@@ -1,7 +1,4 @@
 import * as _ from 'lodash';
-import URI from 'urijs';
-import axios from 'axios';
-import watermarkApi from '../store/watermarkApi2';
 
 class Utils {
   /* @ngInject */
