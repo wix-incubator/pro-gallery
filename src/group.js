@@ -145,6 +145,7 @@ export class Group {
     }
 
     switch (this.type) {
+      default:
       case '1':
         this.safeGetItem(0).width = this.width - m;
         this.safeGetItem(0).height = this.height - m;
@@ -257,6 +258,7 @@ export class Group {
         case 'ppl':
           optionalTypes = (isV ? '1,2h,3l,3h' : '1,3b');
           break;
+        default:
         case 'ppp':
           optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2h');
           break;
@@ -355,6 +357,7 @@ export class Group {
     let h = 0;
 
     switch (this.type) {
+      default:
       case '1' :
 
         item = this.safeGetItem(0);
@@ -641,19 +644,22 @@ export class Group {
   getItemDimensions(items, idx) {
     const m = this.imageMargin * 2;
     switch (this.type) {
+      default:
       case '1':
       case '2v':
-      case '3v':
+      case '3v': {
         const w = this.width - m;
         return (w > 0) && {
           width: w,
         };
+      }
       case '2h':
-      case '3h':
+      case '3h': {
         const h = this.height - m;
         return (h > 0) && {
           height: h,
         };
+      }
       case '3t':
       case '3b':
         if (idx === 0) {
@@ -700,6 +706,7 @@ export class Group {
       // ---------------------------------
       //    const H = W * Rg + M * (Vi - Hi * Rg);
 
+      default:
       case '1':
         Rg = 1 / R[0];
         Rm = 1 - Rg;
@@ -761,6 +768,7 @@ export class Group {
       // ---------------------------------
       // | W = H * Rg + M * Rm |
       // ---------------------------------
+      default:
       case '1':
         Rg = R[0];
         Rm = 1 - Rg;

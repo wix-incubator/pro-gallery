@@ -151,7 +151,7 @@ describe('Pro Gallery Viewer', () => {
       gallery = new Layouter({items, container, styleParams});
 
       const maxGroupHeight = gallery.columns[0].reduce((g, group) => {
-        const isLastStrip = (group.stripIdx == gallery.strips);
+        const isLastStrip = (group.stripIdx === gallery.strips);
         return (Math.max(g, (isLastStrip ? 0 : group.height)));
       }, 0);
 
@@ -294,7 +294,7 @@ describe('Pro Gallery Viewer', () => {
       gallery = new Layouter({items, container, styleParams});
 
       const minItemSize = gallery.columns[0].reduce((g, group) => {
-        const isLastStrip = (group.stripIdx == gallery.strips);
+        const isLastStrip = (group.stripIdx === gallery.strips);
         return (isLastStrip ? g : Math.min(g, group.items.reduce((i, item) => {
           const maxDimension = Math.max(item.width, item.height);
           return Math.min(i, maxDimension);

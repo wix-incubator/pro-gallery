@@ -62,7 +62,20 @@
     }
   },
   "eslintConfig": {
-    "extends": "wix/esnext"
+    "extends": "wix/esnext",
+    "rules": {
+      "no-cond-assign": 0,
+      "no-undef": 0,
+      "no-useless-escape": 0,
+      "max-params": 0,
+      "max-depth": 0,
+      "operator-linebreak": 0,
+      "no-mixed-operators": 0,
+      "no-unused-vars": 1,
+      "camelcase": 0,
+      "no-loop-func": 0,
+      "no-trailing-spaces": 0
+    }
   },
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"

@@ -186,14 +186,14 @@ class Utils {
     }
 
     isDev = isDev || (this.shouldDebug('ph_local'));
-    isDev = isDev || (this.parseGetParam('debug') == 'true');
-    isDev = isDev || ((this.safeLocalStorage() || {}).forceDevMode == 'true');
+    isDev = isDev || (this.parseGetParam('debug') === 'true');
+    isDev = isDev || ((this.safeLocalStorage() || {}).forceDevMode === 'true');
     this._cache.isDev = isDev;
     return isDev;
   }
 
   isVerbose() {
-    return ((this.safeLocalStorage() || {}).forceDevMode == 'true');
+    return ((this.safeLocalStorage() || {}).forceDevMode === 'true');
   }
 
   isLocal() {
@@ -226,14 +226,14 @@ class Utils {
     if (!this.isInWix()) {
       return false;
     }
-    return (this.getViewModeFromCache() == 'editor');
+    return (this.getViewModeFromCache() === 'editor');
   }
 
   isPreview() {
     if (!this.isInWix()) {
       return false;
     }
-    return (this.getViewModeFromCache() == 'preview');
+    return (this.getViewModeFromCache() === 'preview');
   }
 
   isSite() {

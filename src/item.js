@@ -88,11 +88,11 @@ export class Item {
     //override sharpParams with item sharpParams
     if (this.dto.metaData && this.dto.metaData.sharpParams && this.dto.metaData.sharpParams.L) {
       const sharpParams = this.dto.metaData.sharpParams.L;
-      if (sharpParams.quality && sharpParams.overrideQuality == true) {
+      if (sharpParams.quality && sharpParams.overrideQuality === true) {
         this.sharpParams.quality = sharpParams.quality;
       }
 
-      if (sharpParams.usm && sharpParams.overrideUsm == true) {
+      if (sharpParams.usm && sharpParams.overrideUsm === true) {
         this.sharpParams.usm = sharpParams.usm;
       }
     }
@@ -525,7 +525,7 @@ export class Item {
   }
 
   get outerWidth() {
-    return this.width + 2 * this.margins;
+    return this.width + (2 * this.margins);
   }
 
   get orgWidth() {
@@ -545,7 +545,7 @@ export class Item {
   }
 
   get outerHeight() {
-    return this.height + 2 * this.margins;
+    return this.height + (2 * this.margins);
   }
 
   get orgHeight() {
@@ -568,7 +568,7 @@ export class Item {
     let ratio;
     if (_.isFunction(this._cubeRatio)) {
       ratio = this._cubeRatio();
-    } else if (this.cropOnlyFill && this.cubeType == 'fit') {
+    } else if (this.cropOnlyFill && this.cubeType === 'fit') {
       ratio = this.ratio;
     } else {
       ratio = this._cubeRatio;
@@ -595,11 +595,11 @@ export class Item {
   }
 
   get isPortrait() {
-    return this.orientation == 'portrait';
+    return this.orientation === 'portrait';
   }
 
   get isLandscape() {
-    return this.orientation == 'landscape';
+    return this.orientation === 'landscape';
   }
 
   get bgColor() {
@@ -620,7 +620,7 @@ export class Item {
   }
 
   get isCropped() {
-    return this.cubeImages && this.cubeType == 'fill';
+    return this.cubeImages && this.cubeType === 'fill';
   }
 
   get focalPoint() {

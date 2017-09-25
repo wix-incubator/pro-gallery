@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 
-import {utils} from './utils'
-import {Item} from './item.js'
-import {Group} from './group.js'
+import {utils} from './utils';
+import {Item} from './item.js';
+import {Group} from './group.js';
 
 class Strip {
 
@@ -67,8 +67,8 @@ export default class ProLayouter {
     this.layoutItems = [];
 
     let gallerySize = Math.floor(this.styleParams.gallerySize) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
-    let galleryWidth = Math.floor(this.container.galleryWidth);
-    let maxGroupSize = this.maxGroupSize;
+    const galleryWidth = Math.floor(this.container.galleryWidth);
+    const maxGroupSize = this.maxGroupSize;
 
     let groupIdx = 1;
     let inStripIdx = 1;
@@ -76,13 +76,13 @@ export default class ProLayouter {
 
     let groupItems = [];
     let group;
-    let bounds = this.container.bounds;
+    const bounds = this.container.bounds;
 
     let strip = new Strip();
 
     let numOfCols = 1;
-    let columns = [];
-    let columnsH = [];
+    const columns = [];
+    const columnsH = [];
     let columnsW = [];
     let cubeRatios = [];
 
@@ -148,7 +148,7 @@ export default class ProLayouter {
       group = new Group({
         idx: groupIdx,
         stripIdx: strip.idx,
-        inStripIdx: inStripIdx,
+        inStripIdx,
         top: galleryHeight,
         items: groupItems,
         chooseBestGroup: this.styleParams.chooseBestGroup,
@@ -157,7 +157,7 @@ export default class ProLayouter {
         cubeType: this.styleParams.cubeType,
         isVertical: this.styleParams.isVertical,
         minItemSize: this.styleParams.minItemSize,
-        gallerySize: gallerySize,
+        gallerySize,
         collageAmount: this.styleParams.collageAmount,
         collageDensity: this.styleParams.collageDensity,
         layoutsVersion: this.styleParams.layoutsVersion,
@@ -264,13 +264,11 @@ export default class ProLayouter {
         if (this.isLastImage && strip.groups) {
           if (this.styleParams.oneRow) {
             strip.height = this.container.galleryHeight + (this.styleParams.imageMargin - this.styleParams.galleryMargin);
-          } else {
-            if (gallerySize * 2 < (galleryWidth / strip.ratio)) {
+          } else if (gallerySize * 2 < (galleryWidth / strip.ratio)) {
               //stretching the strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
-              strip.height = gallerySize;
-            } else {
-              strip.height = (galleryWidth / strip.ratio);
-            }
+            strip.height = gallerySize;
+          } else {
+            strip.height = (galleryWidth / strip.ratio);
           }
 
           strip.groups[strip.groups.length - 1].isLastGroup = true;
@@ -282,7 +280,7 @@ export default class ProLayouter {
         }
 
       } else {
-  
+
         //---------------------| COLUMNS GALLERY |----------------------//
 
         //find the shortest column
@@ -294,7 +292,7 @@ export default class ProLayouter {
           let minColH = -1;
           for (let i = 0; i < numOfCols; i++) {
             let colH = columnsH[i];
-            if (typeof(colH) === 'undefined') {
+            if (typeof (colH) === 'undefined') {
               colH = 0;
             }
             if (colH < minColH || minColH < 0) {
@@ -303,7 +301,7 @@ export default class ProLayouter {
             }
           }
         }
-  
+
         columns[minCol] = columns[minCol] || [];
         columnsH[minCol] = columnsH[minCol] || 0;
 
@@ -382,11 +380,11 @@ export default class ProLayouter {
       let distance;
 
       // _.each(_.slice(this.layoutItems, itemIdx - 50, itemIdx + 50), (item) => {
-      _.each(this.layoutItems, (item) => {
+      _.each(this.layoutItems, item => {
         itemY = item.offset.top + (item.height / 2);
         itemX = item.offset.left + (item.width / 2);
         distance = Math.sqrt(Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2));
-        if ((minDistance == null || (distance > 0 && distance < minDistance)) && condition(currentItemX, currentItemY, itemX, itemY)) {
+        if ((minDistance === null || (distance > 0 && distance < minDistance)) && condition(currentItemX, currentItemY, itemX, itemY)) {
           minDistance = distance;
           minDistanceItem = item;
         }
@@ -410,7 +408,7 @@ export default class ProLayouter {
           (curX, curY, itmX, itmY) => itmX < curX
         );
         break;
-
+      
       case 'down':
         neighborItem = findClosestItem(
           (currentItem.offset.left + (currentItem.width / 2)),
@@ -418,7 +416,8 @@ export default class ProLayouter {
           (curX, curY, itmX, itmY) => itmY > curY
         );
         break;
-
+        
+      default:
       case 'right':
         neighborItem = findClosestItem(
           (currentItem.offset.right),
@@ -500,7 +499,7 @@ export default class ProLayouter {
       return !this.srcImages[this.pointer + 1];
     } else {
       //Backwards compatibility
-      return !this.srcImages[this.pointer + 3]
+      return !this.srcImages[this.pointer + 3];
     }
   }
 
@@ -511,9 +510,9 @@ export default class ProLayouter {
   get maxGroupSize() {
     let _maxGroupSize = 1;
     try {
-      let groupTypes = _.isString(this.styleParams.groupTypes) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
+      const groupTypes = _.isString(this.styleParams.groupTypes) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
       _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
-        return Math.max(curSize, parseInt(groupType))
+        return Math.max(curSize, parseInt(groupType));
       }, 1);
       _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
     } catch (e) {
