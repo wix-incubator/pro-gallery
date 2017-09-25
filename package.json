@@ -1,0 +1,46 @@
+{
+  "private": false,
+  "name": "pro-layouter",
+  "version": "1.0.0",
+  "author": {
+    "name": "Guy Sopher",
+    "email": "guyso@wix.com",
+    "url": ""
+  },
+  "main": "dist/src/index.js",
+  "files": ["dist"],
+  "scripts": {
+    "start": "yoshi start",
+    "build": ":",
+    "precommit": "yoshi lint",
+    "pretest": "yoshi build",
+    "test": "yoshi test",
+    "posttest": "yoshi lint",
+    "release": "yoshi release"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.22.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-stage-3": "^6.5.0",
+    "chai": "^3.5.0",
+    "husky": "^0.13.4",
+    "yoshi": "latest"
+  },
+  "babel": {
+    "presets": ["stage-3"],
+    "plugins": ["transform-runtime"],
+    "env": {
+      "test": {"presets": [["env", {"targets": {"node": "current"}}]]},
+      "development": {"presets": ["env"]}
+    }
+  },
+  "eslintConfig": {
+    "extends": "wix/esnext"
+  },
+  "publishConfig": {
+    "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
+  }
+}
