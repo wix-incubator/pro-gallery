@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
 import { utils } from '../utils'
-import watermarkApi from '../store/watermarkApi2';
 
 export class ItemCore {
 
@@ -72,30 +71,6 @@ export class ItemCore {
     this.container = config.container;
     this._offset = {};
     this._group = {};
-  
-    if (utils.isStoreGallery() && !this.isVideo) {
-      this.watermark = config.watermark;
-      if (!this.watermark) {
-        watermarkApi.getWatermarkData() //this request should be sync (the watermark should have been cached by the gallery or the fullscreen)
-          .then(data => {
-            this.watermark = data;
-            this.watermarkStr = (this.watermark && this.watermark.imageUrl) ? `,wm_${this.watermark.imageUrl}-${this.watermark.opacity}-${this.watermark.position}-${this.watermark.size}` : '';
-          });
-      } else {
-        // protect against watermark being a string - it happens some times.
-        if (typeof this.watermark === 'string') {
-          try {
-            this.watermark = JSON.parse(this.watermark);
-          } catch (error) {
-            console.error(`item-core - given watermark (${this.watermark}) is not an object`, error);
-          }
-        }
-        this.watermarkStr = '';
-        if (this.watermark.imageUrl) {
-          this.watermarkStr = `,wm_${this.watermark.imageUrl}-${this.watermark.opacity}-${this.watermark.position}-${this.watermark.size}`;
-        }
-      }
-    }
 
     this.style = {
       bgColor: this.bgColor,
