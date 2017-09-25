@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { utils } from './utils'
+import {utils} from './utils';
 
 export class Item {
 
@@ -16,7 +16,7 @@ export class Item {
     //in addition - support of {sharpParam: {quality}}
 
     config = config || {};
-    
+
     if (config.dto && config.dto.dto) {
       config.dto = config.dto.dto; //defence patch due to mis-use of item-core
       if (utils.isDev()) {
@@ -38,7 +38,7 @@ export class Item {
     }
 
     if (this.dto) {
-      let itemMetadata = this.dto.metaData || this.dto.metadata;
+      const itemMetadata = this.dto.metaData || this.dto.metadata;
       if (itemMetadata) { //metadata is encoded encoded, parsed if needed
         this.dto.metaData = this.parseStringObject(itemMetadata);
       }
@@ -79,15 +79,15 @@ export class Item {
       ratio: this.ratio,
       orientation: this.orientation
     };
-  
+
     this.resize(1);
-  
+
   }
 
   updateSharpParams() {
     //override sharpParams with item sharpParams
-    if (this.dto.metaData && this.dto.metaData.sharpParams && this.dto.metaData.sharpParams['L']) {
-      const sharpParams = this.dto.metaData.sharpParams['L'];
+    if (this.dto.metaData && this.dto.metaData.sharpParams && this.dto.metaData.sharpParams.L) {
+      const sharpParams = this.dto.metaData.sharpParams.L;
       if (sharpParams.quality && sharpParams.overrideQuality == true) {
         this.sharpParams.quality = sharpParams.quality;
       }
@@ -135,20 +135,20 @@ export class Item {
     this.resizeHeight = Math.min(maxHeight, Math.ceil(this.height * devicePixelRatio));
     this.resized_url = this.resizedUrl(this.cubeType, this.resizeWidth, this.resizeHeight, this.sharpParams, false);
 
-    this.pixel_url = this.resizedUrl('fill', 1, 1, { quality: 30 }, false);
+    this.pixel_url = this.resizedUrl('fill', 1, 1, {quality: 30}, false);
 
     const maxDimension = 500;
     this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
     this.thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
-    this.thumbnail_url = this.resizedUrl('fit', this.thumbnailWidth, this.thumbnailHeight, { quality: 30 }, false);
+    this.thumbnail_url = this.resizedUrl('fit', this.thumbnailWidth, this.thumbnailHeight, {quality: 30}, false);
 
-    this.square_url = this.resizedUrl('fill', 100, 100, { quality: 80 }, false);
+    this.square_url = this.resizedUrl('fill', 100, 100, {quality: 80}, false);
 
     this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams, false);
 
-    this.download_url = { img: this.getOriginalsUrl() };
+    this.download_url = {img: this.getOriginalsUrl()};
     this.sample_url = this.resizedUrl('fit', 500, 500, this.sharpParams, false, true);
-    
+
     this.download_url.mp4 = this.full_url.mp4;
 
     return this;
@@ -158,14 +158,14 @@ export class Item {
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, noCrop) {
     requiredWidth = Math.round(requiredWidth);
     requiredHeight = Math.round(requiredHeight);
-    let thumbSize = 180;
+    const thumbSize = 180;
 
-    let urls = {};
+    const urls = {};
 
     if (this.metadata.posters || this.metadata.customPoster) {
-      let maxHeight = 720;
-      let qualities = this.metadata.qualities;
-      let poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
+      const maxHeight = 720;
+      const qualities = this.metadata.qualities;
+      const poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
 
       if (poster) {
         if (qualities && qualities.length) {
@@ -181,8 +181,8 @@ export class Item {
               break;
             }
           }
-          let ratio = poster.width / poster.height;
-          let isWider = ratio > 1;
+          const ratio = poster.width / poster.height;
+          const isWider = ratio > 1;
           if (isWider) {
             requiredWidth = Math.ceil(requiredHeight * ratio);
           } else {
@@ -190,21 +190,21 @@ export class Item {
           }
         }
 
-        urls['img'] = this.resizeUrlImp(poster.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, false);
-        urls['thumb'] = this.resizeUrlImp(poster.url, 'fit', thumbSize, thumbSize, sharpParams, false, false);
+        urls.img = this.resizeUrlImp(poster.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, false);
+        urls.thumb = this.resizeUrlImp(poster.url, 'fit', thumbSize, thumbSize, sharpParams, false, false);
       }
     } else {
-      urls['img'] = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, (noCrop !== true && this.isCropped && this.focalPoint));
-      urls['thumb'] = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, false, true);
+      urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, (noCrop !== true && this.isCropped && this.focalPoint));
+      urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, false, true);
     }
 
     return urls;
   }
 
   createFromWixImage(wixData, orderIndex, addWithTitles, isSecure) {
-    let url = wixData.uri || wixData.relativeUri || wixData.url;
-    let itemId = url.slice(0, url.length - 4);
-    let metadata = {
+    const url = wixData.uri || wixData.relativeUri || wixData.url;
+    const itemId = url.slice(0, url.length - 4);
+    const metadata = {
       height: wixData.height,
       width: wixData.width,
       lastModified: new Date().getTime(),
@@ -220,15 +220,15 @@ export class Item {
     };
 
     if (addWithTitles) {
-      metadata['title'] = wixData.title;
+      metadata.title = wixData.title;
     }
 
-    this.dto = {itemId, mediaUrl:url, orderIndex, metadata, isSecure};
+    this.dto = {itemId, mediaUrl: url, orderIndex, metadata, isSecure};
   }
 
   createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
 
-    let qualities = _.map(wixData.fileOutput.video, (q) => {
+    const qualities = _.map(wixData.fileOutput.video, q => {
       return {
         height: q.height,
         width: q.width,
@@ -238,36 +238,36 @@ export class Item {
     });
 
     let posters = _.map(wixData.fileOutput.image, _.partialRight(_.pick, ['url', 'width', 'height']));
-    posters = _.map(posters, (p) => {
+    posters = _.map(posters, p => {
       p.url = p.url.replace('media/', '');
       return p;
     });
 
-    let metaData = {
+    const metaData = {
       name: wixData.title,
       lastModified: new Date().getTime(),
       width: wixData.fileInput.width,
       height: wixData.fileInput.height,
       type: 'video',
-      posters: posters,
+      posters,
       customPoster: '',
       isExternal: false,
       duration: wixData.fileInput.duration,
-      qualities: qualities,
+      qualities,
       link: this.initialLinkObject,
       // title: wixData.title,
       // description: wixData.description,
     };
 
     if (addWithTitles) {
-      metaData['title'] = wixData.title;
+      metaData.title = wixData.title;
     }
 
-    this.dto = {itemId:wixData.id, mediaUrl:wixData.id, orderIndex, metaData, isSecure};
+    this.dto = {itemId: wixData.id, mediaUrl: wixData.id, orderIndex, metaData, isSecure};
   }
 
   createFromExternal(wixData, orderIndex, addWithTitles, isSecure) {
-    let metaData = {
+    const metaData = {
       name: wixData.id,
       videoId: wixData.id,
       lastModified: new Date().getTime(),
@@ -283,7 +283,7 @@ export class Item {
       qualities: [],
     };
 
-    this.dto = {itemId:wixData.id, mediaUrl:metaData.posters[0].url, orderIndex, metaData, isSecure};
+    this.dto = {itemId: wixData.id, mediaUrl: metaData.posters[0].url, orderIndex, metaData, isSecure};
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
@@ -384,12 +384,12 @@ export class Item {
   }
 
   parseStringObject(sObj) {
-    if (typeof sObj != 'string') {
+    if (typeof sObj !== 'string') {
       return sObj;
     }
 
-    let stripedObj = utils.stripSlashes(sObj);
-    if (typeof sObj == 'string' && (/^[\],:{}\s]*$/.test(stripedObj.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, '')))) {
+    const stripedObj = utils.stripSlashes(sObj);
+    if (typeof sObj === 'string' && (/^[\],:{}\s]*$/.test(stripedObj.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, '')))) {
       //this is a json
       try {
         return JSON.parse(stripedObj);
@@ -399,59 +399,59 @@ export class Item {
     }
     return stripedObj;
   }
-  
+
   pinToCorner(cornerName) {
-    
-    let isTop = cornerName.indexOf('top') >= 0;
-    let isLeft = cornerName.indexOf('left') >= 0;
-    
+
+    const isTop = cornerName.indexOf('top') >= 0;
+    const isLeft = cornerName.indexOf('left') >= 0;
+
     this.style.top = isTop ? 0 : 'auto';
     this.style.bottom = isTop ? 'auto' : 0;
     this.style.left = isLeft ? 0 : 'auto';
     this.style.right = isLeft ? 'auto' : 0;
-    
+
     this.pin = cornerName;
     this.isPinnedTop = isTop;
     this.isPinnedLeft = isLeft;
-    
+
   }
-  
+
   setPosition(position) {
     this.style.position = position;
   }
-  
+
   getPosition(pos) {
     return (parseInt(pos, 10) >= 0 ? pos : 'auto');
   }
-  
+
   get hash() {
     return this.id;
   }
-  
+
   get top() {
     return this.getPosition(this.style.top);
   }
-  
+
   get left() {
     return this.getPosition(this.style.left);
   }
-  
+
   get right() {
     return this.getPosition(this.style.right);
   }
-  
+
   get bottom() {
     return this.getPosition(this.style.bottom);
   }
-  
+
   set group(group) {
     _.merge(this._group, group);
   }
-  
+
   set offset(offset) {
     _.merge(this._offset, offset);
   }
-  
+
   get offset() {
     return {
       top: this._offset.top + (this.isPinnedTop ? 0 : (this._group.height - this.height)),
@@ -460,30 +460,30 @@ export class Item {
       bottom: this._offset.bottom - (this.isPinnedTop ? (this._group.height - this.height) : 0),
     };
   }
-  
+
   get transform() {
     if (this.floatingImages > 0) {
-      
+
       const m = this.imageMargin;
       const g = this.galleryMargin;
-      
+
       const spaceLeft = (this.offset.left > 0) ? m : g;
       const spaceRight = (this.container.galleryWidth - this.offset.right > 2 * m) ? m : g;
       const spaceUp = (this.offset.top > 0) ? m : g;
       const spaceDown = (this.container.galleryHeight - this.offset.bottom > 2 * m) ? m : g;
-      
+
       const horizontalShift = utils.hashToInt(this.hash, -1 * spaceLeft, spaceRight) * this.floatingImages;
-      const verticalShift = utils.hashToInt(this.full_url['img'], -1 * spaceUp, spaceDown) * this.floatingImages;
-      
+      const verticalShift = utils.hashToInt(this.full_url.img, -1 * spaceUp, spaceDown) * this.floatingImages;
+
       return {
         transform: `translate3d(${horizontalShift}px, ${verticalShift}px, 0)`
       };
     } else {
-      return {}
+      return {};
     }
-    
+
   }
-  
+
   get id() {
     return this.dto.photoId || this.dto.itemId;
   }
@@ -491,15 +491,15 @@ export class Item {
   set id(id) {
     this.dto.itemId = id;
   }
-  
+
   get photoId() {
     return this.id;
   }
-  
+
   get itemId() {
     return this.id;
   }
-  
+
   get maxWidth() {
     return this.dto.width || this.dto.w || this.metadata.width;
   }
@@ -509,7 +509,7 @@ export class Item {
   }
 
   get metadata() {
-    let md = (this.dto.metaData || this.dto.metadata);
+    const md = (this.dto.metaData || this.dto.metadata);
     if (_.isUndefined(md)) {
       console.error('Item with no metadata' + JSON.stringify(this.dto));
     }
@@ -568,12 +568,10 @@ export class Item {
     let ratio;
     if (_.isFunction(this._cubeRatio)) {
       ratio = this._cubeRatio();
+    } else if (this.cropOnlyFill && this.cubeType == 'fit') {
+      ratio = this.ratio;
     } else {
-      if (this.cropOnlyFill && this.cubeType == 'fit') {
-        ratio = this.ratio;
-      } else {
-        ratio = this._cubeRatio;
-      }
+      ratio = this._cubeRatio;
     }
 
     if (this.smartCrop === true) {
@@ -633,6 +631,6 @@ export class Item {
     this.metadata.focalPoint = value;
   }
 
-  
+
   //---- not needed
 }

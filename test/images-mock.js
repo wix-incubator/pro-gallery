@@ -2213,7 +2213,7 @@ export const testImages = [{
   url: '8bb438_e1d1af8cd51a452b9b24dcebdc665805.jpg'
 }];
 
-export const testVideos =  [{
+export const testVideos = [{
   itemId: 'd19570fa-e97f-4b3d-b8ad-4e24b3a9a3ec',
   url: '0d72ac_31569a98fd8d436f98ae9c827c216443',
   orderIndex: 1.447790730099E8,

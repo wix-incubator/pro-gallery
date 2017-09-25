@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import {utils} from './utils';
 
 export class Group {
-  
+
   constructor(config) {
     this.idx = config.idx;
     this.stripIdx = config.stripIdx;
@@ -25,25 +25,25 @@ export class Group {
     this.itemFont = config.itemFont;
     this.itemFontSlideshow = config.itemFontSlideshow;
     this.imageMargin = config.imageMargin;
-    
+
     this.visible = true;
     this.rendered = true;
     this.required = true;
-    
+
     //prepare the group
     let forcedGroupSize = this.items.length;
-    
+
     //todo - check if minItem size is really working
     while (!this.isWithinMinItemSize && forcedGroupSize > 0) {
       this.placeItems(forcedGroupSize);
       this.resize();
       forcedGroupSize--;
     }
-    
+
   }
-  
+
   getViewProps(galleryConfig) {
-    
+
     return {
       className: 'group',
       id: this.id,
@@ -67,27 +67,27 @@ export class Group {
     if (this.titlePlacement !== 'SHOW_ALWAYS') {
       return 0;
     }
-    
+
     const paddingTopAndBottom = 30;
     let spaceBetweenElements = 16;
     const defaultButtonHeight = 33;
     const defaultItemFontSize = 22;
-    
+
     const isGrid = this.galleryLayout === 2;
-    let item = this.items ? this.items[0] : null;
-    let title = item ? item.title : null;
+    const item = this.items ? this.items[0] : null;
+    const title = item ? item.title : null;
     let fontSize = 0;
-    let isLayoutSupportsNoTitle = isGrid && !utils.isMobile();
-    let shouldSaveSpaceForTitle = (this.allowTitle && title) || isLayoutSupportsNoTitle;
+    const isLayoutSupportsNoTitle = isGrid && !utils.isMobile();
+    const shouldSaveSpaceForTitle = (this.allowTitle && title) || isLayoutSupportsNoTitle;
     if (shouldSaveSpaceForTitle) {
       fontSize = this.itemFontSlideshow ? this.itemFontSlideshow.size : defaultItemFontSize;
     } else {
       spaceBetweenElements = 0;
     }
-    
+
     return fontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
   }
-  
+
   resize() {
     if (this.isVertical) {
       this.resizeToWidth(this.gallerySize);
@@ -95,55 +95,55 @@ export class Group {
       this.resizeToHeight(this.gallerySize);
     }
   }
-  
+
   safeGetItem(idx) {
     if (this.items[idx]) {
-      return this.items[idx]
+      return this.items[idx];
     } else {
-      let item = _.cloneDeep(_.last(this.items));
+      const item = _.cloneDeep(_.last(this.items));
       item.id += 'dummy';
       item.idx = this.idx * (idx + 1) + 1;
       item.type = 'dummy';
       return item;
     }
-  };
-  
+  }
+
   fixItemsRatio(ratio) {
-    
+
     for (let item, i = 0; item = this.items[i]; i++) {
       item.cubeRatio = ratio;
       item.resize(1);
     }
   }
-  
+
   round() {
-    
+
     //round all sizes to full pixels
-    
+
     if (this.isLastGroup) {
       this.width = this.stripWidth - this.left;
     } else {
       this.width = Math.round(this.width);
     }
     this.height = Math.round(this.height);
-    
+
     for (let item, i = 0; item = this.items[i]; i++) {
       item.width = Math.round(item.width);
       item.height = Math.round(item.height);
       item.group = {
         width: this.width,
         height: this.height
-      }
+      };
     }
-    
+
     // return;
-    
+
     const m = this.imageMargin * 2;
-    
+
     if (utils.shouldLog('spacing')) {
       console.log('SPACING - before rounding group #' + this.idx, this.realItems.map(i => `[${i.width}/${i.height}]`).join(', '));
     }
-    
+
     switch (this.type) {
       case '1':
         this.safeGetItem(0).width = this.width - m;
@@ -194,23 +194,23 @@ export class Group {
         this.safeGetItem(2).width = this.width - this.safeGetItem(0).width - this.safeGetItem(1).width - 3 * m;
         break;
     }
-    
+
     if (utils.shouldLog('spacing')) {
       console.log('SPACING - after rounding group #' + this.idx, this.realItems.map(i => `[${i.width}/${i.height}]`).join(', '));
     }
-    
+
   }
-  
+
   placeItems(forcedGroupSize) {
-    
+
     //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
-    
+
     //map the group to l=landscape and p=portrait
     //create a string to state the images group's type
-    this.ratios = this.items.map(function (item) {
+    this.ratios = this.items.map(item => {
       return item.orientation.slice(0, 1);
     }).join('');
-    
+
     //---------| Find the best groupType for each ratios case
     //optional types:
     //  1   => single photo
@@ -220,7 +220,7 @@ export class Group {
     //  3t  => 3 photos - one large on top and two small at the bottom, one alongside the other
     //  3l  => 3 photos - one large on the left and two small on the right, one above the other
     //  3r  => 3 photos - one large on the right and two small on the left, one above the other
-    
+
     //define optional ratios for each type:
     //  1   => all
     //  2v  => lll,llp,ppp     (horizontal only)
@@ -229,102 +229,100 @@ export class Group {
     //  3t  => lll,lpl,llp,lpp (horizontal only)
     //  3l  => ppp,plp,ppl,pll (vertical only)
     //  3r  => ppp,plp,lpp,llp (vertical only)
-    
-    let isV = this.isVertical;
+
+    const isV = this.isVertical;
     let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
-    
+
     if (this.chooseBestGroup) {
       switch (this.ratios) {
         case 'lll':
-          optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v' );
+          optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v');
           break;
         case 'llp':
-          optionalTypes = (isV ? '1,3r' : '1,2v,3t,3v'    );
+          optionalTypes = (isV ? '1,3r' : '1,2v,3t,3v');
           break;
         case 'lpl':
-          optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v' );
+          optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v');
           break;
         case 'pll':
-          optionalTypes = (isV ? '1,2h,3l' : '1,2v,3b,3v' );
+          optionalTypes = (isV ? '1,2h,3l' : '1,2v,3b,3v');
           break;
-        
+
         case 'lpp':
-          optionalTypes = (isV ? '1,2h,3r,3h' : '1,2v,3t' );
+          optionalTypes = (isV ? '1,2h,3r,3h' : '1,2v,3t');
           break;
         case 'plp':
-          optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v' );
+          optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v');
           break;
         case 'ppl':
-          optionalTypes = (isV ? '1,2h,3l,3h' : '1,3b' );
+          optionalTypes = (isV ? '1,2h,3l,3h' : '1,3b');
           break;
         case 'ppp':
-          optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2h' );
+          optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2h');
           break;
       }
-      
-    } else {
-      if (this.items.length === 3 || forcedGroupSize === 3) {
-        optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v' );
-      }
+
+    } else if (this.items.length === 3 || forcedGroupSize === 3) {
+      optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v');
     }
-    
+
     if (this.items.length === 2 || forcedGroupSize === 2) {
-      optionalTypes = (isV ? '1,2h' : '1,2v' );
+      optionalTypes = (isV ? '1,2h' : '1,2v');
     }
     if (this.items.length === 1 || forcedGroupSize === 1) {
       optionalTypes = '1';
     }
-    
+
     let groupTypes = optionalTypes.length > 0 ? optionalTypes.split(',') : [];
-    
-    
+
+
     //---------| Override with specifically defined group types
     if (this.groupTypes) {
-      
+
       // let groupTypesArr = _.union(['1'], this.groupTypes.split(','));
       const groupTypesArr = this.groupTypes.split(',');
-      
+
       if (groupTypesArr.length > 1) {
-        _.remove(groupTypes, (gt) => groupTypesArr.indexOf(gt) < 0);
-        
+        _.remove(groupTypes, gt => groupTypesArr.indexOf(gt) < 0);
+
         if (groupTypes.length === 0) { //there is no match between required group types and the optional ones - use
           groupTypes = ['1'];
         }
       } else {
         groupTypes = groupTypesArr;
       }
-      
+
     }
-    
-    
+
+
     //---------| Calc collage density
     if (this.layoutsVersion > 1 && this.collageDensity) {
       //th new calculation of the collage amount
-      
+
       const collageDensity = this.collageDensity;
-      
+
       //use the collage amount to determine the optional groupsize
       const maxGroupType = parseInt(_.last(groupTypes));
       let optionalGroupSizes;
-      if (maxGroupType === 3)
+      if (maxGroupType === 3) {
         optionalGroupSizes = [[1], [1, 2], [1, 2, 3], [2, 3], [3]];
-      else if (maxGroupType === 2) {
+      } else if (maxGroupType === 2) {
         optionalGroupSizes = [[1], [1, 2], [2]];
       } else {
         optionalGroupSizes = [[1]];
       }
       const targetGroupsizes = optionalGroupSizes[Math.floor(collageDensity * (optionalGroupSizes.length - 1))];
       // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
-      
-      _.remove(groupTypes, (groupType) => {
+
+      _.remove(groupTypes, groupType => {
         return targetGroupsizes.indexOf(parseInt(groupType)) < 0;
       });
-      
+
       if (groupTypes.length === 0) {
         groupTypes = ['1'];
       }
     }
-    
+
     //---------| Calculate a random seed for the collage group type
     const numOfOptions = groupTypes.length;
     let seed;
@@ -335,30 +333,30 @@ export class Group {
     } else {
       seed = (this.inStripIdx + this.stripIdx) % numOfOptions;
     }
-    
+
     if (this.layoutsVersion === 1 && this.collageAmount) {
       //backwards compatibility
       seed += ((this.collageAmount) - 0.5) * numOfOptions;
     }
     seed = Math.min(Math.max(0, seed), (numOfOptions - 1));
     seed = Math.round(seed);
-    
+
     //---------| Final group type to render according to:
     // - the number of options
     // - the collageAmount (if 0 - always renders 1 image, if 1 always renders the max amount)
     // - random seed (determined by the hash)
     this.type = groupTypes[seed] || '1';
-    
-    
+
+
     //---------| Render the images by the groupType
     let items = [];
     let item;
     let w = 0;
     let h = 0;
-    
+
     switch (this.type) {
       case '1' :
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.pinToCorner('top-left');
@@ -366,11 +364,11 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         break;
-      
+
       case '2v':
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.pinToCorner('top-left');
@@ -378,7 +376,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.pinToCorner('bottom-left');
@@ -386,11 +384,11 @@ export class Group {
           h += item.height;
           items.push(item);
         }
-        
+
         break;
-      
+
       case '2h':
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.pinToCorner('top-left');
@@ -399,7 +397,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.pinToCorner('top-right');
@@ -408,11 +406,11 @@ export class Group {
           w += item.width;
           items.push(item);
         }
-        
+
         break;
-      
+
       case '3b':
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.pinToCorner('top-left');
@@ -420,7 +418,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.pinToCorner('top-right');
@@ -428,7 +426,7 @@ export class Group {
           w += item.width;
           items.push(item);
         }
-        
+
         item = this.safeGetItem(2);
         if (item) {
           item.pinToCorner('bottom-left');
@@ -436,11 +434,11 @@ export class Group {
           h += item.height;
           items.push(item);
         }
-        
+
         break;
-      
+
       case '3t':
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.pinToCorner('bottom-left');
@@ -448,7 +446,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(2);
         if (item) {
           item.pinToCorner('bottom-right');
@@ -456,7 +454,7 @@ export class Group {
           w += item.width;
           items.push(item);
         }
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.pinToCorner('top-left');
@@ -464,11 +462,11 @@ export class Group {
           h += item.height;
           items = [item].concat(items);
         }
-        
+
         break;
-      
+
       case '3r':
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.pinToCorner('top-left');
@@ -476,7 +474,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.pinToCorner('bottom-left');
@@ -484,7 +482,7 @@ export class Group {
           h += item.height;
           items.push(item);
         }
-        
+
         item = this.safeGetItem(2);
         if (item) {
           item.pinToCorner('top-right');
@@ -492,11 +490,11 @@ export class Group {
           w += item.width;
           items.push(item);
         }
-        
+
         break;
-      
+
       case '3l':
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.pinToCorner('top-right');
@@ -504,7 +502,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(2);
         if (item) {
           item.pinToCorner('bottom-right');
@@ -512,7 +510,7 @@ export class Group {
           h += item.height;
           items.push(item);
         }
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.pinToCorner('top-left');
@@ -520,11 +518,11 @@ export class Group {
           w += item.width;
           items = [item].concat(items);
         }
-        
+
         break;
-      
+
       case '3v':
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.setPosition('relative');
@@ -532,7 +530,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.setPosition('relative');
@@ -540,7 +538,7 @@ export class Group {
           h += item.height;
           items.push(item);
         }
-        
+
         item = this.safeGetItem(2);
         if (item) {
           item.setPosition('relative');
@@ -548,11 +546,11 @@ export class Group {
           h += item.height;
           items.push(item);
         }
-        
+
         break;
-      
+
       case '3h':
-        
+
         item = this.safeGetItem(0);
         if (item) {
           item.setPosition('relative');
@@ -560,7 +558,7 @@ export class Group {
           w = item.width;
           h = item.height;
         }
-        
+
         item = this.safeGetItem(1);
         if (item) {
           item.setPosition('relative');
@@ -568,7 +566,7 @@ export class Group {
           w += item.width;
           items.push(item);
         }
-        
+
         item = this.safeGetItem(2);
         if (item) {
           item.setPosition('relative');
@@ -576,27 +574,27 @@ export class Group {
           w += item.width;
           items.push(item);
         }
-        
+
         break;
     }
-    
+
     this.width = w;
     this.height = h;
     this.items = items;
     this.placed = true;
-    
+
   }
-  
+
   resizeToHeight(height) {
-    
+
     this.height = height;
     this.width = this.getWidthByHeight(height);
-    
+
     if (utils.shouldLog('spacing')) {
       console.log(`SPACING - Group #${this.idx} resizeToHeight H: ${height}`);
       console.log(`SPACING - Group #${this.idx} resizeToHeight W: ${this.width}`);
     }
-    
+
     const items = _.includes(['3b', '3r'], this.type) ? this.items.slice().reverse() : this.items;
     for (let item, i = 0; item = items[i]; i++) {
       item.group = {
@@ -612,17 +610,17 @@ export class Group {
       item.resize(this.getItemDimensions(items, i));
     }
   }
-  
+
   resizeToWidth(width) {
-    
+
     this.width = width;
     this.height = this.getHeightByWidth(width);
-    
+
     if (utils.shouldLog('spacing')) {
       console.log(`SPACING - Group #${this.idx} resizeToWidth W: ${width}`);
       console.log(`SPACING - Group #${this.idx} resizeToWidth H: ${this.height}`);
     }
-    
+
     const items = _.includes(['3b', '3r'], this.type) ? this.items.slice().reverse() : this.items;
     for (let item, i = 0; item = items[i]; i++) {
       item.group = {
@@ -635,11 +633,11 @@ export class Group {
         bottom: item.offset.top + this.height,
         right: item.offset.left + this.width
       };
-      
+
       item.resize(this.getItemDimensions(items, i));
     }
   }
-  
+
   getItemDimensions(items, idx) {
     const m = this.imageMargin * 2;
     switch (this.type) {
@@ -684,12 +682,12 @@ export class Group {
         }
     }
   }
-  
+
   getHeightByWidth(W) {
     let Rg = 1;
     let Rm = 1;
     const M = this.imageMargin * 2;
-    const R = this.items.map((item) => item.width / item.height);
+    const R = this.items.map(item => item.width / item.height);
     switch (this.type) {
       // ---------------------------------
       // GENERAL FORMULA:
@@ -701,7 +699,7 @@ export class Group {
       // | H = W * R + M * Rm |
       // ---------------------------------
       //    const H = W * Rg + M * (Vi - Hi * Rg);
-      
+
       case '1':
         Rg = 1 / R[0];
         Rm = 1 - Rg;
@@ -740,19 +738,19 @@ export class Group {
         break;
     }
     const H = W * Rg + M * Rm;
-    
+
     if (utils.shouldLog('spacing')) {
       console.log('SPACING - getHeightByWidth, W: ' + W + ', H:' + H, this.type, Rg, Rm);
     }
-    
+
     return H;
   }
-  
+
   getWidthByHeight(H) {
     let Rg = 1;
     let Rm = 1;
     const M = this.imageMargin * 2;
-    const R = this.items.map((item) => item.width / item.height);
+    const R = this.items.map(item => item.width / item.height);
     switch (this.type) {
       // ---------------------------------
       // GENERAL FORMULA:
@@ -801,73 +799,73 @@ export class Group {
         break;
     }
     const W = H * Rg + M * Rm;
-    
+
     if (utils.shouldLog('spacing')) {
       console.log('SPACING - getWidthByHeight, H: ' + H + ', W:' + W, this.type, Rg, Rm);
     }
-    
+
     return W;
   }
-  
+
   setTop(top) {
     this.top = top || 0;
     for (let item, i = 0; item = this.items[i]; i++) {
       item.offset = {
-        top: top,
+        top,
         bottom: top + this.height
       };
     }
   }
-  
+
   setLeft(left) {
     this.left = left || 0;
     this.right = left + this.width;
     for (let item, i = 0; item = this.items[i]; i++) {
       item.offset = {
-        left: left,
+        left,
         right: left + this.width
       };
     }
   }
-  
+
   get id() {
     return 'g' + this.idx + '_' + (this.items[0] || {}).id;
   }
-  
+
   get key() {
     return 'group_' + this.id;
   }
-  
+
   get ratio() {
     const w = this.width;
     const h = this.height;
     return w / h;
   }
-  
+
   get totalHeight() {
     return this.height + this.bottomInfoHeight;
   }
-  
+
   get bottomInfoHeight() {
     return this.getBottomInfoHeight();
   }
-  
+
   get bottom() {
     return this.top + this.height;
   }
-  
+
   set items(items) {
     this._items = items;
   }
-  
+
   get items() {
     return this._items;
   }
-  
+
   get realItems() {
-    return _.filter(this._items, item => item.type !== 'dummy')
+    return _.filter(this._items, item => item.type !== 'dummy');
   }
-  
+
   get isWithinMinItemSize() {
     if (this.items.length === 0 || !this.placed) {
       return false;
@@ -881,7 +879,7 @@ export class Group {
       }, true);
     }
   }
-  
+
 }
 
 /*
