@@ -77,19 +77,21 @@ describe('Pro Gallery Viewer', function () {
 
       var urls = {};
       items.forEach(function (item) {
-        urls[item.url] = 1;
+        urls[item.photoId] = 1;
       });
 
       gallery = new Layouter({items, container, styleParams});
-
+  
+      var galleryUrls = {};
       gallery.columns.forEach((column) => {
         column.forEach((group) => {
           group.items.forEach((item) => {
-            delete urls[item['url']];
+            galleryUrls[item.id] = 1;
           });
         });
       });
-      expect(_.size(urls)).to.equal(0);
+      
+      expect(_.size(urls)).to.equal(_.size(galleryUrls));
 
     }
 
@@ -115,16 +117,22 @@ describe('Pro Gallery Viewer', function () {
       gallery.columns.forEach((column) => {
         column.forEach((group) => {
           group.items.forEach((item) => {
-            if (urls[item['url']]) {
-              urls[item['url']]++;
+            if (urls[item.id]) {
+              urls[item.id]++;
               dups++;
             } else {
-              urls[item['url']] = 1;
+              urls[item.id] = 1;
             }
             ;
           });
         });
       });
+      
+      _.each(urls, (count, key) => {
+        if (count > 1) {
+          console.log(count, key);
+        }
+      })
 
       expect(dups).to.equal(0);
 

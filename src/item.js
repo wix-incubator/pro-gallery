@@ -491,7 +491,15 @@ export class Item {
   set id(id) {
     this.dto.itemId = id;
   }
-
+  
+  get photoId() {
+    return this.id;
+  }
+  
+  get itemId() {
+    return this.id;
+  }
+  
   get maxWidth() {
     return this.dto.width || this.dto.w || this.metadata.width;
   }
