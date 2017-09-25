@@ -80,9 +80,7 @@ export class Item {
       orientation: this.orientation
     };
   
-    if (!utils.isSemiNative()) {
-      this.resize(1);
-    }
+    this.resize(1);
   
   }
 
@@ -140,48 +138,31 @@ export class Item {
     this.pixel_url = this.resizedUrl('fill', 1, 1, { quality: 30 }, false);
 
     const maxDimension = 500;
-    this.thumbnailWidth = Math.min(maxWidth, this.width, utils.getScreenWidth(), maxDimension);
-    this.thumbnailHeight = Math.min(maxHeight, this.height, utils.getScreenHeight(), maxDimension);
+    this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
+    this.thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
     this.thumbnail_url = this.resizedUrl('fit', this.thumbnailWidth, this.thumbnailHeight, { quality: 30 }, false);
 
     this.square_url = this.resizedUrl('fill', 100, 100, { quality: 80 }, false);
 
     this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams, false);
 
-    this.download_url = utils.isStoreGallery() ? this.resizedUrl('fit', 500, 500, this.sharpParams, false, true) : { img: this.getOriginalsUrl() }
-    this.download_url.mp4 = this.full_url.mp4
+    this.download_url = { img: this.getOriginalsUrl() };
+    this.sample_url = this.resizedUrl('fit', 500, 500, this.sharpParams, false, true);
+    
+    this.download_url.mp4 = this.full_url.mp4;
 
     return this;
   }
 
-  getDataForShop() {
-    const fp = this.focalPoint;
-    const md = this.metadata;
-    return {
-      isDemo: md.isDemo,
-      orderIndex: this.orderIndex,
-      itemId: this.dto.itemId,
-      originalUrl: this.getOriginalsUrl(),
-      itemUrl: this.url,
-      itemHeight: md.height,
-      title: md.title,
-      itemWidth: md.width,
-      itemType: (md.type || 'image'),
-      imageUrl: this.resizedUrl('fit', 200, 200, null, null)['img'],
-      imagePurchasedUrl: this.dto.mediaUrl,
-      fpX: fp[0],
-      fpY: fp[1]
-    };
-  }
 
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, noCrop) {
     requiredWidth = Math.round(requiredWidth);
     requiredHeight = Math.round(requiredHeight);
-    var thumbSize = this.isVideo ? 180 : 90;
+    var thumbSize = 180;
 
     var urls = {};
 
-    if (this.isVideo || this.metadata.customPoster) {
+    if (this.metadata.posters || this.metadata.customPoster) {
       var maxHeight = 720;
       var qualities = this.metadata.qualities;
       var poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
@@ -418,14 +399,6 @@ export class Item {
     }
     return stripedObj;
   }
-
-  getTranslatedValue(val) {
-    if (window['TranslationUtil'] && val != '') {
-      var translated = window['TranslationUtil'].getByKey(val);
-      return translated;
-    }
-    return val;
-  }
   
   pinToCorner(cornerName) {
     
@@ -451,103 +424,8 @@ export class Item {
     return (parseInt(pos, 10) >= 0 ? pos : 'auto');
   }
   
-  updateOrderIndex(value) {
-    let ret = this.orderIndex !== value;
-    this.orderIndex = value;
-    return ret;
-  }
-  
   get hash() {
     return this.id;
-  }
-  
-  get seed() {
-    return utils.hashToInt(this.url);
-  }
-  
-  get key() {
-    if (!this._key) {
-      this._key = (this.dto.key || this.id || this.dto.url || 'no_key_found').replace(/\W/g, '');
-    }
-    return this._key;
-  }
-  
-  get demoTitle() {
-    return 'I am a title, only a sample title but still a title. ';
-  }
-  
-  get demoDescription() {
-    return 'I am a description, the best description ever! Here is some lorem ipsum for you: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-  }
-  
-  get demoExif() {
-    return {
-      "GPSVersionID": "2.2.0.0",
-      "GPSAltitudeRef": "1.8",
-      "GPSAltitude": "0",
-      "Make": "LG Electronics",
-      "Model": "LG-H815L",
-      "Orientation": "right-top",
-      "XResolution": "72",
-      "YResolution": "72",
-      "ResolutionUnit": "2",
-      "Software": "Picasa",
-      "DateTime": "2016:04:17 07:19:25",
-      "YCbCrPositioning": "1",
-      "ExposureTime": "0.041666666666666664",
-      "FNumber": "1.8",
-      "ExifIFDPointer": "214",
-      "ExposureProgram": "Undefined",
-      "GPSInfoIFDPointer": "1262",
-      "PhotographicSensitivity": "200",
-      "ExifVersion": "0220",
-      "DateTimeOriginal": "2016:04:17 07:19:25",
-      "DateTimeDigitized": "2016:04:17 07:19:25",
-      "ComponentsConfiguration": "YCbCr",
-      "ShutterSpeedValue": "4.585",
-      "ApertureValue": "1.69",
-      "BrightnessValue": "-0.88",
-      "ExposureBias": "0",
-      "MeteringMode": "CenterWeightedAverage",
-      "Flash": "Flash did not fire, compulsory flash mode",
-      "FocalLength": "4.42",
-      "UserComment": "32,32,32,70,77,49,32,32,32,70,67,48,48,48,48,48,48,48,48,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-      "SubSecTime": "802528",
-      "SubSecTimeOriginal": "802528",
-      "SubSecTimeDigitized": "802528",
-      "FlashpixVersion": "0100",
-      "ColorSpace": "1",
-      "PixelXDimension": "5312",
-      "PixelYDimension": "2988",
-      "InteroperabilityIFDPointer": "1320",
-      "SensingMethod": "Undefined",
-      "SceneType": "Directly photographed",
-      "ExposureMode": "0",
-      "WhiteBalance": "Auto white balance",
-      "DigitalZoomRatio": "1",
-      "SceneCaptureType": "Standard",
-      "ImageUniqueID": "36f6e92221e27c830000000000000000"
-    };
-  }
-  
-  get isImage() {
-    return this.type == 'image';
-  }
-  
-  get isImportant() {
-    return !!(this.dto.i);
-  }
-  
-  get videoUrl() {
-    return this.metadata.videoUrl;
-  }
-  
-  get isExternalVideo() {
-    return this.metadata.isExternal;
-  }
-  
-  get orderIndex() {
-    return this.dto.orderIndex || this.dto.o;
   }
   
   get top() {
@@ -610,36 +488,8 @@ export class Item {
     return this.dto.photoId || this.dto.itemId;
   }
 
-  get photoId() {
-    return this.id;
-  }
-
-  get itemId() {
-    return this.id;
-  }
-
   set id(id) {
     this.dto.itemId = id;
-  }
-
-  get name() {
-    return this.metadata.fileName || '';
-  }
-
-  get url() { //todo :change from mediaUrl
-    return this.dto.file_url || this.dto.mediaUrl || this.dto.url;
-  }
-
-  get mediaUrl() {
-    return this.url;
-  }
-
-  get orderIndex() {
-    return this.dto.orderIndex || 0;
-  }
-
-  set orderIndex(value) {
-    this.dto.orderIndex = value;
   }
 
   get maxWidth() {
@@ -648,10 +498,6 @@ export class Item {
 
   get maxHeight() {
     return this.dto.height || this.dto.h || this.metadata.height;
-  }
-
-  get lastModified() {
-    return this.metadata.lastModified;
   }
 
   get metadata() {
@@ -754,9 +600,6 @@ export class Item {
     let bg;
     if (this.isText) {
       bg = this.metadata && this.metadata.textStyle && this.metadata.textStyle.backgroundColor;
-      if (!bg && !utils.isSemiNative()) {
-        bg = Wix.Styles.getColorByreference('color-5').value;
-      }
     } else {
       bg = 'none';
     }
@@ -768,14 +611,6 @@ export class Item {
       this.orgRatio = this.orgWidth / this.orgHeight;
     }
     return this.orgRatio;
-  }
-
-  get isVideo() {
-    return this.type == 'video';
-  }
-
-  get isExternal() {
-    return this.metadata.isExternal === true;
   }
 
   get isCropped() {
@@ -790,314 +625,6 @@ export class Item {
     this.metadata.focalPoint = value;
   }
 
-  get html() {
-    return this.dto.html || this.dto.text || this.metadata.html || this.metadata.text;
-  }
-
-  set type(type) {
-    this._type = type;
-  }
-
-  get type() {
-    switch (this._type || this.dto.type || this.metadata.type || this.dto.media_type) {
-      case 'dummy':
-        return 'dummy';
-      case 'v':
-      case 'video':
-        return 'video';
-      case 'h':
-      case 'html':
-      case 'text':
-        return 'text';
-      case 'i':
-      case 'image':
-      default:
-        return 'image';
-    }
-  }
-
-  get alt() {
-    return this.metadata.alt || this.title || this.description;
-  }
-
-  get title() {
-    return this.metadata.title || '';
-    // if (!this.metadata.isDemo) {
-    //   return this.metadata.title || '';
-    // }
-    // return this.getTranslatedValue(this.metadata.title);
-  }
-
-  set title(value) {
-    this.metadata.title = value;
-  }
-
-  get fileName() {
-    return this.metadata.fileName || '';
-  }
-
-  set fileName(value) {
-    this.metadata.fileName = value;
-  }
-
-  get description() {
-    return this.metadata.description || '';
-    // if (!this.metadata.isDemo) {
-    //   return this.metadata.description || '';
-    // }
-    // return this.getTranslatedValue(this.metadata.description);
-  }
-
-  set description(value) {
-    this.metadata.description = value;
-  }
-
-  get exif() {
-    return this.metadata.exif || '';
-  }
-
-  get hasLink() {
-    switch (this.linkType) {
-      case 'wix':
-        return !!this.linkData.type;
-      default:
-        return !!this.linkUrl;
-    }
-  }
-
-  get link() {
-    return (this.metadata.link) || {}
-  }
-
-  get linkData() {
-    if (this.metadata.link) {
-      return this.metadata.link.data || {};
-    }
-  }
-
-  set linkData(value) {
-    if (!this.metadata.link) {
-      this.metadata.link = {};
-    }
-    this.metadata.link.data = value;
-  }
-
-  get linkType() {
-    if (this.metadata.link) {
-      return this.metadata.link.type;
-    }
-  }
-
-  set linkType(value) {
-    if (!this.metadata.link) {
-      this.metadata.link = {};
-    }
-
-    // reset metadata.link when 'none' is selected - that's the way wix galleries work
-    this.metadata.link = {
-      type: value,
-      url: undefined,
-      text: undefined,
-      title: undefined,
-      target: '_blank'
-    };
-  }
-
-  get defaultLinkText() {
-    const linkData = this.linkData;
-
-    switch (this.linkType) {
-      case 'wix':
-        if (linkData) {
-          switch (linkData.type) {
-            case 'PageLink':
-              return `Go to Page ${linkData.pageName}`;
-            case 'AnchorLink':
-              return `Scroll to ${linkData.anchorName}`;
-            case 'ExternalLink':
-              return `${linkData.url}`;
-            case 'EmailLink':
-              return `Email ${linkData.recipient}`;
-            case 'PhoneLink':
-              return `Call ${linkData.phoneNumber}`;
-            case 'DocumentLink':
-              return `Open ${linkData.name}`;
-            default:
-              return 'Go To Link';
-          }
-        } else {
-          return 'Go To Link';
-        }
-      case 'web':
-        return this.linkUrl;
-      case 'page':
-        return this.linkTitle;
-      default:
-        return '';
-    }
-    /*
-        const wixLinkDataSamples = {
-          page: {
-            pageId: "#c1dmp",
-            type: "PageLink"
-          },
-          anchor: {
-            anchorDataId: "",
-            anchorName: "Anchor 1",
-            pageId: "#masterPage",
-            type: "AnchorLink"
-          },
-          web: {
-            target: "_self",
-            type: "ExternalLink",
-            url: "http://google.com"
-          },
-          email: {
-            recipient: "guyso@wix.com",
-            subject: "subject",
-            type: "EmailLink"
-          },
-          phone: {
-            phoneNumber: "0547787444",
-            type: "PhoneLink"
-          },
-          document: {
-            docId: "0d72ac_7395fddc29a84899a472b5fcf0dee3ed.doc",
-            name: "חוזה-שכירות-משנה-בלתי-מוגנת.doc",
-            type: "DocumentLink"
-          },
-          scroll: {
-            anchorDataId: "SCROLL_TO_TOP",
-            anchorName: "Top of Page",
-            pageId: "#masterPage",
-            type: "AnchorLink"
-          },
-          lightbox: {
-            pageId: "#zwjzg",
-            type: "PageLink"
-          }
-
-        }
-    */
-
-  }
-
-  get defaultLinkValue() {
-    const linkData = this.linkData;
-
-    switch (this.linkType) {
-      case 'wix':
-        if (linkData) {
-          switch (linkData.type) {
-            case 'PageLink':
-              if (linkData.pageName) {
-                return `PAGE - ${linkData.pageName}`;
-              } else {
-                return 'PAGE';
-              }
-            case 'AnchorLink':
-              return `ANCHOR - ${linkData.anchorName}`;
-            case 'ExternalLink':
-              return `LINK - ${linkData.url}`;
-            case 'EmailLink':
-              return `EMAIL - ${linkData.recipient}`;
-            case 'PhoneLink':
-              return `PHONE - ${linkData.phoneNumber}`;
-            case 'DocumentLink':
-              return `DOCUMENT - ${linkData.name}`;
-            default:
-              return 'Add a Link';
-          }
-        } else {
-          return 'Add a Link';
-        }
-      case 'web':
-        return this.linkUrl;
-      case 'page':
-        return this.linkTitle;
-      default:
-        return '';
-    }
-  }
-
-  get linkText() {
-    if (this.metadata.link) {
-      return this.metadata.link.text || this.defaultLinkText;
-    }
-  }
-
-  set linkText(value) {
-    if (!this.metadata.link) {
-      this.metadata.link = {};
-    }
-    this.metadata.link.text = value;
-  }
-
-  get linkTitle() {
-    if (this.metadata.link) {
-      return this.metadata.link.title;
-    }
-  }
-
-  set linkTitle(value) {
-    if (!this.metadata.link) {
-      this.metadata.link = {};
-    }
-    this.metadata.link.title = value;
-  }
-
-  get linkUrl() {
-    if (this.metadata.link) {
-      return this.metadata.link.url;
-    }
-  }
-
-  set linkUrl(value) {
-    if (!this.metadata.link) {
-      this.metadata.link = {};
-    }
-    this.metadata.link.url = value;
-  }
-
-  get unprotectedLinkOpenType() {
-    return _.get(this, 'metadata.link.target');
-  }
-
-  get linkOpenType() {
-    if (utils.isEditor() || utils.isPreview()) {
-      //in preview never open link in current window (causes many errors)
-      return '_blank';
-    } else if (this.metadata.link) {
-      return this.unprotectedLinkOpenType;
-    }
-  }
-
-  set linkOpenType(value) {
-    if (!this.metadata.link) {
-      this.metadata.link = {};
-    }
-    this.metadata.link.target = value;
-  }
-
-  get initialLinkObject() {
-    return {
-      type: 'none',
-      url: undefined,
-      text: undefined,
-      title: undefined,
-      target: '_blank'
-    };
-  }
-
-  get isDemo() {
-    return this.metadata.isDemo || this.dto.isDemo || this.metadata.sourceName === 'public' || (this.metadata.sourceName === 'private' && _.includes(this.metadata.tags, '_bigstock'))
-  }
-
-  set isDemo(val) {
-    this.metadata.isDemo = val
-  }
-
-  get isText() {
-    return this.type == 'text';
-  }
+  
+  //---- not needed
 }

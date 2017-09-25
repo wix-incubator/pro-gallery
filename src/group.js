@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { utils } from './utils'
 
 export class Group {
@@ -103,9 +104,6 @@ export class Group {
       item.id += 'dummy';
       item.idx = this.idx * (idx + 1) + 1;
       item.type = 'dummy';
-      if (utils.isSemiNative()) {
-        item.resize = function () {}
-      }
       return item;
     }
   };

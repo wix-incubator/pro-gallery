@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import {utils} from './utils'
 import {Item} from './item.js'
 import {Group} from './group.js'

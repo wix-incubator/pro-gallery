@@ -4,16 +4,18 @@
 
 import Layouter from '../src/layouter.js';
 import {testImages} from './images-mock.js';
-import _ from 'lodash';
+import * as _ from 'lodash';
+import {expect} from 'chai';
 
 describe('Pro Gallery Viewer', function () {
-  
+
   var gallery;
   var items;
   var container = {};
   var styleParams = {};
   
   beforeEach(function () {
+
     items = _.cloneDeep(testImages);
 
     styleParams = {
@@ -55,7 +57,7 @@ describe('Pro Gallery Viewer', function () {
         return (g + group.items.length);
       }, 0);
 
-      expect(totalItems).toBe(size);
+      expect(totalItems).to.equal(size);
     }
 
   });
@@ -87,7 +89,7 @@ describe('Pro Gallery Viewer', function () {
           });
         });
       });
-      expect(_.size(urls)).toBe(0);
+      expect(_.size(urls)).to.equal(0);
 
     }
 
@@ -124,7 +126,7 @@ describe('Pro Gallery Viewer', function () {
         });
       });
 
-      expect(dups).toBe(0);
+      expect(dups).to.equal(0);
 
     }
   });
@@ -145,7 +147,7 @@ describe('Pro Gallery Viewer', function () {
         return (Math.max(g, (isLastStrip ? 0 : group.height)));
       }, 0);
 
-      expect(maxGroupHeight).toBeGreaterThan(lastGroupHeight);
+      expect(maxGroupHeight).to.be.above(lastGroupHeight);
 
       lastGroupHeight = maxGroupHeight;
     }
@@ -170,7 +172,7 @@ describe('Pro Gallery Viewer', function () {
         }, true));
       }, true);
 
-      expect(maxGroupWidth).toBeGreaterThan(lastGroupWidth);
+      expect(maxGroupWidth).to.be.above(lastGroupWidth);
 
       lastGroupWidth = maxGroupWidth;
     }
@@ -195,7 +197,7 @@ describe('Pro Gallery Viewer', function () {
         }, true));
       }, true);
 
-      expect(isCroppedCorrectly).toBeTruthy();
+      expect(isCroppedCorrectly).to.be.true;
     }
   });
 
@@ -209,7 +211,7 @@ describe('Pro Gallery Viewer', function () {
       styleParams.fixedColumns = num;
       gallery = new Layouter({items, container, styleParams});
 
-      expect(gallery.columns.length).toBe(num);
+      expect(gallery.columns.length).to.equal(num);
     }
 
   });
@@ -227,7 +229,7 @@ describe('Pro Gallery Viewer', function () {
 
       var avgGroupSize = items.length / gallery.columns[0].length;
 
-      expect(avgGroupSize).not.toBeLessThan(lastAvgGroupSize);
+      expect(avgGroupSize).not.to.be.below(lastAvgGroupSize);
 
       lastAvgGroupSize = avgGroupSize;
     }
@@ -247,7 +249,7 @@ describe('Pro Gallery Viewer', function () {
         return (g && inSize);
       }, true);
 
-      expect(isWithinSize).toBeTruthy();
+      expect(isWithinSize).to.be.true;
     }
 
   });
@@ -266,7 +268,7 @@ describe('Pro Gallery Viewer', function () {
         return (g && inTypes);
       }, true);
 
-      expect(isWithinTypes).toBeTruthy();
+      expect(isWithinTypes).to.be.true;
     }
 
   });
@@ -291,7 +293,7 @@ describe('Pro Gallery Viewer', function () {
         }, styleParams.minItemSize)));
       }, styleParams.minItemSize);
 
-      expect(minItemSize).not.toBeLessThan(size / 2);
+      expect(minItemSize).not.to.be.below(size / 2);
     }
 
   });
@@ -318,73 +320,12 @@ describe('Pro Gallery Viewer', function () {
           }, styleParams.minItemSize));
         }, styleParams.minItemSize);
 
-        expect(minItemSize).not.toBeLessThan(size);
+        expect(minItemSize).not.to.be.below(size);
       }
 
     }
   );
-
-  /*
-
-   it('should successfully test a sample from a Strips gallery', function () {
-   state = {
-   items: testImages.slice(0, 100),
-   isVertical: false,
-   gallerySize: 200,
-   galleryWidth: 1000,
-   groupSize: 3,
-   cubeImages: false,
-   collageAmount: 0.3,
-   minItemSize: 2
-   };
-
-   gallery = new GalleryLayout(state);
-
-   expect(Math.round(gallery.height)).toBe(4401);
-
-   var sampleGroup = gallery.columns[0][7];
-   expect(Math.round(sampleGroup.width)).toBe(333);
-   expect(Math.round(sampleGroup.height)).toBe(222);
-   expect(Math.round(sampleGroup.items.length)).toBe(1);
-
-   sampleGroup = gallery.columns[0][17];
-   expect(Math.round(sampleGroup.width)).toBe(166);
-   expect(Math.round(sampleGroup.height)).toBe(222);
-   expect(Math.round(sampleGroup.items.length)).toBe(2);
-
-   //expect(Math.round(gallery.height)).toBe(2743);
-   });
-
-   it('should successfully test a sample from a Columns gallery', function () {
-   state = {
-   items: testImages.slice(0, 100),
-   isVertical: true,
-   gallerySize: 200,
-   galleryWidth: 1000,
-   groupSize: 3,
-   cubeImages: false,
-   collageAmount: 0.3,
-   minItemSize: 2
-   };
-
-   gallery = new GalleryLayout(state);
-
-   expect(Math.round(gallery.height)).toBe(2797);
-
-   var sampleGroup = gallery.columns[0][7];
-   expect(Math.round(sampleGroup.width)).toBe(200);
-   expect(Math.round(sampleGroup.height)).toBe(133);
-   expect(Math.round(sampleGroup.items.length)).toBe(1);
-
-   sampleGroup = gallery.columns[0][17];
-   expect(Math.round(sampleGroup.width)).toBe(200);
-   expect(Math.round(sampleGroup.height)).toBe(133);
-   expect(Math.round(sampleGroup.items.length)).toBe(1);
-
-   //expect(Math.round(gallery.height)).toBe(2743);
-   });
-   */
-
+  
 });
 
 function multiplyArray(arr) {

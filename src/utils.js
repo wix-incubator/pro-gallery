@@ -18,9 +18,6 @@ class Utils {
   }
 
   isInWix() {
-    if (this.isSemiNative()) {
-      return false;
-    }
     return this.getOrPutFromCache('isInWix', () => {
       return ((top !== self) && (document.location.search.indexOf('instance=') >= 0));
     });
@@ -160,10 +157,6 @@ class Utils {
   }
 
   isMobile() {
-    if (this.isSemiNative()) {
-      return false;
-    }
-
     let _isMobile = () => {
       var isWixMobile = this.isWixMobile();
       var isUserAgentMobile = this.isUserAgentMobile();
@@ -183,14 +176,7 @@ class Utils {
     return false;
   }
 
-  isSemiNative() {
-    return window['semiNative'];
-  }
-
   isDev() {
-    if (this.isSemiNative()) {
-      return true;
-    }
 
     var ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}:[0-9]{1,5}/; //matches 111.222.333.444:9999
     var isDev = this.isLocal();
@@ -250,24 +236,8 @@ class Utils {
     return (this.getViewModeFromCache() == 'preview');
   }
 
-  isPlayground() {
-    if (this.isInWix()) {
-      return false;
-    }
-
-    var isPlayground = false;
-    try {
-      isPlayground = top.location.href.indexOf('playground.html') > 0;
-    } catch (e) {
-      isPlayground = false;
-    }
-
-    return isPlayground;
-
-  }
-
   isSite() {
-    return !this.isPlayground() && !this.isEditor() && !this.isPreview();
+    return !this.isEditor() && !this.isPreview();
   }
 
   safeLocalStorage() {
@@ -276,72 +246,6 @@ class Utils {
     } catch (e) {
       return window;
     }
-  }
-
-  isLandscape() {
-    if (this.isSemiNative()) {
-      return false;
-    }
-    if (!_.isUndefined(this._cache.isLandscape)) {
-      return this._cache.isLandscape;
-    }
-    if (!this.isMobile()) {
-      this._cache.isLandscape = false;
-    }
-    if (!_.isUndefined(window.orientation)) {
-      this._cache.isLandscape = (window.orientation == 90 || window.orientation == -90);
-    } else {
-      var mql = window.matchMedia('(orientation: landscape)');
-      if (mql && mql.matches == true) {
-        this._cache.isLandscape = true;
-      } else {
-        this._cache.isLandscape = false;
-      }
-    }
-    return this._cache.isLandscape;
-  }
-
-  getScreenWidth() {
-    if(this.isPreview() && this.isMobile()) {
-      // In editor preview-mode, the screen is still a desktop, but the viewport in which the preview mode renders us is only 320, so 'window.screen.width' returns a wrong value.
-      return 320;
-    }
-    if (this.isSemiNative()) {
-      return 1920;
-    }
-    if (this.isLandscape()) {
-      return Math.max(window.screen.width, window.screen.height);
-    } else {
-      return window.screen.width;
-    }
-  }
-
-  getScreenHeight() {
-    if (this.isSemiNative()) {
-      return 1200;
-    }
-    if (this.isLandscape()) {
-      return Math.min(window.screen.width, window.screen.height);
-    } else {
-      return window.screen.height;
-    }
-  }
-
-  isStoreGallery() {
-    return this.getOrPutFromCache('isStoreGallery', () => {
-      if (this.isSemiNative()) {
-        return false;
-      }
-
-      try {
-        return window.location.search.toLowerCase().indexOf('isstore') > -1
-      } catch (e) {
-        if (this.isDev()) {
-          console.error('cant find window', e);
-        }
-        return false;
-      }
-    });
   }
 
   isInExpendSettings() {
