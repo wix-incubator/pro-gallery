@@ -631,6 +631,4 @@ export class Item {
     this.metadata.focalPoint = value;
   }
 
-
-  //---- not needed
 }

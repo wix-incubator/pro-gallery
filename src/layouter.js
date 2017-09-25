@@ -14,7 +14,7 @@ class Strip {
   }
 }
 
-export default class ProLayouter {
+export default class Layouter {
 
   constructor(layoutParams) {
 

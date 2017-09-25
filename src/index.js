@@ -1,4 +1,7 @@
+import Layouter from './layouter';
+import {Item} from './item';
+
 module.exports = {
-  Layouter: require('./layouter'),
-  Item: require('.item')
+  Layouter,
+  Item
 };
