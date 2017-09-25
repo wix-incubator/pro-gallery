@@ -445,8 +445,8 @@ export default class ProLayouter {
     if (utils.shouldLog('visibilities')) {
       console.log('Calculating Visibilities for groups', bounds, this.columns);
     }
-    for (var column, c = 0; column = this.columns[c]; c++) {
-      for (var group, g = 0; group = column[g]; g++) {
+    for (let column, c = 0; column = this.columns[c]; c++) {
+      for (let group, g = 0; group = column[g]; g++) {
         column[g] = this.calcVisibilitiesForGroup(group, bounds);
         if (utils.shouldLog('visibilities')) {
           console.log('Calculating Visibilities - group #' + column[g].idx + ' is ' + (column[g].visible ? 'VISIBLE' : (column[g].rendered ? 'RENDERED' : 'HIDDEN')), column[g], bounds);

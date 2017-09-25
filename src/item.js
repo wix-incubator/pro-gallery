@@ -38,7 +38,7 @@ export class Item {
     }
 
     if (this.dto) {
-      var itemMetadata = this.dto.metaData || this.dto.metadata;
+      let itemMetadata = this.dto.metaData || this.dto.metadata;
       if (itemMetadata) { //metadata is encoded encoded, parsed if needed
         this.dto.metaData = this.parseStringObject(itemMetadata);
       }
@@ -158,31 +158,31 @@ export class Item {
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, noCrop) {
     requiredWidth = Math.round(requiredWidth);
     requiredHeight = Math.round(requiredHeight);
-    var thumbSize = 180;
+    let thumbSize = 180;
 
-    var urls = {};
+    let urls = {};
 
     if (this.metadata.posters || this.metadata.customPoster) {
-      var maxHeight = 720;
-      var qualities = this.metadata.qualities;
-      var poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
+      let maxHeight = 720;
+      let qualities = this.metadata.qualities;
+      let poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
 
       if (poster) {
         if (qualities && qualities.length) {
-          var suffix = '/';
+          let suffix = '/';
 
           //search for the first quality bigger that the required one
-          for (var quality, q = 0; quality = qualities[q]; q++) {
+          for (let quality, q = 0; quality = qualities[q]; q++) {
             if (quality.height >= requiredHeight || quality.height >= maxHeight || !qualities[q + 1]) {
               suffix += quality.quality; //e.g. 720p
-              for (var format, i = 0; format = quality.formats[i]; i++) {
+              for (let format, i = 0; format = quality.formats[i]; i++) {
                 urls[format] = window.location.protocol + '//video.wixstatic.com/video/' + this.url + suffix + '/' + format + '/file.' + format;
               }
               break;
             }
           }
-          var ratio = poster.width / poster.height;
-          var isWider = ratio > 1;
+          let ratio = poster.width / poster.height;
+          let isWider = ratio > 1;
           if (isWider) {
             requiredWidth = Math.ceil(requiredHeight * ratio);
           } else {
@@ -316,7 +316,7 @@ export class Item {
     if (utils.isExternalUrl(originalUrl)) {
       return originalUrl;
     } else if (!focalPoint) { //todo remove when supporting focal point
-      var retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/' + resizeMethod + '/';
+      let retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/' + resizeMethod + '/';
       retUrl += 'w_' + requiredWidth;
       retUrl += ',h_' + requiredHeight;
       retUrl += ',al_' + (faces ? 'fs' : 'c');
@@ -331,11 +331,11 @@ export class Item {
       return retUrl;
     } else {
 
-      var scale;
-      var x;
-      var y;
-      var orgW;
-      var orgH;
+      let scale;
+      let x;
+      let y;
+      let orgW;
+      let orgH;
 
       //find the scale
       if (this.ratio > requiredRatio) {
@@ -361,7 +361,7 @@ export class Item {
       //scale must be higher to prevent cases that there will be white margins (or 404)
       scale = Math.ceil(scale * 100) / 100;
 
-      var retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/crop/';
+      let retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/crop/';
       retUrl += 'w_' + requiredWidth;
       retUrl += ',h_' + requiredHeight;
       retUrl += ',x_' + x;
@@ -402,8 +402,8 @@ export class Item {
   
   pinToCorner(cornerName) {
     
-    var isTop = cornerName.indexOf('top') >= 0;
-    var isLeft = cornerName.indexOf('left') >= 0;
+    let isTop = cornerName.indexOf('top') >= 0;
+    let isLeft = cornerName.indexOf('left') >= 0;
     
     this.style.top = isTop ? 0 : 'auto';
     this.style.bottom = isTop ? 'auto' : 0;
@@ -509,7 +509,7 @@ export class Item {
   }
 
   get metadata() {
-    var md = (this.dto.metaData || this.dto.metadata);
+    let md = (this.dto.metaData || this.dto.metadata);
     if (_.isUndefined(md)) {
       console.error('Item with no metadata' + JSON.stringify(this.dto));
     }
