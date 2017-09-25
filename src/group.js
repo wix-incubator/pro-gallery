@@ -1,8 +1,6 @@
-/// <reference path='../../reference.ts' />
-import consts from '../consts.js';
 import { utils } from '../../utils/utils'
 
-class GroupLayout {
+export class Group {
 
   constructor(config) {
     this.idx = config.idx;
@@ -63,23 +61,9 @@ class GroupLayout {
       galleryConfig: galleryConfig,
     };
   }
-
-  get isWithinMinItemSize() {
-    if (this.items.length === 0 || !this.placed) {
-      return false;
-    }
-    if (this.items.length === 1) {
-      return true;
-    } else {
-      return this.items.reduce((i, item) => {
-        const isInSize = Math.min(item.width, item.height) >= this.minItemSize;
-        return (i && isInSize);
-      }, true);
-    }
-  }
-
+  
   getBottomInfoHeight() {
-    if (this.titlePlacement !== consts.placements.SHOW_ALWAYS) {
+    if (this.titlePlacement !== 'SHOW_ALWAYS') {
       return 0;
     }
 
@@ -827,12 +811,6 @@ class GroupLayout {
     return W;
   }
   
-  get ratio() {
-    const w = this.width;
-    const h = this.height;
-    return w / h;
-  }
-  
   setTop(top) {
     this.top = top || 0;
     for (let item, i = 0; item = this.items[i]; i++) {
@@ -857,13 +835,21 @@ class GroupLayout {
   get id () {
     return 'g' + this.idx + '_' + (this.items[0] || {}).id;
   }
+  
   get key() {
     return 'group_' + this.id;
   }
-
+  
+  get ratio() {
+    const w = this.width;
+    const h = this.height;
+    return w / h;
+  }
+  
   get totalHeight() {
     return this.height + this.bottomInfoHeight;
   }
+  
   get bottomInfoHeight() {
     return this.getBottomInfoHeight();
   }
@@ -883,6 +869,21 @@ class GroupLayout {
   get realItems() {
     return _.filter(this._items, item => item.type !== 'dummy')
   }
+  
+  get isWithinMinItemSize() {
+    if (this.items.length === 0 || !this.placed) {
+      return false;
+    }
+    if (this.items.length === 1) {
+      return true;
+    } else {
+      return this.items.reduce((i, item) => {
+        const isInSize = Math.min(item.width, item.height) >= this.minItemSize;
+        return (i && isInSize);
+      }, true);
+    }
+  }
+  
 }
 
 /*
@@ -890,4 +891,3 @@ class GroupLayout {
  src={this.props.resized_url}/>
  */
 
-export default GroupLayout;

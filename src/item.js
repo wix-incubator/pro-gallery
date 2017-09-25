@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { utils } from '../utils'
 
-export class ItemCore {
+export class Item {
 
   /* @ngInject */
   constructor(config) {

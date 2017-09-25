@@ -1,7 +1,7 @@
 ///// <reference path="../../reference.ts" />
 import {utils} from '../../utils'
-import ItemLayout from '../item/itemLayout.js'
-import GroupLayout from '../group/groupLayout.js'
+import {Item} from './item.js'
+import {Group} from './group.js'
 
 class Strip {
 
@@ -13,7 +13,7 @@ class Strip {
   }
 }
 
-class GalleryStructure {
+export default class ProLayouter {
 
   constructor(layoutParams) {
 
@@ -112,7 +112,7 @@ class GalleryStructure {
       }
 
       //console.log('Creating item #' + this.pointer + ' / ' + this.srcImages.length, this.srcImages[this.pointer]);
-      item = new ItemLayout({
+      item = new Item({
         idx: this.pointer,
         scrollTop: galleryHeight,
         dto: this.srcImages[this.pointer],
@@ -144,7 +144,7 @@ class GalleryStructure {
         continue;
       }
 
-      group = new GroupLayout({
+      group = new Group({
         idx: groupIdx,
         stripIdx: strip.idx,
         inStripIdx: inStripIdx,
@@ -522,5 +522,3 @@ class GalleryStructure {
     return _maxGroupSize;
   }
 }
-
-export default GalleryStructure;
