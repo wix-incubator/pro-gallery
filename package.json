@@ -8,7 +8,9 @@
     "url": ""
   },
   "main": "dist/src/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "yoshi start",
     "build": ":",
@@ -19,7 +21,8 @@
     "release": "yoshi release"
   },
   "dependencies": {
-    "babel-runtime": "^6.22.0"
+    "babel-runtime": "^6.22.0",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "^6.22.0",
@@ -30,11 +33,30 @@
     "yoshi": "latest"
   },
   "babel": {
-    "presets": ["stage-3"],
-    "plugins": ["transform-runtime"],
+    "presets": [
+      "stage-3"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ],
     "env": {
-      "test": {"presets": [["env", {"targets": {"node": "current"}}]]},
-      "development": {"presets": ["env"]}
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      },
+      "development": {
+        "presets": [
+          "env"
+        ]
+      }
     }
   },
   "eslintConfig": {
