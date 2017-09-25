@@ -2,7 +2,7 @@
 
 'use strict'
 
-import GalleryStructure from './galleryStructure.js';
+import GalleryStructure from '../src/galleryStructure.js';
 import {testImages} from '../test/images-mock.js';
 import _ from 'lodash';
 
