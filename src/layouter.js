@@ -1,5 +1,4 @@
-///// <reference path="../../reference.ts" />
-import {utils} from '../../utils'
+import {utils} from './utils'
 import {Item} from './item.js'
 import {Group} from './group.js'
 
