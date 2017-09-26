@@ -42,7 +42,7 @@ export class Group {
 
   }
 
-  getViewProps(galleryConfig) {
+  renderProps(galleryConfig) {
 
     return {
       className: 'group',

@@ -83,7 +83,50 @@ export class Item {
     this.resize(1);
 
   }
-
+  
+  renderProps(config) {
+    
+    return _.merge({
+      className: 'image',
+      key: this.key,
+      idx: this.idx,
+      photoId: this.photoId,
+      id: this.id,
+      hash: this.id,
+      html: this.html,
+      type: this.type,
+      url: this.url,
+      alt: this.alt,
+      linkUrl: this.linkUrl,
+      linkOpenType: this.linkOpenType,
+      originalsUrl: this.getOriginalsUrl(),
+      title: this.title,
+      fileName: this.fileName,
+      description: this.description,
+      full_url: this.full_url,
+      download_url: this.download_url,
+      square_url: this.square_url,
+      pixel_url: this.pixel_url,
+      resized_url: this.resized_url,
+      thumbnail_url: this.thumbnail_url,
+      cubeImages: this.cubeImages,
+      cubeType: this.cubeType,
+      cubeRatio: this.cubeRatio,
+      transform: this.transform,
+      offset: this._offset,
+      style: this.style,
+      isDemo: this.isDemo,
+      videoUrl: this.videoUrl,
+      isExternalVideo: this.isExternalVideo,
+      scroll: config.scroll,
+      visible: config.visible,
+      styleParams: config.styleParams,
+      actions: config.actions,
+      currentIdx: config.currentIdx
+    }, config);
+    
+  }
+  
   updateSharpParams() {
     //override sharpParams with item sharpParams
     if (this.dto.metaData && this.dto.metaData.sharpParams && this.dto.metaData.sharpParams.L) {
@@ -153,8 +196,7 @@ export class Item {
 
     return this;
   }
-
-
+  
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, noCrop) {
     requiredWidth = Math.round(requiredWidth);
     requiredHeight = Math.round(requiredHeight);
