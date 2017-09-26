@@ -189,7 +189,7 @@ describe('Pro Gallery Viewer', () => {
 
   it('should have all images in a grid gallery in the required ratio', () => {
 
-    const allowedRounding = 5; //the number of pixels that can change due to rounding
+    const allowedRounding = 2; //the number of pixels that can change due to rounding
 
     items = items.slice(0, 100);
     styleParams.cubeImages = true;
@@ -201,7 +201,9 @@ describe('Pro Gallery Viewer', () => {
       gallery = new Layouter({items, container, styleParams});
       const isCroppedCorrectly = gallery.columns[0].reduce((g, group) => {
         return (g && group.items.reduce((i, image) => {
-          return i && (((image.width - allowedRounding) / (image.height + allowedRounding)) <= image.cubeRatio) && (((image.width + allowedRounding) / (image.height - allowedRounding)) >= image.cubeRatio); //ignore fractions
+          const isItemCroppedCorrectly = (((image.width - allowedRounding) / (image.height + allowedRounding)) <= image.cubeRatio) && (((image.width + allowedRounding) / (image.height - allowedRounding)) >= image.cubeRatio);
+          // expect(image.width / image.height).to.equal(image.cubeRatio);
+          return i && isItemCroppedCorrectly; //ignore fractions
         }, true));
       }, true);
 

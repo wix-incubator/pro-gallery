@@ -6,7 +6,6 @@ export class Item {
   /* @ngInject */
   constructor(config) {
     this.style = {};
-    this.isReadMoreOpen = false;
 
     //Item core can be initialized with:
     // {dto: ItemDto(..)}
@@ -23,40 +22,12 @@ export class Item {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = _.merge({}, config.dto);
+    this.dto = _.merge({}, config.dto, (config.dto.metadata || config.dto.metaData || {}));
 
-    if (config.wixImage && _.isNumber(config.orderIndex)) {
-      this.createFromWixImage(config.wixImage, config.orderIndex, config.addWithTitles, config.isSecure);
-    }
-
-    if (config.wixVideo && _.isNumber(config.orderIndex)) {
-      this.createFromWixVideo(config.wixVideo, config.orderIndex, config.addWithTitles, config.isSecure);
-    }
-
-    if (config.wixExternal && _.isNumber(config.orderIndex)) {
-      this.createFromExternal(config.wixExternal, config.orderIndex, config.addWithTitles, config.isSecure);
-    }
-
-    if (this.dto) {
-      const itemMetadata = this.dto.metaData || this.dto.metadata;
-      if (itemMetadata) { //metadata is encoded encoded, parsed if needed
-        this.dto.metaData = this.parseStringObject(itemMetadata);
-      }
-    }
     if (_.isEmpty(this.dto)) {
-      throw new Error('Item core: no dto');
+      throw new Error('Item: no dto');
     }
-
-    this.sharpParams = _.merge({}, config.sharpParams);
-    if (!this.sharpParams.quality) {
-      this.sharpParams.quality = 90;
-    }
-    if (!this.sharpParams.usm) {
-      this.sharpParams.usm = {};
-    }
-
-    this.updateSharpParams();
-
+    
     this.cubeType = config.cubeType || 'fill';
     this.cubeImages = config.cubeImages;
     this._cubeRatio = config.cubeRatio;
@@ -72,75 +43,10 @@ export class Item {
     this._offset = {};
     this._group = {};
 
-    this.style = {
-      bgColor: this.bgColor,
-      maxWidth: this.maxWidth,
-      maxHeight: this.maxHeight,
-      ratio: this.ratio,
-      orientation: this.orientation
-    };
-
     this.resize(1);
 
   }
   
-  renderProps(config) {
-    
-    return _.merge({
-      className: 'image',
-      key: this.key,
-      idx: this.idx,
-      photoId: this.photoId,
-      id: this.id,
-      hash: this.id,
-      html: this.html,
-      type: this.type,
-      url: this.url,
-      alt: this.alt,
-      linkUrl: this.linkUrl,
-      linkOpenType: this.linkOpenType,
-      originalsUrl: this.getOriginalsUrl(),
-      title: this.title,
-      fileName: this.fileName,
-      description: this.description,
-      full_url: this.full_url,
-      download_url: this.download_url,
-      square_url: this.square_url,
-      pixel_url: this.pixel_url,
-      resized_url: this.resized_url,
-      thumbnail_url: this.thumbnail_url,
-      cubeImages: this.cubeImages,
-      cubeType: this.cubeType,
-      cubeRatio: this.cubeRatio,
-      transform: this.transform,
-      offset: this._offset,
-      style: this.style,
-      isDemo: this.isDemo,
-      videoUrl: this.videoUrl,
-      isExternalVideo: this.isExternalVideo,
-      scroll: config.scroll,
-      visible: config.visible,
-      styleParams: config.styleParams,
-      actions: config.actions,
-      currentIdx: config.currentIdx
-    }, config);
-    
-  }
-  
-  updateSharpParams() {
-    //override sharpParams with item sharpParams
-    if (this.dto.metaData && this.dto.metaData.sharpParams && this.dto.metaData.sharpParams.L) {
-      const sharpParams = this.dto.metaData.sharpParams.L;
-      if (sharpParams.quality && sharpParams.overrideQuality === true) {
-        this.sharpParams.quality = sharpParams.quality;
-      }
-
-      if (sharpParams.usm && sharpParams.overrideUsm === true) {
-        this.sharpParams.usm = sharpParams.usm;
-      }
-    }
-  }
-
   resize(scaleOrDimensions) {
 
     if (utils.shouldLog('spacing')) {
@@ -169,279 +75,10 @@ export class Item {
     }
 
     this.resized = true;
-    const devicePixelRatio = utils.getDevicePixelRatio();
-    const maxWidth = this.maxWidth;
-    const maxHeight = this.maxHeight;
-    // const maxWidth = this.cubeImages ? Math.min(this.maxWidth, this.maxHeight) : this.maxWidth;
-    // const maxHeight = this.cubeImages ? Math.min(this.maxWidth, this.maxHeight) : this.maxHeight;
-    this.resizeWidth = Math.min(maxWidth, Math.ceil(this.width * devicePixelRatio));
-    this.resizeHeight = Math.min(maxHeight, Math.ceil(this.height * devicePixelRatio));
-    this.resized_url = this.resizedUrl(this.cubeType, this.resizeWidth, this.resizeHeight, this.sharpParams, false);
-
-    this.pixel_url = this.resizedUrl('fill', 1, 1, {quality: 30}, false);
-
-    const maxDimension = 500;
-    this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
-    this.thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
-    this.thumbnail_url = this.resizedUrl('fit', this.thumbnailWidth, this.thumbnailHeight, {quality: 30}, false);
-
-    this.square_url = this.resizedUrl('fill', 100, 100, {quality: 80}, false);
-
-    this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams, false);
-
-    this.download_url = {img: this.getOriginalsUrl()};
-    this.sample_url = this.resizedUrl('fit', 500, 500, this.sharpParams, false, true);
-
-    this.download_url.mp4 = this.full_url.mp4;
-
+    
     return this;
   }
   
-  resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, noCrop) {
-    requiredWidth = Math.round(requiredWidth);
-    requiredHeight = Math.round(requiredHeight);
-    const thumbSize = 180;
-
-    const urls = {};
-
-    if (this.metadata.posters || this.metadata.customPoster) {
-      const maxHeight = 720;
-      const qualities = this.metadata.qualities;
-      const poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
-
-      if (poster) {
-        if (qualities && qualities.length) {
-          let suffix = '/';
-
-          //search for the first quality bigger that the required one
-          for (let quality, q = 0; quality = qualities[q]; q++) {
-            if (quality.height >= requiredHeight || quality.height >= maxHeight || !qualities[q + 1]) {
-              suffix += quality.quality; //e.g. 720p
-              for (let format, i = 0; format = quality.formats[i]; i++) {
-                urls[format] = window.location.protocol + '//video.wixstatic.com/video/' + this.url + suffix + '/' + format + '/file.' + format;
-              }
-              break;
-            }
-          }
-          const ratio = poster.width / poster.height;
-          const isWider = ratio > 1;
-          if (isWider) {
-            requiredWidth = Math.ceil(requiredHeight * ratio);
-          } else {
-            requiredHeight = Math.ceil(requiredWidth / ratio);
-          }
-        }
-
-        urls.img = this.resizeUrlImp(poster.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, false);
-        urls.thumb = this.resizeUrlImp(poster.url, 'fit', thumbSize, thumbSize, sharpParams, false, false);
-      }
-    } else {
-      urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, (noCrop !== true && this.isCropped && this.focalPoint));
-      urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, false, true);
-    }
-
-    return urls;
-  }
-
-  createFromWixImage(wixData, orderIndex, addWithTitles, isSecure) {
-    const url = wixData.uri || wixData.relativeUri || wixData.url;
-    const itemId = url.slice(0, url.length - 4);
-    const metadata = {
-      height: wixData.height,
-      width: wixData.width,
-      lastModified: new Date().getTime(),
-      focalPoint: wixData.focalPoint,
-      name: wixData.fileName,
-      type: wixData.type,
-      link: this.initialLinkObject,
-      sourceName: wixData.sourceName,
-      tags: wixData.tags,
-      wm: wixData.wm,
-      // title: wixData.title || '',
-      // description: wixData.description || '',
-    };
-
-    if (addWithTitles) {
-      metadata.title = wixData.title;
-    }
-
-    this.dto = {itemId, mediaUrl: url, orderIndex, metadata, isSecure};
-  }
-
-  createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
-
-    const qualities = _.map(wixData.fileOutput.video, q => {
-      return {
-        height: q.height,
-        width: q.width,
-        quality: q.quality,
-        formats: [q.format]
-      };
-    });
-
-    let posters = _.map(wixData.fileOutput.image, _.partialRight(_.pick, ['url', 'width', 'height']));
-    posters = _.map(posters, p => {
-      p.url = p.url.replace('media/', '');
-      return p;
-    });
-
-    const metaData = {
-      name: wixData.title,
-      lastModified: new Date().getTime(),
-      width: wixData.fileInput.width,
-      height: wixData.fileInput.height,
-      type: 'video',
-      posters,
-      customPoster: '',
-      isExternal: false,
-      duration: wixData.fileInput.duration,
-      qualities,
-      link: this.initialLinkObject,
-      // title: wixData.title,
-      // description: wixData.description,
-    };
-
-    if (addWithTitles) {
-      metaData.title = wixData.title;
-    }
-
-    this.dto = {itemId: wixData.id, mediaUrl: wixData.id, orderIndex, metaData, isSecure};
-  }
-
-  createFromExternal(wixData, orderIndex, addWithTitles, isSecure) {
-    const metaData = {
-      name: wixData.id,
-      videoId: wixData.id,
-      lastModified: new Date().getTime(),
-      height: 1080,
-      width: 1920,
-      source: wixData.source || '',
-      videoUrl: wixData.videoUrl || '',
-      isExternal: true,
-      type: 'video',
-      posters: wixData.posters,
-      customPoster: '',
-      duration: 0,
-      qualities: [],
-    };
-
-    this.dto = {itemId: wixData.id, mediaUrl: metaData.posters[0].url, orderIndex, metaData, isSecure};
-  }
-
-  resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
-
-    const requiredRatio = requiredWidth / requiredHeight;
-    const showWatermark = allowWatermark && this.watermarkStr;
-
-    if (!utils.isMobile()) {
-      requiredWidth = Math.ceil(requiredWidth / 250) * 250;
-      requiredHeight = Math.ceil(requiredWidth / requiredRatio);
-    }
-
-    // assign sharp default parameters
-    sharpParams = sharpParams || {};
-
-    // calc default quality
-    if (!sharpParams.quality) {
-      sharpParams.quality = 90;
-    }
-
-    //don't allow quality above 90 till we have proper UI indication
-    sharpParams.quality = Math.min(90, sharpParams.quality);
-
-    if (sharpParams.usm && sharpParams.usm.usm_r) {
-      sharpParams.usm.usm_a = Math.min(5, Math.max(0, (sharpParams.usm.usm_a || 0)));
-      sharpParams.usm.usm_r = Math.min(128, Math.max(0, (sharpParams.usm.usm_r || 0))); //should be max 500 - but it's returning a 404
-      sharpParams.usm.usm_t = Math.min(1, Math.max(0, (sharpParams.usm.usm_t || 0)));
-    }
-
-    if (utils.isExternalUrl(originalUrl)) {
-      return originalUrl;
-    } else if (!focalPoint) { //todo remove when supporting focal point
-      let retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/' + resizeMethod + '/';
-      retUrl += 'w_' + requiredWidth;
-      retUrl += ',h_' + requiredHeight;
-      retUrl += ',al_' + (faces ? 'fs' : 'c');
-      retUrl += ',q_' + sharpParams.quality;
-
-      retUrl += (sharpParams.usm && sharpParams.usm.usm_r) ? ',usm_' + sharpParams.usm.usm_r.toFixed(2) + '_' + sharpParams.usm.usm_a.toFixed(2) + '_' + sharpParams.usm.usm_t.toFixed(2) : '';
-      // Important to use this as the last param
-      if (showWatermark) {
-        retUrl += this.watermarkStr;
-      }
-      retUrl += '/' + originalUrl;
-      return retUrl;
-    } else {
-
-      let scale;
-      let x;
-      let y;
-      let orgW;
-      let orgH;
-
-      //find the scale
-      if (this.ratio > requiredRatio) {
-        //wide image (relative to required ratio
-        scale = (requiredHeight / this.maxHeight);
-        orgW = Math.floor(requiredHeight * this.ratio);
-        y = 0;
-        x = Math.round((orgW * focalPoint[0]) - (requiredWidth / 2));
-        x = Math.min((orgW - requiredWidth), x);
-        x = Math.max(0, x);
-      } else {
-        //narrow image
-
-        scale = (requiredWidth / this.maxWidth);
-        orgH = Math.floor(requiredWidth / this.ratio);
-        x = 0;
-        y = Math.round((orgH * focalPoint[1]) - (requiredHeight / 2));
-        y = Math.min((orgH - requiredHeight), y);
-        y = Math.max(0, y);
-      }
-
-      //make sure scale is not lower than needed
-      //scale must be higher to prevent cases that there will be white margins (or 404)
-      scale = Math.ceil(scale * 100) / 100;
-
-      let retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/crop/';
-      retUrl += 'w_' + requiredWidth;
-      retUrl += ',h_' + requiredHeight;
-      retUrl += ',x_' + x;
-      retUrl += ',y_' + y;
-      retUrl += ',scl_' + scale.toFixed(2);
-      retUrl += ',q_' + sharpParams.quality;
-      retUrl += (sharpParams.usm && sharpParams.usm.usm_r) ? ',usm_' + sharpParams.usm.usm_r.toFixed(2) + '_' + sharpParams.usm.usm_a.toFixed(2) + '_' + sharpParams.usm.usm_t.toFixed(2) : '';
-      // Important to use this as the last param
-      if (showWatermark) {
-        retUrl += this.watermarkStr;
-      }
-      retUrl += '/' + originalUrl;
-      return retUrl;
-    }
-
-  }
-
-  getOriginalsUrl() {
-    return 'https://static.wixstatic.com/media/' + this.url;
-  }
-
-  parseStringObject(sObj) {
-    if (typeof sObj !== 'string') {
-      return sObj;
-    }
-
-    const stripedObj = utils.stripSlashes(sObj);
-    if (typeof sObj === 'string' && (/^[\],:{}\s]*$/.test(stripedObj.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, '')))) {
-      //this is a json
-      try {
-        return JSON.parse(stripedObj);
-      } catch (e) {
-        console.error('Parse object error: Catched ', e);
-      }
-    }
-    return stripedObj;
-  }
-
   pinToCorner(cornerName) {
 
     const isTop = cornerName.indexOf('top') >= 0;
@@ -533,37 +170,12 @@ export class Item {
   set id(id) {
     this.dto.itemId = id;
   }
-
-  get photoId() {
-    return this.id;
-  }
-
-  get itemId() {
-    return this.id;
-  }
-
+  
   get maxWidth() {
-    return this.dto.width || this.dto.w || this.metadata.width;
+    return this.dto.width || this.dto.w
   }
-
-  get maxHeight() {
-    return this.dto.height || this.dto.h || this.metadata.height;
-  }
-
-  get metadata() {
-    const md = (this.dto.metaData || this.dto.metadata);
-    if (_.isUndefined(md)) {
-      console.error('Item with no metadata' + JSON.stringify(this.dto));
-    }
-    return md;
-  }
-
-  get metaData() {
-    return this.metadata;
-  }
-
-  get margins() {
-    return this.imageMargin || 0;
+  set maxWidth(w) {
+    return this.dto.width = w;
   }
 
   get outerWidth() {
@@ -571,7 +183,7 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this.dto.width || this.dto.w || this.metadata.width || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.width || this.dto.width || this.dto.w ||  1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get width() {
@@ -591,7 +203,7 @@ export class Item {
   }
 
   get orgHeight() {
-    return this.style.height || this.dto.height || this.dto.h || this.metadata.height || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.height || this.dto.height || this.dto.h ||  1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get height() {
@@ -605,7 +217,21 @@ export class Item {
   set height(h) {
     this.style.cubedHeight = this.style.height = Math.max(1, h);
   }
-
+  
+  get maxHeight() {
+    return this.dto.height || this.dto.h
+  }
+  set maxHeight(h) {
+    h = this.dto.height;
+  }
+  
+  get margins() {
+    return this.imageMargin || 0;
+  }
+  set margins(m) {
+    this.imageMargin = m;
+  }
+  
   get cubeRatio() {
     let ratio;
     if (_.isFunction(this._cubeRatio)) {
@@ -644,33 +270,32 @@ export class Item {
     return this.orientation === 'landscape';
   }
 
-  get bgColor() {
-    let bg;
-    if (this.isText) {
-      bg = this.metadata && this.metadata.textStyle && this.metadata.textStyle.backgroundColor;
-    } else {
-      bg = 'none';
-    }
-    return bg;
-  }
-
   get ratio() {
     if (!this.orgRatio) {
       this.orgRatio = this.orgWidth / this.orgHeight;
     }
     return this.orgRatio;
   }
-
-  get isCropped() {
-    return this.cubeImages && this.cubeType === 'fill';
+  
+  set ratio(r) {
+    this.orgRatio = r;
   }
 
-  get focalPoint() {
-    return this.metadata.focalPoint || [0.5, 0.5];
+  get scheme() {
+    return {
+      id: this.id,
+      width: this.width,
+      maxWidth: this.maxWidth,
+      outerWidth: this.outerWidth,
+      height: this.height,
+      maxHeight: this.maxHeight,
+      outerHeight: this.outerHeight,
+      margins: this.margins,
+      ratio: this.ratio,
+      croppedRatio: this.cubeRatio,
+      offset: this.offset,
+      transform: this.transform,
+      orientation: this.orientation
+    }
   }
-
-  set focalPoint(value) {
-    this.metadata.focalPoint = value;
-  }
-
 }
