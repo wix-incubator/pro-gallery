@@ -871,6 +871,10 @@ export class Group {
       height: this.height,
       totalHeight: this.totalHeight,
       ratio: this.ratio,
+      top: this.top,
+      left: this.left,
+      right: this.right,
+      bottom: this.bottom,
       visible: this.visible,
       rendered: this.rendered,
       required: this.required
