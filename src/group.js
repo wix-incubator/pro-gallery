@@ -41,53 +41,7 @@ export class Group {
     }
 
   }
-
-  renderProps(galleryConfig) {
-
-    return {
-      className: 'group',
-      id: this.id,
-      idx: this.idx,
-      key: this.key,
-      type: this.type,
-      top: this.top,
-      width: this.width,
-      height: this.height,
-      bottomInfoHeight: this.bottomInfoHeight,
-      totalHeight: this.totalHeight,
-      items: this.items,
-      visible: this.visible,
-      rendered: this.rendered,
-      required: this.required,
-      galleryConfig,
-    };
-  }
-
-  getBottomInfoHeight() {
-    if (this.titlePlacement !== 'SHOW_ALWAYS') {
-      return 0;
-    }
-
-    const paddingTopAndBottom = 30;
-    let spaceBetweenElements = 16;
-    const defaultButtonHeight = 33;
-    const defaultItemFontSize = 22;
-
-    const isGrid = this.galleryLayout === 2;
-    const item = this.items ? this.items[0] : null;
-    const title = item ? item.title : null;
-    let fontSize = 0;
-    const isLayoutSupportsNoTitle = isGrid && !utils.isMobile();
-    const shouldSaveSpaceForTitle = (this.allowTitle && title) || isLayoutSupportsNoTitle;
-    if (shouldSaveSpaceForTitle) {
-      fontSize = this.itemFontSlideshow ? this.itemFontSlideshow.size : defaultItemFontSize;
-    } else {
-      spaceBetweenElements = 0;
-    }
-
-    return fontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
-  }
-
+  
   resize() {
     if (this.isVertical) {
       this.resizeToWidth(this.gallerySize);
@@ -835,15 +789,36 @@ export class Group {
       };
     }
   }
-
+  
+  getBottomInfoHeight() {
+    if (this.titlePlacement !== 'SHOW_ALWAYS') {
+      return 0;
+    }
+    
+    const paddingTopAndBottom = 30;
+    let spaceBetweenElements = 16;
+    const defaultButtonHeight = 33;
+    const defaultItemFontSize = 22;
+    
+    const isGrid = this.galleryLayout === 2;
+    const item = this.items ? this.items[0] : null;
+    const title = item ? item.title : null;
+    let fontSize = 0;
+    const isLayoutSupportsNoTitle = isGrid && !utils.isMobile();
+    const shouldSaveSpaceForTitle = (this.allowTitle && title) || isLayoutSupportsNoTitle;
+    if (shouldSaveSpaceForTitle) {
+      fontSize = this.itemFontSlideshow ? this.itemFontSlideshow.size : defaultItemFontSize;
+    } else {
+      spaceBetweenElements = 0;
+    }
+    
+    return fontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
+  }
+  
   get id() {
     return 'g' + this.idx + '_' + (this.items[0] || {}).id;
   }
-
-  get key() {
-    return 'group_' + this.id;
-  }
-
+  
   get ratio() {
     const w = this.width;
     const h = this.height;
@@ -887,7 +862,20 @@ export class Group {
       }, true);
     }
   }
-
+  
+  get scheme() {
+    return {
+      id: this.id,
+      idx: this.idx,
+      width: this.width,
+      height: this.height,
+      totalHeight: this.totalHeight,
+      ratio: this.ratio,
+      visible: this.visible,
+      rendered: this.rendered,
+      required: this.required
+    }
+  }
 }
 
 /*
