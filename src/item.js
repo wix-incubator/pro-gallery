@@ -172,7 +172,7 @@ export class Item {
   }
   
   get maxWidth() {
-    return this.dto.width || this.dto.w
+    return this.dto.width || this.dto.w;
   }
   set maxWidth(w) {
     return this.dto.width = w;
@@ -183,7 +183,7 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this.dto.width || this.dto.w ||  1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get width() {
@@ -203,7 +203,7 @@ export class Item {
   }
 
   get orgHeight() {
-    return this.style.height || this.dto.height || this.dto.h ||  1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.height || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get height() {
@@ -219,7 +219,7 @@ export class Item {
   }
   
   get maxHeight() {
-    return this.dto.height || this.dto.h
+    return this.dto.height || this.dto.h;
   }
   set maxHeight(h) {
     h = this.dto.height;
@@ -300,6 +300,6 @@ export class Item {
       offset: this.offset,
       transform: this.transform,
       orientation: this.orientation
-    }
+    };
   }
 }

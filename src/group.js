@@ -874,7 +874,7 @@ export class Group {
       visible: this.visible,
       rendered: this.rendered,
       required: this.required
-    }
+    };
   }
 }
 
