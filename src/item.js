@@ -284,6 +284,8 @@ export class Item {
   get scheme() {
     return {
       id: this.id,
+      idx: this.idx,
+      style: this.style,
       width: this.width,
       maxWidth: this.maxWidth,
       outerWidth: this.outerWidth,
@@ -292,7 +294,9 @@ export class Item {
       outerHeight: this.outerHeight,
       margins: this.margins,
       ratio: this.ratio,
-      croppedRatio: this.cubeRatio,
+      cropRatio: this.cubeRatio,
+      isCropped: this.cubeImages,
+      cropType: this.cubeType,
       offset: this.offset,
       transform: this.transform,
       orientation: this.orientation
