@@ -1,6 +1,6 @@
-import {baseUtils} from 'photography-client-lib';
+import {BaseUtils} from 'photography-client-lib';
 
-export const utils = baseUtils;
+export const utils = new BaseUtils();
 
 if (process.env.NODE_ENV === 'development') {
   window.utils = baseUtils;
