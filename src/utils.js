@@ -1,14 +1,14 @@
-import * as _ from 'lodash';
-
-class Utils {
+class BaseUtils {
   /* @ngInject */
   constructor() {
     this._cache = {};
     this._hash2int = {};
-    this._refs = {};
     this._params = {};
   }
-
+  
+  isUndefined(something) {
+    return typeof(something) === 'undefined';
+  }
   getOrPutFromCache(fld, func) {
     if (this._cache[fld] !== undefined) {
       return this._cache[fld];
@@ -26,7 +26,7 @@ class Utils {
   hashToInt(str, min, max) {
     let int = 0;
 
-    if (_.isUndefined(str) || str.length === 0) {
+    if (this.isUndefined(str) || str.length === 0) {
       return int;
     }
 
@@ -37,21 +37,17 @@ class Utils {
       this._hash2int[str] = int;
     }
 
-    if (_.isUndefined(min) || _.isUndefined(max)) {
+    if (this.isUndefined(min) || this.isUndefined(max)) {
       return this._hash2int[str];
     } else {
       return (this._hash2int[str] % (max - min + 1)) + min;
     }
 
   }
-
-  isDemo() {
-    return (this.parseGetParam('demo') === '1');
-  }
-
+  
   parseGetParam(val, url) {
 
-    if (!_.isUndefined(this._params[val])) {
+    if (!this.isUndefined(this._params[val])) {
       return this._params[val];
     }
 
@@ -102,23 +98,6 @@ class Utils {
     return result;
   }
 
-  stripSlashes(str) {
-    let newStr = '';
-    if (typeof str === 'string') {
-      newStr = str
-        .replace(/\\\//g, '/')
-        .replace(/\\'/g, '\'')
-        .replace(/\\"/g, '"')
-        .replace(/\\0/g, '\0')
-        .replace(/\\\\/g, '\\');
-    }
-    return newStr;
-  }
-
-  getDevicePixelRatio() {
-    return window.devicePixelRatio || window.screen.deviceXDPI / window.screen.logicalXDPI; // Support for IE10
-  }
-
   isWixMobile() {
     const _isWixMobile = () => {
       const deviceType = this.parseGetParam('deviceType');
@@ -161,7 +140,7 @@ class Utils {
       const isWixMobile = this.isWixMobile();
       const isUserAgentMobile = this.isUserAgentMobile();
 
-      return (_.isUndefined(isWixMobile) ? isUserAgentMobile : isWixMobile);
+      return (this.isUndefined(isWixMobile) ? isUserAgentMobile : isWixMobile);
     };
 
     if (!this.isSite()) {
@@ -181,7 +160,7 @@ class Utils {
     const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}:[0-9]{1,5}/; //matches 111.222.333.444:9999
     let isDev = this.isLocal();
 
-    if (!_.isUndefined(this._cache.isDev)) {
+    if (!this.isUndefined(this._cache.isDev)) {
       return this._cache.isDev;
     }
 
@@ -199,7 +178,7 @@ class Utils {
   isLocal() {
     const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}:[0-9]{1,5}/; //matches 111.222.333.444:9999
 
-    if (!_.isUndefined(this._cache.isLocal)) {
+    if (!this.isUndefined(this._cache.isLocal)) {
       return this._cache.isLocal;
     }
     const host = window.location.hostname;
@@ -248,44 +227,6 @@ class Utils {
     }
   }
 
-  isInExpendSettings() {
-    return this.parseGetParam('expandsettingsmode') === '1';
-  }
-
-  isStoreDemoImages() {
-    // NOTE: the next few lines are commented because otherwise cannot check debugApp=ph_local/ph_debug
-    // if (this.isDev()) { //development mode cannot upload images so is is default false
-    //   return Promise.resolve(false);
-    // }
-    if (this.isInExpendSettings()) { //expend settings uses default images
-      return Promise.resolve(true);
-    }
-
-    return this.gallerySettings.get('isStoreDemoImages')
-      .then(isDemo => {
-        if (isDemo === undefined) {
-          throw 'not in gallerySettings, fallback to dataPublic';
-        }
-        return isDemo;
-      })
-      .catch(e => {
-        return this.data.get('isStoreDemoImages')
-          .then(() => {
-            return false;
-          })
-          .catch(e => {
-            if (this.isDev()) {
-              console.log('error fetching store default images', e);
-            }
-            return !!(e && e.error && e.error.message && (e.error.message.indexOf('not found in APP scope') > 0));
-          });
-      });
-  }
-
-  isExternalUrl(url) {
-    return (/(^https?)|(^data)|(^blob)/).test(url);
-  }
-
   shouldDebug(str) {
     try {
       return (
@@ -304,8 +245,8 @@ class Utils {
 
 }
 
-export const utils = new Utils();
+export const utils = new BaseUtils();
 
 if (process.env.NODE_ENV === 'development') {
-  window.utils = utils;
+  window.baseUtils = baseUtils;
 }
