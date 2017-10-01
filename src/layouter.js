@@ -30,7 +30,7 @@ export default class Layouter {
 
   updateParams(layoutParams) {
 
-    this.items = layoutParams.items;
+    this.srcItems = layoutParams.items;
     this.styleParams = layoutParams.styleParams;
     this.container = layoutParams.container;
     this.gotScrollEvent = layoutParams.gotScrollEvent;
@@ -59,8 +59,6 @@ export default class Layouter {
     if (!this.verifyGalleryState()) {
       return false;
     }
-
-    this.srcImages = this.items;
 
     this.pointer = 0;
     this.firstGroup = false;
@@ -106,17 +104,17 @@ export default class Layouter {
       // gallerySize = Math.min(this.styleParams.gallerySize, galleryWidth);
     }
 
-    while (this.srcImages[this.pointer]) {
+    while (this.srcItems[this.pointer]) {
 
-      if (_.isArray(this.srcImages[this.pointer])) {
-        console.error({msg: 'no dto', pointer: this.pointer, allItems: this.srcImages});
+      if (_.isArray(this.srcItems[this.pointer])) {
+        console.error({msg: 'no dto', pointer: this.pointer, allItems: this.srcItems});
       }
 
-      //console.log('Creating item #' + this.pointer + ' / ' + this.srcImages.length, this.srcImages[this.pointer]);
+      //console.log('Creating item #' + this.pointer + ' / ' + this.srcItems.length, this.srcItems[this.pointer]);
       item = new Item({
         idx: this.pointer,
         scrollTop: galleryHeight,
-        dto: this.srcImages[this.pointer],
+        dto: this.srcItems[this.pointer],
         watermark: this.watermark,
         cubeImages: this.styleParams.cubeImages,
         cubeType: this.styleParams.cubeType,
@@ -456,12 +454,14 @@ export default class Layouter {
 
   calcVisibilitiesForGroup(group, bounds) {
     if (this.showAllItems === true) {
-      group.visible = group.rendered = group.required = true;
+      group.onscreen = group.visible = group.rendered = group.required = true;
     } else if (this.styleParams.oneRow) {
+      group.onscreen = group.right >= bounds.onscreenTop && group.left <= bounds.onscreenBottom;
       group.visible = group.right >= bounds.visibleTop && group.left <= bounds.visibleBottom;
       group.rendered = group.right >= bounds.renderedTop && group.left <= bounds.renderedBottom;
       group.required = group.right >= bounds.requiredTop && group.left <= bounds.requiredBottom;
     } else {
+      group.onscreen = group.bottom >= bounds.onscreenTop && group.top <= bounds.onscreenBottom;
       group.visible = group.bottom >= bounds.visibleTop && group.top <= bounds.visibleBottom;
       group.rendered = group.bottom >= bounds.renderedTop && group.top <= bounds.renderedBottom;
       group.required = group.bottom >= bounds.requiredTop && group.top <= bounds.requiredBottom;
@@ -490,21 +490,21 @@ export default class Layouter {
   }
 
   get isLastImage() {
-    return !this.srcImages[this.pointer + 1];
+    return !this.srcItems[this.pointer + 1];
   }
 
   get isLastImages() {
     if (this.styleParams.layoutsVersion > 1) {
       //layouts version 2+
-      return !this.srcImages[this.pointer + 1];
+      return !this.srcItems[this.pointer + 1];
     } else {
       //Backwards compatibility
-      return !this.srcImages[this.pointer + 3];
+      return !this.srcItems[this.pointer + 3];
     }
   }
 
   get imagesLeft() {
-    return this.srcImages.length - this.pointer - 1;
+    return this.srcItems.length - this.pointer - 1;
   }
 
   get maxGroupSize() {
@@ -520,5 +520,9 @@ export default class Layouter {
       _maxGroupSize = 3;
     }
     return _maxGroupSize;
+  }
+  
+  get items() {
+    return this.layoutItems;
   }
 }

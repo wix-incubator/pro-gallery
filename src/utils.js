@@ -7,7 +7,7 @@ class BaseUtils {
   }
   
   isUndefined(something) {
-    return typeof(something) === 'undefined';
+    return typeof something === 'undefined';
   }
   getOrPutFromCache(fld, func) {
     if (this._cache[fld] !== undefined) {

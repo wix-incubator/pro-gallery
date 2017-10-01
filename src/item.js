@@ -127,6 +127,10 @@ export class Item {
     _.merge(this._group, group);
   }
 
+  get group() {
+    return this._group;
+  }
+
   set offset(offset) {
     _.merge(this._offset, offset);
   }
@@ -297,6 +301,7 @@ export class Item {
       cropRatio: this.cubeRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
+      group: this.group,
       offset: this.offset,
       transform: this.transform,
       orientation: this.orientation
