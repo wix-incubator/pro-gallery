@@ -22,7 +22,8 @@ export class Item {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = _.merge({}, config.dto, (config.dto.metadata || config.dto.metaData || {}));
+    const metadata = utils.parseStringObject(config.dto.metadata || config.dto.metaData || '');
+    this.dto = _.merge({}, config.dto, metadata);
 
     if (_.isEmpty(this.dto)) {
       throw new Error('Item: no dto');
@@ -187,7 +188,7 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
 
   get width() {
