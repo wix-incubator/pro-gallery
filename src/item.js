@@ -105,10 +105,6 @@ export class Item {
     return (parseInt(pos, 10) >= 0 ? pos : 'auto');
   }
 
-  get hash() {
-    return this.id;
-  }
-
   get top() {
     return this.getPosition(this.style.top);
   }
