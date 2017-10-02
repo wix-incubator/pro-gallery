@@ -23,9 +23,10 @@ export class Item {
       }
     }
     const metadata = utils.parseStringObject(config.dto.metadata || config.dto.metaData || '');
-    this.dto = _.merge({}, config.dto, metadata);
+    this._dto = _.merge({}, config.dto, metadata);
+    this.dto = config.dto;
 
-    if (_.isEmpty(this.dto)) {
+    if (_.isEmpty(this._dto)) {
       throw new Error('Item: no dto');
     }
     
@@ -169,18 +170,22 @@ export class Item {
   }
 
   get id() {
-    return this.dto.photoId || this.dto.itemId;
+    return this._dto.photoId || this._dto.itemId;
   }
 
   set id(id) {
-    this.dto.itemId = id;
+    this._dto.itemId = id;
+  }
+  
+  get hash() {
+    return this._dto.hash || this._dto.mediaUrl || this._dto.id;
   }
   
   get maxWidth() {
-    return this.dto.width || this.dto.w;
+    return this._dto.width || this._dto.w;
   }
   set maxWidth(w) {
-    return this.dto.width = w;
+    return this._dto.width = w;
   }
 
   get outerWidth() {
@@ -188,7 +193,7 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
+    return this.style.width || this._dto.width || this._dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
 
   get width() {
@@ -208,7 +213,7 @@ export class Item {
   }
 
   get orgHeight() {
-    return this.style.height || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.height || this._dto.height || this._dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get height() {
@@ -224,10 +229,10 @@ export class Item {
   }
   
   get maxHeight() {
-    return this.dto.height || this.dto.h;
+    return this._dto.height || this._dto.h;
   }
   set maxHeight(h) {
-    h = this.dto.height;
+    h = this._dto.height;
   }
   
   get margins() {
