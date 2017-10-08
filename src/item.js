@@ -153,8 +153,8 @@ export class Item {
       const spaceUp = (this.offset.top > 0) ? m : g;
       const spaceDown = (this.container.galleryHeight - this.offset.bottom > 2 * m) ? m : g;
 
-      const horizontalShift = utils.hashToInt(this.hash, -1 * spaceLeft, spaceRight) * this.floatingImages;
-      const verticalShift = utils.hashToInt(this.full_url.img, -1 * spaceUp, spaceDown) * this.floatingImages;
+      const horizontalShift = utils.hashToInt(this.hash + this.offset.right + 'x', -1 * spaceLeft, spaceRight) * this.floatingImages;
+      const verticalShift = utils.hashToInt(this.hash + this.offset.top + 'x', -1 * spaceUp, spaceDown) * this.floatingImages;
 
       return {
         transform: `translate3d(${horizontalShift}px, ${verticalShift}px, 0)`
