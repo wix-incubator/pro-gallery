@@ -30,28 +30,28 @@ export default class Layouter {
 
   convertStyleParams(styleParams) {
     return Object.assign({
-      cubeImages: this.styleParams.cropItems,
-      cubeType: this.styleParams.cropType,
-      cubeRatio: this.styleParams.cropRatio,
-      smartCrop: this.styleParams.smartCrop,
-      imageMargin: this.styleParams.itemSpacing,
-      galleryMargin: this.styleParams.layoutSpacing,
-      floatingImages: this.styleParams.randomSpacings,
-      chooseBestGroup: this.styleParams.smartGrouping,
-      groupSize: this.styleParams.itemsPerGroup,
-      groupTypes: _.isArray(this.styleParams.allowedGroupTypes) ? this.styleParams.allowedGroupTypes.join(',') : undefined,
-      isVertical: this.styleParams.isColumnsLayout,
-      minItemSize: this.styleParams.minItemSize,
-      oneRow: this.styleParams.isVerticalScroll,
-      gallerySize: this.styleParams.rowSize || this.styleParams.columnSize,
-      collageDensity: this.styleParams.collageDensity
+      cubeImages: styleParams.cropItems,
+      cubeType: styleParams.cropType,
+      cubeRatio: styleParams.cropRatio,
+      smartCrop: styleParams.smartCrop,
+      imageMargin: styleParams.itemSpacing,
+      galleryMargin: styleParams.layoutSpacing,
+      floatingImages: styleParams.randomSpacings,
+      chooseBestGroup: styleParams.smartGrouping,
+      groupSize: styleParams.itemsPerGroup,
+      groupTypes: _.isArray(styleParams.allowedGroupTypes) ? styleParams.allowedGroupTypes.join(',') : undefined,
+      isVertical: styleParams.isColumnsLayout,
+      minItemSize: styleParams.minItemSize,
+      oneRow: styleParams.isVerticalScroll,
+      gallerySize: styleParams.rowSize || styleParams.columnSize,
+      collageDensity: styleParams.collageDensity
     }, styleParams);
   }
 
   convertContainer(container) {
     return Object.assign({
-      galleryWidth: this.container.width,
-      galleryHeight: this.container.height,
+      galleryWidth: container.width,
+      galleryHeight: container.height,
     }, container);
   }
 
