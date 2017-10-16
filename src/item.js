@@ -29,7 +29,7 @@ export class Item {
     if (_.isEmpty(this._dto)) {
       throw new Error('Item: no dto');
     }
-    
+
     this.cubeType = config.cubeType || 'fill';
     this.cubeImages = config.cubeImages;
     this._cubeRatio = config.cubeRatio;
@@ -48,7 +48,7 @@ export class Item {
     this.resize(1);
 
   }
-  
+
   resize(scaleOrDimensions) {
 
     if (utils.shouldLog('spacing')) {
@@ -77,10 +77,10 @@ export class Item {
     }
 
     this.resized = true;
-    
+
     return this;
   }
-  
+
   pinToCorner(cornerName) {
 
     const isTop = cornerName.indexOf('top') >= 0;
@@ -166,22 +166,22 @@ export class Item {
   }
 
   get id() {
-    return this._dto.photoId || this._dto.itemId;
+    return this._dto.id || this._dto.photoId || this._dto.itemId;
   }
 
   set id(id) {
     this._dto.itemId = id;
   }
-  
+
   get hash() {
     return this._dto.hash || this._dto.mediaUrl || this._dto.id;
   }
-  
+
   get maxWidth() {
     return this._dto.width || this._dto.w;
   }
   set maxWidth(w) {
-    return this._dto.width = w;
+    this._dto.width = w;
   }
 
   get outerWidth() {
@@ -223,21 +223,21 @@ export class Item {
   set height(h) {
     this.style.cubedHeight = this.style.height = Math.max(1, h);
   }
-  
+
   get maxHeight() {
     return this._dto.height || this._dto.h;
   }
   set maxHeight(h) {
     h = this._dto.height;
   }
-  
+
   get margins() {
     return this.imageMargin || 0;
   }
   set margins(m) {
     this.imageMargin = m;
   }
-  
+
   get cubeRatio() {
     let ratio;
     if (_.isFunction(this._cubeRatio)) {
@@ -282,7 +282,7 @@ export class Item {
     }
     return this.orgRatio;
   }
-  
+
   set ratio(r) {
     this.orgRatio = r;
   }

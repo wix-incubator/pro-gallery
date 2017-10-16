@@ -25,16 +25,41 @@ export default class Layouter {
     this.findNeighborItem = this.findNeighborItem.bind(this);
 
     this.updateParams(layoutParams);
-    this.prepareGallery();
+    this.createLayout();
+  }
+
+  convertStyleParams(styleParams) {
+    return Object.assign({
+      cubeImages: this.styleParams.cropItems,
+      cubeType: this.styleParams.cropType,
+      cubeRatio: this.styleParams.cropRatio,
+      smartCrop: this.styleParams.smartCrop,
+      imageMargin: this.styleParams.itemSpacing,
+      galleryMargin: this.styleParams.layoutSpacing,
+      floatingImages: this.styleParams.randomSpacings,
+      chooseBestGroup: this.styleParams.smartGrouping,
+      groupSize: this.styleParams.itemsPerGroup,
+      groupTypes: _.isArray(this.styleParams.allowedGroupTypes) ? this.styleParams.allowedGroupTypes.join(',') : undefined,
+      isVertical: this.styleParams.isColumnsLayout,
+      minItemSize: this.styleParams.minItemSize,
+      oneRow: this.styleParams.isVerticalScroll,
+      gallerySize: this.styleParams.rowSize || this.styleParams.columnSize,
+      collageDensity: this.styleParams.collageDensity
+    }, styleParams);
+  }
+
+  convertContainer(container) {
+    return Object.assign({
+      galleryWidth: this.container.width,
+      galleryHeight: this.container.height,
+    }, container);
   }
 
   updateParams(layoutParams) {
 
     this.srcItems = layoutParams.items;
-    this.styleParams = layoutParams.styleParams;
-    this.container = layoutParams.container;
-    this.gotScrollEvent = layoutParams.gotScrollEvent;
-    this.watermark = layoutParams.watermark;
+    this.styleParams = this.convertStyleParams(layoutParams.styleParams);
+    this.container = this.convertContainer(layoutParams.container);
     this.showAllItems = layoutParams.showAllItems;
   }
 
@@ -54,7 +79,11 @@ export default class Layouter {
     return true;
   }
 
-  prepareGallery() {
+  createLayout(layoutParams) {
+
+    if (!_.isUndefined(layoutParams)) {
+      this.updateParams(layoutParams);
+    }
 
     if (!this.verifyGalleryState()) {
       return false;
@@ -115,13 +144,11 @@ export default class Layouter {
         idx: this.pointer,
         scrollTop: galleryHeight,
         dto: this.srcItems[this.pointer],
-        watermark: this.watermark,
         cubeImages: this.styleParams.cubeImages,
         cubeType: this.styleParams.cubeType,
         cubeRatio: this.styleParams.cubeRatio,
         smartCrop: this.styleParams.smartCrop,
         cropOnlyFill: this.styleParams.cropOnlyFill,
-        sharpParams: this.styleParams.sharpParams,
         imageMargin: this.styleParams.imageMargin,
         galleryMargin: this.styleParams.galleryMargin,
         floatingImages: this.styleParams.floatingImages,
@@ -406,7 +433,7 @@ export default class Layouter {
           (curX, curY, itmX, itmY) => itmX < curX
         );
         break;
-      
+
       case 'down':
         neighborItem = findClosestItem(
           (currentItem.offset.left + (currentItem.width / 2)),
@@ -414,7 +441,7 @@ export default class Layouter {
           (curX, curY, itmX, itmY) => itmY > curY
         );
         break;
-        
+
       default:
       case 'right':
         neighborItem = findClosestItem(
@@ -521,7 +548,7 @@ export default class Layouter {
     }
     return _maxGroupSize;
   }
-  
+
   get items() {
     return this.layoutItems;
   }

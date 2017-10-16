@@ -5,3 +5,4 @@ target
 maven
 package-lock.json
 .idea
+.history
