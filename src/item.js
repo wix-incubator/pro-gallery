@@ -49,6 +49,7 @@ export class Item {
       bottom: 0
     };
     this._group = {};
+    this.calcPinOffset = () => 0;
 
     this.resize(1);
 
