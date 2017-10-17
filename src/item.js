@@ -100,13 +100,13 @@ export class Item {
     this.isPinnedTop = isTop;
     this.isPinnedLeft = isLeft;
     this.pinOffset = pinOffset;
-    this.calcPinOffset = (groupSize) => {
+    this.calcPinOffset = groupSize => {
       if (pinOffset <= 0) {
         return 0;
       } else {
         //this is used only for 3h/3v group types - to calc the offset of the middle item
         const m = this.imageMargin;
-        return ((groupSize - 6 * m) * this.pinOffset + 2 * m)
+        return ((groupSize - 6 * m) * this.pinOffset + 2 * m);
       }
     };
 
@@ -164,19 +164,6 @@ export class Item {
       right: (this._groupOffset.right - (this.isPinnedLeft ? (this._group.width - this.outerWidth) : this.calcPinOffset(this._group.width)) || 0) - this.imageMargin * 2,
       bottom: (this._groupOffset.bottom - (this.isPinnedTop ? (this._group.height - this.outerHeight) : this.calcPinOffset(this._group.height)) || 0) - this.imageMargin * 2,
     };
-    return offset;
-  }
-
-  getOffset(stop) {
-    const offset = {
-      top: this._groupOffset.top + (this.isPinnedTop ? this.calcPinOffset(this._group.height) : (this._group.height - this.outerHeight)),
-      left: this._groupOffset.left + (this.isPinnedLeft ? this.calcPinOffset(this._group.width) : (this._group.width - this.outerWidth)),
-      right: this._groupOffset.right - (this.isPinnedLeft ? (this._group.width - this.outerWidth) : this.calcPinOffset(this._group.width)) - this.imageMargin * 2,
-      bottom: this._groupOffset.bottom - (this.isPinnedTop ? (this._group.height - this.outerHeight) : this.calcPinOffset(this._group.height)) - this.imageMargin * 2,
-    };
-    if (stop === true && !(offset.top >= 0)) {
-      debugger;
-    }
     return offset;
   }
 

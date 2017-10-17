@@ -50,7 +50,7 @@ for (let i = 0; i < layout.items.length; i++) {
   iDom.style.width = item.width + 'px';
   iDom.style.height = item.height + 'px';
   iDom.style.position = 'absolute';
-  iDom.style.top = layout.items[i].getOffset(true).top + 'px';
+  iDom.style.top = item.offset.top + 'px';
   iDom.style.left = item.offset.left + 'px';
   iDom.style.backgroundColor = items[i].bgColor;
   parent.prepend(iDom);

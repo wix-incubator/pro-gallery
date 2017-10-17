@@ -37,7 +37,7 @@ export default class Layouter {
   convertStyleParams(styleParams) {
 
     //default styleParams
-    let convertedStyleParams = Object.assign({
+    const convertedStyleParams = Object.assign({
       cubeImages: false,
       cubeType: 'fill',
       cubeRatio: 1,
@@ -76,7 +76,7 @@ export default class Layouter {
 
   convertContainer(container, styleParams) {
 
-    let convertedContainer = Object.assign({
+    const convertedContainer = Object.assign({
       galleryWidth: 1000,
       galleryHeight: 1000,
       bounds: {}
