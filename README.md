@@ -1,5 +1,5 @@
 # Pro Gallery Layouter
-This module creates a layout from a list of items, each containing an id, width and height. The layout is fitted to a specified container and is adjustted by a set of style params. It also handles viewport visibility to render only the items in the viewport.
+This module creates a layout from a list of items, each containing an id, width and height. The layout is fitted to a specified container and is adjusted by a set of style params. It also handles viewport visibility to render only the items in the viewport.
 
 # Get Started
 ## Installation
@@ -32,7 +32,7 @@ const layoutParams = {
 
 const layout = new Layouter(layoutParams);
 ```
-Using the layout object to render html can be done in several ways. See samples section.
+Using the layout object to render html can be done in several ways. See [demos](/demos).
 
 # Layout Params:
 
@@ -54,19 +54,19 @@ The minimal size (in pixels) of items in groups. The layouter will try to avoid 
 
 `cropItems` _(true / false)_:
 
-When set to true, all items will be cropped according to the specified crop parameters. When set to false, all items will be displayed in their original proportions.
+When set to true, all items will be cropped according to the specified crop parameters. When set to false, all items will be displayed in their original ratio.
 
 `cropType` _('fit' / 'fill')_:
 
-When set to 'fill', the items will be cropped to fill the entire rectangle defined by the `cropRatio`. When set to 'fit' the item will be resized to fit inside the same rectangle.
+When set to 'fill', the items will be cropped to fill the entire rectangle defined by the cropRatio. When set to 'fit' the item will be resized to fit inside the same rectangle.
 
 `cropRatio` _(float)_:
 
-The proportions of the rectangle that will hold the items (e.g. 1.33 will create rectangles with a standard 4/3 proportions).
+The ratio (width/height) of the rectangle that will hold the items (e.g. 1.33 will create rectangles with a standard 4/3 ratio).
 
 `smartCrop` _(true / false)_:
 
-When set to true, items will be cropped as landscape or portrait according to their original proportion.
+When set to true, items will be cropped according to their original ratio as landscape or portrait.
 
 `itemSpacing` _(integer)_:
 
@@ -82,15 +82,15 @@ Determines the maximum number of items that can be grouped together in collage m
 
 `smartGrouping` _(true / false)_:
 
-When set to true, the group types will be selected according to the group items proportions to avoid uneven sizing of items in each group.
+When set to true, the group types will be selected according to the ratio of the items in the group in order to avoid uneven sizing of items in each group.
 
-`allowedGroupTypes` _(subarray of ['1','2h','2v','3h','3v','3t','3b','3l', '3r'])_:
+`allowedGroupTypes` _(subarray of ['1','2h','2v','3h','3v','3t','3b','3l','3r'])_:
 
 The allowed group types for collage layouts [learn more](https://docs.google.com/presentation/d/1RGRkSmXV94dKXL-7umXcJXsgOGwcBRu0l9AcfShV21I/edit#slide=id.g2704b1b40a_0_370)
 
 `collageDensity` _(0 - 100)_:
 
-The percentage of "collaging" the layouter will create. The higher the percentage, the more complicated groups will be created.
+The percentage of "collaging" the layouter will create. The higher the percentage, the more items will be grouped.
 
 # Learn More
 
