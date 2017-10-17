@@ -28,38 +28,74 @@ export default class Layouter {
     this.createLayout();
   }
 
-  convertStyleParams(styleParams) {
-    return Object.assign({
-      cubeImages: styleParams.cropItems,
-      cubeType: styleParams.cropType,
-      cubeRatio: styleParams.cropRatio,
-      smartCrop: styleParams.smartCrop,
-      imageMargin: styleParams.itemSpacing,
-      galleryMargin: styleParams.layoutSpacing,
-      floatingImages: styleParams.randomSpacings,
-      chooseBestGroup: styleParams.smartGrouping,
-      groupSize: styleParams.itemsPerGroup,
-      groupTypes: _.isArray(styleParams.allowedGroupTypes) ? styleParams.allowedGroupTypes.join(',') : undefined,
-      isVertical: styleParams.isColumnsLayout,
-      minItemSize: styleParams.minItemSize,
-      oneRow: styleParams.isVerticalScroll,
-      gallerySize: styleParams.rowSize || styleParams.columnSize,
-      collageDensity: styleParams.collageDensity
-    }, styleParams);
+  insertIfDefined(obj, field, value) {
+    if (!_.isUndefined(value)) {
+      obj[field] = value;
+    }
   }
 
-  convertContainer(container) {
-    return Object.assign({
-      galleryWidth: container.width,
-      galleryHeight: container.height,
+  convertStyleParams(styleParams) {
+
+    //default styleParams
+    let convertedStyleParams = Object.assign({
+      cubeImages: false,
+      cubeType: 'fill',
+      cubeRatio: 1,
+      smartCrop: false,
+      imageMargin: 10,
+      galleryMargin: 0,
+      floatingImages: 0,
+      chooseBestGroup: true,
+      groupSize: 3,
+      groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
+      isVertical: true,
+      minItemSize: 120,
+      oneRow: false,
+      gallerySize: 500,
+      collageDensity: 50,
+    }, styleParams);
+
+    this.insertIfDefined(convertedStyleParams, 'cubeImages', convertedStyleParams.cropItems);
+    this.insertIfDefined(convertedStyleParams, 'cubeType', convertedStyleParams.cropType);
+    this.insertIfDefined(convertedStyleParams, 'cubeRatio', convertedStyleParams.cropRatio);
+    this.insertIfDefined(convertedStyleParams, 'smartCrop', convertedStyleParams.smartCrop);
+    this.insertIfDefined(convertedStyleParams, 'imageMargin', convertedStyleParams.itemSpacing);
+    this.insertIfDefined(convertedStyleParams, 'galleryMargin', convertedStyleParams.layoutSpacing);
+    this.insertIfDefined(convertedStyleParams, 'floatingImages', convertedStyleParams.randomSpacings);
+    this.insertIfDefined(convertedStyleParams, 'chooseBestGroup', convertedStyleParams.smartGrouping);
+    this.insertIfDefined(convertedStyleParams, 'groupSize', convertedStyleParams.itemsPerGroup);
+    this.insertIfDefined(convertedStyleParams, 'groupTypes', _.isArray(convertedStyleParams.allowedGroupTypes) ? convertedStyleParams.allowedGroupTypes.join(',') : undefined);
+    this.insertIfDefined(convertedStyleParams, 'isVertical', convertedStyleParams.isColumnsLayout);
+    this.insertIfDefined(convertedStyleParams, 'minItemSize', convertedStyleParams.minItemSize);
+    this.insertIfDefined(convertedStyleParams, 'oneRow', convertedStyleParams.isVerticalScroll);
+    this.insertIfDefined(convertedStyleParams, 'gallerySize', convertedStyleParams.rowSize || convertedStyleParams.columnSize);
+    this.insertIfDefined(convertedStyleParams, 'collageDensity', convertedStyleParams.collageDensity);
+
+    return convertedStyleParams;
+  }
+
+  convertContainer(container, styleParams) {
+
+    let convertedContainer = Object.assign({
+      galleryWidth: 1000,
+      galleryHeight: 1000,
+      bounds: {}
     }, container);
+
+    this.insertIfDefined(convertedContainer, 'galleryWidth', container.width);
+    this.insertIfDefined(convertedContainer, 'galleryHeight', container.height);
+
+    convertedContainer.galleryWidth += ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0)) * 2;
+    convertedContainer.galleryHeight += ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0));
+
+    return convertedContainer;
   }
 
   updateParams(layoutParams) {
 
     this.srcItems = layoutParams.items;
     this.styleParams = this.convertStyleParams(layoutParams.styleParams);
-    this.container = this.convertContainer(layoutParams.container);
+    this.container = this.convertContainer(layoutParams.container, this.styleParams);
     this.showAllItems = layoutParams.showAllItems;
   }
 
@@ -103,7 +139,7 @@ export default class Layouter {
 
     let groupItems = [];
     let group;
-    const bounds = this.container.bounds;
+    const bounds = this.container.bounds || {};
 
     let strip = new Strip();
 

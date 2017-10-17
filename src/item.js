@@ -42,7 +42,12 @@ export class Item {
     this.smartCrop = config.smartCrop;
     this.createdBy = config.createdBy;
     this.container = config.container;
-    this._offset = {};
+    this._groupOffset = {
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0
+    };
     this._group = {};
 
     this.resize(1);
@@ -81,19 +86,38 @@ export class Item {
     return this;
   }
 
-  pinToCorner(cornerName) {
+  pinToCorner(cornerName, pinOffset = 0) {
 
     const isTop = cornerName.indexOf('top') >= 0;
     const isLeft = cornerName.indexOf('left') >= 0;
 
-    this.style.top = isTop ? 0 : 'auto';
-    this.style.bottom = isTop ? 'auto' : 0;
-    this.style.left = isLeft ? 0 : 'auto';
-    this.style.right = isLeft ? 'auto' : 0;
+    this.style.top = isTop ? pinOffset : 'auto';
+    this.style.bottom = isTop ? 'auto' : pinOffset;
+    this.style.left = isLeft ? pinOffset : 'auto';
+    this.style.right = isLeft ? 'auto' : pinOffset;
 
     this.pin = cornerName;
     this.isPinnedTop = isTop;
     this.isPinnedLeft = isLeft;
+    this.pinOffset = pinOffset;
+    this.calcPinOffset = (groupSize) => {
+      if (pinOffset <= 0) {
+        return 0;
+      } else {
+        //this is used only for 3h/3v group types - to calc the offset of the middle item
+        const m = this.imageMargin;
+        return ((groupSize - 6 * m) * this.pinOffset + 2 * m)
+      }
+    };
+
+  }
+
+  pinToMiddle() {
+
+    this.style.top = this.style.bottom = this.style.left = this.style.right = 'auto';
+
+    this.pin = 'middle';
+    this.isPinnedMiddle = true;
 
   }
 
@@ -130,16 +154,30 @@ export class Item {
   }
 
   set offset(offset) {
-    _.merge(this._offset, offset);
+    _.merge(this._groupOffset, offset);
   }
 
   get offset() {
-    return {
-      top: this._offset.top + (this.isPinnedTop ? 0 : (this._group.height - this.height)),
-      left: this._offset.left + (this.isPinnedLeft ? 0 : (this._group.width - this.width)),
-      right: this._offset.right - (this.isPinnedLeft ? (this._group.width - this.width) : 0),
-      bottom: this._offset.bottom - (this.isPinnedTop ? (this._group.height - this.height) : 0),
+    const offset = {
+      top: this._groupOffset.top + (this.isPinnedTop ? this.calcPinOffset(this._group.height) : (this._group.height - this.outerHeight)) || 0,
+      left: this._groupOffset.left + (this.isPinnedLeft ? this.calcPinOffset(this._group.width) : (this._group.width - this.outerWidth)) || 0,
+      right: (this._groupOffset.right - (this.isPinnedLeft ? (this._group.width - this.outerWidth) : this.calcPinOffset(this._group.width)) || 0) - this.imageMargin * 2,
+      bottom: (this._groupOffset.bottom - (this.isPinnedTop ? (this._group.height - this.outerHeight) : this.calcPinOffset(this._group.height)) || 0) - this.imageMargin * 2,
     };
+    return offset;
+  }
+
+  getOffset(stop) {
+    const offset = {
+      top: this._groupOffset.top + (this.isPinnedTop ? this.calcPinOffset(this._group.height) : (this._group.height - this.outerHeight)),
+      left: this._groupOffset.left + (this.isPinnedLeft ? this.calcPinOffset(this._group.width) : (this._group.width - this.outerWidth)),
+      right: this._groupOffset.right - (this.isPinnedLeft ? (this._group.width - this.outerWidth) : this.calcPinOffset(this._group.width)) - this.imageMargin * 2,
+      bottom: this._groupOffset.bottom - (this.isPinnedTop ? (this._group.height - this.outerHeight) : this.calcPinOffset(this._group.height)) - this.imageMargin * 2,
+    };
+    if (stop === true && !(offset.top >= 0)) {
+      debugger;
+    }
+    return offset;
   }
 
   get transform() {
@@ -154,7 +192,7 @@ export class Item {
       const spaceDown = (this.container.galleryHeight - this.offset.bottom > 2 * m) ? m : g;
 
       const horizontalShift = utils.hashToInt(this.hash + this.offset.right + 'x', -1 * spaceLeft, spaceRight) * this.floatingImages;
-      const verticalShift = utils.hashToInt(this.hash + this.offset.top + 'x', -1 * spaceUp, spaceDown) * this.floatingImages;
+      const verticalShift = utils.hashToInt(this.hash + this.offset.top + 'y', -1 * spaceUp, spaceDown) * this.floatingImages;
 
       return {
         transform: `translate3d(${horizontalShift}px, ${verticalShift}px, 0)`

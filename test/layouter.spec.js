@@ -1,5 +1,3 @@
-/// <reference path="../../reference.ts" />
-
 'use strict';
 
 import Layouter from '../src/layouter.js';

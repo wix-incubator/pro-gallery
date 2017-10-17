@@ -41,7 +41,7 @@ export class Group {
     }
 
   }
-  
+
   resize() {
     if (this.isVertical) {
       this.resizeToWidth(this.gallerySize);
@@ -482,10 +482,20 @@ export class Group {
 
         item = this.safeGetItem(0);
         if (item) {
+          item.pinToCorner('top-left');
           item.setPosition('relative');
           items.push(item);
           w = item.width;
           h = item.height;
+        }
+
+        item = this.safeGetItem(2);
+        if (item) {
+          item.pinToCorner('bottom-left');
+          item.setPosition('relative');
+          item.resize(w / item.width);
+          h += item.height;
+          items.push(item);
         }
 
         item = this.safeGetItem(1);
@@ -493,14 +503,7 @@ export class Group {
           item.setPosition('relative');
           item.resize(w / item.width);
           h += item.height;
-          items.push(item);
-        }
-
-        item = this.safeGetItem(2);
-        if (item) {
-          item.setPosition('relative');
-          item.resize(w / item.width);
-          h += item.height;
+          item.pinToCorner('top', (items[0].height / h));
           items.push(item);
         }
 
@@ -510,10 +513,20 @@ export class Group {
 
         item = this.safeGetItem(0);
         if (item) {
+          item.pinToCorner('top-left');
           item.setPosition('relative');
           items.push(item);
           w = item.width;
           h = item.height;
+        }
+
+        item = this.safeGetItem(2);
+        if (item) {
+          item.pinToCorner('top-right');
+          item.setPosition('relative');
+          item.resize(h / item.height);
+          w += item.width;
+          items.push(item);
         }
 
         item = this.safeGetItem(1);
@@ -521,14 +534,7 @@ export class Group {
           item.setPosition('relative');
           item.resize(h / item.height);
           w += item.width;
-          items.push(item);
-        }
-
-        item = this.safeGetItem(2);
-        if (item) {
-          item.setPosition('relative');
-          item.resize(h / item.height);
-          w += item.width;
+          item.pinToCorner('left', (items[0].width / w));
           items.push(item);
         }
 
@@ -789,17 +795,17 @@ export class Group {
       };
     }
   }
-  
+
   getBottomInfoHeight() {
     if (this.titlePlacement !== 'SHOW_ALWAYS') {
       return 0;
     }
-    
+
     const paddingTopAndBottom = 30;
     let spaceBetweenElements = 16;
     const defaultButtonHeight = 33;
     const defaultItemFontSize = 22;
-    
+
     const isGrid = this.galleryLayout === 2;
     const item = this.items ? this.items[0] : null;
     const title = item ? item.title : null;
@@ -811,14 +817,14 @@ export class Group {
     } else {
       spaceBetweenElements = 0;
     }
-    
+
     return fontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
   }
-  
+
   get id() {
     return 'g' + this.idx + '_' + (this.items[0] || {}).id;
   }
-  
+
   get ratio() {
     const w = this.width;
     const h = this.height;
@@ -862,7 +868,7 @@ export class Group {
       }, true);
     }
   }
-  
+
   get scheme() {
     return {
       id: this.id,

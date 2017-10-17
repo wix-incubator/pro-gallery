@@ -9,7 +9,7 @@ Notice: this module is currently available only in the wix-private repository.
 
 ## Usage
 ```
-const Layouter = require('pro-gallery-layouter');
+import {Layouter} from 'pro-gallery-layouter';
 const items = [{
   id: '2d3b675ea857dc41158bad3b28300824',
   width: 5600,
@@ -72,10 +72,6 @@ When set to true, items will be cropped as landscape or portrait according to th
 
 The space between items (in pixels).
 
-`layoutSpacing` _(integer)_:
-
-The space between the layout to the bounderies of the container (in pixels).
-
 `randomSpacings` _(0 - 100)_:
 
 The percent of "randomness" to add to the layout spacings. The higher the percentage, the more scattered the layout will appear.
@@ -88,8 +84,7 @@ Determines the maximum number of items that can be grouped together in collage m
 
 When set to true, the group types will be selected according to the group items proportions to avoid uneven sizing of items in each group.
 
-`allowedGroupTypes` _(subarray of ['1','2h','2v','3h','3v','3t','3b','3l',
-r'])_:
+`allowedGroupTypes` _(subarray of ['1','2h','2v','3h','3v','3t','3b','3l', '3r'])_:
 
 The allowed group types for collage layouts [learn more](https://docs.google.com/presentation/d/1RGRkSmXV94dKXL-7umXcJXsgOGwcBRu0l9AcfShV21I/edit#slide=id.g2704b1b40a_0_370)
 
