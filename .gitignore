@@ -6,3 +6,4 @@ maven
 package-lock.json
 .idea
 .history
+.DS_Store
