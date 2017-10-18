@@ -22,6 +22,9 @@ export class Item {
         console.warn('Item core is created with already existing item core');
       }
     }
+    if (!config.dto) {
+      config.dto = {};
+    }
     const metadata = utils.parseStringObject(config.dto.metadata || config.dto.metaData || '');
     this._dto = _.merge({}, config.dto, metadata);
     this.dto = config.dto;
