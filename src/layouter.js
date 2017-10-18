@@ -82,11 +82,12 @@ export default class Layouter {
       bounds: {}
     }, container);
 
-    this.insertIfDefined(convertedContainer, 'galleryWidth', container.width);
-    this.insertIfDefined(convertedContainer, 'galleryHeight', container.height);
-
-    convertedContainer.galleryWidth += ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0)) * 2;
-    convertedContainer.galleryHeight += ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0));
+    if (container.width >= 0) {
+      convertedContainer.galleryWidth = container.width + ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0)) * 2;
+    }
+    if (container.height >= 0) {
+      convertedContainer.galleryHeight = container.height + ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0));
+    }
 
     return convertedContainer;
   }
