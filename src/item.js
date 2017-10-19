@@ -29,10 +29,6 @@ export class Item {
     this._dto = _.merge({}, config.dto, metadata);
     this.dto = config.dto;
 
-    if (_.isEmpty(this._dto)) {
-      throw new Error('Item: no dto');
-    }
-
     this.cubeType = config.cubeType || 'fill';
     this.cubeImages = config.cubeImages;
     this._cubeRatio = config.cubeRatio;
