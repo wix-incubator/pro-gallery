@@ -103,4 +103,5 @@ The percentage of "collaging" the layouter will create. The higher the percentag
 * [Pro Gallery Playground](https://progallery.wix.com/playground.html) the place where you can play with the different styleParams to create new and stunning© layouts
 
 # Demos
-To see how to use the layouter, check out the [Demos](/demos)
+To see how to use the layouter, check out the [Demos](/demos) page.
+(all demos are plain js, but you need to import the library)
