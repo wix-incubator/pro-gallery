@@ -1,12 +1,11 @@
 import GalleryDriver from './galleryDriver.js';
-import { shallow, mount } from 'enzyme';
+import {shallow, mount} from 'enzyme';
 import _ from 'lodash';
 import React from 'react';
 
-
 describe('Gallery Container', () => {
 
-  var galleryDriver;
+  let galleryDriver;
 
   beforeEach(() => {
 
@@ -16,13 +15,13 @@ describe('Gallery Container', () => {
 
   describe('toggle fullscreen', () => {
 
-    var wrapper;
-    var fullscreenOpened;
-    var idx = 1;
+    let wrapper;
+    let fullscreenOpened;
+    let idx = 1;
 
     beforeEach(() => {
 
-      var galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
 
       wrapper.instance().reRender('Items');
@@ -67,11 +66,11 @@ describe('Gallery Container', () => {
 
   describe('initial items load', () => {
 
-    var wrapper;
+    let wrapper;
 
     beforeEach(() => {
 
-      var galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
       galleryContainerProps.renderedItemsCount = 50;
 
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
@@ -100,7 +99,7 @@ describe('Gallery Container', () => {
 
     it('should load only 50 items before scroll if items are large', () => {
 
-      var renderedItemsCount = wrapper.state().renderedItemsCount;
+      let renderedItemsCount = wrapper.state().renderedItemsCount;
 
       wrapper.setState({
         styleParams: _.merge({}, wrapper.state().styleParams, {
@@ -114,9 +113,9 @@ describe('Gallery Container', () => {
         galleryStructure: wrapper.instance().createGalleryStructure(wrapper.state())
       });
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: 0 });
+      wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      var currentItems = wrapper.instance().currentItems().length;
+      let currentItems = wrapper.instance().currentItems().length;
 
       expect(renderedItemsCount).toBe(currentItems);
 
@@ -124,7 +123,7 @@ describe('Gallery Container', () => {
 
     it('should load only more items before scroll if items are small', () => {
 
-      var renderedItemsCount = wrapper.state().renderedItemsCount;
+      let renderedItemsCount = wrapper.state().renderedItemsCount;
 
       wrapper.setState({
         styleParams: _.merge({}, wrapper.state().styleParams, {
@@ -139,9 +138,9 @@ describe('Gallery Container', () => {
         galleryStructure: wrapper.instance().createGalleryStructure(wrapper.state())
       });
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: 0 });
+      wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      var currentItems = wrapper.instance().currentItems().length;
+      let currentItems = wrapper.instance().currentItems().length;
 
       expect(renderedItemsCount).toBeLessThan(currentItems);
 
@@ -151,13 +150,13 @@ describe('Gallery Container', () => {
 
   describe('Gallery layouts loads correctly', () => {
 
-    var wrapper;
-    var galleryContainerProps;
+    let wrapper;
+    let galleryContainerProps;
 
     beforeEach(() => {
       galleryContainerProps = galleryDriver.create.galleryContainerProps();
       galleryContainerProps.renderedItemsCount = 50;
-      galleryContainerProps.styleParams = galleryContainerProps.styleParams || {}
+      galleryContainerProps.styleParams = galleryContainerProps.styleParams || {};
     });
 
 
@@ -166,7 +165,7 @@ describe('Gallery Container', () => {
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
 
       expect(wrapper.state().styleParams.oneRow).toBe(true);
-      expect(wrapper.find({ 'data-hook': 'nav-arrow-next' }).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'nav-arrow-next'}).length).toBe(1);
     });
 
     it('Cube type should be "fit" and cube ratio should be 1:1', () => {
@@ -191,11 +190,11 @@ describe('Gallery Container', () => {
 
   describe('infinite scroll', () => {
 
-    var wrapper;
+    let wrapper;
 
     beforeEach(() => {
 
-      var galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
       galleryContainerProps.renderedItemsCount = 50;
 
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
@@ -235,22 +234,22 @@ describe('Gallery Container', () => {
         galleryStructure: wrapper.instance().createGalleryStructure(wrapper.state())
       });
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: 0 });
+      wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
       // console.debug('3) Layout height and last group: ', wrapper.instance().galleryStructure.height, wrapper.instance().galleryStructure.lastGroup.idx, wrapper.instance().galleryStructure.lastGroup.rendered, wrapper.instance().galleryStructure.lastGroup.width);
       // console.debug('3) Bounds are: ', wrapper.state().container.bounds);
 
-      var initialHeight = wrapper.state().container.galleryHeight;
-      var initialItems = wrapper.state().renderedItemsCount;
+      let initialHeight = wrapper.state().container.galleryHeight;
+      let initialItems = wrapper.state().renderedItemsCount;
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
       // console.debug('4) Bounds are: ', wrapper.state().container.bounds);
       // console.debug('4) Layout height and last group: ', wrapper.instance().galleryStructure.height, wrapper.instance().galleryStructure.lastGroup.idx, wrapper.instance().galleryStructure.lastGroup.rendered, wrapper.instance().galleryStructure.lastGroup.width);
 
-      var newHeight = wrapper.state().container.galleryHeight;
-      var newItems = wrapper.state().renderedItemsCount;
+      let newHeight = wrapper.state().container.galleryHeight;
+      let newItems = wrapper.state().renderedItemsCount;
 
       expect(newHeight).toBeGreaterThan(initialHeight);
       expect(newItems).toBeGreaterThan(initialItems);
@@ -270,17 +269,17 @@ describe('Gallery Container', () => {
         galleryStructure: wrapper.instance().createGalleryStructure(wrapper.state())
       });
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: 0 });
+      wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      var initialHeight = wrapper.state().container.galleryHeight;
-      var initialItems = wrapper.state().renderedItemsCount;
+      let initialHeight = wrapper.state().container.galleryHeight;
+      let initialItems = wrapper.state().renderedItemsCount;
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
 
-      var newHeight = wrapper.state().container.galleryHeight;
-      var newItems = wrapper.state().renderedItemsCount;
+      let newHeight = wrapper.state().container.galleryHeight;
+      let newItems = wrapper.state().renderedItemsCount;
 
       expect(newHeight).toBe(initialHeight);
       expect(newItems).toBe(initialItems);
@@ -291,11 +290,11 @@ describe('Gallery Container', () => {
 
   describe('load more button', () => {
 
-    var wrapper;
+    let wrapper;
 
     beforeEach(() => {
 
-      var galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
       galleryContainerProps.renderedItemsCount = 50;
 
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
@@ -335,21 +334,21 @@ describe('Gallery Container', () => {
         galleryStructure: wrapper.instance().createGalleryStructure(wrapper.state())
       });
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: 0 });
+      wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      var initialHeight = wrapper.state().container.galleryHeight;
-      var initialItems = wrapper.state().renderedItemsCount;
+      let initialHeight = wrapper.state().container.galleryHeight;
+      let initialItems = wrapper.state().renderedItemsCount;
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
 
       wrapper.instance().toggleInfiniteScroll();
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
-      wrapper.instance().reRenderForScroll({ customScrollTop: wrapper.instance().galleryStructure.height - 100 });
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
+      wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
 
-      var newHeight = wrapper.state().container.galleryHeight;
-      var newItems = wrapper.state().renderedItemsCount;
+      let newHeight = wrapper.state().container.galleryHeight;
+      let newItems = wrapper.state().renderedItemsCount;
 
       expect(newHeight).toBeGreaterThan(initialHeight);
       expect(newItems).toBeGreaterThan(initialItems);
@@ -365,9 +364,9 @@ describe('Gallery Container', () => {
         })
       });
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: 0 });
+      wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      expect(wrapper.find({ 'data-hook': 'show-more' }).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'show-more'}).length).toBe(1);
 
     });
 
@@ -380,9 +379,9 @@ describe('Gallery Container', () => {
         })
       });
 
-      wrapper.instance().reRenderForScroll({ customScrollTop: 0 });
+      wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      expect(wrapper.find({ 'data-hook': 'show-more' }).length).toBe(0);
+      expect(wrapper.find({'data-hook': 'show-more'}).length).toBe(0);
 
     });
   });

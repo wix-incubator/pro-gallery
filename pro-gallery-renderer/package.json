@@ -24,18 +24,26 @@
     "babel-runtime": "^6.22.0",
     "enzyme": "^3.1.0",
     "lodash": "^4.17.4",
-    "react": "^16.0.0"
+    "photography-client-lib": "^1.0.10",
+    "react": "^16.0.0",
+    "wix-bi-logger": "1.0.485"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-env": "^1.5.2",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.5.0",
-    "chai": "^3.5.0",
+    "chai": "^4.1.2",
     "husky": "^0.13.4",
+    "jsdom": "11.2.0",
+    "jsdom-global": "3.0.2",
+    "react-dom": "^16.0.0",
     "yoshi": "latest"
   },
   "babel": {
     "presets": [
+      "es2015",
+      "react",
       "stage-3"
     ],
     "plugins": [

@@ -1,23 +1,24 @@
 'use strict';
 
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import galleryReducers from '../../reducers/index.js'
-import { toggleHoverPreview } from '../../actions/galleryActions.js'
+import React from 'react';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
+import galleryReducers from '../../reducers/index.js';
+import {toggleHoverPreview} from '../../actions/galleryActions.js';
 import GalleryContainer from './galleryContainer.js';
 import GalleryItem from '../item/galleryItem.js';
-import {utils} from '../../utils'
-import {logger} from '../../utils'
-import '../../utils/rcp'
-import { timingMeasure } from '../../utils/performanceUtils'
+import {utils} from '../../utils';
+import {logger} from '../../utils';
+import '../../utils/rcp';
+import {timingMeasure} from '../../utils/performanceUtils';
 import videoMiddleware from '../galleryStore/videoMiddleware';
 import videoActionTypes from '../../constants/videoActionTypes';
 import videoPlayModes from '../videoPlayModes';
-import { VideoQueue } from '../../_domain/video-queue';
+import {VideoQueue} from '../../_domain/video-queue';
+import {testImages} from 'images-mock';
 
 logger.initBiLoadedEventListener('gallery');
 
@@ -25,16 +26,14 @@ class ProGalleryServices {
 
   constructor() {
     if (!utils.isInWix()) {
-      import ( /* webpackChunkName: "sampleImages" */ '../../utils/sampleImages').then(images => {
-        window.photos = images.sampleImages
-        this.init()
-      })
+      window.photos = testImages;
+      this.init();
     } else {
-      this.init()
+      this.init();
     }
   }
   init() {
-    timingMeasure('ProGallery start', 'navigationStart')
+    timingMeasure('ProGallery start', 'navigationStart');
 
     this.gallerySrcTypes = { //gallery source types
       sampleImages: 'sampleImages',
@@ -44,12 +43,12 @@ class ProGalleryServices {
       manuallySetImages: 'manuallySetImages'
     };
 
-    const middlewares = [thunkMiddleware, videoMiddleware({ videoQueue: new VideoQueue(), utils })];
+    const middlewares = [thunkMiddleware, videoMiddleware({videoQueue: new VideoQueue(), utils})];
 
-    const shouldLogRedux = false
+    const shouldLogRedux = false;
     if (utils.isDev() && shouldLogRedux) {
-      const loggerMiddleware = createLogger({ diff: true });
-      middlewares.push(loggerMiddleware)
+      const loggerMiddleware = createLogger({diff: true});
+      middlewares.push(loggerMiddleware);
     }
 
     window.store = this.store = createStore(galleryReducers, /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {}, applyMiddleware(...middlewares));
@@ -60,7 +59,7 @@ class ProGalleryServices {
       console.log('initial store state', this.store.getState());
     }
 
-    let unsubscribe = this.store.subscribe(() => {
+    const unsubscribe = this.store.subscribe(() => {
       if (utils.isDev()) {
         console.log('store update', this.store.getState());
       }
@@ -101,11 +100,11 @@ class ProGalleryServices {
 
   updateServerMappingIfNeeded(setId, isDuringPublish, callback) {
     if (!isDuringPublish) {
-      callback()
+      callback();
       return;
     }
     if (setId === 'fake_set') {
-      callback()
+      callback();
       return;
     }
 
@@ -120,18 +119,18 @@ class ProGalleryServices {
       this.mappingUpdatedInstanceId = Wix.Utils.getInstanceId();
       //URL - http://progallery.wix.com/api/v1/albums/map-set-id
       //Body (json) {"instanceId" : "8e3502cb-25ee-4d7f-b8c3-96034fe36911", "compId" : "compId2", "setId": "75cda6bb-c060-4381-930a-beb9a22c027a"}
-      var mappingData = { instanceId: Wix.Utils.getInstanceId(), compId: Wix.Utils.getCompId(), setId: setId };
+      let mappingData = {instanceId: Wix.Utils.getInstanceId(), compId: Wix.Utils.getCompId(), setId};
       $.ajax({
         type: 'POST',
         url: '/api/v1/albums/map-set-id',
         data: JSON.stringify(mappingData),
-        success: (res) => {
+        success: res => {
           console.log('Success in mapping gallery to set', mappingData);
-          callback()
+          callback();
         },
-        error: (err) => {
+        error: err => {
           console.error('Failed to map gallery to set', err);
-          callback()
+          callback();
         },
         contentType: 'application/json'
       });
@@ -154,16 +153,16 @@ class ProGalleryServices {
 
     //replace the current set of images on the window
     try {
-      var activeAlbum = window.parent.parent['activeAlbum'];
+      let activeAlbum = window.parent.parent.activeAlbum;
       const isDuringPublish = _.get(activeAlbum, 'serverStatus.duringUpdate');
-      var albumSet = activeAlbum.getSetByGalleryId(Wix.Utils.getCompId()); //getSetByGalleryId is in albums code
+      let albumSet = activeAlbum.getSetByGalleryId(Wix.Utils.getCompId()); //getSetByGalleryId is in albums code
       if (albumSet.id) {
         this.updateServerMappingIfNeeded(albumSet.id, isDuringPublish, () => {
 
           try {
             albumSet.mapSetIdCallback();
           } catch (e) {
-            console.log("couldn't call mapSetIdCallback", e);
+            console.log('couldn\'t call mapSetIdCallback', e);
           }
 
         });
@@ -183,31 +182,31 @@ class ProGalleryServices {
       let galleryData;
       let galleryDataSrcName;
 
-      let albumSetFromBuilder = this.getImagesFromBuilder();
+      const albumSetFromBuilder = this.getImagesFromBuilder();
       if (window.manuallySetImages) {
         galleryData = window.manuallySetImages;
-        this.galleryDataSrc = this.gallerySrcTypes.manuallySetImages
+        this.galleryDataSrc = this.gallerySrcTypes.manuallySetImages;
         galleryDataSrcName = 'manuallySetImages';
-      } else if (window['itemsFromWixCode']) {
-        galleryData = { photos: window['itemsFromWixCode'] };
+      } else if (window.itemsFromWixCode) {
+        galleryData = {photos: window.itemsFromWixCode};
         this.galleryDataSrc = this.gallerySrcTypes.albumSetFromBuilder;
         galleryDataSrcName = 'itemsFromWixCode';
       } else if (albumSetFromBuilder) {
         galleryData = albumSetFromBuilder;
         this.galleryDataSrc = this.gallerySrcTypes.albumSetFromBuilder;
         galleryDataSrcName = 'albumSetFromBuilder';
-      } else if (window['prerenderedGallery']) {
-        galleryData = { photos: window['prerenderedGallery']['items'] };
+      } else if (window.prerenderedGallery) {
+        galleryData = {photos: window.prerenderedGallery.items};
         this.galleryDataSrc = this.gallerySrcTypes.prerenderedGallery;
         galleryDataSrcName = 'prerenderedGallery';
       } else {
         //no prerender gallery
         if (utils.isSite() && !utils.isDev()) {
           console.error('prerendered gallery is missing');
-          logger.trackBi(logger.biEvents.pro_gallery_error, { errorType: 'prerenderedGalleryMissing' });
+          logger.trackBi(logger.biEvents.pro_gallery_error, {errorType: 'prerenderedGalleryMissing'});
         }
-        galleryData = (utils.isDev() ? window['sampleImages'] : window['emptyImages']);
-        if (galleryData) galleryData.renderedItemsCount = 50;
+        galleryData = (utils.isDev() ? window.sampleImages : window.emptyImages);
+        if (galleryData) {galleryData.renderedItemsCount = 50;}
         this.galleryDataSrc = this.gallerySrcTypes.sampleImages;
         galleryDataSrcName = 'sampleImages/emptyImages';
       }
@@ -216,8 +215,8 @@ class ProGalleryServices {
         console.log('Populating gallery data from: ' + galleryDataSrcName);
       }
 
-      const _galleryData = window['galleryData'] = galleryData;
-      const _itemsCount = (this.galleryDataSrc === this.gallerySrcTypes.prerenderedGallery) ? window['prerenderedGallery']['totalItemsCount'] : (galleryData && galleryData.photos && galleryData.photos.length);
+      const _galleryData = window.galleryData = galleryData;
+      const _itemsCount = (this.galleryDataSrc === this.gallerySrcTypes.prerenderedGallery) ? window.prerenderedGallery.totalItemsCount : (galleryData && galleryData.photos && galleryData.photos.length);
 
       if (this.galleryData) {
 
@@ -232,14 +231,14 @@ class ProGalleryServices {
   }
 
   itemsToDto(items) {
-    return _.map(items, (item) => {
+    return _.map(items, item => {
       item.createdBy = 'itemsToDto';
       return (new GalleryItem({dto: item, watermark: this.watermarkData})).dto;
-    })
+    });
   }
 
   getItemsDto() {
-    var items = this.galleryData && this.galleryData.photos;
+    let items = this.galleryData && this.galleryData.photos;
     items = items || [];
     return this.itemsToDto(items);
   }
@@ -250,21 +249,21 @@ class ProGalleryServices {
   }
 
   getAllItemsFromServer(callback) {
-    var fetchedItems = this.galleryData && this.galleryData.photos;
+    let fetchedItems = this.galleryData && this.galleryData.photos;
 
     if (_.isUndefined(this.itemsCountToFetch) || this.itemsCountToFetch === false) {
       this.itemsCountToFetch = this.itemsCountToFetch || this.itemsCount;
     }
 
-    let fetchCount = Math.min(1000, this.itemsCountToFetch - fetchedItems.length);
+    const fetchCount = Math.min(1000, this.itemsCountToFetch - fetchedItems.length);
     if (fetchCount <= 0) { //end
       this.itemsCountToFetch = false;
       callback(this.itemsToDto(this.galleryData.photos));
     } else {
-      this.getItemsFromServer(fetchedItems.length, fetchedItems.length + fetchCount).done((res) => {
+      this.getItemsFromServer(fetchedItems.length, fetchedItems.length + fetchCount).done(res => {
         this.addImages(res.items);
         this.getAllItemsFromServer(callback);
-      }).fail((err) => {
+      }).fail(err => {
         console.error('failed to get items from server', (err && err.message));
       });
     }
@@ -285,9 +284,9 @@ class ProGalleryServices {
 
   isDisplayingDefaultImages() {
     try {
-      var manuallySetImages = window.manuallySetImages;
-      var albumSetFromBuilder = this.getImagesFromBuilder();
-      var galleryFromVm = window['prerenderedGallery'] ? { photos: window['prerenderedGallery']['items'] } : false;
+      let manuallySetImages = window.manuallySetImages;
+      let albumSetFromBuilder = this.getImagesFromBuilder();
+      let galleryFromVm = window.prerenderedGallery ? {photos: window.prerenderedGallery.items} : false;
 
       return !(manuallySetImages || galleryFromVm || albumSetFromBuilder);
     } catch (e) {
@@ -302,7 +301,7 @@ class ProGalleryServices {
     }
 
     //update selected images in the current set of images on the window
-    if (typeof images != 'object') {
+    if (typeof images !== 'object') {
       console.error('Trying to use addImages with illegal images', images);
     }
     if (!(images.length > 0)) {
@@ -318,7 +317,7 @@ class ProGalleryServices {
       this.galleryDataSrc = this.gallerySrcTypes.manuallySetImages;
       window.infiniteScrollUrl = ''; //diasble infinite scroll when setting images manually
     } catch (e) {
-      console.error("Cannot set new images", e, images, window);
+      console.error('Cannot set new images', e, images, window);
     }
 
     // if (this.galleryView) {
@@ -338,7 +337,7 @@ class ProGalleryServices {
       this.itemsCount = 0;
       this.galleryDataSrc = this.gallerySrcTypes.manuallySetImages;
     } catch (e) {
-      console.error("Cannot set new images", e, window);
+      console.error('Cannot set new images', e, window);
     }
     // if (this.galleryView) {
     //   this.galleryView.renderTrigger = this.galleryView.renderTriggers.ITEMS; //this is a patch, we need to find a better way to control setState without predefined data
@@ -355,7 +354,7 @@ class ProGalleryServices {
       console.log('Gallery Services - addImages', images, shouldAddToStart);
     }
 
-    if (typeof images != 'object') {
+    if (typeof images !== 'object') {
       console.error('Trying to use addImages with illegal images', images);
     }
     if (!this.galleryData) {
@@ -365,8 +364,8 @@ class ProGalleryServices {
       images = [images];
     }
 
-    var firstArray = this.galleryData.photos;
-    var secondArray = images;
+    let firstArray = this.galleryData.photos;
+    let secondArray = images;
 
     if (shouldAddToStart) {
       firstArray = images;
@@ -376,7 +375,7 @@ class ProGalleryServices {
     try {
       this.setImages(firstArray.concat(secondArray));
     } catch (e) {
-      console.error("Cannot add new images", e, images, window);
+      console.error('Cannot add new images', e, images, window);
     }
   }
 
@@ -396,10 +395,10 @@ class ProGalleryServices {
   }
 
   toggleHoverPreviewEvent(toggle) {
-    this.store.dispatch(toggleHoverPreview(toggle))
+    this.store.dispatch(toggleHoverPreview(toggle));
   }
 
-  renderGallery() { 
+  renderGallery() {
     let renderPromise = this.readyPromise;
     if (!renderPromise) {
       renderPromise = Promise.resolve();
@@ -413,13 +412,13 @@ class ProGalleryServices {
         const layout = {
           width: window.innerWidth,
           height: window.innerHeight
-        }
+        };
         const at = Date.now(); //forces the galleryContainer to reRender even if the itemsCount did not change
-        let renderElement = (<Provider store={this.store}>
+        const renderElement = (<Provider store={this.store}>
           <div>
             <GalleryContainer
                 at={at}
-                items={this.galleryData['photos']}
+                items={this.galleryData.photos}
                 galleryDataSrc={this.galleryDataSrc}
                 totalItemsCount={this.itemsCount}
                 store={this.store}
@@ -445,30 +444,30 @@ class ProGalleryServices {
 }
 
 //this should not be accessed by anyone from the outside - everything should be done via post message
-var proGalleryServices = window['proGalleryServices'] = new ProGalleryServices();
+let proGalleryServices = window.proGalleryServices = new ProGalleryServices();
 
 window.addEventListener('message', e => {
   if (e && e.data === 'albumSetImagesUpdated') {
-    proGalleryServices.reRenderGalleryForAlbums()
+    proGalleryServices.reRenderGalleryForAlbums();
   }
 
-  const { type, payload } = e.data
+  const {type, payload} = e.data;
   switch (type) {
     case 'renderGallery':
-      proGalleryServices.renderGallery()
-      break
+      proGalleryServices.renderGallery();
+      break;
     case 'imageUpdated':
-      proGalleryServices.reRenderGalleryForAlbums()
-      break
+      proGalleryServices.reRenderGalleryForAlbums();
+      break;
     case 'albumSetImagesUpdated':
-      console.log('message albumSetImagesUpdated arrived for gallery ', e)
-      proGalleryServices.reRenderGalleryForAlbums()
-      break
+      console.log('message albumSetImagesUpdated arrived for gallery ', e);
+      proGalleryServices.reRenderGalleryForAlbums();
+      break;
     case 'previewHoverMode':
-      proGalleryServices.toggleHoverPreviewEvent(payload)
-      break
+      proGalleryServices.toggleHoverPreviewEvent(payload);
+      break;
     case 'updateGallery':
-      proGalleryServices.setImages(payload.items)
-      break
+      proGalleryServices.setImages(payload.items);
+      break;
   }
-})
+});
