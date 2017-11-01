@@ -1,8 +1,8 @@
 /// <reference path="../../reference.ts" />
 
-import React from 'react'
-import _ from 'lodash'
-import {itemActions} from '../../utils'
+import React from 'react';
+import _ from 'lodash';
+import {itemActions} from 'photography-client-lib';
 
 class GallerySharer extends React.Component {
 
@@ -23,35 +23,35 @@ class GallerySharer extends React.Component {
     itemActions.initWidgetData({
       toggleItemInMultishare: this.toggleItemInMultishare.bind(this),
       isMultisharing: this.isMultisharing.bind(this)
-    })
+    });
   }
 
   toggleItemInMultishare(itemDto) {
 
-    console.log("HASHTAG - Adding item", itemDto);
+    console.log('HASHTAG - Adding item', itemDto);
 
-    var multishareItems = this.state.items.concat([itemDto]);
+    let multishareItems = this.state.items.concat([itemDto]);
 
-    multishareItems = _.uniqBy(multishareItems, (item) => item.itemId || item.photoId || item.url);
+    multishareItems = _.uniqBy(multishareItems, item => item.itemId || item.photoId || item.url);
 
     console.log('New multishareItems', multishareItems);
 
     if (multishareItems && (multishareItems.length == 1) && (this.state.items.length == 0)) {
       this.createInitialHashtagIfNeeded(multishareItems);
-      this.shareButtons = this.createShareButtonsIfNeeded(multishareItems)
+      this.shareButtons = this.createShareButtonsIfNeeded(multishareItems);
     }
 
     $.ajax({
       url: `${utils.getApiUrlPrefix()}gallery/${window.galleryId}/items/${itemDto.itemId || itemDto.photoId}/hashtags`,
       method: 'POST',
       dataType: 'json',
-      contentType: "application/json",
+      contentType: 'application/json',
       processData: false,
       data: JSON.stringify({
         hashTags: [this.hashtag]
       }),
-      done: (res) => {
-        console.log("HASHTAG - Added item", res);
+      done: res => {
+        console.log('HASHTAG - Added item', res);
       }
     });
 
@@ -64,25 +64,25 @@ class GallerySharer extends React.Component {
 
   removeItemFromMultishare(itemDto) {
 
-    console.log("HASHTAG - Removing item", itemDto);
+    console.log('HASHTAG - Removing item', itemDto);
 
     $.ajax({
       url: `${utils.getApiUrlPrefix()}gallery/${window.galleryId}/items/${itemDto.itemId || itemDto.photoId}/hashtags`,
       method: 'DELETE',
       dataType: 'json',
-      contentType: "application/json",
+      contentType: 'application/json',
       processData: false,
       data: JSON.stringify({
         hashTags: [this.hashtag]
       }),
-      done: (res) => {
-        console.log("HASHTAG - Removed item", res);
+      done: res => {
+        console.log('HASHTAG - Removed item', res);
       }
     });
 
-    var multishareItems = this.state.items;
+    let multishareItems = this.state.items;
 
-    multishareItems = _.filter(multishareItems, (item) => {
+    multishareItems = _.filter(multishareItems, item => {
       return (
         (item.itemId || item.photoId) != (itemDto.itemId || itemDto.photoId)
       );
@@ -91,7 +91,7 @@ class GallerySharer extends React.Component {
     utils.setStateAndLog(this, 'HASHTAG - removeItemFromMultishare', {
       items: multishareItems,
       itemsDOM: this.createItems(multishareItems)
-    })
+    });
   }
 
   clearMultishareItems() {
@@ -99,11 +99,11 @@ class GallerySharer extends React.Component {
     utils.setStateAndLog(this, 'clearMultishareItems', {
       items: [],
       itemsDOM: this.createItems([])
-    })
+    });
   }
 
   isMultisharing() {
-    return !!this.state.items.length
+    return !!this.state.items.length;
   }
 
 
@@ -113,16 +113,16 @@ class GallerySharer extends React.Component {
       return [];
     }
 
-    var shareButtons = [];
+    let shareButtons = [];
 
-    var firstItem = items[0];
+    let firstItem = items[0];
     firstItem.hashtag = this.hashtag;
 
-    ['facebook', 'twitter', 'pinterest', 'tumblr', 'email'].forEach((network) => {
+    ['facebook', 'twitter', 'pinterest', 'tumblr', 'email'].forEach(network => {
       shareButtons.push(
-        <i className={network + "-share progallery-svg-font-icons-" + network}
+        <i className={network + '-share progallery-svg-font-icons-' + network}
            onClick={() => itemActions.share(network, firstItem, 'multishare')}
-           key={network + "-share-icon"}/>
+           key={network + '-share-icon'}/>
       );
     });
 
@@ -130,9 +130,9 @@ class GallerySharer extends React.Component {
   }
 
   createInitialHashtagIfNeeded(newItems) {
-    if (newItems.length == 1 && this.state.items.length == 0){
+    if (newItems.length == 1 && this.state.items.length == 0) {
       this.hashtag = 'HT' + utils.getUUID();
-      console.log("Created a new hashtag ", this.hashtag);
+      console.log('Created a new hashtag ', this.hashtag);
     }
     return this.hashtag;
   }
@@ -140,7 +140,7 @@ class GallerySharer extends React.Component {
   getTextDimensions(item) {
 
     //text dimensions include scaling
-    var transform = 'translate(0, 0) scale(' + ((item.style.width < (item.style.height + 1)) ? (this.height / item.style.maxHeight) : (this.width / item.style.maxWidth)) + ')';
+    let transform = 'translate(0, 0) scale(' + ((item.style.width < (item.style.height + 1)) ? (this.height / item.style.maxHeight) : (this.width / item.style.maxWidth)) + ')';
     return {
       margin: (Math.floor((item.style.maxHeight - this.height) / -2)) + 'px ' + (Math.floor((item.style.maxWidth - this.width) / -2)) + 'px',
       width: item.style.maxWidth + 'px',
@@ -148,7 +148,7 @@ class GallerySharer extends React.Component {
       WebkitTransform: transform,
       MsTransform: transform,
       OTransform: transform,
-      transform: transform,
+      transform,
     };
 
   }
@@ -156,15 +156,15 @@ class GallerySharer extends React.Component {
 
   createItems(itemsDto) {
 
-    var itemsDom = [];
-    itemsDto.forEach((item) => {
+    let itemsDom = [];
+    itemsDto.forEach(item => {
       itemsDom.push(
         item.type == 'text' ? (
           <div
             className="sharer-item"
             key={`sharer-item-${item.photoId || item.itemId}`}
             style={{
-              'backgroundColor': item.style.bgColor
+              backgroundColor: item.style.bgColor
             }}>
             <i className="sharer-item-x progallery-svg-font-icons-x"
                onClick={() => this.removeItemFromMultishare(item)} />
@@ -177,7 +177,7 @@ class GallerySharer extends React.Component {
           >
             <i className="sharer-item-x progallery-svg-font-icons-x"
                onClick={() => this.removeItemFromMultishare(item)}/>
-            <img src={item.square_url['img']} alt=""/>
+            <img src={item.square_url.img} alt=""/>
           </div>
         )
       );
@@ -196,7 +196,7 @@ class GallerySharer extends React.Component {
   }
 
   render() {
-    var dom = !!this.state.items.length && (
+    let dom = !!this.state.items.length && (
         <div className="sharer-container">
           <div className="sharer-placeholder"/>
           <div className="sharer-floater" style={{
@@ -217,7 +217,7 @@ class GallerySharer extends React.Component {
         </div>
       );
 
-    Wix.PubSub.publish("multishare", {"dom": dom}, true);
+    Wix.PubSub.publish('multishare', {dom: dom}, true);
 
     return false;
   }
