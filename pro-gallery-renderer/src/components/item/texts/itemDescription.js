@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default class ItemDescription extends React.Component {
 
@@ -7,9 +7,9 @@ export default class ItemDescription extends React.Component {
   }
 
   render() {
-    var {description} = this.props;
+    const {description} = this.props;
     return (
-      <div className={"gallery-item-description"} data-hook="item-description">{description}</div>
-   );
+      <div className={'gallery-item-description'} data-hook="item-description">{description}</div>
+    );
   }
 }

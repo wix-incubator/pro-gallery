@@ -1,10 +1,10 @@
 'use strict';
 
-import ItemView from './itemView.js';
-import GalleryDriver from '../gallery/galleryDriver.js';
-import {shallow, mount} from 'enzyme';
+import GalleryDriver from './galleryDriver.js';
+import {mount} from 'enzyme';
+import {testImages} from './images-mock';
 import React from 'react';
-import {testImages} from '../test/images-mock';
+import ItemView from '../src/components/item/itemView';
 
 describe('Item View', () => {
   let sampleItemViewProps;
@@ -106,7 +106,7 @@ describe('Item View', () => {
 
     it('should show the download button according to the style params', () => {
       // Step 2: check with allowDownload = TRUE
-      let galleryConfig2 = galleryDriver.get.galleryConfig;
+      const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDownload = true;
       sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
 
@@ -121,7 +121,7 @@ describe('Item View', () => {
 
     it('should hide the download button if it is a demo item', () => {
       // Step 2: check with allowDownload = TRUE
-      let galleryConfig2 = galleryDriver.get.galleryConfig;
+      const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDownload = true;
       sampleItem.isDemo = true;
       sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
@@ -137,7 +137,7 @@ describe('Item View', () => {
 
     it('should show title element when showTitle is true', () => {
       // Step 2: check with allowDownload = TRUE
-      let galleryConfig2 = galleryDriver.get.galleryConfig;
+      const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowTitle = true;
       sampleItem.isDemo = true;
       sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
@@ -154,7 +154,7 @@ describe('Item View', () => {
 
     it('should hide title element when showTitle is true but not title text', () => {
       // Step 2: check with allowDownload = TRUE
-      let galleryConfig2 = galleryDriver.get.galleryConfig;
+      const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowTitle = true;
       sampleItem.isDemo = true;
       sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
@@ -170,7 +170,7 @@ describe('Item View', () => {
 
     it('should show description element when allowDescription is true', () => {
       // Step 2: check with allowDownload = TRUE
-      let galleryConfig2 = galleryDriver.get.galleryConfig;
+      const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDescription = true;
       sampleItem.isDemo = true;
       sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
@@ -187,7 +187,7 @@ describe('Item View', () => {
 
     it('should hide description element when allowDescription is true but not description text', () => {
       // Step 2: check with allowDownload = TRUE
-      let galleryConfig2 = galleryDriver.get.galleryConfig;
+      const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDescription = true;
       sampleItem.isDemo = true;
       sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);

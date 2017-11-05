@@ -1,14 +1,14 @@
 
-import { utils } from '../../utils/index.js';
-utils.fixViewport('Gallery');
-
-import React from 'react'
-import GroupView from '../group/groupView.js'
-import GalleryEmpty from './galleryEmpty.js'
-import {Layouter} from 'pro-gallery-layouter'
-import GalleryDebugMessage from './galleryDebugMessage.js'
+import utils from '../../utils';
+import React from 'react';
+import GroupView from '../group/groupView.js';
+import GalleryEmpty from './galleryEmpty.js';
+import {Layouter} from 'pro-gallery-layouter';
+import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
-import { appLoaded } from '../../utils/performanceUtils'
+import {performanceUtils} from 'photography-client-lib';
+
+utils.fixViewport('Gallery');
 
 class SlideshowView extends React.Component {
 
@@ -17,14 +17,14 @@ class SlideshowView extends React.Component {
 
     this.scrollToItem = this.scrollToItem.bind(this);
     this.handleKeypress = this.handleKeypress.bind(this);
-    this._setCurrentItemByScroll = _.throttle(this.setCurrentItemByScroll, 600, {'leading': false, 'trailing': true}).bind(this);
+    this._setCurrentItemByScroll = _.throttle(this.setCurrentItemByScroll, 600, {leading: false, trailing: true}).bind(this);
 
     this.state = {
       flatItems: [],
       currentIdx: 0,
     };
     if (!utils.isLocal()) {
-      appLoaded('pro-gallery-statics')
+      performanceUtils.appLoaded('pro-gallery-statics');
     }
   }
 
@@ -33,7 +33,7 @@ class SlideshowView extends React.Component {
       return this.state.currentIdx === 0;
     }
 
-    return 0 === this.props.scroll.top;
+    return this.props.scroll.top === 0;
 
   }
 
@@ -47,7 +47,7 @@ class SlideshowView extends React.Component {
 
     this.isAutoScrolling = true;
 
-    var currentIdx = this.state.currentIdx;
+    const currentIdx = this.state.currentIdx;
 
     if (this.props.styleParams.showArrows) {
       this.props.actions.scrollToItem(currentIdx + dir, false, true);
@@ -97,14 +97,14 @@ class SlideshowView extends React.Component {
   }
 
   createThumbnails(thumbnailPosition) {
-    var currentIdx = this.state.currentIdx; // zero based (3)
+    const currentIdx = this.state.currentIdx; // zero based (3)
     console.log('creating thumbnails for idx', currentIdx);
 
-    var width = this.props.thumbnailSize;
-    var height = this.props.thumbnailSize;
+    let width = this.props.thumbnailSize;
+    let height = this.props.thumbnailSize;
 
-    var oneRow;
-    var numOfThumbnails;
+    let oneRow;
+    let numOfThumbnails;
 
     switch (thumbnailPosition) {
       case 'top':
@@ -144,10 +144,10 @@ class SlideshowView extends React.Component {
       numOfThumbnails += 1;
       this.lastItemIdx += 1;
     }
-    var thumbnailsContainerSize = numOfThumbnails * this.props.thumbnailSize;
-    var thumbnailsStyle = {width, height};
+    const thumbnailsContainerSize = numOfThumbnails * this.props.thumbnailSize;
+    const thumbnailsStyle = {width, height};
 
-    if ((currentIdx > ((numOfThumbnails / 2) - 1)) && (currentIdx < (this.props.items.length - (numOfThumbnails / 2))) )  { //set selected to center only if neeeded
+    if ((currentIdx > ((numOfThumbnails / 2) - 1)) && (currentIdx < (this.props.items.length - (numOfThumbnails / 2)))) { //set selected to center only if neeeded
       switch (thumbnailPosition) {
         case 'top':
         case 'bottom':
@@ -173,18 +173,18 @@ class SlideshowView extends React.Component {
           thumbnailsStyle.marginTop = 0;
           break;
       }
-    } else if (this.lastItemIdx > numOfThumbnails && currentIdx >= this.lastItemIdx - 3 ) { //scroll to the left/top if the chosen thumbnail is one of the last three
-      let entireThumbnailsSize = thumbnailsContainerSize - this.props.styleParams.thumbnailSpacings;
+    } else if (this.lastItemIdx > numOfThumbnails && currentIdx >= this.lastItemIdx - 3) { //scroll to the left/top if the chosen thumbnail is one of the last three
+      const entireThumbnailsSize = thumbnailsContainerSize - this.props.styleParams.thumbnailSpacings;
       switch (thumbnailPosition) {
         case 'top':
         case 'bottom':
           thumbnailsStyle.left = (width - entireThumbnailsSize) + 'px';
-          thumbnailsStyle['overflow'] = 'visible';
+          thumbnailsStyle.overflow = 'visible';
           break;
         case 'left':
         case 'right':
           thumbnailsStyle.top = (height - entireThumbnailsSize) + 'px';
-          thumbnailsStyle['overflow'] = 'visible';
+          thumbnailsStyle.overflow = 'visible';
           break;
       }
     }
@@ -194,9 +194,9 @@ class SlideshowView extends React.Component {
       galleryHeight: height
     });
 
-    var thumbnailsLayout = this.props.convertToGalleryItems(new Layouter({
+    const thumbnailsLayout = this.props.convertToGalleryItems(new Layouter({
       items: this.props.items.slice(this.firstItemIdx, this.lastItemIdx + 1),
-      container: container,
+      container,
       watermark: this.props.watermark,
       styleParams: {
         gotStyleParams: false,
@@ -214,17 +214,17 @@ class SlideshowView extends React.Component {
         collageDensity: 0,
         cubeRatio: 1,
         fixedColumns: 0,
-        oneRow: oneRow
+        oneRow
       },
       gotScrollEvent: true,
       showAllItems: true
     }, {watermark: this.props.watermark}));
 
-    var thumbnailsConfig = {
+    const thumbnailsConfig = {
       scroll: _.merge({}, this.props.scroll, {}),
       thumbnailHighlightId: _.get(this, `props.items.${currentIdx}.itemId`),
       watermark: this.props.watermark,
-      container: container,
+      container,
       styleParams: _.merge({}, this.props.styleParams, {
         allowSocial: false,
         allowDownload: false,
@@ -271,7 +271,7 @@ class SlideshowView extends React.Component {
     }
 
     const thumbnails = (
-      <div className={"pro-gallery inline-styles thumbnails-gallery " + (oneRow ? " one-row hide-scrollbars " : "") + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
+      <div className={'pro-gallery inline-styles thumbnails-gallery ' + (oneRow ? ' one-row hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
            style={{
              width,
              height,
@@ -281,9 +281,9 @@ class SlideshowView extends React.Component {
 
         {thumbnailsLayout.columns.map((column, c) => {
           return (
-            <div data-hook='gallery-column' className="gallery-column" key={'thumbnails-column' + c}
+            <div data-hook="gallery-column" className="gallery-column" key={'thumbnails-column' + c}
                  style={thumbnailsStyle}>
-              {column.map((group) => React.createElement(GroupView, group.renderProps(thumbnailsConfig)))}
+              {column.map(group => React.createElement(GroupView, group.renderProps(thumbnailsConfig)))}
             </div>
           );
 
@@ -296,15 +296,15 @@ class SlideshowView extends React.Component {
   }
 
   setFlattenItems(galleryStructure) {
-    var flatItems = _.flattenDeep(galleryStructure.columns.map((column, c) => {
+    const flatItems = _.flattenDeep(galleryStructure.columns.map((column, c) => {
       return column.map((group, g) => {
-        return group.items
+        return group.items;
       });
     }));
 
     this.setState({
       flatItems
-    })
+    });
   }
 
   setCurrentItemByScroll() {
@@ -317,11 +317,11 @@ class SlideshowView extends React.Component {
       return;
     }
 
-    var scrollLeft = this.container.scrollLeft();
+    const scrollLeft = this.container.scrollLeft();
 
-    var items = this.state.flatItems;
+    const items = this.state.flatItems;
 
-    var currentIdx;
+    let currentIdx;
 
     for (var item, i = 0; item = items[i]; i++) {
       if (item.offset.left >= scrollLeft + ((this.props.container.galleryWidth - item.width) / 2)) {
@@ -332,7 +332,7 @@ class SlideshowView extends React.Component {
 
     if (!_.isUndefined(currentIdx)) {
       utils.setStateAndLog(this, 'Set Current Item', {
-        currentIdx: currentIdx
+        currentIdx
       });
     }
   }
@@ -381,20 +381,20 @@ class SlideshowView extends React.Component {
 
   render() {
     if (utils.isDev()) {
-      console.count("galleryView render");
+      console.count('galleryView render');
 
       //this.gallery = this.prepareGallery(this.state.images);
       console.count('Rendering Gallery count');
       console.time('Rendering Gallery took ');
     }
 
-    var loader = (this.totalItemsCount > this.props.renderedItemsCount) ? (
+    const loader = (this.totalItemsCount > this.props.renderedItemsCount) ? (
       <div className="more-items-loader"><i className="pro-circle-preloader"/></div>
     ) : false;
 
-    var navArrows = [
+    let navArrows = [
       (this.isFirstItem() ? '' : <button
-        className={"nav-arrows-container prev "}
+        className={'nav-arrows-container prev '}
         onClick={() => this.nextItem(-1)}
         aria-label="Previous Item"
         tabIndex={utils.getTabIndex('slideshowPrev')}
@@ -404,7 +404,7 @@ class SlideshowView extends React.Component {
         <img src={`${window.staticsUrl}assets/images/arrows/arrow-left.svg`} />
       </button>),
       (this.isLastItem() ? '' : <button
-        className={"nav-arrows-container next"}
+        className={'nav-arrows-container next'}
         onClick={() => this.nextItem(1)}
         aria-label="Next Item"
         tabIndex={utils.getTabIndex('slideshowNext')}
@@ -415,11 +415,11 @@ class SlideshowView extends React.Component {
       </button>)
     ];
 
-    var debugMsg = (
+    const debugMsg = (
       <GalleryDebugMessage {...this.props.debug} />
     );
 
-    var galleryConfig = {
+    const galleryConfig = {
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,
@@ -434,17 +434,17 @@ class SlideshowView extends React.Component {
       }
     };
 
-    var layout = (
+    const layout = (
       this.props.galleryStructure.columns.map((column, c) => {
 
-        var marginLeft = 0;
-        var firstGroup = _.find(column, (group) => group.rendered) || {};
+        let marginLeft = 0;
+        const firstGroup = _.find(column, group => group.rendered) || {};
         if (this.props.gotScrollEvent) {
           marginLeft = firstGroup.left || 0;
         }
 
         //remove navBars if no scroll is needed and is column layout
-        const allRenderedGroups = _.filter(column, (group) => group.rendered) || [];
+        const allRenderedGroups = _.filter(column, group => group.rendered) || [];
         const allGroupsWidth = allRenderedGroups.reduce((sum, group) => {
           return sum + group.width;
         }, 0);
@@ -454,27 +454,27 @@ class SlideshowView extends React.Component {
         }
 
         return (
-          <div data-hook='gallery-column' className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
+          <div data-hook="gallery-column" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
                style={{width: this.props.galleryStructure.colWidth}}>
             <div className="gallery-left-padding" style={{width: marginLeft}}></div>
-            {column.map((group) => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store} )) : false)}
+            {column.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
           </div>
         );
 
       })
     );
 
-    var hasThumbnails = this.props.styleParams.hasThumbnails;
-    var thumbnailsPosition = this.props.styleParams.galleryThumbnailsAlignment;
+    const hasThumbnails = this.props.styleParams.hasThumbnails;
+    const thumbnailsPosition = this.props.styleParams.galleryThumbnailsAlignment;
 
-    var thumbnailsGallery = hasThumbnails ? this.createThumbnails(thumbnailsPosition) : false;
+    const thumbnailsGallery = hasThumbnails ? this.createThumbnails(thumbnailsPosition) : false;
 
-    var galleryStyle = {
+    const galleryStyle = {
       height: this.props.container.galleryHeight,
       width: this.props.container.galleryWidth
     };
 
-    var thumbnails = [];
+    const thumbnails = [];
     switch (thumbnailsPosition) {
       case 'top':
       case 'left':
@@ -488,8 +488,8 @@ class SlideshowView extends React.Component {
         break;
     }
 
-    var gallery = (
-      <div id="pro-gallery-container" className={"pro-gallery inline-styles one-row hide-scrollbars " + (this.props.styleParams.enableScroll ? " slider " : "") + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
+    const gallery = (
+      <div id="pro-gallery-container" className={'pro-gallery inline-styles one-row hide-scrollbars ' + (this.props.styleParams.enableScroll ? ' slider ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
            style={galleryStyle}
       >
         {debugMsg}

@@ -1,15 +1,14 @@
 'use strict';
-import {Layouter, Item} from 'pro-gallery-layouter';
-import GalleryItem from '../item/galleryItem';
-import {testImages} from '../test/images-mock.js';
-import {createStore, applyMiddleware} from 'redux'
-import { mount} from 'enzyme';
-import {GalleryContainer} from './galleryContainer.js'; //import GalleryContainer before the connect (without redux)
+import {Layouter} from 'pro-gallery-layouter';
+import GalleryItem from '../src/components/item/galleryItem';
+import {testImages} from './images-mock.js';
+import {mount} from 'enzyme';
+import {GalleryContainer} from '../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
 import _ from 'lodash';
-import React from 'react';
 import configureStore from 'redux-mock-store';
-import { utils } from '../../utils/index.js';
-import consts from '../consts.js';
+import utils from '../src/utils';
+import {Consts} from 'photography-client-lib';
+import React from 'react';
 
 const mockStore = configureStore();
 
@@ -24,28 +23,28 @@ class galleryDriver {
   overrideUtilsForTests() {
     utils.isInWix = () => {
       return true;
-    }
+    };
     utils.isMobile = () => {
       return false;
-    }
+    };
     utils.isTouch = () => {
       return false;
-    }
+    };
     utils.isInWix = () => {
       return true;
-    }
+    };
     utils.getScreenWidth = () => {
       return 1024;
-    }
+    };
     utils.getScreenHeight = () => {
       return 768;
-    }
+    };
     utils.isTest = () => {
       return true;
-    }
+    };
     utils.isVerbose = () => {
       return false;
-    }
+    };
   }
 
   initDefaults() {
@@ -62,7 +61,7 @@ class galleryDriver {
         renderedTop: 0,
         renderedBottom: 3000
       },
-    }
+    };
 
     this.styleParams = {
       gotStyleParams: true,
@@ -105,14 +104,14 @@ class galleryDriver {
       hasThumbnails: false,
       galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,
-      titlePlacement: consts.placements.SHOW_ON_HOVER,
+      titlePlacement: Consts.placements.SHOW_ON_HOVER,
     };
 
     this.scroll = {
       top: 0,
       base: 0,
       isInfinite: true
-    }
+    };
 
     this.items = _.cloneDeep(testImages);
 
@@ -122,7 +121,7 @@ class galleryDriver {
       pauseAllVideos: _.noop,
       setWixHeight: _.noop,
       scrollToItem: _.noop
-    }
+    };
 
     this.layoutParams = {
       items: this.items,
@@ -137,10 +136,10 @@ class galleryDriver {
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions
-    }
+    };
   }
 
-  get get () {
+  get get() {
     return {
       container: this.container,
       styleParams: this.styleParams,
@@ -150,16 +149,16 @@ class galleryDriver {
       layoutParams: this.layoutParams,
       galleryStructure: this.galleryStructure,
       galleryConfig: this.galleryConfig
-    }
+    };
   }
 
-  get mount () {
+  get mount() {
     return {
-      galleryContainer: (props) => {
+      galleryContainer: props => {
 
-          const defaultProps = this.create.galleryContainerProps()
-          props = _.merge(defaultProps, (props || {}));
-          var root = mount(
+        const defaultProps = this.create.galleryContainerProps();
+        props = _.merge(defaultProps, (props || {}));
+        const root = mount(
             <GalleryContainer
               store={mockStore({})}
               actions={{}}
@@ -168,10 +167,10 @@ class galleryDriver {
           );
         return root;
       }
-    }
+    };
   }
 
-  get create () {
+  get create() {
     return {
       galleryContainerProps: () => {
         const layout = {
@@ -184,12 +183,12 @@ class galleryDriver {
           items: this.items,
           totalItemsCount: this.items.length,
           layout
-        }
+        };
       },
 
-      galleryViewProps: (galleryViewProps) => {
+      galleryViewProps: galleryViewProps => {
 
-        if (typeof(galleryViewProps) == 'undefined') {
+        if (typeof (galleryViewProps) === 'undefined') {
           galleryViewProps = {
             totalItemsCount: 100,
             renderedItemsCount: 20,
@@ -202,37 +201,37 @@ class galleryDriver {
           };
         }
 
-        var layoutParams = {
+        const layoutParams = {
           items: galleryViewProps.items,
           container: galleryViewProps.container,
           styleParams: galleryViewProps.styleParams
         };
 
-        galleryStructure = GalleryContainer.convertToGalleryItems(new Layouter(layoutParams));
+        const galleryStructure = GalleryContainer.convertToGalleryItems(new Layouter(layoutParams));
 
         return {
           totalItemsCount: galleryViewProps.totalItemsCount || 100,
           renderedItemsCount: galleryViewProps.renderedItemsCount || 20,
           items: galleryViewProps.items,
-          galleryStructure: galleryStructure,
+          galleryStructure,
           scroll: galleryViewProps.scroll,
           container: galleryViewProps.container,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
           store: mockStore({})
-        }
+        };
 
       },
 
       itemViewProps: (itemDto, galleryConfig) => {
 
-        var newGalleryConfig = galleryConfig || this.get.galleryConfig;
+        const newGalleryConfig = galleryConfig || this.get.galleryConfig;
 
-        let galleryItem = new GalleryItem({dto: itemDto});
+        const galleryItem = new GalleryItem({dto: itemDto});
         return _.merge(galleryItem.renderProps(newGalleryConfig), {config: newGalleryConfig, visible: true});
 
       }
-    }
+    };
   }
 
 }

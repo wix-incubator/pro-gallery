@@ -1,14 +1,14 @@
 'use strict';
 
-import SlideshowView from './slideshowView.js';
 import GalleryDriver from './galleryDriver.js';
-import { shallow, mount } from 'enzyme';
+import {mount} from 'enzyme';
 import React from 'react';
+import SlideshowView from '../src/components/gallery/slideshowView';
 
 describe('Slideshow View', () => {
 
-  var galleryDriver;
-  var galleryViewProps;
+  let galleryDriver;
+  let galleryViewProps;
 
   beforeEach(() => {
 
@@ -29,7 +29,7 @@ describe('Slideshow View', () => {
         {...galleryViewProps}
       />);
 
-      expect(wrapper.find({ 'data-hook': 'gallery-column' }).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'gallery-column'}).length).toBe(1);
     });
 
     it('init empty gallery', () => {
@@ -40,7 +40,7 @@ describe('Slideshow View', () => {
         {...galleryDriver.create.galleryViewProps(galleryViewProps) }
       />);
 
-      expect(wrapper.find({ 'data-hook': 'gallery-column' }).length).toBe(0);
+      expect(wrapper.find({'data-hook': 'gallery-column'}).length).toBe(0);
     });
 
     it('should show arrows', () => {
@@ -49,7 +49,7 @@ describe('Slideshow View', () => {
         {...galleryDriver.create.galleryViewProps(galleryViewProps) }
       />);
 
-      expect(wrapper.find({ 'data-hook': 'nav-arrow-next' }).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'nav-arrow-next'}).length).toBe(1);
     });
 
     // it('should show thumbnails', () => {

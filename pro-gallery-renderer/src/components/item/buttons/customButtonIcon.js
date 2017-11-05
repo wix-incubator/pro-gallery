@@ -8,5 +8,5 @@ export default function CustomButtonIcon() {
       <path fill="currentColor" d="M25.53553353 8.0000001l.7071068.7071068-3.53553392 3.5355339-.70710676-.7071068z"/>
       <path fill="currentColor" d="M19.0000001 8.70710647l.7071068-.7071068 3.5355339 3.53553392-.7071068.70710676z"/>
     </g>
-  </svg>
+  </svg>;
 }

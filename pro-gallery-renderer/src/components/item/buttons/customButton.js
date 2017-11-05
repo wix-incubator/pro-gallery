@@ -1,5 +1,5 @@
-import React from 'react'
-import CustomButtonIcon from './customButtonIcon.js'
+import React from 'react';
+import CustomButtonIcon from './customButtonIcon.js';
 import {utils} from '../../../utils/index.js';
 
 export default class CustomButton extends React.Component {
@@ -9,11 +9,11 @@ export default class CustomButton extends React.Component {
   }
 
   render() {
-    var {styleParams} = this.props;
-    var defaultText = utils.isStoreGallery() ? "Buy Now" : "Click here";
-    var buttonText = styleParams.customButtonText || defaultText;
+    const {styleParams} = this.props;
+    const defaultText = utils.isStoreGallery() ? 'Buy Now' : 'Click here';
+    const buttonText = styleParams.customButtonText || defaultText;
     return (
-      <div className="custom-button-wrapper" style={{ justifyContent: styleParams.galleryHorizontalAlign }}>
+      <div className="custom-button-wrapper" style={{justifyContent: styleParams.galleryHorizontalAlign}}>
         {this.props.small ?
           <CustomButtonIcon /> :
           <button onClick={() => logger.trackBi(logger.biEvents.buyNowClick)}
@@ -24,6 +24,6 @@ export default class CustomButton extends React.Component {
           </button>
         }
       </div>
-   );
+    );
   }
 }

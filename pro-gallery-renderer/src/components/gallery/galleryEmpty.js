@@ -1,5 +1,5 @@
 import React from 'react';
-import {TranslationUtil} from '../../utils'
+import {TranslationUtil} from '../../utils';
 import {utils} from '../../utils';
 
 
@@ -16,7 +16,7 @@ class GalleryEmpty extends React.Component {
   render() {
     console.log('Not rendering - gallery is empty');
 
-    var emptyContent = utils.isStoreGallery() ? (
+    const emptyContent = utils.isStoreGallery() ? (
       <div>
         <div className="pro-gallery-empty-title">
           {TranslationUtil.getByKey('Gallery_ArtStore_Organize_Images_EmptyState_Header')}<br/>
@@ -43,7 +43,7 @@ class GalleryEmpty extends React.Component {
           {emptyContent}
         </div>
       </div>
-    )
+    );
   }
 }
 

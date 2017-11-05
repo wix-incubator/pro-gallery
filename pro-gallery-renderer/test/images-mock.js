@@ -1,6 +1,6 @@
 'use strict';
 
-let testImages = [{
+const testImages = [{
   metadata: {
     height: 1000,
     lastModified: 1445860855,
@@ -2213,38 +2213,38 @@ let testImages = [{
   url: '8bb438_e1d1af8cd51a452b9b24dcebdc665805.jpg'
 }];
 
-let testVideos = [{
-  'itemId': 'd19570fa-e97f-4b3d-b8ad-4e24b3a9a3ec',
+const testVideos = [{
+  itemId: 'd19570fa-e97f-4b3d-b8ad-4e24b3a9a3ec',
   url: '0d72ac_31569a98fd8d436f98ae9c827c216443',
-  'orderIndex': 1.447790730099E8,
-  'metadata': {
+  orderIndex: 1.447790730099E8,
+  metadata: {
     name: '342278662.mp4',
     size: 8941842,
     lastModified: 1431352380000,
     width: 1920,
-    'height': 1080,
-    'type': 'video',
-    'posters': [{
-      'url': '0d72ac_31569a98fd8d436f98ae9c827c216443f000.jpg',
+    height: 1080,
+    type: 'video',
+    posters: [{
+      url: '0d72ac_31569a98fd8d436f98ae9c827c216443f000.jpg',
       height: 1080,
       width: 1920
     }, {
-      'url': '0d72ac_31569a98fd8d436f98ae9c827c216443f001.jpg',
-      'height': 1080,
-      'width': 1920
+      url: '0d72ac_31569a98fd8d436f98ae9c827c216443f001.jpg',
+      height: 1080,
+      width: 1920
     }, {
       url: '0d72ac_31569a98fd8d436f98ae9c827c216443f002.jpg',
-      'height': 1080,
-      'width': 1920
+      height: 1080,
+      width: 1920
     }, {url: '0d72ac_31569a98fd8d436f98ae9c827c216443f003.jpg', height: 1080, width: 1920}],
     duration: 14914,
-    'qualities': [{
-      'formats': ['mp4', 'webm'],
-      'height': 480,
-      'quality': '480p',
-      'width': 854
-    }, {'formats': ['mp4', 'webm'], height: 720, 'quality': '720p', 'width': 1280}, {
-      'formats': ['mp4', 'webm'],
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
       height: 1080,
       quality: '1080p',
       width: 1920
@@ -2253,257 +2253,257 @@ let testVideos = [{
 }, {
   itemId: '5f51db65-4104-447b-b675-94657671a73f',
   url: '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dc',
-  'orderIndex': 1.447790760099E8,
-  'metadata': {
+  orderIndex: 1.447790760099E8,
+  metadata: {
     name: '343014810.mp4',
     size: 23225503,
-    'lastModified': 1435064726000,
+    lastModified: 1435064726000,
     width: 1920,
     height: 1080,
-    'type': 'video',
-    'posters': [{
-      'url': '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf000.jpg',
+    type: 'video',
+    posters: [{
+      url: '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf000.jpg',
       height: 1080,
       width: 1920
     }, {
-      'url': '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf001.jpg',
-      'height': 1080,
+      url: '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf001.jpg',
+      height: 1080,
       width: 1920
     }, {
       url: '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf002.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {'url': '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf003.jpg', height: 1080, width: 1920}],
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf003.jpg', height: 1080, width: 1920}],
     duration: 44878,
     qualities: [{
-      'formats': ['mp4', 'webm'],
+      formats: ['mp4', 'webm'],
       height: 480,
       quality: '480p',
-      'width': 854
-    }, {formats: ['mp4', 'webm'], 'height': 720, 'quality': '720p', 'width': 1280}, {
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
       formats: ['mp4', 'webm'],
       height: 1080,
       quality: '1080p',
-      'width': 1920
+      width: 1920
     }]
   }
 }, {
   itemId: '98c5601c-3486-452b-933c-49cb451d676f',
   url: '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0db',
-  'orderIndex': 1.447790830099E8,
-  'metadata': {
+  orderIndex: 1.447790830099E8,
+  metadata: {
     name: 'Loop_NightRide1 (1).mp4',
-    'size': 50631228,
+    size: 50631228,
     lastModified: 1441172756000,
     width: 1920,
-    'height': 1080,
+    height: 1080,
     type: 'video',
     posters: [{
-      'url': '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf000.jpg',
+      url: '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf000.jpg',
       height: 1080,
-      'width': 1920
+      width: 1920
     }, {
       url: '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf001.jpg',
       height: 1080,
       width: 1920
     }, {
-      'url': '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf002.jpg',
+      url: '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf002.jpg',
       height: 1080,
       width: 1920
-    }, {url: '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf003.jpg', height: 1080, 'width': 1920}],
-    'duration': 24290,
-    'qualities': [{
-      formats: ['mp4', 'webm'],
-      height: 480,
-      quality: '480p',
-      'width': 854
-    }, {'formats': ['mp4', 'webm'], height: 720, 'quality': '720p', 'width': 1280}, {
-      formats: ['mp4', 'webm'],
-      'height': 1080,
-      'quality': '1080p',
-      width: 1920
-    }]
-  }
-}, {
-  'itemId': '8dc4f30b-85cc-4795-9aa5-5ccb1bdb4ef1',
-  'url': '0d72ac_11bbc686975e49caa89013d03e05d554',
-  orderIndex: 1.447790870099E8,
-  'metadata': {
-    'name': 'file (2).mp4',
-    'size': 408855,
-    'lastModified': 1456217552000,
-    width: 1920,
-    'height': 1080,
-    type: 'video',
-    posters: [{
-      url: '0d72ac_11bbc686975e49caa89013d03e05d554f000.jpg',
-      'height': 1080,
-      width: 1920
-    }, {
-      'url': '0d72ac_11bbc686975e49caa89013d03e05d554f001.jpg',
-      'height': 1080,
-      width: 1920
-    }, {
-      'url': '0d72ac_11bbc686975e49caa89013d03e05d554f002.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {'url': '0d72ac_11bbc686975e49caa89013d03e05d554f003.jpg', height: 1080, width: 1920}],
-    duration: 767,
-    'qualities': [{
-      'formats': ['mp4', 'webm'],
-      height: 480,
-      'quality': '480p',
-      width: 854
-    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
-      'formats': ['mp4', 'webm'],
-      'height': 1080,
-      quality: '1080p',
-      'width': 1920
-    }]
-  }
-}, {
-  'itemId': '1fc26b40-8e53-4de2-afa7-eefa8be40a01',
-  'url': '0d72ac_ec7acce34f9a48e4adcca80aa7f46827',
-  'orderIndex': 1.447790890099E8,
-  'metadata': {
-    'name': '343287604.mp4',
-    'size': 6873451,
-    lastModified: 1435063896000,
-    'width': 1920,
-    height: 1080,
-    'type': 'video',
-    'posters': [{
-      url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f000.jpg',
-      height: 1080,
-      width: 1920
-    }, {
-      url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f001.jpg',
-      'height': 1080,
-      width: 1920
-    }, {
-      'url': '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f002.jpg',
-      height: 1080,
-      width: 1920
-    }, {url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f003.jpg', 'height': 1080, width: 1920}],
-    'duration': 15048,
-    'qualities': [{
-      'formats': ['mp4', 'webm'],
-      height: 480,
-      'quality': '480p',
-      width: 854
-    }, {formats: ['mp4', 'webm'], 'height': 720, quality: '720p', 'width': 1280}, {
-      formats: ['mp4', 'webm'],
-      height: 1080,
-      quality: '1080p',
-      'width': 1920
-    }]
-  }
-}, {
-  'itemId': '97143d61-94ef-42af-83b2-dc91ade1b5ed',
-  'url': '0d72ac_8473aaf089cf4f78ad4e037c9340db47',
-  'orderIndex': 1.447790960099E8,
-  'metadata': {
-    'name': '343806063.mp4',
-    'size': 33711266,
-    'lastModified': 1435064606000,
-    'width': 1920,
-    'height': 1080,
-    'type': 'video',
-    'posters': [{
-      url: '0d72ac_8473aaf089cf4f78ad4e037c9340db47f000.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {
-      'url': '0d72ac_8473aaf089cf4f78ad4e037c9340db47f001.jpg',
-      height: 1080,
-      width: 1920
-    }, {
-      'url': '0d72ac_8473aaf089cf4f78ad4e037c9340db47f002.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {'url': '0d72ac_8473aaf089cf4f78ad4e037c9340db47f003.jpg', height: 1080, width: 1920}],
-    'duration': 56656,
-    'qualities': [{
-      formats: ['mp4', 'webm'],
-      height: 480,
-      'quality': '480p',
-      width: 854
-    }, {formats: ['mp4', 'webm'], height: 720, 'quality': '720p', 'width': 1280}, {
-      formats: ['mp4', 'webm'],
-      height: 1080,
-      'quality': '1080p',
-      'width': 1920
-    }]
-  }
-}, {
-  'itemId': 'b801aac0-90d0-439e-9bdf-ad01491f75ae',
-  'url': '0d72ac_648a202922414ffa836f639dee9ef389',
-  'orderIndex': 1.447791000099E8,
-  'metadata': {
-    'name': '343287517.mp4',
-    'size': 32830839,
-    'lastModified': 1435064406000,
-    'width': 1920,
-    'height': 1080,
-    'type': 'video',
-    'posters': [{
-      url: '0d72ac_648a202922414ffa836f639dee9ef389f000.jpg',
-      height: 1080,
-      width: 1920
-    }, {
-      'url': '0d72ac_648a202922414ffa836f639dee9ef389f001.jpg',
-      height: 1080,
-      'width': 1920
-    }, {
-      url: '0d72ac_648a202922414ffa836f639dee9ef389f002.jpg',
-      height: 1080,
-      'width': 1920
-    }, {'url': '0d72ac_648a202922414ffa836f639dee9ef389f003.jpg', 'height': 1080, width: 1920}],
-    duration: 55221,
-    'qualities': [{
-      'formats': ['mp4', 'webm'],
-      height: 480,
-      quality: '480p',
-      width: 854
-    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', 'width': 1280}, {
-      formats: ['mp4', 'webm'],
-      height: 1080,
-      'quality': '1080p',
-      width: 1920
-    }]
-  }
-}, {
-  itemId: 'b83065cf-fe90-40be-951e-f5ceef8bb4c2',
-  'url': '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4',
-  orderIndex: 1.447791040099E8,
-  metadata: {
-    'name': 'file (1).mp4',
-    'size': 18347300,
-    'lastModified': 1456217585000,
-    'width': 1920,
-    'height': 1080,
-    type: 'video',
-    posters: [{
-      url: '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f000.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {
-      'url': '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f001.jpg',
-      height: 1080,
-      width: 1920
-    }, {
-      'url': '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f002.jpg',
-      height: 1080,
-      width: 1920
-    }, {url: '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f003.jpg', height: 1080, 'width': 1920}],
-    'duration': 25480,
+    }, {url: '0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf003.jpg', height: 1080, width: 1920}],
+    duration: 24290,
     qualities: [{
       formats: ['mp4', 'webm'],
       height: 480,
       quality: '480p',
       width: 854
-    }, {'formats': ['mp4', 'webm'], 'height': 720, 'quality': '720p', width: 1280}, {
-      'formats': ['mp4', 'webm'],
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
+      width: 1920
+    }]
+  }
+}, {
+  itemId: '8dc4f30b-85cc-4795-9aa5-5ccb1bdb4ef1',
+  url: '0d72ac_11bbc686975e49caa89013d03e05d554',
+  orderIndex: 1.447790870099E8,
+  metadata: {
+    name: 'file (2).mp4',
+    size: 408855,
+    lastModified: 1456217552000,
+    width: 1920,
+    height: 1080,
+    type: 'video',
+    posters: [{
+      url: '0d72ac_11bbc686975e49caa89013d03e05d554f000.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_11bbc686975e49caa89013d03e05d554f001.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_11bbc686975e49caa89013d03e05d554f002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_11bbc686975e49caa89013d03e05d554f003.jpg', height: 1080, width: 1920}],
+    duration: 767,
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
+      width: 1920
+    }]
+  }
+}, {
+  itemId: '1fc26b40-8e53-4de2-afa7-eefa8be40a01',
+  url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827',
+  orderIndex: 1.447790890099E8,
+  metadata: {
+    name: '343287604.mp4',
+    size: 6873451,
+    lastModified: 1435063896000,
+    width: 1920,
+    height: 1080,
+    type: 'video',
+    posters: [{
+      url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f000.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f001.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_ec7acce34f9a48e4adcca80aa7f46827f003.jpg', height: 1080, width: 1920}],
+    duration: 15048,
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
+      width: 1920
+    }]
+  }
+}, {
+  itemId: '97143d61-94ef-42af-83b2-dc91ade1b5ed',
+  url: '0d72ac_8473aaf089cf4f78ad4e037c9340db47',
+  orderIndex: 1.447790960099E8,
+  metadata: {
+    name: '343806063.mp4',
+    size: 33711266,
+    lastModified: 1435064606000,
+    width: 1920,
+    height: 1080,
+    type: 'video',
+    posters: [{
+      url: '0d72ac_8473aaf089cf4f78ad4e037c9340db47f000.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_8473aaf089cf4f78ad4e037c9340db47f001.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_8473aaf089cf4f78ad4e037c9340db47f002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_8473aaf089cf4f78ad4e037c9340db47f003.jpg', height: 1080, width: 1920}],
+    duration: 56656,
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
+      width: 1920
+    }]
+  }
+}, {
+  itemId: 'b801aac0-90d0-439e-9bdf-ad01491f75ae',
+  url: '0d72ac_648a202922414ffa836f639dee9ef389',
+  orderIndex: 1.447791000099E8,
+  metadata: {
+    name: '343287517.mp4',
+    size: 32830839,
+    lastModified: 1435064406000,
+    width: 1920,
+    height: 1080,
+    type: 'video',
+    posters: [{
+      url: '0d72ac_648a202922414ffa836f639dee9ef389f000.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_648a202922414ffa836f639dee9ef389f001.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_648a202922414ffa836f639dee9ef389f002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_648a202922414ffa836f639dee9ef389f003.jpg', height: 1080, width: 1920}],
+    duration: 55221,
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
+      width: 1920
+    }]
+  }
+}, {
+  itemId: 'b83065cf-fe90-40be-951e-f5ceef8bb4c2',
+  url: '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4',
+  orderIndex: 1.447791040099E8,
+  metadata: {
+    name: 'file (1).mp4',
+    size: 18347300,
+    lastModified: 1456217585000,
+    width: 1920,
+    height: 1080,
+    type: 'video',
+    posters: [{
+      url: '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f000.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f001.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f003.jpg', height: 1080, width: 1920}],
+    duration: 25480,
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
       height: 1080,
       quality: '1080p',
       width: 1920
@@ -2512,185 +2512,185 @@ let testVideos = [{
 }, {
   itemId: 'bb20159b-49da-4615-9582-063f701bc830',
   url: '0d72ac_5a0019a04722461aa11b9aaad3b68ce0',
-  'orderIndex': 1.447791050099E8,
+  orderIndex: 1.447791050099E8,
   metadata: {
-    'name': '343639902.mp4',
-    'size': 8768252,
+    name: '343639902.mp4',
+    size: 8768252,
     lastModified: 1435064070000,
     width: 1920,
     height: 1080,
-    'type': 'video',
-    'posters': [{
+    type: 'video',
+    posters: [{
       url: '0d72ac_5a0019a04722461aa11b9aaad3b68ce0f000.jpg',
-      'height': 1080,
+      height: 1080,
       width: 1920
     }, {
-      'url': '0d72ac_5a0019a04722461aa11b9aaad3b68ce0f001.jpg',
-      'height': 1080,
+      url: '0d72ac_5a0019a04722461aa11b9aaad3b68ce0f001.jpg',
+      height: 1080,
       width: 1920
     }, {
       url: '0d72ac_5a0019a04722461aa11b9aaad3b68ce0f002.jpg',
       height: 1080,
-      'width': 1920
-    }, {url: '0d72ac_5a0019a04722461aa11b9aaad3b68ce0f003.jpg', height: 1080, 'width': 1920}],
-    'duration': 15415,
-    'qualities': [{
-      formats: ['mp4', 'webm'],
-      'height': 480,
-      'quality': '480p',
-      'width': 854
-    }, {formats: ['mp4', 'webm'], height: 720, 'quality': '720p', width: 1280}, {
-      formats: ['mp4', 'webm'],
-      'height': 1080,
-      'quality': '1080p',
-      'width': 1920
-    }]
-  }
-}, {
-  itemId: 'c661ca80-5ba7-4961-be5d-2fbbe945913d',
-  'url': '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021',
-  'orderIndex': 1.447791120099E8,
-  metadata: {
-    'name': '342933669.mp4',
-    size: 15939625,
-    lastModified: 1435064682000,
-    width: 1920,
-    'height': 1080,
-    type: 'video',
-    posters: [{
-      'url': '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f000.jpg',
-      height: 1080,
       width: 1920
-    }, {
-      'url': '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f001.jpg',
-      height: 1080,
-      'width': 1920
-    }, {
-      'url': '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f002.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {'url': '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f003.jpg', 'height': 1080, 'width': 1920}],
-    duration: 26993,
+    }, {url: '0d72ac_5a0019a04722461aa11b9aaad3b68ce0f003.jpg', height: 1080, width: 1920}],
+    duration: 15415,
     qualities: [{
       formats: ['mp4', 'webm'],
-      'height': 480,
-      quality: '480p',
-      'width': 854
-    }, {formats: ['mp4', 'webm'], 'height': 720, quality: '720p', 'width': 1280}, {
-      'formats': ['mp4', 'webm'],
-      height: 1080,
-      'quality': '1080p',
-      width: 1920
-    }]
-  }
-}, {
-  'itemId': 'f192d527-0781-4ef1-89f8-d2dde4e6a563',
-  'url': '0d72ac_f60ba42798594ad09b4fa5207967a4cc',
-  orderIndex: 1.447791150099E8,
-  'metadata': {
-    name: '343380914.mp4',
-    'size': 15311752,
-    lastModified: 1435064172000,
-    width: 1920,
-    'height': 1080,
-    'type': 'video',
-    'posters': [{
-      url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf000.jpg',
-      height: 1080,
-      'width': 1920
-    }, {
-      url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf001.jpg',
-      height: 1080,
-      'width': 1920
-    }, {
-      url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf002.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf003.jpg', 'height': 1080, 'width': 1920}],
-    'duration': 25959,
-    'qualities': [{
-      'formats': ['mp4', 'webm'],
       height: 480,
-      'quality': '480p',
+      quality: '480p',
       width: 854
-    }, {'formats': ['mp4', 'webm'], 'height': 720, 'quality': '720p', 'width': 1280}, {
-      'formats': ['mp4', 'webm'],
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
       height: 1080,
       quality: '1080p',
       width: 1920
     }]
   }
 }, {
-  'itemId': '0f541da5-8557-48b0-b2c2-c5c34b33d125',
-  url: '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615',
-  'orderIndex': 1.447791180099E8,
+  itemId: 'c661ca80-5ba7-4961-be5d-2fbbe945913d',
+  url: '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021',
+  orderIndex: 1.447791120099E8,
   metadata: {
-    'name': '343503620.mp4',
-    size: 7199287,
-    'lastModified': 1435064196000,
-    'width': 1920,
+    name: '342933669.mp4',
+    size: 15939625,
+    lastModified: 1435064682000,
+    width: 1920,
     height: 1080,
     type: 'video',
-    'posters': [{
+    posters: [{
+      url: '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f000.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f001.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f003.jpg', height: 1080, width: 1920}],
+    duration: 26993,
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
+      width: 1920
+    }]
+  }
+}, {
+  itemId: 'f192d527-0781-4ef1-89f8-d2dde4e6a563',
+  url: '0d72ac_f60ba42798594ad09b4fa5207967a4cc',
+  orderIndex: 1.447791150099E8,
+  metadata: {
+    name: '343380914.mp4',
+    size: 15311752,
+    lastModified: 1435064172000,
+    width: 1920,
+    height: 1080,
+    type: 'video',
+    posters: [{
+      url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf000.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf001.jpg',
+      height: 1080,
+      width: 1920
+    }, {
+      url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_f60ba42798594ad09b4fa5207967a4ccf003.jpg', height: 1080, width: 1920}],
+    duration: 25959,
+    qualities: [{
+      formats: ['mp4', 'webm'],
+      height: 480,
+      quality: '480p',
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
+      width: 1920
+    }]
+  }
+}, {
+  itemId: '0f541da5-8557-48b0-b2c2-c5c34b33d125',
+  url: '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615',
+  orderIndex: 1.447791180099E8,
+  metadata: {
+    name: '343503620.mp4',
+    size: 7199287,
+    lastModified: 1435064196000,
+    width: 1920,
+    height: 1080,
+    type: 'video',
+    posters: [{
       url: '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f000.jpg',
-      'height': 1080,
+      height: 1080,
       width: 1920
     }, {
       url: '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f001.jpg',
-      'height': 1080,
-      width: 1920
-    }, {
-      'url': '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f002.jpg',
       height: 1080,
       width: 1920
-    }, {url: '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f003.jpg', height: 1080, 'width': 1920}],
+    }, {
+      url: '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f002.jpg',
+      height: 1080,
+      width: 1920
+    }, {url: '0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f003.jpg', height: 1080, width: 1920}],
     duration: 16766,
-    'qualities': [{
-      'formats': ['mp4', 'webm'],
+    qualities: [{
+      formats: ['mp4', 'webm'],
       height: 480,
       quality: '480p',
-      'width': 854
-    }, {formats: ['mp4', 'webm'], height: 720, 'quality': '720p', 'width': 1280}, {
+      width: 854
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
       formats: ['mp4', 'webm'],
-      'height': 1080,
-      'quality': '1080p',
-      'width': 1920
+      height: 1080,
+      quality: '1080p',
+      width: 1920
     }]
   }
 }, {
   itemId: '96858c16-1f77-4d88-a622-6a24442259df',
   url: '0d72ac_3ba52f5159984d78935ad4f950e9aef8',
   orderIndex: 1.447791280099E8,
-  'metadata': {
+  metadata: {
     name: '343635634.mp4',
-    'size': 2537847,
-    'lastModified': 1435064458000,
+    size: 2537847,
+    lastModified: 1435064458000,
     width: 1920,
     height: 1080,
-    'type': 'video',
+    type: 'video',
     posters: [{
-      'url': '0d72ac_3ba52f5159984d78935ad4f950e9aef8f000.jpg',
+      url: '0d72ac_3ba52f5159984d78935ad4f950e9aef8f000.jpg',
       height: 1080,
       width: 1920
     }, {
       url: '0d72ac_3ba52f5159984d78935ad4f950e9aef8f001.jpg',
-      'height': 1080,
-      'width': 1920
-    }, {
-      'url': '0d72ac_3ba52f5159984d78935ad4f950e9aef8f002.jpg',
       height: 1080,
-      'width': 1920
+      width: 1920
+    }, {
+      url: '0d72ac_3ba52f5159984d78935ad4f950e9aef8f002.jpg',
+      height: 1080,
+      width: 1920
     }, {url: '0d72ac_3ba52f5159984d78935ad4f950e9aef8f003.jpg', height: 1080, width: 1920}],
     duration: 7974,
     qualities: [{
       formats: ['mp4', 'webm'],
       height: 480,
-      'quality': '480p',
+      quality: '480p',
       width: 854
-    }, {formats: ['mp4', 'webm'], 'height': 720, quality: '720p', width: 1280}, {
-      'formats': ['mp4', 'webm'],
-      'height': 1080,
-      'quality': '1080p',
+    }, {formats: ['mp4', 'webm'], height: 720, quality: '720p', width: 1280}, {
+      formats: ['mp4', 'webm'],
+      height: 1080,
+      quality: '1080p',
       width: 1920
     }]
   }

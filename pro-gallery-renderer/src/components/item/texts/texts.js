@@ -3,7 +3,7 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import consts from '../../consts.js';
+import {Consts} from 'photography-client-lib';
 import {utils} from '../../../utils/index.js';
 
 export default class Texts extends React.Component {
@@ -13,7 +13,7 @@ export default class Texts extends React.Component {
 
   getElementClassNames() {
     const {showShare, styleParams, isNarrow} = this.props;
-    let classNames = ['gallery-item-text'];
+    const classNames = ['gallery-item-text'];
     if (showShare) {
       classNames.push('hidden');
     }
@@ -24,7 +24,7 @@ export default class Texts extends React.Component {
       classNames.push('push-down');
     }
     if (isNarrow) {
-      classNames.push('narrow-item')
+      classNames.push('narrow-item');
     }
 
     return classNames.join(' ');
@@ -37,10 +37,10 @@ export default class Texts extends React.Component {
 
   getElementStyle() {
     const {styleParams, style} = this.props;
-    let textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails;
-    let isCentered = style.justifyContent == 'center';
+    const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails;
+    const isCentered = style.justifyContent == 'center';
 
-    var elementStyle = {
+    const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,
       alignItems: styleParams.galleryHorizontalAlign,
       textAlign: styleParams.galleryTextAlign,
@@ -59,14 +59,14 @@ export default class Texts extends React.Component {
   }
 
   getItemTexts() {
-    var titleElem = null;
-    var descriptionElem = null;
-    var buttonElem = null;
+    let titleElem = null;
+    let descriptionElem = null;
+    let buttonElem = null;
 
     const {title, description, fileName, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
-    var displayTitle = (title || fileName)
-    let shouldShowTitle = displayTitle && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement == consts.placements.SHOW_ON_HOVER;
-    let shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
+    const displayTitle = (title || fileName);
+    const shouldShowTitle = displayTitle && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement == Consts.placements.SHOW_ON_HOVER;
+    const shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
     const shouldHaveBottomSpaceInTitle = shouldShowDescription || this.allowAnyAction();
 
     if (shouldShowTitle) {
@@ -78,19 +78,21 @@ export default class Texts extends React.Component {
     }
 
     if (shouldShowButton) {
-      buttonElem = <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>
+      buttonElem = <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
     }
 
-    let shouldHideElement = !titleElem && !descriptionElem && !buttonElem;
+    const shouldHideElement = !titleElem && !descriptionElem && !buttonElem;
     if (shouldHideElement) {
       return null;
     }
 
-    var elementStyle = this.getElementStyle();
-    var classNames = this.getElementClassNames();
+    const elementStyle = this.getElementStyle();
+    const classNames = this.getElementClassNames();
 
     return (
-      <div style={elementStyle} ref={x => { this.container = x } } className={classNames}>
+      <div style={elementStyle} ref={x => {
+        this.container = x;
+      } } className={classNames}>
         {titleElem}
         {descriptionElem}
         {buttonElem}

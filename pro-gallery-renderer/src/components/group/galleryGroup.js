@@ -1,14 +1,15 @@
 ////// <reference path="../../reference.ts" />
-import {utils} from '../../utils/index';
+import utils from '../../utils/index';
+import _ from 'lodash';
 import {Group} from 'pro-gallery-layouter';
 
 class GalleryGroup {
 
   constructor(config) {
-    
-    this.uniqueId = utils.getUUID();
+
+    this.uniqueId = utils.generateUUID();
     this.isGalleryGroup = true;
-  
+
     if (config.dto && config.dto.dto) {
       config.dto = config.dto.dto; //defence patch due to mis-use of item-core
       if (utils.isDev()) {
@@ -23,7 +24,7 @@ class GalleryGroup {
     } else {
       this.processScheme(new Group({dto: config.dto}).scheme);
     }
-    
+
     if (config.items) {
       this.items = config.items;
     } else {
@@ -31,7 +32,7 @@ class GalleryGroup {
     }
 
   }
-  
+
   processScheme(scheme) {
     this.id = scheme.id;
     this.idx = scheme.idx;
@@ -47,9 +48,9 @@ class GalleryGroup {
     this.rendered = scheme.rendered;
     this.required = scheme.required;
   }
-  
+
   renderProps(galleryConfig) {
-    
+
     return {
       className: 'group',
       id: this.id,
@@ -68,11 +69,11 @@ class GalleryGroup {
       galleryConfig,
     };
   }
-  
+
   get key() {
     return 'group_' + this.id;
   }
-  
+
 }
 
 /*

@@ -17,11 +17,11 @@ describe('Gallery Container', () => {
 
     let wrapper;
     let fullscreenOpened;
-    let idx = 1;
+    const idx = 1;
 
     beforeEach(() => {
 
-      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      const galleryContainerProps = galleryDriver.create.galleryContainerProps();
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
 
       wrapper.instance().reRender('Items');
@@ -70,7 +70,7 @@ describe('Gallery Container', () => {
 
     beforeEach(() => {
 
-      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      const galleryContainerProps = galleryDriver.create.galleryContainerProps();
       galleryContainerProps.renderedItemsCount = 50;
 
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
@@ -99,7 +99,7 @@ describe('Gallery Container', () => {
 
     it('should load only 50 items before scroll if items are large', () => {
 
-      let renderedItemsCount = wrapper.state().renderedItemsCount;
+      const renderedItemsCount = wrapper.state().renderedItemsCount;
 
       wrapper.setState({
         styleParams: _.merge({}, wrapper.state().styleParams, {
@@ -115,7 +115,7 @@ describe('Gallery Container', () => {
 
       wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      let currentItems = wrapper.instance().currentItems().length;
+      const currentItems = wrapper.instance().currentItems().length;
 
       expect(renderedItemsCount).toBe(currentItems);
 
@@ -123,7 +123,7 @@ describe('Gallery Container', () => {
 
     it('should load only more items before scroll if items are small', () => {
 
-      let renderedItemsCount = wrapper.state().renderedItemsCount;
+      const renderedItemsCount = wrapper.state().renderedItemsCount;
 
       wrapper.setState({
         styleParams: _.merge({}, wrapper.state().styleParams, {
@@ -140,7 +140,7 @@ describe('Gallery Container', () => {
 
       wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      let currentItems = wrapper.instance().currentItems().length;
+      const currentItems = wrapper.instance().currentItems().length;
 
       expect(renderedItemsCount).toBeLessThan(currentItems);
 
@@ -194,7 +194,7 @@ describe('Gallery Container', () => {
 
     beforeEach(() => {
 
-      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      const galleryContainerProps = galleryDriver.create.galleryContainerProps();
       galleryContainerProps.renderedItemsCount = 50;
 
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
@@ -239,8 +239,8 @@ describe('Gallery Container', () => {
       // console.debug('3) Layout height and last group: ', wrapper.instance().galleryStructure.height, wrapper.instance().galleryStructure.lastGroup.idx, wrapper.instance().galleryStructure.lastGroup.rendered, wrapper.instance().galleryStructure.lastGroup.width);
       // console.debug('3) Bounds are: ', wrapper.state().container.bounds);
 
-      let initialHeight = wrapper.state().container.galleryHeight;
-      let initialItems = wrapper.state().renderedItemsCount;
+      const initialHeight = wrapper.state().container.galleryHeight;
+      const initialItems = wrapper.state().renderedItemsCount;
 
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
@@ -248,8 +248,8 @@ describe('Gallery Container', () => {
       // console.debug('4) Bounds are: ', wrapper.state().container.bounds);
       // console.debug('4) Layout height and last group: ', wrapper.instance().galleryStructure.height, wrapper.instance().galleryStructure.lastGroup.idx, wrapper.instance().galleryStructure.lastGroup.rendered, wrapper.instance().galleryStructure.lastGroup.width);
 
-      let newHeight = wrapper.state().container.galleryHeight;
-      let newItems = wrapper.state().renderedItemsCount;
+      const newHeight = wrapper.state().container.galleryHeight;
+      const newItems = wrapper.state().renderedItemsCount;
 
       expect(newHeight).toBeGreaterThan(initialHeight);
       expect(newItems).toBeGreaterThan(initialItems);
@@ -271,15 +271,15 @@ describe('Gallery Container', () => {
 
       wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      let initialHeight = wrapper.state().container.galleryHeight;
-      let initialItems = wrapper.state().renderedItemsCount;
+      const initialHeight = wrapper.state().container.galleryHeight;
+      const initialItems = wrapper.state().renderedItemsCount;
 
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
 
-      let newHeight = wrapper.state().container.galleryHeight;
-      let newItems = wrapper.state().renderedItemsCount;
+      const newHeight = wrapper.state().container.galleryHeight;
+      const newItems = wrapper.state().renderedItemsCount;
 
       expect(newHeight).toBe(initialHeight);
       expect(newItems).toBe(initialItems);
@@ -294,7 +294,7 @@ describe('Gallery Container', () => {
 
     beforeEach(() => {
 
-      let galleryContainerProps = galleryDriver.create.galleryContainerProps();
+      const galleryContainerProps = galleryDriver.create.galleryContainerProps();
       galleryContainerProps.renderedItemsCount = 50;
 
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
@@ -336,8 +336,8 @@ describe('Gallery Container', () => {
 
       wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      let initialHeight = wrapper.state().container.galleryHeight;
-      let initialItems = wrapper.state().renderedItemsCount;
+      const initialHeight = wrapper.state().container.galleryHeight;
+      const initialItems = wrapper.state().renderedItemsCount;
 
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
@@ -347,8 +347,8 @@ describe('Gallery Container', () => {
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
 
-      let newHeight = wrapper.state().container.galleryHeight;
-      let newItems = wrapper.state().renderedItemsCount;
+      const newHeight = wrapper.state().container.galleryHeight;
+      const newItems = wrapper.state().renderedItemsCount;
 
       expect(newHeight).toBeGreaterThan(initialHeight);
       expect(newItems).toBeGreaterThan(initialItems);

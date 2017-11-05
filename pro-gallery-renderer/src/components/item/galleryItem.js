@@ -1,12 +1,13 @@
 ////// <reference path="../../reference.ts" />
-import {utils} from '../../utils/index';
+import utils from '../../utils/index';
 import {Item} from 'pro-gallery-layouter';
+import * as _ from 'lodash';
 
 class GalleryItem {
 
   constructor(config) {
 
-    this.uniqueId = utils.getUUID();
+    this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
 
     if (config.dto && config.dto.dto) {
@@ -161,7 +162,7 @@ class GalleryItem {
       title: md.title,
       itemWidth: md.width,
       itemType: (md.type || 'image'),
-      imageUrl: this.resizedUrl('fit', 200, 200, null, null)['img'],
+      imageUrl: this.resizedUrl('fit', 200, 200, null, null).img,
       imagePurchasedUrl: this.dto.mediaUrl,
       fpX: fp[0],
       fpY: fp[1]
@@ -493,51 +494,51 @@ class GalleryItem {
 
   get demoExif() {
     return {
-      "GPSVersionID": "2.2.0.0",
-      "GPSAltitudeRef": "1.8",
-      "GPSAltitude": "0",
-      "Make": "LG Electronics",
-      "Model": "LG-H815L",
-      "Orientation": "right-top",
-      "XResolution": "72",
-      "YResolution": "72",
-      "ResolutionUnit": "2",
-      "Software": "Picasa",
-      "DateTime": "2016:04:17 07:19:25",
-      "YCbCrPositioning": "1",
-      "ExposureTime": "0.041666666666666664",
-      "FNumber": "1.8",
-      "ExifIFDPointer": "214",
-      "ExposureProgram": "Undefined",
-      "GPSInfoIFDPointer": "1262",
-      "PhotographicSensitivity": "200",
-      "ExifVersion": "0220",
-      "DateTimeOriginal": "2016:04:17 07:19:25",
-      "DateTimeDigitized": "2016:04:17 07:19:25",
-      "ComponentsConfiguration": "YCbCr",
-      "ShutterSpeedValue": "4.585",
-      "ApertureValue": "1.69",
-      "BrightnessValue": "-0.88",
-      "ExposureBias": "0",
-      "MeteringMode": "CenterWeightedAverage",
-      "Flash": "Flash did not fire, compulsory flash mode",
-      "FocalLength": "4.42",
-      "UserComment": "32,32,32,70,77,49,32,32,32,70,67,48,48,48,48,48,48,48,48,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-      "SubSecTime": "802528",
-      "SubSecTimeOriginal": "802528",
-      "SubSecTimeDigitized": "802528",
-      "FlashpixVersion": "0100",
-      "ColorSpace": "1",
-      "PixelXDimension": "5312",
-      "PixelYDimension": "2988",
-      "InteroperabilityIFDPointer": "1320",
-      "SensingMethod": "Undefined",
-      "SceneType": "Directly photographed",
-      "ExposureMode": "0",
-      "WhiteBalance": "Auto white balance",
-      "DigitalZoomRatio": "1",
-      "SceneCaptureType": "Standard",
-      "ImageUniqueID": "36f6e92221e27c830000000000000000"
+      GPSVersionID: '2.2.0.0',
+      GPSAltitudeRef: '1.8',
+      GPSAltitude: '0',
+      Make: 'LG Electronics',
+      Model: 'LG-H815L',
+      Orientation: 'right-top',
+      XResolution: '72',
+      YResolution: '72',
+      ResolutionUnit: '2',
+      Software: 'Picasa',
+      DateTime: '2016:04:17 07:19:25',
+      YCbCrPositioning: '1',
+      ExposureTime: '0.041666666666666664',
+      FNumber: '1.8',
+      ExifIFDPointer: '214',
+      ExposureProgram: 'Undefined',
+      GPSInfoIFDPointer: '1262',
+      PhotographicSensitivity: '200',
+      ExifVersion: '0220',
+      DateTimeOriginal: '2016:04:17 07:19:25',
+      DateTimeDigitized: '2016:04:17 07:19:25',
+      ComponentsConfiguration: 'YCbCr',
+      ShutterSpeedValue: '4.585',
+      ApertureValue: '1.69',
+      BrightnessValue: '-0.88',
+      ExposureBias: '0',
+      MeteringMode: 'CenterWeightedAverage',
+      Flash: 'Flash did not fire, compulsory flash mode',
+      FocalLength: '4.42',
+      UserComment: '32,32,32,70,77,49,32,32,32,70,67,48,48,48,48,48,48,48,48,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0',
+      SubSecTime: '802528',
+      SubSecTimeOriginal: '802528',
+      SubSecTimeDigitized: '802528',
+      FlashpixVersion: '0100',
+      ColorSpace: '1',
+      PixelXDimension: '5312',
+      PixelYDimension: '2988',
+      InteroperabilityIFDPointer: '1320',
+      SensingMethod: 'Undefined',
+      SceneType: 'Directly photographed',
+      ExposureMode: '0',
+      WhiteBalance: 'Auto white balance',
+      DigitalZoomRatio: '1',
+      SceneCaptureType: 'Standard',
+      ImageUniqueID: '36f6e92221e27c830000000000000000'
     };
   }
 
@@ -561,7 +562,7 @@ class GalleryItem {
   }
 
   updateOrderIndex(value) {
-    let ret = this.orderIndex !== value;
+    const ret = this.orderIndex !== value;
     this.orderIndex = value;
     return ret;
   }
@@ -690,7 +691,7 @@ class GalleryItem {
   }
 
   get link() {
-    return (this.metadata.link) || {}
+    return (this.metadata.link) || {};
   }
 
   get linkData() {
@@ -914,11 +915,11 @@ class GalleryItem {
   }
 
   get isDemo() {
-    return this.metadata.isDemo || this.dto.isDemo || this.metadata.sourceName === 'public' || (this.metadata.sourceName === 'private' && _.includes(this.metadata.tags, '_bigstock'))
+    return this.metadata.isDemo || this.dto.isDemo || this.metadata.sourceName === 'public' || (this.metadata.sourceName === 'private' && _.includes(this.metadata.tags, '_bigstock'));
   }
 
   set isDemo(val) {
-    this.metadata.isDemo = val
+    this.metadata.isDemo = val;
   }
 
   get isText() {

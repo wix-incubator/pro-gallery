@@ -17,14 +17,14 @@ export default class TextItem extends React.Component {
       WebkitTransform: transform,
       MsTransform: transform,
       OTransform: transform,
-      transform: transform,
+      transform,
     };
   }
 
   componentWillMount() {
-    this.props.actions.setItemLoaded()
+    this.props.actions.setItemLoaded();
   }
-  
+
   render() {
     const {visible, id, styleParams, html, style, actions} = this.props;
     const dimensions = this.getTextDimensions();
@@ -32,10 +32,10 @@ export default class TextItem extends React.Component {
     return (visible || styleParams.hasThumbnails) ? (
         <div className={'gallery-item-visible gallery-item loaded text-item'}
           key={'item-text-' + id}
-          style={Object.assign(dimensions, styleParams.cubeType === 'fit' ? { 'backgroundColor': style.bgColor } : {})}
+          style={Object.assign(dimensions, styleParams.cubeType === 'fit' ? {backgroundColor: style.bgColor} : {})}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
-          dangerouslySetInnerHTML={{ __html: html }}/>
+          dangerouslySetInnerHTML={{__html: html}}/>
       ) : (
         <div className={'gallery-item-visible gallery-item loaded text-item'}
               key={'item-text-' + id}
@@ -43,6 +43,6 @@ export default class TextItem extends React.Component {
               onTouchEnd={actions.handleItemMouseUp}
               style={dimensions}>
         </div>
-      )
+      );
   }
 }

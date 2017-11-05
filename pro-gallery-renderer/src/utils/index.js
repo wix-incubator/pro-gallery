@@ -1,7 +1,10 @@
-import {BaseUtils} from 'photography-client-lib';
+import {RenderUtils} from 'photography-client-lib';
 
-class Utils extends BaseUtils {
-  //
+class Utils extends RenderUtils {
+  constructor() {
+    super();
+    this.from = 'renderUtils';
+  }
 }
 
 export default new Utils();

@@ -1,7 +1,7 @@
 /// <reference path="../../reference.ts" />
 
-import React from 'react'
-import ItemContainer from '../item/itemContainer.js'
+import React from 'react';
+import ItemContainer from '../item/itemContainer.js';
 
 class GroupView extends React.Component {
 
@@ -11,7 +11,7 @@ class GroupView extends React.Component {
 
     this.displayName = 'GroupView';
     this.dom = [];
-    this.state = {}
+    this.state = {};
   }
 
   render() {
@@ -24,12 +24,12 @@ class GroupView extends React.Component {
     }
 
     return (
-      <div className={" gallery-group gallery-group-" + (this.props.rendered ? (this.props.visible ? 'visible' : 'hidden') : 'none')} data-group-idx={this.props.idx} data-group-type={this.props.type} data-group-ratios={this.props.ratios}
+      <div className={' gallery-group gallery-group-' + (this.props.rendered ? (this.props.visible ? 'visible' : 'hidden') : 'none')} data-group-idx={this.props.idx} data-group-type={this.props.type} data-group-ratios={this.props.ratios}
            style={{width: this.props.width, height: (this.props.totalHeight)}}
       >
         {this.dom}
       </div>
-    )
+    );
   }
 }
 

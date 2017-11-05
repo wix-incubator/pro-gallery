@@ -113,9 +113,9 @@ class GallerySharer extends React.Component {
       return [];
     }
 
-    let shareButtons = [];
+    const shareButtons = [];
 
-    let firstItem = items[0];
+    const firstItem = items[0];
     firstItem.hashtag = this.hashtag;
 
     ['facebook', 'twitter', 'pinterest', 'tumblr', 'email'].forEach(network => {
@@ -131,7 +131,7 @@ class GallerySharer extends React.Component {
 
   createInitialHashtagIfNeeded(newItems) {
     if (newItems.length == 1 && this.state.items.length == 0) {
-      this.hashtag = 'HT' + utils.getUUID();
+      this.hashtag = 'HT' + utils.generateUUID();
       console.log('Created a new hashtag ', this.hashtag);
     }
     return this.hashtag;
@@ -140,7 +140,7 @@ class GallerySharer extends React.Component {
   getTextDimensions(item) {
 
     //text dimensions include scaling
-    let transform = 'translate(0, 0) scale(' + ((item.style.width < (item.style.height + 1)) ? (this.height / item.style.maxHeight) : (this.width / item.style.maxWidth)) + ')';
+    const transform = 'translate(0, 0) scale(' + ((item.style.width < (item.style.height + 1)) ? (this.height / item.style.maxHeight) : (this.width / item.style.maxWidth)) + ')';
     return {
       margin: (Math.floor((item.style.maxHeight - this.height) / -2)) + 'px ' + (Math.floor((item.style.maxWidth - this.width) / -2)) + 'px',
       width: item.style.maxWidth + 'px',
@@ -156,7 +156,7 @@ class GallerySharer extends React.Component {
 
   createItems(itemsDto) {
 
-    let itemsDom = [];
+    const itemsDom = [];
     itemsDto.forEach(item => {
       itemsDom.push(
         item.type == 'text' ? (
@@ -196,7 +196,7 @@ class GallerySharer extends React.Component {
   }
 
   render() {
-    let dom = !!this.state.items.length && (
+    const dom = !!this.state.items.length && (
         <div className="sharer-container">
           <div className="sharer-placeholder"/>
           <div className="sharer-floater" style={{
@@ -217,7 +217,7 @@ class GallerySharer extends React.Component {
         </div>
       );
 
-    Wix.PubSub.publish('multishare', {dom: dom}, true);
+    Wix.PubSub.publish('multishare', {dom}, true);
 
     return false;
   }

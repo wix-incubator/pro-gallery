@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils } from '../../utils/index.js';
+import {utils} from '../../utils/index.js';
 
 export default class ItemHover extends React.Component {
   constructor(props) {
@@ -7,14 +7,14 @@ export default class ItemHover extends React.Component {
   }
 
   getHoverClass() {
-    var {styleParams, forceShowHover, isMultisharing, itemType} = this.props;
-    let hoverClass = itemType == 'video' ? ["gallery-item-hover-video"] : ["gallery-item-hover"];
+    const {styleParams, forceShowHover, isMultisharing, itemType} = this.props;
+    const hoverClass = itemType == 'video' ? ['gallery-item-hover-video'] : ['gallery-item-hover'];
 
     if (styleParams.isSlider || styleParams.isSlideshow || styleParams.hasThumbnails) {
       hoverClass.push(styleParams.galleryVerticalAlign);
     }
 
-    hoverClass.push("fullscreen-" + (styleParams.fullscreen ? 'enabled' : 'disabled'));
+    hoverClass.push('fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled'));
 
     if (_.isUndefined(styleParams.itemOpacity)) {
       hoverClass.push('default');
@@ -35,7 +35,7 @@ export default class ItemHover extends React.Component {
 
   getMultishareHover() {
     const {isVideo, isMultishared} = this.props;
-    return (<div className={"gallery-item-social" + (isVideo ? ' gradient-top' : '')}>
+    return (<div className={'gallery-item-social' + (isVideo ? ' gradient-top' : '')}>
           <div className={`gallery-item-social-button gallery-item-social-multishare visible ${(utils.isMobile() ? 'mobile' : '')}`}>
             {!isMultishared ? (
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
@@ -51,7 +51,7 @@ export default class ItemHover extends React.Component {
               </svg>
             )}
           </div>
-        </div>)
+        </div>);
   }
 
   render() {
@@ -59,9 +59,9 @@ export default class ItemHover extends React.Component {
     if (!shouldHover) {
       return null;
     }
-    let hoverClass = this.getHoverClass();
+    const hoverClass = this.getHoverClass();
 
-     return (<div
+    return (<div
         className={hoverClass}
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
@@ -71,6 +71,6 @@ export default class ItemHover extends React.Component {
         onTouchEnd={actions.handleItemMouseUp}
         >
         {isMultisharing ? this.getMultishareHover() : this.props.children}
-      </div>)
+      </div>);
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default class ItemTitle extends React.Component {
 
@@ -7,9 +7,9 @@ export default class ItemTitle extends React.Component {
   }
 
   render() {
-    var {id, title, style} = this.props;
+    const {id, title, style} = this.props;
     return (
       <div className={`gallery-item-title`} data-hook="item-title" style={style}>{title}</div>
-   );
+    );
   }
 }

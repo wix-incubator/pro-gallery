@@ -79,7 +79,7 @@ export default class Share extends React.Component {
 
   componentDidUpdate() {
     try {
-      let focusedButton = this.state.focusedShareIcon;
+      const focusedButton = this.state.focusedShareIcon;
       if (focusedButton > 0) {
         this.buttons[focusedButton - 1].focus();
       }
@@ -94,11 +94,11 @@ export default class Share extends React.Component {
     const {allProps} = this.props;
 
     return <button
-      className={"block-fullscreen " + network + "-share progallery-svg-font-icons-" + network + (utils.isSite() ? '' : ' inactive ')}
-      onClick={(e) => {
+      className={'block-fullscreen ' + network + '-share progallery-svg-font-icons-' + network + (utils.isSite() ? '' : ' inactive ')}
+      onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-        itemActions.share(network, allProps, 'gallery')
+        itemActions.share(network, allProps, 'gallery');
       }}
       ref={button => this.buttons[idx] = button}
       title={`Share on ${network}`}
@@ -106,35 +106,35 @@ export default class Share extends React.Component {
       aria-live="assertive"
       role="button"
       tabIndex={-1}
-      key={network + "-share-icon"}/>
+      key={network + '-share-icon'}/>;
   }
 
   render() {
     const {styleParams, type, id, isVerticalContainer, actions, style} = this.props;
-    var share = false;
+    const share = false;
     if (styleParams.allowSocial) {
-      var minDimension = 200;
+      const minDimension = 200;
       if (type == 'text') {
         this.shareArr.splice(2, 1);
       }
 
       return <div
-          className={"block-fullscreen gallery-item-social-share-box " + (this.props.showShare ? '' : ' hidden ') + (this.state.showShare ? ' hovered ' : '') + (isVerticalContainer ? ' vertical-item ' : '')}
-          onClick={(e) => actions.toggleShare(e, false)}
-          onMouseOut={(e) => actions.toggleShare(e, false)}
+          className={'block-fullscreen gallery-item-social-share-box ' + (this.props.showShare ? '' : ' hidden ') + (this.state.showShare ? ' hovered ' : '') + (isVerticalContainer ? ' vertical-item ' : '')}
+          onClick={e => actions.toggleShare(e, false)}
+          onMouseOut={e => actions.toggleShare(e, false)}
           style={{
             transform: (isVerticalContainer ? ('translateY(-50%) ' + (style.height > minDimension ? '' : 'scale(' + style.height / minDimension + ')')) : ('translateX(-50%) ' + (style.width > minDimension ? '' : 'scale(' + style.width / minDimension + ')')))
           }}
           tabIndex={(this.props.currentIdx === this.props.idx) ? utils.getTabIndex('slideshowShare') : -1}
           onKeyDown={this.handleShareArrowNavigation}
-          aria-label={"Share"}
+          aria-label={'Share'}
           role="button"
           key={'item-social-share-container-' + id}
           >
             {_.map(this.shareArr, (network, i) => {
-              return this.getShareItem(network, i)
+              return this.getShareItem(network, i);
             })}
-        </div>
+        </div>;
     }
 
     return false;

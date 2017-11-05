@@ -68,15 +68,16 @@ class LoveButton extends React.Component {
         <span data-hook="love-button"
              className={this.containerClassName() + ' show-tooltip '}
              onMouseOver={e => {
-if (this.props.isSettings) {
-itemActions.showTooltip(e, 'This option is not available in editor')
-;}
-}}
+               if (this.props.isSettings) {
+                 itemActions.showTooltip(e, 'This option is not available in editor')
+;
+               }
+             }}
              onMouseOut={() => {
-if (this.props.isSettings) {
-itemActions.hideTooltip();
-}
-}}
+               if (this.props.isSettings) {
+                 itemActions.hideTooltip();
+               }
+             }}
              {...clickAction}
           >
           {loveButton}

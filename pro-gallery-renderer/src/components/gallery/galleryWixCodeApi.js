@@ -3,24 +3,24 @@
 import {exportAPI} from 'santa-platform-super-apps';
 
 class GalleryWixCodeApi {
-  
+
   constructor() {
-  
+
     this.resetGalleryInEditor = this.resetGalleryInEditor.bind(this);
-  
+
     this.compId = 'pro-gallery-no-comp-id';
     this.uniqueUuids = {};
-    
+
     this.waitForWixSdk();
     this.resetGallery();
-    
+
   }
-  
+
   createUniqueUuidFromString(str, retry) {
     function hashToInt(str) {
-      var hash = 0;
-    
-      if (typeof(str)=='undefined' || str.length === 0) {
+      let hash = 0;
+
+      if (typeof (str) === 'undefined' || str.length === 0) {
         return hash;
       }
       for (let i = 0; i < str.length; i++) {
@@ -28,19 +28,19 @@ class GalleryWixCodeApi {
       }
       return hash;
     }
-  
+
     let num = hashToInt(str);
     num = num < 10000 ? Math.pow(num, 2) : num;
-    
-    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c, i) {
+
+    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c, i) => {
       let r = (Math.ceil(num / (i + 1)) % 16), v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
-    
+
     if (this.uniqueUuids[uuid] === true) {
       //unique uuid already exists!
       console.warn('Pro Gallery - unique uuid already exists', str, num, retry);
-      if (typeof(retry) == 'undefined' || retry > 0) {
+      if (typeof (retry) === 'undefined' || retry > 0) {
         return this.createUniqueUuidFromString(str + 'x', (retry || 3) - 1);
       } else {
         console.error('Pro Gallery - cannot create unique uuid', str, num);
@@ -51,7 +51,7 @@ class GalleryWixCodeApi {
       return uuid;
     }
   }
-  
+
   waitForWixSdk() {
     this.wixSdkReadyInterval = setInterval(() => {
       if (window.Wix && Wix.Utils) {
@@ -61,7 +61,7 @@ class GalleryWixCodeApi {
       }
     }, 100);
   }
-  
+
   onWixSdkReady() {
     //listen to editor/preview changes
     try {
@@ -72,21 +72,21 @@ class GalleryWixCodeApi {
     } catch (e) {
       // console.warn('Cannot use wix sdk for wixCode', e);
     }
-    
-    
+
+
   }
-  
+
   setClickCallback(callback) {
-    if (typeof(callback) == 'function') {
+    if (typeof (callback) === 'function') {
       this.itemClickedCallbacks.push(callback);
     }
   }
-  
+
   onItemClicked(itemProps) {
     //todo - pass a formatted item in the event
-    for (var i = 0; i < this.itemClickedCallbacks.length; i++) {
-      var callback = this.itemClickedCallbacks[i];
-      if (typeof(callback) == 'function') {
+    for (let i = 0; i < this.itemClickedCallbacks.length; i++) {
+      const callback = this.itemClickedCallbacks[i];
+      if (typeof (callback) === 'function') {
         callback({
           compId: this.compId,
           event: {
@@ -108,18 +108,18 @@ class GalleryWixCodeApi {
       }
     }
   }
-  
+
   setItemChangedCallback(callback) {
-    if (typeof(callback) == 'function') {
+    if (typeof (callback) === 'function') {
       this.itemChangedCallbacks.push(callback);
     }
   }
-  
+
   onItemChanged(item) {
     //todo - pass a formatted item in the event
-    for (var i = 0; i < this.itemChangedCallbacks.length; i++) {
-      var callback = this.itemChangedCallbacks[i];
-      if (typeof(callback) == 'function') {
+    for (let i = 0; i < this.itemChangedCallbacks.length; i++) {
+      const callback = this.itemChangedCallbacks[i];
+      if (typeof (callback) === 'function') {
         callback({
           compId: this.compId,
           event: {
@@ -132,9 +132,9 @@ class GalleryWixCodeApi {
       }
     }
   }
-  
+
   formatItemsForWixCode(itemsDto) {
-    var formattedItemsDto = [];
+    const formattedItemsDto = [];
     for (var itemDto, i = 0; itemDto = itemsDto[i]; i++) {
       formattedItemsDto.push({
         uri: itemDto.mediaUrl,
@@ -148,31 +148,31 @@ class GalleryWixCodeApi {
     }
     return formattedItemsDto;
   }
-  
+
   formatItemsFromWixCode(wixCodeItems) {
-    
+
     const formatLink = (link, target) => {
-      switch(typeof(link)) {
+      switch (typeof (link)) {
         case 'object':
           return {
-            type: "wix",
+            type: 'wix',
             data: link
-          }
+          };
         case 'string':
           return {
-            type: "web",
+            type: 'web',
             url: link,
-            target: target,
-          }
+            target,
+          };
         default:
           return {
-            target: "_blank",
-            type: "none"
-          }
+            target: '_blank',
+            type: 'none'
+          };
       }
     };
-    
-    var formattedItemsDto = [];
+
+    const formattedItemsDto = [];
     try {
       for (var wixCodeItem, i = 0; wixCodeItem = wixCodeItems[i]; i++) {
         formattedItemsDto.push({
@@ -185,7 +185,7 @@ class GalleryWixCodeApi {
             title: wixCodeItem.title || '',
             description: wixCodeItem.description || '',
             alt: wixCodeItem.alt || '',
-            sourceName: "private",
+            sourceName: 'private',
             tags: [],
             width: wixCodeItem.width || 1
           },
@@ -197,22 +197,22 @@ class GalleryWixCodeApi {
     }
     return formattedItemsDto;
   }
-  
+
   resetGalleryInEditor() {
     if (window.Wix && Wix.Utils && Wix.Utils.getViewMode() == 'editor') {
       this.resetGallery();
     }
   }
-  
+
   resetGallery() {
     if (this.originalGalleryItems && window.proGalleryServices) {
       window.proGalleryServices.setImages(this.originalGalleryItems);
     }
-  
+
     this.itemClickedCallbacks = [];
     this.itemChangedCallbacks = [];
   }
-  
+
   setItems(items) {
     if (window.proGalleryServices) {
       if (!this.originalGalleryItems) {
@@ -221,23 +221,23 @@ class GalleryWixCodeApi {
       window.proGalleryServices.setImages(this.formatItemsFromWixCode(items));
       // console.log('proGallery setItems for WixCode (replaced rendered gallery items)');
     } else {
-      if (!this.originalGalleryItems && window['prerenderedGallery'] && window['prerenderedGallery']['items']) {
-        this.originalGalleryItems = window['prerenderedGallery']['items'];
+      if (!this.originalGalleryItems && window.prerenderedGallery && window.prerenderedGallery.items) {
+        this.originalGalleryItems = window.prerenderedGallery.items;
       }
       //store the items until the proGalleryServices will be ready
-      window['itemsFromWixCode'] = this.formatItemsFromWixCode(items);
+      window.itemsFromWixCode = this.formatItemsFromWixCode(items);
       // console.log('proGallery setItems for WixCode (stored items for later render)');
     }
   }
-  
+
   getItems() {
     if (window.proGalleryServices) {
-      return this.formatItemsForWixCode(window.proGalleryServices.getItemsDto())
+      return this.formatItemsForWixCode(window.proGalleryServices.getItemsDto());
     } else {
       return [];
     }
   }
-  
+
   generateApi() {
     return {
       getItems: () => this.getItems(),
@@ -245,10 +245,10 @@ class GalleryWixCodeApi {
       onItemClicked: callback => this.setClickCallback(callback),
       onCurrentItemChanged: callback => this.setItemChangedCallback(callback),
     };
-  };
+  }
 }
 
-const galleryWixCodeApi = window['galleryWixCodeApi'] = new GalleryWixCodeApi();
+const galleryWixCodeApi = window.galleryWixCodeApi = new GalleryWixCodeApi();
 
 try {
   exportAPI('publicApi', galleryWixCodeApi.generateApi());

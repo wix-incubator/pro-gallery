@@ -13,16 +13,14 @@ import Social from './social/social.js';
 import Share from './share/share.js';
 import CustomButton from './buttons/customButton.js';
 import ItemTitle from './texts/itemTitle.js';
-import consts from '../consts.js';
-import cartApi from '../../store/cartApi.js';
+import {Consts, performanceUtils} from 'photography-client-lib';
 import classNames from 'classnames';
-import { utils } from '../../utils/index.js';
-import * as performanceUtils from '../../utils/performanceUtils'
+import {utils} from '../../utils/index.js';
 
 class ItemView extends React.Component {
 
   constructor(props) {
-    performanceUtils.itemLoadStart()
+    performanceUtils.itemLoadStart();
     super(props);
 
     this.init();
@@ -59,7 +57,7 @@ class ItemView extends React.Component {
     this.getItemInner = this.getItemInner.bind(this);
 
     if (utils.isEditor()) {
-      Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, (data) => {
+      Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
         setTimeout(() => {
           this.setState({
             showHover: (data.detail == 2)
@@ -93,7 +91,7 @@ class ItemView extends React.Component {
   }
 
   setItemLoaded(e) {
-    performanceUtils.itemLoaded()
+    performanceUtils.itemLoaded();
     this.setState({
       failed: false,
       loaded: true
@@ -102,8 +100,8 @@ class ItemView extends React.Component {
 
   toggleShare(event, forceVal) {
     event.stopPropagation();
-    const isIconTag = (tagName) => ['button', 'i', 'a'].indexOf(tagName.toLowerCase()) >= 0;
-    if (event.type == "mouseout" && (isIconTag(event.target.tagName) || (event.relatedTarget && isIconTag(event.relatedTarget.tagName)))) {
+    const isIconTag = tagName => ['button', 'i', 'a'].indexOf(tagName.toLowerCase()) >= 0;
+    if (event.type == 'mouseout' && (isIconTag(event.target.tagName) || (event.relatedTarget && isIconTag(event.relatedTarget.tagName)))) {
       //mouseout event should not be fired if hovering over icons (tag name == I)
       return;
     }
@@ -123,16 +121,16 @@ class ItemView extends React.Component {
     this.onMouseOverEvent.itemIdx = this.props.idx;
     window.dispatchEvent(this.onMouseOverEvent);
     if (this.props.type == 'video') {
-      this.onVideoHover()
+      this.onVideoHover();
     }
   }
 
   onVideoHover() {
-    const {videoPlay, itemClick} = this.props.styleParams
-    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expend' : !(itemClick == 'expend' && videoPlay == 'onClick')
+    const {videoPlay, itemClick} = this.props.styleParams;
+    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expend' : !(itemClick == 'expend' && videoPlay == 'onClick');
 
     if (this.props.styleParams.videoPlay == 'hover' && !utils.isMobile()) {
-      this.props.playVideo(this.props.idx)
+      this.props.playVideo(this.props.idx);
     }
   }
 
@@ -153,7 +151,9 @@ class ItemView extends React.Component {
 
     const {itemClick, videoPlay} = this.props.styleParams;
 
-    if (!_.isBoolean(isThumbnail)) isThumbnail = !!this.props.thumbnailHighlightId;
+    if (!_.isBoolean(isThumbnail)) {
+      isThumbnail = !!this.props.thumbnailHighlightId;
+    }
 
     if (!isThumbnail && _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked'))) {
       window.galleryWixCodeApi.onItemClicked(this.props);
@@ -162,41 +162,37 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
-    } else {
-      if (itemClick === "expand" || itemClick === 'link') {
-        this.props.actions.toggleFullscreen(this.props.idx);
-      }
-      else if (itemClick === 'nothing' && utils.isMobile()) {
-        this.toggleHoverOnMobile()
-      }
-      else if (this.props.type == 'video') {
-        const shouldTogglePlay = itemClick !== 'expend' && (videoPlay == 'onClick' || utils.isMobile())
-        if (shouldTogglePlay) {
-          this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx)
-        }
+    } else if (itemClick === 'expand' || itemClick === 'link') {
+      this.props.actions.toggleFullscreen(this.props.idx);
+    } else if (itemClick === 'nothing' && utils.isMobile()) {
+      this.toggleHoverOnMobile();
+    } else if (this.props.type == 'video') {
+      const shouldTogglePlay = itemClick !== 'expend' && (videoPlay == 'onClick' || utils.isMobile());
+      if (shouldTogglePlay) {
+        this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
     }
   }
 
   toggleFullscreenIfNeeded(e) {
-    var targetClass = _.get(e, 'target.className');
+    let targetClass = _.get(e, 'target.className');
     if (_.isObject(targetClass)) {
       targetClass = _.valuesIn(targetClass);
     }
 
     if (_.isFunction(targetClass.indexOf) && targetClass.indexOf('block-fullscreen') >= 0) {
-      console.warn("Blocked fullscreen!", e);
+      console.warn('Blocked fullscreen!', e);
       return;
     } else if (this.props.styleParams.fullscreen) {
       this.props.actions.toggleFullscreen(this.props.idx);
     }
-  };
+  }
 
   toggleMultishareSelection(e) {
     if (e && e.stopPropagation) {
       e.stopPropagation();
     }
-    var itemContainer = $(this.itemContainer);
+    const itemContainer = $(this.itemContainer);
     itemContainer.css({
       transform: 'scale(' + ((this.props.style.width - 8) / this.props.style.width) + ')'
     });
@@ -206,15 +202,15 @@ class ItemView extends React.Component {
       });
     }, 80);
 
-    if(this.isMultishared()) {
-      this.props.actions.removeItemFromMultishare(this.props)
+    if (this.isMultishared()) {
+      this.props.actions.removeItemFromMultishare(this.props);
     } else {
-      this.props.actions.addItemToMultishare(this.props)
+      this.props.actions.addItemToMultishare(this.props);
     }
   }
 
   handleItemMouseDown(e) {
-    if(utils.isMobile() && this.props.styleParams.allowMultishare) {
+    if (utils.isMobile() && this.props.styleParams.allowMultishare) {
       clearTimeout(this.longPressTimer);
       this.longPressTimer = setTimeout(() => {
         e.preventDefault(); //prevent default only after a long press (so that scroll will not break)
@@ -225,7 +221,7 @@ class ItemView extends React.Component {
   }
 
   handleItemMouseUp(e) {
-    if(utils.isMobile() && this.longPressTimer) {
+    if (utils.isMobile() && this.longPressTimer) {
       clearTimeout(this.longPressTimer);
     }
     return true; //make sure the default event behaviour continues
@@ -260,9 +256,9 @@ class ItemView extends React.Component {
   }
 
   isMultishared() {
-    var items = _.get(this, 'props.multishare.items');
-    return items && !!_.find(items, (itemProps) => {
-      return (itemProps.id == this.props.id)
+    const items = _.get(this, 'props.multishare.items');
+    return items && !!_.find(items, itemProps => {
+      return (itemProps.id == this.props.id);
     });
   }
 
@@ -283,9 +279,9 @@ class ItemView extends React.Component {
       width: 'calc(100% - 2 * ' + Math.round(imageMarginLeft - this.props.styleParams.imageMargin / 2) + 'px)',
       marginLeft: Math.round(imageMarginLeft - this.props.styleParams.imageMargin / 2)
     } : {
-        height: 'calc(100% - 2 * ' + Math.round(imageMarginTop - this.props.styleParams.imageMargin / 2) + 'px)',
-        marginTop: Math.round(imageMarginTop - this.props.styleParams.imageMargin / 2)
-      });
+      height: 'calc(100% - 2 * ' + Math.round(imageMarginTop - this.props.styleParams.imageMargin / 2) + 'px)',
+      marginTop: Math.round(imageMarginTop - this.props.styleParams.imageMargin / 2)
+    });
   }
 
   isVisible(elment) {
@@ -298,17 +294,17 @@ class ItemView extends React.Component {
     const {top, bottom} = domElment.getBoundingClientRect();
     const videoHeight = bottom - top;
     const tolerance = videoHeight / 2;
-    let res = top + tolerance > scrollPosition && bottom - tolerance < scrollPosition + windowHeight;
+    const res = top + tolerance > scrollPosition && bottom - tolerance < scrollPosition + windowHeight;
 
     return res;
   }
 
   getButtonPlacement() {
-    return utils.isStoreGallery() ? this.props.styleParams.titlePlacement : consts.placements.DONT_SHOW;
+    return utils.isStoreGallery() ? this.props.styleParams.titlePlacement : Consts.placements.DONT_SHOW;
   }
 
   videoOnMount(videoElment) {
-    this.props.videoAdded({idx: this.props.idx, isVisible: ()=>this.isVisible(videoElment)});
+    this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible(videoElment)});
   }
 
   videoOnUnmount() {
@@ -316,11 +312,11 @@ class ItemView extends React.Component {
   }
 
   getItemTextsDetails() {
-    var props = _.pick(this.props, ['title', 'description', 'fileName', 'id', 'styleParams', 'style', 'isNarrow'])
-    let isButtonPlacementOnHover = this.getButtonPlacement() == consts.placements.SHOW_ON_HOVER;
-    let isImage = this.props.type == 'image' || this.props.type == 'picture';
-    let useCustomButton = this.props.styleParams.useCustomButton == true;
-    var shouldShowButton = isButtonPlacementOnHover && isImage && useCustomButton;
+    const props = _.pick(this.props, ['title', 'description', 'fileName', 'id', 'styleParams', 'style', 'isNarrow']);
+    const isButtonPlacementOnHover = this.getButtonPlacement() == Consts.placements.SHOW_ON_HOVER;
+    const isImage = this.props.type == 'image' || this.props.type == 'picture';
+    const useCustomButton = this.props.styleParams.useCustomButton == true;
+    const shouldShowButton = isButtonPlacementOnHover && isImage && useCustomButton;
 
     return <Texts {...props}
               key={`item-texts-${props.id}`}
@@ -331,7 +327,7 @@ class ItemView extends React.Component {
   }
 
   getSocial() {
-    var props = _.pick(this.props, ['id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort'])
+    const props = _.pick(this.props, ['id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
     return <Social {...props}
               allProps={this.props}
               showShare={this.state.showShare}
@@ -339,52 +335,52 @@ class ItemView extends React.Component {
               isVerticalContainer={this.isVerticalContainer()}
               key={`item-social-${props.id}`}
               actions={{
-                        openItemShopInFullScreen: this.openItemShopInFullScreen,
-                        toggleMultishareSelection: this.toggleMultishareSelection,
-                        toggleShare: this.toggleShare,
-                        getShare: this.getShare,
-                        showTooltip: itemActions.showTooltip,
-                        hideTooltip: itemActions.hideTooltip,
-                      }}
+                openItemShopInFullScreen: this.openItemShopInFullScreen,
+                toggleMultishareSelection: this.toggleMultishareSelection,
+                toggleShare: this.toggleShare,
+                getShare: this.getShare,
+                showTooltip: itemActions.showTooltip,
+                hideTooltip: itemActions.hideTooltip,
+              }}
               />;
   }
 
   getShare() {
-    var props = _.pick(this.props, ['styleParams', 'id', 'type', 'style', 'currentIdx', 'idx'])
+    const props = _.pick(this.props, ['styleParams', 'id', 'type', 'style', 'currentIdx', 'idx']);
     return <Share {...props}
               allProps={this.props}
               key={`item-share-${props.id}`}
               showShare={this.state.showShare}
               isVerticalContainer={this.isVerticalContainer()}
               actions={{
-                        toggleShare: this.toggleShare,
-                      }}
+                toggleShare: this.toggleShare,
+              }}
               />;
   }
 
   getItemHover(children, imageDimensions) {
-    var props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
+    const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     return <ItemHover {...props}
             forceShowHover={this.props.previewHover || this.state.showHover}
             isMultisharing={this.isMultisharing()}
             isMultishared={this.isMultishared()}
             shouldHover={this.shouldHover()}
             imageDimensions={imageDimensions}
-            key='hover'
+            key="hover"
             actions={{
-                      handleItemMouseDown: this.handleItemMouseDown,
-                      handleItemMouseUp: this.handleItemMouseUp,
-                      toggleMultishareSelection: this.toggleMultishareSelection,
-                    }}
+              handleItemMouseDown: this.handleItemMouseDown,
+              handleItemMouseUp: this.handleItemMouseUp,
+              toggleMultishareSelection: this.toggleMultishareSelection,
+            }}
             >
               {children}
-            </ItemHover>
+            </ItemHover>;
   }
 
   getImageItem(imageDimensions) {
-    var props = _.pick(this.props, ['alt', 'title', 'description', 'visible', 'id', 'styleParams', 'resized_url'])
+    const props = _.pick(this.props, ['alt', 'title', 'description', 'visible', 'id', 'styleParams', 'resized_url']);
     return <ImageItem {...props}
-            key='imageItem'
+            key="imageItem"
             loaded={this.state.loaded}
             imageDimensions={imageDimensions}
             isThumbnail={!!this.props.thumbnailHighlightId}
@@ -394,11 +390,11 @@ class ItemView extends React.Component {
               setItemLoaded: this.setItemLoaded,
               setItemError: this.setItemError,
             }}
-           />
+           />;
   }
 
   getVideoItem(imageDimensions, itemHover) {
-    var props = _.pick(this.props, [])
+    const props = _.pick(this.props, []);
     return <VideoItem
             {...this.props}
             onMount={this.videoOnMount.bind(this)}
@@ -421,33 +417,33 @@ class ItemView extends React.Component {
               isMultishared: this.isMultishared,
               isMultisharing: this.isMultisharing,
             })}
-            />
+            />;
   }
 
   getTextItem() {
-    var props = _.pick(this.props, ['visible', 'id', 'styleParams', 'style', 'html', 'cubeRatio'])
+    const props = _.pick(this.props, ['visible', 'id', 'styleParams', 'style', 'html', 'cubeRatio']);
 
-    return  <TextItem
+    return <TextItem
               {...props}
-              key='textItem'
+              key="textItem"
               actions={{
                 handleItemMouseDown: this.handleItemMouseDown,
                 handleItemMouseUp: this.handleItemMouseUp,
                 setItemLoaded: this.setItemLoaded,
               }}
-              />
+              />;
   }
 
   getItemInner() {
-    var {styleParams, id, title} = this.props;
-    var itemInner;
+    const {styleParams, id, title} = this.props;
+    let itemInner;
 
-    var imageDimensions = this.getImageDimensions();
-    var itemTexts = this.getItemTextsDetails();
-    var social = this.getSocial();
-    var share = this.getShare();
+    const imageDimensions = this.getImageDimensions();
+    const itemTexts = this.getItemTextsDetails();
+    const social = this.getSocial();
+    const share = this.getShare();
 
-    var itemHover = this.getItemHover([itemTexts, social, share], imageDimensions);
+    const itemHover = this.getItemHover([itemTexts, social, share], imageDimensions);
 
     switch (this.props.type) {
       case 'dummy':
@@ -455,7 +451,7 @@ class ItemView extends React.Component {
         break;
       case 'video':
         if (!this.props.visible) {
-          itemInner = <VideoItemPlaceholder id={this.props.idx} resized_url={this.props.resized_url} hover={itemHover} />
+          itemInner = <VideoItemPlaceholder id={this.props.idx} resized_url={this.props.resized_url} hover={itemHover} />;
         } else {
           itemInner = this.getVideoItem(imageDimensions, itemHover);
         }
@@ -467,7 +463,7 @@ class ItemView extends React.Component {
       case 'image':
       case 'picture':
       default:
-        itemInner = [this.getImageItem(imageDimensions), itemHover]
+        itemInner = [this.getImageItem(imageDimensions), itemHover];
     }
 
     if (styleParams.isSlideshow) {
@@ -480,11 +476,10 @@ class ItemView extends React.Component {
               {social}
               {share}
             </div>
-          </div>
-          :
+          </div> :
           false
         }
-      </div>)
+      </div>);
     }
 
     return itemInner;
@@ -493,7 +488,7 @@ class ItemView extends React.Component {
   openItemShopInFullScreen(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.toggleFullscreenIfNeeded(e, { openShop: true })
+    this.toggleFullscreenIfNeeded(e, {openShop: true});
   }
 
   mouseOver(imageUrl) {
@@ -502,30 +497,34 @@ class ItemView extends React.Component {
   }
 
   getBottomInfoElement() {
-    var {styleParams, style, title, fileName, type, actions} = this.props;
-    var displayTitle = (title || fileName)
-    var {placements} = consts;
-    var buttonPlacement = this.getButtonPlacement();
-    var bottomInfo = null;
+    const {styleParams, style, title, fileName, type, actions} = this.props;
+    const displayTitle = (title || fileName);
+    const {placements} = Consts;
+    const buttonPlacement = this.getButtonPlacement();
+    let bottomInfo = null;
 
     if (styleParams.titlePlacement == placements.SHOW_ALWAYS) {
       let buttonElem = null;
-      let isImage = type == "image" || type == "picture";
+      const isImage = type == 'image' || type == 'picture';
       if (isImage) {
         const shouldShowButton = buttonPlacement == placements.SHOW_ALWAYS && styleParams.useCustomButton === true;
         buttonElem = shouldShowButton ? (<CustomButton styleParams={styleParams} />) : null;
       }
-      let isTitleAvailable = styleParams.allowTitle && displayTitle;
-      let titleElem = isTitleAvailable ? (<ItemTitle title={displayTitle} />) : null;
+      const isTitleAvailable = styleParams.allowTitle && displayTitle;
+      const titleElem = isTitleAvailable ? (<ItemTitle title={displayTitle} />) : null;
       if (titleElem || buttonElem) {
         bottomInfo = (
           <div style={{height: style.bottomInfoHeight, textAlign: styleParams.galleryTextAlign}}
               className="gallery-item-bottom-info"
-              onMouseOver={() => {this.setState({showHover: true})}}
-              onMouseOut={() => {this.setState({showHover: false})}}>
+              onMouseOver={() => {
+                this.setState({showHover: true});
+              }}
+              onMouseOut={() => {
+                this.setState({showHover: false});
+              }}>
             {titleElem}
             {buttonElem}
-          </div>)
+          </div>);
       }
     }
     return bottomInfo;
@@ -552,7 +551,7 @@ class ItemView extends React.Component {
       const isAnotherItemInFocus = document.activeElement.className.indexOf('gallery-item-container') >= 0;
       const isShowMoreInFocus = document.activeElement.className.indexOf('show-more') >= 0;
       if (isAnotherItemInFocus || isShowMoreInFocus) {
-        if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)){
+        if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
           this.itemContainer.focus();
         }
         //check if currentIdx has changed to the current item
@@ -584,12 +583,12 @@ class ItemView extends React.Component {
       const shadowSpread = Math.min(15, Math.round(styleParams.imageMargin * styleParams.boxShadow / 2));
       boxShadow = {
         boxShadow: `${shadowOffset}px ${shadowOffset}px ${shadowSpread}px 0 rgba(0,0,0,0.2)`
-      }
+      };
     }
 
-    let itemStyle = {};
+    const itemStyle = {};
     itemStyle.backgroundColor = styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit';
-    itemStyle.height = height + "px";
+    itemStyle.height = height + 'px';
     itemStyle.borderRadius = borderRadius + 'px';
 
     let typeName = 'Graphic';
@@ -613,7 +612,7 @@ class ItemView extends React.Component {
     return (
       <div className={className}
            href={itemActions.getShareUrl(this.props)}
-           ref={(e) => this.itemContainer = e}
+           ref={e => this.itemContainer = e}
            onMouseOver={() => this.onMouseOver()}
            onClick={this.onItemClick}
            onKeyDown={this.onKeyPress}
@@ -621,7 +620,7 @@ class ItemView extends React.Component {
            data-hash={hash}
            data-id={photoId}
            data-idx={idx}
-           aria-label={typeName + ', ' + title + (utils.isStoreGallery() ? ', Buy Now' :'')}
+           aria-label={typeName + ', ' + title + (utils.isStoreGallery() ? ', Buy Now' : '')}
            role="link"
            aria-level="0"
            data-hook="item-container"
@@ -639,7 +638,7 @@ class ItemView extends React.Component {
              borderRadius: borderRadius + 'px'
            }, this.props.transform, boxShadow)
            }>
-        <div data-hook="item-wrapper" className={"gallery-item-wrapper visible " + (styleParams.cubeImages ? "cube-type-" + styleParams.cubeType : "")}
+        <div data-hook="item-wrapper" className={'gallery-item-wrapper visible ' + (styleParams.cubeImages ? 'cube-type-' + styleParams.cubeType : '')}
           key={'item-wrapper-' + id}
           style={itemStyle}
           >

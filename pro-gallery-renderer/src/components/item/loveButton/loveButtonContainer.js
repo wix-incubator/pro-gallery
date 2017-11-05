@@ -4,9 +4,9 @@ import {bindActionCreators} from 'redux';
 import * as actions from '../../../actions/LoveButtonActions.js';
 import {LoveButton} from './loveButton.js';
 
-  export const LoveButtonContainer = (props) => {
+export const LoveButtonContainer = props => {
 
-    return (
+  return (
         <LoveButton
             toggleLove={props.actions.toggleLove}
             photoId={props.photoId}
@@ -17,8 +17,8 @@ import {LoveButton} from './loveButton.js';
             layout={props.layout}
             isStoreGallery={props.isStoreGallery}
         />
-    );
-  };
+  );
+};
 
 function mapStateToProps(state) {
   return state.loveButton;

@@ -1,14 +1,12 @@
 'use strict';
 
-import GalleryView from './galleryView.js';
 import GalleryDriver from './galleryDriver.js';
-import {shallow, mount} from 'enzyme';
-import React from 'react';
+import {mount} from 'enzyme';
 
 describe('Gallery View', () => {
 
-  var galleryDriver;
-  var galleryViewProps;
+  let galleryDriver;
+  let galleryViewProps;
 
   beforeEach(() => {
 

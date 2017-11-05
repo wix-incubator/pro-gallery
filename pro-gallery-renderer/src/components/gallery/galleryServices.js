@@ -119,7 +119,7 @@ class ProGalleryServices {
       this.mappingUpdatedInstanceId = Wix.Utils.getInstanceId();
       //URL - http://progallery.wix.com/api/v1/albums/map-set-id
       //Body (json) {"instanceId" : "8e3502cb-25ee-4d7f-b8c3-96034fe36911", "compId" : "compId2", "setId": "75cda6bb-c060-4381-930a-beb9a22c027a"}
-      let mappingData = {instanceId: Wix.Utils.getInstanceId(), compId: Wix.Utils.getCompId(), setId};
+      const mappingData = {instanceId: Wix.Utils.getInstanceId(), compId: Wix.Utils.getCompId(), setId};
       $.ajax({
         type: 'POST',
         url: '/api/v1/albums/map-set-id',
@@ -153,9 +153,9 @@ class ProGalleryServices {
 
     //replace the current set of images on the window
     try {
-      let activeAlbum = window.parent.parent.activeAlbum;
+      const activeAlbum = window.parent.parent.activeAlbum;
       const isDuringPublish = _.get(activeAlbum, 'serverStatus.duringUpdate');
-      let albumSet = activeAlbum.getSetByGalleryId(Wix.Utils.getCompId()); //getSetByGalleryId is in albums code
+      const albumSet = activeAlbum.getSetByGalleryId(Wix.Utils.getCompId()); //getSetByGalleryId is in albums code
       if (albumSet.id) {
         this.updateServerMappingIfNeeded(albumSet.id, isDuringPublish, () => {
 
@@ -206,7 +206,9 @@ class ProGalleryServices {
           logger.trackBi(logger.biEvents.pro_gallery_error, {errorType: 'prerenderedGalleryMissing'});
         }
         galleryData = (utils.isDev() ? window.sampleImages : window.emptyImages);
-        if (galleryData) {galleryData.renderedItemsCount = 50;}
+        if (galleryData) {
+          galleryData.renderedItemsCount = 50;
+        }
         this.galleryDataSrc = this.gallerySrcTypes.sampleImages;
         galleryDataSrcName = 'sampleImages/emptyImages';
       }
@@ -249,7 +251,7 @@ class ProGalleryServices {
   }
 
   getAllItemsFromServer(callback) {
-    let fetchedItems = this.galleryData && this.galleryData.photos;
+    const fetchedItems = this.galleryData && this.galleryData.photos;
 
     if (_.isUndefined(this.itemsCountToFetch) || this.itemsCountToFetch === false) {
       this.itemsCountToFetch = this.itemsCountToFetch || this.itemsCount;
@@ -284,9 +286,9 @@ class ProGalleryServices {
 
   isDisplayingDefaultImages() {
     try {
-      let manuallySetImages = window.manuallySetImages;
-      let albumSetFromBuilder = this.getImagesFromBuilder();
-      let galleryFromVm = window.prerenderedGallery ? {photos: window.prerenderedGallery.items} : false;
+      const manuallySetImages = window.manuallySetImages;
+      const albumSetFromBuilder = this.getImagesFromBuilder();
+      const galleryFromVm = window.prerenderedGallery ? {photos: window.prerenderedGallery.items} : false;
 
       return !(manuallySetImages || galleryFromVm || albumSetFromBuilder);
     } catch (e) {
@@ -444,7 +446,7 @@ class ProGalleryServices {
 }
 
 //this should not be accessed by anyone from the outside - everything should be done via post message
-let proGalleryServices = window.proGalleryServices = new ProGalleryServices();
+const proGalleryServices = window.proGalleryServices = new ProGalleryServices();
 
 window.addEventListener('message', e => {
   if (e && e.data === 'albumSetImagesUpdated') {

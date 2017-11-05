@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ItemView from './itemView.js'
-import {CommonItemContainer} from './commonItemContainer.js'
+import ItemView from './itemView.js';
+import {CommonItemContainer} from './commonItemContainer.js';
 
 class ItemContainer extends React.Component {
 
@@ -12,8 +12,8 @@ class ItemContainer extends React.Component {
   }
 
   isSmallItem() {
-    var maxWidth = 90;
-    var maxHeight = 90;
+    const maxWidth = 90;
+    const maxHeight = 90;
 
     if (this.props.styleParams.cubeImages && this.props.styleParams.cubeType == 'fit') {
       if (this.props.style.orientation == 'landscape') {
@@ -29,14 +29,14 @@ class ItemContainer extends React.Component {
   }
 
   isNarrow() {
-    return this.props.style.width < 200
+    return this.props.style.width < 200;
   }
 
   isShort() {
-    return this.props.style.height < 150
+    return this.props.style.height < 150;
   }
 
-  render () {
+  render() {
     this.props.love.showCounter = this.props.styleParams.loveCounter && !this.isSmallItem() && !this.isNarrow();
     return (
         <ItemView
@@ -49,6 +49,6 @@ class ItemContainer extends React.Component {
         />
     );
   }
-};
+}
 
 export default CommonItemContainer(ItemContainer);
