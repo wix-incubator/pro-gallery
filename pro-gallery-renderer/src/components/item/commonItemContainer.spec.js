@@ -4,6 +4,7 @@ import {CommonItemContainerNotConnected} from './commonItemContainer.js';
 import {shallow} from 'enzyme';
 import React from 'react';
 import {itemActions} from 'photography-client-lib';
+import {expect} from 'chai';
 
 class DummyComponent extends React.Component {
   render() {
@@ -19,7 +20,7 @@ describe('Common Item Container', () => {
 
       const MountedEnhancedComponent = shallow(<EnhancedComponent />);
 
-      expect(MountedEnhancedComponent.prop('love')).toBeDefined();
+      expect(MountedEnhancedComponent.prop('love')).to.not.be.undefined;
     });
 
     it('should change state on toggle love', () => {
@@ -27,9 +28,9 @@ describe('Common Item Container', () => {
       itemActions.toggleLove(itemId, 'origin', false); //force item 1 to be unloved
       const EnhancedComponent = CommonItemContainerNotConnected(DummyComponent);
       const MountedEnhancedComponent = shallow(<EnhancedComponent photoId={itemId} />);
-      expect(itemActions.isLoved(itemId)).toEqual(false); //TODO - move this expect to itemActions
+      expect(itemActions.isLoved(itemId)).to.equal(false); //TODO - move this expect to itemActions
       MountedEnhancedComponent.prop('love').toggleLove();
-      expect(MountedEnhancedComponent.state('isLoved')).toEqual(true);
+      expect(MountedEnhancedComponent.state('isLoved')).to.equal(true);
     });
 
   });

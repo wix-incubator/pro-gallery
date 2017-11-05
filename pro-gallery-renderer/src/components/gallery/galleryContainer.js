@@ -10,7 +10,7 @@ import GalleryItem from '../item/galleryItem';
 import GalleryGroup from '../group/galleryGroup';
 import _ from 'lodash';
 import utils from '../../utils';
-import {itemActions, Consts, versionManager, Wix} from 'photography-client-lib';
+import {itemActions, Consts, versionManager, Wix, logger} from 'photography-client-lib';
 
 const adiLoadMoreMaxHeight = 2000;
 window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
@@ -1758,6 +1758,8 @@ TODO:  move this logic to onInit prop
         case 'left':
         case 'right':
           res.galleryWidth -= thumbnailSize;
+          break;
+        default:
           break;
       }
     } else if (this.getLatestState('styleParams.isSlideshow', false)) {

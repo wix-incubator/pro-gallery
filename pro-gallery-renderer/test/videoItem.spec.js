@@ -4,6 +4,7 @@ import GalleryDriver from './galleryDriver.js';
 import {testVideos} from '../test/images-mock';
 import React from 'react';
 import VideoItem from '../src/components/item/videoItem';
+import {expect} from 'chai';
 
 describe('Video Item ', () => {
 
@@ -25,14 +26,14 @@ describe('Video Item ', () => {
   });
 
   it('shouldn\'t auto play', () => {
-    expect(videoWrapper.props().playing).toEqual(false);
+    expect(videoWrapper.props().playing).equal(false);
   });
 
   it('source should have right src', () => {
-    expect(videoWrapper.find('ReactPlayer').props().url).toEqual(sampleItemViewProps.resized_url.mp4);
+    expect(videoWrapper.find('ReactPlayer').props().url).equal(sampleItemViewProps.resized_url.mp4);
   });
 
   it('source should have right src', () => {
-    expect(videoWrapper.find('ReactPlayer').props().fileConfig.attributes.poster).toEqual(sampleItemViewProps.resized_url.img);
+    expect(videoWrapper.find('ReactPlayer').props().fileConfig.attributes.poster).equal(sampleItemViewProps.resized_url.img);
   });
 });

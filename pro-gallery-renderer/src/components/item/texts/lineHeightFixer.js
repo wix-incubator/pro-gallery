@@ -1,7 +1,8 @@
+import $ from 'jquery';
+
 const spaceBetweenElements = 20;
 const minWidthToShowContent = 135;
 const minWithForNormalSizedItem = 190;
-
 
 class LineHeightFixer {
   getElementHeight(element) {

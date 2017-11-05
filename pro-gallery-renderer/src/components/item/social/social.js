@@ -1,5 +1,5 @@
 import React from 'react';
-import {utils} from '../../../utils/index.js';
+import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 
 export default class Social extends React.Component {

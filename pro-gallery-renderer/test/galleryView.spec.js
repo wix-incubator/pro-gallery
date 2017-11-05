@@ -1,7 +1,10 @@
 'use strict';
 
 import GalleryDriver from './galleryDriver.js';
+import GalleryView from '../src/components/gallery/galleryView';
 import {mount} from 'enzyme';
+import React from 'react';
+import {expect} from 'chai';
 
 describe('Gallery View', () => {
 
@@ -25,7 +28,7 @@ describe('Gallery View', () => {
         {...galleryViewProps}
       />);
 
-      expect(wrapper.find({'data-hook': 'gallery-column'}).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'gallery-column'}).length).to.equal(1);
     });
 
     it('init empty gallery', () => {
@@ -36,7 +39,7 @@ describe('Gallery View', () => {
         {...galleryDriver.create.galleryViewProps(galleryViewProps)}
       />);
 
-      expect(wrapper.find({'data-hook': 'gallery-column'}).length).toBe(0);
+      expect(wrapper.find({'data-hook': 'gallery-column'}).length).to.equal(0);
     });
 
   });

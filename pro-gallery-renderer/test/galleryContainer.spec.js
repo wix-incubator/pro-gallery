@@ -2,6 +2,8 @@ import GalleryDriver from './galleryDriver.js';
 import {shallow, mount} from 'enzyme';
 import _ from 'lodash';
 import React from 'react';
+import {expect} from 'chai';
+import {Wix} from 'photography-client-lib';
 
 describe('Gallery Container', () => {
 
@@ -43,7 +45,7 @@ describe('Gallery Container', () => {
       });
 
       wrapper.instance().toggleFullscreen(idx);
-      expect(fullscreenOpened).toBe(true);
+      expect(fullscreenOpened).to.equal(true);
 
     });
 
@@ -58,7 +60,7 @@ describe('Gallery Container', () => {
 
       wrapper.instance().toggleFullscreen(idx);
 
-      expect(fullscreenOpened).toBe(false);
+      expect(fullscreenOpened).to.equal(false);
 
     });
 
@@ -117,7 +119,7 @@ describe('Gallery Container', () => {
 
       const currentItems = wrapper.instance().currentItems().length;
 
-      expect(renderedItemsCount).toBe(currentItems);
+      expect(renderedItemsCount).to.equal(currentItems);
 
     });
 
@@ -142,7 +144,7 @@ describe('Gallery Container', () => {
 
       const currentItems = wrapper.instance().currentItems().length;
 
-      expect(renderedItemsCount).toBeLessThan(currentItems);
+      expect(renderedItemsCount).to.be.below(currentItems);
 
     });
 
@@ -164,16 +166,16 @@ describe('Gallery Container', () => {
       galleryContainerProps.styleParams.scrollDirection = 1;
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
 
-      expect(wrapper.state().styleParams.oneRow).toBe(true);
-      expect(wrapper.find({'data-hook': 'nav-arrow-next'}).length).toBe(1);
+      expect(wrapper.state().styleParams.oneRow).to.equal(true);
+      expect(wrapper.find({'data-hook': 'nav-arrow-next'}).length).to.equal(1);
     });
 
     it('Cube type should be "fit" and cube ratio should be 1:1', () => {
       galleryContainerProps.styleParams.imageResize = 1;
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
 
-      expect(wrapper.state().styleParams.cubeType).toBe('fit');
-      expect(wrapper.state().styleParams.cubeRatio).toBe(1);
+      expect(wrapper.state().styleParams.cubeType).to.equal('fit');
+      expect(wrapper.state().styleParams.cubeRatio).to.equal(1);
     });
 
     it('Cube type should be "fit" and cube ratio should be 16:9 and cubeImages should be false when on "Slider" layout', () => {
@@ -181,9 +183,9 @@ describe('Gallery Container', () => {
       galleryContainerProps.styleParams.galleryLayout = 4;
       wrapper = galleryDriver.mount.galleryContainer(galleryContainerProps);
 
-      expect(wrapper.state().styleParams.cubeType).toBe('fit');
-      expect(wrapper.state().styleParams.cubeRatio).toBe(16 / 9);
-      expect(wrapper.state().styleParams.cubeImages).toBe(false);
+      expect(wrapper.state().styleParams.cubeType).to.equal('fit');
+      expect(wrapper.state().styleParams.cubeRatio).to.equal(16 / 9);
+      expect(wrapper.state().styleParams.cubeImages).to.equal(false);
     });
 
   });
@@ -251,8 +253,8 @@ describe('Gallery Container', () => {
       const newHeight = wrapper.state().container.galleryHeight;
       const newItems = wrapper.state().renderedItemsCount;
 
-      expect(newHeight).toBeGreaterThan(initialHeight);
-      expect(newItems).toBeGreaterThan(initialItems);
+      expect(newHeight).to.be.above(initialHeight);
+      expect(newItems).to.be.above(initialItems);
 
     });
 
@@ -281,8 +283,8 @@ describe('Gallery Container', () => {
       const newHeight = wrapper.state().container.galleryHeight;
       const newItems = wrapper.state().renderedItemsCount;
 
-      expect(newHeight).toBe(initialHeight);
-      expect(newItems).toBe(initialItems);
+      expect(newHeight).to.equal(initialHeight);
+      expect(newItems).to.equal(initialItems);
 
     });
 
@@ -350,8 +352,8 @@ describe('Gallery Container', () => {
       const newHeight = wrapper.state().container.galleryHeight;
       const newItems = wrapper.state().renderedItemsCount;
 
-      expect(newHeight).toBeGreaterThan(initialHeight);
-      expect(newItems).toBeGreaterThan(initialItems);
+      expect(newHeight).to.be.above(initialHeight);
+      expect(newItems).to.be.above(initialItems);
 
     });
 
@@ -366,7 +368,7 @@ describe('Gallery Container', () => {
 
       wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      expect(wrapper.find({'data-hook': 'show-more'}).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'show-more'}).length).to.equal(1);
 
     });
 
@@ -381,7 +383,7 @@ describe('Gallery Container', () => {
 
       wrapper.instance().reRenderForScroll({customScrollTop: 0});
 
-      expect(wrapper.find({'data-hook': 'show-more'}).length).toBe(0);
+      expect(wrapper.find({'data-hook': 'show-more'}).length).to.equal(0);
 
     });
   });

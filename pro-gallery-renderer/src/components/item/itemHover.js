@@ -1,5 +1,6 @@
 import React from 'react';
-import {utils} from '../../utils/index.js';
+import utils from '../../utils/index.js';
+import _ from 'lodash';
 
 export default class ItemHover extends React.Component {
   constructor(props) {

@@ -13,9 +13,10 @@ import Social from './social/social.js';
 import Share from './share/share.js';
 import CustomButton from './buttons/customButton.js';
 import ItemTitle from './texts/itemTitle.js';
-import {Consts, performanceUtils} from 'photography-client-lib';
+import {Consts, performanceUtils, itemActions} from 'photography-client-lib';
 import classNames from 'classnames';
-import {utils} from '../../utils/index.js';
+import utils from '../../utils/index.js';
+import _ from 'lodash';
 
 class ItemView extends React.Component {
 

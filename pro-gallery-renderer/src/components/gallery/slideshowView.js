@@ -7,6 +7,7 @@ import {Layouter} from 'pro-gallery-layouter';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import {performanceUtils} from 'photography-client-lib';
+import $ from 'jquery';
 
 utils.fixViewport('Gallery');
 
@@ -518,7 +519,7 @@ class SlideshowView extends React.Component {
       margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin)
     };
 
-    if (this.props.container.galleryWidth >= ($(window).width() - 10)) {
+    if (this.props.container.galleryWidth >= (utils.getWindowWidth() - 10)) {
       classNames += ' streched';
     }
 

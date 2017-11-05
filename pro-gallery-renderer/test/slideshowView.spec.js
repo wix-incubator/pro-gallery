@@ -4,6 +4,7 @@ import GalleryDriver from './galleryDriver.js';
 import {mount} from 'enzyme';
 import React from 'react';
 import SlideshowView from '../src/components/gallery/slideshowView';
+import {expect} from 'chai';
 
 describe('Slideshow View', () => {
 
@@ -29,7 +30,7 @@ describe('Slideshow View', () => {
         {...galleryViewProps}
       />);
 
-      expect(wrapper.find({'data-hook': 'gallery-column'}).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'gallery-column'}).length).to.equal(1);
     });
 
     it('init empty gallery', () => {
@@ -40,7 +41,7 @@ describe('Slideshow View', () => {
         {...galleryDriver.create.galleryViewProps(galleryViewProps) }
       />);
 
-      expect(wrapper.find({'data-hook': 'gallery-column'}).length).toBe(0);
+      expect(wrapper.find({'data-hook': 'gallery-column'}).length).to.equal(0);
     });
 
     it('should show arrows', () => {
@@ -49,7 +50,7 @@ describe('Slideshow View', () => {
         {...galleryDriver.create.galleryViewProps(galleryViewProps) }
       />);
 
-      expect(wrapper.find({'data-hook': 'nav-arrow-next'}).length).toBe(1);
+      expect(wrapper.find({'data-hook': 'nav-arrow-next'}).length).to.equal(1);
     });
 
     // it('should show thumbnails', () => {
@@ -62,7 +63,7 @@ describe('Slideshow View', () => {
     //     {...galleryDriver.create.galleryViewProps(galleryViewProps)}
     //   />);
     //
-    //   expect(wrapper.find({'data-hook': 'gallery-thumbnails'}).length).toBe(1);
+    //   expect(wrapper.find({'data-hook': 'gallery-thumbnails'}).length).to.equal(1);
     // });
 
   });

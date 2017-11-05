@@ -1,5 +1,5 @@
 import React from 'react';
-import {utils} from '../../../utils';
+import utils from '../../../utils';
 import {itemActions} from 'photography-client-lib';
 
 class LoveButton extends React.Component {

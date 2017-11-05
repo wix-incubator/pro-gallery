@@ -5,6 +5,7 @@ import {mount} from 'enzyme';
 import {testImages} from './images-mock';
 import React from 'react';
 import ItemView from '../src/components/item/itemView';
+import {expect} from 'chai';
 
 describe('Item View', () => {
   let sampleItemViewProps;
@@ -21,7 +22,7 @@ describe('Item View', () => {
     const wrapper = mount(<ItemView
       {...sampleItemViewProps}
       />);
-    expect(wrapper.find({'data-hook': 'item-wrapper'}).length).toBe(1);
+    expect(wrapper.find({'data-hook': 'item-wrapper'}).length).to.equal(1);
   });
 
   describe('when error occurs', () => {
@@ -30,7 +31,7 @@ describe('Item View', () => {
         {...sampleItemViewProps}
         />);
 
-      expect(wrapper.state('retries')).toBe(0);
+      expect(wrapper.state('retries')).to.equal(0);
     });
 
     it('retries should be 1 when setting error once', () => {
@@ -40,7 +41,7 @@ describe('Item View', () => {
 
       wrapper.instance().setItemError();
 
-      expect(wrapper.state('retries')).toBe(1);
+      expect(wrapper.state('retries')).to.equal(1);
     });
 
     it('retries should be 3 when setting error 3 times', () => {
@@ -53,7 +54,7 @@ describe('Item View', () => {
       instance.setItemError();
       instance.setItemError();
 
-      expect(wrapper.state('retries')).toBe(3);
+      expect(wrapper.state('retries')).to.equal(3);
     });
 
     it('failed should be set true when setting error 4 times', () => {
@@ -67,7 +68,7 @@ describe('Item View', () => {
       instance.setItemError();
       instance.setItemError();
 
-      expect(wrapper.state('failed')).toBe(true);
+      expect(wrapper.state('failed')).to.equal(true);
     });
 
     it('failed should be set false when setting error less than 4 times', () => {
@@ -80,7 +81,7 @@ describe('Item View', () => {
       instance.setItemError();
       instance.setItemError();
 
-      expect(wrapper.state('failed')).toBe(false);
+      expect(wrapper.state('failed')).to.equal(false);
     });
   });
 
@@ -101,7 +102,7 @@ describe('Item View', () => {
           loaded: true,
         });
 
-      expect(wrapper1.find({'data-hook': 'item-download'}).length).toBe(0);
+      expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(0);
     });
 
     it('should show the download button according to the style params', () => {
@@ -116,7 +117,7 @@ describe('Item View', () => {
           loaded: true,
         });
 
-      expect(wrapper1.find({'data-hook': 'item-download'}).length).toBe(1);
+      expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(1);
     });
 
     it('should hide the download button if it is a demo item', () => {
@@ -132,7 +133,7 @@ describe('Item View', () => {
           loaded: true,
         });
 
-      expect(wrapper1.find({'data-hook': 'item-download'}).length).toBe(0);
+      expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(0);
     });
 
     it('should show title element when showTitle is true', () => {
@@ -149,7 +150,7 @@ describe('Item View', () => {
         loaded: true,
       });
 
-      expect(wrapper1.find({'data-hook': 'item-title'}).length).toBe(1);
+      expect(wrapper1.find({'data-hook': 'item-title'}).length).to.equal(1);
     });
 
     it('should hide title element when showTitle is true but not title text', () => {
@@ -165,7 +166,7 @@ describe('Item View', () => {
         loaded: true,
       });
 
-      expect(wrapper1.find({'data-hook': 'item-title'}).length).toBe(0);
+      expect(wrapper1.find({'data-hook': 'item-title'}).length).to.equal(0);
     });
 
     it('should show description element when allowDescription is true', () => {
@@ -182,7 +183,7 @@ describe('Item View', () => {
         loaded: true,
       });
 
-      expect(wrapper1.find({'data-hook': 'item-description'}).length).toBe(1);
+      expect(wrapper1.find({'data-hook': 'item-description'}).length).to.equal(1);
     });
 
     it('should hide description element when allowDescription is true but not description text', () => {
@@ -198,7 +199,7 @@ describe('Item View', () => {
         loaded: true,
       });
 
-      expect(wrapper1.find({'data-hook': 'item-description'}).length).toBe(0);
+      expect(wrapper1.find({'data-hook': 'item-description'}).length).to.equal(0);
     });
   });
 
@@ -216,7 +217,7 @@ describe('Item View', () => {
    loaded: true,
    });
 
-   expect(wrapper1.find({'data-hook': 'item-download'}).length).toBe(0);
+   expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(0);
 
    // Step 2: check with allowDownload = TRUE
    var galleryConfig2 = galleryDriver.get.galleryConfig;
@@ -229,7 +230,7 @@ describe('Item View', () => {
    loaded: true,
    });
 
-   expect(wrapper2.find({'data-hook': 'item-download'}).length).toBe(1);
+   expect(wrapper2.find({'data-hook': 'item-download'}).length).to.equal(1);
    });
    */
 

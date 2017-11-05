@@ -1,5 +1,6 @@
 import React from 'react';
 import GroupView from '../group/groupView.js';
+import GalleryDebugMessage from '../gallery/galleryDebugMessage';
 import _ from 'lodash';
 import utils from '../../utils/index.js';
 import {performanceUtils} from 'photography-client-lib';
@@ -82,7 +83,7 @@ class GalleryView extends React.Component {
 
   createShowMoreButton() {
     let showMoreButton = false;
-    const shouldShowButton = (!this.props.scroll.isInfinite && (this.props.galleryStructure.height > $(window).height()));
+    const shouldShowButton = (!this.props.scroll.isInfinite && (this.props.galleryStructure.height > utils.getWindowHeight()));
 
     if (shouldShowButton) {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {utils} from '../../utils/index.js';
+import utils from '../../utils/index.js';
 
 class GalleryDebugMessage extends React.Component {
   constructor(props) {
