@@ -952,7 +952,7 @@ TODO:  move this logic to onInit prop
 
     //note: 0 is true and false is 1 - super confusing (can't change it - because of backwards compatibility)
     if (canSet('loveCounter')) {
-      stateStyles.loveCounter = (wixStyles.loveCounter === 0);
+      stateStyles.loveCounter = (String(wixStyles.loveCounter) === '0');
     }
 
     if (canSet('enableInfiniteScroll')) {
@@ -992,7 +992,7 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('chooseBestGroup')) {
-      stateStyles.chooseBestGroup = (String(wixStyles.chooseBestGroup) === 1);
+      stateStyles.chooseBestGroup = (String(wixStyles.chooseBestGroup) === '1');
     }
 
     if (canSet('groupTypes')) {
@@ -1039,7 +1039,7 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('imageResize', 'cubeType')) {
-      stateStyles.cubeType = ((String(wixStyles.imageResize) === 1) ? 'fit' : 'fill');
+      stateStyles.cubeType = ((String(wixStyles.imageResize) === '1') ? 'fit' : 'fill');
       if (stateStyles.cubeType === 'fit') {
         stateStyles.cubeRatio = 1;
 
@@ -1075,7 +1075,7 @@ TODO:  move this logic to onInit prop
       //If toggle is for Items per row, fill the fixedColumns with the number of items
       //If toggle is responsive, make fixedColumns to be 0 or undefined;
       //Show the new controls only on Vertical scroll (one ow is false)
-      stateStyles.fixedColumns = stateStyles.gridStyle === 1 ? (Number(wixStyles.numberOfImagesPerRow || stateStyles.numberOfImagesPerRow)) : 0;
+      stateStyles.fixedColumns = String(stateStyles.gridStyle) === '1' ? (Number(wixStyles.numberOfImagesPerRow || stateStyles.numberOfImagesPerRow)) : 0;
       stateStyles.groupTypes = '1';
       stateStyles.groupSize = 1;
       stateStyles.collageAmount = 0;
@@ -1131,9 +1131,9 @@ TODO:  move this logic to onInit prop
     }
 
     if (utils.isStoreGallery()) {
-      const isGrid = _.isUndefined(stateStyles.galleryLayout) || stateStyles.galleryLayout === 2;
-      const isMasonry = stateStyles.galleryLayout === 1;
-      const titleOnHover = stateStyles.titlePlacement === 1 || wixStyles.titlePlacement === 1;
+      const isGrid = _.isUndefined(stateStyles.galleryLayout) || String(stateStyles.galleryLayout) === '2';
+      const isMasonry = String(stateStyles.galleryLayout) === '1';
+      const titleOnHover = String(stateStyles.titlePlacement) === '1' || String(wixStyles.titlePlacement) === '1';
 
       if (!isGrid && !isMasonry) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
@@ -1262,7 +1262,7 @@ TODO:  move this logic to onInit prop
     }
 
     //Backwards compatibility for masonry layout
-    if (stateStyles.selectedLayoutV2 === 1) {
+    if (String(stateStyles.selectedLayoutV2) === '1') {
       if (stateStyles.isVertical) {
         stateStyles.gallerySize = Math.round(stateStyles.gallerySize * 8 + 200);
       } else {
