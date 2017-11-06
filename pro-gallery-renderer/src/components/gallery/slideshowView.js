@@ -141,7 +141,7 @@ class SlideshowView extends React.Component {
     }
 
     numOfThumbnails = this.lastItemIdx - this.firstItemIdx + 1;
-    if (numOfThumbnails % 2 == 0) { // keep an odd number of thumbnails
+    if (numOfThumbnails % 2 === 0) { // keep an odd number of thumbnails
       numOfThumbnails += 1;
       this.lastItemIdx += 1;
     }
@@ -324,7 +324,7 @@ class SlideshowView extends React.Component {
 
     let currentIdx;
 
-    for (var item, i = 0; item = items[i]; i++) {
+    for (let item, i = 0; item = items[i]; i++) {
       if (item.offset.left >= scrollLeft + ((this.props.container.galleryWidth - item.width) / 2)) {
         currentIdx = i - 1;
         break;
@@ -369,7 +369,7 @@ class SlideshowView extends React.Component {
     }
     this.setCurrentItemByScroll();
 
-    // if (utils.isSite() && this.props.styleParams.selectedLayoutV2 == 4 && this.props.renderedItemsCount > 2) {
+    // if (utils.isSite() && this.props.styleParams.selectedLayoutV2 === 4 && this.props.renderedItemsCount > 2) {
     //   this.nextItem(1);
     // }
   }

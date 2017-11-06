@@ -1,4 +1,3 @@
-/// <reference path="../../reference.ts" />
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -13,7 +12,7 @@ import Social from './social/social.js';
 import Share from './share/share.js';
 import CustomButton from './buttons/customButton.js';
 import ItemTitle from './texts/itemTitle.js';
-import {Consts, performanceUtils, itemActions} from 'photography-client-lib';
+import {Wix, Consts, performanceUtils, itemActions} from 'photography-client-lib';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
@@ -61,7 +60,7 @@ class ItemView extends React.Component {
       Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
         setTimeout(() => {
           this.setState({
-            showHover: (data.detail == 2)
+            showHover: (data.detail === 2)
           });
         }, 50);
       });
@@ -102,8 +101,8 @@ class ItemView extends React.Component {
   toggleShare(event, forceVal) {
     event.stopPropagation();
     const isIconTag = tagName => ['button', 'i', 'a'].indexOf(tagName.toLowerCase()) >= 0;
-    if (event.type == 'mouseout' && (isIconTag(event.target.tagName) || (event.relatedTarget && isIconTag(event.relatedTarget.tagName)))) {
-      //mouseout event should not be fired if hovering over icons (tag name == I)
+    if (event.type === 'mouseout' && (isIconTag(event.target.tagName) || (event.relatedTarget && isIconTag(event.relatedTarget.tagName)))) {
+      //mouseout event should not be fired if hovering over icons (tag name === I)
       return;
     }
 
@@ -121,16 +120,16 @@ class ItemView extends React.Component {
   onMouseOver(imageUrl) {
     this.onMouseOverEvent.itemIdx = this.props.idx;
     window.dispatchEvent(this.onMouseOverEvent);
-    if (this.props.type == 'video') {
+    if (this.props.type === 'video') {
       this.onVideoHover();
     }
   }
 
   onVideoHover() {
     const {videoPlay, itemClick} = this.props.styleParams;
-    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expend' : !(itemClick == 'expend' && videoPlay == 'onClick');
+    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expend' : !(itemClick === 'expend' && videoPlay === 'onClick');
 
-    if (this.props.styleParams.videoPlay == 'hover' && !utils.isMobile()) {
+    if (this.props.styleParams.videoPlay === 'hover' && !utils.isMobile()) {
       this.props.playVideo(this.props.idx);
     }
   }
@@ -167,8 +166,8 @@ class ItemView extends React.Component {
       this.props.actions.toggleFullscreen(this.props.idx);
     } else if (itemClick === 'nothing' && utils.isMobile()) {
       this.toggleHoverOnMobile();
-    } else if (this.props.type == 'video') {
-      const shouldTogglePlay = itemClick !== 'expend' && (videoPlay == 'onClick' || utils.isMobile());
+    } else if (this.props.type === 'video') {
+      const shouldTogglePlay = itemClick !== 'expend' && (videoPlay === 'onClick' || utils.isMobile());
       if (shouldTogglePlay) {
         this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
@@ -239,7 +238,7 @@ class ItemView extends React.Component {
   }
 
   shouldShowHoverOnMobile() {
-    return (utils.isMobile() && (this.props.styleParams.itemClick == 'nothing'));
+    return (utils.isMobile() && (this.props.styleParams.itemClick === 'nothing'));
   }
 
   shouldHover() {
@@ -259,7 +258,7 @@ class ItemView extends React.Component {
   isMultishared() {
     const items = _.get(this, 'props.multishare.items');
     return items && !!_.find(items, itemProps => {
-      return (itemProps.id == this.props.id);
+      return (itemProps.id === this.props.id);
     });
   }
 
@@ -314,9 +313,9 @@ class ItemView extends React.Component {
 
   getItemTextsDetails() {
     const props = _.pick(this.props, ['title', 'description', 'fileName', 'id', 'styleParams', 'style', 'isNarrow']);
-    const isButtonPlacementOnHover = this.getButtonPlacement() == Consts.placements.SHOW_ON_HOVER;
-    const isImage = this.props.type == 'image' || this.props.type == 'picture';
-    const useCustomButton = this.props.styleParams.useCustomButton == true;
+    const isButtonPlacementOnHover = this.getButtonPlacement() === Consts.placements.SHOW_ON_HOVER;
+    const isImage = this.props.type === 'image' || this.props.type === 'picture';
+    const useCustomButton = this.props.styleParams.useCustomButton === true;
     const shouldShowButton = isButtonPlacementOnHover && isImage && useCustomButton;
 
     return <Texts {...props}
@@ -504,11 +503,11 @@ class ItemView extends React.Component {
     const buttonPlacement = this.getButtonPlacement();
     let bottomInfo = null;
 
-    if (styleParams.titlePlacement == placements.SHOW_ALWAYS) {
+    if (styleParams.titlePlacement === placements.SHOW_ALWAYS) {
       let buttonElem = null;
-      const isImage = type == 'image' || type == 'picture';
+      const isImage = type === 'image' || type === 'picture';
       if (isImage) {
-        const shouldShowButton = buttonPlacement == placements.SHOW_ALWAYS && styleParams.useCustomButton === true;
+        const shouldShowButton = buttonPlacement === placements.SHOW_ALWAYS && styleParams.useCustomButton === true;
         buttonElem = shouldShowButton ? (<CustomButton styleParams={styleParams} />) : null;
       }
       const isTitleAvailable = styleParams.allowTitle && displayTitle;
@@ -554,9 +553,8 @@ class ItemView extends React.Component {
       if (isAnotherItemInFocus || isShowMoreInFocus) {
         if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
           this.itemContainer.focus();
-        }
-        //check if currentIdx has changed to the current item
-        else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
+        } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
+          //check if currentIdx has changed to the current item
           this.itemContainer.focus();
         }
       }
@@ -569,8 +567,8 @@ class ItemView extends React.Component {
     const {styleParams, photoId, id, style, hash, full_url, idx, title, type} = this.props;
     const itemInner = this.getItemInner();
 
-    const isHighlight = this.props.thumbnailHighlightId && this.props.thumbnailHighlightId == this.props.id;
-    const tabIndex = isHighlight ? utils.getTabIndex('currentThumbnail') : (this.props.currentIdx == this.props.idx ? utils.getTabIndex('currentGalleryItem') : -1);
+    const isHighlight = this.props.thumbnailHighlightId && this.props.thumbnailHighlightId === this.props.id;
+    const tabIndex = isHighlight ? utils.getTabIndex('currentThumbnail') : (this.props.currentIdx === this.props.idx ? utils.getTabIndex('currentGalleryItem') : -1);
 
     const bottomInfo = this.getBottomInfoElement();
     const bottomInfoHeight = this.props.bottomInfoHeight || 0;
@@ -592,7 +590,7 @@ class ItemView extends React.Component {
     itemStyle.height = height + 'px';
     itemStyle.borderRadius = borderRadius + 'px';
 
-    let typeName = 'Graphic';
+    let typeName;
     switch (type) {
       case 'dummy':
         typeName = '';
@@ -602,6 +600,9 @@ class ItemView extends React.Component {
         break;
       case 'video':
         typeName = 'Video';
+        break;
+      default:
+        typeName = 'Graphic';
         break;
     }
 

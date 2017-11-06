@@ -28,15 +28,15 @@ class LoveButton extends React.Component {
   }
 
   containerClassName() {
-    return (this.props.layout == 'fullscreen') ? 'fullscreen-social-love-container' : 'block-fullscreen gallery-item-social-love gallery-item-social-button';
+    return (this.props.layout === 'fullscreen') ? 'fullscreen-social-love-container' : 'block-fullscreen gallery-item-social-love gallery-item-social-button';
   }
 
   buttonClassName() {
-    return ((this.props.layout == 'fullscreen') ? 'fullscreen-social-love' : 'gallery-item-social-love') + (utils.isStoreGallery() ? (utils.isMobile ? ' mobile-social-icon' : '') : ((this.props.layout == 'fullscreen') ? '' : ' block-fullscreen'));
+    return ((this.props.layout === 'fullscreen') ? 'fullscreen-social-love' : 'gallery-item-social-love') + (utils.isStoreGallery() ? (utils.isMobile ? ' mobile-social-icon' : '') : ((this.props.layout === 'fullscreen') ? '' : ' block-fullscreen'));
   }
 
   counterClassName() {
-    return (this.props.layout == 'fullscreen') ? 'fullscreen-social-love-count shown' : 'block-fullscreen gallery-item-social-love-count';
+    return (this.props.layout === 'fullscreen') ? 'fullscreen-social-love-count shown' : 'block-fullscreen gallery-item-social-love-count';
   }
 
   render() {

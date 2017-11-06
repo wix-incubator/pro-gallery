@@ -3,13 +3,10 @@ import utils from '../../utils/index.js';
 import _ from 'lodash';
 
 export default class ItemHover extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   getHoverClass() {
     const {styleParams, forceShowHover, isMultisharing, itemType} = this.props;
-    const hoverClass = itemType == 'video' ? ['gallery-item-hover-video'] : ['gallery-item-hover'];
+    const hoverClass = itemType === 'video' ? ['gallery-item-hover-video'] : ['gallery-item-hover'];
 
     if (styleParams.isSlider || styleParams.isSlideshow || styleParams.hasThumbnails) {
       hoverClass.push(styleParams.galleryVerticalAlign);

@@ -15,8 +15,8 @@ class ItemContainer extends React.Component {
     const maxWidth = 90;
     const maxHeight = 90;
 
-    if (this.props.styleParams.cubeImages && this.props.styleParams.cubeType == 'fit') {
-      if (this.props.style.orientation == 'landscape') {
+    if (this.props.styleParams.cubeImages && this.props.styleParams.cubeType === 'fit') {
+      if (this.props.style.orientation === 'landscape') {
         //wide image
         return (this.props.style.width / this.props.style.ratio <= maxHeight);
       } else {

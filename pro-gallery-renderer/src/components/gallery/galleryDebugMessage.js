@@ -2,10 +2,6 @@ import React from 'react';
 import utils from '../../utils/index.js';
 
 class GalleryDebugMessage extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
 
   render() {
     if (utils.getTopUrlParam('pgdebug') !== 'true') {
@@ -18,7 +14,7 @@ class GalleryDebugMessage extends React.Component {
 
     let parentSize = '';
     try {
-      parentSize = ' psw' + top.screen.width + ' piw' + top.innerWidth + ' pbw' + top.document.body.clientWidth;
+      parentSize = ' psw' + window.top.screen.width + ' piw' + window.top.innerWidth + ' pbw' + window.top.document.body.clientWidth;
     } catch (e) {
       //not on the domain
     }

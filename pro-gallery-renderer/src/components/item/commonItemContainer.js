@@ -1,12 +1,11 @@
 import React from 'react';
-import {Component} from 'react';
 import {videoEnded, videoAdded, videoRemoved} from '../../actions/galleryActions.js';
 import {playVideo, pauseVideo} from '../../actions/itemViewActions.js';
 import {connect} from 'react-redux';
 import {itemActions} from 'photography-client-lib';
 
 export const CommonItemContainerNotConnected = ComposedComponent => {
-  class InnerComponent extends Component {
+  class InnerComponent extends React.Component {
     constructor(props, context) {
       super(props, context);
 

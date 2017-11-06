@@ -7,9 +7,6 @@ import {Consts} from 'photography-client-lib';
 import {utils} from '../../../utils/index.js';
 
 export default class Texts extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   getElementClassNames() {
     const {showShare, styleParams, isNarrow} = this.props;
@@ -38,7 +35,7 @@ export default class Texts extends React.Component {
   getElementStyle() {
     const {styleParams, style} = this.props;
     const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails;
-    const isCentered = style.justifyContent == 'center';
+    const isCentered = style.justifyContent === 'center';
 
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,
@@ -65,7 +62,7 @@ export default class Texts extends React.Component {
 
     const {title, description, fileName, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
     const displayTitle = (title || fileName);
-    const shouldShowTitle = displayTitle && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement == Consts.placements.SHOW_ON_HOVER;
+    const shouldShowTitle = displayTitle && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
     const shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
     const shouldHaveBottomSpaceInTitle = shouldShowDescription || this.allowAnyAction();
 

@@ -2,6 +2,7 @@
 import utils from '../../utils/index';
 import {Item} from 'pro-gallery-layouter';
 import * as _ from 'lodash';
+import {watermarkApi} from 'photography-client-lib';
 
 class GalleryItem {
 
@@ -554,7 +555,7 @@ class GalleryItem {
   }
 
   get orderIndex() {
-    return this.dto.orderIndex || 0;
+    return this.dto.orderIndex || this.dto.o || 0;
   }
 
   set orderIndex(value) {
@@ -592,7 +593,7 @@ class GalleryItem {
   }
 
   get isImage() {
-    return this.type == 'image';
+    return this.type === 'image';
   }
 
   get isImportant() {
@@ -600,7 +601,7 @@ class GalleryItem {
   }
 
   get isVideo() {
-    return this.type == 'video';
+    return this.type === 'video';
   }
 
   get videoUrl() {
@@ -609,10 +610,6 @@ class GalleryItem {
 
   get isExternalVideo() {
     return this.metadata.isExternal;
-  }
-
-  get orderIndex() {
-    return this.dto.orderIndex || this.dto.o;
   }
 
   get isExternal() {
@@ -923,7 +920,7 @@ class GalleryItem {
   }
 
   get isText() {
-    return this.type == 'text';
+    return this.type === 'text';
   }
 
 }

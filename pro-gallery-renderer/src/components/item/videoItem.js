@@ -156,7 +156,7 @@ class VideoItem extends React.Component {
     const videoPreloader = <div className="pro-circle-preloader" key={'video-preloader-' + this.props.idx}/>;
 
     const {videoPlay, itemClick} = this.props.styleParams;
-    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expend' : !(itemClick == 'expend' && videoPlay == 'onClick');
+    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expend' : !(itemClick === 'expend' && videoPlay === 'onClick');
     const video = canVideoPlayInGallery ? (
       <div
           className={baseClassName + ' animated fadeIn '}

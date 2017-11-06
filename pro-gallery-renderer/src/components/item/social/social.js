@@ -1,11 +1,9 @@
 import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
+import {logger, itemActions} from 'photography-client-lib';
 
 export default class Social extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   getSocialShare() {
     const {styleParams, id, actions} = this.props;

@@ -46,7 +46,7 @@ export default function galleryReducer(state = initialState.gallery, action) {
         });
       }
 
-    case videoActions.videoModeChanged:
+    case videoActions.videoModeChanged: {
       const newVideoPlayMode = action.payload;
       const {videoPlayMode} = state;
       if (videoPlayMode !== newVideoPlayMode) {
@@ -54,13 +54,15 @@ export default function galleryReducer(state = initialState.gallery, action) {
       }
 
       break;
+    }
     case SET_ITEMS:
       return _.merge({}, state, {items: action.items});
     case SET_RENDERED_ITEMS_COUNT:
       return _.merge({}, state, {renderedItemsCount: action.count});
-    case GALLERY_WINDOW_LAYOUT_CHANGED:
+    case GALLERY_WINDOW_LAYOUT_CHANGED: {
       const documentHeight = {documentHeight: action.documentHeight};
       return _.merge({}, state, documentHeight);
+    }
     case SET_VIDEO_PLAY_INDEX:
       state = {...state, videoIndexPlay: action.payload};
       break;

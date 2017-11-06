@@ -1,6 +1,7 @@
 'use strict';
 
 import {exportAPI} from 'santa-platform-super-apps';
+import {Wix} from 'photography-client-lib';
 
 class GalleryWixCodeApi {
 
@@ -14,6 +15,13 @@ class GalleryWixCodeApi {
     this.waitForWixSdk();
     this.resetGallery();
 
+  }
+
+  generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.floor(Math.random() * 16) || 0;
+      return (c === 'x' ? r.toString(16) : c);
+    });
   }
 
   createUniqueUuidFromString(str, retry) {
@@ -32,10 +40,7 @@ class GalleryWixCodeApi {
     let num = hashToInt(str);
     num = num < 10000 ? Math.pow(num, 2) : num;
 
-    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c, i) => {
-      let r = (Math.ceil(num / (i + 1)) % 16), v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
+    const uuid = this.generateUUID();
 
     if (this.uniqueUuids[uuid] === true) {
       //unique uuid already exists!
@@ -135,7 +140,7 @@ class GalleryWixCodeApi {
 
   formatItemsForWixCode(itemsDto) {
     const formattedItemsDto = [];
-    for (var itemDto, i = 0; itemDto = itemsDto[i]; i++) {
+    for (let itemDto, i = 0; itemDto = itemsDto[i]; i++) {
       formattedItemsDto.push({
         uri: itemDto.mediaUrl,
         description: (itemDto && itemDto.metaData && itemDto.metaData.description),
@@ -174,7 +179,7 @@ class GalleryWixCodeApi {
 
     const formattedItemsDto = [];
     try {
-      for (var wixCodeItem, i = 0; wixCodeItem = wixCodeItems[i]; i++) {
+      for (let wixCodeItem, i = 0; wixCodeItem = wixCodeItems[i]; i++) {
         formattedItemsDto.push({
           itemId: this.createUniqueUuidFromString(i + '_' + (wixCodeItem.uri || wixCodeItem.alt || i)),
           mediaUrl: wixCodeItem.uri || 'no_image.jpg',
@@ -199,7 +204,7 @@ class GalleryWixCodeApi {
   }
 
   resetGalleryInEditor() {
-    if (window.Wix && Wix.Utils && Wix.Utils.getViewMode() == 'editor') {
+    if (window.Wix && Wix.Utils && Wix.Utils.getViewMode() === 'editor') {
       this.resetGallery();
     }
   }

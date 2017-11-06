@@ -1,12 +1,9 @@
 import React from 'react';
 import CustomButtonIcon from './customButtonIcon.js';
 import {utils} from '../../../utils/index.js';
+import {logger} from 'photography-client-lib';
 
 export default class CustomButton extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const {styleParams} = this.props;

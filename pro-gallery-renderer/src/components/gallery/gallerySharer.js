@@ -2,8 +2,8 @@
 
 import React from 'react';
 import _ from 'lodash';
-import {itemActions} from 'photography-client-lib';
-
+import {Wix, itemActions} from 'photography-client-lib';
+import utils from '../../utils';
 class GallerySharer extends React.Component {
 
   constructor(props) {
@@ -36,7 +36,7 @@ class GallerySharer extends React.Component {
 
     console.log('New multishareItems', multishareItems);
 
-    if (multishareItems && (multishareItems.length == 1) && (this.state.items.length == 0)) {
+    if (multishareItems && (multishareItems.length === 1) && (this.state.items.length === 0)) {
       this.createInitialHashtagIfNeeded(multishareItems);
       this.shareButtons = this.createShareButtonsIfNeeded(multishareItems);
     }
@@ -84,7 +84,7 @@ class GallerySharer extends React.Component {
 
     multishareItems = _.filter(multishareItems, item => {
       return (
-        (item.itemId || item.photoId) != (itemDto.itemId || itemDto.photoId)
+        (item.itemId || item.photoId) !== (itemDto.itemId || itemDto.photoId)
       );
     });
 
@@ -109,7 +109,7 @@ class GallerySharer extends React.Component {
 
   createShareButtonsIfNeeded(items) {
 
-    if (items.length == 0) {
+    if (items.length === 0) {
       return [];
     }
 
@@ -130,7 +130,7 @@ class GallerySharer extends React.Component {
   }
 
   createInitialHashtagIfNeeded(newItems) {
-    if (newItems.length == 1 && this.state.items.length == 0) {
+    if (newItems.length === 1 && this.state.items.length === 0) {
       this.hashtag = 'HT' + utils.generateUUID();
       console.log('Created a new hashtag ', this.hashtag);
     }
@@ -159,7 +159,7 @@ class GallerySharer extends React.Component {
     const itemsDom = [];
     itemsDto.forEach(item => {
       itemsDom.push(
-        item.type == 'text' ? (
+        item.type === 'text' ? (
           <div
             className="sharer-item"
             key={`sharer-item-${item.photoId || item.itemId}`}

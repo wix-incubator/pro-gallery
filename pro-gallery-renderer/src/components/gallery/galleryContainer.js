@@ -917,7 +917,7 @@ TODO:  move this logic to onInit prop
 
     //behaviour
     if (canSet('fullscreen')) {
-      stateStyles.fullscreen = (wixStyles.fullscreen.toString() == '0');
+      stateStyles.fullscreen = (wixStyles.fullscreen.toString() === '0');
     } else {
       stateStyles.fullscreen = true;
     }
@@ -956,15 +956,15 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('enableInfiniteScroll')) {
-      stateStyles.enableInfiniteScroll = (wixStyles.enableInfiniteScroll == '1');
+      stateStyles.enableInfiniteScroll = (wixStyles.enableInfiniteScroll === '1');
     }
 
     //design
     if (canSet('isVertical')) {
-      stateStyles.isVertical = ((String(wixStyles.isVertical) == '1'));
+      stateStyles.isVertical = ((String(wixStyles.isVertical) === '1'));
     }
     if (canSet('imageOrientation', 'isVertical')) {
-      stateStyles.isVertical = ((String(wixStyles.imageOrientation) == '1'));
+      stateStyles.isVertical = ((String(wixStyles.imageOrientation) === '1'));
     }
 
     if (canSet('collageAmount')) {
@@ -980,7 +980,7 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('gallerySize')) {
-      stateStyles.gallerySize = stateStyles.gallerySize;
+      stateStyles.gallerySize = wixStyles.gallerySize;
     }
 
     if (canSet('gridStyle')) {
@@ -992,7 +992,7 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('chooseBestGroup')) {
-      stateStyles.chooseBestGroup = (String(wixStyles.chooseBestGroup) == 1);
+      stateStyles.chooseBestGroup = (String(wixStyles.chooseBestGroup) === 1);
     }
 
     if (canSet('groupTypes')) {
@@ -1027,11 +1027,11 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('cubeImages')) {
-      stateStyles.cubeImages = ((String(wixStyles.cubeImages) == '1'));
+      stateStyles.cubeImages = ((String(wixStyles.cubeImages) === '1'));
     }
 
     if (canSet('smartCrop')) {
-      stateStyles.smartCrop = ((String(wixStyles.smartCrop) == '1'));
+      stateStyles.smartCrop = ((String(wixStyles.smartCrop) === '1'));
     }
 
     if (canSet('cubeRatio')) {
@@ -1039,8 +1039,8 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('imageResize', 'cubeType')) {
-      stateStyles.cubeType = ((String(wixStyles.imageResize) == 1) ? 'fit' : 'fill');
-      if (stateStyles.cubeType == 'fit') {
+      stateStyles.cubeType = ((String(wixStyles.imageResize) === 1) ? 'fit' : 'fill');
+      if (stateStyles.cubeType === 'fit') {
         stateStyles.cubeRatio = 1;
 
         if (stateStyles.cropOnlyFill === true) {
@@ -1062,7 +1062,7 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('scrollDirection', 'oneRow')) {
-      stateStyles.oneRow = (String(wixStyles.scrollDirection) == '1');
+      stateStyles.oneRow = (String(wixStyles.scrollDirection) === '1');
 
       if (stateStyles.oneRow) {
         //if oneRow is true, use horizontal layouts only
@@ -1075,7 +1075,7 @@ TODO:  move this logic to onInit prop
       //If toggle is for Items per row, fill the fixedColumns with the number of items
       //If toggle is responsive, make fixedColumns to be 0 or undefined;
       //Show the new controls only on Vertical scroll (one ow is false)
-      stateStyles.fixedColumns = stateStyles.gridStyle == 1 ? (Number(wixStyles.numberOfImagesPerRow || stateStyles.numberOfImagesPerRow)) : 0;
+      stateStyles.fixedColumns = stateStyles.gridStyle === 1 ? (Number(wixStyles.numberOfImagesPerRow || stateStyles.numberOfImagesPerRow)) : 0;
       stateStyles.groupTypes = '1';
       stateStyles.groupSize = 1;
       stateStyles.collageAmount = 0;
@@ -1131,13 +1131,13 @@ TODO:  move this logic to onInit prop
     }
 
     if (utils.isStoreGallery()) {
-      const isGrid = _.isUndefined(stateStyles.galleryLayout) || stateStyles.galleryLayout == 2;
-      const isMasonry = stateStyles.galleryLayout == 1;
-      const titleOnHover = stateStyles.titlePlacement == 1 || wixStyles.titlePlacement == 1;
+      const isGrid = _.isUndefined(stateStyles.galleryLayout) || stateStyles.galleryLayout === 2;
+      const isMasonry = stateStyles.galleryLayout === 1;
+      const titleOnHover = stateStyles.titlePlacement === 1 || wixStyles.titlePlacement === 1;
 
       if (!isGrid && !isMasonry) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-      } else if (stateStyles.isVertical != 1 || stateStyles.oneRow === true) {
+      } else if (stateStyles.isVertical !== 1 || stateStyles.oneRow === true) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
       } else if (titleOnHover) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
@@ -1228,7 +1228,7 @@ TODO:  move this logic to onInit prop
       stateStyles.sharpParams.quality = wixStyles.imageQuality;
     }
 
-    if (canSet('usmToggle') && wixStyles.usmToggle == true) {
+    if (canSet('usmToggle') && wixStyles.usmToggle === true) {
       if (canSet('usm_a')) {
         stateStyles.sharpParams.usm.usm_a = (wixStyles.usm_a || 0) / 100;
       }
@@ -1262,7 +1262,7 @@ TODO:  move this logic to onInit prop
     }
 
     //Backwards compatibility for masonry layout
-    if (stateStyles.selectedLayoutV2 == 1) {
+    if (stateStyles.selectedLayoutV2 === 1) {
       if (stateStyles.isVertical) {
         stateStyles.gallerySize = Math.round(stateStyles.gallerySize * 8 + 200);
       } else {
@@ -1540,7 +1540,7 @@ TODO:  move this logic to onInit prop
 
       const items = this.galleryStructure.items;
 
-      const item = _.find(items, item => (item.idx == itemIdx));
+      const item = _.find(items, item => (item.idx === itemIdx));
       pos = this.state.styleParams.oneRow ? _.get(item, 'offset.left') : _.get(item, 'offset.top');
 
       if (utils.isVerbose()) { //todo yoshi
@@ -1813,7 +1813,7 @@ TODO:  move this logic to onInit prop
           return maxBySlideshow;
         } else if (this.state.styleParams.oneRow) {
           return Math.min(maxByScreen, maxByFirstGroup);
-        } else if (!this.state.styleParams.enableInfiniteScroll == '1') { //vertical with show more
+        } else if (!this.state.styleParams.enableInfiniteScroll === '1') { //vertical with show more
           return maxByScreen;
         } else {
           return false;
@@ -1862,7 +1862,7 @@ TODO:  move this logic to onInit prop
 
       }
 
-      if (Math.abs(lastHeight - neededHeight) < 2 || neededHeight == 0) {
+      if (Math.abs(lastHeight - neededHeight) < 2 || neededHeight === 0) {
         if (utils.isVerbose()) {
           console.log('Skipping Wix height change: was ' + this.lastHeight + ', now it\'s ' + neededHeight);
         }
@@ -1959,7 +1959,7 @@ TODO:  move this logic to onInit prop
       return;
     }
 
-    if (this.state.styleParams.itemClick == 'nothing') {
+    if (this.state.styleParams.itemClick === 'nothing') {
       return;
     }
 
@@ -1975,7 +1975,7 @@ TODO:  move this logic to onInit prop
         createdBy: 'toggleFullscreen'
       });
 
-      if (this.state.styleParams.itemClick == 'link') {
+      if (this.state.styleParams.itemClick === 'link') {
         if (item.linkType && item.linkType !== 'none') {
           if (item.linkType === 'web') {
             window.open(item.linkUrl, item.linkOpenType);
@@ -1991,7 +1991,7 @@ TODO:  move this logic to onInit prop
           console.log('Time to Fullscreen VM - START');
         }
 
-        const prefix = '//' + ((window.staticsVersion == 'debug') ? 'local.wix.com:9001' : 'progallery.wix.com') + '/';
+        const prefix = '//' + ((window.staticsVersion === 'debug') ? 'local.wix.com:9001' : 'progallery.wix.com') + '/';
 
         window.currentGalleryItems = this.allItems();
         window.totalItemsCount = this.state.totalItemsCount;
@@ -2158,7 +2158,7 @@ TODO:  move this logic to onInit prop
     /*
         const taggedItems = [], otherItems = [];
         for (const itemDto, i = 0; itemDto = curItems[i]; i++) {
-          const isInHashtag = _.findIndex(hashtagItems, (item) => (item.itemId == itemDto.itemId)) >= 0;
+          const isInHashtag = _.findIndex(hashtagItems, (item) => (item.itemId === itemDto.itemId)) >= 0;
           if (isInHashtag) {
             taggedItems.push(itemDto);
           } else {

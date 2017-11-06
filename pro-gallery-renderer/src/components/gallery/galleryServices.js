@@ -11,7 +11,7 @@ import {toggleHoverPreview} from '../../actions/galleryActions.js';
 import GalleryContainer from './galleryContainer.js';
 import GalleryItem from '../item/galleryItem.js';
 import {utils} from '../../utils';
-import {logger} from '../../utils';
+import {Wix, logger, watermarkApi} from 'photography-client-lib';
 import '../../utils/rcp';
 import {timingMeasure} from '../../utils/performanceUtils';
 import videoMiddleware from '../galleryStore/videoMiddleware';
@@ -19,6 +19,7 @@ import videoActionTypes from '../../constants/videoActionTypes';
 import videoPlayModes from '../videoPlayModes';
 import {VideoQueue} from '../../_domain/video-queue';
 import {testImages} from 'images-mock';
+import _ from 'lodash';
 
 logger.initBiLoadedEventListener('gallery');
 
@@ -142,7 +143,7 @@ class ProGalleryServices {
       console.log('Gallery Services - getImagesFromBuilder');
     }
 
-    if (window.document.domain != 'wix.com') {
+    if (window.document.domain !== 'wix.com') {
       try {
         //noinspection JSAnnotator
         window.document.domain = 'wix.com';
@@ -220,9 +221,7 @@ class ProGalleryServices {
       const _galleryData = window.galleryData = galleryData;
       const _itemsCount = (this.galleryDataSrc === this.gallerySrcTypes.prerenderedGallery) ? window.prerenderedGallery.totalItemsCount : (galleryData && galleryData.photos && galleryData.photos.length);
 
-      if (this.galleryData) {
-
-      } else {
+      if (!this.galleryData) {
         this.galleryData = _galleryData;
         this.itemsCount = _itemsCount;
       }

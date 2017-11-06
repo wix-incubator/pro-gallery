@@ -9,9 +9,10 @@ const initialState = {
 
 export default function loveButtonReducer(state = initialState, action) {
   switch (action.type) {
-    case TOGGLE_LOVE:
+    case TOGGLE_LOVE: {
       const newCount = action.isLoved ? state.count + 1 : state.count - 1;
       return _.merge({}, state, {isLoved: action.isLoved, count: newCount});
+    }
     default:
       return state;
   }

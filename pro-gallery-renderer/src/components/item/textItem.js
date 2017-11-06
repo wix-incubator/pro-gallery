@@ -1,9 +1,6 @@
 import React from 'react';
 
 export default class TextItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   getTextDimensions() {
     const {style, styleParams, cubeRatio} = this.props;

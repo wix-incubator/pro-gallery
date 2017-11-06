@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
+import {itemActions} from 'photography-client-lib';
 
 export default class Share extends React.Component {
   constructor(props) {
@@ -114,7 +115,7 @@ export default class Share extends React.Component {
     const share = false;
     if (styleParams.allowSocial) {
       const minDimension = 200;
-      if (type == 'text') {
+      if (type === 'text') {
         this.shareArr.splice(2, 1);
       }
 

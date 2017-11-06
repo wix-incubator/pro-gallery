@@ -3,10 +3,6 @@ import {utils} from '../../utils';
 
 class VideoItemPlaceholder extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const baseClassName = 'gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item';
     return <div key={'video-and-hover-container' + this.props.id}>

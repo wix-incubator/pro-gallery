@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import _ from 'lodash';
 
 const spaceBetweenElements = 20;
 const minWidthToShowContent = 135;
@@ -42,10 +43,10 @@ class LineHeightFixer {
     if (customButtonExists) {
       customButtonElement.show();
       const buttonHeight = this.getElementHeight(customButtonElement);
-      const isNotEnoughSpaceForButton = availableHeight < buttonHeight;
+      let isNotEnoughSpaceForButton = availableHeight < buttonHeight;
       if (isNotEnoughSpaceForButton) {
         const hoverTextAreaPaddings = 30;
-        const isNotEnoughSpaceForButton = (availableHeight + hoverTextAreaPaddings) < buttonHeight;
+        isNotEnoughSpaceForButton = (availableHeight + hoverTextAreaPaddings) < buttonHeight;
       }
       if (isNotEnoughSpaceForButton) {
         customButtonElement.hide();
@@ -73,12 +74,12 @@ class LineHeightFixer {
     if (shouldDisplayTitle) {
       titleElement.show();
       titleElement.css({overflow: 'visible'});
-      if (titleElement.length == 1) {
+      if (titleElement.length === 1) {
         let titleHeight = parseInt(titleElement.height());
         const titleLineHeight = parseInt(titleElement.css('line-height'));
         const numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
         const numOfAvailableLines = Math.floor(availableHeight / titleLineHeight);
-        if (numOfAvailableLines == 0) {
+        if (numOfAvailableLines === 0) {
           titleElement.hide();
         } else {
           const isTitleFitInAvailableHeight = numOfAvailableLines <= numOfTitleLines;
@@ -101,7 +102,7 @@ class LineHeightFixer {
       }
     }
 
-    const shouldDisplayDescription = descriptionElement.length == 1 && !isSmallItem && styleParams.allowDescription && description && availableHeight > 0;
+    const shouldDisplayDescription = descriptionElement.length === 1 && !isSmallItem && styleParams.allowDescription && description && availableHeight > 0;
     if (shouldDisplayDescription) {
       descriptionElement.show();
       availableHeight -= (spaceBetweenElements * 2);
@@ -110,7 +111,7 @@ class LineHeightFixer {
       }
       const lineHeight = parseInt(descriptionElement.css('line-height'));
       const numOfLines = Math.floor(availableHeight / lineHeight);
-      if (numOfLines == 0) {
+      if (numOfLines === 0) {
         descriptionElement.hide();
       } else {
         const descriptionOptimisticHeight = parseInt(descriptionElement.css('height'));
