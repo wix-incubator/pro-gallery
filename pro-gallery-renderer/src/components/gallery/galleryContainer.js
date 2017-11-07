@@ -16,11 +16,11 @@ const adiLoadMoreMaxHeight = 2000;
 window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
 
 let FullscreenContainer;
-if (!utils.isInWix()) {
-  import(/* webpackChunkName: "fullscreenContainer" */ '../fullscreen/fullscreenContainer.js').then(fullscreen => {
-    FullscreenContainer = fullscreen.default;
-  });
-}
+// if (!utils.isInWix()) {
+//   import(/* webpackChunkName: "fullscreenContainer" */ '../fullscreen/fullscreenContainer.js').then(fullscreen => {
+//     FullscreenContainer = fullscreen.default;
+//   });
+// }
 
 export class GalleryContainer extends React.Component {
 

@@ -1,2 +1,2 @@
-import GalleryContainer from './src/components/gallery/';
-export default GalleryContainer;
+import ProGallery from './components/gallery/proGallery';
+export default ProGallery;

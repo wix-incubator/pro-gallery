@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactPlayer from 'react-player-fork';
-import utils from '../../utils';
+import utils from '../../../utils';
 import _ from 'lodash';
 
 //import ReactPlayer from '../../../../../react-player';

@@ -1,5 +1,5 @@
 import React from 'react';
-import {utils} from '../../utils';
+import {utils} from '../../../utils';
 
 class VideoItemPlaceholder extends React.Component {
 

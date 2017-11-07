@@ -3,7 +3,7 @@ import {mount} from 'enzyme';
 import GalleryDriver from './galleryDriver.js';
 import {testVideos} from '../test/images-mock';
 import React from 'react';
-import VideoItem from '../src/components/item/videoItem';
+import VideoItem from '../src/components/item/videos/videoItem';
 import {expect} from 'chai';
 
 describe('Video Item ', () => {
