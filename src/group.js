@@ -19,11 +19,7 @@ export class Group {
     this.groupTypes = config.groupTypes;
     this.chooseBestGroup = config.chooseBestGroup;
     this.layoutsVersion = config.layoutsVersion;
-    this.titlePlacement = config.titlePlacement;
-    this.galleryLayout = config.galleryLayout;
-    this.allowTitle = config.allowTitle;
-    this.itemFont = config.itemFont;
-    this.itemFontSlideshow = config.itemFontSlideshow;
+    this.bottomInfoHeight = config.bottomInfoHeight;
     this.imageMargin = config.imageMargin;
 
     this.visible = true;
@@ -796,31 +792,6 @@ export class Group {
     }
   }
 
-  getBottomInfoHeight() {
-    if (this.titlePlacement !== 'SHOW_ALWAYS') {
-      return 0;
-    }
-
-    const paddingTopAndBottom = 30;
-    let spaceBetweenElements = 16;
-    const defaultButtonHeight = 33;
-    const defaultItemFontSize = 22;
-
-    const isGrid = this.galleryLayout === 2;
-    const item = this.items ? this.items[0] : null;
-    const title = item ? item.title : null;
-    let fontSize = 0;
-    const isLayoutSupportsNoTitle = isGrid && !utils.isMobile();
-    const shouldSaveSpaceForTitle = (this.allowTitle && title) || isLayoutSupportsNoTitle;
-    if (shouldSaveSpaceForTitle) {
-      fontSize = this.itemFontSlideshow ? this.itemFontSlideshow.size : defaultItemFontSize;
-    } else {
-      spaceBetweenElements = 0;
-    }
-
-    return fontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
-  }
-
   get id() {
     return 'g' + this.idx + '_' + (this.items[0] || {}).id;
   }
@@ -832,11 +803,7 @@ export class Group {
   }
 
   get totalHeight() {
-    return this.height + this.bottomInfoHeight;
-  }
-
-  get bottomInfoHeight() {
-    return this.getBottomInfoHeight();
+    return this.height + (this.bottomInfoHeight || 0);
   }
 
   get bottom() {

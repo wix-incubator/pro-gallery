@@ -223,11 +223,7 @@ export default class Layouter {
         collageAmount: this.styleParams.collageAmount,
         collageDensity: this.styleParams.collageDensity,
         layoutsVersion: this.styleParams.layoutsVersion,
-        titlePlacement: this.styleParams.titlePlacement,
-        galleryLayout: this.styleParams.galleryLayout,
-        allowTitle: this.styleParams.allowTitle,
-        itemFont: this.styleParams.itemFont,
-        itemFontSlideshow: this.styleParams.itemFontSlideshow,
+        bottomInfoHeight: this.styleParams.bottomInfoHeight,
         container: this.container,
         imageMargin: this.styleParams.imageMargin
       });
