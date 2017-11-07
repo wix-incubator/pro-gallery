@@ -1,18 +1,18 @@
-import * as types from '../../constants/galleryTypes';
-import videoPlayModes from '../videoPlayModes';
-export default ({ videoQueue, utils }) => store => next => action => {
+import * as actions from '../../../constants/galleryTypes';
+import videoPlayModes from './videoPlayModes';
+export default ({videoQueue, utils}) => store => next => action => {
   const {
     type,
     payload
   } = action;
-  const { gallery: { videoPlayMode } } = store.getState();
+  const {gallery: {videoPlayMode}} = store.getState();
 
   // This doesn't affect autoplay
   switch (type) {
-    case types.VIDEO_ADDED:
+    case actions.VIDEO_ADDED:
       videoQueue.addItem(payload);
       break;
-    case types.VIDEO_REMOVED:
+    case actions.VIDEO_REMOVED:
       videoQueue.removeItem(payload);
       break;
   }
@@ -24,19 +24,20 @@ export default ({ videoQueue, utils }) => store => next => action => {
   let indexToPlay = null;
   if (isAutoPlay) {
     switch (type) {
-      case types.NAVIGATION_IN:
+      case actions.NAVIGATION_IN:
         indexToPlay = utils.isEditor() ? -1 : videoQueue.next();
         break;
-      case types.VIDEO_ENDED:
+      case actions.VIDEO_ENDED:
         indexToPlay = videoQueue.next();
         break;
-      case types.EDITOR_MODE_CHANGED:
-      case types.GALLERY_WINDOW_LAYOUT_CHANGED:
+      case actions.EDITOR_MODE_CHANGED:
+      case actions.GALLERY_WINDOW_LAYOUT_CHANGED: {
         const nextIdx = utils.isEditor() ? -1 :
           videoQueue.isCurrentVideoVisible() ? videoQueue.current() : videoQueue.next();
-        indexToPlay = nextIdx
+        indexToPlay = nextIdx;
         break;
-      case types.VIDEO_ADDED:
+      }
+      case actions.VIDEO_ADDED:
         indexToPlay = videoQueue.current();
         break;
       default:
@@ -45,6 +46,6 @@ export default ({ videoQueue, utils }) => store => next => action => {
   }
 
   if (indexToPlay !== null) {
-    store.dispatch({ type: types.SET_VIDEO_PLAY_INDEX, payload: indexToPlay });
+    store.dispatch({type: actions.SET_VIDEO_PLAY_INDEX, payload: indexToPlay});
   }
-}
+};

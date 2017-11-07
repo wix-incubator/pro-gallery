@@ -1,0 +1,104 @@
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@function str-trim($string) {
+  @if type-of($string) != 'string' {
+    @warn "`str-trim` function expecting a string for $string; #{type-of($string)} given.";
+    @return false;
+  }
+
+  $start: 1;
+  $end: str-length($string);
+
+  @for $i from 1 through str-length($string) {
+    $first: str-slice($string, $i, $i);
+    $last: str-slice($string, -$i, -$i);
+
+    @if $first == ' ' and $i + 1 == $start + 1 {
+      $start: $i + 1;
+    }
+
+    @if $last == ' ' and str-length($string) - $i == $end - 1 {
+      $end: str-length($string) - $i;
+    }
+  }
+
+  @return str-slice($string, $start, $end);
+}
+
+@function strip-wix-style-param($param: nil) {
+  @return str-trim(str-replace(str-replace(str-replace($param, '{{'), '}}'), ';'));
+}
+
+/// Join `$list` into a string.
+///
+/// @param {List} $list - the list to convert
+/// @param {String} $glue ('') - a string to separate each element of the list
+///
+/// @return {String}
+
+@function _join($list, $glue: ' ') {
+  $length: length($list);
+  $result: '';
+
+  @if $length < 1 {
+    @return $result;
+  }
+
+  @for $i from 1 through $length {
+    $result: $result
+             + nth($list, $i)
+             + if($i != $length, $glue, '');
+  }
+
+  @return $result;
+}
+
+// Convert given list params to one wix style parameter with fallback
+// ---
+// @param [list] $param-list: list of tpa params to walk through
+// ---
+// @return string $result: tpa param that contains the given params as fallback.
+// @example wix-style-param(('{{color-1}}' 'color-2')) => {{color-1 color-2}}
+// @example wix-style-param('{{color-1}} color-2') => {{color-1 color-2}}
+// @example wix-style-param((';{{color-1}}' 'color-2')) => ; {{color-1 color-2}}
+// @example wix-style-param(';{{color-1}} color-2') => ; {{color-1 color-2}}
+@function wix-style-param($param-list: nil, $is-font: false) {
+  @if ($param-list == nil) {
+    @error 'wix-style-param called without arguments.';
+    @return false;
+  }
+
+  @if (str-index(_join($param-list), ';')) {
+    $is-font: true;
+  }
+
+  $result: '';
+  $params: '';
+
+  @if (type_of($param-list) == string) {
+    $params: strip-wix-style-param($param-list);
+  } @else {
+    @for $i from 1 through length($param-list) {
+      $param-list: set-nth($param-list, $i, strip-wix-style-param(nth($param-list, $i)));
+    }
+    $params: _join($param-list);
+  }
+
+  @if ($is-font) {
+    $result: '; ';
+  }
+
+  @return unquote($result + '{{' + $params + '}}');
+}
+
+@function parseInt($num) {
+  @return $num / (($num * 0) + 1);
+}

@@ -1,0 +1,246 @@
+//legacy wix-style
+$enable-wix-style-css: false;
+// @import '../../../node_modules/wix-style/dist/styles/basics';
+// @import '../../../app/bower_components/wix-style/dist/styles/basics';
+// @import '../../../app/bower_components/wix-style/dist/styles/style';
+//new wix-style
+// @import '../../../node_modules/wix-style/dist/styles/modules';
+// @import '../../../app/bower_components/wix-style/dist/styles/modules';
+@import 'modules/mixins-utils';
+@import 'modules/mixins-tpa';
+//@font-face {
+//  font-family: Helvetica;
+//  font-weight: 100;
+//  src: url('fonts/Helvetiva%20Neue%2025%20UltLt.ttf');
+//}
+//
+//@font-face {
+//  font-family: Helvetica;
+//  font-weight: 200;
+//  src: url('fonts/Helvetiva%20Neue%2035%20Thin.ttf');
+//}
+//
+//@font-face {
+//  font-family: Helvetica;
+//  font-weight: 300;
+//  src: url('fonts/Helvetiva%20Neue%2045%20Light.ttf');
+//}
+//
+//@font-face {
+//  font-family: Helvetica;
+//  font-weight: 400;
+//  src: url('fonts/Helvetiva%20Neue%2055%20Roman.ttf');
+//}
+//
+//@font-face {
+//  font-family: Helvetica;
+//  font-weight: 500;
+//  src: url('fonts/Helvetiva%20Neue%2065%20Medium.ttf');
+//}
+//
+//@font-face {
+//  font-family: Helvetica;
+//  font-weight: 600;
+//  src: url('fonts/Helvetiva%20Neue%2075%20Bold.ttf');
+//}
+//
+//@font-face {
+//  font-family: Helvetica;
+//  font-weight: 700;
+//  src: url('fonts/Helvetiva%20Neue%2095%20Black.ttf');
+//}
+// wix-style colors
+$wix-color-white: #ffffff;
+$wix-color-red03: #d6453d;
+$wix-color-red10: #ee5951;
+$wix-color-dark60: #dfe5eb;
+// wix-style colors
+$dialog-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
+0 13px 19px 2px rgba(0, 0, 0, 0.14),
+0 5px 24px 4px rgba(0, 0, 0, 0.12);
+$wix-dialog-shadow: 0 0 21px 2px rgba(22, 45, 61, 0.6);
+$background-gray: #e0e9f2;
+$background-gray-light: #f1f1f1;
+$background-gray-lighter: #f7f7f7;
+$background-gray-lightest: #fefefe;
+$text-darker: #20303c;
+$text-dark: #2b5672;
+$text-darkest: #162d3d;
+$text-normal: #7a92a5;
+$text-light: #b0bec5;
+$text-placeholder: #b6c1cd;
+$blackish-opacity: rgba(0, 0, 0, 0.2);
+$black-opacity: rgba(0, 0, 0, 0.4);
+$blacker-opacity: rgba(0, 0, 0, 0.7);
+$blackest-opacity: rgba(0, 0, 0, 0.9);
+$whitest-opacity: rgba(255, 255, 255, 0.95);
+$whiter-opacity: rgba(255, 255, 255, 0.8);
+$white-opacity: rgba(255, 255, 255, 0.2);
+$wix-menu-background: #edf2f7;
+$wix-menu-button: #2b81cb;
+$wix-menu-button-hover: #0d487f;
+$wix-menu-border: #d9e1e8;
+$wix-menu-button-danger: #c15150;
+$wix-menu-button-danger-hover: #942b28;
+$input-background: #fcfdff;
+$input-border: #c4e1f9;
+$border-separator: #d6e1e8;
+$symbol-color: #7fccf7;
+$background-menu: #d3edff;
+$wix-blue: #3899ec;
+$wix-blue-selected: #b9e0fb;
+//$font-family: Helvetica, Arial, sans-serif;
+//new colors - added for sidebar
+$wix-color-blue01: #0048ae;
+$wix-color-blue35: #d9e3f3;
+$wix-color-dark75: #f0f3f5;
+$wix-blue-hover: #4eb7f5;
+$wix-header-bg: #e7eff5;
+$divider-color: #d9e1e8;
+$arrow-box-shadow: rgba(52, 94, 151, .43);
+$arrow-hover-box-shadow: rgba(56, 153, 236, .9);
+$gray-url-svg: #797979;
+$disabled-label: #939393;
+$disabled-input-placeholder: #7a7a7a;
+//organize-photos
+$white: #fff;
+$black: #000;
+$header-color: #3899ec;
+$light-blue: #eaf7ff;
+$light-blue-active: #daeffe;
+$light-blue-hover: #d3edff;
+$light-blue-hover-border: #c6e2f7;
+$orange-hover: #fc975c;
+$light-sky-blue: #7ecaf5;
+$menu-opacity: rgba(22, 45, 61, 0.7);
+$figcaption-box-shadow: rgba(22, 45, 61, .5);
+//support
+$main-text-size: 14px;
+$padding: 24px;
+//$main-text-color: #2b5672;
+$link-text-color: #3899ec;
+//share screen
+$share-item-border: #d5d5d5;
+@mixin font($weight) {
+  @if $weight=='ulight' {
+    font-family: $font-ulight;
+    font-weight: 100;
+  }
+  @else if $weight=='light' {
+    font-family: $font-light;
+    font-weight: 200;
+  }
+  @else if $weight=='thin' {
+    font-family: $font-thin;
+    font-weight: 300;
+  }
+  @else if $weight=='thin-400-weight' {
+    font-family: $font-thin;
+    font-weight: 400;
+  }
+  @else if $weight=='normal' {
+    font-family: $font-normal;
+    font-weight: 400;
+  }
+  @else if $weight=='normal-300-weight' {
+    font-family: $font-normal;
+    font-weight: 300;
+  }
+  @else if $weight=='medium' {
+    font-family: $font-medium;
+    font-weight: 600;
+  }
+  @else if $weight=='bold' {
+    font-family: $font-bold;
+    font-weight: 600;
+  }
+  @else {
+    font-family: $font-thin;
+    font-weight: 300;
+  }
+}
+
+$wix-font-family-helvetica-25: "HelveticaNeueW01-UltLt",
+"HelveticaNeueW02-UltLt",
+"HelveticaNeueW10-25UltL",
+sans-serif;
+$wix-font-family-helvetica-35: "HelveticaNeueW01-Thin",
+"HelveticaNeueW02-Thin",
+"HelveticaNeueW10-35Thin",
+sans-serif;
+$wix-font-family-helvetica-45: "HelveticaNeueW01-45Ligh",
+"HelveticaNeueW02-45Ligh",
+"HelveticaNeueW10-45Ligh",
+sans-serif;
+$wix-font-family-helvetica-55: "HelveticaNeueW01-55Roma",
+"HelveticaNeueW02-55Roma",
+"HelveticaNeueW10-55Roma",
+sans-serif;
+$wix-font-family-helvetica-65: "HelveticaNeueW01-65Medi",
+"HelveticaNeueW02-65Medi",
+"HelveticaNeueW10-65Medi",
+sans-serif;
+$wix-font-family-helvetica-75: "HelveticaNeueW01-75Bold",
+"HelveticaNeueW02-75Bold",
+"HelveticaNeueW10-75Bold",
+sans-serif;
+$font-ulight: $wix-font-family-helvetica-25;
+$font-thin: $wix-font-family-helvetica-35;
+$font-light: $wix-font-family-helvetica-45;
+$font-normal: $wix-font-family-helvetica-55;
+$font-medium: $wix-font-family-helvetica-65;
+$font-bold: $wix-font-family-helvetica-75;
+$white: #fff;
+$red: #e03939;
+$wix-blue: #3899ec;
+$dark-gray: #111;
+$medium-gray: #49494b;
+$light-gray: #dbdbe0;
+$lighter-gray: #cdcdd0;
+$light-border: #eeeeee;
+$dark-border: #333333;
+$separator-gray: #d7dfe6;
+$tooltip-text: #171616;
+$tooltip-border: rgba(203, 203, 203, 1);
+$panel-danger: #ec5a56;
+$panel-primary: #3f9ae9;
+$hover-icons: #ffffff;
+$social-icons: #5d5d61;
+$facebook-hover: #36609f;
+$twitter-hover: #2aa9e0;
+$pinterest-hover: #ca2027;
+$tumblr-hover: #37465d;
+$mail-hover: #448ccb;
+$divider: rgba(8, 8, 8, 0.2);
+$bg-bright: #ffffff;
+$icons-bright: #080808;
+$social-bright: #5d5d61;
+$bg-brightless: #e9e9e9;
+$bg-dark: #080808;
+$bg-dark-opacity: rgba(8, 8, 8, 0.75);
+$icons-dark: #ffffff;
+$social-dark: #dbdbe0;
+$light-red: #ff9999;
+$light-green: #c1f0c1;
+$animated-bright-bg: rgba(241, 241, 241, 0.2);
+$animated-dark-bg: rgba(241, 241, 241, 1);
+@mixin placeholder($color, $size:'') {
+  &::-webkit-input-placeholder {
+    color: $color;
+    @if $size !='' {
+      font-size: $size;
+    }
+  }
+  &:-moz-placeholder {
+    color: $color;
+    @if $size !='' {
+      font-size: $size;
+    }
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    @if $size !='' {
+      font-size: $size;
+    }
+  }
+}

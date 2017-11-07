@@ -18,7 +18,7 @@ import {PLAY_VIDEO, PAUSE_VIDEO} from '../actions/itemViewActions.js';
 import initialState from './initialState.js';
 
 import _ from 'lodash';
-import {utils} from '../utils/utils';
+import utils from '../utils';
 
 export default function galleryReducer(state = initialState.gallery, action) {
   switch (action.type) {

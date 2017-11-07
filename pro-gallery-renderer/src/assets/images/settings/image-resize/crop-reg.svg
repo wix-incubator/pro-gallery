@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="51px" height="51px" viewBox="0 0 51 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>crop</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M37.563,6.696 C37.563,7.801 36.668,8.696 35.563,8.696 L10.563,8.696 C9.458,8.696 8.563,7.801 8.563,6.696 L8.563,4.751 L0,12.696 L46.688,12.696 L37.563,0.531 L37.563,6.696 Z" id="path-1"></path>
+        <path d="M0.459,5.62 C0.459,8.55 2.701,10.956 5.563,11.217 L5.563,6.696 C5.563,5.591 6.458,4.696 7.563,4.696 L11.624,4.696 C11.184,2.032 8.869,0 6.08,0 C2.976,0 0.459,2.516 0.459,5.62 Z" id="path-3"></path>
+        <path d="M2.563,0.696 C1.458,0.696 0.563,1.591 0.563,2.696 L0.563,7.214 C0.733,7.23 0.905,7.24 1.08,7.24 C4.184,7.24 6.7,4.724 6.7,1.62 C6.7,1.304 6.668,0.997 6.618,0.696 L2.563,0.696 Z" id="path-5"></path>
+        <path d="M4.956,0.675 L0.563,4.751 L0.563,6.696 C0.563,7.8 1.458,8.696 2.563,8.696 L8.709,8.696 L11.288,6.194 L7.962,0.769 C7.6,0.309 7.092,0.108 6.556,0.108 C6.009,0.108 5.433,0.317 4.956,0.675 Z" id="path-7"></path>
+        <path d="M14.54,1.274 L0.709,14.696 L19.563,14.696 C20.668,14.696 21.563,13.801 21.563,12.696 L21.563,6.531 L17.561,1.196 C17.204,0.791 16.729,0.614 16.234,0.614 C15.646,0.614 15.029,0.862 14.54,1.274 Z" id="path-9"></path>
+        <rect id="path-11" x="8" y="4" width="30" height="20" rx="2"></rect>
+        <mask id="mask-12" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="30" height="20" fill="white">
+            <use xlink:href="#path-11"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="crop">
+            <g id="Group-8" transform="translate(2.000000, 11.000000)">
+                <g id="Page-1" transform="translate(0.000000, 15.000000)">
+                    <g id="Group-6-Copy">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-5"></g>
+                        <polygon id="Fill-4" fill="#D3EDFF" mask="url(#mask-2)" points="-5 17.696 51.688 17.696 51.688 -4.469 -5 -4.469"></polygon>
+                    </g>
+                </g>
+                <rect id="Rectangle-10-Copy" fill="#7FCBF7" x="8" y="4" width="30" height="20" rx="2"></rect>
+                <g id="Group-9" transform="translate(3.000000, 0.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <g id="Clip-8"></g>
+                    <polygon id="Fill-7" fill="#D3EDFF" mask="url(#mask-4)" points="-4.541 16.217 16.624 16.217 16.624 -5 -4.541 -5"></polygon>
+                </g>
+                <g id="Group-15" transform="translate(8.000000, 4.000000)">
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <g id="Clip-14"></g>
+                    <polygon id="Fill-13" fill="#D3EDFF" mask="url(#mask-6)" points="-4.437 12.24 11.7 12.24 11.7 -4.304 -4.437 -4.304"></polygon>
+                </g>
+                <g id="Group-18" transform="translate(8.000000, 15.000000)">
+                    <mask id="mask-8" fill="white">
+                        <use xlink:href="#path-7"></use>
+                    </mask>
+                    <g id="Clip-17"></g>
+                    <polygon id="Fill-16" fill="#D3EDFF" opacity="0.64948694" mask="url(#mask-8)" points="-4.437 13.696 16.288 13.696 16.288 -4.892 -4.437 -4.892"></polygon>
+                </g>
+                <g id="Group-21" transform="translate(16.000000, 9.000000)">
+                    <mask id="mask-10" fill="white">
+                        <use xlink:href="#path-9"></use>
+                    </mask>
+                    <g id="Clip-20"></g>
+                    <polygon id="Fill-19" fill="#D3EDFF" mask="url(#mask-10)" points="-4.291 19.696 26.563 19.696 26.563 -4.386 -4.291 -4.386"></polygon>
+                </g>
+                <use id="Rectangle-10-Copy-2" stroke="#7FCBF7" mask="url(#mask-12)" stroke-width="2" xlink:href="#path-11"></use>
+            </g>
+        </g>
+    </g>
+</svg>

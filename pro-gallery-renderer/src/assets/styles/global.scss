@@ -1,0 +1,261 @@
+// @import 'progallery-svg-font-icons';
+@import 'consts';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.pro-circle-preloader {
+  $diameter: 30px;
+  $border-width: 3px;
+  $timing: 1s;
+  $color1: rgb(220, 220, 220);
+  $color2: rgb(240, 240, 240);
+
+  @mixin semi-circle() {
+    content: '';
+    top: 0;
+    left: 0;
+    right: -100%;
+    bottom: 0;
+    border: $border-width solid currentColor;
+    border-color: currentColor transparent transparent currentColor;
+    border-radius: 50%;
+    position: absolute;
+    transform: rotate(-45deg);
+    animation: inner-rotate $timing / 2 linear infinite alternate;
+  }
+
+  animation: semi-rotate $timing linear infinite;
+  height: $diameter;
+  left: 50%;
+  margin-left: - $diameter / 2;
+  margin-top: - $diameter / 2;
+  overflow: hidden;
+  position: relative;
+  transform-origin: 100% 50%;
+  width: $diameter / 2;
+
+  &::before {
+    @include semi-circle();
+    color: $color1;
+  }
+
+  &::after {
+    @include semi-circle();
+    color: $color2;
+    opacity: 0;
+  }
+
+}
+
+.love-animation {
+  animation-name: loved;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+}
+
+.text-item {
+
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  white-space: initial;
+
+  .te-pro-gallery-text-item {
+    line-height: normal !important;
+    letter-spacing: normal !important;
+  }
+
+  > div {
+    background: initial !important;
+    box-sizing: border-box;
+  }
+
+  p,
+  span,
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  i {
+    margin: 0;
+    padding: 0;
+  }
+
+}
+
+@keyframes inner-rotate {
+  to {
+    opacity: 1;
+    transform: rotate(115deg);
+  }
+}
+
+@keyframes semi-rotate {
+  from {
+    animation-timing-function: ease-out;
+    transform: rotate(180deg);
+  }
+
+  45% {
+    transform: rotate(198deg);
+  }
+
+  55% {
+    transform: rotate(234deg);
+  }
+
+  to {
+    transform: rotate(540deg);
+  }
+}
+
+@keyframes loved {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  35% {
+    -webkit-transform: scale3d(1.25, 1.25, 1.25);
+    transform: scale3d(1.25, 1.25, 1.25);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+.clear {
+  clear: both;
+}
+
+.inactive {
+  filter: opacity(50%);
+  pointer-events: none;
+}
+
+.pro-tooltip {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: fixed;
+  z-index: 99999999;
+  background: $white;
+  top: auto;
+  left: auto;
+  border: 1px solid $tooltip-border;
+  width: calc(100% - 12px);
+  max-width: 250px;
+  box-sizing: border-box;
+  margin: 5px;
+  color: $tooltip-text;
+  padding: 15px 18px;
+  font-family: $font-normal;
+  font-size: 14px;
+  line-height: 18px;
+  overflow: visible;
+  border-radius: 1px;
+
+  &:before,
+  &:after {
+    content: ' ';
+    position: absolute;
+    border: 9px solid transparent;
+  }
+
+  &:before {
+    border-width: 9px;
+    top: 11px;
+  }
+
+  &:after {
+    border-width: 8px;
+    top: 12px;
+  }
+
+  &.left {
+
+    transform: translate3d(0, 0, 0);
+
+    &:before {
+      left: -18px;
+      border-right-color: $tooltip-border;
+    }
+
+    &:after {
+      left: -16px;
+      border-right-color: $white;
+    }
+  }
+
+  &.right {
+
+    transform: translate3d(-100%, 0, 0);
+
+    &:before {
+      right: -18px;
+      border-left-color: $tooltip-border;
+    }
+
+    &:after {
+      right: -16px;
+      border-left-color: $white;
+    }
+  }
+
+  &.top {
+
+    transform: translate3d(-100%, -100%, 0);
+
+    &:before {
+      top: auto;
+      bottom: -18px;
+      right: 12px;
+      border-top-color: $tooltip-border;
+    }
+
+    &:after {
+      top: auto;
+      bottom: -16px;
+      right: 13px;
+      border-top-color: $white;
+    }
+  }
+}
+
+
+.hide-scrollbars {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+
+  &::-webkit-scrollbar,
+  ::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+button {
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+

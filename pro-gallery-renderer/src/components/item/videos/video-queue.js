@@ -24,7 +24,8 @@ export class VideoQueue {
   }
 
   nextVisibleVideo(j) {
-    let len = this.que.length, queIndex;
+    const len = this.que.length;
+    let queIndex;
     for (let i = 0; i < len; i++) {
       queIndex = (i + j) % len;
       if (this.que[queIndex].isVisible()) {
@@ -46,7 +47,7 @@ export class VideoQueue {
   }
 
   removeItem(id) {
-    this.que = this.que.filter((element) => element.idx !== id);
+    this.que = this.que.filter(element => element.idx !== id);
     if (this.isEmpty()) {
       this.video = this.dummyVideo;
     }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>fill-text-color-bld-reg-up</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="fill-text-color-bld-reg-up" sketch:type="MSArtboardGroup" fill="#1D2D3C">
+            <g id="Imported-Layers" sketch:type="MSLayerGroup" transform="translate(6.000000, 9.000000)">
+                <path d="M17.796,3.376 L16.95,2.078 L16.116,3.384 C15.694,4.043 12,9.952 12,13 C12,14.917 13.346,18 16.958,18 C20.436,18 22,15.059 22,13 C22,9.947 18.226,4.036 17.796,3.376 L17.796,3.376 Z M16.958,17 C14.024,17 13,14.49 13,13 C13,10.156 16.958,3.958 16.958,3.958 C16.958,3.958 21,10.156 21,13 C21,14.49 19.892,17 16.958,17 L16.958,17 Z" id="Fill-1" sketch:type="MSShapeGroup"></path>
+                <path d="M6.723,0 C6.723,0 6.723,0 6.722,0 C5.986,0 5.343,0.451 5.043,1.177 L0,13 L2,13 L3.774,9 L9.393,9 L10.5,12 L11,8.003 L8.401,1.178 C8.102,0.452 7.458,0 6.723,0 L6.723,0 Z M4.661,7 L6.722,2.352 L8.589,7 L4.661,7 L4.661,7 Z" id="Fill-2" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

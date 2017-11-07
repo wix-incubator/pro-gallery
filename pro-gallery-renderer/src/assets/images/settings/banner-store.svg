@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+    <defs>
+        <rect id="b" width="402" height="582" rx="8"/>
+        <filter id="a" width="109%" height="106.2%" x="-4.5%" y="-3.1%" filterUnits="objectBoundingBox">
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="shadowSpreadOuter1"/>
+            <feOffset in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.0862745098 0 0 0 0 0.176470588 0 0 0 0 0.239215686 0 0 0 0.38 0"/>
+        </filter>
+        <circle id="c" cx="24" cy="24" r="24"/>
+        <path id="e" d="M2.583 0h24.973L31 22.345 22.545 27H0z"/>
+        <path id="g" d="M0 7c.505-4.995 3.223-7 6.5-7s5.995 2.005 6.5 7H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(-138 -466)">
+            <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+            <use fill="#FFF" xlink:href="#b"/>
+        </g>
+        <path fill="#FFF" d="M6.242 47a2.242 2.242 0 1 0 0 4.485 2.242 2.242 0 0 0 0-4.485z"/>
+        <g>
+            <mask id="d" fill="#fff">
+                <use xlink:href="#c"/>
+            </mask>
+            <use fill="#C1E4FE" xlink:href="#c"/>
+            <g mask="url(#d)">
+                <path fill="#FFF" d="M12 12h22l-2 25H10z"/>
+                <g transform="translate(9 5)">
+                    <path fill="#F4FAFE" fill-rule="nonzero" d="M25 7h2l4 21.296L23 32z"/>
+                    <g transform="translate(0 6)">
+                        <mask id="f" fill="#fff">
+                            <use xlink:href="#e"/>
+                        </mask>
+                        <path stroke="#4EB7F5" stroke-width="2" d="M2.583 0h24.973L31 22.345 22.545 27H0z" mask="url(#f)"/>
+                    </g>
+                    <g transform="translate(8)">
+                        <mask id="h" fill="#fff">
+                            <use xlink:href="#g"/>
+                        </mask>
+                        <path stroke="#4EB7F5" stroke-width="2" d="M0 7c.505-4.995 3.223-7 6.5-7s5.995 2.005 6.5 7H0z" mask="url(#h)"/>
+                    </g>
+                    <path fill="#DAEFFE" fill-rule="nonzero" d="M8 21.06c5 1 9 11 9 11H1s2-12 7-11z"/>
+                    <path fill="#C1E4FE" fill-rule="nonzero" d="M17 20.21C21 22.28 23 32 23 32H7s6-13.858 10-11.79z"/>
+                    <circle cx="18.5" cy="13.5" r="2.5" fill="#4EB7F5" fill-rule="nonzero"/>
+                </g>
+                <path stroke="#4EB7F5" d="M12.038 11.5l-2.488 26h21.867l8.036-4.425L36.127 11.5h-24.09z"/>
+                <path stroke="#4EB7F5" stroke-linecap="round" stroke-linejoin="round" d="M34.5 11.5l-3 26"/>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="62px" height="62px" viewBox="0 0 62 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.2 (15855) - http://www.bohemiancoding.com/sketch -->
+    <title>pro-gallery (62)</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M0,0 L60,0 L60,60 L0,60 L0,0 Z"></path>
+        <path id="path-3" d="M29,34 L1,34 L1,11 L29,11 L29,34 Z"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="pro-gallery-(62)" sketch:type="MSArtboardGroup">
+            <g id="Page-1-Copy" sketch:type="MSLayerGroup" transform="translate(1.000000, 1.000000)">
+                <path d="M60,30 C60,46.569 46.569,60 30,60 C13.431,60 0,46.569 0,30 C0,13.431 13.431,0 30,0 C46.569,0 60,13.431 60,30" id="Fill-1" fill="#733CA6" sketch:type="MSShapeGroup"></path>
+                <g id="Clip-4">
+                    <mask id="mask-2" sketch:name="Clip 4" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g></g>
+                </g>
+                <g id="Group" transform="translate(15.000000, 10.000000)">
+                    <g id="Stroke-3">
+                        <use stroke="#FCFCFC" stroke-width="1" stroke-linejoin="round" sketch:type="MSShapeGroup" xlink:href="#path-3"></use>
+                        <use stroke="none" xlink:href="#path-3"></use>
+                        <use stroke="none" xlink:href="#path-3"></use>
+                    </g>
+                    <path d="M22.6689581,28.320886 L18.3904185,31.0863472 L11.7162956,26 L1,34 L14.789065,34 L22.6689581,34 L29,34 L22.6689581,28.320886 L22.6689581,28.320886 Z" id="Stroke-5" stroke="#FCFCFC" stroke-linejoin="round" sketch:type="MSShapeGroup"></path>
+                    <path d="M22.4712,15 C21.1067811,15 20,16.1067811 20,17.4712 C20,18.8356189 21.1067811,19.9424 22.4712,19.9424 C23.8365838,19.9424 24.9424,18.8356189 24.9424,17.4712 C24.9424,16.1067811 23.8365838,15 22.4712,15 Z" id="Stroke-6" stroke="#FCFCFC" stroke-linejoin="round" sketch:type="MSShapeGroup"></path>
+                    <path d="M2.5,7.5 L27.5,7.5" id="Stroke-7" stroke="#FCFCFC" stroke-linecap="round" stroke-linejoin="round" sketch:type="MSShapeGroup"></path>
+                    <path d="M4.5,4.5 L25.5,4.5" id="Stroke-8" stroke="#FCFCFC" stroke-linecap="round" stroke-linejoin="round" sketch:type="MSShapeGroup"></path>
+                    <path d="M5.5,1.5 L23.5,1.5" id="Stroke-9" stroke="#FCFCFC" stroke-linecap="round" stroke-linejoin="round" sketch:type="MSShapeGroup"></path>
+                    <path d="M22.364592,27.6175616 L17.880436,30.725715 L11.5905393,25.3774414 L0.737426758,34 L14.107581,33.9999999 L22.364592,33.9999999 L29,33.9999999 L22.364592,27.6175616 Z" id="Fill-10" opacity="0.3" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

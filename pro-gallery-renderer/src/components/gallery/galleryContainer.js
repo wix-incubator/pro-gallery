@@ -9,6 +9,7 @@ import {Layouter, Item} from 'pro-gallery-layouter';
 import GalleryItem from '../item/galleryItem';
 import GalleryGroup from '../group/galleryGroup';
 import _ from 'lodash';
+import $ from 'jquery';
 import utils from '../../utils';
 import {itemActions, Consts, versionManager, Wix, logger} from 'photography-client-lib';
 

@@ -8,7 +8,7 @@ import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import galleryReducers from '../../reducers/index.js';
 import GalleryContainer from './galleryContainer.js';
-import {utils} from '../../utils';
+import utils from '../../utils';
 import {Wix, logger, watermarkApi} from 'photography-client-lib';
 import videoActionTypes from '../../constants/videoActionTypes';
 import videoPlayModes from '../item/videos/videoPlayModes';
@@ -18,20 +18,20 @@ import _ from 'lodash';
 
 class ProGallery extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
-    this.init();
+    this.init(props);
   }
 
-  init() {
+  init(props) {
+
+    this.items = props.items || require('../../../test/images-mock').testImages;
 
     const middlewares = [thunkMiddleware, videoMiddleware({videoQueue: new VideoQueue(), utils})];
-
     this.store = createStore(galleryReducers, /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {}, applyMiddleware(...middlewares));
-
     this.initStoreEvents(this.store);
-
     this.readyPromise = this.initWatermark();
+
   }
 
   initStoreEvents(store) {
@@ -57,15 +57,18 @@ class ProGallery extends React.Component {
 
   render() {
     return (
-      <Provider store={this.store}>
-        <div>
+      <div className="pro-gallery">
+        <Provider store={this.store}>
           <GalleryContainer
-              {...this.props}
-              store={this.store}
-              watermarkData={this.watermarkData}
+            {...this.props}
+            items={this.items}
+            store={this.store}
+            watermarkData={this.watermarkData}
           />
-        </div>
-      </Provider>
+        </Provider>
+      </div>
     );
   }
 }
+
+export default ProGallery;
