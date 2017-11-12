@@ -1,4 +1,7 @@
-import * as _ from 'lodash';
+import isObject from 'lodash/isObject';
+import isNumber from 'lodash/isNumber';
+import isFunction from 'lodash/isFunction';
+import merge from 'lodash/merge';
 import {utils} from './utils';
 
 export class Item {
@@ -26,7 +29,7 @@ export class Item {
       config.dto = {};
     }
     const metadata = utils.parseStringObject(config.dto.metadata || config.dto.metaData || '');
-    this._dto = _.merge({}, config.dto, metadata);
+    this._dto = merge({}, config.dto, metadata);
     this.dto = config.dto;
 
     this.cubeType = config.cubeType || 'fill';
@@ -63,9 +66,9 @@ export class Item {
     let scale = 1;
     if (scaleOrDimensions === false) {
       return;
-    } else if (_.isNumber(scaleOrDimensions)) {
+    } else if (isNumber(scaleOrDimensions)) {
       scale = scaleOrDimensions;
-    } else if (_.isObject(scaleOrDimensions)) {
+    } else if (isObject(scaleOrDimensions)) {
       if (scaleOrDimensions.width) {
         scale = scaleOrDimensions.width / this.width;
       } else if (scaleOrDimensions.height) {
@@ -146,7 +149,7 @@ export class Item {
   }
 
   set group(group) {
-    _.merge(this._group, group);
+    merge(this._group, group);
   }
 
   get group() {
@@ -154,7 +157,7 @@ export class Item {
   }
 
   set offset(offset) {
-    _.merge(this._groupOffset, offset);
+    merge(this._groupOffset, offset);
   }
 
   get offset() {
@@ -265,7 +268,7 @@ export class Item {
 
   get cubeRatio() {
     let ratio;
-    if (_.isFunction(this._cubeRatio)) {
+    if (isFunction(this._cubeRatio)) {
       ratio = this._cubeRatio();
     } else if (this.cropOnlyFill && this.cubeType === 'fit') {
       ratio = this.ratio;

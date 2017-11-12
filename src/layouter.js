@@ -1,4 +1,9 @@
-import * as _ from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import isArray from 'lodash/isArray';
+import isString from 'lodash/isString';
+import fill from 'lodash/fill';
+import sum from 'lodash/sum';
+import each from 'lodash/each';
 
 import {utils} from './utils';
 import {Item} from './item.js';
@@ -29,7 +34,7 @@ export default class Layouter {
   }
 
   insertIfDefined(obj, field, value) {
-    if (!_.isUndefined(value)) {
+    if (!isUndefined(value)) {
       obj[field] = value;
     }
   }
@@ -64,7 +69,7 @@ export default class Layouter {
     this.insertIfDefined(convertedStyleParams, 'floatingImages', convertedStyleParams.randomSpacings);
     this.insertIfDefined(convertedStyleParams, 'chooseBestGroup', convertedStyleParams.smartGrouping);
     this.insertIfDefined(convertedStyleParams, 'groupSize', convertedStyleParams.itemsPerGroup);
-    this.insertIfDefined(convertedStyleParams, 'groupTypes', _.isArray(convertedStyleParams.allowedGroupTypes) ? convertedStyleParams.allowedGroupTypes.join(',') : undefined);
+    this.insertIfDefined(convertedStyleParams, 'groupTypes', isArray(convertedStyleParams.allowedGroupTypes) ? convertedStyleParams.allowedGroupTypes.join(',') : undefined);
     this.insertIfDefined(convertedStyleParams, 'isVertical', convertedStyleParams.isColumnsLayout);
     this.insertIfDefined(convertedStyleParams, 'minItemSize', convertedStyleParams.minItemSize);
     this.insertIfDefined(convertedStyleParams, 'oneRow', convertedStyleParams.isVerticalScroll);
@@ -118,7 +123,7 @@ export default class Layouter {
 
   createLayout(layoutParams) {
 
-    if (!_.isUndefined(layoutParams)) {
+    if (!isUndefined(layoutParams)) {
       this.updateParams(layoutParams);
     }
 
@@ -161,9 +166,9 @@ export default class Layouter {
         numOfCols = Math.ceil(galleryWidth / gallerySize) || 1;
       }
       gallerySize = Math.floor(galleryWidth / numOfCols);
-      columnsW = _.fill(Array(numOfCols), gallerySize);
-      columnsW[columnsW.length - 1] += (galleryWidth - _.sum(columnsW)); //the last group compensates for half pixels in other groups
-      cubeRatios = _.fill(Array(numOfCols), this.styleParams.cubeRatio);
+      columnsW = fill(Array(numOfCols), gallerySize);
+      columnsW[columnsW.length - 1] += (galleryWidth - sum(columnsW)); //the last group compensates for half pixels in other groups
+      cubeRatios = fill(Array(numOfCols), this.styleParams.cubeRatio);
       cubeRatios[columnsW.length - 1] = this.styleParams.cubeRatio * (columnsW[columnsW.length - 1] / gallerySize); //fix the last group's cube ratio
     } else {
       numOfCols = 1;
@@ -172,7 +177,7 @@ export default class Layouter {
 
     while (this.srcItems[this.pointer]) {
 
-      if (_.isArray(this.srcItems[this.pointer])) {
+      if (isArray(this.srcItems[this.pointer])) {
         console.error({msg: 'no dto', pointer: this.pointer, allItems: this.srcItems});
       }
 
@@ -437,8 +442,8 @@ export default class Layouter {
       let itemX;
       let distance;
 
-      // _.each(_.slice(this.layoutItems, itemIdx - 50, itemIdx + 50), (item) => {
-      _.each(this.layoutItems, item => {
+      // each(slice(this.layoutItems, itemIdx - 50, itemIdx + 50), (item) => {
+      each(this.layoutItems, item => {
         itemY = item.offset.top + (item.height / 2);
         itemX = item.offset.left + (item.width / 2);
         distance = Math.sqrt(Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2));
@@ -570,7 +575,7 @@ export default class Layouter {
   get maxGroupSize() {
     let _maxGroupSize = 1;
     try {
-      const groupTypes = _.isString(this.styleParams.groupTypes) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
+      const groupTypes = isString(this.styleParams.groupTypes) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
       _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
         return Math.max(curSize, parseInt(groupType));
       }, 1);

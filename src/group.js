@@ -1,4 +1,8 @@
-import * as _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import last from 'lodash/last';
+import remove from 'lodash/remove';
+import includes from 'lodash/includes';
+import filter from 'lodash/filter';
 import {utils} from './utils';
 
 export class Group {
@@ -50,7 +54,7 @@ export class Group {
     if (this.items[idx]) {
       return this.items[idx];
     } else {
-      const item = _.cloneDeep(_.last(this.items));
+      const item = cloneDeep(last(this.items));
       item.id += 'dummy';
       item.idx = this.idx * (idx + 1) + 1;
       item.type = 'dummy';
@@ -231,11 +235,11 @@ export class Group {
     //---------| Override with specifically defined group types
     if (this.groupTypes) {
 
-      // let groupTypesArr = _.union(['1'], this.groupTypes.split(','));
+      // let groupTypesArr = union(['1'], this.groupTypes.split(','));
       const groupTypesArr = this.groupTypes.split(',');
 
       if (groupTypesArr.length > 1) {
-        _.remove(groupTypes, gt => groupTypesArr.indexOf(gt) < 0);
+        remove(groupTypes, gt => groupTypesArr.indexOf(gt) < 0);
 
         if (groupTypes.length === 0) { //there is no match between required group types and the optional ones - use
           groupTypes = ['1'];
@@ -254,7 +258,7 @@ export class Group {
       const collageDensity = this.collageDensity;
 
       //use the collage amount to determine the optional groupsize
-      const maxGroupType = parseInt(_.last(groupTypes));
+      const maxGroupType = parseInt(last(groupTypes));
       let optionalGroupSizes;
       if (maxGroupType === 3) {
         optionalGroupSizes = [[1], [1, 2], [1, 2, 3], [2, 3], [3]];
@@ -266,7 +270,7 @@ export class Group {
       const targetGroupsizes = optionalGroupSizes[Math.floor(collageDensity * (optionalGroupSizes.length - 1))];
       // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
 
-      _.remove(groupTypes, groupType => {
+      remove(groupTypes, groupType => {
         return targetGroupsizes.indexOf(parseInt(groupType)) < 0;
       });
 
@@ -554,7 +558,7 @@ export class Group {
       console.log(`SPACING - Group #${this.idx} resizeToHeight W: ${this.width}`);
     }
 
-    const items = _.includes(['3b', '3r'], this.type) ? this.items.slice().reverse() : this.items;
+    const items = includes(['3b', '3r'], this.type) ? this.items.slice().reverse() : this.items;
     for (let item, i = 0; item = items[i]; i++) {
       item.group = {
         top: this.top,
@@ -580,7 +584,7 @@ export class Group {
       console.log(`SPACING - Group #${this.idx} resizeToWidth H: ${this.height}`);
     }
 
-    const items = _.includes(['3b', '3r'], this.type) ? this.items.slice().reverse() : this.items;
+    const items = includes(['3b', '3r'], this.type) ? this.items.slice().reverse() : this.items;
     for (let item, i = 0; item = items[i]; i++) {
       item.group = {
         top: this.top,
@@ -819,7 +823,7 @@ export class Group {
   }
 
   get realItems() {
-    return _.filter(this._items, item => item.type !== 'dummy');
+    return filter(this._items, item => item.type !== 'dummy');
   }
 
   get isWithinMinItemSize() {
