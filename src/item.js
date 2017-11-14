@@ -6,6 +6,7 @@ export class Item {
   /* @ngInject */
   constructor(config) {
     this.style = {};
+    this.visibility = {};
 
     //Item core can be initialized with:
     // {dto: ItemDto(..)}
@@ -331,7 +332,8 @@ export class Item {
       group: this.group,
       offset: this.offset,
       transform: this.transform,
-      orientation: this.orientation
+      orientation: this.orientation,
+      visibility: this.visibility
     };
   }
 }

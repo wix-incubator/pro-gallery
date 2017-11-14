@@ -526,6 +526,14 @@ export default class Layouter {
       group.rendered = group.bottom >= bounds.renderedTop && group.top <= bounds.renderedBottom;
       group.required = group.bottom >= bounds.requiredTop && group.top <= bounds.requiredBottom;
     }
+    for (let i = 0; i < group.items.length; i++) {
+      group.items[i].visibility = {
+        onscreen: group.onscreen,
+        visible: group.visible,
+        rendered: group.rendered,
+        required: group.required
+      }
+    }
     return group;
   }
 
