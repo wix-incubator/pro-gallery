@@ -532,7 +532,7 @@ export default class Layouter {
         visible: group.visible,
         rendered: group.rendered,
         required: group.required
-      }
+      };
     }
     return group;
   }
