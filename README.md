@@ -76,6 +76,10 @@ The space between items (in pixels).
 
 The percent of "randomness" to add to the layout spacings. The higher the percentage, the more scattered the layout will appear.
 
+`bottomInfoHeight` _(integer)_:
+
+A fixed empty space (in pixels) at the bottom of each image (for title / buttons etc.)
+
 `itemsPerGroup` _(1 - 3)_:
 
 Determines the maximum number of items that can be grouped together in collage mode.
