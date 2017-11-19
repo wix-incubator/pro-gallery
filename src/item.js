@@ -27,7 +27,7 @@ export class Item {
       config.dto = {};
     }
     const metadata = utils.parseStringObject(config.dto.metadata || config.dto.metaData || '');
-    this.fixMetadataVerticalVideoRatio(metadata)
+    this.fixMetadataVerticalVideoRatio(metadata);
 
     this._dto = _.merge({}, config.dto, metadata);
     this.dto = config.dto;
@@ -59,10 +59,10 @@ export class Item {
 
   fixMetadataVerticalVideoRatio(metadata) {
     if (metadata.qualities) { //fix incorrect width height for vertical videos
-      const {qualities} = metadata
-      const {height, width} = qualities[qualities.length - 1]
-      metadata.height = height
-      metadata.width = width
+      const {qualities} = metadata;
+      const {height, width} = qualities[qualities.length - 1];
+      metadata.height = height;
+      metadata.width = width;
     }
   }
 
