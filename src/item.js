@@ -58,7 +58,7 @@ export class Item {
   }
 
   fixMetadataVerticalVideoRatio(metadata) {
-    if (metadata.qualities) { //fix incorrect width height for vertical videos
+    if (metadata.qualities && metadata.qualities[0]) { //fix incorrect width height for vertical videos
       const {qualities} = metadata;
       const {height, width} = qualities[qualities.length - 1];
       metadata.height = height;
