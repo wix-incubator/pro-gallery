@@ -1753,7 +1753,6 @@ TODO:  move this logic to onInit prop
   }
 
   getGalleryScroll(params) {
-    console.error('getGalleryScroll', params);
     if (this.state.styleParams.oneRow) {
       this.currentScrollPosition = $('.gallery-horizontal-scroll').scrollLeft();
     } else if (params && _.isNumber(params.customScrollTop)) {
