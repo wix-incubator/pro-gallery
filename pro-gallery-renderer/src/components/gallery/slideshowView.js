@@ -1,12 +1,13 @@
 
 import utils from '../../utils';
 import React from 'react';
-import GroupView from '../group/groupView.js'
+import GroupView from '../group/groupView.js';
 import GalleryEmpty from './galleryEmpty.js';
 import {Layouter} from 'pro-gallery-layouter';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils'
+import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
+import $ from 'jquery';
 
 utils.fixViewport('Gallery');
 
@@ -24,7 +25,7 @@ class SlideshowView extends React.Component {
       currentIdx: 0,
     };
     if (!utils.isLocal()) {
-      appLoaded('pro-gallery-statics')
+      appLoaded('pro-gallery-statics');
     }
   }
 

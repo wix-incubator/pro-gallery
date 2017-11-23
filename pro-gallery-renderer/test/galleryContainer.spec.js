@@ -344,6 +344,7 @@ describe('Gallery Container', () => {
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});
 
+      wrapper.instance().heightWasSetInternally = false;
       wrapper.instance().toggleInfiniteScroll();
 
       wrapper.instance().reRenderForScroll({customScrollTop: wrapper.instance().galleryStructure.height - 100});

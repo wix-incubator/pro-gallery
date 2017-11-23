@@ -236,10 +236,10 @@ TODO:  move this logic to onInit prop
     setTimeout(
       () => {
         const sp = this.state.styleParams;
-        sp.gotStyleParams || this.reRenderForStyles() //ugly hack, some galleries don't have the styleparams and don't render
+        sp.gotStyleParams || this.reRenderForStyles(); //ugly hack, some galleries don't have the styleparams and don't render
       }
       , 0
-    )
+    );
   }
 
   //-------------------------------------------| INIT |--------------------------------------------//
@@ -289,7 +289,7 @@ TODO:  move this logic to onInit prop
       });
 
       Wix.getBoundingRectAndOffsets(rect => {
-        this.scrollBase = rect.offsets.y * rect.scale;
+        this.scrollBase = rect.offsets.y * rect.scale || 0;
         if (rect && rect.rect && !_.isUndefined(rect.rect.width)) {
           this.maxGalleryWidth = _.get(rect, 'rect.width') || 0;
         }
@@ -1598,29 +1598,29 @@ TODO:  move this logic to onInit prop
         }
         if (utils.getViewModeFromCache() !== 'editor') {
           //All of this code should be removed once SDK fix the scrollTo Issue WEED-5804 with this line of code: Wix.scrollTo(0, Math.round(this.scrollBase + (pos * utils.getViewportScaleRatio())));
-          let scrollToPoint = Math.round(this.scrollBase + (pos * utils.getViewportScaleRatio()))
+          const scrollToPoint = Math.round(this.scrollBase + (pos * utils.getViewportScaleRatio()));
           let shouldScroll = true;
           if (shouldScroll) {
-            let shouldStop = false
+            let shouldStop = false;
             let retriesLeft = 10;
-            let scrollListener = e => {
+            const scrollListener = e => {
               if (e.scrollTop > 0 && e.scrollTop != scrollToPoint) {
                 shouldStop = true;
                 Wix.removeEventListener(Wix.Events.SCROLL, scrollListener);
               }
-            }
+            };
             Wix.addEventListener(Wix.Events.SCROLL, scrollListener);
 
             const retryScroll = () => {
               if (!shouldStop && retriesLeft > 0) {
-                Wix.scrollTo(0, scrollToPoint)
+                Wix.scrollTo(0, scrollToPoint);
                 if (retriesLeft === 0) {
                   shouldStop = true;
                 }
                 retriesLeft--;
-                setTimeout(retryScroll, 500)
+                setTimeout(retryScroll, 500);
               }
-            }
+            };
             retryScroll();
             shouldScroll = false;
           }
@@ -1753,6 +1753,7 @@ TODO:  move this logic to onInit prop
   }
 
   getGalleryScroll(params) {
+    console.error('getGalleryScroll', params);
     if (this.state.styleParams.oneRow) {
       this.currentScrollPosition = $('.gallery-horizontal-scroll').scrollLeft();
     } else if (params && _.isNumber(params.customScrollTop)) {
@@ -1760,7 +1761,7 @@ TODO:  move this logic to onInit prop
       return this.currentScrollPosition;
     } else if (utils.isInWix()) {
       if (params && _.isNumber(params.scrollTop) && _.isNumber(params.y)) {
-        const scrollBase = params.y;
+        const scrollBase = params.y || 0;
         const scrollTop = params.scrollTop;
         this.pageScale = params.scale || 1;
         if (this.scrollBase !== scrollBase) {
@@ -1837,7 +1838,7 @@ TODO:  move this logic to onInit prop
     }
 
     if (this.state.styleParams.oneRow && this.horizontalLayoutHeight) { //hack for albums
-      Wix.setHeight(this.horizontalLayoutHeight)
+      Wix.setHeight(this.horizontalLayoutHeight);
       return;
     }
 
@@ -1920,9 +1921,9 @@ TODO:  move this logic to onInit prop
             console.warn('Changing wix height from: ' + lastHeight + '  to: ' + neededHeight + ' inner gallery height is: ' + this.newHeight);
           }
           //if (this.lastSetHeight !== neededHeight) {
-            setTimeout(() => {
-              Wix.setHeight(neededHeight);
-            }, 0)
+          setTimeout(() => {
+            Wix.setHeight(neededHeight);
+          }, 0);
             //this.lastSetHeight = neededHeight;
           //}
           this.heightWasSetInternally = true;
@@ -1930,7 +1931,7 @@ TODO:  move this logic to onInit prop
       }
     }
 
-    this.scrollToItemIfNeeded()
+    this.scrollToItemIfNeeded();
   }
 
 
@@ -2481,7 +2482,7 @@ TODO:  move this logic to onInit prop
       }
       console.count('galleryContainer reRenderForResize');
     }
-
+    console.error('reRenderForResize', this.heightWasSetInternally);
     if (this.heightWasSetInternally === true) {
       //disable reRender for resize when calling wix.setHeight
       this.heightWasSetInternally = false;
@@ -2610,35 +2611,6 @@ TODO:  move this logic to onInit prop
 
       this.renderTrigger = trigger;
 
-      // if (this.debugScroll) console.time('SCROLL - cloning newState');
-      // let newState = _.cloneDeep(this.state);
-      // if (this.debugScroll) console.timeEnd('SCROLL - cloning newState');
-      // let newState = {};
-      // if (this.debugScroll) console.time('SCROLL - (' + trigger + ') merging newState');
-      // switch (trigger) {
-      //   case NONE:
-      //     break;
-      //   case MODE:
-      //     newState = utils.mergeDeep(scrollState, viewState);
-      //     break;
-      //   case STYLES:
-      //   case LAYOUT:
-      //     newState = utils.mergeDeep(scrollState, stylesState, resizeState);
-      //     break;
-      //   case RESIZE:
-      //   case ORIENTATION:
-      //     newState = utils.mergeDeep(scrollState, resizeState);
-      //     break;
-      //   case SCROLL:
-      //     newState = scrollState;
-      //     break;
-      //   case ALL:
-      //   case ITEMS:
-      //   default:
-      //     newState = utils.mergeDeep(stylesState, scrollState, viewState, resizeState, itemsState);
-      //     break;
-      // }
-      // if (this.debugScroll) console.timeEnd('SCROLL - (' + trigger + ') merging newState');
       if (this.debugScroll) {
         console.time('SCROLL - (' + trigger + ') create new gallery');
       }
@@ -2691,9 +2663,9 @@ TODO:  move this logic to onInit prop
 
     if (triggerIs(LAYOUT)) { //hack for albums
       Wix.Styles.getStyleParams(style => {
-        this.horizontalLayoutHeight = style.numbers.horizontalLayoutHeight
-        this.newState.styleParams.oneRow && this.horizontalLayoutHeight && this.setWixHeight(this.horizontalLayoutHeight)
-      })
+        this.horizontalLayoutHeight = style.numbers.horizontalLayoutHeight;
+        this.newState.styleParams.oneRow && this.horizontalLayoutHeight && this.setWixHeight(this.horizontalLayoutHeight);
+      });
     }
 
     this.scrollToItemIfNeeded();

@@ -3,7 +3,7 @@ import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from '../gallery/galleryDebugMessage';
 import _ from 'lodash';
 import utils from '../../utils/index.js';
-import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils'
+import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 
 utils.fixViewport('Gallery');
 
@@ -19,14 +19,14 @@ class GalleryView extends React.Component {
       currentIdx: 0,
     };
     if (!utils.isLocal()) {
-      appLoaded('pro-gallery-statics')
+      appLoaded('pro-gallery-statics');
     }
   }
 
   handleArrowKeys(e) {
     const activeItemIdx = (document.activeElement.getAttribute('data-idx'));
 
-    if (!!activeItemIdx) {
+    if (activeItemIdx) {
 
       const findNeighborItem = this.props.galleryStructure.findNeighborItem;
       const idx = Number(activeItemIdx);
