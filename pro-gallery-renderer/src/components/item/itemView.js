@@ -78,16 +78,9 @@ class ItemView extends React.Component {
 
   setItemError() {
     this.setState({
-      retries: this.state.retries + 1
+      retries: this.state.retries + 1,
+      failed: (this.state.retries >= 3)
     });
-
-    if (this.state.retries > 3) {
-      console.error('Error (including retries) loading item #' + this.props.idx);
-      this.setState({
-        failed: true
-      });
-    }
-
   }
 
   setItemLoaded(e) {
@@ -162,14 +155,16 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
-    } else if (itemClick === 'expand' || itemClick === 'link') {
-      this.props.actions.toggleFullscreen(this.props.idx);
-    } else if (itemClick === 'nothing' && utils.isMobile()) {
-      this.toggleHoverOnMobile();
-    } else if (this.props.type === 'video') {
-      const shouldTogglePlay = itemClick !== 'expend' && (videoPlay === 'onClick' || utils.isMobile());
-      if (shouldTogglePlay) {
-        this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
+    } else {
+      if (itemClick === "expand" || itemClick === 'link') {
+        this.props.actions.toggleFullscreen(this.props.idx);
+      } else if (this.props.type === 'video') {
+        const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile())
+        if (shouldTogglePlay) {
+          this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx)
+        }
+      } else if (itemClick === 'nothing' && utils.isMobile()) {
+        this.toggleHoverOnMobile()
       }
     }
   }
@@ -268,7 +263,6 @@ class ItemView extends React.Component {
 
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
-
   getImageDimensions() {
     //image dimensions are for images in grif fit - placing the image with positive margins to show it within the square
     const imageIsWider = this.props.style.ratio >= this.props.cubeRatio;
@@ -276,11 +270,11 @@ class ItemView extends React.Component {
     const imageMarginTop = Math.round((this.props.style.width / this.props.style.ratio - this.props.style.height) / -2);
 
     return !((this.props.styleParams.cubeImages && this.props.styleParams.cubeType === 'fit')) ? {} : (!imageIsWider ? {
-      width: 'calc(100% - 2 * ' + Math.round(imageMarginLeft - this.props.styleParams.imageMargin / 2) + 'px)',
-      marginLeft: Math.round(imageMarginLeft - this.props.styleParams.imageMargin / 2)
+      width: `calc(100% - ${2 * imageMarginLeft}px)`,
+      marginLeft: imageMarginLeft
     } : {
-      height: 'calc(100% - 2 * ' + Math.round(imageMarginTop - this.props.styleParams.imageMargin / 2) + 'px)',
-      marginTop: Math.round(imageMarginTop - this.props.styleParams.imageMargin / 2)
+      height: `calc(100% - ${2 * imageMarginTop}px)`,
+      marginTop: imageMarginTop
     });
   }
 
@@ -304,7 +298,7 @@ class ItemView extends React.Component {
   }
 
   videoOnMount(videoElment) {
-    this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible(videoElment)});
+    this.props.videoAdded({ idx: this.props.idx, isVisible: () => this.isVisible(videoElment) });
   }
 
   videoOnUnmount() {
@@ -497,9 +491,9 @@ class ItemView extends React.Component {
   }
 
   getBottomInfoElement() {
-    const {styleParams, style, title, fileName, type, actions} = this.props;
-    const displayTitle = (title || fileName);
-    const {placements} = Consts;
+    const { styleParams, style, title, fileName, type, actions } = this.props;
+    const displayTitle = utils.getTitleOrFilename(title, fileName)
+    const { placements } = Consts;
     const buttonPlacement = this.getButtonPlacement();
     let bottomInfo = null;
 
@@ -514,14 +508,10 @@ class ItemView extends React.Component {
       const titleElem = isTitleAvailable ? (<ItemTitle title={displayTitle} />) : null;
       if (titleElem || buttonElem) {
         bottomInfo = (
-          <div style={{height: style.bottomInfoHeight, textAlign: styleParams.galleryTextAlign}}
+          <div style={{height: styleParams.bottomInfoHeight, textAlign: styleParams.galleryTextAlign}}
               className="gallery-item-bottom-info"
-              onMouseOver={() => {
-                this.setState({showHover: true});
-              }}
-              onMouseOut={() => {
-                this.setState({showHover: false});
-              }}>
+              onMouseOver={() => {this.setState({showHover: true})}}
+              onMouseOut={() => {this.setState({showHover: false})}}>
             {titleElem}
             {buttonElem}
           </div>);
@@ -611,6 +601,13 @@ class ItemView extends React.Component {
       clickable: styleParams.itemClick !== 'nothing',
     });
 
+    const additionalAttributes = {};
+
+    if (styleParams.itemClick === 'expand') {
+      // For SEO only! - don't add it if the user chose not to open in expand mode.
+      additionalAttributes.href = itemActions.getShareUrl(this.props);
+    }
+
     return (
       <div className={className}
            href={itemActions.getShareUrl(this.props)}
@@ -629,7 +626,6 @@ class ItemView extends React.Component {
            key={'item-container-' + id}
            style={_.merge({
              width: wrapperWidth,
-             height: height + bottomInfoHeight,
              margin: styleParams.imageMargin + 'px',
              position: style.position,
              top: style.top,
@@ -639,7 +635,9 @@ class ItemView extends React.Component {
              overflowY: styleParams.isSlideshow ? 'visible' : 'inherit',
              borderRadius: borderRadius + 'px'
            }, this.props.transform, boxShadow)
-           }>
+           }
+           {...additionalAttributes}
+      >
         <div data-hook="item-wrapper" className={'gallery-item-wrapper visible ' + (styleParams.cubeImages ? 'cube-type-' + styleParams.cubeType : '')}
           key={'item-wrapper-' + id}
           style={itemStyle}

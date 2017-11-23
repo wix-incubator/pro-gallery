@@ -4,6 +4,7 @@ import React from 'react';
 import _ from 'lodash';
 import {Wix, itemActions} from 'photography-client-lib';
 import utils from '../../utils';
+
 class GallerySharer extends React.Component {
 
   constructor(props) {

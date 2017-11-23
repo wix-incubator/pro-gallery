@@ -174,12 +174,14 @@ class GalleryItem {
     const url = wixData.uri || wixData.relativeUri || wixData.url;
     const itemId = url.slice(0, url.length - 4);
     const metadata = {
+      createdOn: new Date().getTime(),
       height: wixData.height,
       width: wixData.width,
       lastModified: new Date().getTime(),
       focalPoint: wixData.focalPoint,
       name: wixData.fileName,
-      //fileName: wixData.title,
+      fileName: wixData.title,
+      title: '',
       type: wixData.type,
       link: this.initialLinkObject,
       sourceName: wixData.sourceName,
@@ -214,10 +216,11 @@ class GalleryItem {
     });
 
     const metaData = {
+      createdOn: new Date().getTime(),
       name: wixData.title,
       lastModified: new Date().getTime(),
-      width: wixData.fileInput.width,
-      height: wixData.fileInput.height,
+      width: qualities[qualities.length - 1].width,
+      height: qualities[qualities.length - 1].height,
       type: 'video',
       posters,
       customPoster: '',
@@ -238,6 +241,7 @@ class GalleryItem {
 
   createFromExternal(wixData, orderIndex, addWithTitles, isSecure) {
     const metaData = {
+      createdOn: new Date().getTime(),
       name: wixData.id,
       videoId: wixData.id,
       lastModified: new Date().getTime(),

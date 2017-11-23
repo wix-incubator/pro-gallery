@@ -1,13 +1,12 @@
 
 import utils from '../../utils';
 import React from 'react';
-import GroupView from '../group/groupView.js';
+import GroupView from '../group/groupView.js'
 import GalleryEmpty from './galleryEmpty.js';
 import {Layouter} from 'pro-gallery-layouter';
 import GalleryDebugMessage from './galleryDebugMessage.js';
+import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils'
 import _ from 'lodash';
-import {performanceUtils} from 'photography-client-lib';
-import $ from 'jquery';
 
 utils.fixViewport('Gallery');
 
@@ -25,7 +24,7 @@ class SlideshowView extends React.Component {
       currentIdx: 0,
     };
     if (!utils.isLocal()) {
-      performanceUtils.appLoaded('pro-gallery-statics');
+      appLoaded('pro-gallery-statics')
     }
   }
 
@@ -364,7 +363,7 @@ class SlideshowView extends React.Component {
     window.addEventListener('keydown', this.handleKeypress);
 
     this.container = $('.gallery-horizontal-scroll');
-    if (this.container[0]) {
+    if (this.container && this.container[0]) {
       this.container[0].addEventListener('scroll', this._setCurrentItemByScroll);
     }
     this.setCurrentItemByScroll();
@@ -375,7 +374,9 @@ class SlideshowView extends React.Component {
   }
 
   componentWillUnmount() {
-    this.container[0].removeEventListener('scroll', this._setCurrentItemByScroll);
+    if (this.container && this.container[0]) {
+      this.container[0].removeEventListener('scroll', this._setCurrentItemByScroll);
+    }
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//

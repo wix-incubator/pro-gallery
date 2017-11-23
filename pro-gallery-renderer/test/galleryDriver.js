@@ -17,35 +17,9 @@ class galleryDriver {
 
   constructor() {
     this.initDefaults();
-    this.overrideUtilsForTests();
+    window.isTest = true;
   }
 
-  overrideUtilsForTests() {
-    utils.isInWix = () => {
-      return true;
-    };
-    utils.isMobile = () => {
-      return false;
-    };
-    utils.isTouch = () => {
-      return false;
-    };
-    utils.isInWix = () => {
-      return true;
-    };
-    utils.getScreenWidth = () => {
-      return 1024;
-    };
-    utils.getScreenHeight = () => {
-      return 768;
-    };
-    utils.isTest = () => {
-      return true;
-    };
-    utils.isVerbose = () => {
-      return false;
-    };
-  }
 
   initDefaults() {
     //override utils functions

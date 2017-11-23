@@ -8,8 +8,8 @@ export default class Social extends React.Component {
   getSocialShare() {
     const {styleParams, id, actions} = this.props;
     if (styleParams.allowSocial) {
-      const slideshowShareButton = <i className={'block-fullscreen progallery-svg-font-icons-share-store ' + (utils.isSite() ? '' : ' inactive ')} />;
-      const slideshowShare = (styleParams.isSlideshow ? actions.getShare() : '');
+      var slideshowShareButton = <i className={"block-fullscreen progallery-svg-font-icons-share-store"} />;
+      var slideshowShare = (styleParams.isSlideshow ? actions.getShare() : '');
 
       if (utils.isSite()) {
         return <div className={'block-fullscreen gallery-item-social-share gallery-item-social-button'}
@@ -23,6 +23,7 @@ export default class Social extends React.Component {
           key={'item-social-share-' + id}
           onMouseOver={e => itemActions.showTooltip(e, 'Gallery_Sharing_Disabled_In_Editor')}
           onMouseOut={() => itemActions.hideTooltip()}
+          onClick={e=> e.stopPropagation()}
           >
           {slideshowShareButton}
         </div>;

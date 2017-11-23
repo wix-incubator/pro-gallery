@@ -9,8 +9,8 @@ import {Layouter, Item} from 'pro-gallery-layouter';
 import GalleryItem from '../item/galleryItem';
 import GalleryGroup from '../group/galleryGroup';
 import _ from 'lodash';
-import $ from 'jquery';
 import utils from '../../utils';
+import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
 import {itemActions, Consts, versionManager, Wix, logger} from 'photography-client-lib';
 
 const adiLoadMoreMaxHeight = 2000;
@@ -233,6 +233,13 @@ TODO:  move this logic to onInit prop
       });
     }
 */
+    setTimeout(
+      () => {
+        const sp = this.state.styleParams;
+        sp.gotStyleParams || this.reRenderForStyles() //ugly hack, some galleries don't have the styleparams and don't render
+      }
+      , 0
+    )
   }
 
   //-------------------------------------------| INIT |--------------------------------------------//
@@ -444,13 +451,13 @@ TODO:  move this logic to onInit prop
       isVertical: boolFromSeed('isVertical'),
       gallerySize: numFromSeed(300, 800, 'gallerySize'),
       collageAmount: numFromSeed(5, 10, 'collageAmount') / 10,
-      collageDensity: (versionManager.isNewSpacing() ? numFromSeed(1, 100, 'collageDensity') : numFromSeed(5, 10, 'collageDensity')) / 100,
+      collageDensity: (spacingVersionManager.isNewSpacing() ? numFromSeed(1, 100, 'collageDensity') : numFromSeed(5, 10, 'collageDensity')) / 100,
       groupTypes: ['1'].concat(_.filter('2h,2v,3t,3b,3l,3r,3h,3v'.split(','), (type, i) => boolFromSeed('groupTypes' + i))),
       oneRow: boolFromSeed('oneRow'),
       borderRadius: 0,
       boxShadow: 0,
-      imageMargin: numFromSeed(0, (versionManager.isNewSpacing() ? 250 : 5), 'imageMargin'),
-      galleryMargin: (versionManager.isNewSpacing() ? numFromSeed(0, 50, 'galleryMargin') : numFromSeed(0, 5, 'imageMargin')),
+      imageMargin: numFromSeed(0, (spacingVersionManager.isNewSpacing() ? 250 : 5), 'imageMargin'),
+      galleryMargin: (spacingVersionManager.isNewSpacing() ? numFromSeed(0, 50, 'galleryMargin') : numFromSeed(0, 5, 'imageMargin')),
       floatingImages: 0,
       chooseBestGroup: boolFromSeed('chooseBestGroup'),
       smartCrop: boolFromSeed('smartCrop'),
@@ -957,7 +964,7 @@ TODO:  move this logic to onInit prop
     }
 
     if (canSet('enableInfiniteScroll')) {
-      stateStyles.enableInfiniteScroll = (wixStyles.enableInfiniteScroll === '1');
+      stateStyles.enableInfiniteScroll = (String(wixStyles.enableInfiniteScroll) === '1');
     }
 
     //design
@@ -1285,7 +1292,11 @@ TODO:  move this logic to onInit prop
       console.log('Got styles from Wix', stateStyles);
     }
 
-    return _.merge({}, this.defaultStateStyles, stateStyles);
+    const finalStyleParams = _.merge({}, this.defaultStateStyles, stateStyles);
+
+    finalStyleParams.bottomInfoHeight = this.getBottomInfoHeight(finalStyleParams);
+
+    return finalStyleParams;
 
   }
 
@@ -1389,7 +1400,7 @@ TODO:  move this logic to onInit prop
     const toGroup = _.last(_.last(this.galleryStructure.columns));
     const galleryHeight = this.galleryStructure.height * utils.getViewportScaleRatio();
 
-    const addAfter = this.getLatestState('gotScrollEvent') && (galleryHeight - container.galleryHeight < (styleParams.imageMargin + styleParams.galleryMargin) * 2) && (!toGroup || toGroup.rendered); //if the last item is already rendered - get more items
+    const addAfter = this.getLatestState('gotScrollEvent') && (galleryHeight - container.galleryHeight <= (10 + styleParams.imageMargin + styleParams.galleryMargin) * 2) && (!toGroup || toGroup.rendered); //if the last item is already rendered - get more items
 
     let to = (toGroup ? _.last(toGroup.items).idx + 1 : 0);
 
@@ -1586,7 +1597,33 @@ TODO:  move this logic to onInit prop
           console.log('Scrolling vertically (in wix)');
         }
         if (utils.getViewModeFromCache() !== 'editor') {
-          Wix.scrollTo(0, Math.round(this.scrollBase + (pos * utils.getViewportScaleRatio())));
+          //All of this code should be removed once SDK fix the scrollTo Issue WEED-5804 with this line of code: Wix.scrollTo(0, Math.round(this.scrollBase + (pos * utils.getViewportScaleRatio())));
+          let scrollToPoint = Math.round(this.scrollBase + (pos * utils.getViewportScaleRatio()))
+          let shouldScroll = true;
+          if (shouldScroll) {
+            let shouldStop = false
+            let retriesLeft = 10;
+            let scrollListener = e => {
+              if (e.scrollTop > 0 && e.scrollTop != scrollToPoint) {
+                shouldStop = true;
+                Wix.removeEventListener(Wix.Events.SCROLL, scrollListener);
+              }
+            }
+            Wix.addEventListener(Wix.Events.SCROLL, scrollListener);
+
+            const retryScroll = () => {
+              if (!shouldStop && retriesLeft > 0) {
+                Wix.scrollTo(0, scrollToPoint)
+                if (retriesLeft === 0) {
+                  shouldStop = true;
+                }
+                retriesLeft--;
+                setTimeout(retryScroll, 500)
+              }
+            }
+            retryScroll();
+            shouldScroll = false;
+          }
         }
       } else {
         if (utils.isVerbose()) { //todo yoshi
@@ -1799,6 +1836,11 @@ TODO:  move this logic to onInit prop
       return;
     }
 
+    if (this.state.styleParams.oneRow && this.horizontalLayoutHeight) { //hack for albums
+      Wix.setHeight(this.horizontalLayoutHeight)
+      return;
+    }
+
     this.lastHeight = Math.round(lastHeight);
     this.newHeight = Math.round(height);
 
@@ -1814,7 +1856,7 @@ TODO:  move this logic to onInit prop
           return maxBySlideshow;
         } else if (this.state.styleParams.oneRow) {
           return Math.min(maxByScreen, maxByFirstGroup);
-        } else if (!this.state.styleParams.enableInfiniteScroll === '1') { //vertical with show more
+        } else if (!this.state.styleParams.enableInfiniteScroll) { //vertical with show more
           return maxByScreen;
         } else {
           return false;
@@ -1877,16 +1919,44 @@ TODO:  move this logic to onInit prop
           if (utils.isVerbose()) {
             console.warn('Changing wix height from: ' + lastHeight + '  to: ' + neededHeight + ' inner gallery height is: ' + this.newHeight);
           }
-          if (this.lastSetHeight !== neededHeight) {
-            Wix.setHeight(neededHeight);
-            this.lastSetHeight = neededHeight;
-          }
+          //if (this.lastSetHeight !== neededHeight) {
+            setTimeout(() => {
+              Wix.setHeight(neededHeight);
+            }, 0)
+            //this.lastSetHeight = neededHeight;
+          //}
           this.heightWasSetInternally = true;
         }
       }
     }
 
-    this.scrollToItemIfNeeded();
+    this.scrollToItemIfNeeded()
+  }
+
+
+  getBottomInfoHeight(styleParams) {
+    const {titlePlacement, itemFontSlideshow, allowTitle, galleryLayout} = styleParams;
+
+    if (titlePlacement !== 'SHOW_ALWAYS') {
+      return 0;
+    }
+
+    const paddingTopAndBottom = 30;
+    let spaceBetweenElements = 16;
+    const defaultButtonHeight = 33;
+    const defaultItemFontSize = 22;
+
+    const isGrid = galleryLayout === 2;
+    let fontSize = 0;
+    const isLayoutSupportsNoTitle = isGrid && !utils.isMobile();
+    const shouldSaveSpaceForTitle = allowTitle || isLayoutSupportsNoTitle;
+    if (shouldSaveSpaceForTitle) {
+      fontSize = itemFontSlideshow ? itemFontSlideshow.size : defaultItemFontSize;
+    } else {
+      spaceBetweenElements = 0;
+    }
+
+    return fontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
   }
 
   isInfiniteScroll() {
@@ -2013,8 +2083,11 @@ TODO:  move this logic to onInit prop
             connectedProviders = this.getConnectedProviders();
           }
 
+          const worker = utils.getWorkerWindow();
+
           Wix.Styles.getStyleId(styleId => {
-            utils.getWorkerWindow()['pro-gallery-data-' + this.compId] = {
+            worker['pro-gallery-data-' + this.compId] = {
+              createdAt: Date.now(),
               info: {
                 config,
                 itemIdx,
@@ -2034,19 +2107,22 @@ TODO:  move this logic to onInit prop
               },
               window: {
                 infiniteScrollUrl: window.infiniteScrollUrl,
-                instance: window.instance
+                instance: window.instance,
+                gallerySettings: utils.getGallerySettingsFromWindow() //window.gallerySettings,
               }
             };
 
             //always open the default fullscreen - then read the window date and use replace state to change the url
             //this prevents the iframe from being refreshed
 
-            utils.getWorkerWindow()['pro-gallery-fullscreen-comp-id'] = this.compId;
+            worker['pro-gallery-fullscreen-comp-id'] = this.compId;
+            this.fullscreenOpenedAt = Date.now();
 
             Wix.Utils.navigateToSection({
               sectionId: utils.getFullscreenSectionId(),
-              noTransition: true
-            }, '');
+              noTransition: true,
+              shouldRefreshIframe: false
+            }, utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId));
           });
 
         } else {
@@ -2234,10 +2310,6 @@ TODO:  move this logic to onInit prop
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   static convertToGalleryItems(galleryStructure, itemConfig = {}) {
-    if (utils.isVerbose()) {
-      console.log('Layouter - convertToGalleryItems - START', _.cloneDeep(galleryStructure));
-      console.time('Layouter - convertToGalleryItems');
-    }
     let pointer = 0;
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
@@ -2248,7 +2320,7 @@ TODO:  move this logic to onInit prop
           for (let i = 0; i < group.items.length; i++) {
             const item = group.items[i];
             if (!item.isGalleryItem) {
-              groupItems[i] = new GalleryItem(_.merge({scheme: item.scheme, dto: item.dto}, itemConfig));
+              groupItems[i] = new GalleryItem(Object.assign({scheme: item.scheme, dto: item.dto}, itemConfig));
             } else {
               groupItems[i] = group.items[i];
             }
@@ -2260,10 +2332,6 @@ TODO:  move this logic to onInit prop
       }
     }
 
-    if (utils.isVerbose()) {
-      console.log('Layouter - convertToGalleryItems - END', _.cloneDeep(galleryStructure));
-      console.timeEnd('Layouter - convertToGalleryItems');
-    }
     return galleryStructure;
   }
 
@@ -2292,7 +2360,7 @@ TODO:  move this logic to onInit prop
         console.time('Recalculating Gallery - new');
       }
       const layout = (new Layouter(layoutParams));
-      galleryStructure = GalleryContainer.convertToGalleryItems(layout, {watermark: this.props.watermarkData});
+      galleryStructure = GalleryContainer.convertToGalleryItems(layout, {watermark: this.props.watermarkData, sharpParams: layoutParams.styleParams.sharpParams});
       if (utils.isVerbose()) {
         console.timeEnd('Recalculating Gallery - new');
       }
@@ -2317,7 +2385,7 @@ TODO:  move this logic to onInit prop
       }
       galleryStructure.createLayout(layoutParams);
       galleryStructure.calcVisibilities(getState('container.bounds'));
-      galleryStructure = GalleryContainer.convertToGalleryItems(galleryStructure, {watermark: this.props.watermarkData});
+      galleryStructure = GalleryContainer.convertToGalleryItems(galleryStructure, {watermark: this.props.watermarkData, sharpParams: layoutParams.styleParams.sharpParams});
       if (utils.isVerbose()) {
         console.timeEnd('Recalculating Gallery - prepare');
       }
@@ -2580,8 +2648,6 @@ TODO:  move this logic to onInit prop
 
       if (this.debugScroll) {
         console.timeEnd('SCROLL - (' + trigger + ') create new gallery');
-      }
-      if (this.debugScroll) {
         console.time('SCROLL - (' + trigger + ') time of setting new state for gallery');
       }
 
@@ -2591,8 +2657,6 @@ TODO:  move this logic to onInit prop
       utils.setStateAndLog(this, 'Gallery ReRender', this.newState, () => {
         if (this.debugScroll) {
           console.timeEnd('SCROLL - (' + trigger + ') time of setting new state for gallery');
-        }
-        if (this.debugScroll) {
           console.timeEnd('SCROLL - full cycle time');
         }
         if ((this.isInfiniteScroll() && !this.state.styleParams.oneRow) || trigger !== LAYOUT || isChangedLayout) {
@@ -2624,6 +2688,13 @@ TODO:  move this logic to onInit prop
           break;
       }
     });
+
+    if (triggerIs(LAYOUT)) { //hack for albums
+      Wix.Styles.getStyleParams(style => {
+        this.horizontalLayoutHeight = style.numbers.horizontalLayoutHeight
+        this.newState.styleParams.oneRow && this.horizontalLayoutHeight && this.setWixHeight(this.horizontalLayoutHeight)
+      })
+    }
 
     this.scrollToItemIfNeeded();
 

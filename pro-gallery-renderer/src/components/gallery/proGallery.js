@@ -9,14 +9,14 @@ import createLogger from 'redux-logger';
 import galleryReducers from '../../reducers/index.js';
 import GalleryContainer from './galleryContainer.js';
 import utils from '../../utils';
-import {Wix, logger, watermarkApi} from 'photography-client-lib';
+import {Wix, logger} from 'photography-client-lib';
 import videoActionTypes from '../../constants/videoActionTypes';
 import videoPlayModes from '../item/videos/videoPlayModes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import {VideoQueue} from '../item/videos/video-queue';
 import _ from 'lodash';
 
-class ProGallery extends React.Component {
+export default class ProGallery extends React.Component {
 
   constructor(props) {
     super();
@@ -25,12 +25,9 @@ class ProGallery extends React.Component {
 
   init(props) {
 
-    this.items = props.items || require('../../../test/images-mock').testImages;
-
     const middlewares = [thunkMiddleware, videoMiddleware({videoQueue: new VideoQueue(), utils})];
     this.store = createStore(galleryReducers, /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {}, applyMiddleware(...middlewares));
     this.initStoreEvents(this.store);
-    this.readyPromise = this.initWatermark();
 
   }
 
@@ -45,30 +42,18 @@ class ProGallery extends React.Component {
     }
   }
 
-  initWatermark() {
-    let returnPromise = Promise.resolve(null);
-    if (utils.isStoreGallery()) {
-      returnPromise = watermarkApi.getWatermarkData().then(watermarkData => {
-        this.watermarkData = watermarkData;
-      });
-    }
-    return returnPromise;
-  }
-
   render() {
     return (
       <div className="pro-gallery">
         <Provider store={this.store}>
           <GalleryContainer
             {...this.props}
-            items={this.items}
+            items={this.props.items || require('../../../test/images-mock').testImages}
             store={this.store}
-            watermarkData={this.watermarkData}
+            watermarkData={this.props.watermarkData}
           />
         </Provider>
       </div>
     );
   }
 }
-
-export default ProGallery;
