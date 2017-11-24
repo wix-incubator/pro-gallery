@@ -457,7 +457,7 @@ TODO:  move this logic to onInit prop
       borderRadius: 0,
       boxShadow: 0,
       imageMargin: numFromSeed(0, (spacingVersionManager.isNewSpacing() ? 250 : 5), 'imageMargin'),
-      galleryMargin: (spacingVersionManager.isNewSpacing() ? numFromSeed(0, 50, 'galleryMargin') : numFromSeed(0, 5, 'imageMargin')),
+      galleryMargin: (spacingVersionManager.isNewSpacing() ? 0 : numFromSeed(0, 5, 'imageMargin')),
       floatingImages: 0,
       chooseBestGroup: boolFromSeed('chooseBestGroup'),
       smartCrop: boolFromSeed('smartCrop'),
