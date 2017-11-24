@@ -155,17 +155,15 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
-    } else {
-      if (itemClick === "expand" || itemClick === 'link') {
-        this.props.actions.toggleFullscreen(this.props.idx);
-      } else if (this.props.type === 'video') {
-        const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile())
-        if (shouldTogglePlay) {
-          this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx)
-        }
-      } else if (itemClick === 'nothing' && utils.isMobile()) {
-        this.toggleHoverOnMobile()
+    } else if (itemClick === 'expand' || itemClick === 'link') {
+      this.props.actions.toggleFullscreen(this.props.idx);
+    } else if (this.props.type === 'video') {
+      const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile());
+      if (shouldTogglePlay) {
+        this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
+    } else if (itemClick === 'nothing' && utils.isMobile()) {
+      this.toggleHoverOnMobile();
     }
   }
 
@@ -298,7 +296,7 @@ class ItemView extends React.Component {
   }
 
   videoOnMount(videoElment) {
-    this.props.videoAdded({ idx: this.props.idx, isVisible: () => this.isVisible(videoElment) });
+    this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible(videoElment)});
   }
 
   videoOnUnmount() {
@@ -491,9 +489,9 @@ class ItemView extends React.Component {
   }
 
   getBottomInfoElement() {
-    const { styleParams, style, title, fileName, type, actions } = this.props;
-    const displayTitle = utils.getTitleOrFilename(title, fileName)
-    const { placements } = Consts;
+    const {styleParams, style, title, fileName, type, actions} = this.props;
+    const displayTitle = utils.getTitleOrFilename(title, fileName);
+    const {placements} = Consts;
     const buttonPlacement = this.getButtonPlacement();
     let bottomInfo = null;
 
@@ -510,8 +508,12 @@ class ItemView extends React.Component {
         bottomInfo = (
           <div style={{height: styleParams.bottomInfoHeight, textAlign: styleParams.galleryTextAlign}}
               className="gallery-item-bottom-info"
-              onMouseOver={() => {this.setState({showHover: true})}}
-              onMouseOut={() => {this.setState({showHover: false})}}>
+              onMouseOver={() => {
+                this.setState({showHover: true});
+              }}
+              onMouseOut={() => {
+                this.setState({showHover: false});
+              }}>
             {titleElem}
             {buttonElem}
           </div>);

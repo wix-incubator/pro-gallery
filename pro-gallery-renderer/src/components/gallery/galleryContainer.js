@@ -1604,7 +1604,7 @@ TODO:  move this logic to onInit prop
             let shouldStop = false;
             let retriesLeft = 10;
             const scrollListener = e => {
-              if (e.scrollTop > 0 && e.scrollTop != scrollToPoint) {
+              if (e.scrollTop > 0 && e.scrollTop !== scrollToPoint) {
                 shouldStop = true;
                 Wix.removeEventListener(Wix.Events.SCROLL, scrollListener);
               }
