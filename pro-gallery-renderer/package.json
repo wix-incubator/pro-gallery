@@ -53,6 +53,7 @@
     "husky": "^0.13.4",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
+    "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.1",
     "yoshi": "latest"
   },
