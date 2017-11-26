@@ -122,6 +122,7 @@ class GalleryItem {
       description: this.description,
       full_url: this.full_url,
       download_url: this.download_url,
+      sample_url: this.sample_url,
       square_url: this.square_url,
       pixel_url: this.pixel_url,
       resized_url: this.resized_url,
