@@ -399,8 +399,10 @@ TODO:  move this logic to onInit prop
         break;
       }
       const item = new GalleryItem({dto, watermark: this.props.watermarkData});
-      preloadedItems[i] = new Image();
-      preloadedItems[i].src = item.thumbnail_url.img;
+      if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
+        preloadedItems[i] = new Image();
+        preloadedItems[i].src = item.thumbnail_url['img'];
+      }
     }
     if (utils.isVerbose()) {
       console.timeEnd(`Preloaded ${preloadSize} items`);
