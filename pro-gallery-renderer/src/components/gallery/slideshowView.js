@@ -219,7 +219,7 @@ class SlideshowView extends React.Component {
       },
       gotScrollEvent: true,
       showAllItems: true
-    }, {watermark: this.props.watermark}));
+    }), {watermark: this.props.watermark});
 
     const thumbnailsConfig = {
       scroll: _.merge({}, this.props.scroll, {}),
