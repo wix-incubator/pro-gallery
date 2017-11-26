@@ -209,30 +209,7 @@ export class GalleryContainer extends React.Component {
     if (_.isFunction(props.onInit)) {
       props.onInit();
     }
-/*
-TODO:  move this logic to onInit prop
--------------------------------------
-    if (window.Wix && (utils.getViewModeFromCache() === 'editor') && utils.isStoreGallery()) {
-      Wix.addEventListener(Wix.Events.EDIT_MODE_CHANGE, vm => {
-        if (vm.editMode === 'preview') {
-          storeApi.getStoreGalleryData(true).then(data => {
-            if (utils.isDebugBuild()) {
-              try {
-                const currentConnectedProviders = this.getConnectedProviders();
-                if (Object.keys(currentConnectedProviders)[0] !== Object.keys(data.connectedProviders)[0]) {
-                  console.log('Server providers is different than client');
-                }
-              } catch (error) {
-                console.log(error);
-              }
-            }
 
-            window.connectedProviders = data.connectedProviders;
-          });
-        }
-      });
-    }
-*/
     setTimeout(
       () => {
         const sp = this.state.styleParams;
@@ -401,7 +378,7 @@ TODO:  move this logic to onInit prop
       const item = new GalleryItem({dto, watermark: this.props.watermarkData});
       if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
         preloadedItems[i] = new Image();
-        preloadedItems[i].src = item.thumbnail_url['img'];
+        preloadedItems[i].src = item.thumbnail_url.img;
       }
     }
     if (utils.isVerbose()) {
