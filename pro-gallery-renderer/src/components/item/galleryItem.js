@@ -375,10 +375,9 @@ class GalleryItem {
 
     this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams, false);
 
-    this.download_url = {img: this.getOriginalsUrl()};
     this.sample_url = this.resizedUrl('fit', 500, 500, this.sharpParams, false, true);
 
-    this.download_url.mp4 = this.full_url.mp4;
+    this.download_url = utils.isStoreGallery() ? this.sample_url : {img: this.getOriginalsUrl(), mp4: this.full_url.mp4};
   }
 
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, noCrop) {
