@@ -456,7 +456,7 @@ TODO:  move this logic to onInit prop
       oneRow: boolFromSeed('oneRow'),
       borderRadius: 0,
       boxShadow: 0,
-      imageMargin: numFromSeed(0, (spacingVersionManager.isNewSpacing() ? 250 : 5), 'imageMargin'),
+      imageMargin: numFromSeed(0, (spacingVersionManager.isNewSpacing() ? (numFromSeed(300, 800, 'gallerySize') / 5) : 5), 'imageMargin'),
       galleryMargin: (spacingVersionManager.isNewSpacing() ? 0 : numFromSeed(0, 5, 'imageMargin')),
       floatingImages: 0,
       chooseBestGroup: boolFromSeed('chooseBestGroup'),
