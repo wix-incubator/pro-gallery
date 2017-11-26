@@ -2481,7 +2481,6 @@ TODO:  move this logic to onInit prop
       }
       console.count('galleryContainer reRenderForResize');
     }
-    console.error('reRenderForResize', this.heightWasSetInternally);
     if (this.heightWasSetInternally === true) {
       //disable reRender for resize when calling wix.setHeight
       this.heightWasSetInternally = false;
