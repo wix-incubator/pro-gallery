@@ -199,7 +199,7 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    window.webpIsSupported = utils.webpIsSupported();
+    window.isWebpSupported = utils.isWebpSupported();
 
     if (initPromise) {
       initPromise.then(() => {
