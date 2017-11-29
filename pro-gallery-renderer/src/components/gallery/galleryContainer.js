@@ -410,7 +410,7 @@ export class GalleryContainer extends React.Component {
       return Math.floor(((s1 / s2) - Math.floor(s1 / s2)) * 10000000);
     };
 
-    if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams')) && !this.props.styleParams) {
+    if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams'))) {
       if (utils.isVerbose()) { //todo yoshi
         console.log('already got style params, not fetching again', this.state.styleParams);
       }
@@ -592,9 +592,11 @@ export class GalleryContainer extends React.Component {
 
   }
 
-  getStyleByLayout(wixStyles) {
+  getStyleByLayout(wixStyles, selectedLayout) {
     //new layouts
-    let {galleryLayout, gallerySize, magicLayoutSeed} = wixStyles;
+    const {gallerySize, magicLayoutSeed} = wixStyles;
+
+    let galleryLayout = selectedLayout || wixStyles.galleryLayout;
 
     const emptyLayout = {
       galleryType: undefined,
@@ -831,7 +833,7 @@ export class GalleryContainer extends React.Component {
   getStyleParamsState() {
 
     let wixStyles = {};
-    let stateStyles = {};
+    let stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {});
 
     function canSet(wixParam, stateParam) {
       // wixStyles    =>  Styles arrived directly from wix
@@ -878,15 +880,18 @@ export class GalleryContainer extends React.Component {
       _.merge(wixStyles, this.props.styleParams);
     }
 
-    wixStyles.gallerySize = wixStyles.gallerySize || 30;
+    wixStyles.gallerySize = stateStyles.gallerySize || wixStyles.gallerySize || 30;
 
-    if (!_.isUndefined(wixStyles.galleryType) && _.isUndefined(wixStyles.galleryLayout)) {
+    const galleryLayoutV1 = _.isUndefined(stateStyles.galleryType) ? wixStyles.galleryType : stateStyles.galleryType;
+    const galleryLayoutV2 = _.isUndefined(stateStyles.galleryLayout) ? wixStyles.galleryLayout : stateStyles.galleryLayout;
+
+    if (!_.isUndefined(galleryLayoutV1) && _.isUndefined(galleryLayoutV2)) {
       //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
       if (utils.isVerbose()) { //todo yoshi
         console.log('Using galleryType for defaults', wixStyles);
       }
 
-      stateStyles = this.getStyleByGalleryType(String(wixStyles.galleryType), wixStyles.gallerySize); //legacy layouts
+      stateStyles = this.getStyleByGalleryType(String(galleryLayoutV1), wixStyles.gallerySize); //legacy layouts
       stateStyles.layoutsVersion = 1;
       const selectedLayoutVars = ['galleryType', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
@@ -895,11 +900,11 @@ export class GalleryContainer extends React.Component {
       if (utils.isVerbose()) { //todo yoshi
         console.log('Using galleryLayout for defaults', wixStyles);
       }
-      stateStyles = this.getStyleByLayout(wixStyles);
+      stateStyles = this.getStyleByLayout(wixStyles, galleryLayoutV2);
       const selectedLayoutVars = ['galleryLayout', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
       stateStyles.layoutsVersion = 2;
-      stateStyles.selectedLayoutV2 = wixStyles.galleryLayout;
+      stateStyles.selectedLayoutV2 = galleryLayoutV2;
       if (utils.isVerbose()) { //todo yoshi
         console.log('new selected layout', stateStyles.selectedLayout);
       }
@@ -1659,11 +1664,14 @@ export class GalleryContainer extends React.Component {
     //   document.documentElement.clientWidth ||
     //   document.getElementsByTagName('body')[0].clientWidth;
     const domWidth = this.protectGalleryWidth(utils.isMobile() ? document.body.clientWidth : window.innerWidth); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
-    return (utils.isSemiNative() ? this.props.layout.width : domWidth) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
+    const propsWidth = _.get(this.props, 'layout.width') || _.get(this.props, 'container.width');
+    return (propsWidth > 0 ? propsWidth : domWidth) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
   }
 
   getGalleryHeight() {
-    return (utils.isSemiNative() ? this.props.layout.height : window.innerHeight) + this.getDimensionFix();
+    const domHeight = window.innerHeight;
+    const propsHeight = _.get(this.props, 'layout.height') || _.get(this.props, 'container.height');
+    return (propsHeight > 0 ? propsHeight : domHeight) + this.getDimensionFix();
   }
 
   getGalleryRatio() {
