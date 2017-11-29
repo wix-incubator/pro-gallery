@@ -4,7 +4,7 @@ import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
 import {Consts} from 'photography-client-lib';
-import {utils} from '../../../utils/index.js';
+import utils from '../../../utils';
 
 export default class Texts extends React.Component {
 
@@ -61,7 +61,7 @@ export default class Texts extends React.Component {
     let buttonElem = null;
 
     const {title, description, fileName, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
-    const displayTitle = (title || fileName);
+    const displayTitle = utils.getTitleOrFilename(title, fileName);;
     const shouldShowTitle = displayTitle && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
     const shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
     const shouldHaveBottomSpaceInTitle = shouldShowDescription || this.allowAnyAction();
