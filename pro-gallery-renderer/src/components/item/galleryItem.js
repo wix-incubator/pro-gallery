@@ -423,6 +423,11 @@ class GalleryItem {
       urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, false, true);
     }
 
+    if (window.webpIsSupported) {
+      urls.thumb = urls.thumb.replace(/\.jpg$/i, '.webp');
+      urls.img = urls.img.replace(/\.jpg$/i, '.webp');
+    }
+
     return urls;
   }
 

@@ -198,6 +198,9 @@ export class GalleryContainer extends React.Component {
         isMultisharing: (this.props.defaultSelectMode === true)
       }
     };
+
+    window.webpIsSupported = utils.webpIsSupported;
+
     if (initPromise) {
       initPromise.then(() => {
         this.preloadItems();
