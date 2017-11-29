@@ -2102,9 +2102,9 @@ export class GalleryContainer extends React.Component {
 
             Wix.Utils.navigateToSection({
               sectionId: utils.getFullscreenSectionId(),
-              noTransition: true,
-              shouldRefreshIframe: false
-            }, utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId));
+              // shouldRefreshIframe: false,
+              noTransition: true
+            }/* , utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId) */);
           });
 
         } else {
