@@ -423,7 +423,7 @@ class GalleryItem {
       urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, false, true);
     }
 
-    if (window.isWebpSupported) {
+    if (window.isWebpSupported && !utils.isStoreGallery()) {
       urls.thumb = urls.thumb.replace(/\.jpg$/i, '.webp');
       urls.img = urls.img.replace(/\.jpg$/i, '.webp');
     }
