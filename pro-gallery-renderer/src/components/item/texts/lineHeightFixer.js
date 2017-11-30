@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import _ from 'lodash';
+import utils from '../../../utils/index.js';
 
 const spaceBetweenElements = 20;
 const minWidthToShowContent = 135;
@@ -70,7 +71,7 @@ class LineHeightFixer {
     }
 
 
-    const shouldDisplayTitle = (title || fileName) && !isSmallItem && styleParams.allowTitle;
+    const shouldDisplayTitle = utils.getTitleOrFilename(title, fileName) && !isSmallItem && styleParams.allowTitle;
     if (shouldDisplayTitle) {
       titleElement.show();
       titleElement.css({overflow: 'visible'});
