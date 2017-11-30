@@ -794,17 +794,14 @@ export class GalleryContainer extends React.Component {
         isSlideshow: false,
         cropOnlyFill: false
       },
+      empty: {
+        gallerySize: Math.round(gallerySize * 9 + 100)
+      },
       magic: this.getStyleBySeed(magicLayoutSeed)
     };
 
-    const specialMobileStoreConfig = {};
-    const isStoreMobile = utils.isStoreGallery() && utils.isMobile();
-    if (isStoreMobile) {
-      galleryLayout = 2;
-      specialMobileStoreConfig.forceMobileCustomButton = true;
-    }
-
     const galleyLayoutList = [
+      'empty', //-1
       'collage',
       'masonry',
       'grid',
@@ -816,10 +813,19 @@ export class GalleryContainer extends React.Component {
       'magic'
     ];
 
-    let layoutName = galleyLayoutList[galleryLayout || 0];
+    let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
+    if (_.isUndefined(layoutName)) {
+      if (utils.isStoreGallery()) {
+        layoutName = 'grid';
+      } else {
+        layoutName = 'collage';
+      }
+    }
 
-    if (utils.isStoreGallery() && _.isUndefined(galleryLayout)) {
-      layoutName = galleyLayoutList[2];
+    const specialMobileStoreConfig = {};
+    if (utils.isStoreGallery() && utils.isMobile()) {
+      layoutName = 'grid';
+      specialMobileStoreConfig.forceMobileCustomButton = true;
     }
 
     if (utils.isVerbose()) { //todo yoshi
@@ -891,7 +897,7 @@ export class GalleryContainer extends React.Component {
         console.log('Using galleryType for defaults', wixStyles);
       }
 
-      stateStyles = this.getStyleByGalleryType(String(galleryLayoutV1), wixStyles.gallerySize); //legacy layouts
+      stateStyles = Object.assign({}, this.getStyleByGalleryType(String(galleryLayoutV1), wixStyles.gallerySize), stateStyles); //legacy layouts
       stateStyles.layoutsVersion = 1;
       const selectedLayoutVars = ['galleryType', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
@@ -900,7 +906,7 @@ export class GalleryContainer extends React.Component {
       if (utils.isVerbose()) { //todo yoshi
         console.log('Using galleryLayout for defaults', wixStyles);
       }
-      stateStyles = this.getStyleByLayout(wixStyles, galleryLayoutV2);
+      stateStyles = Object.assign({}, this.getStyleByLayout(wixStyles, galleryLayoutV2), stateStyles); //legacy layouts
       const selectedLayoutVars = ['galleryLayout', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
       stateStyles.layoutsVersion = 2;
