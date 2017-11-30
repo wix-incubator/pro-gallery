@@ -61,7 +61,7 @@ export default class Texts extends React.Component {
     let buttonElem = null;
 
     const {title, description, fileName, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
-    const displayTitle = utils.getTitleOrFilename(title, fileName);;
+    const displayTitle = utils.getTitleOrFilename(title, fileName);
     const shouldShowTitle = displayTitle && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
     const shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
     const shouldHaveBottomSpaceInTitle = shouldShowDescription || this.allowAnyAction();
