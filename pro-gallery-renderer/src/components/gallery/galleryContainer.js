@@ -410,7 +410,7 @@ export class GalleryContainer extends React.Component {
       return Math.floor(((s1 / s2) - Math.floor(s1 / s2)) * 10000000);
     };
 
-    if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams'))) {
+    if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams')) && !this.props.styleParams) {
       if (utils.isVerbose()) { //todo yoshi
         console.log('already got style params, not fetching again', this.state.styleParams);
       }
