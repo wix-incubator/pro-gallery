@@ -1675,7 +1675,7 @@ export class GalleryContainer extends React.Component {
   }
 
   getGalleryHeight() {
-    const domHeight = window.innerHeight;
+    const domHeight = Math.round(window.innerHeight / utils.getViewportScaleRatio());
     const propsHeight = _.get(this.props, 'layout.height') || _.get(this.props, 'container.height');
     return (propsHeight > 0 ? propsHeight : domHeight) + this.getDimensionFix();
   }
