@@ -9,6 +9,7 @@ export class Item {
   /* @ngInject */
   constructor(config) {
     this.style = {};
+    this.visibility = {};
 
     //Item core can be initialized with:
     // {dto: ItemDto(..)}
@@ -29,6 +30,8 @@ export class Item {
       config.dto = {};
     }
     const metadata = utils.parseStringObject(config.dto.metadata || config.dto.metaData || '');
+    this.fixMetadataVerticalVideoRatio(metadata);
+
     this._dto = merge({}, config.dto, metadata);
     this.dto = config.dto;
 
@@ -55,6 +58,15 @@ export class Item {
 
     this.resize(1);
 
+  }
+
+  fixMetadataVerticalVideoRatio(metadata) {
+    if (metadata.qualities && metadata.qualities[0]) { //fix incorrect width height for vertical videos
+      const {qualities} = metadata;
+      const {height, width} = qualities[qualities.length - 1];
+      metadata.height = height;
+      metadata.width = width;
+    }
   }
 
   resize(scaleOrDimensions) {
@@ -334,7 +346,8 @@ export class Item {
       group: this.group,
       offset: this.offset,
       transform: this.transform,
-      orientation: this.orientation
+      orientation: this.orientation,
+      visibility: this.visibility
     };
   }
 }
