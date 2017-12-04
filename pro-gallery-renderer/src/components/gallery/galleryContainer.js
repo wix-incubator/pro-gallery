@@ -816,14 +816,17 @@ export class GalleryContainer extends React.Component {
     let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
     if (_.isUndefined(layoutName)) {
       if (utils.isStoreGallery()) {
+        galleryLayout = 2;
         layoutName = 'grid';
       } else {
+        galleryLayout = 0;
         layoutName = 'collage';
       }
     }
 
     const specialMobileStoreConfig = {};
     if (utils.isStoreGallery() && utils.isMobile()) {
+      galleryLayout = 2;
       layoutName = 'grid';
       specialMobileStoreConfig.forceMobileCustomButton = true;
     }
@@ -832,7 +835,7 @@ export class GalleryContainer extends React.Component {
       console.log('chosen layout is', layoutName);
     }
 
-    return _.merge(emptyLayout, layouts[layoutName], specialMobileStoreConfig);
+    return _.merge(emptyLayout, layouts[layoutName], specialMobileStoreConfig, {galleryLayout});
 
   }
 
