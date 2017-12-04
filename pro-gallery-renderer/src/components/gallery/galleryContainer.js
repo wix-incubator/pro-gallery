@@ -596,7 +596,7 @@ export class GalleryContainer extends React.Component {
     //new layouts
     const {gallerySize, magicLayoutSeed} = wixStyles;
 
-    const galleryLayout = selectedLayout || wixStyles.galleryLayout;
+    let galleryLayout = selectedLayout || wixStyles.galleryLayout;
 
     const emptyLayout = {
       galleryType: undefined,
