@@ -167,6 +167,7 @@ export class GalleryContainer extends React.Component {
     this.items = this.props.items;
 
     const itemsIds = this.itemsIds(this.items);
+    this.newProps = {};
     this.state = {
       items: itemsIds,
       renderedItemsCount: this.props.renderedItemsCount || itemsIds.length,
@@ -842,7 +843,7 @@ export class GalleryContainer extends React.Component {
   getStyleParamsState() {
 
     let wixStyles = {};
-    let stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {});
+    let stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {}, this.newProps.styles || {}, this.newProps.behaviour || {});
 
     function canSet(wixParam, stateParam) {
       // wixStyles    =>  Styles arrived directly from wix
@@ -860,7 +861,7 @@ export class GalleryContainer extends React.Component {
       }
     }
 
-    if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams'))) {
+    if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams')) && _.isEmpty(stateStyles)) {
       if (utils.isVerbose()) { //todo yoshi
         console.log('already got style params, not fetching again', this.state.styleParams);
       }
@@ -1303,6 +1304,7 @@ export class GalleryContainer extends React.Component {
       console.log('Received new props', newProps);
     }
     try {
+      this.newProps = newProps;
       if (newProps.items) {
         if (this.getHashtagFilter()) {
           this.initHashtagFilter(() => {
@@ -1335,6 +1337,9 @@ export class GalleryContainer extends React.Component {
             console.warn(`Got new props with fewer items`, newProps, this.state.items);
           }
         }
+      }
+      if (newProps.styles && !_.isEqual(this.props.styles, newProps.styles)) {
+        this.reRender(this.renderTriggers.STYLES);
       }
     } catch (e) {
       console.error('Failed settings new props', e);
