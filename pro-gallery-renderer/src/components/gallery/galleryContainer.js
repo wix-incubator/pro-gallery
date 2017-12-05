@@ -843,7 +843,7 @@ export class GalleryContainer extends React.Component {
   getStyleParamsState() {
 
     let wixStyles = {};
-    let stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {}, this.newProps.styles || {}, this.newProps.behaviour || {});
+    let stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {}, this.newProps.styles || {}, this.newProps.behaviour || {}, window.styles || {}, window.behaviour || {});
 
     function canSet(wixParam, stateParam) {
       // wixStyles    =>  Styles arrived directly from wix
@@ -870,19 +870,18 @@ export class GalleryContainer extends React.Component {
 
     let gotStyleParams = !(utils.isInWix() && !utils.isDemo()); // if in Wix wait for real (not default) style params
 
+    wixStyles = {};
     if (utils.isInWix() && Wix && Wix.Styles && Wix.Styles.getStyleParams()) {
       const sp = Wix.Styles.getStyleParams();
-      wixStyles = {};
       _.merge(wixStyles, sp.booleans, sp.numbers, sp.colors, sp.fonts);
       gotStyleParams = true;
-    } else if (typeof (window.styles) === 'object') {
-      wixStyles = window.styles;
-    } else if (utils.parseGetParam('galleryStyle')) {
+    }
+    if (utils.parseGetParam('galleryStyle')) {
       const galleryStyle = utils.parseGetParam('galleryStyle');
 
       if (/^[\],:{}\s]*$/.test(galleryStyle.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         //the json is ok
-        wixStyles = JSON.parse(decodeURIComponent(galleryStyle));
+        _.merge(wixStyles, JSON.parse(decodeURIComponent(galleryStyle)));
       }
     }
 
