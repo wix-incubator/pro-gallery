@@ -1829,14 +1829,14 @@ export class GalleryContainer extends React.Component {
   }
 
   setWixHeight(height, lastHeight, trigger) {
-
+    const additionalHeight = this.props.additionalHeight || 0;
     if (height <= 0) {
       console.warn('Wix setHeight called with height less than 0');
       return;
     }
 
     if (this.state.styleParams.oneRow && this.horizontalLayoutHeight) { //hack for albums
-      Wix.setHeight(this.horizontalLayoutHeight);
+      Wix.setHeight(this.horizontalLayoutHeight + additionalHeight);
       return;
     }
 
@@ -1920,7 +1920,7 @@ export class GalleryContainer extends React.Component {
           }
           //if (this.lastSetHeight !== neededHeight) {
           setTimeout(() => {
-            Wix.setHeight(neededHeight);
+            Wix.setHeight(neededHeight + additionalHeight);
           }, 0);
             //this.lastSetHeight = neededHeight;
           //}
