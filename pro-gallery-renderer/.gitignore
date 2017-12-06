@@ -1,6 +1,6 @@
 dist
 node_modules
-*npm-debug.log
+npm-debug.log.*
 target
 maven
 package-lock.json
