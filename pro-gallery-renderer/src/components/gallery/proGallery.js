@@ -51,7 +51,7 @@ export default class ProGallery extends React.Component {
             items={this.props.items || require('../../../test/images-mock').testImages}
             store={this.store}
             watermarkData={this.props.watermarkData}
-            additionalHeight={this.props.additionalHeight}
+            offsetTop={this.props.offsetTop}
           />
         </Provider>
       </div>

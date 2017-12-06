@@ -1833,14 +1833,14 @@ export class GalleryContainer extends React.Component {
   }
 
   setWixHeight(height, lastHeight, trigger) {
-    const additionalHeight = this.props.additionalHeight || 0;
+    const offsetTop = this.props.offsetTop || 0;
     if (height <= 0) {
       console.warn('Wix setHeight called with height less than 0');
       return;
     }
 
     if (this.state.styleParams.oneRow && this.horizontalLayoutHeight) { //hack for albums
-      Wix.setHeight(this.horizontalLayoutHeight + additionalHeight);
+      Wix.setHeight(this.horizontalLayoutHeight + offsetTop);
       return;
     }
 
@@ -1923,9 +1923,7 @@ export class GalleryContainer extends React.Component {
             console.warn('Changing wix height from: ' + lastHeight + '  to: ' + neededHeight + ' inner gallery height is: ' + this.newHeight);
           }
           //if (this.lastSetHeight !== neededHeight) {
-          setTimeout(() => {
-            Wix.setHeight(neededHeight + additionalHeight);
-          }, 0);
+          Wix.setHeight(neededHeight + offsetTop);
             //this.lastSetHeight = neededHeight;
           //}
           this.heightWasSetInternally = true;
