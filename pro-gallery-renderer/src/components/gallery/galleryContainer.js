@@ -16,7 +16,8 @@ import {itemActions, Consts, versionManager, Wix, logger} from 'photography-clie
 const adiLoadMoreMaxHeight = 2000;
 try {
   window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
-} catch {
+} catch (e) {
+  //
 }
 
 let FullscreenContainer;
