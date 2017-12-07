@@ -292,7 +292,7 @@ class ItemView extends React.Component {
   }
 
   getButtonPlacement() {
-    return utils.isStoreGallery() ? this.props.styleParams.titlePlacement : Consts.placements.DONT_SHOW;
+    return this.props.styleParams.titlePlacement;
   }
 
   videoOnMount(videoElment) {
@@ -308,7 +308,7 @@ class ItemView extends React.Component {
     const isButtonPlacementOnHover = this.getButtonPlacement() === Consts.placements.SHOW_ON_HOVER;
     const isImage = this.props.type === 'image' || this.props.type === 'picture';
     const useCustomButton = this.props.styleParams.useCustomButton === true;
-    const shouldShowButton = isButtonPlacementOnHover && isImage && useCustomButton;
+    const shouldShowButton = isButtonPlacementOnHover && (isImage || !utils.isStoreGallery()) && useCustomButton;
 
     return <Texts {...props}
               key={`item-texts-${props.id}`}
@@ -498,10 +498,8 @@ class ItemView extends React.Component {
     if (styleParams.titlePlacement === placements.SHOW_ALWAYS) {
       let buttonElem = null;
       const isImage = type === 'image' || type === 'picture';
-      if (isImage) {
-        const shouldShowButton = buttonPlacement === placements.SHOW_ALWAYS && styleParams.useCustomButton === true;
-        buttonElem = shouldShowButton ? (<CustomButton styleParams={styleParams} />) : null;
-      }
+      const shouldShowButton = buttonPlacement === placements.SHOW_ALWAYS && styleParams.useCustomButton === true && (isImage || !utils.isStoreGallery());
+      buttonElem = shouldShowButton ? (<CustomButton styleParams={styleParams} />) : null;
       const isTitleAvailable = styleParams.allowTitle && displayTitle;
       const titleElem = isTitleAvailable ? (<ItemTitle title={displayTitle} />) : null;
       if (titleElem || buttonElem) {
