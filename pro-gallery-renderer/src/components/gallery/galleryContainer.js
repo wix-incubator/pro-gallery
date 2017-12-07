@@ -880,6 +880,9 @@ export class GalleryContainer extends React.Component {
       _.merge(wixStyles, sp.booleans, sp.numbers, sp.colors, sp.fonts);
       gotStyleParams = true;
     }
+    if (_.isObject(window.galleryStyle)) {
+      _.merge(wixStyles, window.galleryStyle);
+    }
     if (utils.parseGetParam('galleryStyle')) {
       const galleryStyle = utils.parseGetParam('galleryStyle');
 
