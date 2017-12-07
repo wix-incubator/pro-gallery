@@ -1,21 +1,17 @@
 'use strict';
 
 import React from 'react';
-import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
 import galleryReducers from '../../reducers/index.js';
 import {toggleHoverPreview} from '../../actions/galleryActions.js';
 import GalleryContainer from './galleryContainer.js';
 import utils from '../../utils';
-import {Wix, logger} from 'photography-client-lib';
+import {Wix} from 'photography-client-lib';
 import videoActionTypes from '../../constants/videoActionTypes';
-import videoPlayModes from '../item/videos/videoPlayModes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import {VideoQueue} from '../item/videos/video-queue';
-import _ from 'lodash';
 
 export default class ProGallery extends React.Component {
 
