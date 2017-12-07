@@ -7,6 +7,7 @@ import {createStore, applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import galleryReducers from '../../reducers/index.js';
+import {toggleHoverPreview} from '../../actions/galleryActions.js';
 import GalleryContainer from './galleryContainer.js';
 import utils from '../../utils';
 import {Wix, logger} from 'photography-client-lib';
@@ -21,6 +22,12 @@ export default class ProGallery extends React.Component {
   constructor(props) {
     super();
     this.init(props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.forceHover !== this.props.forceHover) {
+      this.store.dispatch(toggleHoverPreview(nextProps.forceHover));
+    }
   }
 
   init(props) {
