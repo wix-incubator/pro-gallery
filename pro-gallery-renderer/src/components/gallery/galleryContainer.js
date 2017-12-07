@@ -14,7 +14,10 @@ import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/
 import {itemActions, Consts, versionManager, Wix, logger} from 'photography-client-lib';
 
 const adiLoadMoreMaxHeight = 2000;
-window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
+try {
+  window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
+} catch {
+}
 
 let FullscreenContainer;
 // if (!utils.isInWix()) {
