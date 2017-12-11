@@ -419,8 +419,9 @@ class GalleryItem {
         urls.thumb = this.resizeUrlImp(poster.url, 'fit', thumbSize, thumbSize, sharpParams, false, false);
       }
     } else {
-      urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, (noCrop !== true && this.isCropped && this.focalPoint));
-      urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, false, true);
+      const fp = (noCrop !== true && this.isCropped && this.focalPoint);
+      urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, fp);
+      urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, showFaces, true, fp);
     }
 
     if (window.isWebpSupported && !utils.isStoreGallery()) {
