@@ -1347,6 +1347,9 @@ export class GalleryContainer extends React.Component {
       if (newProps.styles && !_.isEqual(this.props.styles, newProps.styles)) {
         this.reRender(this.renderTriggers.STYLES);
       }
+      if (newProps.offsetTop !== this.props.offsetTop) {
+        this.reRender(this.renderTriggers.RESIZE);
+      }
     } catch (e) {
       console.error('Failed settings new props', e);
     }
@@ -1851,8 +1854,8 @@ export class GalleryContainer extends React.Component {
       return;
     }
 
-    this.lastHeight = Math.round(lastHeight);
-    this.newHeight = Math.round(height);
+    this.lastHeight = Math.round(lastHeight + offsetTop);
+    this.newHeight = Math.round(height + offsetTop);
 
     //resize wix tpa window if needed
     const getNeededHeight = (height, trigger) => {
@@ -1915,7 +1918,7 @@ export class GalleryContainer extends React.Component {
 
       }
 
-      if (Math.abs(lastHeight - neededHeight) < 2 || neededHeight === 0) {
+      if (Math.abs(lastHeight - neededHeight) < 6 || neededHeight === 0) {
         if (utils.isVerbose()) {
           console.log('Skipping Wix height change: was ' + this.lastHeight + ', now it\'s ' + neededHeight);
         }
@@ -1930,7 +1933,7 @@ export class GalleryContainer extends React.Component {
             console.warn('Changing wix height from: ' + lastHeight + '  to: ' + neededHeight + ' inner gallery height is: ' + this.newHeight);
           }
           //if (this.lastSetHeight !== neededHeight) {
-          Wix.setHeight(neededHeight + offsetTop);
+          Wix.setHeight(neededHeight);
             //this.lastSetHeight = neededHeight;
           //}
           this.heightWasSetInternally = true;
