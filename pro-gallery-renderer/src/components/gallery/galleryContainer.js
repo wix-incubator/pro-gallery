@@ -1692,7 +1692,8 @@ export class GalleryContainer extends React.Component {
   }
 
   getGalleryHeight() {
-    const domHeight = Math.round(window.innerHeight / utils.getViewportScaleRatio());
+    const offsetTop = _.get(this, 'state.styleParams.oneRow') ? (this.props.offsetTop || 0) : 0;
+    const domHeight = Math.round((window.innerHeight - offsetTop) / utils.getViewportScaleRatio());
     const propsHeight = _.get(this.props, 'layout.height') || _.get(this.props, 'container.height');
     return (propsHeight > 0 ? propsHeight : domHeight) + this.getDimensionFix();
   }
@@ -1844,6 +1845,7 @@ export class GalleryContainer extends React.Component {
 
   setWixHeight(height, lastHeight, trigger) {
     const offsetTop = this.props.offsetTop || 0;
+    const offsetTopChanged = this.lastOffsetTop !== offsetTop;
     if (height <= 0) {
       console.warn('Wix setHeight called with height less than 0');
       return;
@@ -1879,7 +1881,10 @@ export class GalleryContainer extends React.Component {
       let newHeight = Math.round(height * utils.getViewportScaleRatio());
       let should = true;
 
-      if (!this.isInfiniteScroll() || _.get(this, 'state.styleParams.oneRow')) {
+      const isHorizontalGallery = _.get(this, 'state.styleParams.oneRow');
+      const isLoadMoreEnabled = !this.isInfiniteScroll();
+      const isGalleryHeightStatic = !offsetTopChanged && (isHorizontalGallery || isLoadMoreEnabled);
+      if (isGalleryHeightStatic) {
         should = false;
       }
 
@@ -1934,6 +1939,7 @@ export class GalleryContainer extends React.Component {
           }
           //if (this.lastSetHeight !== neededHeight) {
           Wix.setHeight(neededHeight);
+          this.lastOffsetTop = offsetTop;
             //this.lastSetHeight = neededHeight;
           //}
           this.heightWasSetInternally = true;
