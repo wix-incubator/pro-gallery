@@ -164,7 +164,7 @@ export class GalleryContainer extends React.Component {
       thumbnailSpacings: 0,
       gridStyle: 0,
       useCustomButton: utils.isStoreGallery(),
-      titlePlacement: utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER
+      titlePlacement: Consts.placements.SHOW_ON_HOVER
     };
 
     const galleryWidth = this.getGalleryWidth();
@@ -1143,20 +1143,18 @@ export class GalleryContainer extends React.Component {
     }
 
 
-    if (canSet('titlePlacement')) {
-      const isGrid = _.isUndefined(stateStyles.galleryLayout) || String(stateStyles.galleryLayout) === '2';
-      const isMasonry = String(stateStyles.galleryLayout) === '1';
-      const titleOnHover = String(stateStyles.titlePlacement) === '1' || String(wixStyles.titlePlacement) === '1';
+    const isGrid = _.isUndefined(stateStyles.galleryLayout) || String(stateStyles.galleryLayout) === '2';
+    const isMasonry = String(stateStyles.galleryLayout) === '1';
+    const titleOnHover = String(stateStyles.titlePlacement) === '1' || String(wixStyles.titlePlacement) === '1';
 
-      if (!isGrid && !isMasonry) {
-        stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-      } else if (!stateStyles.isVertical || stateStyles.oneRow === true) {
-        stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-      } else if (titleOnHover) {
-        stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-      } else {
-        stateStyles.titlePlacement = Consts.placements.SHOW_ALWAYS;
-      }
+    if (!isGrid && !isMasonry) {
+      stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+    } else if (!stateStyles.isVertical || stateStyles.oneRow === true) {
+      stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+    } else if (titleOnHover) {
+      stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+    } else {
+      stateStyles.titlePlacement = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
     }
 
     if (canSet('itemFont')) {
