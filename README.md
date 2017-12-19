@@ -102,9 +102,9 @@ The percentage of "collaging" the layouter will create. The higher the percentag
 
 * [Group Types](https://docs.google.com/presentation/d/1RGRkSmXV94dKXL-7umXcJXsgOGwcBRu0l9AcfShV21I/edit#slide=id.g2704b1b40a_0_370) a presentaion that displays the different group types in the collage layout
 
-* [Viewport Visibility Demo](http://wix-private.github.io/pro-gallery-statics/) see the layouter hides and show items according to their location in the viewport
+* [Layouter & Viewport Visibility Demo](http://wix-private.github.io/pro-gallery-layouter/) see the layouter hides and show items according to their location in the viewport
 
-* [Pro Gallery Playground](https://progallery.wix.com/playground.html) the place where you can play with the different styleParams to create new and stunning© layouts
+* [Pro Gallery Playground](https://wix-private.github.io/pro-gallery-playground/) the place where you can play with the different styleParams to create new and stunning© layouts
 
 # Demos
 To see how to use the layouter, check out the [Demos](/demos) page.
