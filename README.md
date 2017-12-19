@@ -109,3 +109,4 @@ The percentage of "collaging" the layouter will create. The higher the percentag
 # Demos
 To see how to use the layouter, check out the [Demos](/demos) page.
 (all demos are plain js, but you need to import the library)
+You can also clone the repo and move to the *demos* branch, run `npm install` and `npm start` to see it in action
