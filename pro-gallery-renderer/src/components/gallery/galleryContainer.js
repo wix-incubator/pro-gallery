@@ -105,6 +105,7 @@ export class GalleryContainer extends React.Component {
     this.resizeCount = 0;
     this.orientationCount = 0;
     this.scrollBase = 0;
+    this.lastOffsetTop = 0;
 
     this.thumbnailSize = utils.isMobile() ? 90 : 120;
     this.slideshowInfoSize = 220;
