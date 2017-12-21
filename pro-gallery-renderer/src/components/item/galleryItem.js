@@ -201,7 +201,7 @@ class GalleryItem {
 
   createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
 
-    const videos = wixData.fileOutput.video.filter(video => video.format === "mp4");
+    const videos = wixData.fileOutput.video.filter(video => video.format === 'mp4');
 
     const qualities = _.map(videos, q => {
       return {
