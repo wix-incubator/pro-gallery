@@ -1146,16 +1146,20 @@ export class GalleryContainer extends React.Component {
 
     const isGrid = _.isUndefined(stateStyles.galleryLayout) || String(stateStyles.galleryLayout) === '2';
     const isMasonry = String(stateStyles.galleryLayout) === '1';
-    const titleOnHover = String(stateStyles.titlePlacement) === '1' || String(wixStyles.titlePlacement) === '1';
+    let selectedPlacement;
+    if (String(wixStyles.titlePlacement) === '1') {
+      selectedPlacement = Consts.placements.SHOW_ON_HOVER;
+    } else if (String(wixStyles.titlePlacement) === '0') {
+      selectedPlacement = Consts.placements.SHOW_ALWAYS;
+    }
 
     if (!isGrid && !isMasonry) {
       stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
     } else if (!stateStyles.isVertical || stateStyles.oneRow === true) {
       stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-    } else if (titleOnHover) {
-      stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
     } else {
-      stateStyles.titlePlacement = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
+      const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
+      stateStyles.titlePlacement = selectedPlacement || defaultValue;
     }
 
     if (canSet('itemFont')) {
