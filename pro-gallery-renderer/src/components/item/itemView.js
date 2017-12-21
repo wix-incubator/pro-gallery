@@ -120,7 +120,6 @@ class ItemView extends React.Component {
 
   onVideoHover() {
     const {videoPlay, itemClick} = this.props.styleParams;
-    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expend' : !(itemClick === 'expend' && videoPlay === 'onClick');
 
     if (this.props.styleParams.videoPlay === 'hover' && !utils.isMobile()) {
       this.props.playVideo(this.props.idx);
