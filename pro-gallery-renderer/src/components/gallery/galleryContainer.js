@@ -1999,16 +1999,10 @@ export class GalleryContainer extends React.Component {
   onResizeEvent(e) {
 
     //workaround for safari issue - calling resize on style change
-    if (this.currentWindowWidth !== window.innerWidth || this.currentWindowHeight !== window.innerHeight) {
-      if (!utils.isiPhone() ||
-        this.currentWindowWidth !== window.innerWidth ||
-        (Math.abs(this.currentWindowHeight - window.innerHeight) > 25)
-      ) {
-        this.currentWindowWidth = window.innerWidth;
-        this.currentWindowHeight = window.innerHeight;
-        this.reRenderForResize(e);
-
-      }
+    if (!utils.isiPhone() || this.currentWindowWidth !== window.innerWidth || (Math.abs(this.currentWindowHeight - window.innerHeight) > 50)) {
+      this.currentWindowWidth = window.innerWidth;
+      this.currentWindowHeight = window.innerHeight;
+      this.reRenderForResize(e);
     }
   }
 
