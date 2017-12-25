@@ -242,8 +242,8 @@ class GalleryItem {
   }
 
   getHighestMp4Resolution(qualities) {
-    const mp4s =  qualities.filter(video => video.formats[0] === 'mp4');
-    const {width, height} = mp4s.sort((a, b) => b.width - a.width)[0]
+    const mp4s = qualities.filter(video => video.formats[0] === 'mp4');
+    const {width, height} = mp4s.sort((a, b) => b.width - a.width)[0];
     return {width, height};
   }
 
