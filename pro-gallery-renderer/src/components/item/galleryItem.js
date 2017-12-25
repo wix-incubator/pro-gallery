@@ -201,9 +201,7 @@ class GalleryItem {
 
   createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
 
-    const videos = wixData.fileOutput.video.filter(video => video.format === 'mp4');
-
-    const qualities = _.map(videos, q => {
+    const qualities = _.map(wixData.fileOutput.video, q => {
       return {
         height: q.height,
         width: q.width,
@@ -218,12 +216,13 @@ class GalleryItem {
       return p;
     });
 
+    const resolution = this.getHighestMp4Resolution(qualities);
     const metaData = {
       createdOn: new Date().getTime(),
       name: wixData.title,
       lastModified: new Date().getTime(),
-      width: qualities[qualities.length - 1].width,
-      height: qualities[qualities.length - 1].height,
+      width: resolution.width,
+      height: resolution.height,
       type: 'video',
       posters,
       customPoster: '',
@@ -240,6 +239,12 @@ class GalleryItem {
     }
 
     this.dto = {itemId: wixData.id, mediaUrl: wixData.id, orderIndex, metaData, isSecure};
+  }
+
+  getHighestMp4Resolution(qualities) {
+    const mp4s =  qualities.filter(video => video.formats[0] === 'mp4');
+    const {width, height} = mp4s.sort((a, b) => b.width - a.width)[0]
+    return {width, height};
   }
 
   createFromExternal(wixData, orderIndex, addWithTitles, isSecure) {
@@ -391,7 +396,7 @@ class GalleryItem {
 
     if (this.metadata.posters || this.metadata.customPoster) {
       const maxHeight = 720;
-      const qualities = this.metadata.qualities;
+      const qualities = this.metadata.qualities.filter(video => video.formats[0] === 'mp4');
       const poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
 
       if (poster) {
