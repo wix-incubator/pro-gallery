@@ -1910,7 +1910,7 @@ export class GalleryContainer extends React.Component {
               should = true;
             }
           }
-        } else if (this.state.styleParams.isInAdi && !this.state.styleParams.enableInfiniteScroll) {
+        } else if (!this.state.styleParams.oneRow && this.state.styleParams.isInAdi && !this.state.styleParams.enableInfiniteScroll) {
           newHeight = Math.min(newHeight, adiLoadMoreMaxHeight);
           should = true;
         }
