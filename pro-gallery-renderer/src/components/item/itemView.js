@@ -184,14 +184,10 @@ class ItemView extends React.Component {
     if (e && e.stopPropagation) {
       e.stopPropagation();
     }
-    const itemContainer = $(this.itemContainer);
-    itemContainer.css({
-      transform: 'scale(' + ((this.props.style.width - 8) / this.props.style.width) + ')'
-    });
+    const itemContainer = this.itemContainer;
+    itemContainer.style.transform = 'scale(' + ((this.props.style.width - 8) / this.props.style.width) + ')';
     setTimeout(() => {
-      itemContainer.css({
-        transform: 'scale(1)'
-      });
+      itemContainer.style.transform = 'scale(1)';
     }, 80);
 
     if (this.isMultishared()) {

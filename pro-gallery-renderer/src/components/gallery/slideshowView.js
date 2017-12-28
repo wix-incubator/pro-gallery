@@ -7,7 +7,6 @@ import {Layouter} from 'pro-gallery-layouter';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
-import $ from 'jquery';
 
 utils.fixViewport('Gallery');
 
@@ -318,7 +317,7 @@ class SlideshowView extends React.Component {
       return;
     }
 
-    const scrollLeft = this.container.scrollLeft();
+    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
 
     const items = this.state.flatItems;
 
@@ -363,20 +362,17 @@ class SlideshowView extends React.Component {
 
     window.addEventListener('keydown', this.handleKeypress);
 
-    this.container = $('.gallery-horizontal-scroll');
-    if (this.container && this.container[0]) {
-      this.container[0].addEventListener('scroll', this._setCurrentItemByScroll);
+    this.container = document.getElementById('gallery-horizontal-scroll');
+    if (this.container) {
+      this.container.addEventListener('scroll', this._setCurrentItemByScroll);
     }
     this.setCurrentItemByScroll();
 
-    // if (utils.isSite() && this.props.styleParams.selectedLayoutV2 === 4 && this.props.renderedItemsCount > 2) {
-    //   this.nextItem(1);
-    // }
   }
 
   componentWillUnmount() {
-    if (this.container && this.container[0]) {
-      this.container[0].removeEventListener('scroll', this._setCurrentItemByScroll);
+    if (this.container) {
+      this.container.removeEventListener('scroll', this._setCurrentItemByScroll);
     }
   }
 
@@ -457,7 +453,7 @@ class SlideshowView extends React.Component {
         }
 
         return (
-          <div data-hook="gallery-column" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
+          <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
                style={{width: this.props.galleryStructure.colWidth}}>
             <div className="gallery-left-padding" style={{width: marginLeft}}></div>
             {column.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}

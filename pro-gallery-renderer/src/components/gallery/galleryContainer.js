@@ -320,8 +320,8 @@ export class GalleryContainer extends React.Component {
 
   initEventListeners() {
     if (!utils.isInWix() && !utils.isSemiNative()) {
-      $(window).on('beforeunload', () => {
-        $(window).scrollTop(0);
+      window.addEventListener('beforeunload', () => {
+        window.scrollTop = 0;
       });
     }
 
@@ -1504,20 +1504,20 @@ export class GalleryContainer extends React.Component {
         storeParameter = `&isStore=true`;
       }
 
-      $.ajax({
-        url: `${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`,
-        xhrFields: {
-          withCredentials: true
-        },
-        success: res => {
+      fetch(`${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`, {
+        method: 'GET',
+        credentials: 'include'
+      })
+      .then(res => res.ok && res.json() || false)
+      .then(res => {
+        if (res) {
           if (utils.shouldLog('infinite_scroll')) {
             console.timeEnd('Infinite Scroll - Fetching items from DB');
             console.log('Infinite Scroll - Fetched items from DB', res);
           }
           callback(res || defaultRes);
           this.alreadyGettingItems = false;
-        },
-        error: () => {
+        } else {
           this.alreadyGettingItems = false;
           callback(defaultRes);
         }
@@ -1545,13 +1545,13 @@ export class GalleryContainer extends React.Component {
   scrollToItem(itemIdx, fixedScroll, isManual) {
 
     let pos;
-    const horizontalElement = $('.gallery-horizontal-scroll');
+    const horizontalElement = document.getElementById('gallery-horizontal-scroll');
 
     if (fixedScroll === true) {
       //scroll by half the container size
 
       if (this.state.styleParams.oneRow) {
-        pos = horizontalElement.scrollLeft() + itemIdx * this.state.container.galleryWidth / 2;
+        pos = horizontalElement.scrollLeft + itemIdx * this.state.container.galleryWidth / 2;
       } else {
         pos = this.state.scroll.top + itemIdx * this.state.container.galleryHeight / 2;
       }
@@ -1604,7 +1604,7 @@ export class GalleryContainer extends React.Component {
         if (utils.isVerbose()) { //todo yoshi
           console.log('Scrolling horiontally', pos, horizontalElement);
         }
-        horizontalElement.animate({scrollLeft: (Math.round(pos * utils.getViewportScaleRatio()))}, 400); //todo - make sure this triggers the infinite scroll!!!
+        utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), 400, true);
       } else if (utils.isInWix()) {
         if (utils.isVerbose()) { //todo yoshi
           console.log('Scrolling vertically (in wix)');
@@ -1643,7 +1643,7 @@ export class GalleryContainer extends React.Component {
           console.log('Scrolling vertically (not in wix)');
         }
         //$(window).animate({scrollTop: pos + 'px'});
-        $(window).scrollTop(Math.round(pos * utils.getViewportScaleRatio()));
+        window.scrollTop = (Math.round(pos * utils.getViewportScaleRatio()));
       }
     });
 
@@ -1771,7 +1771,7 @@ export class GalleryContainer extends React.Component {
 
   getGalleryScroll(params) {
     if (this.state.styleParams.oneRow) {
-      this.currentScrollPosition = $('.gallery-horizontal-scroll').scrollLeft();
+      this.currentScrollPosition = document.getElementById('gallery-horizontal-scroll').scrollLeft;
     } else if (params && _.isNumber(params.customScrollTop)) {
       this.currentScrollPosition = params.customScrollTop;
       return this.currentScrollPosition;
@@ -1790,7 +1790,7 @@ export class GalleryContainer extends React.Component {
       }
       return this.currentScrollPosition;
     } else {
-      this.currentScrollPosition = $(window).scrollTop();
+      this.currentScrollPosition = window.scrollTop;
       return this.currentScrollPosition;
     }
   }
@@ -2156,8 +2156,9 @@ export class GalleryContainer extends React.Component {
           }
 
           if (!utils.isSemiNative()) {
-            $('#fullscreen, #gallery-fullscreen').show();
-            $('#content').hide();
+            document.getElementById('fullscreen').style.display = 'block';
+            document.getElementById('gallery-fullscreen').style.display = 'block';
+            document.getElementById('content').style.display = 'none';
           }
         }
       }
@@ -2185,7 +2186,7 @@ export class GalleryContainer extends React.Component {
     const items = this.resetItems(fullscreenData.currentGalleryItems);
 
     if (!utils.isSemiNative()) {
-      $('#content').show();
+      document.getElementById('content').style.display = 'block';
     }
 
     //get current items from window - it was placed there by the fullscreen

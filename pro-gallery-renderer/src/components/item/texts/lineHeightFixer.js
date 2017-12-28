@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
 
@@ -8,11 +7,11 @@ const minWithForNormalSizedItem = 190;
 
 class LineHeightFixer {
   getElementHeight(element) {
-    return parseInt($(element).height());
+    return parseInt(element.clientHeight);
   }
 
   getElementWidth(element) {
-    return parseInt($(element).width());
+    return parseInt(element.clientWidth);
   }
 
   getDimension(element) {
@@ -22,7 +21,37 @@ class LineHeightFixer {
     };
   }
 
+  hideElement(element) {
+    try {
+      element.style.display = 'none';
+    } catch (e) {
+      //
+    }
+
+  }
+
+  showElement(element) {
+    try {
+      element.style.display = 'block';
+    } catch (e) {
+      //
+    }
+  }
+
+  setCss(element, styles) {
+    try {
+      Object.assign(element.style, styles);
+    } catch (e) {
+      //
+    }
+  }
+
   fix(options, container) {
+
+    if (utils.isTest()) {
+      return;
+    }
+
     const {styleParams, fileName, title, description, isSmallItem} = options;
 
     if (!container || styleParams.isSlideshow) {
@@ -31,18 +60,22 @@ class LineHeightFixer {
     const dimensions = this.getDimension(container);
     let availableHeight = dimensions.height;
 
-    const customButtonElement = $(container).find('.custom-button-wrapper');
-    const customButtonExists = customButtonElement.length > 0;
-    const titleElement = $(container).find('.gallery-item-title');
-    const descriptionElement = $(container).find('.gallery-item-description');
+    const customButtonElements = container.getElementsByClassName('custom-button-wrapper');
+    const titleElements = container.getElementsByClassName('gallery-item-title');
+    const descriptionElements = container.getElementsByClassName('gallery-item-description');
+    const customButtonExists = customButtonElements.length > 0;
+
+    const customButtonElement = (customButtonElements.length > 0) && customButtonElements[0];
+    const titleElement = (titleElements.length > 0) && titleElements[0];
+    const descriptionElement = (descriptionElements.length > 0) && descriptionElements[0];
 
     const isItemWidthToSmall = dimensions.width < minWidthToShowContent;
-    titleElement.hide();
-    descriptionElement.hide();
-    customButtonElement.hide();
+    this.hideElement(titleElement);
+    this.hideElement(descriptionElement);
+    this.hideElement(customButtonElement);
 
     if (customButtonExists) {
-      customButtonElement.show();
+      this.showElement(customButtonElement);
       const buttonHeight = this.getElementHeight(customButtonElement);
       let isNotEnoughSpaceForButton = availableHeight < buttonHeight;
       if (isNotEnoughSpaceForButton) {
@@ -50,11 +83,11 @@ class LineHeightFixer {
         isNotEnoughSpaceForButton = (availableHeight + hoverTextAreaPaddings) < buttonHeight;
       }
       if (isNotEnoughSpaceForButton) {
-        customButtonElement.hide();
+        this.hideElement(customButtonElement);
       } else if (isItemWidthToSmall) {
-        customButtonElement.find('button').css({'min-width': 0 + 'px', 'max-width': minWidthToShowContent + 'px'});
+        this.setCss(customButtonElement.querySelector('button'), {'min-width': 0 + 'px', 'max-width': minWidthToShowContent + 'px'});
       } else if (dimensions.width < minWithForNormalSizedItem) {
-        customButtonElement.find('button').css({'min-width': minWidthToShowContent + 'px', 'max-width': dimensions.width + 'px'});
+        this.setCss(customButtonElement.querySelector('button'), {'min-width': minWidthToShowContent + 'px', 'max-width': dimensions.width + 'px'});
       }
 
       const isButtonHeightAvailable = !_.isNaN(buttonHeight);
@@ -63,7 +96,7 @@ class LineHeightFixer {
         availableHeight -= spaceBetweenElements;
         if (availableHeight < 0) {
           availableHeight = 0;
-          // customButtonElement.hide();
+          // this.hideElement(customButtonElement);
         }
       }
     } else {
@@ -73,23 +106,23 @@ class LineHeightFixer {
 
     const shouldDisplayTitle = utils.getTitleOrFilename(title, fileName) && !isSmallItem && styleParams.allowTitle;
     if (shouldDisplayTitle) {
-      titleElement.show();
-      titleElement.css({overflow: 'visible'});
-      if (titleElement.length === 1) {
-        let titleHeight = parseInt(titleElement.height());
-        const titleLineHeight = parseInt(titleElement.css('line-height'));
+      this.showElement(titleElement);
+      this.setCss(titleElement, {overflow: 'visible'});
+      if (titleElements.length === 1) {
+        let titleHeight = parseInt(titleElement.clientHeight);
+        const titleLineHeight = parseInt(titleElement.style.lineHeight);
         const numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
         const numOfAvailableLines = Math.floor(availableHeight / titleLineHeight);
         if (numOfAvailableLines === 0) {
-          titleElement.hide();
+          this.hideElement(titleElement);
         } else {
           const isTitleFitInAvailableHeight = numOfAvailableLines <= numOfTitleLines;
           if (isTitleFitInAvailableHeight) {
-            titleElement.css({'-webkit-line-clamp': (numOfAvailableLines + '')});
+            this.setCss(titleElement, {'-webkit-line-clamp': (numOfAvailableLines + '')});
             titleHeight = titleLineHeight * numOfAvailableLines;
-            titleElement.css({overflow: 'hidden', height: titleHeight});
+            this.setCss(titleElement, {overflow: 'hidden', height: titleHeight});
           } else {
-            titleElement.css({'-webkit-line-clamp': 'none'});
+            this.setCss(titleElement, {'-webkit-line-clamp': 'none'});
             titleHeight = titleLineHeight * numOfTitleLines;
           }
 
@@ -105,22 +138,22 @@ class LineHeightFixer {
 
     const shouldDisplayDescription = descriptionElement.length === 1 && !isSmallItem && styleParams.allowDescription && description && availableHeight > 0;
     if (shouldDisplayDescription) {
-      descriptionElement.show();
+      this.showElement(descriptionElement);
       availableHeight -= (spaceBetweenElements * 2);
       if (availableHeight < 0) {
         availableHeight = 0;
       }
-      const lineHeight = parseInt(descriptionElement.css('line-height'));
+      const lineHeight = parseInt(descriptionElement.style.lineHeight);
       const numOfLines = Math.floor(availableHeight / lineHeight);
       if (numOfLines === 0) {
-        descriptionElement.hide();
+        this.hideElement(descriptionElement);
       } else {
-        const descriptionOptimisticHeight = parseInt(descriptionElement.css('height'));
+        const descriptionOptimisticHeight = parseInt(descriptionElement.style.height);
         const descriptionAvailableHeight = lineHeight * numOfLines;
         const isDescriptionHeightBiggerThanAvailableHeight = descriptionOptimisticHeight > descriptionAvailableHeight;
         availableHeight -= isDescriptionHeightBiggerThanAvailableHeight ? descriptionAvailableHeight : descriptionOptimisticHeight;
         //title.height(numOfLines * lineHeight);
-        descriptionElement.css({overflow: 'hidden', '-webkit-line-clamp': (numOfLines + '')});
+        this.setCss(descriptionElement, {overflow: 'hidden', '-webkit-line-clamp': (numOfLines + '')});
       }
     }
   }
