@@ -1955,7 +1955,7 @@ export class GalleryContainer extends React.Component {
 
 
   getBottomInfoHeight(styleParams) {
-    const {titlePlacement, itemFontSlideshow, allowTitle, galleryLayout} = styleParams;
+    const {titlePlacement, itemFontSlideshow, allowTitle, galleryLayout, useCustomButton} = styleParams;
 
     if (titlePlacement !== 'SHOW_ALWAYS') {
       return 0;
@@ -1963,7 +1963,7 @@ export class GalleryContainer extends React.Component {
 
     const paddingTopAndBottom = 30;
     let spaceBetweenElements = 16;
-    const defaultButtonHeight = 33;
+    const defaultButtonHeight = useCustomButton ? 33 : 0;
     const defaultItemFontSize = 22;
 
     const isGrid = galleryLayout === 2;
