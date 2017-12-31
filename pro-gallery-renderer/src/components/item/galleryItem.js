@@ -85,6 +85,7 @@ class GalleryItem {
   processScheme(scheme) {
     this.id = scheme.id;
     this.idx = scheme.idx;
+    this.type = scheme.type;
     this.style = scheme.style;
     this.width = scheme.width;
     this.maxWidth = scheme.maxWidth;
