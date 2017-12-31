@@ -3,6 +3,7 @@ import utils from '../../utils/index';
 import {Item} from 'pro-gallery-layouter';
 import * as _ from 'lodash';
 import {watermarkApi} from 'photography-client-lib';
+import * as imageSdk from 'image-client-api/dist/imageClientSDK';
 
 class GalleryItem {
 
@@ -270,6 +271,14 @@ class GalleryItem {
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
+    if ((window && window.petri && window.petri["specs.pro-gallery.ImageClientApi"] === "true")) {
+      return this.resizeUrlImp_sdk(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint);
+    } else {
+      return this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint);
+    }
+  }
+
+  resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
 
     const requiredRatio = requiredWidth / requiredHeight;
     const showWatermark = allowWatermark && this.watermarkStr;
@@ -357,6 +366,95 @@ class GalleryItem {
         retUrl += this.watermarkStr;
       }
       retUrl += '/' + originalUrl;
+      return retUrl;
+    }
+
+  }
+
+  resizeUrlImp_sdk(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
+
+    const requiredRatio = requiredWidth / requiredHeight;
+    const showWatermark = allowWatermark && this.watermarkStr;
+
+    if (!utils.isMobile()) {
+      requiredWidth = Math.ceil(requiredWidth / 250) * 250;
+      requiredHeight = Math.ceil(requiredWidth / requiredRatio);
+    }
+
+    // assign sharp default parameters
+    sharpParams = sharpParams || {};
+
+    // calc default quality
+    if (!sharpParams.quality) {
+      sharpParams.quality = 90;
+    }
+
+    //don't allow quality above 90 till we have proper UI indication
+    sharpParams.quality = Math.min(90, sharpParams.quality);
+
+    if (sharpParams.usm && sharpParams.usm.usm_r) {
+      sharpParams.usm.usm_a = Math.min(5, Math.max(0, (sharpParams.usm.usm_a || 0)));
+      sharpParams.usm.usm_r = Math.min(128, Math.max(0, (sharpParams.usm.usm_r || 0))); //should be max 500 - but it's returning a 404
+      sharpParams.usm.usm_t = Math.min(1, Math.max(0, (sharpParams.usm.usm_t || 0)));
+    }
+
+    if (utils.isExternalUrl(originalUrl)) {
+      return originalUrl;
+    } else {
+
+      let resizer = _.noop;
+      if (resizeMethod === 'fit') {
+        // function getScaleToFitImageURL(relativeUrl, sourceWidth, sourceHeight, targetWidth, targetHeight, options) {
+        resizer = imageSdk.getScaleToFitImageURL;
+      } else {
+        // function getScaleToFillImageURL(relativeUrl, sourceWidth, sourceHeight, targetWidth, targetHeight, options) {
+        resizer = imageSdk.getScaleToFillImageURL;
+      }
+
+      /**
+       * the transform options
+       * @typedef  {object}   ImageTransformOptions
+       * @property {boolean}  [progressive]               image transform progressive
+       * @property {number}   [quality]                   image transform quality
+       * @property {string}   [watermark]                 image watermark id
+       * @property {object}   [unsharpMask]               unsharpMask filter
+       * @property {number}   [unsharpMask.radius]        unsharpMask radius
+       * @property {number}   [unsharpMask.amount]        unsharpMask amount
+       * @property {number}   [unsharpMask.threshold]     unsharpMask threshold
+       */
+
+      let options = {
+         quality: sharpParams.quality,
+      };
+      if (focalPoint && focalPoint.length === 2) {
+        options.focalPoint = {
+          x: focalPoint[0],
+          y: focalPoint[1]
+        }
+      };
+      if (sharpParams && sharpParams.usm) {
+        options.unsharpMask = {
+          radius: sharpParams.usm.usm_r,
+          amount: sharpParams.usm.usm_a,
+          threshold: sharpParams.usm.usm_t
+        }
+      };
+      if (this.watermarkStr) {
+        options.watermark = this.watermarkStr
+      };
+
+      let retUrl = resizer(originalUrl, this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
+
+      console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
+        originalUrl,
+        resizeMethod,
+        orgWidth: this.maxWidth,
+        orgHeight: this.maxHeight,
+        requiredWidth,
+        requiredHeight,
+        options
+      });
+
       return retUrl;
     }
 
