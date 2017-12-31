@@ -489,21 +489,21 @@ export class Group {
           h = item.height;
         }
 
-        item = this.safeGetItem(2);
-        if (item) {
-          item.pinToCorner('bottom-left');
-          item.setPosition('relative');
-          item.resize(w / item.width);
-          h += item.height;
-          items.push(item);
-        }
-
         item = this.safeGetItem(1);
         if (item) {
           item.setPosition('relative');
           item.resize(w / item.width);
           h += item.height;
           item.pinToCorner('top', (items[0].height / h));
+          items.push(item);
+        }
+
+        item = this.safeGetItem(2);
+        if (item) {
+          item.pinToCorner('bottom-left');
+          item.setPosition('relative');
+          item.resize(w / item.width);
+          h += item.height;
           items.push(item);
         }
 
@@ -520,21 +520,21 @@ export class Group {
           h = item.height;
         }
 
-        item = this.safeGetItem(2);
-        if (item) {
-          item.pinToCorner('top-right');
-          item.setPosition('relative');
-          item.resize(h / item.height);
-          w += item.width;
-          items.push(item);
-        }
-
         item = this.safeGetItem(1);
         if (item) {
           item.setPosition('relative');
           item.resize(h / item.height);
           w += item.width;
           item.pinToCorner('left', (items[0].width / w));
+          items.push(item);
+        }
+
+        item = this.safeGetItem(2);
+        if (item) {
+          item.pinToCorner('top-right');
+          item.setPosition('relative');
+          item.resize(h / item.height);
+          w += item.width;
           items.push(item);
         }
 
@@ -844,6 +844,7 @@ export class Group {
     return {
       id: this.id,
       idx: this.idx,
+      type: this.type,
       width: this.width,
       height: this.height,
       totalHeight: this.totalHeight,

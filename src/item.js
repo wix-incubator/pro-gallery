@@ -331,6 +331,7 @@ export class Item {
     return {
       id: this.id,
       idx: this.idx,
+      type: this.type,
       style: this.style,
       width: this.width,
       maxWidth: this.maxWidth,
