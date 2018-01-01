@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactPlayer from 'react-player-fork';
 import utils from '../../../utils';
-import _ from 'lodash';
-
-//import ReactPlayer from '../../../../../react-player';
 
 class VideoItem extends React.Component {
 
@@ -31,35 +28,6 @@ class VideoItem extends React.Component {
   pause() {
     this.props.pauseVideo();
   }
-
-  // if we use this function again we need to see if jquery still exists in the project
-  //
-  // drawFrame(video, canvas) {
-  //   const vWidth = video.videoWidth;
-  //   const vHeight = video.videoHeight;
-  //   const cWidth = $(video).width();
-  //   const cHeight = $(video).height();
-  //   let w = cWidth;
-  //   let h = cHeight;
-  //   if (vWidth > w || vHeight > h) {
-  //     if (vWidth / w > vHeight / h) {
-  //       h = (w / vWidth) * vHeight;
-  //     }
-  //     else {
-  //       w = (h / vHeight) * vWidth;
-  //     }
-  //   }
-  //
-  //   $(canvas).width(cWidth);
-  //   $(canvas).height(cHeight);
-  //   canvas.width = cWidth;
-  //   canvas.height = cHeight;
-  //
-  //   const context = canvas.getContext('2d');
-  //   context.drawImage(video, (cWidth - w) / 2, (cHeight - h) / 2, w, h);
-  //   $(canvas).css($(video).css('transform'));
-  //   $(canvas).show();
-  // }
 
   //-----------------------------------------| UTILS |--------------------------------------------//
 
@@ -130,7 +98,7 @@ class VideoItem extends React.Component {
                 key={'image-' + this.props.id}
                 className={'gallery-item-hidden gallery-item-visible gallery-item ' + (this.props.loadingStatus.loaded ? ' loaded ' : '') + (this.props.loadingStatus.failed ? ' failed ' : '')}
                 src={this.props.resized_url.img}
-                style={this.props.imageDimensions}/>;
+                />;
   }
 
   componentDidMount() {
@@ -161,7 +129,7 @@ class VideoItem extends React.Component {
       <div
           className={baseClassName + ' animated fadeIn '}
           key={'video_container-' + this.props.id}
-          style={_.merge(this.props.loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`}, this.props.imageDimensions)}
+          style={this.props.loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...this.props.imageDimensions}}
         >
           {this.createPlayerElement()}
           {videoControls}
@@ -171,7 +139,7 @@ class VideoItem extends React.Component {
       <div
           className={baseClassName}
           key={'video_container-' + this.props.id}
-          style={this.props.loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`}}
+          style={{backgroundImage: `url(${this.props.resized_url.thumb})`, ...this.props.imageDimensions}}
         >
           {this.createImageElement()}
           {videoControls}
