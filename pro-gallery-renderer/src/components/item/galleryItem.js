@@ -273,7 +273,7 @@ class GalleryItem {
   }
 
   useImageClientApi() {
-    return utils.shouldDebug('ph_imageApi') || utils.isDev() || (window && window.petri && window.petri["specs.pro-gallery.ImageClientApi"] === "true");
+    return utils.shouldDebug('ph_imageApi') || utils.isDev() || (window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'true');
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
@@ -396,12 +396,13 @@ class GalleryItem {
       sharpParams.quality = Math.min(90, sharpParams.quality);
     }
 
+    let focalPointObj;
     if (focalPoint && focalPoint.length === 2) {
-      const focalPointObj = {
+      focalPointObj = {
         x: parseInt(parseInt(focalPoint[0]) || 0.5 * 100),
         y: parseInt(parseInt(focalPoint[1]) || 0.5 * 100)
-      }
-    };
+      };
+    }
 
     if (sharpParams.usm && sharpParams.usm.usm_r) {
       sharpParams.usm.usm_a = Math.min(5, Math.max(0, (sharpParams.usm.usm_a || 0)));
@@ -434,28 +435,28 @@ class GalleryItem {
        * @property {number}   [unsharpMask.threshold]     unsharpMask threshold
        */
 
-      let options = {};
+      const options = {};
       if (sharpParams.quality > 0) {
         options.quality = sharpParams.quality
-      };
+      }
       if (focalPointObj) {
         options.focalPoint = focalPointObj;
-      };
+      }
       if (sharpParams && sharpParams.usm) {
         options.unsharpMask = {
           radius: sharpParams.usm.usm_r,
           amount: sharpParams.usm.usm_a,
           threshold: sharpParams.usm.usm_t
-        }
-      };
+        };
+      }
       if (this.watermarkStrSdk) {
         options.watermark = this.watermarkStrSdk
-      };
+      }
       if (originalUrl.indexOf('/') < 0) {
         originalUrl = 'media/' + originalUrl;
       }
 
-      let retUrl = resizer(originalUrl, this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
+      const retUrl = resizer(originalUrl, this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
 
 /*
       console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
