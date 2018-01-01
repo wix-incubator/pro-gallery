@@ -437,7 +437,7 @@ class GalleryItem {
 
       const options = {};
       if (sharpParams.quality > 0) {
-        options.quality = sharpParams.quality
+        options.quality = sharpParams.quality;
       }
       if (focalPointObj) {
         options.focalPoint = focalPointObj;
@@ -450,7 +450,7 @@ class GalleryItem {
         };
       }
       if (this.watermarkStrSdk) {
-        options.watermark = this.watermarkStrSdk
+        options.watermark = this.watermarkStrSdk;
       }
       if (originalUrl.indexOf('/') < 0) {
         originalUrl = 'media/' + originalUrl;
