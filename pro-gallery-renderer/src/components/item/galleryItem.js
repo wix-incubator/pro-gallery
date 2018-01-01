@@ -52,7 +52,8 @@ class GalleryItem {
         watermarkApi.getWatermarkData() //this request should be sync (the watermark should have been cached by the gallery or the fullscreen)
           .then(data => {
             this.watermark = data;
-            this.watermarkStr = (this.watermark && this.watermark.imageUrl) ? `,wm_${this.watermark.imageUrl}-${this.watermark.opacity}-${this.watermark.position}-${this.watermark.size}` : '';
+            this.watermarkStrSdk = (this.watermark && this.watermark.imageUrl) ? `${this.watermark.imageUrl}-${this.watermark.opacity}-${this.watermark.position}-${this.watermark.size}` : '';
+            this.watermarkStr = (this.watermark && this.watermark.imageUrl) ? `,wm_${this.watermarkStrSdk}` : '';
           });
       } else {
         // protect against watermark being a string - it happens some times.
@@ -65,7 +66,8 @@ class GalleryItem {
         }
         this.watermarkStr = '';
         if (this.watermark.imageUrl) {
-          this.watermarkStr = `,wm_${this.watermark.imageUrl}-${this.watermark.opacity}-${this.watermark.position}-${this.watermark.size}`;
+          this.watermarkStrSdk = `${this.watermark.imageUrl}-${this.watermark.opacity}-${this.watermark.position}-${this.watermark.size}`;
+          this.watermarkStr = `,wm_${this.watermarkStrSdk}`;
         }
       }
     }
@@ -270,11 +272,15 @@ class GalleryItem {
     this.dto = {itemId: wixData.id, mediaUrl: metaData.posters[0].url, orderIndex, metaData, isSecure};
   }
 
+  useImageClientApi() {
+    return utils.shouldDebug('ph_imageApi') || utils.isDev() || (window && window.petri && window.petri["specs.pro-gallery.ImageClientApi"] === "true");
+  }
+
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
-    if ((window && window.petri && window.petri["specs.pro-gallery.ImageClientApi"] === "true")) {
-      return this.resizeUrlImp_sdk(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint);
+    if (this.useImageClientApi()) {
+      return this.resizeUrlImp_sdk(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint);
     } else {
-      return this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint);
+      return this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint);
     }
   }
 
@@ -385,12 +391,17 @@ class GalleryItem {
     sharpParams = sharpParams || {};
 
     // calc default quality
-    if (!sharpParams.quality) {
-      sharpParams.quality = 90;
+    if (sharpParams.quality > 0) {
+      //don't allow quality above 90 till we have proper UI indication
+      sharpParams.quality = Math.min(90, sharpParams.quality);
     }
 
-    //don't allow quality above 90 till we have proper UI indication
-    sharpParams.quality = Math.min(90, sharpParams.quality);
+    if (focalPoint && focalPoint.length === 2) {
+      const focalPointObj = {
+        x: parseInt(parseInt(focalPoint[0]) || 0.5 * 100),
+        y: parseInt(parseInt(focalPoint[1]) || 0.5 * 100)
+      }
+    };
 
     if (sharpParams.usm && sharpParams.usm.usm_r) {
       sharpParams.usm.usm_a = Math.min(5, Math.max(0, (sharpParams.usm.usm_a || 0)));
@@ -423,14 +434,12 @@ class GalleryItem {
        * @property {number}   [unsharpMask.threshold]     unsharpMask threshold
        */
 
-      let options = {
-         quality: sharpParams.quality,
+      let options = {};
+      if (sharpParams.quality > 0) {
+        options.quality = sharpParams.quality
       };
-      if (focalPoint && focalPoint.length === 2) {
-        options.focalPoint = {
-          x: focalPoint[0],
-          y: focalPoint[1]
-        }
+      if (focalPointObj) {
+        options.focalPoint = focalPointObj;
       };
       if (sharpParams && sharpParams.usm) {
         options.unsharpMask = {
@@ -439,12 +448,16 @@ class GalleryItem {
           threshold: sharpParams.usm.usm_t
         }
       };
-      if (this.watermarkStr) {
-        options.watermark = this.watermarkStr
+      if (this.watermarkStrSdk) {
+        options.watermark = this.watermarkStrSdk
       };
+      if (originalUrl.indexOf('/') < 0) {
+        originalUrl = 'media/' + originalUrl;
+      }
 
       let retUrl = resizer(originalUrl, this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
 
+/*
       console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
         originalUrl,
         resizeMethod,
@@ -454,14 +467,14 @@ class GalleryItem {
         requiredHeight,
         options
       });
-
+ */
       return retUrl;
     }
 
   }
 
   createUrls() {
-    const devicePixelRatio = utils.getDevicePixelRatio();
+    const devicePixelRatio = this.useImageClientApi() ? 1 : utils.getDevicePixelRatio(); // when using ImageClientAPI the devicePixelRatio is added automatically
     const maxWidth = this.maxWidth || this.dto.width;
     const maxHeight = this.maxHeight || this.dto.height;
     // const maxWidth = this.cubeImages ? Math.min(this.maxWidth, this.maxHeight) : this.maxWidth;
