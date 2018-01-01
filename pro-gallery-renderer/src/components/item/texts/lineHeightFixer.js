@@ -23,7 +23,7 @@ class LineHeightFixer {
 
   hideElement(element) {
     try {
-      element.style.display = 'none';
+      element.style.visibility = 'hidden';
     } catch (e) {
       //
     }
@@ -32,7 +32,7 @@ class LineHeightFixer {
 
   showElement(element) {
     try {
-      element.style.display = 'block';
+      element.style.visibility = 'visible';
     } catch (e) {
       //
     }
