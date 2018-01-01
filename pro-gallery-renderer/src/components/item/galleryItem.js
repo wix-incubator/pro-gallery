@@ -539,6 +539,8 @@ class GalleryItem {
         urls.img = this.resizeUrlImp(poster.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, false);
         urls.thumb = this.resizeUrlImp(poster.url, 'fit', thumbSize, thumbSize, sharpParams, false, false);
       }
+    } else if (this.isText) {
+      urls = {};
     } else {
       const fp = (noCrop !== true && this.isCropped && this.focalPoint);
       urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, fp);
