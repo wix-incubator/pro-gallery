@@ -6,36 +6,31 @@ const minWidthToShowContent = 135;
 const minWithForNormalSizedItem = 190;
 
 class LineHeightFixer {
-  getElementHeight(element) {
-    return parseInt(element.clientHeight);
-  }
 
-  getElementWidth(element) {
-    return parseInt(element.clientWidth);
-  }
+  getDimensions(element) {
+    const cs = window.getComputedStyle(element);
+    const paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    const paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
 
-  getDimension(element) {
+    const borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+    const borderY = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
     return {
-      height: this.getElementHeight(element),
-      width: this.getElementWidth(element),
+      width: element.clientWidth - paddingX - borderX,
+      height: element.clientHeight - paddingY - borderY,
     };
   }
 
   hideElement(element) {
-    try {
-      element.style.visibility = 'hidden';
-    } catch (e) {
-      //
-    }
-
+    this.setCss(element, {visibility: 'hidden'});
   }
 
   showElement(element) {
-    try {
-      element.style.visibility = 'visible';
-    } catch (e) {
-      //
-    }
+    this.setCss(element, {visibility: 'visible'});
+  }
+
+  getCss(element, rule) {
+    return window.getComputedStyle(element)[rule];
   }
 
   setCss(element, styles) {
@@ -57,7 +52,7 @@ class LineHeightFixer {
     if (!container || styleParams.isSlideshow) {
       return;
     }
-    const dimensions = this.getDimension(container);
+    const dimensions = this.getDimensions(container);
     let availableHeight = dimensions.height;
 
     const customButtonElements = container.getElementsByClassName('custom-button-wrapper');
@@ -110,7 +105,7 @@ class LineHeightFixer {
       this.setCss(titleElement, {overflow: 'visible'});
       if (titleElements.length === 1) {
         let titleHeight = parseInt(titleElement.clientHeight);
-        const titleLineHeight = parseInt(titleElement.style.lineHeight);
+        const titleLineHeight = parseInt(this.getCss(titleElement, 'line-height'));
         const numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
         const numOfAvailableLines = Math.floor(availableHeight / titleLineHeight);
         if (numOfAvailableLines === 0) {
@@ -136,19 +131,19 @@ class LineHeightFixer {
       }
     }
 
-    const shouldDisplayDescription = descriptionElement.length === 1 && !isSmallItem && styleParams.allowDescription && description && availableHeight > 0;
+    const shouldDisplayDescription = descriptionElement && !isSmallItem && styleParams.allowDescription && description && availableHeight > 0;
     if (shouldDisplayDescription) {
       this.showElement(descriptionElement);
       availableHeight -= (spaceBetweenElements * 2);
       if (availableHeight < 0) {
         availableHeight = 0;
       }
-      const lineHeight = parseInt(descriptionElement.style.lineHeight);
+      const lineHeight = parseInt(this.getCss(descriptionElement, 'line-height'));
       const numOfLines = Math.floor(availableHeight / lineHeight);
       if (numOfLines === 0) {
         this.hideElement(descriptionElement);
       } else {
-        const descriptionOptimisticHeight = parseInt(descriptionElement.style.height);
+        const descriptionOptimisticHeight = parseInt(this.getCss(descriptionElement, 'lheight'));
         const descriptionAvailableHeight = lineHeight * numOfLines;
         const isDescriptionHeightBiggerThanAvailableHeight = descriptionOptimisticHeight > descriptionAvailableHeight;
         availableHeight -= isDescriptionHeightBiggerThanAvailableHeight ? descriptionAvailableHeight : descriptionOptimisticHeight;
