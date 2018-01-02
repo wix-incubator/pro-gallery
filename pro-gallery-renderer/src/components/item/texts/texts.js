@@ -87,9 +87,10 @@ export default class Texts extends React.Component {
     const classNames = this.getElementClassNames();
 
     return (
-      <div style={elementStyle} ref={x => {
-        this.container = x;
-      } } className={classNames}>
+      <div style={elementStyle}
+           ref={x => this.container = x}
+           className={classNames}
+           dir="auto" >
         {titleElem}
         {descriptionElem}
         {buttonElem}
