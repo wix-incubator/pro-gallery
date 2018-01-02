@@ -1,5 +1,3 @@
-/// <reference path="../../reference.ts" />
-
 import React from 'react';
 import ItemContainer from '../item/itemContainer.js';
 import _ from 'lodash';
@@ -25,8 +23,13 @@ class GroupView extends React.Component {
     }
 
     return (
-      <div className={' gallery-group gallery-group-' + (this.props.rendered ? (this.props.visible ? 'visible' : 'hidden') : 'none')} data-group-idx={this.props.idx} data-group-type={this.props.type} data-group-ratios={this.props.ratios}
-           style={{width: this.props.width, height: (this.props.totalHeight)}}
+      <div
+        className={' gallery-group gallery-group-' + (this.props.rendered ? (this.props.visible ? 'visible' : 'hidden') : 'none')}
+        style={{width: this.props.width, height: (this.props.totalHeight)}}
+        key={`group_${this.props.idx}`}
+        data-group-idx={this.props.idx}
+        data-group-type={this.props.type}
+        data-group-ratios={this.props.ratios}
       >
         {this.dom}
       </div>
