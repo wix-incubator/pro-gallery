@@ -586,12 +586,10 @@ class GalleryItem {
   }
 
   get metadata() {
-    let md = (this.dto.metaData || this.dto.metadata);
-    if (_.isUndefined(md)) {
-      // console.error('Item with no metadata' + JSON.stringify(this.dto));
-      md = {};
+    if (_.isUndefined(this._metadata)) {
+      this._metadata = (this.dto.metaData || this.dto.metadata || {});
     }
-    return md;
+    return this._metadata;
   }
 
   get metaData() {
