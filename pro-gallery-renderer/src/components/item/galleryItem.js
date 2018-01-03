@@ -388,7 +388,7 @@ class GalleryItem {
     }
 
     // assign default parameters
-    originalUrl = originalUrl || {};
+    originalUrl = originalUrl || '';
     sharpParams = sharpParams || {};
 
     // calc default quality
