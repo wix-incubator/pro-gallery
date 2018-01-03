@@ -15,6 +15,8 @@ class GalleryView extends React.Component {
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
 
+    this.id = Date.now() + '|' + Math.floor(Math.random() * 10000);
+
     this.state = {
       currentIdx: 0,
     };
@@ -215,10 +217,12 @@ class GalleryView extends React.Component {
       <div className="screen-logs">URL width: {utils.parseGetParam('width')}, Container: {JSON.stringify(this.props.container.galleryWidth)}, document.body.clientWidth {document.body.clientWidth}, window.innerWidth {window.innerWidth}, window.screen.width: {window.screen.width}</div>
     ) : '');
 
-    return (<div className={'pro-gallery-parent-container'}
-                 style={{
-                   margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin),
-                 }}
+    return (
+    <div className={'pro-gallery-parent-container'}
+      key={`pro-gallery-${this.id}`}
+      style={{
+        margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin),
+      }}
     >
       {screenLogs}
       {emptyState}
