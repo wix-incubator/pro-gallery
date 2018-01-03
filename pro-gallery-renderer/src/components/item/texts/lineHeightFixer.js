@@ -71,7 +71,7 @@ class LineHeightFixer {
 
     if (customButtonExists) {
       this.showElement(customButtonElement);
-      const buttonHeight = this.getElementHeight(customButtonElement);
+      const buttonHeight = this.getDimensions(customButtonElement).height;
       let isNotEnoughSpaceForButton = availableHeight < buttonHeight;
       if (isNotEnoughSpaceForButton) {
         const hoverTextAreaPaddings = 30;
