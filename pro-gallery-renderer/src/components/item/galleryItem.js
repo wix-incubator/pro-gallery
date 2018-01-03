@@ -387,7 +387,8 @@ class GalleryItem {
       requiredHeight = Math.ceil(requiredWidth / requiredRatio);
     }
 
-    // assign sharp default parameters
+    // assign default parameters
+    originalUrl = originalUrl || {};
     sharpParams = sharpParams || {};
 
     // calc default quality
