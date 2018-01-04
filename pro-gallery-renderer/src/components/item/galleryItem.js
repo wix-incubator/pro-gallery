@@ -397,12 +397,10 @@ class GalleryItem {
       sharpParams.quality = Math.min(90, sharpParams.quality);
     }
 
-    let focalPointObj;
+    const focalPointObj = {x: 50, y: 50};
     if (focalPoint && focalPoint.length === 2) {
-      focalPointObj = {
-        x: parseInt(parseInt(focalPoint[0]) || 0.5 * 100),
-        y: parseInt(parseInt(focalPoint[1]) || 0.5 * 100)
-      };
+      focalPointObj.x = Math.round(focalPoint[0] * 100);
+      focalPointObj.y = Math.round(focalPoint[1] * 100);
     }
 
     if (sharpParams.usm && sharpParams.usm.usm_r) {
