@@ -12,13 +12,13 @@
     "dist"
   ],
   "scripts": {
-    "start": "yoshi start",
+    "start": "haste start",
     "build": ":",
-    "precommit": "yoshi lint",
-    "pretest": "yoshi build",
-    "test": "yoshi test",
-    "posttest": "yoshi lint",
-    "release": "yoshi release"
+    "precommit": "haste lint",
+    "pretest": "haste build",
+    "test": "haste test",
+    "posttest": "haste lint",
+    "release": "haste release"
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
@@ -33,7 +33,7 @@
     "husky": "^0.13.4",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
-    "yoshi": "latest"
+    "haste-preset-yoshi": "latest"
   },
   "babel": {
     "presets": [
@@ -80,5 +80,8 @@
   },
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
+  },
+  "haste": {
+    "preset": "yoshi"
   }
 }
