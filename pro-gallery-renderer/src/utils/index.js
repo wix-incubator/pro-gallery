@@ -4,7 +4,7 @@ import {
 
 class Utils extends RenderUtils {
 
-  scrollTo(element, to, duration, isHorizontal) {
+  scrollTo(element, to, duration, isHorizontal, callback) {
 
     const easeInOutQuad = (t, b, c, d) => {
             //t = current time
@@ -28,17 +28,24 @@ class Utils extends RenderUtils {
       currentTime += increment;
       const val = easeInOutQuad(currentTime, start, change, duration);
 
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment);
+      } else {
+        element.setAttribute('data-scrolling', '');
+        if (typeof callback === 'function') {
+          callback();
+        }
+      }
+
       if (isHorizontal) {
         element.scrollLeft = val;
       } else {
         element.scrollTop = val;
       }
 
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment);
-      }
     };
 
+    element.setAttribute('data-scrolling', 'true');
     animateScroll();
   }
 
