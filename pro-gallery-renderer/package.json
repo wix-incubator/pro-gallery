@@ -117,5 +117,11 @@
   },
   "haste": {
     "preset": "yoshi"
+  },
+  "yoshi": {
+    "entry": {
+      "main": "./index"
+    },
+    "exports": "pro-gallery-renderer"
   }
 }
