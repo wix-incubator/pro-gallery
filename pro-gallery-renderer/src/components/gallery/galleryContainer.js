@@ -12,6 +12,7 @@ import _ from 'lodash';
 import utils from '../../utils';
 import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
 import {itemActions, Consts, versionManager, Wix, logger} from 'photography-client-lib';
+import axios from 'axios';
 
 const adiLoadMoreMaxHeight = 2000;
 try {
@@ -1504,23 +1505,29 @@ export class GalleryContainer extends React.Component {
         storeParameter = `&isStore=true`;
       }
 
-      fetch(`${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`, {
+      axios({
+        url: `${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`,
         method: 'GET',
-        credentials: 'include'
+        withCredentials: true,
+        xsrfCookieName: null
       })
-      .then(res => res.ok && res.json() || false)
+      .then(res => res.data)
       .then(res => {
         if (res) {
           if (utils.shouldLog('infinite_scroll')) {
             console.timeEnd('Infinite Scroll - Fetching items from DB');
             console.log('Infinite Scroll - Fetched items from DB', res);
           }
-          callback(res || defaultRes);
           this.alreadyGettingItems = false;
+          callback(res || defaultRes);
         } else {
           this.alreadyGettingItems = false;
           callback(defaultRes);
         }
+      })
+      .catch(e => {
+        this.alreadyGettingItems = false;
+        console.error('Cannot fetch items from server', e);
       });
     } else {
       if (utils.shouldLog('infinite_scroll')) {
