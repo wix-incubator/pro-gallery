@@ -6,7 +6,6 @@ html.pro-gallery {
 }
 
 body.pro-gallery {
-  // opacity: 0;
   transition: opacity 2s ease;
 }
 
@@ -536,9 +535,7 @@ div.pro-gallery {
     float: left;
     vertical-align: top;
     border: none;
-    //background-color: transparent;
     padding: 0;
-    //padding: $image-margin+px;
     border-radius: 0;
     box-sizing: border-box;
     overflow: hidden;
@@ -615,10 +612,7 @@ div.pro-gallery {
         height: 100%;
         margin: 0;
         border-radius: 0;
-        //transition: opacity 600ms linear;
         background: rgba(241, 241, 241, 0.5);
-        //background: $animated-bright-bg linear-gradient(to right, $animated-bright-bg 0%, $animated-dark-bg 20%, $animated-bright-bg 40%, $animated-bright-bg 100%);
-        //animation: changing_background 3s infinite ease;
 
         .pro-circle-preloader {
           top: 50%;
@@ -670,7 +664,6 @@ div.pro-gallery {
 
         &.gallery-item-video {
           overflow: hidden;
-          text-align: center; //for grid crop
 
           &.playing {
             button,
@@ -702,18 +695,9 @@ div.pro-gallery {
 
             &.progallery-svg-font-icons-play-triangle,
             &.progallery-svg-font-icons-play-background {
-              //padding-left: 6px;
-              //width: 54px;
-              //line-height: 58px;
               font-size: 26px;
             }
 
-            //&.progallery-svg-font-icons-pause {
-            //  padding-left: 0;
-            //  width: 60px;
-            //  font-size: 8px;
-            //  line-height: 58px;
-            //}
 
             &:hover {
               opacity: 0.9;
@@ -735,7 +719,6 @@ div.pro-gallery {
         width: 100%;
         box-sizing: border-box;
         display: flex;
-        //border-radius: $image-radius+px;
         z-index: 3;
 
         > div {
@@ -856,7 +839,6 @@ div.pro-gallery {
             display: inline-block;
             height: 30px;
             max-width: 300px;
-            //width: 0;
             width: 210px;
             overflow: visible;
             z-index: 4;
@@ -921,7 +903,6 @@ div.pro-gallery {
         margin: 0;
         box-sizing: border-box;
         border-radius: 0;
-        //border-radius: $image-radius+px;
         z-index: 3;
 
         .custom-button-wrapper {
@@ -1028,28 +1009,23 @@ div.pro-gallery {
         }
 
         .gallery-item-title {
-          //font-family: $font-thin;
           line-height: 32px;
           font-size: 21px;
           margin-bottom: 20px;
           padding: 0;
           color: $white;
-          //height: 60px;
           overflow: hidden;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           opacity: 0;
           transition: opacity 0.4s ease;
-          //margin-bottom: 20px;
 
         }
 
         .gallery-item-description {
-          //font-family: $font-thin;
           line-height: 25px;
           font-size: 15px;
           color: $white;
-          //height: 60px;
           overflow: hidden;
           display: -webkit-box;
           -webkit-box-orient: vertical;
@@ -1390,14 +1366,12 @@ div.pro-gallery {
   }
 
   &.one-row {
-    //overflow-x: scroll;
     white-space: nowrap;
     float: left;
 
     .gallery-column {
       width: 100%;
       float: none;
-      //overflow-x: scroll;
       white-space: nowrap;
 
       .gallery-group {

@@ -1,60 +1,10 @@
-//legacy wix-style
 $enable-wix-style-css: false;
-// @import '../../../node_modules/wix-style/dist/styles/basics';
-// @import '../../../app/bower_components/wix-style/dist/styles/basics';
-// @import '../../../app/bower_components/wix-style/dist/styles/style';
-//new wix-style
-// @import '../../../node_modules/wix-style/dist/styles/modules';
-// @import '../../../app/bower_components/wix-style/dist/styles/modules';
 @import 'modules/mixins-utils';
 @import 'modules/mixins-tpa';
-//@font-face {
-//  font-family: Helvetica;
-//  font-weight: 100;
-//  src: url('fonts/Helvetiva%20Neue%2025%20UltLt.ttf');
-//}
-//
-//@font-face {
-//  font-family: Helvetica;
-//  font-weight: 200;
-//  src: url('fonts/Helvetiva%20Neue%2035%20Thin.ttf');
-//}
-//
-//@font-face {
-//  font-family: Helvetica;
-//  font-weight: 300;
-//  src: url('fonts/Helvetiva%20Neue%2045%20Light.ttf');
-//}
-//
-//@font-face {
-//  font-family: Helvetica;
-//  font-weight: 400;
-//  src: url('fonts/Helvetiva%20Neue%2055%20Roman.ttf');
-//}
-//
-//@font-face {
-//  font-family: Helvetica;
-//  font-weight: 500;
-//  src: url('fonts/Helvetiva%20Neue%2065%20Medium.ttf');
-//}
-//
-//@font-face {
-//  font-family: Helvetica;
-//  font-weight: 600;
-//  src: url('fonts/Helvetiva%20Neue%2075%20Bold.ttf');
-//}
-//
-//@font-face {
-//  font-family: Helvetica;
-//  font-weight: 700;
-//  src: url('fonts/Helvetiva%20Neue%2095%20Black.ttf');
-//}
-// wix-style colors
 $wix-color-white: #ffffff;
 $wix-color-red03: #d6453d;
 $wix-color-red10: #ee5951;
 $wix-color-dark60: #dfe5eb;
-// wix-style colors
 $dialog-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
 0 13px 19px 2px rgba(0, 0, 0, 0.14),
 0 5px 24px 4px rgba(0, 0, 0, 0.12);
@@ -89,8 +39,6 @@ $symbol-color: #7fccf7;
 $background-menu: #d3edff;
 $wix-blue: #3899ec;
 $wix-blue-selected: #b9e0fb;
-//$font-family: Helvetica, Arial, sans-serif;
-//new colors - added for sidebar
 $wix-color-blue01: #0048ae;
 $wix-color-blue35: #d9e3f3;
 $wix-color-dark75: #f0f3f5;
@@ -102,7 +50,6 @@ $arrow-hover-box-shadow: rgba(56, 153, 236, .9);
 $gray-url-svg: #797979;
 $disabled-label: #939393;
 $disabled-input-placeholder: #7a7a7a;
-//organize-photos
 $white: #fff;
 $black: #000;
 $header-color: #3899ec;
@@ -114,12 +61,9 @@ $orange-hover: #fc975c;
 $light-sky-blue: #7ecaf5;
 $menu-opacity: rgba(22, 45, 61, 0.7);
 $figcaption-box-shadow: rgba(22, 45, 61, .5);
-//support
 $main-text-size: 14px;
 $padding: 24px;
-//$main-text-color: #2b5672;
 $link-text-color: #3899ec;
-//share screen
 $share-item-border: #d5d5d5;
 @mixin font($weight) {
   @if $weight=='ulight' {

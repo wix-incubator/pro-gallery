@@ -317,6 +317,13 @@ class SlideshowView extends React.Component {
       return;
     }
 
+    const isScrolling = (this.container && this.container.getAttribute('data-scrolling')) === 'true';
+
+    if (isScrolling) {
+      //while the scroll is animating, prevent the reaction to this event
+      return;
+    }
+
     const scrollLeft = (this.container && this.container.scrollLeft) || 0;
 
     const items = this.state.flatItems;
@@ -324,7 +331,7 @@ class SlideshowView extends React.Component {
     let currentIdx;
 
     for (let item, i = 0; item = items[i]; i++) {
-      if (item.offset.left >= scrollLeft + ((this.props.container.galleryWidth - item.width) / 2)) {
+      if (item.offset.left > scrollLeft + ((this.props.container.galleryWidth - item.width) / 2)) {
         currentIdx = i - 1;
         break;
       }

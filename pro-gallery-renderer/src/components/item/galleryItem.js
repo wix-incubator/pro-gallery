@@ -273,7 +273,11 @@ class GalleryItem {
   }
 
   useImageClientApi() {
-    return utils.shouldDebug('ph_imageApi') || utils.isDev() || (window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'true');
+    const isSdkExperimentOn = utils.shouldDebug('ph_imageApi') || (window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'true');
+    const isDev = utils.isDev();
+    const isImageSizeAvailable = (this.maxWidth > 1 && this.maxHeight > 1);
+
+    return isImageSizeAvailable && (isSdkExperimentOn || isDev);
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
