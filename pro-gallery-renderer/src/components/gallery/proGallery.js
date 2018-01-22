@@ -17,17 +17,19 @@ export default class ProGallery extends React.Component {
 
   constructor(props) {
     super();
-    this.init(props);
+    this.canRender = (typeof window !== 'undefined' && typeof document !== 'undefined'); //do not render if it is SSR
+    if (this.canRender) {
+      this.init(props);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.forceHover !== this.props.forceHover) {
+    if (this.store && this.store.dispatch && (nextProps.forceHover !== this.props.forceHover)) {
       this.store.dispatch(toggleHoverPreview(nextProps.forceHover));
     }
   }
 
   init(props) {
-
     const middlewares = [thunkMiddleware, videoMiddleware({videoQueue: new VideoQueue(), utils})];
     this.store = createStore(galleryReducers, /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {}, applyMiddleware(...middlewares));
     this.initStoreEvents(this.store);
@@ -46,7 +48,7 @@ export default class ProGallery extends React.Component {
   }
 
   render() {
-    return (
+    return this.canRender && (
       <div className="pro-gallery">
         <Provider store={this.store}>
           <GalleryContainer
