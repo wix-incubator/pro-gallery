@@ -1063,12 +1063,10 @@ export class GalleryContainer extends React.Component {
       }
     }
 
-    if (stateStyles.isSlider) {
-      const val = canSet('gallerySliderImageRatio', 'cubeRatio') ? wixStyles.gallerySliderImageRatio : this.defaultStateStyles.gallerySliderImageRatio;
-      stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(val)]));
-    } else if (stateStyles.isGrid) {
-      const val = canSet('galleryImageRatio', 'cubeRatio') ? wixStyles.galleryImageRatio : this.defaultStateStyles.galleryImageRatio;
-      stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(val)]));
+    if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
+      stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
+    } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
+      stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
     }
 
     if (canSet('fixedColumns')) {
