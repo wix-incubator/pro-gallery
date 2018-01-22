@@ -720,6 +720,7 @@ export class GalleryContainer extends React.Component {
       slider: {
         showArrows: true,
         cubeImages: true,
+        cubeRatio: 16/9,
         smartCrop: false,
         isVertical: false,
         galleryType: 'Strips',
@@ -1055,8 +1056,6 @@ export class GalleryContainer extends React.Component {
     if (canSet('imageResize', 'cubeType')) {
       stateStyles.cubeType = ((String(wixStyles.imageResize) === '1') ? 'fit' : 'fill');
       if (stateStyles.cubeType === 'fit') {
-        stateStyles.cubeRatio = 1;
-
         if (stateStyles.cropOnlyFill === true) {
           stateStyles.cubeImages = false;
         }
