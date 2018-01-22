@@ -720,7 +720,7 @@ export class GalleryContainer extends React.Component {
       slider: {
         showArrows: true,
         cubeImages: true,
-        cubeRatio: 16/9,
+        cubeRatio: 16 / 9,
         smartCrop: false,
         isVertical: false,
         galleryType: 'Strips',
