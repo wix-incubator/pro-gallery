@@ -1,17 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {
+  connect
+} from 'react-redux';
+import {
+  bindActionCreators
+} from 'redux';
 import * as actions from '../../actions/galleryActions.js';
 import GalleryView from './galleryView.js';
 import SlideshowView from './slideshowView.js';
-import {Layouter, Item} from 'pro-gallery-layouter';
+import {
+  Layouter,
+  Item
+} from 'pro-gallery-layouter';
 import GalleryItem from '../item/galleryItem';
 import GalleryGroup from '../group/galleryGroup';
 import _ from 'lodash';
 import utils from '../../utils';
-import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
-import {itemActions, Consts, versionManager, Wix, logger} from 'photography-client-lib';
+import {
+  spacingVersionManager
+} from 'photography-client-lib/dist/src/versioning/features/spacing';
+import {
+  itemActions,
+  Consts,
+  versionManager,
+  Wix,
+  logger
+} from 'photography-client-lib';
 import axios from 'axios';
 
 const adiLoadMoreMaxHeight = 2000;
@@ -225,8 +240,7 @@ export class GalleryContainer extends React.Component {
       () => {
         const sp = this.state.styleParams;
         sp.gotStyleParams || this.reRenderForStyles(); //ugly hack, some galleries don't have the styleparams and don't render
-      }
-      , 0
+      }, 0
     );
   }
 
@@ -248,7 +262,9 @@ export class GalleryContainer extends React.Component {
         this.pageId = res;
         Wix.Styles.getStyleId(res => {
           this.styleId = res;
-          Wix.Utils.getSectionUrl({sectionId: utils.getFullscreenSectionId()}, res => {
+          Wix.Utils.getSectionUrl({
+            sectionId: utils.getFullscreenSectionId()
+          }, res => {
             this.fullscreenUrl = res.url;
             this.setState({
               itemActionsInit: itemActions.initWidgetData({
@@ -386,7 +402,10 @@ export class GalleryContainer extends React.Component {
       if (!dto || !dto.itemId) {
         break;
       }
-      const item = new GalleryItem({dto, watermark: this.props.watermarkData});
+      const item = new GalleryItem({
+        dto,
+        watermark: this.props.watermarkData
+      });
       if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
         preloadedItems[i] = new Image();
         preloadedItems[i].src = item.thumbnail_url.img;
@@ -602,7 +621,10 @@ export class GalleryContainer extends React.Component {
 
   getStyleByLayout(wixStyles, selectedLayout) {
     //new layouts
-    const {gallerySize, magicLayoutSeed} = wixStyles;
+    const {
+      gallerySize,
+      magicLayoutSeed
+    } = wixStyles;
 
     let galleryLayout = selectedLayout || wixStyles.galleryLayout;
 
@@ -844,7 +866,9 @@ export class GalleryContainer extends React.Component {
       console.log('chosen layout is', layoutName);
     }
 
-    return _.merge(emptyLayout, layouts[layoutName], specialMobileStoreConfig, {galleryLayout});
+    return _.merge(emptyLayout, layouts[layoutName], specialMobileStoreConfig, {
+      galleryLayout
+    });
 
   }
 
@@ -1503,29 +1527,29 @@ export class GalleryContainer extends React.Component {
       }
 
       axios({
-        url: `${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`,
-        method: 'GET',
-        withCredentials: true,
-        xsrfCookieName: null
-      })
-      .then(res => res.data)
-      .then(res => {
-        if (res) {
-          if (utils.shouldLog('infinite_scroll')) {
-            console.timeEnd('Infinite Scroll - Fetching items from DB');
-            console.log('Infinite Scroll - Fetched items from DB', res);
+          url: `${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`,
+          method: 'GET',
+          withCredentials: true,
+          xsrfCookieName: null
+        })
+        .then(res => res.data)
+        .then(res => {
+          if (res) {
+            if (utils.shouldLog('infinite_scroll')) {
+              console.timeEnd('Infinite Scroll - Fetching items from DB');
+              console.log('Infinite Scroll - Fetched items from DB', res);
+            }
+            this.alreadyGettingItems = false;
+            callback(res || defaultRes);
+          } else {
+            this.alreadyGettingItems = false;
+            callback(defaultRes);
           }
+        })
+        .catch(e => {
           this.alreadyGettingItems = false;
-          callback(res || defaultRes);
-        } else {
-          this.alreadyGettingItems = false;
-          callback(defaultRes);
-        }
-      })
-      .catch(e => {
-        this.alreadyGettingItems = false;
-        console.error('Cannot fetch items from server', e);
-      });
+          console.error('Cannot fetch items from server', e);
+        });
     } else {
       if (utils.shouldLog('infinite_scroll')) {
         console.log('Infinite Scroll - Not fetching items ' + counts);
@@ -1947,7 +1971,7 @@ export class GalleryContainer extends React.Component {
           //if (this.lastSetHeight !== neededHeight) {
           Wix.setHeight(neededHeight);
           this.lastOffsetTop = offsetTop;
-            //this.lastSetHeight = neededHeight;
+          //this.lastSetHeight = neededHeight;
           //}
           this.heightWasSetInternally = true;
         }
@@ -1959,7 +1983,13 @@ export class GalleryContainer extends React.Component {
 
 
   getBottomInfoHeight(styleParams) {
-    const {titlePlacement, itemFontSlideshow, allowTitle, galleryLayout, useCustomButton} = styleParams;
+    const {
+      titlePlacement,
+      itemFontSlideshow,
+      allowTitle,
+      galleryLayout,
+      useCustomButton
+    } = styleParams;
 
     if (titlePlacement !== 'SHOW_ALWAYS') {
       return 0;
@@ -2071,7 +2101,9 @@ export class GalleryContainer extends React.Component {
           } else if (item.linkType === 'wix') {
             Wix.navigateTo(item.linkData);
           } else {
-            Wix.navigateToPage(item.linkUrl, {noTransition: true});
+            Wix.navigateToPage(item.linkUrl, {
+              noTransition: true
+            });
           }
         }
       } else {
@@ -2140,7 +2172,7 @@ export class GalleryContainer extends React.Component {
               sectionId: utils.getFullscreenSectionId(),
               // shouldRefreshIframe: false,
               noTransition: true
-            }/* , utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId) */);
+            } /* , utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId) */ );
           });
 
         } else {
@@ -2166,7 +2198,9 @@ export class GalleryContainer extends React.Component {
           }
         }
       }
-      logger.track('expand', {selection: 'expand'});
+      logger.track('expand', {
+        selection: 'expand'
+      });
     }
   }
 
@@ -2292,7 +2326,10 @@ export class GalleryContainer extends React.Component {
   addItemToMultishare(itemDto) {
     if (utils.isInWix()) {
       itemDto.compId = this.compId; //add a refernce to the gallery that started this share
-      Wix.PubSub.publish('gallery2multishare', {call: 'addItemToMultishare', data: (itemDto)}, true);
+      Wix.PubSub.publish('gallery2multishare', {
+        call: 'addItemToMultishare',
+        data: (itemDto)
+      }, true);
     } else {
       this.onItemClickEvent.itemId = itemDto.id;
       window.dispatchEvent(this.onItemClickEvent);
@@ -2308,7 +2345,10 @@ export class GalleryContainer extends React.Component {
 
   removeItemFromMultishare(itemProps) {
     if (utils.isInWix()) {
-      Wix.PubSub.publish('gallery2multishare', {call: 'removeItemFromMultishare', data: (itemProps)}, true);
+      Wix.PubSub.publish('gallery2multishare', {
+        call: 'removeItemFromMultishare',
+        data: (itemProps)
+      }, true);
     } else {
       let multishareItems = this.state.multishare.items;
       multishareItems = _.filter(multishareItems, item => {
@@ -2339,14 +2379,21 @@ export class GalleryContainer extends React.Component {
           for (let i = 0; i < group.items.length; i++) {
             const item = group.items[i];
             if (!item.isGalleryItem) {
-              groupItems[i] = new GalleryItem(Object.assign({scheme: item.scheme, dto: item.dto}, itemConfig));
+              groupItems[i] = new GalleryItem(Object.assign({
+                scheme: item.scheme,
+                dto: item.dto
+              }, itemConfig));
             } else {
               groupItems[i] = group.items[i];
             }
             galleryStructure.items[item.idx] = groupItems[i];
             pointer++;
           }
-          column[g] = new GalleryGroup({scheme: group.scheme, dto: group.dto, items: groupItems});
+          column[g] = new GalleryGroup({
+            scheme: group.scheme,
+            dto: group.dto,
+            items: groupItems
+          });
         }
       }
     }
@@ -2379,7 +2426,10 @@ export class GalleryContainer extends React.Component {
         console.time('Recalculating Gallery - new');
       }
       const layout = (new Layouter(layoutParams));
-      galleryStructure = GalleryContainer.convertToGalleryItems(layout, {watermark: this.props.watermarkData, sharpParams: layoutParams.styleParams.sharpParams});
+      galleryStructure = GalleryContainer.convertToGalleryItems(layout, {
+        watermark: this.props.watermarkData,
+        sharpParams: layoutParams.styleParams.sharpParams
+      });
       if (utils.isVerbose()) {
         console.timeEnd('Recalculating Gallery - new');
       }
@@ -2404,7 +2454,10 @@ export class GalleryContainer extends React.Component {
       }
       galleryStructure.createLayout(layoutParams);
       galleryStructure.calcVisibilities(getState('container.bounds'));
-      galleryStructure = GalleryContainer.convertToGalleryItems(galleryStructure, {watermark: this.props.watermarkData, sharpParams: layoutParams.styleParams.sharpParams});
+      galleryStructure = GalleryContainer.convertToGalleryItems(galleryStructure, {
+        watermark: this.props.watermarkData,
+        sharpParams: layoutParams.styleParams.sharpParams
+      });
       if (utils.isVerbose()) {
         console.timeEnd('Recalculating Gallery - prepare');
       }
@@ -2538,7 +2591,17 @@ export class GalleryContainer extends React.Component {
 
   reRender(trigger, params) {
 
-    const {ALL, STYLES, RESIZE, ORIENTATION, LAYOUT, MODE, SCROLL, ITEMS, NONE} = this.renderTriggers;
+    const {
+      ALL,
+      STYLES,
+      RESIZE,
+      ORIENTATION,
+      LAYOUT,
+      MODE,
+      SCROLL,
+      ITEMS,
+      NONE
+    } = this.renderTriggers;
 
     if (utils.isVerbose()) { //todo yoshi
       console.count('galleryContainer reRender');
@@ -2556,14 +2619,19 @@ export class GalleryContainer extends React.Component {
     //------| SCROLL STATE |------//
     this.getGalleryScroll(params);
     const scrollState = {
-      scroll: _.merge(this.state.scroll, {top: this.currentScrollPosition, base: this.scrollBase}),
+      scroll: _.merge(this.state.scroll, {
+        top: this.currentScrollPosition,
+        base: this.scrollBase
+      }),
       container: _.merge(this.state.container, this.getVisibleBounds(this.currentScrollPosition, this.pageScale)),
       gotScrollEvent: this.state.gotScrollEvent || triggerIs(SCROLL)
     };
     this.newState = scrollState;
 
     //------| STYLES STATE |------//
-    const stylesState = {styleParams: (triggerIs(STYLES) ? this.getStyleParamsState() : this.state.styleParams)};
+    const stylesState = {
+      styleParams: (triggerIs(STYLES) ? this.getStyleParamsState() : this.state.styleParams)
+    };
     const isNewLayout = triggerIs(STYLES) && stylesState.styleParams && this.state.styleParams && (stylesState.styleParams.selectedLayout !== this.state.styleParams.selectedLayout);
     if (isNewLayout) {
       trigger = LAYOUT;
@@ -2582,7 +2650,11 @@ export class GalleryContainer extends React.Component {
     //------| VIEW STATE |------//
     let viewState = {};
     if (triggerIs(MODE)) {
-      viewState = {container: {viewMode: (utils.isInWix() ? utils.getViewModeFromCache() : 'view')}};
+      viewState = {
+        container: {
+          viewMode: (utils.isInWix() ? utils.getViewModeFromCache() : 'view')
+        }
+      };
       _.merge(this.newState.container, viewState.container);
     }
 
@@ -2662,7 +2734,9 @@ export class GalleryContainer extends React.Component {
         } //in the editor, the layout change can be triggered by the settings, so we need to scroll to the first item. In sites, this is triggered once on load and the scroll is unneccessary (could cause problem with anchors_
       });
 
-      const {actions} = this.props;
+      const {
+        actions
+      } = this.props;
       switch (trigger) {
         case SCROLL:
           if (params && actions.galleryWindowLayoutChanged) {
@@ -2739,68 +2813,127 @@ export class GalleryContainer extends React.Component {
 
     return this.shouldRender() && (
       this.state.styleParams.oneRow ?
-      <SlideshowView
-            totalItemsCount={this.state.totalItemsCount}
-            renderedItemsCount={this.state.renderedItemsCount}
-            items={this.currentItems()}
-            galleryStructure={this.galleryStructure}
-            styleParams={this.state.styleParams}
-            container={this.state.container}
-            scroll={_.merge({}, this.state.scroll, {isInfinite: this.isInfiniteScroll()})}
-            thumbnailSize={this.thumbnailSize}
-            multishare={this.state.multishare}
-            watermark={this.props.watermarkData}
-            gotScrollEvent={this.state.gotScrollEvent}
-            convertToGalleryItems={GalleryContainer.convertToGalleryItems}
-            actions={_.merge(this.props.actions, {
-              toggleInfiniteScroll: this.toggleInfiniteScroll,
-              toggleFullscreen: this.toggleFullscreen,
-              pauseAllVideos: this.pauseAllVideos,
-              setWixHeight: this.setWixHeight,
-              scrollToItem: this.scrollToItem,
-              addItemToMultishare: this.addItemToMultishare,
-              removeItemFromMultishare: this.removeItemFromMultishare
-            })}
-            debug={{
-              lastHeight: this.lastHeight,
-              newHeight: this.newHeight,
-              resizeCount: this.resizeCount,
-              orientationCount: this.orientationCount,
-              maxGalleryWidth: this.props.maxGalleryWidth
-            }}
-            store={this.props.store}
-            {...this.props.gallery}
-          /> :
-      <GalleryView
-            totalItemsCount={this.state.totalItemsCount}
-            renderedItemsCount={this.state.renderedItemsCount}
-            items={this.currentItems()}
-            galleryStructure={this.galleryStructure}
-            styleParams={this.state.styleParams}
-            container={this.state.container}
-            scroll={_.merge({}, this.state.scroll, {isInfinite: this.isInfiniteScroll()})}
-            multishare={this.state.multishare}
-            watermark={this.props.watermarkData}
-            gotScrollEvent={this.state.gotScrollEvent}
-            actions={_.merge(this.props.actions, {
-              toggleInfiniteScroll: this.toggleInfiniteScroll,
-              toggleFullscreen: this.toggleFullscreen,
-              pauseAllVideos: this.pauseAllVideos,
-              setWixHeight: this.setWixHeight,
-              scrollToItem: this.scrollToItem,
-              addItemToMultishare: this.addItemToMultishare,
-              removeItemFromMultishare: this.removeItemFromMultishare
-            })}
-            debug={{
-              lastHeight: this.lastHeight,
-              newHeight: this.newHeight,
-              resizeCount: this.resizeCount,
-              orientationCount: this.orientationCount,
-              maxGalleryWidth: this.props.maxGalleryWidth
-            }}
-            store={this.props.store}
-            {...this.props.gallery}
-          />
+      <
+      SlideshowView totalItemsCount = {
+        this.state.totalItemsCount
+      }
+      renderedItemsCount = {
+        this.state.renderedItemsCount
+      }
+      items = {
+        this.currentItems()
+      }
+      galleryStructure = {
+        this.galleryStructure
+      }
+      styleParams = {
+        this.state.styleParams
+      }
+      container = {
+        this.state.container
+      }
+      scroll = {
+        _.merge({}, this.state.scroll, {
+          isInfinite: this.isInfiniteScroll()
+        })
+      }
+      thumbnailSize = {
+        this.thumbnailSize
+      }
+      multishare = {
+        this.state.multishare
+      }
+      watermark = {
+        this.props.watermarkData
+      }
+      gotScrollEvent = {
+        this.state.gotScrollEvent
+      }
+      convertToGalleryItems = {
+        GalleryContainer.convertToGalleryItems
+      }
+      actions = {
+        _.merge(this.props.actions, {
+          toggleInfiniteScroll: this.toggleInfiniteScroll,
+          toggleFullscreen: this.toggleFullscreen,
+          pauseAllVideos: this.pauseAllVideos,
+          setWixHeight: this.setWixHeight,
+          scrollToItem: this.scrollToItem,
+          addItemToMultishare: this.addItemToMultishare,
+          removeItemFromMultishare: this.removeItemFromMultishare
+        })
+      }
+      debug = {
+        {
+          lastHeight: this.lastHeight,
+          newHeight: this.newHeight,
+          resizeCount: this.resizeCount,
+          orientationCount: this.orientationCount,
+          maxGalleryWidth: this.props.maxGalleryWidth
+        }
+      }
+      store = {
+        this.props.store
+      } { ...this.props.gallery
+      }
+      /> : <
+      GalleryView totalItemsCount = {
+        this.state.totalItemsCount
+      }
+      renderedItemsCount = {
+        this.state.renderedItemsCount
+      }
+      items = {
+        this.currentItems()
+      }
+      galleryStructure = {
+        this.galleryStructure
+      }
+      styleParams = {
+        this.state.styleParams
+      }
+      container = {
+        this.state.container
+      }
+      scroll = {
+        _.merge({}, this.state.scroll, {
+          isInfinite: this.isInfiniteScroll()
+        })
+      }
+      multishare = {
+        this.state.multishare
+      }
+      watermark = {
+        this.props.watermarkData
+      }
+      gotScrollEvent = {
+        this.state.gotScrollEvent
+      }
+      actions = {
+        _.merge(this.props.actions, {
+          toggleInfiniteScroll: this.toggleInfiniteScroll,
+          toggleFullscreen: this.toggleFullscreen,
+          pauseAllVideos: this.pauseAllVideos,
+          setWixHeight: this.setWixHeight,
+          scrollToItem: this.scrollToItem,
+          addItemToMultishare: this.addItemToMultishare,
+          removeItemFromMultishare: this.removeItemFromMultishare
+        })
+      }
+      debug = {
+        {
+          lastHeight: this.lastHeight,
+          newHeight: this.newHeight,
+          resizeCount: this.resizeCount,
+          orientationCount: this.orientationCount,
+          maxGalleryWidth: this.props.maxGalleryWidth
+        }
+      }
+      store = {
+        this.props.store
+      } { ...this.props.gallery
+      }
+      />
     );
   }
 
