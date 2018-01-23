@@ -1165,23 +1165,24 @@ export class GalleryContainer extends React.Component {
       stateStyles.galleryLayout = wixStyles.galleryLayout;
     }
 
+    if (canSet('titlePlacement')) {
+      const isGrid = _.isUndefined(stateStyles.galleryLayout) || String(stateStyles.galleryLayout) === '2';
+      const isMasonry = String(stateStyles.galleryLayout) === '1';
+      let selectedPlacement;
+      if (String(wixStyles.titlePlacement) === '1') {
+        selectedPlacement = Consts.placements.SHOW_ON_HOVER;
+      } else if (String(wixStyles.titlePlacement) === '0') {
+        selectedPlacement = Consts.placements.SHOW_ALWAYS;
+      }
 
-    const isGrid = _.isUndefined(stateStyles.galleryLayout) || String(stateStyles.galleryLayout) === '2';
-    const isMasonry = String(stateStyles.galleryLayout) === '1';
-    let selectedPlacement;
-    if (String(wixStyles.titlePlacement) === '1') {
-      selectedPlacement = Consts.placements.SHOW_ON_HOVER;
-    } else if (String(wixStyles.titlePlacement) === '0') {
-      selectedPlacement = Consts.placements.SHOW_ALWAYS;
-    }
-
-    if (!isGrid && !isMasonry) {
-      stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-    } else if (!stateStyles.isVertical || stateStyles.oneRow === true) {
-      stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-    } else {
-      const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
-      stateStyles.titlePlacement = selectedPlacement || defaultValue;
+      if (!isGrid && !isMasonry) {
+        stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+      } else if (!stateStyles.isVertical || stateStyles.oneRow === true) {
+        stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+      } else {
+        const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
+        stateStyles.titlePlacement = selectedPlacement || defaultValue;
+      }
     }
 
     if (canSet('itemFont')) {
