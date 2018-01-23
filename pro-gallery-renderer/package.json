@@ -18,7 +18,9 @@
     "pretest": "haste build",
     "test": "haste test",
     "posttest": "haste lint",
-    "release": "haste release"
+    "release": "haste release",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
@@ -112,6 +114,7 @@
       "prerenderedGallery": true
     }
   },
+  "unpkg": true,
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
   },
