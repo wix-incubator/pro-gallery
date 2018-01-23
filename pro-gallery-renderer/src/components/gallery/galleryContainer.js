@@ -1527,11 +1527,11 @@ export class GalleryContainer extends React.Component {
       }
 
       axios({
-          url: `${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`,
-          method: 'GET',
-          withCredentials: true,
-          xsrfCookieName: null
-        })
+        url: `${window.infiniteScrollUrl}from/${curTo}/to/${toItem + 1}?instance=${window.instance}${storeParameter}`,
+        method: 'GET',
+        withCredentials: true,
+        xsrfCookieName: null
+      })
         .then(res => res.data)
         .then(res => {
           if (res) {
@@ -2172,7 +2172,7 @@ export class GalleryContainer extends React.Component {
               sectionId: utils.getFullscreenSectionId(),
               // shouldRefreshIframe: false,
               noTransition: true
-            } /* , utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId) */ );
+            } /* , utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId) */);
           });
 
         } else {
@@ -2864,13 +2864,13 @@ export class GalleryContainer extends React.Component {
         })
       }
       debug = {
-        {
-          lastHeight: this.lastHeight,
-          newHeight: this.newHeight,
-          resizeCount: this.resizeCount,
-          orientationCount: this.orientationCount,
-          maxGalleryWidth: this.props.maxGalleryWidth
-        }
+      {
+        lastHeight: this.lastHeight,
+        newHeight: this.newHeight,
+        resizeCount: this.resizeCount,
+        orientationCount: this.orientationCount,
+        maxGalleryWidth: this.props.maxGalleryWidth
+      }
       }
       store = {
         this.props.store
@@ -2921,13 +2921,13 @@ export class GalleryContainer extends React.Component {
         })
       }
       debug = {
-        {
-          lastHeight: this.lastHeight,
-          newHeight: this.newHeight,
-          resizeCount: this.resizeCount,
-          orientationCount: this.orientationCount,
-          maxGalleryWidth: this.props.maxGalleryWidth
-        }
+      {
+        lastHeight: this.lastHeight,
+        newHeight: this.newHeight,
+        resizeCount: this.resizeCount,
+        orientationCount: this.orientationCount,
+        maxGalleryWidth: this.props.maxGalleryWidth
+      }
       }
       store = {
         this.props.store
