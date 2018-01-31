@@ -875,7 +875,7 @@ export class GalleryContainer extends React.Component {
   getStyleParamsState() {
 
     let wixStyles = {};
-    let stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {}, this.newProps.styles || {}, this.newProps.behaviour || {}, window.styles || {}, window.behaviour || {});
+    const stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {}, this.newProps.styles || {}, this.newProps.behaviour || {}, window.styles || {}, window.behaviour || {});
 
     function canSet(wixParam, stateParam) {
       // wixStyles    =>  Styles arrived directly from wix
@@ -935,7 +935,7 @@ export class GalleryContainer extends React.Component {
         console.log('Using galleryType for defaults', wixStyles);
       }
 
-      stateStyles = Object.assign({}, this.getStyleByGalleryType(String(galleryLayoutV1), wixStyles.gallerySize), stateStyles); //legacy layouts
+      Object.assign(stateStyles, this.getStyleByGalleryType(String(galleryLayoutV1), wixStyles.gallerySize)); //legacy layouts
       stateStyles.layoutsVersion = 1;
       const selectedLayoutVars = ['galleryType', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
@@ -944,7 +944,7 @@ export class GalleryContainer extends React.Component {
       if (utils.isVerbose()) { //todo yoshi
         console.log('Using galleryLayout for defaults', wixStyles);
       }
-      stateStyles = Object.assign({}, this.getStyleByLayout(wixStyles, galleryLayoutV2), stateStyles); //legacy layouts
+      Object.assign(stateStyles, this.getStyleByLayout(wixStyles, galleryLayoutV2)); //legacy layouts
       const selectedLayoutVars = ['galleryLayout', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
       stateStyles.layoutsVersion = 2;
