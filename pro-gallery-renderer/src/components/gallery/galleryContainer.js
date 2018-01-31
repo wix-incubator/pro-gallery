@@ -2518,7 +2518,12 @@ export class GalleryContainer extends React.Component {
 
   reRenderForHorizontalScroll(event) {
 
-    const isScrollingHorizontalGallery = this.state.styleParams.oneRow && event.target.className.indexOf('gallery-horizontal-scroll') >= 0;
+    let isScrollingHorizontalGallery;
+    try {
+      isScrollingHorizontalGallery = this.state.styleParams.oneRow && event.target.className.indexOf('gallery-horizontal-scroll') >= 0;
+    } catch (e) {
+      isScrollingHorizontalGallery = false;
+    }
 
     if (isScrollingHorizontalGallery) {
 
