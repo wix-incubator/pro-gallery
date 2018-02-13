@@ -825,6 +825,32 @@ export class GalleryContainer extends React.Component {
         isSlideshow: false,
         cropOnlyFill: false
       },
+      fullsize: {
+        showArrows: true,
+        cubeImages: true,
+        smartCrop: false,
+        cubeType: 'fill',
+        cubeRatio: (() => {
+          const dims = this.getGalleryDimensions();
+          return (dims.galleryWidth / dims.galleryHeight);
+        }),
+        isVertical: false,
+        galleryType: 'Strips',
+        groupSize: 1,
+        gallerySize: this.getGalleryWidth(),
+        groupTypes: '1',
+        oneRow: true,
+        hasThumbnails: false,
+        enableScroll: false,
+        isGrid: false,
+        isSlider: false,
+        isColumns: false,
+        isSlideshow: false,
+        cropOnlyFill: false,
+        floatingImages: 0,
+        galleryMargin: 0,
+        imageMargin: 0
+      },
       empty: {
         gallerySize: Math.round(gallerySize * 9 + 100)
       },
@@ -841,7 +867,8 @@ export class GalleryContainer extends React.Component {
       'slideshow',
       'panorama',
       'column',
-      'magic'
+      'magic',
+      'fullsize'
     ];
 
     let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
