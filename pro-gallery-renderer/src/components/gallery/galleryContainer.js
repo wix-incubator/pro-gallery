@@ -444,7 +444,50 @@ export class GalleryContainer extends React.Component {
 
   preloadItems() {
 
-    this.loadItemsDimensions();
+    const preloadItem = (idx, dto, onload) => {
+      if (!dto || !dto.itemId) {
+        return;
+      }
+      const item = new GalleryItem({
+        dto,
+        watermark: this.props.watermarkData
+      });
+      let preloadedItem;
+      if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
+        preloadedItem = new Image();
+        preloadedItem.src = item.thumbnail_url.img;
+        if (typeof onload === 'function') {
+          preloadedItem.onload = e => onload(item.dto.metaData.originalIdx, e);
+        }
+      }
+      return preloadedItem;
+    };
+
+    const itemsWithoutDimensions = this.items.filter((item, idx) => {
+      const meta = (item.metadata || item.metaData);
+      const isDimensionless = !(meta &&
+        meta.width > 1 &&
+        meta.height > 1);
+      if (isDimensionless) {
+        meta.originalIdx = idx;
+      }
+      return isDimensionless;
+    });
+
+    itemsWithoutDimensions.forEach((item, idx, items) => {
+      preloadItem(idx, item, (idx, e) => {
+        try {
+          console.log('item loaded event', idx, e);
+          const ele = e.srcElement;
+          this.items[idx].metaData.width = ele.width;
+          this.items[idx].metaData.height = ele.height;
+        } catch (e) {
+          console.error('Could not calc element dimensions', e);
+        }
+        this.reRender(this.renderTriggers.ITEMS);
+      });
+    });
+
     const preloadSize = (Number(_.get(window, 'debugApp')) || 10);
     const preloadedItems = [];
     if (utils.isVerbose()) {
@@ -452,7 +495,7 @@ export class GalleryContainer extends React.Component {
     }
 
     for (let i = 0; i < preloadSize; i++) {
-      this.preloadItem(i, this.items[i]);
+      preloadItem(i, this.items[i]);
     }
 
     if (utils.isVerbose()) {
