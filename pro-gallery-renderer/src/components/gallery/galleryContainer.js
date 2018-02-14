@@ -391,27 +391,26 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  preloadItems() {
-
-    const preloadItem = (idx, dto, onload) => {
-      if (!dto || !dto.itemId) {
-        return;
+  preloadItem(idx, dto, onload) {
+    if (!dto || !dto.itemId) {
+      return;
+    }
+    const item = new GalleryItem({
+      dto,
+      watermark: this.props.watermarkData
+    });
+    let preloadedItem;
+    if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
+      preloadedItem = new Image();
+      preloadedItem.src = item.thumbnail_url.img;
+      if (typeof onload === 'function') {
+        preloadedItem.onload = e => onload(item.dto.metaData.originalIdx, e);
       }
-      const item = new GalleryItem({
-        dto,
-        watermark: this.props.watermarkData
-      });
-      let preloadedItem;
-      if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
-        preloadedItem = new Image();
-        preloadedItem.src = item.thumbnail_url.img;
-        if (typeof onload === 'function') {
-          preloadedItem.onload = e => onload(item.dto.metaData.originalIdx, e);
-        }
-      }
-      return preloadedItem;
-    };
+    }
+    return preloadedItem;
+  }
 
+  loadItemsDimensions() {
     const itemsWithoutDimensions = this.items.filter((item, idx) => {
       const meta = (item.metadata || item.metaData);
       const isDimensionless = !(meta &&
@@ -424,7 +423,7 @@ export class GalleryContainer extends React.Component {
     });
 
     itemsWithoutDimensions.forEach((item, idx, items) => {
-      preloadItem(idx, item, (idx, e) => {
+      this.preloadItem(idx, item, (idx, e) => {
         try {
           console.log('item loaded event', idx, e);
           const ele = e.srcElement;
@@ -436,7 +435,12 @@ export class GalleryContainer extends React.Component {
         this.reRender(this.renderTriggers.ITEMS);
       });
     });
+  }
 
+  preloadItems() {
+
+    this.loadItemsDimensions();
+    
     const preloadSize = (Number(_.get(window, 'debugApp')) || 10);
     const preloadedItems = [];
     if (utils.isVerbose()) {
@@ -444,7 +448,7 @@ export class GalleryContainer extends React.Component {
     }
 
     for (let i = 0; i < preloadSize; i++) {
-      preloadItem(i, this.items[i]);
+      this.preloadItem(i, this.items[i]);
     }
 
     if (utils.isVerbose()) {
@@ -1426,6 +1430,7 @@ export class GalleryContainer extends React.Component {
               items: this.itemsIds(newProps.items),
               totalItemsCount: newProps.totalItemsCount
             }, () => {
+              this.loadItemsDimensions();
               this.reRender(this.renderTriggers.ALL);
             });
           } else if ((newProps.items.length < this.state.items.length) && utils.isDev()) {
