@@ -412,14 +412,19 @@ export class GalleryContainer extends React.Component {
 
   loadItemsDimensions() {
     const itemsWithoutDimensions = this.items.filter((item, idx) => {
-      const meta = (item.metadata || item.metaData);
-      const isDimensionless = !(meta &&
-        meta.width > 1 &&
-        meta.height > 1);
-      if (isDimensionless) {
-        meta.originalIdx = idx;
+      try {
+        let meta = (item.metadata || item.metaData);
+        if (!_.isObject(meta)) {
+          meta = JSON.parse(utils.stripSlashes(meta));
+        }
+        const isDimensionless = meta && !(meta.width > 1 && meta.height > 1);
+        if (isDimensionless) {
+          meta.originalIdx = idx;
+        }
+        return isDimensionless;
+      } catch (e) {
+        return false;
       }
-      return isDimensionless;
     });
 
     itemsWithoutDimensions.forEach((item, idx, items) => {
@@ -440,7 +445,6 @@ export class GalleryContainer extends React.Component {
   preloadItems() {
 
     this.loadItemsDimensions();
-    
     const preloadSize = (Number(_.get(window, 'debugApp')) || 10);
     const preloadedItems = [];
     if (utils.isVerbose()) {
