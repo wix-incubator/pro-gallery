@@ -786,12 +786,10 @@ export class GalleryContainer extends React.Component {
       slider: {
         showArrows: true,
         cubeImages: true,
-        cubeRatio: 16 / 9,
         smartCrop: false,
         isVertical: false,
         galleryType: 'Strips',
         groupSize: 1,
-        gallerySliderImageRatio: 0,
         groupTypes: '1',
         gallerySize: this.getGalleryHeight(),
         oneRow: true,
