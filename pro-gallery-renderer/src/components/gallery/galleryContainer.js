@@ -1157,6 +1157,8 @@ export class GalleryContainer extends React.Component {
 
     if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
       stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
+    } else if (stateStyles.isSlider && _.isUndefined(stateStyles.cubeRatio)) {
+      stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
     } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
       stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
     }
