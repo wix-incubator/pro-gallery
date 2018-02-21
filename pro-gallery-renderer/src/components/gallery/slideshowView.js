@@ -407,7 +407,7 @@ class SlideshowView extends React.Component {
         key="nav-arrow-back"
         data-hook="nav-arrow-back"
       >
-        <img src={`${window.staticsUrl}assets/images/arrows/arrow-left.svg`} />
+        <img src={require(`../../assets/images/arrows/arrow-left.svg`)} />
       </button>),
       (this.isLastItem() ? '' : <button
         className={'nav-arrows-container next'}
@@ -417,7 +417,7 @@ class SlideshowView extends React.Component {
         key="nav-arrow-next"
         data-hook="nav-arrow-next"
       >
-        <img src={`${window.staticsUrl}assets/images/arrows/arrow-right.svg`} />
+        <img src={require(`../../assets/images/arrows/arrow-right.svg`)} />
       </button>)
     ];
 

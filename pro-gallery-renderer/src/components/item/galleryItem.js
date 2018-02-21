@@ -553,10 +553,10 @@ class GalleryItem {
       urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, showFaces, true, fp);
     }
 
-    if (window.isWebpSupported && !utils.isStoreGallery()) {
-      urls.thumb = urls.thumb.replace(/\.jpg$/i, '.webp');
-      urls.img = urls.img.replace(/\.jpg$/i, '.webp');
-    }
+    // if (window.isWebpSupported && !utils.isStoreGallery()) {
+    //   urls.thumb = urls.thumb.replace(/\.jpg$/i, '.webp');
+    //   urls.img = urls.img.replace(/\.jpg$/i, '.webp');
+    // }
 
     return urls;
   }
