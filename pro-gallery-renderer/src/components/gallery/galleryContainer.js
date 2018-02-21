@@ -412,14 +412,19 @@ export class GalleryContainer extends React.Component {
 
   loadItemsDimensions() {
     const itemsWithoutDimensions = this.items.filter((item, idx) => {
-      const meta = (item.metadata || item.metaData);
-      const isDimensionless = !(meta &&
-        meta.width > 1 &&
-        meta.height > 1);
-      if (isDimensionless) {
-        meta.originalIdx = idx;
+      try {
+        let meta = (item.metadata || item.metaData);
+        if (!_.isObject(meta)) {
+          meta = JSON.parse(utils.stripSlashes(meta));
+        }
+        const isDimensionless = meta && !(meta.width > 1 && meta.height > 1);
+        if (isDimensionless) {
+          meta.originalIdx = idx;
+        }
+        return isDimensionless;
+      } catch (e) {
+        return false;
       }
-      return isDimensionless;
     });
 
     itemsWithoutDimensions.forEach((item, idx, items) => {
@@ -440,7 +445,6 @@ export class GalleryContainer extends React.Component {
   preloadItems() {
 
     this.loadItemsDimensions();
-
     const preloadSize = (Number(_.get(window, 'debugApp')) || 10);
     const preloadedItems = [];
     if (utils.isVerbose()) {
@@ -782,12 +786,10 @@ export class GalleryContainer extends React.Component {
       slider: {
         showArrows: true,
         cubeImages: true,
-        cubeRatio: 16 / 9,
         smartCrop: false,
         isVertical: false,
         galleryType: 'Strips',
         groupSize: 1,
-        gallerySliderImageRatio: 0,
         groupTypes: '1',
         gallerySize: this.getGalleryHeight(),
         oneRow: true,
@@ -1155,6 +1157,8 @@ export class GalleryContainer extends React.Component {
 
     if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
       stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
+    } else if (stateStyles.isSlider && _.isUndefined(stateStyles.cubeRatio)) {
+      stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
     } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
       stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
     }
