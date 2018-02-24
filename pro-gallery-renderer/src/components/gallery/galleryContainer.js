@@ -126,6 +126,8 @@ export class GalleryContainer extends React.Component {
     this.thumbnailSize = utils.isMobile() ? 90 : 120;
     this.slideshowInfoSize = 220;
 
+    this.preloadedItems = [];
+
     const initPromise = this.init();
 
     this.defaultStateStyles = {
@@ -395,19 +397,30 @@ export class GalleryContainer extends React.Component {
     if (!dto || !dto.itemId) {
       return;
     }
-    const item = new GalleryItem({
-      dto,
-      watermark: this.props.watermarkData
-    });
-    let preloadedItem;
-    if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
-      preloadedItem = new Image();
-      preloadedItem.src = item.thumbnail_url.img;
-      if (typeof onload === 'function') {
-        preloadedItem.onload = e => onload(item.dto.metaData.originalIdx, e);
+    try {
+      const id = dto.itemId;
+      if (typeof this.preloadedItems[id] !== 'undefined') {
+        return;
       }
+      if (utils.isVerbose()) {
+        console.log('Preloading item #' + idx, dto);
+      }
+      this.preloadedItems[id] = new Image();
+      const item = new GalleryItem({
+        dto,
+        watermark: this.props.watermarkData
+      });
+      if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
+        this.preloadedItems[id].src = item.thumbnail_url.img;
+        if (typeof onload === 'function') {
+          this.preloadedItems[id].onload = e => onload(item.dto.metaData.originalIdx, e);
+        }
+      }
+      return this.preloadedItems[id];
+    } catch (e) {
+      console.error('Could not preload item', idx, dto);
+      return;
     }
-    return preloadedItem;
   }
 
   loadItemsDimensions() {
@@ -446,7 +459,6 @@ export class GalleryContainer extends React.Component {
 
     this.loadItemsDimensions();
     const preloadSize = (Number(_.get(window, 'debugApp')) || 10);
-    const preloadedItems = [];
     if (utils.isVerbose()) {
       console.time(`Preloaded ${preloadSize} items`);
     }
