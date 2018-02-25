@@ -1051,8 +1051,12 @@ class GalleryItem {
     };
   }
 
+  isUserUploadedImage() {
+    this.metadata.sourceName === 'private' && !_.includes(this.metadata.tags, '_paid');
+  }
+
   get isDemo() {
-    return this.metadata.isDemo || this.dto.isDemo || this.metadata.sourceName === 'public' || (this.metadata.sourceName === 'private' && _.includes(this.metadata.tags, '_bigstock'));
+    return this.metadata.isDemo || this.dto.isDemo || this.metadata.sourceName === 'public' || !this.isUserUploadedImage();
   }
 
   set isDemo(val) {
