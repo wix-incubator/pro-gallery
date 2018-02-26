@@ -403,9 +403,9 @@ export class GalleryContainer extends React.Component {
       this.preloadedItems[id].src = item.thumbnail_url.img;
       if (typeof onload === 'function') {
         this.preloadedItems[id].onload = e => {
-          console.timeEnd('[DIMENSIONS] preloading item #' + item.idx);          
+          console.timeEnd('[DIMENSIONS] preloading item #' + item.idx);
           onload(e);
-        }
+        };
       }
       return this.preloadedItems[id];
     } catch (e) {
