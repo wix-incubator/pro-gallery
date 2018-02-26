@@ -226,14 +226,6 @@ export class GalleryContainer extends React.Component {
 
     window.isWebpSupported = utils.isWebpSupported();
 
-    if (initPromise) {
-      initPromise.then(() => {
-        this.preloadItems();
-      });
-    } else {
-      this.preloadItems();
-    }
-
     if (_.isFunction(props.onInit)) {
       props.onInit();
     }
@@ -393,83 +385,67 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  preloadItem(idx, dto, onload) {
-    if (!dto || !dto.itemId) {
+  preloadItem(item, onload) {
+    if (!item || !item.itemId || !item.isGalleryItem) {
       return;
     }
     try {
-      const id = dto.itemId;
+      const id = item.itemId;
       if (typeof this.preloadedItems[id] !== 'undefined') {
         return;
       }
-      if (utils.isVerbose()) {
-        console.log('Preloading item #' + idx, dto);
-      }
       this.preloadedItems[id] = new Image();
-      const item = new GalleryItem({
-        dto,
-        watermark: this.props.watermarkData
-      });
-      if (item && item.dto && item.dto.metaData && item.dto.metaData.type !== 'text') {
-        this.preloadedItems[id].src = item.thumbnail_url.img;
-        if (typeof onload === 'function') {
-          this.preloadedItems[id].onload = e => onload(item.dto.metaData.originalIdx, e);
+      if (utils.isVerbose()) {
+        console.log('Preloading item #' + item);
+      }
+      // console.log('[DIMENSIONS] preloading item', item.idx, item.thumbnail_url.img);
+      console.time('[DIMENSIONS] preloading item #' + item.idx);
+      this.preloadedItems[id].src = item.thumbnail_url.img;
+      if (typeof onload === 'function') {
+        this.preloadedItems[id].onload = e => {
+          console.timeEnd('[DIMENSIONS] preloading item #' + item.idx);          
+          onload(e);
         }
       }
       return this.preloadedItems[id];
     } catch (e) {
-      console.error('Could not preload item', idx, dto);
+      console.error('Could not preload item', item);
       return;
     }
   }
 
   loadItemsDimensions() {
-    const itemsWithoutDimensions = this.items.filter((item, idx) => {
+    if (!this.layoutItems()) {
+      return;
+    }
+
+    const itemsWithoutDimensions = this.layoutItems().filter((item, idx) => {
       try {
-        let meta = (item.metadata || item.metaData);
-        if (!_.isObject(meta)) {
-          meta = JSON.parse(utils.stripSlashes(meta));
-        }
-        const isDimensionless = meta && !(meta.width > 1 && meta.height > 1);
-        if (isDimensionless) {
-          meta.originalIdx = idx;
-        }
-        return isDimensionless;
+        return (item.isVisible && item.isDimensionless);
       } catch (e) {
         return false;
       }
     });
 
+    // console.log(`[DIMENSIONS] calculating ${itemsWithoutDimensions.length} / ${this.layoutItems().length} elements dimensions`);
     itemsWithoutDimensions.forEach((item, idx, items) => {
-      this.preloadItem(idx, item, (idx, e) => {
+      this.preloadItem(item, e => {
         try {
-          console.log('item loaded event', idx, e);
+          if (utils.isVerbose()) {
+            console.log('item loaded event', idx, e);
+          }
           const ele = e.srcElement;
-          this.items[idx].metaData.width = ele.width;
-          this.items[idx].metaData.height = ele.height;
+          const itemIdx = this.items.findIndex(itm => itm.itemId === item.itemId);
+          this.items[itemIdx].metaData.width = ele.width;
+          this.items[itemIdx].metaData.height = ele.height;
+          // console.log('[DIMENSIONS] Calculated element dimensions', itemIdx, this.items[itemIdx].metaData.width, this.items[itemIdx].metaData.height);
+          // console.count('[DIMENSIONS] Calculated element dimensions');
         } catch (e) {
           console.error('Could not calc element dimensions', e);
         }
         this.reRender(this.renderTriggers.ITEMS);
       });
     });
-  }
-
-  preloadItems() {
-
-    this.loadItemsDimensions();
-    const preloadSize = (Number(_.get(window, 'debugApp')) || 10);
-    if (utils.isVerbose()) {
-      console.time(`Preloaded ${preloadSize} items`);
-    }
-
-    for (let i = 0; i < preloadSize; i++) {
-      this.preloadItem(i, this.items[i]);
-    }
-
-    if (utils.isVerbose()) {
-      console.timeEnd(`Preloaded ${preloadSize} items`);
-    }
   }
 
   //-----------------------------------------| STYLES |--------------------------------------------//
@@ -494,7 +470,7 @@ export class GalleryContainer extends React.Component {
     };
 
     if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams')) && !this.props.styleParams) {
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.log('already got style params, not fetching again', this.state.styleParams);
       }
       return;
@@ -548,7 +524,7 @@ export class GalleryContainer extends React.Component {
     style.groupTypes = style.groupTypes.join(',');
     style.minItemSize = style.gallerySize / style.groupSize / 2;
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.log('Created magic layout style', seed, style);
     }
 
@@ -943,7 +919,7 @@ export class GalleryContainer extends React.Component {
       specialMobileStoreConfig.forceMobileCustomButton = true;
     }
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.log('chosen layout is', layoutName);
     }
 
@@ -975,7 +951,7 @@ export class GalleryContainer extends React.Component {
     }
 
     if (utils.isSite() && (_.get(this, 'state.styleParams.gotStyleParams')) && _.isEmpty(stateStyles)) {
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.log('already got style params, not fetching again', this.state.styleParams);
       }
       return this.state.styleParams;
@@ -1012,7 +988,7 @@ export class GalleryContainer extends React.Component {
 
     if (!_.isUndefined(galleryLayoutV1) && _.isUndefined(galleryLayoutV2)) {
       //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.log('Using galleryType for defaults', wixStyles);
       }
 
@@ -1022,7 +998,7 @@ export class GalleryContainer extends React.Component {
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
     } else {
       //new layouts
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.log('Using galleryLayout for defaults', wixStyles);
       }
       Object.assign(stateStyles, this.getStyleByLayout(wixStyles, galleryLayoutV2)); //legacy layouts
@@ -1030,7 +1006,7 @@ export class GalleryContainer extends React.Component {
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
       stateStyles.layoutsVersion = 2;
       stateStyles.selectedLayoutV2 = galleryLayoutV2;
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.log('new selected layout', stateStyles.selectedLayout);
       }
     }
@@ -1400,7 +1376,7 @@ export class GalleryContainer extends React.Component {
 
     stateStyles.gotStyleParams = gotStyleParams;
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.log('Got styles from Wix', stateStyles);
     }
 
@@ -1415,7 +1391,7 @@ export class GalleryContainer extends React.Component {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentWillReceiveProps(newProps) {
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.log('Received new props', newProps);
     }
     try {
@@ -1438,7 +1414,7 @@ export class GalleryContainer extends React.Component {
             utils.isPlayground(); //in the playground
 
           if (canSetItems) {
-            if (utils.isVerbose()) { //todo yoshi
+            if (utils.isVerbose()) {
               console.log(`Got new props with new items`, newProps, this.state.items);
             }
             this.items = newProps.items;
@@ -1446,7 +1422,6 @@ export class GalleryContainer extends React.Component {
               items: this.itemsIds(newProps.items),
               totalItemsCount: newProps.totalItemsCount
             }, () => {
-              this.loadItemsDimensions();
               this.reRender(this.renderTriggers.ALL);
             });
           } else if ((newProps.items.length < this.state.items.length) && utils.isDev()) {
@@ -1672,7 +1647,7 @@ export class GalleryContainer extends React.Component {
     } else {
 
       //scroll to specific item
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.log('Scrolling to items #' + itemIdx);
       }
 
@@ -1681,7 +1656,7 @@ export class GalleryContainer extends React.Component {
       const item = _.find(items, item => (item.idx === itemIdx));
       pos = this.state.styleParams.oneRow ? _.get(item, 'offset.left') : _.get(item, 'offset.top');
 
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.log('Scrolling to position ' + pos, item);
       }
 
@@ -1702,7 +1677,7 @@ export class GalleryContainer extends React.Component {
           pos -= diff;
         }
         pos = Math.max(0, pos) / utils.getViewportScaleRatio();
-        if (utils.isVerbose()) { //todo yoshi
+        if (utils.isVerbose()) {
           console.log('Scrolling to new position ' + pos, this);
         }
       }
@@ -1714,12 +1689,12 @@ export class GalleryContainer extends React.Component {
       scrollTop: pos
     }, () => {
       if (this.state.styleParams.oneRow) {
-        if (utils.isVerbose()) { //todo yoshi
+        if (utils.isVerbose()) {
           console.log('Scrolling horiontally', pos, horizontalElement);
         }
         utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), 400, true);
       } else if (utils.isInWix()) {
-        if (utils.isVerbose()) { //todo yoshi
+        if (utils.isVerbose()) {
           console.log('Scrolling vertically (in wix)');
         }
         if (utils.getViewModeFromCache() !== 'editor') {
@@ -1752,7 +1727,7 @@ export class GalleryContainer extends React.Component {
           }
         }
       } else {
-        if (utils.isVerbose()) { //todo yoshi
+        if (utils.isVerbose()) {
           console.log('Scrolling vertically (not in wix)');
         }
         //$(window).animate({scrollTop: pos + 'px'});
@@ -2193,7 +2168,7 @@ export class GalleryContainer extends React.Component {
         }
       } else {
 
-        if (utils.isVerbose()) { //todo yoshi
+        if (utils.isVerbose()) {
           console.log('Time to Fullscreen VM - START');
         }
 
@@ -2205,7 +2180,7 @@ export class GalleryContainer extends React.Component {
 
           //data to be read by the fullscreen iframe
           window.onunload = function () {
-            if (utils.isVerbose()) { //todo yoshi
+            if (utils.isVerbose()) {
               console.log('Fullscreen iFrame unloaded');
             }
           };
@@ -2341,7 +2316,7 @@ export class GalleryContainer extends React.Component {
         $.get(`${utils.getApiUrlPrefix()}gallery/${this.galleryId}/hashtags/${hashtagFilter}/items?instance=${window.instance}`, res => {
           if (res && res.items && res.items.length > 0) {
             hashtag.items = res.items;
-            if (utils.isVerbose()) { //todo yoshi
+            if (utils.isVerbose()) {
               console.log('Got hashtag items', hashtag);
             }
             utils.setStateAndLog(this, 'Get Hashtag Items', {
@@ -2394,7 +2369,7 @@ export class GalleryContainer extends React.Component {
   }
 
   updateMultishareItems(event) {
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.log('multishare pubsub', event);
     }
     const data = event.data;
@@ -2592,7 +2567,7 @@ export class GalleryContainer extends React.Component {
       return true;
     }
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.count('galleryContainer reRenderForScroll');
       console.log('SCROLL - got vertical scroll event', params);
     }
@@ -2611,7 +2586,7 @@ export class GalleryContainer extends React.Component {
 
     if (isScrollingHorizontalGallery) {
 
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.count('galleryContainer reRenderForHorizontalScroll');
         console.log('SCROLL - got horizontal scroll event');
       }
@@ -2637,7 +2612,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reRenderForResize(e) {
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       if (!utils.isSemiNative()) {
         console.log(`Got resize event (${this.lastWindowHeight} > ${window.innerHeight})`, e);
       }
@@ -2663,7 +2638,7 @@ export class GalleryContainer extends React.Component {
 
   reRenderForOrientation() {
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.count('galleryContainer reRenderForOrientation');
     }
 
@@ -2693,7 +2668,7 @@ export class GalleryContainer extends React.Component {
       NONE
     } = this.renderTriggers;
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.count('galleryContainer reRender');
       console.count('reRendering (trigger: ' + trigger + ')');
       console.log('reRendering', trigger, params);
@@ -2796,6 +2771,7 @@ export class GalleryContainer extends React.Component {
 
       // this.newState = newState;
       this.galleryStructure = this.createGalleryStructure();
+      this.loadItemsDimensions();
 
       if (this.debugScroll) {
         console.timeEnd('SCROLL - (' + trigger + ') create new gallery');
@@ -2855,28 +2831,28 @@ export class GalleryContainer extends React.Component {
 
   shouldRender() {
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.count('galleryContainer shouldRender');
     }
 
     const state = this.state;
 
     if (_.get(state, 'styleParams.gotStyleParams') === false) {
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.warn('Could not render gallery - did not get style params', state.styleParams);
       }
       return false;
     }
 
     if (_.get(state, 'container.galleryWidth') <= 0) {
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.warn('Could not render gallery - width is 0');
       }
       return false;
     }
 
     if (!this.galleryStructure.ready) {
-      if (utils.isVerbose()) { //todo yoshi
+      if (utils.isVerbose()) {
         console.warn('Could not render gallery - preparation failed', state.galleryStructure.reason);
       }
       setTimeout(() => {
@@ -2896,9 +2872,14 @@ export class GalleryContainer extends React.Component {
       return false;
     }
 
-    if (utils.isVerbose()) { //todo yoshi
+    if (utils.isVerbose()) {
       console.count('galleryContainer render');
       console.timeEnd('SCROLL - js logic time');
+      console.log('[DEBUG_RENDER] GalleryContainer props changed', utils.printableObjectsDiff((this.lastProps || {}), this.state));
+      this.lastProps = _.cloneDeep(this.props);
+      console.log('[DEBUG_RENDER] GalleryContainer state changed', utils.printableObjectsDiff((this.lastState || {}), this.state));
+      this.lastState = _.cloneDeep(this.state);
+      this.renderCount = (this.renderCount || 0) + 1;
     }
 
     return this.shouldRender() && (

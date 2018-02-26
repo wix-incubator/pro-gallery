@@ -103,6 +103,7 @@ class GalleryItem {
     this.group = scheme.group;
     this.transform = scheme.transform;
     this.orientation = scheme.orientation;
+    this.visibility = scheme.visibility;
   }
 
   renderProps(config) {
@@ -1067,6 +1068,17 @@ class GalleryItem {
     return this.type === 'text';
   }
 
+  get isVisible() {
+    return this.visibility && this.visibility.visible;
+  }
+
+  get isRendered() {
+    return this.visibility && this.visibility.rendered;
+  }
+
+  get isDimensionless() {
+    return (this.maxWidth <= 1 && this.maxHeight <= 1);
+  }
 }
 
 /*
