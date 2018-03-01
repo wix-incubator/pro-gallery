@@ -274,11 +274,10 @@ class GalleryItem {
   }
 
   useImageClientApi() {
-    const isSdkExperimentOn = utils.shouldDebug('ph_imageApi') || (window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'true');
-    const isDev = utils.isDev();
-    const isImageSizeAvailable = (this.maxWidth > 1 && this.maxHeight > 1);
+    const isSdkExperimentOn = !(window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'false'); //use the new api unless the experiment is specifically turned off
+    const isImageSizeAvailable = !this.isDimensionless;
 
-    return isImageSizeAvailable && (isSdkExperimentOn || isDev);
+    return isImageSizeAvailable && isSdkExperimentOn;
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
