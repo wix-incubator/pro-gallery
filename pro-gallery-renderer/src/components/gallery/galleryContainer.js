@@ -156,6 +156,7 @@ export class GalleryContainer extends React.Component {
       videoPlay: 'hover',
       gallerySliderImageRatio: 0,
       galleryImageRatio: 2,
+      numberOfImagesPerRow: 3,
       sharpParams: {
         quality: 90,
         usm: {} // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
@@ -660,37 +661,6 @@ export class GalleryContainer extends React.Component {
 
     let galleryLayout = selectedLayout || wixStyles.galleryLayout;
 
-    const emptyLayout = {
-      galleryType: undefined,
-      groupSize: undefined,
-      showArrows: undefined,
-      cubeImages: undefined,
-      cubeType: undefined,
-      cubeRatio: undefined,
-      isVertical: undefined,
-      gallerySize: undefined,
-      collageAmount: undefined,
-      collageDensity: undefined,
-      groupTypes: undefined,
-      oneRow: undefined,
-      borderRadius: undefined,
-      boxShadow: undefined,
-      imageMargin: undefined,
-      galleryMargin: undefined,
-      floatingImages: undefined,
-      chooseBestGroup: undefined,
-      smartCrop: undefined,
-      hasThumbnails: undefined,
-      enableScroll: undefined,
-      isGrid: undefined,
-      isSlider: undefined,
-      isColumns: undefined,
-      isSlideshow: undefined,
-      cropOnlyFill: undefined,
-      fixedColumns: undefined,
-      enableInfiniteScroll: undefined,
-    };
-
     const layouts = {
       collage: {
         showArrows: false,
@@ -728,8 +698,6 @@ export class GalleryContainer extends React.Component {
         cubeImages: true,
         smartCrop: false,
         imageResize: false,
-        galleryImageRatio: 2,
-        numberOfImagesPerRow: 3,
         isVertical: true,
         galleryType: 'Columns',
         groupSize: 1,
@@ -923,7 +891,7 @@ export class GalleryContainer extends React.Component {
       console.log('chosen layout is', layoutName);
     }
 
-    return _.merge(emptyLayout, layouts[layoutName], specialMobileStoreConfig, {
+    return _.merge(layouts[layoutName], specialMobileStoreConfig, {
       galleryLayout
     });
 
@@ -932,7 +900,7 @@ export class GalleryContainer extends React.Component {
   getStyleParamsState() {
 
     let wixStyles = {};
-    const stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {}, this.newProps.styles || {}, this.newProps.behaviour || {}, window.styles || {}, window.behaviour || {});
+    let stateStyles = Object.assign({}, this.props.styles || {}, this.props.behaviour || {}, this.newProps.styles || {}, this.newProps.behaviour || {}, window.styles || {}, window.behaviour || {});
 
     function canSet(wixParam, stateParam) {
       // wixStyles    =>  Styles arrived directly from wix
@@ -983,6 +951,37 @@ export class GalleryContainer extends React.Component {
 
     wixStyles.gallerySize = stateStyles.gallerySize || wixStyles.gallerySize || 30;
 
+    const emptyLayout = {
+      galleryType: undefined,
+      groupSize: undefined,
+      showArrows: undefined,
+      cubeImages: undefined,
+      cubeType: undefined,
+      cubeRatio: undefined,
+      isVertical: undefined,
+      gallerySize: undefined,
+      collageAmount: undefined,
+      collageDensity: undefined,
+      groupTypes: undefined,
+      oneRow: undefined,
+      borderRadius: undefined,
+      boxShadow: undefined,
+      imageMargin: undefined,
+      galleryMargin: undefined,
+      floatingImages: undefined,
+      chooseBestGroup: undefined,
+      smartCrop: undefined,
+      hasThumbnails: undefined,
+      enableScroll: undefined,
+      isGrid: undefined,
+      isSlider: undefined,
+      isColumns: undefined,
+      isSlideshow: undefined,
+      cropOnlyFill: undefined,
+      fixedColumns: undefined,
+      enableInfiniteScroll: undefined,
+    };
+
     const galleryLayoutV1 = _.isUndefined(stateStyles.galleryType) ? wixStyles.galleryType : stateStyles.galleryType;
     const galleryLayoutV2 = _.isUndefined(stateStyles.galleryLayout) ? wixStyles.galleryLayout : stateStyles.galleryLayout;
 
@@ -992,7 +991,7 @@ export class GalleryContainer extends React.Component {
         console.log('Using galleryType for defaults', wixStyles);
       }
 
-      Object.assign(stateStyles, this.getStyleByGalleryType(String(galleryLayoutV1), wixStyles.gallerySize)); //legacy layouts
+      stateStyles = Object.assign(stateStyles, this.getStyleByGalleryType(String(galleryLayoutV1), wixStyles.gallerySize)); //legacy layouts
       stateStyles.layoutsVersion = 1;
       const selectedLayoutVars = ['galleryType', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
@@ -1001,7 +1000,7 @@ export class GalleryContainer extends React.Component {
       if (utils.isVerbose()) {
         console.log('Using galleryLayout for defaults', wixStyles);
       }
-      Object.assign(stateStyles, this.getStyleByLayout(wixStyles, galleryLayoutV2)); //legacy layouts
+      stateStyles = Object.assign(emptyLayout, stateStyles, this.getStyleByLayout(wixStyles, galleryLayoutV2)); //legacy layouts
       const selectedLayoutVars = ['galleryLayout', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
       stateStyles.selectedLayout = selectedLayoutVars.map(key => String(wixStyles[key])).join('|');
       stateStyles.layoutsVersion = 2;
