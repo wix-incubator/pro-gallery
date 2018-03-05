@@ -1090,6 +1090,10 @@ export class GalleryContainer extends React.Component {
       stateStyles.gallerySize = wixStyles.gallerySize;
     }
 
+    if (canSet('gallerySizePx')) {
+      stateStyles.gallerySizePx = wixStyles.gallerySizePx;
+    }
+
     if (canSet('gridStyle')) {
       stateStyles.gridStyle = wixStyles.gridStyle;
     }
@@ -1383,6 +1387,11 @@ export class GalleryContainer extends React.Component {
       stateStyles.galleryLayout = 2;
       stateStyles.fixedColumns = 1;
       stateStyles.numberOfImagesPerRow = 1;
+    }
+
+    //in case a fixed gallery size (in pixels) was specified, use it
+    if (stateStyles.gallerySizePx > 0) {
+      stateStyles.gallerySize = stateStyles.gallerySizePx;
     }
 
     stateStyles.gotStyleParams = gotStyleParams;
