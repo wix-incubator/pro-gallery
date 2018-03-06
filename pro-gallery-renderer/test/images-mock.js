@@ -6,7 +6,8 @@ const testImages = [{
     lastModified: 1445860855,
     name: '8b72558253b2502b401bb46e5599f22a',
     size: 1100727,
-    width: 1920
+    width: 1920,
+    sourceName: 'private'
   },
   orderIndex: 0,
   photoId: '8b72558253b2502b401bb46e5599f22a',

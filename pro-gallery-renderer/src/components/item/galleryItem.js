@@ -103,6 +103,7 @@ class GalleryItem {
     this.group = scheme.group;
     this.transform = scheme.transform;
     this.orientation = scheme.orientation;
+    this.visibility = scheme.visibility;
   }
 
   renderProps(config) {
@@ -273,11 +274,10 @@ class GalleryItem {
   }
 
   useImageClientApi() {
-    const isSdkExperimentOn = utils.shouldDebug('ph_imageApi') || (window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'true');
-    const isDev = utils.isDev();
-    const isImageSizeAvailable = (this.maxWidth > 1 && this.maxHeight > 1);
+    const isSdkExperimentOn = !(window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'false'); //use the new api unless the experiment is specifically turned off
+    const isImageSizeAvailable = !this.isDimensionless;
 
-    return isImageSizeAvailable && (isSdkExperimentOn || isDev);
+    return isImageSizeAvailable && isSdkExperimentOn;
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
@@ -1051,8 +1051,12 @@ class GalleryItem {
     };
   }
 
+  isUserUploadedImage() {
+    return this.metadata.sourceName === 'private' && !_.includes(this.metadata.tags, '_paid');
+  }
+
   get isDemo() {
-    return this.metadata.isDemo || this.dto.isDemo || this.metadata.sourceName === 'public' || (this.metadata.sourceName === 'private' && _.includes(this.metadata.tags, '_bigstock'));
+    return this.metadata.isDemo || this.dto.isDemo || this.metadata.sourceName === 'public' || !this.isUserUploadedImage();
   }
 
   set isDemo(val) {
@@ -1063,6 +1067,17 @@ class GalleryItem {
     return this.type === 'text';
   }
 
+  get isVisible() {
+    return this.visibility && this.visibility.visible;
+  }
+
+  get isRendered() {
+    return this.visibility && this.visibility.rendered;
+  }
+
+  get isDimensionless() {
+    return (this.maxWidth <= 1 && this.maxHeight <= 1);
+  }
 }
 
 /*
