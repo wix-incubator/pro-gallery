@@ -1078,6 +1078,10 @@ export class GalleryContainer extends React.Component {
       stateStyles.gallerySize = wixStyles.gallerySize;
     }
 
+    if (canSet('gallerySizePx')) {
+      stateStyles.gallerySizePx = wixStyles.gallerySizePx;
+    }
+
     if (canSet('gridStyle')) {
       stateStyles.gridStyle = wixStyles.gridStyle;
     }
@@ -1103,10 +1107,13 @@ export class GalleryContainer extends React.Component {
     }
 
     if (canSet('imageMargin')) {
-      stateStyles.imageMargin = Number(wixStyles.imageMargin) / 2;
+      stateStyles.imageMargin = Number(wixStyles.imageMargin);
+    }
+    if (stateStyles.imageMargin > 0) {
       if (utils.isMobile()) {
-        stateStyles.imageMargin = Math.min(stateStyles.imageMargin, 25); //limit mobile spacing to 50px (25 on each side)
+        stateStyles.imageMargin = Math.min(stateStyles.imageMargin, 50); //limit mobile spacing to 50px (25 on each side)
       }
+      stateStyles.imageMargin /= 2;
     }
 
     if (canSet('galleryMargin')) {
@@ -1371,6 +1378,11 @@ export class GalleryContainer extends React.Component {
       stateStyles.galleryLayout = 2;
       stateStyles.fixedColumns = 1;
       stateStyles.numberOfImagesPerRow = 1;
+    }
+
+    //in case a fixed gallery size (in pixels) was specified, use it
+    if (stateStyles.gallerySizePx > 0) {
+      stateStyles.gallerySize = stateStyles.gallerySizePx;
     }
 
     stateStyles.gotStyleParams = gotStyleParams;
