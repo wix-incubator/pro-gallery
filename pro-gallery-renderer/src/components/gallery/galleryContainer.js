@@ -1790,14 +1790,14 @@ export class GalleryContainer extends React.Component {
     //   document.getElementsByTagName('body')[0].clientWidth;
     const domWidth = this.protectGalleryWidth(utils.isMobile() ? document.body.clientWidth : window.innerWidth); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
     const propsWidth = _.get(this.props, 'layout.width') || _.get(this.props, 'container.width');
-    return (propsWidth > 0 ? propsWidth : domWidth) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
+    return Math.floor((propsWidth > 0 ? propsWidth : domWidth) + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
   }
 
   getGalleryHeight() {
     const offsetTop = _.get(this, 'state.styleParams.oneRow') ? (this.props.offsetTop || 0) : 0;
     const domHeight = Math.round((window.innerHeight - offsetTop) / utils.getViewportScaleRatio());
     const propsHeight = _.get(this.props, 'layout.height') || _.get(this.props, 'container.height');
-    return (propsHeight > 0 ? propsHeight : domHeight) + this.getDimensionFix();
+    return Math.floor((propsHeight > 0 ? propsHeight : domHeight) + this.getDimensionFix());
   }
 
   getGalleryRatio() {
