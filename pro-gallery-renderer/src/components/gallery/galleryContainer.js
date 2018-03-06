@@ -1119,10 +1119,13 @@ export class GalleryContainer extends React.Component {
     }
 
     if (canSet('imageMargin')) {
-      stateStyles.imageMargin = Number(wixStyles.imageMargin) / 2;
+      stateStyles.imageMargin = Number(wixStyles.imageMargin);
+    }
+    if (stateStyles.imageMargin > 0) {
       if (utils.isMobile()) {
-        stateStyles.imageMargin = Math.min(stateStyles.imageMargin, 25); //limit mobile spacing to 50px (25 on each side)
+        stateStyles.imageMargin = Math.min(stateStyles.imageMargin, 50); //limit mobile spacing to 50px (25 on each side)
       }
+      stateStyles.imageMargin /= 2;
     }
 
     if (canSet('galleryMargin')) {
