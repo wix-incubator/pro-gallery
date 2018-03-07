@@ -455,11 +455,12 @@ class GalleryItem {
       if (this.watermarkStrSdk) {
         options.watermark = this.watermarkStrSdk;
       }
+      let prefix = '';
       if (originalUrl.indexOf('/') < 0) {
-        originalUrl = 'media/' + originalUrl;
+        prefix = 'media/';
       }
 
-      const retUrl = resizer(originalUrl, this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
+      const retUrl = resizer((prefix + originalUrl), this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
 
 /*
       console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
