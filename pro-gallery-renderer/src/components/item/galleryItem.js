@@ -1075,7 +1075,7 @@ class GalleryItem {
   }
 
   get isDimensionless() {
-    return (this.maxWidth <= 1 && this.maxHeight <= 1);
+    return !(this.maxWidth > 1 || this.maxHeight > 1);
   }
 }
 
