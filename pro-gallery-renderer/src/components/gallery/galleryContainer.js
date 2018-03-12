@@ -1175,7 +1175,7 @@ export class GalleryContainer extends React.Component {
       //If toggle is for Items per row, fill the fixedColumns with the number of items
       //If toggle is responsive, make fixedColumns to be 0 or undefined;
       //Show the new controls only on Vertical scroll (one ow is false)
-      stateStyles.fixedColumns = String(stateStyles.gridStyle) === '1' ? (Number(wixStyles.numberOfImagesPerRow || stateStyles.numberOfImagesPerRow)) : 0;
+      stateStyles.fixedColumns = String(stateStyles.gridStyle) === '1' ? (Number(wixStyles.numberOfImagesPerRow || stateStyles.numberOfImagesPerRow || this.defaultStateStyles.numberOfImagesPerRow)) : 0;
       stateStyles.groupTypes = '1';
       stateStyles.groupSize = 1;
       stateStyles.collageAmount = 0;
