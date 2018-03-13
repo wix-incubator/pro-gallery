@@ -234,6 +234,8 @@ class ItemView extends React.Component {
       return true;
     } else if (this.props.styleParams.isSlideshow) {
       return false;
+    } else if (this.props.styleParams.allowHover === false) {
+      return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
     } else if (utils.isEditor()) {
