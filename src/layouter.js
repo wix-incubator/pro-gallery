@@ -53,6 +53,7 @@ export default class Layouter {
       chooseBestGroup: true,
       groupSize: 3,
       groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
+      rotatingGroupTypes: '',
       isVertical: true,
       minItemSize: 120,
       oneRow: false,
@@ -70,6 +71,7 @@ export default class Layouter {
     this.insertIfDefined(convertedStyleParams, 'chooseBestGroup', convertedStyleParams.smartGrouping);
     this.insertIfDefined(convertedStyleParams, 'groupSize', convertedStyleParams.itemsPerGroup);
     this.insertIfDefined(convertedStyleParams, 'groupTypes', isArray(convertedStyleParams.allowedGroupTypes) ? convertedStyleParams.allowedGroupTypes.join(',') : undefined);
+    this.insertIfDefined(convertedStyleParams, 'rotatingGroupTypes', isArray(convertedStyleParams.rotatingGroupTypes) ? convertedStyleParams.rotatingGroupTypes.join(',') : undefined);
     this.insertIfDefined(convertedStyleParams, 'isVertical', convertedStyleParams.isColumnsLayout);
     this.insertIfDefined(convertedStyleParams, 'minItemSize', convertedStyleParams.minItemSize);
     this.insertIfDefined(convertedStyleParams, 'oneRow', convertedStyleParams.isVerticalScroll);
@@ -220,6 +222,7 @@ export default class Layouter {
         items: groupItems,
         chooseBestGroup: this.styleParams.chooseBestGroup,
         groupTypes: this.styleParams.groupTypes,
+        rotatingGroupTypes: this.styleParams.rotatingGroupTypes,
         cubeImages: this.styleParams.cubeImages,
         cubeType: this.styleParams.cubeType,
         isVertical: this.styleParams.isVertical,

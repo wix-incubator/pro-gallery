@@ -21,6 +21,7 @@ export class Group {
     this.collageAmount = config.collageAmount;
     this.collageDensity = config.collageDensity;
     this.groupTypes = config.groupTypes;
+    this.rotatingGroupTypes = config.rotatingGroupTypes;
     this.chooseBestGroup = config.chooseBestGroup;
     this.layoutsVersion = config.layoutsVersion;
     this.bottomInfoHeight = config.bottomInfoHeight;
@@ -231,78 +232,83 @@ export class Group {
 
     let groupTypes = optionalTypes.length > 0 ? optionalTypes.split(',') : [];
 
+    //---------| Override with specifically defined rotating group types (ignores everything else)
+    if (this.rotatingGroupTypes) {
+      const groupTypesArr = this.rotatingGroupTypes.split(',');
+      this.type = groupTypesArr[(this.idx - 1) % groupTypesArr.length];
 
     //---------| Override with specifically defined group types
-    if (this.groupTypes) {
+    } else {
+      if (this.groupTypes) {
 
-      // let groupTypesArr = union(['1'], this.groupTypes.split(','));
-      const groupTypesArr = this.groupTypes.split(',');
+        // let groupTypesArr = union(['1'], this.groupTypes.split(','));
+        const groupTypesArr = this.groupTypes.split(',');
 
-      if (groupTypesArr.length > 1) {
-        remove(groupTypes, gt => groupTypesArr.indexOf(gt) < 0);
+        if (groupTypesArr.length > 1) {
+          remove(groupTypes, gt => groupTypesArr.indexOf(gt) < 0);
 
-        if (groupTypes.length === 0) { //there is no match between required group types and the optional ones - use
+          if (groupTypes.length === 0) { //there is no match between required group types and the optional ones - use
+            groupTypes = ['1'];
+          }
+        } else {
+          groupTypes = groupTypesArr;
+        }
+
+      }
+
+
+      //---------| Calc collage density
+      if (this.layoutsVersion > 1 && this.collageDensity) {
+        //th new calculation of the collage amount
+
+        const collageDensity = this.collageDensity;
+
+        //use the collage amount to determine the optional groupsize
+        const maxGroupType = parseInt(last(groupTypes));
+        let optionalGroupSizes;
+        if (maxGroupType === 3) {
+          optionalGroupSizes = [[1], [1, 2], [1, 2, 3], [2, 3], [3]];
+        } else if (maxGroupType === 2) {
+          optionalGroupSizes = [[1], [1, 2], [2]];
+        } else {
+          optionalGroupSizes = [[1]];
+        }
+        const targetGroupsizes = optionalGroupSizes[Math.floor(collageDensity * (optionalGroupSizes.length - 1))];
+        // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
+
+        remove(groupTypes, groupType => {
+          return targetGroupsizes.indexOf(parseInt(groupType)) < 0;
+        });
+
+        if (groupTypes.length === 0) {
           groupTypes = ['1'];
         }
+      }
+
+      //---------| Calculate a random seed for the collage group type
+      const numOfOptions = groupTypes.length;
+      let seed;
+      if (this.isVertical) {
+        //vertical galleries random is not relevant (previous group is in another column)
+        seed = utils.hashToInt(this.items[0].hash) % (numOfOptions);
+        //console.log('Seed is: ' + seed + '. Found using hash: ' + this.items[0].hash);
       } else {
-        groupTypes = groupTypesArr;
+        seed = (this.inStripIdx + this.stripIdx) % numOfOptions;
       }
 
-    }
-
-
-    //---------| Calc collage density
-    if (this.layoutsVersion > 1 && this.collageDensity) {
-      //th new calculation of the collage amount
-
-      const collageDensity = this.collageDensity;
-
-      //use the collage amount to determine the optional groupsize
-      const maxGroupType = parseInt(last(groupTypes));
-      let optionalGroupSizes;
-      if (maxGroupType === 3) {
-        optionalGroupSizes = [[1], [1, 2], [1, 2, 3], [2, 3], [3]];
-      } else if (maxGroupType === 2) {
-        optionalGroupSizes = [[1], [1, 2], [2]];
-      } else {
-        optionalGroupSizes = [[1]];
+      if (this.layoutsVersion === 1 && this.collageAmount) {
+        //backwards compatibility
+        seed += ((this.collageAmount) - 0.5) * numOfOptions;
       }
-      const targetGroupsizes = optionalGroupSizes[Math.floor(collageDensity * (optionalGroupSizes.length - 1))];
-      // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
+      seed = Math.min(Math.max(0, seed), (numOfOptions - 1));
+      seed = Math.round(seed);
 
-      remove(groupTypes, groupType => {
-        return targetGroupsizes.indexOf(parseInt(groupType)) < 0;
-      });
-
-      if (groupTypes.length === 0) {
-        groupTypes = ['1'];
-      }
+      //---------| Final group type to render according to:
+      // - the number of options
+      // - the collageAmount (if 0 - always renders 1 image, if 1 always renders the max amount)
+      // - random seed (determined by the hash)
+      this.type = groupTypes[seed] || '1';
     }
-
-    //---------| Calculate a random seed for the collage group type
-    const numOfOptions = groupTypes.length;
-    let seed;
-    if (this.isVertical) {
-      //vertical galleries random is not relevant (previous group is in another column)
-      seed = utils.hashToInt(this.items[0].hash) % (numOfOptions);
-      //console.log('Seed is: ' + seed + '. Found using hash: ' + this.items[0].hash);
-    } else {
-      seed = (this.inStripIdx + this.stripIdx) % numOfOptions;
-    }
-
-    if (this.layoutsVersion === 1 && this.collageAmount) {
-      //backwards compatibility
-      seed += ((this.collageAmount) - 0.5) * numOfOptions;
-    }
-    seed = Math.min(Math.max(0, seed), (numOfOptions - 1));
-    seed = Math.round(seed);
-
-    //---------| Final group type to render according to:
-    // - the number of options
-    // - the collageAmount (if 0 - always renders 1 image, if 1 always renders the max amount)
-    // - random seed (determined by the hash)
-    this.type = groupTypes[seed] || '1';
-
 
     //---------| Render the images by the groupType
     let items = [];
