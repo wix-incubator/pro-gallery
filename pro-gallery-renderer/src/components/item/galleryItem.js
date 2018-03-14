@@ -277,8 +277,9 @@ class GalleryItem {
     const isSdkExperimentOn = !(window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'false'); //use the new api unless the experiment is specifically turned off
     const isImageSizeAvailable = !this.isDimensionless;
     const isSSR = !(window && window.document); //the image client lib can only be used in the client (dahh)
+    const hasWatermark = !!this.watermark;
 
-    return isImageSizeAvailable && isSdkExperimentOn && !isSSR;
+    return isImageSizeAvailable && isSdkExperimentOn && !isSSR && !hasWatermark;
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
@@ -1075,7 +1076,7 @@ class GalleryItem {
   }
 
   get isDimensionless() {
-    return (this.maxWidth <= 1 && this.maxHeight <= 1);
+    return !(this.maxWidth > 1 || this.maxHeight > 1);
   }
 }
 

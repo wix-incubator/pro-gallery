@@ -1082,6 +1082,14 @@ export class GalleryContainer extends React.Component {
       stateStyles.gallerySizePx = wixStyles.gallerySizePx;
     }
 
+    if (canSet('gallerySizeRatio')) {
+      stateStyles.gallerySizeRatio = wixStyles.gallerySizeRatio;
+    }
+
+    if (canSet('gallerySizeType')) {
+      stateStyles.gallerySizeType = ['smart', 'px', 'ratio'][Number(wixStyles.gallerySizeType)];
+    }
+
     if (canSet('gridStyle')) {
       stateStyles.gridStyle = wixStyles.gridStyle;
     }
@@ -1096,6 +1104,10 @@ export class GalleryContainer extends React.Component {
 
     if (canSet('groupTypes')) {
       stateStyles.groupTypes = String(wixStyles.groupTypes);
+    }
+
+    if (canSet('rotatingGroupTypes')) {
+      stateStyles.rotatingGroupTypes = String(wixStyles.rotatingGroupTypes);
     }
 
     if (canSet('borderRadius')) {
@@ -1380,9 +1392,11 @@ export class GalleryContainer extends React.Component {
       stateStyles.numberOfImagesPerRow = 1;
     }
 
-    //in case a fixed gallery size (in pixels) was specified, use it
-    if (stateStyles.gallerySizePx > 0) {
+    //in case a special gallery size was specified, use it
+    if (stateStyles.gallerySizeType === 'px' && stateStyles.gallerySizePx > 0) {
       stateStyles.gallerySize = stateStyles.gallerySizePx;
+    } else if (stateStyles.gallerySizeType === 'ratio' && stateStyles.gallerySizeRatio > 0) {
+      stateStyles.gallerySize = this.getGalleryWidth() * (stateStyles.gallerySizeRatio / 100);
     }
 
     stateStyles.gotStyleParams = gotStyleParams;
@@ -2644,7 +2658,9 @@ export class GalleryContainer extends React.Component {
     this.lastWindowHeight = this.getGalleryHeight();
 
     this.resizeCount = this.resizeCount + 1;
-    this.reRender(this.renderTriggers.RESIZE);
+
+    const trigger = this.state.styleParams.gallerySizeType === 'ratio' ? this.renderTriggers.STYLES : this.renderTriggers.RESIZE; //when the gallery size is relative to the window width, resize should trigger styles recalc
+    this.reRender(trigger);
   }
 
   reRenderForOrientation() {
