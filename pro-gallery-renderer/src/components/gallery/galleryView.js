@@ -130,6 +130,7 @@ class GalleryView extends React.Component {
     if (utils.isVerbose()) {
       console.count('galleryView render');
       console.time('Rendering Gallery took ');
+      console.log('[DEBUG_RENDER] GalleryView styleParams', this.props.styleParams);
       console.log('[DEBUG_RENDER] GalleryView props changed', utils.printableObjectsDiff((this.lastProps || {}), this.props));
       this.lastProps = _.cloneDeep(this.props);
       console.log('[DEBUG_RENDER] GalleryView state changed', utils.printableObjectsDiff((this.lastState || {}), this.state));
