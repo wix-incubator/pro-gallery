@@ -157,88 +157,88 @@ export class Group {
 
   }
 
-  placeItems(forcedGroupSize) {
-
-    //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
-
-    //map the group to l=landscape and p=portrait
-    //create a string to state the images group's type
-    this.ratios = this.items.map(item => {
-      return item.orientation.slice(0, 1);
-    }).join('');
-
-    //---------| Find the best groupType for each ratios case
-    //optional types:
-    //  1   => single photo
-    //  2v  => 2 photos one above the other
-    //  2h  => 2 photos one alongside the other
-    //  3b  => 3 photos - one large at the bottom and two small on top, one alongside the other
-    //  3t  => 3 photos - one large on top and two small at the bottom, one alongside the other
-    //  3l  => 3 photos - one large on the left and two small on the right, one above the other
-    //  3r  => 3 photos - one large on the right and two small on the left, one above the other
-
-    //define optional ratios for each type:
-    //  1   => all
-    //  2v  => lll,llp,ppp     (horizontal only)
-    //  2h  => ppp,ppl,lll     (vertical only)
-    //  3b  => lll,lpl,pll,ppl (horizontal only)
-    //  3t  => lll,lpl,llp,lpp (horizontal only)
-    //  3l  => ppp,plp,ppl,pll (vertical only)
-    //  3r  => ppp,plp,lpp,llp (vertical only)
-
-    const isV = this.isVertical;
-    let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
-
-    if (this.chooseBestGroup) {
-      switch (this.ratios) {
-        case 'lll':
-          optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v');
-          break;
-        case 'llp':
-          optionalTypes = (isV ? '1,3r' : '1,2v,3t,3v');
-          break;
-        case 'lpl':
-          optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v');
-          break;
-        case 'pll':
-          optionalTypes = (isV ? '1,2h,3l' : '1,2v,3b,3v');
-          break;
-
-        case 'lpp':
-          optionalTypes = (isV ? '1,2h,3r,3h' : '1,2v,3t');
-          break;
-        case 'plp':
-          optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v');
-          break;
-        case 'ppl':
-          optionalTypes = (isV ? '1,2h,3l,3h' : '1,3b');
-          break;
-        default:
-        case 'ppp':
-          optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2h');
-          break;
-      }
-
-    } else if (this.items.length === 3 || forcedGroupSize === 3) {
-      optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v');
-    }
-
-    if (this.items.length === 2 || forcedGroupSize === 2) {
-      optionalTypes = (isV ? '1,2h' : '1,2v');
-    }
-    if (this.items.length === 1 || forcedGroupSize === 1) {
-      optionalTypes = '1';
-    }
-
-    let groupTypes = optionalTypes.length > 0 ? optionalTypes.split(',') : [];
+  getGroupType(forcedGroupSize) {
 
     //---------| Override with specifically defined rotating group types (ignores everything else)
     if (this.rotatingGroupTypes) {
       const groupTypesArr = this.rotatingGroupTypes.split(',');
-      this.type = groupTypesArr[(this.idx - 1) % groupTypesArr.length];
+      return groupTypesArr[(this.idx - 1) % groupTypesArr.length];
 
-    //---------| Override with specifically defined group types
     } else {
+      //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
+
+      //map the group to l=landscape and p=portrait
+      //create a string to state the images group's type
+      this.ratios = this.items.map(item => {
+        return item.orientation.slice(0, 1);
+      }).join('');
+
+      //---------| Find the best groupType for each ratios case
+      //optional types:
+      //  1   => single photo
+      //  2v  => 2 photos one above the other
+      //  2h  => 2 photos one alongside the other
+      //  3b  => 3 photos - one large at the bottom and two small on top, one alongside the other
+      //  3t  => 3 photos - one large on top and two small at the bottom, one alongside the other
+      //  3l  => 3 photos - one large on the left and two small on the right, one above the other
+      //  3r  => 3 photos - one large on the right and two small on the left, one above the other
+
+      //define optional ratios for each type:
+      //  1   => all
+      //  2v  => lll,llp,ppp     (horizontal only)
+      //  2h  => ppp,ppl,lll     (vertical only)
+      //  3b  => lll,lpl,pll,ppl (horizontal only)
+      //  3t  => lll,lpl,llp,lpp (horizontal only)
+      //  3l  => ppp,plp,ppl,pll (vertical only)
+      //  3r  => ppp,plp,lpp,llp (vertical only)
+
+      const isV = this.isVertical;
+      let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
+
+      if (this.chooseBestGroup) {
+        switch (this.ratios) {
+          case 'lll':
+            optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v');
+            break;
+          case 'llp':
+            optionalTypes = (isV ? '1,3r' : '1,2v,3t,3v');
+            break;
+          case 'lpl':
+            optionalTypes = (isV ? '1,2h' : '1,2v,3t,3b,3v');
+            break;
+          case 'pll':
+            optionalTypes = (isV ? '1,2h,3l' : '1,2v,3b,3v');
+            break;
+
+          case 'lpp':
+            optionalTypes = (isV ? '1,2h,3r,3h' : '1,2v,3t');
+            break;
+          case 'plp':
+            optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v');
+            break;
+          case 'ppl':
+            optionalTypes = (isV ? '1,2h,3l,3h' : '1,3b');
+            break;
+          default:
+          case 'ppp':
+            optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2h');
+            break;
+        }
+
+      } else if (this.items.length === 3 || forcedGroupSize === 3) {
+        optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v');
+      }
+
+      if (this.items.length === 2 || forcedGroupSize === 2) {
+        optionalTypes = (isV ? '1,2h' : '1,2v');
+      }
+      if (this.items.length === 1 || forcedGroupSize === 1) {
+        optionalTypes = '1';
+      }
+
+      let groupTypes = optionalTypes.length > 0 ? optionalTypes.split(',') : [];
+
+      //---------| Override with specifically defined group types
       if (this.groupTypes) {
 
         // let groupTypesArr = union(['1'], this.groupTypes.split(','));
@@ -307,8 +307,14 @@ export class Group {
       // - the number of options
       // - the collageAmount (if 0 - always renders 1 image, if 1 always renders the max amount)
       // - random seed (determined by the hash)
-      this.type = groupTypes[seed] || '1';
+      return groupTypes[seed] || '1';
     }
+
+  }
+
+  placeItems(forcedGroupSize) {
+
+    this.type = this.getGroupType(forcedGroupSize);
 
     //---------| Render the images by the groupType
     let items = [];
