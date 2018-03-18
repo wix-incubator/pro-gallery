@@ -2597,7 +2597,22 @@ export class GalleryContainer extends React.Component {
       console.log('SCROLL - got vertical scroll event', params);
     }
 
-    this._reRenderForScroll(params);
+    try {
+      if (utils.shouldDebug('paralax_raf') && window && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          this._reRenderForScroll(params);
+        });
+      } else if (utils.shouldDebug('paralax_st')) {
+        setTimeout(() => {
+          this._reRenderForScroll(params);
+        });
+      } else {
+        this._reRenderForScroll(params);
+      }
+    } catch (e) {
+      console.error('Could not delay scroll handling', e);
+      this._reRenderForScroll(params);
+    }
   }
 
   reRenderForHorizontalScroll(event) {
