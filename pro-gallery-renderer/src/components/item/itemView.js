@@ -533,7 +533,7 @@ class ItemView extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (utils.isSite()) {
+    if (utils.isSite() && document && document.activeElement && document.activeElement.className) {
       //check if thumbnailId has changed to the current item
       const isAnotherItemInFocus = document.activeElement.className.indexOf('gallery-item-container') >= 0;
       const isShowMoreInFocus = document.activeElement.className.indexOf('show-more') >= 0;
