@@ -76,6 +76,9 @@ class SlideshowView extends React.Component {
   }
 
   handleKeypress(e) {
+    if (!utils.isInWix()) {
+      return;
+    }
     switch (e.charCode || e.keyCode) {
       case 38: //up
       case 37: //left
