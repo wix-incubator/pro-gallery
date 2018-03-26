@@ -21,12 +21,16 @@ class LineHeightFixer {
     };
   }
 
+  removeElement(element) {
+    this.setCss(element, {display: 'none'});
+  }
+
   hideElement(element) {
-    this.setCss(element, {visibility: 'hidden'});
+    this.setCss(element, {visibility: 'hidden', display: 'block'});
   }
 
   showElement(element) {
-    this.setCss(element, {visibility: 'visible'});
+    this.setCss(element, {visibility: 'visible', display: 'block'});
   }
 
   getCss(element, rule) {
@@ -42,7 +46,6 @@ class LineHeightFixer {
   }
 
   fix(options, container) {
-
     if (utils.isTest()) {
       return;
     }
@@ -60,7 +63,7 @@ class LineHeightFixer {
     const descriptionElements = container.getElementsByClassName('gallery-item-description');
     const customButtonExists = customButtonElements.length > 0;
 
-    const customButtonElement = (customButtonElements.length > 0) && customButtonElements[0];
+    const customButtonElement = customButtonExists && customButtonElements[0];
     const titleElement = (titleElements.length > 0) && titleElements[0];
     const descriptionElement = (descriptionElements.length > 0) && descriptionElements[0];
 
@@ -78,7 +81,7 @@ class LineHeightFixer {
         isNotEnoughSpaceForButton = (availableHeight + hoverTextAreaPaddings) < buttonHeight;
       }
       if (isNotEnoughSpaceForButton) {
-        this.hideElement(customButtonElement);
+        this.removeElement(customButtonElement);
       } else if (isItemWidthToSmall) {
         this.setCss(customButtonElement.querySelector('button'), {'min-width': 0 + 'px', 'max-width': minWidthToShowContent + 'px'});
       } else if (dimensions.width < minWithForNormalSizedItem) {
@@ -109,13 +112,13 @@ class LineHeightFixer {
         const numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
         const numOfAvailableLines = Math.floor(availableHeight / titleLineHeight);
         if (numOfAvailableLines === 0) {
-          this.hideElement(titleElement);
+          this.removeElement(titleElement);
         } else {
           const isTitleFitInAvailableHeight = numOfAvailableLines <= numOfTitleLines;
           if (isTitleFitInAvailableHeight) {
             this.setCss(titleElement, {'-webkit-line-clamp': (numOfAvailableLines + '')});
             titleHeight = titleLineHeight * numOfAvailableLines;
-            this.setCss(titleElement, {overflow: 'hidden', height: titleHeight});
+            this.setCss(titleElement, {overflow: 'hidden', height: titleHeight + 'px'});
           } else {
             this.setCss(titleElement, {'-webkit-line-clamp': 'none'});
             titleHeight = titleLineHeight * numOfTitleLines;
@@ -141,7 +144,7 @@ class LineHeightFixer {
       const lineHeight = parseInt(this.getCss(descriptionElement, 'line-height'));
       const numOfLines = Math.floor(availableHeight / lineHeight);
       if (numOfLines === 0) {
-        this.hideElement(descriptionElement);
+        this.removeElement(descriptionElement);
       } else {
         const descriptionOptimisticHeight = parseInt(this.getCss(descriptionElement, 'lheight'));
         const descriptionAvailableHeight = lineHeight * numOfLines;
