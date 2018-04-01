@@ -849,8 +849,12 @@ class GalleryItem {
   }
 
   get linkType() {
-    if (this.metadata.link) {
+    if (this.metadata.link && !_.isUndefined(this.metadata.link.type)) {
       return this.metadata.link.type;
+    } else if (this.linkUrl) {
+      return 'web';
+    } else {
+      return 'none';
     }
   }
 
@@ -1033,8 +1037,12 @@ class GalleryItem {
     if (utils.isEditor() || utils.isPreview()) {
       //in preview never open link in current window (causes many errors)
       return '_blank';
-    } else if (this.metadata.link) {
+    } else if (this.metadata.link && !_.isUndefined(this.metadata.link.target)) {
       return this.unprotectedLinkOpenType;
+    } else if (this.metadata.link && !_.isUndefined(this.metadata.link.targetBlank)) {
+      return this.metadata.link.targetBlank ? '_blank' : '_top';
+    } else {
+      return '_blank';
     }
   }
 

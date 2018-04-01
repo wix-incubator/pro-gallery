@@ -28,6 +28,7 @@ import {
   logger
 } from 'photography-client-lib';
 import axios from 'axios';
+import prependHttpExtra from 'prepend-http-extra';
 
 const adiLoadMoreMaxHeight = 2000;
 try {
@@ -2182,7 +2183,7 @@ export class GalleryContainer extends React.Component {
       if (this.state.styleParams.itemClick === 'link') {
         if (item.linkType && item.linkType !== 'none') {
           if (item.linkType === 'web') {
-            window.open(item.linkUrl, item.linkOpenType);
+            window.open(prependHttpExtra(item.linkUrl), item.linkOpenType);
           } else if (item.linkType === 'wix') {
             Wix.navigateTo(item.linkData);
           } else {

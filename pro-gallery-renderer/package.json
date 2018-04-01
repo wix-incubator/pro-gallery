@@ -28,6 +28,7 @@
     "image-client-api": "1.133.0",
     "lodash": "^4.17.4",
     "photography-client-lib": "^1.0.64",
+    "prepend-http-extra": "^1.0.0",
     "pro-gallery-layouter": "^1.0.21",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
