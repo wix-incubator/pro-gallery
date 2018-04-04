@@ -1244,8 +1244,6 @@ export class GalleryContainer extends React.Component {
     }
 
     if (canSet('titlePlacement')) {
-      const isGrid = _.isUndefined(stateStyles.galleryLayout) || String(stateStyles.galleryLayout) === '2';
-      const isMasonry = String(stateStyles.galleryLayout) === '1';
       let selectedPlacement;
       if (String(wixStyles.titlePlacement) === '1') {
         selectedPlacement = Consts.placements.SHOW_ON_HOVER;
@@ -1253,9 +1251,7 @@ export class GalleryContainer extends React.Component {
         selectedPlacement = Consts.placements.SHOW_ALWAYS;
       }
 
-      if (!isGrid && !isMasonry) {
-        stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-      } else if (!stateStyles.isVertical || stateStyles.oneRow === true) {
+      if (!stateStyles.isVertical || stateStyles.groupSize > 1 || stateStyles.oneRow === true) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
       } else {
         const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
