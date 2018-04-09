@@ -6,17 +6,25 @@ class Utils extends RenderUtils {
 
   scrollTo(element, to, duration, isHorizontal, callback) {
 
-    const easeInOutQuad = (t, b, c, d) => {
-            //t = current time
-            //b = start value
-            //c = change in value
-            //d = duration
-      t /= d / 2;
-      if (t < 1) {
-        return c / 2 * t * t + b;
+    if (this.isMobile()) {
+      duration = 0; //do not animate scroll on mobile (looks jumpy and buggy)
+    }
+
+    const easeInOutQuad = (currentTime, start, change, duration) => {
+      //t = current time
+      //b = start value
+      //c = change in value
+      //d = duration
+      if (duration === 0) {
+        return change + start;
       }
-      t--;
-      return -c / 2 * (t * (t - 2) - 1) + b;
+
+      currentTime /= duration / 2;
+      if (currentTime < 1) {
+        return change / 2 * currentTime * currentTime + start;
+      }
+      currentTime--;
+      return -change / 2 * (currentTime * (currentTime - 2) - 1) + start;
     };
 
     const start = isHorizontal ? element.scrollLeft : element.scrollTop;
