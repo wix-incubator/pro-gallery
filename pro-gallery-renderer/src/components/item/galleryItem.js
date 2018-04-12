@@ -206,6 +206,7 @@ class GalleryItem {
 
   createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
 
+    console.log(JSON.stringify(wixData, null, 2));
     const qualities = _.map(wixData.fileOutput.video, q => {
       return {
         height: q.height,
@@ -243,7 +244,8 @@ class GalleryItem {
       metaData.title = wixData.title;
     }
 
-    this.dto = {itemId: wixData.id, mediaUrl: wixData.id, orderIndex, metaData, isSecure};
+    const mediaUrl = wixData.fileBaseUrl.replace('video/', '');
+    this.dto = {itemId: wixData.id, mediaUrl, orderIndex, metaData, isSecure};
   }
 
   getHighestMp4Resolution(qualities) {
