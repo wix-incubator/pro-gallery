@@ -4,6 +4,10 @@ import {
 
 class Utils extends RenderUtils {
 
+  isWixIframe() {
+    return window && window.Wix && (window.top !== window.self);
+  }
+
   scrollTo(element, to, duration, isHorizontal, callback) {
 
     if (this.isMobile()) {

@@ -308,7 +308,7 @@ export class GalleryContainer extends React.Component {
     this.wixEventsFunctions = [];
     this.pubsubFunctions = [];
 
-    if (utils.isInWix()) {
+    if (utils.isInWix() || utils.isWixIframe()) {
       this.wixEventsFunctions.push([Wix.Events.STYLE_PARAMS_CHANGE, this.reRenderForStyles]);
       this.wixEventsFunctions.push([Wix.Events.SETTINGS_UPDATED, this.reRenderForSettings]);
       this.wixEventsFunctions.push([Wix.Events.EDIT_MODE_CHANGE, this.reRenderForEditMode]);
@@ -1457,6 +1457,16 @@ export class GalleryContainer extends React.Component {
       if (newProps.offsetTop !== this.props.offsetTop) {
         this.reRender(this.renderTriggers.RESIZE);
       }
+      if (newProps.domId) {
+        try {
+          this.galleryWrapper = document.getElementById(`pro-gallery-${newProps.domId}`);
+          this.boundingRect = this.galleryWrapper.getBoundingClientRect();
+        } catch (e) {
+          this.galleryWrapper = null;
+          this.boundingRect = null;
+        }
+      }
+
     } catch (e) {
       console.error('Failed settings new props', e);
     }
@@ -1655,7 +1665,12 @@ export class GalleryContainer extends React.Component {
   scrollToItem(itemIdx, fixedScroll, isManual) {
 
     let pos;
-    const horizontalElement = document.getElementById('gallery-horizontal-scroll');
+    let horizontalElement;
+
+    if (this.state.styleParams.oneRow) {
+      const galleryWrapper = this.galleryWrapper || document;
+      horizontalElement = galleryWrapper.getElementById('gallery-horizontal-scroll');
+    }
 
     if (fixedScroll === true) {
       //scroll by half the container size
@@ -1885,8 +1900,11 @@ export class GalleryContainer extends React.Component {
     } else if (params && _.isNumber(params.customScrollTop)) {
       this.currentScrollPosition = params.customScrollTop;
       return this.currentScrollPosition;
-    } else if (utils.isInWix()) {
+    } else if (utils.isInWix() || utils.isWixIframe()) {
       if (params && _.isNumber(params.scrollTop) && _.isNumber(params.y)) {
+        if (this.boundingRect) {
+          params.y = this.boundingRect.y;
+        }
         const scrollBase = params.y || 0;
         const scrollTop = params.scrollTop;
         this.pageScale = params.scale || 1;
