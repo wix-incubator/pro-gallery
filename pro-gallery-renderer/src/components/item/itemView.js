@@ -367,7 +367,7 @@ class ItemView extends React.Component {
   }
 
   getImageItem(imageDimensions) {
-    const props = _.pick(this.props, ['alt', 'title', 'description', 'visible', 'id', 'styleParams', 'resized_url']);
+    const props = _.pick(this.props, ['alt', 'title', 'description', 'visible', 'id', 'styleParams', 'resized_url', 'settings']);
     return <ImageItem {...props}
             key="imageItem"
             loaded={this.state.loaded}

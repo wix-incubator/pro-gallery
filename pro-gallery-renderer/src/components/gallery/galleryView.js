@@ -157,6 +157,7 @@ class GalleryView extends React.Component {
       styleParams: this.props.styleParams,
       multishare: this.props.multishare,
       watermark: this.props.watermark,
+      settings: this.props.settings,
       currentIdx: this.state.currentIdx,
       actions: {
         toggleFullscreen: this.props.actions.toggleFullscreen,

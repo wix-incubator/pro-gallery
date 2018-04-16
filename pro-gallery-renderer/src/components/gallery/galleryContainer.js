@@ -2975,6 +2975,9 @@ export class GalleryContainer extends React.Component {
       watermark = {
         this.props.watermarkData
       }
+      settings = {
+        this.props.settings
+      }
       gotScrollEvent = {
         this.state.gotScrollEvent
       }
@@ -3034,6 +3037,9 @@ export class GalleryContainer extends React.Component {
       }
       watermark = {
         this.props.watermarkData
+      }
+      settings = {
+        this.props.settings
       }
       gotScrollEvent = {
         this.state.gotScrollEvent

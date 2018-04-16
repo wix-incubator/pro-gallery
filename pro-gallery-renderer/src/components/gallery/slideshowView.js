@@ -434,6 +434,7 @@ class SlideshowView extends React.Component {
       container: this.props.container,
       multishare: this.props.multishare,
       watermark: this.props.watermark,
+      settings: this.props.settings,
       currentIdx: this.state.currentIdx,
       actions: {
         toggleFullscreen: this.props.actions.toggleFullscreen,

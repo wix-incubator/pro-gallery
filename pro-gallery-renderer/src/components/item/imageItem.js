@@ -5,7 +5,8 @@ import LoveButton from './loveButton/loveButton.js';
 export default class ImageItem extends React.Component {
 
   render() {
-    const {isThumbnail, alt, visible, loaded, styleParams, imageDimensions, resized_url, id, actions} = this.props;
+    const {isThumbnail, alt, visible, loaded, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
+    const imageProps = (typeof settings.imageProps === 'function') ? settings.imageProps(id) : {};
     if (visible) {
       return <div
         className={'gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'loaded' : '')}
@@ -21,6 +22,7 @@ export default class ImageItem extends React.Component {
           alt={isThumbnail ? '' : alt}
           onError={actions.setItemError}
           style={imageDimensions}
+          {...imageProps}
         />
         {isThumbnail ? false : <div className="pro-circle-preloader" key={'image-preloader-' + id} />}
       </div>;
