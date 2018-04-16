@@ -306,14 +306,14 @@ export class GalleryContainer extends React.Component {
   initEventsFunction() {
     this.windowEventsFunctions = [];
     this.wixEventsFunctions = [];
-    this.pubsubFunctions = [];
+    // this.pubsubFunctions = [];
 
     if (utils.isInWix() || utils.isWixIframe()) {
       this.wixEventsFunctions.push([Wix.Events.STYLE_PARAMS_CHANGE, this.reRenderForStyles]);
       this.wixEventsFunctions.push([Wix.Events.SETTINGS_UPDATED, this.reRenderForSettings]);
       this.wixEventsFunctions.push([Wix.Events.EDIT_MODE_CHANGE, this.reRenderForEditMode]);
       this.wixEventsFunctions.push([Wix.Events.SCROLL, this.reRenderForScroll]);
-      this.pubsubFunctions.push(['multishare2gallery', this.updateMultishareItems]);
+      // this.pubsubFunctions.push(['multishare2gallery', this.updateMultishareItems]);
     } else {
       this.windowEventsFunctions.push(['scroll', this.reRenderForScroll]);
     }
@@ -339,21 +339,22 @@ export class GalleryContainer extends React.Component {
     }
 
     this.windowEventsFunctions.forEach(x => window.addEventListener(...x));
+    document.addEventListener('scroll', this.reRenderForHorizontalScroll, true);
     if (!utils.isSemiNative()) {
-      this.pubsubFunctions.forEach(x => Wix.PubSub.subscribe(...x));
-      this.wixEventsFunctions.forEach(x => Wix.addEventListener(...x));
+      // this.pubsubFunctions.forEach(x => Wix.PubSub.subscribe(...x));
+      this.wixEventsFunctions.forEach(x => Wix.addEventListener && Wix.addEventListener(...x));
     }
 
-    document.addEventListener('scroll', this.reRenderForHorizontalScroll, true);
 
   }
 
   removeEventListeners() {
-    this.wixEventsFunctions.forEach(x => Wix.removeEventListener(...x));
     this.windowEventsFunctions.forEach(x => window.removeEventListener(...x));
-    this.pubsubFunctions.forEach(x => Wix.PubSub.unsubscribe(...x));
-
     document.removeEventListener('scroll', this.reRenderForHorizontalScroll, true);
+    if (!utils.isSemiNative()) {
+      this.wixEventsFunctions.forEach(x => Wix.removeEventListener && Wix.removeEventListener(...x));
+      // this.pubsubFunctions.forEach(x => Wix.PubSub.unsubscribe(...x));
+    }
   }
 
   initNavigationEventListeners() {
@@ -1669,7 +1670,7 @@ export class GalleryContainer extends React.Component {
 
     if (this.state.styleParams.oneRow) {
       const galleryWrapper = this.galleryWrapper || document;
-      horizontalElement = galleryWrapper.getElementById('gallery-horizontal-scroll');
+      horizontalElement = galleryWrapper.querySelector('#gallery-horizontal-scroll');
     }
 
     if (fixedScroll === true) {
