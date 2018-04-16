@@ -6,7 +6,7 @@ export default class ImageItem extends React.Component {
 
   render() {
     const {isThumbnail, alt, visible, loaded, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
-    const imageProps = (typeof settings.imageProps === 'function') ? settings.imageProps(id) : {};
+    const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
     if (visible) {
       return <div
         className={'gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'loaded' : '')}
