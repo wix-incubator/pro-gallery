@@ -2762,7 +2762,7 @@ export class GalleryContainer extends React.Component {
     this.newState.styleParams = stylesState.styleParams;
 
     //------| RESIZE STATE |------//
-    const shouldGetNewGalleryDimensions = triggerIs([STYLES, RESIZE, ORIENTATION, LAYOUT]);
+    const shouldGetNewGalleryDimensions = triggerIs([STYLES, ORIENTATION, LAYOUT]) || (!utils.isiOS() && triggerIs([RESIZE])); //on iOS resize event is triggered on random events (without real change to the window size) https://jira.wixpress.com/browse/PHOT-555
     const resizeState = {
       container: shouldGetNewGalleryDimensions ? this.getGalleryDimensions(stylesState.styleParams) : this.state.container
     };
