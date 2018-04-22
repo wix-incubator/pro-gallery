@@ -26,11 +26,11 @@ class LineHeightFixer {
   }
 
   hideElement(element) {
-    this.setCss(element, {visibility: 'hidden', display: 'block'});
+    this.setCss(element, {visibility: 'hidden'});
   }
 
   showElement(element) {
-    this.setCss(element, {visibility: 'visible', display: 'block'});
+    this.setCss(element, {visibility: 'visible'});
   }
 
   getCss(element, rule) {
