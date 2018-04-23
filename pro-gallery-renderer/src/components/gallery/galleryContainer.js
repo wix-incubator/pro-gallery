@@ -1904,7 +1904,7 @@ export class GalleryContainer extends React.Component {
     } else if (utils.isInWix() || utils.isWixIframe()) {
       if (params && _.isNumber(params.scrollTop) && _.isNumber(params.y)) {
         if (this.boundingRect) {
-          params.y = this.boundingRect.y;
+          params.y += this.boundingRect.y;
         }
         const scrollBase = params.y || 0;
         const scrollTop = params.scrollTop;
