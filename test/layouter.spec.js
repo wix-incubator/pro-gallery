@@ -611,6 +611,39 @@ describe('Layouter', () => {
       }, true);
     });
 
+    // functional cropRatio
+    it('should crop items according to the cropRatio function if defined', () => {
+
+      const items = getItems(100); //todo - something breaks when using exactly 100 images
+      styleParams.cropRatio = () => Math.random();
+      styleParams.cropItems = true;
+      styleParams.smartCrop = false;
+
+      gallery = getLayout({items, container, styleParams});
+
+      gallery.items.reduce((i, item) => {
+        expect(item.cropRatio).to.not.equal(i);
+        return item.cropRatio;
+      }, 0);
+    });
+
+    // crop only fill
+    it('should not crop items if cropOnlyFill is true and cropType is fit', () => {
+
+      const items = getItems(100); //todo - something breaks when using exactly 100 images
+      styleParams.cropRatio = 1;
+      styleParams.cropOnlyFill = true;
+      styleParams.cubeType = 'fit';
+      styleParams.cropItems = true;
+      styleParams.smartCrop = false;
+
+      gallery = getLayout({items, container, styleParams});
+
+      gallery.items.forEach(item => {
+        expect(item.cropRatio).to.equal(item.ratio);
+      });
+    });
+
     // rotatingCropRatios
     it('should crop items according to rotatingCropRatios if defined', () => {
 
@@ -624,7 +657,7 @@ describe('Layouter', () => {
 
       gallery = getLayout({items, container, styleParams});
       gallery.items.forEach((item, i) => {
-        expect(item.cropRatio).to.equal(rotatingCropRatiosArr[i % rotatingCropRatiosArr.length]);
+        expect(item.cropRatio).to.equal(Number(rotatingCropRatiosArr[i % rotatingCropRatiosArr.length]));
       }, true);
     });
 

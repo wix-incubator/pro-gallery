@@ -269,13 +269,17 @@ export class Item {
     if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
       const cropRatiosArr = this.rotatingCropRatios.split(',');
       ratio = cropRatiosArr[(this.idx) % cropRatiosArr.length];
-    } else if (isFunction(this._cubeRatio)) {
+    }
+    if (!ratio && isFunction(this._cubeRatio)) {
       ratio = this._cubeRatio();
-    } else if (this.cropOnlyFill && this.cubeType === 'fit') {
+    }
+    if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {
       ratio = this.ratio;
-    } else {
+    }
+    if (!ratio) {
       ratio = this._cubeRatio;
     }
+    ratio = Number(ratio);
 
     if (this.smartCrop === true) {
       if (this.isPortrait) {
