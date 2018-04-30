@@ -184,7 +184,7 @@ export class Group {
 
     //---------| Override with specifically defined rotating group types (ignores everything else)
     if (this.rotatingGroupTypes) {
-      const groupTypesArr = this.rotatingGroupTypes.split(',');
+      const groupTypesArr = String(this.rotatingGroupTypes).split(',');
       return groupTypesArr[(this.idx - 1) % groupTypesArr.length];
 
     } else {

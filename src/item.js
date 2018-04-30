@@ -267,7 +267,7 @@ export class Item {
   get cubeRatio() {
     let ratio;
     if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
-      const cropRatiosArr = this.rotatingCropRatios.split(',');
+      const cropRatiosArr = String(this.rotatingCropRatios).split(',');
       ratio = cropRatiosArr[(this.idx) % cropRatiosArr.length];
     }
     if (!ratio && isFunction(this._cubeRatio)) {
