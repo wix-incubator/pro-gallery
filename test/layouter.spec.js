@@ -624,7 +624,6 @@ describe('Layouter', () => {
 
       gallery = getLayout({items, container, styleParams});
       gallery.items.forEach((item, i) => {
-        console.log(item);
         expect(item.cropRatio).to.equal(rotatingCropRatiosArr[i % rotatingCropRatiosArr.length]);
       }, true);
     });
