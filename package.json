@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery-layouter",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": {
     "name": "Guy Sopher",
     "email": "guyso@wix.com",
@@ -12,28 +12,28 @@
     "dist"
   ],
   "scripts": {
-    "start": "haste start",
-    "build": ":",
-    "precommit": "haste lint",
-    "pretest": "haste build",
-    "test": "haste test",
-    "posttest": "haste lint",
-    "release": "haste release"
+    "start": "yoshi start",
+    "build": "yoshi build",
+    "precommit": "yoshi lint",
+    "pretest": "yoshi build",
+    "test": "yoshi test",
+    "posttest": "yoshi lint",
+    "release": "yoshi release"
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
-    "lodash": "^4.17.4",
-    "photography-client-lib": "^1.0.16"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-env": "^1.5.2",
     "babel-preset-stage-3": "^6.5.0",
     "chai": "^4.1.2",
+    "deep-freeze": "0.0.1",
     "husky": "^0.13.4",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
-    "haste-preset-yoshi": "latest"
+    "yoshi": "^1.2.0"
   },
   "babel": {
     "presets": [
@@ -65,23 +65,11 @@
   "eslintConfig": {
     "extends": "wix/esnext",
     "rules": {
-      "no-cond-assign": 0,
-      "no-undef": 0,
-      "no-useless-escape": 0,
-      "max-params": 0,
-      "max-depth": 0,
-      "operator-linebreak": 0,
       "no-mixed-operators": 0,
-      "no-unused-vars": 1,
-      "camelcase": 0,
-      "no-loop-func": 0,
-      "no-trailing-spaces": 0
+      "no-loop-func": 0
     }
   },
   "publishConfig": {
-    "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
-  },
-  "haste": {
-    "preset": "yoshi"
+    "registry": "https://registry.npmjs.org/"
   }
 }

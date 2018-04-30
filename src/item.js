@@ -11,42 +11,29 @@ export class Item {
     this.style = {};
     this.visibility = {};
 
-    //Item core can be initialized with:
-    // {dto: ItemDto(..)}
-    // or {wixVideo: ... }
-    // or {wixImage: ...}
-
-    //in addition - support of {sharpParam: {quality}}
-
     config = config || {};
 
-    if (config.dto && config.dto.dto) {
-      config.dto = config.dto.dto; //defence patch due to mis-use of item-core
-      if (utils.isDev()) {
-        console.warn('Item core is created with already existing item core');
-      }
-    }
     if (!config.dto) {
+      console.error('Item has no DTO', config);
       config.dto = {};
     }
-    const metadata = utils.parseStringObject(config.dto.metadata || config.dto.metaData || '');
-    this.fixMetadataVerticalVideoRatio(metadata);
 
-    this._dto = merge({}, config.dto, metadata);
     this.dto = config.dto;
-
-    this.cubeType = config.cubeType || 'fill';
-    this.cubeImages = config.cubeImages;
-    this._cubeRatio = config.cubeRatio;
-    this.smartCrop = config.smartCrop;
-    this.cropOnlyFill = config.cropOnlyFill;
-    this.imageMargin = config.imageMargin;
-    this.galleryMargin = config.galleryMargin;
-    this.floatingImages = config.floatingImages;
     this.idx = config.idx;
-    this.smartCrop = config.smartCrop;
-    this.createdBy = config.createdBy;
+    this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
+
+    this.cubeType = config.styleParams.cubeType || 'fill';
+    this.cubeImages = config.styleParams.cubeImages;
+    this._cubeRatio = config.styleParams.cubeRatio;
+    this.rotatingCropRatios = config.styleParams.rotatingCropRatios;
+    this.smartCrop = config.styleParams.smartCrop;
+    this.cropOnlyFill = config.styleParams.cropOnlyFill;
+    this.imageMargin = config.styleParams.imageMargin;
+    this.galleryMargin = config.styleParams.galleryMargin;
+    this.floatingImages = config.styleParams.floatingImages;
+    this.smartCrop = config.styleParams.smartCrop;
+
     this._groupOffset = {
       top: 0,
       left: 0,
@@ -71,10 +58,6 @@ export class Item {
 
   resize(scaleOrDimensions) {
 
-    if (utils.shouldLog('spacing')) {
-      console.log(`SPACING - Item  resize `, scaleOrDimensions);
-    }
-
     let scale = 1;
     if (scaleOrDimensions === false) {
       return;
@@ -82,57 +65,56 @@ export class Item {
       scale = scaleOrDimensions;
     } else if (isObject(scaleOrDimensions)) {
       if (scaleOrDimensions.width) {
-        scale = scaleOrDimensions.width / this.width;
+        const w = Math.max(1, scaleOrDimensions.width);
+        scale = w / this.width;
       } else if (scaleOrDimensions.height) {
-        scale = scaleOrDimensions.height / this.height;
+        const h = Math.max(1, scaleOrDimensions.height);
+        scale = h / this.height;
       }
     }
 
     this.width *= scale;
     this.height *= scale;
 
-    if (utils.shouldLog('spacing')) {
-      console.log(`SPACING - Item  W: ${this.width}`);
-      console.log(`SPACING - Item  H: ${this.height}`);
-    }
-
     this.resized = true;
 
     return this;
   }
 
-  pinToCorner(cornerName, pinOffset = 0) {
+  pinToCorner(cornerName, pinAfter = false) {
 
     const isTop = cornerName.indexOf('top') >= 0;
     const isLeft = cornerName.indexOf('left') >= 0;
 
-    this.style.top = isTop ? pinOffset : 'auto';
-    this.style.bottom = isTop ? 'auto' : pinOffset;
-    this.style.left = isLeft ? pinOffset : 'auto';
-    this.style.right = isLeft ? 'auto' : pinOffset;
+    this.style.top = isTop ? 0 : 'auto';
+    this.style.bottom = isTop ? 'auto' : 0;
+    this.style.left = isLeft ? 0 : 'auto';
+    this.style.right = isLeft ? 'auto' : 0;
 
     this.pin = cornerName;
     this.isPinnedTop = isTop;
     this.isPinnedLeft = isLeft;
-    this.pinOffset = pinOffset;
-    this.calcPinOffset = groupSize => {
-      if (pinOffset <= 0) {
+    this.pinAfter = pinAfter;
+    this.pinAfterType = isTop ? 'top' : (isLeft ? 'left' : '');
+    this.calcPinOffset = (groupSize, dir) => {
+      if (!this.pinAfter) {
         return 0;
-      } else {
+      } else if (this.pin === dir) {
         //this is used only for 3h/3v group types - to calc the offset of the middle item
         const m = this.imageMargin;
-        return ((groupSize - 6 * m) * this.pinOffset + 2 * m);
+        // return ((groupSize - 6 * m) * this.pinOffset + 2 * m);
+        if (dir === 'top') {
+          return this.pinAfter.height + 2 * m;
+        } else if (dir === 'left') {
+          return this.pinAfter.width + 2 * m;
+        } else {
+          return 0;
+        }
+        // return ((groupSize - 6 * m) * this.pinOffset + 4 * m);
+      } else {
+        return 0;
       }
     };
-
-  }
-
-  pinToMiddle() {
-
-    this.style.top = this.style.bottom = this.style.left = this.style.right = 'auto';
-
-    this.pin = 'middle';
-    this.isPinnedMiddle = true;
 
   }
 
@@ -168,17 +150,17 @@ export class Item {
     return this._group;
   }
 
-  set offset(offset) {
+  set groupOffset(offset) {
     merge(this._groupOffset, offset);
   }
 
   get offset() {
     const offset = {
-      top: this._groupOffset.top + (this.isPinnedTop ? this.calcPinOffset(this._group.height) : (this._group.height - this.outerHeight)) || 0,
-      left: this._groupOffset.left + (this.isPinnedLeft ? this.calcPinOffset(this._group.width) : (this._group.width - this.outerWidth)) || 0,
-      right: (this._groupOffset.right - (this.isPinnedLeft ? (this._group.width - this.outerWidth) : this.calcPinOffset(this._group.width)) || 0) - this.imageMargin * 2,
-      bottom: (this._groupOffset.bottom - (this.isPinnedTop ? (this._group.height - this.outerHeight) : this.calcPinOffset(this._group.height)) || 0) - this.imageMargin * 2,
+      top: this._groupOffset.top + (this.isPinnedTop ? this.calcPinOffset(this._group.height, 'top') : (this._group.height - this.outerHeight)) || 0,
+      left: this._groupOffset.left + (this.isPinnedLeft ? this.calcPinOffset(this._group.width, 'left') : (this._group.width - this.outerWidth)) || 0,
     };
+    offset.right = offset.left + this.width;
+    offset.bottom = offset.top + this.height;
     return offset;
   }
 
@@ -206,22 +188,22 @@ export class Item {
   }
 
   get id() {
-    return this._dto.id || this._dto.photoId || this._dto.itemId;
+    return this.dto.id || this.dto.photoId || this.dto.itemId;
   }
 
   set id(id) {
-    this._dto.itemId = id;
+    this.dto.itemId = this.dto.photoId = this.dto.id = id;
   }
 
   get hash() {
-    return this._dto.hash || this._dto.mediaUrl || this._dto.id;
+    return this.dto.hash || this.dto.mediaUrl || this.dto.id;
   }
 
   get maxWidth() {
-    return this._dto.width || this._dto.w;
+    return this.dto.width || this.dto.w;
   }
   set maxWidth(w) {
-    this._dto.width = w;
+    this.dto.width = w;
   }
 
   get outerWidth() {
@@ -229,15 +211,17 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this._dto.width || this._dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
+    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
 
   get width() {
+    let width;
     if (this.cubeImages && (this.ratio >= this.cubeRatio)) {
-      return this.style.cubedWidth || (this.orgHeight * this.cubeRatio);
+      width = this.style.cubedWidth || (this.orgHeight * this.cubeRatio);
     } else {
-      return this.orgWidth;
+      width = this.orgWidth;
     }
+    return Math.max(width, 1);
   }
 
   set width(w) {
@@ -249,15 +233,17 @@ export class Item {
   }
 
   get orgHeight() {
-    return this.style.height || this._dto.height || this._dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.height || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get height() {
+    let height;
     if (this.cubeImages && (this.ratio < this.cubeRatio)) {
-      return this.style.cubedHeight || (this.orgWidth / this.cubeRatio);
+      height = this.style.cubedHeight || (this.orgWidth / this.cubeRatio);
     } else {
-      return this.orgHeight;
+      height = this.orgHeight;
     }
+    return Math.max(height, 1);
   }
 
   set height(h) {
@@ -265,10 +251,10 @@ export class Item {
   }
 
   get maxHeight() {
-    return this._dto.height || this._dto.h;
+    return this.dto.height || this.dto.h;
   }
   set maxHeight(h) {
-    h = this._dto.height;
+    h = this.dto.height;
   }
 
   get margins() {
@@ -280,7 +266,10 @@ export class Item {
 
   get cubeRatio() {
     let ratio;
-    if (isFunction(this._cubeRatio)) {
+    if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
+      const cropRatiosArr = this.rotatingCropRatios.split(',');
+      ratio = cropRatiosArr[(this.idx) % cropRatiosArr.length];
+    } else if (isFunction(this._cubeRatio)) {
       ratio = this._cubeRatio();
     } else if (this.cropOnlyFill && this.cubeType === 'fit') {
       ratio = this.ratio;
@@ -331,6 +320,8 @@ export class Item {
     return {
       id: this.id,
       idx: this.idx,
+      inGroupIdx: this.inGroupIdx,
+      dto: this.dto,
       type: this.type,
       style: this.style,
       width: this.width,
@@ -346,8 +337,11 @@ export class Item {
       cropType: this.cubeType,
       group: this.group,
       offset: this.offset,
+      groupOffset: this._groupOffset,
       transform: this.transform,
       orientation: this.orientation,
+      isPortrait: this.isPortrait,
+      isLandscape: this.isLandscape,
       visibility: this.visibility
     };
   }

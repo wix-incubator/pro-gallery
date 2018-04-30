@@ -1,4 +1,4 @@
-import {Layouter} from 'pro-gallery-layouter';
+import {createLayout} from 'pro-gallery-layouter';
 
 //create random colored boxes
 function generateUUID() {
@@ -37,7 +37,7 @@ const layoutParams = {
   container
 };
 
-const layout = new Layouter(layoutParams);
+const layout = createLayout(layoutParams);
 const parent = document.createElement('div');
 parent.id = 'root';
 document.body.prepend(parent);
