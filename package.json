@@ -33,6 +33,7 @@
     "husky": "^0.13.4",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
+    "log-to-file": "^1.2.2",
     "yoshi": "^1.2.0"
   },
   "babel": {

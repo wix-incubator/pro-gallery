@@ -5,7 +5,6 @@ import {testImages} from './images-mock.js';
 import range from 'lodash/range';
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
-import expectedOffsets from './expectedOffsets';
 
 const getItems = count => deepFreeze(testImages.slice(0, count));
 const getGroupCount = layout => layout.columns.reduce(
@@ -20,7 +19,6 @@ describe('Layouter', () => {
   let layouter;
   let container = {};
   let styleParams = {};
-  let styleParamsOptions = {};
 
   const getLayout = layoutParams => layouter.createLayout(layoutParams);
 
@@ -49,23 +47,6 @@ describe('Layouter', () => {
       fixedColumns: 0
     };
 
-    styleParamsOptions = {
-      oneRow: [true, false],
-      isVertical: [true, false],
-      gallerySize: [100, 200, 500],
-      groupSize: [1, 2, 3],
-      groupTypes: ['1,2h,2v,3t,3b,3l,3r,3v,3h', '1,3t,3l,3h', '2h,2v,3t,3v,3h'],
-      rotatingGroupTypes: ['', '1,2v,3t'],
-      cubeImages: [true, false],
-      cubeRatio: [1, 2, 0.5],
-      smartCrop: [true, false],
-      chooseBestGroup: [true, false],
-      collageDensity: [0, 0.6, 1],
-      minItemSize: [20, 50, 100],
-      imageMargin: [0, 10, 50],
-      fixedColumns: [0, 1, 5]
-    };
-
     container = {
       galleryWidth: 1000,
       bounds: {
@@ -80,41 +61,6 @@ describe('Layouter', () => {
   });
 
   describe('items', () => {
-    it('should not change default layout', () => {
-
-      const items = getItems(100);
-
-      const res = {};
-
-      for (const option of Object.entries(styleParamsOptions)) {
-        const [styleParam, values] = option;
-        for (const value of values) {
-          styleParams[styleParam] = value;
-          gallery = getLayout({items, container, styleParams});
-
-          const offsets = gallery.items.reduce((str, item) => {
-            const os = item.offset;
-            const itemStr = `{t:${Math.round(os.top)},l:${Math.round(os.left)},r:${Math.round(os.right)},b:${Math.round(os.bottom)}}`;
-            return str + itemStr;
-          }, '');
-
-          const spStr = `${styleParam}_${value}`.replace(/[,.]/g, '');
-
-          res[spStr] = spStr + offsets;
-          expect(expectedOffsets[spStr]).to.equal(spStr + offsets);
-
-        }
-      }
-
-      // Use these lines to print an expected result
-      // for (const a of Object.entries(res)) {
-      //   console.log(`${a[0]}: ${a[1]}`);
-      // }
-      // expect(true).to.be.false;
-
-
-    });
-
     it('should include all items in original order', () => {
 
       styleParams.galleryWidth = 500;

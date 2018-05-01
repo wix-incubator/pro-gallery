@@ -8,3 +8,4 @@ package-lock.json
 .history
 .DS_Store
 .vscode
+log.txt
