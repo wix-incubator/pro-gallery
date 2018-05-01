@@ -59,10 +59,10 @@ export default class Layouter {
     return numOfCols;
   }
 
-  findShortestColumn(columns) {
+  findShortestColumn(columns, groupIdx) {
     let minCol = columns[0];
     if (this.styleParams.cubeImages) {
-      minCol = columns[this.pointer % columns.length];
+      minCol = columns[groupIdx % columns.length];
     } else {
       let minColH = -1;
       for (const column of columns) {
@@ -96,7 +96,7 @@ export default class Layouter {
     const galleryWidth = Math.floor(this.container.galleryWidth);
     const maxGroupSize = this.maxGroupSize;
 
-    let groupIdx = 1;
+    let groupIdx = 0;
     let item = {};
 
     let groupItems = [];
@@ -221,7 +221,7 @@ export default class Layouter {
         //---------------------| COLUMNS GALLERY |----------------------//
 
         //find the shortest column
-        const minCol = this.findShortestColumn(columns);
+        const minCol = this.findShortestColumn(columns, this.groups.length - 1);
 
         //resize the group and images
         group.fixItemsRatio(minCol.cubeRatio); //fix last column's items ratio (caused by stretching it to fill the screen)

@@ -607,7 +607,7 @@ describe('Layouter', () => {
 
       gallery = getLayout({items, container, styleParams});
       gallery.groups.forEach((group, g) => {
-        expect(group.type).to.equal(rotatingGroupTypesArr[(g - 1) % rotatingGroupTypesArr.length]); //first group idx is 1
+        expect(group.type).to.equal(rotatingGroupTypesArr[g % rotatingGroupTypesArr.length]); //first group idx is 1
       }, true);
     });
 
@@ -758,7 +758,7 @@ describe('Layouter', () => {
 
     });
 
-    it('finfNeighborItem should work', () => {
+    it('findNeighborItem should work', () => {
 
       let neighbor;
 

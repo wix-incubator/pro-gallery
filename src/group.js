@@ -185,7 +185,7 @@ export class Group {
     //---------| Override with specifically defined rotating group types (ignores everything else)
     if (this.rotatingGroupTypes) {
       const groupTypesArr = String(this.rotatingGroupTypes).split(',');
-      return groupTypesArr[(this.idx - 1) % groupTypesArr.length];
+      return groupTypesArr[this.idx % groupTypesArr.length];
 
     } else {
       //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
