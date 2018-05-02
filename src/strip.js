@@ -57,6 +57,10 @@ export class Strip {
       return false;
     }
 
+    if (this.styleParams.groupsPerStrip > 0) {
+      return this.groups.length >= this.styleParams.groupsPerStrip;
+    }
+
     const {galleryWidth} = this.container;
     const {oneRow, gallerySize} = this.styleParams;
 
