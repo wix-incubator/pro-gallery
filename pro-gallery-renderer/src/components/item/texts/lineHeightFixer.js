@@ -21,16 +21,27 @@ class LineHeightFixer {
     };
   }
 
+  saveCurrentDisplay(element) {
+    element && element.setAttribute('data-display', this.getCss(element, 'display'));
+  }
+
+  getSavedDisplay(element) {
+    return (element && element.getAttribute('data-display')) || '-webkit-box';
+  }
+
   removeElement(element) {
+    this.saveCurrentDisplay(element);
     this.setCss(element, {display: 'none'});
   }
 
   hideElement(element) {
-    this.setCss(element, {visibility: 'hidden'});
+    const display = this.getSavedDisplay(element);
+    this.setCss(element, {visibility: 'hidden', display});
   }
 
   showElement(element) {
-    this.setCss(element, {visibility: 'visible'});
+    const display = this.getSavedDisplay(element);
+    this.setCss(element, {visibility: 'visible', display});
   }
 
   getCss(element, rule) {
