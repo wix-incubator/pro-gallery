@@ -146,7 +146,7 @@ class LineHeightFixer {
       if (numOfLines === 0) {
         this.removeElement(descriptionElement);
       } else {
-        const descriptionOptimisticHeight = parseInt(this.getCss(descriptionElement, 'lheight'));
+        const descriptionOptimisticHeight = parseInt(this.getCss(descriptionElement, 'height'));
         const descriptionAvailableHeight = lineHeight * numOfLines;
         const isDescriptionHeightBiggerThanAvailableHeight = descriptionOptimisticHeight > descriptionAvailableHeight;
         availableHeight -= isDescriptionHeightBiggerThanAvailableHeight ? descriptionAvailableHeight : descriptionOptimisticHeight;
