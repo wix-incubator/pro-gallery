@@ -125,7 +125,6 @@ export default class Layouter {
       maxLoops--;
       if (maxLoops <= 0) {
         console.error('Cannot create layout, maxLoops reached!!!');
-        // debugger;
         return false;
       }
 
@@ -142,7 +141,7 @@ export default class Layouter {
 
       //push the image to a group - until its full
       groupItems.push(item);
-      if (!this.isLastImages && (groupItems.length < maxGroupSize)) {
+      if ((groupItems.length < maxGroupSize) && this.srcItems[this.pointer + 1]) {
         this.pointer++;
         continue;
       }
@@ -153,6 +152,7 @@ export default class Layouter {
         inStripIdx: (strip.groups.length + 1),
         top: galleryHeight,
         items: groupItems,
+        isLastItems: this.isLastImages,
         gallerySize,
         showAllItems: this.showAllItems,
         container: this.container,

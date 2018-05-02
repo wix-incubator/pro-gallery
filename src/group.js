@@ -42,6 +42,7 @@ export class Group {
     this.items = config.items;
     this.top = config.top;
     this.showAllItems = config.showAllItems;
+    this.isLastItems = config.isLastItems;
 
     this.oneRow = config.styleParams.oneRow;
     this.cubeType = config.styleParams.cubeType;
@@ -187,6 +188,8 @@ export class Group {
       const groupTypesArr = String(this.rotatingGroupTypes).split(',');
       return groupTypesArr[this.idx % groupTypesArr.length];
 
+    } else if (this.isLastItems) {
+      return this.groupTypes.split(',')[0] || '1';
     } else {
       //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
 
