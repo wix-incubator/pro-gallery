@@ -44,20 +44,23 @@ export class Group {
     this.showAllItems = config.showAllItems;
     this.isLastItems = config.isLastItems;
 
-    this.oneRow = config.styleParams.oneRow;
-    this.cubeType = config.styleParams.cubeType;
-    this.cubeImages = config.styleParams.cubeImages;
-    this.isVertical = config.styleParams.isVertical;
-    this.minItemSize = config.styleParams.minItemSize;
-    this.gallerySize = config.styleParams.gallerySize;
-    this.collageAmount = config.styleParams.collageAmount;
-    this.collageDensity = config.styleParams.collageDensity;
-    this.groupTypes = config.styleParams.groupTypes;
-    this.rotatingGroupTypes = config.styleParams.rotatingGroupTypes;
-    this.chooseBestGroup = config.styleParams.chooseBestGroup;
-    this.layoutsVersion = config.styleParams.layoutsVersion;
-    this.bottomInfoHeight = config.styleParams.bottomInfoHeight;
-    this.imageMargin = config.styleParams.imageMargin;
+    if (config.styleParams) {
+      const {styleParams} = config;
+      this.oneRow = styleParams.oneRow;
+      this.cubeType = styleParams.cubeType;
+      this.cubeImages = styleParams.cubeImages;
+      this.isVertical = styleParams.isVertical;
+      this.minItemSize = styleParams.minItemSize;
+      this.gallerySize = styleParams.gallerySize;
+      this.collageAmount = styleParams.collageAmount;
+      this.collageDensity = styleParams.collageDensity;
+      this.groupTypes = styleParams.groupTypes;
+      this.rotatingGroupTypes = styleParams.rotatingGroupTypes;
+      this.chooseBestGroup = styleParams.chooseBestGroup;
+      this.layoutsVersion = styleParams.layoutsVersion;
+      this.bottomInfoHeight = styleParams.bottomInfoHeight;
+      this.imageMargin = styleParams.imageMargin;
+    }
 
     this.visible = true;
     this.rendered = true;

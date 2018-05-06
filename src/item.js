@@ -23,16 +23,19 @@ export class Item {
     this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
 
-    this.cubeType = config.styleParams.cubeType || 'fill';
-    this.cubeImages = config.styleParams.cubeImages;
-    this._cubeRatio = config.styleParams.cubeRatio;
-    this.rotatingCropRatios = config.styleParams.rotatingCropRatios;
-    this.smartCrop = config.styleParams.smartCrop;
-    this.cropOnlyFill = config.styleParams.cropOnlyFill;
-    this.imageMargin = config.styleParams.imageMargin;
-    this.galleryMargin = config.styleParams.galleryMargin;
-    this.floatingImages = config.styleParams.floatingImages;
-    this.smartCrop = config.styleParams.smartCrop;
+    if (config.styleParams) {
+      const {styleParams} = config;
+      this.cubeType = styleParams.cubeType || 'fill';
+      this.cubeImages = styleParams.cubeImages;
+      this._cubeRatio = styleParams.cubeRatio;
+      this.rotatingCropRatios = styleParams.rotatingCropRatios;
+      this.smartCrop = styleParams.smartCrop;
+      this.cropOnlyFill = styleParams.cropOnlyFill;
+      this.imageMargin = styleParams.imageMargin;
+      this.galleryMargin = styleParams.galleryMargin;
+      this.floatingImages = styleParams.floatingImages;
+      this.smartCrop = styleParams.smartCrop;
+    }
 
     this._groupOffset = {
       top: 0,
