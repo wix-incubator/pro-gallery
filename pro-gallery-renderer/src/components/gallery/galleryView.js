@@ -175,7 +175,16 @@ class GalleryView extends React.Component {
 
       let paddingTop = 0;
       if (this.props.gotScrollEvent) {
-        const firstRenderedGroup = _.find(column, group => group.rendered) || {top: column[column.length - 1].bottom};
+        let firstRenderedGroup = _.find(column, group => group.rendered);
+        if (!firstRenderedGroup) {
+          if (this.props.scroll.top > 0) {
+            //gallery is above the fold
+            firstRenderedGroup = {top: column[column.length - 1].bottom};
+          } else {
+            //gallery is below the fold
+            firstRenderedGroup = {top: 0};
+          }
+        }
         paddingTop = firstRenderedGroup.top || 0;
       }
 
