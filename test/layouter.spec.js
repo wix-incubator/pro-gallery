@@ -48,7 +48,7 @@ describe('Layouter', () => {
     };
 
     container = {
-      galleryWidth: 1000,
+      width: 1000,
       bounds: {
         visibleTop: 0,
         visibleBottom: 1000,
@@ -104,9 +104,11 @@ describe('Layouter', () => {
     it('should support legacy container props', () => {
       const items = getItems();
 
-      const containerA = {galleryWidth: 100, galleryHeight: 200};
+      //old gallries already include the margin compensation
+      const containerA = {galleryWidth: 120, galleryHeight: 210};
       const layouterA = new Layouter({items, container: containerA, styleParams});
 
+      //new galleries don't need to compensate
       const containerB = {width: 100, height: 200};
       const layouterB = new Layouter({items, container: containerB, styleParams});
 
@@ -355,7 +357,7 @@ describe('Layouter', () => {
       container.galleryHeight = 500;
 
       styleParams.oneRow = false;
-      styleParams.imageMargin = 10;
+      styleParams.imageMargin = 0;
 
       gallery = getLayout({items, container, styleParams});
       expect(gallery.height).to.be.above(container.galleryHeight);

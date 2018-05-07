@@ -42,7 +42,7 @@ describe('Expected Layouts', () => {
     };
 
     container = {
-      galleryWidth: 1000,
+      width: 1000,
       bounds: {
         visibleTop: 0,
         visibleBottom: 1000,
