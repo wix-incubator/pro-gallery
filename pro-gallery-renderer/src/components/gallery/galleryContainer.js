@@ -69,39 +69,45 @@ export class GalleryContainer extends React.Component {
     this.reRenderForEditMode = this.reRenderForEditMode.bind(this);
     this.onResizeEvent = this.onResizeEvent.bind(this);
 
-    if (utils.isDev() && !utils.isTest()) {
+    let debouncer = _.throttle;
+    let debounceInterval = 2000;
+    if (!utils.isTest()) {
       try {
         switch (utils.safeLocalStorage().scrollThrottleMode) {
           case 'throttle250':
-            this.reRenderForScroll = _.throttle(this.reRenderForScroll, 250);
-            this.reRenderForHorizontalScroll = _.throttle(this.reRenderForHorizontalScroll, 250);
+            debounceInterval = 250;
             break;
           case 'throttle500':
-          default:
-            this.reRenderForScroll = _.throttle(this.reRenderForScroll, 500);
-            this.reRenderForHorizontalScroll = _.throttle(this.reRenderForHorizontalScroll, 500);
+            debounceInterval = 500;
             break;
           case 'throttle1000':
-            this.reRenderForScroll = _.throttle(this.reRenderForScroll, 1000);
-            this.reRenderForHorizontalScroll = _.throttle(this.reRenderForHorizontalScroll, 1000);
+            debounceInterval = 1000;
+            break;
+          default:
+          case 'throttle2000':
+            debounceInterval = 2000;
             break;
           case 'debounce100':
-            this.reRenderForScroll = _.debounce(this.reRenderForScroll, 100);
-            this.reRenderForHorizontalScroll = _.debounce(this.reRenderForHorizontalScroll, 100);
+            debounceInterval = 100;
+            debouncer = _.debounce;
             break;
           case 'debounce300':
-            this.reRenderForScroll = _.debounce(this.reRenderForScroll, 300);
-            this.reRenderForHorizontalScroll = _.debounce(this.reRenderForHorizontalScroll, 300);
+            debounceInterval = 300;
+            debouncer = _.debounce;
             break;
           case 'debounce500':
-            this.reRenderForScroll = _.debounce(this.reRenderForScroll, 500);
-            this.reRenderForHorizontalScroll = _.debounce(this.reRenderForHorizontalScroll, 500);
-            break;
-          case 'none':
+            debounceInterval = 500;
+            debouncer = _.debounce;
             break;
         }
+
+        this.reRenderForScroll = debouncer(this.reRenderForScroll, debounceInterval);
+        this.reRenderForHorizontalScroll = debouncer(this.reRenderForHorizontalScroll, debounceInterval);
+        if (utils.isVerbose()) {
+          console.log('debouncing scroll', debouncer, debounceInterval);
+        }
       } catch (e) {
-        //
+        console.error('Could not debounce scroll', e);
       }
     }
 
@@ -1462,6 +1468,7 @@ export class GalleryContainer extends React.Component {
         try {
           this.galleryWrapper = document.getElementById(`pro-gallery-${newProps.domId}`);
           this.boundingRect = this.galleryWrapper.getBoundingClientRect();
+          console.log(`Calculating bounding rect for domId ${newProps.domId}`, this.boundingRect);
         } catch (e) {
           this.galleryWrapper = null;
           this.boundingRect = null;
@@ -1903,10 +1910,10 @@ export class GalleryContainer extends React.Component {
       return this.currentScrollPosition;
     } else if (utils.isInWix() || utils.isWixIframe()) {
       if (params && _.isNumber(params.scrollTop) && _.isNumber(params.y)) {
+        let scrollBase = params.y || 0;
         if (this.boundingRect) {
-          params.y += this.boundingRect.y;
+          scrollBase += this.boundingRect.y;
         }
-        const scrollBase = params.y || 0;
         const scrollTop = params.scrollTop;
         this.pageScale = params.scale || 1;
         if (this.scrollBase !== scrollBase) {
@@ -2618,12 +2625,10 @@ export class GalleryContainer extends React.Component {
         window.requestAnimationFrame(() => {
           this._reRenderForScroll(params);
         });
-      } else if (utils.shouldDebug('paralax_st')) {
+      } else {
         setTimeout(() => {
           this._reRenderForScroll(params);
-        });
-      } else {
-        this._reRenderForScroll(params);
+        }, 500);
       }
     } catch (e) {
       console.error('Could not delay scroll handling', e);
@@ -2984,6 +2989,9 @@ export class GalleryContainer extends React.Component {
       convertToGalleryItems = {
         GalleryContainer.convertToGalleryItems
       }
+      domId = {
+        this.props.domId
+      }
       actions = {
         _.merge(this.props.actions, {
           toggleInfiniteScroll: this.toggleInfiniteScroll,
@@ -3043,6 +3051,9 @@ export class GalleryContainer extends React.Component {
       }
       gotScrollEvent = {
         this.state.gotScrollEvent
+      }
+      domId = {
+        this.props.domId
       }
       actions = {
         _.merge(this.props.actions, {

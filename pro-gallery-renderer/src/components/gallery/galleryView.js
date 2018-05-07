@@ -188,10 +188,25 @@ class GalleryView extends React.Component {
         paddingTop = firstRenderedGroup.top || 0;
       }
 
+/*
+      const debugStyles = {float: 'left', border: '5px solid black', boxSizing: 'border-box'};
+      const debugInner = group => (
+        <ul>
+          <li>Dom ID: {this.props.domId}</li>
+          <li>Scroll Top: {this.props.scroll.top}</li>
+          <li>Scroll Base: {this.props.scroll.base}</li>
+          <li>Visible Top: {this.props.container.bounds.visibleTop}</li>
+          <li>Visible Bottom: {this.props.container.bounds.visibleBottom}</li>
+          <li>Group Top: {group.top}</li>
+          <li>Group Left: {group.left}</li>
+        </ul>
+      );
+*/
       return (
         <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
              style={{width: columnsW[c], paddingTop}}>
           {column.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+          {/* {column.map(group => group.rendered ? (group.visible ? <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'green'})}>{debugInner(group)}</div> : <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'red'})} >{debugInner(group)}</div>) : false)} */}
         </div>
       );
 
