@@ -166,11 +166,11 @@ class Utils {
     const width = container.width || container.galleryWidth;
     const height = container.height || container.galleryHeight;
 
-    if (width >= 0) {
+    if (container.width >= 0) {
       convertedContainer.galleryWidth = width + ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0)) * 2;
       delete convertedContainer.width;
     }
-    if (height >= 0) {
+    if (container.height >= 0) {
       convertedContainer.galleryHeight = height + ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0));
       delete convertedContainer.height;
     }

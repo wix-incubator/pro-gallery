@@ -722,7 +722,6 @@ export class Group {
     }
   }
 
-  //todo - move to the group class
   calcVisibilities(bounds) {
     if (bounds === true || this.showAllItems === true) {
       this.onscreen = this.visible = this.rendered = this.required = true;
