@@ -2625,6 +2625,8 @@ export class GalleryContainer extends React.Component {
         window.requestAnimationFrame(() => {
           this._reRenderForScroll(params);
         });
+      } else if (utils.isTest()) {
+        this._reRenderForScroll(params);
       } else {
         setTimeout(() => {
           this._reRenderForScroll(params);
