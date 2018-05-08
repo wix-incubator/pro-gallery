@@ -168,16 +168,18 @@ class GalleryView extends React.Component {
     };
 
     const columns = this.props.galleryStructure.columns;
+    const columnsW = _.fill(Array(columns.length), this.props.galleryStructure.colWidth);
+    columnsW[columns.length - 1] += (this.props.container.galleryWidth - _.sum(columnsW));
 
     const layout = _.map(columns, (column, c) => {
 
       let paddingTop = 0;
       if (this.props.gotScrollEvent) {
-        let firstRenderedGroup = _.find(column.groups, group => group.rendered);
+        let firstRenderedGroup = _.find(column, group => group.rendered);
         if (!firstRenderedGroup) {
           if (this.props.scroll.top > 0) {
             //gallery is above the fold
-            firstRenderedGroup = {top: column.groups[column.groups.length - 1].bottom};
+            firstRenderedGroup = {top: column[column.length - 1].bottom};
           } else {
             //gallery is below the fold
             firstRenderedGroup = {top: 0};
@@ -199,12 +201,12 @@ class GalleryView extends React.Component {
           <li>Group Left: {group.left}</li>
         </ul>
       );
-      {column.map(group => group.rendered ? (group.visible ? <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'green'})}>{debugInner(group)}</div> : <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'red'})} >{debugInner(group)}</div>) : false)}
 */
-      return column.galleryGroups.length && (
+      return (
         <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
-             style={{width: column.width, paddingTop}}>
-          {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+             style={{width: columnsW[c], paddingTop}}>
+          {column.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+          {/* {column.map(group => group.rendered ? (group.visible ? <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'green'})}>{debugInner(group)}</div> : <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'red'})} >{debugInner(group)}</div>) : false)} */}
         </div>
       );
 
