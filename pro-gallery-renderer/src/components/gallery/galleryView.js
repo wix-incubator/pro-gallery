@@ -199,7 +199,7 @@ class GalleryView extends React.Component {
           <li>Group Left: {group.left}</li>
         </ul>
       );
-      {column.map(group => group.rendered ? (group.visible ? <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'green'})}>{debugInner(group)}</div> : <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'red'})} >{debugInner(group)}</div>) : false)}
+      {column.galleryGroups.map(group => group.rendered ? (group.visible ? <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'green'})}>{debugInner(group)}</div> : <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'red'})} >{debugInner(group)}</div>) : false)}
 */
       return column.galleryGroups.length && (
         <div data-hook="gallery-column" className="gallery-column" key={'column' + c}

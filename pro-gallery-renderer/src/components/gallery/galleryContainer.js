@@ -1532,7 +1532,7 @@ export class GalleryContainer extends React.Component {
       return this.state.renderedItemsCount;
     }
 
-    const toGroup = _.last(_.last(this.galleryStructure.columns));
+    const toGroup = _.last(this.galleryStructure.groups);
     const galleryHeight = this.galleryStructure.height * utils.getViewportScaleRatio();
 
     const addAfter = this.getLatestState('gotScrollEvent') && (galleryHeight - container.galleryHeight <= (10 + styleParams.imageMargin + styleParams.galleryMargin) * 2) && (!toGroup || toGroup.rendered); //if the last item is already rendered - get more items
@@ -2538,11 +2538,7 @@ export class GalleryContainer extends React.Component {
       if (utils.isVerbose()) {
         console.time('Recalculating Gallery - new');
       }
-      const layout = (new Layouter(layoutParams));
-      galleryStructure = GalleryContainer.convertToGalleryItems(layout, {
-        watermark: this.props.watermarkData,
-        sharpParams: layoutParams.styleParams.sharpParams
-      });
+      galleryStructure = (new Layouter(layoutParams));
       if (utils.isVerbose()) {
         console.timeEnd('Recalculating Gallery - new');
       }
@@ -2567,15 +2563,14 @@ export class GalleryContainer extends React.Component {
       }
       galleryStructure.createLayout(layoutParams);
       galleryStructure.calcVisibilities(getState('container.bounds'));
-      galleryStructure = GalleryContainer.convertToGalleryItems(galleryStructure, {
-        watermark: this.props.watermarkData,
-        sharpParams: layoutParams.styleParams.sharpParams
-      });
       if (utils.isVerbose()) {
         console.timeEnd('Recalculating Gallery - prepare');
       }
-
     }
+    galleryStructure = GalleryContainer.convertToGalleryItems(galleryStructure, {
+      watermark: this.props.watermarkData,
+      sharpParams: layoutParams.styleParams.sharpParams
+    });
 
     window.galleryStructure = galleryStructure; //save on window for fullscreen access
 
