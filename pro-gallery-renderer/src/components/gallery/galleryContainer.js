@@ -2480,29 +2480,24 @@ export class GalleryContainer extends React.Component {
     let pointer = 0;
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
-      for (let g = 0; g < column.length; g++) {
-        const group = column[g];
-        if (!group.isGalleryGroup) {
-          const groupItems = [];
-          for (let i = 0; i < group.items.length; i++) {
-            const item = group.items[i];
-            if (!item.isGalleryItem) {
-              groupItems[i] = new GalleryItem(Object.assign({
-                scheme: item.scheme,
-                dto: item.dto
-              }, itemConfig));
-            } else {
-              groupItems[i] = group.items[i];
-            }
-            galleryStructure.items[item.idx] = groupItems[i];
-            pointer++;
-          }
-          column[g] = new GalleryGroup({
-            scheme: group.scheme,
-            dto: group.dto,
-            items: groupItems
-          });
+      column.galleryGroups = column.galleryGroups || [];
+      for (let g = 0; g < column.groups.length; g++) {
+        const group = column.groups[g];
+        const groupItems = [];
+        for (let i = 0; i < group.items.length; i++) {
+          const item = group.items[i];
+          groupItems[i] = new GalleryItem(Object.assign({
+            scheme: item.scheme,
+            dto: item.dto
+          }, itemConfig));
+          galleryStructure.items[item.idx] = groupItems[i];
+          pointer++;
         }
+        column.galleryGroups[g] = new GalleryGroup({
+          scheme: group.scheme,
+          dto: group.dto,
+          items: groupItems
+        });
       }
     }
 
@@ -2513,9 +2508,19 @@ export class GalleryContainer extends React.Component {
 
     const getState = (key, defaultValue) => _.get(structureState, key) || this.getLatestState(key, defaultValue);
 
+    const convertDtoToLayoutItem = dto => {
+      const metadata = utils.parseStringObject(dto.metaData) || {};
+      return {
+        id: dto.itemId,
+        width: metadata.width,
+        height: metadata.height,
+        ...dto,
+      };
+    };
+
     //either create a new gallery or rerender the existing (if a substential change happend) or just set visibilities (on scroll)
     const layoutParams = {
-      items: this.items.slice(0, getState('renderedItemsCount', 50)),
+      items: this.items.slice(0, getState('renderedItemsCount', 50)).map(item => convertDtoToLayoutItem(item)),
       container: getState('container'),
       styleParams: getState('styleParams'),
       gotScrollEvent: getState('gotScrollEvent')
