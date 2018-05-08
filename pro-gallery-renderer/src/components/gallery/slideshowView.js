@@ -286,7 +286,7 @@ class SlideshowView extends React.Component {
           return (
             <div data-hook="gallery-column" className="gallery-column" key={'thumbnails-column' + c}
                  style={thumbnailsStyle}>
-              {column.map(group => React.createElement(GroupView, group.renderProps(thumbnailsConfig)))}
+              {column.groups.map(group => React.createElement(GroupView, group.renderProps(thumbnailsConfig)))}
             </div>
           );
 
@@ -300,7 +300,7 @@ class SlideshowView extends React.Component {
 
   setFlattenItems(galleryStructure) {
     const flatItems = _.flattenDeep(galleryStructure.columns.map((column, c) => {
-      return column.map((group, g) => {
+      return column.groups.map((group, g) => {
         return group.items;
       });
     }));
@@ -448,13 +448,13 @@ class SlideshowView extends React.Component {
       this.props.galleryStructure.columns.map((column, c) => {
 
         let marginLeft = 0;
-        const firstGroup = _.find(column, group => group.rendered) || {};
+        const firstGroup = _.find(column.groups, group => group.rendered) || {};
         if (this.props.gotScrollEvent) {
           marginLeft = firstGroup.left || 0;
         }
 
         //remove navBars if no scroll is needed and is column layout
-        const allRenderedGroups = _.filter(column, group => group.rendered) || [];
+        const allRenderedGroups = _.filter(column.groups, group => group.rendered) || [];
         const allGroupsWidth = allRenderedGroups.reduce((sum, group) => {
           return sum + group.width;
         }, 0);
@@ -463,14 +463,13 @@ class SlideshowView extends React.Component {
           navArrows = false;
         }
 
-        return (
+        return column.galleryGroups.length && (
           <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
-               style={{width: this.props.galleryStructure.colWidth}}>
+               style={{width: column.width}}>
             <div className="gallery-left-padding" style={{width: marginLeft}}></div>
-            {column.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+            {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
           </div>
         );
-
       })
     );
 
