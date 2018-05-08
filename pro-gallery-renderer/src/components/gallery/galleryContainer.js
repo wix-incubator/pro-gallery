@@ -2509,9 +2509,9 @@ export class GalleryContainer extends React.Component {
     const getState = (key, defaultValue) => _.get(structureState, key) || this.getLatestState(key, defaultValue);
 
     const convertDtoToLayoutItem = dto => {
-      const metadata = utils.parseStringObject(dto.metaData) || {};
+      const metadata = _.isObject(dto.metadata) ? dto.metadata : (utils.parseStringObject(dto.metaData) || {});
       return {
-        id: dto.itemId,
+        id: dto.itemId || dto.photoId,
         width: metadata.width,
         height: metadata.height,
         ...dto,
