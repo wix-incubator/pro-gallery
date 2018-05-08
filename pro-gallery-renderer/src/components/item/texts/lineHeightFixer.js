@@ -108,8 +108,6 @@ class LineHeightFixer {
           // this.hideElement(customButtonElement);
         }
       }
-    } else {
-      availableHeight -= spaceBetweenElements;
     }
 
 
