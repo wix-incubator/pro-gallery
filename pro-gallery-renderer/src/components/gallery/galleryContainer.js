@@ -2488,9 +2488,10 @@ export class GalleryContainer extends React.Component {
 
   static convertToGalleryItems(galleryStructure, itemConfig = {}) {
     let pointer = 0;
+    galleryStructure.galleryItems = [];
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
-      column.galleryGroups = column.galleryGroups || [];
+      column.galleryGroups = [];
       const groups = (column.groups || column);
       for (let g = 0; g < groups.length; g++) {
         const group = groups[g];
@@ -2501,7 +2502,7 @@ export class GalleryContainer extends React.Component {
             scheme: item.scheme,
             dto: item.dto
           }, itemConfig));
-          galleryStructure.items[item.idx] = groupItems[i];
+          galleryStructure.galleryItems[item.idx] = groupItems[i];
           pointer++;
         }
         column.galleryGroups[g] = new GalleryGroup({
