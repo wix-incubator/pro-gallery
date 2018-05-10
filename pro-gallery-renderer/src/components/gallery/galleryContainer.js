@@ -2477,7 +2477,8 @@ export class GalleryContainer extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   static convertDtoToLayoutItem(dto) {
-    const metadata = _.isObject(dto.metadata) ? dto.metadata : (utils.parseStringObject(dto.metaData) || {});
+    const dtoMetadata = dto.metadata || dto.metaData;
+    const metadata = _.isObject(dtoMetadata) ? dtoMetadata : (utils.parseStringObject(dtoMetadata) || {});
     return {
       id: dto.itemId || dto.photoId,
       width: metadata.width,
