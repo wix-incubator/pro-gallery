@@ -2525,7 +2525,8 @@ export class GalleryContainer extends React.Component {
       items: this.items.slice(0, getState('renderedItemsCount', 50)).map(item => GalleryContainer.convertDtoToLayoutItem(item)),
       container: getState('container'),
       styleParams: getState('styleParams'),
-      gotScrollEvent: getState('gotScrollEvent')
+      gotScrollEvent: getState('gotScrollEvent'),
+      showAllItems: utils.browserIs('explorer')
     };
 
     if (utils.isVerbose()) {
