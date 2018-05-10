@@ -1916,7 +1916,7 @@ export class GalleryContainer extends React.Component {
         }
         const scrollTop = params.scrollTop;
         this.pageScale = params.scale || 1;
-        if (this.scrollBase !== scrollBase) {
+        if (this.scrollBase !== scrollBase && _.isNumber(scrollBase) && !_.isNaN(scrollBase)) {
           if (utils.isDev()) {
             console.log('gallery ' + this.compId + ' scroll base has changed from ' + this.scrollBase + ' to ' + scrollBase);
           }
@@ -2526,7 +2526,7 @@ export class GalleryContainer extends React.Component {
       container: getState('container'),
       styleParams: getState('styleParams'),
       gotScrollEvent: getState('gotScrollEvent'),
-      showAllItems: utils.browserIs('explorer')
+      // showAllItems: utils.browserIs('explorer')
     };
 
     if (utils.isVerbose()) {
@@ -2548,7 +2548,7 @@ export class GalleryContainer extends React.Component {
 
     } else if (this.renderTrigger === this.renderTriggers.SCROLL) {
 
-      if (!utils.browserIs('explorer')) {
+      // if (!utils.browserIs('explorer')) {
         if (utils.isVerbose()) {
           console.time('Recalculating Gallery - visibilities');
         }
@@ -2556,7 +2556,7 @@ export class GalleryContainer extends React.Component {
         if (utils.isVerbose()) {
           console.timeEnd('Recalculating Gallery - visibilities');
         }
-      }
+      // }
 
     } else {
 
