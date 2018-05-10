@@ -98,7 +98,7 @@ class GalleryItem {
     this.ratio = scheme.ratio;
     this.cubeRatio = scheme.cropRatio;
     this.cubeImages = scheme.isCropped;
-    this.cubeType = scheme.cropType;
+    this.cubeType = scheme.cropType || 'fill';
     this.offset = scheme.offset;
     this.group = scheme.group;
     this.transform = scheme.transform;
