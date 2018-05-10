@@ -11,6 +11,7 @@ class GalleryItem {
 
     this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
+    this.createdBy = config.createdBy;
 
     if (config.dto && config.dto.dto) {
       config.dto = config.dto.dto; //defence patch due to mis-use of item-core
@@ -485,8 +486,8 @@ class GalleryItem {
 
   createUrls() {
     const devicePixelRatio = this.useImageClientApi() ? 1 : utils.getDevicePixelRatio(); // when using ImageClientAPI the devicePixelRatio is added automatically
-    const maxWidth = this.maxWidth || this.dto.width;
-    const maxHeight = this.maxHeight || this.dto.height;
+    const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
+    const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
     // const maxWidth = this.cubeImages ? Math.min(this.maxWidth, this.maxHeight) : this.maxWidth;
     // const maxHeight = this.cubeImages ? Math.min(this.maxWidth, this.maxHeight) : this.maxHeight;
     this.resizeWidth = Math.min(maxWidth, Math.ceil(this.width * devicePixelRatio));

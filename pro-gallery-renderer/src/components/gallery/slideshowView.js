@@ -224,7 +224,7 @@ class SlideshowView extends React.Component {
     }), {watermark: this.props.watermark});
 
     const thumbnailsConfig = {
-      scroll: _.merge({}, this.props.scroll, {}),
+      scroll: _.merge({}, this.props.scroll || {}),
       thumbnailHighlightId: _.get(this, `props.items.${currentIdx}.itemId`),
       watermark: this.props.watermark,
       container,

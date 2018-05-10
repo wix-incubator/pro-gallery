@@ -2329,7 +2329,7 @@ export class GalleryContainer extends React.Component {
       return;
     }
 
-    const items = this.resetItems(fullscreenData.currentGalleryItems);
+    // this.items = this.resetItems(fullscreenData.currentGalleryItems);
 
     if (!utils.isSemiNative()) {
       document.getElementById('content').style.display = 'block';
@@ -2337,7 +2337,7 @@ export class GalleryContainer extends React.Component {
 
     //get current items from window - it was placed there by the fullscreen
     utils.setStateAndLog(this, 'Fullscreen Callback', {
-      items
+      items: this.itemsIds(fullscreenData.currentGalleryItems)
     });
 
     this.shouldScrollTo = fullscreenData.currentGalleryItemIdx;
