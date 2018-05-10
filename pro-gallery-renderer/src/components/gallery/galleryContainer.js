@@ -2548,12 +2548,14 @@ export class GalleryContainer extends React.Component {
 
     } else if (this.renderTrigger === this.renderTriggers.SCROLL) {
 
-      if (utils.isVerbose()) {
-        console.time('Recalculating Gallery - visibilities');
-      }
-      galleryStructure.calcVisibilities(getState('container.bounds'));
-      if (utils.isVerbose()) {
-        console.timeEnd('Recalculating Gallery - visibilities');
+      if (!utils.browserIs('explorer')) {
+        if (utils.isVerbose()) {
+          console.time('Recalculating Gallery - visibilities');
+        }
+        galleryStructure.calcVisibilities(getState('container.bounds'));
+        if (utils.isVerbose()) {
+          console.timeEnd('Recalculating Gallery - visibilities');
+        }
       }
 
     } else {
@@ -2565,7 +2567,6 @@ export class GalleryContainer extends React.Component {
         console.time('Recalculating Gallery - prepare');
       }
       galleryStructure.createLayout(layoutParams);
-      galleryStructure.calcVisibilities(getState('container.bounds'));
       if (utils.isVerbose()) {
         console.timeEnd('Recalculating Gallery - prepare');
       }
