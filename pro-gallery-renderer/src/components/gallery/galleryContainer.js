@@ -2549,13 +2549,13 @@ export class GalleryContainer extends React.Component {
     } else if (this.renderTrigger === this.renderTriggers.SCROLL) {
 
       // if (!utils.browserIs('explorer')) {
-        if (utils.isVerbose()) {
-          console.time('Recalculating Gallery - visibilities');
-        }
-        galleryStructure.calcVisibilities(getState('container.bounds'));
-        if (utils.isVerbose()) {
-          console.timeEnd('Recalculating Gallery - visibilities');
-        }
+      if (utils.isVerbose()) {
+        console.time('Recalculating Gallery - visibilities');
+      }
+      galleryStructure.calcVisibilities(getState('container.bounds'));
+      if (utils.isVerbose()) {
+        console.timeEnd('Recalculating Gallery - visibilities');
+      }
       // }
 
     } else {
