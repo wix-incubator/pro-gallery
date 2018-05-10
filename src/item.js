@@ -22,10 +22,11 @@ export class Item {
     this.idx = config.idx;
     this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
+    this.cubeType = 'fill';
 
     if (config.styleParams) {
       const {styleParams} = config;
-      this.cubeType = styleParams.cubeType || 'fill';
+      this.cubeType = styleParams.cubeType;
       this.cubeImages = styleParams.cubeImages;
       this._cubeRatio = styleParams.cubeRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
@@ -280,7 +281,7 @@ export class Item {
       ratio = this.ratio;
     }
     if (!ratio) {
-      ratio = this._cubeRatio;
+      ratio = this._cubeRatio || this.ratio;
     }
     ratio = Number(ratio);
 
