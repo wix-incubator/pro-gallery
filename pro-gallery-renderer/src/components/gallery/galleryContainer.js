@@ -1118,6 +1118,10 @@ export class GalleryContainer extends React.Component {
       stateStyles.rotatingGroupTypes = String(wixStyles.rotatingGroupTypes);
     }
 
+    if (canSet('rotatingCropRatios')) {
+      stateStyles.rotatingCropRatios = String(wixStyles.rotatingCropRatios);
+    }
+
     if (canSet('borderRadius')) {
       stateStyles.borderRadius = Number(wixStyles.borderRadius);
     }
