@@ -198,7 +198,7 @@ class SlideshowView extends React.Component {
     });
 
     const thumbnailsLayout = this.props.convertToGalleryItems(new Layouter({
-      items: this.props.items.slice(this.firstItemIdx, this.lastItemIdx + 1),
+      items: this.props.items.slice(this.firstItemIdx, this.lastItemIdx + 1).map(item => this.props.convertDtoToLayoutItem(item)),
       container,
       watermark: this.props.watermark,
       styleParams: {
@@ -286,7 +286,7 @@ class SlideshowView extends React.Component {
           return (
             <div data-hook="gallery-column" className="gallery-column" key={'thumbnails-column' + c}
                  style={thumbnailsStyle}>
-              {column.groups.map(group => React.createElement(GroupView, group.renderProps(thumbnailsConfig)))}
+              {column.galleryGroups.map(group => React.createElement(GroupView, group.renderProps(thumbnailsConfig)))}
             </div>
           );
 
@@ -300,7 +300,7 @@ class SlideshowView extends React.Component {
 
   setFlattenItems(galleryStructure) {
     const flatItems = _.flattenDeep(galleryStructure.columns.map((column, c) => {
-      return column.groups.map((group, g) => {
+      return column.galleryGroups.map((group, g) => {
         return group.items;
       });
     }));

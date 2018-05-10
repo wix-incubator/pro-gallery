@@ -2476,13 +2476,24 @@ export class GalleryContainer extends React.Component {
 
   //-----------------------------------------| RENDER |--------------------------------------------//
 
+  static convertDtoToLayoutItem(dto) {
+    const metadata = _.isObject(dto.metadata) ? dto.metadata : (utils.parseStringObject(dto.metaData) || {});
+    return {
+      id: dto.itemId || dto.photoId,
+      width: metadata.width,
+      height: metadata.height,
+      ...dto,
+    };
+  }
+
   static convertToGalleryItems(galleryStructure, itemConfig = {}) {
     let pointer = 0;
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
       column.galleryGroups = column.galleryGroups || [];
-      for (let g = 0; g < column.groups.length; g++) {
-        const group = column.groups[g];
+      const groups = (column.groups || column);
+      for (let g = 0; g < groups.length; g++) {
+        const group = groups[g];
         const groupItems = [];
         for (let i = 0; i < group.items.length; i++) {
           const item = group.items[i];
@@ -2508,19 +2519,9 @@ export class GalleryContainer extends React.Component {
 
     const getState = (key, defaultValue) => _.get(structureState, key) || this.getLatestState(key, defaultValue);
 
-    const convertDtoToLayoutItem = dto => {
-      const metadata = _.isObject(dto.metadata) ? dto.metadata : (utils.parseStringObject(dto.metaData) || {});
-      return {
-        id: dto.itemId || dto.photoId,
-        width: metadata.width,
-        height: metadata.height,
-        ...dto,
-      };
-    };
-
     //either create a new gallery or rerender the existing (if a substential change happend) or just set visibilities (on scroll)
     const layoutParams = {
-      items: this.items.slice(0, getState('renderedItemsCount', 50)).map(item => convertDtoToLayoutItem(item)),
+      items: this.items.slice(0, getState('renderedItemsCount', 50)).map(item => GalleryContainer.convertDtoToLayoutItem(item)),
       container: getState('container'),
       styleParams: getState('styleParams'),
       gotScrollEvent: getState('gotScrollEvent')
@@ -2990,6 +2991,9 @@ export class GalleryContainer extends React.Component {
       }
       convertToGalleryItems = {
         GalleryContainer.convertToGalleryItems
+      }
+      convertDtoToLayoutItem = {
+        GalleryContainer.convertDtoToLayoutItem
       }
       domId = {
         this.props.domId
