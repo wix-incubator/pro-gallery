@@ -71,7 +71,7 @@ export class GalleryContainer extends React.Component {
 
     let debouncer = _.throttle;
     let debounceInterval = 2000;
-    if (!utils.isTest()) {
+    if (!utils.browserIs('explorer') && !utils.isTest()) {
       try {
         switch (utils.safeLocalStorage().scrollThrottleMode) {
           case 'throttle250':
@@ -2627,7 +2627,7 @@ export class GalleryContainer extends React.Component {
         window.requestAnimationFrame(() => {
           this._reRenderForScroll(params);
         });
-      } else if (utils.isTest()) {
+      } else if (utils.browserIs('explorer') || utils.isTest()) {
         this._reRenderForScroll(params);
       } else {
         setTimeout(() => {
