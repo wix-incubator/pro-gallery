@@ -201,7 +201,7 @@ class GalleryView extends React.Component {
       );
       {column.galleryGroups.map(group => group.rendered ? (group.visible ? <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'green'})}>{debugInner(group)}</div> : <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'red'})} >{debugInner(group)}</div>) : false)}
 */
-      return column.galleryGroups.length && (
+      return !!column.galleryGroups.length && (
         <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
              style={{width: column.width, paddingTop}}>
           {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}

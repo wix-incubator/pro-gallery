@@ -15,7 +15,7 @@ describe('Slideshow View', () => {
 
     galleryDriver = new GalleryDriver();
     galleryViewProps = galleryDriver.create.galleryViewProps();
-
+    galleryViewProps.styleParams.oneRow = true;
 
   });
 
@@ -58,11 +58,9 @@ describe('Slideshow View', () => {
     //   galleryViewProps.styleParams.hasThumbnails = true;
     //   galleryViewProps.styleParams.galleryThumbnailsAlignment = 'top';
     //   galleryViewProps.thumbnailSize = 90;
-    //
     //   const wrapper = mount(<SlideshowView
     //     {...galleryDriver.create.galleryViewProps(galleryViewProps)}
     //   />);
-    //
     //   expect(wrapper.find({'data-hook': 'gallery-thumbnails'}).length).to.equal(1);
     // });
 

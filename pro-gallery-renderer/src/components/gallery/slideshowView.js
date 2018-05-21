@@ -29,18 +29,13 @@ class SlideshowView extends React.Component {
   }
 
   isFirstItem() {
-    if (!_.isUndefined(this.state.currentIdx)) {
-      return this.state.currentIdx === 0;
-    }
-
-    return this.props.scroll.top === 0;
-
+    return (this.state.currentIdx === 0) || (this.props.scroll.top === 0);
   }
 
   isLastItem() {
-
-    return this.state.currentIdx >= this.props.totalItemsCount - 1;
-
+    const [lastGroup] = this.props.galleryStructure.groups.slice(-1);
+    const isLastItem = (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastGroup || (this.props.container.galleryWidth + this.props.scroll.top >= lastGroup.right);
+    return isLastItem;
   }
 
   nextItem(dir) {
@@ -456,14 +451,14 @@ class SlideshowView extends React.Component {
         //remove navBars if no scroll is needed and is column layout
         const allRenderedGroups = _.filter(column.groups, group => group.rendered) || [];
         const allGroupsWidth = allRenderedGroups.reduce((sum, group) => {
-          return sum + group.width;
+          return sum + Math.max(0, group.width);
         }, 0);
         const isAllItemsFitsGalleryWidth = this.props.styleParams.oneRow && (this.props.container.galleryWidth >= allGroupsWidth);
         if (isAllItemsFitsGalleryWidth) {
           navArrows = false;
         }
 
-        return column.galleryGroups.length && (
+        return !!column.galleryGroups.length && (
           <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
                style={{width: column.width}}>
             <div className="gallery-left-padding" style={{width: marginLeft}}></div>
