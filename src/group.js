@@ -112,7 +112,7 @@ export class Group {
 
     //round all sizes to full pixels
 
-    if (this.isLastGroup) {
+    if (this.isLastGroup && !this.oneRow) {
       this.width = this.stripWidth - this.left;
     } else {
       this.width = Math.round(this.width);
