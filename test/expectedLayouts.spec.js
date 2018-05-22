@@ -9,7 +9,20 @@ import expectedOffsets from './expectedOffsets';
 
 const getItems = count => deepFreeze(testImages.slice(0, count));
 
-const log = require('log-to-file');
+const fs = require('fs');
+
+const logToFile = (text, overwrite) => {
+	// Define file name.
+	const filename = 'test/expectedOffsets.js';
+	// Define log text.
+	const logText = text + '\r\n';
+  // Save log to file.
+  if (overwrite) {
+    fs.writeFileSync(filename, logText, 'utf8');
+  } else {
+    fs.appendFileSync(filename, logText, 'utf8');
+  }
+}
 
 describe('Expected Layouts', () => {
 
@@ -83,6 +96,10 @@ describe('Expected Layouts', () => {
     };
 
     const startTime = Date.now();
+    if (isDebug) {
+      logToFile('\/* eslint-disable *\/', true);
+      logToFile('export default [');
+    }
     for (let seed = 1; seed < totalOptions[totalOptions.length - 1]; seed++) {
       const styleParams = (selectStyleParams(seed));
 
@@ -98,11 +115,13 @@ describe('Expected Layouts', () => {
         if (!(seed % 100)) {
           console.log(`Completed ${Math.round(100 * seed / totalOptions[totalOptions.length - 1])}% ${seed}/${totalOptions[totalOptions.length - 1]} layouts (${Math.floor((Date.now() - startTime) / 1000)}s)`);
         }
-        log('\'' + offsets + '\',');
+        logToFile('\'' + offsets + '\',');
       } else {
-        expect(offsets).to.equal(expectedOffsets[seed - 1]);
+        expect(seed + '|' + offsets).to.equal(seed + '|' + expectedOffsets[seed - 1]);
       }
     }
-
+    if (isDebug) {
+      logToFile('];');
+    }
   });
 });
