@@ -681,6 +681,7 @@ export class GalleryContainer extends React.Component {
         enableScroll: true,
         isGrid: false,
         isSlider: false,
+        isMasonry: false,
         isColumns: false,
         isSlideshow: false,
         cropOnlyFill: false
@@ -696,6 +697,7 @@ export class GalleryContainer extends React.Component {
         enableScroll: true,
         isGrid: false,
         isSlider: false,
+        isMasonry: true,
         isColumns: false,
         isSlideshow: false,
         cropOnlyFill: false,
@@ -718,6 +720,7 @@ export class GalleryContainer extends React.Component {
         isSlider: false,
         isColumns: false,
         isGrid: true,
+        isMasonry: false,
         isSlideshow: false,
         minItemSize: 50
       },
@@ -740,6 +743,7 @@ export class GalleryContainer extends React.Component {
         enableScroll: false,
         isGrid: false,
         isSlider: false,
+        isMasonry: false,
         isColumns: false,
         isSlideshow: false,
         cropOnlyFill: false,
@@ -762,6 +766,7 @@ export class GalleryContainer extends React.Component {
         isGrid: false,
         isSlider: true,
         isColumns: false,
+        isMasonry: false,
         isSlideshow: false,
         cropOnlyFill: true
       },
@@ -785,6 +790,7 @@ export class GalleryContainer extends React.Component {
         enableScroll: false,
         isGrid: false,
         isColumns: false,
+        isMasonry: false,
         isSlider: false,
         isSlideshow: true,
         cropOnlyFill: false,
@@ -806,6 +812,7 @@ export class GalleryContainer extends React.Component {
         enableScroll: true,
         isGrid: false,
         isColumns: false,
+        isMasonry: false,
         isSlider: false,
         isSlideshow: false,
         cropOnlyFill: false
@@ -827,6 +834,7 @@ export class GalleryContainer extends React.Component {
         enableScroll: true,
         isGrid: false,
         isColumns: true,
+        isMasonry: false,
         isSlider: false,
         isSlideshow: false,
         cropOnlyFill: false
@@ -851,6 +859,7 @@ export class GalleryContainer extends React.Component {
         isGrid: false,
         isSlider: false,
         isColumns: false,
+        isMasonry: false,
         isSlideshow: false,
         cropOnlyFill: false,
         floatingImages: 0,
@@ -1194,7 +1203,7 @@ export class GalleryContainer extends React.Component {
       }
     }
 
-    if (stateStyles.isGrid && !stateStyles.oneRow) {
+    if ((stateStyles.isGrid && !stateStyles.oneRow) || (stateStyles.isMasonry && stateStyles.isVertical)) {
       // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
       //If toggle is for Items per row, fill the fixedColumns with the number of items
       //If toggle is responsive, make fixedColumns to be 0 or undefined;
