@@ -115,7 +115,7 @@ export default class Layouter {
     gallerySize = this.styleParams.isVertical ? Math.floor(galleryWidth / numOfCols) : gallerySize;
 
     const columns = fill(Array(numOfCols), 0).map((column, idx) => new Column(idx, gallerySize, this.styleParams.cubeRatio));
-    columns[numOfCols - 1].width += Math.max(0, (galleryWidth - (gallerySize * numOfCols))); //the last group compensates for half pixels in other groups
+    columns[numOfCols - 1].width += (galleryWidth - (gallerySize * numOfCols)); //the last group compensates for half pixels in other groups
     columns[numOfCols - 1].cubeRatio = this.styleParams.cubeRatio * (columns[numOfCols - 1].width / gallerySize); //fix the last group's cube ratio
 
     let maxLoops = this.srcItems.length * 10;
