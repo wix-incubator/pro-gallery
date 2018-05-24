@@ -29,7 +29,7 @@
     "lodash": "^4.17.4",
     "photography-client-lib": "^1.0.64",
     "prepend-http-extra": "^1.0.0",
-    "pro-gallery-layouter": "^2.0.6",
+    "pro-gallery-layouter": "^2.0.14",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-player-fork": "^0.12.106",
