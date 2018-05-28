@@ -510,6 +510,10 @@ class GalleryItem {
     this.sample_url = this.resizedUrl('fit', 500, 500, this.sharpParams, false, true);
 
     this.download_url = utils.isStoreGallery() ? this.sample_url : {img: this.getOriginalsUrl(), mp4: this.full_url.mp4};
+    if (this.download_url.img) {
+      this.download_url.img += `?dn=${this.fileName}`; //https://jira.wixpress.com/browse/PHOT-129#
+    }
+
   }
 
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, noCrop) {
