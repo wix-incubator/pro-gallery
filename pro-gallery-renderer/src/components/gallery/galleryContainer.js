@@ -21,6 +21,9 @@ import {
   spacingVersionManager
 } from 'photography-client-lib/dist/src/versioning/features/spacing';
 import {
+  layoutsVersionManager
+} from 'photography-client-lib/dist/src/versioning/features/layouts';
+import {
   itemActions,
   Consts,
   versionManager,
@@ -1203,7 +1206,7 @@ export class GalleryContainer extends React.Component {
       }
     }
 
-    if ((stateStyles.isGrid && !stateStyles.oneRow) || (stateStyles.isMasonry && stateStyles.isVertical)) {
+    if ((stateStyles.isGrid && !stateStyles.oneRow) || (layoutsVersionManager.allowFixedColumnsInMasonry() && stateStyles.isMasonry && stateStyles.isVertical)) {
       // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
       //If toggle is for Items per row, fill the fixedColumns with the number of items
       //If toggle is responsive, make fixedColumns to be 0 or undefined;
