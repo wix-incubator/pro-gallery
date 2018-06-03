@@ -34,6 +34,7 @@ import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 
 const adiLoadMoreMaxHeight = 2000;
+const adiHorizontalHeight = 600;
 try {
   window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
 } catch (e) {
@@ -2069,6 +2070,9 @@ export class GalleryContainer extends React.Component {
         } else if (!this.state.styleParams.oneRow && this.state.styleParams.isInAdi && !this.state.styleParams.enableInfiniteScroll) {
           newHeight = Math.min(newHeight, adiLoadMoreMaxHeight);
           should = true;
+        } else if (this.state.styleParams.oneRow && this.state.styleParams.isInAdi) {
+          newHeight = adiHorizontalHeight;
+          should = true;
         }
       }
 
@@ -2868,7 +2872,7 @@ export class GalleryContainer extends React.Component {
         console.time('SCROLL - (' + trigger + ') time of setting new state for gallery');
       }
 
-      const isLayoutDefined = layout => (layout && layout.replace(/(undefined)[|]?/g, '') !== '');
+      const isLayoutDefined = layout => (String(layout) && String(layout).replace(/(undefined)[|]?/g, '') !== '');
       const isChangedLayout = isNewLayout && isLayoutDefined(this.newState.styleParams.selectedLayout) && isLayoutDefined(this.state.styleParams.selectedLayout); //used to prevent setting height on first layout reRender
 
       utils.setStateAndLog(this, 'Gallery ReRender', this.newState, () => {

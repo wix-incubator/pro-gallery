@@ -142,7 +142,7 @@ class SlideshowView extends React.Component {
       numOfThumbnails += 1;
       this.lastItemIdx += 1;
     }
-    const thumbnailsContainerSize = numOfThumbnails * this.props.thumbnailSize;
+    const thumbnailsContainerSize = numOfThumbnails * (this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings);
     const thumbnailsStyle = {width, height};
 
     if ((currentIdx > ((numOfThumbnails / 2) - 1)) && (currentIdx < (this.props.items.length - (numOfThumbnails / 2)))) { //set selected to center only if neeeded
