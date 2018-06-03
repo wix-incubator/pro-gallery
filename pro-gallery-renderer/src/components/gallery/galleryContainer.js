@@ -427,11 +427,11 @@ export class GalleryContainer extends React.Component {
   }
 
   loadItemsDimensions() {
-    if (!this.layoutItems()) {
+    if (!this.galleryItems()) {
       return;
     }
 
-    const itemsWithoutDimensions = this.layoutItems().filter((item, idx) => {
+    const itemsWithoutDimensions = this.galleryItems().filter((item, idx) => {
       try {
         return (item.isVisible && item.isDimensionless);
       } catch (e) {
@@ -1532,6 +1532,10 @@ export class GalleryContainer extends React.Component {
 
   layoutItems() {
     return this.galleryStructure.layoutItems;
+  }
+
+  galleryItems() {
+    return this.galleryStructure.galleryItems;
   }
 
   findVisibleItems() {
