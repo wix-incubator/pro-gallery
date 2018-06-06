@@ -12,13 +12,13 @@
     "dist"
   ],
   "scripts": {
-    "start": "haste start",
-    "build": "haste build",
+    "start": "yoshi start",
+    "build": "yoshi build",
     "precommit": " ",
-    "pretest": "haste build",
-    "test": "haste test",
-    "posttest": "haste lint",
-    "release": "haste release",
+    "pretest": "yoshi build",
+    "test": "yoshi test",
+    "posttest": "yoshi lint",
+    "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -59,7 +59,7 @@
     "wallaby-webpack": "^3.9.7",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.1",
-    "haste-preset-yoshi": "latest"
+    "yoshi": "^1.2.0"
   },
   "babel": {
     "presets": [
@@ -119,9 +119,6 @@
   "unpkg": true,
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
-  },
-  "haste": {
-    "preset": "yoshi"
   },
   "yoshi": {
     "entry": {
