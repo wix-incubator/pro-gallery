@@ -49,7 +49,7 @@ export default class Layouter {
     let numOfCols = 1;
     if (this.styleParams.isVertical) {
       if (this.styleParams.fixedColumns > 0) {
-        numOfCols = utils.isMobile() ? 1 : this.styleParams.fixedColumns;
+        numOfCols = this.styleParams.fixedColumns;
       } else {
         numOfCols = Math.ceil(galleryWidth / gallerySize) || 1;
       }
