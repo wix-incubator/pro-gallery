@@ -1196,9 +1196,6 @@ export class GalleryContainer extends React.Component {
 
     if (canSet('fixedColumns')) {
       stateStyles.fixedColumns = Number(wixStyles.fixedColumns);
-      if (stateStyles.fixedColumns > 0 && utils.isMobile()) {
-        stateStyles.fixedColumns = 1;
-      }
     }
 
     if (canSet('scrollDirection', 'oneRow')) {
@@ -1414,6 +1411,10 @@ export class GalleryContainer extends React.Component {
       stateStyles.galleryLayout = 2;
       stateStyles.fixedColumns = 1;
       stateStyles.numberOfImagesPerRow = 1;
+    }
+
+    if (stateStyles.fixedColumns > 0 && utils.isMobile()) {
+      stateStyles.fixedColumns = 1;
     }
 
     //in case a special gallery size was specified, use it
