@@ -1196,6 +1196,9 @@ export class GalleryContainer extends React.Component {
 
     if (canSet('fixedColumns')) {
       stateStyles.fixedColumns = Number(wixStyles.fixedColumns);
+      if (stateStyles.fixedColumns > 0 && utils.isMobile()) {
+        stateStyles.fixedColumns = 1;
+      }
     }
 
     if (canSet('scrollDirection', 'oneRow')) {
