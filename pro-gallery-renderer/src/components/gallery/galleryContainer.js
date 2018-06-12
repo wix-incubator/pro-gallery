@@ -2878,6 +2878,7 @@ export class GalleryContainer extends React.Component {
 
       const isLayoutDefined = layout => (String(layout) && String(layout).replace(/(undefined)[|]?/g, '') !== '');
       const isChangedLayout = isNewLayout && isLayoutDefined(this.newState.styleParams.selectedLayout) && isLayoutDefined(this.state.styleParams.selectedLayout); //used to prevent setting height on first layout reRender
+      const galleryHeight = Math.round(this.getGalleryHeight());
 
       utils.setStateAndLog(this, 'Gallery ReRender', this.newState, () => {
         if (this.debugScroll) {
@@ -2890,7 +2891,7 @@ export class GalleryContainer extends React.Component {
           //  - Changed layout in the editor
           //  - The trigger is not a new layout
           // (this is used to prevent auto change of height when the editor loads)
-          this.setWixHeight(this.galleryStructure.height, Math.round(this.getGalleryHeight()), trigger);
+          this.setWixHeight(this.galleryStructure.height, galleryHeight, trigger);
         }
 
         if (isNewLayout && utils.isEditor()) {
