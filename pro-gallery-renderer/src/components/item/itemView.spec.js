@@ -1,10 +1,10 @@
 'use strict';
 
-import GalleryDriver from '../drivers/reactDriver';
+import GalleryDriver from '../../../test/drivers/reactDriver';
 import {mount} from 'enzyme';
-import {testImages} from '../images-mock';
+import {testImages} from '../../../test/images-mock';
 import React from 'react';
-import ItemView from '../../src/components/item/itemView';
+import ItemView from './itemView';
 import {expect} from 'chai';
 
 describe('Item View', () => {

@@ -1,9 +1,9 @@
 'use strict';
 import {mount} from 'enzyme';
-import GalleryDriver from '../drivers/reactDriver';
-import {testVideos} from '../images-mock';
+import GalleryDriver from '../../../../test/drivers/reactDriver';
+import {testVideos} from '../../../../test/images-mock';
 import React from 'react';
-import VideoItem from '../../src/components/item/videos/videoItem';
+import VideoItem from './videoItem';
 import {expect} from 'chai';
 
 describe('Video Item ', () => {

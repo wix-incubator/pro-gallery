@@ -1,9 +1,9 @@
 'use strict';
 
-import GalleryDriver from '../drivers/reactDriver.js';
+import GalleryDriver from '../../../test/drivers/reactDriver';
 import {mount} from 'enzyme';
 import React from 'react';
-import SlideshowView from '../../src/components/gallery/slideshowView';
+import SlideshowView from './slideshowView';
 import {expect} from 'chai';
 
 describe('Slideshow View', () => {

@@ -1,9 +1,6 @@
-import GalleryDriver from '../drivers/reactDriver';
-import {shallow, mount} from 'enzyme';
+import GalleryDriver from '../../../test/drivers/reactDriver';
 import _ from 'lodash';
-import React from 'react';
 import {expect} from 'chai';
-import {Wix} from 'photography-client-lib';
 
 describe('Gallery Container', () => {
 
@@ -388,7 +385,7 @@ describe('Gallery Container', () => {
 
       driver.get.instance().reRenderForScroll({customScrollTop: 0});
 
-      expect(driver.find.hook({'data-hook': 'show-more'}).length).to.equal(0);
+      expect(driver.find.hook('show-more').length).to.equal(0);
 
     });
   });

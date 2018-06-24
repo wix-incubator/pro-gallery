@@ -1,6 +1,6 @@
 'use strict';
 
-import GalleryDriver from '../drivers/reactDriver.js';
+import GalleryDriver from '../../../test/drivers/reactDriver';
 
 describe('Gallery Services', () => {
 
