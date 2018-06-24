@@ -20,7 +20,9 @@
     "posttest": "yoshi lint",
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "babel-runtime": "^6.22.0",
@@ -41,6 +43,11 @@
     "wix-bi-logger": "1.0.485"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.7",
+    "@storybook/addon-links": "^3.4.7",
+    "@storybook/addons": "^3.4.7",
+    "@storybook/react": "^3.4.7",
+    "babel-core": "^6.26.3",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "babel-plugin-react-css-modules": "^3.3.2",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
@@ -53,12 +60,18 @@
     "chai-spies": "^0.7.1",
     "enzyme": "^2.4.1",
     "enzyme-adapter-react-15.4": "^1.0.4",
+    "file-loader": "^1.1.11",
     "husky": "^0.13.4",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
-    "wallaby-webpack": "^3.9.7",
+    "nock": "^9.3.3",
+    "node-sass": "^4.9.0",
+    "puppeteer": "^1.5.0",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^15.6.1",
+    "sass-loader": "^7.0.3",
+    "svg-inline-loader": "^0.8.0",
+    "wallaby-webpack": "^3.9.7",
     "yoshi": "^1.2.0"
   },
   "babel": {

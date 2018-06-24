@@ -1,10 +1,10 @@
 'use strict';
 
-import GalleryDriver from './galleryDriver.js';
+import GalleryDriver from '../drivers/reactDriver';
 import {mount} from 'enzyme';
-import {testImages} from './images-mock';
+import {testImages} from '../images-mock';
 import React from 'react';
-import ItemView from '../src/components/item/itemView';
+import ItemView from '../../src/components/item/itemView';
 import {expect} from 'chai';
 
 describe('Item View', () => {
@@ -15,7 +15,7 @@ describe('Item View', () => {
   beforeEach(() => {
     galleryDriver = new GalleryDriver();
     sampleItem = testImages[0];
-    sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem);
+    sampleItemViewProps = galleryDriver.props.itemView(sampleItem);
   });
 
   it('should init', () => {
@@ -94,7 +94,7 @@ describe('Item View', () => {
     it('should hide according to the style params', () => {
       // Step 1: check with allowDownload = FALSE
       galleryConfig.styleParams.allowDownload = false;
-      sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig);
+      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig);
 
       const wrapper1 = mount(<ItemView
         {...sampleItemViewProps}
@@ -109,7 +109,7 @@ describe('Item View', () => {
       // Step 2: check with allowDownload = TRUE
       const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDownload = true;
-      sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
+      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
 
       const wrapper1 = mount(<ItemView
         {...sampleItemViewProps}
@@ -125,7 +125,7 @@ describe('Item View', () => {
       const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDownload = true;
       sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
+      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
 
       const wrapper1 = mount(<ItemView
         {...sampleItemViewProps}
@@ -141,7 +141,7 @@ describe('Item View', () => {
       const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowTitle = true;
       sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
+      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
 
       const wrapper1 = mount(<ItemView
         {...sampleItemViewProps}
@@ -158,7 +158,7 @@ describe('Item View', () => {
       const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowTitle = true;
       sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
+      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
 
       const wrapper1 = mount(<ItemView
         {...sampleItemViewProps}
@@ -174,7 +174,7 @@ describe('Item View', () => {
       const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDescription = true;
       sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
+      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
 
       const wrapper1 = mount(<ItemView
         {...sampleItemViewProps}
@@ -191,7 +191,7 @@ describe('Item View', () => {
       const galleryConfig2 = galleryDriver.get.galleryConfig;
       galleryConfig2.styleParams.allowDescription = true;
       sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
+      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
 
       const wrapper1 = mount(<ItemView
         {...sampleItemViewProps}
@@ -209,7 +209,7 @@ describe('Item View', () => {
    // Step 1: check with allowDownload = FALSE
    var galleryConfig1 = galleryDriver.get.galleryConfig;
    galleryConfig1.styleParams.allowDownload = false;
-   sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig1);
+   sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig1);
 
    let wrapper1 = mount(<ItemView
    {...sampleItemViewProps}
@@ -222,7 +222,7 @@ describe('Item View', () => {
    // Step 2: check with allowDownload = TRUE
    var galleryConfig2 = galleryDriver.get.galleryConfig;
    galleryConfig2.styleParams.allowDownload = true;
-   sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem, galleryConfig2);
+   sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
 
    let wrapper2 = mount(<ItemView
    {...sampleItemViewProps}

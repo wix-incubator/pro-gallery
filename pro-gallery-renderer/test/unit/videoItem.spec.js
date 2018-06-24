@@ -1,9 +1,9 @@
 'use strict';
 import {mount} from 'enzyme';
-import GalleryDriver from './galleryDriver.js';
-import {testVideos} from '../test/images-mock';
+import GalleryDriver from '../drivers/reactDriver';
+import {testVideos} from '../images-mock';
 import React from 'react';
-import VideoItem from '../src/components/item/videos/videoItem';
+import VideoItem from '../../src/components/item/videos/videoItem';
 import {expect} from 'chai';
 
 describe('Video Item ', () => {
@@ -15,7 +15,7 @@ describe('Video Item ', () => {
     const galleryDriver = new GalleryDriver();
 
     sampleItem = testVideos[0];
-    sampleItemViewProps = galleryDriver.create.itemViewProps(sampleItem);
+    sampleItemViewProps = galleryDriver.props.itemView(sampleItem);
     Object.assign(sampleItemViewProps, {playing: false, onMount: () => {}, onUnmount: () => {}});
     videoWrapper = mount(<VideoItem
         {...sampleItemViewProps}

@@ -1,6 +1,6 @@
 'use strict';
 
-import GalleryDriver from './galleryDriver.js';
+import GalleryDriver from '../drivers/reactDriver.js';
 
 describe('Gallery Services', () => {
 
@@ -10,7 +10,7 @@ describe('Gallery Services', () => {
   beforeEach(() => {
 
     galleryDriver = new GalleryDriver();
-    galleryViewProps = galleryDriver.create.galleryViewProps();
+    galleryViewProps = galleryDriver.props.galleryView();
 
   });
 

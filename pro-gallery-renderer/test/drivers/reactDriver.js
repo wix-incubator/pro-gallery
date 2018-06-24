@@ -1,12 +1,11 @@
 'use strict';
 import {Layouter} from 'pro-gallery-layouter';
-import GalleryItem from '../src/components/item/galleryItem';
-import {testImages} from './images-mock.js';
+import GalleryItem from '../../src/components/item/galleryItem';
+import {testImages} from '../images-mock.js';
 import {mount} from 'enzyme';
-import {GalleryContainer} from '../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
+import {GalleryContainer} from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
-import utils from '../src/utils';
 import {Consts} from 'photography-client-lib';
 import React from 'react';
 
@@ -122,31 +121,53 @@ class galleryDriver {
       actions: this.actions,
       layoutParams: this.layoutParams,
       galleryStructure: this.galleryStructure,
-      galleryConfig: this.galleryConfig
+      galleryConfig: this.galleryConfig,
+      state: () => this.wrapper.state(),
+      instance: () => this.wrapper.instance()
     };
   }
 
   get mount() {
-    return {
-      galleryContainer: props => {
-
-        const defaultProps = this.create.galleryContainerProps();
-        props = _.merge(defaultProps, (props || {}));
-        const root = mount(
+    const res = (Component, props) => {
+      this.wrapper = mount(<Component
+        {...props}
+        />);
+      return this;
+    };
+    res.galleryContainer = props => {
+      const defaultProps = this.props.galleryContainer();
+      props = _.merge(defaultProps, (props || {}));
+      this.wrapper = mount(
             <GalleryContainer
               store={mockStore({})}
               actions={{}}
               {...props}
             />
           );
-        return root;
+      return this;
+    };
+    return res;
+  }
+
+  get set() {
+    return {
+      state: (state, callback) => {
+        return this.wrapper.setState(state, callback);
       }
     };
   }
 
-  get create() {
+  get find() {
     return {
-      galleryContainerProps: () => {
+      hook: str => {
+        return this.wrapper.find({'data-hook': str});
+      }
+    };
+  }
+
+  get props() {
+    return {
+      galleryContainer: () => {
         const layout = {
           width: window.innerWidth,
           height: window.innerHeight
@@ -160,7 +181,7 @@ class galleryDriver {
         };
       },
 
-      galleryViewProps: galleryViewProps => {
+      galleryView: galleryViewProps => {
 
         if (typeof (galleryViewProps) === 'undefined') {
           galleryViewProps = {
@@ -197,7 +218,7 @@ class galleryDriver {
 
       },
 
-      itemViewProps: (itemDto, galleryConfig) => {
+      itemView: (itemDto, galleryConfig) => {
 
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
 
