@@ -9,7 +9,7 @@ export default class galleryDriver {
   }
 
   async openGallery(name = 'Default') {
-    this.browser = await puppeteer.launch();
+    this.browser = await puppeteer.launch({args: ['--no-sandbox']});
     this.page = await this.goAndWait(this.browser, this.getPageUrl('Gallery', name));
     this.frames = await this.page.frames();
     this.galleryFrame = this.frames.find(f => f.name() === 'storybook-preview-iframe');
