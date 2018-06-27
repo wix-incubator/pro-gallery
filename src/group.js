@@ -39,6 +39,7 @@ export class Group {
     this.top = config.top;
     this.showAllItems = config.showAllItems;
     this.isLastItems = config.isLastItems;
+    this.dummyItems = [];
 
     if (config.styleParams) {
       const {styleParams} = config;
@@ -87,12 +88,14 @@ export class Group {
   safeGetItem(idx) {
     if (this.items[idx]) {
       return this.items[idx];
+    } else if (this.dummyItems[idx]) {
+      return this.dummyItems[idx];
     } else {
       const item = cloneDeep(this.items[this.items.length - 1]);
       item.id += 'dummy';
       item.idx = this.idx * (idx + 1) + 1;
       item.type = 'dummy';
-      this.items[idx] = item;
+      this.dummyItems[idx] = item;
       return item;
     }
   }
