@@ -1,8 +1,3 @@
-import isUndefined from 'lodash/isUndefined';
-import isArray from 'lodash/isArray';
-
-// import BaseUtils from 'photography-client-lib/dist/src/utils/baseUtils';
-
 class Utils {
   constructor() {
     this._hash2int = {};
@@ -42,7 +37,7 @@ class Utils {
   hashToInt(str, min, max) {
     let int = 0;
 
-    if (isUndefined(str) || str.length === 0) {
+    if ((typeof str === 'undefined') || str.length === 0) {
       return int;
     }
 
@@ -53,7 +48,7 @@ class Utils {
       this._hash2int[str] = int;
     }
 
-    if (isUndefined(min) || isUndefined(max)) {
+    if ((typeof min === 'undefined') || (typeof max === 'undefined')) {
       return this._hash2int[str];
     } else {
       return (this._hash2int[str] % (max - min + 1)) + min;
@@ -62,7 +57,7 @@ class Utils {
   }
 
   insertIfDefined(obj, field, value) {
-    if (!isUndefined(value)) {
+    if (typeof value !== 'undefined') {
       obj[field] = value;
     }
   }
@@ -93,15 +88,15 @@ class Utils {
     this.insertIfDefined(convertedStyleParams, 'cubeImages', convertedStyleParams.cropItems);
     this.insertIfDefined(convertedStyleParams, 'cubeType', convertedStyleParams.cropType);
     this.insertIfDefined(convertedStyleParams, 'cubeRatio', convertedStyleParams.cropRatio);
-    this.insertIfDefined(convertedStyleParams, 'rotatingCropRatios', isArray(convertedStyleParams.rotatingCropRatios) ? convertedStyleParams.rotatingCropRatios.join(',') : undefined);
+    this.insertIfDefined(convertedStyleParams, 'rotatingCropRatios', Array.isArray(convertedStyleParams.rotatingCropRatios) ? convertedStyleParams.rotatingCropRatios.join(',') : undefined);
     this.insertIfDefined(convertedStyleParams, 'smartCrop', convertedStyleParams.smartCrop);
     this.insertIfDefined(convertedStyleParams, 'imageMargin', convertedStyleParams.itemSpacing);
     this.insertIfDefined(convertedStyleParams, 'galleryMargin', convertedStyleParams.layoutSpacing);
     this.insertIfDefined(convertedStyleParams, 'floatingImages', convertedStyleParams.randomSpacings);
     this.insertIfDefined(convertedStyleParams, 'chooseBestGroup', convertedStyleParams.smartGrouping);
     this.insertIfDefined(convertedStyleParams, 'groupSize', convertedStyleParams.itemsPerGroup);
-    this.insertIfDefined(convertedStyleParams, 'groupTypes', isArray(convertedStyleParams.allowedGroupTypes) ? convertedStyleParams.allowedGroupTypes.join(',') : undefined);
-    this.insertIfDefined(convertedStyleParams, 'rotatingGroupTypes', isArray(convertedStyleParams.rotatingGroupTypes) ? convertedStyleParams.rotatingGroupTypes.join(',') : undefined);
+    this.insertIfDefined(convertedStyleParams, 'groupTypes', Array.isArray(convertedStyleParams.allowedGroupTypes) ? convertedStyleParams.allowedGroupTypes.join(',') : undefined);
+    this.insertIfDefined(convertedStyleParams, 'rotatingGroupTypes', Array.isArray(convertedStyleParams.rotatingGroupTypes) ? convertedStyleParams.rotatingGroupTypes.join(',') : undefined);
     this.insertIfDefined(convertedStyleParams, 'isVertical', convertedStyleParams.isColumnsLayout);
     this.insertIfDefined(convertedStyleParams, 'minItemSize', convertedStyleParams.minItemSize);
     this.insertIfDefined(convertedStyleParams, 'oneRow', convertedStyleParams.isVerticalScroll);
@@ -130,8 +125,6 @@ class Utils {
 
     return convertedContainer;
   }
-
-
 
 }
 export const utils = new Utils();

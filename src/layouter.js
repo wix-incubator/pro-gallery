@@ -1,7 +1,3 @@
-import isUndefined from 'lodash/isUndefined';
-import isString from 'lodash/isString';
-import fill from 'lodash/fill';
-
 import {utils} from './utils';
 import {Item} from './item.js';
 import {Group} from './group.js';
@@ -78,7 +74,7 @@ export default class Layouter {
 
   createLayout(layoutParams) {
 
-    if (!isUndefined(layoutParams)) {
+    if (typeof layoutParams !== 'undefined') {
       this.updateParams(layoutParams);
     }
 
@@ -114,7 +110,7 @@ export default class Layouter {
     const numOfCols = this.calcNumberOfColumns(galleryWidth, gallerySize);
     gallerySize = this.styleParams.isVertical ? Math.floor(galleryWidth / numOfCols) : gallerySize;
 
-    const columns = fill(Array(numOfCols), 0).map((column, idx) => new Column(idx, gallerySize, this.styleParams.cubeRatio));
+    const columns = Array(numOfCols).fill(0).map((column, idx) => new Column(idx, gallerySize, this.styleParams.cubeRatio));
     columns[numOfCols - 1].width += (galleryWidth - (gallerySize * numOfCols)); //the last group compensates for half pixels in other groups
     columns[numOfCols - 1].cubeRatio = this.styleParams.cubeRatio * (columns[numOfCols - 1].width / gallerySize); //fix the last group's cube ratio
 
@@ -393,7 +389,7 @@ export default class Layouter {
   get maxGroupSize() {
     let _maxGroupSize = 1;
     try {
-      const groupTypes = isString(this.styleParams.groupTypes) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
+      const groupTypes = (typeof this.styleParams.groupTypes === 'string' && this.styleParams.groupTypes.length > 0) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
       _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
         return Math.max(curSize, parseInt(groupType));
       }, 1);

@@ -1,7 +1,3 @@
-import isObject from 'lodash/isObject';
-import isNumber from 'lodash/isNumber';
-import isFunction from 'lodash/isFunction';
-import merge from 'lodash/merge';
 import {utils} from './utils';
 
 export class Item {
@@ -65,9 +61,9 @@ export class Item {
     let scale = 1;
     if (scaleOrDimensions === false) {
       return;
-    } else if (isNumber(scaleOrDimensions)) {
-      scale = scaleOrDimensions;
-    } else if (isObject(scaleOrDimensions)) {
+    } else if (parseInt(scaleOrDimensions) > 0) {
+      scale = parseInt(scaleOrDimensions);
+    } else if (typeof scaleOrDimensions === 'object') {
       if (scaleOrDimensions.width) {
         const w = Math.max(1, scaleOrDimensions.width);
         scale = w / this.width;
@@ -147,7 +143,7 @@ export class Item {
   }
 
   set group(group) {
-    merge(this._group, group);
+    Object.assign(this._group, group);
   }
 
   get group() {
@@ -155,7 +151,7 @@ export class Item {
   }
 
   set groupOffset(offset) {
-    merge(this._groupOffset, offset);
+    Object.assign(this._groupOffset, offset);
   }
 
   get offset() {
@@ -274,7 +270,7 @@ export class Item {
       const cropRatiosArr = String(this.rotatingCropRatios).split(',');
       ratio = cropRatiosArr[(this.idx) % cropRatiosArr.length];
     }
-    if (!ratio && isFunction(this._cubeRatio)) {
+    if (!ratio && typeof this._cubeRatio === 'function') {
       ratio = this._cubeRatio();
     }
     if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {

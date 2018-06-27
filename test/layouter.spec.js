@@ -2,7 +2,6 @@
 
 import Layouter from '../src/layouter.js';
 import {testImages} from './images-mock.js';
-import range from 'lodash/range';
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
@@ -204,7 +203,7 @@ describe('Layouter', () => {
     it('should have more items in groups when the collageAmount increases', () => {
       const itemCount = 100;
       const items = getItems(itemCount);
-      const collageAmounts = range(0, 11).map(i => i / 10);
+      const collageAmounts = Array.from({length: 11}, (_, i) => i).map(i => i / 10);
       let lastGroupCount = itemCount;
       styleParams.layoutsVersion = 1;
 
@@ -224,7 +223,7 @@ describe('Layouter', () => {
       const itemCount = 100;
       const items = getItems(itemCount);
 
-      const collageDensities = range(0, 11).map(i => i / 10);
+      const collageDensities = Array.from({length: 11}, (_, i) => i).map(i => i / 10);
       let lastGroupCount = itemCount;
 
       for (const collageDensity of collageDensities) {

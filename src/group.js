@@ -1,9 +1,5 @@
-import cloneDeep from 'lodash/cloneDeep';
-import last from 'lodash/last';
-import remove from 'lodash/remove';
-import includes from 'lodash/includes';
-import filter from 'lodash/filter';
 import {utils} from './utils';
+import cloneDeep from 'lodash.clonedeep';
 
 const GROUP_TYPES_BY_RATIOS_V = {
   lll: '1,2h',
@@ -92,10 +88,11 @@ export class Group {
     if (this.items[idx]) {
       return this.items[idx];
     } else {
-      const item = cloneDeep(last(this.items));
+      const item = cloneDeep(this.items[this.items.length - 1]);
       item.id += 'dummy';
       item.idx = this.idx * (idx + 1) + 1;
       item.type = 'dummy';
+      this.items[idx] = item;
       return item;
     }
   }
@@ -244,7 +241,7 @@ export class Group {
         const groupTypesArr = this.groupTypes.split(',');
 
         if (groupTypesArr.length > 1) {
-          remove(groupTypes, gt => groupTypesArr.indexOf(gt) < 0);
+          groupTypes = groupTypes.filter(gt => groupTypesArr.indexOf(gt) >= 0);
 
           if (groupTypes.length === 0) { //there is no match between required group types and the optional ones - use
             groupTypes = ['1'];
@@ -262,12 +259,12 @@ export class Group {
         const collageDensity = this.collageDensity;
 
         //use the collage amount to determine the optional groupsize
-        const maxGroupType = parseInt(last(groupTypes));
+        const maxGroupType = parseInt(groupTypes[groupTypes.length - 1]);
         const optionalGroupSizes = GROUP_SIZES_BY_MAX_SIZE[maxGroupType];
         const targetGroupSizes = optionalGroupSizes[Math.floor(collageDensity * (optionalGroupSizes.length - 1))];
         // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
 
-        remove(groupTypes, groupType => targetGroupSizes.indexOf(parseInt(groupType)) < 0);
+        groupTypes = groupTypes.filter(groupType => targetGroupSizes.indexOf(parseInt(groupType)) >= 0);
 
         if (groupTypes.length === 0) {
           groupTypes = ['1'];
@@ -520,7 +517,7 @@ export class Group {
   }
 
   resizeItems() {
-    const items = includes(['3b', '3r'], this.type) ? this.items.slice().reverse() : this.items;
+    const items = (['3b', '3r'].indexOf(this.type) >= 0) ? this.items.slice().reverse() : this.items;
     items.forEach((item, i) => {
       item.resize(this.getItemDimensions(items, i));
       item.group = {
@@ -777,7 +774,7 @@ export class Group {
   }
 
   get realItems() {
-    return filter(this._items, item => item.type !== 'dummy');
+    return this._items.filter(item => item.type !== 'dummy');
   }
 
   get isWithinMinItemSize() {
