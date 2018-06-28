@@ -14,10 +14,11 @@ describe('Gallery', () => {
     driver.closeGallery();
   });
 
-  it('renders default items', async () => {
-    await driver.openGallery('Default');
-    expect((await driver.find.items()).length).to.equal(50);
-  });
+
+  // it('renders default items', async () => {
+  //   await driver.openGallery('Default');
+  //   expect((await driver.find.items()).length).to.equal(50);
+  // });
 
 });
 

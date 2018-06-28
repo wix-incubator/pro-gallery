@@ -8,14 +8,18 @@ export default class Share extends React.Component {
     super(props);
 
     this.handleShareArrowNavigation = this.handleShareArrowNavigation.bind(this);
+    this.getShareArr = this.getShareArr.bind(this);
     this.buttons = [];
-    this.shareArr = ['facebook', 'twitter', 'pinterest', 'tumblr', 'email'];
-
+    this.shareArr = this.getShareArr(this.props.type);
     this.state = {
       showShare: false,
       focusedShareIcon: 0
     };
 
+  }
+
+  getShareArr(type) {
+    return (type === 'text' ? ['facebook', 'twitter', 'tumblr', 'email'] : ['facebook', 'twitter', 'pinterest', 'tumblr', 'email']);
   }
 
   handleShareArrowNavigation(e) {
@@ -90,10 +94,8 @@ export default class Share extends React.Component {
     }
   }
 
-
   getShareItem(network, idx) {
     const {allProps} = this.props;
-
     return <button
       className={'block-fullscreen ' + network + '-share progallery-svg-font-icons-' + network + (utils.isSite() ? '' : ' inactive ')}
       onClick={e => {
@@ -101,9 +103,10 @@ export default class Share extends React.Component {
         e.stopPropagation();
         itemActions.share(network, allProps, 'gallery');
       }}
+      data-hook={network + '-share-button'}
       ref={button => this.buttons[idx] = button}
       title={`Share on ${network}`}
-      aria-label={`Share on ${network}, ${idx} of 5`}
+      aria-label={`Share on ${network}, ${idx + 1} of ${this.shareArr.length}`}
       aria-live="assertive"
       role="button"
       tabIndex={-1}
@@ -115,11 +118,8 @@ export default class Share extends React.Component {
     const share = false;
     if (styleParams.allowSocial) {
       const minDimension = 200;
-      if (type === 'text') {
-        this.shareArr.splice(2, 1);
-      }
-
       return <div
+          data-hook="social-share-box"
           className={'block-fullscreen gallery-item-social-share-box ' + (this.props.showShare ? '' : ' hidden ') + (this.state.showShare ? ' hovered ' : '') + (isVerticalContainer ? ' vertical-item ' : '')}
           onClick={e => actions.toggleShare(e, false)}
           onMouseOut={e => actions.toggleShare(e, false)}
@@ -137,7 +137,6 @@ export default class Share extends React.Component {
             })}
         </div>;
     }
-
     return false;
   }
 }

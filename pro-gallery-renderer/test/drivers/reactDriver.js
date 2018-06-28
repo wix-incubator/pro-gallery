@@ -93,7 +93,8 @@ class galleryDriver {
       toggleFullscreen: _.noop,
       pauseAllVideos: _.noop,
       setWixHeight: _.noop,
-      scrollToItem: _.noop
+      scrollToItem: _.noop,
+      toggleShare: _.noop
     };
 
     this.layoutParams = {
@@ -123,7 +124,8 @@ class galleryDriver {
       galleryStructure: this.galleryStructure,
       galleryConfig: this.galleryConfig,
       state: () => this.wrapper.state(),
-      instance: () => this.wrapper.instance()
+      instance: () => this.wrapper.instance(),
+      props: () => this.wrapper.props()
     };
   }
 
@@ -153,6 +155,9 @@ class galleryDriver {
     return {
       state: (state, callback) => {
         return this.wrapper.setState(state, callback);
+      },
+      props: (props, callback) => {
+        return this.wrapper.setProps(props, callback);
       }
     };
   }
@@ -161,7 +166,17 @@ class galleryDriver {
     return {
       hook: str => {
         return this.wrapper.find({'data-hook': str});
-      }
+      },
+      id: str => {
+        return this.wrapper.find(`#${str}`);
+      },
+      class: str => {
+        return this.wrapper.find(`.${str}`);
+      },
+      selector: str => {
+        return this.wrapper.find(str);
+      },
+
     };
   }
 
