@@ -117,6 +117,9 @@ describe('Expected Layouts', () => {
         }
         logToFile('\'' + offsets + '\',');
       } else {
+        if (offsets !== expectedOffsets[seed - 1]) {
+          console.error(`Broken SP: ${seed}: ${Object.entries(selectStyleParams(seed)).map(e => e.join('=')).join('|')}`);
+        }
         expect(seed + '|' + offsets).to.equal(seed + '|' + expectedOffsets[seed - 1]);
       }
     }

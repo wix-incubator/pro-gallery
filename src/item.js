@@ -61,8 +61,8 @@ export class Item {
     let scale = 1;
     if (scaleOrDimensions === false) {
       return;
-    } else if (parseInt(scaleOrDimensions) > 0) {
-      scale = parseInt(scaleOrDimensions);
+    } else if (scaleOrDimensions > 0) {
+      scale = scaleOrDimensions;
     } else if (typeof scaleOrDimensions === 'object') {
       if (scaleOrDimensions.width) {
         const w = Math.max(1, scaleOrDimensions.width);
