@@ -96,13 +96,18 @@ export default class Share extends React.Component {
 
   getShareItem(network, idx) {
     const {allProps} = this.props;
+    const shareIconsNumber = this.shareArr.length;
     return <button
-      className={'block-fullscreen ' + network + '-share progallery-svg-font-icons-' + network + (utils.isSite() ? '' : ' inactive ')}
-      onClick={e => {
-        e.preventDefault();
-        e.stopPropagation();
-        itemActions.share(network, allProps, 'gallery');
-      }}
+      className={`block-fullscreen network-${idx + 1} progallery-svg-font-icons-` + network + (utils.isSite() ? '' : ' inactive ')}
+			style={{
+  top: this.props.isVerticalContainer ? `calc(100% / 6 * ${idx + 1} + -10px ${shareIconsNumber === 4 ? '+ 100% / 12' : ''})` : '',
+  left: this.props.isVerticalContainer ? '' : `calc(100% / 6 * ${idx + 1} + -10px ${shareIconsNumber === 4 ? '+ 100% / 12' : ''})`
+}}
+			onClick={e => {
+  e.preventDefault();
+  e.stopPropagation();
+  itemActions.share(network, allProps, 'gallery');
+}}
       data-hook={network + '-share-button'}
       ref={button => this.buttons[idx] = button}
       title={`Share on ${network}`}

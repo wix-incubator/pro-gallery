@@ -1256,28 +1256,20 @@ div.pro-gallery {
               opacity: 0.7;
             }
 
-            &.facebook-share {
-              left: calc(100% / 6 * 1 - 10px);
+            &.network-1 {
               margin-left: 5px;
             }
 
-            &.twitter-share {
-              left: calc(100% / 6 * 2 - 10px);
+            &.network-2 {
               font-size: 13px;
               margin-top: 1px;
             }
 
-            &.pinterest-share {
-              left: calc(100% / 6 * 5 - 10px);
-            }
-
-            &.tumblr-share {
-              left: calc(100% / 6 * 3 - 10px);
+            &.network-4 {
               margin-left: -1px;
             }
 
-            &.email-share {
-              left: calc(100% / 6 * 4 - 10px);
+            &.network-5 {
               font-size: 13px;
               margin-top: 1px;
               margin-left: -3px;
@@ -1299,25 +1291,12 @@ div.pro-gallery {
               margin-left: -10px;
               margin-top: 8px;
 
-              &.facebook-share {
-                top: calc(100% / 6 * 1 - 10px);
-              }
 
-              &.twitter-share {
-                top: calc(100% / 6 * 2 - 10px);
+              &.network-2 {
                 font-size: 13px;
               }
 
-              &.pinterest-share {
-                top: calc(100% / 6 * 3 - 10px);
-              }
-
-              &.tumblr-share {
-                top: calc(100% / 6 * 4 - 10px);
-              }
-
-              &.email-share {
-                top: calc(100% / 6 * 5 - 10px);
+              &.network-5 {
                 font-size: 13px;
               }
             }
