@@ -133,19 +133,19 @@ class galleryDriver {
     const res = (Component, props) => {
       this.wrapper = mount(<Component
         {...props}
-        />);
+      />);
       return this;
     };
     res.galleryContainer = props => {
       const defaultProps = this.props.galleryContainer();
       props = _.merge(defaultProps, (props || {}));
       this.wrapper = mount(
-            <GalleryContainer
-              store={mockStore({})}
-              actions={{}}
-              {...props}
-            />
-          );
+        <GalleryContainer
+          store={mockStore({})}
+          actions={{}}
+          {...props}
+        />
+      );
       return this;
     };
     return res;
@@ -247,4 +247,3 @@ class galleryDriver {
 }
 
 export default galleryDriver;
-

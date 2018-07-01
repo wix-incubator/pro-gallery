@@ -13,7 +13,7 @@ export default class CustomButton extends React.Component {
       <div className="custom-button-wrapper" style={{justifyContent: styleParams.galleryHorizontalAlign}}>
         {this.props.small ?
           <CustomButtonIcon /> :
-          <button onClick={() => logger.trackBi(logger.biEvents.buyNowClick)}
+          <button data-hook="custom-button-button" onClick={() => logger.trackBi(logger.biEvents.buyNowClick)}
             tabIndex={-1}
           >
             {buttonText}

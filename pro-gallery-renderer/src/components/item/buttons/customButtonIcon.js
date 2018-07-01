@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function CustomButtonIcon() {
   return <svg className="buy-icon" xmlns="http://www.w3.org/2000/svg" width="38" height="34" viewBox="0 0 38 34">
     <g fill="none" fillRule="evenodd">
