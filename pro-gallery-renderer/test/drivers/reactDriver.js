@@ -74,6 +74,7 @@ class galleryDriver {
       oneRow: false, //render the gallery as a single row with horizontal scroll
       showArrows: false,
       isSlideshow: false,
+      isSlider: false,
       hasThumbnails: false,
       galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,

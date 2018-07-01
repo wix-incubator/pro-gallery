@@ -33,23 +33,27 @@ export default class ItemHover extends React.Component {
 
   getMultishareHover() {
     const {isVideo, isMultishared} = this.props;
-    return (<div className={'gallery-item-social' + (isVideo ? ' gradient-top' : '')}>
-          <div className={`gallery-item-social-button gallery-item-social-multishare visible ${(utils.isMobile() ? 'mobile' : '')}`}>
-            {!isMultishared ? (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                <path className="gallery-item-svg-foreground"
-                      d="M9,1A8,8,0,1,1,1,9,8,8,0,0,1,9,1M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0Z"/>
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-                <path className="gallery-item-svg-foreground"
-                      d="M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0ZM8.59,13.46l-4-4,.71-.71,3.16,3.16,4.44-6.67.83.55Z"/>
-                <polygon className="gallery-item-svg-background"
-                         points="8.43 11.89 5.27 8.74 4.57 9.44 8.59 13.46 13.71 5.78 12.87 5.22 8.43 11.89"/>
-              </svg>
-            )}
-          </div>
-        </div>);
+    return <div
+        className={'gallery-item-social' + (isVideo ? ' gradient-top' : '')}
+        data-hook="multisharing-hover"
+        >
+      <div
+        className={`gallery-item-social-button gallery-item-social-multishare visible ${(utils.isMobile() ? 'mobile' : '')}`}>
+        {!isMultishared ? (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+            <path className="gallery-item-svg-foreground"
+                  d="M9,1A8,8,0,1,1,1,9,8,8,0,0,1,9,1M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0Z"/>
+          </svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+            <path className="gallery-item-svg-foreground"
+                  d="M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0ZM8.59,13.46l-4-4,.71-.71,3.16,3.16,4.44-6.67.83.55Z"/>
+            <polygon className="gallery-item-svg-background"
+                     points="8.43 11.89 5.27 8.74 4.57 9.44 8.59 13.46 13.71 5.78 12.87 5.22 8.43 11.89"/>
+          </svg>
+        )}
+      </div>
+    </div>;
   }
 
   render() {
