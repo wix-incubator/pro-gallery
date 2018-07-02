@@ -1,35 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  connect
-} from 'react-redux';
-import {
-  bindActionCreators
-} from 'redux';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as actions from '../../actions/galleryActions.js';
 import GalleryView from './galleryView.js';
 import SlideshowView from './slideshowView.js';
-import {
-  Layouter,
-  Item
-} from 'pro-gallery-layouter';
+import {Layouter} from 'pro-gallery-layouter';
 import GalleryItem from '../item/galleryItem';
 import GalleryGroup from '../group/galleryGroup';
 import _ from 'lodash';
 import utils from '../../utils';
-import {
-  spacingVersionManager
-} from 'photography-client-lib/dist/src/versioning/features/spacing';
-import {
-  layoutsVersionManager
-} from 'photography-client-lib/dist/src/versioning/features/layouts';
-import {
-  itemActions,
-  Consts,
-  versionManager,
-  Wix,
-  logger
-} from 'photography-client-lib';
+import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
+import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/features/layouts';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
+import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
+import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
+import Consts from 'photography-client-lib/dist/src/utils/consts';
 import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 
@@ -2389,9 +2375,9 @@ export class GalleryContainer extends React.Component {
     //get the items for the hashtag
     if (hashtagFilter) {
       if (!utils.isSemiNative()) {
-        $.get(`${utils.getApiUrlPrefix()}gallery/${this.galleryId}/hashtags/${hashtagFilter}/items?instance=${window.instance}`, res => {
-          if (res && res.items && res.items.length > 0) {
-            hashtag.items = res.items;
+        axios.get(`${utils.getApiUrlPrefix()}gallery/${this.galleryId}/hashtags/${hashtagFilter}/items?instance=${window.instance}`).then(({data}) => {
+          if (data && data.items && data.items.length > 0) {
+            hashtag.items = data.items;
             if (utils.isVerbose()) {
               console.log('Got hashtag items', hashtag);
             }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {translationUtils} from 'photography-client-lib';
+import translationUtils from 'photography-client-lib/dist/src/utils/translationUtils';
 import utils from '../../utils';
 
 

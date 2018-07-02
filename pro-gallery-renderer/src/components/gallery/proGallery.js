@@ -8,7 +8,7 @@ import galleryReducers from '../../reducers/index.js';
 import {toggleHoverPreview} from '../../actions/galleryActions.js';
 import GalleryContainer from './galleryContainer.js';
 import utils from '../../utils';
-import {Wix} from 'photography-client-lib';
+import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import videoActionTypes from '../../constants/videoActionTypes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import {VideoQueue} from '../item/videos/video-queue';
@@ -55,7 +55,7 @@ export default class ProGallery extends React.Component {
           <GalleryContainer
             {...this.props}
             domId={this.domId}
-            items={this.props.items || require('../../../test/images-mock').testImages}
+            items={this.props.items || require('../../constants/default-images').defaultImages}
             store={this.store}
             watermarkData={this.props.watermarkData}
             settings={this.props.settings || {}}

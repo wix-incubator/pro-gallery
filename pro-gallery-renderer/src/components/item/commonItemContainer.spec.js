@@ -3,7 +3,7 @@
 import {CommonItemContainerNotConnected} from './commonItemContainer.js';
 import {shallow} from 'enzyme';
 import React from 'react';
-import {itemActions} from 'photography-client-lib';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import {expect} from 'chai';
 
 class DummyComponent extends React.Component {

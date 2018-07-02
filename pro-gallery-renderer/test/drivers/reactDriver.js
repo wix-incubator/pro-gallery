@@ -6,7 +6,7 @@ import {mount} from 'enzyme';
 import {GalleryContainer} from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
-import {Consts} from 'photography-client-lib';
+import Consts from 'photography-client-lib/dist/src/utils/consts';
 import React from 'react';
 
 const mockStore = configureStore();

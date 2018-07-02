@@ -1,6 +1,6 @@
 import React from 'react';
 import utils from '../../../utils';
-import {itemActions} from 'photography-client-lib';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 
 class LoveButton extends React.Component {
   constructor(props) {

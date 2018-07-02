@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomButtonIcon from './customButtonIcon.js';
 import utils from '../../../utils/index.js';
-import {logger} from 'photography-client-lib';
+import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
 
 export default class CustomButton extends React.Component {
 

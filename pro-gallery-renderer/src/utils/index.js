@@ -1,6 +1,4 @@
-import {
-    RenderUtils
-} from 'photography-client-lib';
+import RenderUtils from 'photography-client-lib/dist/src/utils/renderUtils';
 
 class Utils extends RenderUtils {
 

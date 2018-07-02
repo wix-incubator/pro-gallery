@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import {Wix, itemActions} from 'photography-client-lib';
+import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import utils from '../../utils';
 
 class GallerySharer extends React.Component {
@@ -40,19 +41,19 @@ class GallerySharer extends React.Component {
       this.shareButtons = this.createShareButtonsIfNeeded(multishareItems);
     }
 
-    $.ajax({
-      url: `${utils.getApiUrlPrefix()}gallery/${window.galleryId}/items/${itemDto.itemId || itemDto.photoId}/hashtags`,
-      method: 'POST',
-      dataType: 'json',
-      contentType: 'application/json',
-      processData: false,
-      data: JSON.stringify({
-        hashTags: [this.hashtag]
-      }),
-      done: res => {
-        console.log('HASHTAG - Added item', res);
-      }
-    });
+    // $.ajax({
+    //   url: `${utils.getApiUrlPrefix()}gallery/${window.galleryId}/items/${itemDto.itemId || itemDto.photoId}/hashtags`,
+    //   method: 'POST',
+    //   dataType: 'json',
+    //   contentType: 'application/json',
+    //   processData: false,
+    //   data: JSON.stringify({
+    //     hashTags: [this.hashtag]
+    //   }),
+    //   done: res => {
+    //     console.log('HASHTAG - Added item', res);
+    //   }
+    // });
 
     utils.setStateAndLog(this, 'HASHTAG - toggleItemInMultishare', {
       items: multishareItems,
@@ -65,19 +66,19 @@ class GallerySharer extends React.Component {
 
     console.log('HASHTAG - Removing item', itemDto);
 
-    $.ajax({
-      url: `${utils.getApiUrlPrefix()}gallery/${window.galleryId}/items/${itemDto.itemId || itemDto.photoId}/hashtags`,
-      method: 'DELETE',
-      dataType: 'json',
-      contentType: 'application/json',
-      processData: false,
-      data: JSON.stringify({
-        hashTags: [this.hashtag]
-      }),
-      done: res => {
-        console.log('HASHTAG - Removed item', res);
-      }
-    });
+    // $.ajax({
+    //   url: `${utils.getApiUrlPrefix()}gallery/${window.galleryId}/items/${itemDto.itemId || itemDto.photoId}/hashtags`,
+    //   method: 'DELETE',
+    //   dataType: 'json',
+    //   contentType: 'application/json',
+    //   processData: false,
+    //   data: JSON.stringify({
+    //     hashTags: [this.hashtag]
+    //   }),
+    //   done: res => {
+    //     console.log('HASHTAG - Removed item', res);
+    //   }
+    // });
 
     let multishareItems = this.state.items;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {videoEnded, videoAdded, videoRemoved} from '../../actions/galleryActions.js';
 import {playVideo, pauseVideo} from '../../actions/itemViewActions.js';
 import {connect} from 'react-redux';
-import {itemActions} from 'photography-client-lib';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 
 export const CommonItemContainerNotConnected = ComposedComponent => {
   class InnerComponent extends React.Component {

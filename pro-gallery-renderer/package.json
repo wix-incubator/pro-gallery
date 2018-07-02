@@ -25,22 +25,25 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "babel-runtime": "^6.22.0",
+    "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
     "image-client-api": "^1.133.0",
-    "lodash": "^4.17.4",
     "photography-client-lib": "^1.0.64",
     "prepend-http-extra": "^1.0.0",
-    "pro-gallery-layouter": "^2.0.14",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1",
+    "pro-gallery-layouter": "^2.0.16",
     "react-player-fork": "^0.12.106",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.3.0",
     "redux-thunk": "^2.2.0",
-    "wix-bi-logger": "1.0.485"
+    "wix-bi-logger": "^1.0.496"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.4",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "axios": "^0.16.2"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.7",
@@ -74,6 +77,10 @@
     "sass-loader": "^7.0.3",
     "svg-inline-loader": "^0.8.0",
     "wallaby-webpack": "^3.9.7",
+    "lodash": "^4.17.4",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "axios": "^0.16.2",
     "yoshi": "^1.2.0"
   },
   "babel": {
@@ -125,8 +132,6 @@
       "fetch": true,
       "window": true,
       "document": true,
-      "jquery": "$",
-      "lodash": "_",
       "Image": true,
       "prerenderedGallery": true,
       "Event": true,
@@ -140,6 +145,13 @@
   "yoshi": {
     "entry": {
       "main": "./index"
+    },
+    "externals": {
+      "axios": "axios",
+      "babel-runtime": "babel-runtime",
+      "lodash": "_",
+      "react": "React",
+      "react-dom": "ReactDOM"
     },
     "exports": "pro-gallery-renderer"
   }

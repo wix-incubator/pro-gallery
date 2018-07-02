@@ -1,8 +1,8 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
 import {Item} from 'pro-gallery-layouter';
-import * as _ from 'lodash';
-import {watermarkApi} from 'photography-client-lib';
+import _ from 'lodash';
+import watermarkApi from 'photography-client-lib/dist/src/store/watermarkApi';
 import * as imageSdk from 'image-client-api/dist/imageClientSDK';
 
 class GalleryItem {

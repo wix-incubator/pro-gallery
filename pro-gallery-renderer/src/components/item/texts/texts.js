@@ -3,7 +3,7 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import {Consts} from 'photography-client-lib';
+import Consts from 'photography-client-lib/dist/src/utils/consts';
 import utils from '../../../utils';
 
 export default class Texts extends React.Component {

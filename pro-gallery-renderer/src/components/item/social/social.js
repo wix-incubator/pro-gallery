@@ -1,7 +1,8 @@
 import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
-import {logger, itemActions} from 'photography-client-lib';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
+import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
 
 export default class Social extends React.Component {
 

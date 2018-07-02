@@ -1,5 +1,5 @@
 import * as actions from '../constants/actionTypes.js';
-import {itemActions} from 'photography-client-lib';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 
 export function toggleLove(itemId) {
 
