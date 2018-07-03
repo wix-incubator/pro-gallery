@@ -863,17 +863,17 @@ export class GalleryContainer extends React.Component {
     };
 
     const galleyLayoutList = [
-      'empty', //-1
-      'collage',
-      'masonry',
-      'grid',
-      'thumbnails',
-      'slider',
-      'slideshow',
-      'panorama',
-      'column',
-      'magic',
-      'fullsize'
+      'empty',      // -1
+      'collage',    // 0
+      'masonry',    // 1
+      'grid',       // 2
+      'thumbnails', // 3
+      'slider',     // 4
+      'slideshow',  // 5
+      'panorama',   // 6
+      'column',     // 7
+      'magic',      // 8
+      'fullsize'    // 9
     ];
 
     let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
@@ -988,6 +988,10 @@ export class GalleryContainer extends React.Component {
       fixedColumns: undefined,
       enableInfiniteScroll: undefined,
     };
+
+    if (String(wixStyles.mobilePanorama) === '1' && utils.isMobile()) {
+      stateStyles.galleryLayout = 6;
+    }
 
     const galleryLayoutV1 = _.isUndefined(stateStyles.galleryType) ? wixStyles.galleryType : stateStyles.galleryType;
     const galleryLayoutV2 = _.isUndefined(stateStyles.galleryLayout) ? wixStyles.galleryLayout : stateStyles.galleryLayout;
@@ -1182,6 +1186,10 @@ export class GalleryContainer extends React.Component {
 
     if (canSet('fixedColumns')) {
       stateStyles.fixedColumns = Number(wixStyles.fixedColumns);
+    }
+
+    if (canSet('groupsPerStrip')) {
+      stateStyles.groupsPerStrip = Number(wixStyles.groupsPerStrip);
     }
 
     if (canSet('scrollDirection', 'oneRow')) {
@@ -1380,6 +1388,9 @@ export class GalleryContainer extends React.Component {
     }
     if (canSet('videoLoop')) {
       stateStyles.videoLoop = wixStyles.videoLoop;
+    }
+    if (canSet('mobilePanorama')) {
+      stateStyles.mobilePanorama = String(wixStyles.mobilePanorama) === '1';
     }
 
     //Backwards compatibility for masonry layout
