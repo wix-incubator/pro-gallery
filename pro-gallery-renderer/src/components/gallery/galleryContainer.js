@@ -991,6 +991,10 @@ export class GalleryContainer extends React.Component {
 
     if (String(wixStyles.mobilePanorama) === '1' && utils.isMobile()) {
       stateStyles.galleryLayout = 6;
+      stateStyles.rotatingGroupTypes = '1';
+      stateStyles.isVertical = true;
+      stateStyles.numberOfImagesPerRow = 1;
+      stateStyles.oneRow = false;
     }
 
     const galleryLayoutV1 = _.isUndefined(stateStyles.galleryType) ? wixStyles.galleryType : stateStyles.galleryType;
