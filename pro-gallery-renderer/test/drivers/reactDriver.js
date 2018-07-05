@@ -177,8 +177,11 @@ class galleryDriver {
       selector: str => {
         return this.wrapper.find(str);
       },
-
     };
+  }
+
+  get text() {
+    return this.wrapper.text();
   }
 
   get props() {
@@ -241,6 +244,15 @@ class galleryDriver {
         const galleryItem = new GalleryItem({dto: itemDto});
         return _.merge(galleryItem.renderProps(newGalleryConfig), {config: newGalleryConfig, visible: true});
 
+      },
+
+      textView: (itemDto, galleryConfig) => {
+        const newGalleryConfig = galleryConfig || this.get.galleryConfig;
+        const galleryItem = new GalleryItem({dto: itemDto});
+        const itemViewPropsObj = _.merge(galleryItem.renderProps(newGalleryConfig), {config: newGalleryConfig, visible: true});
+        return _.merge(itemViewPropsObj, {actions: {handleItemMouseDown: () => {},
+          handleItemMouseUp: () => {},
+          setItemLoaded: () => {}}});
       }
     };
   }

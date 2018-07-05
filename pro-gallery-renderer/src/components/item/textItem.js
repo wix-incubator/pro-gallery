@@ -25,21 +25,22 @@ export default class TextItem extends React.Component {
   render() {
     const {visible, id, styleParams, html, style, actions} = this.props;
     const dimensions = this.getTextDimensions();
+    const htmlParam = {dangerouslySetInnerHTML: {__html: html}};
+    const styleIsDimensions = {style: {dimensions}};
+    const changeBgColor = {style: Object.assign(dimensions, styleParams.cubeType === 'fit' ? {backgroundColor: style.bgColor} : {})};
+    const show = (visible || styleParams.hasThumbnails);
+    const attributes = show ? {
+      ...htmlParam,
+      ...changeBgColor
+    } : {...styleIsDimensions};
 
-    return (visible || styleParams.hasThumbnails) ? (
+    return (
         <div className={'gallery-item-visible gallery-item loaded text-item'}
           key={'item-text-' + id}
-          style={Object.assign(dimensions, styleParams.cubeType === 'fit' ? {backgroundColor: style.bgColor} : {})}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
-          dangerouslySetInnerHTML={{__html: html}}/>
-      ) : (
-        <div className={'gallery-item-visible gallery-item loaded text-item'}
-              key={'item-text-' + id}
-              onTouchStart={actions.handleItemMouseDown}
-              onTouchEnd={actions.handleItemMouseUp}
-              style={dimensions}>
-        </div>
-      );
+          data-hook="text-item"
+          {...attributes}/>
+    );
   }
 }
