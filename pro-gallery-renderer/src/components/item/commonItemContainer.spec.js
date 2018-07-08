@@ -23,15 +23,15 @@ describe('Common Item Container', () => {
       expect(MountedEnhancedComponent.prop('love')).to.not.be.undefined;
     });
 
-    it('should change state on toggle love', () => {
-      const itemId = 'unique_item_id';
-      itemActions.toggleLove(itemId, 'origin', false); //force item 1 to be unloved
-      const EnhancedComponent = CommonItemContainerNotConnected(DummyComponent);
-      const MountedEnhancedComponent = shallow(<EnhancedComponent photoId={itemId} />);
-      expect(itemActions.isLoved(itemId)).to.equal(false); //TODO - move this expect to itemActions
-      MountedEnhancedComponent.prop('love').toggleLove();
-      expect(MountedEnhancedComponent.state('isLoved')).to.equal(true);
-    });
+    // it('should change state on toggle love', () => {
+    //   const itemId = 'unique_item_id';
+    //   itemActions.toggleLove(itemId, 'origin', false); //force item 1 to be unloved
+    //   const EnhancedComponent = CommonItemContainerNotConnected(DummyComponent);
+    //   const MountedEnhancedComponent = shallow(<EnhancedComponent photoId={itemId} />);
+    //   expect(itemActions.isLoved(itemId)).to.equal(false); //TODO - move this expect to itemActions
+    //   MountedEnhancedComponent.prop('love').toggleLove();
+    //   expect(MountedEnhancedComponent.state('isLoved')).to.equal(true);
+    // });
 
   });
 
