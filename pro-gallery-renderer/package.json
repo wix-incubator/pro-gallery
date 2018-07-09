@@ -125,7 +125,9 @@
       "no-cond-assign": 0,
       "max-depth": 0,
       "no-useless-escape": 0,
-      "no-eval": 0
+      "no-eval": 0,
+      "curly": 0,
+      "curly-style": 0
     },
     "globals": {
       "fetch": true,

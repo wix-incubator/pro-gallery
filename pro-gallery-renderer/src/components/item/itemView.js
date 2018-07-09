@@ -386,7 +386,6 @@ class ItemView extends React.Component {
   }
 
   getVideoItem(imageDimensions, itemHover) {
-    const props = _.pick(this.props, []);
     return <VideoItem
             {...this.props}
             onMount={this.videoOnMount.bind(this)}
