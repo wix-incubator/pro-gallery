@@ -1,0 +1,213 @@
+'use strict';
+
+import React from 'react';
+import {expect} from 'chai';
+import sinon from 'sinon';
+import utils from '../../../utils';
+import {VideoQueue} from './video-queue';
+import videoMiddleware from './videoMiddleware';
+
+
+describe('Video Item ', () => {
+  const store = {
+    getState() {
+      return {gallery: {
+        videoPlayMode: 1
+      }};
+    },
+    dispatch: action => {}
+  };
+  const next = action => {};
+  let videoQueue;
+  let middleware;
+  let videoData1;
+  let videoData2;
+  let action;
+  let stub;
+
+  beforeEach(() => {
+    videoQueue = new VideoQueue();
+    middleware = videoMiddleware({videoQueue, utils})(store)(next);
+    videoData1 = {
+      idx: 1,
+      isVisible: () => true
+    };
+    videoData2 = {
+      idx: 2,
+      isVisible: () => true
+    };
+  });
+
+  it('video added and video removed effecting the queue', () => {
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData1
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(1);
+    action = {
+      type: 'VIDEO_REMOVED',
+      payload: 1
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(-1);
+  });
+
+  it('not editor && if autoplay & video ended, should play next visible video', () => {
+    stub = sinon.stub(utils, 'isEditor').returns(false);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData1
+    };
+    middleware(action);
+    videoData2 = {
+      idx: 2,
+      isVisible: () => false
+    };
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData2
+    };
+    middleware(action);
+    const videoData3 = {
+      idx: 3,
+      isVisible: () => true
+    };
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData3
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(1);
+    action = {
+      type: 'VIDEO_ENDED',
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(3);
+    stub.restore();
+  });
+
+  it('not editor && if autoplay & navigation in, should play next visible video', () => {
+    stub = sinon.stub(utils, 'isEditor').returns(false);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData1
+    };
+    middleware(action);
+    videoData2 = {
+      idx: 2,
+      isVisible: () => false
+    };
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData2
+    };
+    middleware(action);
+    const videoData3 = {
+      idx: 3,
+      isVisible: () => true
+    };
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData3
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(1);
+    action = {
+      type: 'NAVIGATION_IN',
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(3);
+    stub.restore();
+  });
+
+  it('not editor && if autoplay & editor mode changed, should still play current if visible', () => {
+    stub = sinon.stub(utils, 'isEditor').returns(false);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData1
+    };
+    middleware(action);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData2
+    };
+    middleware(action);
+    action = {
+      type: 'EDITOR_MODE_CHANGED',
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(1);
+    stub.restore();
+  });
+
+  it('not editor && if autoplay & gallery window layout changed, should still play current if visible', () => {
+    stub = sinon.stub(utils, 'isEditor').returns(false);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData1
+    };
+    middleware(action);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData2
+    };
+    middleware(action);
+    action = {
+      type: 'GALLERY_WINDOW_LAYOUT_CHANGED',
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(1);
+    stub.restore();
+  });
+
+  it('not editor && if autoplay & editor mode changed, should play next visible if current is not visible', () => {
+    stub = sinon.stub(utils, 'isEditor').returns(false);
+    videoData1 = {
+      idx: 1,
+      isVisible: () => false
+    };
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData1
+    };
+    middleware(action);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData2
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(1);
+    action = {
+      type: 'EDITOR_MODE_CHANGED',
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(2);
+    stub.restore();
+  });
+
+  it('not editor && if autoplay & gallery window layout changed, should play next visible if current is not visible', () => {
+    stub = sinon.stub(utils, 'isEditor').returns(false);
+    videoData1 = {
+      idx: 1,
+      isVisible: () => false
+    };
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData1
+    };
+    middleware(action);
+    action = {
+      type: 'VIDEO_ADDED',
+      payload: videoData2
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(1);
+    action = {
+      type: 'GALLERY_WINDOW_LAYOUT_CHANGED',
+    };
+    middleware(action);
+    expect(videoQueue.current()).to.equal(2);
+    stub.restore();
+  });
+});

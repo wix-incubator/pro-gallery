@@ -1,6 +1,5 @@
 import React from 'react';
 import utils from '../../utils/index.js';
-import LoveButton from './loveButton/loveButton.js';
 
 export default class ImageItem extends React.Component {
 
@@ -13,6 +12,7 @@ export default class ImageItem extends React.Component {
         onTouchStart={actions.handleItemMouseDown}
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
+        data-hook={'image-item'}
         style={loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${resized_url.thumb})`}}
         >
         <img onLoad={actions.setItemLoaded}
@@ -31,6 +31,7 @@ export default class ImageItem extends React.Component {
         className={'gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'loaded' : '')}
         key={'image_container-' + id}
         style={utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${resized_url.thumb})`}}
+        data-hook={'image-item'}
       >
         <img onLoad={actions.setItemLoaded}
              key={'image-' + id}

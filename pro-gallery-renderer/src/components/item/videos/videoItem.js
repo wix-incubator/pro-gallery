@@ -50,11 +50,6 @@ class VideoItem extends React.Component {
       videoDimensionsCss.right = '-100%';
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
-      // if (isWiderThenContainer) {
-      //   videoDimensionsCss['marginLeft'] =  ;
-      // } else {
-      //   videoDimensionsCss['marginTop'] = Math.round((this.props.style.width / this.props.style.ratio - this.props.style.height) / -2);
-      // }
     }
     return <ReactPlayer
       className={'gallery-item-visible video gallery-item'}
@@ -109,6 +104,13 @@ class VideoItem extends React.Component {
     this.props.onUnmount();
   }
 
+  canVideoPlayInGallery(itemClick, videoPlay) {
+    if (utils.isMobile() && itemClick !== 'expand') return true;
+    else if (!utils.isMobile() && itemClick !== 'expand') return true;
+    else if (!utils.isMobile() && videoPlay !== 'onClick') return true;
+    else return false;
+  }
+
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -117,17 +119,17 @@ class VideoItem extends React.Component {
       baseClassName += ' playing';
     }
     const videoControls = this.props.hidePlay ? false : [
-      <i key="play-triangle" className={'gallery-item-video-play-triangle progallery-svg-font-icons-play-triangle '}/>,
-      <i key="play-bg" className={'gallery-item-video-play-background progallery-svg-font-icons-play-background '}/>
+      <i key="play-triangle" data-hook="play-triangle" className={'gallery-item-video-play-triangle progallery-svg-font-icons-play-triangle '}/>,
+      <i key="play-bg" data-hook="play-background" className={'gallery-item-video-play-background progallery-svg-font-icons-play-background '}/>
     ];
 
     const videoPreloader = <div className="pro-circle-preloader" key={'video-preloader-' + this.props.idx}/>;
 
     const {videoPlay, itemClick} = this.props.styleParams;
-    const canVideoPlayInGallery = utils.isMobile() ? itemClick !== 'expand' : !(itemClick === 'expand' && videoPlay === 'onClick');
-    const video = canVideoPlayInGallery ? (
+    const video = this.canVideoPlayInGallery(itemClick, videoPlay) ? (
       <div
           className={baseClassName + ' animated fadeIn '}
+          data-hook="video_container-video-player-element"
           key={'video_container-' + this.props.id}
           style={this.props.loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...this.props.imageDimensions}}
         >
@@ -138,6 +140,7 @@ class VideoItem extends React.Component {
     ) : (
       <div
           className={baseClassName}
+          data-hook="video_container-image-element"
           key={'video_container-' + this.props.id}
           style={{backgroundImage: `url(${this.props.resized_url.thumb})`, ...this.props.imageDimensions}}
         >
