@@ -10,10 +10,10 @@ export default class Social extends React.Component {
     const {styleParams, id, actions} = this.props;
     if (styleParams.allowSocial) {
       const slideshowShareButton = <i className={'block-fullscreen progallery-svg-font-icons-share-store'} />;
-      const slideshowShare = (styleParams.isSlideshow ? actions.getShare() : '');
-
       if (utils.isSite()) {
+        const slideshowShare = (styleParams.isSlideshow ? actions.getShare() : '');
         return <div className={'block-fullscreen gallery-item-social-share gallery-item-social-button'}
+          data-hook="gallery-item-social-button"
           key={'item-social-share-' + id}
           onClick={e => actions.toggleShare(e, true)}>
           {slideshowShareButton}
@@ -21,6 +21,7 @@ export default class Social extends React.Component {
         </div>;
       } else {
         return <div className={'show-tooltip block-fullscreen gallery-item-social-share gallery-item-social-button'}
+          data-hook="gallery-item-social-button"
           key={'item-social-share-' + id}
           onMouseOver={e => itemActions.showTooltip(e, 'Gallery_Sharing_Disabled_In_Editor')}
           onMouseOut={() => itemActions.hideTooltip()}
@@ -84,7 +85,6 @@ export default class Social extends React.Component {
       };
 
       const itemProps = {
-        download: 'download',
         target: '_blank',
         href: download_url.mp4 || download_url.webm || download_url.img,
         onClick: e => {
@@ -105,14 +105,7 @@ export default class Social extends React.Component {
         const props = isDemo ? {
           onMouseOver: e => itemActions.showTooltip(e, 'Gallery_Hover_Download_FreeImages_Text'),
           onMouseOut: () => itemActions.hideTooltip(),
-        } : {
-          target: '_blank',
-          href: download_url.mp4 || download_url.webm || download_url.img,
-          onClick: e => {
-            e.stopPropagation();
-            logger.trackBi(logger.biEvents.download, {origin: 'gallery'});
-          },
-        };
+        } : itemProps;
         return <a
           {...genralProps}
           download="download"
