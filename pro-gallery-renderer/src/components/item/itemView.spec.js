@@ -1,240 +1,518 @@
+//Yonatan Hattav Jun21
 'use strict';
 
-import GalleryDriver from '../../../test/drivers/reactDriver';
-import {mount} from 'enzyme';
-import {testImages} from '../../../test/images-mock';
+import ReactDOM from 'react-dom';
+import ImageItem from './imageItem.js';
+import VideoItem from './videos/videoItem.js';
+import TextItem from './textItem.js';
+import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
+import ItemHover from './itemHover.js';
+import Texts from './texts/texts.js';
+import Share from './share/share.js';
+import CustomButton from './buttons/customButton.js';
+import ItemTitle from './texts/itemTitle.js';
+import {Wix, Consts, performanceUtils, itemActions, logger} from 'photography-client-lib';
+import classNames from 'classnames';
+import _ from 'lodash';
+import Social from './social/social.js';
+import {mount, shallow} from 'enzyme';
+import {use, spy, expect, chai} from 'chai';
+import sinon from 'sinon';
+import chaiEnzyme from 'chai-enzyme';
+import utils from '../../../src/utils/index.js';
+import LoveButton from './loveButton/loveButton.js';
 import React from 'react';
+import GalleryDriver from '../../../test/drivers/reactDriver';
+import {testImages} from '../../../test/images-mock';
 import ItemView from './itemView';
-import {expect} from 'chai';
 
 describe('Item View', () => {
+  let driver;
   let sampleItemViewProps;
-  let galleryDriver;
   let sampleItem;
-
+  let mockEvent;
   beforeEach(() => {
-    galleryDriver = new GalleryDriver();
+    mockEvent = new Event('mock');
+    driver = new GalleryDriver();
     sampleItem = testImages[0];
-    sampleItemViewProps = galleryDriver.props.itemView(sampleItem);
+    sampleItemViewProps = driver.props.itemView(sampleItem);
   });
 
   it('should init', () => {
-    const wrapper = mount(<ItemView
-      {...sampleItemViewProps}
-      />);
-    expect(wrapper.find({'data-hook': 'item-wrapper'}).length).to.equal(1);
+    driver.mount(ItemView, sampleItemViewProps);
+    expect(driver.find.hook('item-wrapper').length).to.equal(1);
   });
 
   describe('when error occurs', () => {
-    it('retries should be 0 if no error occured', () => {
-      const wrapper = mount(<ItemView
-        {...sampleItemViewProps}
-        />);
-
-      expect(wrapper.state('retries')).to.equal(0);
+    it('state - retries should be increase acording to times called setItemError, failed is true after 4 times or more', () => {
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.get.instance().setItemError();
+      expect(driver.get.state('retries')).to.equal(1);
+      expect(driver.get.state('failed')).to.be.false;
+      driver.get.instance().setItemError();
+      expect(driver.get.state('retries')).to.equal(2);
+      expect(driver.get.state('failed')).to.be.false;
+      driver.get.instance().setItemError();
+      expect(driver.get.state('retries')).to.equal(3);
+      expect(driver.get.state('failed')).to.be.false;
+      driver.get.instance().setItemError();
+      expect(driver.get.state('retries')).to.equal(4);
+      expect(driver.get.state('failed')).to.be.true;
     });
 
-    it('retries should be 1 when setting error once', () => {
-      const wrapper = mount(<ItemView
-        {...sampleItemViewProps}
-        />);
-
-      wrapper.instance().setItemError();
-
-      expect(wrapper.state('retries')).to.equal(1);
-    });
-
-    it('retries should be 3 when setting error 3 times', () => {
-      const wrapper = mount(<ItemView
-        {...sampleItemViewProps}
-        />);
-
-      const instance = wrapper.instance();
-      instance.setItemError();
-      instance.setItemError();
-      instance.setItemError();
-
-      expect(wrapper.state('retries')).to.equal(3);
-    });
-
-    it('failed should be set true when setting error 4 times', () => {
-      const wrapper = mount(<ItemView
-        {...sampleItemViewProps}
-        />);
-
-      const instance = wrapper.instance();
-      instance.setItemError();
-      instance.setItemError();
-      instance.setItemError();
-      instance.setItemError();
-
-      expect(wrapper.state('failed')).to.equal(true);
-    });
-
-    it('failed should be set false when setting error less than 4 times', () => {
-      const wrapper = mount(<ItemView
-        {...sampleItemViewProps}
-        />);
-
-      const instance = wrapper.instance();
-      instance.setItemError();
-      instance.setItemError();
-      instance.setItemError();
-
-      expect(wrapper.state('failed')).to.equal(false);
+  });
+  describe('item loaded setItemLoaded', () => {
+    it('should set states when called', () => {
+      const spy = sinon.spy(ItemView.prototype, 'setItemLoaded');
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.set.state({
+        failed: true,
+        loaded: false
+      });
+      driver.get.instance().setItemLoaded();
+      expect(driver.get.state('failed')).to.be.false;
+      expect(driver.get.state('loaded')).to.be.true;
+      expect(spy.called).to.be.true;
+      spy.restore();
     });
   });
+  describe('toggleShare', () => {
+    it('should not be fired if hovering over icons', () => {
 
-  describe('Item Download ', () => {
-    let galleryConfig;
-    beforeEach(() => {
-      galleryConfig = galleryDriver.get.galleryConfig;
+      driver.mount(ItemView, sampleItemViewProps);
+      let spy = sinon.spy(ItemView.prototype, 'setState');
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      expect(spy.called).to.be.true; //called on any event type other than mouseout
+      spy.restore();
+      spy = sinon.spy(ItemView.prototype, 'setState');
+      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      expect(spy.called).to.be.false; //not called is mouseout but one of the tagName isnt listed
+      spy.restore();
+      spy = sinon.spy(ItemView.prototype, 'setState');
+      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'button'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}});
+      expect(spy.called).to.be.false; //not called is mouseout but at least one of the tagName isnt listed
+      spy.restore();
+      spy = sinon.spy(ItemView.prototype, 'setState');
+      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}});
+      expect(spy.called).to.be.true; // called if mouseout but no listed tagName
+      spy.restore();
     });
-
-    it('should hide according to the style params', () => {
-      // Step 1: check with allowDownload = FALSE
-      galleryConfig.styleParams.allowDownload = false;
-      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig);
-
-      const wrapper1 = mount(<ItemView
-        {...sampleItemViewProps}
-        />).setState({
-          loaded: true,
-        });
-
-      expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(0);
-    });
-
-    it('should show the download button according to the style params', () => {
-      // Step 2: check with allowDownload = TRUE
-      const galleryConfig2 = galleryDriver.get.galleryConfig;
-      galleryConfig2.styleParams.allowDownload = true;
-      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
-
-      const wrapper1 = mount(<ItemView
-        {...sampleItemViewProps}
-        />).setState({
-          loaded: true,
-        });
-
-      expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(1);
-    });
-
-    it('should hide the download button if it is a demo item', () => {
-      // Step 2: check with allowDownload = TRUE
-      const galleryConfig2 = galleryDriver.get.galleryConfig;
-      galleryConfig2.styleParams.allowDownload = true;
-      sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
-
-      const wrapper1 = mount(<ItemView
-        {...sampleItemViewProps}
-        />).setState({
-          loaded: true,
-        });
-
-      expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(0);
-    });
-
-    it('should show title element when showTitle is true', () => {
-      // Step 2: check with allowDownload = TRUE
-      const galleryConfig2 = galleryDriver.get.galleryConfig;
-      galleryConfig2.styleParams.allowTitle = true;
-      sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
-
-      const wrapper1 = mount(<ItemView
-        {...sampleItemViewProps}
-        title = "My title"
-      />).setState({
-        loaded: true,
+    it('should changes showShare properly when fired', () => {
+      driver.mount(ItemView, sampleItemViewProps);
+      const spy = sinon.spy(ItemView.prototype, 'setState');
+      driver.set.state({
+        showShare: true
       });
-
-      expect(wrapper1.find({'data-hook': 'item-title'}).length).to.equal(1);
-    });
-
-    it('should hide title element when showTitle is true but not title text', () => {
-      // Step 2: check with allowDownload = TRUE
-      const galleryConfig2 = galleryDriver.get.galleryConfig;
-      galleryConfig2.styleParams.allowTitle = true;
-      sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
-
-      const wrapper1 = mount(<ItemView
-        {...sampleItemViewProps}
-      />).setState({
-        loaded: true,
-      });
-
-      expect(wrapper1.find({'data-hook': 'item-title'}).length).to.equal(0);
-    });
-
-    it('should show description element when allowDescription is true', () => {
-      // Step 2: check with allowDownload = TRUE
-      const galleryConfig2 = galleryDriver.get.galleryConfig;
-      galleryConfig2.styleParams.allowDescription = true;
-      sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
-
-      const wrapper1 = mount(<ItemView
-        {...sampleItemViewProps}
-        description = "My description"
-      />).setState({
-        loaded: true,
-      });
-
-      expect(wrapper1.find({'data-hook': 'item-description'}).length).to.equal(1);
-    });
-
-    it('should hide description element when allowDescription is true but not description text', () => {
-      // Step 2: check with allowDownload = TRUE
-      const galleryConfig2 = galleryDriver.get.galleryConfig;
-      galleryConfig2.styleParams.allowDescription = true;
-      sampleItem.isDemo = true;
-      sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
-
-      const wrapper1 = mount(<ItemView
-        {...sampleItemViewProps}
-      />).setState({
-        loaded: true,
-      });
-
-      expect(wrapper1.find({'data-hook': 'item-description'}).length).to.equal(0);
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      expect(driver.get.state().showShare).to.be.false; //when forceVal is not sent - toggles showShare
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      expect(driver.get.state().showShare).to.be.true; //when forceVal is not sent - toggles showShare
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}}, true);
+      expect(driver.get.state().showShare).to.be.true; //assignes forceVal to showShare if it is defined
+      spy.restore();
     });
   });
+  describe('toggleHoverOnMobile', () => {
+    it('should toggle showHover', () => {
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.set.state({
+        showHover: true
+      });
+      driver.get.instance().toggleHoverOnMobile();
+      expect(driver.get.state().showHover).to.be.false;
+      driver.get.instance().toggleHoverOnMobile();
+      expect(driver.get.state().showHover).to.be.true;
+    });
+  });
+  describe('onMouseOver', () => {
+    it('should call onVideoHover when hovering and the type is video', () => {
+      const spy = sinon.stub(ItemView.prototype, 'onVideoHover');
+      Object.assign(sampleItemViewProps, {type: 'video'});
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.find.hook('item-container').simulate('mouseover');
+      expect(spy.called).to.be.true;
+      spy.restore();
+    });
+    it('onVideoHover does not execute if played on mobile or if not defined as hover play', () => {
+      Object.assign(sampleItemViewProps, {type: 'video'});
+			//IMPORTANT stubing a function that is going to be passed as props before it is passed. stubing after mounting interfers with react managing the props and will not always work.
+      const spy = sinon.stub(sampleItemViewProps, 'playVideo');
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.set.props({styleParams: {videoPlay: 'hover'}});
+      const stub = sinon.stub(utils, 'isMobile').returns(false);
+      driver.find.hook('item-container').simulate('mouseover');
+      expect(spy.called).to.be.true;
+      stub.restore();
+      spy.restore();
+    });
 
-  /*
-   it('should show / hide the download button according to the style params', () => {
 
-   // Step 1: check with allowDownload = FALSE
-   var galleryConfig1 = galleryDriver.get.galleryConfig;
-   galleryConfig1.styleParams.allowDownload = false;
-   sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig1);
+  });
+  describe('onItemClick', () => {
+    it('should scroll to item on click if item is thumbnail and not if its not', () => {
+      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image'});
+      driver.mount(ItemView, sampleItemViewProps);
+      const spy = sinon.stub(driver.get.props().actions, 'scrollToItem');
+      driver.find.hook('item-container').simulate('click');
+      expect(spy.called).to.be.false;
+      driver.set.props({thumbnailHighlightId: '1'});
+      driver.find.hook('item-container').simulate('click');
+      expect(spy.called).to.be.true;
+      spy.restore();
+    });
+    it('should toggleFullscreen for items with link', () => {
+      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'link', videoPlay: 'onClick'}});
+      driver.mount(ItemView, sampleItemViewProps);
+      const stub = sinon.stub(driver.get.props().actions, 'toggleFullscreen');
+      driver.find.hook('item-container').simulate('click');
+      expect(stub.called).to.be.true;
+      stub.restore();
+    });
+    it('should toggleFullscreen for items with expand', () => {
+      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'expand', videoPlay: 'onClick'}});
+      driver.mount(ItemView, sampleItemViewProps);
+      const stub = sinon.stub(driver.get.props().actions, 'toggleFullscreen');
+      driver.find.hook('item-container').simulate('click');
+      expect(stub.called).to.be.true;
+      stub.restore();
+    });
+    it('should toggle playVideo/pauseVideo for video items that are not expand and the video is styled to play onclick/the device is mobile/', () => {
+      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'video', styleParams: {itemClick: 'foo', videoPlay: 'onClick'}});
+      const spyPlay = sinon.stub(sampleItemViewProps, 'playVideo');
+      const spyPause = sinon.stub(sampleItemViewProps, 'pauseVideo');
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.set.props({
+        playing: true
+      });
+      driver.find.hook('item-container').simulate('click');
+      expect(spyPlay.called).to.be.false;
+      expect(spyPause.called).to.be.true;
+			// the props are toggled useing redux. to be tested in the e2e tests. here I hardcode a toggle for props.playing
+      driver.set.props({
+        playing: false
+      });
+      spyPlay.called = false;
+      spyPause.called = false;
+      driver.find.hook('item-container').simulate('click');
+      expect(spyPlay.called).to.be.true;
+      expect(spyPause.called).to.be.false;
+      spyPlay.restore();
+      spyPause.restore();
+    });
+		// following will always fail for video items. it looks to me like a bug. videos will never have hover on mobile
+    it('should toggleHover onClick when the device is mobile and the onclick is styles to nothing', () => {
+      const mobileStub = sinon.stub(utils, 'isMobile').returns(true);
+      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'nothing', videoPlay: 'onClick'}});
+      driver.mount(ItemView, sampleItemViewProps);
+      const spy = sinon.spy(ItemView.prototype, 'toggleHoverOnMobile');
+      driver.find.hook('item-container').simulate('click');
+      expect(spy.called).to.be.true;
+      spy.restore();
+      mobileStub.restore();
+    });
+  });
+  describe('toggleFullscreenIfNeeded', () => {
+    it('should call toggleFullscreen only if the target item does not have block-fullscreen class', () => {
+			// not testing this.
+    });
+  });
+	// not testing multishare toggleMultishareSelection
+	// not testing multishare handleItemMouseDown
+	// not testing multishare handleItemMouseUp
+	// not testing "if" isSmallItem
+	// not testing "if" isVerticalContainer
+	// not testing "if" shouldShowHoverOnMobile
+  describe('shouldHover', () => {
+    it('should return true/false on different item parameters', () => {
+      Object.assign(sampleItemViewProps);
+      driver.mount(ItemView, sampleItemViewProps);
+      const instance = driver.get.instance();
+      const stub = sinon.stub(instance, 'isMultisharing').returns(false);
+      const stubprop = sinon.stub(instance, 'shouldShowHoverOnMobile').returns(false);
+      const stubMobile = sinon.stub(utils, 'isMobile').returns(false);
+      const stubEditor = sinon.stub(utils, 'isEditor').returns(false);
+      driver.set.props({
+        styleParams: {
+          isSlideshow: false,
+          allowHover: true
+        }
+      });
+      expect(instance.shouldHover()).to.be.true;
+			//IMPORTANT after stubing, there is no need to "restub" to change the return value. the stub variable has the functions
+      stubEditor.returns(true);
+      expect(instance.shouldHover()).to.equal(driver.get.state('showHover'));
+      stubEditor.returns(false);
+      stubMobile.returns(true);
+      expect(instance.shouldHover()).to.be.false;
+      driver.set.props({
+        styleParams: {
+          isSlideshow: false,
+          allowHover: false
+        }
+      });
+      expect(instance.shouldHover()).to.be.false;
+      driver.set.props({
+        styleParams: {
+          isSlideshow: true,
+          allowHover: true
+        }
+      });
+      expect(instance.shouldHover()).to.be.false;
+      stub.returns(true);
+      expect(instance.shouldHover()).to.be.true;
+      stub.restore();
+      stubMobile.restore();
+      stubEditor.restore();
+      stubprop.restore();
 
-   let wrapper1 = mount(<ItemView
-   {...sampleItemViewProps}
-   />).setState({
-   loaded: true,
-   });
+    });
+  });
+	// not testing isMultishared
+	// not testing isMultisharing
 
-   expect(wrapper1.find({'data-hook': 'item-download'}).length).to.equal(0);
+  describe('getImageDimentions', () => {
+    it('should return the correct dimentions for image parameters', () => {
+      Object.assign(sampleItemViewProps, {
+        styleParams: {
+          cubeImages: false,
+          cubeType: 'fit'},
+        style: {
+          bgColor: 'none',
+          maxWidth: 1920,
+          maxHeight: 1000,
+          ratio: 1.92,
+          orientation: 'landscape',
+          width: 1920,
+          cubedWidth: 1920,
+          height: 1000,
+          cubedHeight: 1000}});
+      driver.mount(ItemView, sampleItemViewProps);
+			//IMPORTANT use deep when trying to compare objects
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal({});
 
-   // Step 2: check with allowDownload = TRUE
-   var galleryConfig2 = galleryDriver.get.galleryConfig;
-   galleryConfig2.styleParams.allowDownload = true;
-   sampleItemViewProps = galleryDriver.props.itemView(sampleItem, galleryConfig2);
+      driver.set.props({
+        styleParams: {
+          cubeImages: true,
+          cubeType: 'foo'},
+        style: {
+          bgColor: 'none',
+          maxWidth: 1920,
+          maxHeight: 1000,
+          ratio: 1.92,
+          orientation: 'landscape',
+          width: 1920,
+          cubedWidth: 1920,
+          height: 1000,
+          cubedHeight: 1000}});
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal({});
 
-   let wrapper2 = mount(<ItemView
-   {...sampleItemViewProps}
-   />).setState({
-   loaded: true,
-   });
+      driver.set.props({
+        styleParams: {
+          cubeImages: true,
+          cubeType: 'fit'},
+        style: {
+          bgColor: 'none',
+          maxWidth: 1920,
+          maxHeight: 1000,
+          ratio: 1.92,
+          orientation: 'landscape',
+          width: 1920,
+          cubedWidth: 1920,
+          height: 1000,
+          cubedHeight: 1000}});
+			//IMPORTANT notice marginTop is -0. if it was just 0 it wouldnt deep equal the -0 that returns from the function (the value is devided by -2 in the function)
+      let testObject = {
+        height: `calc(100% - 0px)`,
+        marginTop: -0
+      };
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal(testObject);
+      driver.set.props({
+        styleParams: {
+          cubeImages: true,
+          cubeType: 'fit'},
+        style: {
+          bgColor: 'none',
+          maxWidth: 1920,
+          maxHeight: 1000,
+          ratio: 1.0,
+          orientation: 'landscape',
+          width: 1920,
+          cubedWidth: 1920,
+          height: 1000,
+          cubedHeight: 1000}});
+      testObject = {
+        width: `calc(100% - 920px)`,
+        marginLeft: 460
+      };
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal(testObject);
+    });
+  });
+  describe('isVisible', () => {
+    it('should return true if the element is visible', () => {
+      Object.assign(sampleItemViewProps, {
+        documentHeight: 1080,
+        scroll: {
+          top: 200},
+        type: 'video'});
+      driver.mount(ItemView, sampleItemViewProps);
+      let visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+      expect(visible).to.be.false;
+      driver.set.props({
+        scroll: {
+          top: 270}
+      });
+      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+      expect(visible).to.be.false;
+      driver.set.props({
+        scroll: {
+          top: 271}
+      });
+      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+      expect(visible).to.be.true;
+      driver.set.props({
+        scroll: {
+          top: 1349}
+      });
+      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+      expect(visible).to.be.true;
+      driver.set.props({
+        scroll: {
+          top: 1350}
+      });
+      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+      expect(visible).to.be.false;
+      driver.set.props({
+        scroll: {
+          top: 1500}
+      });
+      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+      expect(visible).to.be.false;
+      driver.set.props({
+        scroll: {
+          top: 2000}
+      });
+      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+      expect(visible).to.be.false;
+    });
+  });
+	// not testing all the "return component" functions
+  describe('getItemInner', () => {
+    it('should return a placeholder for non visible video', () => {
+      Object.assign(sampleItemViewProps, {
+        visible: true,
+        styleParams: {
+          isSlideshow: false},
+        type: 'video'});
+      driver.mount(ItemView, sampleItemViewProps);
+      expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(0);
+      expect(driver.find.selector(VideoItem).length).to.equal(1);
+      driver.set.props({
+        visible: false
+      });
+      expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
+      expect(driver.find.selector(VideoItem).length).to.equal(0);
+    });
+    it('should create a separate div for buttons when in slideshow', () => {
+      Object.assign(sampleItemViewProps, {
+        visible: true,
+        styleParams: {
+          isSlideshow: true},
+        type: 'image'});
+      driver.mount(ItemView, sampleItemViewProps);
+      expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(1);
+      driver.set.props({
+        styleParams: {
+          isSlideshow: false}
+      });
+      expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(0);
+    });
+  });
+	//openItemShopInFullScreen not tested
+  describe('getBottomInfoElement', () => {
+    it('should create a CustomButton/ItemTitle if needed', () => {
+      Object.assign(sampleItemViewProps, {
+        visible: true,
+        styleParams: {
+          useCustomButton: true,
+          titlePlacement: 'SHOW_ALWAYS',
+          allowTitle: true},
+        type: 'image'});
+      const stub = sinon.stub(utils, 'getTitleOrFilename').returns('foo bar');
+      driver.mount(ItemView, sampleItemViewProps);
+      expect(driver.find.selector(CustomButton).length).to.equal(1);
+      expect(driver.find.selector(ItemTitle).length).to.equal(1);
+      stub.restore();
+    });
 
-   expect(wrapper2.find({'data-hook': 'item-download'}).length).to.equal(1);
-   });
-   */
-
-
+  });
+	//compunentDidUpdate not tested
+  describe('render', () => {
+    it('should create a href only if itemClick is expand', () => {
+      Object.assign(sampleItemViewProps, {
+        styleParams: {
+          itemClick: 'foo'}});
+      driver.mount(ItemView, sampleItemViewProps);
+      expect(driver.find.selector('div[href][data-hook="item-container"]').length).to.equal(0);
+      driver.set.props({
+        styleParams: {
+          itemClick: 'expand'}});
+      expect(driver.find.selector('div[href][data-hook="item-container"]').length).to.equal(1);
+    });
+    it('should have boxshadow only if defined', () => {
+      Object.assign(sampleItemViewProps, {
+        styleParams: {
+          boxShadow: 5,
+          imageMargin: 5}});
+      driver.mount(ItemView, sampleItemViewProps);
+      let style = driver.find.hook('item-container').get(0).style;
+      expect(style.boxShadow).to.equal('5px 5px 13px 0 rgba(0,0,0,0.2)');
+      driver.set.props({
+        styleParams: {
+          boxShadow: 0,
+          imageMargin: 5}});
+      style = driver.find.hook('item-container').get(0).style;
+      expect(style.boxShadow).to.equal('');
+    });
+    it('should toggle overflowY visible/inherit', () => {
+      Object.assign(sampleItemViewProps, {
+        styleParams: {
+          isSlideshow: true}});
+      driver.mount(ItemView, sampleItemViewProps);
+      let style = driver.find.hook('item-container').get(0).style;
+      expect(style.overflowY).to.equal('visible');
+      driver.set.props({
+        styleParams: {
+          isSlideshow: false}});
+      style = driver.find.hook('item-container').get(0).style;
+      expect(style.overflowY).to.equal('inherit');
+    });
+    it('item-Wrapper should have class based on cubeType', () => {
+      Object.assign(sampleItemViewProps, {
+        styleParams: {
+          cubeImages: true,
+          cubeType: 'foo'}});
+      driver.mount(ItemView, sampleItemViewProps);
+      expect(driver.find.hook('item-wrapper').hasClass('cube-type-foo')).to.equal(true);
+      driver.set.props({
+        styleParams: {
+          cubeImages: false}});
+      expect(driver.find.hook('item-wrapper').hasClass('cube-type-foo')).to.equal(false);
+    });
+    it('should toggle overflowY visible/inherit', () => {
+      Object.assign(sampleItemViewProps, {
+        style: {bgColor: 'red'},
+        styleParams: {
+          cubeType: 'fit'}});
+      driver.mount(ItemView, sampleItemViewProps);
+      let style = driver.find.hook('item-wrapper').get(0).style;
+      expect(style.backgroundColor).to.equal('inherit');
+      driver.set.props({
+        styleParams: {
+          cubeType: 'foot'}});
+      style = driver.find.hook('item-wrapper').get(0).style;
+      expect(style.backgroundColor).to.equal('red');
+    });
+  });
 });
 
 

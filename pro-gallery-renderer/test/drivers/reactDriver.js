@@ -97,6 +97,12 @@ class galleryDriver {
       scrollToItem: _.noop,
       toggleShare: _.noop
     };
+		//video functions used passed by commonItemcontainer decorator
+    this.videoEnded = _.noop;
+    this.videoAdded = _.noop;
+    this.videoRemoved = _.noop;
+    this.playVideo = _.noop;
+    this.pauseVideo = _.noop;
 
     this.layoutParams = {
       items: this.items,
@@ -110,7 +116,12 @@ class galleryDriver {
     this.galleryConfig = {
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
-      actions: this.get.actions
+      actions: this.get.actions,
+      videoEnded: this.get.videoEnded,
+      videoAdded: this.get.videoAdded,
+      videoRemoved: this.videoRemoved,
+      playVideo: this.get.playVideo,
+      pauseVideo: this.get.pauseVideo
     };
   }
 
@@ -124,9 +135,15 @@ class galleryDriver {
       layoutParams: this.layoutParams,
       galleryStructure: this.galleryStructure,
       galleryConfig: this.galleryConfig,
-      state: () => this.wrapper.state(),
+      state: str => this.wrapper.state(str),
       instance: () => this.wrapper.instance(),
-      props: () => this.wrapper.props()
+      props: str => this.wrapper.props(str),
+      node: () => this.wrapper.getNode(),
+      videoEnded: this.videoEnded,
+      videoAdded: this.videoAdded,
+      videoRemoved: this.videoRemoved,
+      playVideo: this.playVideo,
+      pauseVideo: this.pauseVideo,
     };
   }
 
