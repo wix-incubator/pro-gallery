@@ -29,7 +29,6 @@ class GalleryItem {
       Object.assign(dto, this.dto, this.metadata);
       this.processScheme(new Item({dto}).scheme);
     }
-
     if (config.wixImage && _.isNumber(config.orderIndex)) {
       this.createFromWixImage(config.wixImage, config.orderIndex, config.addWithTitles, config.isSecure);
     }
@@ -37,7 +36,6 @@ class GalleryItem {
     if (config.wixVideo && _.isNumber(config.orderIndex)) {
       this.createFromWixVideo(config.wixVideo, config.orderIndex, config.addWithTitles, config.isSecure);
     }
-
     if (config.wixExternal && _.isNumber(config.orderIndex)) {
       this.createFromExternal(config.wixExternal, config.orderIndex, config.addWithTitles, config.isSecure);
     }
@@ -48,7 +46,6 @@ class GalleryItem {
         this.dto.metaData = utils.parseStringObject(itemMetadata);
       }
     }
-
     if (utils.isStoreGallery() && !this.isVideo) {
       this.watermark = config.watermark;
       if (!this.watermark) {
@@ -158,24 +155,23 @@ class GalleryItem {
     }, config);
 
   }
-
   getDataForShop() {
-    const fp = this.focalPoint;
-    const md = this.metadata;
+    const focalPoint = this.focalPoint;
+    const metadata = this.metadata;
     return {
-      isDemo: md.isDemo,
+      isDemo: metadata.isDemo,
       orderIndex: this.orderIndex,
       itemId: this.dto.itemId,
       originalUrl: this.getOriginalsUrl(),
       itemUrl: this.url,
-      itemHeight: md.height,
-      title: md.title,
-      itemWidth: md.width,
-      itemType: (md.type || 'image'),
+      itemHeight: metadata.height,
+      title: metadata.title,
+      itemWidth: metadata.width,
+      itemType: (metadata.type || 'image'),
       imageUrl: this.resizedUrl('fit', 200, 200, null, null).img,
       imagePurchasedUrl: this.dto.mediaUrl,
-      fpX: fp[0],
-      fpY: fp[1]
+      fpX: focalPoint[0],
+      fpY: focalPoint[1]
     };
   }
 
@@ -209,7 +205,6 @@ class GalleryItem {
 
   createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
 
-    console.log(JSON.stringify(wixData, null, 2));
     const qualities = _.map(wixData.fileOutput.video, q => {
       return {
         height: q.height,
@@ -224,7 +219,6 @@ class GalleryItem {
       p.url = p.url.replace('media/', '');
       return p;
     });
-
     const resolution = this.getHighestMp4Resolution(qualities);
     const metaData = {
       createdOn: new Date().getTime(),
@@ -470,7 +464,7 @@ class GalleryItem {
 
       const retUrl = resizer((prefix + originalUrl), this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
 
-/*
+		/*
       console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
         originalUrl,
         resizeMethod,
@@ -480,7 +474,7 @@ class GalleryItem {
         requiredHeight,
         options
       });
- */
+ 		*/
       return retUrl;
     }
 
@@ -502,9 +496,7 @@ class GalleryItem {
     this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
     this.thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
     this.thumbnail_url = this.resizedUrl('fit', this.thumbnailWidth, this.thumbnailHeight, {quality: 30}, false);
-
     this.square_url = this.resizedUrl('fill', 100, 100, {quality: 80}, false);
-
     this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams, false);
 
     this.sample_url = this.resizedUrl('fit', 500, 500, this.sharpParams, false, true);
@@ -532,7 +524,6 @@ class GalleryItem {
       const maxHeight = 720;
       const qualities = this.metadata.qualities;
       const poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
-
       if (poster) {
         if (qualities && qualities.length) {
           let suffix = '/';
@@ -902,10 +893,10 @@ class GalleryItem {
             case 'DocumentLink':
               return `Open ${linkData.name}`;
             default:
-              return 'Go To Link';
+              return 'Go to Link';
           }
         } else {
-          return 'Go To Link';
+          return 'Go to Link';
         }
       case 'web':
         return this.linkUrl;
