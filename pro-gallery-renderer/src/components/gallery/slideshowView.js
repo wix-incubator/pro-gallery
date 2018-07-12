@@ -38,7 +38,11 @@ class SlideshowView extends React.Component {
     return isLastItem;
   }
 
-  nextItem(dir) {
+  nextItem(dir, isAutoSlideshow) {
+
+    if (!isAutoSlideshow) {
+      this.stopAutoSlideshow();
+    }
 
     this.isAutoScrolling = true;
 
@@ -54,6 +58,25 @@ class SlideshowView extends React.Component {
       currentIdx: currentIdx + dir
     });
 
+  }
+
+  stopAutoSlideshow() {
+    clearInterval(this.autoSlideshowInterval);
+  }
+
+  startAutoSlideshow(interval) {
+    this.stopAutoSlideshow();
+    this.autoSlideshowInterval = setInterval(() => {
+      try {
+        if (this.isLastItem()) {
+          this.scrollToItem(0);
+        } else {
+          this.nextItem(1, true);
+        }
+      } catch (e) {
+        console.error('Cannot auto slide...', e);
+      }
+    }, interval);
   }
 
   scrollToItem(itemIdx) {
@@ -373,6 +396,9 @@ class SlideshowView extends React.Component {
     }
     this.setCurrentItemByScroll();
 
+    if (this.props.styleParams.isAutoSlideshow && this.props.styleParams.autoSlideshowInterval > 0) {
+      this.startAutoSlideshow(this.props.styleParams.autoSlideshowInterval * 1000);
+    }
   }
 
   componentWillUnmount() {

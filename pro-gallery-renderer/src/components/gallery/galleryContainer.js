@@ -1396,6 +1396,12 @@ export class GalleryContainer extends React.Component {
     if (canSet('mobilePanorama')) {
       stateStyles.mobilePanorama = String(wixStyles.mobilePanorama) === '1';
     }
+    if (canSet('isAutoSlideshow')) {
+      stateStyles.isAutoSlideshow = String(wixStyles.isAutoSlideshow) === '1';
+    }
+    if (canSet('autoSlideshowInterval')) {
+      stateStyles.autoSlideshowInterval = Number(wixStyles.autoSlideshowInterval) || 0;
+    }
 
     //Backwards compatibility for masonry layout
     if (String(stateStyles.selectedLayoutV2) === '1') {
