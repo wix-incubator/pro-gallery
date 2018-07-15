@@ -38,9 +38,9 @@ class SlideshowView extends React.Component {
     return isLastItem;
   }
 
-  nextItem(dir, isAutoSlideshow) {
+  nextItem(dir, isAutoTrigger) {
 
-    if (!isAutoSlideshow) {
+    if (!isAutoTrigger) {
       this.stopAutoSlideshow();
     }
 
@@ -74,7 +74,8 @@ class SlideshowView extends React.Component {
           this.nextItem(1, true);
         }
       } catch (e) {
-        console.error('Cannot auto slide...', e);
+        console.error('Cannot continue auto slideshow', e);
+        this.stopAutoSlideshow();
       }
     }, interval);
   }
