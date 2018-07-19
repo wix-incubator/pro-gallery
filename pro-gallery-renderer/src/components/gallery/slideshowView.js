@@ -39,7 +39,6 @@ class SlideshowView extends React.Component {
   }
 
   nextItem(dir, isAutoTrigger) {
-
     if (!isAutoTrigger) {
       this.stopAutoSlideshow();
     }
@@ -57,7 +56,6 @@ class SlideshowView extends React.Component {
     utils.setStateAndLog(this, 'Next Item', {
       currentIdx: currentIdx + dir
     });
-
   }
 
   stopAutoSlideshow() {
@@ -81,7 +79,6 @@ class SlideshowView extends React.Component {
   }
 
   scrollToItem(itemIdx) {
-
     this.isAutoScrolling = true;
 
     itemIdx += this.firstItemIdx;
@@ -91,7 +88,6 @@ class SlideshowView extends React.Component {
     });
 
     this.props.actions.scrollToItem(itemIdx, false, true);
-
   }
 
   handleKeypress(e) {
@@ -113,14 +109,12 @@ class SlideshowView extends React.Component {
         this.nextItem(1);
         return false;
     }
-
     return true; //continue handling the original keyboard event
-
   }
 
   createThumbnails(thumbnailPosition) {
     const currentIdx = this.state.currentIdx; // zero based (3)
-    console.log('creating thumbnails for idx', currentIdx);
+    utils.isVerbose() && console.log('creating thumbnails for idx', currentIdx);
 
     let width = this.props.thumbnailSize;
     let height = this.props.thumbnailSize;
@@ -299,13 +293,13 @@ class SlideshowView extends React.Component {
              height,
              margin: thumbnailsMargin
            }}
-            data-hook="gallery-thumbnails">
+           data-hook="gallery-thumbnails">
 
         {thumbnailsLayout.columns.map((column, c) => {
           return (
-            <div data-hook="gallery-column" className="gallery-column" key={'thumbnails-column' + c}
+            <div data-hook="gallery-thumbnails-column" className="gallery-column" key={'thumbnails-column' + c}
                  style={thumbnailsStyle}>
-              {column.galleryGroups.map(group => React.createElement(GroupView, group.renderProps(thumbnailsConfig)))}
+              {column.galleryGroups.map(group => React.createElement(GroupView, _.merge(group.renderProps(thumbnailsConfig), {store: this.props.store})))}
             </div>
           );
 
@@ -318,8 +312,8 @@ class SlideshowView extends React.Component {
   }
 
   setFlattenItems(galleryStructure) {
-    const flatItems = _.flattenDeep(galleryStructure.columns.map((column, c) => {
-      return column.galleryGroups.map((group, g) => {
+    const flatItems = _.flattenDeep(galleryStructure.columns.map(column => {
+      return column.galleryGroups.map(group => {
         return group.items;
       });
     }));
@@ -330,7 +324,6 @@ class SlideshowView extends React.Component {
   }
 
   setCurrentItemByScroll() {
-
     utils.isVerbose() && console.log('Setting current Idx by scroll', this.isAutoScrolling);
 
     if (this.isAutoScrolling) {
@@ -366,6 +359,146 @@ class SlideshowView extends React.Component {
     }
   }
 
+  createDebugMsg() {
+    return <GalleryDebugMessage {...this.props.debug} />;
+  }
+
+  createNavArrows() {
+    const shouldNotRenderNavArrows = this.props.galleryStructure.columns.some(column => {
+      const allRenderedGroups = _.filter(column.groups, group => group.rendered) || [];
+      const allGroupsWidth = allRenderedGroups.reduce((sum, group) => sum + Math.max(0, group.width), 0);
+      const isAllItemsFitsGalleryWidth = this.props.styleParams.oneRow && (this.props.container.galleryWidth >= allGroupsWidth);
+      return isAllItemsFitsGalleryWidth;
+    });
+
+    //remove navBars if no scroll is needed and is column layout
+    if (shouldNotRenderNavArrows) {
+      return null;
+    }
+
+    return [
+      (this.isFirstItem() ? '' : <button
+        className={'nav-arrows-container prev '}
+        onClick={() => this.nextItem(-1)}
+        aria-label="Previous Item"
+        tabIndex={utils.getTabIndex('slideshowPrev')}
+        key="nav-arrow-back"
+        data-hook="nav-arrow-back"
+      >
+        <img src={require(`../../assets/images/arrows/arrow-left.svg`)} />
+      </button>),
+      (this.isLastItem() ? '' : <button
+        className={'nav-arrows-container next'}
+        onClick={() => this.nextItem(1)}
+        aria-label="Next Item"
+        tabIndex={utils.getTabIndex('slideshowNext')}
+        key="nav-arrow-next"
+        data-hook="nav-arrow-next"
+      >
+        <img src={require(`../../assets/images/arrows/arrow-right.svg`)} />
+      </button>)
+    ];
+  }
+
+  createLayout() {
+    const galleryConfig = {
+      scroll: this.props.scroll,
+      styleParams: this.props.styleParams,
+      container: this.props.container,
+      multishare: this.props.multishare,
+      watermark: this.props.watermark,
+      settings: this.props.settings,
+      currentIdx: this.state.currentIdx,
+      actions: {
+        toggleFullscreen: this.props.actions.toggleFullscreen,
+        pauseAllVideos: this.props.actions.pauseAllVideos,
+        addItemToMultishare: this.props.actions.addItemToMultishare,
+        removeItemFromMultishare: this.props.actions.removeItemFromMultishare
+      }
+    };
+
+    return this.props.galleryStructure.columns.map((column, c) => {
+
+      let marginLeft = 0;
+      const firstGroup = _.find(column.groups, group => group.rendered) || {};
+      if (this.props.gotScrollEvent) {
+        marginLeft = firstGroup.left || 0;
+      }
+
+      return !!column.galleryGroups.length && (
+        <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
+             style={{width: column.width}}>
+          <div className="gallery-left-padding" style={{width: marginLeft}}></div>
+          {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+        </div>
+      );
+    });
+  }
+
+  createGallery() {
+    const galleryStyle = {
+      height: this.props.container.galleryHeight,
+      width: this.props.container.galleryWidth
+    };
+
+    return <div id="pro-gallery-container" className={'pro-gallery inline-styles one-row hide-scrollbars ' + (this.props.styleParams.enableScroll ? ' slider ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
+                style={galleryStyle}
+    >
+      {this.createDebugMsg()}
+      {this.createLayout()}
+      {this.createNavArrows()}
+    </div>;
+  }
+
+  getThumbnails() {
+    const hasThumbnails = this.props.styleParams.hasThumbnails;
+    const thumbnailsPosition = this.props.styleParams.galleryThumbnailsAlignment;
+
+    const thumbnailsGallery = hasThumbnails ? this.createThumbnails(thumbnailsPosition) : false;
+
+    const thumbnails = [];
+    switch (thumbnailsPosition) {
+      case 'top':
+      case 'left':
+        thumbnails[0] = thumbnailsGallery;
+        thumbnails[1] = false;
+        break;
+      case 'right':
+      case 'bottom':
+        thumbnails[0] = false;
+        thumbnails[1] = thumbnailsGallery;
+        break;
+    }
+    return thumbnails;
+  }
+
+  getClassNames() {
+    let classNames = '';
+    if (this.props.styleParams.isSlideshow) {
+      classNames = ' gallery-slideshow';
+    } else if (this.props.styleParams.isSlider) {
+      classNames = ' gallery-slider';
+    } else if (this.props.styleParams.hasThumbnails) {
+      classNames = ' gallery-thumbnails';
+    } else if (this.props.styleParams.isColumns) {
+      classNames = ' gallery-columns';
+    }
+
+    if (this.props.container.galleryWidth >= (utils.getWindowWidth() - 10)) {
+      classNames += ' streched';
+    }
+
+    return classNames;
+  }
+
+  getStyles() {
+    return {
+      margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin)
+    };
+  }
+
+  //-----------------------------------------| REACT |--------------------------------------------//
+
   componentWillReceiveProps(props) {
     if (props.items) {
       this.setFlattenItems(props.galleryStructure);
@@ -373,7 +506,6 @@ class SlideshowView extends React.Component {
   }
 
   componentWillMount() {
-
     if (!(this.props.renderedItemsCount > 0) && utils.isEditor()) {
       return (<GalleryEmpty
           actions={{
@@ -413,155 +545,24 @@ class SlideshowView extends React.Component {
   render() {
     if (utils.isDev()) {
       console.count('galleryView render');
-
-      //this.gallery = this.prepareGallery(this.state.images);
       console.count('Rendering Gallery count');
       console.time('Rendering Gallery took ');
     }
 
-    const loader = (this.totalItemsCount > this.props.renderedItemsCount) ? (
-      <div className="more-items-loader"><i className="pro-circle-preloader"/></div>
-    ) : false;
-
-    let navArrows = [
-      (this.isFirstItem() ? '' : <button
-        className={'nav-arrows-container prev '}
-        onClick={() => this.nextItem(-1)}
-        aria-label="Previous Item"
-        tabIndex={utils.getTabIndex('slideshowPrev')}
-        key="nav-arrow-back"
-        data-hook="nav-arrow-back"
-      >
-        <img src={require(`../../assets/images/arrows/arrow-left.svg`)} />
-      </button>),
-      (this.isLastItem() ? '' : <button
-        className={'nav-arrows-container next'}
-        onClick={() => this.nextItem(1)}
-        aria-label="Next Item"
-        tabIndex={utils.getTabIndex('slideshowNext')}
-        key="nav-arrow-next"
-        data-hook="nav-arrow-next"
-      >
-        <img src={require(`../../assets/images/arrows/arrow-right.svg`)} />
-      </button>)
-    ];
-
-    const debugMsg = (
-      <GalleryDebugMessage {...this.props.debug} />
-    );
-
-    const galleryConfig = {
-      scroll: this.props.scroll,
-      styleParams: this.props.styleParams,
-      container: this.props.container,
-      multishare: this.props.multishare,
-      watermark: this.props.watermark,
-      settings: this.props.settings,
-      currentIdx: this.state.currentIdx,
-      actions: {
-        toggleFullscreen: this.props.actions.toggleFullscreen,
-        pauseAllVideos: this.props.actions.pauseAllVideos,
-        addItemToMultishare: this.props.actions.addItemToMultishare,
-        removeItemFromMultishare: this.props.actions.removeItemFromMultishare
-      }
-    };
-
-    const layout = (
-      this.props.galleryStructure.columns.map((column, c) => {
-
-        let marginLeft = 0;
-        const firstGroup = _.find(column.groups, group => group.rendered) || {};
-        if (this.props.gotScrollEvent) {
-          marginLeft = firstGroup.left || 0;
-        }
-
-        //remove navBars if no scroll is needed and is column layout
-        const allRenderedGroups = _.filter(column.groups, group => group.rendered) || [];
-        const allGroupsWidth = allRenderedGroups.reduce((sum, group) => {
-          return sum + Math.max(0, group.width);
-        }, 0);
-        const isAllItemsFitsGalleryWidth = this.props.styleParams.oneRow && (this.props.container.galleryWidth >= allGroupsWidth);
-        if (isAllItemsFitsGalleryWidth) {
-          navArrows = false;
-        }
-
-        return !!column.galleryGroups.length && (
-          <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
-               style={{width: column.width}}>
-            <div className="gallery-left-padding" style={{width: marginLeft}}></div>
-            {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
-          </div>
-        );
-      })
-    );
-
-    const hasThumbnails = this.props.styleParams.hasThumbnails;
-    const thumbnailsPosition = this.props.styleParams.galleryThumbnailsAlignment;
-
-    const thumbnailsGallery = hasThumbnails ? this.createThumbnails(thumbnailsPosition) : false;
-
-    const galleryStyle = {
-      height: this.props.container.galleryHeight,
-      width: this.props.container.galleryWidth
-    };
-
-    const thumbnails = [];
-    switch (thumbnailsPosition) {
-      case 'top':
-      case 'left':
-        thumbnails[0] = thumbnailsGallery;
-        thumbnails[1] = false;
-        break;
-      case 'right':
-      case 'bottom':
-        thumbnails[0] = false;
-        thumbnails[1] = thumbnailsGallery;
-        break;
-    }
-
-    const gallery = (
-      <div id="pro-gallery-container" className={'pro-gallery inline-styles one-row hide-scrollbars ' + (this.props.styleParams.enableScroll ? ' slider ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
-           style={galleryStyle}
-      >
-        {debugMsg}
-        {layout}
-        {loader}
-        {navArrows}
-      </div>
-    );
+    const gallery = this.createGallery();
+    const thumbnails = this.getThumbnails();
 
     if (utils.isDev()) {
       console.timeEnd('Rendering Gallery took ');
     }
 
-    let classNames = '';
-    if (this.props.styleParams.isSlideshow) {
-      classNames = ' gallery-slideshow';
-    } else if (this.props.styleParams.isSlider) {
-      classNames = ' gallery-slider';
-    } else if (this.props.styleParams.hasThumbnails) {
-      classNames = ' gallery-thumbnails';
-    } else if (this.props.styleParams.isColumns) {
-      classNames = ' gallery-columns';
-    }
-
-    const styles = {
-      margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin)
-    };
-
-    if (this.props.container.galleryWidth >= (utils.getWindowWidth() - 10)) {
-      classNames += ' streched';
-    }
-
-    return (<div className={classNames} style={styles}>
+    return (<div className={this.getClassNames()} style={this.getStyles()}>
       {thumbnails[0]}
       {gallery}
       {thumbnails[1]}
     </div>);
 
   }
-
 }
-
 
 export default SlideshowView;

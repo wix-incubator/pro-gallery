@@ -229,6 +229,7 @@ class galleryDriver {
             container: this.container,
             styleParams: this.styleParams,
             actions: this.actions,
+            thumbnailSize: 20
           };
         }
 
@@ -249,7 +250,10 @@ class galleryDriver {
           container: galleryViewProps.container,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
-          store: mockStore({})
+          thumbnailSize: galleryViewProps.thumbnailSize,
+          store: mockStore({}),
+          convertToGalleryItems: GalleryContainer.convertToGalleryItems,
+          convertDtoToLayoutItem: GalleryContainer.convertDtoToLayoutItem
         };
 
       },
