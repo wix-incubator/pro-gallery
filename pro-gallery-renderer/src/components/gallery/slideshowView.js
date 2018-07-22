@@ -5,7 +5,7 @@ import GroupView from '../group/groupView.js';
 import GalleryEmpty from './galleryEmpty.js';
 import {Layouter} from 'pro-gallery-layouter';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
+import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
 
 utils.fixViewport('Gallery');
@@ -24,7 +24,7 @@ class SlideshowView extends React.Component {
       currentIdx: 0,
     };
     if (!utils.isLocal()) {
-      appLoaded('pro-gallery-statics');
+      appPartiallyLoaded('pro-gallery-statics');
     }
   }
 
@@ -402,6 +402,7 @@ class SlideshowView extends React.Component {
 
   createLayout() {
     const galleryConfig = {
+      renderedItemsCount: this.props.renderedItemsCount,
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,

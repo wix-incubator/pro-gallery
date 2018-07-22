@@ -97,6 +97,7 @@ class ItemView extends React.Component {
   }
   setItemLoaded() {
     performanceUtils.itemLoaded();
+    performanceUtils.appLoaded();
     this.setState({
       failed: false,
       loaded: true

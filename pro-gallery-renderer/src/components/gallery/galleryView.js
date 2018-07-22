@@ -3,7 +3,7 @@ import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from '../gallery/galleryDebugMessage';
 import _ from 'lodash';
 import utils from '../../utils/index.js';
-import {appLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
+import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 
 utils.fixViewport('Gallery');
 
@@ -21,7 +21,7 @@ class GalleryView extends React.Component {
       currentIdx: 0,
     };
     if (!utils.isLocal()) {
-      appLoaded('pro-gallery-statics');
+      appPartiallyLoaded('pro-gallery-statics');
     }
   }
 
@@ -152,6 +152,7 @@ class GalleryView extends React.Component {
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
 
     const galleryConfig = {
+      renderedItemsCount: this.props.renderedItemsCount,
       scroll: this.props.scroll,
       container: this.props.container,
       styleParams: this.props.styleParams,
