@@ -27,6 +27,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
+    "dotenv": "^6.0.0",
     "image-client-api": "^1.133.0",
     "photography-client-lib": "^1.0.64",
     "prepend-http-extra": "^1.0.0",
@@ -70,6 +71,7 @@
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "lodash": "^4.17.4",
+    "match-screenshot": "^1.0.14",
     "nock": "^9.3.3",
     "node-sass": "^4.9.0",
     "puppeteer": "^1.5.0",
