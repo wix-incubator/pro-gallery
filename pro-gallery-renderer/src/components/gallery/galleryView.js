@@ -176,7 +176,7 @@ class GalleryView extends React.Component {
       if (this.props.gotScrollEvent) {
         let firstRenderedGroup = _.find(column.groups, group => group.rendered);
         if (!firstRenderedGroup) {
-          if (this.props.scroll.top > 0) {
+          if (this.props.scroll.top > 0 && column.groups.length > 0) {
             //gallery is above the fold
             firstRenderedGroup = {top: column.groups[column.groups.length - 1].bottom};
           } else {
