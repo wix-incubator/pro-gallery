@@ -504,6 +504,10 @@ class SlideshowView extends React.Component {
     if (props.items) {
       this.setFlattenItems(props.galleryStructure);
     }
+
+    if (utils.isEditor() && props.styleParams.isAutoSlideshow && props.styleParams.autoSlideshowInterval > 0) {
+      this.startAutoSlideshow(props.styleParams.autoSlideshowInterval * 1000);
+    }
   }
 
   componentWillMount() {

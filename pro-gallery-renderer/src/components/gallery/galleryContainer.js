@@ -181,7 +181,10 @@ export class GalleryContainer extends React.Component {
       thumbnailSpacings: 0,
       gridStyle: 0,
       useCustomButton: utils.isStoreGallery(),
-      titlePlacement: Consts.placements.SHOW_ON_HOVER
+      titlePlacement: Consts.placements.SHOW_ON_HOVER,
+      mobilePanorama: false,
+      isAutoSlideshow: false,
+      autoSlideshowInterval: 2
     };
 
     const galleryWidth = this.getGalleryWidth();
