@@ -201,6 +201,10 @@ class galleryDriver {
     return this.wrapper.text();
   }
 
+  update() {
+    this.wrapper.update();
+  }
+
   get props() {
     return {
       galleryContainer: () => {

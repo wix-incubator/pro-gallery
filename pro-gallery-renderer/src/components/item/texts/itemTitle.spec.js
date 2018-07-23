@@ -10,6 +10,5 @@ describe('Item Title', () => {
     const titleText = 'Hello';
     const wrapper = mount(<ItemTitle title={titleText} />);
     expect(wrapper.find({'data-hook': 'item-title'}).text()).to.equal(titleText);
-
   });
 });
