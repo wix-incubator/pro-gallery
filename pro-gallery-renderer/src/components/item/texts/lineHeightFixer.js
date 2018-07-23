@@ -86,12 +86,7 @@ class LineHeightFixer {
     if (customButtonExists) {
       this.showElement(customButtonElement);
       const buttonHeight = this.getDimensions(customButtonElement).height;
-      let isNotEnoughSpaceForButton = availableHeight < buttonHeight;
-      if (isNotEnoughSpaceForButton) {
-        const hoverTextAreaPaddings = 30;
-        isNotEnoughSpaceForButton = (availableHeight + hoverTextAreaPaddings) < buttonHeight;
-      }
-      if (isNotEnoughSpaceForButton) {
+      if ((availableHeight + 30) < buttonHeight) {
         this.removeElement(customButtonElement);
       } else if (isItemWidthToSmall) {
         this.setCss(customButtonElement.querySelector('button'), {'min-width': 0 + 'px', 'max-width': minWidthToShowContent + 'px'});
@@ -105,7 +100,6 @@ class LineHeightFixer {
         availableHeight -= spaceBetweenElements;
         if (availableHeight < 0) {
           availableHeight = 0;
-          // this.hideElement(customButtonElement);
         }
       }
     }
