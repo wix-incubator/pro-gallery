@@ -29,7 +29,7 @@
     "classnames": "^2.2.5",
     "dotenv": "^6.0.0",
     "image-client-api": "^1.133.0",
-    "photography-client-lib": "^1.0.64",
+    "photography-client-lib": "^1.0.91",
     "prepend-http-extra": "^1.0.0",
     "pro-gallery-layouter": "^2.0.16",
     "react-player-fork": "^0.12.106",

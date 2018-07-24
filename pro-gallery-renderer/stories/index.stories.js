@@ -8,7 +8,79 @@ import {Button, Welcome} from '@storybook/react/demo';
 import {ProGallery} from '../src/index';
 
 storiesOf('Gallery', module)
-  .add('Default', () => <ProGallery />)
+	.add('Default', () => <ProGallery />)
+	.add('collage', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 0,
+  itemClick: 'expand'
+}}
+		/>
+	))
+	.add('Masonry', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 1,
+  itemClick: 'expand',
+  allowSocial: false,
+  allowDownload: true,
+  loveButton: false
+}}
+		/>
+	))
+	.add('Grid', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 2,
+  itemClick: 'expand'
+}}
+		/>
+	))
+	.add('Thumbnails', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 3,
+  itemClick: 'expand'
+}}
+		/>
+	))
+	.add('Slider', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 4,
+  itemClick: 'expand'
+}}
+		/>
+	))
+	.add('Slide Show', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 5,
+  itemClick: 'expand'
+}}
+		/>
+	))
+	.add('Strip', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 6,
+  itemClick: 'expand'
+}}
+		/>
+	))
+	.add('Column', () => (
+		<ProGallery
+			styles={{
+  galleryLayout: 7,
+  itemClick: 'expand'
+}}
+		/>
+	))
+	.add('Empty Gallery', () => (
+		<ProGallery
+			items={[]}
+		/>
+	))
 ;
 storiesOf('Eyes', module)
   .add('Default', () => <ProGallery />)
