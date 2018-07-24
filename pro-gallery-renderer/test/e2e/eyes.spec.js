@@ -5,7 +5,7 @@ const {Assertion} = require('chai');
 const toMatchScreenshot = require('match-screenshot/chai');
 Assertion.addMethod('toMatchScreenshot', toMatchScreenshot);
 
-describe('Eyes layout tests', () => {
+describe.skip('Eyes layout tests', () => {
 
   let page;
   let browser;
