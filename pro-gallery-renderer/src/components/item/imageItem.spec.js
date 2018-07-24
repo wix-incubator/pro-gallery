@@ -57,10 +57,6 @@ describe('Image Item', () => {
     const errEvent = new Event('err');
     galleryDriver.find.selector('img').simulate('error', errEvent);
     expect(spy.called).to.be.true;
-    Object.assign(imageItemsProps, {visible: false});
-    galleryDriver.mount(ImageItem, imageItemsProps);
-    galleryDriver.find.selector('img').simulate('error', errEvent);
-    expect(spy.called).to.be.true;
   });
 
   it('create pro-circle-preloader div if isThumbnail is false', () => {

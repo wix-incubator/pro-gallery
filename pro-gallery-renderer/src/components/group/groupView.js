@@ -10,6 +10,7 @@ class GroupView extends React.Component {
 
     this.displayName = 'GroupView';
     this.dom = [];
+    //remove state?
     this.state = {};
   }
 
@@ -26,6 +27,7 @@ class GroupView extends React.Component {
       <div
         className={' gallery-group gallery-group-' + (this.props.rendered ? (this.props.visible ? 'visible' : 'hidden') : 'none')}
         style={{width: this.props.width, height: (this.props.totalHeight)}}
+        data-hook={'group-view'}
         key={`group_${this.props.idx}`}
         data-group-idx={this.props.idx}
         data-group-type={this.props.type}

@@ -2,7 +2,7 @@
 import {Layouter} from 'pro-gallery-layouter';
 import GalleryItem from '../../src/components/item/galleryItem';
 import {testImages} from '../images-mock.js';
-import {mount} from 'enzyme';
+import {mount, shallow} from 'enzyme';
 import {GalleryContainer} from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
@@ -169,6 +169,16 @@ class galleryDriver {
     return res;
   }
 
+  get shallow() {
+    const res = (Component, props) => {
+      this.wrapper = shallow(<Component
+        {...props}
+      />);
+      return this;
+    };
+    return res;
+  }
+
   get set() {
     return {
       state: (state, callback) => {
@@ -260,6 +270,11 @@ class galleryDriver {
           convertDtoToLayoutItem: GalleryContainer.convertDtoToLayoutItem
         };
 
+      },
+
+      groupView: () => {
+        const galleryViewProps = this.props.galleryView();
+        return _.merge(galleryViewProps, {items: galleryViewProps.items.map(item => new GalleryItem({dto: item}))});
       },
 
       itemView: (itemDto, galleryConfig) => {
