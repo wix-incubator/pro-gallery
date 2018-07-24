@@ -14,6 +14,10 @@ class GalleryView extends React.Component {
 
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
+    this.createGalleryConfig = this.createGalleryConfig.bind(this);
+    this.createEmptyState = this.createEmptyState.bind(this);
+    this.screenLogs = this.screenLogs.bind(this);
+    this.createGallery = this.createGallery.bind(this);
 
     this.id = Date.now() + '|' + Math.floor(Math.random() * 10000);
 
@@ -83,6 +87,82 @@ class GalleryView extends React.Component {
     }
   }
 
+  createGallery(showMore) {
+    const galleryConfig = this.createGalleryConfig();
+    const galleryHeight = (showMore ? (window.innerHeight - 138) + 'px' : '100%');
+    const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
+    const columns = this.props.galleryStructure.columns;
+    const layout = _.map(columns, (column, c) => {
+
+      let paddingTop = 0;
+      if (this.props.gotScrollEvent) {
+        let firstRenderedGroup = _.find(column.groups, group => group.rendered);
+        if (!firstRenderedGroup) {
+          if (this.props.scroll.top > 0 && column.groups.length > 0) {
+            //gallery is above the fold
+            firstRenderedGroup = {top: column.groups[column.groups.length - 1].bottom};
+          } else {
+            //gallery is below the fold
+            firstRenderedGroup = {top: 0};
+          }
+        }
+        paddingTop = firstRenderedGroup.top || 0;
+      }
+
+      return !!column.galleryGroups.length && (
+        <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
+             style={{width: column.width, paddingTop}}>
+          {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+        </div>
+      );
+
+    });
+    return (
+      <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
+           style={{
+             height: galleryHeight,
+             width: this.props.container.galleryWidth,
+             overflowX: 'hidden'
+           }}
+           onKeyDown={this.handleArrowKeys}
+      >
+        {debugMsg}
+        {layout}
+      </div>
+    );
+  }
+
+  createGalleryConfig() {
+    return {
+      scroll: this.props.scroll,
+      container: this.props.container,
+      styleParams: this.props.styleParams,
+      multishare: this.props.multishare,
+      watermark: this.props.watermark,
+      settings: this.props.settings,
+      currentIdx: this.state.currentIdx,
+      actions: {
+        toggleFullscreen: this.props.actions.toggleFullscreen,
+        pauseAllVideos: this.props.actions.pauseAllVideos,
+        addItemToMultishare: this.props.actions.addItemToMultishare,
+        removeItemFromMultishare: this.props.actions.removeItemFromMultishare
+      }
+    };
+  }
+
+  createEmptyState() {
+    return ((!(this.props.renderedItemsCount > 0) && utils.isEditor()) ?
+    (<GalleryEmpty actions={{
+      setWixHeight: this.props.actions.setWixHeight
+    }}/>) : '');
+  }
+
+  screenLogs() {
+    return ((utils.shouldDebug('screenLogs')) ? (
+      <div className="screen-logs">URL width: {utils.parseGetParam('width')}, Container: {JSON.stringify(this.props.container.galleryWidth)}, document.body.clientWidth {document.body.clientWidth}, window.innerWidth {window.innerWidth}, window.screen.width: {window.screen.width}</div>
+    ) : '');
+  }
+
   createShowMoreButton() {
     let showMoreButton = false;
     const shouldShowButton = (!this.props.scroll.isInfinite && (this.props.galleryStructure.height > utils.getWindowHeight()));
@@ -107,23 +187,6 @@ class GalleryView extends React.Component {
     return showMoreButton;
   }
 
-  createNavArrows() {
-    return (this.props.styleParams.showArrows) ? [
-      (<i
-        className={'nav-arrows prev progallery-svg-font-icons-arrow_left ' + (this.isFirstItem() ? ' inactive ' : '')}
-        onClick={() => this.nextItem(-1)}
-        key="nav-arrow-back"
-        data-hook="nav-arrow-back"
-      />),
-      (<i
-        className={'nav-arrows next progallery-svg-font-icons-arrow_right ' + (this.isLastItem() ? ' inactive ' : '')}
-        onClick={() => this.nextItem(1)}
-        key="nav-arrow-next"
-        data-hook="nav-arrow-next"
-      />)
-    ] : false;
-  }
-
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -138,110 +201,14 @@ class GalleryView extends React.Component {
       this.renderCount = (this.renderCount || 0) + 1;
     }
 
-
-    const loader = (this.totalItemsCount > this.props.renderedItemsCount) ? (
-      <div className="more-items-loader"><i className="pro-circle-preloader"/></div>
-    ) : false;
-
     const showMore = this.createShowMoreButton();
-
-    const navArrows = this.createNavArrows();
-
-    const galleryHeight = (showMore ? (window.innerHeight - 138) + 'px' : (navArrows ? window.innerHeight : '100%'));
-
-    const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
-
-    const galleryConfig = {
-      renderedItemsCount: this.props.renderedItemsCount,
-      scroll: this.props.scroll,
-      container: this.props.container,
-      styleParams: this.props.styleParams,
-      multishare: this.props.multishare,
-      watermark: this.props.watermark,
-      settings: this.props.settings,
-      currentIdx: this.state.currentIdx,
-      actions: {
-        toggleFullscreen: this.props.actions.toggleFullscreen,
-        pauseAllVideos: this.props.actions.pauseAllVideos,
-        addItemToMultishare: this.props.actions.addItemToMultishare,
-        removeItemFromMultishare: this.props.actions.removeItemFromMultishare
-      }
-    };
-
-    const columns = this.props.galleryStructure.columns;
-
-    const layout = _.map(columns, (column, c) => {
-
-      let paddingTop = 0;
-      if (this.props.gotScrollEvent) {
-        let firstRenderedGroup = _.find(column.groups, group => group.rendered);
-        if (!firstRenderedGroup) {
-          if (this.props.scroll.top > 0 && column.groups.length > 0) {
-            //gallery is above the fold
-            firstRenderedGroup = {top: column.groups[column.groups.length - 1].bottom};
-          } else {
-            //gallery is below the fold
-            firstRenderedGroup = {top: 0};
-          }
-        }
-        paddingTop = firstRenderedGroup.top || 0;
-      }
-
-/*
-      const debugStyles = {float: 'left', border: '5px solid black', boxSizing: 'border-box'};
-      const debugInner = group => (
-        <ul>
-          <li>Dom ID: {this.props.domId}</li>
-          <li>Scroll Top: {this.props.scroll.top}</li>
-          <li>Scroll Base: {this.props.scroll.base}</li>
-          <li>Visible Top: {this.props.container.bounds.visibleTop}</li>
-          <li>Visible Bottom: {this.props.container.bounds.visibleBottom}</li>
-          <li>Group Top: {group.top}</li>
-          <li>Group Left: {group.left}</li>
-        </ul>
-      );
-      {column.galleryGroups.map(group => group.rendered ? (group.visible ? <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'green'})}>{debugInner(group)}</div> : <div style={_.merge(group.renderProps(galleryConfig), debugStyles, {background: 'red'})} >{debugInner(group)}</div>) : false)}
-*/
-      return !!column.galleryGroups.length && (
-        <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
-             style={{width: column.width, paddingTop}}>
-          {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
-        </div>
-      );
-
-    });
-
-    const gallery = (
-      <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
-           style={{
-             height: galleryHeight,
-             width: this.props.container.galleryWidth,
-             overflowX: 'hidden'
-           }}
-           onKeyDown={this.handleArrowKeys}
-      >
-        {debugMsg}
-        {layout}
-        {loader}
-        {navArrows}
-      </div>
-    );
-
-    const emptyState = (!(this.props.renderedItemsCount > 0) && utils.isEditor()) ?
-       (<GalleryEmpty
-          actions={{
-            setWixHeight: this.props.actions.setWixHeight
-          }}
-        />
-      ) : '';
+    const gallery = this.createGallery(showMore);
+    const emptyState = this.createEmptyState();
 
     if (utils.isVerbose()) {
       console.timeEnd('Rendering Gallery took ');
     }
-
-    const screenLogs = ((utils.shouldDebug('screenLogs')) ? (
-      <div className="screen-logs">URL width: {utils.parseGetParam('width')}, Container: {JSON.stringify(this.props.container.galleryWidth)}, document.body.clientWidth {document.body.clientWidth}, window.innerWidth {window.innerWidth}, window.screen.width: {window.screen.width}</div>
-    ) : '');
+    const screenLogs = this.screenLogs();
 
     return (
     <div className={'pro-gallery-parent-container'}
@@ -257,8 +224,6 @@ class GalleryView extends React.Component {
     </div>);
 
   }
-
 }
-
 
 export default GalleryView;
