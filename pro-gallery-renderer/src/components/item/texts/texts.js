@@ -99,12 +99,23 @@ export default class Texts extends React.Component {
 
   }
 
+  tryFixLineHeight() {
+    try {
+      lineHeightFixer.fix(this.props, this.container);
+    } catch (e) {
+      if (utils.isVerbose()) {
+        console.error('Error on componentDidUpdate', e);
+      }
+    }
+
+  }
+
   componentDidUpdate() {
-    lineHeightFixer.fix(this.props, this.container);
+    this.tryFixLineHeight();
   }
 
   componentDidMount() {
-    lineHeightFixer.fix(this.props, this.container);
+    this.tryFixLineHeight();
   }
 
   render() {
