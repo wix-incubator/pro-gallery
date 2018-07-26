@@ -1495,11 +1495,11 @@ export class GalleryContainer extends React.Component {
       if (newProps.offsetTop !== this.props.offsetTop) {
         this.reRender(this.renderTriggers.RESIZE);
       }
-      if (newProps.domId) {
+      if (newProps.domId !== this.props.domId) {
         try {
           this.galleryWrapper = document.getElementById(`pro-gallery-${newProps.domId}`);
           this.boundingRect = this.galleryWrapper.getBoundingClientRect();
-          console.log(`Calculating bounding rect for domId ${newProps.domId}`, this.boundingRect);
+          // console.log(`Calculating bounding rect for domId ${newProps.domId}`, this.boundingRect);
         } catch (e) {
           this.galleryWrapper = null;
           this.boundingRect = null;
