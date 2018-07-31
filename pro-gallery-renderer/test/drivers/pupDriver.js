@@ -1,5 +1,7 @@
 import puppeteer from 'puppeteer';
 
+const devices = require('puppeteer/DeviceDescriptors');
+
 export default class galleryDriver {
 
   constructor() {
@@ -8,8 +10,9 @@ export default class galleryDriver {
     this.frames = [{}];
     this.debug = false;
   }
+
 // we should look at opening one browser insead of opening one every test. this might require takeing it out of the driver.
-  async openGallery(name = 'Default') {
+  async openGallery(kind = 'Gallery', name = 'Default', device = 'Desktop') {
     if (this.debug) {
       this.browser = await puppeteer.launch({
         slowMo: 200,
@@ -19,7 +22,7 @@ export default class galleryDriver {
     } else {
       this.browser = await puppeteer.launch({args: ['--no-sandbox']});
     }
-    this.page = await this.goAndWait(this.browser, this.getPageUrl('Gallery', name));
+    this.page = await this.goAndWait(this.browser, this.getPageUrl(kind, name), device);
     this.frames = await this.page.frames();
     this.galleryFrame = this.frames.find(f => f.name() === 'storybook-preview-iframe');
 
@@ -33,8 +36,20 @@ export default class galleryDriver {
     }
   }
 
-  async goAndWait(browser, url) {
+  async goAndWait(browser, url, device) {
     const page = await browser.newPage();
+    switch (device) {
+      case 'Android':
+        await page.emulate(devices['Galaxy S5']);
+        break;
+      case 'iPhone':
+        await page.emulate(devices['iPhone X']);
+        break;
+      default: await page.setViewport({
+        width: 1920,
+        height: 1080
+      });
+    }
     await page.goto(url, {waitUntil: 'networkidle2'});
     return page;
   }
@@ -66,6 +81,9 @@ export default class galleryDriver {
       numOfPages: async () => {
         const a = await this.browser.pages();
         return a.length;
+      },
+      screenshot: async path => {
+        return path ? await this.page.screenshot({path: `${path}.png`}) : await this.page.screenshot();
       }
     };
   }
@@ -86,7 +104,7 @@ export default class galleryDriver {
   get actions() {
     return {
       hover: async str => (await this.galleryFrame.hover(`[data-hook="${str}"]`)),
-      click: async str => (await this.galleryFrame.click(`[data-hook="${str}"]`)),
+      click: async str => (await this.galleryFrame.click(`[data-hook="${str}"]`))
       // debug: () => {
       //   debugger;
       // }
