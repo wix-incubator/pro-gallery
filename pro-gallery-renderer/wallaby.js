@@ -4,6 +4,5 @@ module.exports = function (wallaby) {
     pattern: 'test/e2e/*',
     ignore: true
   });
-  console.log(config.tests);
   return config;
 };

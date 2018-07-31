@@ -7,7 +7,9 @@ const testImages = [{
     name: '8b72558253b2502b401bb46e5599f22a',
     size: 1100727,
     width: 1920,
-    sourceName: 'private'
+    sourceName: 'private',
+    title: 'Image 0',
+    description: 'Description of image 0 -> now we are testing long description, lets see how it works'
   },
   orderIndex: 0,
   photoId: '8b72558253b2502b401bb46e5599f22a',
@@ -18,7 +20,8 @@ const testImages = [{
     lastModified: 1445857830,
     name: '2d3b675ea857dc41158bad3b28300824',
     size: 8128464,
-    width: 3737
+    width: 3737,
+    title: 'Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1'
   },
   orderIndex: 1,
   photoId: '2d3b675ea857dc41158bad3b28300824',
@@ -29,7 +32,8 @@ const testImages = [{
     lastModified: 1445857821,
     name: '860df034014674abd7a2e73abe0b851b',
     size: 5655675,
-    width: 5600
+    width: 5600,
+    description: 'DescriptionOfImage2'
   },
   orderIndex: 2,
   photoId: '860df034014674abd7a2e73abe0b851b',
@@ -40,7 +44,9 @@ const testImages = [{
     lastModified: 1445857814,
     name: 'a898a24fe0d2c60a348eac9e38cae265',
     size: 11697590,
-    width: 5600
+    width: 5600,
+    title: 'Image3Image3Image3 Image3Image3Image3',
+    description: 'Desc3'
   },
   orderIndex: 3,
   photoId: 'a898a24fe0d2c60a348eac9e38cae265',
@@ -51,7 +57,9 @@ const testImages = [{
     lastModified: 1445857800,
     name: '5dd5a6e757c702b2856a3a2f4bb00154',
     size: 6528300,
-    width: 5600
+    width: 5600,
+    title: '4',
+    description: 'DescriptionOfImage4DescriptionOfImage4 DescriptionOfImage4DescriptionOfImage4'
   },
   orderIndex: 4,
   photoId: '5dd5a6e757c702b2856a3a2f4bb00154',
@@ -62,7 +70,9 @@ const testImages = [{
     lastModified: 1445857785,
     name: 'e8b32772f67865aedb3b12115eaf19a4',
     size: 4931341,
-    width: 5600
+    width: 5600,
+    title: '',
+    description: ''
   },
   orderIndex: 5,
   photoId: 'e8b32772f67865aedb3b12115eaf19a4',
@@ -73,7 +83,8 @@ const testImages = [{
     lastModified: 1445857778,
     name: '90e376fcd4b801bed0f22cb5bd7d0045',
     size: 11051393,
-    width: 5600
+    width: 5600,
+    title: 'Image2Image2Image2Image2Image2Image2Image2Image2Image2Image2',
   },
   orderIndex: 6,
   photoId: '90e376fcd4b801bed0f22cb5bd7d0045',
@@ -84,7 +95,9 @@ const testImages = [{
     lastModified: 1445857763,
     name: '0db65a80624a2e0b8c71e553b6f4b3f6',
     size: 9294683,
-    width: 5600
+    width: 5600,
+    title: 'Image 7',
+    description: 'DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7'
   },
   orderIndex: 7,
   photoId: '0db65a80624a2e0b8c71e553b6f4b3f6',
@@ -106,7 +119,9 @@ const testImages = [{
     lastModified: 1445857742,
     name: '70cf2b13f9bde8f8c33768260f25050a',
     size: 6486671,
-    width: 5600
+    width: 5600,
+    title: 'Image 9',
+    description: 'Description of image 9'
   },
   orderIndex: 9,
   photoId: '70cf2b13f9bde8f8c33768260f25050a',
@@ -117,7 +132,9 @@ const testImages = [{
     lastModified: 1445857734,
     name: '8e0bf32b6fade59dcfd7757ead8a0478',
     size: 9556027,
-    width: 5600
+    width: 5600,
+    title: 'Image 10',
+    description: 'Description of image 10 -> now we are testing long description, lets see how it works'
   },
   orderIndex: 10,
   photoId: '8e0bf32b6fade59dcfd7757ead8a0478',
@@ -128,7 +145,9 @@ const testImages = [{
     lastModified: 1445857722,
     name: '027af4a640930155cd68f72b3236842d',
     size: 6526471,
-    width: 5600
+    width: 5600,
+    title: 'Image 11',
+    description: 'Description of image 11'
   },
   orderIndex: 11,
   photoId: '027af4a640930155cd68f72b3236842d',
@@ -139,7 +158,9 @@ const testImages = [{
     lastModified: 1445857703,
     name: '5fb9385c24ba5972991a2da94fe5b550',
     size: 11226275,
-    width: 5600
+    width: 5600,
+    title: 'Image 12',
+    description: 'Description of image 12'
   },
   orderIndex: 12,
   photoId: '5fb9385c24ba5972991a2da94fe5b550',
@@ -150,7 +171,9 @@ const testImages = [{
     lastModified: 1445857691,
     name: '34fb0d724c5d3921d22b997a8c1705ef',
     size: 7257722,
-    width: 5600
+    width: 5600,
+    title: 'Image 13',
+    description: 'Description of image 13'
   },
   orderIndex: 13,
   photoId: '34fb0d724c5d3921d22b997a8c1705ef',
@@ -161,7 +184,9 @@ const testImages = [{
     lastModified: 1445857683,
     name: '984bf3ca8432e2da6e65601d7cec1104',
     size: 8525833,
-    width: 5600
+    width: 5600,
+    title: 'Image 14',
+    description: 'Description of image 14'
   },
   orderIndex: 14,
   photoId: '984bf3ca8432e2da6e65601d7cec1104',
@@ -172,7 +197,9 @@ const testImages = [{
     lastModified: 1445857683,
     name: '984bf3ca8432e2da7435601d7cec1104',
     size: undefined,
-    width: 1280
+    width: 1280,
+    title: 'Image 15',
+    description: 'Description of image 15'
   },
   orderIndex: 15,
   photoId: '984bf3ca8432e2da7435601d7cec1104',
@@ -183,7 +210,9 @@ const testImages = [{
     lastModified: 1445857674,
     name: '0a1f3af15dc764fd08e5c83a9febb30e',
     size: 12994265,
-    width: 3737
+    width: 3737,
+    title: 'Image 16',
+    description: 'Description of image 16'
   },
   orderIndex: 16,
   photoId: '0a1f3af15dc764fd08e5c83a9febb30e',
@@ -194,7 +223,9 @@ const testImages = [{
     lastModified: 1445857660,
     name: 'ab9e2fa37f6355328860bdf52d1f2088',
     size: 9074907,
-    width: 3737
+    width: 3737,
+    title: 'Image 17',
+    description: 'Description of image 17'
   },
   orderIndex: 17,
   photoId: 'ab9e2fa37f6355328860bdf52d1f2088',
@@ -205,7 +236,9 @@ const testImages = [{
     lastModified: 1445857651,
     name: '8f3f93f90a846f70fc897755f70525a7',
     size: 6893842,
-    width: 5600
+    width: 5600,
+    title: 'Image 18',
+    description: 'Description of image 18'
   },
   orderIndex: 18,
   photoId: '8f3f93f90a846f70fc897755f70525a7',
@@ -216,7 +249,9 @@ const testImages = [{
     lastModified: 1445857640,
     name: 'd1168a52496bc3a7b5e0025212a76e2c',
     size: 10155312,
-    width: 5600
+    width: 5600,
+    title: 'Image 19',
+    description: 'Description of image 19'
   },
   orderIndex: 19,
   photoId: 'd1168a52496bc3a7b5e0025212a76e2c',
@@ -227,7 +262,9 @@ const testImages = [{
     lastModified: 1445858468,
     name: '46247b1df460eb0e8272053a9a079ab1',
     size: 9930627,
-    width: 4400
+    width: 4400,
+    title: 'Image 20',
+    description: 'Description of image 20'
   },
   orderIndex: 20,
   photoId: '46247b1df460eb0e8272053a9a079ab1',
@@ -238,7 +275,9 @@ const testImages = [{
     lastModified: 1445858458,
     name: 'ea8ec1609e052b7f196935318316299d',
     size: 9812260,
-    width: 4200
+    width: 4200,
+    title: 'Image 21',
+    description: 'Description of image 21'
   },
   orderIndex: 21,
   photoId: 'ea8ec1609e052b7f196935318316299d',
@@ -249,7 +288,9 @@ const testImages = [{
     lastModified: 1445858438,
     name: '098281dfb9701c0068f786bc8aab0390',
     size: 8707214,
-    width: 2799
+    width: 2799,
+    title: 'Image 22',
+    description: 'Description of image 22'
   },
   orderIndex: 22,
   photoId: '098281dfb9701c0068f786bc8aab0390',
@@ -260,7 +301,9 @@ const testImages = [{
     lastModified: 1445858429,
     name: '1ea8c429c3fbbc7b507b45b756c8499f',
     size: 9487361,
-    width: 4500
+    width: 4500,
+    title: 'Image 23',
+    description: 'Description of image 23'
   },
   orderIndex: 23,
   photoId: '1ea8c429c3fbbc7b507b45b756c8499f',
@@ -271,7 +314,9 @@ const testImages = [{
     lastModified: 1445858419,
     name: 'a466b258c6b5e2096fa546c86aae8fa2',
     size: 15444132,
-    width: 5494
+    width: 5494,
+    title: 'Image 24',
+    description: 'Description of image 24'
   },
   orderIndex: 24,
   photoId: 'a466b258c6b5e2096fa546c86aae8fa2',
@@ -282,7 +327,9 @@ const testImages = [{
     lastModified: 1445858401,
     name: 'a081f588eff30a9f8b6fcd0f4889eac3',
     size: 8885483,
-    width: 4200
+    width: 4200,
+    title: 'Image 25',
+    description: 'Description of image 25'
   },
   orderIndex: 25,
   photoId: 'a081f588eff30a9f8b6fcd0f4889eac3',
@@ -293,7 +340,9 @@ const testImages = [{
     lastModified: 1445858391,
     name: '9c0c752ebc1b7b27dc3b02b98f2a4181',
     size: 7486333,
-    width: 4200
+    width: 4200,
+    title: 'Image 26',
+    description: 'Description of image 20'
   },
   orderIndex: 26,
   photoId: '9c0c752ebc1b7b27dc3b02b98f2a4181',
@@ -304,7 +353,9 @@ const testImages = [{
     lastModified: 1445858374,
     name: '5c64c68f0efda76c3cfbf83f569a8e2e',
     size: 10375299,
-    width: 4500
+    width: 4500,
+    title: 'Image 27',
+    description: 'Description of image 27'
   },
   orderIndex: 27,
   photoId: '5c64c68f0efda76c3cfbf83f569a8e2e',
@@ -315,7 +366,9 @@ const testImages = [{
     lastModified: 1445858362,
     name: '87dc373b35ff17641e86a23b58635f89',
     size: 10610316,
-    width: 5000
+    width: 5000,
+    title: 'Image 28',
+    description: 'Description of image 28'
   },
   orderIndex: 28,
   photoId: '87dc373b35ff17641e86a23b58635f89',
@@ -326,7 +379,9 @@ const testImages = [{
     lastModified: 1445858349,
     name: 'd432d617a9f508cf404d64d8c489e1f1',
     size: 6443941,
-    width: 4400
+    width: 4400,
+    title: 'Image 29',
+    description: 'Description of image 29'
   },
   orderIndex: 29,
   photoId: 'd432d617a9f508cf404d64d8c489e1f1',
@@ -337,7 +392,9 @@ const testImages = [{
     lastModified: 1445858340,
     name: '7a5e2e30ec277ada8e1715ed520e6b38',
     size: 8182325,
-    width: 4600
+    width: 4600,
+    title: 'Image 30',
+    description: 'Description of image 30'
   },
   orderIndex: 30,
   photoId: '7a5e2e30ec277ada8e1715ed520e6b38',
@@ -348,7 +405,9 @@ const testImages = [{
     lastModified: 1445858331,
     name: 'c6b5cd1f1316311ec3560d6fb7d50958',
     size: 8925756,
-    width: 5200
+    width: 5200,
+    title: 'Image 31',
+    description: 'Description of image 31'
   },
   orderIndex: 31,
   photoId: 'c6b5cd1f1316311ec3560d6fb7d50958',
@@ -359,7 +418,9 @@ const testImages = [{
     lastModified: 1445861402,
     name: 'd63281682aa9881794bd301d06f37dba',
     size: 5345028,
-    width: 4200
+    width: 4200,
+    title: 'Image 32',
+    description: 'Description of image 32'
   },
   orderIndex: 32,
   photoId: 'd63281682aa9881794bd301d06f37dba',
@@ -370,7 +431,9 @@ const testImages = [{
     lastModified: 1445861394,
     name: '0bd4f007cef66bf47fbb936fb3ea2336',
     size: 8207276,
-    width: 2800
+    width: 2800,
+    title: 'Image 33',
+    description: 'Description of image 33'
   },
   orderIndex: 33,
   photoId: '0bd4f007cef66bf47fbb936fb3ea2336',
@@ -381,7 +444,9 @@ const testImages = [{
     lastModified: 1445859025,
     name: '759c83479429d725f03367897235a8b5',
     size: 2039710,
-    width: 1920
+    width: 1920,
+    title: 'Image 34',
+    description: 'Description of image 34'
   },
   orderIndex: 34,
   photoId: '759c83479429d725f03367897235a8b5',
@@ -392,7 +457,9 @@ const testImages = [{
     lastModified: 1445860434,
     name: '0ee95e519c2e1274c30f56e3c098ec86',
     size: 2051821,
-    width: 5600
+    width: 5600,
+    title: 'Image 35',
+    description: 'Description of image 35'
   },
   orderIndex: 35,
   photoId: '0ee95e519c2e1274c30f56e3c098ec86',
@@ -403,7 +470,9 @@ const testImages = [{
     lastModified: 1445860430,
     name: '262e38d72080e92600c9df018a4f4f1e',
     size: 2445274,
-    width: 3727
+    width: 3727,
+    title: 'Image 36',
+    description: 'Description of image 36'
   },
   orderIndex: 36,
   photoId: '262e38d72080e92600c9df018a4f4f1e',
@@ -414,7 +483,9 @@ const testImages = [{
     lastModified: 1445860420,
     name: '3dff88af7694728e13d6ca4ff03fc6cf',
     size: 3904313,
-    width: 5600
+    width: 5600,
+    title: 'Image 37',
+    description: 'Description of image 37'
   },
   orderIndex: 37,
   photoId: '3dff88af7694728e13d6ca4ff03fc6cf',
@@ -425,7 +496,9 @@ const testImages = [{
     lastModified: 1445860407,
     name: '83d9e931839e66e00faf1df41cbc7349',
     size: 2816020,
-    width: 5600
+    width: 5600,
+    title: 'Image 38',
+    description: 'Description of image 38'
   },
   orderIndex: 38,
   photoId: '83d9e931839e66e00faf1df41cbc7349',
@@ -436,7 +509,9 @@ const testImages = [{
     lastModified: 1445860396,
     name: '678c48f759062c8e8146a70043ad7823',
     size: 2626295,
-    width: 5600
+    width: 5600,
+    title: 'Image 39',
+    description: 'Description of image 39'
   },
   orderIndex: 39,
   photoId: '678c48f759062c8e8146a70043ad7823',
@@ -447,7 +522,9 @@ const testImages = [{
     lastModified: 1445860392,
     name: 'f6db1b532552aa00e9549b5c97e6770a',
     size: 3807639,
-    width: 5600
+    width: 5600,
+    title: 'Image 40',
+    description: 'Description of image 40'
   },
   orderIndex: 40,
   photoId: 'f6db1b532552aa00e9549b5c97e6770a',
@@ -458,7 +535,9 @@ const testImages = [{
     lastModified: 1445860384,
     name: '69102794801438efee46af8202c76b81',
     size: 2671950,
-    width: 3727
+    width: 3727,
+    title: 'Image 41',
+    description: 'Description of image 41'
   },
   orderIndex: 41,
   photoId: '69102794801438efee46af8202c76b81',
@@ -469,7 +548,9 @@ const testImages = [{
     lastModified: 1445860380,
     name: '61d3f0c021fd47d92a4e7395ab107e48',
     size: 3471762,
-    width: 5600
+    width: 5600,
+    title: 'Image 42',
+    description: 'Description of image 42'
   },
   orderIndex: 42,
   photoId: '61d3f0c021fd47d92a4e7395ab107e48',
@@ -480,7 +561,9 @@ const testImages = [{
     lastModified: 1445860375,
     name: '22883fe4ca22b25b5b19c8640d21d524',
     size: 4229177,
-    width: 5600
+    width: 5600,
+    title: 'Image 43',
+    description: 'Description of image 43'
   },
   orderIndex: 43,
   photoId: '22883fe4ca22b25b5b19c8640d21d524',
@@ -491,7 +574,9 @@ const testImages = [{
     lastModified: 1445860369,
     name: 'cf6787a4653057bd8af8cb05888dc9b1',
     size: 2936592,
-    width: 5600
+    width: 5600,
+    title: 'Image 44',
+    description: 'Description of image 44'
   },
   orderIndex: 44,
   photoId: 'cf6787a4653057bd8af8cb05888dc9b1',
@@ -502,7 +587,9 @@ const testImages = [{
     lastModified: 1445860365,
     name: 'fdda4e9e700d4208640b78d5c035d88a',
     size: 3756606,
-    width: 5600
+    width: 5600,
+    title: 'Image 45',
+    description: 'Description of image 45'
   },
   orderIndex: 45,
   photoId: 'fdda4e9e700d4208640b78d5c035d88a',
@@ -513,7 +600,9 @@ const testImages = [{
     lastModified: 1445860360,
     name: '74f7bad48d543460fb949cc406fb70e7',
     size: 2877705,
-    width: 5600
+    width: 5600,
+    title: 'Image 46',
+    description: 'Description of image 46'
   },
   orderIndex: 46,
   photoId: '74f7bad48d543460fb949cc406fb70e7',
@@ -524,7 +613,9 @@ const testImages = [{
     lastModified: 1445860354,
     name: 'a005c2daaa8b7c8cf1c53f589e64a860',
     size: 3953647,
-    width: 5600
+    width: 5600,
+    title: 'Image 47',
+    description: 'Description of image 47'
   },
   orderIndex: 47,
   photoId: 'a005c2daaa8b7c8cf1c53f589e64a860',
@@ -535,7 +626,9 @@ const testImages = [{
     lastModified: 1445860346,
     name: 'b091d8ac038d07476546bef2475a7b03',
     size: 2913404,
-    width: 5600
+    width: 5600,
+    title: 'Image 48',
+    description: 'Description of image 48'
   },
   orderIndex: 48,
   photoId: 'b091d8ac038d07476546bef2475a7b03',
@@ -546,7 +639,9 @@ const testImages = [{
     lastModified: 1445860335,
     name: '2b5c5f752b1c931b2351bee50aa939f0',
     size: 3010614,
-    width: 5600
+    width: 5600,
+    title: 'Image 49',
+    description: 'Description of image 49'
   },
   orderIndex: 49,
   photoId: '2b5c5f752b1c931b2351bee50aa939f0',
@@ -557,7 +652,9 @@ const testImages = [{
     lastModified: 1445860450,
     name: '7968928dd556638214cf26be7ea2a592',
     size: 2704408,
-    width: 5600
+    width: 5600,
+    title: 'Image 50',
+    description: 'Description of image 50'
   },
   orderIndex: 50,
   photoId: '7968928dd556638214cf26be7ea2a592',
@@ -568,7 +665,9 @@ const testImages = [{
     lastModified: 1445860437,
     name: 'eb2349c8379074578a5ac7ca97aec2e4',
     size: 2049626,
-    width: 5600
+    width: 5600,
+    title: 'Image 51',
+    description: 'Description of image 51'
   },
   orderIndex: 51,
   photoId: 'eb2349c8379074578a5ac7ca97aec2e4',
@@ -579,7 +678,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '4f431d8f88a3e5d3842df5a906fd536f',
     size: 1603869,
-    width: 3287
+    width: 3287,
+    title: 'Image 52',
+    description: 'Description of image 52'
   },
   orderIndex: 52,
   photoId: '4f431d8f88a3e5d3842df5a906fd536f',
@@ -590,7 +691,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '3337a427b2e877ab39bf116fcb3f01ea',
     size: 2057775,
-    width: 3484
+    width: 3484,
+    title: 'Image 53',
+    description: 'Description of image 53'
   },
   orderIndex: 53,
   photoId: '3337a427b2e877ab39bf116fcb3f01ea',
@@ -601,7 +704,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '7474d69be9754f2f5012a08ab9e5c283',
     size: 1862011,
-    width: 3720
+    width: 3720,
+    title: 'Image 54',
+    description: 'Description of image 54'
   },
   orderIndex: 54,
   photoId: '7474d69be9754f2f5012a08ab9e5c283',
@@ -612,7 +717,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: 'befba01503f77c9dc77df88419290c01',
     size: 2157963,
-    width: 3946
+    width: 3946,
+    title: 'Image 55',
+    description: 'Description of image 55'
   },
   orderIndex: 55,
   photoId: 'befba01503f77c9dc77df88419290c01',
@@ -623,7 +730,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '2f493d2be5d47bd89b016ba46a0f66f4',
     size: 1679662,
-    width: 3484
+    width: 3484,
+    title: 'Image 56',
+    description: 'Description of image 56'
   },
   orderIndex: 56,
   photoId: '2f493d2be5d47bd89b016ba46a0f66f4',
@@ -634,7 +743,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '2d6bee6fe2a726f213599508722bcb27',
     size: 2462629,
-    width: 3945
+    width: 3945,
+    title: 'Image 57',
+    description: 'Description of image 57'
   },
   orderIndex: 57,
   photoId: '2d6bee6fe2a726f213599508722bcb27',
@@ -645,7 +756,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '9e6bb2d0c554dcd559a32ab89c9092f0',
     size: 1423161,
-    width: 3180
+    width: 3180,
+    title: 'Image 58',
+    description: 'Description of image 58'
   },
   orderIndex: 58,
   photoId: '9e6bb2d0c554dcd559a32ab89c9092f0',
@@ -656,7 +769,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '315e6213ce778d43f5580b2caf347556',
     size: 1683368,
-    width: 3484
+    width: 3484,
+    title: 'Image 59',
+    description: 'Description of image 59'
   },
   orderIndex: 59,
   photoId: '315e6213ce778d43f5580b2caf347556',
@@ -667,7 +782,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '338f76721bc5a127ebf0b01306abf35e',
     size: 1904181,
-    width: 3542
+    width: 3542,
+    title: 'Image 60',
+    description: 'Description of image 60'
   },
   orderIndex: 60,
   photoId: '338f76721bc5a127ebf0b01306abf35e',
@@ -678,7 +795,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: 'd4c8670400a3bf9d7c8cba7e5f133454',
     size: 2095199,
-    width: 3540
+    width: 3540,
+    title: 'Image 61',
+    description: 'Description of image 61'
   },
   orderIndex: 61,
   photoId: 'd4c8670400a3bf9d7c8cba7e5f133454',
@@ -689,7 +808,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '5e106a5d4a0b7709f8938194d4778ff4',
     size: 1521731,
-    width: 3720
+    width: 3720,
+    title: 'Image 62',
+    description: 'Description of image 62'
   },
   orderIndex: 62,
   photoId: '5e106a5d4a0b7709f8938194d4778ff4',
@@ -700,7 +821,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: 'e8f7b815b395981a5285c2bd8b90b1a6',
     size: 1213695,
-    width: 3720
+    width: 3720,
+    title: 'Image 63',
+    description: 'Description of image 63'
   },
   orderIndex: 63,
   photoId: 'e8f7b815b395981a5285c2bd8b90b1a6',
@@ -711,7 +834,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: 'ab9df5eb2b706bd06a6e8bab622beba4',
     size: 1376745,
-    width: 3286
+    width: 3286,
+    title: 'Image 64',
+    description: 'Description of image 64'
   },
   orderIndex: 64,
   photoId: 'ab9df5eb2b706bd06a6e8bab622beba4',
@@ -722,7 +847,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '4eb593cdb6d13eb99c7a18d2de79b181',
     size: 2762647,
-    width: 3718
+    width: 3718,
+    title: 'Image 65',
+    description: 'Description of image 65'
   },
   orderIndex: 65,
   photoId: '4eb593cdb6d13eb99c7a18d2de79b181',
@@ -733,7 +860,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '175fa38b92269154b6673618477160de',
     size: 2117640,
-    width: 3483
+    width: 3483,
+    title: 'Image 66',
+    description: 'Description of image 66'
   },
   orderIndex: 66,
   photoId: '175fa38b92269154b6673618477160de',
@@ -744,7 +873,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '5b65c635c3ca09f2badf2aeb6d84ed99',
     size: 1499154,
-    width: 1922
+    width: 1922,
+    title: 'Image 67',
+    description: 'Description of image 67'
   },
   orderIndex: 67,
   photoId: '5b65c635c3ca09f2badf2aeb6d84ed99',
@@ -755,7 +886,9 @@ const testImages = [{
     lastModified: 1445861516,
     name: '00a063e26be177d3c6a4a2b41cc15be6',
     size: 2746325,
-    width: 3718
+    width: 3718,
+    title: 'Image 68',
+    description: 'Description of image 68'
   },
   orderIndex: 68,
   photoId: '00a063e26be177d3c6a4a2b41cc15be6',
@@ -766,7 +899,9 @@ const testImages = [{
     lastModified: 1445861511,
     name: 'ad45c7343a2ecf89982122c4097a054d',
     size: 1375916,
-    width: 3286
+    width: 3286,
+    title: 'Image 69',
+    description: 'Description of image 69'
   },
   orderIndex: 69,
   photoId: 'ad45c7343a2ecf89982122c4097a054d',
@@ -777,7 +912,9 @@ const testImages = [{
     lastModified: 1445852211,
     name: '066c5c3fafab90ecbef3f32736dac3c8',
     size: 561146,
-    width: 1920
+    width: 1920,
+    title: 'Image 70',
+    description: 'Description of image 70'
   },
   orderIndex: 70,
   photoId: '066c5c3fafab90ecbef3f32736dac3c8',
@@ -788,7 +925,9 @@ const testImages = [{
     lastModified: 1445860813,
     name: '7dc09ef29834aea2ae4d1948d60426c1',
     size: 404456,
-    width: 1920
+    width: 1920,
+    title: 'Image 71',
+    description: 'Description of image 71'
   },
   orderIndex: 71,
   photoId: '7dc09ef29834aea2ae4d1948d60426c1',
@@ -799,7 +938,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '53e606d52c7ac88ab77dce9595eb57c5',
     size: 1108341,
-    width: 2947
+    width: 2947,
+    title: 'Image 72',
+    description: 'Description of image 72'
   },
   orderIndex: 72,
   photoId: '53e606d52c7ac88ab77dce9595eb57c5',
@@ -810,7 +951,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '37d29273821f8404ed4832dd0872f8f3',
     size: 775953,
-    width: 3648
+    width: 3648,
+    title: 'Image 73',
+    description: 'Description of image 73'
   },
   orderIndex: 73,
   photoId: '37d29273821f8404ed4832dd0872f8f3',
@@ -821,7 +964,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: 'fc1b98985d634845d9eb5eef2878f327',
     size: 334330,
-    width: 3192
+    width: 3192,
+    title: 'Image 74',
+    description: 'Description of image 74'
   },
   orderIndex: 74,
   photoId: 'fc1b98985d634845d9eb5eef2878f327',
@@ -832,7 +977,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '47f5e94bc11c22a66fcbd44aff73241c',
     size: 4217344,
-    width: 3648
+    width: 3648,
+    title: 'Image 75',
+    description: 'Description of image 75'
   },
   orderIndex: 75,
   photoId: '47f5e94bc11c22a66fcbd44aff73241c',
@@ -843,7 +990,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '5862a30656b6e61705dfbe5505faf867',
     size: 4609929,
-    width: 3648
+    width: 3648,
+    title: 'Image 76',
+    description: 'Description of image 76'
   },
   orderIndex: 76,
   photoId: '5862a30656b6e61705dfbe5505faf867',
@@ -854,7 +1003,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: 'bc261174203a17b59d870ccf26a01597',
     size: 5736096,
-    width: 5472
+    width: 5472,
+    title: 'Image 77',
+    description: 'Description of image 77'
   },
   orderIndex: 77,
   photoId: 'bc261174203a17b59d870ccf26a01597',
@@ -865,7 +1016,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '279757098541cffc5689b7bbe39a88b2',
     size: 5959189,
-    width: 3648
+    width: 3648,
+    title: 'Image 78',
+    description: 'Description of image 78'
   },
   orderIndex: 78,
   photoId: '279757098541cffc5689b7bbe39a88b2',
@@ -876,7 +1029,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: 'ea3c344c388002acfe4f67fac5c8c400',
     size: 3871502,
-    width: 5472
+    width: 5472,
+    title: 'Image 79',
+    description: 'Description of image 79'
   },
   orderIndex: 79,
   photoId: 'ea3c344c388002acfe4f67fac5c8c400',
@@ -887,7 +1042,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '3152ccf507b8ff1662385fa6a67311f8',
     size: 2410359,
-    width: 3648
+    width: 3648,
+    title: 'Image 80',
+    description: 'Description of image 80'
   },
   orderIndex: 80,
   photoId: '3152ccf507b8ff1662385fa6a67311f8',
@@ -898,7 +1055,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '4faa8030d46fdf8fbb787c1b66f395e3',
     size: 2259034,
-    width: 3648
+    width: 3648,
+    title: 'Image 81',
+    description: 'Description of image 81'
   },
   orderIndex: 81,
   photoId: '4faa8030d46fdf8fbb787c1b66f395e3',
@@ -909,7 +1068,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '2a37fa063861660e7850eb82d62914ee',
     size: 6866865,
-    width: 3648
+    width: 3648,
+    title: 'Image 82',
+    description: 'Description of image 82'
   },
   orderIndex: 82,
   photoId: '2a37fa063861660e7850eb82d62914ee',
@@ -920,7 +1081,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '2103f7d2c4be85e4467d2f9cba4aeded',
     size: 5509488,
-    width: 5472
+    width: 5472,
+    title: 'Image 83',
+    description: 'Description of image 83'
   },
   orderIndex: 83,
   photoId: '2103f7d2c4be85e4467d2f9cba4aeded',
@@ -931,7 +1094,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: 'd15b37f375ea80bda4f2c37b64fdf7e8',
     size: 3202506,
-    width: 5472
+    width: 5472,
+    title: 'Image 84',
+    description: 'Description of image 84'
   },
   orderIndex: 84,
   photoId: 'd15b37f375ea80bda4f2c37b64fdf7e8',
@@ -942,7 +1107,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: 'cedc4449d88b491aca7d452fcdf0b3da',
     size: 4278078,
-    width: 3648
+    width: 3648,
+    title: 'Image 85',
+    description: 'Description of image 85'
   },
   orderIndex: 85,
   photoId: 'cedc4449d88b491aca7d452fcdf0b3da',
@@ -953,7 +1120,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: 'd375541f5888e55ac32a5142ed85c3bc',
     size: 5327873,
-    width: 5472
+    width: 5472,
+    title: 'Image 86',
+    description: 'Description of image 86'
   },
   orderIndex: 86,
   photoId: 'd375541f5888e55ac32a5142ed85c3bc',
@@ -964,7 +1133,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: 'b12907da5fbb55a31a760e49fb0bb4e6',
     size: 3941332,
-    width: 5177
+    width: 5177,
+    title: 'Image 87',
+    description: 'Description of image 87'
   },
   orderIndex: 87,
   photoId: 'b12907da5fbb55a31a760e49fb0bb4e6',
@@ -975,7 +1146,9 @@ const testImages = [{
     lastModified: 1445852219,
     name: '1cfbc70e8a351916a2dd29c63e5a2100',
     size: 7240707,
-    width: 5472
+    width: 5472,
+    title: 'Image 88',
+    description: 'Description of image 88'
   },
   orderIndex: 88,
   photoId: '1cfbc70e8a351916a2dd29c63e5a2100',
@@ -986,7 +1159,9 @@ const testImages = [{
     lastModified: 1445861579,
     name: '0d134f293b71f7c0a9638c5f1a8435e5',
     size: 285522,
-    width: 1695
+    width: 1695,
+    title: 'Image 89',
+    description: 'Description of image 89'
   },
   orderIndex: 89,
   photoId: '0d134f293b71f7c0a9638c5f1a8435e5',
@@ -997,7 +1172,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: '8a719c372d21ebb4b9d2a8373734bf52',
     size: 829742,
-    width: 1621
+    width: 1621,
+    title: 'Image 90',
+    description: 'Description of image 90'
   },
   orderIndex: 90,
   photoId: '8a719c372d21ebb4b9d2a8373734bf52',
@@ -1008,7 +1185,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: 'd201d3aea92d4fb08635d281a3909180',
     size: 920207,
-    width: 1621
+    width: 1621,
+    title: 'Image 91',
+    description: 'Description of image 91'
   },
   orderIndex: 91,
   photoId: 'd201d3aea92d4fb08635d281a3909180',
@@ -1019,7 +1198,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: '4f8cf05deeb154bda3b878e68656e4c5',
     size: 848528,
-    width: 1621
+    width: 1621,
+    title: 'Image 92',
+    description: 'Description of image 92'
   },
   orderIndex: 92,
   photoId: '4f8cf05deeb154bda3b878e68656e4c5',
@@ -1030,7 +1211,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: 'ab64fd1362015d405181f8b82d14e029',
     size: 258698,
-    width: 1621
+    width: 1621,
+    title: 'Image 93',
+    description: 'Description of image 93'
   },
   orderIndex: 93,
   photoId: 'ab64fd1362015d405181f8b82d14e029',
@@ -1041,7 +1224,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: '9d652929eb67d0ae370494dcb2709871',
     size: 719331,
-    width: 1621
+    width: 1621,
+    title: 'Image 94',
+    description: 'Description of image 94'
   },
   orderIndex: 94,
   photoId: '9d652929eb67d0ae370494dcb2709871',
@@ -1052,7 +1237,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: '7e411b039d55fc0d86266697a51172d8',
     size: 873130,
-    width: 1621
+    width: 1621,
+    title: 'Image 95',
+    description: 'Description of image 95'
   },
   orderIndex: 95,
   photoId: '7e411b039d55fc0d86266697a51172d8',
@@ -1063,7 +1250,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: '75318326db54174bea73594c3c25873a',
     size: 490692,
-    width: 1621
+    width: 1621,
+    title: 'Image 96',
+    description: 'Description of image 96'
   },
   orderIndex: 96,
   photoId: '75318326db54174bea73594c3c25873a',
@@ -1074,7 +1263,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: '90ee6549ab33042ab1206b0a925b10bd',
     size: 516058,
-    width: 1621
+    width: 1621,
+    title: 'Image 97',
+    description: 'Description of image 97'
   },
   orderIndex: 97,
   photoId: '90ee6549ab33042ab1206b0a925b10bd',
@@ -1085,7 +1276,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: 'd052fe7e6db2fd246708f8e56ddc3684',
     size: 566152,
-    width: 1621
+    width: 1621,
+    title: 'Image 98',
+    description: 'Description of image 98'
   },
   orderIndex: 98,
   photoId: 'd052fe7e6db2fd246708f8e56ddc3684',
@@ -1096,7 +1289,9 @@ const testImages = [{
     lastModified: 1445852215,
     name: '8310d26374ed948918b9914ea076e411',
     size: 545677,
-    width: 1621
+    width: 1621,
+    title: 'Image 99',
+    description: 'Description of image 99'
   },
   orderIndex: 99,
   photoId: '8310d26374ed948918b9914ea076e411',

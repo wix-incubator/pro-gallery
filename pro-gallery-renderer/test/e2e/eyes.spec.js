@@ -1,67 +1,120 @@
 import React from 'react';
 import {spy, expect} from 'chai';
-import puppeteer from 'puppeteer';
+import GalleryDriver from '../drivers/pupDriver';
 const {Assertion} = require('chai');
 const toMatchScreenshot = require('match-screenshot/chai');
 Assertion.addMethod('toMatchScreenshot', toMatchScreenshot);
 
-describe.skip('Eyes layout tests', () => {
+describe('Eyes layout tests', () => {
 
-  let page;
-  let browser;
+  let driver;
 
-  beforeEach(async () => {
-    browser = await puppeteer.launch();
-    page = await browser.newPage();
+  beforeEach(() => {
+    driver = new GalleryDriver();
+    //driver.debug = true;
   });
 
-  afterEach(() => browser.close());
-
-  it('Default layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Default');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Default layout'});
+  afterEach(async () => {
+    driver.closeGallery();
   });
 
-  it('Collage layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Collage');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Collage layout'});
+  it('Collage layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Collage');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Collage layout - Desktop', version: 'v1.0.1'});
   });
 
-  it('Masonry layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Masonry');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Masonry layout'});
+  it('Masonry layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Masonry');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Masonry layout - Desktop', version: 'v1.0.1'});
   });
 
-  it('Grid layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Grid');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Grid layout'});
+  it('Grid 1 layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Grid 1');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Grid 1 layout - Desktop', version: 'v1.0.1'});
   });
 
-  it('Thumbnails layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Thumbnails');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Thumbnails layout'});
+  it('Grid 2 layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Grid 2');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Grid 2 layout - Desktop', version: 'v1.0.1'});
   });
 
-  it('Slider layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Slider');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Slider layout'});
+  it('Grid 3 layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Grid 3');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Grid 3 layout - Desktop', version: 'v1.0.1'});
   });
 
-  it('Slideshow layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Slideshow');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Slideshow layout'});
+  it('Thumbnails 1 layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Thumbnails 1');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Thumbnails 1 layout - Desktop', version: 'v1.0.1'});
   });
 
-  it('Strip layout', async () => {
-    await page.goto('http://localhost:6006/?selectedKind=Eyes&selectedStory=Strip');
-    const myScreenshot = await page.screenshot();
-    await expect(myScreenshot).toMatchScreenshot({key: 'Strip layout'});
+  it('Thumbnails 2 layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Thumbnails 2');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Thumbnails 2 layout - Desktop', version: 'v1.0.1'});
+  });
+
+  it('Slider layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Slider');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Slider layout - Desktop', version: 'v1.0.1'});
+  });
+
+  it('Slideshow layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Slideshow');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Slideshow layout - Desktop', version: 'v1.0.1'});
+  });
+
+  it('Strip layout - Desktop', async () => {
+    await driver.openGallery('Eyes', 'Strip');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Strip layout - Desktop', version: 'v1.0.1'});
+  });
+
+  it('Collage layout - Android', async () => {
+    await driver.openGallery('Eyes', 'Collage', 'Android');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Collage layout - Android', version: 'v1.0.1'});
+  });
+
+  it('Masonry layout - Android', async () => {
+    await driver.openGallery('Eyes', 'Masonry', 'Android');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Masonry layout - Android', version: 'v1.0.1'});
+  });
+
+  it('Grid 1 layout - Android', async () => {
+    await driver.openGallery('Eyes', 'Grid 1', 'Android');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Grid 1 layout - Android', version: 'v1.0.1'});
+  });
+
+  it('Grid 2 layout - Android', async () => {
+    await driver.openGallery('Eyes', 'Grid 2', 'Android');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Grid 2 layout - Android', version: 'v1.0.1'});
+  });
+
+  it('Grid 3 layout - iPhone', async () => {
+    await driver.openGallery('Eyes', 'Grid 3', 'iPhone');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Grid 3 layout - iPhone', version: 'v1.0.1'});
+  });
+
+  it('Thumbnails 1 layout - Android', async () => {
+    await driver.openGallery('Eyes', 'Thumbnails 1', 'Android');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Thumbnails 1 layout - Android', version: 'v1.0.1'});
+  });
+
+  it('Thumbnails 2 layout - iPhone', async () => {
+    await driver.openGallery('Eyes', 'Thumbnails 2', 'iPhone');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Thumbnails 2 layout - iPhone', version: 'v1.0.1'});
+  });
+
+  it('Slider layout - iPhone', async () => {
+    await driver.openGallery('Eyes', 'Slider', 'iPhone');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Slider layout - iPhone', version: 'v1.0.1'});
+  });
+
+  it('Slideshow layout - iPhone', async () => {
+    await driver.openGallery('Eyes', 'Slideshow', 'iPhone');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Slideshow layout - iPhone', version: 'v1.0.1'});
+  });
+
+  it('Strip layout - iPhone', async () => {
+    await driver.openGallery('Eyes', 'Strip', 'iPhone');
+    await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Strip layout - iPhone', version: 'v1.0.1'});
   });
 });

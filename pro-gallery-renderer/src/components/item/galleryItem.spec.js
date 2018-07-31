@@ -49,24 +49,31 @@ describe('GalleryItem ', () => {
     const object = {
       isGalleryItem: true,
       createdBy: 'Yonatan',
-      dto:
-      {metadata:
-      {height: 1000,
-        lastModified: 1445860855,
-        name: '8b72558253b2502b401bb46e5599f22a',
-        size: 1100727,
-        width: 1920,
-        sourceName: 'private'},
-        orderIndex: 0,
-        photoId: '8b72558253b2502b401bb46e5599f22a',
-        url: '8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        metaData:
-        {height: 1000,
+      dto: {
+        metadata: {
+          height: 1000,
           lastModified: 1445860855,
           name: '8b72558253b2502b401bb46e5599f22a',
           size: 1100727,
           width: 1920,
-          sourceName: 'private'}},
+          sourceName: 'private',
+          title: 'Image 0',
+          description: 'Description of image 0 -> now we are testing long description, lets see how it works'
+        },
+        orderIndex: 0,
+        photoId: '8b72558253b2502b401bb46e5599f22a',
+        url: '8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+        metaData: {
+          height: 1000,
+          lastModified: 1445860855,
+          name: '8b72558253b2502b401bb46e5599f22a',
+          size: 1100727,
+          width: 1920,
+          sourceName: 'private',
+          title: 'Image 0',
+          description: 'Description of image 0 -> now we are testing long description, lets see how it works'
+        }
+      },
       id: '8b72558253b2502b401bb46e5599f22a',
       idx: undefined,
       _type: undefined,
@@ -595,7 +602,7 @@ describe('GalleryItem ', () => {
       originalUrl: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
       itemUrl: '8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
       itemHeight: 1000,
-      title: undefined,
+      title: 'Image 0',
       itemWidth: 1920,
       itemType: 'image',
       imageUrl: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_80,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',

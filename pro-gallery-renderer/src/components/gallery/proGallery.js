@@ -23,6 +23,12 @@ export default class ProGallery extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.store && this.store.dispatch && this.props.forceHover === true) {
+      this.store.dispatch(toggleHoverPreview(this.props.forceHover));
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.store && this.store.dispatch && (nextProps.forceHover !== this.props.forceHover)) {
       this.store.dispatch(toggleHoverPreview(nextProps.forceHover));
