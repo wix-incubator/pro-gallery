@@ -45,134 +45,13 @@ describe('GalleryItem ', () => {
   it('isGalleryItem should be true', () => {
     expect(galleryItem.isGalleryItem).to.equal(true);
   });
-  it('uses config in parameters', () => {
-    const object = {
-      isGalleryItem: true,
-      createdBy: 'Yonatan',
-      dto: {
-        metadata: {
-          height: 1000,
-          lastModified: 1445860855,
-          name: '8b72558253b2502b401bb46e5599f22a',
-          size: 1100727,
-          width: 1920,
-          sourceName: 'private',
-          title: 'Image 0',
-          description: 'Description of image 0 -> now we are testing long description, lets see how it works'
-        },
-        orderIndex: 0,
-        photoId: '8b72558253b2502b401bb46e5599f22a',
-        url: '8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        metaData: {
-          height: 1000,
-          lastModified: 1445860855,
-          name: '8b72558253b2502b401bb46e5599f22a',
-          size: 1100727,
-          width: 1920,
-          sourceName: 'private',
-          title: 'Image 0',
-          description: 'Description of image 0 -> now we are testing long description, lets see how it works'
-        }
-      },
-      id: '8b72558253b2502b401bb46e5599f22a',
-      idx: undefined,
-      _type: undefined,
-      style: {width: 1920, cubedWidth: 1920, height: 1000, cubedHeight: 1000},
-      width: 1920,
-      maxWidth: 1920,
-      height: 1000,
-      maxHeight: 1000,
-      margins: 0,
-      ratio: 1.92,
-      cubeRatio: 1.92,
-      cubeImages: undefined,
-      cubeType: 'fill',
-      offset: {top: 0, left: 0, right: 1920, bottom: 1000},
-      group: {},
-      transform: {},
-      orientation: 'landscape',
-      visibility: {},
-      sharpParams: {quality: 90, usm: {}},
-      resizeWidth: 1920,
-      resizeHeight: 1000,
-      resized_url:
-      {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_1919,h_1000,fp_0.50_0.50,q_90/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_90,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'},
-      pixel_url:
-      {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_30,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_30,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'},
-      thumbnailWidth: 500,
-      thumbnailHeight: 500,
-      thumbnail_url:
-      {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_500,h_260,al_c,q_30,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_30,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'},
-      square_url:
-      {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_80,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'},
-      full_url:
-      {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_1919,h_1000,fp_0.50_0.50,q_90/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_90,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'},
-      sample_url:
-      {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_500,h_260,al_c,q_90,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-        thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_90,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'},
-      download_url:
-      {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg?dn=',
-        mp4: undefined}};
-    const antiObject = {isGalleryItem: true,
-      createdBy: undefined,
-      dto: {},
-      id: undefined,
-      idx: undefined,
-      _type: undefined,
-      style: {width: 1, cubedWidth: 1, height: 1, cubedHeight: 1},
-      width: 1,
-      maxWidth: undefined,
-      height: 1,
-      maxHeight: undefined,
-      margins: 0,
-      ratio: 1,
-      cubeRatio: 1,
-      cubeImages: undefined,
-      cubeType: 'fill',
-      offset: {top: 0, left: 0, right: 1, bottom: 1},
-      group: {},
-      transform: {},
-      orientation: 'landscape',
-      visibility: {},
-      sharpParams: {quality: 90, usm: {}},
-      resizeWidth: NaN,
-      resizeHeight: NaN,
-      resized_url:
-      {img: 'https://static.wixstatic.com/media/undefined/v1/fill/w_NaN,h_NaN,al_c,q_90/undefined',
-        thumb: 'https://static.wixstatic.com/media/undefined/v1/fit/w_250,h_250,al_c,q_90/undefined'},
-      pixel_url:
-      {img: 'https://static.wixstatic.com/media/undefined/v1/fill/w_250,h_250,al_c,q_30/undefined',
-        thumb: 'https://static.wixstatic.com/media/undefined/v1/fit/w_250,h_250,al_c,q_30/undefined'},
-      thumbnailWidth: NaN,
-      thumbnailHeight: NaN,
-      thumbnail_url:
-      {img: 'https://static.wixstatic.com/media/undefined/v1/fit/w_NaN,h_NaN,al_c,q_30/undefined',
-        thumb: 'https://static.wixstatic.com/media/undefined/v1/fit/w_250,h_250,al_c,q_30/undefined'},
-      square_url:
-      {img: 'https://static.wixstatic.com/media/undefined/v1/fill/w_250,h_250,al_c,q_80/undefined',
-        thumb: 'https://static.wixstatic.com/media/undefined/v1/fit/w_250,h_250,al_c,q_80/undefined'},
-      full_url:
-      {img: 'https://static.wixstatic.com/media/undefined/v1/fill/w_NaN,h_NaN,al_c,q_90/undefined',
-        thumb: 'https://static.wixstatic.com/media/undefined/v1/fit/w_250,h_250,al_c,q_90/undefined'},
-      sample_url:
-      {img: 'https://static.wixstatic.com/media/undefined/v1/fit/w_500,h_500,al_c,q_90/undefined',
-        thumb: 'https://static.wixstatic.com/media/undefined/v1/fit/w_250,h_250,al_c,q_90/undefined'},
-      download_url:
-      {img: 'https://static.wixstatic.com/media/undefined?dn=',
-        mp4: undefined}};
-    delete galleryItem.uniqueId;
-    delete antiGalleryItem.uniqueId;
-    expect(galleryItem).to.deep.equal(object);
-    expect(antiGalleryItem).to.deep.equal(antiObject);
+  it('recieves correct styles from dto', () => {
+    expect(galleryItem.style).to.deep.equal({width: 1920, cubedWidth: 1920, height: 1000, cubedHeight: 1000});
+    expect(antiGalleryItem.style).to.deep.equal({width: 1, cubedWidth: 1, height: 1, cubedHeight: 1});
   });
 	//not testing missuse of item-core
 
-  it('should use processScheme on scheme created from dto, does not have scheme parameters undefined without dto', () => {
+  it('should use processScheme on scheme created from dto, does not have scheme parameters (undefined) without dto', () => {
     expect(galleryItem.id).equal('8b72558253b2502b401bb46e5599f22a');
     expect(antiGalleryItem.id).equal(undefined);
   });
@@ -185,95 +64,8 @@ describe('GalleryItem ', () => {
   it('createFromWixImage', () => {
     Object.assign(config, {orderIndex: 1});
     galleryItem = new GalleryItem(config);
-    const object = {isGalleryItem: true,
-      createdBy: 'Yonatan',
-      dto:
-      {itemId: 'aaaa',
-        mediaUrl: 'aaaaaaaa',
-        orderIndex: 1,
-        metadata:
-        {height: 300,
-          width: 300,
-          focalPoint: 3,
-          name: 'wixData.title',
-          fileName: '',
-          title: '',
-          type: 'wixData.type',
-          link:
-          {type: 'none',
-            url: undefined,
-            text: undefined,
-            title: undefined,
-            target: '_blank'},
-          sourceName: 'wixData.sourceName',
-          tags: 'wixData.tags',
-          wm: 'wixData.wm'},
-        isSecure: undefined,
-        metaData:
-        {height: 300,
-          width: 300,
-          focalPoint: 3,
-          name: 'wixData.title',
-          fileName: '',
-          title: '',
-          type: 'wixData.type',
-          link:
-          {type: 'none',
-            url: undefined,
-            text: undefined,
-            title: undefined,
-            target: '_blank'},
-          sourceName: 'wixData.sourceName',
-          tags: 'wixData.tags',
-          wm: 'wixData.wm'}},
-      id: '8b72558253b2502b401bb46e5599f22a',
-      idx: undefined,
-      _type: undefined,
-      style: {width: 1920, cubedWidth: 1920, height: 1000, cubedHeight: 1000},
-      width: 1920,
-      maxWidth: 1920,
-      height: 1000,
-      maxHeight: 1000,
-      margins: 0,
-      ratio: 1.92,
-      cubeRatio: 1.92,
-      cubeImages: undefined,
-      cubeType: 'fill',
-      offset: {top: 0, left: 0, right: 1920, bottom: 1000},
-      group: {},
-      transform: {},
-      orientation: 'landscape',
-      visibility: {},
-      sharpParams: {quality: 90, usm: {}},
-      resizeWidth: 1920,
-      resizeHeight: 1000,
-      resized_url:
-      {img: 'https://static.wixstatic.com/media/aaaaaaaa',
-        thumb: 'https://static.wixstatic.com/media/aaaaaaaa'},
-      pixel_url:
-      {img: 'https://static.wixstatic.com/media/aaaaaaaa',
-        thumb: 'https://static.wixstatic.com/media/aaaaaaaa'},
-      thumbnailWidth: 500,
-      thumbnailHeight: 500,
-      thumbnail_url:
-      {img: 'https://static.wixstatic.com/media/aaaaaaaa',
-        thumb: 'https://static.wixstatic.com/media/aaaaaaaa'},
-      square_url:
-      {img: 'https://static.wixstatic.com/media/aaaaaaaa',
-        thumb: 'https://static.wixstatic.com/media/aaaaaaaa'},
-      full_url:
-      {img: 'https://static.wixstatic.com/media/aaaaaaaa',
-        thumb: 'https://static.wixstatic.com/media/aaaaaaaa'},
-      sample_url:
-      {img: 'https://static.wixstatic.com/media/aaaaaaaa',
-        thumb: 'https://static.wixstatic.com/media/aaaaaaaa'},
-      download_url:
-      {img: 'https://static.wixstatic.com/media/aaaaaaaa?dn=',
-        mp4: undefined}};
-    delete galleryItem.uniqueId;
-    delete galleryItem.metadata.createdOn;
-    delete galleryItem.metadata.lastModified;
-    expect(galleryItem).to.deep.equal(object);
+    expect(galleryItem.metaData.width).to.deep.equal(300); //metaData is taken from metadata after the crateFromWixImage
+    expect(galleryItem.metaData.height).to.deep.equal(300);
   });
   it('createFromWixVideo', () => {
     delete config.wixImage;
@@ -295,86 +87,8 @@ describe('GalleryItem ', () => {
       wm: 'wixData.wm'
     }});
     galleryItem = new GalleryItem(config);
-    const url = galleryItem.resizedUrl('fill', 100, 100, {quality: 80}, false);
-    const object = {isGalleryItem: true,
-      createdBy: 'Yonatan',
-      dto:
-      {itemId: undefined,
-        mediaUrl: 'asdasd',
-        orderIndex: 1,
-        metaData:
-        {name: '',
-          width: 100,
-          height: 100,
-          type: 'video',
-          posters: [{url: 'aaa', width: 100, height: 100}],
-          customPoster: '',
-          isExternal: false,
-          duration: 100,
-          qualities:
-          [{height: 100, width: 100, quality: 'high', formats: ['mp4']},
-							{height: 200, width: 200, quality: 'high', formats: ['best']}],
-          link:
-          {type: 'none',
-            url: undefined,
-            text: undefined,
-            title: undefined,
-            target: '_blank'}},
-        isSecure: undefined},
-      id: '8b72558253b2502b401bb46e5599f22a',
-      idx: undefined,
-      _type: undefined,
-      style: {width: 1920, cubedWidth: 1920, height: 1000, cubedHeight: 1000},
-      width: 1920,
-      maxWidth: 1920,
-      height: 1000,
-      maxHeight: 1000,
-      margins: 0,
-      ratio: 1.92,
-      cubeRatio: 1.92,
-      cubeImages: undefined,
-      cubeType: 'fill',
-      offset: {top: 0, left: 0, right: 1920, bottom: 1000},
-      group: {},
-      transform: {},
-      orientation: 'landscape',
-      visibility: {},
-      sharpParams: {quality: 90, usm: {}},
-      resizeWidth: 1920,
-      resizeHeight: 1000,
-      resized_url:
-      {mp4: 'about://video.wixstatic.com/video/asdasd/high/mp4/file.mp4',
-        img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      pixel_url:
-      {mp4: 'about://video.wixstatic.com/video/asdasd/high/mp4/file.mp4',
-        img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      thumbnailWidth: 500,
-      thumbnailHeight: 500,
-      thumbnail_url:
-      {mp4: 'about://video.wixstatic.com/video/asdasd/high/mp4/file.mp4',
-        img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      square_url:
-      {mp4: 'about://video.wixstatic.com/video/asdasd/high/mp4/file.mp4',
-        img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      full_url:
-      {mp4: 'about://video.wixstatic.com/video/asdasd/high/mp4/file.mp4',
-        img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      sample_url:
-      {mp4: 'about://video.wixstatic.com/video/asdasd/high/mp4/file.mp4',
-        img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      download_url:
-      {img: 'https://static.wixstatic.com/media/asdasd?dn=',
-        mp4: 'about://video.wixstatic.com/video/asdasd/high/mp4/file.mp4'}};
-    delete galleryItem.uniqueId;
-    delete galleryItem.metadata.createdOn;
-    delete galleryItem.metadata.lastModified;
-    expect(galleryItem).to.deep.equal(object);
+    expect(galleryItem.metaData.height).to.deep.equal(100);
+    expect(galleryItem.metaData.width).to.deep.equal(100);
   });
   it('createFromExternal', () => {
     delete config.wixImage;
@@ -397,75 +111,8 @@ describe('GalleryItem ', () => {
       wm: 'wixData.wm'
     }});
     galleryItem = new GalleryItem(config);
-    const url = galleryItem.resizedUrl('fill', 100, 100, {quality: 80}, false);
-    const object = {isGalleryItem: true,
-      createdBy: 'Yonatan',
-      dto:
-      {itemId: undefined,
-        mediaUrl: 'media/aaa',
-        orderIndex: 1,
-        metaData:
-        {name: undefined,
-          videoId: undefined,
-          height: 1080,
-          width: 1920,
-          source: '',
-          videoUrl: '',
-          isExternal: true,
-          type: 'video',
-          posters: [{url: 'media/aaa', width: 100, height: 100}],
-          customPoster: '',
-          duration: 0,
-          qualities: []},
-        isSecure: undefined},
-      id: '8b72558253b2502b401bb46e5599f22a',
-      idx: undefined,
-      _type: undefined,
-      style: {width: 1920, cubedWidth: 1920, height: 1000, cubedHeight: 1000},
-      width: 1920,
-      maxWidth: 1920,
-      height: 1000,
-      maxHeight: 1000,
-      margins: 0,
-      ratio: 1.92,
-      cubeRatio: 1.92,
-      cubeImages: undefined,
-      cubeType: 'fill',
-      offset: {top: 0, left: 0, right: 1920, bottom: 1000},
-      group: {},
-      transform: {},
-      orientation: 'landscape',
-      visibility: {},
-      sharpParams: {quality: 90, usm: {}},
-      resizeWidth: 1920,
-      resizeHeight: 1000,
-      resized_url:
-      {img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      pixel_url:
-      {img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      thumbnailWidth: 500,
-      thumbnailHeight: 500,
-      thumbnail_url:
-      {img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      square_url:
-      {img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      full_url:
-      {img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      sample_url:
-      {img: 'https://static.wixstatic.com/media/aaa',
-        thumb: 'https://static.wixstatic.com/media/aaa'},
-      download_url:
-      {img: 'https://static.wixstatic.com/media/media/aaa?dn=',
-        mp4: undefined}};
-    delete galleryItem.uniqueId;
-    delete galleryItem.metadata.createdOn;
-    delete galleryItem.metadata.lastModified;
-    expect(galleryItem).to.deep.equal(object);
+    expect(galleryItem.metaData.height).to.deep.equal(1080); //these width/height numbers are hard coded for externals so it doesnt take it from anywhere else.
+    expect(galleryItem.metaData.width).to.deep.equal(1920);
   });
   it('defaultLink Text', () => {
     galleryItem.linkType = 'wix';
@@ -596,18 +243,7 @@ describe('GalleryItem ', () => {
     stubPreview.restore();
   });
   it('getDataForShop snapshot', () => {
-    expect(galleryItem.getDataForShop()).to.deep.equal({isDemo: undefined,
-      orderIndex: 0,
-      itemId: undefined,
-      originalUrl: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      itemUrl: '8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      itemHeight: 1000,
-      title: 'Image 0',
-      itemWidth: 1920,
-      itemType: 'image',
-      imageUrl: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_80,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      imagePurchasedUrl: undefined,
-      fpX: 0.5,
-      fpY: 0.5});
+    expect(galleryItem.getDataForShop().itemHeight).to.equal(1000);
+    expect(galleryItem.getDataForShop().itemWidth).to.equal(1920);
   });
 });
