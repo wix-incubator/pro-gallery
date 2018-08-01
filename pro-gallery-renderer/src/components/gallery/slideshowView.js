@@ -75,7 +75,7 @@ class SlideshowView extends React.Component {
         console.error('Cannot continue auto slideshow', e);
         this.stopAutoSlideshow();
       }
-    }, props.styleParams.autoSlideshowInterval * 1000);
+    }, this.props.styleParams.autoSlideshowInterval * 1000); //should be passed as a param (this.props might be the old props)
   }
 
   scrollToItem(itemIdx) {
@@ -508,7 +508,7 @@ class SlideshowView extends React.Component {
 
     // if (!utils.isSite()) {
     //   if (
-    //     (props.styleParams.isAutoSlideshow && props.styleParams.autoSlideshowInterval > 0) && 
+    //     (props.styleParams.isAutoSlideshow && props.styleParams.autoSlideshowInterval > 0) &&
     //     ( //check that the change is related to the slideshow settings
     //       (this.props.styleParams.isAutoSlideshow !== props.styleParams.isAutoSlideshow) ||
     //       (this.props.styleParams.autoSlideshowInterval !== props.styleParams.autoSlideshowInterval)
