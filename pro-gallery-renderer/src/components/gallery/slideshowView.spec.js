@@ -112,36 +112,36 @@ describe('Slideshow View', () => {
     });
   });
 
-  describe('Auto Slideshow', () => {
+  // describe('Auto Slideshow', () => {
 
-    it('startAutoSlideshow is called if needed', () => {
-      Object.assign(initialGalleryViewProps.styleParams, {
-        isAutoSlideshow: false,
-        autoSlideshowInterval: 10
-      });
-      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
-      const stub = sinon.stub(SlideshowView.prototype, 'startAutoSlideshow');
-      driver.mount(SlideshowView, galleryViewProps);
-      expect(stub.called).to.equal(false);
+  //   it('startAutoSlideshow is called if needed', () => {
+  //     Object.assign(initialGalleryViewProps.styleParams, {
+  //       isAutoSlideshow: false,
+  //       autoSlideshowInterval: 10
+  //     });
+  //     galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+  //     const stub = sinon.stub(SlideshowView.prototype, 'startAutoSlideshow');
+  //     driver.mount(SlideshowView, galleryViewProps);
+  //     expect(stub.called).to.equal(false);
 
-      Object.assign(initialGalleryViewProps.styleParams, {
-        isAutoSlideshow: true,
-        autoSlideshowInterval: 0
-      });
-      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
-      driver.mount(SlideshowView, galleryViewProps);
-      expect(stub.called).to.equal(false);
+  //     Object.assign(initialGalleryViewProps.styleParams, {
+  //       isAutoSlideshow: true,
+  //       autoSlideshowInterval: 0
+  //     });
+  //     galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+  //     driver.mount(SlideshowView, galleryViewProps);
+  //     expect(stub.called).to.equal(false);
 
-      Object.assign(initialGalleryViewProps.styleParams, {
-        isAutoSlideshow: true,
-        autoSlideshowInterval: 10
-      });
-      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
-      driver.mount(SlideshowView, galleryViewProps);
-      expect(stub.called).to.equal(true);
-      stub.restore();
-    });
-  });
+  //     Object.assign(initialGalleryViewProps.styleParams, {
+  //       isAutoSlideshow: true,
+  //       autoSlideshowInterval: 10
+  //     });
+  //     galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+  //     driver.mount(SlideshowView, galleryViewProps);
+  //     expect(stub.called).to.equal(true);
+  //     stub.restore();
+  //   });
+  // });
 
 });
 
