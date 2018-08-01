@@ -62,7 +62,7 @@ class SlideshowView extends React.Component {
     clearInterval(this.autoSlideshowInterval);
   }
 
-  startAutoSlideshow(interval) {
+  startAutoSlideshow() {
     this.stopAutoSlideshow();
     this.autoSlideshowInterval = setInterval(() => {
       try {
@@ -75,7 +75,7 @@ class SlideshowView extends React.Component {
         console.error('Cannot continue auto slideshow', e);
         this.stopAutoSlideshow();
       }
-    }, interval);
+    }, props.styleParams.autoSlideshowInterval * 1000);
   }
 
   scrollToItem(itemIdx) {
@@ -506,9 +506,19 @@ class SlideshowView extends React.Component {
       this.setFlattenItems(props.galleryStructure);
     }
 
-    if (utils.isEditor() && props.styleParams.isAutoSlideshow && props.styleParams.autoSlideshowInterval > 0) {
-      this.startAutoSlideshow(props.styleParams.autoSlideshowInterval * 1000);
-    }
+    // if (!utils.isSite()) {
+    //   if (
+    //     (props.styleParams.isAutoSlideshow && props.styleParams.autoSlideshowInterval > 0) && 
+    //     ( //check that the change is related to the slideshow settings
+    //       (this.props.styleParams.isAutoSlideshow !== props.styleParams.isAutoSlideshow) ||
+    //       (this.props.styleParams.autoSlideshowInterval !== props.styleParams.autoSlideshowInterval)
+    //     )
+    //   ) {
+    //     this.startAutoSlideshow();
+    //   } else {
+    //     this.stopAutoSlideshow();
+    //   }
+    // }
   }
 
   componentWillMount() {
@@ -535,9 +545,9 @@ class SlideshowView extends React.Component {
     }
     this.setCurrentItemByScroll();
 
-    if (this.props.styleParams.isAutoSlideshow && this.props.styleParams.autoSlideshowInterval > 0) {
-      this.startAutoSlideshow(this.props.styleParams.autoSlideshowInterval * 1000);
-    }
+    // if (this.props.styleParams.isAutoSlideshow && this.props.styleParams.autoSlideshowInterval > 0) {
+    //   this.startAutoSlideshow();
+    // }
   }
 
   componentWillUnmount() {
