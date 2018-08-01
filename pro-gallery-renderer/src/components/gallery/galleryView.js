@@ -92,6 +92,7 @@ class GalleryView extends React.Component {
     const galleryHeight = (showMore ? (window.innerHeight - 138) + 'px' : '100%');
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
     const columns = this.props.galleryStructure.columns;
+
     const layout = _.map(columns, (column, c) => {
 
       let paddingTop = 0;
@@ -142,6 +143,7 @@ class GalleryView extends React.Component {
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
       actions: {
+        getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
         pauseAllVideos: this.props.actions.pauseAllVideos,
         addItemToMultishare: this.props.actions.addItemToMultishare,

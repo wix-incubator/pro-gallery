@@ -411,6 +411,7 @@ class SlideshowView extends React.Component {
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
       actions: {
+        getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
         pauseAllVideos: this.props.actions.pauseAllVideos,
         addItemToMultishare: this.props.actions.addItemToMultishare,

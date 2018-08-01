@@ -91,6 +91,7 @@
       "stage-3"
     ],
     "plugins": [
+      "transform-class-properties",
       "transform-runtime",
       "syntax-dynamic-import",
       "dynamic-import-webpack"
@@ -156,6 +157,7 @@
       "react": "React",
       "react-dom": "ReactDOM"
     },
+
     "exports": "pro-gallery-renderer"
   }
 }

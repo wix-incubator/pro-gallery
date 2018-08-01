@@ -7,6 +7,7 @@ import thunkMiddleware from 'redux-thunk';
 import galleryReducers from '../../reducers/index.js';
 import {toggleHoverPreview} from '../../actions/galleryActions.js';
 import GalleryContainer from './galleryContainer.js';
+import GalleryContainerNew from './galleryContainerNew.js';
 import utils from '../../utils';
 import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import videoActionTypes from '../../constants/videoActionTypes';
@@ -55,13 +56,14 @@ export default class ProGallery extends React.Component {
   }
 
   render() {
+    const ProGalleryComponent = this.props.useRefactoredProGallery === true ? GalleryContainerNew : GalleryContainer;
     return this.canRender && (
       <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
         <Provider store={this.store}>
-          <GalleryContainer
+          <ProGalleryComponent
             {...this.props}
             domId={this.domId}
-            items={this.props.items || require('../../constants/default-images').defaultImages}
+            items={this.props.items || require('../../constants/default-images.js').defaultImages}
             store={this.store}
             watermarkData={this.props.watermarkData}
             settings={this.props.settings || {}}

@@ -248,8 +248,8 @@ export class GalleryContainer extends React.Component {
     };
     this.currentScrollPosition = 0;
     this.compId = utils.isSemiNative() ? 'compId' : Wix.Utils.getCompId();
-    this.galleryId = window.galleryId;
-    this.currentWindowWidth = window.innerWidth;
+    this.galleryId = window.galleryId; //TD: move to props
+    this.currentWindowWidth = window.innerWidth; //TD: move to WixWrapper
     this.currentWindowHeight = window.innerHeight;
 
     if (!utils.isSemiNative()) {
@@ -371,7 +371,7 @@ export class GalleryContainer extends React.Component {
   }
 
   initPersistentEventListeners() {
-    window.addEventListener('fullscreen_closed', this.closeFullscreenCallback);
+    window.addEventListener('fullscreen_closed', this.closeFullscreenCallback); //TD: this shouldnt be an event
   }
 
   initCustomEvents() {
@@ -416,7 +416,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  loadItemsDimensions() {
+  loadItemsDimensions() { //TD: move to item logic
     if (!this.galleryItems()) {
       return;
     }
@@ -2324,7 +2324,7 @@ export class GalleryContainer extends React.Component {
         } else {
           const fullscreen = document.getElementById('gallery-fullscreen');
           if (fullscreen) {
-            this.fullscreenElem = React.createElement(FullscreenContainer, {
+            this.fullscreenElem = React.createElement(this.props.FullscreenContainer, {
               demoModeParams: {
                 items: this.allItems(),
                 galleryStructure: this.galleryStructure,
@@ -2993,140 +2993,75 @@ export class GalleryContainer extends React.Component {
 
     return this.shouldRender() && (
       this.state.styleParams.oneRow ?
-      <
-      SlideshowView totalItemsCount = {
-        this.state.totalItemsCount
-      }
-      renderedItemsCount = {
-        this.state.renderedItemsCount
-      }
-      items = {
-        this.currentItems()
-      }
-      galleryStructure = {
-        this.galleryStructure
-      }
-      styleParams = {
-        this.state.styleParams
-      }
-      container = {
-        this.state.container
-      }
-      scroll = {
-        _.merge({}, this.state.scroll, {
-          isInfinite: this.isInfiniteScroll()
-        })
-      }
-      thumbnailSize = {
-        this.thumbnailSize
-      }
-      multishare = {
-        this.state.multishare
-      }
-      watermark = {
-        this.props.watermarkData
-      }
-      settings = {
-        this.props.settings
-      }
-      gotScrollEvent = {
-        this.state.gotScrollEvent
-      }
-      convertToGalleryItems = {
-        GalleryContainer.convertToGalleryItems
-      }
-      convertDtoToLayoutItem = {
-        GalleryContainer.convertDtoToLayoutItem
-      }
-      domId = {
-        this.props.domId
-      }
-      actions = {
-        _.merge(this.props.actions, {
-          toggleInfiniteScroll: this.toggleInfiniteScroll,
-          toggleFullscreen: this.toggleFullscreen,
-          pauseAllVideos: this.pauseAllVideos,
-          setWixHeight: this.setWixHeight,
-          scrollToItem: this.scrollToItem,
-          addItemToMultishare: this.addItemToMultishare,
-          removeItemFromMultishare: this.removeItemFromMultishare
-        })
-      }
-      debug = {
-      {
+      <SlideshowView
+      totalItemsCount = {this.state.totalItemsCount}
+      renderedItemsCount = {this.state.renderedItemsCount}
+      items = {this.currentItems()}
+      galleryStructure = {this.galleryStructure}
+      styleParams = {this.state.styleParams}
+      container = {this.state.container}
+      scroll = {_.merge({}, this.state.scroll, {
+        isInfinite: this.isInfiniteScroll()
+      })}
+      thumbnailSize = {this.thumbnailSize}
+      multishare = {this.state.multishare}
+      watermark = {this.props.watermarkData}
+      settings = {this.props.settings}
+      gotScrollEvent = {this.state.gotScrollEvent}
+      convertToGalleryItems = {GalleryContainer.convertToGalleryItems}
+      convertDtoToLayoutItem = {GalleryContainer.convertDtoToLayoutItem}
+      domId = {this.props.domId}
+      actions = {_.merge(this.props.actions, {
+        toggleInfiniteScroll: this.toggleInfiniteScroll,
+        toggleFullscreen: this.toggleFullscreen,
+        pauseAllVideos: this.pauseAllVideos,
+        setWixHeight: this.setWixHeight,
+        scrollToItem: this.scrollToItem,
+        addItemToMultishare: this.addItemToMultishare,
+        removeItemFromMultishare: this.removeItemFromMultishare
+      })}
+      debug = {{
         lastHeight: this.lastHeight,
         newHeight: this.newHeight,
         resizeCount: this.resizeCount,
         orientationCount: this.orientationCount,
         maxGalleryWidth: this.props.maxGalleryWidth
-      }
-      }
-      store = {
-        this.props.store
-      } { ...this.props.gallery
-      }
-      /> : <
-      GalleryView totalItemsCount = {
-        this.state.totalItemsCount
-      }
-      renderedItemsCount = {
-        this.state.renderedItemsCount
-      }
-      items = {
-        this.currentItems()
-      }
-      galleryStructure = {
-        this.galleryStructure
-      }
-      styleParams = {
-        this.state.styleParams
-      }
-      container = {
-        this.state.container
-      }
-      scroll = {
-        _.merge({}, this.state.scroll, {
-          isInfinite: this.isInfiniteScroll()
-        })
-      }
-      multishare = {
-        this.state.multishare
-      }
-      watermark = {
-        this.props.watermarkData
-      }
-      settings = {
-        this.props.settings
-      }
-      gotScrollEvent = {
-        this.state.gotScrollEvent
-      }
-      domId = {
-        this.props.domId
-      }
-      actions = {
-        _.merge(this.props.actions, {
-          toggleInfiniteScroll: this.toggleInfiniteScroll,
-          toggleFullscreen: this.toggleFullscreen,
-          pauseAllVideos: this.pauseAllVideos,
-          setWixHeight: this.setWixHeight,
-          scrollToItem: this.scrollToItem,
-          addItemToMultishare: this.addItemToMultishare,
-          removeItemFromMultishare: this.removeItemFromMultishare
-        })
-      }
-      debug = {
-      {
+      }}
+      store = {this.props.store}
+      { ...this.props.gallery }
+      /> :
+      <GalleryView
+      totalItemsCount = {this.state.totalItemsCount}
+      renderedItemsCount = {this.state.renderedItemsCount}
+      items = {this.currentItems()}
+      galleryStructure = {this.galleryStructure}
+      styleParams = {this.state.styleParams}
+      container = {this.state.container}
+      scroll = {_.merge({}, this.state.scroll, {
+        isInfinite: this.isInfiniteScroll()
+      })}
+      multishare = {this.state.multishare}
+      watermark = {this.props.watermarkData}
+      settings = {this.props.settings}
+      gotScrollEvent = {this.state.gotScrollEvent}
+      domId = {this.props.domId}
+      actions = {_.merge(this.props.actions, {
+        toggleInfiniteScroll: this.toggleInfiniteScroll,
+        toggleFullscreen: this.toggleFullscreen,
+        pauseAllVideos: this.pauseAllVideos,
+        setWixHeight: this.setWixHeight,
+        scrollToItem: this.scrollToItem,
+        addItemToMultishare: this.addItemToMultishare,
+        removeItemFromMultishare: this.removeItemFromMultishare
+      })}
+      debug = {{
         lastHeight: this.lastHeight,
         newHeight: this.newHeight,
         resizeCount: this.resizeCount,
         orientationCount: this.orientationCount,
         maxGalleryWidth: this.props.maxGalleryWidth
-      }
-      }
-      store = {
-        this.props.store
-      } { ...this.props.gallery
+      }}
+      store = {this.props.store} { ...this.props.gallery
       }
       />
     );
