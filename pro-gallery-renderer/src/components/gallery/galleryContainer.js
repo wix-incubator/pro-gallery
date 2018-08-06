@@ -1939,7 +1939,8 @@ export class GalleryContainer extends React.Component {
 
   getGalleryScroll(params) {
     if (this.state.styleParams.oneRow) {
-      this.currentScrollPosition = document.getElementById('gallery-horizontal-scroll').scrollLeft;
+      const horizontalElement = document.getElementById('gallery-horizontal-scroll');
+      this.currentScrollPosition = (horizontalElement && horizontalElement.scrollLeft) || 0;
     } else if (params && _.isNumber(params.customScrollTop)) {
       this.currentScrollPosition = params.customScrollTop;
       return this.currentScrollPosition;
