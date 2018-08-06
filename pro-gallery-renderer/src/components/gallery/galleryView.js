@@ -2,6 +2,7 @@ import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from '../gallery/galleryDebugMessage';
 import _ from 'lodash';
+import GalleryEmpty from '../gallery/galleryEmpty';
 import utils from '../../utils/index.js';
 import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 

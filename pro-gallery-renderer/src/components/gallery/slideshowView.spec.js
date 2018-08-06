@@ -5,6 +5,7 @@ import React from 'react';
 import SlideshowView from './slideshowView';
 import {expect} from 'chai';
 import sinon from 'sinon';
+import utils from '../../../src/utils/index.js';
 
 describe('Slideshow View', () => {
 
@@ -39,6 +40,18 @@ describe('Slideshow View', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.find.hook('gallery-column').length).to.equal(0);
+    });
+
+    it.skip('should create GalleryEmpty', () => {
+      const stub = sinon.stub(utils, 'isEditor').returns(true);
+      Object.assign(initialGalleryViewProps, {
+        items: [],
+        renderedItemsCount: -1
+      });
+      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+      driver.mount(SlideshowView, galleryViewProps);
+      expect(driver.find.selector('GalleryEmpty').length).to.equal(1);
+      stub.restore();
     });
 
     it('should show next-arrow if more then one item, otherwise no next-arrow', () => {
