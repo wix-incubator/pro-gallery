@@ -563,6 +563,7 @@ export class GalleryContainer extends React.Component {
         groupTypes: '1',
         gallerySize: Math.round(gallerySize * 8.5 + 150),
         fixedColumns: 0,
+        placeGroupsLtr: true,
         isGrid: true
       },
       masonry_ver: {
@@ -713,6 +714,7 @@ export class GalleryContainer extends React.Component {
         isSlider: false,
         isColumns: false,
         isGrid: true,
+        placeGroupsLtr: true,
         isMasonry: false,
         isSlideshow: false,
         minItemSize: 50
@@ -1398,6 +1400,9 @@ export class GalleryContainer extends React.Component {
     }
     if (canSet('mobilePanorama')) {
       stateStyles.mobilePanorama = String(wixStyles.mobilePanorama) === '1';
+    }
+    if (canSet('placeGroupsLtr')) {
+      stateStyles.placeGroupsLtr = String(wixStyles.placeGroupsLtr) === '1';
     }
     if (canSet('isAutoSlideshow')) {
       stateStyles.isAutoSlideshow = String(wixStyles.isAutoSlideshow) === '1';
