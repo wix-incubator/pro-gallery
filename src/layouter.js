@@ -57,7 +57,7 @@ export default class Layouter {
 
   findShortestColumn(columns, groupIdx) {
     let minCol = columns[0];
-    if (this.styleParams.cubeImages) {
+    if (this.styleParams.placeGroupsLtr) {
       minCol = columns[groupIdx % columns.length];
     } else {
       let minColH = -1;
