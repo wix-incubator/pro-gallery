@@ -16,7 +16,8 @@ describe('Gallery View', () => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
     Object.assign(initialGalleryViewProps.styleParams, {
-      oneRow: false
+      oneRow: false,
+      styleParams: {imageMargin: 10, galleryMargin: 5}
     });
   });
 
@@ -39,6 +40,18 @@ describe('Gallery View', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
       expect(driver.find.hook('gallery-column').length).to.equal(0);
+    });
+
+    it('should create GalleryEmpty', () => {
+      const stub = sinon.stub(utils, 'isEditor').returns(true);
+      Object.assign(initialGalleryViewProps, {
+        items: [],
+        renderedItemsCount: -1
+      });
+      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+      driver.mount(GalleryView, galleryViewProps);
+      expect(driver.find.selector('GalleryEmpty').length).to.equal(1);
+      stub.restore();
     });
   });
 
