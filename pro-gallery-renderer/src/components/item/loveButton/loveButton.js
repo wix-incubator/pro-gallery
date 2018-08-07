@@ -1,86 +1,148 @@
 import React from 'react';
 import utils from '../../../utils';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
+import _ from 'lodash';
 
 class LoveButton extends React.Component {
   constructor(props) {
     super(props);
     this.toggleLove = this.toggleLove.bind(this);
+    this.updateLoveCount = this.updateLoveCount.bind(this);
+
     this.state = {
+      isLoved: itemActions.isLoved(props.itemId),
+      loveCount: itemActions.getLoveCount(props.itemId),
       animate: false
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.itemId !== this.props.itemId) {
+      this.setState({
+        isLoved: itemActions.isLoved(nextProps.itemId),
+        loveCount: itemActions.getLoveCount(nextProps.itemId),
+      });
+    }
+  }
+
   toggleLove(e) {
     e.stopPropagation();
-    this.props.toggleLove();
+    e.preventDefault();
+    const item = _.pick(this.props, ['layout', 'type', 'itemId', 'id', 'item', 'idx', 'hashtag']);
+    Object.assign(item, {type: 'image'});
+    itemActions.postLoveActivity(item);
+    itemActions.toggleLove(item.itemId, item.layout);
     this.setState({
-      animate: (!this.props.isLoved)
+      animate: !this.state.isLoved,
+      isLoved: !this.state.isLoved
     });
   }
 
-  isLovedClassName() {
-    return 'progallery-svg-font-icons-' + (this.props.isLoved ? 'love_full loved' : 'love_empty');
+  componentDidMount() {
+    window.addEventListener('love_count_fetched', this.updateLoveCount);
   }
 
-  animatedClassName() {
-    return (this.state.animate ? ' love-animation' : ' ');
+  componentWillUnmount() {
+    window.removeEventListener('love_count_fetched', this.updateLoveCount);
   }
 
   containerClassName() {
-    return (this.props.layout === 'fullscreen') ? 'fullscreen-social-love-container' : 'block-fullscreen gallery-item-social-love gallery-item-social-button';
+    switch (this.props.layout) {
+      case 'fullscreen':
+        return 'fullscreen-social-love-container show-tooltip';
+      default:
+        return 'block-fullscreen gallery-item-social-love gallery-item-social-button show-tooltip';
+    }
   }
 
-  buttonClassName() {
-    return ((this.props.layout === 'fullscreen') ? 'fullscreen-social-love' : 'gallery-item-social-love') + (utils.isStoreGallery() ? (utils.isMobile ? ' mobile-social-icon' : '') : ((this.props.layout === 'fullscreen') ? '' : ' block-fullscreen'));
+  buttonClasssName() {
+    const className = [];
+    switch (this.props.layout) {
+      case 'fullscreen':
+        className.push('fullscreen-social-love');
+        break;
+      default:
+        className.push('gallery-item-social-love');
+        if (!(utils.isStoreGallery())) {
+          className.push('block-fullscreen');
+        }
+    }
+    className.push(this.viewClassName());
+    if (this.state.isLoved) {
+      className.push('progallery-svg-font-icons-love_full loved');
+    } else {
+      className.push('progallery-svg-font-icons-love_empty');
+    }
+    if (this.state.animate) {
+      className.push('love-animation');
+    }
+    return className.join(' ');
+  }
+
+  viewClassName() {
+    switch (this.props.layout) {
+      case 'fullscreen':
+        return this.props.device === 'desktop' ? 'fullscreen-icon' : '';
+      default:
+        return '';
+    }
   }
 
   counterClassName() {
-    return (this.props.layout === 'fullscreen') ? 'fullscreen-social-love-count shown' : 'block-fullscreen gallery-item-social-love-count';
+    switch (this.props.layout) {
+      case 'fullscreen':
+        return 'fullscreen-social-love-count shown ' + this.viewClassName();
+      default:
+        return 'block-fullscreen gallery-item-social-love-count ' + this.viewClassName();
+    }
+  }
+
+  createLoveCounter() {
+    const count = this.state.loveCount + (this.state.isLoved ? 1 : 0);
+    return !!this.props.showCounter && (count > 0) ? (
+    <i
+      data-hook="love-counter"
+      className={this.counterClassName()}>{count}</i>) : null;
+  }
+
+  createMouseOver() {
+    return e => {
+      if (this.props.isSettings) {
+        itemActions.showTooltip(e, 'This option is not available in editor');
+      }
+    };
+  }
+
+  createMouseOut() {
+    return () => {
+      if (this.props.isSettings) {
+        itemActions.hideTooltip();
+      }
+    };
+  }
+
+  updateLoveCount() {
+    this.setState({
+      count: itemActions.getLoveCount(this.props.itemId)
+    });
   }
 
   render() {
-    const {layout, device} = this.props;
-
-    const loveButtonClassName = [this.buttonClassName(), itemActions.viewClassName(layout, device), this.isLovedClassName(), this.animatedClassName()].join(' ');
-    const counterClassName = [this.counterClassName(), itemActions.viewClassName(layout, device)].join(' ');
-    const loveCounter = this.props.showCounter && (this.props.count > 0) ? (
-        <i
-            data-hook="love-counter"
-            style={this.props.counterStyle}
-            className={counterClassName}>{this.props.count}</i>
-    ) : '';
-
-    const loveButton = <button
-        data-hook="love-icon"
-        className={loveButtonClassName}
-        title={this.props.count}
-        style={this.props.style}
-        tabIndex={utils.getTabIndex(this.props.layout + 'Love')}
-        aria-label={(this.props.isLoved ? 'Unlike' : 'Like') + `, ${this.props.count}`}
-        aria-checked={(!!this.props.isLoved).toString()}
-        role="checkbox"
-    />;
-
+    const loveCounter = this.createLoveCounter();
     const clickAction = utils.getMobileEnabledClick(this.toggleLove);
 
     return (
         <span data-hook="love-button"
-             className={this.containerClassName() + ' show-tooltip '}
-             onMouseOver={e => {
-               if (this.props.isSettings) {
-                 itemActions.showTooltip(e, 'This option is not available in editor')
-;
-               }
-             }}
-             onMouseOut={() => {
-               if (this.props.isSettings) {
-                 itemActions.hideTooltip();
-               }
-             }}
-             {...clickAction}
-          >
-          {loveButton}
+         className={this.containerClassName()}
+         onMouseOver = {this.createMouseOver()}
+         onMouseOut = {this.createMouseOut()}
+         {...clickAction}
+              >
+          <button
+          data-hook="love-icon"
+          className={this.buttonClasssName()}
+          role="checkbox"
+          />
           {loveCounter}
         </span>
     );

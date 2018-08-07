@@ -3,6 +3,7 @@ import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
+import _ from 'lodash';
 
 export default class Social extends React.Component {
 
@@ -63,11 +64,13 @@ export default class Social extends React.Component {
   }
 
   getLoveButton() {
-    const {styleParams, love, isNarrow} = this.props;
+    const {styleParams, love} = this.props;
+    const props = _.pick(this.props, ['id', 'item', 'idx', 'styleParams', 'hashtag', 'love']);
     return styleParams.loveButton ? (
       <LoveButton
+        {...props}
+        itemId={this.props.photoId}
         layout={styleParams.isSlideshow ? 'slideshow' : 'gallery'}
-        {...love}
         showCounter={love && love.showCounter}
         />
     ) : '';

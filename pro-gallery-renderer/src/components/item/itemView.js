@@ -332,9 +332,8 @@ class ItemView extends React.Component {
   }
 
   getSocial() {
-    const props = _.pick(this.props, ['id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
+    const props = _.pick(this.props, ['hashtag', 'photoId', 'item', 'idx', 'id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
     return <Social {...props}
-              allProps={this.props}
               showShare={this.state.showShare}
               isSmallItem={this.isSmallItem()}
               isVerticalContainer={this.isVerticalContainer()}
