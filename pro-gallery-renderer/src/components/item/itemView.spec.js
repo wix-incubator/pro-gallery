@@ -1,26 +1,13 @@
 //Yonatan Hattav Jun21
 'use strict';
 
-import ReactDOM from 'react-dom';
-import ImageItem from './imageItem.js';
 import VideoItem from './videos/videoItem.js';
-import TextItem from './textItem.js';
 import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
-import ItemHover from './itemHover.js';
-import Texts from './texts/texts.js';
-import Share from './share/share.js';
 import CustomButton from './buttons/customButton.js';
 import ItemTitle from './texts/itemTitle.js';
-import {Wix, Consts, performanceUtils, itemActions, logger} from 'photography-client-lib';
-import classNames from 'classnames';
-import _ from 'lodash';
-import Social from './social/social.js';
-import {mount, shallow} from 'enzyme';
-import {use, spy, expect, chai} from 'chai';
+import {spy, expect, chai} from 'chai';
 import sinon from 'sinon';
-import chaiEnzyme from 'chai-enzyme';
 import utils from '../../../src/utils/index.js';
-import LoveButton from './loveButton/loveButton.js';
 import React from 'react';
 import GalleryDriver from '../../../test/drivers/reactDriver';
 import {testImages} from '../../../test/images-mock';
@@ -437,11 +424,9 @@ describe('Item View', () => {
           titlePlacement: 'SHOW_ALWAYS',
           allowTitle: true},
         type: 'image'});
-      const stub = sinon.stub(utils, 'getTitleOrFilename').returns('foo bar');
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.selector(CustomButton).length).to.equal(1);
       expect(driver.find.selector(ItemTitle).length).to.equal(1);
-      stub.restore();
     });
 
   });

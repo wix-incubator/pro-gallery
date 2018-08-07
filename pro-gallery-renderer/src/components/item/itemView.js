@@ -493,8 +493,7 @@ class ItemView extends React.Component {
   }
 
   getBottomInfoElement() {
-    const {styleParams, title, fileName, type} = this.props;
-    const displayTitle = utils.getTitleOrFilename(title, fileName);
+    const {styleParams, title, type} = this.props;
     const {placements} = Consts;
     const buttonPlacement = this.getButtonPlacement();
     let bottomInfo = null;
@@ -503,8 +502,8 @@ class ItemView extends React.Component {
       const isImage = type === 'image' || type === 'picture';
       const shouldShowButton = buttonPlacement === placements.SHOW_ALWAYS && styleParams.useCustomButton === true && (isImage || !utils.isStoreGallery());
       const buttonElem = shouldShowButton ? (<CustomButton styleParams={styleParams} />) : null;
-      const isTitleAvailable = styleParams.allowTitle && displayTitle;
-      const titleElem = isTitleAvailable ? (<ItemTitle title={displayTitle} />) : null;
+      const isTitleAvailable = styleParams.allowTitle && title;
+      const titleElem = isTitleAvailable ? (<ItemTitle title={title} />) : null;
       if (titleElem || buttonElem) {
         bottomInfo = (
           <div style={{height: styleParams.bottomInfoHeight, textAlign: styleParams.galleryTextAlign}}

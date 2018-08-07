@@ -1,12 +1,9 @@
 'use strict';
 
-import {shallow, mount} from 'enzyme';
 import React from 'react';
 import {use, spy, expect} from 'chai';
 import spies from 'chai-spies';
-import ItemView from '../itemView.js';
 import GalleryDriver from '../../../../test/drivers/reactDriver.js';
-import utils from '../../../utils';
 import {testImages} from '../../../../test/images-mock';
 import sinon from 'sinon';
 import Texts from './texts.js';
@@ -34,12 +31,10 @@ describe('Text elements', () => {
   });
 
   it('shoud render title, description and button', () => {
-    const stub = sinon.stub(utils, 'getTitleOrFilename').returns('title');
     galleryDriver.mount(Texts, itemViewProps);
     expect(galleryDriver.find.hook('item-title').length).to.equal(1);
     expect(galleryDriver.find.hook('item-description').length).to.equal(1);
     expect(galleryDriver.find.hook('custom-button-button').length).to.equal(1);
-    stub.restore();
   });
 
   it('shold hide item texts', () => {
@@ -66,9 +61,7 @@ describe('Text elements', () => {
     itemViewProps.shouldShowButton = false;
     // make allowAnyAction() return false;
     itemViewProps.styleParams.loveButton = itemViewProps.styleParams.allowSocial = itemViewProps.styleParams.allowDownload = false;
-    const stub = sinon.stub(utils, 'getTitleOrFilename').returns('title');
     galleryDriver.mount(Texts, itemViewProps);
     expect(galleryDriver.find.hook('item-title').get(0).style.marginBottom).to.equal('0px');
-    stub.restore();
   });
 });

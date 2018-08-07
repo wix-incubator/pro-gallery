@@ -61,7 +61,7 @@ class LineHeightFixer {
       return;
     }
 
-    const {styleParams, fileName, title, description, isSmallItem} = options;
+    const {styleParams, title, description, isSmallItem} = options;
 
     if (!container || styleParams.isSlideshow) {
       return;
@@ -105,7 +105,7 @@ class LineHeightFixer {
     }
 
 
-    const shouldDisplayTitle = utils.getTitleOrFilename(title, fileName) && !isSmallItem && styleParams.allowTitle;
+    const shouldDisplayTitle = title && !isSmallItem && styleParams.allowTitle;
     if (shouldDisplayTitle) {
       this.showElement(titleElement);
       this.setCss(titleElement, {overflow: 'visible'});

@@ -56,27 +56,14 @@ export default class Texts extends React.Component {
   }
 
   getItemTexts() {
-    let titleElem = null;
-    let descriptionElem = null;
-    let buttonElem = null;
-
-    const {title, description, fileName, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
-    const displayTitle = utils.getTitleOrFilename(title, fileName);
-    const shouldShowTitle = displayTitle && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
+    const {title, description, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
+    const shouldShowTitle = title && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
     const shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
     const shouldHaveBottomSpaceInTitle = shouldShowDescription || this.allowAnyAction();
 
-    if (shouldShowTitle) {
-      titleElem = <ItemTitle key={'item-title-' + id} title={displayTitle} style={shouldHaveBottomSpaceInTitle ? {} : {marginBottom: 0}} />;
-    }
-
-    if (shouldShowDescription) {
-      descriptionElem = (<ItemDescription description={description} key={'item-description-' + id} />);
-    }
-
-    if (shouldShowButton) {
-      buttonElem = <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
-    }
+    const titleElem = shouldShowTitle && <ItemTitle key={'item-title-' + id} title={title} style={shouldHaveBottomSpaceInTitle ? {} : {marginBottom: 0}} />;
+    const descriptionElem = shouldShowDescription && <ItemDescription description={description} key={'item-description-' + id} />;
+    const buttonElem = shouldShowButton && <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
 
     const shouldHideElement = !titleElem && !descriptionElem && !buttonElem;
     if (shouldHideElement) {

@@ -3,11 +3,9 @@
 import ItemView from '../itemView.js';
 import GalleryDriver from '../../../../test/drivers/reactDriver.js';
 import Share from './share.js';
-import {mount, shallow} from 'enzyme';
 import React from 'react';
-import {use, spy, expect, chai} from 'chai';
+import {spy, expect, chai} from 'chai';
 import sinon from 'sinon';
-import chaiEnzyme from 'chai-enzyme';
 import {testImages} from '../../../../test/images-mock.js';
 import {itemActions} from 'photography-client-lib';
 import utils from '../../../../src/utils/index.js';

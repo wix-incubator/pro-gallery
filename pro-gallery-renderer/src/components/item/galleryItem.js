@@ -787,7 +787,15 @@ class GalleryItem {
   }
 
   get title() {
-    return this.metadata.title || '';
+    const title = this.metadata.title;
+    if (typeof title === 'string') {
+      return title;
+    } else {
+      const filename = this.metadata.fileName;
+      if (filename)
+        return filename;
+    }
+    return '';
     // if (!this.metadata.isDemo) {
     //   return this.metadata.title || '';
     // }
