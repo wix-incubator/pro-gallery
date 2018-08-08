@@ -90,7 +90,8 @@ class GalleryView extends React.Component {
 
   createGallery(showMore) {
     const galleryConfig = this.createGalleryConfig();
-    const galleryHeight = (showMore ? (window.innerHeight - 138) + 'px' : '100%');
+    const showMoreContainerHeight = 138; //according to the scss
+    const galleryHeight = (showMore ? (this.props.container.galleryHeight - (showMoreContainerHeight * utils.getViewportScaleRatio())) + 'px' : '100%');
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
     const columns = this.props.galleryStructure.columns;
 
