@@ -116,7 +116,7 @@ describe('Share:', () => {
       spy.restore();
     });
     it('warns onmount if cannot focus on share icon', () => {
-      const spy = sinon.spy(console, 'warn');
+      const spy = sinon.stub(console, 'warn');
       const stubFocus = sinon.stub(HTMLElement.prototype, 'focus').throws();
       driver.mount(Share, sampleItemViewProps);
       driver.set.state({focusedShareIcon: 1});

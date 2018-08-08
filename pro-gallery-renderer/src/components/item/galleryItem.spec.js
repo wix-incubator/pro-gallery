@@ -147,7 +147,7 @@ describe('GalleryItem ', () => {
   });
   it('should send error if watermark is a string that cant be parsed to an object', () => {
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
-    const spyerror = sinon.spy(console, 'error');
+    const spyerror = sinon.stub(console, 'error');
     Object.assign(config, {watermark: 'ssss', type: 'image'});
     galleryItem = new GalleryItem(config);
     expect(spyerror.called).to.equal(true);
@@ -157,7 +157,7 @@ describe('GalleryItem ', () => {
   });
   it('should parse into a water mark object if watermark is a string that can be parsed', () => {
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
-    const spyerror = sinon.spy(console, 'error');
+    const spyerror = sinon.stub(console, 'error');
     Object.assign(config, {watermark: '{"imageUrl": "aaa", "opacity": 0.5, "position": 1, "size": 300}', type: 'image'});
     galleryItem = new GalleryItem(config);
     expect(spyerror.called).to.equal(false);
@@ -187,8 +187,6 @@ describe('GalleryItem ', () => {
     const stubApi = sinon.stub(watermarkApi, 'getWatermarkData').resolves({imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300});
     const spyerror = sinon.spy(console, 'error');
     Object.assign(config, {type: 'image'});
-    console.log(watermarkApi.getWatermarkData());
-    console.log(galleryItem.watermarkStr);
     const resolvingItem = new Promise(resolve => {
       galleryItem = new GalleryItem(config);
       resolve();
@@ -208,8 +206,6 @@ describe('GalleryItem ', () => {
     const stubApi = sinon.stub(watermarkApi, 'getWatermarkData').resolves({opacity: 0.5, position: 1, size: 300});
     const spyerror = sinon.spy(console, 'error');
     Object.assign(config, {type: 'image'});
-    console.log(watermarkApi.getWatermarkData());
-    console.log(galleryItem.watermarkStr);
     const resolvingItem = new Promise(resolve => {
       galleryItem = new GalleryItem(config);
       resolve();

@@ -64,6 +64,7 @@ class galleryDriver {
       collageAmount: 0.8,
       collageDensity: 0.8,
       imageMargin: 5,
+      galleryMargin: 1,
       viewMode: 'preview',
       galleryHorizontalAlign: 0,
       galleryVerticalAlign: 0,

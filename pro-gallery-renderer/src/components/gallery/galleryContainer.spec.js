@@ -321,7 +321,6 @@ describe('Gallery Container', () => {
 
     it('should start changing height on scroll when show more is clicked', () => {
 
-      console.log(driver.get.state().styleParams.enableInfiniteScroll);
 
       driver.set.state({
         styleParams: _.merge({}, driver.get.state().styleParams, {
@@ -331,24 +330,19 @@ describe('Gallery Container', () => {
         galleryStructure: driver.get.instance().createGalleryStructure(driver.get.state())
       });
 
-      console.log(driver.get.state().styleParams.enableInfiniteScroll);
 
       driver.get.instance().reRenderForScroll({customScrollTop: 0});
 
       const initialHeight = driver.get.state().container.galleryHeight;
       const initialItems = driver.get.state().renderedItemsCount;
 
-      console.log(driver.get.instance().galleryStructure.height);
       driver.get.instance().reRenderForScroll({customScrollTop: driver.get.instance().galleryStructure.height - 100});
-      console.log(driver.get.instance().galleryStructure.height);
       driver.get.instance().reRenderForScroll({customScrollTop: driver.get.instance().galleryStructure.height - 100});
 
       driver.get.instance().heightWasSetInternally = false;
       driver.get.instance().toggleInfiniteScroll();
 
-      console.log(driver.get.instance().galleryStructure.height);
       driver.get.instance().reRenderForScroll({customScrollTop: driver.get.instance().galleryStructure.height - 100});
-      console.log(driver.get.instance().galleryStructure.height);
       driver.get.instance().reRenderForScroll({customScrollTop: driver.get.instance().galleryStructure.height - 100});
 
       const newHeight = driver.get.state().container.galleryHeight;

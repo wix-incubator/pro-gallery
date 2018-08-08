@@ -4,7 +4,7 @@ import * as actions from '../constants/actionTypes.js';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import {expect} from 'chai';
 
-describe('actions', () => {
+describe.skip('actions', () => {
   it('should love', () => {
     const expectedAction = {
       isLoved: true,

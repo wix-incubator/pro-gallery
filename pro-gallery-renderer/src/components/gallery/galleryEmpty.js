@@ -10,8 +10,9 @@ class GalleryEmpty extends React.Component {
   }
 
   render() {
-    console.log('Not rendering - gallery is empty');
-
+    if (utils.isVerbose()) {
+      console.log('Not rendering - gallery is empty');
+    }
     const emptyContent = utils.isStoreGallery() ? (
       <div>
         <div className="pro-gallery-empty-title">

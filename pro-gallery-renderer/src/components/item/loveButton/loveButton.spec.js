@@ -17,7 +17,8 @@ describe('Love Button', () => {
   let driver;
   let sampleItemViewProps;
   let sampleItem;
-
+  let stub_postLoveActivity;
+  let stub_isLoved;
   beforeEach(() => {
     driver = new GalleryDriver();
     sampleItem = testImages[0];
@@ -27,9 +28,17 @@ describe('Love Button', () => {
       isSettings: true,
       showCounter: true
     });
+    stub_postLoveActivity = sinon.stub(itemActions, 'postLoveActivity');
+    stub_isLoved = sinon.stub(itemActions, 'toggleLove');
+
+  });
+  afterEach(() => {
+    stub_postLoveActivity.restore();
+    stub_isLoved.restore();
   });
 
   it('should toggle love', () => {
+
     driver.mount(LoveButton, sampleItemViewProps);
     expect(driver.get.state().isLoved).to.equal(false);
     driver.find.hook('love-icon').simulate('click');
@@ -48,16 +57,12 @@ describe('Love Button', () => {
   });
 
   it('check item Actions called on toggle', () => {
-    const stub_isLoved = sinon.stub(itemActions, 'toggleLove');
-    const stub_postLoveActivity = sinon.stub(itemActions, 'postLoveActivity');
     driver.mount(LoveButton, sampleItemViewProps);
     expect(stub_isLoved.called).to.be.false;
     expect(stub_postLoveActivity.called).to.be.false;
     driver.find.hook('love-icon').simulate('click');
     expect(stub_isLoved.called).to.be.true;
     expect(stub_postLoveActivity.called).to.be.true;
-    stub_isLoved.restore();
-    stub_postLoveActivity.restore();
   });
 
   it('check mouse Out love button', () => {

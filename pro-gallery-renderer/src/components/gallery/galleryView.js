@@ -190,6 +190,12 @@ class GalleryView extends React.Component {
     return showMoreButton;
   }
 
+  getStyles() {
+    return {
+      margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin)
+    };
+  }
+
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -216,9 +222,7 @@ class GalleryView extends React.Component {
     return (
     <div className={'pro-gallery-parent-container'}
       key={`pro-gallery-${this.id}`}
-      style={{
-        margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin),
-      }}
+      style={this.getStyles()}
     >
       {screenLogs}
       {emptyState}
