@@ -77,7 +77,8 @@ export default class Social extends React.Component {
   }
 
   getDownload() {
-    const {styleParams, isDemo, type, allProps, download_url} = this.props;
+    const item = _.pick(this.props, ['html', 'style']);
+    const {styleParams, isDemo, type, download_url} = this.props;
     if (styleParams.allowDownload && !utils.isiOS() && !(utils.isSite() && isDemo)) {
       const className = 'block-fullscreen gallery-item-social-download ' + (styleParams.allowSocial ? '' : ' pull-right ') + ' gallery-item-social-button';
       const downloadIcon = <i className={'block-fullscreen progallery-svg-font-icons-download' + (isDemo ? ' inactive' : '')} />;
@@ -100,7 +101,7 @@ export default class Social extends React.Component {
           {...genralProps}
           onClick={e => {
             e.stopPropagation();
-            itemActions.downloadTextItem(allProps, 'gallery');
+            itemActions.downloadTextItem(item, 'gallery');
           }} >
           {downloadIcon}
         </a>;

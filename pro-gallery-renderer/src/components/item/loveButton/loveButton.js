@@ -123,7 +123,7 @@ class LoveButton extends React.Component {
 
   updateLoveCount() {
     this.setState({
-      count: itemActions.getLoveCount(this.props.itemId)
+      loveCount: itemActions.getLoveCount(this.props.itemId)
     });
   }
 
