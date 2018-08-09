@@ -121,7 +121,7 @@ class LineHeightFixer {
           if (isTitleFitInAvailableHeight) {
             this.setCss(titleElement, {'-webkit-line-clamp': (numOfAvailableLines + '')});
             titleHeight = titleLineHeight * numOfAvailableLines;
-            this.setCss(titleElement, {overflow: 'hidden', height: titleHeight + 'px'});
+            this.setCss(titleElement, {overflow: 'hidden'});
           } else {
             this.setCss(titleElement, {'-webkit-line-clamp': 'none'});
             titleHeight = titleLineHeight * numOfTitleLines;

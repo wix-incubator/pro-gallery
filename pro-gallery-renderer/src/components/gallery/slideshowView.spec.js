@@ -42,7 +42,7 @@ describe('Slideshow View', () => {
       expect(driver.find.hook('gallery-column').length).to.equal(0);
     });
 
-    it.skip('should create GalleryEmpty', () => {
+    it('should create GalleryEmpty', () => {
       const stub = sinon.stub(utils, 'isEditor').returns(true);
       Object.assign(initialGalleryViewProps, {
         items: [],

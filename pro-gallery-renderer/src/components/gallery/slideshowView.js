@@ -17,6 +17,7 @@ class SlideshowView extends React.Component {
 
     this.scrollToItem = this.scrollToItem.bind(this);
     this.handleKeypress = this.handleKeypress.bind(this);
+    this.createEmptyState = this.createEmptyState.bind(this);
     this._setCurrentItemByScroll = _.throttle(this.setCurrentItemByScroll, 600, {leading: false, trailing: true}).bind(this);
 
     this.state = {
@@ -446,6 +447,7 @@ class SlideshowView extends React.Component {
     return <div id="pro-gallery-container" className={'pro-gallery inline-styles one-row hide-scrollbars ' + (this.props.styleParams.enableScroll ? ' slider ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
                 style={galleryStyle}
     >
+      {this.createEmptyState()}
       {this.createDebugMsg()}
       {this.createLayout()}
       {this.createNavArrows()}
@@ -521,15 +523,12 @@ class SlideshowView extends React.Component {
     // }
   }
 
-  componentWillMount() {
-    if (!(this.props.renderedItemsCount > 0) && utils.isEditor()) {
-      return (<GalleryEmpty
-          actions={{
-            setWixHeight: this.props.actions.setWixHeight
-          }}
-        />
-      );
-    }
+
+  createEmptyState() {
+    return ((!(this.props.renderedItemsCount > 0) && utils.isEditor()) ?
+    (<GalleryEmpty actions={{
+      setWixHeight: this.props.actions.setWixHeight
+    }}/>) : '');
   }
 
   componentDidMount() {
