@@ -87,12 +87,14 @@ export default class Social extends React.Component {
         className,
         'data-hook': 'item-download',
       };
-
+      const downloadLink = download_url.mp4 || download_url.webm || download_url.img;
       const itemProps = {
         target: '_blank',
-        href: download_url.mp4 || download_url.webm || download_url.img,
+        href: downloadLink,
         onClick: e => {
           e.stopPropagation();
+          e.preventDefault();
+          window.location.href = downloadLink;
           logger.trackBi(logger.biEvents.download, {origin: 'gallery'});
         },
       };
