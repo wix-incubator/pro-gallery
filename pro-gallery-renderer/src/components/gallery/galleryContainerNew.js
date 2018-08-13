@@ -195,7 +195,6 @@ export class GalleryContainer extends React.Component {
         getMoreItemsIfNeeded: this.getMoreItemsIfNeeded.bind(this),
         toggleInfiniteScroll: this.toggleInfiniteScroll,
         toggleFullscreen: this.toggleFullscreen,
-        pauseAllVideos: this.pauseAllVideos,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem
       })}

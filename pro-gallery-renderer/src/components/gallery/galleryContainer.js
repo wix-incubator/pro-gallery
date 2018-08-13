@@ -42,7 +42,6 @@ export class GalleryContainer extends React.Component {
     this.closeFullscreenCallback = this.closeFullscreenCallback.bind(this);
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this);
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
-    this.pauseAllVideos = this.pauseAllVideos.bind(this);
     this.getGalleryScroll = this.getGalleryScroll.bind(this);
     this.setWixHeight = this.setWixHeight.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
@@ -184,7 +183,7 @@ export class GalleryContainer extends React.Component {
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
       mobilePanorama: false,
       isAutoSlideshow: false,
-      autoSlideshowInterval: 2
+      autoSlideshowInterval: 4
     };
 
     const galleryWidth = this.getGalleryWidth();
@@ -362,10 +361,11 @@ export class GalleryContainer extends React.Component {
         this.initEventListeners();
         this.props.actions.navigationIn();
         itemActions.getStats();
+        window.dispatchEvent(this.navigationInEvent);
       });
       Wix.addEventListener(Wix.Events.PAGE_NAVIGATION_OUT, () => {
         this.removeEventListeners();
-        this.pauseAllVideos();
+        window.dispatchEvent(this.navigationOutEvent);
       });
     }
   }
@@ -377,13 +377,15 @@ export class GalleryContainer extends React.Component {
   initCustomEvents() {
     if (utils.isSemiNative()) {
       this.galleryScrollEvent = new window.CustomEvent('gallery_scroll'); // MUST be 'CustomEvent'
-      this.pauseAllVideosEvent = new window.CustomEvent('pause_all_videos'); // MUST be 'CustomEvent'
+      this.navigationOutEvent = new window.CustomEvent('gallery_navigation_out'); // MUST be 'CustomEvent'
+      this.navigationInEvent = new window.CustomEvent('gallery_navigation_in'); // MUST be 'CustomEvent'
     } else {
       this.galleryScrollEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
       this.galleryScrollEvent.initCustomEvent('gallery_scroll', false, false, null);
-
-      this.pauseAllVideosEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
-      this.pauseAllVideosEvent.initCustomEvent('pause_all_videos', false, false, null);
+      this.navigationOutEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+      this.navigationOutEvent.initCustomEvent('gallery_navigation_out', false, false, null);
+      this.navigationInEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+      this.navigationInEvent.initCustomEvent('gallery_navigation_in', false, false, null);
     }
   }
 
@@ -1710,7 +1712,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  scrollToItem(itemIdx, fixedScroll, isManual) {
+  scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 400) { //400 was the default untill now
 
     let pos;
     let horizontalElement;
@@ -1777,7 +1779,7 @@ export class GalleryContainer extends React.Component {
         if (utils.isVerbose()) {
           console.log('Scrolling horiontally', pos, horizontalElement);
         }
-        utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), 400, true);
+        utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), durationInMS, true);
       } else if (utils.isInWix()) {
         if (utils.isVerbose()) {
           console.log('Scrolling vertically (in wix)');
@@ -2354,10 +2356,6 @@ export class GalleryContainer extends React.Component {
         selection: 'expand'
       });
     }
-  }
-
-  pauseAllVideos() {
-    window.dispatchEvent(this.pauseAllVideosEvent);
   }
 
   closeFullscreenCallback() {
@@ -3020,7 +3018,6 @@ export class GalleryContainer extends React.Component {
       actions = {_.merge(this.props.actions, {
         toggleInfiniteScroll: this.toggleInfiniteScroll,
         toggleFullscreen: this.toggleFullscreen,
-        pauseAllVideos: this.pauseAllVideos,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
         addItemToMultishare: this.addItemToMultishare,
@@ -3054,7 +3051,6 @@ export class GalleryContainer extends React.Component {
       actions = {_.merge(this.props.actions, {
         toggleInfiniteScroll: this.toggleInfiniteScroll,
         toggleFullscreen: this.toggleFullscreen,
-        pauseAllVideos: this.pauseAllVideos,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
         addItemToMultishare: this.addItemToMultishare,

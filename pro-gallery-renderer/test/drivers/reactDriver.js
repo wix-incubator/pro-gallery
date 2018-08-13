@@ -22,7 +22,7 @@ class galleryDriver {
 
   initDefaults() {
     //override utils functions
-
+    this.isTesingEnvironment = true;
     this.container = {
       maxGalleryWidth: 1000,
       galleryWidth: 1000,

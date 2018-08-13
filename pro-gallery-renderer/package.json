@@ -157,7 +157,6 @@
       "react": "React",
       "react-dom": "ReactDOM"
     },
-
     "exports": "pro-gallery-renderer"
   }
 }

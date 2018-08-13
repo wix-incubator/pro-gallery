@@ -31,11 +31,10 @@ describe('Share:', () => {
       expect(stub.called).to.be.true;
     });
     it('Toggles inactive based on utils.isSite function', () => {
-      let stub = sinon.stub(utils, 'isSite').returns(true);
+      const stub = sinon.stub(utils, 'isSite').returns(true);
       driver.mount(Share, sampleItemViewProps);
       expect(driver.find.hook('facebook-share-button').hasClass('inactive')).to.equal(false);
-      stub.restore();
-      stub = sinon.stub(utils, 'isSite').returns(false);
+      stub.returns(false);
       driver.mount(Share, sampleItemViewProps);
       expect(driver.find.hook('facebook-share-button').hasClass('inactive')).to.equal(true);
       stub.restore();

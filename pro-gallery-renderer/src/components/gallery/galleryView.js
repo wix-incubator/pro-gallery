@@ -147,7 +147,6 @@ class GalleryView extends React.Component {
       actions: {
         getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
-        pauseAllVideos: this.props.actions.pauseAllVideos,
         addItemToMultishare: this.props.actions.addItemToMultishare,
         removeItemFromMultishare: this.props.actions.removeItemFromMultishare
       }

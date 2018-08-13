@@ -15,11 +15,13 @@ class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.scrollToItem = this.scrollToItem.bind(this);
+    this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
+    this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
+    this.startAutoSlideshowIfNeeded = this.startAutoSlideshowIfNeeded.bind(this);
     this.handleKeypress = this.handleKeypress.bind(this);
     this.createEmptyState = this.createEmptyState.bind(this);
     this._setCurrentItemByScroll = _.throttle(this.setCurrentItemByScroll, 600, {leading: false, trailing: true}).bind(this);
-
+    this._nextItem = _.throttle(this.nextItem, 400, {leading: true, trailing: false}).bind(this);
     this.state = {
       flatItems: [],
       currentIdx: 0,
@@ -38,24 +40,36 @@ class SlideshowView extends React.Component {
     const isLastItem = (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastGroup || (this.props.container.galleryWidth + this.props.scroll.top >= lastGroup.right);
     return isLastItem;
   }
-
-  nextItem(dir, isAutoTrigger) {
-    if (!isAutoTrigger) {
-      this.stopAutoSlideshow();
-    }
-
-    this.isAutoScrolling = true;
-
-    const currentIdx = this.state.currentIdx;
-
-    if (this.props.styleParams.showArrows) {
-      this.props.actions.scrollToItem(currentIdx + dir, false, true);
+  nextItem(direction, isAutoTrigger, scrollDuration = 400) {
+    const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
+    const {showArrows} = this.props.styleParams;
+    const {scrollToItem} = this.props.actions;
+    let nextItem = currentIdx + direction;
+    if (isAutoTrigger) {
+			// ---- Called by the Auto Slideshow ---- //
+      if (this.isLastItem()) {
+        nextItem = 0;
+        scrollDuration = 0;
+      }
     } else {
-      this.props.actions.scrollToItem(dir, true, true);
+		// ---- Called by the user (arrows, keys etc.) ---- //
+      this.startAutoSlideshowIfNeeded(this.props.styleParams);
+      const isScrollingPastEdge = ((direction === 1 && this.isLastItem()) || (direction === -1 && this.isFirstItem()));
+      if (isScrollingPastEdge) {
+        return;
+      }
     }
-
+		// ---- navigate ---- //
+    try {
+      scrollToItem(nextItem, false, true, scrollDuration);
+    } catch (e) {
+      console.error('Cannot proceed to the next Item', e);
+      this.stopAutoSlideshow();
+      return;
+    }
+    this.isAutoScrolling = true;
     utils.setStateAndLog(this, 'Next Item', {
-      currentIdx: currentIdx + dir
+      currentIdx: nextItem
     });
   }
 
@@ -63,24 +77,18 @@ class SlideshowView extends React.Component {
     clearInterval(this.autoSlideshowInterval);
   }
 
-  startAutoSlideshow() {
+  startAutoSlideshowIfNeeded(styleParams) {
+    const {isAutoSlideshow, autoSlideshowInterval} = styleParams;
     this.stopAutoSlideshow();
+    if (!(isAutoSlideshow && autoSlideshowInterval > 0)) return;
     this.autoSlideshowInterval = setInterval(() => {
-      try {
-        if (this.isLastItem()) {
-          this.scrollToItem(0);
-        } else {
-          this.nextItem(1, true);
-        }
-      } catch (e) {
-        console.error('Cannot continue auto slideshow', e);
-        this.stopAutoSlideshow();
-      }
-    }, this.props.styleParams.autoSlideshowInterval * 1000); //should be passed as a param (this.props might be the old props)
+      this._nextItem(1, true, 800);
+    }, autoSlideshowInterval * 1000);
   }
 
-  scrollToItem(itemIdx) {
+  scrollToThumbnail(itemIdx, scrollDuration = 400) { //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
     this.isAutoScrolling = true;
+    this.startAutoSlideshowIfNeeded(this.props.styleParams);
 
     itemIdx += this.firstItemIdx;
 
@@ -88,7 +96,7 @@ class SlideshowView extends React.Component {
       currentIdx: itemIdx
     });
 
-    this.props.actions.scrollToItem(itemIdx, false, true);
+    this.props.actions.scrollToItem(itemIdx, false, true, scrollDuration);
   }
 
   handleKeypress(e) {
@@ -100,14 +108,14 @@ class SlideshowView extends React.Component {
       case 37: //left
       case 33: //page up
         e.preventDefault();
-        this.nextItem(-1);
+        this._nextItem(-1);
         return false;
       case 39: //right
       case 40: //down
       case 32: //space
       case 34: //page down
         e.preventDefault();
-        this.nextItem(1);
+        this._nextItem(1);
         return false;
     }
     return true; //continue handling the original keyboard event
@@ -263,9 +271,8 @@ class SlideshowView extends React.Component {
         itemClick: 'expand'
       }),
       actions: {
-        scrollToItem: this.scrollToItem,
+        scrollToItem: this.scrollToThumbnail,
         toggleFullscreen: this.props.actions.toggleFullscreen,
-        pauseAllVideos: this.props.actions.pauseAllVideos,
       },
       hidePlay: true
     };
@@ -325,6 +332,7 @@ class SlideshowView extends React.Component {
   }
 
   setCurrentItemByScroll() {
+
     utils.isVerbose() && console.log('Setting current Idx by scroll', this.isAutoScrolling);
 
     if (this.isAutoScrolling) {
@@ -336,10 +344,12 @@ class SlideshowView extends React.Component {
     const isScrolling = (this.container && this.container.getAttribute('data-scrolling')) === 'true';
 
     if (isScrolling) {
+      this.stopAutoSlideshow();
+
       //while the scroll is animating, prevent the reaction to this event
       return;
     }
-
+    this.startAutoSlideshowIfNeeded(this.props.styleParams);
     const scrollLeft = (this.container && this.container.scrollLeft) || 0;
 
     const items = this.state.flatItems;
@@ -358,11 +368,13 @@ class SlideshowView extends React.Component {
         currentIdx
       });
     }
+    return (currentIdx);
   }
 
   createDebugMsg() {
     return <GalleryDebugMessage {...this.props.debug} />;
   }
+
 
   createNavArrows() {
     const shouldNotRenderNavArrows = this.props.galleryStructure.columns.some(column => {
@@ -380,7 +392,7 @@ class SlideshowView extends React.Component {
     return [
       (this.isFirstItem() ? '' : <button
         className={'nav-arrows-container prev '}
-        onClick={() => this.nextItem(-1)}
+        onClick={() => this._nextItem(-1)}
         aria-label="Previous Item"
         tabIndex={utils.getTabIndex('slideshowPrev')}
         key="nav-arrow-back"
@@ -390,7 +402,7 @@ class SlideshowView extends React.Component {
       </button>),
       (this.isLastItem() ? '' : <button
         className={'nav-arrows-container next'}
-        onClick={() => this.nextItem(1)}
+        onClick={() => this._nextItem(1)}
         aria-label="Next Item"
         tabIndex={utils.getTabIndex('slideshowNext')}
         key="nav-arrow-next"
@@ -414,7 +426,6 @@ class SlideshowView extends React.Component {
       actions: {
         getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
-        pauseAllVideos: this.props.actions.pauseAllVideos,
         addItemToMultishare: this.props.actions.addItemToMultishare,
         removeItemFromMultishare: this.props.actions.removeItemFromMultishare
       }
@@ -508,19 +519,15 @@ class SlideshowView extends React.Component {
       this.setFlattenItems(props.galleryStructure);
     }
 
-    // if (!utils.isSite()) {
-    //   if (
-    //     (props.styleParams.isAutoSlideshow && props.styleParams.autoSlideshowInterval > 0) &&
-    //     ( //check that the change is related to the slideshow settings
-    //       (this.props.styleParams.isAutoSlideshow !== props.styleParams.isAutoSlideshow) ||
-    //       (this.props.styleParams.autoSlideshowInterval !== props.styleParams.autoSlideshowInterval)
-    //     )
-    //   ) {
-    //     this.startAutoSlideshow();
-    //   } else {
-    //     this.stopAutoSlideshow();
-    //   }
-    // }
+
+    if (!utils.isSite()) {
+      if (( //check that the change is related to the slideshow settings
+          (this.props.styleParams.isAutoSlideshow !== props.styleParams.isAutoSlideshow) ||
+          (this.props.styleParams.autoSlideshowInterval !== props.styleParams.autoSlideshowInterval)
+				)) {
+        this.startAutoSlideshowIfNeeded(props.styleParams);
+      }
+    }
   }
 
 
@@ -537,16 +544,18 @@ class SlideshowView extends React.Component {
     }
 
     window.addEventListener('keydown', this.handleKeypress);
+    window.addEventListener('gallery_navigation_out', this.stopAutoSlideshow);
+    window.addEventListener('gallery_navigation_in', () => {
+      this.startAutoSlideshowIfNeeded(this.props.styleParams);
+    });
 
     this.container = document.getElementById('gallery-horizontal-scroll');
     if (this.container) {
       this.container.addEventListener('scroll', this._setCurrentItemByScroll);
     }
     this.setCurrentItemByScroll();
+    this.startAutoSlideshowIfNeeded(this.props.styleParams);
 
-    // if (this.props.styleParams.isAutoSlideshow && this.props.styleParams.autoSlideshowInterval > 0) {
-    //   this.startAutoSlideshow();
-    // }
   }
 
   componentWillUnmount() {
