@@ -19,8 +19,8 @@ import Consts from 'photography-client-lib/dist/src/utils/consts';
 import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 
-const adiLoadMoreMaxHeight = 2000;
-const adiHorizontalHeight = 600;
+const adiLoadMoreMaxHeight = utils.isMobile() ? 700 : 2000;
+const adiHorizontalHeight = utils.isMobile() ? 200 : 600;
 try {
   window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
 } catch (e) {
@@ -309,6 +309,7 @@ export class GalleryContainer extends React.Component {
     if (utils.isInWix() || utils.isWixIframe()) {
       this.wixEventsFunctions.push([Wix.Events.STYLE_PARAMS_CHANGE, this.reRenderForStyles]);
       this.wixEventsFunctions.push([Wix.Events.SETTINGS_UPDATED, this.reRenderForSettings]);
+      this.wixEventsFunctions.push([Wix.Events.DEVICE_TYPE_CHANGED, this.reRenderForEditMode]);
       this.wixEventsFunctions.push([Wix.Events.EDIT_MODE_CHANGE, this.reRenderForEditMode]);
       this.wixEventsFunctions.push([Wix.Events.SCROLL, this.reRenderForScroll]);
       // this.pubsubFunctions.push(['multishare2gallery', this.updateMultishareItems]);
@@ -2089,12 +2090,14 @@ export class GalleryContainer extends React.Component {
               should = true;
             }
           }
-        } else if (!this.state.styleParams.oneRow && this.state.styleParams.isInAdi && !this.state.styleParams.enableInfiniteScroll) {
-          newHeight = Math.min(newHeight, adiLoadMoreMaxHeight);
-          should = true;
-        } else if (this.state.styleParams.oneRow && this.state.styleParams.isInAdi) {
-          newHeight = adiHorizontalHeight;
-          should = true;
+        } else if (this.state.styleParams.isInAdi) {
+          if (!this.state.styleParams.oneRow && !this.state.styleParams.enableInfiniteScroll) {
+            newHeight = Math.min(newHeight, adiLoadMoreMaxHeight);
+            should = true;
+          } else if (this.state.styleParams.oneRow) {
+            newHeight = adiHorizontalHeight;
+            should = true;
+          }
         }
       }
 
