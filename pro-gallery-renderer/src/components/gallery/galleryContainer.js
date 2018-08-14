@@ -20,7 +20,7 @@ import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 
 const adiLoadMoreMaxHeight = utils.isMobile() ? 700 : 2000;
-const adiHorizontalHeight = utils.isMobile() ? 200 : 600;
+const adiHorizontalHeight = utils.isMobile() ? 300 : 600;
 try {
   window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
 } catch (e) {
@@ -2014,7 +2014,7 @@ export class GalleryContainer extends React.Component {
 
     maxGalleryHeight = maxGalleryHeight || document.body.clientHeight;
 
-    if (utils.isMobile() && !utils.isIos()) {
+    if (utils.isMobile() && !utils.isiOS()) {
       maxGalleryHeight = Math.floor(maxGalleryHeight / utils.getViewportScaleRatio());
     }
     return Math.min(Math.floor(height - offsetTop), maxGalleryHeight);

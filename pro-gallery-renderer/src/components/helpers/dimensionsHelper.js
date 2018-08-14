@@ -34,7 +34,7 @@ function protectGalleryHeight(height, offsetTop) {
 
   maxGalleryHeight = maxGalleryHeight || document.body.clientHeight;
 
-  if (utils.isMobile() && !utils.isIos()) {
+  if (utils.isMobile() && !utils.isiOS()) {
     maxGalleryHeight = Math.floor(maxGalleryHeight / utils.getViewportScaleRatio());
   }
   return Math.min(Math.floor(height - offsetTop), maxGalleryHeight);
