@@ -309,7 +309,7 @@ export class GalleryContainer extends React.Component {
     if (utils.isInWix() || utils.isWixIframe()) {
       this.wixEventsFunctions.push([Wix.Events.STYLE_PARAMS_CHANGE, this.reRenderForStyles]);
       this.wixEventsFunctions.push([Wix.Events.SETTINGS_UPDATED, this.reRenderForSettings]);
-      this.wixEventsFunctions.push([Wix.Events.DEVICE_TYPE_CHANGED, this.reRenderForEditMode]);
+      this.wixEventsFunctions.push([Wix.Events.DEVICE_TYPE_CHANGED, this.reRenderForOrientation]);
       this.wixEventsFunctions.push([Wix.Events.EDIT_MODE_CHANGE, this.reRenderForEditMode]);
       this.wixEventsFunctions.push([Wix.Events.SCROLL, this.reRenderForScroll]);
       // this.pubsubFunctions.push(['multishare2gallery', this.updateMultishareItems]);
@@ -1872,7 +1872,7 @@ export class GalleryContainer extends React.Component {
 
   getGalleryHeight() {
     const offsetTop = _.get(this, 'state.styleParams.oneRow') ? (this.props.offsetTop || 0) : 0;
-    const domHeight = Math.round((window.innerHeight - offsetTop) / utils.getViewportScaleRatio());
+    const domHeight = this.protectGalleryHeight((utils.isMobile() ? document.body.clientHeight : window.innerHeight), offsetTop);
     const propsHeight = _.get(this.props, 'layout.height') || _.get(this.props, 'container.height');
     return Math.floor((propsHeight > 0 ? propsHeight : domHeight) + this.getDimensionFix());
   }
@@ -2003,6 +2003,21 @@ export class GalleryContainer extends React.Component {
     }
 
     return res;
+  }
+
+  protectGalleryHeight(height, offsetTop) {
+
+    let maxGalleryHeight;
+    if (utils.isSite()) {
+      maxGalleryHeight = Number(utils.parseGetParam('height'));
+    }
+
+    maxGalleryHeight = maxGalleryHeight || document.body.clientHeight;
+
+    if (utils.isMobile() && !utils.isIos()) {
+      maxGalleryHeight = Math.floor(maxGalleryHeight / utils.getViewportScaleRatio());
+    }
+    return Math.min(Math.floor(height - offsetTop), maxGalleryHeight);
   }
 
   protectGalleryWidth(width) {
