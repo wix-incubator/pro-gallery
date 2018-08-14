@@ -27,18 +27,13 @@ function protectGalleryWidth(width) {
 
 function protectGalleryHeight(height, offsetTop) {
 
-  let maxGalleryHeight;
-  if (utils.isSite()) {
-    maxGalleryHeight = Number(utils.parseGetParam('height'));
-  }
-
-  maxGalleryHeight = maxGalleryHeight || document.body.clientHeight;
-
+  let galleryHeight = Math.floor(height - offsetTop);
   if (utils.isMobile() && !utils.isiOS()) {
-    maxGalleryHeight = Math.floor(maxGalleryHeight / utils.getViewportScaleRatio());
+    galleryHeight = Math.floor(galleryHeight / utils.getViewportScaleRatio());
   }
-  return Math.min(Math.floor(height - offsetTop), maxGalleryHeight);
+  return galleryHeight;
 }
+
 function getDimensionFix(styles) {
   return (Number(styles.imageMargin) - Number(styles.galleryMargin));
 }
@@ -86,7 +81,7 @@ function getGalleryWidth(styles, container) {
 
 function getGalleryHeight(styles, container) {
   const offsetTop = styles.oneRow ? container.offsetTop : 0;
-  const domHeight = protectGalleryHeight((utils.isMobile() ? document.body.clientHeight : window.innerHeight), offsetTop);
+  const domHeight = () => protectGalleryHeight(window.innerHeight, offsetTop);
   return Math.floor((container.height > 0 ? container.height : domHeight()) + getDimensionFix(styles));
 }
 

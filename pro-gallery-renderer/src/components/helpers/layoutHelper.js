@@ -109,7 +109,7 @@ function getStyleByGalleryType(styles, container) {
   const {galleryType, gallerySize} = styles;
 
   const galleryTypes = {
-    collage_ver: {
+    collage_ver: () => ({
       cubeImages: false,
       isVertical: true,
       galleryType: 'Columns',
@@ -117,8 +117,8 @@ function getStyleByGalleryType(styles, container) {
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
       gallerySize: Math.round(gallerySize * 5 + 500),
       fixedColumns: 0
-    },
-    collage_hor: {
+    }),
+    collage_hor: () => ({
       cubeImages: false,
       isVertical: false,
       galleryType: 'Strips',
@@ -126,8 +126,8 @@ function getStyleByGalleryType(styles, container) {
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
       gallerySize: Math.round(gallerySize * 5 + 500),
       fixedColumns: 0
-    },
-    grid: {
+    }),
+    grid: () => ({
       cubeImages: true,
       isVertical: true,
       galleryType: 'Columns',
@@ -136,8 +136,8 @@ function getStyleByGalleryType(styles, container) {
       gallerySize: Math.round(gallerySize * 8.5 + 150),
       fixedColumns: 0,
       isGrid: true
-    },
-    masonry_ver: {
+    }),
+    masonry_ver: () => ({
       cubeImages: false,
       isVertical: true,
       galleryType: 'Columns',
@@ -145,8 +145,8 @@ function getStyleByGalleryType(styles, container) {
       groupTypes: '1',
       gallerySize: Math.round(gallerySize * 8 + 200),
       fixedColumns: 0
-    },
-    masonry_hor: {
+    }),
+    masonry_hor: () => ({
       cubeImages: false,
       isVertical: false,
       galleryType: 'Strips',
@@ -154,8 +154,8 @@ function getStyleByGalleryType(styles, container) {
       groupTypes: '1',
       gallerySize: Math.round(gallerySize * 5 + 200),
       fixedColumns: 0
-    },
-    one_col: {
+    }),
+    one_col: () => ({
       cubeImages: false,
       isVertical: true,
       galleryType: 'Columns',
@@ -163,8 +163,8 @@ function getStyleByGalleryType(styles, container) {
       groupTypes: '1',
       gallerySize: getGalleryWidth(styles, container), //'full_width';
       fixedColumns: 1
-    },
-    one_row: {
+    }),
+    one_row: () => ({
       cubeImages: false,
       isVertical: false,
       galleryType: 'Strips',
@@ -172,8 +172,8 @@ function getStyleByGalleryType(styles, container) {
       groupTypes: '1',
       gallerySize: getGalleryHeight(styles, container),
       fixedColumns: 0
-    },
-    slideshow: {
+    }),
+    slideshow: () => ({
       showArrows: true,
       cubeImages: true,
       cubeRatio: getGalleryRatio(styles, container),
@@ -183,7 +183,7 @@ function getStyleByGalleryType(styles, container) {
       groupSize: 1,
       groupTypes: '1',
       fixedColumns: 1
-    }
+    })
   };
 
   let styleState;
@@ -195,29 +195,29 @@ function getStyleByGalleryType(styles, container) {
       };
       break;
     case '0': //vertical collage
-      styleState = galleryTypes.collage_ver;
+      styleState = galleryTypes.collage_ver();
       break;
     default:
     case '1': //horizontal collage
-      styleState = galleryTypes.collage_hor;
+      styleState = galleryTypes.collage_hor();
       break;
     case '2': //grid
-      styleState = galleryTypes.grid;
+      styleState = galleryTypes.grid();
       break;
     case '3': //vertical masonry
-      styleState = galleryTypes.masonry_ver;
+      styleState = galleryTypes.masonry_ver();
       break;
     case '4': //horizontal masonry
-      styleState = galleryTypes.masonry_hor;
+      styleState = galleryTypes.masonry_hor();
       break;
     case '5': //one column
-      styleState = galleryTypes.one_col;
+      styleState = galleryTypes.one_col();
       break;
     case '6': //one row
-      styleState = galleryTypes.one_row;
+      styleState = galleryTypes.one_row();
       break;
     case '7': //slideshow
-      styleState = galleryTypes.slideshow;
+      styleState = galleryTypes.slideshow();
       break;
   }
 
@@ -230,7 +230,7 @@ function getStyleByLayout(styles, container) {
   let {galleryLayout, gallerySize, magicLayoutSeed} = styles;
 
   const layouts = {
-    collage: {
+    collage: () => ({
       showArrows: false,
       cubeImages: false,
       groupSize: 3,
@@ -245,8 +245,8 @@ function getStyleByLayout(styles, container) {
       isColumns: false,
       isSlideshow: false,
       cropOnlyFill: false
-    },
-    masonry: {
+    }),
+    masonry: () => ({
       showArrows: false,
       cubeImages: false,
       groupSize: 1,
@@ -262,8 +262,8 @@ function getStyleByLayout(styles, container) {
       isSlideshow: false,
       cropOnlyFill: false,
       oneRow: false,
-    },
-    grid: {
+    }),
+    grid: () => ({
       showArrows: false,
       cubeImages: true,
       smartCrop: false,
@@ -283,8 +283,8 @@ function getStyleByLayout(styles, container) {
       isMasonry: false,
       isSlideshow: false,
       minItemSize: 50
-    },
-    thumbnails: {
+    }),
+    thumbnails: () => ({
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
@@ -310,8 +310,8 @@ function getStyleByLayout(styles, container) {
       floatingImages: 0,
       galleryMargin: 0,
       imageMargin: 0
-    },
-    slider: {
+    }),
+    slider: () => ({
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
@@ -329,8 +329,8 @@ function getStyleByLayout(styles, container) {
       isMasonry: false,
       isSlideshow: false,
       cropOnlyFill: true
-    },
-    slideshow: {
+    }),
+    slideshow: () => ({
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
@@ -357,8 +357,8 @@ function getStyleByLayout(styles, container) {
       floatingImages: 0,
       galleryMargin: 0,
       imageMargin: 0
-    },
-    panorama: {
+    }),
+    panorama: () => ({
       showArrows: false,
       cubeImages: false,
       isVertical: true,
@@ -376,8 +376,8 @@ function getStyleByLayout(styles, container) {
       isSlider: false,
       isSlideshow: false,
       cropOnlyFill: false
-    },
-    column: {
+    }),
+    column: () => ({
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
@@ -398,8 +398,8 @@ function getStyleByLayout(styles, container) {
       isSlider: false,
       isSlideshow: false,
       cropOnlyFill: false
-    },
-    fullsize: {
+    }),
+    fullsize: () => ({
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
@@ -425,11 +425,11 @@ function getStyleByLayout(styles, container) {
       floatingImages: 0,
       galleryMargin: 0,
       imageMargin: 0
-    },
-    empty: {
+    }),
+    empty: () => ({
       gallerySize: Math.round(gallerySize * 9 + 100)
-    },
-    magic: getStyleBySeed(magicLayoutSeed)
+    }),
+    magic: () => getStyleBySeed(magicLayoutSeed)
   };
 
   const galleyLayoutList = [
@@ -468,7 +468,7 @@ function getStyleByLayout(styles, container) {
     console.log('chosen layout is', layoutName);
   }
 
-  return _.merge(layouts[layoutName], specialMobileStoreConfig, {
+  return _.merge(layouts[layoutName](), specialMobileStoreConfig, {
     galleryLayout
   });
 

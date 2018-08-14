@@ -1872,7 +1872,7 @@ export class GalleryContainer extends React.Component {
 
   getGalleryHeight() {
     const offsetTop = _.get(this, 'state.styleParams.oneRow') ? (this.props.offsetTop || 0) : 0;
-    const domHeight = this.protectGalleryHeight((utils.isMobile() ? document.body.clientHeight : window.innerHeight), offsetTop);
+    const domHeight = this.protectGalleryHeight(window.innerHeight, offsetTop);
     const propsHeight = _.get(this.props, 'layout.height') || _.get(this.props, 'container.height');
     return Math.floor((propsHeight > 0 ? propsHeight : domHeight) + this.getDimensionFix());
   }
@@ -2005,19 +2005,13 @@ export class GalleryContainer extends React.Component {
     return res;
   }
 
-  protectGalleryHeight(height, offsetTop) {
+  protectGalleryHeight(height, offsetTop = 0) {
 
-    let maxGalleryHeight;
-    if (utils.isSite()) {
-      maxGalleryHeight = Number(utils.parseGetParam('height'));
-    }
-
-    maxGalleryHeight = maxGalleryHeight || document.body.clientHeight;
-
+    let galleryHeight = Math.floor(height - offsetTop);
     if (utils.isMobile() && !utils.isiOS()) {
-      maxGalleryHeight = Math.floor(maxGalleryHeight / utils.getViewportScaleRatio());
+      galleryHeight = Math.floor(galleryHeight / utils.getViewportScaleRatio());
     }
-    return Math.min(Math.floor(height - offsetTop), maxGalleryHeight);
+    return galleryHeight;
   }
 
   protectGalleryWidth(width) {
