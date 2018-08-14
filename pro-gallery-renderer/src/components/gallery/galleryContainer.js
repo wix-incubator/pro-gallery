@@ -56,6 +56,7 @@ export class GalleryContainer extends React.Component {
     this.reRenderForResize = this.reRenderForResize.bind(this);
     this.reRenderForOrientation = this.reRenderForOrientation.bind(this);
     this.reRenderForEditMode = this.reRenderForEditMode.bind(this);
+    this.reRenderForDevice = this.reRenderForDevice.bind(this);
     this.onResizeEvent = this.onResizeEvent.bind(this);
 
     let debouncer = _.throttle;
@@ -309,7 +310,7 @@ export class GalleryContainer extends React.Component {
     if (utils.isInWix() || utils.isWixIframe()) {
       this.wixEventsFunctions.push([Wix.Events.STYLE_PARAMS_CHANGE, this.reRenderForStyles]);
       this.wixEventsFunctions.push([Wix.Events.SETTINGS_UPDATED, this.reRenderForSettings]);
-      this.wixEventsFunctions.push([Wix.Events.DEVICE_TYPE_CHANGED, this.reRenderForOrientation]);
+      this.wixEventsFunctions.push([Wix.Events.DEVICE_TYPE_CHANGED, this.reRenderForDevice]);
       this.wixEventsFunctions.push([Wix.Events.EDIT_MODE_CHANGE, this.reRenderForEditMode]);
       this.wixEventsFunctions.push([Wix.Events.SCROLL, this.reRenderForScroll]);
       // this.pubsubFunctions.push(['multishare2gallery', this.updateMultishareItems]);
@@ -2652,6 +2653,14 @@ export class GalleryContainer extends React.Component {
     }
 
     this.reRender(this.renderTriggers.STYLES);
+  }
+
+  reRenderForDevice() {
+    if (utils.isDev()) {
+      console.count('galleryContainer reRenderForDevice');
+    }
+
+    this.reRender(this.renderTriggers.LAYOUT);
   }
 
   reRenderForStyles() {
