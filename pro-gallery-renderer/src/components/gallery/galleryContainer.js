@@ -19,8 +19,6 @@ import Consts from 'photography-client-lib/dist/src/utils/consts';
 import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 
-const adiLoadMoreMaxHeight = utils.isMobile() ? 700 : 2000;
-const adiHorizontalHeight = utils.isMobile() ? 300 : 600;
 try {
   window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
 } catch (e) {
@@ -2101,6 +2099,8 @@ export class GalleryContainer extends React.Component {
             }
           }
         } else if (this.state.styleParams.isInAdi) {
+          const adiLoadMoreMaxHeight = utils.isMobile() ? 700 : 2000;
+          const adiHorizontalHeight = utils.isMobile() ? 300 : 600;
           if (!this.state.styleParams.oneRow && !this.state.styleParams.enableInfiniteScroll) {
             newHeight = Math.min(newHeight, adiLoadMoreMaxHeight);
             should = true;
@@ -2660,7 +2660,7 @@ export class GalleryContainer extends React.Component {
       console.count('galleryContainer reRenderForDevice');
     }
 
-    this.reRender(this.renderTriggers.LAYOUT);
+    this.reRender(this.renderTriggers.MODE);
   }
 
   reRenderForStyles() {
