@@ -2920,9 +2920,10 @@ export class GalleryContainer extends React.Component {
           console.timeEnd('SCROLL - (' + trigger + ') time of setting new state for gallery');
           console.timeEnd('SCROLL - full cycle time');
         }
-        if ((this.isInfiniteScroll() && !this.state.styleParams.oneRow) || trigger !== LAYOUT || isChangedLayout) {
+        if ((this.isInfiniteScroll() && !this.state.styleParams.oneRow) || this.state.styleParams.isInAdi || trigger !== LAYOUT || isChangedLayout) {
           // auto change height when:
           //  - Vertical gallery with infinite scroll
+          //  - ADI galleries
           //  - Changed layout in the editor
           //  - The trigger is not a new layout
           // (this is used to prevent auto change of height when the editor loads)
