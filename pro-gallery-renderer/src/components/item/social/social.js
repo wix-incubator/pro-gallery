@@ -94,7 +94,7 @@ export default class Social extends React.Component {
         onClick: e => {
           e.stopPropagation();
           e.preventDefault();
-          window.location.href = downloadLink;
+          window.location.assign(downloadLink);
           logger.trackBi(logger.biEvents.download, {origin: 'gallery'});
         },
       };

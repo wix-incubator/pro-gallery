@@ -17,10 +17,14 @@ class LoveButton extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.itemId !== this.props.itemId) {
+    const currIsLoved = itemActions.isLoved(nextProps.itemId);
+    const currLoveCount = itemActions.getLoveCount(nextProps.itemId);
+    if (nextProps.itemId !== this.props.itemId ||
+        this.state.isLoved !== currIsLoved ||
+        this.state.loveCount !== currLoveCount) {
       this.setState({
-        isLoved: itemActions.isLoved(nextProps.itemId),
-        loveCount: itemActions.getLoveCount(nextProps.itemId),
+        isLoved: currIsLoved,
+        loveCount: currLoveCount,
       });
     }
   }
