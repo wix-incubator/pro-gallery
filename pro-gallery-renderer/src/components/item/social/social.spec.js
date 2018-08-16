@@ -18,12 +18,19 @@ describe('Social:', () => {
   let sampleItemViewProps;
   let sampleItem;
   let mockEvent;
+  let stubForWindowLocation;
   beforeEach(() => {
     mockEvent = new Event('mock');
     driver = new GalleryDriver();
     sampleItem = testImages[0];
     sampleItemViewProps = driver.props.itemView(sampleItem);
+    stubForWindowLocation = sinon.stub(window.location, 'assign');
   });
+
+  afterEach(() => {
+    stubForWindowLocation.restore();
+  });
+
   describe('root div, gallery-item-social', () => {
     it('renders ', () => {
       driver.mount(ItemView, sampleItemViewProps);
