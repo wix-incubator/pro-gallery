@@ -2,6 +2,7 @@ import React from 'react';
 import utils from '../../../utils';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import _ from 'lodash';
+import styles from './loveButton.scss';
 
 class LoveButton extends React.Component {
   constructor(props) {
@@ -73,7 +74,8 @@ class LoveButton extends React.Component {
     }
     className.push(this.viewClassName());
     if (this.state.isLoved) {
-      className.push('progallery-svg-font-icons-love_full loved');
+      className.push('progallery-svg-font-icons-love_full');
+      className.push(styles.loved);
     } else {
       className.push('progallery-svg-font-icons-love_empty');
     }
