@@ -7,8 +7,8 @@ import React from 'react';
 import {spy, expect, chai} from 'chai';
 import sinon from 'sinon';
 import {testImages} from '../../../../test/images-mock.js';
-import {itemActions} from 'photography-client-lib';
 import utils from '../../../../src/utils/index.js';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 
 describe('Share:', () => {
 

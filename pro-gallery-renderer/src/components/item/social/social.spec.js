@@ -9,9 +9,10 @@ import {use, spy, expect, chai} from 'chai';
 import sinon from 'sinon';
 import chaiEnzyme from 'chai-enzyme';
 import {testImages} from '../../../../test/images-mock.js';
-import {logger, itemActions} from 'photography-client-lib';
 import utils from '../../../../src/utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
+import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
+import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
 
 describe('Social:', () => {
   let driver;
