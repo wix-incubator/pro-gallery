@@ -232,9 +232,18 @@ export class GalleryContainer extends React.Component {
     setTimeout(
       () => {
         const sp = this.state.styleParams;
+        if (sp.gotStyleParams === undefined) {
+          console.error('Gallery Container: styleParams are empty');
+        }
+      }, 5000
+    );
+
+    /*setTimeout(
+      () => {
+        const sp = this.state.styleParams;
         sp.gotStyleParams || this.reRenderForStyles(); //ugly hack, some galleries don't have the styleparams and don't render
       }, 0
-    );
+    );*/
   }
 
   //-------------------------------------------| INIT |--------------------------------------------//
