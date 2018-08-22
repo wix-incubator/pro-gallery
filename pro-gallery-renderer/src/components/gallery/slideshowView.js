@@ -25,6 +25,7 @@ class SlideshowView extends React.Component {
     this.state = {
       flatItems: [],
       currentIdx: 0,
+      isInView: true,
     };
     if (!utils.isLocal()) {
       appPartiallyLoaded('pro-gallery-statics');
@@ -80,7 +81,7 @@ class SlideshowView extends React.Component {
   startAutoSlideshowIfNeeded(styleParams) {
     const {isAutoSlideshow, autoSlideshowInterval} = styleParams;
     this.stopAutoSlideshow();
-    if (!(isAutoSlideshow && autoSlideshowInterval > 0)) return;
+    if (!(isAutoSlideshow && autoSlideshowInterval > 0 && this.state.isInView)) return;
     this.autoSlideshowInterval = setInterval(() => {
       this._nextItem(1, true, 800);
     }, autoSlideshowInterval * 1000);
@@ -544,8 +545,16 @@ class SlideshowView extends React.Component {
     }
 
     window.addEventListener('keydown', this.handleKeypress);
-    window.addEventListener('gallery_navigation_out', this.stopAutoSlideshow);
+    window.addEventListener('gallery_navigation_out', () => {
+      utils.setStateAndLog(this, 'Next Item', {
+        isInView: false
+      });
+      this.stopAutoSlideshow();
+    });
     window.addEventListener('gallery_navigation_in', () => {
+      utils.setStateAndLog(this, 'Next Item', {
+        isInView: true
+      });
       this.startAutoSlideshowIfNeeded(this.props.styleParams);
     });
 

@@ -46,6 +46,9 @@ export class GalleryContainer extends React.Component {
     this.addItemToMultishare = this.addItemToMultishare.bind(this);
     this.removeItemFromMultishare = this.removeItemFromMultishare.bind(this);
     this.updateMultishareItems = this.updateMultishareItems.bind(this);
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+    this.dispatchNavigationOutIfNeeded = this.dispatchNavigationOutIfNeeded.bind(this);
+    this.dispatchNavigationInIfNeeded = this.dispatchNavigationInIfNeeded.bind(this);
 
     this.reRenderForHorizontalScroll = this.reRenderForHorizontalScroll.bind(this);
     this.reRenderForScroll = this.reRenderForScroll.bind(this);
@@ -364,18 +367,53 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  dispatchNavigationOutIfNeeded() {
+    if (!this.tabFocused || !this.wixFocused) window.dispatchEvent(this.navigationOutEvent);
+  }
+  dispatchNavigationInIfNeeded() {
+    if (this.tabFocused && this.wixFocused) window.dispatchEvent(this.navigationInEvent);
+  }
+
+  handleVisibilityChange() {
+    let hidden;
+    if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+      hidden = 'hidden';
+    } else if (typeof document.msHidden !== 'undefined') {
+      hidden = 'msHidden';
+    } else if (typeof document.webkitHidden !== 'undefined') {
+      hidden = 'webkitHidden';
+    }
+    if (document[hidden]) {
+      this.tabFocused = false;
+      this.dispatchNavigationOutIfNeeded();
+    } else {
+      this.tabFocused = true;
+      this.dispatchNavigationInIfNeeded();
+    }
+  }
   initNavigationEventListeners() {
     if (!utils.isSemiNative()) {
       Wix.addEventListener(Wix.Events.PAGE_NAVIGATION_IN, () => {
         this.initEventListeners();
         this.props.actions.navigationIn();
         itemActions.getStats();
-        window.dispatchEvent(this.navigationInEvent);
+        this.wixFocused = true;
+        this.dispatchNavigationInIfNeeded();
       });
       Wix.addEventListener(Wix.Events.PAGE_NAVIGATION_OUT, () => {
         this.removeEventListeners();
-        window.dispatchEvent(this.navigationOutEvent);
+        this.wixFocused = false;
+        this.dispatchNavigationOutIfNeeded();
       });
+      let visibilityChange;
+      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+        visibilityChange = 'visibilitychange';
+      } else if (typeof document.msHidden !== 'undefined') {
+        visibilityChange = 'msvisibilitychange';
+      } else if (typeof document.webkitHidden !== 'undefined') {
+        visibilityChange = 'webkitvisibilitychange';
+      }
+      window.addEventListener(visibilityChange, this.handleVisibilityChange, false);
     }
   }
 
@@ -1533,7 +1571,8 @@ export class GalleryContainer extends React.Component {
     this.initCustomEvents();
     this.initNavigationEventListeners();
     this.initHashtagFilter();
-
+    this.wixFocused = true;
+    this.tabFocused = true;
     if (!utils.isInWix() || utils.isTest()) { //in wix the stylesParamsChanged event will be the first reRender
       this.reRender(this.renderTriggers.ALL);
     }
@@ -1721,7 +1760,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 400) { //400 was the default untill now
+  scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0) { //400 was the default untill now
 
     let pos;
     let horizontalElement;
