@@ -97,12 +97,19 @@ export default class Texts extends React.Component {
 
   }
 
-  componentDidUpdate() {
-    this.tryFixLineHeight();
+  componentDidUpdate(prevProps) {
+    if (lineHeightFixer.shouldFix(prevProps, this.props)) {
+      this.tryFixLineHeight();
+    }
   }
 
   componentDidMount() {
     this.tryFixLineHeight();
+    setTimeout(
+      () => {
+        this.tryFixLineHeight(); //waiting for wix inline styles to take affect
+      }, 1000
+    );
   }
 
   render() {

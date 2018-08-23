@@ -1011,7 +1011,7 @@ div.pro-gallery {
         .gallery-item-title {
           line-height: 32px;
           font-size: 21px;
-          margin-bottom: 20px;
+          //margin-bottom: 20px;
           padding: 0;
           color: $white;
           overflow: hidden;
@@ -1019,7 +1019,6 @@ div.pro-gallery {
           -webkit-box-orient: vertical;
           opacity: 0;
           transition: opacity 0.4s ease;
-
         }
 
         .gallery-item-description {
@@ -1032,7 +1031,7 @@ div.pro-gallery {
           opacity: 0;
           transition: opacity 0.4s ease;
           white-space: normal;
-          margin-bottom: 20px;
+          margin-top: 20px;
         }
 
         .gallery-item-social {

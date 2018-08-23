@@ -56,6 +56,22 @@ class LineHeightFixer {
     }
   }
 
+  shouldFix(oldOptions, newOptions) {
+    const {styleParams, title, description, isSmallItem} = oldOptions;
+    const newStyleParams = newOptions.styleParams;
+    const newTitle = newOptions.title;
+    const newDescription = newOptions.description;
+    const newIsSmallItems = newOptions.isSmallItem;
+    return (
+      styleParams.isSlideshow !== newStyleParams.isSlideshow ||
+      styleParams.allowTitle !== newStyleParams.allowTitle ||
+      styleParams.allowDescription !== newStyleParams.allowDescription ||
+      title !== newTitle ||
+      description !== newDescription ||
+      isSmallItem !== newIsSmallItems
+    );
+  }
+
   fix(options, container) {
     if (utils.isTest()) {
       return;
@@ -114,14 +130,16 @@ class LineHeightFixer {
         const titleLineHeight = parseInt(this.getCss(titleElement, 'line-height'));
         const numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
         const numOfAvailableLines = Math.floor(availableHeight / titleLineHeight);
+
         if (numOfAvailableLines === 0) {
           this.removeElement(titleElement);
         } else {
+          this.setCss(titleElement, {overflow: 'hidden'});
+
           const isTitleFitInAvailableHeight = numOfAvailableLines <= numOfTitleLines;
           if (isTitleFitInAvailableHeight) {
             this.setCss(titleElement, {'-webkit-line-clamp': (numOfAvailableLines + '')});
             titleHeight = titleLineHeight * numOfAvailableLines;
-            this.setCss(titleElement, {overflow: 'hidden'});
           } else {
             this.setCss(titleElement, {'-webkit-line-clamp': 'none'});
             titleHeight = titleLineHeight * numOfTitleLines;
@@ -149,11 +167,6 @@ class LineHeightFixer {
       if (numOfLines === 0) {
         this.removeElement(descriptionElement);
       } else {
-        const descriptionOptimisticHeight = parseInt(this.getCss(descriptionElement, 'height'));
-        const descriptionAvailableHeight = lineHeight * numOfLines;
-        const isDescriptionHeightBiggerThanAvailableHeight = descriptionOptimisticHeight > descriptionAvailableHeight;
-        availableHeight -= isDescriptionHeightBiggerThanAvailableHeight ? descriptionAvailableHeight : descriptionOptimisticHeight;
-        //title.height(numOfLines * lineHeight);
         this.setCss(descriptionElement, {overflow: 'hidden', '-webkit-line-clamp': (numOfLines + '')});
       }
     }
