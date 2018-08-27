@@ -153,7 +153,6 @@ describe('Slideshow View', () => {
   });
 
   describe('Auto Slideshow', () => {
-
 		//IMPORTANT - I used useFakeTimers() to run this test. if you have something that happens only X time after a click etc. you can also use this.
 		//Why not setTimeout?, setTimeout will actually wait the time you ask it to and that means a higher time cost on our tests.
 		//the fake timers "fakes" the time passing and then proceeds to the next line in the test.
