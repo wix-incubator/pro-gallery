@@ -79,8 +79,9 @@ class SlideshowView extends React.Component {
   }
 
   startAutoSlideshowIfNeeded(styleParams) {
-    const {isAutoSlideshow, autoSlideshowInterval} = styleParams;
+    const {isAutoSlideshow, autoSlideshowInterval, galleryLayout} = styleParams;
     this.stopAutoSlideshow();
+    if (!(galleryLayout === 5 || galleryLayout === 4 || galleryLayout === 3)) return;
     if (!(isAutoSlideshow && autoSlideshowInterval > 0 && this.state.isInView)) return;
     this.autoSlideshowInterval = setInterval(() => {
       this._nextItem(1, true, 800);

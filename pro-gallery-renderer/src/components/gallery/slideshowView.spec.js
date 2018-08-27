@@ -161,7 +161,8 @@ describe('Slideshow View', () => {
     it('startAutoSlideshow is called if needed', () => {
       Object.assign(initialGalleryViewProps.styleParams, {
         isAutoSlideshow: true,
-        autoSlideshowInterval: 1
+        autoSlideshowInterval: 1,
+        galleryLayout: 4,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       const stub = sinon.stub(SlideshowView.prototype, 'nextItem');
