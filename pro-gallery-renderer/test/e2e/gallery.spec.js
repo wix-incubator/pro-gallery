@@ -77,7 +77,7 @@ describe('Gallery', () => {
 		//check that its 2 (the default after opening the storybook gallery)
     expect(numOfPages).to.equal(2);
 		// create a promise that will resolve when a new page actually opens. (setting wait time of 2000ms - if the page did not open by then it rejects)
-    const newPagePromise = driver.waitFor.newPage(1000); // 1000ms should be enough of the new page to open. less than 300+- will fail, we also dont want it to be flaky
+    const newPagePromise = driver.waitFor.newPage(2000); // 1000ms should be enough of the new page to open. less than 300+- will fail, we also dont want it to be flaky
 		//click the facebook share
     await driver.actions.click('facebook-share-button');
 		//the propmise is returned (to fail the test if it doesn't work)
