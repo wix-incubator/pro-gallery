@@ -322,7 +322,9 @@ export class GalleryContainer extends React.Component {
       this.wixEventsFunctions.push([Wix.Events.SETTINGS_UPDATED, this.reRenderForSettings]);
       this.wixEventsFunctions.push([Wix.Events.DEVICE_TYPE_CHANGED, this.reRenderForDevice]);
       this.wixEventsFunctions.push([Wix.Events.EDIT_MODE_CHANGE, this.reRenderForEditMode]);
-      this.wixEventsFunctions.push([Wix.Events.SCROLL, this.reRenderForScroll]);
+      if (!this.props.ignoreWixScrollEvent) {
+        this.wixEventsFunctions.push([Wix.Events.SCROLL, this.reRenderForScroll]);
+      }
       // this.pubsubFunctions.push(['multishare2gallery', this.updateMultishareItems]);
     } else {
       this.windowEventsFunctions.push(['scroll', this.reRenderForScroll]);
