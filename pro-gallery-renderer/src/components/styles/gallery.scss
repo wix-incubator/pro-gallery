@@ -6,6 +6,7 @@ html.pro-gallery {
 }
 
 body.pro-gallery {
+  // opacity: 0;
   transition: opacity 2s ease;
 }
 
@@ -513,6 +514,7 @@ div.pro-gallery {
     padding: 0;
     font-family: $font-light;
     font-size: 11px;
+    transition: width .4s ease, height .4s ease;
 
     &.debug {
       &.gallery-group-gone {
@@ -535,7 +537,9 @@ div.pro-gallery {
     float: left;
     vertical-align: top;
     border: none;
+    //background-color: transparent;
     padding: 0;
+    //padding: $image-margin+px;
     border-radius: 0;
     box-sizing: border-box;
     overflow: hidden;
@@ -545,6 +549,7 @@ div.pro-gallery {
     outline: none;
     text-decoration: none;
     color: inherit;
+    transition: width .4s ease, height .4s ease;
 
     &:hover {
       .gallery-item-bottom-info {
@@ -584,6 +589,7 @@ div.pro-gallery {
       width: 100%;
       height: 100%;
       overflow: hidden;
+      transition: width .4s ease, height .4s ease;
 
       &.transparent,
       &.cube-type-fit {
@@ -612,7 +618,10 @@ div.pro-gallery {
         height: 100%;
         margin: 0;
         border-radius: 0;
+        //transition: opacity 600ms linear;
         background: rgba(241, 241, 241, 0.5);
+        //background: $animated-bright-bg linear-gradient(to right, $animated-bright-bg 0%, $animated-dark-bg 20%, $animated-bright-bg 40%, $animated-bright-bg 100%);
+        //animation: changing_background 3s infinite ease;
 
         .pro-circle-preloader {
           top: 50%;
@@ -630,7 +639,7 @@ div.pro-gallery {
           object-position: center;
         }
 
-        &.loaded {
+        &.gallery-item-loaded {
           opacity: 1 !important;
           background: transparent;
 
@@ -664,6 +673,7 @@ div.pro-gallery {
 
         &.gallery-item-video {
           overflow: hidden;
+          text-align: center; //for grid crop
 
           &.playing {
             button,
@@ -695,9 +705,18 @@ div.pro-gallery {
 
             &.progallery-svg-font-icons-play-triangle,
             &.progallery-svg-font-icons-play-background {
+              //padding-left: 6px;
+              //width: 54px;
+              //line-height: 58px;
               font-size: 26px;
             }
 
+            //&.progallery-svg-font-icons-pause {
+            //  padding-left: 0;
+            //  width: 60px;
+            //  font-size: 8px;
+            //  line-height: 58px;
+            //}
 
             &:hover {
               opacity: 0.9;
@@ -719,6 +738,7 @@ div.pro-gallery {
         width: 100%;
         box-sizing: border-box;
         display: flex;
+        //border-radius: $image-radius+px;
         z-index: 3;
 
         > div {
@@ -799,7 +819,7 @@ div.pro-gallery {
             color: $text-dark;
             cursor: pointer;
 
-            &:hover:not(.loved) {
+            &:hover:not(.pro-gallery-loved) {
               opacity: 0.7;
             }
 
@@ -817,9 +837,9 @@ div.pro-gallery {
                 background: transparent;
                 text-decoration: none;
 
-                &.loved {
-                  color: $red !important;
-                }
+                // &.pro-gallery-loved {
+                //   color: $red !important;
+                // }
               }
 
               .gallery-item-social-love-count {
@@ -839,6 +859,7 @@ div.pro-gallery {
             display: inline-block;
             height: 30px;
             max-width: 300px;
+            //width: 0;
             width: 210px;
             overflow: visible;
             z-index: 4;
@@ -903,6 +924,7 @@ div.pro-gallery {
         margin: 0;
         box-sizing: border-box;
         border-radius: 0;
+        //border-radius: $image-radius+px;
         z-index: 3;
 
         .custom-button-wrapper {
@@ -1009,11 +1031,13 @@ div.pro-gallery {
         }
 
         .gallery-item-title {
+          //font-family: $font-thin;
           line-height: 32px;
           font-size: 21px;
           //margin-bottom: 20px;
           padding: 0;
           color: $white;
+          //height: 60px;
           overflow: hidden;
           display: -webkit-box;
           -webkit-box-orient: vertical;
@@ -1022,9 +1046,11 @@ div.pro-gallery {
         }
 
         .gallery-item-description {
+          //font-family: $font-thin;
           line-height: 25px;
           font-size: 15px;
           color: $white;
+          //height: 60px;
           overflow: hidden;
           display: -webkit-box;
           -webkit-box-orient: vertical;
@@ -1081,7 +1107,7 @@ div.pro-gallery {
             padding: 10px;
             margin: -10px;
 
-            &:hover:not(.loved) {
+            &:hover:not(.pro-gallery-loved) {
               opacity: 0.7;
             }
 
@@ -1108,9 +1134,9 @@ div.pro-gallery {
                 padding: 1px 5px;
                 text-decoration: none;
 
-                &.loved {
-                  color: $red !important;
-                }
+                // &.pro-gallery-loved {
+                //   color: $red !important;
+                // }
               }
 
               .gallery-item-social-love-count {
@@ -1257,6 +1283,7 @@ div.pro-gallery {
 
             &.network-1 {
               margin-left: 5px;
+              left: 5 px;
             }
 
             &.network-2 {
@@ -1289,7 +1316,6 @@ div.pro-gallery {
               left: 50%;
               margin-left: -10px;
               margin-top: 8px;
-
 
               &.network-2 {
                 font-size: 13px;
@@ -1344,12 +1370,14 @@ div.pro-gallery {
   }
 
   &.one-row {
+    //overflow-x: scroll;
     white-space: nowrap;
     float: left;
 
     .gallery-column {
       width: 100%;
       float: none;
+      //overflow-x: scroll;
       white-space: nowrap;
 
       .gallery-group {
@@ -1380,6 +1408,10 @@ div.pro-gallery {
     &.thumbnails-gallery {
       overflow: visible;
     }
+  }
+
+  *:focus {
+    box-shadow: none; //remove wix's default blue shadow
   }
 
   &.accessible {

@@ -91,7 +91,7 @@ class VideoItem extends React.Component {
     return <img onLoad={this.props.actions.setItemLoaded}
                 onError={this.props.actions.setItemError}
                 key={'image-' + this.props.id}
-                className={'gallery-item-hidden gallery-item-visible gallery-item ' + (this.props.loadingStatus.loaded ? ' loaded ' : '') + (this.props.loadingStatus.failed ? ' failed ' : '')}
+                className={'gallery-item-hidden gallery-item-visible gallery-item ' + (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') + (this.props.loadingStatus.failed ? ' failed ' : '')}
                 src={this.props.resized_url.img}
                 />;
   }
@@ -114,7 +114,7 @@ class VideoItem extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    let baseClassName = 'gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item' + (utils.isiPhone() ? ' ios' : '') + (this.props.loaded ? 'loaded' : '');
+    let baseClassName = 'gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item' + (utils.isiPhone() ? ' ios' : '') + (this.props.loaded ? 'gallery-item-loaded' : '');
     if (this.state.playing) {
       baseClassName += ' playing';
     }

@@ -59,14 +59,14 @@ describe('Text Item', () => {
     Object.assign(textItemProps, {styleParams: {cubeType: 'fit'}});
     Object.assign(textItemProps, {style: {bgColor: 'red'}});
     galleryDriver.mount(TextItem, textItemProps);
-    const style = galleryDriver.find.class('loaded.text-item').get(0).style;
+    const style = galleryDriver.find.class('gallery-item-loaded.text-item').get(0).style;
     expect(style).to.have.property('backgroundColor', 'red');
   });
 
   it('should resize itself', () => {
     Object.assign(textItemProps, {style: {maxWidth: 100, maxHeight: 100}});
     galleryDriver.mount(TextItem, textItemProps);
-    const style = galleryDriver.find.class('loaded.text-item').get(0).style;
+    const style = galleryDriver.find.class('gallery-item-loaded.text-item').get(0).style;
     expect(style).to.have.property('width', '100px');
     expect(style).to.have.property('height', '100px');
   });

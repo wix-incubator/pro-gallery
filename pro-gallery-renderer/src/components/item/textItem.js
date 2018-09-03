@@ -35,7 +35,7 @@ export default class TextItem extends React.Component {
     } : {...styleIsDimensions};
 
     return (
-        <div className={'gallery-item-visible gallery-item loaded text-item'}
+        <div className={'gallery-item-visible gallery-item gallery-item-loaded text-item'}
           key={'item-text-' + id}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
