@@ -620,15 +620,16 @@ class ItemView extends React.Component {
     //
   }
   componentDidUpdate(prevProps) {
-    if (utils.isSite() && document && document.activeElement && document.activeElement.className) {
-      //check if thumbnailId has changed to the current item
+    if (utils.isSite() && !utils.isMobile() && document && document.activeElement && document.activeElement.className) {
+			//check if thumbnailId has changed to the current item
       const isAnotherItemInFocus = document.activeElement.className.indexOf('gallery-item-container') >= 0;
       const isShowMoreInFocus = document.activeElement.className.indexOf('show-more') >= 0;
       if (isAnotherItemInFocus || isShowMoreInFocus) {
         if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
+					// if the highlighted thumbnail changed and it is the same as this itemview's
           this.itemContainer.focus();
         } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
-          //check if currentIdx has changed to the current item
+					//check if currentIdx has changed to the current item
           this.itemContainer.focus();
         }
       }
