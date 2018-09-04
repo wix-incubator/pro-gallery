@@ -8,7 +8,7 @@ export default class ImageItem extends React.Component {
     const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
     if (visible) {
       return <div
-        className={'gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'loaded' : '')}
+        className={'gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'gallery-item-loaded' : '')}
         onTouchStart={actions.handleItemMouseDown}
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
@@ -17,7 +17,7 @@ export default class ImageItem extends React.Component {
         >
         <img onLoad={actions.setItemLoaded}
           key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-          className={'gallery-item-visible gallery-item ' + (loaded ? 'loaded' : 'gallery-item-hidden')}
+          className={'gallery-item-visible gallery-item ' + (loaded ? 'gallery-item-loaded' : 'gallery-item-hidden')}
           src={resized_url.img}
           alt={isThumbnail ? '' : alt}
           onError={actions.setItemError}
@@ -28,7 +28,7 @@ export default class ImageItem extends React.Component {
       </div>;
     } else {
       return <div
-        className={'gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'loaded' : '')}
+        className={'gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'gallery-item-loaded' : '')}
         key={'image_container-' + id}
         style={utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${resized_url.thumb})`}}
         data-hook={'image-item'}
