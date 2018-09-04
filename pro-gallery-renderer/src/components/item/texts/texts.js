@@ -59,9 +59,15 @@ export default class Texts extends React.Component {
     const {title, description, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
     const shouldShowTitle = title && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
     const shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
-    const shouldHaveBottomSpaceInTitle = shouldShowDescription || this.allowAnyAction();
+    //if there is a description, it will take care of the bottom part.
+    //if no description: if there are actions, we will add marginBottom of 20. if no actions, we will add marginBottom of 0.
+    const titleStyle = shouldShowDescription ? {} : (this.allowAnyAction() ? {marginBottom: 20} : {marginBottom: 0});
 
-    const titleElem = shouldShowTitle && <ItemTitle key={'item-title-' + id} title={title} style={shouldHaveBottomSpaceInTitle ? {} : {marginBottom: 0}} />;
+    const titleElem = shouldShowTitle && <ItemTitle
+      key={'item-title-' + id}
+      title={title}
+      style={titleStyle}
+    />;
     const descriptionElem = shouldShowDescription && <ItemDescription description={description} key={'item-description-' + id} />;
     const buttonElem = shouldShowButton && <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
 
