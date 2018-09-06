@@ -2632,7 +2632,7 @@ export class GalleryContainer extends React.Component {
       container: getState('container'),
       styleParams: getState('styleParams'),
       gotScrollEvent: getState('gotScrollEvent'),
-      // showAllItems: utils.browserIs('explorer')
+      showAllItems: !!this.props.ignoreWixScrollEvent
     };
 
     if (utils.isVerbose()) {
