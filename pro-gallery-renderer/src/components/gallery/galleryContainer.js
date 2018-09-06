@@ -1551,7 +1551,7 @@ export class GalleryContainer extends React.Component {
       if (newProps.offsetTop !== this.props.offsetTop) {
         this.reRender(this.renderTriggers.RESIZE);
       }
-      if (newProps.domId !== this.props.domId) {
+      if (_.isUndefined(this.galleryWrapper) || newProps.domId !== this.props.domId) {
         try {
           this.galleryWrapper = document.getElementById(`pro-gallery-${newProps.domId}`);
           this.boundingRect = this.galleryWrapper.getBoundingClientRect();
@@ -1996,7 +1996,8 @@ export class GalleryContainer extends React.Component {
 
   getGalleryScroll(params) {
     if (this.state.styleParams.oneRow) {
-      const horizontalElement = document.getElementById('gallery-horizontal-scroll');
+      const galleryWrapper = this.galleryWrapper || document;
+      const horizontalElement = galleryWrapper.querySelector('#gallery-horizontal-scroll');
       this.currentScrollPosition = (horizontalElement && horizontalElement.scrollLeft) || 0;
     } else if (params && _.isNumber(params.customScrollTop)) {
       this.currentScrollPosition = params.customScrollTop;
