@@ -2962,7 +2962,10 @@ export class GalleryContainer extends React.Component {
         console.time('SCROLL - (' + trigger + ') time of setting new state for gallery');
       }
 
-      const isLayoutDefined = layout => (String(layout) && String(layout).replace(/(undefined)[|]?/g, '') !== '');
+      const isLayoutDefined = layout => {
+        const match = String(layout).match(/(\w+\|){6}(\w+)/g); // this is the structure of a valid layout
+        return ((String(layout) && (String(layout).replace(/(undefined)[|]?/g, '') !== '') && (match !== null)));
+      };
       const isChangedLayout = isNewLayout && isLayoutDefined(this.newState.styleParams.selectedLayout) && isLayoutDefined(this.state.styleParams.selectedLayout); //used to prevent setting height on first layout reRender
       const galleryHeight = Math.round(this.getGalleryHeight());
 
