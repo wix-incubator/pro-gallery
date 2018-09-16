@@ -43,7 +43,6 @@ class SlideshowView extends React.Component {
   }
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
-    const {showArrows} = this.props.styleParams;
     const {scrollToItem} = this.props.actions;
     let nextItem = currentIdx + direction;
     if (isAutoTrigger) {
@@ -170,7 +169,7 @@ class SlideshowView extends React.Component {
     }
 
     numOfThumbnails = this.lastItemIdx - this.firstItemIdx + 1;
-    if (numOfThumbnails % 2 === 0 && this.props.items.length > numOfThumbnails) { // keep an odd number of thumbnails if there are more thumbnails than items
+    if (numOfThumbnails % 2 === 0 && this.props.items.length > numOfThumbnails && this.lastItemIdx < this.props.items.length - 1) { // keep an odd number of thumbnails if there are more thumbnails than items and if the thumbnails haven't reach the last item yet
       numOfThumbnails += 1;
       this.lastItemIdx += 1;
     }
@@ -362,9 +361,21 @@ class SlideshowView extends React.Component {
     const items = this.state.flatItems;
 
     let currentIdx;
+    let thumbnailColumnWidth = 0;
+
+    if (this.props.styleParams.galleryLayout === 3) { //if layout is thumbnails
+      const thumbnailPosition = this.props.styleParams.galleryThumbnailsAlignment;
+
+      switch (thumbnailPosition) { //if thumbnailPosition is left or right, need to calculate the thumbnails column in the width calculation
+        case 'left':
+        case 'right':
+          thumbnailColumnWidth = this.props.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
+          break;
+      }
+    }
 
     for (let item, i = 0; item = items[i]; i++) {
-      if (item.offset.left > scrollLeft + ((this.props.container.galleryWidth - item.width) / 2)) {
+      if (item.offset.left > scrollLeft + thumbnailColumnWidth + ((this.props.container.galleryWidth - item.width) / 2)) {
         currentIdx = i - 1;
         break;
       }
