@@ -43,7 +43,6 @@ class SlideshowView extends React.Component {
   }
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
-    const {showArrows} = this.props.styleParams;
     const {scrollToItem} = this.props.actions;
     let nextItem = currentIdx + direction;
     if (isAutoTrigger) {
@@ -132,26 +131,29 @@ class SlideshowView extends React.Component {
 
     let oneRow;
     let numOfThumbnails;
+    let numOfWholeThumbnails;
 
     switch (thumbnailPosition) {
       case 'top':
       case 'bottom':
-        width = this.props.container.galleryWidth + this.props.styleParams.thumbnailSpacings;//window.innerWidth / utils.getViewportScaleRatio();
-        height = this.props.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
+        width = this.props.container.galleryWidth + this.props.styleParams.thumbnailSpacings;
+        height = this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings;
         oneRow = true;
         numOfThumbnails = Math.ceil(width / this.props.thumbnailSize);
+        numOfWholeThumbnails = Math.floor((width + this.props.styleParams.thumbnailSpacings) / (this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings * 2));
         break;
       case 'left':
       case 'right':
-        height = this.props.container.galleryHeight + 2 * this.props.styleParams.thumbnailSpacings;// window.innerHeight * utils.getViewportScaleRatio();
+        height = this.props.container.galleryHeight + 2 * this.props.styleParams.thumbnailSpacings;
         width = this.props.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
         oneRow = false;
         numOfThumbnails = Math.ceil(height / this.props.thumbnailSize);
+        numOfWholeThumbnails = Math.floor(height / (this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings * 2));
         break;
     }
 
-    this.firstItemIdx = currentIdx - Math.floor(numOfThumbnails / 2); // (1)
-    this.lastItemIdx = this.firstItemIdx + numOfThumbnails - 1; // (5)
+    this.firstItemIdx = currentIdx - Math.floor(numOfThumbnails / 2);
+    this.lastItemIdx = this.firstItemIdx + numOfThumbnails - 1;
 
     if (this.firstItemIdx < 0) {
       this.lastItemIdx -= this.firstItemIdx;
@@ -167,27 +169,16 @@ class SlideshowView extends React.Component {
     }
 
     numOfThumbnails = this.lastItemIdx - this.firstItemIdx + 1;
-    if (numOfThumbnails % 2 === 0) { // keep an odd number of thumbnails
+    if (numOfThumbnails % 2 === 0 && this.props.items.length > numOfThumbnails && this.lastItemIdx < this.props.items.length - 1) { // keep an odd number of thumbnails if there are more thumbnails than items and if the thumbnails haven't reach the last item yet
       numOfThumbnails += 1;
       this.lastItemIdx += 1;
     }
-    const thumbnailsContainerSize = numOfThumbnails * (this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings);
+
+    const thumbnailsContainerSize = numOfThumbnails * this.props.thumbnailSize +
+      ((numOfThumbnails - 1) * 2 + 1) * this.props.styleParams.thumbnailSpacings;
     const thumbnailsStyle = {width, height};
 
-    if ((currentIdx > ((numOfThumbnails / 2) - 1)) && (currentIdx < (this.props.items.length - (numOfThumbnails / 2)))) { //set selected to center only if neeeded
-      switch (thumbnailPosition) {
-        case 'top':
-        case 'bottom':
-          thumbnailsStyle.width = thumbnailsContainerSize + 'px';
-          thumbnailsStyle.left = 0;
-          break;
-        case 'left':
-        case 'right':
-          thumbnailsStyle.height = thumbnailsContainerSize + 'px';
-          thumbnailsStyle.marginTop = ((height - thumbnailsContainerSize) / 2) + 'px';
-          break;
-      }
-    } else if (currentIdx < ((numOfThumbnails / 2) - 1)) { //one of the first thumbnails
+    if ((this.props.items.length <= numOfWholeThumbnails) || (currentIdx < ((numOfThumbnails / 2) - 1))) { //there are less thumbnails than available thumbnails spots || one of the first thumbnails
       switch (thumbnailPosition) {
         case 'top':
         case 'bottom':
@@ -200,17 +191,29 @@ class SlideshowView extends React.Component {
           thumbnailsStyle.marginTop = 0;
           break;
       }
-    } else if (this.lastItemIdx > numOfThumbnails && currentIdx >= this.lastItemIdx - 3) { //scroll to the left/top if the chosen thumbnail is one of the last three
-      const entireThumbnailsSize = thumbnailsContainerSize - this.props.styleParams.thumbnailSpacings;
+    } else if ((currentIdx > ((numOfThumbnails / 2) - 1)) && (currentIdx < (this.props.items.length - (numOfThumbnails / 2)))) { //set selected to center only if neeeded
       switch (thumbnailPosition) {
         case 'top':
         case 'bottom':
-          thumbnailsStyle.left = (width - entireThumbnailsSize) + 'px';
+          thumbnailsStyle.width = thumbnailsContainerSize + 'px';
+          thumbnailsStyle.left = ((width - thumbnailsContainerSize) / 2) + 'px';
+          break;
+        case 'left':
+        case 'right':
+          thumbnailsStyle.height = thumbnailsContainerSize + 'px';
+          thumbnailsStyle.marginTop = ((height - thumbnailsContainerSize) / 2) + 'px';
+          break;
+      }
+    } else if (currentIdx >= (this.props.items.length - (numOfThumbnails / 2))) { //one of the last thumbnails
+      switch (thumbnailPosition) {
+        case 'top':
+        case 'bottom':
+          thumbnailsStyle.left = (width - thumbnailsContainerSize) + 'px';
           thumbnailsStyle.overflow = 'visible';
           break;
         case 'left':
         case 'right':
-          thumbnailsStyle.top = (height - entireThumbnailsSize) + 'px';
+          thumbnailsStyle.top = (height - thumbnailsContainerSize) + 'px';
           thumbnailsStyle.overflow = 'visible';
           break;
       }
@@ -253,6 +256,7 @@ class SlideshowView extends React.Component {
       watermark: this.props.watermark,
       container,
       styleParams: _.merge({}, this.props.styleParams, {
+        allowHover: false,
         allowSocial: false,
         allowDownload: false,
         allowTitle: false,
@@ -357,9 +361,21 @@ class SlideshowView extends React.Component {
     const items = this.state.flatItems;
 
     let currentIdx;
+    let thumbnailColumnWidth = 0;
+
+    if (this.props.styleParams.galleryLayout === 3) { //if layout is thumbnails
+      const thumbnailPosition = this.props.styleParams.galleryThumbnailsAlignment;
+
+      switch (thumbnailPosition) { //if thumbnailPosition is left or right, need to calculate the thumbnails column in the width calculation
+        case 'left':
+        case 'right':
+          thumbnailColumnWidth = this.props.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
+          break;
+      }
+    }
 
     for (let item, i = 0; item = items[i]; i++) {
-      if (item.offset.left > scrollLeft + ((this.props.container.galleryWidth - item.width) / 2)) {
+      if (item.offset.left > scrollLeft + thumbnailColumnWidth + ((this.props.container.galleryWidth - item.width) / 2)) {
         currentIdx = i - 1;
         break;
       }
