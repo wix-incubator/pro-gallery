@@ -2447,7 +2447,11 @@ export class GalleryContainer extends React.Component {
     });
 
     this.shouldScrollTo = fullscreenData.currentGalleryItemIdx;
-
+    if (this.state.styleParams.oneRow) {
+      const fixBannerHeight = 75;
+      const pos = this.scrollBase - fixBannerHeight;
+      Wix.scrollTo(0, pos);
+    }
     this.scrollToItemIfNeeded();
 
     //state might not be changed but the gallery must be rerendred (for loves counts)
