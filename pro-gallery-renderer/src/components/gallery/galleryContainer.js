@@ -2386,7 +2386,7 @@ export class GalleryContainer extends React.Component {
             worker['pro-gallery-fullscreen-comp-id'] = this.compId;
             this.fullscreenOpenedAt = Date.now();
 
-            if (window && window.petri && window.petri.fullscreenPopup === 'true') {
+            if (window && window.petri && window.petri['specs.pro-gallery.fullscreenPopup'] === 'true') {
               Wix.Utils.getSectionUrl({sectionId: utils.getFullscreenSectionId()}, res => {
                 const fullscreenState = utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId);
                 const fullscreenUrl = res.url + '/' + fullscreenState;
