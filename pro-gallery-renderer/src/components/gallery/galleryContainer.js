@@ -2457,9 +2457,11 @@ export class GalleryContainer extends React.Component {
     }
 
     //get current items from window - it was placed there by the fullscreen
-    utils.setStateAndLog(this, 'Fullscreen Callback', {
-      items: this.itemsIds(fullscreenData.currentGalleryItems)
-    });
+    if (fullscreenData.currentGalleryItems.length > this.state.items.length) {
+      utils.setStateAndLog(this, 'Fullscreen Callback', {
+        items: this.itemsIds(fullscreenData.currentGalleryItems)
+      });
+    }
 
     this.shouldScrollTo = fullscreenData.currentGalleryItemIdx;
     if (this.state.styleParams.oneRow) {
