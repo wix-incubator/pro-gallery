@@ -2386,11 +2386,22 @@ export class GalleryContainer extends React.Component {
             worker['pro-gallery-fullscreen-comp-id'] = this.compId;
             this.fullscreenOpenedAt = Date.now();
 
-            Wix.Utils.navigateToSection({
-              sectionId: utils.getFullscreenSectionId(),
-              // shouldRefreshIframe: false,
-              noTransition: true
-            } /* , utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId) */);
+            if (window && window.petri && window.petri.fullscreenPopup === 'true') {
+              Wix.Utils.getSectionUrl({sectionId: utils.getFullscreenSectionId()}, res => {
+                const fullscreenState = utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId);
+                const fullscreenUrl = res.url + '/' + fullscreenState;
+                Wix.openPopup(fullscreenUrl, '100%', '100%', {
+                  origin: Wix.WindowOrigin.FIXED,
+                  placement: Wix.WindowPlacement.CENTER
+                }, this.closeFullscreenCallback, Wix.Theme.BARE);
+              });
+            } else {
+              Wix.Utils.navigateToSection({
+                sectionId: utils.getFullscreenSectionId(),
+                // shouldRefreshIframe: false,
+                noTransition: true
+              } /* , utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId) */);
+            }
           });
 
         } else {
