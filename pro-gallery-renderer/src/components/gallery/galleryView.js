@@ -191,8 +191,9 @@ class GalleryView extends React.Component {
   }
 
   getStyles() {
+    const marginExceptBottom = (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin);
     return {
-      margin: (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin)
+      margin: `${marginExceptBottom}px ${marginExceptBottom}px 0 ${marginExceptBottom}px`
     };
   }
 
