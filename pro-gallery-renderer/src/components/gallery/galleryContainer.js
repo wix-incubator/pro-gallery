@@ -185,7 +185,8 @@ export class GalleryContainer extends React.Component {
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
       mobilePanorama: false,
       isAutoSlideshow: false,
-      autoSlideshowInterval: 4
+      autoSlideshowInterval: 4,
+      arrowsSize: 23
     };
 
     const galleryWidth = this.getGalleryWidth();
@@ -1460,6 +1461,9 @@ export class GalleryContainer extends React.Component {
     }
     if (canSet('autoSlideshowInterval')) {
       stateStyles.autoSlideshowInterval = Number(wixStyles.autoSlideshowInterval) || 0;
+    }
+    if (canSet('arrowsSize')) {
+      stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
     }
 
     //Backwards compatibility for masonry layout
