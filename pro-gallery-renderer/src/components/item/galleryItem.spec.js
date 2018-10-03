@@ -136,13 +136,9 @@ describe('GalleryItem ', () => {
   });
   it('getting correct resized url', () => {
 		//2 tests of the output.
-    let url = galleryItem.resizedUrl('fill', 100, 100, {quality: 80}, false);
-    let object = {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_80,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'};
-    expect(url).to.deep.equal(object);
-    url = galleryItem.resizedUrl('fit', 100, 300, {quality: 85}, true);
-    object = {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_85,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_130,al_c,q_85,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'};
+    const url = galleryItem.resizedUrl('fill', 100, 100, {quality: 80}, false);
+    const object = {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_80,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+      thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_5,usm_0.66_1.00_0.01/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'};
     expect(url).to.deep.equal(object);
   });
   it('should send error if watermark is a string that cant be parsed to an object', () => {
