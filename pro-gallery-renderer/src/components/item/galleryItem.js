@@ -516,7 +516,7 @@ class GalleryItem {
 
     requiredWidth = Math.round(requiredWidth);
     requiredHeight = Math.round(requiredHeight);
-    const thumbSize = 180;
+    const thumbSize = 100;
 
     const urls = {};
 
@@ -549,12 +549,12 @@ class GalleryItem {
         }
 
         urls.img = this.resizeUrlImp(poster.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, false);
-        urls.thumb = this.resizeUrlImp(poster.url, 'fit', thumbSize, thumbSize, sharpParams, false, false);
+        urls.thumb = this.resizeUrlImp(poster.url, resizeMethod, thumbSize, (thumbSize * requiredHeight / requiredWidth), {...sharpParams, quality: 5}, false, false);
       }
     } else {
       const fp = (noCrop !== true && this.isCropped && this.focalPoint);
       urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, fp);
-      urls.thumb = this.resizeUrlImp(this.url, 'fit', thumbSize, thumbSize, sharpParams, showFaces, true, fp);
+      urls.thumb = this.resizeUrlImp(this.url, resizeMethod, thumbSize, (thumbSize * requiredHeight / requiredWidth), {...sharpParams, quality: 5}, showFaces, true, fp);
     }
 
     // if (window.isWebpSupported && !utils.isStoreGallery()) {

@@ -38,9 +38,9 @@ class SlideshowView extends React.Component {
 
   isLastItem() {
     const [lastGroup] = this.props.galleryStructure.groups.slice(-1);
-    const isLastItem = (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastGroup || (this.props.container.galleryWidth + this.props.scroll.top >= lastGroup.right);
-    return isLastItem;
+    return (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastGroup || (this.props.container.galleryWidth + this.props.scroll.top >= lastGroup.right);
   }
+
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
     const {scrollToItem} = this.props.actions;
@@ -407,6 +407,25 @@ class SlideshowView extends React.Component {
       return null;
     }
 
+    const arrowWidth = this.props.styleParams.arrowsSize;
+
+    const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
+    const scalePercentage = arrowWidth / arrowOrigWidth;
+    const imageStyle = {transform: `scale(${scalePercentage})`};
+
+    // nav-arrows-container width is 100. arrowWidth + padding on each side should be 100
+    const containerPadding = (100 - arrowWidth) / 2;
+
+    // this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+    const prevContainerStyle = {
+      padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
+      left: `${this.props.styleParams.imageMargin}px`
+    };
+    const nextContainerStyle = {
+      padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
+      right: `${this.props.styleParams.imageMargin}px`
+    };
+
     return [
       (this.isFirstItem() ? '' : <button
         className={'nav-arrows-container prev '}
@@ -415,8 +434,14 @@ class SlideshowView extends React.Component {
         tabIndex={utils.getTabIndex('slideshowPrev')}
         key="nav-arrow-back"
         data-hook="nav-arrow-back"
+        style={prevContainerStyle}
       >
-        <img src={require(`../../assets/images/arrows/arrow-left.svg`)} />
+        <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
+          <path id="_250_middle_right_copy_3" data-name="250 middle right  copy 3" className="slideshow-arrow"
+                d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
+                transform="translate(-133 -225)"/>
+        </svg>
+
       </button>),
       (this.isLastItem() ? '' : <button
         className={'nav-arrows-container next'}
@@ -425,8 +450,13 @@ class SlideshowView extends React.Component {
         tabIndex={utils.getTabIndex('slideshowNext')}
         key="nav-arrow-next"
         data-hook="nav-arrow-next"
+        style={nextContainerStyle}
       >
-        <img src={require(`../../assets/images/arrows/arrow-right.svg`)} />
+        <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
+          <path id="_250_middle_right_copy_2" data-name="250 middle right  copy 2" className="slideshow-arrow"
+                d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
+                transform="translate(-855 -230)"/>
+        </svg>
       </button>)
     ];
   }

@@ -185,7 +185,8 @@ export class GalleryContainer extends React.Component {
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
       mobilePanorama: false,
       isAutoSlideshow: false,
-      autoSlideshowInterval: 4
+      autoSlideshowInterval: 4,
+      arrowsSize: 23
     };
 
     const galleryWidth = this.getGalleryWidth();
@@ -1461,6 +1462,9 @@ export class GalleryContainer extends React.Component {
     if (canSet('autoSlideshowInterval')) {
       stateStyles.autoSlideshowInterval = Number(wixStyles.autoSlideshowInterval) || 0;
     }
+    if (canSet('arrowsSize')) {
+      stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
+    }
 
     //Backwards compatibility for masonry layout
     if (String(stateStyles.selectedLayoutV2) === '1') {
@@ -2453,9 +2457,11 @@ export class GalleryContainer extends React.Component {
     }
 
     //get current items from window - it was placed there by the fullscreen
-    utils.setStateAndLog(this, 'Fullscreen Callback', {
-      items: this.itemsIds(fullscreenData.currentGalleryItems)
-    });
+    if (fullscreenData.currentGalleryItems.length > this.state.items.length) {
+      utils.setStateAndLog(this, 'Fullscreen Callback', {
+        items: this.itemsIds(fullscreenData.currentGalleryItems)
+      });
+    }
 
     this.shouldScrollTo = fullscreenData.currentGalleryItemIdx;
     if (this.state.styleParams.oneRow) {
