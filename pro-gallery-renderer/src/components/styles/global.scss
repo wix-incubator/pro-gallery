@@ -47,6 +47,19 @@ body {
     opacity: 0;
   }
 
+  &.blue {
+    $highlight1: rgb(56, 153, 236);
+    $highlight2: rgb(76, 173, 255);
+
+    &::before {
+      color: $highlight1;
+    }
+  
+    &::after {
+      color: $highlight2;
+    }
+  }
+
 }
 
 .love-animation {
