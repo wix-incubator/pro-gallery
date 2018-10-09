@@ -1854,7 +1854,7 @@ export class GalleryContainer extends React.Component {
             Wix.addEventListener(Wix.Events.SCROLL, scrollListener);
 
             const retryScroll = () => {
-              if (!shouldStop && retriesLeft > 0) {
+              if (!shouldStop && retriesLeft > 0 && (utils.getViewModeFromCache() !== 'editor')) {
                 Wix.scrollTo(0, scrollToPoint);
                 if (retriesLeft === 0) {
                   shouldStop = true;
