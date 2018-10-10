@@ -18,6 +18,8 @@ import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
 import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
+import {pauseVideo} from '../../actions/itemViewActions.js';
+
 
 try {
   window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
@@ -150,6 +152,7 @@ export class GalleryContainer extends React.Component {
       loveButton: true,
       loveCounter: true,
       videoLoop: true,
+      videoSound: false,
       videoSpeed: 1,
       videoPlay: 'hover',
       gallerySliderImageRatio: 0,
@@ -358,7 +361,14 @@ export class GalleryContainer extends React.Component {
       this.wixEventsFunctions.forEach(x => Wix.addEventListener && Wix.addEventListener(...x));
     }
 
+    window.addEventListener('gallery_navigation_in', () => {
+      this.props.store.dispatch(actions.toggleIsInView(true));
+    });
 
+    window.addEventListener('gallery_navigation_out', () => {
+      this.props.store.dispatch(actions.toggleIsInView(false));
+      this.props.store.dispatch(pauseVideo());
+    });
   }
 
   removeEventListeners() {
@@ -398,10 +408,10 @@ export class GalleryContainer extends React.Component {
     if (!utils.isSemiNative()) {
       Wix.addEventListener(Wix.Events.PAGE_NAVIGATION_IN, () => {
         this.initEventListeners();
-        this.props.actions.navigationIn();
-        itemActions.getStats();
         this.wixFocused = true;
         this.dispatchNavigationInIfNeeded();
+        this.props.actions.navigationIn();
+        itemActions.getStats();
       });
       Wix.addEventListener(Wix.Events.PAGE_NAVIGATION_OUT, () => {
         this.removeEventListeners();
@@ -1443,6 +1453,9 @@ export class GalleryContainer extends React.Component {
           stateStyles.videoPlay = 'onClick';
           break;
       }
+    }
+    if (canSet('videoSound')) {
+      stateStyles.videoSound = wixStyles.videoSound;
     }
     if (canSet('videoSpeed')) {
       stateStyles.videoSpeed = wixStyles.videoSpeed;

@@ -9,6 +9,7 @@ import {
   NAVIGATION_IN,
   EDITOR_MODE_CHANGED,
   TOGGLE_HOVER_PREVIEW,
+  TOGGLE_ISINVIEW,
   SET_VIDEO_PLAY_INDEX
 } from '../constants/galleryTypes.js';
 
@@ -64,14 +65,21 @@ export default function galleryReducer(state = initialState.gallery, action) {
       return _.merge({}, state, documentHeight);
     }
     case SET_VIDEO_PLAY_INDEX:
-      state = {...state, videoIndexPlay: action.payload};
+      if (state.isInView) {
+        state = {...state, videoIndexPlay: action.payload, lastVideoPlayed: action.payload};
+      }
       break;
     case PLAY_VIDEO:
-      return _.merge({}, state, {videoIndexPlay: action.idx});
+      if (state.isInView) {
+        return _.merge({}, state, {videoIndexPlay: action.idx, lastVideoPlayed: action.idx});
+      }
+      break;
     case PAUSE_VIDEO:
       return _.merge({}, state, {videoIndexPlay: -1});
     case TOGGLE_HOVER_PREVIEW:
       return _.merge({}, state, {previewHover: action.toggle});
+    case TOGGLE_ISINVIEW:
+      return _.merge({}, state, {isInView: action.toggle});
     default:
       return state;
   }

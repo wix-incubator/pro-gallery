@@ -55,6 +55,7 @@ class galleryDriver {
       loveButton: true,
       loveCounter: true,
       videoLoop: true,
+      videoSound: false,
       videoSpeed: 1,
       videoPlay: 'hover',
       sharpParams: {

@@ -1,4 +1,5 @@
 import * as types from '../../../constants/galleryTypes';
+import {PLAY_VIDEO, PAUSE_VIDEO} from '../../../actions/itemViewActions.js';
 import videoPlayModes from './videoPlayModes';
 export default ({videoQueue, utils}) => store => {
 
@@ -24,7 +25,6 @@ export default ({videoQueue, utils}) => store => {
       payload
     } = action;
     const {gallery: {videoPlayMode}} = store.getState();
-
     // This doesn't affect autoplay
     switch (type) {
       case types.VIDEO_ADDED:

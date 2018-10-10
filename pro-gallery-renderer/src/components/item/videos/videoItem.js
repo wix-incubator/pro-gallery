@@ -59,7 +59,7 @@ class VideoItem extends React.Component {
       url={this.props.videoUrl ? this.props.videoUrl : this.props.resized_url.mp4}
       loop={!!this.props.styleParams.videoLoop}
       ref={player => this.video = player}
-      volume={0}
+      volume={!!this.props.styleParams.videoSound ? 0.8 : 0}
       playing={this.props.playing}
       poster={this.props.resized_url.img}
       mockPlayer={!this.state.playedOnce && (this.props.isExternalVideo || utils.isMobile())}
@@ -149,6 +149,7 @@ class VideoItem extends React.Component {
           {videoPreloader}
         </div>
     );
+
 
     const hover = this.props.hover;
 

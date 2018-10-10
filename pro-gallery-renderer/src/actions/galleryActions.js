@@ -13,6 +13,7 @@ import {
   NAVIGATION_IN,
   EDITOR_MODE_CHANGED,
   TOGGLE_HOVER_PREVIEW,
+  TOGGLE_ISINVIEW,
 } from '../constants/galleryTypes.js';
 
 export function initWixData() {
@@ -97,6 +98,13 @@ export function editorModeChanged() {
 export function toggleHoverPreview(toggle) {
   return {
     type: TOGGLE_HOVER_PREVIEW,
+    toggle
+  };
+}
+
+export function toggleIsInView(toggle){
+  return {
+    type: TOGGLE_ISINVIEW,
     toggle
   };
 }
