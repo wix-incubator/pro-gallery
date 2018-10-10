@@ -102,7 +102,7 @@ export function toggleHoverPreview(toggle) {
   };
 }
 
-export function toggleIsInView(toggle){
+export function toggleIsInView(toggle) {
   return {
     type: TOGGLE_ISINVIEW,
     toggle
