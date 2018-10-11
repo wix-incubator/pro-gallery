@@ -420,7 +420,7 @@ class SlideshowView extends React.Component {
     const containerStyle = {
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
       top: `calc(50% - 50px + ${this.props.styleParams.imageMargin / 2}px - ${slideshowSpace / 2}px)`
-    }
+    };
     // left & right: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
     const prevContainerStyle = {
       left: `${this.props.styleParams.imageMargin}px`
