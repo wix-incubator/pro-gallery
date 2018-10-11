@@ -415,14 +415,17 @@ class SlideshowView extends React.Component {
 
     // nav-arrows-container width is 100. arrowWidth + padding on each side should be 100
     const containerPadding = (100 - arrowWidth) / 2;
-
-    // this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
-    const prevContainerStyle = {
+    const slideshowSpace = this.props.styleParams.isSlideshow ? this.props.styleParams.slideshowInfoSize : 0;
+    // top: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly. 50% is the middle, 50px is half of nav-arrows-container height
+    const containerStyle = {
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
+      top: `calc(50% - 50px + ${this.props.styleParams.imageMargin / 2}px - ${slideshowSpace / 2}px)`
+    }
+    // left & right: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+    const prevContainerStyle = {
       left: `${this.props.styleParams.imageMargin}px`
     };
     const nextContainerStyle = {
-      padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
       right: `${this.props.styleParams.imageMargin}px`
     };
 
@@ -434,7 +437,7 @@ class SlideshowView extends React.Component {
         tabIndex={utils.getTabIndex('slideshowPrev')}
         key="nav-arrow-back"
         data-hook="nav-arrow-back"
-        style={prevContainerStyle}
+        style={{...containerStyle, ...prevContainerStyle}}
       >
         <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
           <path id="_250_middle_right_copy_3" data-name="250 middle right  copy 3" className="slideshow-arrow"
@@ -450,7 +453,7 @@ class SlideshowView extends React.Component {
         tabIndex={utils.getTabIndex('slideshowNext')}
         key="nav-arrow-next"
         data-hook="nav-arrow-next"
-        style={nextContainerStyle}
+        style={{...containerStyle, ...nextContainerStyle}}
       >
         <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
           <path id="_250_middle_right_copy_2" data-name="250 middle right  copy 2" className="slideshow-arrow"
