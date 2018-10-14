@@ -786,7 +786,6 @@ export class GalleryContainer extends React.Component {
         showArrows: true,
         cubeImages: true,
         smartCrop: false,
-        cubeType: 'fill',
         cubeRatio: (() => {
           const dims = this.getGalleryDimensions();
           return (dims.galleryWidth / dims.galleryHeight);
@@ -836,7 +835,6 @@ export class GalleryContainer extends React.Component {
           const dims = this.getGalleryDimensions();
           return (dims.galleryWidth / dims.galleryHeight);
         }),
-        cubeType: 'fill',
         isVertical: false,
         gallerySize: 550,
         galleryType: 'Strips',
