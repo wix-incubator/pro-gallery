@@ -66,7 +66,7 @@ describe('Gallery', () => {
 	// Of pages to be +1 the actual page did not have enough real time to open and thus - the test will fail.
 	// In any test wher ethings "move" we might have to wait enough time to check them or create events that will know when it is time to check
 	// and not only when to check but also when to give up (so not to get up to the full super long 30 secs default timeout).
-  it.skip('should open new page on a click on a social network', async () => {
+  it('should open new page on a click on a social network', async () => {
     await driver.openGallery('Gallery', 'Default');
 		// hover on first item
     await driver.actions.hover('item-container');
