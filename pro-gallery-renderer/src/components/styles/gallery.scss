@@ -600,10 +600,13 @@ div.pro-gallery {
         height: 100%;
         margin: 0;
         border-radius: 0;
-        //transition: opacity 600ms linear;
         background: rgba(241, 241, 241, 0.5);
-        //background: $animated-bright-bg linear-gradient(to right, $animated-bright-bg 0%, $animated-dark-bg 20%, $animated-bright-bg 40%, $animated-bright-bg 100%);
-        //animation: changing_background 3s infinite ease;
+        transition: opacity 800ms ease;  
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        will-change: transform;
+          // background: $animated-bright-bg linear-gradient(to right, $animated-bright-bg 0%, $animated-dark-bg 20%, $animated-bright-bg 40%, $animated-bright-bg 100%);
+        // animation: changing_background 3s infinite ease;
 
         .pro-circle-preloader {
           top: 50%;
@@ -622,8 +625,10 @@ div.pro-gallery {
         }
 
         &.gallery-item-loaded {
-          opacity: 1 !important;
           background: transparent;
+          opacity: 1 !important;
+          filter: none !important;
+          animation: none !important;
 
           ~ .pro-circle-preloader {
             display: none;
@@ -647,7 +652,6 @@ div.pro-gallery {
             background-size: contain;
           }
         }
-
 
         &.gallery-item-hidden {
           opacity: 0;

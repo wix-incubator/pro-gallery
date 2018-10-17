@@ -384,14 +384,6 @@ class GalleryItem {
 
   resizeUrlImp_sdk(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
 
-    const requiredRatio = requiredWidth / requiredHeight;
-    const showWatermark = allowWatermark && this.watermarkStr;
-
-    if (!utils.isMobile()) {
-      requiredWidth = Math.ceil(requiredWidth / 250) * 250;
-      requiredHeight = Math.ceil(requiredWidth / requiredRatio);
-    }
-
     // assign default parameters
     originalUrl = originalUrl || '';
     sharpParams = sharpParams || {};
@@ -490,7 +482,7 @@ class GalleryItem {
     this.resizeHeight = Math.min(maxHeight, Math.ceil(this.height * devicePixelRatio));
     this.resized_url = this.resizedUrl(this.cubeType, this.resizeWidth, this.resizeHeight, this.sharpParams, false);
 
-    this.pixel_url = this.resizedUrl('fill', 1, 1, {quality: 30}, false);
+    this.pixel_url = this.resizedUrl('fill', 1, 1, {quality: 5}, false);
 
     const maxDimension = 500;
     this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
@@ -514,9 +506,9 @@ class GalleryItem {
       return {};
     }
 
-    requiredWidth = Math.round(requiredWidth);
-    requiredHeight = Math.round(requiredHeight);
-    const thumbSize = 100;
+    requiredWidth = Math.ceil(requiredWidth);
+    requiredHeight = Math.ceil(requiredHeight);
+    const thumbSize = 80;
 
     const urls = {};
 
