@@ -294,11 +294,6 @@ class GalleryItem {
     const requiredRatio = requiredWidth / requiredHeight;
     const showWatermark = allowWatermark && this.watermarkStr;
 
-    if (!utils.isMobile()) {
-      requiredWidth = Math.ceil(requiredWidth / 250) * 250;
-      requiredHeight = Math.ceil(requiredWidth / requiredRatio);
-    }
-
     // assign sharp default parameters
     sharpParams = sharpParams || {};
 
