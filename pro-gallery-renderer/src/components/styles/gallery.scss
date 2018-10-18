@@ -600,14 +600,14 @@ div.pro-gallery {
         height: 100%;
         margin: 0;
         border-radius: 0;
-        background: rgba(241, 241, 241, 0.5);
+        background-color: rgba(241, 241, 241, 0.5);
         transition: opacity 1s ease;  
         transition-delay: .5s;
         backface-visibility: hidden;
         transform: translateZ(0);
-        will-change: transform;
-          // background: $animated-bright-bg linear-gradient(to right, $animated-bright-bg 0%, $animated-dark-bg 20%, $animated-bright-bg 40%, $animated-bright-bg 100%);
-        // animation: changing_background 3s infinite ease;
+        will-change: opacity, background-color;
+        animation: changing_background 3s infinite ease;
+        animation-timing-function: ease;
 
         .pro-circle-preloader {
           top: 50%;
@@ -628,7 +628,7 @@ div.pro-gallery {
         &.gallery-item-loaded {
           background: transparent;
           opacity: 1 !important;
-          filter: none !important;
+          // filter: none !important;
           animation: none !important;
 
           ~ .pro-circle-preloader {
@@ -1436,16 +1436,15 @@ div.pro-gallery {
 
 @keyframes changing_background {
   0% {
-    animation-timing-function: ease;
-    background-position: 0 50%;
+    background-color: rgba(241, 241, 241, 0.2);
   }
 
   50% {
-    background-position: 100% 50%;
+    background-color: rgba(241, 241, 241, 0.8);
   }
 
-  to {
-    background-position: 0 50%;
+  100% {
+    background-color: rgba(241, 241, 241, 0.2);
   }
 }
 }
