@@ -25,9 +25,7 @@ class GalleryView extends React.Component {
     this.state = {
       currentIdx: 0,
     };
-    if (!utils.isLocal()) {
-      appPartiallyLoaded('pro-gallery-statics');
-    }
+    appPartiallyLoaded('pro-gallery-statics');
   }
 
   handleArrowKeys(e) {

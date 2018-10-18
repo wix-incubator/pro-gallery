@@ -27,9 +27,7 @@ class SlideshowView extends React.Component {
       currentIdx: 0,
       isInView: true,
     };
-    if (!utils.isLocal()) {
-      appPartiallyLoaded('pro-gallery-statics');
-    }
+    appPartiallyLoaded('pro-gallery-statics');
   }
 
   isFirstItem() {
