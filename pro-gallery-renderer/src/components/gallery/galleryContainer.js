@@ -124,7 +124,6 @@ export class GalleryContainer extends React.Component {
     this.lastOffsetTop = 0;
 
     this.thumbnailSize = utils.isMobile() ? 90 : 120;
-    this.slideshowInfoSize = 220;
 
     this.preloadedItems = [];
 
@@ -1477,6 +1476,9 @@ export class GalleryContainer extends React.Component {
     if (canSet('arrowsSize')) {
       stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
     }
+    if (canSet('slideshowInfoSize')) {
+      stateStyles.slideshowInfoSize = Number(wixStyles.slideshowInfoSize);
+    }
 
     //Backwards compatibility for masonry layout
     if (String(stateStyles.selectedLayoutV2) === '1') {
@@ -2064,8 +2066,7 @@ export class GalleryContainer extends React.Component {
           break;
       }
     } else if (this.getLatestState('styleParams.isSlideshow', false)) {
-      // res.galleryHeight = 550; //if the height of the image is constant
-      res.galleryHeight -= this.slideshowInfoSize; //if the height of the text is constant
+      res.galleryHeight -= this.getLatestState('styleParams.slideshowInfoSize', 200);
     }
 
     return res;
@@ -2123,7 +2124,7 @@ export class GalleryContainer extends React.Component {
       const getMaxRowHeight = () => {
         const maxByScreen = window.screen.height * 0.6; //make sure that the gallery is not heigher than the screen
         const maxByFirstGroup = (this.state.container.galleryWidth / this.galleryStructure.firstGroup.ratio) * 0.8; //make sure more than 1 group is visible
-        const maxBySlideshow = (this.state.container.galleryWidth * 9 / 16) + this.slideshowInfoSize; //in slideshow and thumbnails, the group ratio is calculated by the height so we need a fixed value
+        const maxBySlideshow = (this.state.container.galleryWidth * 9 / 16) + this.getLatestState('styleParams.slideshowInfoSize', 200); //in slideshow and thumbnails, the group ratio is calculated by the height so we need a fixed value
 
         if (this.state.styleParams.isSlideshow || this.state.styleParams.hasThumbnails) {
           return maxBySlideshow;

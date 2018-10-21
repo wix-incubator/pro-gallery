@@ -486,13 +486,17 @@ class SlideshowView extends React.Component {
 
       let marginLeft = 0;
       const firstGroup = _.find(column.groups, group => group.rendered) || {};
+      const columnStyle = {width: column.width};
       if (this.props.gotScrollEvent) {
         marginLeft = firstGroup.left || 0;
+      }
+      if (this.props.styleParams.isSlideshow) {
+        _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
       }
 
       return !!column.galleryGroups.length && (
         <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
-             style={{width: column.width}}>
+             style={columnStyle}>
           <div className="gallery-left-padding" style={{width: marginLeft}}></div>
           {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
         </div>
@@ -505,6 +509,9 @@ class SlideshowView extends React.Component {
       height: this.props.container.galleryHeight,
       width: this.props.container.galleryWidth
     };
+    if (this.props.styleParams.isSlideshow) {
+      _.merge(galleryStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
+    }
 
     return <div id="pro-gallery-container" className={'pro-gallery inline-styles one-row hide-scrollbars ' + (this.props.styleParams.enableScroll ? ' slider ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
                 style={galleryStyle}

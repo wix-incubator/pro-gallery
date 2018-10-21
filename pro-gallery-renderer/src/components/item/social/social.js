@@ -126,13 +126,16 @@ export default class Social extends React.Component {
   }
 
   render() {
-    const {styleParams, id, showShare, actions, isSmallItem, isNarrow, isShort, isVerticalContainer} = this.props;
+    const {styleParams, id, showShare, isSmallItem, isNarrow, isShort, isVerticalContainer} = this.props;
     const socialShare = this.getSocialShare();
     const multishare = this.getMultishare();
     const loveButton = this.getLoveButton();
     const download = this.getDownload();
     //var shopIcons = this.getShopIcons();
     const isShowArrows = styleParams.hasThumbnails;
+    const isPopulated = styleParams.allowSocial ||
+      styleParams.loveButton ||
+      styleParams.allowDownload;
 
     const classes = [
       [showShare, 'hidden'],
@@ -141,6 +144,7 @@ export default class Social extends React.Component {
       [isNarrow, 'narrow-item'],
       [isVerticalContainer, 'vertical-item'],
       [isShowArrows, 'with-arrows'],
+      [isPopulated, 'populated-item'],
     ].filter(x => x[0])
       .map(x => x[1])
       .join(' ');

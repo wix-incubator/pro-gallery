@@ -2,7 +2,6 @@
 import utils from '../../utils';
 
 const thumbnailSize = utils.isMobile() ? 90 : 120;
-const slideshowInfoSize = 220;
 
 function protectGalleryWidth(width) {
 
@@ -61,8 +60,7 @@ function getGalleryDimensions(styles, container) {
         break;
     }
   } else if (styles.isSlideshow) {
-    // res.galleryHeight = 550; //if the height of the image is constant
-    res.galleryHeight -= slideshowInfoSize; //if the height of the text is constant
+    res.galleryHeight -= styles.slideshowInfoSize;
   }
 
   return res;

@@ -34,14 +34,22 @@ class LineHeightFixer {
     this.setCss(element, {display: 'none'});
   }
 
-  hideElement(element) {
-    const display = this.getSavedDisplay(element);
-    this.setCss(element, {visibility: 'hidden', display});
+  hideElement(element, shouldOverrideDisplay = true) {
+    if (shouldOverrideDisplay) {
+      const display = this.getSavedDisplay(element);
+      this.setCss(element, {visibility: 'hidden', display});
+    } else {
+      this.setCss(element, {visibility: 'hidden'});
+    }
   }
 
-  showElement(element) {
-    const display = this.getSavedDisplay(element);
-    this.setCss(element, {visibility: 'visible', display});
+  showElement(element, shouldOverrideDisplay = true) {
+    if (shouldOverrideDisplay) {
+      const display = this.getSavedDisplay(element);
+      this.setCss(element, {visibility: 'visible', display});
+    } else {
+      this.setCss(element, {visibility: 'visible'});
+    }
   }
 
   getCss(element, rule) {
@@ -62,14 +70,32 @@ class LineHeightFixer {
     const newTitle = newOptions.title;
     const newDescription = newOptions.description;
     const newIsSmallItems = newOptions.isSmallItem;
+    const newIsSocialPopulated = newStyleParams.allowSocial ||
+      newStyleParams.loveButton ||
+      newStyleParams.allowDownload;
+    const oldIsSocialPopulated = styleParams.allowSocial ||
+      styleParams.loveButton ||
+      styleParams.allowDownload;
     return (
       styleParams.isSlideshow !== newStyleParams.isSlideshow ||
       styleParams.allowTitle !== newStyleParams.allowTitle ||
       styleParams.allowDescription !== newStyleParams.allowDescription ||
+      styleParams.slideshowInfoSize !== newStyleParams.slideshowInfoSize ||
+      oldIsSocialPopulated !== newIsSocialPopulated ||
       title !== newTitle ||
       description !== newDescription ||
       isSmallItem !== newIsSmallItems
     );
+  }
+
+  calcAvilableHeightIfSlideshow(options) {
+    const {styleParams, itemContainer} = options;
+    const socialElements = itemContainer.getElementsByClassName('gallery-item-social');
+    const socialElement = (socialElements.length > 0) && socialElements[0];
+    const socialHeight = socialElement.clientHeight;
+    const socialMarginBottom = parseInt(this.getCss(socialElement, 'margin-bottom'));
+    const itemInfoChildDivPaddingTop = 24; //padding-top of the div inside gallery-item-info
+    return styleParams.slideshowInfoSize - itemInfoChildDivPaddingTop - socialHeight - socialMarginBottom;
   }
 
   fix(options, container) {
@@ -79,11 +105,18 @@ class LineHeightFixer {
 
     const {styleParams, title, description, isSmallItem} = options;
 
-    if (!container || styleParams.isSlideshow) {
+    if (!container) {
       return;
     }
+
     const dimensions = this.getDimensions(container);
-    let availableHeight = dimensions.height;
+    let availableHeight;
+
+    if (styleParams.isSlideshow) {
+      availableHeight = this.calcAvilableHeightIfSlideshow(options);
+    } else {
+      availableHeight = dimensions.height;
+    }
 
     const customButtonElements = container.getElementsByClassName('custom-button-wrapper');
     const titleElements = container.getElementsByClassName('gallery-item-title');
@@ -97,10 +130,10 @@ class LineHeightFixer {
     const isItemWidthToSmall = dimensions.width < minWidthToShowContent;
     this.hideElement(titleElement);
     this.hideElement(descriptionElement);
-    this.hideElement(customButtonElement);
+    this.hideElement(customButtonElement, !styleParams.isSlideshow); //if Slideshow, customButtonElement should not get 'display: -webkit-box'
 
     if (customButtonExists) {
-      this.showElement(customButtonElement);
+      this.showElement(customButtonElement, !styleParams.isSlideshow); //if Slideshow, customButtonElement should not get 'display: -webkit-box'
       const buttonHeight = this.getDimensions(customButtonElement).height;
       if ((availableHeight + 30) < buttonHeight) {
         this.removeElement(customButtonElement);

@@ -325,6 +325,7 @@ class ItemView extends React.Component {
     const shouldShowButton = isButtonPlacementOnHover && (isImage || !utils.isStoreGallery()) && useCustomButton;
     return <Texts {...props}
               key={`item-texts-${props.id}`}
+              itemContainer={this.itemContainer}
               showShare={this.state.showShare}
               isSmallItem={this.isSmallItem()}
               titlePlacement={this.props.styleParams.titlePlacement}
@@ -468,14 +469,18 @@ class ItemView extends React.Component {
     }
 
     if (styleParams.isSlideshow) {
+      const style = {
+        height: `${styleParams.slideshowInfoSize}px`,
+        bottom: `-${styleParams.slideshowInfoSize}px`
+      };
       itemInner = (<div>
         {itemInner}
         { (this.props.currentIdx === this.props.idx) ?
-          <div className="gallery-item-info gallery-item-bottom-info" data-hook="gallery-item-info-buttons">
+          <div className="gallery-item-info gallery-item-bottom-info" data-hook="gallery-item-info-buttons" style={style}>
             <div>
-              {itemTexts}
               {social}
               {share}
+              {itemTexts}
             </div>
           </div> :
           false

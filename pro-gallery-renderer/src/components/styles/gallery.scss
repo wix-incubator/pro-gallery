@@ -154,7 +154,6 @@ div.gallery-slideshow {
 
   div.pro-gallery,
   .gallery-column {
-    padding-bottom: 200px !important;
     box-sizing: content-box !important;
   }
 
@@ -183,9 +182,11 @@ div.gallery-slideshow {
 
       .gallery-item-info {
         position: absolute;
-        height: 200px;
-        bottom: -200px;
-        padding-top: 24px;
+        padding-top: 0px;
+
+        > div {
+          padding-top: 24px;
+        }
 
         &.gallery-item-bottom-info {
           .custom-button-wrapper {
@@ -207,6 +208,10 @@ div.gallery-slideshow {
           .gallery-item-description {
             margin-top: 5px;
             max-width: 800px;
+
+            > span {
+              white-space: normal;
+            }
           }
         }
 
@@ -214,6 +219,10 @@ div.gallery-slideshow {
           display: flex;
           flex-direction: row;
           margin-top: 0;
+
+          &.populated-item {
+            margin-bottom: 24px;
+          }
 
           &:hover {
             .gallery-item-social-share-box {
