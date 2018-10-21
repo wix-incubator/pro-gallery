@@ -83,6 +83,7 @@ export default class galleryDriver {
         return a.length;
       },
       screenshot: async path => {
+        await this.waitFor.timer(1000);
         return path ? await this.page.screenshot({path: `${path}.png`}) : await this.page.screenshot();
       }
     };
