@@ -305,7 +305,7 @@ class GalleryItem {
     //don't allow quality above 90 till we have proper UI indication
     sharpParams.quality = Math.min(90, sharpParams.quality);
 
-    if (sharpParams.usm && sharpParams.usm.usm_r) {
+    if (sharpParams.allowUsm === true) {
       sharpParams.usm.usm_a = Math.min(5, Math.max(0, (sharpParams.usm.usm_a || 0)));
       sharpParams.usm.usm_r = Math.min(128, Math.max(0, (sharpParams.usm.usm_r || 0))); //should be max 500 - but it's returning a 404
       sharpParams.usm.usm_t = Math.min(1, Math.max(0, (sharpParams.usm.usm_t || 0)));
@@ -395,10 +395,14 @@ class GalleryItem {
       focalPointObj.y = Math.round(focalPoint[1] * 100);
     }
 
-    if (sharpParams.usm && sharpParams.usm.usm_r) {
+    if (sharpParams.allowUsm === true) {
       sharpParams.usm.usm_a = Math.min(5, Math.max(0, (sharpParams.usm.usm_a || 0)));
       sharpParams.usm.usm_r = Math.min(128, Math.max(0, (sharpParams.usm.usm_r || 0))); //should be max 500 - but it's returning a 404
       sharpParams.usm.usm_t = Math.min(1, Math.max(0, (sharpParams.usm.usm_t || 0)));
+    } else {
+      sharpParams.usm.usm_a = 0;
+      sharpParams.usm.usm_r = 0;
+      sharpParams.usm.usm_t = 1;
     }
 
     if (utils.isExternalUrl(originalUrl)) {

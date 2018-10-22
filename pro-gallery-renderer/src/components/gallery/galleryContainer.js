@@ -1426,15 +1426,19 @@ export class GalleryContainer extends React.Component {
       stateStyles.sharpParams.quality = wixStyles.imageQuality;
     }
 
-    if (canSet('usmToggle') && wixStyles.usmToggle === true) {
-      if (canSet('usm_a')) {
-        stateStyles.sharpParams.usm.usm_a = (wixStyles.usm_a || 0) / 100;
-      }
-      if (canSet('usm_r')) {
-        stateStyles.sharpParams.usm.usm_r = wixStyles.usm_r;
-      }
-      if (canSet('usm_t')) {
-        stateStyles.sharpParams.usm.usm_t = (wixStyles.usm_t || 0) / 255;
+    if (canSet('usmToggle')) {
+      stateStyles.sharpParams.allowUsm = wixStyles.usmToggle;
+
+      if (wixStyles.usmToggle === true) {
+        if (canSet('usm_a')) {
+          stateStyles.sharpParams.usm.usm_a = (wixStyles.usm_a || 0) / 100;
+        }
+        if (canSet('usm_r')) {
+          stateStyles.sharpParams.usm.usm_r = wixStyles.usm_r;
+        }
+        if (canSet('usm_t')) {
+          stateStyles.sharpParams.usm.usm_t = (wixStyles.usm_t || 0) / 255;
+        }
       }
     }
 
