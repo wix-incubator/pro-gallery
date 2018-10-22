@@ -30,6 +30,7 @@ class ItemView extends React.Component {
     this.state = {
       failed: false,
       loaded: false,
+      displayed: false,
       retries: 0,
       showShare: false,
       showHover: false,
@@ -102,6 +103,11 @@ class ItemView extends React.Component {
       failed: false,
       loaded: true
     });
+    setTimeout(() => {
+      this.setState({
+        displayed: true
+      });
+    }, 1500);
   }
 
   isIconTag(tagName) {
@@ -387,6 +393,7 @@ class ItemView extends React.Component {
     return <ImageItem {...props}
             key="imageItem"
             loaded={this.state.loaded}
+            displayed={this.state.displayed}
             imageDimensions={imageDimensions}
             isThumbnail={!!this.props.thumbnailHighlightId}
             actions={{

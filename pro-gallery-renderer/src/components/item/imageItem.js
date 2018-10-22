@@ -4,7 +4,7 @@ import utils from '../../utils/index.js';
 export default class ImageItem extends React.Component {
 
   render() {
-    const {isThumbnail, alt, visible, loaded, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
+    const {isThumbnail, alt, visible, loaded, displayed, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
     const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
     if (visible) {
       return <div
@@ -13,7 +13,7 @@ export default class ImageItem extends React.Component {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
-        style={utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${resized_url.thumb})`}}
+        style={displayed || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${resized_url.thumb})`}}
         >
         <img onLoad={actions.setItemLoaded}
           key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
