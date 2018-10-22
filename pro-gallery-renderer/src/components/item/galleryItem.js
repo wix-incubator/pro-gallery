@@ -395,14 +395,16 @@ class GalleryItem {
       focalPointObj.y = Math.round(focalPoint[1] * 100);
     }
 
-    if (sharpParams.allowUsm === true) {
+    if (sharpParams.allowUsm === true && sharpParams.usm) {
       sharpParams.usm.usm_a = Math.min(5, Math.max(0, (sharpParams.usm.usm_a || 0)));
       sharpParams.usm.usm_r = Math.min(128, Math.max(0, (sharpParams.usm.usm_r || 0))); //should be max 500 - but it's returning a 404
       sharpParams.usm.usm_t = Math.min(1, Math.max(0, (sharpParams.usm.usm_t || 0)));
     } else {
-      sharpParams.usm.usm_a = 0;
-      sharpParams.usm.usm_r = 0;
-      sharpParams.usm.usm_t = 1;
+      sharpParams.usm = {
+        usm_a: 0,
+        usm_r: 0,
+        usm_t: 0
+      };
     }
 
     if (utils.isExternalUrl(originalUrl)) {
@@ -439,9 +441,9 @@ class GalleryItem {
       }
       if (sharpParams && sharpParams.usm) {
         options.unsharpMask = {
-          radius: sharpParams.usm.usm_r,
-          amount: sharpParams.usm.usm_a,
-          threshold: sharpParams.usm.usm_t
+          radius: parseFloat(sharpParams.usm.usm_r),
+          amount: parseFloat(sharpParams.usm.usm_a),
+          threshold: parseFloat(sharpParams.usm.usm_t)
         };
       }
       if (this.watermarkStrSdk) {
