@@ -35,34 +35,6 @@ export default class Social extends React.Component {
     return '';
   }
 
-  getMultishare() {
-    const {styleParams, id, actions} = this.props;
-    if (styleParams.allowMultishare) {
-      if (utils.isSite()) {
-        return <div className={'block-fullscreen gallery-item-social-multishare gallery-item-social-button'}
-          key={'item-social-multishare-' + id}
-          onClick={actions.toggleMultishareSelection}>
-          <svg className={'block-fullscreen'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-            <path className="gallery-item-svg-foreground"
-              d="M9,1A8,8,0,1,1,1,9,8,8,0,0,1,9,1M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0Z" />
-          </svg>
-        </div>;
-      } else {
-        return <div className={'show-tooltip block-fullscreen gallery-item-social-multishare gallery-item-social-button '}
-          onMouseOver={e => itemActions.showTooltip(e, 'Gallery_Sharing_Disabled_In_Editor')}
-          onMouseOut={() => itemActions.hideTooltip()}
-          key={'item-social-multishare-' + id}
-          >
-          <svg className={'block-fullscreen inactive'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-            <path className="gallery-item-svg-foreground"
-              d="M9,1A8,8,0,1,1,1,9,8,8,0,0,1,9,1M9,0a9,9,0,1,0,9,9A9,9,0,0,0,9,0Z" />
-          </svg>
-        </div>;
-      }
-    }
-    return false;
-  }
-
   getLoveButton() {
     const {styleParams, love} = this.props;
     const props = _.pick(this.props, ['id', 'item', 'idx', 'styleParams', 'hashtag', 'love']);
@@ -128,7 +100,6 @@ export default class Social extends React.Component {
   render() {
     const {styleParams, id, showShare, isSmallItem, isNarrow, isShort, isVerticalContainer} = this.props;
     const socialShare = this.getSocialShare();
-    const multishare = this.getMultishare();
     const loveButton = this.getLoveButton();
     const download = this.getDownload();
     //var shopIcons = this.getShopIcons();
@@ -155,7 +126,6 @@ export default class Social extends React.Component {
         key={'item-social-' + id}
         data-hook="item-social"
         >
-        {multishare}
         {loveButton}
         {download}
         {socialShare}

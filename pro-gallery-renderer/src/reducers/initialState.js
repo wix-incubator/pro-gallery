@@ -10,7 +10,5 @@ export default {
     documentHeight: utils.getScreenHeight()
   },
   fullscreen: {
-  },
-  multishare: {
   }
 };

@@ -203,9 +203,6 @@ describe('Item View', () => {
 			// not testing this.
     });
   });
-	// not testing multishare toggleMultishareSelection
-	// not testing multishare handleItemMouseDown
-	// not testing multishare handleItemMouseUp
 	// not testing "if" isSmallItem
 	// not testing "if" isVerticalContainer
 	// not testing "if" shouldShowHoverOnMobile
@@ -214,7 +211,6 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps);
       driver.mount(ItemView, sampleItemViewProps);
       const instance = driver.get.instance();
-      const stub = sinon.stub(instance, 'isMultisharing').returns(false);
       const stubprop = sinon.stub(instance, 'shouldShowHoverOnMobile').returns(false);
       const stubMobile = sinon.stub(utils, 'isMobile').returns(false);
       const stubEditor = sinon.stub(utils, 'isEditor').returns(false);
@@ -245,17 +241,12 @@ describe('Item View', () => {
         }
       });
       expect(instance.shouldHover()).to.be.false;
-      stub.returns(true);
-      expect(instance.shouldHover()).to.be.true;
-      stub.restore();
       stubMobile.restore();
       stubEditor.restore();
       stubprop.restore();
 
     });
   });
-	// not testing isMultishared
-	// not testing isMultisharing
 
   describe('getImageDimentions', () => {
     it('should return the correct dimentions for image parameters', () => {

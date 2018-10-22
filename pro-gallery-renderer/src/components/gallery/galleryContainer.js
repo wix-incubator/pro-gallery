@@ -45,9 +45,6 @@ export class GalleryContainer extends React.Component {
     this.getGalleryScroll = this.getGalleryScroll.bind(this);
     this.setWixHeight = this.setWixHeight.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
-    this.addItemToMultishare = this.addItemToMultishare.bind(this);
-    this.removeItemFromMultishare = this.removeItemFromMultishare.bind(this);
-    this.updateMultishareItems = this.updateMultishareItems.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.dispatchNavigationOutIfNeeded = this.dispatchNavigationOutIfNeeded.bind(this);
     this.dispatchNavigationInIfNeeded = this.dispatchNavigationInIfNeeded.bind(this);
@@ -147,7 +144,6 @@ export class GalleryContainer extends React.Component {
       allowDownload: false,
       allowTitle: true,
       allowDescription: false,
-      allowMultishare: false,
       loveButton: true,
       loveCounter: true,
       videoLoop: true,
@@ -223,10 +219,6 @@ export class GalleryContainer extends React.Component {
       hashtag: {
         filter: utils.getWorkerWindow()['pro-gallery-hashtag-filter'] || '',
         items: []
-      },
-      multishare: {
-        items: [],
-        isMultisharing: (this.props.defaultSelectMode === true)
       }
     };
 
@@ -329,7 +321,6 @@ export class GalleryContainer extends React.Component {
       if (!this.props.ignoreWixScrollEvent) {
         this.wixEventsFunctions.push([Wix.Events.SCROLL, this.reRenderForScroll]);
       }
-      // this.pubsubFunctions.push(['multishare2gallery', this.updateMultishareItems]);
     } else {
       this.windowEventsFunctions.push(['scroll', this.reRenderForScroll]);
     }
@@ -1313,11 +1304,6 @@ export class GalleryContainer extends React.Component {
 
     if (canSet('galleryThumbnailsAlignment')) {
       stateStyles.galleryThumbnailsAlignment = ['bottom', 'left', 'top', 'right'][wixStyles.galleryThumbnailsAlignment];
-    }
-
-    if (canSet('allowMultishare')) {
-      //ODEDS: changed to hardcoded false, disabling all occurences of multishare for now
-      stateStyles.allowMultishare = false; // !!(wixStyles.allowMultishare) && utils.isWidgetInSite('multishare_widget'); //the widget must be present to show the multishare
     }
 
     //There's some kunch-ptant here so support opacity, checkout .default css className usage
@@ -2492,7 +2478,7 @@ export class GalleryContainer extends React.Component {
     //this.forceUpdate();
   }
 
-  //---------------------------------------| MULTISHARE |-----------------------------------------//
+  //---------------------------------------| HASHTAG |-----------------------------------------//
 
   initHashtagFilter(callback) {
 
@@ -2558,64 +2544,6 @@ export class GalleryContainer extends React.Component {
       console.warn('Could not sort hashtag items', e, hashtagItems, curItems);
       return curItems;
     }
-  }
-
-  updateMultishareItems(event) {
-    if (utils.isVerbose()) {
-      console.log('multishare pubsub', event);
-    }
-    const data = event.data;
-    if (_.isBoolean(data.update) && data.update === true && _.isArray(data.items)) {
-      utils.setStateAndLog(this, 'updateMultishareItems', {
-        multishare: {
-          items: data.items,
-          isMultisharing: (this.props.defaultSelectMode === true || !!data.items.length)
-        }
-      });
-    }
-  }
-
-  addItemToMultishare(itemDto) {
-    if (utils.isInWix()) {
-      itemDto.compId = this.compId; //add a refernce to the gallery that started this share
-      Wix.PubSub.publish('gallery2multishare', {
-        call: 'addItemToMultishare',
-        data: (itemDto)
-      }, true);
-    } else {
-      this.onItemClickEvent.itemId = itemDto.id;
-      window.dispatchEvent(this.onItemClickEvent);
-
-      utils.setStateAndLog(this, 'updateMultishareItems', {
-        multishare: {
-          items: this.state.multishare.items.concat([itemDto]),
-          isMultisharing: true
-        }
-      });
-    }
-  }
-
-  removeItemFromMultishare(itemProps) {
-    if (utils.isInWix()) {
-      Wix.PubSub.publish('gallery2multishare', {
-        call: 'removeItemFromMultishare',
-        data: (itemProps)
-      }, true);
-    } else {
-      let multishareItems = this.state.multishare.items;
-      multishareItems = _.filter(multishareItems, item => {
-        return (
-          (item.itemId || item.photoId) !== (itemProps.itemId || itemProps.photoId)
-        );
-      });
-      utils.setStateAndLog(this, 'updateMultishareItems', {
-        multishare: {
-          items: multishareItems,
-          isMultisharing: true
-        }
-      });
-    }
-
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//
@@ -3122,7 +3050,6 @@ export class GalleryContainer extends React.Component {
         isInfinite: this.isInfiniteScroll()
       })}
       thumbnailSize = {this.thumbnailSize}
-      multishare = {this.state.multishare}
       watermark = {this.props.watermarkData}
       settings = {this.props.settings}
       gotScrollEvent = {this.state.gotScrollEvent}
@@ -3134,8 +3061,6 @@ export class GalleryContainer extends React.Component {
         toggleFullscreen: this.toggleFullscreen,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
-        addItemToMultishare: this.addItemToMultishare,
-        removeItemFromMultishare: this.removeItemFromMultishare
       })}
       debug = {{
         lastHeight: this.lastHeight,
@@ -3157,7 +3082,6 @@ export class GalleryContainer extends React.Component {
       scroll = {_.merge({}, this.state.scroll, {
         isInfinite: this.isInfiniteScroll()
       })}
-      multishare = {this.state.multishare}
       watermark = {this.props.watermarkData}
       settings = {this.props.settings}
       gotScrollEvent = {this.state.gotScrollEvent}
@@ -3167,8 +3091,6 @@ export class GalleryContainer extends React.Component {
         toggleFullscreen: this.toggleFullscreen,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
-        addItemToMultishare: this.addItemToMultishare,
-        removeItemFromMultishare: this.removeItemFromMultishare
       })}
       debug = {{
         lastHeight: this.lastHeight,

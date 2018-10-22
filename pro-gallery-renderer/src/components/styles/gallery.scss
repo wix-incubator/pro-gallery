@@ -1152,32 +1152,6 @@ div.pro-gallery {
               right: 30px;
             }
 
-            &.gallery-item-social-multishare {
-              top: 29px;
-              left: 28px;
-              bottom: auto;
-              line-height: 1;
-
-              &.mobile {
-                top: 19px;
-                left: 18px;
-              }
-
-              svg {
-                width: 21px;
-                height: 21px;
-                cursor: pointer;
-
-                .gallery-item-svg-foreground {
-                  fill: $hover-icons;
-                }
-
-                .gallery-item-svg-background {
-                  fill: $icons-bright;
-                }
-              }
-            }
-
             &.gallery-item-social-download {
               bottom: 31px;
               left: auto;

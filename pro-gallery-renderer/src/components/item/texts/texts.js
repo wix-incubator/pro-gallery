@@ -17,9 +17,6 @@ export default class Texts extends React.Component {
     if (styleParams.showArrows) {
       classNames.push('padded-horizontal');
     }
-    if (styleParams.allowMultishare) {
-      classNames.push('push-down');
-    }
     if (isNarrow) {
       classNames.push('narrow-item');
     }

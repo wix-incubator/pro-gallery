@@ -29,13 +29,11 @@ describe('ItemHover', () => {
     Object.assign(sampleItemViewProps, {
       idx: 1,
       shouldHover: true,
-      isMultisharing: true,
       imageDimensions: {
         height: `calc(100% - 80px)`,
         marginTop: 10
       },
       actions: {
-        toggleMultishareSelection: () => {},
         handleItemMouseDown: () => {},
         handleItemMouseUp: () => {}
       },
@@ -142,7 +140,6 @@ describe('ItemHover', () => {
 
     Object.assign(sampleItemViewProps, {
       forceShowHover: true,
-      isMultisharing: false
     });
     stub = sinon.stub(utils, 'isMobile').returns(true);
     driver.mount(ItemHover, sampleItemViewProps);
@@ -152,7 +149,6 @@ describe('ItemHover', () => {
 
     Object.assign(sampleItemViewProps, {
       forceShowHover: false,
-      isMultisharing: false
     });
     stub = sinon.stub(utils, 'isMobile').returns(true);
     driver.mount(ItemHover, sampleItemViewProps);
@@ -162,7 +158,6 @@ describe('ItemHover', () => {
 
     Object.assign(sampleItemViewProps, {
       forceShowHover: false,
-      isMultisharing: false
     });
     stub = sinon.stub(utils, 'isMobile').returns(false);
     driver.mount(ItemHover, sampleItemViewProps);

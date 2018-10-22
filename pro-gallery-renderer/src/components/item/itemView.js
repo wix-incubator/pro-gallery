@@ -43,13 +43,10 @@ class ItemView extends React.Component {
     this.onItemClick = this.onItemClick.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.toggleFullscreenIfNeeded = this.toggleFullscreenIfNeeded.bind(this);
-    this.toggleMultishareSelection = this.toggleMultishareSelection.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
     this.setItemError = this.setItemError.bind(this);
-    this.isMultishared = this.isMultishared.bind(this);
-    this.isMultisharing = this.isMultisharing.bind(this);
     this.isVerticalContainer = this.isVerticalContainer.bind(this);
     this.isHighlight = this.isHighlight.bind(this);
     this.toggleShare = this.toggleShare.bind(this);
@@ -198,31 +195,15 @@ class ItemView extends React.Component {
     }
   }
 
-  toggleMultishareSelection(e) {
-    if (e && e.stopPropagation) {
-      e.stopPropagation();
-    }
-    const itemContainer = this.itemContainer;
-    itemContainer.style.transform = 'scale(' + ((this.props.style.width - 8) / this.props.style.width) + ')';
-    setTimeout(() => {
-      itemContainer.style.transform = 'scale(1)';
-    }, 80);
-
-    if (this.isMultishared()) {
-      this.props.actions.removeItemFromMultishare(this.props);
-    } else {
-      this.props.actions.addItemToMultishare(this.props);
-    }
-  }
-
   handleItemMouseDown(e) {
-    if (utils.isMobile() && this.props.styleParams.allowMultishare) {
-      clearTimeout(this.longPressTimer);
-      this.longPressTimer = setTimeout(() => {
-        e.preventDefault(); //prevent default only after a long press (so that scroll will not break)
-        this.toggleMultishareSelection(e);
-      }, 500);
-    }
+    //check for long press
+    // if (utils.isMobile()) {
+    //   clearTimeout(this.longPressTimer);
+    //   this.longPressTimer = setTimeout(() => {
+    //     e.preventDefault(); //prevent default only after a long press (so that scroll will not break)
+    //     //do something
+    //   }, 500);
+    // }
     return true; //make sure the default event behaviour continues
   }
 
@@ -252,9 +233,7 @@ class ItemView extends React.Component {
   }
 
   shouldHover() {
-    if (this.isMultisharing()) {
-      return true;
-    } else if (this.props.styleParams.isSlideshow) {
+    if (this.props.styleParams.isSlideshow) {
       return false;
     } else if (this.props.styleParams.allowHover === false) {
       return false;
@@ -265,17 +244,6 @@ class ItemView extends React.Component {
     } else {
       return true;
     }
-  }
-
-  isMultishared() {
-    const items = _.get(this, 'props.multishare.items');
-    return items && !!_.find(items, itemProps => {
-      return (itemProps.id === this.props.id);
-    });
-  }
-
-  isMultisharing() {
-    return _.get(this, 'props.multishare.isMultisharing');
   }
 
   //---------------------------------------| COMPONENTS |-----------------------------------------//
@@ -347,7 +315,6 @@ class ItemView extends React.Component {
               key={`item-social-${props.id}`}
               actions={{
                 openItemShopInFullScreen: this.openItemShopInFullScreen,
-                toggleMultishareSelection: this.toggleMultishareSelection,
                 toggleShare: this.toggleShare,
                 getShare: this.getShare,
                 showTooltip: itemActions.showTooltip,
@@ -373,15 +340,12 @@ class ItemView extends React.Component {
     const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     return <ItemHover {...props}
             forceShowHover={this.props.previewHover || this.state.showHover}
-            isMultisharing={this.isMultisharing()}
-            isMultishared={this.isMultishared()}
             shouldHover={this.shouldHover()}
             imageDimensions={imageDimensions}
             key="hover"
             actions={{
               handleItemMouseDown: this.handleItemMouseDown,
               handleItemMouseUp: this.handleItemMouseUp,
-              toggleMultishareSelection: this.toggleMultishareSelection,
             }}
             >
               {children}
@@ -424,9 +388,6 @@ class ItemView extends React.Component {
               setItemError: this.setItemError,
               handleItemMouseDown: this.handleItemMouseDown,
               handleItemMouseUp: this.handleItemMouseUp,
-              toggleMultishareSelection: this.toggleMultishareSelection,
-              isMultishared: this.isMultishared,
-              isMultisharing: this.isMultisharing,
             })}
             />;
   }

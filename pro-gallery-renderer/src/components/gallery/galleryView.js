@@ -138,15 +138,12 @@ class GalleryView extends React.Component {
       scroll: this.props.scroll,
       container: this.props.container,
       styleParams: this.props.styleParams,
-      multishare: this.props.multishare,
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
       actions: {
         getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
-        addItemToMultishare: this.props.actions.addItemToMultishare,
-        removeItemFromMultishare: this.props.actions.removeItemFromMultishare
       }
     };
   }

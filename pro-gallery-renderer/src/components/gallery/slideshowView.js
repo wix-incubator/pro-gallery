@@ -259,7 +259,6 @@ class SlideshowView extends React.Component {
         allowSocial: false,
         allowDownload: false,
         allowTitle: false,
-        allowMultishare: false,
         cubeType: 'fill',
         loveButton: false,
         loveCounter: false,
@@ -470,15 +469,12 @@ class SlideshowView extends React.Component {
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,
-      multishare: this.props.multishare,
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
       actions: {
         getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
-        addItemToMultishare: this.props.actions.addItemToMultishare,
-        removeItemFromMultishare: this.props.actions.removeItemFromMultishare
       }
     };
 
