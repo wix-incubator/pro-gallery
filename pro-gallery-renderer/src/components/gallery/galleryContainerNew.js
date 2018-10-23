@@ -6,7 +6,7 @@ import GalleryView from './galleryView.js';
 import SlideshowView from './slideshowView.js';
 import {addLayoutStyles} from '../helpers/layoutHelper';
 import {ItemsHelper} from '../helpers/itemsHelper';
-import {thumbnailSize, getGalleryDimensions} from '../helpers/dimensionsHelper';
+import {getGalleryDimensions} from '../helpers/dimensionsHelper';
 
 import {createLayout} from 'pro-gallery-layouter';
 import GalleryItem from '../item/galleryItem';
@@ -177,7 +177,6 @@ export class GalleryContainer extends React.Component {
       galleryStructure = {this.galleryStructure}
       styleParams = {styles}
       container = {this.state.container}
-      thumbnailSize = {thumbnailSize}
       watermark = {this.props.watermarkData}
       settings = {this.props.settings}
       gotScrollEvent = {true}

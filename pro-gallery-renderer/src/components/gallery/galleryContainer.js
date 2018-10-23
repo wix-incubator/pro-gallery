@@ -122,7 +122,7 @@ export class GalleryContainer extends React.Component {
     this.scrollBase = 0;
     this.lastOffsetTop = 0;
 
-    this.thumbnailSize = utils.isMobile() ? 90 : 120;
+    this.defaultThumbnailSize = utils.isMobile() ? 90 : 120;
 
     this.preloadedItems = [];
 
@@ -179,6 +179,7 @@ export class GalleryContainer extends React.Component {
       isSlideshow: false,
       slideshowInfoSize: 200,
       hasThumbnails: false,
+      thumbnailSize: this.defaultThumbnailSize,
       galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,
       gridStyle: 0,
@@ -1484,6 +1485,9 @@ export class GalleryContainer extends React.Component {
     if (canSet('slideshowInfoSize')) {
       stateStyles.slideshowInfoSize = Number(wixStyles.slideshowInfoSize);
     }
+    if (canSet('thumbnailSize')) {
+      stateStyles.thumbnailSize = utils.isMobile() ? this.defaultThumbnailSize : (Number(wixStyles.thumbnailSize) || this.defaultThumbnailSize);
+    }
 
     //Backwards compatibility for masonry layout
     if (String(stateStyles.selectedLayoutV2) === '1') {
@@ -2055,7 +2059,7 @@ export class GalleryContainer extends React.Component {
       galleryHeight: this.getGalleryHeight()
     };
 
-    const thumbnailSize = this.thumbnailSize + this.getLatestState('styleParams.galleryMargin', 0) + 3 * this.getLatestState('styleParams.thumbnailSpacings', 0);
+    const thumbnailSize = this.getLatestState('styleParams.thumbnailSize', this.defaultThumbnailSize) + this.getLatestState('styleParams.galleryMargin', 0) + 3 * this.getLatestState('styleParams.thumbnailSpacings', 0);
 
     if (this.getLatestState('styleParams.hasThumbnails', false)) {
       switch (this.getLatestState('styleParams.galleryThumbnailsAlignment', '')) {
@@ -2153,7 +2157,7 @@ export class GalleryContainer extends React.Component {
       }
 
       if (this.state.styleParams.hasThumbnails && ['top', 'bottom'].indexOf(this.state.styleParams.galleryThumbnailsAlignment) >= 0) {
-        newHeight += this.thumbnailSize;
+        newHeight += this.getLatestState('styleParams.thumbnailSize', this.defaultThumbnailSize);
       }
 
       const maxRowHeight = getMaxRowHeight();
@@ -3064,7 +3068,6 @@ export class GalleryContainer extends React.Component {
       scroll = {_.merge({}, this.state.scroll, {
         isInfinite: this.isInfiniteScroll()
       })}
-      thumbnailSize = {this.thumbnailSize}
       watermark = {this.props.watermarkData}
       settings = {this.props.settings}
       gotScrollEvent = {this.state.gotScrollEvent}

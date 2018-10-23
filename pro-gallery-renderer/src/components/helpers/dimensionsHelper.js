@@ -1,8 +1,6 @@
 
 import utils from '../../utils';
 
-const thumbnailSize = utils.isMobile() ? 90 : 120;
-
 function protectGalleryWidth(width) {
 
   let maxGalleryWidth;
@@ -44,7 +42,7 @@ function getGalleryDimensions(styles, container) {
     galleryHeight: getGalleryHeight(styles, container)
   };
 
-  const fixedThumbnailSize = thumbnailSize + styles.galleryMargin + 3 * styles.thumbnailSpacings;
+  const fixedThumbnailSize = styles.thumbnailSize + styles.galleryMargin + 3 * styles.thumbnailSpacings;
 
   if (styles.hasThumbnails) {
     switch (styles.galleryThumbnailsAlignment) {
@@ -123,6 +121,5 @@ export {
   getGalleryDimensions,
   getGalleryHeight,
   getGalleryWidth,
-  getGalleryRatio,
-  thumbnailSize
+  getGalleryRatio
 };

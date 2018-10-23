@@ -124,8 +124,8 @@ class SlideshowView extends React.Component {
     const currentIdx = this.state.currentIdx; // zero based (3)
     utils.isVerbose() && console.log('creating thumbnails for idx', currentIdx);
 
-    let width = this.props.thumbnailSize;
-    let height = this.props.thumbnailSize;
+    let width = this.props.styleParams.thumbnailSize;
+    let height = this.props.styleParams.thumbnailSize;
 
     let oneRow;
     let numOfThumbnails;
@@ -135,18 +135,18 @@ class SlideshowView extends React.Component {
       case 'top':
       case 'bottom':
         width = this.props.container.galleryWidth + this.props.styleParams.thumbnailSpacings;
-        height = this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings;
+        height = this.props.styleParams.thumbnailSize + this.props.styleParams.thumbnailSpacings;
         oneRow = true;
-        numOfThumbnails = Math.ceil(width / this.props.thumbnailSize);
-        numOfWholeThumbnails = Math.floor((width + this.props.styleParams.thumbnailSpacings) / (this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings * 2));
+        numOfThumbnails = Math.ceil(width / this.props.styleParams.thumbnailSize);
+        numOfWholeThumbnails = Math.floor((width + this.props.styleParams.thumbnailSpacings) / (this.props.styleParams.thumbnailSize + this.props.styleParams.thumbnailSpacings * 2));
         break;
       case 'left':
       case 'right':
         height = this.props.container.galleryHeight + 2 * this.props.styleParams.thumbnailSpacings;
-        width = this.props.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
+        width = this.props.styleParams.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
         oneRow = false;
-        numOfThumbnails = Math.ceil(height / this.props.thumbnailSize);
-        numOfWholeThumbnails = Math.floor(height / (this.props.thumbnailSize + this.props.styleParams.thumbnailSpacings * 2));
+        numOfThumbnails = Math.ceil(height / this.props.styleParams.thumbnailSize);
+        numOfWholeThumbnails = Math.floor(height / (this.props.styleParams.thumbnailSize + this.props.styleParams.thumbnailSpacings * 2));
         break;
     }
 
@@ -172,7 +172,7 @@ class SlideshowView extends React.Component {
       this.lastItemIdx += 1;
     }
 
-    const thumbnailsContainerSize = numOfThumbnails * this.props.thumbnailSize +
+    const thumbnailsContainerSize = numOfThumbnails * this.props.styleParams.thumbnailSize +
       ((numOfThumbnails - 1) * 2 + 1) * this.props.styleParams.thumbnailSpacings;
     const thumbnailsStyle = {width, height};
 
@@ -229,8 +229,8 @@ class SlideshowView extends React.Component {
       styleParams: {
         gotStyleParams: false,
         isVertical: false,
-        gallerySize: this.props.thumbnailSize,
-        minItemSize: this.props.thumbnailSize,
+        gallerySize: this.props.styleParams.thumbnailSize,
+        minItemSize: this.props.styleParams.thumbnailSize,
         imageMargin: this.props.styleParams.thumbnailSpacings,
         galleryMargin: 0,
         groupSize: 1,
@@ -368,7 +368,7 @@ class SlideshowView extends React.Component {
       switch (thumbnailPosition) { //if thumbnailPosition is left or right, need to calculate the thumbnails column in the width calculation
         case 'left':
         case 'right':
-          thumbnailColumnWidth = this.props.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
+          thumbnailColumnWidth = this.props.styleParams.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
           break;
       }
     }
