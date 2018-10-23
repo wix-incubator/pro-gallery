@@ -2413,14 +2413,14 @@ export class GalleryContainer extends React.Component {
             this.fullscreenOpenedAt = Date.now();
 
             if ((this.state.styleParams.itemClick === 'popup') || (window && window.petri && window.petri['specs.pro-gallery.fullscreenPopup'] === 'true')) {
-              Wix.Utils.getSectionUrl({sectionId: utils.getFullscreenSectionId()}, res => {
-                const fullscreenState = utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId);
-                const fullscreenUrl = res.url + '/' + fullscreenState;
-                Wix.openPopup(fullscreenUrl, '100%', '100%', {
-                  origin: Wix.WindowOrigin.FIXED,
-                  placement: Wix.WindowPlacement.CENTER
-                }, this.closeFullscreenCallback, Wix.Theme.BARE);
-              });
+
+              const baseUrl = 'http://progallery.wix.com/fullscreen/';
+              const fullscreenState = utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId);
+              const fullscreenUrl = baseUrl + '/' + fullscreenState;
+              Wix.openPopup(fullscreenUrl, '100%', '100%', {
+                origin: Wix.WindowOrigin.FIXED,
+                placement: Wix.WindowPlacement.CENTER
+              }, this.closeFullscreenCallback, Wix.Theme.BARE);
             } else {
               Wix.Utils.navigateToSection({
                 sectionId: utils.getFullscreenSectionId(),
