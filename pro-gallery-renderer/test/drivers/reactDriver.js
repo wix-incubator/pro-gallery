@@ -8,6 +8,7 @@ import _ from 'lodash';
 import configureStore from 'redux-mock-store';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
 import React from 'react';
+import utils from '../../src/utils';
 
 const mockStore = configureStore();
 
@@ -78,6 +79,7 @@ class galleryDriver {
       isSlideshow: false,
       isSlider: false,
       hasThumbnails: false,
+      thumbnailSize: utils.isMobile() ? 90 : 120,
       galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
@@ -244,8 +246,7 @@ class galleryDriver {
             scroll: this.scroll,
             container: this.container,
             styleParams: this.styleParams,
-            actions: this.actions,
-            thumbnailSize: 20
+            actions: this.actions
           };
         }
 
@@ -266,7 +267,6 @@ class galleryDriver {
           container: galleryViewProps.container,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
-          thumbnailSize: galleryViewProps.thumbnailSize,
           store: mockStore({}),
           convertToGalleryItems: GalleryContainer.convertToGalleryItems,
           convertDtoToLayoutItem: GalleryContainer.convertDtoToLayoutItem
