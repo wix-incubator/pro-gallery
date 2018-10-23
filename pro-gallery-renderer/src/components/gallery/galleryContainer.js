@@ -2360,7 +2360,7 @@ export class GalleryContainer extends React.Component {
 
         window.currentGalleryItems = this.allItems();
         window.totalItemsCount = this.state.totalItemsCount;
-        if (utils.isInWix()) {
+        if (utils.isInWix() || utils.isWixIframe()) {
 
           //data to be read by the fullscreen iframe
           window.onunload = function () {
@@ -2412,7 +2412,7 @@ export class GalleryContainer extends React.Component {
             worker['pro-gallery-fullscreen-comp-id'] = this.compId;
             this.fullscreenOpenedAt = Date.now();
 
-            if (window && window.petri && window.petri['specs.pro-gallery.fullscreenPopup'] === 'true') {
+            if ((this.state.styleParams.itemClick === 'popup') || (window && window.petri && window.petri['specs.pro-gallery.fullscreenPopup'] === 'true')) {
               Wix.Utils.getSectionUrl({sectionId: utils.getFullscreenSectionId()}, res => {
                 const fullscreenState = utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId);
                 const fullscreenUrl = res.url + '/' + fullscreenState;
