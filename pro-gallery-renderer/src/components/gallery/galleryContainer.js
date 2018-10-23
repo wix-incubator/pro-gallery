@@ -53,6 +53,7 @@ export class GalleryContainer extends React.Component {
     this.reRenderForHorizontalScroll = this.reRenderForHorizontalScroll.bind(this);
     this.reRenderForScroll = this.reRenderForScroll.bind(this);
     this.reRenderForStyles = this.reRenderForStyles.bind(this);
+    this.galleryPublished = this.galleryPublished.bind(this);
     this.reRenderForSettings = this.reRenderForSettings.bind(this);
     this.reRenderForResize = this.reRenderForResize.bind(this);
     this.reRenderForOrientation = this.reRenderForOrientation.bind(this);
@@ -315,6 +316,7 @@ export class GalleryContainer extends React.Component {
     // this.pubsubFunctions = [];
 
     if (utils.isInWix() || utils.isWixIframe()) {
+      this.wixEventsFunctions.push([Wix.Events.SITE_PUBLISHED, this.galleryPublished]);
       this.wixEventsFunctions.push([Wix.Events.STYLE_PARAMS_CHANGE, this.reRenderForStyles]);
       this.wixEventsFunctions.push([Wix.Events.SETTINGS_UPDATED, this.reRenderForSettings]);
       this.wixEventsFunctions.push([Wix.Events.DEVICE_TYPE_CHANGED, this.reRenderForDevice]);
@@ -504,6 +506,12 @@ export class GalleryContainer extends React.Component {
     });
   }
 
+  galleryPublished() {
+    logger.track('gallery_published', {
+      numberOfItems: this.state.totalItemsCount,
+      styleParams: JSON.stringify(this.state.styleParams)
+    });
+  }
   //-----------------------------------------| STYLES |--------------------------------------------//
 
   getStyleBySeed(seed) {
