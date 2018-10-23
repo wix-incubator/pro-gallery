@@ -19,6 +19,7 @@ import Consts from 'photography-client-lib/dist/src/utils/consts';
 import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 import {pauseVideo} from '../../actions/itemViewActions.js';
+import {getFixedLayouts} from '../helpers/fixedLayoutsHelper.js';
 
 
 try {
@@ -915,7 +916,10 @@ export class GalleryContainer extends React.Component {
       empty: {
         gallerySize: Math.round(gallerySize * 9 + 100)
       },
-      magic: this.getStyleBySeed(magicLayoutSeed)
+      magic: this.getStyleBySeed(magicLayoutSeed),
+      bricks: getFixedLayouts(0),
+      alternate: getFixedLayouts(1),
+      mix: getFixedLayouts(2)
     };
 
     const galleyLayoutList = [
@@ -929,7 +933,10 @@ export class GalleryContainer extends React.Component {
       'panorama',   // 6
       'column',     // 7
       'magic',      // 8
-      'fullsize'    // 9
+      'fullsize',   // 9
+      'bricks',      //10
+      'alternate',   //11
+      'mix',         //12
     ];
 
     let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
