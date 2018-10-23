@@ -509,7 +509,7 @@ class GalleryItem {
 
     requiredWidth = Math.ceil(requiredWidth);
     requiredHeight = Math.ceil(requiredHeight);
-    const thumbSize = 80;
+    const thumbSize = 250;
 
     const urls = {};
 
