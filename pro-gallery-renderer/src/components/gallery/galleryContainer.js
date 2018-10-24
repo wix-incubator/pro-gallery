@@ -2416,7 +2416,7 @@ export class GalleryContainer extends React.Component {
 
               const baseUrl = 'http://progallery.wix.com/fullscreen/';
               const fullscreenState = utils.getFullscreenUrlState(this.compId, item.id, itemIdx, this.pageId, styleId);
-              const fullscreenUrl = baseUrl + '/' + fullscreenState;
+              const fullscreenUrl = baseUrl + '/' + fullscreenState + `&instance=${window && window.instance}`;
               Wix.openPopup(fullscreenUrl, '100%', '100%', {
                 origin: Wix.WindowOrigin.FIXED,
                 placement: Wix.WindowPlacement.CENTER

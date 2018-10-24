@@ -532,6 +532,9 @@ class GalleryItem {
               break;
             }
           }
+          // const wixQualities = qualities.filter(video => video.formats[0] === 'wix');
+          // urls.wix = window.location.protocol + '//video.wixstatic.com/video/' + this.url + suffix + '/' + format + '/file.' + format;
+
           const ratio = poster.width / poster.height;
           const isWider = ratio > 1;
           if (isWider) {
