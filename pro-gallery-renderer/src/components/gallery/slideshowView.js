@@ -337,7 +337,6 @@ class SlideshowView extends React.Component {
   }
 
   setCurrentItemByScroll() {
-
     utils.isVerbose() && console.log('Setting current Idx by scroll', this.isAutoScrolling);
 
     if (this.isAutoScrolling) {
@@ -360,21 +359,9 @@ class SlideshowView extends React.Component {
     const items = this.state.flatItems;
 
     let currentIdx;
-    let thumbnailColumnWidth = 0;
-
-    if (this.props.styleParams.galleryLayout === 3) { //if layout is thumbnails
-      const thumbnailPosition = this.props.styleParams.galleryThumbnailsAlignment;
-
-      switch (thumbnailPosition) { //if thumbnailPosition is left or right, need to calculate the thumbnails column in the width calculation
-        case 'left':
-        case 'right':
-          thumbnailColumnWidth = this.props.styleParams.thumbnailSize + 2 * this.props.styleParams.thumbnailSpacings;
-          break;
-      }
-    }
 
     for (let item, i = 0; item = items[i]; i++) {
-      if (item.offset.left > scrollLeft + thumbnailColumnWidth + ((this.props.container.galleryWidth - item.width) / 2)) {
+      if (item.offset.left > scrollLeft + ((this.props.container.galleryWidth) / 2)) {
         currentIdx = i - 1;
         break;
       }
