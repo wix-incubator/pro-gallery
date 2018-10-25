@@ -63,7 +63,7 @@ export class GalleryContainer extends React.Component {
     if (isNew.items) {
       _items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
       this.items = _items;
-      newState.items = _items.map(item => item.id);
+      newState.items = _items;
     } else {
       _items = this.state.items;
     }

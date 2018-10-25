@@ -1,7 +1,7 @@
 
 import utils from '../../utils';
 
-function protectGalleryWidth(width) {
+function protectGalleryWidth(width, container) {
 
   let maxGalleryWidth;
   if (utils.isSite()) {
@@ -11,9 +11,9 @@ function protectGalleryWidth(width) {
   if (utils.browserIs('chromeIos')) {
     // This can be the width calc for all galleries, but in chromeIos it must be used otherwise there is a gap on the left of the gallery.
     // Currently there is a bug with Mitzi that the width parmeter is not updating fast enough once it is fixed, use this code always.
-    maxGalleryWidth = maxGalleryWidth || document.body.clientWidth;
+    maxGalleryWidth = maxGalleryWidth || container.documentWidth;
   } else {
-    maxGalleryWidth = document.body.clientWidth;
+    maxGalleryWidth = container.documentWidth;
   }
 
   if (utils.isMobile()) {
@@ -36,7 +36,7 @@ function getDimensionFix(styles) {
 }
 
 function getGalleryDimensions(styles, container) {
-
+  //console.count('this is the container in dimentsions helper', container);
   const res = {
     galleryWidth: getGalleryWidth(styles, container),
     galleryHeight: getGalleryHeight(styles, container)
@@ -60,7 +60,7 @@ function getGalleryDimensions(styles, container) {
   } else if (styles.isSlideshow) {
     res.galleryHeight -= styles.slideshowInfoSize;
   }
-
+  console.log(res);
   return res;
 }
 
@@ -70,14 +70,14 @@ function getGalleryWidth(styles, container) {
 //   window.innerWidth ||
 //   document.documentElement.clientWidth ||
 //   document.getElementsByTagName('body')[0].clientWidth;
-  const domWidth = () => protectGalleryWidth(utils.isMobile() ? document.body.clientWidth : window.innerWidth); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
+  const domWidth = () => protectGalleryWidth(utils.isMobile() ? container.documentWidth : container.windowWidth, container); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
   return Math.floor((container.width > 0 ? container.width : domWidth()) + getDimensionFix(styles) * 2); //add margins to width and then remove them in css negative margins
 }
 
 
 function getGalleryHeight(styles, container) {
   const offsetTop = styles.oneRow ? container.offsetTop : 0;
-  const domHeight = () => protectGalleryHeight(window.innerHeight, offsetTop);
+  const domHeight = () => protectGalleryHeight(container.windowHeight, offsetTop);
   return Math.floor((container.height > 0 ? container.height : domHeight()) + getDimensionFix(styles));
 }
 
