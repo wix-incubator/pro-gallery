@@ -6,12 +6,11 @@ function getDimensionFix(styles) {
 }
 
 function getGalleryDimensions(styles, container) {
-  //console.count('this is the container in dimentsions helper', container);
+  // console.count('this is the container in dimentsions helper', container);
   const res = {
     galleryWidth: getGalleryWidth(styles, container),
     galleryHeight: getGalleryHeight(styles, container)
   };
-
 
   if (styles.hasThumbnails) {
     const fixedThumbnailSize = styles.thumbnailSize + styles.galleryMargin + 3 * styles.thumbnailSpacings;

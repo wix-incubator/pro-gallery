@@ -19,11 +19,17 @@ class GroupView extends React.Component {
       renderedHorizontally: false,
     };
 
+    this.galleryScroll = {
+      top: 0,
+      left: 0
+    };
+
+
     this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
 
   }
 
-  isRenderedVertically({target}) {
+  isRenderedVertically(target) {
     const renderedPadding = utils.parseGetParam('renderedPadding') || target.clientHeight * 2;
     const isBelowViewportTop = target.offsetTop + this.props.bottom > target.scrollTop - renderedPadding;
     const isAboveViewportBottom = target.offsetTop + this.props.top < target.scrollTop + target.clientHeight + renderedPadding;
@@ -31,18 +37,15 @@ class GroupView extends React.Component {
     return rendered;
   }
 
-  isVisibleVertically({target}) {
+  isVisibleVertically(target) {
     const visiblePadding = utils.parseGetParam('displayPadding') || target.clientHeight * 0.5;
     const isBelowViewportTop = target.offsetTop + this.props.bottom > target.scrollTop - visiblePadding;
     const isAboveViewportBottom = target.offsetTop + this.props.top < target.scrollTop + target.clientHeight + visiblePadding;
     const visible = isBelowViewportTop && isAboveViewportBottom;
-    if (this.props.idx === 0) {
-      console.log(`PROGALLERY [visibility] - Gallery #${target.offsetTop} Group #${this.props.idx} is vertically ${visible ? 'VISIBLE' : 'HIDDEN'}`, target);
-    }
     return visible;
   }
 
-  isVisibleHorizontally({target}) {
+  isVisibleHorizontally(target) {
     if (!this.props.galleryConfig.styleParams.oneRow) {
       return true;
     }
@@ -50,11 +53,10 @@ class GroupView extends React.Component {
     const isRightToViewportLeft = this.props.right > target.scrollLeft - visiblePadding;
     const isLeftToViewportRight = this.props.left < target.scrollLeft + target.clientWidth + visiblePadding;
     const visible = isRightToViewportLeft && isLeftToViewportRight;
-    // console.log(`PROGALLERY [visibility] - Gallery #${target.offsetTop} Group #${this.props.idx} is horizontally ${visible ? 'VISIBLE' : 'HIDDEN'}`);
     return visible;
   }
 
-  isRenderedHorizontally({target}) {
+  isRenderedHorizontally(target) {
     if (!this.props.galleryConfig.styleParams.oneRow) {
       return true;
     }
@@ -75,64 +77,49 @@ class GroupView extends React.Component {
     this.setState(newState);
   }
 
-  setVerticalVisibility(params) {
+  setVerticalVisibility(target) {
     this.setVisibilityState({
-      visibleVertically: this.isVisibleVertically(params),
-      renderedVertically: this.isRenderedVertically(params)
+      visibleVertically: this.isVisibleVertically(target),
+      renderedVertically: this.isRenderedVertically(target)
     });
   }
 
-  setHorizontalVisibility(params) {
+  setHorizontalVisibility(target) {
     this.setVisibilityState({
-      visibleHorizontally: this.isVisibleHorizontally(params),
-      renderedHorizontally: this.isRenderedHorizontally(params)
+      visibleHorizontally: this.isVisibleHorizontally(target),
+      renderedHorizontally: this.isRenderedHorizontally(target)
     });
   }
 
   setInitialVisibility() {
     const {scrollBase, height, width, galleryHeight, galleryWidth} = this.props.galleryConfig.container;
     this.setVerticalVisibility({
-      target: {
-        scrollTop: 0,
-        offsetTop: scrollBase,
-        clientHeight: height || galleryHeight,
-      }
+      scrollTop: 0,
+      offsetTop: scrollBase,
+      clientHeight: height || galleryHeight,
     });
     this.setHorizontalVisibility({
-      target: {
-        scrollLeft: 0,
-        clientWidth: width || galleryWidth,
-      }
+      scrollLeft: 0,
+      clientWidth: width || galleryWidth,
     });
-  }
-
-  initScrollListener() {
-    this.onVerticalScroll = _.throttle(this.setVerticalVisibility.bind(this), 500);
-    const {getScrollingElement} = this.props.galleryConfig.container;
-    getScrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
-    const {oneRow} = this.props.galleryConfig.styleParams;
-    if (oneRow) {
-      this.onHorizontalScroll = _.throttle(this.setHorizontalVisibility.bind(this), 500);
-      getScrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
-    }
-  }
-
-  removeScrollListener() {
-    const {getScrollingElement} = this.props.galleryConfig.container;
-    getScrollingElement.vertical().removeEventListener('scroll', this.onVerticalScroll);
-    getScrollingElement.horizontal().removeEventListener('scroll', this.onHorizontalScroll);
   }
 
   componentDidMount() {
     if (this.useRefactoredProGallery) {
-      this.initScrollListener();
       this.setInitialVisibility();
     }
   }
 
-  componentWillUnmount() {
+  componentWillReceiveProps(nextProps) {
     if (this.useRefactoredProGallery) {
-      this.removeScrollListener();
+      if (nextProps.galleryConfig.scroll.top !== this.galleryScroll.top) {
+        this.setVerticalVisibility(nextProps.galleryConfig.scroll.vertical);
+        this.galleryScroll.top = nextProps.galleryConfig.scroll.top;
+      }
+      if (nextProps.galleryConfig.scroll.left !== this.galleryScroll.left) {
+        this.setHorizontalVisibility(nextProps.galleryConfig.scroll.horizontal);
+        this.galleryScroll.left = nextProps.galleryConfig.scroll.left;
+      }
     }
   }
 
