@@ -27,20 +27,28 @@ class GroupView extends React.Component {
 
     this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
 
+    this.screenSize = (window && window.screen) || {
+      width: 1366,
+      height: 768
+    };
+
+    this.renderedPaddingMultiply = 2;
+    this.visiblePaddingMultiply = 0.5;
+
   }
 
   isRenderedVertically(target) {
-    const renderedPadding = utils.parseGetParam('renderedPadding') || target.clientHeight * 2;
+    const renderedPadding = utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply;
     const isBelowViewportTop = target.offsetTop + this.props.bottom > target.scrollTop - renderedPadding;
-    const isAboveViewportBottom = target.offsetTop + this.props.top < target.scrollTop + target.clientHeight + renderedPadding;
+    const isAboveViewportBottom = target.offsetTop + this.props.top < target.scrollTop + this.screenSize.height + renderedPadding;
     const rendered = isBelowViewportTop && isAboveViewportBottom;
     return rendered;
   }
 
   isVisibleVertically(target) {
-    const visiblePadding = utils.parseGetParam('displayPadding') || target.clientHeight * 0.5;
+    const visiblePadding = utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply;
     const isBelowViewportTop = target.offsetTop + this.props.bottom > target.scrollTop - visiblePadding;
-    const isAboveViewportBottom = target.offsetTop + this.props.top < target.scrollTop + target.clientHeight + visiblePadding;
+    const isAboveViewportBottom = target.offsetTop + this.props.top < target.scrollTop + this.screenSize.height + visiblePadding;
     const visible = isBelowViewportTop && isAboveViewportBottom;
     return visible;
   }
@@ -49,9 +57,9 @@ class GroupView extends React.Component {
     if (!this.props.galleryConfig.styleParams.oneRow) {
       return true;
     }
-    const visiblePadding = utils.parseGetParam('displayPadding') || target.clientWidth * 0.5;
+    const visiblePadding = utils.parseGetParam('displayPadding') || this.screenSize.width * this.visiblePaddingMultiply;
     const isRightToViewportLeft = this.props.right > target.scrollLeft - visiblePadding;
-    const isLeftToViewportRight = this.props.left < target.scrollLeft + target.clientWidth + visiblePadding;
+    const isLeftToViewportRight = this.props.left < target.scrollLeft + this.screenSize.width + visiblePadding;
     const visible = isRightToViewportLeft && isLeftToViewportRight;
     return visible;
   }
@@ -60,9 +68,9 @@ class GroupView extends React.Component {
     if (!this.props.galleryConfig.styleParams.oneRow) {
       return true;
     }
-    const renderedPadding = utils.parseGetParam('renderedPadding') || target.clientWidth * 2;
+    const renderedPadding = utils.parseGetParam('renderedPadding') || this.screenSize.width * this.renderedPaddingMultiply;
     const isRightToViewportLeft = this.props.right > target.scrollLeft - renderedPadding;
-    const isLeftToViewportRight = this.props.left < target.scrollLeft + target.clientWidth + renderedPadding;
+    const isLeftToViewportRight = this.props.left < target.scrollLeft + this.screenSize.width + renderedPadding;
     const rendered = isRightToViewportLeft && isLeftToViewportRight;
     return rendered;
   }
@@ -125,8 +133,16 @@ class GroupView extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.useRefactoredProGallery) {
-      if (this.props.galleryConfig.actions.getMoreItemsIfNeeded && this.state.visible) {
-      //this group just got rendered - if it's the last, check if more items can be fetched from the db
+
+      let hasJustBecomeVisible;
+      if (this.props.galleryConfig.styleParams.oneRow) {
+        hasJustBecomeVisible = this.state.visibleVertically && this.state.visibleHorizontally && !prevState.visibleHorizontally;
+      } else {
+        hasJustBecomeVisible = this.state.visibleVertically && !prevState.visibleVertically;
+      }
+      if (hasJustBecomeVisible) {
+        console.log(`PROGALLERY [visibilities] - Group #${this.props.idx} JUST BECAME VISIBLE!`);
+        //this group just got rendered - if it's the last, check if more items can be fetched from the db
         this.props.galleryConfig.actions.getMoreItemsIfNeeded(this.props.idx);
       }
     }

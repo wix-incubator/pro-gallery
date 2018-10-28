@@ -27,7 +27,7 @@ export class GalleryContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    //
+
     this.state = {
       scroll: {
         isInfinite: false,
@@ -35,22 +35,25 @@ export class GalleryContainer extends React.Component {
         top: 0
       }
     };
+
+    this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
   }
 
   componentDidMount() {
-    this.reCreateGallery(this.props, () => {
+    this.reCreateGalleryExpensively(this.props, () => {
       this.initScrollListener();
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.reCreateGallery(nextProps);
+    this.reCreateGalleryExpensively(nextProps);
   }
 
-  reCreateGallery({items, styles, container, watermarkData}, callback = () => {}) {
-    console.count('PROGALLERY [COUNT] - reCreateGallery');
-    console.time('PROGALLERY [TIMING] - reCreateGallery');
+  reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
+    console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively');
+    console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
     dimentionsHelper.updateParams({styles, container});
+
     let _items, _styles, _container;
 
     const isNew = {
@@ -63,7 +66,7 @@ export class GalleryContainer extends React.Component {
 
     items = items || this.items;
 
-    console.log('PROGALLERY [RENDERS] - reCreateGallery', {isNew}, {items, styles, container, watermarkData});
+    console.log('PROGALLERY [RENDERS] - reCreateGalleryExpensively', {isNew}, {items, styles, container, watermarkData});
 
     const newState = {};
 
@@ -111,12 +114,12 @@ export class GalleryContainer extends React.Component {
     }
 
     if (isNew.any) {
-      console.time('PROGALLERY [TIMING] - reCreateGallery - newState setting');
+      console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively - newState setting');
       console.log('PROGALLERY [RENDERS] - newState', {newState}, this.items, this.galleryStructure);
       this.setState(newState, () => {
         callback();
-        console.timeEnd('PROGALLERY [TIMING] - reCreateGallery - newState setting');
-        console.timeEnd('PROGALLERY [TIMING] - reCreateGallery');
+        console.timeEnd('PROGALLERY [TIMING] - reCreateGalleryExpensively - newState setting');
+        console.timeEnd('PROGALLERY [TIMING] - reCreateGalleryExpensively');
       });
     } else {
       callback();
@@ -167,18 +170,19 @@ export class GalleryContainer extends React.Component {
   }
 
   getMoreItemsIfNeeded(groupIdx) {
-    if (this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length && groupIdx === this.galleryStructure.groups.length - 1) {
-        //this is the last group
-      this.gettingMoreItems = true;
-      console.error('PROGALLERY [ITEMS] Getting more items', this.state.items.length, this.props.totalItemsCount);
-      this.props.getMoreItems(this.state.items.length, newItems => {
-        this.reCreateGallery({
-          items: this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || [])
-        }, () => {
-          console.error('PROGALLERY [ITEMS] Got more items', this.state.items.length, this.props.totalItemsCount);
-          this.gettingMoreItems = false;
+    if (this.galleryStructure && groupIdx >= this.galleryStructure.groups.length - 1) { //only when the last group turns visible we should try getting more items
+      if (this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
+        this.gettingMoreItems = true;
+        console.error('PROGALLERY [ITEMS] Getting more items', this.state.items.length, this.props.totalItemsCount);
+        this.props.getMoreItems(this.state.items.length, newItems => {
+          this.reCreateGalleryExpensively({
+            items: this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || [])
+          }, () => {
+            console.error('PROGALLERY [ITEMS] Got more items', this.state.items.length, this.props.totalItemsCount);
+            this.gettingMoreItems = false;
+          });
         });
-      });
+      }
     }
     return false;
   }
@@ -208,38 +212,31 @@ export class GalleryContainer extends React.Component {
     console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
 
     return (
-      <div style={{background: 'yellowgreen'}}>
-    <ViewComponent
-      totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
-      items = {this.items}
-      galleryStructure = {this.galleryStructure}
-      styleParams = {styles}
-      container = {this.state.container}
-      watermark = {this.props.watermarkData}
-      settings = {this.props.settings}
-      gotScrollEvent = {true}
-      scroll = {this.state.scroll}
-      convertToGalleryItems = {ItemsHelper.convertToGalleryItems}
-      convertDtoToLayoutItem = {ItemsHelper.convertDtoToLayoutItem}
-      domId = {this.props.domId}
-      actions = {_.merge(this.props.actions, {
-        getMoreItemsIfNeeded: this.getMoreItemsIfNeeded.bind(this),
-        toggleInfiniteScroll: this.toggleInfiniteScroll,
-        toggleFullscreen: this.toggleFullscreen,
-        setWixHeight: this.setWixHeight,
-        scrollToItem: this.scrollToItem
-      })}
-      debug = {{
-        lastHeight: this.lastHeight,
-        newHeight: this.newHeight,
-        resizeCount: this.resizeCount,
-        orientationCount: this.orientationCount,
-        maxGalleryWidth: this.props.maxGalleryWidth
-      }}
-      store = {this.props.store}
-      { ...this.props.gallery }
-  />
-  </div>
+      <div style={{background: 'yellowgreen'}} className={`pg-scroll-${this.state.scroll.top}`}>
+        <ViewComponent
+          totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
+          items = {this.items}
+          galleryStructure = {this.galleryStructure}
+          styleParams = {styles}
+          container = {this.state.container}
+          watermark = {this.props.watermarkData}
+          settings = {this.props.settings}
+          gotScrollEvent = {true}
+          scroll = {this.state.scroll}
+          convertToGalleryItems = {ItemsHelper.convertToGalleryItems}
+          convertDtoToLayoutItem = {ItemsHelper.convertDtoToLayoutItem}
+          domId = {this.props.domId}
+          actions = {_.merge(this.props.actions, {
+            getMoreItemsIfNeeded: this.getMoreItemsIfNeeded,
+            toggleInfiniteScroll: this.toggleInfiniteScroll,
+            toggleFullscreen: this.toggleFullscreen,
+            setWixHeight: this.setWixHeight,
+            scrollToItem: this.scrollToItem
+          })}
+          store = {this.props.store}
+          { ...this.props.gallery }
+        />
+      </div>
     );
   }
 }
