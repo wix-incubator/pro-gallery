@@ -40,6 +40,7 @@ export class Group {
     this.showAllItems = config.showAllItems;
     this.isLastItems = config.isLastItems;
     this.dummyItems = [];
+    this.gallerySize = config.gallerySize;
 
     if (config.styleParams) {
       const {styleParams} = config;
@@ -48,7 +49,6 @@ export class Group {
       this.cubeImages = styleParams.cubeImages;
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
-      this.gallerySize = styleParams.gallerySize;
       this.collageAmount = styleParams.collageAmount;
       this.collageDensity = styleParams.collageDensity;
       this.groupTypes = styleParams.groupTypes;
@@ -127,7 +127,6 @@ export class Group {
         height: this.height
       };
     }
-
     const m = this.imageMargin * 2;
 
     switch (this.type) {
@@ -508,7 +507,6 @@ export class Group {
   resizeToHeight(height) {
     this.height = height;
     this.width = this.getWidthByHeight(height);
-
     this.resizeItems();
   }
 
