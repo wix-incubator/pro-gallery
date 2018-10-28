@@ -63,9 +63,9 @@ export class GalleryContainer extends React.Component {
     if (isNew.items) {
       _items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
       this.items = _items;
-      newState.items = _items;
+      newState.items = _items.map(item => item.id);
     } else {
-      _items = this.state.items;
+      _items = this.items;
     }
 
     if (isNew.styles || isNew.container) {
@@ -169,8 +169,7 @@ export class GalleryContainer extends React.Component {
     console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
 
     return (
-      <div>
-        NEWWWW
+      <div style={{background: 'yellowgreen'}}>
     <ViewComponent
       totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
       items = {this.items}
