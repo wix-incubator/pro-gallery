@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import utils from '../../utils';
+import Consts from 'photography-client-lib/dist/src/utils/consts';
+import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/features/layouts';
 import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
 import {getGalleryRatio, getGalleryWidth, getGalleryHeight, getGalleryDimensions} from './dimensionsHelper';
 
@@ -480,14 +482,14 @@ function addLayoutStyles(styles, container) {
   const galleryLayoutV2 = styles.galleryLayout;
 
   if (!_.isUndefined(galleryLayoutV1) && _.isUndefined(galleryLayoutV2)) {
-    //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
+		//legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
     styles = Object.assign(styles, getStyleByGalleryType(styles, container)); //legacy layouts
     styles.layoutsVersion = 1;
     const selectedLayoutVars = ['galleryType', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
     styles.selectedLayout = selectedLayoutVars.map(key => String(styles[key])).join('|');
   } else {
-    //new layouts
+		//new layouts
     if (utils.isVerbose()) {
       console.log('Using galleryLayout for defaults', styles);
     }
@@ -500,10 +502,112 @@ function addLayoutStyles(styles, container) {
       console.log('new selected layout', styles.selectedLayout);
     }
   }
-
+  styles = Object.assign(styles, processLayouts(styles));
   return styles;
 }
 
+function processLayouts(styles) {
+  const processedStyles = styles;
+
+  if (processedStyles.oneRow) {
+		//if oneRow is true, use horizontal layouts only
+    processedStyles.isVertical = false;
+  }
+  if (processedStyles.imageMargin > 0) {
+    if (utils.isMobile()) {
+      processedStyles.imageMargin = Math.min(processedStyles.imageMargin, 50); //limit mobile spacing to 50px (25 on each side)
+    }
+    processedStyles.imageMargin /= 2;
+  }
+
+  if (processedStyles.isSlider) {
+    processedStyles.cubeRatio = processedStyles.gallerySliderImageRatio;
+  } else if (processedStyles.isGrid && !_.isUndefined(processedStyles.galleryImageRatioFromWix)) {
+    processedStyles.cubeRatio = processedStyles.galleryImageRatioFromWix;
+  }
+//Used to look like that before the split :
+// if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
+// 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
+// } else if (stateStyles.isSlider && _.isUndefined(stateStyles.cubeRatio)) {
+// 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
+// } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
+// 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
+// }
+
+  if ((processedStyles.isGrid && !processedStyles.oneRow) || (layoutsVersionManager.allowFixedColumnsInMasonry() && processedStyles.isMasonry && processedStyles.isVertical)) {
+// if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
+//If toggle is for Items per row, fill the fixedColumns with the number of items
+//If toggle is responsive, make fixedColumns to be 0 or undefined;
+//Show the new controls only on Vertical scroll (one ow is false)
+    processedStyles.fixedColumns = String(processedStyles.gridStyle) === '1' ? (Number(processedStyles.numberOfImagesPerRow)) : 0;
+    processedStyles.groupTypes = '1';
+    processedStyles.groupSize = 1;
+    processedStyles.collageAmount = 0;
+    processedStyles.collageDensity = 0;
+// }
+  }
+
+//TODO this needs to split, need to leave the wixStyles assign in the statics section
+  if (!_.isUndefined(processedStyles.numberOfImagesPerCol) && processedStyles.isGrid && processedStyles.oneRow) {
+    processedStyles.fixedColumns = 0;
+    switch (processedStyles.numberOfImagesPerCol) {
+      case 1:
+      default:
+        processedStyles.groupTypes = '1';
+        processedStyles.groupSize = 1;
+        processedStyles.collageAmount = 0;
+        processedStyles.collageDensity = 0;
+        break;
+      case 2:
+        processedStyles.groupTypes = '2v';
+        processedStyles.groupSize = 2;
+        processedStyles.collageAmount = 1;
+        processedStyles.collageDensity = 1;
+        break;
+      case 3:
+        processedStyles.groupTypes = '3v';
+        processedStyles.groupSize = 3;
+        processedStyles.collageAmount = 1;
+        processedStyles.collageDensity = 1;
+        break;
+    }
+  }
+
+  processedStyles.sharpParams = {
+    quality: 90,
+    usm: {}
+  };
+
+//Backwards compatibility for masonry layout
+  if (String(processedStyles.galleryLayout) === '1') {
+    if (processedStyles.isVertical) {
+      processedStyles.gallerySize = Math.round(processedStyles.gallerySize * 8 + 200);
+    } else {
+      processedStyles.gallerySize = Math.round(processedStyles.gallerySize * 5 + 200);
+    }
+  }
+
+  if (processedStyles.forceMobileCustomButton) {
+    processedStyles.gallerySize = Math.round(30 * 8.5 + 150);
+    processedStyles.titlePlacement = Consts.placements.SHOW_ALWAYS;
+    processedStyles.galleryLayout = 2;
+    processedStyles.fixedColumns = 1;
+    processedStyles.numberOfImagesPerRow = 1;
+  }
+
+  if (processedStyles.fixedColumns > 0 && utils.isMobile()) {
+    processedStyles.fixedColumns = 1;
+  }
+
+
+//in case a special gallery size was specified, use it
+  if (processedStyles.gallerySizeType === 'px' && processedStyles.gallerySizePx > 0) {
+    processedStyles.gallerySize = processedStyles.gallerySizePx;
+  } else if (processedStyles.gallerySizeType === 'ratio' && processedStyles.gallerySizeRatio > 0) {
+    processedStyles.gallerySize = (window && window.innerWidth || 980) * (processedStyles.gallerySizeRatio / 100);
+  }
+  return processedStyles;
+}
 export {
   addLayoutStyles
 };
