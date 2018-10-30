@@ -291,6 +291,9 @@ class GalleryItem {
 
   resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
 
+    requiredWidth = Math.ceil(requiredWidth);
+    requiredHeight = Math.ceil(requiredHeight);
+
     const requiredRatio = requiredWidth / requiredHeight;
     const showWatermark = allowWatermark && this.watermarkStr;
 
