@@ -3,7 +3,7 @@ import utils from '../../utils';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
 import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/features/layouts';
 import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
-import {getGalleryRatio, getGalleryWidth, getGalleryHeight, getGalleryDimensions} from './dimensionsHelper';
+import dimensionsHelper from './dimensionsHelper';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -163,7 +163,9 @@ function getStyleByGalleryType(styles, container) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: getGalleryWidth(styles, container), //'full_width';
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryWidth();
+      }), //'full_width';
       fixedColumns: 1
     }),
     one_row: () => ({
@@ -172,15 +174,21 @@ function getStyleByGalleryType(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: getGalleryHeight(styles, container),
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryHeight();
+      }),
       fixedColumns: 0
     }),
     slideshow: () => ({
       showArrows: true,
       cubeImages: true,
-      cubeRatio: getGalleryRatio(styles, container),
+      cubeRatio: (() => {
+        return dimensionsHelper.getGalleryRatio();
+      }),
       isVertical: true,
-      gallerySize: getGalleryWidth(styles, container),
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryWidth();
+      }),
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
@@ -292,13 +300,14 @@ function getStyleByLayout(styles, container) {
       smartCrop: false,
       cubeType: 'fill',
       cubeRatio: (() => {
-        const dims = getGalleryDimensions(styles, container);
-        return (dims.galleryWidth / dims.galleryHeight);
+        return dimensionsHelper.getGalleryRatio();
       }),
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: getGalleryWidth(styles, container),
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryWidth();
+      }),
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: true,
@@ -321,7 +330,9 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: getGalleryHeight(styles, container),
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryHeight();
+      }),
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
@@ -337,8 +348,7 @@ function getStyleByLayout(styles, container) {
       cubeImages: true,
       smartCrop: false,
       cubeRatio: (() => {
-        const dims = getGalleryDimensions(styles, container);
-        return (dims.galleryWidth / dims.galleryHeight);
+        return dimensionsHelper.getGalleryRatio();
       }),
       cubeType: 'fill',
       isVertical: false,
@@ -367,7 +377,9 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: getGalleryWidth(styles, container),
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryWidth();
+      }),
       oneRow: false,
       fixedColumns: 1,
       hasThumbnails: false,
@@ -389,7 +401,9 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: getGalleryHeight(styles, container),
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryHeight();
+      }),
       fixedColumns: 0,
       hasThumbnails: false,
       oneRow: true,
@@ -407,13 +421,14 @@ function getStyleByLayout(styles, container) {
       smartCrop: false,
       cubeType: 'fill',
       cubeRatio: (() => {
-        const dims = getGalleryDimensions(styles, container);
-        return (dims.galleryWidth / dims.galleryHeight);
+        return dimensionsHelper.getGalleryRatio();
       }),
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: getGalleryWidth(styles, container),
+      gallerySize: (() => {
+        return dimensionsHelper.getGalleryWidth();
+      }),
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: false,
@@ -573,10 +588,11 @@ function processLayouts(styles) {
     }
   }
 
-  processedStyles.sharpParams = {
-    quality: 90,
-    usm: {}
-  };
+	//returned to the statics because it was the definition of the object.
+  // processedStyles.sharpParams = {
+  //   quality: 90,
+  //   usm: {}
+  // };
 
 //Backwards compatibility for masonry layout
   if (String(processedStyles.galleryLayout) === '1') {
