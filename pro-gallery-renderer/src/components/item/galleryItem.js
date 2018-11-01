@@ -393,7 +393,7 @@ class GalleryItem {
     }
 
     const focalPointObj = {x: 50, y: 50};
-    if (focalPoint && focalPoint.length === 2) {
+    if (focalPoint && focalPoint[0] >= 0 && focalPoint[1] >= 0) {
       focalPointObj.x = Math.round(focalPoint[0] * 100);
       focalPointObj.y = Math.round(focalPoint[1] * 100);
     }
