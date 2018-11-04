@@ -50,8 +50,7 @@ export class GalleryContainer extends React.Component {
   reCreateGallery({items, styles, container, watermarkData}, callback = () => {}) {
     console.count('PROGALLERY [COUNT] - reCreateGallery');
     console.time('PROGALLERY [TIMING] - reCreateGallery');
-    dimentionsHelper.updateStyles(styles);
-    dimentionsHelper.updateContainer(container);
+    dimentionsHelper.updateParams({styles, container});
     let _items, _styles, _container;
 
     const isNew = {
@@ -81,12 +80,12 @@ export class GalleryContainer extends React.Component {
       container = container || this.state.container;
 
       _styles = addLayoutStyles(styles, container);
-      dimentionsHelper.updateStyles(_styles);
+      dimentionsHelper.updateParams({styles: _styles});
       _container = Object.assign({}, container, dimentionsHelper.getGalleryDimensions(), {
         scrollBase: this.getScrollBase(),
         getScrollingElement: this.getScrollingElement(_styles)
       });
-      dimentionsHelper.updateContainer(_container);
+      dimentionsHelper.updateParams({container: _container});
       newState.styles = _styles;
       newState.container = _container;
     } else {

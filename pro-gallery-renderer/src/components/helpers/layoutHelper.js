@@ -163,9 +163,7 @@ function getStyleByGalleryType(styles, container) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryWidth();
-      }), //'full_width';
+      gallerySize: () => dimensionsHelper.getGalleryWidth(), //'full_width';
       fixedColumns: 1
     }),
     one_row: () => ({
@@ -174,21 +172,15 @@ function getStyleByGalleryType(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryHeight();
-      }),
+      gallerySize: () => dimensionsHelper.getGalleryHeight(),
       fixedColumns: 0
     }),
     slideshow: () => ({
       showArrows: true,
       cubeImages: true,
-      cubeRatio: (() => {
-        return dimensionsHelper.getGalleryRatio();
-      }),
+      cubeRatio: () => dimensionsHelper.getGalleryRatio(),
       isVertical: true,
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryWidth();
-      }),
+      gallerySize: () => dimensionsHelper.getGalleryWidth(),
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
@@ -299,15 +291,11 @@ function getStyleByLayout(styles, container) {
       cubeImages: true,
       smartCrop: false,
       cubeType: 'fill',
-      cubeRatio: (() => {
-        return dimensionsHelper.getGalleryRatio();
-      }),
+      cubeRatio: () => dimensionsHelper.getGalleryRatio(),
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryWidth();
-      }),
+      gallerySize: () => dimensionsHelper.getGalleryWidth(),
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: true,
@@ -330,9 +318,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryHeight();
-      }),
+      gallerySize: () => dimensionsHelper.getGalleryHeight(),
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
@@ -347,9 +333,7 @@ function getStyleByLayout(styles, container) {
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
-      cubeRatio: (() => {
-        return dimensionsHelper.getGalleryRatio();
-      }),
+      cubeRatio: () => dimensionsHelper.getGalleryRatio(),
       cubeType: 'fill',
       isVertical: false,
       gallerySize: 550,
@@ -377,9 +361,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryWidth();
-      }),
+      gallerySize: () => dimensionsHelper.getGalleryWidth(),
       oneRow: false,
       fixedColumns: 1,
       hasThumbnails: false,
@@ -401,9 +383,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryHeight();
-      }),
+      gallerySize: () => dimensionsHelper.getGalleryHeight(),
       fixedColumns: 0,
       hasThumbnails: false,
       oneRow: true,
@@ -420,15 +400,11 @@ function getStyleByLayout(styles, container) {
       cubeImages: true,
       smartCrop: false,
       cubeType: 'fill',
-      cubeRatio: (() => {
-        return dimensionsHelper.getGalleryRatio();
-      }),
+      cubeRatio: () => dimensionsHelper.getGalleryRatio(),
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: (() => {
-        return dimensionsHelper.getGalleryWidth();
-      }),
+      gallerySize: () => dimensionsHelper.getGalleryWidth(),
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: false,
