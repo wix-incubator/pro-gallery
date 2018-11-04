@@ -169,7 +169,7 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
-    } else if (itemClick === 'expand' || itemClick === 'link') {
+    } else if (itemClick === 'expand' || itemClick === 'link' || itemClick === 'popup' || itemClick === 'itemUrl') {
       this.props.actions.toggleFullscreen(this.props.idx);
     } else if (this.props.type === 'video') {
       const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile());

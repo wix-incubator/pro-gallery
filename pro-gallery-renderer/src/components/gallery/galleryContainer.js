@@ -2421,6 +2421,14 @@ export class GalleryContainer extends React.Component {
                 origin: Wix.WindowOrigin.FIXED,
                 placement: Wix.WindowPlacement.CENTER
               }, this.closeFullscreenCallback, Wix.Theme.BARE);
+            } else if (this.state.styleParams.itemClick === 'itemUrl') {
+              const itemUrl = item.full_url.img; //TODO - use image-client-api to fit to modal dimensions
+              const {width, height} = window.screen; // TODO - get the site dimensions from Wix SDK
+              const margin = 200;
+              Wix.openModal(itemUrl, (width - margin), (height - margin), {
+                origin: Wix.WindowOrigin.FIXED,
+                placement: Wix.WindowPlacement.CENTER
+              }, this.closeFullscreenCallback, Wix.Theme.BARE);
             } else {
               Wix.Utils.navigateToSection({
                 sectionId: utils.getFullscreenSectionId(),
