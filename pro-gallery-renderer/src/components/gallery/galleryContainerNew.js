@@ -27,7 +27,7 @@ export class GalleryContainer extends React.Component {
 
   constructor(props) {
     super(props);
-
+		//
     this.state = {
       scroll: {
         isInfinite: false,
@@ -106,7 +106,7 @@ export class GalleryContainer extends React.Component {
       };
 
       const layout = createLayout(layoutParams);
-
+      this.props.handleNewGalleryStructure(layoutParams, layout);
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams
@@ -230,7 +230,7 @@ export class GalleryContainer extends React.Component {
             getMoreItemsIfNeeded: this.getMoreItemsIfNeeded,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
             toggleFullscreen: this.toggleFullscreen,
-            setWixHeight: this.setWixHeight,
+            setWixHeight: _.noop,
             scrollToItem: this.scrollToItem
           })}
           store = {this.props.store}

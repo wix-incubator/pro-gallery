@@ -7,6 +7,7 @@ class GalleryEmpty extends React.Component {
 
   componentWillMount() {
     this.props.actions.setWixHeight(390, window.innerHeight);
+		//TODO-NewGalleryContianer - remove this function because the functionality is now in the TPAwrapper
   }
 
   render() {
