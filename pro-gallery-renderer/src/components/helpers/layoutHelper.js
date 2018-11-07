@@ -4,6 +4,7 @@ import Consts from 'photography-client-lib/dist/src/utils/consts';
 import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/features/layouts';
 import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
 import dimensionsHelper from './dimensionsHelper';
+import {getFixedLayouts} from './fixedLayoutsHelper';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -422,21 +423,27 @@ function getStyleByLayout(styles, container) {
     empty: () => ({
       gallerySize: Math.round(gallerySize * 9 + 100)
     }),
-    magic: () => getStyleBySeed(magicLayoutSeed)
+    magic: () => getStyleBySeed(magicLayoutSeed),
+    bricks: () => getFixedLayouts(0),
+    alternate: () => getFixedLayouts(1),
+    mix: () => getFixedLayouts(2),
   };
 
   const galleyLayoutList = [
-    'empty', // -1
-    'collage', // 0
-    'masonry', // 1
-    'grid', // 2
+    'empty',      // -1
+    'collage',    // 0
+    'masonry',    // 1
+    'grid',       // 2
     'thumbnails', // 3
-    'slider', // 4
-    'slideshow', // 5
-    'panorama', // 6
-    'column', // 7
-    'magic', // 8
-    'fullsize' // 9
+    'slider',     // 4
+    'slideshow',  // 5
+    'panorama',   // 6
+    'column',     // 7
+    'magic',      // 8
+    'fullsize',   // 9
+    'bricks',     // 10
+    'alternate',  // 11
+    'mix',         // 12
   ];
 
   let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
