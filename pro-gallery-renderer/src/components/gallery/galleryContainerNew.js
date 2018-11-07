@@ -22,7 +22,6 @@ import Consts from 'photography-client-lib/dist/src/utils/consts';
 import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 
-
 export class GalleryContainer extends React.Component {
 
   constructor(props) {
@@ -37,6 +36,8 @@ export class GalleryContainer extends React.Component {
     };
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
+
+    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? props.onItemClicked.bind(this) : () => {};
   }
 
   componentDidMount() {
@@ -252,7 +253,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(GalleryContainer);
-
+  mapStateToProps,
+  mapDispatchToProps
+)(GalleryContainer);
