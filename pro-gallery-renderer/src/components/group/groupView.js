@@ -142,8 +142,12 @@ class GroupView extends React.Component {
       }
       if (hasJustBecomeVisible) {
         console.log(`PROGALLERY [visibilities] - Group #${this.props.idx} JUST BECAME VISIBLE!`);
-        //this group just got rendered - if it's the last, check if more items can be fetched from the db
-        this.props.galleryConfig.actions.getMoreItemsIfNeeded(this.props.idx);
+				//this group just got rendered - if it's the last, check if more items can be fetched from the db
+        try {
+          this.props.galleryConfig.actions.getMoreItemsIfNeeded(this.props.idx);
+        } catch (e) {
+          console.warn('Cannot get more items', this.props.galleryConfig, e);
+        }
       }
     }
   }

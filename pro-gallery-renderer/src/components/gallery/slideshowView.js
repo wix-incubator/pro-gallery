@@ -278,6 +278,7 @@ class SlideshowView extends React.Component {
       actions: {
         scrollToItem: this.scrollToThumbnail,
         toggleFullscreen: this.props.actions.toggleFullscreen,
+        getMoreItemsIfNeeded: _.noop,
       },
       hidePlay: true
     };
