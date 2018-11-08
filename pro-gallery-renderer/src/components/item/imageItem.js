@@ -6,6 +6,8 @@ export default class ImageItem extends React.Component {
   render() {
     const {isThumbnail, alt, visible, loaded, displayed, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
     const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
+    const backgroundStyle = utils.deviceHasMemoryIssues() ? {} : Object.assign({backgroundImage: `url(${resized_url.thumb})`}, loaded ? {} : {transform: 'scale(1.1)'});
+
     if (visible) {
       return <div
         className={'image-item gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'gallery-item-loaded' : '')}
@@ -13,7 +15,7 @@ export default class ImageItem extends React.Component {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
-        style={displayed || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${resized_url.thumb})`}}
+        style={displayed ? {} : backgroundStyle}
         >
         <img onLoad={actions.setItemLoaded}
           key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
@@ -30,7 +32,7 @@ export default class ImageItem extends React.Component {
       return <div
         className={'image-item gallery-item-visible gallery-item gallery-item-preloaded ' + ((styleParams.cubeImages && styleParams.cubeType === 'fit') ? ' grid-fit ' : '') + (loaded ? 'gallery-item-loaded' : '')}
         key={'image_container-' + id}
-        style={utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${resized_url.thumb})`}}
+        style={backgroundStyle}
         data-hook={'image-item'}
       >
         <img onLoad={actions.setItemLoaded}

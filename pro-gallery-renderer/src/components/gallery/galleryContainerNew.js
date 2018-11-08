@@ -37,7 +37,7 @@ export class GalleryContainer extends React.Component {
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
 
-    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? props.onItemClicked.bind(this) : () => {};
+    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.items[itemIdx])) : () => {};
   }
 
   componentDidMount() {

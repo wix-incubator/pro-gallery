@@ -434,9 +434,10 @@
           .gallery-item-hover {
             padding: 50px 100px;
 
-          .gallery-item-social:not(.text-underneath-item) {
-            &.with-arrows {
-              margin: 40px -10px 0;
+            .gallery-item-social:not(.text-underneath-item) {
+              &.with-arrows {
+                margin: 40px -10px 0;
+              }
             }
           }
         }
@@ -459,6 +460,7 @@
           }
         }
       }
+
       .gallery-item-bottom-info {
         .gallery-item-title {
           white-space: normal;
@@ -633,16 +635,17 @@
           animation: changing_background 3s infinite ease;
           animation-timing-function: ease;
 
-          &.image-item:after {
-            content: ' ';
-            background-color: rgba(255, 255, 255, 0.5);
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+          &.image-item {
+            &:after {
+              content: ' ';
+              background-color: rgba(255, 255, 255, 0.5);
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
           }
-
           .pro-circle-preloader {
             top: 50%;
             left: 50%;
@@ -1356,23 +1359,24 @@
           text-overflow: ellipsis;
         }
 
-      .gallery-item-description {
-        -webkit-line-clamp: 1;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis;
+        .gallery-item-description {
+          -webkit-line-clamp: 1;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
 
-        > span {
-          white-space: normal;
+          >span {
+            white-space: normal;
+          }
         }
-      }
 
-      .custom-button-wrapper {
-        button {
-          outline: none;
-          border: none;
-          background: transparent;
+        .custom-button-wrapper {
+          button {
+            outline: none;
+            border: none;
+            background: transparent;
+          }
         }
       }
     }
