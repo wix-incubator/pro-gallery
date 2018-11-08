@@ -100,12 +100,12 @@ class LineHeightFixer {
       const socialHeight = socialElement.clientHeight;
       const socialMarginBottom = parseInt(this.getCss(socialElement, 'margin-bottom'));
       const itemInfoChildDivPaddingTop = 24; //padding-top of the div inside gallery-item-info
-      availableHeight =  styleParams.slideshowInfoSize - itemInfoChildDivPaddingTop - socialHeight - socialMarginBottom;
+      availableHeight = styleParams.slideshowInfoSize - itemInfoChildDivPaddingTop - socialHeight - socialMarginBottom;
     } else if (styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS) {
       const bottomElements = itemContainer.getElementsByClassName('gallery-item-bottom-info');
       const bottomElement = (bottomElements.length > 0) && bottomElements[0];
       const bottomElementPadding = parseInt(this.getCss(bottomElement, 'padding'));
-      availableHeight =  styleParams.bottomInfoHeight - 2 * bottomElementPadding;
+      availableHeight = styleParams.bottomInfoHeight - 2 * bottomElementPadding;
     } else {
       availableHeight = dimensions.height;
     }

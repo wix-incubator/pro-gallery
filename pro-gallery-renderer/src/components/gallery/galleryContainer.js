@@ -2259,7 +2259,7 @@ export class GalleryContainer extends React.Component {
     }
 
     if (allowDescription) {
-      descriptionFontSize = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) :defaultItemDescriptionFontSize;
+      descriptionFontSize = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
       spaceBetweenElements += 16;
     }
 
