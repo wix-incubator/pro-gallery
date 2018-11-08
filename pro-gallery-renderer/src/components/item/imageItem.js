@@ -24,7 +24,7 @@ export default class ImageItem extends React.Component {
           style={imageDimensions}
           {...imageProps}
         />
-        {isThumbnail ? false : <div className="pro-circle-preloader" key={'image-preloader-' + id} />}
+        {/* {isThumbnail ? false : <div className="pro-circle-preloader" key={'image-preloader-' + id} />} */}
       </div>;
     } else {
       return <div
