@@ -139,11 +139,11 @@ class LineHeightFixer {
     const isItemWidthToSmall = dimensions.width < minWidthToShowContent;
 
     this.hideElement(titleElement);
-    this.hideElement(descriptionElement, !(styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS)); //if titlePlacement = SHOW_ALWAYS, descriptionElement should not get 'display: -webkit-box'
-    this.hideElement(customButtonElement, !styleParams.isSlideshow); //if Slideshow, customButtonElement should not get 'display: -webkit-box'
+    this.hideElement(descriptionElement, styleParams.titlePlacement !== Consts.placements.SHOW_ALWAYS); //if titlePlacement = SHOW_ALWAYS, descriptionElement should not get 'display: -webkit-box'
+    this.hideElement(customButtonElement, !(styleParams.isSlideshow ||styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS)); //if Slideshow or if titlePlacement = SHOW_ALWAYS, customButtonElement should not get 'display: -webkit-box'
 
     if (customButtonExists) {
-      this.showElement(customButtonElement, !styleParams.isSlideshow); //if Slideshow, customButtonElement should not get 'display: -webkit-box'
+      this.showElement(customButtonElement, !(styleParams.isSlideshow ||styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS)); //if Slideshow or if titlePlacement = SHOW_ALWAYS, customButtonElement should not get 'display: -webkit-box'
       const buttonHeight = this.getDimensions(customButtonElement).height;
       if ((availableHeight + 30) < buttonHeight) {
         this.removeElement(customButtonElement);
