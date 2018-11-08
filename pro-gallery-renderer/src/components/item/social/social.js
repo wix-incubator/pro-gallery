@@ -4,6 +4,7 @@ import LoveButton from '../loveButton/loveButton.js';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
 import _ from 'lodash';
+import Consts from "photography-client-lib/dist/src/utils/consts";
 
 export default class Social extends React.Component {
 
@@ -107,6 +108,7 @@ export default class Social extends React.Component {
     const isPopulated = styleParams.allowSocial ||
       styleParams.loveButton ||
       styleParams.allowDownload;
+    const isTitlePlacementShowAlways = styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS;
 
     const classes = [
       [showShare, 'hidden'],
@@ -116,6 +118,7 @@ export default class Social extends React.Component {
       [isVerticalContainer, 'vertical-item'],
       [isShowArrows, 'with-arrows'],
       [isPopulated, 'populated-item'],
+      [isTitlePlacementShowAlways, 'text-underneath-item'],
     ].filter(x => x[0])
       .map(x => x[1])
       .join(' ');

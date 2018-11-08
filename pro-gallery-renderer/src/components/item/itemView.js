@@ -9,8 +9,6 @@ import ItemHover from './itemHover.js';
 import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
-import CustomButton from './buttons/customButton.js';
-import ItemTitle from './texts/itemTitle.js';
 import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
@@ -279,10 +277,6 @@ class ItemView extends React.Component {
     return res;
   }
 
-  getButtonPlacement() {
-    return this.props.styleParams.titlePlacement;
-  }
-
   videoOnMount(videoElment) {
     this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible(videoElment)});
   }
@@ -293,10 +287,10 @@ class ItemView extends React.Component {
 
   getItemTextsDetails() {
     const props = _.pick(this.props, ['title', 'description', 'fileName', 'id', 'styleParams', 'style', 'isNarrow']);
-    const isButtonPlacementOnHover = this.getButtonPlacement() === Consts.placements.SHOW_ON_HOVER;
     const isImage = this.props.type === 'image' || this.props.type === 'picture';
     const useCustomButton = this.props.styleParams.useCustomButton === true;
-    const shouldShowButton = isButtonPlacementOnHover && (isImage || !utils.isStoreGallery()) && useCustomButton;
+    const shouldShowButton = (isImage || !utils.isStoreGallery()) && useCustomButton;
+
     return <Texts {...props}
               key={`item-texts-${props.id}`}
               itemContainer={this.itemContainer}
@@ -410,12 +404,14 @@ class ItemView extends React.Component {
 
   getItemInner() {
     const {styleParams, type, visible} = this.props;
+    const {placements} = Consts;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
-    const itemTexts = this.getItemTextsDetails();
+    const itemTexts = styleParams.titlePlacement !== placements.SHOW_ON_HOVER ? null : this.getItemTextsDetails(); //if titlePlacement (title & description) is not SHOW_ON_HOVER, it is not part of the hover
     const social = this.getSocial();
     const share = this.getShare();
     const itemHover = this.getItemHover([itemTexts, social, share], imageDimensions);
+
     switch (type) {
       case 'dummy':
         itemInner = <div/>;
@@ -437,6 +433,7 @@ class ItemView extends React.Component {
     }
 
     if (styleParams.isSlideshow) {
+      const itemTexts = this.getItemTextsDetails();
       const style = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`
@@ -465,18 +462,12 @@ class ItemView extends React.Component {
   }
 
   getBottomInfoElement() {
-    const {styleParams, title, type} = this.props;
-    const {placements} = Consts;
-    const buttonPlacement = this.getButtonPlacement();
+    const {styleParams} = this.props;
     let bottomInfo = null;
 
-    if (styleParams.titlePlacement === placements.SHOW_ALWAYS) {
-      const isImage = type === 'image' || type === 'picture';
-      const shouldShowButton = buttonPlacement === placements.SHOW_ALWAYS && styleParams.useCustomButton === true && (isImage || !utils.isStoreGallery());
-      const buttonElem = shouldShowButton ? (<CustomButton styleParams={styleParams} />) : null;
-      const isTitleAvailable = styleParams.allowTitle && title;
-      const titleElem = isTitleAvailable ? (<ItemTitle title={title} />) : null;
-      if (titleElem || buttonElem) {
+    if (styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS) {
+      const itemTexts = this.getItemTextsDetails();
+      if (itemTexts) {
         bottomInfo = (
           <div style={{height: styleParams.bottomInfoHeight, textAlign: styleParams.galleryTextAlign}}
               className="gallery-item-bottom-info"
@@ -486,8 +477,7 @@ class ItemView extends React.Component {
               onMouseOut={() => {
                 this.setState({showHover: false});
               }}>
-            {titleElem}
-            {buttonElem}
+            {itemTexts}
           </div>);
       }
     }

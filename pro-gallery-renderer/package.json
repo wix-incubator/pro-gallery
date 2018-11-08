@@ -31,7 +31,7 @@
     "image-client-api": "^1.1509.0",
     "photography-client-lib": "^1.0.91",
     "prepend-http-extra": "^1.0.0",
-    "pro-gallery-layouter": "^2.0.16",
+    "pro-gallery-layouter": "^2.0.22",
     "react-player-fork": "^0.12.106",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",

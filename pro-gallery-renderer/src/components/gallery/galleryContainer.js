@@ -1340,7 +1340,7 @@ export class GalleryContainer extends React.Component {
         selectedPlacement = Consts.placements.SHOW_ALWAYS;
       }
 
-      if (!stateStyles.isVertical || stateStyles.groupSize > 1 || stateStyles.oneRow === true) {
+      if ((!stateStyles.isVertical || stateStyles.groupSize > 1 || stateStyles.oneRow === true) && !stateStyles.isSlider && !stateStyles.isColumns) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
       } else {
         const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
@@ -1355,6 +1355,11 @@ export class GalleryContainer extends React.Component {
     if (canSet('itemFontSlideshow')) {
       stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
     }
+
+    if (canSet('itemDescriptionFontSlideshow')) {
+      stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
+    }
+
 
     if (canSet('galleryHorizontalAlign')) {
       let horizontalAlign;
@@ -2230,31 +2235,48 @@ export class GalleryContainer extends React.Component {
     const {
       titlePlacement,
       itemFontSlideshow,
+      itemDescriptionFontSlideshow,
       allowTitle,
-      galleryLayout,
+      allowDescription,
       useCustomButton
     } = styleParams;
 
-    if (titlePlacement !== 'SHOW_ALWAYS') {
+    if (titlePlacement !== 'SHOW_ALWAYS' || (!allowTitle && !allowDescription)) {
       return 0;
     }
 
     const paddingTopAndBottom = 30;
-    let spaceBetweenElements = 16;
     const defaultButtonHeight = useCustomButton ? 33 : 0;
     const defaultItemFontSize = 22;
+    const defaultItemDescriptionFontSize = 15;
+    let spaceBetweenElements = 0;
+    let titleFontSize = 0;
+    let descriptionFontSize = 0;
 
-    const isGrid = galleryLayout === 2;
-    let fontSize = 0;
-    const isLayoutSupportsNoTitle = isGrid && !utils.isMobile();
-    const shouldSaveSpaceForTitle = allowTitle || isLayoutSupportsNoTitle;
-    if (shouldSaveSpaceForTitle) {
-      fontSize = itemFontSlideshow ? itemFontSlideshow.size : defaultItemFontSize;
-    } else {
-      spaceBetweenElements = 0;
+    if (allowTitle) {
+      titleFontSize = itemFontSlideshow ? this.getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
+      spaceBetweenElements += 16;
     }
 
-    return fontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
+    if (allowDescription) {
+      descriptionFontSize = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) :defaultItemDescriptionFontSize;
+      spaceBetweenElements += 16;
+    }
+
+    return titleFontSize + 3 * descriptionFontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
+  }
+
+  getFontLineHeight(font) {
+    if (font.value.match(/\/(\d+)px/)) { //lineHeight is in px
+      return parseInt(font.value.match(/\/(\d+)px/)[1]);
+    } else if (font.value.match(/\/(\d+)%/)) { //lineHeight is in percentage
+      return font.size * (parseInt(font.value.match(/\/(\d+)%/)[1]) / 100);
+    } else if (font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)) { //lineHeight is in em or without any units (which means em too)
+      return font.size * parseFloat(font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)[1]);
+    } else {
+      console.error('GalleryContainer -> getFontLineHeight -> font lineHeight do not match any pattern. font value: ', font.value);
+      return font.size;
+    }
   }
 
   isInfiniteScroll() {

@@ -63,7 +63,6 @@ class GalleryGroup {
       bottom: this.bottom,
       width: this.width,
       height: this.height,
-      bottomInfoHeight: this.bottomInfoHeight,
       totalHeight: this.totalHeight,
       items: this.items,
       visible: this.visible,

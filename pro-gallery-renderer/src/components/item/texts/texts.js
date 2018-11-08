@@ -31,7 +31,7 @@ export default class Texts extends React.Component {
 
   getElementStyle() {
     const {styleParams, style} = this.props;
-    const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails;
+    const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails && (styleParams.titlePlacement !== Consts.placements.SHOW_ALWAYS);
     const isCentered = style.justifyContent === 'center';
 
     const elementStyle = {
@@ -54,8 +54,8 @@ export default class Texts extends React.Component {
 
   getItemTexts() {
     const {title, description, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
-    const shouldShowTitle = title && !isSmallItem && styleParams.allowTitle && styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
-    const shouldShowDescription = !isSmallItem && styleParams.allowDescription && description;
+    const shouldShowTitle = title && !isSmallItem && styleParams.allowTitle;
+    const shouldShowDescription = description && !isSmallItem && styleParams.allowDescription;
     //if there is a description, it will take care of the bottom part.
     //if no description: if there are actions, we will add marginBottom of 20. if no actions, we will add marginBottom of 0.
     const titleStyle = shouldShowDescription ? {} : (this.allowAnyAction() ? {marginBottom: 20} : {marginBottom: 0});

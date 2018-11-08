@@ -159,7 +159,7 @@ class GroupView extends React.Component {
       const dom = [];
       for (let item, i = 0; item = this.props.items[i]; i++) {
         dom.push(
-          React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(this.props.galleryConfig, {visible, bottomInfoHeight: this.props.bottomInfoHeight})), {store: this.props.store}))
+          React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(this.props.galleryConfig, {visible})), {store: this.props.store}))
        );
       }
       return dom;
