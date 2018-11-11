@@ -1029,6 +1029,8 @@ export class GalleryContainer extends React.Component {
     }
 
     wixStyles.gallerySize = stateStyles.gallerySize || wixStyles.gallerySize || 30;
+    wixStyles = this.convertToMobileSettingIfNeeded(wixStyles);
+
 
     const emptyLayout = {
       galleryType: undefined,
@@ -1061,7 +1063,7 @@ export class GalleryContainer extends React.Component {
       enableInfiniteScroll: undefined,
     };
 
-    if (String(wixStyles.mobilePanorama) === '1' && utils.isMobile()) {
+    if (wixStyles.mobilePanorama && String(wixStyles.mobilePanorama) === '1' && utils.isMobile()) {
       stateStyles.galleryLayout = 6;
       stateStyles.rotatingGroupTypes = '1';
       stateStyles.isVertical = true;
@@ -1214,7 +1216,11 @@ export class GalleryContainer extends React.Component {
     }
     if (stateStyles.imageMargin > 0) {
       if (utils.isMobile()) {
-        stateStyles.imageMargin = Math.min(stateStyles.imageMargin, 50); //limit mobile spacing to 50px (25 on each side)
+        if (_.isUndefined(wixStyles.m_imageMargin)) {
+          stateStyles.imageMargin = Math.min(stateStyles.imageMargin, 50); //limit mobile spacing to 50px (25 on each side)
+        } else {
+          stateStyles.imageMargin = wixStyles.m_imageMargin;
+        }
       }
       stateStyles.imageMargin /= 2;
     }
@@ -1512,7 +1518,11 @@ export class GalleryContainer extends React.Component {
     }
 
     if (stateStyles.fixedColumns > 0 && utils.isMobile()) {
-      stateStyles.fixedColumns = 1;
+      if (_.isUndefined(wixStyles.m_fixedColumns)) {
+        stateStyles.fixedColumns = 1;
+      } else {
+        stateStyles.fixedColumns = wixStyles.m_fixedColumns;
+      }
     }
 
     //in case a special gallery size was specified, use it
@@ -2292,6 +2302,17 @@ export class GalleryContainer extends React.Component {
       return (styleParamsInfiniteScroll || stateInfiniteScroll);
     }
 
+  }
+
+  convertToMobileSettingIfNeeded(styles) {
+    if (utils.isMobile()) {
+      Object.keys(styles).forEach(val => {
+        if (val.startsWith('m_')) {
+          styles[val.slice(2)] = styles[val];
+        }
+      });
+    }
+    return styles;
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -3152,7 +3173,6 @@ export class GalleryContainer extends React.Component {
       />
     );
   }
-
 }
 
 function mapStateToProps(state) {
@@ -3164,6 +3184,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(actions, dispatch)
   };
 }
+
+
 
 export default connect(
   mapStateToProps,
