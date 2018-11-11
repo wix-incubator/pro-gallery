@@ -59,13 +59,6 @@ describe('Image Item', () => {
     expect(spy.called).to.be.true;
   });
 
-  it('create pro-circle-preloader div if isThumbnail is false', () => {
-    Object.assign(imageItemsProps, {visible: true});
-    Object.assign(imageItemsProps, {isThumbnail: false});
-    galleryDriver.mount(ImageItem, imageItemsProps);
-    expect(galleryDriver.find.class('pro-circle-preloader').length).to.equal(1);
-  });
-
   it('put alternate text for the image if isThumbnail is false', () => {
     Object.assign(imageItemsProps, {alt: 'test'});
     Object.assign(imageItemsProps, {isThumbnail: false});
