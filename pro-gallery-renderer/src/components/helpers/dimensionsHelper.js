@@ -64,7 +64,7 @@ class DimensionsHelper {
 
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
-      const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
+      //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
       const domHeight = 500;//() => protectGalleryHeight(this.container.windowHeight, offsetTop);
       return Math.floor((this.container.height > 0 ? this.container.height : domHeight) + this.getDimensionFix());
     });
