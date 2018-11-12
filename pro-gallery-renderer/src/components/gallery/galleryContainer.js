@@ -1480,6 +1480,9 @@ export class GalleryContainer extends React.Component {
     if (canSet('isAutoSlideshow')) {
       stateStyles.isAutoSlideshow = String(wixStyles.isAutoSlideshow) === '1';
     }
+    if (canSet('slideshowLoop')) {
+      stateStyles.slideshowLoop = String(wixStyles.slideshowLoop) === '1';
+    }
     if (canSet('autoSlideshowInterval')) {
       stateStyles.autoSlideshowInterval = Number(wixStyles.autoSlideshowInterval) || 0;
     }
