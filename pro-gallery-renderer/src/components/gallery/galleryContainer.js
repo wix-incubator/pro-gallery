@@ -1215,13 +1215,6 @@ export class GalleryContainer extends React.Component {
       stateStyles.imageMargin = Number(wixStyles.imageMargin);
     }
     if (stateStyles.imageMargin > 0) {
-      if (utils.isMobile()) {
-        if (_.isUndefined(wixStyles.m_imageMargin)) {
-          stateStyles.imageMargin = Math.min(stateStyles.imageMargin, 50); //limit mobile spacing to 50px (25 on each side)
-        } else {
-          stateStyles.imageMargin = wixStyles.m_imageMargin;
-        }
-      }
       stateStyles.imageMargin /= 2;
     }
 
@@ -1515,14 +1508,6 @@ export class GalleryContainer extends React.Component {
       stateStyles.galleryLayout = 2;
       stateStyles.fixedColumns = 1;
       stateStyles.numberOfImagesPerRow = 1;
-    }
-
-    if (stateStyles.fixedColumns > 0 && utils.isMobile()) {
-      if (_.isUndefined(wixStyles.m_fixedColumns)) {
-        stateStyles.fixedColumns = 1;
-      } else {
-        stateStyles.fixedColumns = wixStyles.m_fixedColumns;
-      }
     }
 
     //in case a special gallery size was specified, use it
