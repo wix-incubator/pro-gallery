@@ -29,14 +29,15 @@ export class GalleryContainer extends React.Component {
 		//
     this.state = {
       scroll: {
-        isInfinite: false,
+        isInfinite: this.isInfiniteScroll(),
         left: 0,
         top: 0
       }
     };
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
-
+    this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
+    this.isInfiniteScroll = this.isInfiniteScroll.bind(this); //TODO check if needed
     this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.items[itemIdx])) : () => {};
   }
 
@@ -55,7 +56,7 @@ export class GalleryContainer extends React.Component {
     console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
     dimentionsHelper.updateParams({styles, container});
 
-    let _items, _styles, _container;
+    let _items, _styles, _container, scroll, _scroll;
 
     const isNew = {
       items: !!items && (!this.state.items || items !== this.props.items),
@@ -82,6 +83,7 @@ export class GalleryContainer extends React.Component {
     if (isNew.styles || isNew.container) {
       styles = styles || this.state.styles;
       container = container || this.state.container;
+      scroll = this.state.scroll || {};
 
       _styles = addLayoutStyles(styles, container);
       dimentionsHelper.updateParams({styles: _styles});
@@ -90,8 +92,10 @@ export class GalleryContainer extends React.Component {
         getScrollingElement: this.getScrollingElement(_styles)
       });
       dimentionsHelper.updateParams({container: _container});
+      _scroll = Object.assign({}, scroll, {isInfinite: this.isInfiniteScroll(_styles)});
       newState.styles = _styles;
       newState.container = _container;
+      newState.scroll = _scroll;
     } else {
       _styles = this.state.styles;
       _container = this.state.container;
@@ -107,10 +111,11 @@ export class GalleryContainer extends React.Component {
       };
 
       const layout = createLayout(layoutParams);
-      this.props.handleNewGalleryStructure(layoutParams, layout);
+      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, this.isInfiniteScroll(_styles));
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
-        sharpParams: _styles.sharpParams
+        sharpParams: _styles.sharpParams,
+        lastVisibleItemIdx: this.lastVisibleItemIdx,
       });
     }
 
@@ -170,6 +175,27 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  isInfiniteScroll(styles = this.props.styles) {
+    const styleParamsInfiniteScroll = styles.enableInfiniteScroll;//_.get(this, 'state.styleParams.enableInfiniteScroll'); //if undefined -> enable infinite scroll
+    const stateInfiniteScroll = this.state && this.state.scroll.isInfinite;//_.get(this, 'state.scroll.isInfinite'); //if defined -> override style params
+    const gotStylesParams = styles.gotStyleParams;//_.get(this, 'state.styleParams.gotStyleParams'); //if false -> do not allow infinite scroll yet
+
+    if (!gotStylesParams) {
+      return false;
+    } else {
+      //DO NOT allow infinite scroll only if both styleParams and state are FALSE
+      return !!((styleParamsInfiniteScroll || stateInfiniteScroll));
+    }
+  }
+  toggleInfiniteScroll(forceVal) { // TODO - connect this to the gallery
+    const isInfinite = forceVal || !this.state.scroll.isInfinite;
+    this.setState({
+      scroll: Object.assign(this.state.scroll,
+				{isInfinite}
+		)}, () => {
+      this.props.handleNewGalleryStructure(this.items, this.state.container, this.state.styles, this.galleryStructure, this.isInfiniteScroll(this.state.styles));
+    });
+  }
   getMoreItemsIfNeeded(groupIdx) {
     if (this.galleryStructure && groupIdx >= this.galleryStructure.groups.length - 1) { //only when the last group turns visible we should try getting more items
       if (this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server

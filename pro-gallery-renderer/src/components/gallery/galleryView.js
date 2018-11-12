@@ -26,6 +26,9 @@ class GalleryView extends React.Component {
       currentIdx: 0,
     };
     appPartiallyLoaded('pro-gallery-statics');
+
+    this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
+
   }
 
   handleArrowKeys(e) {
@@ -66,12 +69,27 @@ class GalleryView extends React.Component {
     return true;
   }
 
+  lastVisibleItemIdxInHeight(height) {
+    for (let i = this.props.galleryStructure.items.length - 1; i >= 0; i--) {
+      const item = this.props.galleryStructure.items[i];
+      const isVisible = item.offset.top < height;
+      if (isVisible) {
+        return i;
+      }
+    }
+    return this.items.length - 1;
+  }
+
+  lastVisibleItemIdx() {
+    //the item must be visible and about the show more button
+    return this.lastVisibleItemIdxInHeight(this.props.container.galleryHeight - 100);
+  }
   showMoreItems() {
 
     if (utils.isAccessibilityEnabled()) { // tal - I left this check since we do not want to focus the last item in non-accessibility mode
       //find the last visible item and focus on it
       try {
-        const lastItemIdx = this.props.galleryStructure.lastVisibleItemIdx();
+        const lastItemIdx = this.useRefactoredProGallery ? this.lastVisibleItemIdx() : this.props.galleryStructure.lastVisibleItemIdx();
         utils.setStateAndLog(this, 'Focus on Last Gallery Item', {
           currentIdx: lastItemIdx + 1
         }, () => {
