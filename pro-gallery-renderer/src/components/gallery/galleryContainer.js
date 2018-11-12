@@ -1493,7 +1493,7 @@ export class GalleryContainer extends React.Component {
       stateStyles.slideshowInfoSize = Number(wixStyles.slideshowInfoSize);
     }
     if (canSet('thumbnailSize')) {
-      stateStyles.thumbnailSize = utils.isMobile() ? this.defaultThumbnailSize : (Number(wixStyles.thumbnailSize) || this.defaultThumbnailSize);
+      stateStyles.thumbnailSize = (Number(wixStyles.thumbnailSize) || this.defaultThumbnailSize);
     }
 
     //Backwards compatibility for masonry layout
