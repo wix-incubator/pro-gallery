@@ -18,7 +18,8 @@ export default class ProGallery extends React.Component {
 
   constructor(props) {
     super();
-    this.canRender = (typeof window !== 'undefined' && typeof document !== 'undefined'); //do not render if it is SSR
+    const isSSR = !(typeof window !== 'undefined' && typeof document !== 'undefined');
+    this.canRender = !isSSR || props.allowSSR === true; //do not render if it is SSR
     if (this.canRender) {
       this.init(props);
     }
