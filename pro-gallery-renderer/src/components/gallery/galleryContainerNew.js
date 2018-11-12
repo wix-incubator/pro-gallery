@@ -7,6 +7,7 @@ import SlideshowView from './slideshowView.js';
 import {addLayoutStyles} from '../helpers/layoutHelper';
 import {ItemsHelper} from '../helpers/itemsHelper';
 import dimentionsHelper from '../helpers/dimensionsHelper';
+import {calcPosForScrollToItem} from '../helpers/scrollHelper';
 
 import {createLayout} from 'pro-gallery-layouter';
 import GalleryItem from '../item/galleryItem';
@@ -36,8 +37,12 @@ export class GalleryContainer extends React.Component {
     };
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
+<<<<<<< HEAD
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
     this.isInfiniteScroll = this.isInfiniteScroll.bind(this); //TODO check if needed
+=======
+    this.scrollToItem = this.scrollToItem.bind(this);
+>>>>>>> [pgr] refactor (galleryContainerNew): connect scrollToItem to new gallery container
     this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.items[itemIdx])) : () => {};
   }
 
@@ -145,6 +150,44 @@ export class GalleryContainer extends React.Component {
     return {vertical, horizontal};
   }
 
+  scrollToItem(itemIdx, fixedScroll, isManual) {
+    let horizontalElement;
+    if (this.props.styles.oneRow) {
+      const galleryWrapper = this.galleryWrapper || document; //there is no this.galleryWrapper! TODO
+      horizontalElement = galleryWrapper.querySelector('#gallery-horizontal-scroll');
+    }
+    const pos = calcPosForScrollToItem({
+      oneRow: this.props.styles.oneRow,
+      galleryWidth: this.state.container.galleryWidth,
+      galleryHeight: this.state.container.galleryHeight,
+      top: this.state.scroll.top,
+      items: this.galleryStructure.items,
+      itemIdx,
+      fixedScroll,
+      isManual,
+      horizontalElement,
+    });
+    utils.setStateAndLog(this, 'Scroll To Item', {
+      scrollTop: pos
+    }, () => {
+      if (this.state.styleParams.oneRow) {
+        if (utils.isVerbose()) {
+          console.log('Scrolling horiontally', pos, horizontalElement);
+        }
+        utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), 400, true);
+      } else if (utils.isInWix()) {
+        if (utils.isVerbose()) {
+          console.log('Scrolling vertically (in wix)');
+        }
+      } else {
+        if (utils.isVerbose()) {
+          console.log('Scrolling vertically (not in wix)');
+        }
+        window.scrollTop = (Math.round(pos * utils.getViewportScaleRatio()));
+      }
+    });
+  }
+
   initScrollListener() {
     const scrollInterval = 500;
 
@@ -235,6 +278,11 @@ export class GalleryContainer extends React.Component {
     console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
 
     const {styles} = this.state;
+    const scroll = { // SlideshowView need 'top' to be the current pos.
+      horizontal: this.props.scroll.horizontal,
+      isInfinite: this.props.scroll.isInfinite,
+      top: this.props.scroll.left,
+    };
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
     console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
 
@@ -242,6 +290,7 @@ export class GalleryContainer extends React.Component {
       <div style={{background: 'yellowgreen'}} className={`pg-scroll-${this.state.scroll.top}`}>
         <ViewComponent
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
+          renderedItemsCount = {this.props.renderedItemsCount}
           items = {this.items}
           galleryStructure = {this.galleryStructure}
           styleParams = {styles}
@@ -249,7 +298,7 @@ export class GalleryContainer extends React.Component {
           watermark = {this.props.watermarkData}
           settings = {this.props.settings}
           gotScrollEvent = {true}
-          scroll = {this.state.scroll}
+          scroll = {scroll}
           convertToGalleryItems = {ItemsHelper.convertToGalleryItems}
           convertDtoToLayoutItem = {ItemsHelper.convertDtoToLayoutItem}
           domId = {this.props.domId}
