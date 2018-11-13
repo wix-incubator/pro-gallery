@@ -85,7 +85,7 @@ export class GalleryContainer extends React.Component {
     if (isNew.styles || isNew.container) {
       styles = styles || this.state.styles;
       container = container || this.state.container;
-      scroll = this.state.scroll || {};
+      scroll = this.state.scroll;
 
       _styles = addLayoutStyles(styles, container);
       dimentionsHelper.updateParams({styles: _styles});
@@ -94,7 +94,7 @@ export class GalleryContainer extends React.Component {
         getScrollingElement: this.getScrollingElement(_styles)
       });
       dimentionsHelper.updateParams({container: _container});
-      _scroll = Object.assign({}, scroll, {isInfinite: this.isInfiniteScroll(_styles)});
+      _scroll = Object.assign({}, scroll, {isInfinite: _styles.enableInfiniteScroll});
       newState.styles = _styles;
       newState.container = _container;
       newState.scroll = _scroll;
@@ -113,7 +113,7 @@ export class GalleryContainer extends React.Component {
       };
 
       const layout = createLayout(layoutParams);
-      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, this.isInfiniteScroll(_styles));
+      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, this.isInfiniteScroll(_styles), false);
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,
@@ -227,13 +227,13 @@ export class GalleryContainer extends React.Component {
       return !!((styleParamsInfiniteScroll || stateInfiniteScroll));
     }
   }
-  toggleInfiniteScroll(forceVal) { // TODO - connect this to the gallery
+  toggleInfiniteScroll(forceVal) {
     const isInfinite = forceVal || !this.state.scroll.isInfinite;
     this.setState({
       scroll: Object.assign(this.state.scroll,
 				{isInfinite}
 		)}, () => {
-      this.props.handleNewGalleryStructure(this.items, this.state.container, this.state.styles, this.galleryStructure, this.isInfiniteScroll(this.state.styles));
+      this.props.handleNewGalleryStructure(this.items, this.state.container, this.state.styles, this.galleryStructure, this.isInfiniteScroll(this.state.styles), true);
     });
   }
   getMoreItemsIfNeeded(groupIdx) {
@@ -275,11 +275,11 @@ export class GalleryContainer extends React.Component {
     console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
 
     const {styles} = this.state;
-    const scroll = { // SlideshowView need 'top' to be the current pos.
-      horizontal: this.props.scroll.horizontal,
-      isInfinite: this.props.scroll.isInfinite,
-      top: this.props.scroll.left,
-    };
+    // const scroll = { // SlideshowView need 'top' to be the current pos.
+    //   horizontal: this.props.scroll.horizontal,
+    //   isInfinite: this.props.scroll.isInfinite,
+    //   top: this.props.scroll.left,
+    // };
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
     console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
 
@@ -295,7 +295,7 @@ export class GalleryContainer extends React.Component {
           watermark = {this.props.watermarkData}
           settings = {this.props.settings}
           gotScrollEvent = {true}
-          scroll = {scroll}
+          scroll = {this.state.scroll}
           convertToGalleryItems = {ItemsHelper.convertToGalleryItems}
           convertDtoToLayoutItem = {ItemsHelper.convertDtoToLayoutItem}
           domId = {this.props.domId}
