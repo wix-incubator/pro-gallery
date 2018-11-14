@@ -82,7 +82,7 @@ class LineHeightFixer {
       styleParams.allowTitle !== newStyleParams.allowTitle ||
       styleParams.allowDescription !== newStyleParams.allowDescription ||
       styleParams.slideshowInfoSize !== newStyleParams.slideshowInfoSize ||
-      styleParams.bottomInfoHeight !== newStyleParams.bottomInfoHeight ||
+      styleParams.externalInfoHeight !== newStyleParams.externalInfoHeight ||
       oldIsSocialPopulated !== newIsSocialPopulated ||
       title !== newTitle ||
       description !== newDescription ||
@@ -90,7 +90,7 @@ class LineHeightFixer {
     );
   }
 
-  calcAvailableHeight(options, dimensions) {
+  calcAvailableHeight(options, textPlacementAboveOrBelow, textsContainerHeight) {
     const {styleParams, itemContainer} = options;
     let availableHeight;
 
@@ -101,13 +101,14 @@ class LineHeightFixer {
       const socialMarginBottom = parseInt(this.getCss(socialElement, 'margin-bottom'));
       const itemInfoChildDivPaddingTop = 24; //padding-top of the div inside gallery-item-info
       availableHeight = styleParams.slideshowInfoSize - itemInfoChildDivPaddingTop - socialHeight - socialMarginBottom;
-    } else if (styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS) {
-      const bottomElements = itemContainer.getElementsByClassName('gallery-item-bottom-info');
-      const bottomElement = (bottomElements.length > 0) && bottomElements[0];
-      const bottomElementPadding = parseInt(this.getCss(bottomElement, 'padding'));
-      availableHeight = styleParams.bottomInfoHeight - 2 * bottomElementPadding;
+    } else if (textPlacementAboveOrBelow) {
+      const className = styleParams.titlePlacement === Consts.placements.SHOW_BELOW ? 'gallery-item-bottom-info' : 'gallery-item-top-info';
+      const elements = itemContainer.getElementsByClassName(className);
+      const element = (elements.length > 0) && elements[0];
+      const elementPadding = parseInt(this.getCss(element, 'padding-top')) + parseInt(this.getCss(element, 'padding-bottom'));
+      availableHeight = styleParams.externalInfoHeight - elementPadding;
     } else {
-      availableHeight = dimensions.height;
+      availableHeight = textsContainerHeight;
     }
 
     return availableHeight;
@@ -120,17 +121,22 @@ class LineHeightFixer {
 
     const {styleParams, title, description, isSmallItem} = options;
 
+    let textPlacementAboveOrBelow = false;
+    if (styleParams.titlePlacement === Consts.placements.SHOW_BELOW || styleParams.titlePlacement === Consts.placements.SHOW_ABOVE) {
+      textPlacementAboveOrBelow = true;
+    }
+
     if (!container) {
       return;
     }
 
     const dimensions = this.getDimensions(container);
-    let availableHeight = this.calcAvailableHeight(options, dimensions);
+    let availableHeight = this.calcAvailableHeight(options, textPlacementAboveOrBelow, dimensions.height);
 
     const customButtonElements = container.getElementsByClassName('custom-button-wrapper');
     const titleElements = container.getElementsByClassName('gallery-item-title');
     const descriptionElements = container.getElementsByClassName('gallery-item-description');
-    const customButtonExists = customButtonElements.length > 0;
+    let customButtonExists = customButtonElements.length > 0;
 
     const customButtonElement = customButtonExists && customButtonElements[0];
     const titleElement = (titleElements.length > 0) && titleElements[0];
@@ -139,14 +145,15 @@ class LineHeightFixer {
     const isItemWidthToSmall = dimensions.width < minWidthToShowContent;
 
     this.hideElement(titleElement);
-    this.hideElement(descriptionElement, styleParams.titlePlacement !== Consts.placements.SHOW_ALWAYS); //if titlePlacement = SHOW_ALWAYS, descriptionElement should not get 'display: -webkit-box'
-    this.hideElement(customButtonElement, !(styleParams.isSlideshow || styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS)); //if Slideshow or if titlePlacement = SHOW_ALWAYS, customButtonElement should not get 'display: -webkit-box'
+    this.hideElement(descriptionElement, !textPlacementAboveOrBelow); //if textPlacementAboveOrBelow, descriptionElement should not get 'display: -webkit-box'
+    this.hideElement(customButtonElement, !(styleParams.isSlideshow || textPlacementAboveOrBelow)); //if Slideshow or if textPlacementAboveOrBelow, customButtonElement should not get 'display: -webkit-box'
 
     if (customButtonExists) {
-      this.showElement(customButtonElement, !(styleParams.isSlideshow || styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS)); //if Slideshow or if titlePlacement = SHOW_ALWAYS, customButtonElement should not get 'display: -webkit-box'
+      this.showElement(customButtonElement, !(styleParams.isSlideshow || textPlacementAboveOrBelow)); //if Slideshow or if textPlacementAboveOrBelow, customButtonElement should not get 'display: -webkit-box'
       const buttonHeight = this.getDimensions(customButtonElement).height;
       if ((availableHeight + 30) < buttonHeight) {
         this.removeElement(customButtonElement);
+        customButtonExists = false;
       } else if (isItemWidthToSmall) {
         this.setCss(customButtonElement.querySelector('button'), {'min-width': 0 + 'px', 'max-width': minWidthToShowContent + 'px'});
       } else if (dimensions.width < minWithForNormalSizedItem) {
@@ -154,7 +161,7 @@ class LineHeightFixer {
       }
 
       const isButtonHeightAvailable = !_.isNaN(buttonHeight);
-      if (isButtonHeightAvailable) {
+      if (isButtonHeightAvailable && customButtonExists) {
         availableHeight -= buttonHeight;
         availableHeight -= spaceBetweenElements;
         if (availableHeight < 0) {
@@ -202,8 +209,8 @@ class LineHeightFixer {
 
     const shouldDisplayDescription = descriptionElement && !isSmallItem && styleParams.allowDescription && description && availableHeight > 0;
     if (shouldDisplayDescription) {
-      this.showElement(descriptionElement, !(styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS)); //if titlePlacement = SHOW_ALWAYS, descriptionElement should not get 'display: -webkit-box'
-      if (styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS) { //if titlePlacement = SHOW_ALWAYS, social & love are not under the texts
+      this.showElement(descriptionElement, !textPlacementAboveOrBelow); //if textPlacementAboveOrBelow, descriptionElement should not get 'display: -webkit-box'
+      if (textPlacementAboveOrBelow) { //if textPlacementAboveOrBelow, social & love are not under the texts
         availableHeight -= spaceBetweenElements;
       } else {
         availableHeight -= 2 * spaceBetweenElements;
@@ -217,6 +224,9 @@ class LineHeightFixer {
         this.removeElement(descriptionElement);
       } else {
         this.setCss(descriptionElement, {overflow: 'hidden', '-webkit-line-clamp': (numOfLines + '')});
+        if (customButtonExists) {
+          this.setCss(descriptionElement, {marginBottom: '16px'});
+        }
       }
     }
   }

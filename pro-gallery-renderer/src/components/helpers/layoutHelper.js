@@ -588,7 +588,7 @@ function processLayouts(styles) {
 
   if (processedStyles.forceMobileCustomButton) {
     processedStyles.gallerySize = Math.round(30 * 8.5 + 150);
-    processedStyles.titlePlacement = Consts.placements.SHOW_ALWAYS;
+    processedStyles.titlePlacement = Consts.placements.SHOW_BELOW;
     processedStyles.galleryLayout = 2;
     processedStyles.fixedColumns = 1;
     processedStyles.numberOfImagesPerRow = 1;

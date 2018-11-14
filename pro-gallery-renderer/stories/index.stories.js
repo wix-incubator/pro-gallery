@@ -135,8 +135,9 @@ storiesOf('Eyes', module)
       styles={{
         galleryLayout: 2,
         imageMargin: 0,
-        allowTitle: false,
-        allowDescription: true
+        titlePlacement: 'SHOW_ABOVE',
+        allowTitle: true,
+        allowDescription: false
       }}
       forceHover= {true}
       {...props}
@@ -148,7 +149,8 @@ storiesOf('Eyes', module)
         galleryLayout: 2,
         imageMargin: 100,
         gallerySize: 10,
-        titlePlacement: 'SHOW_ALWAYS',
+        titlePlacement: 'SHOW_BELOW',
+        allowTitle: true,
         allowDescription: false
       }}
       forceHover= {true}

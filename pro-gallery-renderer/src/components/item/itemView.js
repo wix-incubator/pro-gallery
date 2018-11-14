@@ -277,8 +277,8 @@ class ItemView extends React.Component {
     return res;
   }
 
-  videoOnMount(videoElment) {
-    this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible(videoElment)});
+  videoOnMount(videoElement) {
+    this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible(videoElement)});
   }
 
   videoOnUnmount() {
@@ -461,28 +461,48 @@ class ItemView extends React.Component {
     this.toggleFullscreenIfNeeded(e);
   }
 
-  getBottomInfoElement() {
+  getBottomInfoElementIfNeeded() {
     const {styleParams} = this.props;
-    let bottomInfo = null;
 
-    if (styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS) {
-      const itemTexts = this.getItemTextsDetails();
-      if (itemTexts) {
-        bottomInfo = (
-          <div style={{height: styleParams.bottomInfoHeight, textAlign: styleParams.galleryTextAlign}}
-              className="gallery-item-bottom-info"
-              onMouseOver={() => {
-                this.setState({showHover: true});
-              }}
-              onMouseOut={() => {
-                this.setState({showHover: false});
-              }}>
-            {itemTexts}
-          </div>);
-      }
+    if (styleParams.titlePlacement === Consts.placements.SHOW_BELOW) {
+      return this.getInfoElement('gallery-item-bottom-info');
+    } else {
+      return null;
     }
-    return bottomInfo;
   }
+
+  getTopInfoElementIfNeeded() {
+    const {styleParams} = this.props;
+
+    if (styleParams.titlePlacement === Consts.placements.SHOW_ABOVE) {
+      return this.getInfoElement('gallery-item-top-info');
+    } else {
+      return null;
+    }
+  }
+
+  getInfoElement(elementName) {
+    const {styleParams} = this.props;
+    let info = null;
+
+    //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
+    const itemTexts = this.getItemTextsDetails();
+    if (itemTexts) {
+      info = (
+        <div style={{height: styleParams.externalInfoHeight, textAlign: styleParams.galleryTextAlign}}
+             className={elementName}
+             onMouseOver={() => {
+               this.setState({showHover: true});
+             }}
+             onMouseOut={() => {
+               this.setState({showHover: false});
+             }}>
+          {itemTexts}
+        </div>);
+      }
+    return info;
+  }
+
   getItemContainerStyles() {
     const {styleParams, style, transform} = this.props;
     const wrapperWidth = style.width;
@@ -621,13 +641,14 @@ class ItemView extends React.Component {
            style={this.getItemContainerStyles()}
            {...this.getSEOLink()}
       >
+        {this.getTopInfoElementIfNeeded()}
         <div data-hook="item-wrapper" className={this.getItemWrapperClass()}
           key={'item-wrapper-' + id}
           style={this.getItemWrapperStyles()}
           >
           {this.getItemInner()}
         </div>
-        {this.getBottomInfoElement()}
+        {this.getBottomInfoElementIfNeeded()}
       </div>
     );
   }

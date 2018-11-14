@@ -31,7 +31,7 @@ export default class Texts extends React.Component {
 
   getElementStyle() {
     const {styleParams, style} = this.props;
-    const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails && (styleParams.titlePlacement !== Consts.placements.SHOW_ALWAYS);
+    const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails && (styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER);
     const isCentered = style.justifyContent === 'center';
 
     const elementStyle = {

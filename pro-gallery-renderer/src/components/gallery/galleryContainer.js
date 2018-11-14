@@ -1339,13 +1339,15 @@ export class GalleryContainer extends React.Component {
       if (String(wixStyles.titlePlacement) === '1') {
         selectedPlacement = Consts.placements.SHOW_ON_HOVER;
       } else if (String(wixStyles.titlePlacement) === '0') {
-        selectedPlacement = Consts.placements.SHOW_ALWAYS;
+        selectedPlacement = Consts.placements.SHOW_BELOW;
+      } else if (String(wixStyles.titlePlacement) === '2') {
+        selectedPlacement = Consts.placements.SHOW_ABOVE;
       }
 
       if ((!stateStyles.isVertical || stateStyles.groupSize > 1 || stateStyles.oneRow === true) && !stateStyles.isSlider && !stateStyles.isColumns) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
       } else {
-        const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_ALWAYS : Consts.placements.SHOW_ON_HOVER;
+        const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_BELOW : Consts.placements.SHOW_ON_HOVER;
         stateStyles.titlePlacement = selectedPlacement || defaultValue;
       }
     }
@@ -1510,7 +1512,7 @@ export class GalleryContainer extends React.Component {
 
     if (stateStyles.forceMobileCustomButton) {
       stateStyles.gallerySize = Math.round(30 * 8.5 + 150);
-      stateStyles.titlePlacement = Consts.placements.SHOW_ALWAYS;
+      stateStyles.titlePlacement = Consts.placements.SHOW_BELOW;
       stateStyles.galleryLayout = 2;
       stateStyles.fixedColumns = 1;
       stateStyles.numberOfImagesPerRow = 1;
@@ -1535,7 +1537,7 @@ export class GalleryContainer extends React.Component {
 
     const finalStyleParams = _.merge({}, this.defaultStateStyles, stateStyles);
 
-    finalStyleParams.bottomInfoHeight = this.getBottomInfoHeight(finalStyleParams);
+    finalStyleParams.externalInfoHeight = this.getExternalInfoHeight(finalStyleParams);
 
     return finalStyleParams;
 
@@ -2236,7 +2238,7 @@ export class GalleryContainer extends React.Component {
   }
 
 
-  getBottomInfoHeight(styleParams) {
+  getExternalInfoHeight(styleParams) {
     const {
       titlePlacement,
       itemFontSlideshow,
@@ -2246,29 +2248,30 @@ export class GalleryContainer extends React.Component {
       useCustomButton
     } = styleParams;
 
-    if (titlePlacement !== 'SHOW_ALWAYS' || (!allowTitle && !allowDescription)) {
+    if (titlePlacement === 'SHOW_ON_HOVER' || titlePlacement === 'DONT_SHOW' || (!allowTitle && !allowDescription && !useCustomButton)) {
       return 0;
     }
 
-    const paddingTopAndBottom = 30;
+    const paddingTopAndBottom = 45;
     const defaultButtonHeight = useCustomButton ? 33 : 0;
     const defaultItemFontSize = 22;
     const defaultItemDescriptionFontSize = 15;
-    let spaceBetweenElements = 0;
+    const spaceBetweenElements = 16;
+
+    let totalSpaceBetweenElements = useCustomButton && (allowTitle || allowDescription) ? spaceBetweenElements : 0;
     let titleFontSize = 0;
     let descriptionFontSize = 0;
 
     if (allowTitle) {
       titleFontSize = itemFontSlideshow ? this.getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
-      spaceBetweenElements += 16;
+      totalSpaceBetweenElements += allowDescription ? spaceBetweenElements : 0;
     }
 
     if (allowDescription) {
       descriptionFontSize = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
-      spaceBetweenElements += 16;
     }
 
-    return titleFontSize + 3 * descriptionFontSize + paddingTopAndBottom + spaceBetweenElements + defaultButtonHeight;
+    return titleFontSize + 3 * descriptionFontSize + paddingTopAndBottom + totalSpaceBetweenElements + defaultButtonHeight;
   }
 
   getFontLineHeight(font) {

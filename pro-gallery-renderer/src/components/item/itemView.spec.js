@@ -412,7 +412,7 @@ describe('Item View', () => {
         visible: true,
         styleParams: {
           useCustomButton: true,
-          titlePlacement: 'SHOW_ALWAYS',
+          titlePlacement: 'SHOW_BELOW',
           allowTitle: true},
         type: 'image'});
       driver.mount(ItemView, sampleItemViewProps);

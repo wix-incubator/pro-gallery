@@ -108,7 +108,7 @@ export default class Social extends React.Component {
     const isPopulated = styleParams.allowSocial ||
       styleParams.loveButton ||
       styleParams.allowDownload;
-    const isTitlePlacementShowAlways = styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS;
+    const textPlacementAboveOrBelow = styleParams.titlePlacement === Consts.placements.SHOW_BELOW || styleParams.titlePlacement === Consts.placements.SHOW_ABOVE;
 
     const classes = [
       [showShare, 'hidden'],
@@ -118,7 +118,7 @@ export default class Social extends React.Component {
       [isVerticalContainer, 'vertical-item'],
       [isShowArrows, 'with-arrows'],
       [isPopulated, 'populated-item'],
-      [isTitlePlacementShowAlways, 'text-underneath-item'],
+      [textPlacementAboveOrBelow, 'text-external-item'],
     ].filter(x => x[0])
       .map(x => x[1])
       .join(' ');
