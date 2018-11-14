@@ -65,6 +65,7 @@ export class GalleryContainer extends React.Component {
       styles: !!styles && (!this.state.styles || styles !== this.props.styles),
       container: !!container && (!this.state.container || container !== this.props.container),
       watermark: !!watermarkData && (watermarkData !== this.props.watermarkData),
+      scroll: this.state.scroll.isInfinite !== this.props.styles.enableInfiniteScroll,
     };
     isNew.any = Object.keys(isNew).reduce((is, key) => is || isNew[key], false);
 
@@ -113,7 +114,7 @@ export class GalleryContainer extends React.Component {
       };
 
       const layout = createLayout(layoutParams);
-      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, this.isInfiniteScroll(_styles), false);
+      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, isNew.scroll);
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,
@@ -233,7 +234,7 @@ export class GalleryContainer extends React.Component {
       scroll: Object.assign(this.state.scroll,
 				{isInfinite}
 		)}, () => {
-      this.props.handleNewGalleryStructure(this.items, this.state.container, this.state.styles, this.galleryStructure, this.isInfiniteScroll(this.state.styles), true);
+      this.reCreateGalleryExpensively(this.props);
     });
   }
   getMoreItemsIfNeeded(groupIdx) {
