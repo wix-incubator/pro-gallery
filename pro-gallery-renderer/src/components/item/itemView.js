@@ -499,7 +499,7 @@ class ItemView extends React.Component {
              }}>
           {itemTexts}
         </div>);
-      }
+    }
     return info;
   }
 
