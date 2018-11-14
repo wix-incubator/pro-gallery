@@ -57,7 +57,7 @@ Simplest way to create a layout. Suitable for most uses.
 
 ## Layouter
 
-Use it to create responsive layouts and/or for rendering only visible items.  
+Use it to create responsive layouts and/or for rendering only visible items.
 Check out [responsive example](/examples/responsive.js) for more info.
 
 ### constructor
@@ -132,9 +132,9 @@ The space between items (in pixels).
 
 The percent of "randomness" to add to the layout spacings. The higher the percentage, the more scattered the layout will appear.
 
-`bottomInfoHeight` _(integer)_:
+`externalInfoHeight` _(integer)_:
 
-A fixed empty space (in pixels) at the bottom of each image (for title / buttons etc.)
+A fixed empty space (in pixels) at the bottom or at the top of each image (for title / buttons etc.)
 
 `itemsPerGroup` _(1 - 3)_:
 
@@ -180,7 +180,7 @@ Original height of the item
 
 ## layout
 
-Object returned by [createLayout](#createlayout), [calcVisibilities](#calcvisibilities), [Layouter.createLayout](#createlayout-1). 
+Object returned by [createLayout](#createlayout), [calcVisibilities](#calcvisibilities), [Layouter.createLayout](#createlayout-1).
 The object contains: [height](#height), [items](#items-1), [groups](#groups), [strips](#strips), [columns](#columns).
 
 ### height
@@ -308,7 +308,7 @@ To see how to use the layouter, check out the [Examples](/examples).
 (all demos are in vanilla js, but you need to import the library)
 
 - [Absolute positioning example](/examples/absolute.js) uses absolute positioning to display the layout
-- [Relative positioning example](/examples/relative.js) uses relative positioning to display the layout 
+- [Relative positioning example](/examples/relative.js) uses relative positioning to display the layout
 - [Responsive example](/examples/relative.js) takes advantage of the [Layouter](#layouter) to implement responsive layout where only visible items are rendered
 
 # Learn More

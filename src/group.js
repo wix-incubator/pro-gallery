@@ -55,7 +55,7 @@ export class Group {
       this.rotatingGroupTypes = styleParams.rotatingGroupTypes;
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.layoutsVersion = styleParams.layoutsVersion;
-      this.bottomInfoHeight = styleParams.bottomInfoHeight;
+      this.externalInfoHeight = styleParams.externalInfoHeight;
       this.imageMargin = styleParams.imageMargin;
     }
 
@@ -755,7 +755,7 @@ export class Group {
   }
 
   get totalHeight() {
-    return this.height + (this.bottomInfoHeight || 0);
+    return this.height + (this.externalInfoHeight || 0);
   }
 
   get bottom() {

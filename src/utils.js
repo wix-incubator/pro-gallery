@@ -121,8 +121,8 @@ class Utils {
       convertedContainer.galleryHeight = container.height + ((styleParams.imageMargin || 0) - (styleParams.galleryMargin || 0));
       delete convertedContainer.height;
     }
-    if (styleParams.bottomInfoHeight >= 0 && styleParams.oneRow) {
-      convertedContainer.galleryHeight -= styleParams.bottomInfoHeight;
+    if (styleParams.externalInfoHeight >= 0 && styleParams.oneRow) {
+      convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }
 
     return convertedContainer;
