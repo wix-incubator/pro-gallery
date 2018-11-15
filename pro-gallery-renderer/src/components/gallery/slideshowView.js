@@ -7,7 +7,6 @@ import {Layouter} from 'pro-gallery-layouter';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
-import styles from './slideshowView.scss';
 
 utils.fixViewport('Gallery');
 
@@ -353,7 +352,7 @@ class SlideshowView extends React.Component {
              margin: thumbnailsMargin
            }}
            data-hook="gallery-thumbnails">
-          <div data-hook="gallery-thumbnails-column" className={styles.galleryColumn} key={'thumbnails-column'}
+          <div data-hook="gallery-thumbnails-column" className={'galleryColumn'} key={'thumbnails-column'}
             style={Object.assign(thumbnailsStyle, {width, height})}>
               {thumbnailItems.map((item, idx) => {
                 const itemStyle = {
@@ -366,7 +365,7 @@ class SlideshowView extends React.Component {
                 Object.assign(itemStyle, thumbnailOffset);
                 return (<div
                   key={'thumbnail-' + item.id}
-                  className={styles.thumbnailItem + ((item.idx === currentIdx) ? ' pro-gallery-thumbnails-highlighted gallery-item-container highlight' : '')}
+                  className={'thumbnailItem' + ((item.idx === currentIdx) ? ' pro-gallery-thumbnails-highlighted gallery-item-container highlight' : '')}
                   data-key={item.id}
                   style={itemStyle}
                   onClick={() => this.scrollToThumbnail(item.idx)}

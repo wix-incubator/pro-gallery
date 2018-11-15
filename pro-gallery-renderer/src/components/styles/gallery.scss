@@ -1418,6 +1418,22 @@
       overflow: hidden;
       float: left;
 
+      .galleryColumn {
+        position: relative;
+        overflow: visible;
+        transition: all .4s ease;
+      }
+
+      .thumbnailItem {
+        position: absolute;
+        background-color: white;
+        background-size: cover;
+        background-position: center;
+        overflow-y: inherit;
+        border-radius: 0px;
+        cursor: pointer;
+      }
+
       .gallery-item-container {
         .custom-button-wrapper {
           display: none !important;
