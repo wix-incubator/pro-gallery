@@ -8,6 +8,7 @@ import {addLayoutStyles} from '../helpers/layoutHelper';
 import {ItemsHelper} from '../helpers/itemsHelper';
 import dimentionsHelper from '../helpers/dimensionsHelper';
 import {calcPosForScrollToItem} from '../helpers/scrollHelper';
+import {pauseVideo} from '../../actions/itemViewActions.js';
 
 import {createLayout} from 'pro-gallery-layouter';
 import GalleryItem from '../item/galleryItem';
@@ -51,8 +52,24 @@ export class GalleryContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.reCreateGalleryExpensively(nextProps);
+    if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
   }
-
+  handleNavigation(isInDisplay) {
+    this.toggleEventListeners(isInDisplay);
+    if (isInDisplay) {
+      this.props.store.dispatch(actions.toggleIsInView(true));
+    }	else {
+      this.props.store.dispatch(actions.toggleIsInView(false));
+      this.props.store.dispatch(pauseVideo());
+    }
+  }
+  toggleEventListeners(isInDisplay) {
+    if (isInDisplay) {
+      if (!this.eventListenersLive) {
+        this.initScrollListener();
+      }
+    } //else if (this.eventListenersLive)  {this.removeScrollLostener();} //for guy to add the remove function
+  }
   reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
     console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively');
     console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
