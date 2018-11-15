@@ -95,7 +95,7 @@ export class GalleryContainer extends React.Component {
         getScrollingElement: this.getScrollingElement(_styles)
       });
       dimentionsHelper.updateParams({container: _container});
-      _scroll = Object.assign({}, scroll, {isInfinite: _styles.enableInfiniteScroll});
+      _scroll = Object.assign({}, scroll, {isInfinite: isNew.styles ? _styles.enableInfiniteScroll : this.isInfiniteScroll()});
       newState.styles = _styles;
       newState.container = _container;
       newState.scroll = _scroll;
@@ -114,7 +114,8 @@ export class GalleryContainer extends React.Component {
       };
 
       const layout = createLayout(layoutParams);
-      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, isNew.scroll);
+      const isInfinite = (isNew.scroll && !_styles.oneRow) || _styles.enableInfiniteScroll;
+      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, isInfinite);
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,
