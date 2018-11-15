@@ -114,7 +114,7 @@ export class GalleryContainer extends React.Component {
       };
 
       const layout = createLayout(layoutParams);
-      const isInfinite = (isNew.scroll && !_styles.oneRow) || _styles.enableInfiniteScroll;
+      const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll) && !_styles.oneRow;
       this.props.handleNewGalleryStructure(_items, _container, _styles, layout, isInfinite);
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
