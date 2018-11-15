@@ -187,7 +187,6 @@ export class GalleryContainer extends React.Component {
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
       mobilePanorama: false,
       isAutoSlideshow: false,
-      slideshowLoop: false,
       autoSlideshowInterval: 4,
       arrowsSize: 23
     };
