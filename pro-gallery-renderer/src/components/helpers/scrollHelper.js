@@ -16,12 +16,7 @@ function scrollToItemIfNeeded() {
 export function calcPosForScrollToItem(scrollParams) {
 
   let pos;
-  let {horizontalElement, oneRow, galleryWidth, galleryHeight, top, items, itemIdx, fixedScroll, isManual} = scrollParams;
-
-  if (oneRow) {
-    const galleryWrapper = scrollParams.galleryWrapper || document;
-    horizontalElement = galleryWrapper.querySelector('#gallery-horizontal-scroll');
-  }
+  const {horizontalElement, oneRow, galleryWidth, galleryHeight, top, items, itemIdx, fixedScroll, isManual} = scrollParams;
 
   if (fixedScroll === true) {
       //scroll by half the container size

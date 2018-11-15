@@ -7,6 +7,7 @@ import {Layouter} from 'pro-gallery-layouter';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
+import styles from './slideshowView.scss';
 
 utils.fixViewport('Gallery');
 
@@ -29,17 +30,30 @@ class SlideshowView extends React.Component {
       isInView: true,
     };
     appPartiallyLoaded('pro-gallery-statics');
+    this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
   }
 
   isFirstItem() {
-    const firstItem = () => (this.state.currentIdx === 0) || (this.props.scroll.top === 0);
+    let pos;
+    if (this.useRefactoredProGallery) {
+      pos = this.props.styleParams.oneRow ? this.props.scroll.left : this.props.scroll.top;
+    } else {
+      pos = this.props.scroll.top;
+    }
+    const firstItem = () => (this.state.currentIdx === 0) || (pos === 0);
     const isSlideshowLoop = () => this.shouldEnableSlideshowLoop();
     return firstItem() && !isSlideshowLoop();
   }
 
   isLastItem() {
+    let pos;
+    if (this.useRefactoredProGallery) {
+      pos = this.props.styleParams.oneRow ? this.props.scroll.left : this.props.scroll.top;
+    } else {
+      pos = this.props.scroll.top;
+    }
     const [lastGroup] = this.props.galleryStructure.groups.slice(-1);
-    const lastItem = () => (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastGroup || (this.props.container.galleryWidth + this.props.scroll.top >= lastGroup.right);
+    const lastItem = () => (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastGroup || (this.props.container.galleryWidth + pos >= lastGroup.right);
     const isSlideshowLoop = () => this.shouldEnableSlideshowLoop();
     return lastItem() && !isSlideshowLoop();
   }
@@ -166,7 +180,6 @@ class SlideshowView extends React.Component {
     this.isAutoScrolling = true;
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
 
-    itemIdx += this.firstItemIdx;
     let itemIdxForScroll = itemIdx;
 
     if (this.shouldEnableSlideshowLoop()) {
@@ -224,7 +237,6 @@ class SlideshowView extends React.Component {
 
     let width = this.props.styleParams.thumbnailSize;
     let height = this.props.styleParams.thumbnailSize;
-
     let oneRow;
     let numOfThumbnails;
     let numOfWholeThumbnails;
@@ -315,90 +327,25 @@ class SlideshowView extends React.Component {
       }
     }
 
-    const container = _.merge({}, this.props.container, {
-      galleryWidth: width,
-      galleryHeight: height
-    });
-
-    const thumbnailsLayout = this.props.convertToGalleryItems(new Layouter({
-      items: items.slice(this.firstItemIdx, this.lastItemIdx + 1).map(item => this.props.convertDtoToLayoutItem(item)),
-      container,
-      watermark: this.props.watermark,
-      styleParams: {
-        gotStyleParams: false,
-        isVertical: false,
-        gallerySize: this.props.styleParams.thumbnailSize,
-        minItemSize: this.props.styleParams.thumbnailSize,
-        imageMargin: this.props.styleParams.thumbnailSpacings,
-        galleryMargin: 0,
-        groupSize: 1,
-        chooseBestGroup: false,
-        groupTypes: '1',
-        cubeType: 'fill',
-        cubeImages: true,
-        smartCrop: false,
-        collageAmount: 0,
-        collageDensity: 0,
-        cubeRatio: 1,
-        fixedColumns: 0,
-        oneRow
-      },
-      gotScrollEvent: true,
-      showAllItems: true
-    }), {watermark: this.props.watermark});
-
-    const thumbnailsConfig = {
-      scroll: _.merge({}, this.props.scroll || {}),
-      thumbnailHighlightId: _.get(items, `${currentIdx}.itemId`),
-      watermark: this.props.watermark,
-      container,
-      styleParams: _.merge({}, this.props.styleParams, {
-        allowHover: false,
-        allowSocial: false,
-        allowDownload: false,
-        allowTitle: false,
-        cubeType: 'fill',
-        loveButton: false,
-        loveCounter: false,
-        videoLoop: false,
-        videoSpeed: 1,
-        videoPlay: 'onClick',
-        sharpParams: {
-          quality: 90,
-          usm: {}
-        },
-        imageMargin: this.props.styleParams.thumbnailSpacings,
-        galleryMargin: 0,
-        enableInfiniteScroll: 0,
-        showArrows: false,
-        itemClick: 'expand'
-      }),
-      actions: {
-        scrollToItem: this.scrollToThumbnail,
-        toggleFullscreen: this.props.actions.toggleFullscreen,
-        getMoreItemsIfNeeded: _.noop,
-      },
-      hidePlay: true
-    };
-
     let thumbnailsMargin;
-    const m = this.props.styleParams.thumbnailSpacings;
+    const thumbnailSpacings = this.props.styleParams.thumbnailSpacings;
     switch (this.props.styleParams.galleryThumbnailsAlignment) {
       case 'bottom':
-        thumbnailsMargin = `${m}px -${m}px 0 -${m}px`;
+        thumbnailsMargin = `${thumbnailSpacings}px -${thumbnailSpacings}px 0 -${thumbnailSpacings}px`;
         break;
       case 'left':
-        thumbnailsMargin = `-${m}px ${m}px -${m}px 0`;
+        thumbnailsMargin = `-${thumbnailSpacings}px ${thumbnailSpacings}px -${thumbnailSpacings}px 0`;
         break;
       case 'top':
-        thumbnailsMargin = `0 -${m}px ${m}px -${m}px`;
+        thumbnailsMargin = `0 -${thumbnailSpacings}px ${thumbnailSpacings}px -${thumbnailSpacings}px`;
         break;
       case 'right':
-        thumbnailsMargin = `-${m}px 0 -${m}px ${m}px`;
+        thumbnailsMargin = `-${thumbnailSpacings}px 0 -${thumbnailSpacings}px ${thumbnailSpacings}px`;
         break;
     }
-
-    const thumbnails = (
+    const thumbnailItems = this.props.galleryStructure.galleryItems.slice(this.firstItemIdx, this.lastItemIdx + 1);
+    const {thumbnailSize} = this.props.styleParams;
+    return (
       <div className={'pro-gallery inline-styles thumbnails-gallery ' + (oneRow ? ' one-row hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
            style={{
              width,
@@ -406,21 +353,28 @@ class SlideshowView extends React.Component {
              margin: thumbnailsMargin
            }}
            data-hook="gallery-thumbnails">
-
-        {thumbnailsLayout.columns.map((column, c) => {
-          return (
-            <div data-hook="gallery-thumbnails-column" className="gallery-column" key={'thumbnails-column' + c}
-                 style={thumbnailsStyle}>
-              {column.galleryGroups.map(group => React.createElement(GroupView, _.merge(group.renderProps(thumbnailsConfig), {store: this.props.store})))}
-            </div>
-          );
-
-        })}
+          <div data-hook="gallery-thumbnails-column" className={styles.galleryColumn} key={'thumbnails-column'}
+            style={Object.assign(thumbnailsStyle, {width, height})}>
+              {thumbnailItems.map((item, idx) => {
+                const itemStyle = {
+                  width: thumbnailSize,
+                  height: thumbnailSize,
+                  margin: thumbnailSpacings,
+                  backgroundImage: `url(${item.thumbnail_url.img})`,
+                };
+                const thumbnailOffset = oneRow ? {left: (thumbnailSize * idx) + 2 * idx * thumbnailSpacings} : {top: (thumbnailSize * idx) + 2 * idx * thumbnailSpacings};
+                Object.assign(itemStyle, thumbnailOffset);
+                return (<div
+                  key={'thumbnail-' + item.id}
+                  className={styles.thumbnailItem + ((item.idx === currentIdx) ? ' pro-gallery-thumbnails-highlighted gallery-item-container highlight' : '')}
+                  data-key={item.id}
+                  style={itemStyle}
+                  onClick={() => this.scrollToThumbnail(item.idx)}
+                />);
+              })}
+          </div>
       </div>
     );
-
-    return thumbnails;
-
   }
 
   setFlattenItems(galleryStructure) {

@@ -149,11 +149,8 @@ export class GalleryContainer extends React.Component {
   }
 
   scrollToItem(itemIdx, fixedScroll, isManual) {
-    let horizontalElement;
-    if (this.props.styles.oneRow) {
-      const galleryWrapper = this.galleryWrapper || document; //there is no this.galleryWrapper! TODO
-      horizontalElement = galleryWrapper.querySelector('#gallery-horizontal-scroll');
-    }
+    const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
+    const horizontalElement = scrollingElement.horizontal();
     const pos = calcPosForScrollToItem({
       oneRow: this.props.styles.oneRow,
       galleryWidth: this.state.container.galleryWidth,
@@ -165,25 +162,11 @@ export class GalleryContainer extends React.Component {
       isManual,
       horizontalElement,
     });
-    utils.setStateAndLog(this, 'Scroll To Item', {
-      scrollTop: pos
-    }, () => {
-      if (this.state.styleParams.oneRow) {
-        if (utils.isVerbose()) {
-          console.log('Scrolling horiontally', pos, horizontalElement);
-        }
-        utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), 400, true);
-      } else if (utils.isInWix()) {
-        if (utils.isVerbose()) {
-          console.log('Scrolling vertically (in wix)');
-        }
-      } else {
-        if (utils.isVerbose()) {
-          console.log('Scrolling vertically (not in wix)');
-        }
-        window.scrollTop = (Math.round(pos * utils.getViewportScaleRatio()));
-      }
-    });
+    if (this.props.styles.oneRow) {
+      utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), 400, true);
+    } else {
+      scrollingElement.vertical().scrollTo(pos);
+    }
   }
 
   initScrollListener() {
@@ -276,11 +259,6 @@ export class GalleryContainer extends React.Component {
     console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
 
     const {styles} = this.state;
-    // const scroll = { // SlideshowView need 'top' to be the current pos.
-    //   horizontal: this.props.scroll.horizontal,
-    //   isInfinite: this.props.scroll.isInfinite,
-    //   top: this.props.scroll.left,
-    // };
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
     console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
 
