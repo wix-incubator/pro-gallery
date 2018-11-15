@@ -1518,7 +1518,7 @@ export class GalleryContainer extends React.Component {
       stateStyles.numberOfImagesPerRow = 1;
     }
 
-    if (stateStyles.fixedColumns > 0 && utils.isMobile()) {
+    if (stateStyles.fixedColumns > 0 && utils.isMobile() && typeof (wixStyles.m_numberOfImagesPerRow) === 'undefined') {
       stateStyles.fixedColumns = 1;
     }
 
