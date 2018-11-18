@@ -13,10 +13,10 @@ function scrollToItemIfNeeded() {
   }
 }
 
-export function calcPosForScrollToItem(scrollParams) {
+export function scrollToItemImp(scrollParams) {
 
   let pos;
-  const {horizontalElement, oneRow, galleryWidth, galleryHeight, top, items, itemIdx, fixedScroll, isManual} = scrollParams;
+  const {durationInMS, horizontalElement, scrollingElement, oneRow, galleryWidth, galleryHeight, top, items, itemIdx, fixedScroll, isManual} = scrollParams;
 
   if (fixedScroll === true) {
       //scroll by half the container size
@@ -63,5 +63,11 @@ export function calcPosForScrollToItem(scrollParams) {
       }
     }
   }
-  return pos;
+
+  if (this.state.styles.oneRow) {
+    utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), durationInMS, true);
+  } else {
+    scrollingElement.vertical().scrollTo(pos);
+  }
+  return true;
 }

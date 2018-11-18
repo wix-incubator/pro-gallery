@@ -186,6 +186,7 @@ export class GalleryContainer extends React.Component {
       useCustomButton: utils.isStoreGallery(),
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
       mobilePanorama: false,
+      slideshowLoop: false,
       isAutoSlideshow: false,
       autoSlideshowInterval: 4,
       arrowsSize: 23

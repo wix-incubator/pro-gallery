@@ -7,22 +7,12 @@ import SlideshowView from './slideshowView.js';
 import {addLayoutStyles} from '../helpers/layoutHelper';
 import {ItemsHelper} from '../helpers/itemsHelper';
 import dimentionsHelper from '../helpers/dimensionsHelper';
-import {calcPosForScrollToItem} from '../helpers/scrollHelper';
+import {scrollToItem} from '../helpers/scrollHelper';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 
 import {createLayout} from 'pro-gallery-layouter';
-import GalleryItem from '../item/galleryItem';
-import GalleryGroup from '../group/galleryGroup';
 import _ from 'lodash';
 import utils from '../../utils';
-import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
-import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/features/layouts';
-import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
-import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
-import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
-import axios from 'axios';
-import prependHttpExtra from 'prepend-http-extra';
 
 export class GalleryContainer extends React.Component {
 
@@ -166,11 +156,11 @@ export class GalleryContainer extends React.Component {
     return {vertical, horizontal};
   }
 
-  scrollToItem(itemIdx, fixedScroll, isManual) {
+  scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0) {
     const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
     const horizontalElement = scrollingElement.horizontal();
-    const pos = calcPosForScrollToItem({
-      oneRow: this.props.styles.oneRow,
+    scrollToItem({
+      oneRow: this.state.styles.oneRow,
       galleryWidth: this.state.container.galleryWidth,
       galleryHeight: this.state.container.galleryHeight,
       top: this.state.scroll.top,
@@ -178,13 +168,10 @@ export class GalleryContainer extends React.Component {
       itemIdx,
       fixedScroll,
       isManual,
+      scrollingElement,
       horizontalElement,
+      durationInMS,
     });
-    if (this.props.styles.oneRow) {
-      utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), 400, true);
-    } else {
-      scrollingElement.vertical().scrollTo(pos);
-    }
   }
 
   initScrollListener() {
