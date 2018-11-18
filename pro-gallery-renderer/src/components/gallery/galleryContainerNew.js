@@ -39,6 +39,9 @@ export class GalleryContainer extends React.Component {
       this.initScrollListener();
     });
   }
+  componentWillUnmount() {
+    this.removeScrollListener();
+  }
 
   componentWillReceiveProps(nextProps) {
     this.reCreateGalleryExpensively(nextProps);
@@ -55,10 +58,8 @@ export class GalleryContainer extends React.Component {
   }
   toggleEventListeners(isInDisplay) {
     if (isInDisplay) {
-      if (!this.eventListenersLive) {
-        this.initScrollListener();
-      }
-    } //else if (this.eventListenersLive)  {this.removeScrollLostener();} //for guy to add the remove function
+      this.initScrollListener();
+    } else this.removeScrollListener(); //for guy to add the remove function
   }
   reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
     console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively');
@@ -174,33 +175,48 @@ export class GalleryContainer extends React.Component {
     });
   }
 
+  removeScrollListener() {
+    if (this.scrollEventListenerSet) {
+      this.scrollEventListenerSet = false;
+      const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
+      scrollingElement.vertical().removeEventListener('scroll', this.onVerticalScroll);
+      const {oneRow} = this.state.styles;
+      if (oneRow) {
+        scrollingElement.horizontal().removeEventListener('scroll', this.onHorizontalScroll);
+      }
+    }
+  }
+
   initScrollListener() {
-    const scrollInterval = 500;
+    if (!this.scrollEventListenerSet) {
+      this.scrollEventListenerSet = true;
+      const scrollInterval = 500;
 
     //Vertical Scroll
-    this.onVerticalScroll = _.throttle(({target}) => {
-      this.setState({
-        scroll: Object.assign(this.state.scroll, {
-          top: target.scrollTop,
-          vertical: target
-        })
-      });
-    }, scrollInterval);
-    const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
-    scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
-
-    //Horizontal Scroll
-    const {oneRow} = this.state.styles;
-    if (oneRow) {
-      this.onHorizontalScroll = _.throttle(({target}) => {
+      this.onVerticalScroll = _.throttle(({target}) => {
         this.setState({
           scroll: Object.assign(this.state.scroll, {
-            left: target.scrollLeft,
-            horizontal: target
+            top: target.scrollTop,
+            vertical: target
           })
         });
       }, scrollInterval);
-      scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
+      const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
+      scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
+
+    //Horizontal Scroll
+      const {oneRow} = this.state.styles;
+      if (oneRow) {
+        this.onHorizontalScroll = _.throttle(({target}) => {
+          this.setState({
+            scroll: Object.assign(this.state.scroll, {
+              left: target.scrollLeft,
+              horizontal: target
+            })
+          });
+        }, scrollInterval);
+        scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
+      }
     }
   }
 
