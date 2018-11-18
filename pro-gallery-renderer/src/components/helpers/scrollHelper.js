@@ -64,7 +64,7 @@ export function scrollToItemImp(scrollParams) {
     }
   }
 
-  if (this.state.styles.oneRow) {
+  if (oneRow) {
     utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), durationInMS, true);
   } else {
     scrollingElement.vertical().scrollTo(pos);
