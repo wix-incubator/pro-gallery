@@ -7,7 +7,7 @@ import SlideshowView from './slideshowView.js';
 import {addLayoutStyles} from '../helpers/layoutHelper';
 import {ItemsHelper} from '../helpers/itemsHelper';
 import dimentionsHelper from '../helpers/dimensionsHelper';
-import {scrollToItem} from '../helpers/scrollHelper';
+import {scrollToItemImp} from '../helpers/scrollHelper';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 
 import {createLayout} from 'pro-gallery-layouter';
@@ -159,7 +159,7 @@ export class GalleryContainer extends React.Component {
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0) {
     const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
     const horizontalElement = scrollingElement.horizontal();
-    scrollToItem({
+    scrollToItemImp({
       oneRow: this.state.styles.oneRow,
       galleryWidth: this.state.container.galleryWidth,
       galleryHeight: this.state.container.galleryHeight,
