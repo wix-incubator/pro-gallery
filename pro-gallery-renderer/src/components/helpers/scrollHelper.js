@@ -1,18 +1,6 @@
 import _ from 'lodash';
 import utils from '../../utils';
 
-function scrollToItemIfNeeded() {
-    //after height is changed - scroll to an item if needed
-  if (this.shouldScrollTo >= 0) {
-    setTimeout(() => {
-      const scrolled = this.scrollToItem(this.shouldScrollTo);
-      if (scrolled) {
-        this.shouldScrollTo = -1;
-      }
-    }, 10);
-  }
-}
-
 export function scrollToItemImp(scrollParams) {
 
   let pos;
@@ -67,7 +55,7 @@ export function scrollToItemImp(scrollParams) {
   if (oneRow) {
     utils.scrollTo(horizontalElement, (Math.round(pos * utils.getViewportScaleRatio())), durationInMS, true);
   } else {
-    scrollingElement.vertical().scrollTo(pos);
+    scrollingElement.vertical().scrollTo(0, pos);
   }
   return true;
 }
