@@ -29,7 +29,7 @@ describe('Gallery View', () => {
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
-      expect(driver.find.hook('gallery-column').length).to.equal(1);
+      expect(driver.find.hook('item-container').length).to.equal(1);
       expect(driver.find.selector('GalleryDebugMessage').length).to.equal(1);
     });
 

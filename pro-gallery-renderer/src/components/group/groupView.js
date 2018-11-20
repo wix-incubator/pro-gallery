@@ -156,12 +156,7 @@ class GroupView extends React.Component {
     if (this.useRefactoredProGallery && !rendered) {
       return null;
     } else {
-      const dom = [];
-      for (let item, i = 0; item = this.props.items[i]; i++) {
-        dom.push(
-          React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(this.props.galleryConfig, {visible})), {store: this.props.store}))
-       );
-      }
+      const dom = this.props.items.map(item => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(this.props.galleryConfig, {visible})), {store: this.props.store})));
       return dom;
     }
 
@@ -172,21 +167,35 @@ class GroupView extends React.Component {
     const visible = this.useRefactoredProGallery ? (this.state.visibleVertically && this.state.visibleHorizontally) : this.props.visible;
     const rendered = this.useRefactoredProGallery ? (this.state.renderedVertically && this.state.renderedHorizontally) : this.props.rendered;
 
-    return (
-      <div
+    const groupStyle = {
+      width: this.props.width,
+      height: (this.props.totalHeight)
+    };
+
+    if (utils.useRelativePositioning) {
+
+      return (
+        <div
         className={' gallery-group gallery-group-' + (rendered ? (visible ? 'visible' : 'hidden') : 'none')}
-        style={{width: this.props.width, height: (this.props.totalHeight)}}
+        style={groupStyle}
         data-hook={'group-view'}
         key={`group_${this.props.idx}`}
         data-group-idx={this.props.idx}
         data-group-type={this.props.type}
         data-group-ratios={this.props.ratios}
         data-visible={(rendered ? (visible ? 'visible' : 'rendered') : 'hidden')}
-      >
-      {!!this.useRefactoredProGallery && this.props.idx}
-      {this.createDom(rendered, visible)}
+        >
+        {!!this.useRefactoredProGallery && this.props.idx}
+        {this.createDom(rendered, visible)}
       </div>
-    );
+      );
+    } else {
+      return !!rendered && (
+        <div
+          key={`group_${this.props.idx}`}
+          data-hook={'group-view'}
+        >{this.createDom(rendered, visible)}</div>);
+    }
   }
 }
 

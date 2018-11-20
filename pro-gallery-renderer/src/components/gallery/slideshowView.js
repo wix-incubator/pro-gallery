@@ -513,24 +513,40 @@ class SlideshowView extends React.Component {
 
     return this.props.galleryStructure.columns.map((column, c) => {
 
-      let marginLeft = 0;
-      const firstGroup = _.find(column.groups, group => group.rendered) || {};
-      const columnStyle = {width: column.width};
-      if (this.props.gotScrollEvent) {
-        marginLeft = firstGroup.left || 0;
-      }
-      if (this.props.styleParams.isSlideshow) {
-        _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
-      }
+      if (utils.useRelativePositioning) {
+        let marginLeft = 0;
+        const firstGroup = _.find(column.groups, group => group.rendered) || {};
+        const columnStyle = {width: column.width};
+        if (this.props.gotScrollEvent) {
+          marginLeft = firstGroup.left || 0;
+        }
+        if (this.props.styleParams.isSlideshow) {
+          _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
+        }
 
-      return !!column.galleryGroups.length && (
+        return !!column.galleryGroups.length && (
+          <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
+               style={columnStyle}>
+            <div className="gallery-left-padding" style={{width: marginLeft}}></div>
+            {this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
+            {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+          </div>
+        );
+      } else {
+
+        const columnStyle = {width: column.width, height: this.props.container.galleryHeight};
+        if (this.props.styleParams.isSlideshow) {
+          _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
+        }
+        return !!column.galleryGroups.length && (
         <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
-             style={columnStyle}>
-          <div className="gallery-left-padding" style={{width: marginLeft}}></div>
+          style={columnStyle}
+          >
           {this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
           {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
         </div>
-      );
+        );
+      }
     });
   }
 

@@ -2,6 +2,13 @@ import RenderUtils from 'photography-client-lib/dist/src/utils/renderUtils';
 
 class Utils extends RenderUtils {
 
+  constructor() {
+    super();
+
+    this.positioningType = (window && window.petri && window.petri['specs.pro-gallery.itemsPositioning']) || 'relative';
+    this.useRelativePositioning = !(this.positioningType === 'absolute' || this.positioningType === 'transform');
+  }
+
   isWixIframe() {
     return window && window.Wix && (window.top !== window.self);
   }

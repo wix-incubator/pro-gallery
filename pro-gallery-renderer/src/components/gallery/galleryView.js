@@ -107,34 +107,47 @@ class GalleryView extends React.Component {
   createGallery(showMore) {
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
-    const galleryHeight = (showMore ? (this.props.container.galleryHeight - (showMoreContainerHeight * utils.getViewportScaleRatio())) + 'px' : '100%');
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
     const columns = this.props.galleryStructure.columns;
 
+    let galleryHeight;
+    if (showMore) {
+      galleryHeight = (this.props.container.galleryHeight - (showMoreContainerHeight * utils.getViewportScaleRatio()));
+    } else if (!utils.useRelativePositioning) {
+      galleryHeight = this.props.container.galleryHeight + 'px';
+    } else {
+      galleryHeight = '100%';
+    }
+
     const layout = _.map(columns, (column, c) => {
 
-      let paddingTop = 0;
-      if (this.props.gotScrollEvent) {
-        let firstRenderedGroup = _.find(column.groups, group => group.rendered);
-        if (!firstRenderedGroup) {
-          if (this.props.scroll.top > 0 && column.groups.length > 0) {
+      if (utils.useRelativePositioning) {
+
+        let paddingTop = 0;
+        if (this.props.gotScrollEvent) {
+          let firstRenderedGroup = _.find(column.groups, group => group.rendered);
+          if (!firstRenderedGroup) {
+            if (this.props.scroll.top > 0 && column.groups.length > 0) {
             //gallery is above the fold
-            firstRenderedGroup = {top: column.groups[column.groups.length - 1].bottom};
-          } else {
+              firstRenderedGroup = {top: column.groups[column.groups.length - 1].bottom};
+            } else {
             //gallery is below the fold
-            firstRenderedGroup = {top: 0};
+              firstRenderedGroup = {top: 0};
+            }
           }
+          paddingTop = firstRenderedGroup.top || 0;
         }
-        paddingTop = firstRenderedGroup.top || 0;
+
+        return !!column.galleryGroups.length && (
+          <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
+              style={{width: column.width, paddingTop}}>
+            {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+          </div>
+        );
+
+      } else {
+        return !!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false);
       }
-
-      return !!column.galleryGroups.length && (
-        <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
-             style={{width: column.width, paddingTop}}>
-          {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
-        </div>
-      );
-
     });
     return (
       <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}

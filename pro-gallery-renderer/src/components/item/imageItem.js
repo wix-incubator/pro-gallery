@@ -7,10 +7,7 @@ export default class ImageItem extends React.Component {
   render() {
     const {isThumbnail, alt, visible, loaded, displayed, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
     const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
-    const backgroundStyle = utils.deviceHasMemoryIssues() ? {} : Object.assign(
-      styleParams.imageLoadingMode === Consts.loadingMode.COLOR ? {} : {backgroundImage: `url(${resized_url.thumb})`},
-      loaded ? {} : {transform: 'scale(1.1)'}
-      );
+    const backgroundStyle = (utils.deviceHasMemoryIssues() || styleParams.imageLoadingMode === Consts.loadingMode.COLOR) ? {} : {backgroundImage: `url(${resized_url.thumb})`};
     const imageItemClassName = [
       'image-item',
       'gallery-item-visible',

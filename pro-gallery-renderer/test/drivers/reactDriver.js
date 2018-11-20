@@ -276,7 +276,7 @@ class galleryDriver {
 
       groupView: () => {
         const galleryViewProps = this.props.galleryView();
-        return _.merge(galleryViewProps, {items: galleryViewProps.items.map(item => new GalleryItem({dto: item}))});
+        return _.merge(galleryViewProps, {rendered: true, visible: true, items: galleryViewProps.items.map(item => new GalleryItem({dto: item}))});
       },
 
       itemView: (itemDto, galleryConfig) => {

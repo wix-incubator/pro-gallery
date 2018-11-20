@@ -516,7 +516,7 @@ class ItemView extends React.Component {
         boxShadow: `${shadowOffset}px ${shadowOffset}px ${shadowSpread}px 0 rgba(0,0,0,0.2)`
       };
     }
-    const styles = _.merge({
+    const itemStyles = {
       width: wrapperWidth,
       margin: styleParams.imageMargin + 'px',
       position: style.position,
@@ -526,7 +526,33 @@ class ItemView extends React.Component {
       bottom: style.bottom,
       overflowY: styleParams.isSlideshow ? 'visible' : 'inherit',
       borderRadius: borderRadius + 'px'
-    }, transform, boxShadow);
+    };
+
+    if (utils.positioningType === 'absolute') {
+      Object.assign(itemStyles, {
+        position: 'absolute',
+        top: this.props.offset.top,
+        left: this.props.offset.left,
+        right: 'auto',
+        bottom: 'auto',
+        width: style.width,
+        height: style.height
+      });
+    } else if (utils.positioningType === 'transform') {
+      Object.assign(itemStyles, {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        transform: `translate3d(${this.props.offset.left}px, ${this.props.offset.top}px, 0)`,
+        right: 'auto',
+        bottom: 'auto',
+        width: style.width,
+        height: style.height
+      });
+    }
+
+    const styles = _.merge(itemStyles, transform, boxShadow);
+
     return styles;
   }
   getItemWrapperStyles() {
