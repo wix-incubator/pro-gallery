@@ -189,7 +189,8 @@ export class GalleryContainer extends React.Component {
       slideshowLoop: false,
       isAutoSlideshow: false,
       autoSlideshowInterval: 4,
-      arrowsSize: 23
+      arrowsSize: 23,
+      imageLoadingMode: Consts.loadingMode.BLUR
     };
 
     const galleryWidth = this.getGalleryWidth();
@@ -1500,6 +1501,13 @@ export class GalleryContainer extends React.Component {
     }
     if (canSet('thumbnailSize')) {
       stateStyles.thumbnailSize = (Number(wixStyles.thumbnailSize) || this.defaultThumbnailSize);
+    }
+    if (canSet('imageLoadingMode')) {
+      if (String(wixStyles.imageLoadingMode) === '1') {
+        stateStyles.imageLoadingMode = Consts.loadingMode.COLOR;
+      } else { //String(wixStyles.imageLoadingMode) === '0'
+        stateStyles.imageLoadingMode = Consts.loadingMode.BLUR;
+      }
     }
 
     //Backwards compatibility for masonry layout
