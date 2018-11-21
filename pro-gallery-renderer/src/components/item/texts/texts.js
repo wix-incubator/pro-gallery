@@ -33,7 +33,6 @@ export default class Texts extends React.Component {
     const {styleParams, style} = this.props;
     const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails && (styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER);
     const isCentered = style.justifyContent === 'center';
-
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,
       alignItems: styleParams.galleryHorizontalAlign,
@@ -59,13 +58,25 @@ export default class Texts extends React.Component {
     //if there is a description, it will take care of the bottom part.
     //if no description: if there are actions, we will add marginBottom of 20. if no actions, we will add marginBottom of 0.
     const titleStyle = shouldShowDescription ? {} : (this.allowAnyAction() ? {marginBottom: 20} : {marginBottom: 0});
+    if (utils.isMobile() && styleParams.mobileTitleSize > 0) {
+      titleStyle.fontSize = styleParams.mobileTitleSize;
+      titleStyle.lineHeight = `${styleParams.mobileTitleSize * 1.6}px`;
+    }
+    const descStyle = {};
+    if (utils.isMobile()) {
+      if (styleParams.mobileDescSize > 0) {
+        descStyle.fontSize = styleParams.mobileDescSize;
+        descStyle.lineHeight = `${styleParams.mobileDescSize * 1.6}px`;
+      }
+    }
+
 
     const titleElem = shouldShowTitle && <ItemTitle
       key={'item-title-' + id}
       title={title}
       style={titleStyle}
     />;
-    const descriptionElem = shouldShowDescription && <ItemDescription description={description} key={'item-description-' + id} />;
+    const descriptionElem = shouldShowDescription && <ItemDescription description={description} key={'item-description-' + id} style={descStyle}/>;
     const buttonElem = shouldShowButton && <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
 
     const shouldHideElement = !titleElem && !descriptionElem && !buttonElem;

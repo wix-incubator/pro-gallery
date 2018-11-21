@@ -175,8 +175,8 @@ class LineHeightFixer {
       this.showElement(titleElement);
       this.setCss(titleElement, {overflow: 'visible'});
       if (titleElements.length === 1) {
-        let titleHeight = parseInt(titleElement.clientHeight);
-        const titleLineHeight = parseInt(this.getCss(titleElement, 'line-height'));
+        let titleHeight = (utils.isMobile() && styleParams.monileTitleSize) ? styleParams.monileTitleSize : parseInt(titleElement.clientHeight);
+        const titleLineHeight = (utils.isMobile() && styleParams.monileTitleSize) ? (styleParams.mobileTitleSize * 1.6) : parseInt(this.getCss(titleElement, 'line-height'));
         let numOfTitleLines = 1;
         if (titleHeight >= titleLineHeight) {
           numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
@@ -218,7 +218,7 @@ class LineHeightFixer {
       if (availableHeight < 0) {
         availableHeight = 0;
       }
-      const lineHeight = parseInt(this.getCss(descriptionElement, 'line-height'));
+      const lineHeight = (utils.isMobile() && styleParams.mobileDescSize) ? styleParams.mobileDescSize * 1.6 : parseInt(this.getCss(descriptionElement, 'line-height'));
       const numOfLines = Math.floor(availableHeight / lineHeight);
       if (numOfLines === 0) {
         this.removeElement(descriptionElement);

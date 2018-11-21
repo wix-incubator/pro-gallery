@@ -1345,7 +1345,6 @@ export class GalleryContainer extends React.Component {
       } else if (String(wixStyles.titlePlacement) === '2') {
         selectedPlacement = Consts.placements.SHOW_ABOVE;
       }
-
       if ((!stateStyles.isVertical || stateStyles.groupSize > 1 || stateStyles.oneRow === true) && !stateStyles.isSlider && !stateStyles.isColumns) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
       } else {
@@ -1358,6 +1357,11 @@ export class GalleryContainer extends React.Component {
       stateStyles.itemFont = wixStyles.itemFont;
     }
 
+    if (canSet('itemDescriptionFont')) {
+      stateStyles.itemDescriptionFont = wixStyles.itemDescriptionFont;
+    }
+
+    // We need another param because the color should be different on hover(white on black) or underneath (black on white)
     if (canSet('itemFontSlideshow')) {
       stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
     }
@@ -1495,6 +1499,21 @@ export class GalleryContainer extends React.Component {
     }
     if (canSet('arrowsSize')) {
       stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
+    }
+    if (canSet('mobileTitleSize')) {
+      stateStyles.mobileTitleSize = Number(wixStyles.mobileTitleSize) || 0;
+    }
+    if (canSet('mobileDescSize')) {
+      stateStyles.mobileDescSize = Number(wixStyles.mobileDescSize) || 0;
+    }
+    if (canSet('mobileLoadMoreSize')) {
+      stateStyles.mobileLoadMoreSize = Number(wixStyles.mobileLoadMoreSize) || 0;
+    }
+    if (canSet('loadMoreButtonBorderWidth')) {
+      stateStyles.loadMoreButtonBorderWidth = Number(wixStyles.loadMoreButtonBorderWidth) || 0;
+    }
+    if (canSet('loadMoreButtonBorderRadius')) {
+      stateStyles.loadMoreButtonBorderRadius = Number(wixStyles.loadMoreButtonBorderRadius) || 0;
     }
     if (canSet('slideshowInfoSize')) {
       stateStyles.slideshowInfoSize = Number(wixStyles.slideshowInfoSize);
@@ -2254,7 +2273,9 @@ export class GalleryContainer extends React.Component {
       itemDescriptionFontSlideshow,
       allowTitle,
       allowDescription,
-      useCustomButton
+      useCustomButton,
+      mobileTitleSize,
+      mobileDescSize
     } = styleParams;
 
     if (titlePlacement === 'SHOW_ON_HOVER' || titlePlacement === 'DONT_SHOW' || (!allowTitle && !allowDescription && !useCustomButton)) {
@@ -2272,12 +2293,16 @@ export class GalleryContainer extends React.Component {
     let descriptionFontSize = 0;
 
     if (allowTitle) {
-      titleFontSize = itemFontSlideshow ? this.getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
+      const mobileTitleLineHeight = (utils.isMobile() && mobileTitleSize) ? (mobileTitleSize * 1.6) : 0;
+      const desktopTitleLineHeight = itemFontSlideshow ? this.getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
+      titleFontSize = mobileTitleLineHeight ? mobileTitleLineHeight : desktopTitleLineHeight;
       totalSpaceBetweenElements += allowDescription ? spaceBetweenElements : 0;
     }
 
     if (allowDescription) {
-      descriptionFontSize = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
+      const mobileDescLineHeight = (utils.isMobile() && mobileDescSize) ? (mobileDescSize * 1.6) : 0;
+      const desktopDescLineHeight = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
+      descriptionFontSize = mobileDescLineHeight ? mobileDescLineHeight : desktopDescLineHeight;
     }
 
     return titleFontSize + 3 * descriptionFontSize + paddingTopAndBottom + totalSpaceBetweenElements + defaultButtonHeight;
