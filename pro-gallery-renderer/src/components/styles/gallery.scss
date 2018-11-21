@@ -554,7 +554,8 @@
       outline: none;
       text-decoration: none;
       color: inherit;
-      transition: top .4s ease, left .4s ease, width .4s ease, height .4s ease;
+      transition: all .4s ease;
+      transition-property: top, left, width, height; 
 
       &:hover {
         .gallery-item-bottom-info, .gallery-item-top-info {
@@ -594,7 +595,8 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        transition: top .4s ease, left .4s ease, width .4s ease, height .4s ease;
+        transition: all .4s ease;
+        transition-property: top, left, width, height; 
 
         &.transparent,
         &.cube-type-fit {
@@ -1426,6 +1428,8 @@
         overflow-y: inherit;
         border-radius: 0px;
         cursor: pointer;
+        transition: all .4s ease;
+        transition-property: top, left, width, height; 
       }
 
       .gallery-item-container {
