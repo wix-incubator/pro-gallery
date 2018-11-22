@@ -149,13 +149,13 @@ export class GalleryContainer extends React.Component {
 
   getScrollBase() {
     let scrollBase = this.props.container.scrollBase;
-    const {y} = document.getElementById(`pro-gallery-${this.props.domId}`).getBoundingClientRect();
+    const {y} = window.document.getElementById(`pro-gallery-${this.props.domId}`).getBoundingClientRect();
     scrollBase += y;
     return scrollBase;
   }
 
   getScrollingElement(oneRow) {
-    const horizontal = oneRow ? () => document.querySelector(`#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`) : () => {};
+    const horizontal = oneRow ? () => window.document.querySelector(`#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`) : () => {};
     const vertical = this.props.getScrollingElement ? ((typeof this.props.getScrollingElement === 'function') ? this.props.getScrollingElement : () => this.props.getScrollingElement) : () => window;
     return {vertical, horizontal};
   }

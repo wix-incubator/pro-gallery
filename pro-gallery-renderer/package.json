@@ -134,8 +134,6 @@
     },
     "globals": {
       "fetch": true,
-      "window": true,
-      "document": true,
       "Image": true,
       "prerenderedGallery": true,
       "Event": true,
