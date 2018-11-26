@@ -1520,12 +1520,6 @@ export class GalleryContainer extends React.Component {
     if (canSet('arrowsSize')) {
       stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
     }
-    if (canSet('mobileTitleSize')) {
-      stateStyles.mobileTitleSize = Number(wixStyles.mobileTitleSize) || 0;
-    }
-    if (canSet('mobileDescSize')) {
-      stateStyles.mobileDescSize = Number(wixStyles.mobileDescSize) || 0;
-    }
     if (canSet('mobileLoadMoreSize')) {
       stateStyles.mobileLoadMoreSize = Number(wixStyles.mobileLoadMoreSize) || 0;
     }
@@ -2294,8 +2288,6 @@ export class GalleryContainer extends React.Component {
       allowTitle,
       allowDescription,
       useCustomButton,
-      mobileTitleSize,
-      mobileDescSize
     } = styleParams;
 
     if (titlePlacement === 'SHOW_ON_HOVER' || titlePlacement === 'DONT_SHOW' || (!allowTitle && !allowDescription && !useCustomButton)) {
