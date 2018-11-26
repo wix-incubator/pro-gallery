@@ -1357,8 +1357,16 @@ export class GalleryContainer extends React.Component {
       stateStyles.itemFont = wixStyles.itemFont;
     }
 
+    if (canSet('isSlideshowFont')) {
+      stateStyles.isSlideshowFont = wixStyles.isSlideshowFont;
+    }
+
     if (canSet('itemDescriptionFont')) {
       stateStyles.itemDescriptionFont = wixStyles.itemDescriptionFont;
+    }
+
+    if (canSet('itemDescriptionFontSlideshow')) {
+      stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
     }
 
     // We need another param because the color should be different on hover(white on black) or underneath (black on white)
@@ -1366,8 +1374,20 @@ export class GalleryContainer extends React.Component {
       stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
     }
 
-    if (canSet('itemDescriptionFontSlideshow')) {
-      stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
+    if (canSet('itemFontColor')) {
+      stateStyles.itemFontColor = wixStyles.itemFontColor;
+    }
+
+    if (canSet('itemDescriptionFontColor')) {
+      stateStyles.itemDescriptionFontColor = wixStyles.itemDescriptionFontColor;
+    }
+
+    if (canSet('itemFontColorSlideshow')) {
+      stateStyles.itemFontColorSlideshow = wixStyles.itemFontColorSlideshow;
+    }
+
+    if (canSet('itemDescriptionFontColorSlideshow')) {
+      stateStyles.itemDescriptionFontColorSlideshow = wixStyles.itemDescriptionFontColorSlideshow;
     }
 
 
@@ -2293,16 +2313,12 @@ export class GalleryContainer extends React.Component {
     let descriptionFontSize = 0;
 
     if (allowTitle) {
-      const mobileTitleLineHeight = (utils.isMobile() && mobileTitleSize) ? (mobileTitleSize * 1.6) : 0;
-      const desktopTitleLineHeight = itemFontSlideshow ? this.getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
-      titleFontSize = mobileTitleLineHeight ? mobileTitleLineHeight : desktopTitleLineHeight;
+      titleFontSize = itemFontSlideshow ? this.getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
       totalSpaceBetweenElements += allowDescription ? spaceBetweenElements : 0;
     }
 
     if (allowDescription) {
-      const mobileDescLineHeight = (utils.isMobile() && mobileDescSize) ? (mobileDescSize * 1.6) : 0;
-      const desktopDescLineHeight = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
-      descriptionFontSize = mobileDescLineHeight ? mobileDescLineHeight : desktopDescLineHeight;
+      descriptionFontSize = itemDescriptionFontSlideshow ? this.getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
     }
 
     return titleFontSize + 3 * descriptionFontSize + paddingTopAndBottom + totalSpaceBetweenElements + defaultButtonHeight;
