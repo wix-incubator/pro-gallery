@@ -16,6 +16,7 @@ import * as performanceUtils from 'photography-client-lib/dist/src/utils/perform
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
+import {isWithinPaddingHorizontally, isWithinPaddingVertically} from '../helpers/scrollHelper.js';
 
 class ItemView extends React.Component {
 
@@ -32,6 +33,25 @@ class ItemView extends React.Component {
       retries: 0,
       showShare: false,
       showHover: false,
+      visibleVertically: false,
+      renderedVertically: false,
+      visibleHorizontally: false,
+      renderedHorizontally: false,
+    };
+
+    this.screenSize = (window && window.screen) || {
+      width: 1366,
+      height: 768
+    };
+
+    this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
+    this.renderedPaddingMultiply = 2;
+    this.visiblePaddingMultiply = 0.5;
+    this.renderedPadding = utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply;
+    this.visiblePadding = utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply;
+    this.galleryScroll = {
+      top: 0,
+      left: 0
     };
   }
 
@@ -214,6 +234,53 @@ class ItemView extends React.Component {
 
   //-----------------------------------------| UTILS |--------------------------------------------//
 
+  setVisibilityState(state) {
+    const newState = {};
+    Object.keys(state).forEach(key => {
+      if (state[key] !== this.state[key]) {
+        newState[key] = state[key];
+      }
+    });
+    this.setState(newState);
+  }
+
+  setVerticalVisibility(target) {
+    const {offset, style} = this.props;
+    const bottom = offset.top + style.height;
+    this.setVisibilityState({
+      visibleVertically: isWithinPaddingVertically(target, bottom, offset.top, this.screenSize.height, this.visiblePadding),
+      renderedVertically: isWithinPaddingVertically(target, bottom, offset.top, this.screenSize.height, this.renderedPadding)
+    });
+  }
+
+  setHorizontalVisibility(target) {
+    const {offset, style} = this.props;
+    const right = offset.left + style.width; //TODO - do these ever change? i could set them in "this" one time in the constructor
+    this.setVisibilityState({
+      visibleHorizontally: isWithinPaddingHorizontally(target, right, offset.left, this.screenSize.width, this.visiblePadding, style.oneRow),
+      renderedHorizontally: isWithinPaddingHorizontally(target, right, offset.left, this.screenSize.width, this.renderedPadding, style.oneRow)
+    });
+  }
+
+  setInitialVisibility() {
+    const {scrollBase, height, width, galleryHeight, galleryWidth} = this.props.container;
+    this.setVerticalVisibility({
+      scrollTop: this.props.scrollTop || 0,
+      offsetTop: scrollBase,
+      clientHeight: height || galleryHeight,
+    });
+    this.setHorizontalVisibility({
+      scrollLeft: this.props.scrollLeft || 0,
+      clientWidth: width || galleryWidth,
+    });
+  }
+  getItemVisibility() {
+    if (this.useRefactoredProGallery) {
+      return this.state.visibleHorizontally && this.state.visibleVertically;
+    } else {
+      return this.props.visible;
+    }
+  }
   isSmallItem() {
     return this.props.isSmallItem && !this.props.styleParams.isSlideshow;
   }
@@ -347,8 +414,9 @@ class ItemView extends React.Component {
   }
 
   getImageItem(imageDimensions) {
-    const props = _.pick(this.props, ['alt', 'title', 'description', 'visible', 'id', 'styleParams', 'resized_url', 'settings']);
+    const props = _.pick(this.props, ['alt', 'title', 'description', 'id', 'styleParams', 'resized_url', 'settings']);
     return <ImageItem {...props}
+						visible = {this.getItemVisibility()}
             key="imageItem"
             loaded={this.state.loaded}
             displayed={this.state.displayed}
@@ -390,9 +458,10 @@ class ItemView extends React.Component {
   }
 
   getTextItem() {
-    const props = _.pick(this.props, ['visible', 'id', 'styleParams', 'style', 'html', 'cubeRatio']);
+    const props = _.pick(this.props, ['id', 'styleParams', 'style', 'html', 'cubeRatio']);
     return <TextItem
-              {...props}
+							{...props}
+							visible = {this.getItemVisibility()}
               key="textItem"
               actions={{
                 handleItemMouseDown: this.handleItemMouseDown,
@@ -403,7 +472,8 @@ class ItemView extends React.Component {
   }
 
   getItemInner() {
-    const {styleParams, type, visible} = this.props;
+    const {styleParams, type} = this.props;
+    const visible = this.getItemVisibility();
     const {placements} = Consts;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
@@ -623,12 +693,24 @@ class ItemView extends React.Component {
 
       }
     }
+    if (this.useRefactoredProGallery) {
+      this.setInitialVisibility();
+    }
   }
 
-  componentWillReceiveProps(props) {
-    //
+  componentWillReceiveProps(nextProps) {
+    if (this.useRefactoredProGallery) {
+      if (nextProps.scroll.top !== this.galleryScroll.top) {
+        this.setVerticalVisibility(nextProps.scroll.vertical);
+        this.galleryScroll.top = nextProps.scroll.top;
+      }
+      if (nextProps.scroll.left !== this.galleryScroll.left) {
+        this.setHorizontalVisibility(nextProps.scroll.horizontal);
+        this.galleryScroll.left = nextProps.scroll.left;
+      }
+    }
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (utils.isSite() && !utils.isMobile() && document && document.activeElement && document.activeElement.className) {
 			//check if thumbnailId has changed to the current item
       const isAnotherItemInFocus = document.activeElement.className.indexOf('gallery-item-container') >= 0;
@@ -643,12 +725,31 @@ class ItemView extends React.Component {
         }
       }
     }
+    if (this.useRefactoredProGallery) {
+      let hasJustBecomeVisible;
+      if (this.props.styleParams.oneRow) {
+        hasJustBecomeVisible = this.state.visibleVertically && this.state.visibleHorizontally && !prevState.visibleHorizontally;
+      } else {
+        hasJustBecomeVisible = this.state.visibleVertically && !prevState.visibleVertically;
+      }
+      if (hasJustBecomeVisible) {
+        console.log(`PROGALLERY [visibilities] - item #${this.props.idx} JUST BECAME VISIBLE!`);
+				//this group just got rendered - if it's the last, check if more items can be fetched from the db
+        try {
+          this.props.actions.getMoreItemsIfNeeded(this.props.idx);
+        } catch (e) {
+          console.warn('Cannot get more items', this.props.galleryConfig, e);
+        }
+      }
+    }
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+    const rendered = this.useRefactoredProGallery ? (this.state.renderedVertically && this.state.renderedHorizontally) : true;
     const {photoId, id, hash, idx} = this.props;
+    if (this.useRefactoredProGallery && !rendered) return null;
     return (
       <div className={this.getItemContainerClass()}
            ref={e => this.itemContainer = e}

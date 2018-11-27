@@ -59,3 +59,28 @@ export function scrollToItemImp(scrollParams) {
   }
   return true;
 }
+
+// ----- rendererd / visible ----- //
+
+function isWithinPaddingVertically(target, bottom, top, screenHeight, padding) {
+  const isBelowViewportTop = target.offsetTop + bottom > target.scrollTop - padding;
+  const isAboveViewportBottom = target.offsetTop + top < target.scrollTop + screenHeight + padding;
+  const res = isBelowViewportTop && isAboveViewportBottom;
+  return res;
+}
+
+function isWithinPaddingHorizontally(target, right, left, screenWidth, padding, oneRow) {
+  if (oneRow) {
+    return true;
+  }
+  const isRightToViewportLeft = right > target.scrollLeft - padding;
+  const isLeftToViewportRight = left < target.scrollLeft + screenWidth + padding;
+  const res = isRightToViewportLeft && isLeftToViewportRight;
+  return res;
+}
+
+export {
+	isWithinPaddingHorizontally,
+	isWithinPaddingVertically
+}
+;

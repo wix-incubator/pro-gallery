@@ -137,7 +137,8 @@
       "Image": true,
       "prerenderedGallery": true,
       "Event": true,
-      "HTMLElement": true
+      "HTMLElement": true,
+      "window": true
     }
   },
   "unpkg": true,

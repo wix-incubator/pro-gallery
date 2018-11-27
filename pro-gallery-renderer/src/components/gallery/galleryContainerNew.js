@@ -103,7 +103,6 @@ export class GalleryContainer extends React.Component {
       dimentionsHelper.updateParams({styles: _styles});
       _container = Object.assign({}, container, dimentionsHelper.getGalleryDimensions(), {
         scrollBase: this.getScrollBase(),
-        getScrollingElement: this.getScrollingElement(_styles)
       });
       dimentionsHelper.updateParams({container: _container});
       _scroll = Object.assign({}, scroll, {isInfinite: isNew.styles ? _styles.enableInfiniteScroll : this.isInfiniteScroll()});
@@ -126,7 +125,7 @@ export class GalleryContainer extends React.Component {
 
       const layout = createLayout(layoutParams);
       const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll) && !_styles.oneRow;
-      this.props.handleNewGalleryStructure(_items, _container, _styles, layout, isInfinite);
+      this.props.handleNewGalleryStructure({items: _items, container: _container, styles: _styles, layout, isInfinite});
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,
@@ -156,7 +155,7 @@ export class GalleryContainer extends React.Component {
 
   getScrollingElement(oneRow) {
     const horizontal = oneRow ? () => window.document.querySelector(`#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`) : () => {};
-    const vertical = this.props.getScrollingElement ? ((typeof this.props.getScrollingElement === 'function') ? this.props.getScrollingElement : () => this.props.getScrollingElement) : () => window;
+    const vertical = this.props.scrollingElement ? ((typeof this.props.scrollingElement === 'function') ? this.props.scrollingElement : () => this.props.scrollingElement) : () => window;
     return {vertical, horizontal};
   }
 
@@ -244,16 +243,14 @@ export class GalleryContainer extends React.Component {
       this.reCreateGalleryExpensively(this.props);
     });
   }
-  getMoreItemsIfNeeded(groupIdx) {
-    if (this.galleryStructure && groupIdx >= this.galleryStructure.groups.length - 1) { //only when the last group turns visible we should try getting more items
+  getMoreItemsIfNeeded(itemIdx) {
+    if (this.galleryStructure && itemIdx >= this.galleryStructure.items.length - 1) { //only when the last item turns visible we should try getting more items
       if (this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
         this.gettingMoreItems = true;
-        console.error('PROGALLERY [ITEMS] Getting more items', this.state.items.length, this.props.totalItemsCount);
         this.props.getMoreItems(this.state.items.length, newItems => {
           this.reCreateGalleryExpensively({
             items: this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || [])
           }, () => {
-            console.error('PROGALLERY [ITEMS] Got more items', this.state.items.length, this.props.totalItemsCount);
             this.gettingMoreItems = false;
           });
         });
