@@ -138,7 +138,8 @@
       "prerenderedGallery": true,
       "Event": true,
       "HTMLElement": true,
-      "window": true
+      "window": true,
+      "document": true
     }
   },
   "unpkg": true,
