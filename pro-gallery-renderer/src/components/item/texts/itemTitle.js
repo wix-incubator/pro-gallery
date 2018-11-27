@@ -5,7 +5,9 @@ export default class ItemTitle extends React.Component {
   render() {
     const {title, style} = this.props;
     return (
-      <div className={`gallery-item-title`} data-hook="item-title" style={style}>{title}</div>
+      <div className={`gallery-item-title`} data-hook="item-title" style={style.titleStyle}>
+        <span style={style.titleSpanStyle}>{title}</span>
+      </div>
     );
   }
 }

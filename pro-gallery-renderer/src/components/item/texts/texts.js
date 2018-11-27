@@ -58,30 +58,31 @@ export default class Texts extends React.Component {
     //if there is a description, it will take care of the bottom part.
     //if no description: if there are actions, we will add marginBottom of 20. if no actions, we will add marginBottom of 0.
     const titleStyle = shouldShowDescription ? {} : (this.allowAnyAction() ? {marginBottom: 20} : {marginBottom: 0});
+    const titleSpanStyle = {};
     const descStyle = {};
     if (utils.isMobile()) {
       if (styleParams.isSlideshowFont) {
         if (typeof styleParams.itemFontSlideshow !== 'undefined') {
-          titleStyle.font = styleParams.itemFontSlideshow.value.slice(5, -1);
+          titleSpanStyle.font = styleParams.itemFontSlideshow.value.slice(5, -1);
         }
         if (typeof styleParams.itemDescriptionFontSlideshow !== 'undefined') {
           descStyle.font = styleParams.itemDescriptionFontSlideshow.value.slice(5, -1);
         }
         if (typeof styleParams.itemFontColorSlideshow !== 'undefined') {
-          titleStyle.color = styleParams.itemFontColorSlideshow.value;
+          titleSpanStyle.color = styleParams.itemFontColorSlideshow.value;
         }
         if (typeof styleParams.itemDescriptionFontColorSlideshow !== 'undefined') {
           descStyle.color = styleParams.itemDescriptionFontColorSlideshow.value;
         }
       } else {
         if (typeof styleParams.itemFont !== 'undefined') {
-          titleStyle.font = styleParams.itemFont.value.slice(5, -1);
+          titleSpanStyle.font = styleParams.itemFont.value.slice(5, -1);
         }
         if (typeof styleParams.itemDescriptionFont !== 'undefined') {
           descStyle.font = styleParams.itemDescriptionFont.value.slice(5, -1);
         }
         if (typeof styleParams.itemFontColor !== 'undefined') {
-          titleStyle.color = styleParams.itemFontColor.value;
+          titleSpanStyle.color = styleParams.itemFontColor.value;
         }
         if (typeof styleParams.itemDescriptionFontColor !== 'undefined') {
           descStyle.color = styleParams.itemDescriptionFontColor.value;
@@ -92,7 +93,7 @@ export default class Texts extends React.Component {
     const titleElem = shouldShowTitle && <ItemTitle
       key={'item-title-' + id}
       title={title}
-      style={titleStyle}
+      style={{titleStyle, titleSpanStyle}}
     />;
     const descriptionElem = shouldShowDescription && <ItemDescription description={description} key={'item-description-' + id} style={descStyle}/>;
     const buttonElem = shouldShowButton && <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
