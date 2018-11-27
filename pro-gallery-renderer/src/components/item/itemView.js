@@ -175,7 +175,7 @@ class ItemView extends React.Component {
     if (!isThumbnail && _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked'))) {
       window.galleryWixCodeApi.onItemClicked(this.props);
     }
-
+    debugger;
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
@@ -311,7 +311,7 @@ class ItemView extends React.Component {
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
     } else if (utils.isEditor()) {
-      return this.state.showHover;
+      return this.showHover();
     } else {
       return true;
     }
