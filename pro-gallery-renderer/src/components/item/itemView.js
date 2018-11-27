@@ -16,7 +16,7 @@ import * as performanceUtils from 'photography-client-lib/dist/src/utils/perform
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
-import {isWithinPaddingHorizontally, isWithinPaddingVertically} from '../helpers/scrollHelper.js';
+import {isWithinPaddingHorizontally, isWithinPaddingVertically, setHorizontalVisibility, setVerticalVisibility, setInitialVisibility} from '../helpers/scrollHelper.js';
 
 class ItemView extends React.Component {
 
@@ -46,8 +46,10 @@ class ItemView extends React.Component {
     this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
     this.renderedPaddingMultiply = 2;
     this.visiblePaddingMultiply = 0.5;
-    this.renderedPadding = utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply;
-    this.visiblePadding = utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply;
+    this.padding = {
+      rendered: utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply,
+      visible: utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply
+    };
     this.galleryScroll = {
       top: 0,
       left: 0
@@ -83,6 +85,7 @@ class ItemView extends React.Component {
     this.getSEOLink = this.getSEOLink.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
+    this.setVisibilityState = this.setVisibilityState.bind(this);
 
     if (utils.isEditor()) {
       Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
@@ -243,36 +246,6 @@ class ItemView extends React.Component {
     this.setState(newState);
   }
 
-  setVerticalVisibility(target) {
-    const {offset, style} = this.props;
-    const bottom = offset.top + style.height;
-    this.setVisibilityState({
-      visibleVertically: isWithinPaddingVertically(target, bottom, offset.top, this.screenSize.height, this.visiblePadding),
-      renderedVertically: isWithinPaddingVertically(target, bottom, offset.top, this.screenSize.height, this.renderedPadding)
-    });
-  }
-
-  setHorizontalVisibility(target) {
-    const {offset, style} = this.props;
-    const right = offset.left + style.width; //TODO - do these ever change? i could set them in "this" one time in the constructor
-    this.setVisibilityState({
-      visibleHorizontally: isWithinPaddingHorizontally(target, right, offset.left, this.screenSize.width, this.visiblePadding, style.oneRow),
-      renderedHorizontally: isWithinPaddingHorizontally(target, right, offset.left, this.screenSize.width, this.renderedPadding, style.oneRow)
-    });
-  }
-
-  setInitialVisibility() {
-    const {scrollBase, height, width, galleryHeight, galleryWidth} = this.props.container;
-    this.setVerticalVisibility({
-      scrollTop: this.props.scrollTop || 0,
-      offsetTop: scrollBase,
-      clientHeight: height || galleryHeight,
-    });
-    this.setHorizontalVisibility({
-      scrollLeft: this.props.scrollLeft || 0,
-      clientWidth: width || galleryWidth,
-    });
-  }
   getItemVisibility() {
     if (this.useRefactoredProGallery) {
       return this.state.visibleHorizontally && this.state.visibleVertically;
@@ -704,18 +677,18 @@ class ItemView extends React.Component {
       }
     }
     if (this.useRefactoredProGallery) {
-      this.setInitialVisibility();
+      setInitialVisibility({props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.useRefactoredProGallery) {
       if (nextProps.scroll.top !== this.galleryScroll.top) {
-        this.setVerticalVisibility(nextProps.scroll.vertical);
+        setVerticalVisibility({target: nextProps.scroll.vertical, props: nextProps, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
         this.galleryScroll.top = nextProps.scroll.top;
       }
       if (nextProps.scroll.left !== this.galleryScroll.left) {
-        this.setHorizontalVisibility(nextProps.scroll.horizontal);
+        setHorizontalVisibility({target: nextProps.scroll.horizontal, props: nextProps, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
         this.galleryScroll.left = nextProps.scroll.left;
       }
     }
@@ -759,7 +732,9 @@ class ItemView extends React.Component {
   render() {
     const rendered = this.useRefactoredProGallery ? (this.state.renderedVertically && this.state.renderedHorizontally) : true;
     const {photoId, id, hash, idx} = this.props;
-    if (this.useRefactoredProGallery && !rendered) return null;
+    if (this.useRefactoredProGallery && !rendered) {
+      return null;
+    }
     return (
       <div className={this.getItemContainerClass()}
            ref={e => this.itemContainer = e}
