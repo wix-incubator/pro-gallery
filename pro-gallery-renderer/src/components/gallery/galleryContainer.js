@@ -43,6 +43,7 @@ export class GalleryContainer extends React.Component {
     this.closeFullscreenCallback = this.closeFullscreenCallback.bind(this);
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this);
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
+    this.setCurrentHover = this.setCurrentHover.bind(this);
     this.getGalleryScroll = this.getGalleryScroll.bind(this);
     this.setWixHeight = this.setWixHeight.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
@@ -224,7 +225,8 @@ export class GalleryContainer extends React.Component {
       hashtag: {
         filter: utils.getWorkerWindow()['pro-gallery-hashtag-filter'] || '',
         items: []
-      }
+      },
+      currentHover: -1
     };
 
     window.isWebpSupported = utils.isWebpSupported();
@@ -2400,6 +2402,12 @@ export class GalleryContainer extends React.Component {
     return connectedProviders;
   }
 
+  setCurrentHover(idx) {
+    this.setState(
+      {currentHover: idx}
+    );
+  }
+
   toggleFullscreen(itemIdx, config = {}) {
     if (!this.state.styleParams.fullscreen) {
       return;
@@ -3165,11 +3173,13 @@ export class GalleryContainer extends React.Component {
       convertToGalleryItems = {GalleryContainer.convertToGalleryItems}
       convertDtoToLayoutItem = {GalleryContainer.convertDtoToLayoutItem}
       domId = {this.props.domId}
+      currentHover = {this.state.currentHover}
       actions = {_.merge(this.props.actions, {
         toggleInfiniteScroll: this.toggleInfiniteScroll,
         toggleFullscreen: this.toggleFullscreen,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
+        setCurrentHover: this.setCurrentHover
       })}
       debug = {{
         lastHeight: this.lastHeight,
@@ -3195,11 +3205,13 @@ export class GalleryContainer extends React.Component {
       settings = {this.props.settings}
       gotScrollEvent = {this.state.gotScrollEvent}
       domId = {this.props.domId}
+      currentHover = {this.state.currentHover}
       actions = {_.merge(this.props.actions, {
         toggleInfiniteScroll: this.toggleInfiniteScroll,
         toggleFullscreen: this.toggleFullscreen,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
+        setCurrentHover: this.setCurrentHover
       })}
       debug = {{
         lastHeight: this.lastHeight,

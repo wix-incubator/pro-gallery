@@ -32,7 +32,6 @@ class ItemView extends React.Component {
       displayed: false,
       retries: 0,
       showShare: false,
-      showHover: false,
       visibleVertically: false,
       renderedVertically: false,
       visibleHorizontally: false,
@@ -88,9 +87,7 @@ class ItemView extends React.Component {
     if (utils.isEditor()) {
       Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
         setTimeout(() => {
-          this.setState({
-            showHover: (data.detail === 2)
-          });
+          data.detail === 2 ? this.props.actions.setCurrentHover(this.props.idx) : this.props.actions.setCurrentHover(-1);
         }, 50);
       });
     }
@@ -140,11 +137,6 @@ class ItemView extends React.Component {
     });
   }
 
-  toggleHoverOnMobile() {
-    this.setState({
-      showHover: !this.state.showHover
-    });
-  }
   onMouseOver() {
     this.onMouseOverEvent.itemIdx = this.props.idx;
     window.dispatchEvent(this.onMouseOverEvent);
@@ -187,6 +179,15 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
+    } else if (this.shouldShowHoverOnMobile()) {
+      if (this.props.currentHover === this.props.idx) {
+        if (itemClick === 'expand') {
+          this.props.actions.toggleFullscreen(this.props.idx);
+        }
+        this.props.actions.setCurrentHover(-1);
+      } else {
+        this.props.actions.setCurrentHover(this.props.idx);
+      }
     } else if (itemClick === 'expand' || itemClick === 'link' || itemClick === 'popup' || itemClick === 'itemUrl') {
       this.props.actions.toggleFullscreen(this.props.idx);
     } else if (this.props.type === 'video') {
@@ -194,8 +195,6 @@ class ItemView extends React.Component {
       if (shouldTogglePlay) {
         this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
-    } else if (this.shouldShowHoverOnMobile()) {
-      this.toggleHoverOnMobile();
     }
   }
 
@@ -290,7 +289,14 @@ class ItemView extends React.Component {
   }
 
   shouldShowHoverOnMobile() {
-    return (utils.isMobile() && (this.props.styleParams.itemClick === 'nothing'));
+    if (utils.isMobile()) {
+      if (this.props.styleParams.itemClick === 'nothing') {
+        return true;
+      } else if (this.props.styleParams.itemClick === 'expand' && this.props.styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER) {
+        return true;
+      }
+    }
+    return false;
   }
 
   isHighlight() {
@@ -400,7 +406,7 @@ class ItemView extends React.Component {
   getItemHover(children, imageDimensions) {
     const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     return <ItemHover {...props}
-            forceShowHover={this.props.previewHover || this.state.showHover}
+            forceShowHover={this.showHover()}
             shouldHover={this.shouldHover()}
             imageDimensions={imageDimensions}
             key="hover"
@@ -562,15 +568,19 @@ class ItemView extends React.Component {
         <div style={{height: styleParams.externalInfoHeight, textAlign: styleParams.galleryTextAlign}}
              className={elementName}
              onMouseOver={() => {
-               this.setState({showHover: true});
+               this.props.actions.setCurrentHover(this.props.idx);
              }}
              onMouseOut={() => {
-               this.setState({showHover: false});
+               this.props.actions.setCurrentHover(-1);
              }}>
           {itemTexts}
         </div>);
     }
     return info;
+  }
+
+  showHover() {
+    return (this.props.previewHover || this.props.currentHover === this.props.idx);
   }
 
   getItemContainerStyles() {
