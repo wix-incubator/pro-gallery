@@ -36,6 +36,7 @@ class ItemView extends React.Component {
       renderedVertically: false,
       visibleHorizontally: false,
       renderedHorizontally: false,
+      previewHover: this.props.previewHover
     };
 
     this.screenSize = (window && window.screen) || {
@@ -86,11 +87,12 @@ class ItemView extends React.Component {
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.setVisibilityState = this.setVisibilityState.bind(this);
+    this.setPreviewHover = this.setPreviewHover.bind(this);
 
     if (utils.isEditor()) {
       Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
         setTimeout(() => {
-          data.detail === 2 ? this.props.actions.setCurrentHover(this.props.idx) : this.props.actions.setCurrentHover(-1);
+          data.detail === 2 ? this.setPreviewHover(true) : this.setPreviewHover(false);
         }, 50);
       });
     }
@@ -137,6 +139,12 @@ class ItemView extends React.Component {
     }
     this.setState({
       showShare: (_.isUndefined(forceVal) ? !this.state.showShare : !!forceVal)
+    });
+  }
+
+  setPreviewHover(val) {
+    this.setState({
+      previewHover: val
     });
   }
 
@@ -552,7 +560,7 @@ class ItemView extends React.Component {
   }
 
   showHover() {
-    return (this.props.previewHover || this.props.currentHover === this.props.idx);
+    return (this.props.currentHover === this.props.idx || this.state.previewHover);
   }
 
   getItemContainerStyles() {
