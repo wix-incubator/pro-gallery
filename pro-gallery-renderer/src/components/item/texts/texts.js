@@ -93,7 +93,8 @@ export default class Texts extends React.Component {
     const titleElem = shouldShowTitle && <ItemTitle
       key={'item-title-' + id}
       title={title}
-      style={{titleStyle, titleSpanStyle}}
+      style={titleStyle}
+      spanStyle={titleSpanStyle}
     />;
     const descriptionElem = shouldShowDescription && <ItemDescription description={description} key={'item-description-' + id} style={descStyle}/>;
     const buttonElem = shouldShowButton && <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
