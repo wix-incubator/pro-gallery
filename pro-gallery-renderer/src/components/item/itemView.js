@@ -189,21 +189,18 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
-    } else if (this.shouldShowHoverOnMobile()) {
-      if (this.props.currentHover === this.props.idx) {
-        if (itemClick === 'expand') {
-          this.props.actions.toggleFullscreen(this.props.idx);
-        }
-        this.props.actions.setCurrentHover(-1);
-      } else {
-        this.props.actions.setCurrentHover(this.props.idx);
-      }
     } else if (itemClick === 'expand' || itemClick === 'link' || itemClick === 'popup' || itemClick === 'itemUrl') {
       this.props.actions.toggleFullscreen(this.props.idx);
     } else if (this.props.type === 'video') {
       const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile());
       if (shouldTogglePlay) {
         this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
+      }
+    } else if (this.shouldShowHoverOnMobile()) {
+      if (this.props.currentHover === this.props.idx) {
+        this.props.actions.setCurrentHover(-1);
+      } else {
+        this.props.actions.setCurrentHover(this.props.idx);
       }
     }
   }
@@ -271,8 +268,6 @@ class ItemView extends React.Component {
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       if (this.props.styleParams.itemClick === 'nothing') {
-        return true;
-      } else if (this.props.styleParams.itemClick === 'expand' && this.props.styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER) {
         return true;
       }
     }
