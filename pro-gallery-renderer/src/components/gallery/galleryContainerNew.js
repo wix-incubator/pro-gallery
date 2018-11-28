@@ -31,7 +31,7 @@ export class GalleryContainer extends React.Component {
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
     this.isInfiniteScroll = this.isInfiniteScroll.bind(this); //TODO check if needed
     this.scrollToItem = this.scrollToItem.bind(this);
-    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.items[itemIdx])) : () => {};
+    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
   }
 
   componentDidMount() {
