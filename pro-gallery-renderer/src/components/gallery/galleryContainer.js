@@ -43,6 +43,7 @@ export class GalleryContainer extends React.Component {
     this.closeFullscreenCallback = this.closeFullscreenCallback.bind(this);
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this);
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
+    this.setCurrentHover = this.setCurrentHover.bind(this);
     this.getGalleryScroll = this.getGalleryScroll.bind(this);
     this.setWixHeight = this.setWixHeight.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
@@ -224,7 +225,8 @@ export class GalleryContainer extends React.Component {
       hashtag: {
         filter: utils.getWorkerWindow()['pro-gallery-hashtag-filter'] || '',
         items: []
-      }
+      },
+      currentHover: -1
     };
 
     window.isWebpSupported = utils.isWebpSupported();
@@ -1345,7 +1347,6 @@ export class GalleryContainer extends React.Component {
       } else if (String(wixStyles.titlePlacement) === '2') {
         selectedPlacement = Consts.placements.SHOW_ABOVE;
       }
-
       if ((!stateStyles.isVertical || stateStyles.groupSize > 1 || stateStyles.oneRow === true) && !stateStyles.isSlider && !stateStyles.isColumns) {
         stateStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
       } else {
@@ -1358,12 +1359,37 @@ export class GalleryContainer extends React.Component {
       stateStyles.itemFont = wixStyles.itemFont;
     }
 
-    if (canSet('itemFontSlideshow')) {
-      stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
+    if (canSet('isSlideshowFont')) {
+      stateStyles.isSlideshowFont = wixStyles.isSlideshowFont;
+    }
+
+    if (canSet('itemDescriptionFont')) {
+      stateStyles.itemDescriptionFont = wixStyles.itemDescriptionFont;
     }
 
     if (canSet('itemDescriptionFontSlideshow')) {
       stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
+    }
+
+    // We need another param because the color should be different on hover(white on black) or underneath (black on white)
+    if (canSet('itemFontSlideshow')) {
+      stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
+    }
+
+    if (canSet('itemFontColor')) {
+      stateStyles.itemFontColor = wixStyles.itemFontColor;
+    }
+
+    if (canSet('itemDescriptionFontColor')) {
+      stateStyles.itemDescriptionFontColor = wixStyles.itemDescriptionFontColor;
+    }
+
+    if (canSet('itemFontColorSlideshow')) {
+      stateStyles.itemFontColorSlideshow = wixStyles.itemFontColorSlideshow;
+    }
+
+    if (canSet('itemDescriptionFontColorSlideshow')) {
+      stateStyles.itemDescriptionFontColorSlideshow = wixStyles.itemDescriptionFontColorSlideshow;
     }
 
 
@@ -1495,6 +1521,15 @@ export class GalleryContainer extends React.Component {
     }
     if (canSet('arrowsSize')) {
       stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
+    }
+    if (canSet('mobileLoadMoreSize')) {
+      stateStyles.mobileLoadMoreSize = Number(wixStyles.mobileLoadMoreSize) || 0;
+    }
+    if (canSet('loadMoreButtonBorderWidth')) {
+      stateStyles.loadMoreButtonBorderWidth = Number(wixStyles.loadMoreButtonBorderWidth) || 0;
+    }
+    if (canSet('loadMoreButtonBorderRadius')) {
+      stateStyles.loadMoreButtonBorderRadius = Number(wixStyles.loadMoreButtonBorderRadius) || 0;
     }
     if (canSet('slideshowInfoSize')) {
       stateStyles.slideshowInfoSize = Number(wixStyles.slideshowInfoSize);
@@ -2254,7 +2289,7 @@ export class GalleryContainer extends React.Component {
       itemDescriptionFontSlideshow,
       allowTitle,
       allowDescription,
-      useCustomButton
+      useCustomButton,
     } = styleParams;
 
     if (titlePlacement === 'SHOW_ON_HOVER' || titlePlacement === 'DONT_SHOW' || (!allowTitle && !allowDescription && !useCustomButton)) {
@@ -2365,6 +2400,12 @@ export class GalleryContainer extends React.Component {
     }
 
     return connectedProviders;
+  }
+
+  setCurrentHover(idx) {
+    this.setState(
+      {currentHover: idx}
+    );
   }
 
   toggleFullscreen(itemIdx, config = {}) {
@@ -3132,11 +3173,13 @@ export class GalleryContainer extends React.Component {
       convertToGalleryItems = {GalleryContainer.convertToGalleryItems}
       convertDtoToLayoutItem = {GalleryContainer.convertDtoToLayoutItem}
       domId = {this.props.domId}
+      currentHover = {this.state.currentHover}
       actions = {_.merge(this.props.actions, {
         toggleInfiniteScroll: this.toggleInfiniteScroll,
         toggleFullscreen: this.toggleFullscreen,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
+        setCurrentHover: this.setCurrentHover
       })}
       debug = {{
         lastHeight: this.lastHeight,
@@ -3162,11 +3205,13 @@ export class GalleryContainer extends React.Component {
       settings = {this.props.settings}
       gotScrollEvent = {this.state.gotScrollEvent}
       domId = {this.props.domId}
+      currentHover = {this.state.currentHover}
       actions = {_.merge(this.props.actions, {
         toggleInfiniteScroll: this.toggleInfiniteScroll,
         toggleFullscreen: this.toggleFullscreen,
         setWixHeight: this.setWixHeight,
         scrollToItem: this.scrollToItem,
+        setCurrentHover: this.setCurrentHover
       })}
       debug = {{
         lastHeight: this.lastHeight,

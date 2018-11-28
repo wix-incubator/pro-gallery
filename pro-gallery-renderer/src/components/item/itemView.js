@@ -16,6 +16,7 @@ import * as performanceUtils from 'photography-client-lib/dist/src/utils/perform
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
+import {isWithinPaddingHorizontally, isWithinPaddingVertically, setHorizontalVisibility, setVerticalVisibility, setInitialVisibility} from '../helpers/scrollHelper.js';
 
 class ItemView extends React.Component {
 
@@ -31,7 +32,28 @@ class ItemView extends React.Component {
       displayed: false,
       retries: 0,
       showShare: false,
-      showHover: false,
+      visibleVertically: false,
+      renderedVertically: false,
+      visibleHorizontally: false,
+      renderedHorizontally: false,
+      previewHover: this.props.previewHover
+    };
+
+    this.screenSize = (window && window.screen) || {
+      width: 1366,
+      height: 768
+    };
+
+    this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
+    this.renderedPaddingMultiply = 2;
+    this.visiblePaddingMultiply = 0.5;
+    this.padding = {
+      rendered: utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply,
+      visible: utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply
+    };
+    this.galleryScroll = {
+      top: 0,
+      left: 0
     };
   }
 
@@ -64,13 +86,13 @@ class ItemView extends React.Component {
     this.getSEOLink = this.getSEOLink.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
+    this.setVisibilityState = this.setVisibilityState.bind(this);
+    this.setPreviewHover = this.setPreviewHover.bind(this);
 
     if (utils.isEditor()) {
       Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
         setTimeout(() => {
-          this.setState({
-            showHover: (data.detail === 2)
-          });
+          data.detail === 2 ? this.setPreviewHover(true) : this.setPreviewHover(false);
         }, 50);
       });
     }
@@ -120,11 +142,12 @@ class ItemView extends React.Component {
     });
   }
 
-  toggleHoverOnMobile() {
+  setPreviewHover(val) {
     this.setState({
-      showHover: !this.state.showHover
+      previewHover: val
     });
   }
+
   onMouseOver() {
     this.onMouseOverEvent.itemIdx = this.props.idx;
     window.dispatchEvent(this.onMouseOverEvent);
@@ -163,10 +186,18 @@ class ItemView extends React.Component {
     if (!isThumbnail && _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked'))) {
       window.galleryWixCodeApi.onItemClicked(this.props);
     }
-
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
+    } else if (this.shouldShowHoverOnMobile()) {
+      if (this.props.currentHover === this.props.idx) {
+        if (itemClick === 'expand') {
+          this.props.actions.toggleFullscreen(this.props.idx);
+        }
+        this.props.actions.setCurrentHover(-1);
+      } else {
+        this.props.actions.setCurrentHover(this.props.idx);
+      }
     } else if (itemClick === 'expand' || itemClick === 'link' || itemClick === 'popup' || itemClick === 'itemUrl') {
       this.props.actions.toggleFullscreen(this.props.idx);
     } else if (this.props.type === 'video') {
@@ -174,8 +205,6 @@ class ItemView extends React.Component {
       if (shouldTogglePlay) {
         this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
-    } else if (this.shouldShowHoverOnMobile()) {
-      this.toggleHoverOnMobile();
     }
   }
 
@@ -214,6 +243,23 @@ class ItemView extends React.Component {
 
   //-----------------------------------------| UTILS |--------------------------------------------//
 
+  setVisibilityState(state) {
+    const newState = {};
+    Object.keys(state).forEach(key => {
+      if (state[key] !== this.state[key]) {
+        newState[key] = state[key];
+      }
+    });
+    this.setState(newState);
+  }
+
+  getItemVisibility() {
+    if (this.useRefactoredProGallery) {
+      return this.state.visibleHorizontally && this.state.visibleVertically;
+    } else {
+      return this.props.visible;
+    }
+  }
   isSmallItem() {
     return this.props.isSmallItem && !this.props.styleParams.isSlideshow;
   }
@@ -223,7 +269,14 @@ class ItemView extends React.Component {
   }
 
   shouldShowHoverOnMobile() {
-    return (utils.isMobile() && (this.props.styleParams.itemClick === 'nothing'));
+    if (utils.isMobile()) {
+      if (this.props.styleParams.itemClick === 'nothing') {
+        return true;
+      } else if (this.props.styleParams.itemClick === 'expand' && this.props.styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER) {
+        return true;
+      }
+    }
+    return false;
   }
 
   isHighlight() {
@@ -238,7 +291,7 @@ class ItemView extends React.Component {
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
     } else if (utils.isEditor()) {
-      return this.state.showHover;
+      return this.showHover();
     } else {
       return true;
     }
@@ -333,7 +386,7 @@ class ItemView extends React.Component {
   getItemHover(children, imageDimensions) {
     const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     return <ItemHover {...props}
-            forceShowHover={this.props.previewHover || this.state.showHover}
+            forceShowHover={this.showHover()}
             shouldHover={this.shouldHover()}
             imageDimensions={imageDimensions}
             key="hover"
@@ -347,8 +400,9 @@ class ItemView extends React.Component {
   }
 
   getImageItem(imageDimensions) {
-    const props = _.pick(this.props, ['alt', 'title', 'description', 'visible', 'id', 'styleParams', 'resized_url', 'settings']);
+    const props = _.pick(this.props, ['alt', 'title', 'description', 'id', 'styleParams', 'resized_url', 'settings']);
     return <ImageItem {...props}
+						visible = {this.getItemVisibility()}
             key="imageItem"
             loaded={this.state.loaded}
             displayed={this.state.displayed}
@@ -390,9 +444,10 @@ class ItemView extends React.Component {
   }
 
   getTextItem() {
-    const props = _.pick(this.props, ['visible', 'id', 'styleParams', 'style', 'html', 'cubeRatio']);
+    const props = _.pick(this.props, ['id', 'styleParams', 'style', 'html', 'cubeRatio']);
     return <TextItem
-              {...props}
+							{...props}
+							visible = {this.getItemVisibility()}
               key="textItem"
               actions={{
                 handleItemMouseDown: this.handleItemMouseDown,
@@ -403,7 +458,8 @@ class ItemView extends React.Component {
   }
 
   getItemInner() {
-    const {styleParams, type, visible} = this.props;
+    const {styleParams, type} = this.props;
+    const visible = this.getItemVisibility();
     const {placements} = Consts;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
@@ -492,15 +548,19 @@ class ItemView extends React.Component {
         <div style={{height: styleParams.externalInfoHeight, textAlign: styleParams.galleryTextAlign}}
              className={elementName}
              onMouseOver={() => {
-               this.setState({showHover: true});
+               this.props.actions.setCurrentHover(this.props.idx);
              }}
              onMouseOut={() => {
-               this.setState({showHover: false});
+               this.props.actions.setCurrentHover(-1);
              }}>
           {itemTexts}
         </div>);
     }
     return info;
+  }
+
+  showHover() {
+    return (this.props.currentHover === this.props.idx || this.state.previewHover);
   }
 
   getItemContainerStyles() {
@@ -623,12 +683,24 @@ class ItemView extends React.Component {
 
       }
     }
+    if (this.useRefactoredProGallery) {
+      setInitialVisibility({props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
+    }
   }
 
-  componentWillReceiveProps(props) {
-    //
+  componentWillReceiveProps(nextProps) {
+    if (this.useRefactoredProGallery) {
+      if (nextProps.scroll.top !== this.galleryScroll.top) {
+        setVerticalVisibility({target: nextProps.scroll.vertical, props: nextProps, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
+        this.galleryScroll.top = nextProps.scroll.top;
+      }
+      if (nextProps.scroll.left !== this.galleryScroll.left) {
+        setHorizontalVisibility({target: nextProps.scroll.horizontal, props: nextProps, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
+        this.galleryScroll.left = nextProps.scroll.left;
+      }
+    }
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (utils.isSite() && !utils.isMobile() && document && document.activeElement && document.activeElement.className) {
 			//check if thumbnailId has changed to the current item
       const isAnotherItemInFocus = document.activeElement.className.indexOf('gallery-item-container') >= 0;
@@ -643,12 +715,33 @@ class ItemView extends React.Component {
         }
       }
     }
+    if (this.useRefactoredProGallery) {
+      let hasJustBecomeVisible;
+      if (this.props.styleParams.oneRow) {
+        hasJustBecomeVisible = this.state.visibleVertically && this.state.visibleHorizontally && !prevState.visibleHorizontally;
+      } else {
+        hasJustBecomeVisible = this.state.visibleVertically && !prevState.visibleVertically;
+      }
+      if (hasJustBecomeVisible) {
+        console.log(`PROGALLERY [visibilities] - item #${this.props.idx} JUST BECAME VISIBLE!`);
+				//this group just got rendered - if it's the last, check if more items can be fetched from the db
+        try {
+          this.props.actions.getMoreItemsIfNeeded(this.props.idx);
+        } catch (e) {
+          console.warn('Cannot get more items', this.props.galleryConfig, e);
+        }
+      }
+    }
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+    const rendered = this.useRefactoredProGallery ? (this.state.renderedVertically && this.state.renderedHorizontally) : true;
     const {photoId, id, hash, idx} = this.props;
+    if (this.useRefactoredProGallery && !rendered) {
+      return null;
+    }
     return (
       <div className={this.getItemContainerClass()}
            ref={e => this.itemContainer = e}

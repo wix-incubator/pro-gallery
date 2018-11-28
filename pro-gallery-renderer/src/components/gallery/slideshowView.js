@@ -505,9 +505,11 @@ class SlideshowView extends React.Component {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
+      currentHover: this.props.currentHover,
       actions: {
         getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
+        setCurrentHover: this.props.actions.setCurrentHover
       }
     };
 

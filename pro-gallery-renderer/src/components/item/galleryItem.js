@@ -151,7 +151,8 @@ class GalleryItem {
       visible: config.visible,
       styleParams: config.styleParams,
       actions: config.actions,
-      currentIdx: config.currentIdx
+      currentIdx: config.currentIdx,
+      currentHover: config.currentHover
     }, config);
 
   }
