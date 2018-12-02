@@ -65,8 +65,10 @@ export class GalleryContainer extends React.Component {
     } else this.removeScrollListener(); //for guy to add the remove function
   }
   reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
-    console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively');
-    console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
+    if (utils.isVerbose()) {
+      console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively');
+      console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
+    }
     dimentionsHelper.updateParams({styles, container});
 
     let _items, _styles, _container, scroll, _scroll;
@@ -82,7 +84,9 @@ export class GalleryContainer extends React.Component {
 
     items = items || this.items;
 
-    console.log('PROGALLERY [RENDERS] - reCreateGalleryExpensively', {isNew}, {items, styles, container, watermarkData});
+    if (utils.isVerbose()) {
+      console.log('PROGALLERY [RENDERS] - reCreateGalleryExpensively', {isNew}, {items, styles, container, watermarkData});
+    }
 
     const newState = {};
 
@@ -134,12 +138,16 @@ export class GalleryContainer extends React.Component {
     }
 
     if (isNew.any) {
-      console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively - newState setting');
-      console.log('PROGALLERY [RENDERS] - newState', {newState}, this.items, this.galleryStructure);
+      if (utils.isVerbose()) {
+        console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively - newState setting');
+        console.log('PROGALLERY [RENDERS] - newState', {newState}, this.items, this.galleryStructure);
+      }
       this.setState(newState, () => {
         callback();
-        console.timeEnd('PROGALLERY [TIMING] - reCreateGalleryExpensively - newState setting');
-        console.timeEnd('PROGALLERY [TIMING] - reCreateGalleryExpensively');
+        if (utils.isVerbose()) {
+          console.timeEnd('PROGALLERY [TIMING] - reCreateGalleryExpensively - newState setting');
+          console.timeEnd('PROGALLERY [TIMING] - reCreateGalleryExpensively');
+        }
       });
     } else {
       callback();
@@ -265,9 +273,9 @@ export class GalleryContainer extends React.Component {
       this.state.styles &&
       this.state.items
     );
-
-    !can && console.log('PROGALLERY [CAN_RENDER] GalleryContainer', this.domId, can, this.state.container, this.state.styles, this.state.items);
-
+    if (can && utils.isVerbose()) {
+      console.log('PROGALLERY [CAN_RENDER] GalleryContainer', this.domId, can, this.state.container, this.state.styles, this.state.items);
+    }
     return can;
   }
 
@@ -277,12 +285,12 @@ export class GalleryContainer extends React.Component {
       return null;
     }
 
-    console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
-
     const {styles} = this.state;
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
-    console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
-
+    if (utils.isVerbose()) {
+      console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
+      console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
+    }
     return (
       <div style={{background: 'yellowgreen'}} className={`pg-scroll-${this.state.scroll.top}`}>
         <ViewComponent
