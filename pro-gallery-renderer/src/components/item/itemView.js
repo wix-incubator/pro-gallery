@@ -45,8 +45,8 @@ class ItemView extends React.Component {
     };
 
     this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
-    this.renderedPaddingMultiply = 2;
-    this.visiblePaddingMultiply = 0.5;
+    this.renderedPaddingMultiply = 10;
+    this.visiblePaddingMultiply = 2.5;
     this.padding = {
       rendered: utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply,
       visible: utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply
