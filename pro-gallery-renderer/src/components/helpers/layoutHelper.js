@@ -5,6 +5,7 @@ import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/
 import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
 import dimensionsHelper from './dimensionsHelper';
 import {getFixedLayouts} from './fixedLayoutsHelper';
+import designConsts from '../../constants/designConsts';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -505,6 +506,8 @@ function addLayoutStyles(styles, container) {
 function processLayouts(styles) {
   const processedStyles = styles;
 
+  processedStyles.externalInfoHeight = getExternalInfoHeight(styles);
+
   if (processedStyles.oneRow) {
 		//if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
@@ -605,6 +608,55 @@ function processLayouts(styles) {
   }
   return processedStyles;
 }
+
+function getExternalInfoHeight(styleParams) {
+  const {
+    titlePlacement,
+    itemFontSlideshow,
+    itemDescriptionFontSlideshow,
+    allowTitle,
+    allowDescription,
+    useCustomButton,
+  } = styleParams;
+
+  if (titlePlacement === 'SHOW_ON_HOVER' || titlePlacement === 'DONT_SHOW' || (!allowTitle && !allowDescription && !useCustomButton)) {
+    return 0;
+  }
+
+  const paddingTopAndBottom = 45;
+  const defaultButtonHeight = useCustomButton ? 33 : 0;
+  const defaultItemFontSize = 22;
+  const defaultItemDescriptionFontSize = 15;
+
+  let totalSpaceBetweenElements = useCustomButton && (allowTitle || allowDescription) ? designConsts.spaceBetweenElements : 0;
+  let titleFontSize = 0;
+  let descriptionFontSize = 0;
+
+  if (allowTitle) {
+    titleFontSize = itemFontSlideshow ? getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
+    totalSpaceBetweenElements += allowDescription ? designConsts.spaceBetweenTitleAndDescription : 0;
+  }
+
+  if (allowDescription) {
+    descriptionFontSize = itemDescriptionFontSlideshow ? getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
+  }
+
+  return titleFontSize + 3 * descriptionFontSize + paddingTopAndBottom + totalSpaceBetweenElements + defaultButtonHeight;
+}
+
+function getFontLineHeight(font) {
+  if (font.value.match(/\/(\d+)px/)) { //lineHeight is in px
+    return parseInt(font.value.match(/\/(\d+)px/)[1]);
+  } else if (font.value.match(/\/(\d+)%/)) { //lineHeight is in percentage
+    return font.size * (parseInt(font.value.match(/\/(\d+)%/)[1]) / 100);
+  } else if (font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)) { //lineHeight is in em or without any units (which means em too)
+    return font.size * parseFloat(font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)[1]);
+  } else {
+    console.error('GalleryContainer -> getFontLineHeight -> font lineHeight do not match any pattern. font value: ', font.value);
+    return font.size;
+  }
+}
+
 export {
   addLayoutStyles
 };

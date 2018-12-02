@@ -20,6 +20,7 @@ import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 import {getFixedLayouts} from '../helpers/fixedLayoutsHelper.js';
+import designConsts from '../../constants/designConsts.js';
 
 
 try {
@@ -2300,15 +2301,14 @@ export class GalleryContainer extends React.Component {
     const defaultButtonHeight = useCustomButton ? 33 : 0;
     const defaultItemFontSize = 22;
     const defaultItemDescriptionFontSize = 15;
-    const spaceBetweenElements = 16;
 
-    let totalSpaceBetweenElements = useCustomButton && (allowTitle || allowDescription) ? spaceBetweenElements : 0;
+    let totalSpaceBetweenElements = useCustomButton && (allowTitle || allowDescription) ? designConsts.spaceBetweenElements : 0;
     let titleFontSize = 0;
     let descriptionFontSize = 0;
 
     if (allowTitle) {
       titleFontSize = itemFontSlideshow ? this.getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
-      totalSpaceBetweenElements += allowDescription ? spaceBetweenElements : 0;
+      totalSpaceBetweenElements += allowDescription ? designConsts.spaceBetweenTitleAndDescription : 0;
     }
 
     if (allowDescription) {

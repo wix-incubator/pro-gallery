@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
+import designConsts from '../../../constants/designConsts.js';
 
-const spaceBetweenElements = 16;
 const minWidthToShowContent = 135;
 const minWithForNormalSizedItem = 190;
 
@@ -126,7 +126,7 @@ class LineHeightFixer {
       textPlacementAboveOrBelow = true;
     }
 
-    if (!container) {
+    if (!container || !(options && options.itemContainer)) {
       return;
     }
 
@@ -163,7 +163,7 @@ class LineHeightFixer {
       const isButtonHeightAvailable = !_.isNaN(buttonHeight);
       if (isButtonHeightAvailable && customButtonExists) {
         availableHeight -= buttonHeight;
-        availableHeight -= spaceBetweenElements;
+        availableHeight -= designConsts.spaceBetweenElements;
         if (availableHeight < 0) {
           availableHeight = 0;
         }
@@ -210,10 +210,8 @@ class LineHeightFixer {
     const shouldDisplayDescription = descriptionElement && !isSmallItem && styleParams.allowDescription && description && availableHeight > 0;
     if (shouldDisplayDescription) {
       this.showElement(descriptionElement, !textPlacementAboveOrBelow); //if textPlacementAboveOrBelow, descriptionElement should not get 'display: -webkit-box'
-      if (textPlacementAboveOrBelow) { //if textPlacementAboveOrBelow, social & love are not under the texts
-        availableHeight -= spaceBetweenElements;
-      } else {
-        availableHeight -= 2 * spaceBetweenElements;
+      if (shouldDisplayTitle) {
+        availableHeight -= designConsts.spaceBetweenTitleAndDescription;
       }
       if (availableHeight < 0) {
         availableHeight = 0;
@@ -224,9 +222,6 @@ class LineHeightFixer {
         this.removeElement(descriptionElement);
       } else {
         this.setCss(descriptionElement, {overflow: 'hidden', '-webkit-line-clamp': (numOfLines + '')});
-        if (customButtonExists) {
-          this.setCss(descriptionElement, {marginBottom: '16px'});
-        }
       }
     }
   }

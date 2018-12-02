@@ -5,6 +5,7 @@ import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
 import utils from '../../../utils';
+import designConsts from '../../../constants/designConsts.js';
 
 export default class Texts extends React.Component {
 
@@ -40,8 +41,8 @@ export default class Texts extends React.Component {
     };
 
     //Set the texts fixed height considering the height of the love and share buttons which is about 100px;
-    if (textsDisplayOnHover && this.allowAnyAction()) {
-      elementStyle.paddingBottom = 45;
+    if (textsDisplayOnHover && this.allowAnyAction() && (styleParams.allowTitle || styleParams.allowDescription)) {
+      elementStyle.paddingBottom = 70;
     }
 
     if (isCentered) {
@@ -55,37 +56,51 @@ export default class Texts extends React.Component {
     const {title, description, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
     const shouldShowTitle = title && !isSmallItem && styleParams.allowTitle;
     const shouldShowDescription = description && !isSmallItem && styleParams.allowDescription;
-    //if there is a description, it will take care of the bottom part.
-    //if no description: if there are actions, we will add marginBottom of 20. if no actions, we will add marginBottom of 0.
-    const titleStyle = shouldShowDescription ? {} : (this.allowAnyAction() ? {marginBottom: 20} : {marginBottom: 0});
+
     const titleSpanStyle = {};
-    const descStyle = {};
+    const descSpanStyle = {};
+
+    let titleStyle, descStyle;
+    if (shouldShowDescription) {
+      titleStyle = {marginBottom: designConsts.spaceBetweenTitleAndDescription}
+    } else if (shouldShowButton) {
+      titleStyle = {marginBottom: designConsts.spaceBetweenElements}
+    } else {
+      titleStyle = {marginBottom: 0}
+    }
+
+    if (shouldShowButton) {
+      descStyle = {marginBottom: designConsts.spaceBetweenElements}
+    } else {
+      descStyle = {marginBottom: 0}
+    }
+
     // if (utils.isMobile()) {
     //   if (styleParams.isSlideshowFont) {
     //     if (typeof styleParams.itemFontSlideshow !== 'undefined') {
     //       titleSpanStyle.font = styleParams.itemFontSlideshow.value.slice(5, -1);
     //     }
     //     if (typeof styleParams.itemDescriptionFontSlideshow !== 'undefined') {
-    //       descStyle.font = styleParams.itemDescriptionFontSlideshow.value.slice(5, -1);
+    //       descSpanStyle.font = styleParams.itemDescriptionFontSlideshow.value.slice(5, -1);
     //     }
     //     if (typeof styleParams.itemFontColorSlideshow !== 'undefined') {
     //       titleSpanStyle.color = styleParams.itemFontColorSlideshow.value;
     //     }
     //     if (typeof styleParams.itemDescriptionFontColorSlideshow !== 'undefined') {
-    //       descStyle.color = styleParams.itemDescriptionFontColorSlideshow.value;
+    //       descSpanStyle.color = styleParams.itemDescriptionFontColorSlideshow.value;
     //     }
     //   } else {
     //     if (typeof styleParams.itemFont !== 'undefined') {
     //       titleSpanStyle.font = styleParams.itemFont.value.slice(5, -1);
     //     }
     //     if (typeof styleParams.itemDescriptionFont !== 'undefined') {
-    //       descStyle.font = styleParams.itemDescriptionFont.value.slice(5, -1);
+    //       descSpanStyle.font = styleParams.itemDescriptionFont.value.slice(5, -1);
     //     }
     //     if (typeof styleParams.itemFontColor !== 'undefined') {
     //       titleSpanStyle.color = styleParams.itemFontColor.value;
     //     }
     //     if (typeof styleParams.itemDescriptionFontColor !== 'undefined') {
-    //       descStyle.color = styleParams.itemDescriptionFontColor.value;
+    //       descSpanStyle.color = styleParams.itemDescriptionFontColor.value;
     //     }
     //   }
     // }
@@ -96,8 +111,18 @@ export default class Texts extends React.Component {
       style={titleStyle}
       spanStyle={titleSpanStyle}
     />;
-    const descriptionElem = shouldShowDescription && <ItemDescription description={description} key={'item-description-' + id} style={descStyle}/>;
-    const buttonElem = shouldShowButton && <CustomButton type="button" styleParams={styleParams} style={style} small={isNarrow}/>;
+    const descriptionElem = shouldShowDescription && <ItemDescription
+      key={'item-description-' + id}
+      description={description}
+      style={descStyle}
+      spanStyle={descSpanStyle}
+    />;
+    const buttonElem = shouldShowButton && <CustomButton
+      type="button"
+      styleParams={styleParams}
+      style={style}
+      small={isNarrow}
+    />;
 
     const shouldHideElement = !titleElem && !descriptionElem && !buttonElem;
     if (shouldHideElement) {

@@ -208,7 +208,6 @@
             }
 
             .gallery-item-description {
-              margin-top: 5px;
               max-width: 800px;
 
               >span {
@@ -218,12 +217,11 @@
           }
 
           .gallery-item-social:not(.text-external-item) {
-            margin: 40px 0 0;
             height: auto;
             position: static;
             display: flex;
             flex-direction: row;
-            margin-top: 0;
+            margin: 0;
 
             &.populated-item {
               margin-bottom: 24px;
@@ -555,7 +553,7 @@
       text-decoration: none;
       color: inherit;
       transition: all .4s ease;
-      transition-property: top, left, width, height; 
+      transition-property: top, left, width, height;
 
       &:hover {
         .gallery-item-bottom-info, .gallery-item-top-info {
@@ -596,7 +594,7 @@
         height: 100%;
         overflow: hidden;
         transition: all .4s ease;
-        transition-property: top, left, width, height; 
+        transition-property: top, left, width, height;
 
         &.transparent,
         &.cube-type-fit {
@@ -817,7 +815,6 @@
           }
 
           .gallery-item-title {
-            margin-bottom: 20px;
             font-family: $font-thin;
             line-height: 32px;
             font-size: 21px;
@@ -839,7 +836,6 @@
             display: block;
             -webkit-box-orient: vertical;
             transition: opacity 0.4s ease;
-            margin-bottom: 20px;
             white-space: nowrap;
             text-overflow: ellipsis;
           }
@@ -855,7 +851,6 @@
               color: $text-dark;
               overflow: hidden;
               -webkit-box-orient: vertical;
-              margin-top: 20px;
               white-space: nowrap;
               text-overflow: ellipsis;
               display: inline;
@@ -1088,13 +1083,10 @@
           }
 
           .gallery-item-title {
-            //font-family: $font-thin;
             line-height: 32px;
             font-size: 21px;
-            //margin-bottom: 20px;
             padding: 0;
             color: $white;
-            //height: 60px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-box-orient: vertical;
@@ -1103,18 +1095,15 @@
           }
 
           .gallery-item-description {
-            //font-family: $font-thin;
             line-height: 25px;
             font-size: 15px;
             color: $white;
-            //height: 60px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             opacity: 0;
             transition: opacity 0.4s ease;
             white-space: normal;
-            margin-top: 20px;
           }
 
           .gallery-item-social {
@@ -1381,7 +1370,6 @@
         cursor: pointer;
 
         .gallery-item-title {
-          margin-bottom: 16px;
           -webkit-line-clamp: 1;
           overflow: hidden;
           display: -webkit-box;
@@ -1461,7 +1449,7 @@
         border-radius: 0px;
         cursor: pointer;
         transition: all .4s ease;
-        transition-property: top, left, width, height; 
+        transition-property: top, left, width, height;
       }
 
       .gallery-item-container {
