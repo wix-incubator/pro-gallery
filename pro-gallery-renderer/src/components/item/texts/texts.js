@@ -62,17 +62,17 @@ export default class Texts extends React.Component {
 
     let titleStyle, descStyle;
     if (shouldShowDescription) {
-      titleStyle = {marginBottom: designConsts.spaceBetweenTitleAndDescription}
+      titleStyle = {marginBottom: designConsts.spaceBetweenTitleAndDescription};
     } else if (shouldShowButton) {
-      titleStyle = {marginBottom: designConsts.spaceBetweenElements}
+      titleStyle = {marginBottom: designConsts.spaceBetweenElements};
     } else {
-      titleStyle = {marginBottom: 0}
+      titleStyle = {marginBottom: 0};
     }
 
     if (shouldShowButton) {
-      descStyle = {marginBottom: designConsts.spaceBetweenElements}
+      descStyle = {marginBottom: designConsts.spaceBetweenElements};
     } else {
-      descStyle = {marginBottom: 0}
+      descStyle = {marginBottom: 0};
     }
 
     // if (utils.isMobile()) {
