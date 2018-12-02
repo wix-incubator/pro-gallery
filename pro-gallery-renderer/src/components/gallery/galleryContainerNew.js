@@ -292,7 +292,7 @@ export class GalleryContainer extends React.Component {
       console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
     }
     return (
-      <div style={{background: 'yellowgreen'}} className={`pg-scroll-${this.state.scroll.top}`}>
+      <div className={`pg-scroll-${this.state.scroll.top}`}>
         <ViewComponent
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount = {this.props.renderedItemsCount}

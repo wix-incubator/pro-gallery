@@ -49,7 +49,6 @@ class GroupView extends React.Component {
         data-group-ratios={this.props.ratios}
         data-visible={(rendered ? (visible ? 'visible' : 'rendered') : 'hidden')}
         >
-        {!!this.useRefactoredProGallery && this.props.idx}
         {this.createDom(visible)}
       </div>
       );

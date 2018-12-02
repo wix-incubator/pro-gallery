@@ -47,8 +47,9 @@ export class ItemsHelper {
         });
       }
     }
-
-    console.log({galleryStructure});
+    if (utils.isVerbose()) {
+      console.log({galleryStructure});
+    }
 
     return galleryStructure;
   }

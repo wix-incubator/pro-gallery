@@ -718,7 +718,9 @@ class ItemView extends React.Component {
         hasJustBecomeVisible = this.state.visibleVertically && !prevState.visibleVertically;
       }
       if (hasJustBecomeVisible) {
-        console.log(`PROGALLERY [visibilities] - item #${this.props.idx} JUST BECAME VISIBLE!`);
+        if (utils.isVerbose()) {
+          console.log(`PROGALLERY [visibilities] - item #${this.props.idx} JUST BECAME VISIBLE!`);
+        }
 				//this group just got rendered - if it's the last, check if more items can be fetched from the db
         try {
           this.props.actions.getMoreItemsIfNeeded(this.props.idx);
