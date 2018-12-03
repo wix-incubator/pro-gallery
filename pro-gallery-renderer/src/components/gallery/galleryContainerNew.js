@@ -68,27 +68,40 @@ export class GalleryContainer extends React.Component {
   }
   reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
     if (utils.isVerbose()) {
-      console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively');
       console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
     }
     dimentionsHelper.updateParams({styles, container});
 
     let _items, _styles, _container, scroll, _scroll;
 
+    const isInfiniteScrollChanged = () => {
+      if (!this.infiniteScrollChanged && (this.state.scroll.isInfinite !== this.props.styles.enableInfiniteScroll)) {
+        this.infiniteScrollChanged = true;
+        return true;
+      }
+      return false;
+    };
+
+    const isContainerChanged = () => {
+      const containerHasChanged = {
+        height: !this.state.styles.oneRow ? false : (!!container.height && (container.height !== this.props.container.height)),
+        width: !!container.width && (container.width !== this.props.container.width),
+        scrollBase: !!container.scrollBase && (container.scrollBase !== this.props.container.scrollBase),
+      };
+      return Object.keys(containerHasChanged).reduce((is, key) => is || containerHasChanged[key], false);
+    };
+
     const isNew = {
       items: !!items && (!this.state.items || items !== this.props.items),
       styles: !!styles && (!this.state.styles || styles !== this.props.styles),
-      container: !!container && (!this.state.container || container !== this.props.container),
+      container: !this.state.styles || !this.state.container || (!!container && isContainerChanged()),
       watermark: !!watermarkData && (watermarkData !== this.props.watermarkData),
-      scroll: this.state.scroll.isInfinite !== this.props.styles.enableInfiniteScroll,
+      scroll: isInfiniteScrollChanged(),
     };
     isNew.any = Object.keys(isNew).reduce((is, key) => is || isNew[key], false);
 
     items = items || this.items;
 
-    if (utils.isVerbose()) {
-      console.log('PROGALLERY [RENDERS] - reCreateGalleryExpensively', {isNew}, {items, styles, container, watermarkData});
-    }
 
     const newState = {};
 
@@ -121,6 +134,9 @@ export class GalleryContainer extends React.Component {
     }
 
     if (!this.galleryStructure || isNew.any) {
+      if (utils.isVerbose()) {
+        console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively');
+      }
       const layoutParams = {
         items: _items,
         container: _container,
@@ -130,7 +146,7 @@ export class GalleryContainer extends React.Component {
       };
 
       const layout = createLayout(layoutParams);
-      const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll) && !_styles.oneRow;
+      const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll || this.infiniteScrollChanged) && !_styles.oneRow;
       this.props.handleNewGalleryStructure({items: _items, container: _container, styles: _styles, layout, isInfinite});
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
@@ -153,6 +169,9 @@ export class GalleryContainer extends React.Component {
       });
     } else {
       callback();
+    }
+    if (utils.isVerbose()) {
+      console.log('PROGALLERY [RENDERS] - reCreateGalleryExpensively', {isNew}, {items, styles, container, watermarkData});
     }
   }
 
