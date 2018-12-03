@@ -445,6 +445,13 @@ class SlideshowView extends React.Component {
     const scalePercentage = arrowWidth / arrowOrigWidth;
     const imageStyle = {transform: `scale(${scalePercentage})`};
 
+    const svgStyle = {};
+    if(utils.isMobile()) {
+      if (typeof this.props.styleParams.arrowsColor !== 'undefined') {
+        svgStyle.fill = this.props.styleParams.arrowsColor.value;
+      }
+    }
+
     // nav-arrows-container width is 100. arrowWidth + padding on each side should be 100
     const containerPadding = (100 - arrowWidth) / 2;
     const slideshowSpace = this.props.styleParams.isSlideshow ? this.props.styleParams.slideshowInfoSize : 0;
@@ -473,6 +480,7 @@ class SlideshowView extends React.Component {
       >
         <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
           <path id="_250_middle_right_copy_3" data-name="250 middle right  copy 3" className="slideshow-arrow"
+                style={svgStyle}
                 d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
                 transform="translate(-133 -225)"/>
         </svg>
@@ -489,6 +497,7 @@ class SlideshowView extends React.Component {
       >
         <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
           <path id="_250_middle_right_copy_2" data-name="250 middle right  copy 2" className="slideshow-arrow"
+                style={svgStyle}
                 d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
                 transform="translate(-855 -230)"/>
         </svg>

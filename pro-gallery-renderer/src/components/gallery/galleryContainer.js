@@ -1555,6 +1555,9 @@ export class GalleryContainer extends React.Component {
     if (canSet('arrowsSize')) {
       stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
     }
+    if (canSet('arrowsColor')) {
+      stateStyles.arrowsColor = wixStyles.arrowsColor;
+    }
     if (canSet('slideshowInfoSize')) {
       stateStyles.slideshowInfoSize = Number(wixStyles.slideshowInfoSize);
     }
