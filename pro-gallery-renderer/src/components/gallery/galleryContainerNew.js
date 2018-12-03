@@ -24,7 +24,8 @@ export class GalleryContainer extends React.Component {
         isInfinite: this.isInfiniteScroll(),
         left: 0,
         top: 0
-      }
+      },
+      currentHover: -1
     };
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
@@ -32,6 +33,7 @@ export class GalleryContainer extends React.Component {
     this.isInfiniteScroll = this.isInfiniteScroll.bind(this); //TODO check if needed
     this.scrollToItem = this.scrollToItem.bind(this);
     this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
+    this.setCurrentHover = this.setCurrentHover.bind(this);
   }
 
   componentDidMount() {
@@ -251,6 +253,11 @@ export class GalleryContainer extends React.Component {
       this.reCreateGalleryExpensively(this.props);
     });
   }
+  setCurrentHover(idx) {
+    this.setState(
+      {currentHover: idx}
+    );
+  }
   getMoreItemsIfNeeded(itemIdx) {
     if (this.galleryStructure && itemIdx >= this.galleryStructure.items.length - 1) { //only when the last item turns visible we should try getting more items
       if (this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
@@ -307,12 +314,14 @@ export class GalleryContainer extends React.Component {
           convertToGalleryItems = {ItemsHelper.convertToGalleryItems}
           convertDtoToLayoutItem = {ItemsHelper.convertDtoToLayoutItem}
           domId = {this.props.domId}
+          currentHover = {this.state.currentHover}
           actions = {_.merge(this.props.actions, {
             getMoreItemsIfNeeded: this.getMoreItemsIfNeeded,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
             toggleFullscreen: this.toggleFullscreen,
             setWixHeight: _.noop,
-            scrollToItem: this.scrollToItem
+            scrollToItem: this.scrollToItem,
+            setCurrentHover: this.setCurrentHover
           })}
           store = {this.props.store}
           { ...this.props.gallery }

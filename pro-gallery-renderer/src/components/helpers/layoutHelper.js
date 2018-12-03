@@ -506,6 +506,46 @@ function addLayoutStyles(styles, container) {
 function processLayouts(styles) {
   const processedStyles = styles;
 
+
+  if (utils.isMobile()) {
+    if (!_.isUndefined(processedStyles.itemFont)) {
+      processedStyles.itemFont.value = processedStyles.itemFont.value.slice(5, -1);
+      if (processedStyles.itemFont.value.indexOf('underline') > 0) {
+        processedStyles.itemFont.value = processedStyles.itemFont.value.slice(0, -26);
+        processedStyles.textDecorationTitle = 'underline';
+      } else {
+        processedStyles.textDecorationTitle = 'none';
+      }
+    }
+    if (!_.isUndefined(processedStyles.itemFontSlideshow)) {
+      processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(5, -1);
+      if (processedStyles.itemFontSlideshow.value.indexOf('underline') > 0) {
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(0, -26);
+        processedStyles.textDecorationTitle = 'underline';
+      } else {
+        processedStyles.textDecorationTitle = 'none';
+      }
+    }
+    if (!_.isUndefined(processedStyles.itemDescriptionFont)) {
+      processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(5, -1);
+      if (processedStyles.itemDescriptionFont.value.indexOf('underline') > 0) {
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(0, -26);
+        processedStyles.textDecorationDesc = 'underline';
+      } else {
+        processedStyles.textDecorationDesc = 'none';
+      }
+    }
+    if (!_.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
+      processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(5, -1);
+      if (processedStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0) {
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(0, -26);
+        processedStyles.textDecorationDesc = 'underline';
+      } else {
+        processedStyles.textDecorationDesc = 'none';
+      }
+    }
+  }
+
   processedStyles.externalInfoHeight = getExternalInfoHeight(styles);
 
   if (processedStyles.oneRow) {
@@ -595,7 +635,7 @@ function processLayouts(styles) {
     processedStyles.numberOfImagesPerRow = 1;
   }
 
-  if (processedStyles.fixedColumns > 0 && utils.isMobile()) {
+  if (processedStyles.fixedColumns > 0 && utils.isMobile() && (typeof processedStyles.m_numberOfImagesPerRow === 'undefined')) {
     processedStyles.fixedColumns = 1;
   }
 
