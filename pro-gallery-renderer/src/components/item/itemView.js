@@ -270,6 +270,9 @@ class ItemView extends React.Component {
       if (this.props.styleParams.itemClick === 'nothing') {
         return true;
       }
+      if (utils.isEditor() && this.state.previewHover) {
+        return true;
+      }
     }
     return false;
   }
