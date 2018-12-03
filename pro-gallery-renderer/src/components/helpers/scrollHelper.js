@@ -67,12 +67,12 @@ function getDistanceFromScreen({offset, scroll, itemStart, itemEnd, screenSize})
   return {before, after};
 }
 function isWithinPaddingVertically({target, top, bottom, screenHeight, padding}) {
-  const res = getDistanceFromScreen({offset: target.offsetTop, scroll: target.scrollTop, itemStart: top, itemEnd: bottom, screenSize: screenHeight});
+  const res = getDistanceFromScreen({offset: target.offsetTop || 0, scroll: target.scrollY, itemStart: top, itemEnd: bottom, screenSize: screenHeight});
   return (res.before < padding && res.after < padding);
 }
 
 function isWithinPaddingHorizontally({target, left, right, screenWidth, padding, oneRow}) {
-  if (oneRow) {
+  if (!oneRow) {
     return true;
   }
   const res = getDistanceFromScreen({offset: 0, scroll: target.scrollLeft, itemStart: left, itemEnd: right, screenSize: screenWidth});
@@ -89,23 +89,23 @@ function setVerticalVisibility({target, props, screenSize, padding, callback}) {
 }
 
 function setHorizontalVisibility({target, props, screenSize, padding, callback}) {
-  const {offset, style} = props;
+  const {offset, styleParams, style} = props;
   const right = offset.left + style.width;
   callback({
-    visibleHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.visible, oneRow: style.oneRow}),
-    renderedHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.rendered, oneRow: style.oneRow})
+    visibleHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.visible, oneRow: styleParams.oneRow}),
+    renderedHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.rendered, oneRow: styleParams.oneRow})
   });
 }
 
 function setInitialVisibility({props, screenSize, padding, callback}) {
   const {scrollBase, height, width, galleryHeight, galleryWidth} = props.container;
   setVerticalVisibility({target: {
-    scrollTop: props.scrollTop || 0,
-    offsetTop: scrollBase,
+    scrollY: props.scroll.scrollY || 0,
+    offsetTop: scrollBase || 0,
     clientHeight: height || galleryHeight,
   }, props, screenSize, padding, callback});
   setHorizontalVisibility({target: {
-    scrollLeft: props.scrollLeft || 0,
+    scrollLeft: props.scroll.scrollLeft || 0,
     clientWidth: width || galleryWidth,
   }, props, screenSize, padding, callback});
 }

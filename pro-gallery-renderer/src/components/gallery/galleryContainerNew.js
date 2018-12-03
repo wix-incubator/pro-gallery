@@ -206,7 +206,7 @@ export class GalleryContainer extends React.Component {
       this.onVerticalScroll = _.throttle(({target}) => {
         this.setState({
           scroll: Object.assign(this.state.scroll, {
-            top: target.scrollTop,
+            top: target.scrollY,
             vertical: target
           })
         });
