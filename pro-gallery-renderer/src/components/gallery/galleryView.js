@@ -197,24 +197,9 @@ class GalleryView extends React.Component {
   createShowMoreButton() {
     let showMoreButton = false;
     const shouldShowButton = (!this.props.scroll.isInfinite && (this.props.galleryStructure.height > utils.getWindowHeight()));
-    const {mobileLoadMoreSize, loadMoreButtonBorderWidth, loadMoreButtonBorderRadius, loadMoreButtonText} = this.props.styleParams;
 
     if (shouldShowButton) {
-
-      const buttonText = loadMoreButtonText || 'Load More';
-      const btnStyle = {};
-      if (utils.isMobile()) {
-        if (mobileLoadMoreSize > 0) {
-          btnStyle.fontSize = mobileLoadMoreSize;
-          btnStyle.lineHeight = `${mobileLoadMoreSize * 1.6}px`;
-        }
-        if (!_.isUndefined(loadMoreButtonBorderRadius)) {
-          btnStyle.borderRadius = loadMoreButtonBorderRadius;
-        }
-        if (!_.isUndefined(loadMoreButtonBorderWidth)) {
-          btnStyle.borderWidth = loadMoreButtonBorderWidth;
-        }
-      }
+      const buttonText = this.props.styleParams.loadMoreButtonText || 'Load More';
       showMoreButton = (
         <div className="show-more-container">
           <button
@@ -223,7 +208,6 @@ class GalleryView extends React.Component {
             onClick={this.showMoreItems}
             data-hook="show-more"
             aria-label={buttonText}
-            style={btnStyle}
           >{buttonText}</button>
         </div>
       );

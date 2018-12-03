@@ -1358,41 +1358,73 @@ export class GalleryContainer extends React.Component {
 
     if (canSet('itemFont')) {
       stateStyles.itemFont = wixStyles.itemFont;
-    }
-
-    if (canSet('isSlideshowFont')) {
-      stateStyles.isSlideshowFont = wixStyles.isSlideshowFont;
-    }
-
-    if (canSet('itemDescriptionFont')) {
-      stateStyles.itemDescriptionFont = wixStyles.itemDescriptionFont;
-    }
-
-    if (canSet('itemDescriptionFontSlideshow')) {
-      stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
+      if (utils.isMobile()) {
+        stateStyles.itemFont.value = stateStyles.itemFont.value.slice(5, -1);
+        if (stateStyles.itemFont.value.indexOf('underline') > 0) {
+          stateStyles.itemFont.value = stateStyles.itemFont.value.slice(0, -26);
+          stateStyles.textDecorationTitle = 'underline';
+        } else {
+          stateStyles.textDecorationTitle = 'none';
+        }
+      }
     }
 
     // We need another param because the color should be different on hover(white on black) or underneath (black on white)
     if (canSet('itemFontSlideshow')) {
       stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
+      if (utils.isMobile()) {
+        stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.slice(5, -1);
+        if (stateStyles.itemFontSlideshow.value.indexOf('underline') > 0) {
+          stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.slice(0, -26);
+          stateStyles.textDecorationTitle = 'underline';
+        } else {
+          stateStyles.textDecorationTitle = 'none';
+        }
+      }
+    }
+
+    if (canSet('itemDescriptionFont')) {
+      stateStyles.itemDescriptionFont = wixStyles.itemDescriptionFont;
+      if (utils.isMobile()) {
+        stateStyles.itemDescriptionFont.value = stateStyles.itemDescriptionFont.value.slice(5, -1);
+        if (stateStyles.itemDescriptionFont.value.indexOf('underline') > 0) {
+          stateStyles.itemDescriptionFont.value = stateStyles.itemDescriptionFont.value.slice(0, -26);
+          stateStyles.textDecorationDesc = 'underline';
+        } else {
+          stateStyles.textDecorationDesc = 'none';
+        }
+      }
+    }
+
+    if (canSet('itemDescriptionFontSlideshow')) {
+      stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
+      if (utils.isMobile()) {
+        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.slice(5, -1);
+        if (stateStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0) {
+          stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.slice(0, -26);
+          stateStyles.textDecorationDesc = 'underline';
+        } else {
+          stateStyles.textDecorationDesc = 'none';
+        }
+      }
     }
 
     if (canSet('itemFontColor')) {
       stateStyles.itemFontColor = wixStyles.itemFontColor;
     }
 
-    if (canSet('itemDescriptionFontColor')) {
-      stateStyles.itemDescriptionFontColor = wixStyles.itemDescriptionFontColor;
-    }
-
+    // We need another param because the color should be different on hover(white on black) or underneath (black on white)
     if (canSet('itemFontColorSlideshow')) {
       stateStyles.itemFontColorSlideshow = wixStyles.itemFontColorSlideshow;
+    }
+
+    if (canSet('itemDescriptionFontColor')) {
+      stateStyles.itemDescriptionFontColor = wixStyles.itemDescriptionFontColor;
     }
 
     if (canSet('itemDescriptionFontColorSlideshow')) {
       stateStyles.itemDescriptionFontColorSlideshow = wixStyles.itemDescriptionFontColorSlideshow;
     }
-
 
     if (canSet('galleryHorizontalAlign')) {
       let horizontalAlign;
@@ -1522,15 +1554,6 @@ export class GalleryContainer extends React.Component {
     }
     if (canSet('arrowsSize')) {
       stateStyles.arrowsSize = Number(wixStyles.arrowsSize) || 23;
-    }
-    if (canSet('mobileLoadMoreSize')) {
-      stateStyles.mobileLoadMoreSize = Number(wixStyles.mobileLoadMoreSize) || 0;
-    }
-    if (canSet('loadMoreButtonBorderWidth')) {
-      stateStyles.loadMoreButtonBorderWidth = Number(wixStyles.loadMoreButtonBorderWidth) || 0;
-    }
-    if (canSet('loadMoreButtonBorderRadius')) {
-      stateStyles.loadMoreButtonBorderRadius = Number(wixStyles.loadMoreButtonBorderRadius) || 0;
     }
     if (canSet('slideshowInfoSize')) {
       stateStyles.slideshowInfoSize = Number(wixStyles.slideshowInfoSize);

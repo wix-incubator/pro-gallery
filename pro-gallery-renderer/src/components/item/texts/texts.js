@@ -59,7 +59,6 @@ export default class Texts extends React.Component {
 
     const titleSpanStyle = {};
     const descSpanStyle = {};
-
     let titleStyle, descStyle;
     if (shouldShowDescription) {
       titleStyle = {marginBottom: designConsts.spaceBetweenTitleAndDescription};
@@ -75,35 +74,43 @@ export default class Texts extends React.Component {
       descStyle = {marginBottom: 0};
     }
 
-    // if (utils.isMobile()) {
-    //   if (styleParams.isSlideshowFont) {
-    //     if (typeof styleParams.itemFontSlideshow !== 'undefined') {
-    //       titleSpanStyle.font = styleParams.itemFontSlideshow.value.slice(5, -1);
-    //     }
-    //     if (typeof styleParams.itemDescriptionFontSlideshow !== 'undefined') {
-    //       descSpanStyle.font = styleParams.itemDescriptionFontSlideshow.value.slice(5, -1);
-    //     }
-    //     if (typeof styleParams.itemFontColorSlideshow !== 'undefined') {
-    //       titleSpanStyle.color = styleParams.itemFontColorSlideshow.value;
-    //     }
-    //     if (typeof styleParams.itemDescriptionFontColorSlideshow !== 'undefined') {
-    //       descSpanStyle.color = styleParams.itemDescriptionFontColorSlideshow.value;
-    //     }
-    //   } else {
-    //     if (typeof styleParams.itemFont !== 'undefined') {
-    //       titleSpanStyle.font = styleParams.itemFont.value.slice(5, -1);
-    //     }
-    //     if (typeof styleParams.itemDescriptionFont !== 'undefined') {
-    //       descSpanStyle.font = styleParams.itemDescriptionFont.value.slice(5, -1);
-    //     }
-    //     if (typeof styleParams.itemFontColor !== 'undefined') {
-    //       titleSpanStyle.color = styleParams.itemFontColor.value;
-    //     }
-    //     if (typeof styleParams.itemDescriptionFontColor !== 'undefined') {
-    //       descSpanStyle.color = styleParams.itemDescriptionFontColor.value;
-    //     }
-    //   }
-    // }
+    if (utils.isMobile()) { // ovveride desktop color and fonts
+      if (this.isSlideshowFont()) {
+        if (typeof styleParams.itemFontSlideshow !== 'undefined') {
+          titleStyle.font = styleParams.itemFontSlideshow.value;
+          titleStyle.textDecoration = styleParams.textDecorationTitle;
+        }
+        if (typeof styleParams.itemDescriptionFontSlideshow !== 'undefined') {
+          descStyle.font = styleParams.itemDescriptionFontSlideshow.value;
+          descStyle.textDecoration = styleParams.textDecorationDesc;
+        }
+        if (typeof styleParams.itemFontColor !== 'undefined') {
+          titleStyle.color = styleParams.itemFontColorSlideshow.value;
+          titleStyle.textDecorationColor = styleParams.itemFontColorSlideshow.value;
+        }
+        if (typeof styleParams.itemDescriptionFontColor !== 'undefined') {
+          descStyle.color = styleParams.itemDescriptionFontColorSlideshow.value;
+          descStyle.textDecorationColor = styleParams.itemDescriptionFontColorSlideshow.value;
+        }
+      } else {
+        if (typeof styleParams.itemFont !== 'undefined') {
+          titleStyle.font = styleParams.itemFont.value;
+          titleStyle.textDecoration = styleParams.textDecorationTitle;
+        }
+        if (typeof styleParams.itemDescriptionFont !== 'undefined') {
+          descStyle.font = styleParams.itemDescriptionFont.value;
+          descStyle.textDecoration = styleParams.textDecorationDesc;
+        }
+        if (typeof styleParams.itemFontColor !== 'undefined') {
+          titleStyle.color = styleParams.itemFontColor.value;
+          titleStyle.textDecorationColor = styleParams.itemFontColor.value;
+        }
+        if (typeof styleParams.itemDescriptionFontColor !== 'undefined') {
+          descStyle.color = styleParams.itemDescriptionFontColor.value;
+          descStyle.textDecorationColor = styleParams.itemDescriptionFontColor.value;
+        }
+      }
+    }
 
     const titleElem = shouldShowTitle && <ItemTitle
       key={'item-title-' + id}
@@ -160,6 +167,24 @@ export default class Texts extends React.Component {
     if (lineHeightFixer.shouldFix(prevProps, this.props)) {
       this.tryFixLineHeight();
     }
+  }
+
+  isSlideshowFont() {
+    const {styleParams} = this.props;
+    const galleryLayout = styleParams.galleryLayout;
+    if (galleryLayout === 5) {
+      return true;
+    }
+    if (styleParams.titlePlacement === 'SHOW_ABOVE' || styleParams.titlePlacement === 'SHOW_BELOW') {
+      if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
+        return true;
+      } else if (galleryLayout === 1 && styleParams.isVertical) {
+        return true;
+      } else if (galleryLayout === 2 && styleParams.scrollDirection !== 1) {
+        return true;
+      }
+    }
+    return false;
   }
 
   componentDidMount() {
