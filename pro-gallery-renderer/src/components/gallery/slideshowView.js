@@ -446,7 +446,7 @@ class SlideshowView extends React.Component {
     const imageStyle = {transform: `scale(${scalePercentage})`};
 
     const svgStyle = {};
-    if(utils.isMobile()) {
+    if (utils.isMobile()) {
       if (typeof this.props.styleParams.arrowsColor !== 'undefined') {
         svgStyle.fill = this.props.styleParams.arrowsColor.value;
       }
