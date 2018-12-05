@@ -518,7 +518,7 @@ class ItemView extends React.Component {
   getBottomInfoElementIfNeeded() {
     const {styleParams} = this.props;
 
-    if (styleParams.titlePlacement === Consts.placements.SHOW_BELOW) {
+    if (styleParams.titlePlacement === Consts.placements.SHOW_BELOW && (styleParams.allowTitle || styleParams.allowDescription || styleParams.useCustomButton)) {
       return this.getInfoElement('gallery-item-bottom-info');
     } else {
       return null;
@@ -528,7 +528,7 @@ class ItemView extends React.Component {
   getTopInfoElementIfNeeded() {
     const {styleParams} = this.props;
 
-    if (styleParams.titlePlacement === Consts.placements.SHOW_ABOVE) {
+    if (styleParams.titlePlacement === Consts.placements.SHOW_ABOVE && (styleParams.allowTitle || styleParams.allowDescription || styleParams.useCustomButton)) {
       return this.getInfoElement('gallery-item-top-info');
     } else {
       return null;
