@@ -490,7 +490,7 @@ function addLayoutStyles(styles, container) {
     if (utils.isVerbose()) {
       console.log('Using galleryLayout for defaults', styles);
     }
-    styles = Object.assign(emptyLayout, styles, getStyleByLayout(styles, container)); //legacy layouts
+    styles = Object.assign({}, emptyLayout, styles, getStyleByLayout(styles, container)); //legacy layouts
     const selectedLayoutVars = ['galleryLayout', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
     styles.selectedLayout = selectedLayoutVars.map(key => String(styles[key])).join('|');
     styles.layoutsVersion = 2;

@@ -53,6 +53,7 @@ export class GalleryContainer extends React.Component {
     }
     if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
   }
+
   handleNavigation(isInDisplay) {
     this.toggleEventListeners(isInDisplay);
     if (isInDisplay) {
@@ -62,18 +63,14 @@ export class GalleryContainer extends React.Component {
       this.props.store.dispatch(pauseVideo());
     }
   }
+
   toggleEventListeners(isInDisplay) {
     if (isInDisplay) {
       this.initScrollListener();
     } else this.removeScrollListener(); //for guy to add the remove function
   }
-  reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
-    if (utils.isVerbose()) {
-      console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
-    }
-    dimentionsHelper.updateParams({styles, container});
 
-    let _items, _styles, _container, scroll, _scroll;
+  isNew({items, styles, container, watermarkData}) {
 
     const isInfiniteScrollChanged = () => {
       if (!this.infiniteScrollChanged && (this.state.scroll.isInfinite !== this.props.styles.enableInfiniteScroll)) {
@@ -83,7 +80,7 @@ export class GalleryContainer extends React.Component {
       return false;
     };
 
-    const isContainerChanged = () => {
+    const containerHadChanged = container => {
       const containerHasChanged = {
         height: !this.state.styles.oneRow ? false : (!!container.height && (container.height !== this.props.container.height)),
         width: !!container.width && (container.width !== this.props.container.width),
@@ -92,18 +89,38 @@ export class GalleryContainer extends React.Component {
       return Object.keys(containerHasChanged).reduce((is, key) => is || containerHasChanged[key], false);
     };
 
+    const stylesHaveChanged = styles => {
+      let is;
+      try {
+        is = (JSON.stringify(styles) !== JSON.stringify(this.props.styles));
+      } catch (e) {
+        is = true;
+      }
+      return is;
+    };
+
     const isNew = {
       items: !!items && (!this.state.items || items !== this.props.items),
-      styles: !!styles && (!this.state.styles || styles !== this.props.styles),
-      container: !this.state.styles || !this.state.container || (!!container && isContainerChanged()),
+      styles: !!styles && (!this.state.styles || stylesHaveChanged(styles)),
+      container: !this.state.styles || !this.state.container || (!!container && containerHadChanged(container)),
       watermark: !!watermarkData && (watermarkData !== this.props.watermarkData),
       scroll: isInfiniteScrollChanged(),
     };
     isNew.any = Object.keys(isNew).reduce((is, key) => is || isNew[key], false);
 
+    return isNew;
+  }
+
+  reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
+    if (utils.isVerbose()) {
+      console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
+    }
+    dimentionsHelper.updateParams({styles, container});
+
+    let _items, _styles, _container, scroll, _scroll;
     items = items || this.items;
 
-
+    const isNew = this.isNew({items, styles, container, watermarkData});
     const newState = {};
 
     if (isNew.items) {
