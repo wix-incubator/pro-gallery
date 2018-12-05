@@ -102,11 +102,9 @@ function setInitialVisibility({props, screenSize, padding, callback}) {
   setVerticalVisibility({target: {
     scrollY: props.scroll.scrollY || 0,
     offsetTop: scrollBase || 0,
-    clientHeight: height || galleryHeight,
   }, props, screenSize, padding, callback});
   setHorizontalVisibility({target: {
     scrollLeft: props.scroll.scrollLeft || 0,
-    clientWidth: width || galleryWidth,
   }, props, screenSize, padding, callback});
 }
 export {

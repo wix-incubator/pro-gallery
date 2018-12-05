@@ -32,21 +32,25 @@ class ItemView extends React.Component {
       displayed: false,
       retries: 0,
       showShare: false,
-      visibleVertically: false,
-      renderedVertically: false,
-      visibleHorizontally: false,
-      renderedHorizontally: false,
-      previewHover: this.props.previewHover
+      visibleVertically: true,
+      renderedVertically: true,
+      visibleHorizontally: true,
+      renderedHorizontally: true,
+      previewHover: this.props.previewHover,
+      scroll: {
+        top: 0,
+        left: 0,
+      }
     };
 
     this.screenSize = (window && window.screen) || {
       width: 1366,
       height: 768
     };
-
+    this.shouldListenToScroll = this.props.type === 'video';
     this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
-    this.renderedPaddingMultiply = 10;
-    this.visiblePaddingMultiply = 2.5;
+    this.renderedPaddingMultiply = 2;
+    this.visiblePaddingMultiply = 0.5;
     this.padding = {
       rendered: utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply,
       visible: utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply
@@ -398,12 +402,14 @@ class ItemView extends React.Component {
   }
 
   getImageItem(imageDimensions) {
-    const props = _.pick(this.props, ['alt', 'title', 'description', 'id', 'styleParams', 'resized_url', 'settings']);
+    const props = _.pick(this.props, ['alt', 'title', 'description', 'id', 'idx', 'styleParams', 'resized_url', 'settings']);
     return <ImageItem {...props}
-						visible = {this.getItemVisibility()}
             key="imageItem"
+						visible = {this.getItemVisibility()}
             loaded={this.state.loaded}
             displayed={this.state.displayed}
+            dimensions={{...this.props.style, ...this.props.offset}}
+            scrollBase={this.props.container.scrollBase}
             imageDimensions={imageDimensions}
             isThumbnail={!!this.props.thumbnailHighlightId}
             actions={{
@@ -681,22 +687,18 @@ class ItemView extends React.Component {
 
       }
     }
-    if (this.useRefactoredProGallery) {
+    if (this.shouldListenToScroll && this.useRefactoredProGallery) {
+      this.initScrollListener();
       setInitialVisibility({props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
     }
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.useRefactoredProGallery) {
-      if (nextProps.scroll.top !== this.galleryScroll.top) {
-        setVerticalVisibility({target: nextProps.scroll.vertical, props: nextProps, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
-        this.galleryScroll.top = nextProps.scroll.top;
-      }
-      if (nextProps.scroll.left !== this.galleryScroll.left) {
-        setHorizontalVisibility({target: nextProps.scroll.horizontal, props: nextProps, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
-        this.galleryScroll.left = nextProps.scroll.left;
-      }
+  componentWillUnmount() {
+    if (this.shouldListenToScroll && this.useRefactoredProGallery) {
+      this.removeScrollListener();
     }
+  }
+  componentWillReceiveProps(nextProps) {
+
   }
   componentDidUpdate(prevProps, prevState) {
     if (utils.isSite() && !utils.isMobile() && document && document.activeElement && document.activeElement.className) {
@@ -713,27 +715,64 @@ class ItemView extends React.Component {
         }
       }
     }
-    if (this.useRefactoredProGallery) {
-      let hasJustBecomeVisible;
-      if (this.props.styleParams.oneRow) {
-        hasJustBecomeVisible = this.state.visibleVertically && this.state.visibleHorizontally && !prevState.visibleHorizontally;
-      } else {
-        hasJustBecomeVisible = this.state.visibleVertically && !prevState.visibleVertically;
-      }
-      if (hasJustBecomeVisible) {
-        if (utils.isVerbose()) {
-          console.log(`PROGALLERY [visibilities] - item #${this.props.idx} JUST BECAME VISIBLE!`);
-        }
-				//this group just got rendered - if it's the last, check if more items can be fetched from the db
-        try {
-          this.props.actions.getMoreItemsIfNeeded(this.props.idx);
-        } catch (e) {
-          console.warn('Cannot get more items', this.props.galleryConfig, e);
-        }
+  }
+  removeScrollListener() {
+    if (this.scrollEventListenerSet) {
+      this.scrollEventListenerSet = false;
+      const {scrollingElement} = this.props;
+      scrollingElement.vertical().removeEventListener('scroll', this.onVerticalScroll);
+      const {oneRow} = this.props.styleParams;
+      try {
+        scrollingElement.horizontal().removeEventListener('scroll', this.onHorizontalScroll);
+      } catch (e) {
       }
     }
   }
+  normalizeWixParams(e) {
+    const target = {
+      scrollY: e.scrollTop || 0,
+      scrollX: e.scrollLeft || 0,
+      offsetTop: e.y,
+      clientWidth: e.documentWidth,
+      clientHeight: e.documentHeight,
+    };
+    return target;
+  }
+  initScrollListener() {
+    if (!this.scrollEventListenerSet) {
+      this.scrollEventListenerSet = true;
+      const scrollInterval = 500;
+		//Vertical Scroll
+      this.onVerticalScroll = _.throttle(e => {
+        const target = this.normalizeWixParams(e);
+        this.setState({
+          scroll: Object.assign(this.state.scroll, {
+            top: target.scrollY,
+            vertical: target
+          })
+        },
+					() => setVerticalVisibility({target, props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState})
+				);
+      }, scrollInterval);
+      const {scrollingElement} = this.props;
+      scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
 
+    //Horizontal Scroll
+      const {oneRow} = this.props.styleParams;
+      if (oneRow) {
+        this.onHorizontalScroll = _.throttle(({target}) => {
+          this.setState({
+            scroll: Object.assign(this.state.scroll, {
+              left: target.scrollLeft,
+              horizontal: target
+            })
+          }, () => setHorizontalVisibility({target, props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState})
+				);
+        }, scrollInterval);
+        scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
+      }
+    }
+  }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -744,21 +783,21 @@ class ItemView extends React.Component {
     }
     return (
       <div className={this.getItemContainerClass()}
-           ref={e => this.itemContainer = e}
-           onMouseOver={this.onMouseOver}
-           onClick={this.onItemClick}
-           onKeyDown={this.onKeyPress}
-           tabIndex={this.getItemContainerTabIndex()}
-           data-hash={hash}
-           data-id={photoId}
-           data-idx={idx}
-           aria-label={this.getItemAriaLabel()}
-           role="link"
-           aria-level="0"
-           data-hook="item-container"
-           key={'item-container-' + id}
-           style={this.getItemContainerStyles()}
-           {...this.getSEOLink()}
+          ref={e => this.itemContainer = e}
+          onMouseOver={this.onMouseOver}
+          onClick={this.onItemClick}
+          onKeyDown={this.onKeyPress}
+          tabIndex={this.getItemContainerTabIndex()}
+          data-hash={hash}
+          data-id={photoId}
+          data-idx={idx}
+          aria-label={this.getItemAriaLabel()}
+          role="link"
+          aria-level="0"
+          data-hook="item-container"
+          key={'item-container-' + id}
+          style={this.getItemContainerStyles()}
+          {...this.getSEOLink()}
       >
         {this.getTopInfoElementIfNeeded()}
         <div data-hook="item-wrapper" className={this.getItemWrapperClass()}

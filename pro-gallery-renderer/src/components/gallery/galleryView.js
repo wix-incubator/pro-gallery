@@ -5,6 +5,7 @@ import _ from 'lodash';
 import GalleryEmpty from '../gallery/galleryEmpty';
 import utils from '../../utils/index.js';
 import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
+import ItemContainer from '../item/itemContainer.js';
 
 utils.fixViewport('Gallery');
 
@@ -12,7 +13,6 @@ class GalleryView extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
@@ -108,20 +108,23 @@ class GalleryView extends React.Component {
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
-    const columns = this.props.galleryStructure.columns;
 
     let galleryHeight;
     if (showMore) {
       galleryHeight = (this.props.container.galleryHeight - (showMoreContainerHeight * utils.getViewportScaleRatio()));
     } else if (!utils.useRelativePositioning) {
-      galleryHeight = this.props.container.galleryHeight + 'px';
+      galleryHeight = this.props.galleryStructure.height + 'px';
     } else {
       galleryHeight = '100%';
     }
 
-    const layout = _.map(columns, (column, c) => {
+    let layout;
 
-      if (utils.useRelativePositioning) {
+    if (utils.useRelativePositioning) {
+
+      const columns = this.props.galleryStructure.columns;
+
+      layout = _.map(columns, (column, c) => {
 
         let paddingTop = 0;
         if (this.props.gotScrollEvent) {
@@ -144,11 +147,12 @@ class GalleryView extends React.Component {
             {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
           </div>
         );
+      });
 
-      } else {
-        return !!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false);
-      }
-    });
+    } else {
+      layout = this.props.galleryStructure.galleryItems.map(item => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(galleryConfig, {visible: item.isVisible})), {store: this.props.store})));
+    }
+
     return (
       <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
            style={{
@@ -166,6 +170,7 @@ class GalleryView extends React.Component {
 
   createGalleryConfig() {
     return {
+      scrollingElement: this.props.scrollingElement,
       scroll: this.props.scroll,
       container: this.props.container,
       styleParams: this.props.styleParams,
@@ -174,7 +179,6 @@ class GalleryView extends React.Component {
       currentIdx: this.state.currentIdx,
       currentHover: this.props.currentHover,
       actions: {
-        getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
         setCurrentHover: this.props.actions.setCurrentHover,
       }

@@ -507,6 +507,7 @@ class SlideshowView extends React.Component {
 
   createLayout() {
     const galleryConfig = {
+      scrollingElement: this.props.scrollingElement,
       renderedItemsCount: this.props.renderedItemsCount,
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
@@ -516,7 +517,6 @@ class SlideshowView extends React.Component {
       currentIdx: this.state.currentIdx,
       currentHover: this.props.currentHover,
       actions: {
-        getMoreItemsIfNeeded: this.props.actions.getMoreItemsIfNeeded,
         toggleFullscreen: this.props.actions.toggleFullscreen,
         setCurrentHover: this.props.actions.setCurrentHover
       }

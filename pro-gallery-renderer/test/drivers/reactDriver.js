@@ -25,6 +25,7 @@ class galleryDriver {
     //override utils functions
     this.isTesingEnvironment = true;
     this.container = {
+      scrollBase: 0,
       maxGalleryWidth: 1000,
       galleryWidth: 1000,
       galleryHeight: 500,
@@ -118,6 +119,7 @@ class galleryDriver {
     this.galleryStructure = GalleryContainer.convertToGalleryItems(new Layouter(this.layoutParams));
 
     this.galleryConfig = {
+      container: this.get.container,
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions,

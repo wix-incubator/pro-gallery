@@ -9,7 +9,7 @@ import {ItemsHelper} from '../helpers/itemsHelper';
 import dimentionsHelper from '../helpers/dimensionsHelper';
 import {scrollToItemImp} from '../helpers/scrollHelper';
 import {pauseVideo} from '../../actions/itemViewActions.js';
-
+import {pgScrollSteps, pgScrollClassName} from '../../constants/cssScroll';
 import {createLayout} from 'pro-gallery-layouter';
 import _ from 'lodash';
 import utils from '../../utils';
@@ -20,10 +20,9 @@ export class GalleryContainer extends React.Component {
     super(props);
 		//
     this.state = {
+      pgScroll: 0,
       scroll: {
-        isInfinite: this.isInfiniteScroll(),
-        left: 0,
-        top: 0
+        isInfinite: this.isInfiniteScroll()
       },
       currentHover: -1
     };
@@ -33,11 +32,13 @@ export class GalleryContainer extends React.Component {
     this.isInfiniteScroll = this.isInfiniteScroll.bind(this); //TODO check if needed
     this.scrollToItem = this.scrollToItem.bind(this);
     this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
+    //this._scrollingElement = this.getScrollingElement(this.props.styles.isVertical); TODO - i want one call for this function, (same element should be passed in the props and use in the listener)
     this.setCurrentHover = this.setCurrentHover.bind(this);
   }
 
   componentDidMount() {
     this.reCreateGalleryExpensively(this.props, () => {
+      this.getMoreItemsIfNeeded(0);
       this.initScrollListener();
     });
   }
@@ -223,30 +224,27 @@ export class GalleryContainer extends React.Component {
       this.scrollEventListenerSet = true;
       const scrollInterval = 500;
 
-    //Vertical Scroll
-      this.onVerticalScroll = _.throttle(({target}) => {
-        this.setState({
-          scroll: Object.assign(this.state.scroll, {
-            top: target.scrollY,
-            vertical: target
-          })
-        });
-      }, scrollInterval);
       const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
-      scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
-
-    //Horizontal Scroll
       const {oneRow} = this.state.styles;
       if (oneRow) {
-        this.onHorizontalScroll = _.throttle(({target}) => {
+        //Horizontal Scroll
+        this.onHorizontalScroll = _.throttle(e => {
+          const left = (e.target && e.target.scrollLeft) || 0;
+          this.getMoreItemsIfNeeded(left);
           this.setState({
-            scroll: Object.assign(this.state.scroll, {
-              left: target.scrollLeft,
-              horizontal: target
-            })
+            pgScroll: left
           });
         }, scrollInterval);
         scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
+      } else {
+        //Vertical Scroll
+        this.onVerticalScroll = _.throttle(e => {
+          this.getMoreItemsIfNeeded(e.scrollTop);
+          this.setState({
+            pgScroll: e.scrollTop
+          });
+        }, scrollInterval);
+        scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
       }
     }
   }
@@ -272,14 +270,22 @@ export class GalleryContainer extends React.Component {
       this.reCreateGalleryExpensively(this.props);
     });
   }
+
   setCurrentHover(idx) {
     this.setState(
       {currentHover: idx}
     );
   }
-  getMoreItemsIfNeeded(itemIdx) {
-    if (this.galleryStructure && itemIdx >= this.galleryStructure.items.length - 1) { //only when the last item turns visible we should try getting more items
-      if (this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
+
+  getMoreItemsIfNeeded(scrollTop) {
+    if (this.galleryStructure && this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
+
+      //TODO - add support for horizontal galleries
+      const galleryHeight = (this.galleryStructure.height);
+      const scrollHeight = scrollTop + this.state.container.scrollBase + window.screen.height;
+      const getItemsDistance = window.screen.height;
+
+      if (galleryHeight - scrollHeight < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
         this.props.getMoreItems(this.state.items.length, newItems => {
           this.reCreateGalleryExpensively({
@@ -317,9 +323,13 @@ export class GalleryContainer extends React.Component {
       console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
     }
+
+    const pgScroll = pgScrollSteps.map((step, idx) => `${pgScrollClassName}-${idx}-${Math.floor(this.state.pgScroll / step) * step}`).join(' ');
+
     return (
-      <div className={`pg-scroll-${this.state.scroll.top}`}>
+      <div className={pgScroll}>
         <ViewComponent
+					scrollingElement = {this.getScrollingElement(this.state.styles.oneRow)}
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount = {this.props.renderedItemsCount}
           items = {this.items}
@@ -329,13 +339,12 @@ export class GalleryContainer extends React.Component {
           watermark = {this.props.watermarkData}
           settings = {this.props.settings}
           gotScrollEvent = {true}
-          scroll = {this.state.scroll}
+          scroll = {{isInfinite: this.state.scroll.isInfinite}}
           convertToGalleryItems = {ItemsHelper.convertToGalleryItems}
           convertDtoToLayoutItem = {ItemsHelper.convertDtoToLayoutItem}
           domId = {this.props.domId}
           currentHover = {this.state.currentHover}
           actions = {_.merge(this.props.actions, {
-            getMoreItemsIfNeeded: this.getMoreItemsIfNeeded,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
             toggleFullscreen: this.toggleFullscreen,
             setWixHeight: _.noop,
