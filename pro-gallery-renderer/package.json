@@ -22,6 +22,7 @@
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
+    "start-no-test": "yoshi start --no-test",
     "build-storybook": "build-storybook"
   },
   "dependencies": {

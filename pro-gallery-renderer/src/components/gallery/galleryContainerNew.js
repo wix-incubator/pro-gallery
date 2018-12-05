@@ -277,8 +277,8 @@ export class GalleryContainer extends React.Component {
     );
   }
 
-  getMoreItemsIfNeeded(scrollTop) {
-    if (this.galleryStructure && this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
+  async getMoreItemsIfNeeded(scrollTop) {
+    if (this.galleryStructure && this.props.onGetItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
 
       //TODO - add support for horizontal galleries
       const galleryHeight = (this.galleryStructure.height);
@@ -287,16 +287,14 @@ export class GalleryContainer extends React.Component {
 
       if (galleryHeight - scrollHeight < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
-        this.props.getMoreItems(this.state.items.length, newItems => {
-          this.reCreateGalleryExpensively({
-            items: this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || [])
-          }, () => {
-            this.gettingMoreItems = false;
-          });
+        const newItems = await this.props.onGetItems(this.state.items.length);
+        this.reCreateGalleryExpensively({
+          items: this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || [])
+        }, () => {
+          this.gettingMoreItems = false;
         });
       }
     }
-    return false;
   }
 
   canRender() {
