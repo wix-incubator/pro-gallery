@@ -32,7 +32,7 @@ export class GalleryContainer extends React.Component {
     this.isInfiniteScroll = this.isInfiniteScroll.bind(this); //TODO check if needed
     this.scrollToItem = this.scrollToItem.bind(this);
     this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
-    //this._scrollingElement = this.getScrollingElement(this.props.styles.isVertical); TODO - i want one call for this function, (same element should be passed in the props and use in the listener)
+    this._scrollingElement = this.getScrollingElement();
     this.setCurrentHover = this.setCurrentHover.bind(this);
   }
 
@@ -200,14 +200,14 @@ export class GalleryContainer extends React.Component {
     return scrollBase;
   }
 
-  getScrollingElement(oneRow) {
-    const horizontal = oneRow ? () => window.document.querySelector(`#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`) : () => {};
+  getScrollingElement() {
+    const horizontal = () => window.document.querySelector(`#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`);
     const vertical = this.props.scrollingElement ? ((typeof this.props.scrollingElement === 'function') ? this.props.scrollingElement : () => this.props.scrollingElement) : () => window;
     return {vertical, horizontal};
   }
 
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0) {
-    const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
+    const scrollingElement = this._scrollingElement;
     const horizontalElement = scrollingElement.horizontal();
     scrollToItemImp({
       oneRow: this.state.styles.oneRow,
@@ -227,7 +227,7 @@ export class GalleryContainer extends React.Component {
   removeScrollListener() {
     if (this.scrollEventListenerSet) {
       this.scrollEventListenerSet = false;
-      const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
+      const scrollingElement = this._scrollingElement;
       scrollingElement.vertical().removeEventListener('scroll', this.onVerticalScroll);
       const {oneRow} = this.state.styles;
       if (oneRow) {
@@ -241,7 +241,7 @@ export class GalleryContainer extends React.Component {
       this.scrollEventListenerSet = true;
       const scrollInterval = 500;
 
-      const scrollingElement = this.getScrollingElement(this.state.styles.oneRow);
+      const scrollingElement = this._scrollingElement;
       const {oneRow} = this.state.styles;
       if (oneRow) {
         //Horizontal Scroll
@@ -343,8 +343,9 @@ export class GalleryContainer extends React.Component {
 
     return (
       <div className={pgScroll}>
-        <ViewComponent
-					scrollingElement = {this.getScrollingElement(this.state.styles.oneRow)}
+				<ViewComponent
+					isInDisplay = {this.props.isInDisplay}
+					scrollingElement = {this._scrollingElement}
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount = {this.props.renderedItemsCount}
           items = {this.items}

@@ -338,12 +338,12 @@ class SlideshowView extends React.Component {
     const {thumbnailSize} = this.props.styleParams;
     return (
       <div className={'pro-gallery inline-styles thumbnails-gallery ' + (oneRow ? ' one-row hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
-           style={{
-             width,
-             height,
-             margin: thumbnailsMargin
-           }}
-           data-hook="gallery-thumbnails">
+          style={{
+            width,
+            height,
+            margin: thumbnailsMargin
+          }}
+          data-hook="gallery-thumbnails">
           <div data-hook="gallery-thumbnails-column" className={'galleryColumn'} key={'thumbnails-column'}
             style={Object.assign(thumbnailsStyle, {width, height})}>
               {thumbnailItems.map((item, idx) => {
@@ -635,7 +635,12 @@ class SlideshowView extends React.Component {
       this.ItemsForSlideshowLoopThumbnails = false;
     }
     this.shouldEnableSlideshowLoop(); // check if need to enable slideshow loop
+    if (this.useRefactoredProGallery) {
+      if (this.props.isInDisplay !== props.isInDisplay) {
+        this.setState({isInView: props.isInDisplay}, () => this.startAutoSlideshowIfNeeded(props.styleParams));
 
+      }
+    }
     if (!utils.isSite()) {
       if (( //check that the change is related to the slideshow settings
           (this.props.styleParams.isAutoSlideshow !== props.styleParams.isAutoSlideshow) ||
@@ -660,13 +665,13 @@ class SlideshowView extends React.Component {
     }
 
     window.addEventListener('keydown', this.handleKeypress);
-    window.addEventListener('gallery_navigation_out', () => {
+    window.addEventListener('gallery_navigation_out', () => { //TODO remove after full refactor release
       utils.setStateAndLog(this, 'Next Item', {
         isInView: false
       });
       this.stopAutoSlideshow();
     });
-    window.addEventListener('gallery_navigation_in', () => {
+    window.addEventListener('gallery_navigation_in', () => { //TODO remove after full refactor release
       utils.setStateAndLog(this, 'Next Item', {
         isInView: true
       });
