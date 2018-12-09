@@ -292,8 +292,6 @@ class ItemView extends React.Component {
       return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
-    } else if (utils.isEditor()) {
-      return this.showHover();
     } else {
       return true;
     }
