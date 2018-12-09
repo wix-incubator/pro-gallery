@@ -545,8 +545,14 @@ function processLayouts(styles) {
       }
     }
   }
+  if ((!processedStyles.isVertical || processedStyles.groupSize > 1 || processedStyles.oneRow === true) && !processedStyles.isSlider && !processedStyles.isColumns) {
+    processedStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+  } else {
+    const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_BELOW : Consts.placements.SHOW_ON_HOVER;
+    processedStyles.titlePlacement = processedStyles.titlePlacement || defaultValue;
+  }
 
-  processedStyles.externalInfoHeight = getExternalInfoHeight(styles);
+  processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
 
   if (processedStyles.oneRow) {
 		//if oneRow is true, use horizontal layouts only
