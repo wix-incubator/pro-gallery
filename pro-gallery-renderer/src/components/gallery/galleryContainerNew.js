@@ -144,7 +144,7 @@ export class GalleryContainer extends React.Component {
       _styles = addLayoutStyles(styles, container);
       dimentionsHelper.updateParams({styles: _styles});
       _container = Object.assign({}, container, dimentionsHelper.getGalleryDimensions(), {
-        scrollBase: this.getScrollBase(),
+        scrollBase: this.getScrollBase(container),
       });
       dimentionsHelper.updateParams({container: _container});
       _scroll = Object.assign({}, scroll, {isInfinite: isNew.styles ? _styles.enableInfiniteScroll : this.isInfiniteScroll()});
@@ -200,8 +200,9 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getScrollBase() {
-    let scrollBase = this.props.container.scrollBase;
+  getScrollBase(container) {
+    container = container || this.props.container;
+    let {scrollBase} = container;
     try {
       const {y} = window.document.getElementById(`pro-gallery-${this.props.domId}`).getBoundingClientRect();
       scrollBase += y;
