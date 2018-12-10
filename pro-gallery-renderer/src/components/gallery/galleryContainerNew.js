@@ -23,7 +23,7 @@ export class GalleryContainer extends React.Component {
     super(props);
     console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
 
-    this.state = {
+    const initialState = {
       pgScroll: 0,
       scroll: {
         isInfinite: this.isInfiniteScroll()
@@ -31,12 +31,10 @@ export class GalleryContainer extends React.Component {
       currentHover: -1
     };
 
-    this.reCreateGalleryExpensively(props).then(newState => {
-      this.state = {
-        ...this.state,
-        ...newState,
-      };
-    });
+    this.state = {
+      ...initialState,
+      ...this.reCreateGalleryExpensively(props, initialState),
+    };
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
@@ -48,17 +46,13 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.reCreateGalleryExpensively(this.props).then(newState => {
-      this.setState(newState, () => {
-        this.getMoreItemsIfNeeded(0);
-      });
+    this.setState(this.reCreateGalleryExpensively(this.props), () => {
+      this.getMoreItemsIfNeeded(0);
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.reCreateGalleryExpensively(nextProps).then(newState => {
-      this.setState(newState);
-    });
+    this.setState(this.reCreateGalleryExpensively(nextProps));
     if (!!nextProps.currentIdx && nextProps.currentIdx > 0) {
       this.scrollToItem(nextProps.currentIdx, false, true, 0);
     }
@@ -74,10 +68,10 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  isNew({items, styles, container, watermarkData}) {
+  isNew({items, styles, container, watermarkData}, state) {
 
     const isInfiniteScrollChanged = () => {
-      if (!this.infiniteScrollChanged && (this.state.scroll.isInfinite !== this.props.styles.enableInfiniteScroll)) {
+      if (!this.infiniteScrollChanged && (state.scroll.isInfinite !== this.props.styles.enableInfiniteScroll)) {
         this.infiniteScrollChanged = true;
         return true;
       }
@@ -86,7 +80,7 @@ export class GalleryContainer extends React.Component {
 
     const containerHadChanged = container => {
       const containerHasChanged = {
-        height: !this.state.styles.oneRow ? false : (!!container.height && (container.height !== this.props.container.height)),
+        height: !state.styles.oneRow ? false : (!!container.height && (container.height !== this.props.container.height)),
         width: !!container.width && (container.width !== this.props.container.width),
         scrollBase: !!container.scrollBase && (container.scrollBase !== this.props.container.scrollBase),
       };
@@ -104,9 +98,9 @@ export class GalleryContainer extends React.Component {
     };
 
     const isNew = {
-      items: !!items && (!this.state.items || items !== this.props.items),
-      styles: !!styles && (!this.state.styles || stylesHaveChanged(styles)),
-      container: !this.state.styles || !this.state.container || (!!container && containerHadChanged(container)),
+      items: !!items && (!state.items || items !== this.props.items),
+      styles: !!styles && (!state.styles || stylesHaveChanged(styles)),
+      container: !state.styles || !state.container || (!!container && containerHadChanged(container)),
       watermark: !!watermarkData && (watermarkData !== this.props.watermarkData),
       scroll: isInfiniteScrollChanged(),
     };
@@ -115,21 +109,21 @@ export class GalleryContainer extends React.Component {
     return isNew;
   }
 
-  reCreateGalleryExpensively({items, styles, container, watermarkData}) {
+  reCreateGalleryExpensively({items, styles, container, watermarkData}, curState) {
 
     if (window.isMock) {
       console.log('[OOISSR] reCreateGalleryExpensively', {items, styles, container, watermarkData});
     }
     const handleNewGalleryStructure = typeof this.props.handleNewGalleryStructure === 'function' ? this.props.handleNewGalleryStructure : () => {};
+    const isFullwidth = (container && container.width === '100%');
+    const state = curState || this.state || {};
 
     dimentionsHelper.updateParams({styles, container});
-
-    const isFullwidth = (container && container.width === '100%');
 
     let _items, _styles, _container, scroll, _scroll;
     items = items || this.items;
 
-    const isNew = this.isNew({items, styles, container, watermarkData});
+    const isNew = this.isNew({items, styles, container, watermarkData}, state);
     const newState = {};
 
     if (isNew.items) {
@@ -141,9 +135,9 @@ export class GalleryContainer extends React.Component {
     }
 
     if (isNew.styles || isNew.container) {
-      styles = styles || this.state.styles;
-      container = container || this.state.container;
-      scroll = this.state.scroll;
+      styles = styles || state.styles;
+      container = container || state.container;
+      scroll = state.scroll;
 
       _styles = addLayoutStyles(styles, container);
       dimentionsHelper.updateParams({styles: _styles});
@@ -156,8 +150,8 @@ export class GalleryContainer extends React.Component {
       newState.container = _container;
       newState.scroll = _scroll;
     } else {
-      _styles = this.state.styles;
-      _container = this.state.container;
+      _styles = state.styles;
+      _container = state.container;
     }
 
     if (!this.galleryStructure || isNew.any) {
@@ -179,13 +173,13 @@ export class GalleryContainer extends React.Component {
         sharpParams: _styles.sharpParams,
         lastVisibleItemIdx: this.lastVisibleItemIdx,
       });
-      const isFullwidth = _container.width === '100%';
+
       if (isFullwidth) {
         console.time('fullwidthLayoutsCss!');
         this.fullwidthLayoutsCss = createCssLayouts(layoutParams);
         console.timeEnd('fullwidthLayoutsCss!');
       } else {
-        this.fullwidthLayoutsCss = '';
+        this.fullwidthLayoutsCss = [];
       }
 
       this.scrollCss = cssScrollHelper.calcScrollCss({
@@ -201,21 +195,24 @@ export class GalleryContainer extends React.Component {
       console.log('PROGALLERY [RENDERS] - reCreateGalleryExpensively', {isNew}, {items, styles, container, watermarkData});
     }
 
-    return new Promise((resolve, reject) => {
-      if (isNew.any) {
-        resolve(newState);
-      } else {
-        resolve(this.state);
-      }
-    });
+    if (isNew.any) {
+      return (newState);
+    } else {
+      return (this.state);
+    }
   }
 
   getScrollBase(container) {
     container = container || this.props.container;
     let {scrollBase} = container;
     try {
+      if (!(scrollBase >= 0)) {
+        scrollBase = 0;
+      }
       const {y} = window.document.getElementById(`pro-gallery-${this.props.domId}`).getBoundingClientRect();
-      scrollBase += y;
+      if (y >= 0) {
+        scrollBase += y;
+      }
     } catch (e) {
       //
     }
@@ -261,13 +258,12 @@ export class GalleryContainer extends React.Component {
 
   toggleInfiniteScroll(forceVal) {
     const isInfinite = forceVal || !this.state.scroll.isInfinite;
+    const nextState = {
+      scroll: Object.assign(this.state.scroll, {isInfinite})
+    };
     this.setState({
-      scroll: Object.assign(this.state.scroll,
-				{isInfinite}
-		)}, () => {
-      this.reCreateGalleryExpensively(this.props).then(newState => {
-        this.setState(newState);
-      });
+      ...nextState,
+      ...this.reCreateGalleryExpensively(this.props, nextState)
     });
   }
 
@@ -289,11 +285,10 @@ export class GalleryContainer extends React.Component {
       if (gallerySize - scrollEnd < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
         const newItems = await this.props.onGetItems(this.state.items.length);
-        this.reCreateGalleryExpensively({
+        this.setState(this.reCreateGalleryExpensively({
           items: this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || [])
-        }).then(newState => {
+        }), () => {
           this.gettingMoreItems = false;
-          this.setState(newState);
         });
       }
     }
@@ -306,7 +301,7 @@ export class GalleryContainer extends React.Component {
       this.state.items
     );
     if (utils.isVerbose()) {
-      console.log('PROGALLERY [CAN_RENDER] GalleryContainer', this.domId, can, this.state.container, this.state.styles, this.state.items);
+      console.log('PROGALLERY [CAN_RENDER] GalleryContainer', this.state, can, this.state.container, this.state.styles, this.state.items);
     }
     return can;
   }
@@ -326,7 +321,7 @@ export class GalleryContainer extends React.Component {
 
     return (
       <div>
-        <style>{this.fullwidthLayoutsCss}</style>
+        {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
         <style>{this.scrollCss}</style>
         <CssSrollIndicator oneRow={this.state.styles.oneRow} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
 				<ViewComponent

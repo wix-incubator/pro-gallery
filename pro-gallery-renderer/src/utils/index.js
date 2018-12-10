@@ -76,6 +76,9 @@ class Utils extends RenderUtils {
     animateScroll();
   }
 
+  isVerbose() {
+    return window.isMock || (!this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true'));
+  }
 }
 
 export default new Utils();
