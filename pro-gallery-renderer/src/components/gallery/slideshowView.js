@@ -6,6 +6,7 @@ import GalleryEmpty from './galleryEmpty.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 utils.fixViewport('Gallery');
 
@@ -28,7 +29,8 @@ class SlideshowView extends React.Component {
       isInView: true,
     };
     appPartiallyLoaded('pro-gallery-statics');
-    this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
+
+    this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.enableSlideshowLoop = false;
   }
 
@@ -678,7 +680,7 @@ class SlideshowView extends React.Component {
       this.startAutoSlideshowIfNeeded(this.props.styleParams);
     });
 
-    this.container = document.getElementById('gallery-horizontal-scroll');
+    this.container = window.document.getElementById('gallery-horizontal-scroll');
     if (this.container) {
       this.container.addEventListener('scroll', this._setCurrentItemByScroll);
     }

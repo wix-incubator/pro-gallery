@@ -1,6 +1,7 @@
 import React from 'react';
 import translationUtils from 'photography-client-lib/dist/src/utils/translationUtils';
 import utils from '../../utils';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 
 class GalleryEmpty extends React.Component {

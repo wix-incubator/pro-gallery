@@ -3,6 +3,7 @@ import utils from '../../../utils';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import _ from 'lodash';
 import styles from './loveButton.scss';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 class LoveButton extends React.Component {
   constructor(props) {

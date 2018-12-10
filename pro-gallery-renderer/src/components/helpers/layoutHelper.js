@@ -5,6 +5,7 @@ import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/
 import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
 import dimensionsHelper from './dimensionsHelper';
 import {getFixedLayouts} from './fixedLayoutsHelper';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 import designConsts from '../../constants/designConsts';
 
 const emptyLayout = {

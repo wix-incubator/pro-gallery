@@ -16,7 +16,9 @@ import * as performanceUtils from 'photography-client-lib/dist/src/utils/perform
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
-import {isWithinPaddingHorizontally, isWithinPaddingVertically, setHorizontalVisibility, setVerticalVisibility, setInitialVisibility} from '../helpers/scrollHelper.js';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import {setHorizontalVisibility, setVerticalVisibility, setInitialVisibility} from '../helpers/scrollHelper.js';
+import {cssScrollHelper} from '../helpers/cssScrollHelper';
 
 class ItemView extends React.Component {
 
@@ -48,7 +50,7 @@ class ItemView extends React.Component {
       height: 768
     };
     this.shouldListenToScroll = this.props.type === 'video';
-    this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
+    this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.renderedPaddingMultiply = 2;
     this.visiblePaddingMultiply = 0.5;
     this.padding = {
@@ -99,13 +101,6 @@ class ItemView extends React.Component {
           data.detail === 2 ? this.setPreviewHover(true) : this.setPreviewHover(false);
         }, 50);
       });
-    }
-
-    if (utils.isSemiNative()) {
-      this.onMouseOverEvent = new window.CustomEvent('on_mouse_over'); // MUST be 'CustomEvent'
-    } else {
-      this.onMouseOverEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
-      this.onMouseOverEvent.initCustomEvent('on_mouse_over', false, false, null);
     }
   }
 
@@ -406,8 +401,6 @@ class ItemView extends React.Component {
 						visible = {this.getItemVisibility()}
             loaded={this.state.loaded}
             displayed={this.state.displayed}
-            dimensions={{...this.props.style, ...this.props.offset}}
-            scrollBase={this.props.container.scrollBase}
             imageDimensions={imageDimensions}
             isThumbnail={!!this.props.thumbnailHighlightId}
             actions={{
@@ -678,6 +671,10 @@ class ItemView extends React.Component {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
+
+    this.onMouseOverEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+    this.onMouseOverEvent.initCustomEvent('on_mouse_over', false, false, null);
+
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);
@@ -699,10 +696,10 @@ class ItemView extends React.Component {
 
   }
   componentDidUpdate(prevProps, prevState) {
-    if (utils.isSite() && !utils.isMobile() && document && document.activeElement && document.activeElement.className) {
+    if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
 			//check if thumbnailId has changed to the current item
-      const isAnotherItemInFocus = document.activeElement.className.indexOf('gallery-item-container') >= 0;
-      const isShowMoreInFocus = document.activeElement.className.indexOf('show-more') >= 0;
+      const isAnotherItemInFocus = window.document.activeElement.className.indexOf('gallery-item-container') >= 0;
+      const isShowMoreInFocus = window.document.activeElement.className.indexOf('show-more') >= 0;
       if (isAnotherItemInFocus || isShowMoreInFocus) {
         if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
 					// if the highlighted thumbnail changed and it is the same as this itemview's
@@ -781,6 +778,7 @@ class ItemView extends React.Component {
     }
     return (
       <div className={this.getItemContainerClass()}
+          id={cssScrollHelper.getDomId(this.props)}
           ref={e => this.itemContainer = e}
           onMouseOver={this.onMouseOver}
           onClick={this.onItemClick}

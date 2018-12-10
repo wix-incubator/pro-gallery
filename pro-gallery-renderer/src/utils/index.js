@@ -1,12 +1,22 @@
 import RenderUtils from 'photography-client-lib/dist/src/utils/renderUtils';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 class Utils extends RenderUtils {
 
-  constructor() {
-    super();
+  get positioningType() {
+    let pt = (window && window.petri && window.petri['specs.pro-gallery.itemsPositioning']) || 'relative';
+    if (window.isSSR) {
+      pt = 'absolute'; //on SSR use only absolute positioning
+    }
+    return pt;
+  }
 
-    this.positioningType = (window && window.petri && window.petri['specs.pro-gallery.itemsPositioning']) || 'relative';
-    this.useRelativePositioning = !(this.positioningType === 'absolute' || this.positioningType === 'transform');
+  get useRelativePositioning() {
+    return !(this.positioningType === 'absolute' || this.positioningType === 'transform');
+  }
+
+  get useRefactoredProGallery() {
+    return !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true') || (window && window.isSSR); //on SSR use only refactor gallery
   }
 
   isWixIframe() {
@@ -64,6 +74,10 @@ class Utils extends RenderUtils {
 
     element.setAttribute('data-scrolling', 'true');
     animateScroll();
+  }
+
+  isVerbose() {
+    return true;
   }
 
 }

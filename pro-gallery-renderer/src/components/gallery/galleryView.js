@@ -5,6 +5,7 @@ import _ from 'lodash';
 import GalleryEmpty from '../gallery/galleryEmpty';
 import utils from '../../utils/index.js';
 import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
 
 utils.fixViewport('Gallery');
@@ -32,7 +33,7 @@ class GalleryView extends React.Component {
   }
 
   handleArrowKeys(e) {
-    const activeItemIdx = (document.activeElement.getAttribute('data-idx'));
+    const activeItemIdx = (window.document.activeElement.getAttribute('data-idx'));
 
     if (activeItemIdx) {
 
@@ -194,7 +195,7 @@ class GalleryView extends React.Component {
 
   screenLogs() {
     return ((utils.shouldDebug('screenLogs')) ? (
-      <div className="screen-logs">URL width: {utils.parseGetParam('width')}, Container: {JSON.stringify(this.props.container.galleryWidth)}, document.body.clientWidth {document.body.clientWidth}, window.innerWidth {window.innerWidth}, window.screen.width: {window.screen.width}</div>
+      <div className="screen-logs">URL width: {utils.parseGetParam('width')}, Container: {JSON.stringify(this.props.container.galleryWidth)}, window.document.body.clientWidth {document.body.clientWidth}, window.innerWidth {window.innerWidth}, window.screen.width: {window.screen.width}</div>
     ) : '');
   }
 

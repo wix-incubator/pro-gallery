@@ -1,5 +1,6 @@
 import React from 'react';
 import utils from '../../utils/index.js';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 class GalleryDebugMessage extends React.Component {
 
@@ -21,7 +22,7 @@ class GalleryDebugMessage extends React.Component {
 
     const debugMsg = (
       <div className="version-header ">{utils.isLandscape() ? 'land' : 'port'} sw{window.screen.width}
-        sh{window.screen.height} iw{window.innerWidth} bw{document.body.clientWidth} sr{utils.getViewportScaleRatio()}
+        sh{window.screen.height} iw{window.innerWidth} bw{window.document.body.clientWidth} sr{utils.getViewportScaleRatio()}
         rc{this.props.resizeCount} oc{this.props.orientationCount} nh{this.props.newHeight} lh{this.props.lastHeight}{parentSize}
         www{this.props.maxGalleryWidth}</div>
     );

@@ -20,8 +20,8 @@ import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 import {getFixedLayouts} from '../helpers/fixedLayoutsHelper.js';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 import designConsts from '../../constants/designConsts.js';
-
 
 try {
   window.itemActions = itemActions; //itemActions must be saved on the window because the specific instance of each gallery's itemActions is accessed from other frames
@@ -341,7 +341,7 @@ export class GalleryContainer extends React.Component {
     if (utils.isSemiNative()) {
       this.onItemClickEvent = new window.CustomEvent('on_item_click');
     } else {
-      this.onItemClickEvent = document.createEvent('CustomEvent');
+      this.onItemClickEvent = window.document.createEvent('CustomEvent');
       this.onItemClickEvent.initCustomEvent('on_item_click', false, false, null);
     }
 
@@ -355,7 +355,7 @@ export class GalleryContainer extends React.Component {
     }
 
     this.windowEventsFunctions.forEach(x => window.addEventListener(...x));
-    document.addEventListener('scroll', this.reRenderForHorizontalScroll, true);
+    window.document.addEventListener('scroll', this.reRenderForHorizontalScroll, true);
     if (!utils.isSemiNative()) {
       // this.pubsubFunctions.forEach(x => Wix.PubSub.subscribe(...x));
       this.wixEventsFunctions.forEach(x => Wix.addEventListener && Wix.addEventListener(...x));
@@ -373,7 +373,7 @@ export class GalleryContainer extends React.Component {
 
   removeEventListeners() {
     this.windowEventsFunctions.forEach(x => window.removeEventListener(...x));
-    document.removeEventListener('scroll', this.reRenderForHorizontalScroll, true);
+    window.document.removeEventListener('scroll', this.reRenderForHorizontalScroll, true);
     if (!utils.isSemiNative()) {
       this.wixEventsFunctions.forEach(x => Wix.removeEventListener && Wix.removeEventListener(...x));
       // this.pubsubFunctions.forEach(x => Wix.PubSub.unsubscribe(...x));
@@ -389,14 +389,14 @@ export class GalleryContainer extends React.Component {
 
   handleVisibilityChange() {
     let hidden;
-    if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+    if (typeof window.document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
       hidden = 'hidden';
-    } else if (typeof document.msHidden !== 'undefined') {
+    } else if (typeof window.document.msHidden !== 'undefined') {
       hidden = 'msHidden';
-    } else if (typeof document.webkitHidden !== 'undefined') {
+    } else if (typeof window.document.webkitHidden !== 'undefined') {
       hidden = 'webkitHidden';
     }
-    if (document[hidden]) {
+    if (window.document[hidden]) {
       this.tabFocused = false;
       this.dispatchNavigationOutIfNeeded();
     } else {
@@ -419,11 +419,11 @@ export class GalleryContainer extends React.Component {
         this.dispatchNavigationOutIfNeeded();
       });
       let visibilityChange;
-      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+      if (typeof window.document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
         visibilityChange = 'visibilitychange';
-      } else if (typeof document.msHidden !== 'undefined') {
+      } else if (typeof window.document.msHidden !== 'undefined') {
         visibilityChange = 'msvisibilitychange';
-      } else if (typeof document.webkitHidden !== 'undefined') {
+      } else if (typeof window.document.webkitHidden !== 'undefined') {
         visibilityChange = 'webkitvisibilitychange';
       }
       window.addEventListener(visibilityChange, this.handleVisibilityChange, false);
@@ -440,11 +440,11 @@ export class GalleryContainer extends React.Component {
       this.navigationOutEvent = new window.CustomEvent('gallery_navigation_out'); // MUST be 'CustomEvent'
       this.navigationInEvent = new window.CustomEvent('gallery_navigation_in'); // MUST be 'CustomEvent'
     } else {
-      this.galleryScrollEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+      this.galleryScrollEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
       this.galleryScrollEvent.initCustomEvent('gallery_scroll', false, false, null);
-      this.navigationOutEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+      this.navigationOutEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
       this.navigationOutEvent.initCustomEvent('gallery_navigation_out', false, false, null);
-      this.navigationInEvent = document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+      this.navigationInEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
       this.navigationInEvent.initCustomEvent('gallery_navigation_in', false, false, null);
     }
   }
@@ -1663,7 +1663,7 @@ export class GalleryContainer extends React.Component {
       }
       if (_.isUndefined(this.galleryWrapper) || newProps.domId !== this.props.domId) {
         try {
-          this.galleryWrapper = document.getElementById(`pro-gallery-${newProps.domId}`);
+          this.galleryWrapper = window.document.getElementById(`pro-gallery-${newProps.domId}`);
           this.boundingRect = this.galleryWrapper.getBoundingClientRect();
           // console.log(`Calculating bounding rect for domId ${newProps.domId}`, this.boundingRect);
         } catch (e) {
@@ -1878,7 +1878,7 @@ export class GalleryContainer extends React.Component {
     let horizontalElement;
 
     if (this.state.styleParams.oneRow) {
-      const galleryWrapper = this.galleryWrapper || document;
+      const galleryWrapper = this.galleryWrapper || window.document;
       horizontalElement = galleryWrapper.querySelector('#gallery-horizontal-scroll');
     }
 
@@ -2019,12 +2019,12 @@ export class GalleryContainer extends React.Component {
   }
 
   getGalleryWidth() {
-    // const DomWidth = window.innerWidth && document.documentElement.clientWidth ?
-    //   Math.min(window.innerWidth, document.documentElement.clientWidth) :
+    // const DomWidth = window.innerWidth && window.document.documentElement.clientWidth ?
+    //   Math.min(window.innerWidth, window.document.documentElement.clientWidth) :
     //   window.innerWidth ||
-    //   document.documentElement.clientWidth ||
-    //   document.getElementsByTagName('body')[0].clientWidth;
-    const domWidth = this.protectGalleryWidth(utils.isMobile() ? document.body.clientWidth : window.innerWidth); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
+    //   window.document.documentElement.clientWidth ||
+    //   window.document.getElementsByTagName('body')[0].clientWidth;
+    const domWidth = this.protectGalleryWidth(utils.isMobile() ? window.document.body.clientWidth : window.innerWidth); //on mobile we use the window.document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
     const propsWidth = _.get(this.props, 'layout.width') || _.get(this.props, 'container.width');
     return Math.floor((propsWidth > 0 ? propsWidth : domWidth) + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
   }
@@ -2067,7 +2067,7 @@ export class GalleryContainer extends React.Component {
     }
 
     let docViewTop = scrollTop;
-    let docViewBottom = docViewTop + screenSize; //cannot get the real document height - using the screen as default
+    let docViewBottom = docViewTop + screenSize; //cannot get the real window.document height - using the screen as default
 
     if (!this.isInfiniteScroll() && !this.state.styleParams.oneRow) {
       docViewTop = 0;
@@ -2106,7 +2106,7 @@ export class GalleryContainer extends React.Component {
 
   getGalleryScroll(params) {
     if (this.state.styleParams.oneRow) {
-      const galleryWrapper = this.galleryWrapper || document;
+      const galleryWrapper = this.galleryWrapper || window.document;
       const horizontalElement = galleryWrapper.querySelector('#gallery-horizontal-scroll');
       this.currentScrollPosition = (horizontalElement && horizontalElement.scrollLeft) || 0;
     } else if (params && _.isNumber(params.customScrollTop)) {
@@ -2183,9 +2183,9 @@ export class GalleryContainer extends React.Component {
     if (utils.browserIs('chromeIos')) {
       // This can be the width calc for all galleries, but in chromeIos it must be used otherwise there is a gap on the left of the gallery.
       // Currently there is a bug with Mitzi that the width parmeter is not updating fast enough once it is fixed, use this code always.
-      maxGalleryWidth = maxGalleryWidth || document.body.clientWidth;
+      maxGalleryWidth = maxGalleryWidth || window.document.body.clientWidth;
     } else {
-      maxGalleryWidth = document.body.clientWidth;
+      maxGalleryWidth = window.document.body.clientWidth;
     }
 
     if (utils.isMobile()) {
@@ -2556,7 +2556,7 @@ export class GalleryContainer extends React.Component {
           });
 
         } else {
-          const fullscreen = document.getElementById('gallery-fullscreen');
+          const fullscreen = window.document.getElementById('gallery-fullscreen');
           if (fullscreen) {
             this.fullscreenElem = React.createElement(this.props.FullscreenContainer, {
               demoModeParams: {
@@ -2572,9 +2572,9 @@ export class GalleryContainer extends React.Component {
           }
 
           if (!utils.isSemiNative()) {
-            document.getElementById('fullscreen').style.display = 'block';
-            document.getElementById('gallery-fullscreen').style.display = 'block';
-            document.getElementById('content').style.display = 'none';
+            window.document.getElementById('fullscreen').style.display = 'block';
+            window.document.getElementById('gallery-fullscreen').style.display = 'block';
+            window.document.getElementById('content').style.display = 'none';
           }
         }
       }
@@ -2600,7 +2600,7 @@ export class GalleryContainer extends React.Component {
     // this.items = this.resetItems(fullscreenData.currentGalleryItems);
 
     if (!utils.isSemiNative()) {
-      document.getElementById('content').style.display = 'block';
+      window.document.getElementById('content').style.display = 'block';
     }
 
     //get current items from window - it was placed there by the fullscreen

@@ -553,7 +553,9 @@
       text-decoration: none;
       color: inherit;
       transition: all .4s ease;
-      transition-property: top, left, width, height;
+      transition-property: transform, margin, top, left, width, height;
+      will-change: transform, margin, top, left, width, height;
+      box-sizing: border-box;
 
       &:hover {
         .gallery-item-bottom-info, .gallery-item-top-info {
@@ -622,14 +624,14 @@
           width: 100%;
           height: 100%;
           margin: 0;
+          overflow: hidden;
           border-radius: 0;
           transition: opacity 1s ease;
           transition-delay: .5s;
           backface-visibility: hidden;
-          transform: translateZ(0);
-          will-change: opacity, background-color;
-          animation: changing_background 3s infinite ease;
-          animation-timing-function: ease;
+          transform: translate3d(0,0,0);
+          will-change: transform, opacity, background-color;
+          transition: transform 1s ease;
 
           &.text-item {
           
@@ -708,10 +710,6 @@
 
           &.error {
             opacity: 0 !important;
-          }
-
-          &.gallery-item-visible:not(video) {
-            transform: translate3d(0, 0, 0);
           }
 
           &.gallery-item-preloaded {
@@ -979,6 +977,7 @@
           border-radius: 0;
           //border-radius: $image-radius+px;
           z-index: 3;
+          overflow: hidden;
 
           .custom-button-wrapper {
             display: flex;

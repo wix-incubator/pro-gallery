@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import utils from '../../utils';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 export function scrollToItemImp(scrollParams) {
 

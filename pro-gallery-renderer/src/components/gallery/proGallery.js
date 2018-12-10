@@ -13,12 +13,14 @@ import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import videoActionTypes from '../../constants/videoActionTypes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import {VideoQueue} from '../item/videos/video-queue';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 export default class ProGallery extends React.Component {
 
   constructor(props) {
     super();
-    const isSSR = !(typeof window !== 'undefined' && typeof document !== 'undefined');
+    console.count('[OOISSR] proGallery constructor', window.isMock);
+    const isSSR = !!window.isMock;
     this.canRender = !isSSR || props.allowSSR === true; //do not render if it is SSR
     if (this.canRender) {
       this.init(props);
@@ -38,7 +40,8 @@ export default class ProGallery extends React.Component {
   }
 
   init(props) {
-    this.domId = Math.floor(Math.random() * 1000000);
+    console.count('[OOISSR] proGallery init');
+    console.log('[OOISSR] proGallery init', window.isMock, this.domId, props.domId);
     const middlewares = [thunkMiddleware, videoMiddleware({videoQueue: new VideoQueue(), utils})];
     this.store = createStore(galleryReducers, /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {}, applyMiddleware(...middlewares));
     this.initStoreEvents(this.store);
@@ -63,7 +66,6 @@ export default class ProGallery extends React.Component {
         <Provider store={this.store}>
           <ProGalleryComponent
             {...this.props}
-            domId={this.domId}
             items={this.props.items || require('../../constants/default-images.js').defaultImages}
             store={this.store}
             watermarkData={this.props.watermarkData}

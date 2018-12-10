@@ -9,6 +9,7 @@ import configureStore from 'redux-mock-store';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
 import React from 'react';
 import utils from '../../src/utils';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 const mockStore = configureStore();
 

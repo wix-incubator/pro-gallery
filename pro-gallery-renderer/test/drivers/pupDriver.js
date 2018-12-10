@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 const devices = require('puppeteer/DeviceDescriptors');
 
@@ -67,7 +68,7 @@ export default class galleryDriver {
   get grab() {
     return {
       hook: async str => (await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`)),
-      value: async str => (await document.querySelector(`[data-hook="${str}"]`)),
+      value: async str => (await window.document.querySelector(`[data-hook="${str}"]`)),
       html: async str => (await this.page.$eval(`[data-hook="${str}"]`, element => {
         return element.innerHTML;
       })),

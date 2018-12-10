@@ -13,6 +13,7 @@ import utils from '../../../../src/utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 describe('Social:', () => {
   let driver;
