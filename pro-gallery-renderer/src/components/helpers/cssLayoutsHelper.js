@@ -2,7 +2,9 @@ import {createLayout} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 
 const CDN_URL = 'https://static.wixstatic.com/media/';
-const popularWidths = [5120, 4096, 3840, 3000, 2880, 2732, 2560, 2304, 2160, 2048, 1920, 1680, 1600, 1536, 1440, 1366, 1280, 1200, 1080, 1024, 960, 900, 854, 800, 768, 720, 640, 600, 540, 480, 320];
+const desktopWidths = [1024, 1280, 1360, 1440, 1680, 1920];
+const mobileWidths = [320, 480, 600, 720, 800, 900];
+const popularWidths = desktopWidths;
 
 /*
     TODO:
@@ -36,7 +38,7 @@ const getImageStyle = item => ({
 const createCssFromLayouts = (layouts, styleParams) => {
 
   const cssStrs = [];
-  layouts.each((layout, idx) => {
+  layouts.forEach((layout, idx) => {
     let cssStr = '';
     const width = popularWidths[idx];
     const isFirstMediaQuery = cssStrs.length === 0;

@@ -38,8 +38,8 @@ class CssScrollHelper {
     if (!(items && items.length)) {
       return '';
     }
-    this.maxHeight = items[items.length - 1].offset[styleParams.oneRow ? 'right' : 'bottom'];
     this.screenSize = styleParams.oneRow ? window.screen.width : window.screen.height;
+    this.maxHeight = (styleParams.oneRow ? items[items.length - 1].offset.right : items[items.length - 1].offset.top + scrollBase) + this.screenSize;
     return items.map(item => this.calcScrollCssForItem({item, scrollBase, styleParams})).join(`\n`);
   }
 

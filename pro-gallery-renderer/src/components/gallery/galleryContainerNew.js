@@ -305,7 +305,7 @@ export class GalleryContainer extends React.Component {
       this.state.styles &&
       this.state.items
     );
-    if (can && utils.isVerbose()) {
+    if (utils.isVerbose()) {
       console.log('PROGALLERY [CAN_RENDER] GalleryContainer', this.domId, can, this.state.container, this.state.styles, this.state.items);
     }
     return can;
