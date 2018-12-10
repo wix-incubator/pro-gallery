@@ -36,10 +36,9 @@ const getImageStyle = item => ({
 const createCssFromLayouts = (layouts, styleParams) => {
 
   const cssStrs = [];
-  Object.entries(layouts).forEach(entry => {
+  layouts.each((layout, idx) => {
     let cssStr = '';
-    const width = entry[0];
-    const layout = entry[1];
+    const width = popularWidths[idx];
     const isFirstMediaQuery = cssStrs.length === 0;
     if (layout) {
       cssStr += isFirstMediaQuery ? '' : `@media only screen and (min-width: ${width}px) {`;
