@@ -1,9 +1,18 @@
 import {createLayout} from 'pro-gallery-layouter';
+import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 
 const CDN_URL = 'https://static.wixstatic.com/media/';
+const popularWidths = [5120, 4096, 3840, 3000, 2880, 2732, 2560, 2304, 2160, 2048, 1920, 1680, 1600, 1536, 1440, 1366, 1280, 1200, 1080, 1024, 960, 900, 854, 800, 768, 720, 640, 600, 540, 480, 320];
+
+/*
+    TODO:
+    - check run time and minimize layouts width
+    - remove !important if possible
+    - fix default width of gallery (currently 990???)
+*/
 
 const getImgSize = (item, dimension) => {
-  const scale = window.devicePixelRatio;
+  const scale = 1;
   return Math.ceil(Math.min(
       scale * item[dimension],
       item[`max${dimension[0].toUpperCase() + dimension.substring(1)}`]
@@ -24,7 +33,7 @@ const getImageStyle = item => ({
   backgroundImage: `url(${getImageSrc(item)})`
 });
 
-export const createCssFromLayouts = (layouts, styleParams) => {
+const createCssFromLayouts = (layouts, styleParams) => {
 
   const cssStrs = [];
   Object.entries(layouts).forEach(entry => {
@@ -40,11 +49,11 @@ export const createCssFromLayouts = (layouts, styleParams) => {
       const layoutWidth = layout.columns.reduce((sum, col) => (sum + col.width), 0) - styleParams.imageMargin * 2;
       layout.items.forEach(item => {
         const style = getImageStyle(item);
-        cssStr += `\n.pro-gallery-item-${item.id}-style {
-            top: ${100 * (style.top / layoutWidth)}vw;
-            left: ${100 * (style.left / layoutWidth)}vw;
-            width: ${100 * (style.width / layoutWidth)}vw;
-            height: ${100 * (style.height / layoutWidth)}vw;
+        cssStr += `\n#${cssScrollHelper.getDomId(item)} {
+            top: ${100 * (style.top / layoutWidth)}vw !important;
+            left: ${100 * (style.left / layoutWidth)}vw !important;
+            width: ${100 * (style.width / layoutWidth)}vw !important;
+            height: ${100 * (style.height / layoutWidth)}vw !important;
           }`;
       });
 
@@ -53,6 +62,11 @@ export const createCssFromLayouts = (layouts, styleParams) => {
     }
   });
 
-  return cssStrs;
-}
-;
+  return cssStrs.join(`\n`);
+};
+
+export const createCssLayouts = layoutParams => {
+  const cssLayouts = popularWidths.map(width => createLayout({...layoutParams, ...{container: {...layoutParams.container, width}}}));
+  return createCssFromLayouts(cssLayouts, layoutParams.styleParams);
+};
+

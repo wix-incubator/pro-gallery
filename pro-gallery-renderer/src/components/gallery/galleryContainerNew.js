@@ -13,7 +13,7 @@ import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 import CssSrollIndicator from './galleryCssScrollIndicator';
 import {createLayout} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
-import {cssLayoutsHelper} from '../helpers/cssLayoutsHelper.js';
+import {createCssLayouts} from '../helpers/cssLayoutsHelper.js';
 import _ from 'lodash';
 import utils from '../../utils';
 
@@ -122,6 +122,8 @@ export class GalleryContainer extends React.Component {
 
     dimentionsHelper.updateParams({styles, container});
 
+    const isFullwidth = container.width === '100%';
+
     let _items, _styles, _container, scroll, _scroll;
     items = items || this.items;
 
@@ -176,10 +178,13 @@ export class GalleryContainer extends React.Component {
         lastVisibleItemIdx: this.lastVisibleItemIdx,
       });
 
-      // if (isWidthlessContainer) {
-      //   const cssLayouts = [100, 500, 2000].map(width => createLayout({...layoutParams, ...{container: {..._container, width}}}));
-      //   console.log('widthlessContainer!!!', cssLayouts);
-      // }
+      if (isFullwidth) {
+        console.time('fullwidthLayoutsCss!');
+        this.fullwidthLayoutsCss = createCssLayouts(layoutParams);
+        console.timeEnd('fullwidthLayoutsCss!');
+      } else {
+        this.fullwidthLayoutsCss = '';
+      }
 
       this.scrollCss = cssScrollHelper.calcScrollCss({
         items: this.galleryStructure.galleryItems,
@@ -313,6 +318,7 @@ export class GalleryContainer extends React.Component {
 
     return (
       <div>
+        <style>{this.fullwidthLayoutsCss}</style>
         <style>{this.scrollCss}</style>
         <CssSrollIndicator oneRow={this.state.styles.oneRow} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
 				<ViewComponent
