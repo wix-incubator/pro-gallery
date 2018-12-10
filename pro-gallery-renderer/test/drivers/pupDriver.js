@@ -1,5 +1,4 @@
 import puppeteer from 'puppeteer';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 const devices = require('puppeteer/DeviceDescriptors');
 
@@ -73,11 +72,11 @@ export default class galleryDriver {
         return element.innerHTML;
       })),
       style: async (str, prop) => {
-        const foo = (element, prop) => {
+        const getStyles = (element, prop) => {
           const styles = window.getComputedStyle(element);
           return (styles.getPropertyValue(`${prop}`));
         };
-        return (await this.galleryFrame.$eval(`[data-hook="${str}"]`, foo, prop));
+        return (await this.galleryFrame.$eval(`[data-hook="${str}"]`, getStyles, prop));
       },
       numOfPages: async () => {
         const a = await this.browser.pages();
