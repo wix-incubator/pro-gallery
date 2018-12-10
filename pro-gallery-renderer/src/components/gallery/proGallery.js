@@ -40,8 +40,8 @@ export default class ProGallery extends React.Component {
   }
 
   init(props) {
-    console.count('[OOISSR] proGallery init');
-    console.log('[OOISSR] proGallery init', window.isMock, this.domId, props.domId);
+    this.domId = props.domId || Math.floor(Math.random() * 10000);
+    console.log('[OOISSR] proGallery init', window.isMock);
     const middlewares = [thunkMiddleware, videoMiddleware({videoQueue: new VideoQueue(), utils})];
     this.store = createStore(galleryReducers, /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {}, applyMiddleware(...middlewares));
     this.initStoreEvents(this.store);
@@ -66,6 +66,7 @@ export default class ProGallery extends React.Component {
         <Provider store={this.store}>
           <ProGalleryComponent
             {...this.props}
+            domId={this.domId}
             items={this.props.items || require('../../constants/default-images.js').defaultImages}
             store={this.store}
             watermarkData={this.props.watermarkData}
