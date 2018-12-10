@@ -76,10 +76,6 @@ class Utils extends RenderUtils {
     animateScroll();
   }
 
-  isVerbose() {
-    return true;
-  }
-
 }
 
 export default new Utils();
