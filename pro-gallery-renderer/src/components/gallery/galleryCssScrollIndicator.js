@@ -24,13 +24,22 @@ export default class CssScrollIndicator extends React.Component {
 
   removeScrollListener() {
     if (this.scrollEventListenerSet) {
-      this.scrollEventListenerSet = false;
       const scrollingElement = this.props.scrollingElement;
-      scrollingElement.vertical().removeEventListener('scroll', this.onVerticalScroll);
-      const {oneRow} = this.props;
-      if (oneRow) {
-        scrollingElement.horizontal().removeEventListener('scroll', this.onHorizontalScroll);
+      try {
+        scrollingElement.vertical().removeEventListener('scroll', this.onVerticalScroll);
+      } catch (e) {
+        //
       }
+
+      try {
+        const {oneRow} = this.props;
+        if (oneRow) {
+          scrollingElement.horizontal().removeEventListener('scroll', this.onHorizontalScroll);
+        }
+      } catch (e) {
+        //
+      }
+      this.scrollEventListenerSet = false;
     }
   }
 
@@ -54,7 +63,11 @@ export default class CssScrollIndicator extends React.Component {
             this.props.getMoreItemsIfNeeded(left);
           }
         };
-        scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
+        try {
+          scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
+        } catch (e) {
+          //
+        }
       } else {
             //Vertical Scroll
         // this.onVerticalScroll = _.throttle(e => {
@@ -69,7 +82,11 @@ export default class CssScrollIndicator extends React.Component {
           }
         };
         // }, scrollInterval);
-        scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
+        try {
+          scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
+        } catch (e) {
+          //
+        }
       }
     }
   }
