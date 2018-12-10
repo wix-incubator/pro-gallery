@@ -114,9 +114,6 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryExpensively({items, styles, container, watermarkData}, callback = () => {}) {
-    if (utils.isVerbose()) {
-      console.time('PROGALLERY [TIMING] - reCreateGalleryExpensively');
-    }
 
     if (window.isMock) {
       console.log('[OOISSR] reCreateGalleryExpensively', {items, styles, container, watermarkData});
