@@ -122,8 +122,6 @@ export class GalleryContainer extends React.Component {
 
     dimentionsHelper.updateParams({styles, container});
 
-    const isFullwidth = container.width === '100%';
-
     let _items, _styles, _container, scroll, _scroll;
     items = items || this.items;
 
@@ -177,7 +175,7 @@ export class GalleryContainer extends React.Component {
         sharpParams: _styles.sharpParams,
         lastVisibleItemIdx: this.lastVisibleItemIdx,
       });
-
+      const isFullwidth = _container.width === '100%';
       if (isFullwidth) {
         console.time('fullwidthLayoutsCss!');
         this.fullwidthLayoutsCss = createCssLayouts(layoutParams);
