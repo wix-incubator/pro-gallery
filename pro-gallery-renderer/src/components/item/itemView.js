@@ -113,8 +113,8 @@ class ItemView extends React.Component {
     });
   }
   setItemLoaded() {
-    performanceUtils.itemLoaded();
     performanceUtils.appLoaded('pro-gallery-statics');
+    performanceUtils.itemLoaded();
     this.setState({
       failed: false,
       loaded: true
