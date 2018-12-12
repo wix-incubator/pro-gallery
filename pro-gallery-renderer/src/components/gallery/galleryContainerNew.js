@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../../actions/galleryActions.js';
+import videoActionTypes from '../../constants/videoActionTypes';
 import GalleryView from './galleryView.js';
 import SlideshowView from './slideshowView.js';
 import {addLayoutStyles} from '../helpers/layoutHelper';
@@ -173,6 +174,11 @@ export class GalleryContainer extends React.Component {
 
       const layout = createLayout(layoutParams);
       const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll || this.infiniteScrollChanged) && !_styles.oneRow;
+      this.props.handleNewGalleryStructure({items: _items, container: _container, styles: _styles, layout, isInfinite});
+      this.props.store.dispatch({
+        type: videoActionTypes.videoModeChanged,
+        payload: _styles.videoPlay
+      });
       this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,

@@ -13,6 +13,7 @@ import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
 import * as performanceUtils from 'photography-client-lib/dist/src/utils/performanceUtils';
+import * as actions from '../../actions/galleryActions.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
@@ -52,7 +53,7 @@ class ItemView extends React.Component {
     this.shouldListenToScroll = this.props.type === 'video';
     this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.renderedPaddingMultiply = 2;
-    this.visiblePaddingMultiply = 0.5;
+    this.visiblePaddingMultiply = 0;
     this.padding = {
       rendered: utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply,
       visible: utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply
@@ -246,7 +247,9 @@ class ItemView extends React.Component {
         newState[key] = state[key];
       }
     });
-    this.setState(newState);
+    this.setState(newState, () => {
+      this.props.store.dispatch(actions.galleryWindowLayoutChanged(this.screenSize.height));
+    });
   }
 
   getItemVisibility() {
@@ -318,7 +321,7 @@ class ItemView extends React.Component {
     }
     const {top, bottom} = clientRect;
     const windowHeight = this.props.documentHeight;
-    const scrollPosition = this.props.scroll.top;
+    const scrollPosition = this.useRefactoredProGallery ? (this.state.scroll.top - this.props.container.scrollBase) : this.props.scroll.top;
     const videoHeight = bottom - top;
     const tolerance = videoHeight / 2;
     const res = top + tolerance > scrollPosition && bottom - tolerance < scrollPosition + windowHeight;

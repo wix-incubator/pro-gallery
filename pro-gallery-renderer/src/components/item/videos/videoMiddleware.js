@@ -21,7 +21,7 @@ export default ({videoQueue, utils}) => store => {
 
   return next => action => {
     const {
-      type,
+			type,
       payload
     } = action;
     const {gallery: {videoPlayMode}} = store.getState();
@@ -38,7 +38,7 @@ export default ({videoQueue, utils}) => store => {
     next(action);
 
     // Auto-play handling
-    const isAutoPlay = videoPlayMode === videoPlayModes.autoPlay;
+    const isAutoPlay = videoPlayMode === videoPlayModes.autoPlay || videoPlayMode === videoPlayModes.refactoredAutoPlay;
     let indexToPlay = null;
     if (utils.isEditor() && payload !== -1) {
       stopPlaying();

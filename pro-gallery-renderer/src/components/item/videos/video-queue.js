@@ -32,7 +32,7 @@ export class VideoQueue {
         break;
       }
     }
-    return this.que[queIndex].isVisible() ? this.que[queIndex] : this.dummyVideo;
+    return (this.que[queIndex] && this.que[queIndex].isVisible()) ? this.que[queIndex] : this.dummyVideo;
   }
 
   isEmpty() {
@@ -51,5 +51,6 @@ export class VideoQueue {
     if (this.isEmpty()) {
       this.video = this.dummyVideo;
     }
+    this.video = this.nextVisibleVideo(0);
   }
 }
