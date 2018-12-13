@@ -29,7 +29,7 @@ export default class Layouter {
 
     const options = layoutParams.options || {};
     this.useExistingLayout = !!options.useExistingLayout;
-    this.createLayoutOnInit = !!options.createLayoutOnInit;
+    this.createLayoutOnInit = options.createLayoutOnInit;
     this.showAllItems = !!options.showAllItems || !!layoutParams.showAllItems;
     this.skipVisibilitiesCalc = !!options.skipVisibilitiesCalc;
     this.useLayoutStore = !!options.useLayoutStore;
