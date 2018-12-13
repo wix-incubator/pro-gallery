@@ -12,7 +12,7 @@ import {scrollToItemImp} from '../helpers/scrollHelper';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 import CssSrollIndicator from './galleryCssScrollIndicator';
-import {createLayout} from 'pro-gallery-layouter';
+import {Layouter} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 import {createCssLayouts} from '../helpers/cssLayoutsHelper.js';
 import _ from 'lodash';
@@ -110,6 +110,7 @@ export class GalleryContainer extends React.Component {
       watermark: !!watermarkData && (watermarkData !== this.props.watermarkData),
       scroll: isInfiniteScrollChanged(),
     };
+    isNew.str = Object.entries(isNew).map(([key, is]) => is ? key : '').join('');
     isNew.any = Object.keys(isNew).reduce((is, key) => is || isNew[key], false);
 
     return isNew;
@@ -169,17 +170,28 @@ export class GalleryContainer extends React.Component {
         container: _container,
         styleParams: _styles,
         gotScrollEvent: true,
-        showAllItems: true
+        options: {
+          showAllItems: true,
+          skipVisibilitiesCalc: true,
+          useLayoutStore: false
+        }
       };
 
-      const layout = createLayout(layoutParams);
-      const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll || this.infiniteScrollChanged) && !_styles.oneRow;
-      this.props.handleNewGalleryStructure({items: _items, container: _container, styles: _styles, layout, isInfinite});
+      if (this.layouter && isNew.str === 'items') {
+        layoutParams.options.useExistingLayout = true;
+      } else {
+        layoutParams.options.createLayoutOnInit = false;
+        this.layouter = new Layouter(layoutParams);
+      }
+
       this.props.store.dispatch({
         type: videoActionTypes.videoModeChanged,
         payload: _styles.videoPlay
       });
-      this.galleryStructure = ItemsHelper.convertToGalleryItems(layout, {
+
+      const layout = this.layouter.createLayout(layoutParams);
+      const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll || this.infiniteScrollChanged) && !_styles.oneRow;
+      this.galleryStructure = ItemsHelper.convertToGalleryItemsNew((this.galleryStructure || layout), layout, {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,
         lastVisibleItemIdx: this.lastVisibleItemIdx,
@@ -297,11 +309,14 @@ export class GalleryContainer extends React.Component {
       if (gallerySize - scrollEnd < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
         const newItems = await this.props.onGetItems(this.state.items.length);
-        this.setState(this.reCreateGalleryExpensively({
-          items: this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || [])
-        }), () => {
-          this.gettingMoreItems = false;
+        const allItems = this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || []);
+        const itemsState = this.reCreateGalleryExpensively({
+          items: allItems
         });
+        this.gettingMoreItems = false;
+        if (Object.keys(itemsState).length > 0) {
+          this.setState(itemsState);
+        }
       }
     }
   }
@@ -349,7 +364,6 @@ export class GalleryContainer extends React.Component {
           settings = {this.props.settings}
           gotScrollEvent = {true}
           scroll = {{isInfinite: this.state.scroll.isInfinite}}
-          convertToGalleryItems = {ItemsHelper.convertToGalleryItems}
           convertDtoToLayoutItem = {ItemsHelper.convertDtoToLayoutItem}
           domId = {this.props.domId}
           currentHover = {this.state.currentHover}
