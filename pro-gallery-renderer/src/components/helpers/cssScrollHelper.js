@@ -19,8 +19,8 @@ class CssScrollHelper {
     this.inScreenPadding = [0, 0];
     this.aboveScreenPadding = [100, Infinity];
     this.belowScreenPadding = [Infinity, 100];
-    this.visiblePadding = [this.screenSize * 5, this.screenSize];
-    this.renderedPadding = [this.screenSize * 5, this.screenSize * 3];
+    this.visiblePadding = [this.screenSize * 7, this.screenSize * 2];
+    this.renderedPadding = [this.screenSize * 7, this.screenSize * 4];
 
     this.scrollCss = [];
     this.scrollCssProps = [];
@@ -47,7 +47,7 @@ class CssScrollHelper {
     if (type === 'video' || type === 'text') {
       return false;
     }
-    const scrollCssProps = JSON.stringify({top, left, width, height, scrollBase, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode});
+    const scrollCssProps = JSON.stringify({top, left, width, height, scrollBase, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
     if (scrollCssProps === this.scrollCssProps[idx]) {
       return false;
     }
@@ -86,15 +86,22 @@ class CssScrollHelper {
       return scrollClasses.join(', ');
     };
 
-    //load hi-res image + loading transition
-    this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item>div`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
+    if (window.isSSR) {
 
-    //add the blurry image
-    if (!(utils.deviceHasMemoryIssues() || styleParams.imageLoadingMode === Consts.loadingMode.COLOR)) {
-      //remove blurry thumbnail background
-      this.scrollCss[idx] += createScrollSelectors(this.inScreenPadding, `.image-item`) + `{background-image: none !important}`;
-      // add blurred background-image
-      this.scrollCss[idx] += createScrollSelectors(this.renderedPadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
+      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
+
+    } else {
+
+      //load hi-res image + loading transition
+      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item>div`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
+  
+      //add the blurry image
+      if (!(utils.deviceHasMemoryIssues() || styleParams.imageLoadingMode === Consts.loadingMode.COLOR)) {
+        //remove blurry thumbnail background
+        this.scrollCss[idx] += createScrollSelectors(this.inScreenPadding, `.image-item`) + `{background-image: none !important}`;
+        // add blurred background-image
+        this.scrollCss[idx] += createScrollSelectors(this.renderedPadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
+      }
     }
 
     //scrollAnimation [DEMO]
