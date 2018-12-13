@@ -277,10 +277,10 @@ class GalleryItem {
   useImageClientApi() {
     const isSdkExperimentOn = !(window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'false'); //use the new api unless the experiment is specifically turned off
     const isImageSizeAvailable = !this.isDimensionless;
-    const isSSR = !(window && window.document) || window.isMock; //the image client lib can only be used in the client (dahh)
+    // const isSSR = !(window && window.document) || window.isMock; //the image client lib can only be used in the client (dahh)
     const hasWatermark = !!this.watermark;
 
-    return isImageSizeAvailable && isSdkExperimentOn && !isSSR && !hasWatermark;
+    return isImageSizeAvailable && isSdkExperimentOn && !hasWatermark;
   }
 
   resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
