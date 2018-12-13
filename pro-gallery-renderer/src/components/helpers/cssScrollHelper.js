@@ -94,7 +94,7 @@ class CssScrollHelper {
 
       //load hi-res image + loading transition
       this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item>div`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
-  
+
       //add the blurry image
       if (!(utils.deviceHasMemoryIssues() || styleParams.imageLoadingMode === Consts.loadingMode.COLOR)) {
         //remove blurry thumbnail background
