@@ -12,7 +12,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "yoshi start",
+    "start": "PORT=8293 yoshi start",
     "build": "yoshi build",
     "precommit": "yoshi lint",
     "pretest": "yoshi build",
@@ -60,6 +60,13 @@
         "presets": [
           "env"
         ]
+      }
+    }
+  },
+  "yoshi": {
+    "servers": {
+      "cdn": {
+        "port": 4662
       }
     }
   },

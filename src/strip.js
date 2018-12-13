@@ -18,6 +18,7 @@ export class Strip {
       this.lastGroup.isLastGroup = false;
     }
     this.groups.push(group);
+    group.stripIdx = this.idx;
     this.lastGroup.isLastGroup = true;
     this.lastGroup.stripWidth = this.height * this.ratio;
   }

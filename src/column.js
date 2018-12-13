@@ -13,6 +13,7 @@ export class Column {
 
   addGroups(groups) {
     this.groups = this.groups.concat(groups);
+    groups.forEach(group => group.columnIdx = this.idx);
   }
 
   get scheme() {

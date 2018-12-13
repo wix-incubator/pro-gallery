@@ -3,6 +3,7 @@ import {Item} from './item.js';
 import {Group} from './group.js';
 import {Strip} from './strip.js';
 import {Column} from './column.js';
+import layoutsStore from './layoutsStore.js';
 
 export default class Layouter {
 
@@ -15,14 +16,23 @@ export default class Layouter {
     this.findNeighborItem = this.findNeighborItem.bind(this);
 
     this.updateParams(layoutParams);
-    this.createLayout();
+
+    if (this.createLayoutOnInit !== false) {
+      this.createLayout(layoutParams);
+    }
   }
 
   updateParams(layoutParams) {
     this.srcItems = layoutParams.items;
     this.styleParams = utils.convertStyleParams(layoutParams.styleParams);
     this.container = utils.convertContainer(layoutParams.container, this.styleParams);
-    this.showAllItems = layoutParams.showAllItems;
+
+    const options = layoutParams.options || {};
+    this.useExistingLayout = !!options.useExistingLayout;
+    this.createLayoutOnInit = !!options.createLayoutOnInit;
+    this.showAllItems = !!options.showAllItems || !!layoutParams.showAllItems;
+    this.skipVisibilitiesCalc = !!options.skipVisibilitiesCalc;
+    this.useLayoutStore = !!options.useLayoutStore;
   }
 
   verifyGalleryState() {
@@ -72,6 +82,122 @@ export default class Layouter {
     return minCol;
   }
 
+  saveExistingLayout() {
+    if (this.useLayoutStore) {
+      layoutsStore.layout = ({
+        pointer: this.pointer,
+        layoutItems: this.layoutItems,
+        groups: this.groups,
+        strips: this.strips,
+        groupIdx: this.groupIdx,
+        groupItems: this.groupItems,
+        group: this.group,
+        strip: this.strip,
+        gallerySize: this.gallerySize,
+        galleryHeight: this.galleryHeight,
+        columns: this.columns,
+      });
+    }
+  }
+
+  prepareLayoutParams() {
+
+    if (this.useExistingLayout && this.pointer > 0) {
+
+      if (this.useLayoutStore) {
+        Object.assign(this, layoutsStore.layout);
+      } else {
+
+        if (this.styleParams.isVertical) {
+
+      //---------------------| COLUMNS GALLERY |----------------------//
+      //remove items from the last 3 groups;
+          const lastGroups = this.groups.slice(-3);
+          lastGroups.forEach(group => {
+            const column = this.columns[group.columnIdx];
+            if (column) {
+              column.height -= group.totalHeight;
+              column.groups.splice(-1, 1);
+            }
+            this.groups.splice(-1, 1);
+            group.items.forEach(() => {
+              this.layoutItems.splice(-1, 1);
+              this.pointer--;
+            });
+            this.groupIdx--;
+          });
+
+        } else {
+
+        //---------------------| STRIPS GALLERY |----------------------//
+          const lastStrip = this.strips[this.strips.length - 1];
+          if (lastStrip) {
+            this.strips.splice(-1, 1);
+            const groups = lastStrip.groups;
+            groups.forEach(group => {
+              this.groups.splice(-1, 1);
+              group.items.forEach(() => {
+                this.layoutItems.splice(-1, 1);
+                this.pointer--;
+              });
+              this.groupIdx--;
+            });
+            this.galleryHeight = this.strips.reduce((totalHeight, strip) => totalHeight += strip.height, 0);
+          // this.strip = this.strips[this.strips.length - 1];
+            this.strip = new Strip({
+              idx: this.strips.length,
+              container: this.container,
+              styleParams: this.styleParams
+            });
+          }
+        }
+
+        this.groupItems = [];
+      }
+
+      this.item = {};
+      this.maxLoops = this.srcItems.length * 10;
+
+
+    } else {
+
+      this.pointer = 0;
+      this.firstGroup = false;
+      this.layoutItems = [];
+      this.groups = [];
+      this.strips = [];
+
+      this.gallerySize = Math.floor(this.styleParams.gallerySize) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
+      this.galleryWidth = Math.floor(this.container.galleryWidth);
+      this.maxGroupSize = this.getMaxGroupSize();
+
+      this.groupIdx = 0;
+      this.item = {};
+
+      this.groupItems = [];
+      this.group;
+      this.bounds = this.container.bounds || {};
+
+      this.strip = new Strip({
+        idx: 1,
+        container: this.container,
+        styleParams: this.styleParams
+      });
+
+      this.galleryHeight = 0;
+
+      this.numOfCols = this.calcNumberOfColumns(this.galleryWidth, this.gallerySize);
+      this.gallerySize = this.styleParams.isVertical ? Math.floor(this.galleryWidth / this.numOfCols) : this.gallerySize;
+
+      this.columns = Array(this.numOfCols).fill(0).map((column, idx) => new Column(idx, this.gallerySize, this.styleParams.cubeRatio));
+      this.columns[this.numOfCols - 1].width += (this.galleryWidth - (this.gallerySize * this.numOfCols)); //the last group compensates for half pixels in other groups
+      this.columns[this.numOfCols - 1].cubeRatio = this.styleParams.cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
+
+      this.maxLoops = this.srcItems.length * 10;
+    }
+
+  }
+
   createLayout(layoutParams) {
 
     if (typeof layoutParams !== 'undefined') {
@@ -82,134 +208,105 @@ export default class Layouter {
       return false;
     }
 
-    this.pointer = 0;
-    this.firstGroup = false;
-    this.layoutItems = [];
-    this.groups = [];
-    this.strips = [];
-
-    let gallerySize = Math.floor(this.styleParams.gallerySize) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
-    const galleryWidth = Math.floor(this.container.galleryWidth);
-    const maxGroupSize = this.maxGroupSize;
-
-    let groupIdx = 0;
-    let item = {};
-
-    let groupItems = [];
-    let group;
-    const bounds = this.container.bounds || {};
-
-    let strip = new Strip({
-      idx: 1,
-      container: this.container,
-      styleParams: this.styleParams
-    });
-
-    let galleryHeight = 0;
-
-    const numOfCols = this.calcNumberOfColumns(galleryWidth, gallerySize);
-    gallerySize = this.styleParams.isVertical ? Math.floor(galleryWidth / numOfCols) : gallerySize;
-
-    const columns = Array(numOfCols).fill(0).map((column, idx) => new Column(idx, gallerySize, this.styleParams.cubeRatio));
-    columns[numOfCols - 1].width += (galleryWidth - (gallerySize * numOfCols)); //the last group compensates for half pixels in other groups
-    columns[numOfCols - 1].cubeRatio = this.styleParams.cubeRatio * (columns[numOfCols - 1].width / gallerySize); //fix the last group's cube ratio
-
-    let maxLoops = this.srcItems.length * 10;
+    this.prepareLayoutParams();
 
     while (this.srcItems[this.pointer]) {
 
-      maxLoops--;
-      if (maxLoops <= 0) {
+      if (this.imagesLeft === 6) {
+        this.saveExistingLayout();
+      }
+
+      this.maxLoops--;
+      if (this.maxLoops <= 0) {
         console.error('Cannot create layout, maxLoops reached!!!');
         return false;
       }
 
-      item = new Item({
+      this.item = new Item({
         idx: this.pointer,
-        inGroupIdx: groupItems.length + 1,
-        scrollTop: galleryHeight,
+        inGroupIdx: this.groupItems.length + 1,
+        scrollTop: this.galleryHeight,
         dto: this.srcItems[this.pointer],
         container: this.container,
         styleParams: this.styleParams
       });
 
-      this.layoutItems[this.pointer] = item;
+      this.layoutItems[this.pointer] = this.item;
 
       //push the image to a group - until its full
-      groupItems.push(item);
-      if ((groupItems.length < maxGroupSize) && this.srcItems[this.pointer + 1]) {
+      this.groupItems.push(this.item);
+      if ((this.groupItems.length < this.maxGroupSize) && this.srcItems[this.pointer + 1]) {
         this.pointer++;
         continue;
       }
 
-      group = new Group({
-        idx: groupIdx,
-        stripIdx: strip.idx,
-        inStripIdx: (strip.groups.length + 1),
-        top: galleryHeight,
-        items: groupItems,
+      this.group = new Group({
+        idx: this.groupIdx,
+        stripIdx: this.strip.idx,
+        inStripIdx: (this.strip.groups.length + 1),
+        top: this.galleryHeight,
+        items: this.groupItems,
         isLastItems: this.isLastImages,
-        gallerySize,
+        gallerySize: this.gallerySize,
         showAllItems: this.showAllItems,
         container: this.container,
         styleParams: this.styleParams
       });
-      this.groups[groupIdx] = group;
+      this.groups[this.groupIdx] = this.group;
 
       //take back the pointer in case the group was created with less items
-      this.pointer += (group.realItems.length - groupItems.length);
+      this.pointer += (this.group.realItems.length - this.groupItems.length);
 
-      groupIdx++;
-      groupItems = [];
+      this.groupIdx++;
+      this.groupItems = [];
 
       //resize and fit the group in the strip / column
       if (!this.styleParams.isVertical) {
 
         //---------------------| STRIPS GALLERY |----------------------//
 
-        if (strip.isFull(group, this.isLastImage)) {
+        if (this.strip.isFull(this.group, this.isLastImage)) {
           //close the current strip
-          strip.resizeToHeight((galleryWidth / strip.ratio));
-          strip.setWidth(galleryWidth);
-          galleryHeight += strip.height;
-          columns[0].addGroups(strip.groups);
-          this.strips.push(strip);
+          this.strip.resizeToHeight((this.galleryWidth / this.strip.ratio));
+          this.strip.setWidth(this.galleryWidth);
+          this.galleryHeight += this.strip.height;
+          this.columns[0].addGroups(this.strip.groups);
+          this.strips.push(this.strip);
 
           //open a new strip
-          strip = new Strip({
-            idx: strip.idx + 1,
+          this.strip = new Strip({
+            idx: this.strip.idx + 1,
             container: this.container,
             styleParams: this.styleParams
           });
 
           //reset the group (this group will be rebuilt)
-          this.pointer -= (group.realItems.length - 1);
-          groupIdx--;
+          this.pointer -= (this.group.realItems.length - 1);
+          this.groupIdx--;
           continue;
         }
 
         //add the group to the (current/new) strip
-        group.setTop(galleryHeight);
-        group.stripIdx = strip.idx;
-        strip.ratio += group.ratio;
-        // strip.height = Math.min(gallerySize, (galleryWidth / strip.ratio));
-        strip.height = galleryWidth / strip.ratio;
-        strip.setWidth(galleryWidth);
-        strip.addGroup(group);
+        this.group.setTop(this.galleryHeight);
+        this.strip.ratio += this.group.ratio;
+        // this.strip.height = Math.min(gallerySize, (galleryWidth / this.strip.ratio));
+        this.strip.height = this.galleryWidth / this.strip.ratio;
+        this.strip.setWidth(this.galleryWidth);
+        this.strip.addGroup(this.group);
 
-        if (this.isLastImage && strip.hasGroups) {
+        if (this.isLastImage && this.strip.hasGroups) {
           if (this.styleParams.oneRow) {
-            strip.height = this.container.galleryHeight + (this.styleParams.imageMargin - this.styleParams.galleryMargin);
-          } else if (gallerySize * 1.5 < strip.height) {
-              //stretching the strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
-            strip.height = gallerySize;
-            strip.markAsIncomplete();
+            this.strip.height = this.container.galleryHeight + (this.styleParams.imageMargin - this.styleParams.galleryMargin);
+          } else if (this.gallerySize * 1.5 < this.strip.height) {
+              //stretching the this.strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
+            this.strip.height = this.gallerySize;
+            this.strip.markAsIncomplete();
           }
 
-          strip.resizeToHeight(strip.height);
-          galleryHeight += (strip.height);
-          columns[0].addGroups(strip.groups);
-          this.strips.push(strip);
+          this.strip.resizeToHeight(this.strip.height);
+          this.galleryHeight += (this.strip.height);
+          this.columns[0].addGroups(this.strip.groups);
+          this.strips.push(this.strip);
         }
 
       } else {
@@ -217,52 +314,52 @@ export default class Layouter {
         //---------------------| COLUMNS GALLERY |----------------------//
 
         //find the shortest column
-        const minCol = this.findShortestColumn(columns, this.groups.length - 1);
+        const minCol = this.findShortestColumn(this.columns, this.groups.length - 1);
 
         //resize the group and images
-        group.fixItemsRatio(minCol.cubeRatio); //fix last column's items ratio (caused by stretching it to fill the screen)
-        group.resizeToWidth(minCol.width);
-        group.round();
+        this.group.fixItemsRatio(minCol.cubeRatio); //fix last column's items ratio (caused by stretching it to fill the screen)
+        this.group.resizeToWidth(minCol.width);
+        this.group.round();
 
         //update the group's position
-        group.setTop(minCol.height);
-        group.setLeft(minCol.idx * gallerySize);
+        this.group.setTop(minCol.height);
+        this.group.setLeft(minCol.idx * this.gallerySize);
 
         //add the image to the column
-        minCol.addGroup(group);
+        minCol.addGroup(this.group);
 
         //add the image height to the column
-        minCol.height += group.totalHeight;
+        minCol.height += this.group.totalHeight;
 
-        if (galleryHeight < minCol.height) {
-          galleryHeight = minCol.height;
+        if (this.galleryHeight < minCol.height) {
+          this.galleryHeight = minCol.height;
         }
       }
 
       //set the group visibility
 
-      if (!this.gotScrollEvent && this.pointer < 10) {
+      if (!this.skipVisibilitiesCalc && !this.gotScrollEvent && this.pointer < 10) {
         //until the first scroll event, make sure the first 10 groups are displayed
-        group.calcVisibilities(true);
+        this.group.calcVisibilities(true);
       } else {
-        group.calcVisibilities(bounds);
+        this.group.calcVisibilities(this.bounds);
       }
 
       if (!this.firstGroup) {
-        this.firstGroup = group;
+        this.firstGroup = this.group;
       }
 
-      //advance the this.pointer
       this.pointer++;
     }
 
     //results
-    this.lastGroup = group;
-    this.columns = columns;
-    this.colWidth = Math.floor(galleryWidth / numOfCols);
-    this.height = galleryHeight - (this.styleParams.imageMargin - this.styleParams.galleryMargin) * 2;
+    this.lastGroup = this.group;
+    this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
+    this.height = this.galleryHeight - (this.styleParams.imageMargin - this.styleParams.galleryMargin) * 2;
 
-    this.calcVisibilities(bounds);
+    if (!this.skipVisibilitiesCalc) {
+      this.calcVisibilities(this.bounds);
+    }
 
     this.ready = true;
 
@@ -368,6 +465,21 @@ export default class Layouter {
 
   }
 
+  getMaxGroupSize() {
+    let _maxGroupSize = 1;
+    try {
+      const groupTypes = (typeof this.styleParams.groupTypes === 'string' && this.styleParams.groupTypes.length > 0) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
+      _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
+        return Math.max(curSize, parseInt(groupType));
+      }, 1);
+      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
+    } catch (e) {
+      console.error('couldn\'t calculate max group size - returing 3 (?)', e);
+      _maxGroupSize = 3;
+    }
+    return _maxGroupSize;
+  }
+
   get isLastImage() {
     return !this.srcItems[this.pointer + 1];
   }
@@ -384,21 +496,6 @@ export default class Layouter {
 
   get imagesLeft() {
     return this.srcItems.length - this.pointer - 1;
-  }
-
-  get maxGroupSize() {
-    let _maxGroupSize = 1;
-    try {
-      const groupTypes = (typeof this.styleParams.groupTypes === 'string' && this.styleParams.groupTypes.length > 0) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
-      _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
-        return Math.max(curSize, parseInt(groupType));
-      }, 1);
-      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
-    } catch (e) {
-      console.error('couldn\'t calculate max group size - returing 3 (?)', e);
-      _maxGroupSize = 3;
-    }
-    return _maxGroupSize;
   }
 
   get items() {
