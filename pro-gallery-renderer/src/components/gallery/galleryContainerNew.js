@@ -298,7 +298,7 @@ export class GalleryContainer extends React.Component {
   }
 
   async getMoreItemsIfNeeded(scrollPos) {
-    if (this.galleryStructure && this.props.onGetItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
+    if (this.galleryStructure && this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
       //TODO - add support for horizontal galleries
       const {oneRow} = this.state.styles;
 
@@ -308,7 +308,7 @@ export class GalleryContainer extends React.Component {
 
       if (gallerySize - scrollEnd < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
-        const newItems = await this.props.onGetItems(this.state.items.length);
+        const newItems = await this.props.getMoreItems(this.state.items.length);
         const allItems = this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || []);
         const itemsState = this.reCreateGalleryExpensively({
           items: allItems
