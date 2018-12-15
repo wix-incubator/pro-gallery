@@ -17,8 +17,8 @@ class CssScrollHelper {
     this.screenSize = Math.max(window.screen.width, window.screen.height);
 
     this.inScreenPadding = [0, 0];
-    this.aboveScreenPadding = [100, Infinity];
-    this.belowScreenPadding = [Infinity, 100];
+    this.aboveScreenPadding = [200, Infinity];
+    this.belowScreenPadding = [Infinity, 200];
     this.visiblePadding = [this.screenSize * 7, this.screenSize * 2];
     this.renderedPadding = [this.screenSize * 7, this.screenSize * 4];
 
@@ -100,14 +100,15 @@ class CssScrollHelper {
     //scrollAnimation [DEMO]
     if (utils.shouldDebug('scrollAnimation')) {
       //push down items under screen
-      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{transform: translateY(${((idx % 4) * 30) + 100}px); transition-duration: ${((idx % 5) * 100) + 400}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{transform: translateY(${((idx % 4) * 30) + 100}px); transition-duration: 800ms; transition-delay: ${((idx % 5) * 50)}ms}`;
       //push back items in screen
       this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: translateY(0) !important}`;
     }
 
     if (utils.shouldDebug('fadeAnimation')) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{opacity: 0; transition-duration: ${((idx % 5) * 100) + 400}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{opacity: 0; transition-duration: 800ms; transition-delay: ${((idx % 5) * 70) + 200}ms}`;
+      //shoe items in screen
       this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{opacity: 1 !important}`;
     }
 
