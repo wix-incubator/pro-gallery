@@ -283,8 +283,8 @@ class GalleryItem {
     return isImageSizeAvailable && isSdkExperimentOn && !hasWatermark;
   }
 
-  resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint) {
-    if (this.useImageClientApi()) {
+  resizeUrlImp(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces = false, allowWatermark = false, focalPoint, forceManual) {
+    if (forceManual !== true && this.useImageClientApi()) {
       return this.resizeUrlImp_sdk(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint);
     } else {
       return this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint);
@@ -324,6 +324,9 @@ class GalleryItem {
       retUrl += ',h_' + requiredHeight;
       retUrl += ',al_' + (faces ? 'fs' : 'c');
       retUrl += ',q_' + sharpParams.quality;
+      if (sharpParams.blur) {
+        retUrl += ',blur_' + sharpParams.blur;
+      }
 
       retUrl += (sharpParams.usm && sharpParams.usm.usm_r) ? ',usm_' + sharpParams.usm.usm_r.toFixed(2) + '_' + sharpParams.usm.usm_a.toFixed(2) + '_' + sharpParams.usm.usm_t.toFixed(2) : '';
       // Important to use this as the last param
@@ -371,6 +374,9 @@ class GalleryItem {
       retUrl += ',y_' + y;
       retUrl += ',scl_' + scale.toFixed(2);
       retUrl += ',q_' + sharpParams.quality;
+      if (sharpParams.blur) {
+        retUrl += ',blur_' + sharpParams.blur;
+      }
       retUrl += (sharpParams.usm && sharpParams.usm.usm_r) ? ',usm_' + sharpParams.usm.usm_r.toFixed(2) + '_' + sharpParams.usm.usm_a.toFixed(2) + '_' + sharpParams.usm.usm_t.toFixed(2) : '';
       // Important to use this as the last param
       if (showWatermark) {
@@ -555,12 +561,12 @@ class GalleryItem {
         }
 
         urls.img = this.resizeUrlImp(poster.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, false);
-        urls.thumb = this.resizeUrlImp(poster.url, resizeMethod, thumbSize, (thumbSize * requiredHeight / requiredWidth), {...sharpParams, quality: 70, blur: 30}, false, false);
+        urls.thumb = this.resizeUrlImp(poster.url, resizeMethod, thumbSize, (thumbSize * requiredHeight / requiredWidth), {...sharpParams, quality: 70, blur: 30}, false, false, true);
       }
     } else {
       const fp = (noCrop !== true && this.isCropped && this.focalPoint);
       urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, fp);
-      urls.thumb = this.resizeUrlImp(this.url, resizeMethod, thumbSize, (thumbSize * requiredHeight / requiredWidth), {...sharpParams, quality: 70, blur: 30}, showFaces, true, fp);
+      urls.thumb = this.resizeUrlImp(this.url, resizeMethod, thumbSize, (thumbSize * requiredHeight / requiredWidth), {...sharpParams, quality: 70, blur: 30}, showFaces, true, fp, true);
     }
 
     // if (window.isWebpSupported && !utils.isStoreGallery()) {
