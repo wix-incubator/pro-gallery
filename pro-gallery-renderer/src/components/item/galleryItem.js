@@ -316,13 +316,20 @@ class GalleryItem {
       sharpParams.usm.usm_t = Math.min(1, Math.max(0, (sharpParams.usm.usm_t || 0)));
     }
 
+    const focalPointObj = {x: 50, y: 50};
+    if (focalPoint && focalPoint[0] >= 0 && focalPoint[1] >= 0) {
+      focalPointObj.x = Math.round(focalPoint[0] * 100);
+      focalPointObj.y = Math.round(focalPoint[1] * 100);
+    }
+
     if (utils.isExternalUrl(originalUrl)) {
       return originalUrl;
     } else if (!focalPoint) { //todo remove when supporting focal point
       let retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/' + resizeMethod + '/';
       retUrl += 'w_' + requiredWidth;
       retUrl += ',h_' + requiredHeight;
-      retUrl += ',al_' + (faces ? 'fs' : 'c');
+      retUrl += `,fp_0.${focalPointObj.x}_0.${focalPointObj.y}`;
+      // retUrl += ',al_' + (faces ? 'fs' : 'c');
       retUrl += ',q_' + sharpParams.quality;
       if (sharpParams.blur) {
         retUrl += ',blur_' + sharpParams.blur;
