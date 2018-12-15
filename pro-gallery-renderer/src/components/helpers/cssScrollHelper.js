@@ -92,7 +92,7 @@ class CssScrollHelper {
     }
 
     //add the blurry image
-    if (!utils.deviceHasMemoryIssues() && !styleParams.imageLoadingMode === Consts.loadingMode.COLOR && !item.isTransparent) {
+    if (!utils.deviceHasMemoryIssues() && styleParams.imageLoadingMode !== Consts.loadingMode.COLOR && !item.isTransparent) {
       // add blurred background-image
       this.scrollCss[idx] += createScrollSelectors(this.renderedPadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
     }
