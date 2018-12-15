@@ -1100,6 +1100,10 @@ class GalleryItem {
   get isDimensionless() {
     return !(this.maxWidth > 1 || this.maxHeight > 1);
   }
+
+  get isTransparent() {
+    return this.url && this.url.indexOf('.png') > 0;
+  }
 }
 
 /*

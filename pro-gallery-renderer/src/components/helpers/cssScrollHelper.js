@@ -86,27 +86,30 @@ class CssScrollHelper {
       return scrollClasses.join(', ');
     };
 
-    if (window.isSSR) {
-
-      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
-
-    } else {
-
-      //load hi-res image + loading transition
+    //load hi-res image + loading transition
+    if (!window.isSSR) {
       this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item>div`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
+    }
 
-      //add the blurry image
-      if (!(utils.deviceHasMemoryIssues() || styleParams.imageLoadingMode === Consts.loadingMode.COLOR)) {
-        //remove blurry thumbnail background
-        this.scrollCss[idx] += createScrollSelectors(this.inScreenPadding, `.image-item`) + `{background-image: none !important}`;
-        // add blurred background-image
-        this.scrollCss[idx] += createScrollSelectors(this.renderedPadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
-      }
+    //add the blurry image
+    if (!utils.deviceHasMemoryIssues() && !styleParams.imageLoadingMode === Consts.loadingMode.COLOR && !item.isTransparent) {
+      // add blurred background-image
+      this.scrollCss[idx] += createScrollSelectors(this.renderedPadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
     }
 
     //scrollAnimation [DEMO]
-    // this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{transform: translateY(${((idx % 4) * 30) + 100}px); transition-duration: ${((idx % 5) * 100) + 400}ms}`;
-    // this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: translateY(0) !important}`;
+    if (utils.shouldDebug('scrollAnimation')) {
+      //push down items under screen
+      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{transform: translateY(${((idx % 4) * 30) + 100}px); transition-duration: ${((idx % 5) * 100) + 400}ms}`;
+      //push back items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: translateY(0) !important}`;
+    }
+
+    if (utils.shouldDebug('fadeAnimation')) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{opacity: 0; transition-duration: ${((idx % 5) * 100) + 400}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{opacity: 1 !important}`;
+    }
 
     return this.scrollCss[idx];
     // console.count('pgScroll item created');
