@@ -119,18 +119,24 @@ export class GalleryContainer extends React.Component {
   reCreateGalleryExpensively({items, styles, container, watermarkData}, curState) {
 
     if (utils.isVerbose()) {
-      console.count('PROGALLERY [COUNT] reCreateGalleryExpensively', {items, styles, container, watermarkData});
+      console.count('PROGALLERY [COUNT] reCreateGalleryExpensively');
     }
     const handleNewGalleryStructure = typeof this.props.handleNewGalleryStructure === 'function' ? this.props.handleNewGalleryStructure : () => {};
     const isFullwidth = (container && ((container.width === '100%' /*regular*/) || (container.width === '' /*mesh*/)));
+    if (isFullwidth) {
+      container.width = window.isMock ? utils.getScreenWidth() : window.innerWidth;
+    }
     const state = curState || this.state || {};
-
 
     let _items, _styles, _container, scroll, _scroll;
     items = items || this.items;
 
     const isNew = this.isNew({items, styles, container, watermarkData}, state);
     const newState = {};
+
+    if (utils.isVerbose()) {
+      console.log('PROGALLERY reCreateGalleryExpensively', isNew, {items, styles, container, watermarkData});
+    }
 
     if (isNew.items) {
       _items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
@@ -197,7 +203,7 @@ export class GalleryContainer extends React.Component {
         lastVisibleItemIdx: this.lastVisibleItemIdx,
       });
 
-      if (isFullwidth) {
+      if (window.isSSR && isFullwidth) {
         console.time('fullwidthLayoutsCss!');
         this.fullwidthLayoutsCss = createCssLayouts(layoutParams);
         console.timeEnd('fullwidthLayoutsCss!');
@@ -349,7 +355,7 @@ export class GalleryContainer extends React.Component {
     return (
       <div>
         {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
-        <style>{this.scrollCss}</style>
+        <style key="scrollCss">{this.scrollCss}</style>
         <CssSrollIndicator oneRow={this.state.styles.oneRow} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
 				<ViewComponent
 					isInDisplay = {this.props.isInDisplay}

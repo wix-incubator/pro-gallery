@@ -1,5 +1,6 @@
 import utils from '../../utils';
 import _ from 'lodash';
+import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 class DimensionsHelper {
   constructor() {
@@ -56,8 +57,8 @@ class DimensionsHelper {
 
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
-      const domWidth = utils.getScreenWidth();//() => protectGalleryWidth(utils.isMobile() ? container.documentWidth : container.windowWidth, container); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
-      return Math.floor((this.container.width > 0 ? this.container.width : domWidth) + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
+      const domWidth = () => window.isMock ? utils.getScreenWidth() : window.innerWidth;
+      return Math.floor((this.container.width > 0 ? this.container.width : domWidth()) + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
     });
   }
 
@@ -65,8 +66,8 @@ class DimensionsHelper {
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
       //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
-      const domHeight = utils.getScreenHeight();//() => protectGalleryHeight(this.container.windowHeight, offsetTop);
-      return Math.floor((this.container.height > 0 ? this.container.height : domHeight) + this.getDimensionFix());
+      const domHeight = () => window.isMock ? utils.getScreenHeight() : window.innerHeight;//() => protectGalleryHeight(this.container.windowHeight, offsetTop);
+      return Math.floor((this.container.height > 0 ? this.container.height : domHeight()) + this.getDimensionFix());
     });
   }
 
