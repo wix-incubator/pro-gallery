@@ -11,14 +11,15 @@ import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 class CssScrollHelper {
 
   constructor() {
-    this.pgScrollSteps = [5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10];
+    this.pgScrollSteps = [5120, 2560, 1280, 640, 320, 160, 80, 40];
     this.pgScrollClassName = 'pgscl';
 
     this.screenSize = Math.max(window.screen.width, window.screen.height);
 
     this.inScreenPadding = [0, 0];
-    this.aboveScreenPadding = [200, Infinity];
-    this.belowScreenPadding = [Infinity, 200];
+    this.aboveScreenPadding = [0, Infinity];
+    this.justBelowScreenPadding = [1000, -0];
+    this.belowScreenPadding = [Infinity, 0];
     this.visiblePadding = [this.screenSize * 7, this.screenSize * 2];
     this.renderedPadding = [this.screenSize * 7, this.screenSize * 4];
 
@@ -55,25 +56,15 @@ class CssScrollHelper {
     return true;
   }
 
-  calcScrollCssForItem({item, scrollBase, styleParams}) {
-
-    const {resized_url, uniqueId, idx} = item;
-    const domId = this.getDomId(item);
-
-    if (!this.shouldCalcScrollCss(item, scrollBase, styleParams)) {
-      return this.scrollCss[idx];
-    }
-
-    this.scrollCss[idx] = '';
-
+  createScrollSelectorsFunction({item, scrollBase, styleParams}) {
     const _scrollBase = scrollBase >= 0 ? scrollBase : 0;
-    const ceil = (num, step) => Math.min(this.maxHeight, (Math.ceil(num / step) * step));
-    const floor = (num, step) => Math.max(0, Math.floor(num / step) * step);
     const imageTop = styleParams.oneRow ? (item.offset.left - this.screenSize) : (item.offset.top - this.screenSize + _scrollBase);
     const imageBottom = styleParams.oneRow ? (item.offset.left + item.width) : (item.offset.top + item.height + _scrollBase);
     const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
-
-    const createScrollSelectors = (padding, suffix) => {
+    const ceil = (num, step) => Math.min(this.maxHeight, (Math.ceil(num / step) * step));
+    const floor = (num, step) => Math.max(0, Math.floor(num / step) * step);
+    const domId = this.getDomId(item);
+    return (padding, suffix) => {
       let from = floor(imageTop - padding[0], minStep);
       const to = ceil(imageBottom + padding[1], minStep);
       const scrollClasses = [];
@@ -85,6 +76,19 @@ class CssScrollHelper {
       }
       return scrollClasses.join(', ');
     };
+  }
+
+  calcScrollCssForItem({item, scrollBase, styleParams}) {
+
+    const {resized_url, uniqueId, idx} = item;
+
+    if (!this.shouldCalcScrollCss(item, scrollBase, styleParams)) {
+      return this.scrollCss[idx];
+    }
+
+    this.scrollCss[idx] = '';
+
+    const createScrollSelectors = this.createScrollSelectorsFunction({item, scrollBase, styleParams});
 
     //load hi-res image + loading transition
     if (!window.isSSR) {
@@ -98,22 +102,71 @@ class CssScrollHelper {
     }
 
     //scrollAnimation [DEMO]
-    if (utils.shouldDebug('scrollAnimation')) {
+    this.createScrollAnimationsIfNeeded(idx, createScrollSelectors);
+
+    return this.scrollCss[idx];
+    // console.count('pgScroll item created');
+  }
+
+  createScrollAnimationsIfNeeded(idx, createScrollSelectors) {
+
+    if (utils.shouldDebug('slideAnimation')) {
       //push down items under screen
-      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{transform: translateY(${((idx % 4) * 30) + 100}px); transition-duration: 800ms; transition-delay: ${((idx % 5) * 50)}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: translateY(150px); transition: transform 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
       //push back items in screen
       this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: translateY(0) !important}`;
     }
 
-    if (utils.shouldDebug('fadeAnimation')) {
-      //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, '') + `{opacity: 0; transition-duration: 800ms; transition-delay: ${((idx % 5) * 70) + 200}ms}`;
-      //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{opacity: 1 !important}`;
+    if (utils.shouldDebug('sideAnimation')) {
+      //push down items under screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '.image-item') + `{transform: translateX(150px); transition: transform 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      //push back items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '.image-item') + `{transform: translateX(0) !important}`;
     }
 
-    return this.scrollCss[idx];
-    // console.count('pgScroll item created');
+    if (utils.shouldDebug('fadeAnimation')) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: opacity(0); transition: filter 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      //shoe items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: opacity(1) !important}`;
+    }
+
+    if (utils.shouldDebug('zoomAnimation')) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: scale(0); transition: transform 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      //shoe items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: scale(1) !important}`;
+    }
+
+    if (utils.shouldDebug('rotateAnimation')) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: rotate(10deg); transform-origin: top left; transition: transform 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      //shoe items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: rotate(0deg) !important}`;
+    }
+
+    if (utils.shouldDebug('bnwAnimation')) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: grayscale(100%); transition: filter 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      //shoe items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: grayscale(0) !important}`;
+    }
+
+    if (utils.shouldDebug('blurAnimation')) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: blur(10px); transition: filter 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      //shoe items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: blur(0) !important}`;
+    }
+
+    if (utils.shouldDebug('flipAnimation')) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{perspective: 300px;}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '>div') + `{transform: rotateX(-20deg); transform-origin: top; transition: transform 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      //shoe items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '>div') + `{transform: rotateX(0) !important}`;
+    }
+
   }
 }
 
