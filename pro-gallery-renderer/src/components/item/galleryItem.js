@@ -328,7 +328,9 @@ class GalleryItem {
       let retUrl = 'https://static.wixstatic.com/media/' + originalUrl + '/v1/' + resizeMethod + '/';
       retUrl += 'w_' + requiredWidth;
       retUrl += ',h_' + requiredHeight;
-      retUrl += `,fp_0.${focalPointObj.x}_0.${focalPointObj.y}`;
+      if (resizeMethod === 'fill') {
+        retUrl += `,fp_0.${focalPointObj.x}_0.${focalPointObj.y}`;
+      }
       // retUrl += ',al_' + (faces ? 'fs' : 'c');
       retUrl += ',q_' + sharpParams.quality;
       if (sharpParams.blur) {
