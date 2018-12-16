@@ -633,50 +633,6 @@
           will-change: transform, opacity, background-color;
           transition: transform 1s ease;
 
-          &.text-item {
-          
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            white-space: initial;
-          
-            .te-pro-gallery-text-item {
-              line-height: normal !important;
-              letter-spacing: normal !important;
-            }
-          
-            > div {
-              background: initial !important;
-              box-sizing: border-box;
-            }
-          
-            p,
-            span,
-            div,
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6,
-            i {
-              margin: 0;
-              padding: 0;
-            }
-          
-          }
-          
-          // &.image-item {
-          //   &:after {
-          //     content: ' ';
-          //     background-color: rgba(255, 255, 255, 0.5);
-          //     width: 100%;
-          //     height: 100%;
-          //     position: absolute;
-          //     top: 0;
-          //     left: 0;
-          //   }
-          // }
-
           .pro-circle-preloader {
             top: 50%;
             left: 50%;
