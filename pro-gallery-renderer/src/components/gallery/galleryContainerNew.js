@@ -125,7 +125,6 @@ export class GalleryContainer extends React.Component {
     const isFullwidth = (container && ((container.width === '100%' /*regular*/) || (container.width === '' /*mesh*/)));
     const state = curState || this.state || {};
 
-    dimentionsHelper.updateParams({styles, container});
 
     let _items, _styles, _container, scroll, _scroll;
     items = items || this.items;
@@ -146,6 +145,7 @@ export class GalleryContainer extends React.Component {
       container = container || state.container;
       scroll = state.scroll;
 
+      dimentionsHelper.updateParams({styles, container});
       _styles = addLayoutStyles(styles, container);
       dimentionsHelper.updateParams({styles: _styles});
       _container = Object.assign({}, container, dimentionsHelper.getGalleryDimensions(), {

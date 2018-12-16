@@ -29,6 +29,7 @@ class GalleryView extends React.Component {
     appPartiallyLoaded('pro-gallery-statics');
 
     this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
+    this.useCssScrolling = this.useRefactoredProGallery;
 
   }
 
@@ -145,7 +146,7 @@ class GalleryView extends React.Component {
         return !!column.galleryGroups.length && (
           <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
               style={{width: column.width, paddingTop}}>
-            {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+            {column.galleryGroups.map(group => group.rendered || this.useCssScrolling ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
           </div>
         );
       });
