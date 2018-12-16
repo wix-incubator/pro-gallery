@@ -122,7 +122,7 @@ export class GalleryContainer extends React.Component {
       console.count('PROGALLERY [COUNT] reCreateGalleryExpensively', {items, styles, container, watermarkData});
     }
     const handleNewGalleryStructure = typeof this.props.handleNewGalleryStructure === 'function' ? this.props.handleNewGalleryStructure : () => {};
-    const isFullwidth = (container && container.width === '100%');
+    const isFullwidth = (container && ((container.width === '100%' /*regular*/) || (container.width === '' /*mesh*/)));
     const state = curState || this.state || {};
 
     dimentionsHelper.updateParams({styles, container});
