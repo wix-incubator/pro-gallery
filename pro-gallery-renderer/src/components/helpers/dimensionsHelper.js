@@ -56,7 +56,7 @@ class DimensionsHelper {
 
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
-      const domWidth = 1920;//() => protectGalleryWidth(utils.isMobile() ? container.documentWidth : container.windowWidth, container); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
+      const domWidth = 980;//() => protectGalleryWidth(utils.isMobile() ? container.documentWidth : container.windowWidth, container); //on mobile we use the document width - which takes in account the pixel ratio fix (width more that 100% and scale down)
       return Math.floor((this.container.width > 0 ? this.container.width : domWidth) + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
     });
   }
