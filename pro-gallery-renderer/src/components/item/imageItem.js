@@ -35,7 +35,7 @@ export default class ImageItem extends React.Component {
       data-hook={'image-item'}
         style={displayed ? {} : backgroundStyle}
         >
-        {this.useCssScrolling ? <div
+        {this.useCssScrolling ? <canvas
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
             className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
             style={imageDimensions}

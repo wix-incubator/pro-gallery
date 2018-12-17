@@ -92,7 +92,7 @@ class CssScrollHelper {
 
     //load hi-res image + loading transition
     if (!window.isSSR) {
-      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item>div`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
+      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item>canvas`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
     }
 
     //add the blurry image
@@ -162,9 +162,9 @@ class CssScrollHelper {
     if (utils.shouldDebug('flipAnimation')) {
       //hide items below screen
       this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{perspective: 300px;}`;
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '>div') + `{transform: rotateX(-20deg); transform-origin: top; transition: transform 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '>canvas') + `{transform: rotateX(-20deg); transform-origin: top; transition: transform 800ms ease ${(((idx % 3) + 2) * 50)}ms}`;
       //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '>div') + `{transform: rotateX(0) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '>canvas') + `{transform: rotateX(0) !important}`;
     }
 
   }
