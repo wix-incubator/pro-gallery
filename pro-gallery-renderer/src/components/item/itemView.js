@@ -191,8 +191,8 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
-    } else if (this.props.type === 'video' && this.props.itemclick === 'nothing') {
-      const shouldTogglePlay = (videoPlay === 'onClick' || utils.isMobile());
+    } else if (this.props.type === 'video') {
+      const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile());
       if (shouldTogglePlay) {
         this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
