@@ -83,6 +83,8 @@ class Utils {
       oneRow: false,
       gallerySize: 500,
       collageDensity: 50,
+      fixedColumns: 0,
+      columnWidths: ''
     }, styleParams);
 
     this.insertIfDefined(convertedStyleParams, 'cubeImages', convertedStyleParams.cropItems);
@@ -102,6 +104,8 @@ class Utils {
     this.insertIfDefined(convertedStyleParams, 'oneRow', convertedStyleParams.isVerticalScroll);
     this.insertIfDefined(convertedStyleParams, 'gallerySize', convertedStyleParams.rowSize || convertedStyleParams.columnSize);
     this.insertIfDefined(convertedStyleParams, 'collageDensity', convertedStyleParams.collageDensity);
+    this.insertIfDefined(convertedStyleParams, 'fixedColumns', convertedStyleParams.fixedColumns);
+    this.insertIfDefined(convertedStyleParams, 'columnWidths', Array.isArray(convertedStyleParams.columnWidths) ? convertedStyleParams.columnWidths.join(',') : undefined);
 
     return convertedStyleParams;
   }
