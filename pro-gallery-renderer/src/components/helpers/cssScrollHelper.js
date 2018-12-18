@@ -111,7 +111,7 @@ class CssScrollHelper {
   createScrollAnimationsIfNeeded(idx, createScrollSelectors) {
 
     const animationTiming = (((idx % 3) + 2) * 50);
-    
+
     if (utils.shouldDebug('slideAnimation')) {
       //push down items under screen
       this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: translateY(150px); transition: transform 800ms ease ${animationTiming}ms}`;
