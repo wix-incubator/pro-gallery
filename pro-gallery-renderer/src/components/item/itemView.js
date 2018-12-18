@@ -20,6 +20,8 @@ import _ from 'lodash';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 import {setHorizontalVisibility, setVerticalVisibility, setInitialVisibility} from '../helpers/scrollHelper.js';
 import {cssScrollHelper} from '../helpers/cssScrollHelper';
+import {settingsVersionManager} from 'photography-client-lib/dist/src/versioning/features/settings';
+
 
 class ItemView extends React.Component {
 
@@ -189,19 +191,22 @@ class ItemView extends React.Component {
     if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
       //the click is on a thumbnail
       this.props.actions.scrollToItem(this.props.idx);
-    } else if (itemClick === 'expand' || itemClick === 'link' || itemClick === 'popup' || itemClick === 'itemUrl') {
-      this.props.actions.toggleFullscreen(this.props.idx);
-    } else if (this.props.type === 'video') {
-      const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile());
+    } else if (this.props.type === 'video' && this.props.itemclick === 'nothing') {
+      const shouldTogglePlay = (videoPlay === 'onClick' || utils.isMobile());
       if (shouldTogglePlay) {
         this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
     } else if (this.shouldShowHoverOnMobile()) {
       if (this.props.currentHover === this.props.idx) {
+        if (itemClick !== 'nothing') {
+          this.props.actions.toggleFullscreen(this.props.idx);
+        }
         this.props.actions.setCurrentHover(-1);
       } else {
         this.props.actions.setCurrentHover(this.props.idx);
       }
+    } else if (itemClick === 'expand' || itemClick === 'link' || itemClick === 'popup' || itemClick === 'itemUrl') {
+      this.props.actions.toggleFullscreen(this.props.idx);
     }
   }
 
@@ -269,7 +274,14 @@ class ItemView extends React.Component {
 
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
-      if (this.props.styleParams.itemClick === 'nothing') {
+      const {allowDescription, allowTitle, titlePlacement, itemClick, isSlideshow} = this.props.styleParams;
+      const isNewMobileSettings = settingsVersionManager.newMobileSettings();
+      if (isSlideshow) {
+        return false;
+      }
+      if (itemClick === 'nothing') {
+        return true;
+      } else if ((allowTitle || allowDescription) && (titlePlacement === Consts.placements.SHOW_ON_HOVER) && isNewMobileSettings) {
         return true;
       }
       if (utils.isEditor() && this.state.previewHover) {
@@ -546,10 +558,10 @@ class ItemView extends React.Component {
         <div style={{height: styleParams.externalInfoHeight, textAlign: styleParams.galleryTextAlign}}
              className={elementName}
              onMouseOver={() => {
-               this.props.actions.setCurrentHover(this.props.idx);
+               utils.isMobile() ? _.noop() : this.props.actions.setCurrentHover(this.props.idx);
              }}
              onMouseOut={() => {
-               this.props.actions.setCurrentHover(-1);
+               utils.isMobile() ? _.noop() : this.props.actions.setCurrentHover(-1);
              }}>
           {itemTexts}
         </div>);

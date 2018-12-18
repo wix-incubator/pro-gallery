@@ -1139,6 +1139,10 @@ export class GalleryContainer extends React.Component {
       stateStyles.loveButton = wixStyles.loveButton;
     }
 
+    if (canSet('isNewMobileSettings')) {
+      stateStyles.isNewMobileSettings = wixStyles.isNewMobileSettings;
+    }
+
     //note: 0 is true and false is 1 - super confusing (can't change it - because of backwards compatibility)
     if (canSet('loveCounter')) {
       stateStyles.loveCounter = (String(wixStyles.loveCounter) === '0');
@@ -1370,11 +1374,12 @@ export class GalleryContainer extends React.Component {
     }
 
     // We need another param because the color should be different on hover(white on black) or underneath (black on white)
+    stateStyles.isSlideshowFont = this.isSlideshowFont(stateStyles);
     if (canSet('itemFontSlideshow')) {
       stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
       if (utils.isMobile()) {
         stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.slice(5, -1);
-        if (stateStyles.itemFontSlideshow.value.indexOf('underline') > 0) {
+        if (stateStyles.itemFontSlideshow.value.indexOf('underline') > 0 && stateStyles.isSlideshowFont) {
           stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.slice(0, -26);
           stateStyles.textDecorationTitle = 'underline';
         } else {
@@ -1400,7 +1405,7 @@ export class GalleryContainer extends React.Component {
       stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
       if (utils.isMobile()) {
         stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.slice(5, -1);
-        if (stateStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0) {
+        if (stateStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0 && stateStyles.isSlideshowFont) {
           stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.slice(0, -26);
           stateStyles.textDecorationDesc = 'underline';
         } else {
@@ -1782,6 +1787,23 @@ export class GalleryContainer extends React.Component {
     // curItems = curItems.slice(0, this.state.totalItemsCount);
 
     return curItems;
+  }
+
+  isSlideshowFont(styles) {
+    const galleryLayout = styles.galleryLayout;
+    if (galleryLayout === 5) {
+      return true;
+    }
+    if (styles.titlePlacement === 'SHOW_ABOVE' || styles.titlePlacement === 'SHOW_BELOW') {
+      if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
+        return true;
+      } else if (galleryLayout === 1 && styles.isVertical) {
+        return true;
+      } else if (galleryLayout === 2 && styles.scrollDirection !== 1) {
+        return true;
+      }
+    }
+    return false;
   }
 
   getRequiredItemsFromDbIfNeeded(toItem, callback = _.noop) {

@@ -506,43 +506,46 @@ function addLayoutStyles(styles, container) {
 
 function processLayouts(styles) {
   const processedStyles = styles;
-
+  processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
 
   if (utils.isMobile()) {
-    if (!_.isUndefined(processedStyles.itemFont)) {
-      processedStyles.itemFont.value = processedStyles.itemFont.value.slice(5, -1);
-      if (processedStyles.itemFont.value.indexOf('underline') > 0) {
-        processedStyles.itemFont.value = processedStyles.itemFont.value.slice(0, -26);
-        processedStyles.textDecorationTitle = 'underline';
-      } else {
-        processedStyles.textDecorationTitle = 'none';
+    if (processedStyles.isSlideshowFont) {
+      if (!_.isUndefined(processedStyles.itemFontSlideshow)) {
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(5, -1);
+        if (processedStyles.itemFontSlideshow.value.indexOf('underline') > 0) {
+          processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(0, -26);
+          processedStyles.textDecorationTitle = 'underline';
+        } else {
+          processedStyles.textDecorationTitle = 'none';
+        }
       }
-    }
-    if (!_.isUndefined(processedStyles.itemFontSlideshow)) {
-      processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(5, -1);
-      if (processedStyles.itemFontSlideshow.value.indexOf('underline') > 0) {
-        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(0, -26);
-        processedStyles.textDecorationTitle = 'underline';
-      } else {
-        processedStyles.textDecorationTitle = 'none';
+      if (!_.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(5, -1);
+        if (processedStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0) {
+          processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(0, -26);
+          processedStyles.textDecorationDesc = 'underline';
+        } else {
+          processedStyles.textDecorationDesc = 'none';
+        }
       }
-    }
-    if (!_.isUndefined(processedStyles.itemDescriptionFont)) {
-      processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(5, -1);
-      if (processedStyles.itemDescriptionFont.value.indexOf('underline') > 0) {
-        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(0, -26);
-        processedStyles.textDecorationDesc = 'underline';
-      } else {
-        processedStyles.textDecorationDesc = 'none';
+    } else {
+      if (!_.isUndefined(processedStyles.itemFont)) {
+        processedStyles.itemFont.value = processedStyles.itemFont.value.slice(5, -1);
+        if (processedStyles.itemFont.value.indexOf('underline') > 0) {
+          processedStyles.itemFont.value = processedStyles.itemFont.value.slice(0, -26);
+          processedStyles.textDecorationTitle = 'underline';
+        } else {
+          processedStyles.textDecorationTitle = 'none';
+        }
       }
-    }
-    if (!_.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
-      processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(5, -1);
-      if (processedStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0) {
-        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(0, -26);
-        processedStyles.textDecorationDesc = 'underline';
-      } else {
-        processedStyles.textDecorationDesc = 'none';
+      if (!_.isUndefined(processedStyles.itemDescriptionFont)) {
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(5, -1);
+        if (processedStyles.itemDescriptionFont.value.indexOf('underline') > 0) {
+          processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(0, -26);
+          processedStyles.textDecorationDesc = 'underline';
+        } else {
+          processedStyles.textDecorationDesc = 'none';
+        }
       }
     }
   }
@@ -702,6 +705,23 @@ function getFontLineHeight(font) {
     console.error('GalleryContainer -> getFontLineHeight -> font lineHeight do not match any pattern. font value: ', font.value);
     return font.size;
   }
+}
+
+function isSlideshowFont(styles) {
+  const galleryLayout = styles.galleryLayout;
+  if (galleryLayout === 5) {
+    return true;
+  }
+  if (styles.titlePlacement === 'SHOW_ABOVE' || styles.titlePlacement === 'SHOW_BELOW') {
+    if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
+      return true;
+    } else if (galleryLayout === 1 && styles.isVertical) {
+      return true;
+    } else if (galleryLayout === 2 && styles.scrollDirection !== 1) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export {
