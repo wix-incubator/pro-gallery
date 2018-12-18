@@ -163,7 +163,7 @@ describe('Item View', () => {
       expect(stub.called).to.be.true;
       stub.restore();
     });
-    it('should toggle playVideo/pauseVideo for video items that are not expand and the video is styled to play onclick/the device is mobile/', () => {
+    it.skip('should toggle playVideo/pauseVideo for video items that are not expand and the video is styled to play onclick/the device is mobile/', () => {
       Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'video', styleParams: {itemClick: 'foo', videoPlay: 'onClick'}});
       const spyPlay = sinon.stub(sampleItemViewProps, 'playVideo');
       const spyPause = sinon.stub(sampleItemViewProps, 'pauseVideo');
