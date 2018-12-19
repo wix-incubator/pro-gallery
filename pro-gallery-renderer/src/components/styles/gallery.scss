@@ -553,8 +553,8 @@
       text-decoration: none;
       color: inherit;
       transition: all .4s ease;
-      transition-property: transform, opacity, margin, top, left, width, height;
-      will-change: transform, margin, opacity, top, left, width, height;
+      transition-property: transform, margin, top, left, width, height;
+      will-change: transform, margin, top, left, width, height;
       box-sizing: border-box;
 
       &:hover {
@@ -642,6 +642,10 @@
             .te-pro-gallery-text-item {
               line-height: normal !important;
               letter-spacing: normal !important;
+            }
+
+            > div {
+              background: initial !important;
               box-sizing: border-box;
             }
 
