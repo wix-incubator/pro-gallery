@@ -142,6 +142,7 @@ export class GalleryContainer extends React.Component {
       _items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
       this.items = _items;
       newState.items = _items.map(item => item.id);
+      this.gettingMoreItems = false; //probably finished getting more items
     } else {
       _items = this.items;
     }
@@ -303,7 +304,7 @@ export class GalleryContainer extends React.Component {
     );
   }
 
-  async getMoreItemsIfNeeded(scrollPos) {
+  getMoreItemsIfNeeded(scrollPos) {
     if (this.galleryStructure && this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
       //TODO - add support for horizontal galleries
       const {oneRow} = this.state.styles;
@@ -314,17 +315,32 @@ export class GalleryContainer extends React.Component {
 
       if (gallerySize - scrollEnd < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
-        const newItems = await this.props.getMoreItems(this.state.items.length);
-        if (newItems && newItems.length > 0) {
-          const allItems = this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || []);
-          const itemsState = this.reCreateGalleryExpensively({
-            items: allItems
+        const itemsPromise = this.props.getMoreItems(this.state.items.length);
+        if (itemsPromise) {
+          itemsPromise.then(newItems => {
+            console.log('Got more items from server', newItems);
+            this.gettingMoreItems = false;
+            if (newItems && newItems.length > 0) {
+              const allItems = this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || []);
+              const itemsState = this.reCreateGalleryExpensively({
+                items: allItems
+              });
+              if (Object.keys(itemsState).length > 0) {
+                this.setState(itemsState);
+              }
+            }
+          })
+          .catch(e => {
+            this.gettingMoreItems = false;
+            console.error('Could not get more items from server', e);
           });
-          if (Object.keys(itemsState).length > 0) {
-            this.setState(itemsState);
-          }
+        } else {
+          setTimeout(() => {
+            //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
+            this.gettingMoreItems = false;
+          }, 2000);
+          console.error('Could not get more items from server: itemsPromise is not a promise?!?!?');
         }
-        this.gettingMoreItems = false;
       }
     }
   }
@@ -335,7 +351,7 @@ export class GalleryContainer extends React.Component {
       this.state.styles &&
       this.state.items
     );
-    if (utils.isVerbose()) {
+    if (!can && utils.isVerbose()) {
       console.log('PROGALLERY [CAN_RENDER] GalleryContainer', this.state, can, this.state.container, this.state.styles, this.state.items);
     }
     return can;
