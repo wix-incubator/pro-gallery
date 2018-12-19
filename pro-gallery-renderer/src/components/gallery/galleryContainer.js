@@ -1489,6 +1489,35 @@ export class GalleryContainer extends React.Component {
     if (canSet('loadMoreButtonText')) {
       stateStyles.loadMoreButtonText = String(wixStyles.loadMoreButtonText);
     }
+    if (canSet('loadMoreButtonFont')) {
+      stateStyles.loadMoreButtonFont = wixStyles.loadMoreButtonFont;
+      if (utils.isMobile()) {
+        stateStyles.loadMoreButtonFont.value = stateStyles.loadMoreButtonFont.value.slice(5, -1);
+        if (stateStyles.loadMoreButtonFont.value.indexOf('underline') > 0) {
+          stateStyles.loadMoreButtonFont.value = stateStyles.loadMoreButtonFont.value.slice(0, -26);
+          stateStyles.textDecorationLoadMore = 'underline';
+        } else {
+          stateStyles.textDecorationLoadMore = 'none';
+        }
+      }
+    }
+    if (canSet('loadMoreButtonFontColor')) {
+      stateStyles.loadMoreButtonFontColor = wixStyles.loadMoreButtonFontColor;
+    }
+    if (canSet('loadMoreButtonColor')) {
+      stateStyles.loadMoreButtonColor = wixStyles.loadMoreButtonColor;
+    }
+    if (canSet('loadMoreButtonBorderWidth')) {
+      stateStyles.loadMoreButtonBorderWidth = wixStyles.loadMoreButtonBorderWidth;
+    }
+    if (canSet('loadMoreButtonBorderColor')) {
+      stateStyles.loadMoreButtonBorderColor = wixStyles.loadMoreButtonBorderColor;
+    }
+    if (canSet('loadMoreButtonBorderRadius')) {
+      stateStyles.loadMoreButtonBorderRadius = wixStyles.loadMoreButtonBorderRadius;
+    }
+
+
 
     if (canSet('customButtonText')) {
       stateStyles.customButtonText = String(wixStyles.customButtonText);

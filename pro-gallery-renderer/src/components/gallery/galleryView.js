@@ -200,12 +200,41 @@ class GalleryView extends React.Component {
     ) : '');
   }
 
+  returnButtonStyle(styleParams) {
+    const btnStyle = {};
+    if (utils.isMobile()) {
+      if (typeof styleParams.loadMoreButtonFont !== 'undefined') {
+        btnStyle.font = styleParams.loadMoreButtonFont.value;
+        btnStyle.textDecoration = styleParams.textDecorationLoadMore;
+      }
+      if (typeof styleParams.loadMoreButtonFontColor !== 'undefined') {
+        btnStyle.color = styleParams.loadMoreButtonFontColor.value;
+        btnStyle.textDecorationColor = styleParams.loadMoreButtonFontColor.value;
+      }
+      if (typeof styleParams.loadMoreButtonColor !== 'undefined') {
+        btnStyle.background = styleParams.loadMoreButtonColor.value;
+      }
+      if (typeof styleParams.loadMoreButtonBorderColor !== 'undefined') {
+        btnStyle.borderColor = styleParams.loadMoreButtonBorderColor.value;
+      }
+      if (typeof styleParams.loadMoreButtonBorderRadius !== 'undefined') {
+        btnStyle.borderRadius = styleParams.loadMoreButtonBorderRadius;
+      }
+      if (typeof styleParams.loadMoreButtonBorderWidth !== 'undefined') {
+        btnStyle.borderWidth = styleParams.loadMoreButtonBorderWidth;
+      }
+    }
+    return btnStyle;
+  }
+
   createShowMoreButton() {
+    const styleParams = this.props.styleParams;
     let showMoreButton = false;
     const shouldShowButton = (!this.props.scroll.isInfinite && (this.props.galleryStructure.height > utils.getWindowHeight()));
+    const btnStyle = this.returnButtonStyle(styleParams);
 
     if (shouldShowButton) {
-      const buttonText = this.props.styleParams.loadMoreButtonText || 'Load More';
+      const buttonText = styleParams.loadMoreButtonText || 'Load More';
       showMoreButton = (
         <div className="show-more-container">
           <button
@@ -214,6 +243,7 @@ class GalleryView extends React.Component {
             onClick={this.showMoreItems}
             data-hook="show-more"
             aria-label={buttonText}
+            style={btnStyle}
           >{buttonText}</button>
         </div>
       );

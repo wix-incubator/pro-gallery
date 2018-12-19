@@ -569,6 +569,16 @@ function processLayouts(styles) {
     processedStyles.imageMargin /= 2;
   }
 
+  if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
+    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.slice(5, -1);
+    if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > 0) {
+      processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.slice(0, -26);
+      processedStyles.textDecorationLoadMore = 'underline';
+    } else {
+      processedStyles.textDecorationLoadMore = 'none';
+    }
+  }
+
   if (processedStyles.isSlider) {
     processedStyles.cubeRatio = processedStyles.gallerySliderImageRatio;
   } else if (processedStyles.isGrid && !_.isUndefined(processedStyles.galleryImageRatioFromWix)) {
