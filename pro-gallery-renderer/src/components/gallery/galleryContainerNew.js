@@ -315,14 +315,16 @@ export class GalleryContainer extends React.Component {
       if (gallerySize - scrollEnd < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
         const newItems = await this.props.getMoreItems(this.state.items.length);
-        const allItems = this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || []);
-        const itemsState = this.reCreateGalleryExpensively({
-          items: allItems
-        });
-        this.gettingMoreItems = false;
-        if (Object.keys(itemsState).length > 0) {
-          this.setState(itemsState);
+        if (newItems && newItems.length > 0) {
+          const allItems = this.items.concat(newItems.map(item => ItemsHelper.convertDtoToLayoutItem(item)) || []);
+          const itemsState = this.reCreateGalleryExpensively({
+            items: allItems
+          });
+          if (Object.keys(itemsState).length > 0) {
+            this.setState(itemsState);
+          }
         }
+        this.gettingMoreItems = false;
       }
     }
   }
