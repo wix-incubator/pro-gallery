@@ -626,12 +626,10 @@
           margin: 0;
           overflow: hidden;
           border-radius: 0;
-          transition: opacity 1s ease;
-          transition-delay: .5s;
+          transition: all 1s ease;
           backface-visibility: hidden;
           transform: translate3d(0,0,0);
           will-change: transform, opacity, background-color;
-          transition: transform 1s ease;
 
           &.text-item {
 

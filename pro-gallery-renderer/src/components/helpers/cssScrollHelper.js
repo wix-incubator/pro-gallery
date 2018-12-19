@@ -92,7 +92,7 @@ class CssScrollHelper {
 
     //load hi-res image + loading transition
     if (!window.isSSR) {
-      this.scrollCss[idx] += createScrollSelectors(this.highResPadding, `.image-item>canvas`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
+      this.scrollCss[idx] += createScrollSelectors(this.highResPadding, `.image-item>canvas`) + `{opacity: 1; transition: opacity 1s ease .5s; background-image: url(${resized_url.img})}`;
     }
 
     //add the blurry image
@@ -114,59 +114,59 @@ class CssScrollHelper {
 
     if (utils.shouldDebug('slideAnimation')) {
       //push down items under screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: translateY(150px); transition: transform 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: translateY(150px);}`;
       //push back items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: translateY(0) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: translateY(0) !important; transition: transform 800ms ease ${animationTiming}ms;}`;
     }
 
     if (utils.shouldDebug('sideAnimation')) {
       //push down items under screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '.image-item') + `{transform: translateX(150px); transition: transform 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '.image-item') + `{transform: translateX(150px);}`;
       //push back items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '.image-item') + `{transform: translateX(0) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '.image-item') + `{transform: translateX(0) !important; transition: transform 800ms ease ${animationTiming}ms;}`;
     }
 
     if (utils.shouldDebug('fadeAnimation')) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: opacity(0); transition: filter 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: opacity(0);}`;
       //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: opacity(1) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: opacity(1) !important; transition: filter 800ms ease ${animationTiming}ms;}`;
     }
 
     if (utils.shouldDebug('zoomAnimation')) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: scale(0); transition: transform 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: scale(0);}`;
       //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: scale(1) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: scale(1) !important; transition: transform 800ms ease ${animationTiming}ms;}`;
     }
 
     if (utils.shouldDebug('rotateAnimation')) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: rotate(10deg); transform-origin: top left; transition: transform 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: rotate(10deg); transform-origin: top left;}`;
       //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: rotate(0deg) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: rotate(0deg) !important; transition: transform 800ms ease ${animationTiming}ms;}`;
     }
 
     if (utils.shouldDebug('bnwAnimation')) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: grayscale(100%); transition: filter 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: grayscale(100%);}`;
       //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: grayscale(0) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: grayscale(0) !important; transition: filter 800ms ease ${animationTiming}ms;}`;
     }
 
     if (utils.shouldDebug('blurAnimation')) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: blur(10px); transition: filter 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: blur(10px);}`;
       //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: blur(0) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: blur(0) !important; transition: filter 800ms ease ${animationTiming}ms;}`;
     }
 
     if (utils.shouldDebug('flipAnimation')) {
       //hide items below screen
       this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{perspective: 300px;}`;
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '>canvas') + `{transform: rotateX(-20deg); transform-origin: top; transition: transform 800ms ease ${animationTiming}ms}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '>canvas') + `{transform: rotateX(-20deg); transform-origin: top;}`;
       //shoe items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '>canvas') + `{transform: rotateX(0) !important}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '>canvas') + `{transform: rotateX(0) !important; transition: transform 800ms ease ${animationTiming}ms;}`;
     }
 
   }
