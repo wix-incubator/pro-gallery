@@ -62,6 +62,6 @@ describe('Text elements', () => {
     // make allowAnyAction() return false;
     itemViewProps.styleParams.loveButton = itemViewProps.styleParams.allowSocial = itemViewProps.styleParams.allowDownload = false;
     galleryDriver.mount(Texts, itemViewProps);
-    expect(galleryDriver.find.hook('item-title').get(0).style.marginBottom).to.equal('0px');
+    expect(galleryDriver.find.hook('item-title').get(0).props.style.marginBottom).to.equal(0);
   });
 });

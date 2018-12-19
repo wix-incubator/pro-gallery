@@ -37,15 +37,15 @@ describe('Image Item', () => {
     Object.assign(imageItemsProps, {loaded: false, resized_url: {thumb: 'test'}});
     let stub = sinon.stub(utils, 'deviceHasMemoryIssues').returns(false);
     galleryDriver.mount(ImageItem, imageItemsProps);
-    let style = galleryDriver.find.hook('image-item').get(0).style;
+    let style = galleryDriver.find.hook('image-item').get(0).props.style;
     expect(style).to.have.property('backgroundImage', 'url(test)');
     stub.restore();
 
     Object.assign(imageItemsProps, {loaded: false, resized_url: {thumb: 'test'}});
     stub = sinon.stub(utils, 'deviceHasMemoryIssues').returns(true);
     galleryDriver.mount(ImageItem, imageItemsProps);
-    style = galleryDriver.find.hook('image-item').get(0).style;
-    expect(style).to.have.property('backgroundImage', '');
+    style = galleryDriver.find.hook('image-item').get(0).props.style;
+    expect(style.backgroundImage).to.equal(undefined);
     stub.restore();
   });
 
@@ -63,6 +63,6 @@ describe('Image Item', () => {
     Object.assign(imageItemsProps, {alt: 'test'});
     Object.assign(imageItemsProps, {isThumbnail: false});
     galleryDriver.mount(ImageItem, imageItemsProps);
-    expect(galleryDriver.find.selector('img').get(0).alt).to.equal('test');
+    expect(galleryDriver.find.selector('img').get(0).props.alt).to.equal('test');
   });
 });

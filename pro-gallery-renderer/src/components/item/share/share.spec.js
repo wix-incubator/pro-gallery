@@ -75,11 +75,15 @@ describe('Share:', () => {
     it('should have a correct transform formula', () => {
       Object.assign(sampleItemViewProps, {style: {height: 321, width: 123}, isVerticalContainer: false});
       driver.mount(Share, sampleItemViewProps);
-      const style = driver.find.hook('social-share-box').get(0).style;
+      let style = driver.find.hook('social-share-box').get(0).props.style;
       expect(style.transform).to.equal('translateX(-50%) scale(0.615)');
       driver.set.props({isVerticalContainer: true});
+			//driver.update();
+      style = driver.find.hook('social-share-box').get(0).props.style;
       expect(style.transform).to.equal('translateY(-50%) ');
       driver.set.props({style: {height: 123, width: 321}});
+			//driver.update();
+      style = driver.find.hook('social-share-box').get(0).props.style;
       expect(style.transform).to.equal('translateY(-50%) scale(0.615)');
     });
   });

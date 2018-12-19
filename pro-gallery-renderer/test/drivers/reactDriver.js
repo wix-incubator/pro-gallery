@@ -2,7 +2,7 @@
 import {Layouter} from 'pro-gallery-layouter';
 import GalleryItem from '../../src/components/item/galleryItem';
 import {testImages} from '../images-mock.js';
-import {mount, shallow} from 'enzyme';
+import {mount, shallow, configure} from 'enzyme';
 import {GalleryContainer} from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
@@ -10,7 +10,9 @@ import Consts from 'photography-client-lib/dist/src/utils/consts';
 import React from 'react';
 import utils from '../../src/utils';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import Adapter from 'enzyme-adapter-react-16';
 
+configure({adapter: new Adapter()});
 const mockStore = configureStore();
 
 
@@ -188,10 +190,10 @@ class galleryDriver {
 
   get set() {
     return {
-      state: (state, callback) => {
+      state: (state, callback = () => {}) => {
         return this.wrapper.setState(state, callback);
       },
-      props: (props, callback) => {
+      props: (props, callback = () => {}) => {
         return this.wrapper.setProps(props, callback);
       }
     };

@@ -68,19 +68,19 @@ describe('Item View', () => {
 
       driver.mount(ItemView, sampleItemViewProps);
       let spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
       expect(spy.called).to.be.true; //called on any event type other than mouseout
       spy.restore();
       spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
       expect(spy.called).to.be.false; //not called is mouseout but one of the tagName isnt listed
       spy.restore();
       spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'button'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}});
+      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'button'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}, preventDefault: () => {}});
       expect(spy.called).to.be.false; //not called is mouseout but at least one of the tagName isnt listed
       spy.restore();
       spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}});
+      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}, preventDefault: () => {}});
       expect(spy.called).to.be.true; // called if mouseout but no listed tagName
       spy.restore();
     });
@@ -90,11 +90,11 @@ describe('Item View', () => {
       driver.set.state({
         showShare: true
       });
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
       expect(driver.get.state().showShare).to.be.false; //when forceVal is not sent - toggles showShare
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}});
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
       expect(driver.get.state().showShare).to.be.true; //when forceVal is not sent - toggles showShare
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}}, true);
+      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}}, true);
       expect(driver.get.state().showShare).to.be.true; //assignes forceVal to showShare if it is defined
       spy.restore();
     });
@@ -440,26 +440,26 @@ describe('Item View', () => {
           boxShadow: 5,
           imageMargin: 5}});
       driver.mount(ItemView, sampleItemViewProps);
-      let style = driver.find.hook('item-container').get(0).style;
+      let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('5px 5px 13px 0 rgba(0,0,0,0.2)');
       driver.set.props({
         styleParams: {
           boxShadow: 0,
           imageMargin: 5}});
-      style = driver.find.hook('item-container').get(0).style;
-      expect(style.boxShadow).to.equal('');
+      style = driver.find.hook('item-container').get(0).props.style;
+      expect(style.boxShadow).to.equal(undefined);
     });
     it('should toggle overflowY visible/inherit', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           isSlideshow: true}});
       driver.mount(ItemView, sampleItemViewProps);
-      let style = driver.find.hook('item-container').get(0).style;
+      let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('visible');
       driver.set.props({
         styleParams: {
           isSlideshow: false}});
-      style = driver.find.hook('item-container').get(0).style;
+      style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('inherit');
     });
     it('item-Wrapper should have class based on cubeType', () => {
@@ -480,12 +480,12 @@ describe('Item View', () => {
         styleParams: {
           cubeType: 'fit'}});
       driver.mount(ItemView, sampleItemViewProps);
-      let style = driver.find.hook('item-wrapper').get(0).style;
+      let style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
       driver.set.props({
         styleParams: {
           cubeType: 'foot'}});
-      style = driver.find.hook('item-wrapper').get(0).style;
+      style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('red');
     });
   });
