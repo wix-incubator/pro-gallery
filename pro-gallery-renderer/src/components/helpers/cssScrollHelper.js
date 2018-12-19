@@ -11,17 +11,17 @@ import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 class CssScrollHelper {
 
   constructor() {
-    this.pgScrollSteps = [5120, 2560, 1280, 640, 320, 160, 80, 40];
+    this.pgScrollSteps = [5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10];
     this.pgScrollClassName = 'pgscl';
 
     this.screenSize = Math.max(window.screen.width, window.screen.height);
 
     this.inScreenPadding = [0, 0];
     this.aboveScreenPadding = [0, Infinity];
-    this.justBelowScreenPadding = [1000, -0];
+    this.justBelowScreenPadding = [this.screenSize, 0];
     this.belowScreenPadding = [Infinity, 0];
-    this.visiblePadding = [this.screenSize * 7, this.screenSize * 2];
-    this.renderedPadding = [this.screenSize * 7, this.screenSize * 4];
+    this.highResPadding = [this.screenSize * 7, this.screenSize * 2];
+    this.lowResPadding = [this.screenSize * 7, this.screenSize * 4];
 
     this.scrollCss = [];
     this.scrollCssProps = [];
@@ -92,25 +92,25 @@ class CssScrollHelper {
 
     //load hi-res image + loading transition
     if (!window.isSSR) {
-      this.scrollCss[idx] += createScrollSelectors(this.visiblePadding, `.image-item>canvas`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
+      this.scrollCss[idx] += createScrollSelectors(this.highResPadding, `.image-item>canvas`) + `{opacity: 1; background-image: url(${resized_url.img})}`;
     }
 
     //add the blurry image
     if (!utils.deviceHasMemoryIssues() && styleParams.imageLoadingMode !== Consts.loadingMode.COLOR && !item.isTransparent) {
       // add blurred background-image
-      this.scrollCss[idx] += createScrollSelectors(this.renderedPadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
+      this.scrollCss[idx] += createScrollSelectors(this.lowResPadding, `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
     }
 
     //scrollAnimation [DEMO]
-    this.createScrollAnimationsIfNeeded(idx, createScrollSelectors);
+    this.createScrollAnimationsIfNeeded({idx, styleParams, createScrollSelectors});
 
     return this.scrollCss[idx];
     // console.count('pgScroll item created');
   }
 
-  createScrollAnimationsIfNeeded(idx, createScrollSelectors) {
+  createScrollAnimationsIfNeeded({idx, styleParams, createScrollSelectors}) {
 
-    const animationTiming = (((idx % 3) + 2) * 50);
+    const animationTiming = (((idx % 3) + 2) * 50); //100 - 200
 
     if (utils.shouldDebug('slideAnimation')) {
       //push down items under screen
