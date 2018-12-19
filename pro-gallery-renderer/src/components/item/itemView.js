@@ -626,11 +626,14 @@ class ItemView extends React.Component {
     return styles;
   }
   getItemWrapperStyles() {
-    const {styleParams, style, transform} = this.props;
+    const {styleParams, style, type} = this.props;
     const borderRadius = (styleParams.borderRadius < 100 ? styleParams.borderRadius : Math.min(parseInt(style.width), parseInt(style.height)));
     const height = style.height;
     const styles = {};
     styles.backgroundColor = styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit';
+    if (type !== 'text') {
+      styles.backgroundColor = styles.backgroundColor || 'transparent'
+    }
     styles.height = height + 'px';
     styles.borderRadius = borderRadius + 'px';
     return styles;
