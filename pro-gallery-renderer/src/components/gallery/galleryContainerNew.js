@@ -202,14 +202,12 @@ export class GalleryContainer extends React.Component {
 
     if (isNew.items && !isNew.addedItems) {
       this.items = items.map(item => {
-        console.count('reCreateGalleryExpensively convertDtoToLayoutItem');
         return ItemsHelper.convertDtoToLayoutItem(item);
       });
       newState.items = this.items.map(item => item.id);
       this.gettingMoreItems = false; //probably finished getting more items
     } else if (isNew.addedItems) {
       this.items = this.items.concat(items.slice(this.items.length).map(item => {
-        console.count('reCreateGalleryExpensively convertDtoToLayoutItem');
         return ItemsHelper.convertDtoToLayoutItem(item);
       }));
       newState.items = this.items.map(item => item.id);
@@ -254,7 +252,7 @@ export class GalleryContainer extends React.Component {
         }
       };
 
-      if (this.layouter && isNew.str === 'addedItems') {
+      if (this.layouter && isNew.addedItems) {
         layoutParams.options.useExistingLayout = true;
       } else {
         layoutParams.options.createLayoutOnInit = false;
@@ -269,7 +267,7 @@ export class GalleryContainer extends React.Component {
       const layout = this.layouter.createLayout(layoutParams);
       const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll || this.infiniteScrollChanged) && !_styles.oneRow;
 
-      if (isNew.str === 'addedItems') {
+      if (isNew.addedItems) {
         const existingLayout = this.galleryStructure || layout;
         this.galleryStructure = ItemsHelper.convertExistingStructureToGalleryItems(existingLayout, layout, {
           watermark: watermarkData,
