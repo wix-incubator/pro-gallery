@@ -266,7 +266,7 @@ describe('Item View', () => {
           cubedHeight: 1000}});
       driver.mount(ItemView, sampleItemViewProps);
 			//IMPORTANT use deep when trying to compare objects
-      expect(driver.get.instance().getImageDimensions()).to.deep.equal({});
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal({width: 1920, height: 1000});
 
       driver.set.props({
         styleParams: {
@@ -282,7 +282,7 @@ describe('Item View', () => {
           cubedWidth: 1920,
           height: 1000,
           cubedHeight: 1000}});
-      expect(driver.get.instance().getImageDimensions()).to.deep.equal({});
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal({width: 1920, height: 1000});
 
       driver.set.props({
         styleParams: {
@@ -299,11 +299,10 @@ describe('Item View', () => {
           height: 1000,
           cubedHeight: 1000}});
 			//IMPORTANT notice marginTop is -0. if it was just 0 it wouldnt deep equal the -0 that returns from the function (the value is devided by -2 in the function)
-      let testObject = {
-        height: `calc(100% - 0px)`,
-        marginTop: -0
-      };
-      expect(driver.get.instance().getImageDimensions()).to.deep.equal(testObject);
+      let testObject = driver.get.instance().getImageDimensions();
+      expect(testObject.width).to.equal(1920);
+      expect(testObject.height).to.equal(1000);
+      expect(testObject.marginTop).to.equal(0);
       driver.set.props({
         styleParams: {
           cubeImages: true,
@@ -318,11 +317,10 @@ describe('Item View', () => {
           cubedWidth: 1920,
           height: 1000,
           cubedHeight: 1000}});
-      testObject = {
-        width: `calc(100% - 920px)`,
-        marginLeft: 460
-      };
-      expect(driver.get.instance().getImageDimensions()).to.deep.equal(testObject);
+      testObject = driver.get.instance().getImageDimensions();
+      expect(testObject.width).to.equal(1000);
+      expect(testObject.height).to.equal(1000);
+      expect(testObject.marginLeft).to.equal(460);
     });
   });
   describe('isVisible', () => {
