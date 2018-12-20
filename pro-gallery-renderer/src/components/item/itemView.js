@@ -311,16 +311,28 @@ class ItemView extends React.Component {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    const imageIsWider = this.props.style.ratio >= this.props.cubeRatio;
-    const imageMarginLeft = Math.round((this.props.style.height * this.props.style.ratio - this.props.style.width) / -2);
-    const imageMarginTop = Math.round((this.props.style.width / this.props.style.ratio - this.props.style.height) / -2);
-    return !((this.props.styleParams.cubeImages && this.props.styleParams.cubeType === 'fit')) ? {} : (!imageIsWider ? {
-      width: `calc(100% - ${2 * imageMarginLeft}px)`,
-      marginLeft: imageMarginLeft
-    } : {
-      height: `calc(100% - ${2 * imageMarginTop}px)`,
-      marginTop: imageMarginTop
-    });
+    const {styleParams, cubeRatio, style} = this.props;
+    const imageIsWider = style.ratio >= cubeRatio;
+    const imageMarginLeft = Math.round((style.height * style.ratio - style.width) / -2);
+    const imageMarginTop = Math.round((style.width / style.ratio - style.height) / -2);
+    return !((styleParams.cubeImages && styleParams.cubeType === 'fit')) ? {
+      //not grid fit
+      width: style.width,
+      height: style.height
+    } : (
+      //grid fit images
+      !imageIsWider ? {
+        //portrait
+        width: style.width - 2 * imageMarginLeft,
+        height: style.height,
+        marginLeft: imageMarginLeft
+      } : {
+        //landscape
+        height: style.height - 2 * imageMarginTop,
+        width: style.width,
+        marginTop: imageMarginTop
+      }
+    );
   }
 
   isVisible(elment, clientRect) {
