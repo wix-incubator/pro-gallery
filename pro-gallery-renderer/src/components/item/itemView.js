@@ -690,9 +690,15 @@ class ItemView extends React.Component {
     return className;
   }
   getItemWrapperClass() {
-    const {styleParams} = this.props;
-    const className = 'gallery-item-wrapper visible ' + (styleParams.cubeImages ? 'cube-type-' + styleParams.cubeType : '');
-    return className;
+    const {styleParams, type} = this.props;
+    const classNames = ['gallery-item-wrapper', 'visible'];
+    if (styleParams.cubeImages) {
+      classNames.push('cube-type-' + styleParams.cubeType);
+    }
+    if (type === 'text') {
+      classNames.push('gallery-item-wrapper-text');
+    }
+    return classNames.join(' ');
   }
   getItemContainerTabIndex() {
     const tabIndex = this.isHighlight() ? utils.getTabIndex('currentThumbnail') : (this.props.currentIdx === this.props.idx ? utils.getTabIndex('currentGalleryItem') : -1);

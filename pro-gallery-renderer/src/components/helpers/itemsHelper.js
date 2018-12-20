@@ -54,7 +54,7 @@ export class ItemsHelper {
     return galleryStructure;
   }
 
-  static convertToGalleryItemsNew(existingStructure, galleryStructure, itemConfig = {}) {
+  static convertExistingStructureToGalleryItems(existingStructure, galleryStructure, itemConfig = {}) {
     // console.log('convertToGalleryItems', existingStructure.galleryItems);
     // console.count('convertToGalleryItems');
     if (utils.isVerbose()) {

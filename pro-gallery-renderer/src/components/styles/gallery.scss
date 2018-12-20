@@ -626,10 +626,8 @@
           margin: 0;
           overflow: hidden;
           border-radius: 0;
-          transition: all 1s ease;
           backface-visibility: hidden;
           transform: translate3d(0,0,0);
-          will-change: transform, opacity, background-color;
 
           &.text-item {
 

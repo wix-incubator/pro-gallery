@@ -1117,7 +1117,7 @@ class GalleryItem {
   }
 
   get isTransparent() {
-    return this.url && this.url.indexOf('.png') > 0;
+    return this.url && (this.url.indexOf('.png') > 0 || this.url.indexOf('.gif') > 0);
   }
 }
 

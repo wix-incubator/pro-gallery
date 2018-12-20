@@ -44,11 +44,11 @@ class CssScrollHelper {
     return items.map(item => this.calcScrollCssForItem({item, scrollBase, styleParams})).join(`\n`);
   }
 
-  shouldCalcScrollCss({top, left, width, height, resized_url, idx, type}, scrollBase, styleParams) {
+  shouldCalcScrollCss({id, top, left, width, height, resized_url, idx, type}, scrollBase, styleParams) {
     if (type === 'video' || type === 'text') {
       return false;
     }
-    const scrollCssProps = JSON.stringify({top, left, width, height, scrollBase, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
+    const scrollCssProps = JSON.stringify({id, top, left, width, height, scrollBase, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
     if (scrollCssProps === this.scrollCssProps[idx]) {
       return false;
     }
