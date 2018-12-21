@@ -54,7 +54,7 @@ export default class CssScrollIndicator extends React.Component {
             //Horizontal Scroll
         this.onHorizontalScroll = e => {
           const target = (e.currentTarget || e.target || e);
-          const left = (target && (target.scrollX || target.scrollLeft));
+          const left = (target && (target.scrollX || target.scrollLeft || target.x));
           if (left >= 0) {
             this.setState({
               scrollTop: left, //todo use both scrollTop and scrollLeft
@@ -73,7 +73,7 @@ export default class CssScrollIndicator extends React.Component {
         // this.onVerticalScroll = _.throttle(e => {
         this.onVerticalScroll = e => {
           const target = (e.currentTarget || e.target || e);
-          const top = (target && (target.scrollY || target.scrollTop));
+          const top = (target && (target.scrollY || target.scrollTop || target.y));
           if (top >= 0) {
             this.setState({
               scrollTop: top
