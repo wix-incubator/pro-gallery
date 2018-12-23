@@ -388,7 +388,7 @@ export class GalleryContainer extends React.Component {
 
       const gallerySize = (oneRow ? this.galleryStructure.columns[0].width : this.galleryStructure.height);
       const scrollEnd = (oneRow ? scrollPos + window.screen.width : scrollPos + this.state.container.scrollBase + window.screen.height);
-      const getItemsDistance = oneRow ? window.screen.width : window.screen.height;
+      const getItemsDistance = 2 * (oneRow ? window.screen.width : window.screen.height);
 
       if (gallerySize - scrollEnd < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
