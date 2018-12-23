@@ -92,7 +92,7 @@ class CssScrollHelper {
 
     //load hi-res image + loading transition
     if (!window.isSSR) {
-      this.scrollCss[idx] += createScrollSelectors(this.highResPadding, `.image-item>canvas`) + `{opacity: 1; transition: opacity 1s ease .5s; background-image: url(${resized_url.img})}`;
+      this.scrollCss[idx] += createScrollSelectors(this.highResPadding, `.image-item>canvas`) + `{opacity: 1; transition: opacity 1s ease 2s; background-image: url(${resized_url.img})}`;
     }
 
     //add the blurry image
