@@ -5,8 +5,8 @@ class Utils extends RenderUtils {
 
   get positioningType() {
     let pt = (window && window.petri && window.petri['specs.pro-gallery.itemsPositioning']) || 'relative';
-    if (window.isSSR) {
-      pt = 'absolute'; //on SSR use only absolute positioning
+    if (this.useRefactoredProGallery) {
+      pt = 'absolute'; //on OOI / SSR use only absolute positioning
     }
     return pt;
   }
