@@ -16,7 +16,7 @@ class Utils extends RenderUtils {
   }
 
   get useRefactoredProGallery() {
-    return !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true') || (window && window.isSSR); //on SSR use only refactor gallery
+    return !!(window && window.petri && (window.petri['specs.pro-gallery.newGalleryContainer'] === 'true' || window.petri['specs.pro-gallery.useRefactoredProGallery'] === 'true')) || (window && window.isSSR); //on SSR use only refactor gallery
   }
 
   isWixIframe() {
@@ -76,9 +76,9 @@ class Utils extends RenderUtils {
     animateScroll();
   }
 
-  isVerbose() {
-    return window.isMock || (!this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true'));
-  }
+  // isVerbose() {
+  //   return window.isMock || (!this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true'));
+  // }
 }
 
 export default new Utils();

@@ -28,8 +28,7 @@ class GalleryView extends React.Component {
     };
     appPartiallyLoaded('pro-gallery-statics');
 
-    this.useRefactoredProGallery = !!(window && window.petri && window.petri['specs.pro-gallery.newGalleryContainer'] === 'true');
-    this.useCssScrolling = this.useRefactoredProGallery;
+    this.useCssScrolling = utils.useRefactoredProGallery;
 
   }
 
@@ -91,7 +90,7 @@ class GalleryView extends React.Component {
     if (utils.isAccessibilityEnabled()) { // tal - I left this check since we do not want to focus the last item in non-accessibility mode
       //find the last visible item and focus on it
       try {
-        const lastItemIdx = this.useRefactoredProGallery ? this.lastVisibleItemIdx() : this.props.galleryStructure.lastVisibleItemIdx();
+        const lastItemIdx = utils.useRefactoredProGallery ? this.lastVisibleItemIdx() : this.props.galleryStructure.lastVisibleItemIdx();
         utils.setStateAndLog(this, 'Focus on Last Gallery Item', {
           currentIdx: lastItemIdx + 1
         }, () => {
