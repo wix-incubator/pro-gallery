@@ -29,7 +29,7 @@ class CssScrollHelper {
   }
 
   getDomId({id, idx}) {
-    return `pgi${String(idx)}${String(id).slice(-5, -1)}`;
+    return id; //`pgi${String(idx)}${String(id).slice(-5, -1)}`;
   }
 
   calcScrollClasses(scrollTop) {
