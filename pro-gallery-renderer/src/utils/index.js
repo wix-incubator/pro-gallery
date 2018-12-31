@@ -17,7 +17,6 @@ class Utils extends RenderUtils {
   }
 
   get useRefactoredProGallery() {
-    console.log('useRefactoredProGallery from experimentsWrapper', experiments);
     return (window && window.petri && !!(window.petri['specs.pro-gallery.newGalleryContainer'] === 'true' || window.petri['specs.pro-gallery.useRefactoredProGallery'] === 'true')) || (window && window.isSSR); //on SSR use only refactor gallery
   }
 
