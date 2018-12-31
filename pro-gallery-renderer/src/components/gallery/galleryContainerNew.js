@@ -291,8 +291,7 @@ export class GalleryContainer extends React.Component {
       }
       if (window.isSSR && isFullwidth) {
         console.time('fullwidthLayoutsCss!');
-        const isMobile = (this.context && this.context.isMobile);
-        this.fullwidthLayoutsCss = createCssLayouts(layoutParams, isMobile);
+        this.fullwidthLayoutsCss = createCssLayouts(layoutParams, utils.isMobile());
         console.timeEnd('fullwidthLayoutsCss!');
       } else {
         this.fullwidthLayoutsCss = [];
