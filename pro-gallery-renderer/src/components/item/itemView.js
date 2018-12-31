@@ -135,6 +135,7 @@ class ItemView extends React.Component {
 
   toggleShare(event, forceVal) {
     event.stopPropagation();
+    event.preventDefault();
     if (event.type === 'mouseout' && (this.isIconTag(event.target.tagName) || (event.relatedTarget && this.isIconTag(event.relatedTarget.tagName)))) {
       //mouseout event should not be fired if hovering over icons (tag name === I)
       return;
