@@ -247,6 +247,10 @@ class ItemView extends React.Component {
   //-----------------------------------------| UTILS |--------------------------------------------//
 
   setVisibilityState(state) {
+//     if (state.visibleVertically && state.renderedVertically) {
+//       console.log(this.props.idx)
+// ;
+//     }
     const newState = {};
     Object.keys(state).forEach(key => {
       if (state[key] !== this.state[key]) {
@@ -350,6 +354,7 @@ class ItemView extends React.Component {
     const videoHeight = bottom - top;
     const tolerance = videoHeight / 2;
     const res = top + tolerance > scrollPosition && bottom - tolerance < scrollPosition + windowHeight;
+    console.log(this.props.idx, res);
     return res;
   }
 
@@ -762,8 +767,8 @@ class ItemView extends React.Component {
   }
   normalizeWixParams(e) {
     const target = {
-      scrollY: e.scrollTop || 0,
-      scrollX: e.scrollLeft || 0,
+      scrollY: e.scrollTop || e.y || 0,
+      scrollX: e.scrollLeft || e.x || 0,
       offsetTop: e.y,
       clientWidth: e.documentWidth,
       clientHeight: e.documentHeight,

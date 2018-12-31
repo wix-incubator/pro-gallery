@@ -67,8 +67,8 @@ function getDistanceFromScreen({offset, scroll, itemStart, itemEnd, screenSize})
   const after = offset + itemStart - screenSize - scroll;
   return {before, after};
 }
-function isWithinPaddingVertically({target, top, bottom, screenHeight, padding}) {
-  const res = getDistanceFromScreen({offset: target.offsetTop || 0, scroll: target.scrollY, itemStart: top, itemEnd: bottom, screenSize: screenHeight});
+function isWithinPaddingVertically({target, scrollBase, top, bottom, screenHeight, padding}) {
+  const res = getDistanceFromScreen({offset: scrollBase || 0, scroll: target.scrollY, itemStart: top, itemEnd: bottom, screenSize: screenHeight});
   return (res.before < padding && res.after < padding);
 }
 
@@ -83,9 +83,10 @@ function isWithinPaddingHorizontally({target, left, right, screenWidth, padding,
 function setVerticalVisibility({target, props, screenSize, padding, callback}) {
   const {offset, style} = props;
   const bottom = offset.top + style.height;
+  const {scrollBase} = props.container;
   callback({
-    visibleVertically: isWithinPaddingVertically({target, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.visible}),
-    renderedVertically: isWithinPaddingVertically({target, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.rendered})
+    visibleVertically: isWithinPaddingVertically({target, scrollBase, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.visible}),
+    renderedVertically: isWithinPaddingVertically({target, scrollBase, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.rendered})
   });
 }
 
