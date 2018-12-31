@@ -4,7 +4,6 @@ import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 // const CDN_URL = 'https://static.wixstatic.com/media/';
 const desktopWidths = [1024, 1280, 1360, 1440, 1680, 1920];
 const mobileWidths = [320, 480, 600, 720, 800, 900];
-const popularWidths = [...mobileWidths, ...desktopWidths];
 
 /*
     TODO:
@@ -36,13 +35,13 @@ const getImageStyle = item => ({
   // backgroundImage: `url(${getImageSrc(item)})`
 });
 
-const createCssFromLayouts = (layouts, styleParams) => {
+const createCssFromLayouts = (layouts, styleParams, widths) => {
 
   const cssStrs = [];
   layouts.forEach((layout, idx) => {
     let cssStr = '';
     if (layout) {
-      const width = popularWidths[idx];
+      const width = widths[idx];
       const isFirstMediaQuery = cssStrs.length === 0;
       cssStr += isFirstMediaQuery ? '' : `@media only screen and (min-width: ${width}px) {`;
       const layoutWidth = width - styleParams.imageMargin * 2;
@@ -69,11 +68,12 @@ const createCssFromLayouts = (layouts, styleParams) => {
   return cssStrs;
 };
 
-export const createCssLayouts = layoutParams => {
-  const cssLayouts = popularWidths.map(width => {
+export const createCssLayouts = (layoutParams, isMobile) => {
+  const widths = (isMobile ? mobileWidths : desktopWidths);
+  const cssLayouts = widths.map(width => {
     const _layoutParams = {...layoutParams, ...{container: {...layoutParams.container, galleryWidth: width, width}}};
     return createLayout(_layoutParams);
   });
-  return createCssFromLayouts(cssLayouts, layoutParams.styleParams);
+  return createCssFromLayouts(cssLayouts, layoutParams.styleParams, widths);
 };
 
