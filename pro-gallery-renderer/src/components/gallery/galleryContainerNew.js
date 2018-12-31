@@ -51,6 +51,14 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.getMoreItemsIfNeeded(0);
+
+    //calcScrollBase (read the dom)
+    this.setState({
+      container: Object.assign({}, this.state.container, dimentionsHelper.getGalleryDimensions(), {
+        scrollBase: this.calcScrollBase(this.state.container),
+      })
+    });
+
   }
 
   componentWillReceiveProps(nextProps) {
