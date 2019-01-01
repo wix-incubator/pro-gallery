@@ -26,14 +26,14 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
       const layoutWidth = width - styleParams.imageMargin * 2;
       layout.items.forEach((item, i) => {
         const id = cssScrollHelper.getDomId(item);
-        if (i < 100) {
+        if (i < 50) {
           const style = getImageStyle(item);
-          cssStr += `#${id} {` +
-              `top:${Math.round(10000 * (style.top / layoutWidth)) / 100}vw !important;` +
-              `left:${Math.round(10000 * (style.left / layoutWidth)) / 100}vw !important;` +
-              `width:${Math.round(10000 * (style.width / layoutWidth)) / 100}vw !important;` +
-              `height:${Math.round(10000 * (style.height / layoutWidth)) / 100}vw !important;` +
-            `}`;
+          const top = `top:${Math.round(10000 * (style.top / layoutWidth)) / 100}vw !important;`;
+          const left = `left:${Math.round(10000 * (style.left / layoutWidth)) / 100}vw !important;`;
+          const width = `width:${Math.round(10000 * (style.width / layoutWidth)) / 100}vw !important;`;
+          const height = `height:${Math.round(10000 * (style.height / layoutWidth)) / 100}vw !important;`;
+          cssStr += `#${id} {${top}${left}${width}${height}}`;
+          cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${width}${height}}`;
         } else {
           cssStr += `#${id}{display:none;}`;
         }
