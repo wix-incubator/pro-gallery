@@ -5,7 +5,7 @@ import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper'
 class Utils extends RenderUtils {
 
   get positioningType() {
-    let pt = (window && window.petri && window.petri['specs.pro-gallery.itemsPositioning']) || 'relative';
+    let pt = (experiments['specs.pro-gallery.itemsPositioning']) || 'relative';
     if (this.useRefactoredProGallery) {
       pt = 'absolute'; //on OOI / SSR use only absolute positioning
     }
@@ -17,11 +17,11 @@ class Utils extends RenderUtils {
   }
 
   get useRefactoredProGallery() {
-    return (window && window.petri && !!(window.petri['specs.pro-gallery.newGalleryContainer'] === 'true' || window.petri['specs.pro-gallery.useRefactoredProGallery'] === 'true')) || (window && window.isSSR); //on SSR use only refactor gallery
+    return (!!(experiments['specs.pro-gallery.newGalleryContainer'] === 'true' || experiments['specs.pro-gallery.useRefactoredProGallery'] === 'true')) || (window && window.isSSR); //on SSR use only refactor gallery
   }
 
   isWixIframe() {
-    return window && window.Wix && (window.top !== window.self);
+    return (window && !window.isMock) && (window.Wix && !window.Wix.isMock) && (window.top !== window.self);
   }
 
   scrollTo(element, to, duration, isHorizontal, callback) {

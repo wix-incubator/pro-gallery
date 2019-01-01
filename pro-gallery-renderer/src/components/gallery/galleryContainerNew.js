@@ -51,6 +51,14 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.getMoreItemsIfNeeded(0);
+
+    //calcScrollBase (read the dom)
+    this.setState({
+      container: Object.assign({}, this.state.container, dimentionsHelper.getGalleryDimensions(), {
+        scrollBase: this.calcScrollBase(this.state.container),
+      })
+    });
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -155,8 +163,6 @@ export class GalleryContainer extends React.Component {
       }, false);
     };
 
-    console.time('isNew');
-
     const isNew = {
       items: itemsHaveChanged(items),
       addedItems: itemsWereAdded(items),
@@ -168,13 +174,12 @@ export class GalleryContainer extends React.Component {
     isNew.str = Object.entries(isNew).map(([key, is]) => is ? key : '').join('');
     isNew.any = isNew.str.length > 0;
 
-    if (!isNew.any) {
-      console.count('Tried recreating gallery with no new params');
-    } else {
-      console.count('Recreating gallery with new params');
-    }
+    // if (!isNew.any) {
+    //   console.count('Tried recreating gallery with no new params');
+    // } else {
+    //   console.count('Recreating gallery with new params');
+    // }
 
-    console.timeEnd('isNew');
     return isNew;
   }
 
@@ -283,7 +288,7 @@ export class GalleryContainer extends React.Component {
       }
       if (window.isSSR && isFullwidth) {
         console.time('fullwidthLayoutsCss!');
-        this.fullwidthLayoutsCss = createCssLayouts(layoutParams, this.context.isMobile);
+        this.fullwidthLayoutsCss = createCssLayouts(layoutParams, utils.isMobile());
         console.timeEnd('fullwidthLayoutsCss!');
       } else {
         this.fullwidthLayoutsCss = [];
