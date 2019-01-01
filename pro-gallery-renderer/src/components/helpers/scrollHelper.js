@@ -85,8 +85,9 @@ function setVerticalVisibility({target, props, screenSize, padding, callback}) {
   const bottom = offset.top + style.height;
   const {scrollBase} = props.container;
   callback({
-    visibleVertically: isWithinPaddingVertically({target, scrollBase, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.visible}),
-    renderedVertically: isWithinPaddingVertically({target, scrollBase, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.rendered})
+    playVertically: isWithinPaddingVertically({target, scrollBase, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.playVertical}),
+    visibleVertically: isWithinPaddingVertically({target, scrollBase, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.visibleVertical}),
+    renderedVertically: isWithinPaddingVertically({target, scrollBase, top: offset.top, bottom, screenHeight: screenSize.height, padding: padding.renderedVertical})
   });
 }
 
@@ -94,8 +95,9 @@ function setHorizontalVisibility({target, props, screenSize, padding, callback})
   const {offset, styleParams, style} = props;
   const right = offset.left + style.width;
   callback({
-    visibleHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.visible, oneRow: styleParams.oneRow}),
-    renderedHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.rendered, oneRow: styleParams.oneRow})
+    playHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.playHorizontal, oneRow: styleParams.oneRow}),
+    visibleHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.visibleHorizontal, oneRow: styleParams.oneRow}),
+    renderedHorizontally: isWithinPaddingHorizontally({target, left: offset.left, right, screenWidth: screenSize.width, padding: padding.renderedHorizontal, oneRow: styleParams.oneRow})
   });
 }
 

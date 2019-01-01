@@ -37,6 +37,8 @@ class ItemView extends React.Component {
       displayed: false,
       retries: 0,
       showShare: false,
+      playVertically: false,
+      playHorizontally: true,
       visibleVertically: true,
       renderedVertically: true,
       visibleHorizontally: true,
@@ -56,9 +58,15 @@ class ItemView extends React.Component {
     this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.renderedPaddingMultiply = 2;
     this.visiblePaddingMultiply = 0;
+    this.videoPlayVerticalTolerance = (this.props.offset.bottom - this.props.offset.top) / 2;
+    this.videoPlayHorizontalTolerance = (this.props.offset.right - this.props.offset.left) / 2;
     this.padding = {
-      rendered: utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply,
-      visible: utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply
+      renderedVertical: utils.parseGetParam('renderedPadding') || this.screenSize.height * this.renderedPaddingMultiply,
+      visibleVertical: utils.parseGetParam('displayPadding') || this.screenSize.height * this.visiblePaddingMultiply,
+      playVertical: utils.parseGetParam('playPadding') || this.screenSize.height * this.visiblePaddingMultiply - this.videoPlayVerticalTolerance,
+      renderedHorizontal: utils.parseGetParam('renderedPadding') || this.screenSize.width * this.renderedPaddingMultiply,
+      visibleHorizontal: utils.parseGetParam('displayPadding') || this.screenSize.width * this.visiblePaddingMultiply,
+      playHorizontal: utils.parseGetParam('playPadding') || this.screenSize.width * this.visiblePaddingMultiply - this.videoPlayHorizontalTolerance,
     };
     this.galleryScroll = {
       top: 0,
@@ -247,10 +255,6 @@ class ItemView extends React.Component {
   //-----------------------------------------| UTILS |--------------------------------------------//
 
   setVisibilityState(state) {
-//     if (state.visibleVertically && state.renderedVertically) {
-//       console.log(this.props.idx)
-// ;
-//     }
     const newState = {};
     Object.keys(state).forEach(key => {
       if (state[key] !== this.state[key]) {
@@ -341,21 +345,24 @@ class ItemView extends React.Component {
   }
 
   isVisible(elment, clientRect) {
-    if (typeof clientRect === 'undefined') {
-      const domElment = ReactDOM.findDOMNode(elment.video);
-      if (!domElment) {
-        return false;
+    if (this.useRefactoredProGallery) {
+      return this.state.playVertically && this.state.playHorizontally;
+    } else {
+      if (typeof clientRect === 'undefined') {
+        const domElment = ReactDOM.findDOMNode(elment.video);
+        if (!domElment) {
+          return false;
+        }
+        clientRect = domElment.getBoundingClientRect();
       }
-      clientRect = domElment.getBoundingClientRect();
+      const {top, bottom} = clientRect;
+      const windowHeight = this.props.documentHeight;
+      const scrollPosition = this.props.scroll.top;
+      const videoHeight = bottom - top;
+      const tolerance = videoHeight / 2;
+      const res = top + tolerance > scrollPosition && bottom - tolerance < scrollPosition + windowHeight;
+      return res;
     }
-    const {top, bottom} = clientRect;
-    const windowHeight = this.props.documentHeight;
-    const scrollPosition = this.useRefactoredProGallery ? (this.state.scroll.top - this.props.container.scrollBase) : this.props.scroll.top;
-    const videoHeight = bottom - top;
-    const tolerance = videoHeight / 2;
-    const res = top + tolerance > scrollPosition && bottom - tolerance < scrollPosition + windowHeight;
-    console.log(this.props.idx, res);
-    return res;
   }
 
   videoOnMount(videoElement) {
