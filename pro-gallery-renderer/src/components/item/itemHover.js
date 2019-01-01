@@ -34,7 +34,7 @@ export default class ItemHover extends React.Component {
       return null;
     }
     const hoverClass = this.getHoverClass();
-    const {marginLeft, marginTop, ...restOfDimensions} = imageDimensions;
+    const {marginLeft, marginTop, ...restOfDimensions} = imageDimensions || {};
 
     return (<div
         className={hoverClass}
