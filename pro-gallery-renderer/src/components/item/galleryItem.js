@@ -5,6 +5,7 @@ import _ from 'lodash';
 import watermarkApi from 'photography-client-lib/dist/src/store/watermarkApi';
 import * as imageSdk from 'image-client-api/dist/imageClientSDK';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 class GalleryItem {
 
@@ -275,7 +276,7 @@ class GalleryItem {
   }
 
   useImageClientApi() {
-    const isSdkExperimentOn = !(window && window.petri && window.petri['specs.pro-gallery.ImageClientApi'] === 'false'); //use the new api unless the experiment is specifically turned off
+    const isSdkExperimentOn = !(experiments['specs.pro-gallery.ImageClientApi'] === 'false'); //use the new api unless the experiment is specifically turned off
     const isImageSizeAvailable = !this.isDimensionless;
     // const isSSR = !(window && window.document) || window.isMock; //the image client lib can only be used in the client (dahh)
     const hasWatermark = !!this.watermark;

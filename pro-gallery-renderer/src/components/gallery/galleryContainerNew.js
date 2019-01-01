@@ -163,8 +163,6 @@ export class GalleryContainer extends React.Component {
       }, false);
     };
 
-    console.time('isNew');
-
     const isNew = {
       items: itemsHaveChanged(items),
       addedItems: itemsWereAdded(items),
@@ -176,13 +174,12 @@ export class GalleryContainer extends React.Component {
     isNew.str = Object.entries(isNew).map(([key, is]) => is ? key : '').join('');
     isNew.any = isNew.str.length > 0;
 
-    if (!isNew.any) {
-      console.count('Tried recreating gallery with no new params');
-    } else {
-      console.count('Recreating gallery with new params');
-    }
+    // if (!isNew.any) {
+    //   console.count('Tried recreating gallery with no new params');
+    // } else {
+    //   console.count('Recreating gallery with new params');
+    // }
 
-    console.timeEnd('isNew');
     return isNew;
   }
 
