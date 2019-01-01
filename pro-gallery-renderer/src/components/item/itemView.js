@@ -661,6 +661,7 @@ class ItemView extends React.Component {
     }
     styles.height = height + 'px';
     styles.borderRadius = borderRadius + 'px';
+    Object.assign(styles, this.getImageDimensions());
     return styles;
   }
 
