@@ -2,30 +2,8 @@ import {createLayout} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 
 // const CDN_URL = 'https://static.wixstatic.com/media/';
-const desktopWidths = [1024, 1280, 1360, 1440, 1680, 1920];
-const mobileWidths = [320, 480, 600, 720, 800, 900];
-
-/*
-    TODO:
-    - check run time and minimize layouts width
-    - remove !important if possible
-    - fix default width of gallery (currently 990???)
-    - check if is mobile and select the widths accordinly
-*/
-
-// const getImgSize = (item, dimension) => {
-//   const scale = 1;
-//   return Math.ceil(Math.min(
-//       scale * item[dimension],
-//       item[`max${dimension[0].toUpperCase() + dimension.substring(1)}`]
-//     ));
-// };
-
-// const getImageSrc = item => {
-//   const h = getImgSize(item, 'height');
-//   const w = getImgSize(item, 'width');
-//   return `${CDN_URL}${item.dto.url}/v1/fit/w_${w},h_${h},al_c,q_80/file.jpg`;
-// };
+const desktopWidths = [1024, 1280, 1366, 1680, 1920, 2560];
+const mobileWidths = [320, 375, 414, 480, 600, 768, 900];
 
 const getImageStyle = item => ({
   top: item.offset.top,
@@ -42,8 +20,9 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
     let cssStr = '';
     if (layout) {
       const width = widths[idx];
-      const isFirstMediaQuery = cssStrs.length === 0;
-      cssStr += isFirstMediaQuery ? '' : `@media only screen and (min-width: ${width}px) {`;
+      const lastWidth = widths[idx - 1];
+      const isFirstMediaQuery = !lastWidth || cssStrs.length === 0;
+      cssStr += isFirstMediaQuery ? '' : `@media only screen and (min-width: ${(lastWidth * 2 + width) / 3}px) {`;
       const layoutWidth = width - styleParams.imageMargin * 2;
       layout.items.forEach((item, i) => {
         const id = cssScrollHelper.getDomId(item);
