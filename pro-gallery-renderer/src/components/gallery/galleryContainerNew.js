@@ -452,6 +452,10 @@ export class GalleryContainer extends React.Component {
       console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
     }
 
+    if (typeof this.props.onAppLoaded === 'function') {
+      this.props.onAppLoaded();
+    }
+
     return (
       <div>
         {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
