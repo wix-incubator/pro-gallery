@@ -32,7 +32,8 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
           const left = `left:${Math.round(10000 * (style.left / layoutWidth)) / 100}vw !important;`;
           const width = `width:${Math.round(10000 * (style.width / layoutWidth)) / 100}vw !important;`;
           const height = `height:${Math.round(10000 * (style.height / layoutWidth)) / 100}vw !important;`;
-          cssStr += `#${id} {${top}${left}${width}${height}}`;
+          const transition = 'all 0.4s ease';
+          cssStr += `#${id} {${top}${left}${width}${height}${transition}}`;
           cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${width}${height}}`;
         } else {
           cssStr += `#${id}{display:none;}`;

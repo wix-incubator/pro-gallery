@@ -631,7 +631,8 @@ class ItemView extends React.Component {
         right: 'auto',
         bottom: 'auto',
         width: style.width,
-        height: style.height + styleParams.externalInfoHeight
+        height: style.height + styleParams.externalInfoHeight,
+        transition: 'all 0.4s ease'
       });
     } else if (utils.positioningType === 'transform') {
       Object.assign(itemStyles, {
@@ -642,7 +643,8 @@ class ItemView extends React.Component {
         right: 'auto',
         bottom: 'auto',
         width: style.width,
-        height: style.height + styleParams.externalInfoHeight
+        height: style.height + styleParams.externalInfoHeight,
+        transition: 'all 0.4s ease'
       });
     }
 
