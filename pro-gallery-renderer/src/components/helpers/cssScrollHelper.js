@@ -21,7 +21,7 @@ class CssScrollHelper {
     this.aboveScreenPadding = [0, Infinity];
     this.justBelowScreenPadding = [this.screenSize, 0];
     this.belowScreenPadding = [Infinity, 0];
-    this.highResPadding = [this.screenSize * 3, this.screenSize * 7];
+    this.highResPadding = [this.screenSize * 3, Infinity];
     this.lowResPadding = [this.screenSize * 8, Infinity];
 
     this.scrollCss = [];
