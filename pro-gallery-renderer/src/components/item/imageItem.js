@@ -47,7 +47,7 @@ export default class ImageItem extends React.Component {
             src={resized_url.img}
             alt={isThumbnail ? '' : alt}
             onError={actions.setItemError}
-            style={imageDimensions}
+            style={restOfDimensions}
             {...imageProps}
           />}
       </div>;
