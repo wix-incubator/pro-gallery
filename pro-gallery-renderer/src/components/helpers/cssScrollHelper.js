@@ -19,10 +19,10 @@ class CssScrollHelper {
     //padding: [belowScreen, aboveScreen]
     this.inScreenPadding = [0, 0];
     this.aboveScreenPadding = [0, Infinity];
-    this.justBelowScreenPadding = [this.screenSize, 0];
+    this.justBelowScreenPadding = [500, 0];
     this.belowScreenPadding = [Infinity, 0];
-    this.highResPadding = [this.screenSize * 3, Infinity];
-    this.lowResPadding = [this.screenSize * 8, Infinity];
+    this.highResPadding = [3000, Infinity];
+    this.lowResPadding = [8000, Infinity];
 
     this.scrollCss = [];
     this.scrollCssProps = [];
@@ -41,6 +41,9 @@ class CssScrollHelper {
       return '';
     }
     this.screenSize = styleParams.oneRow ? window.screen.width : window.screen.height;
+    if (utils.isMobile()) {
+      this.screenSize *= (320 / window.screen.width);
+    }
     this.maxHeight = (styleParams.oneRow ? items[items.length - 1].offset.right : items[items.length - 1].offset.top + scrollBase) + this.screenSize;
     return items.map(item => this.calcScrollCssForItem({item, scrollBase, styleParams})).join(`\n`);
   }
