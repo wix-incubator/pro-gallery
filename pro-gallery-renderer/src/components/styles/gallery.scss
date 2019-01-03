@@ -1387,7 +1387,7 @@
         .gallery-item-title,
         .gallery-item-description,
         .custom-button-wrapper,
-        .gallery-item-social-share-box {
+        .gallery-item-social-share-box:not(.hidden) {
           transition: inherit;
           opacity: 1 !important;
         }
