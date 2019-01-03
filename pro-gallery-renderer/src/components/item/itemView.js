@@ -702,6 +702,11 @@ class ItemView extends React.Component {
     const className = classNames('gallery-item-container', 'visible', {
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',
+      'hover-animation-slide-down': utils.shouldDebug('hoverAnimationOverlaySlideDown'),
+      'hover-animation-scale': utils.shouldDebug('hoverAnimationOverlayScale'),
+      'scale-on-hover': utils.shouldDebug('hoverAnimationImageScale'),
+      'zoom-on-hover': utils.shouldDebug('hoverAnimationImageZoom'),
+      'bnw-on-hover': utils.shouldDebug('hoverAnimationImageBnw'),
     });
     return className;
   }
@@ -713,18 +718,6 @@ class ItemView extends React.Component {
     }
     if (type === 'text') {
       classNames.push('gallery-item-wrapper-text');
-    }
-    if (utils.shouldDebug('hoverAnimationOverlaySlideDown')) {
-      classNames.push('hover-animation-slide-down');
-    }
-    if (utils.shouldDebug('hoverAnimationOverlayScale')) {
-      classNames.push('hover-animation-scale');
-    }
-    if (utils.shouldDebug('hoverAnimationImageScale')) {
-      classNames.push('scale-on-hover');
-    }
-    if (utils.shouldDebug('hoverAnimationImageBnw')) {
-      classNames.push('bnw-on-hover');
     }
     return classNames.join(' ');
   }
