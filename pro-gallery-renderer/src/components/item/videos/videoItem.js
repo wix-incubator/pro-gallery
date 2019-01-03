@@ -114,7 +114,7 @@ class VideoItem extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    let baseClassName = 'gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item' + (utils.isiPhone() ? ' ios' : '') + (this.props.loaded ? 'gallery-item-loaded' : '');
+    let baseClassName = 'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item' + (utils.isiPhone() ? ' ios' : '') + (this.props.loaded ? 'gallery-item-loaded' : '');
     if (this.state.playing) {
       baseClassName += ' playing';
     }
