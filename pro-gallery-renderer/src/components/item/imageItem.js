@@ -15,7 +15,7 @@ export default class ImageItem extends React.Component {
     const {isThumbnail, alt, visible, loaded, displayed, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
     const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
     const backgroundStyle = (this.useCssScrolling || utils.deviceHasMemoryIssues() || styleParams.imageLoadingMode === Consts.loadingMode.COLOR) ? {} : {backgroundImage: `url(${resized_url.thumb})`}; //remove this inline style if rendered padding (using css) is used
-
+    const {marginLeft, marginTop, ...restOfDimensions} = imageDimensions || {};
     const imageItemClassName = [
       'image-item',
       'gallery-item-visible',
@@ -33,12 +33,12 @@ export default class ImageItem extends React.Component {
       onTouchEnd={actions.handleItemMouseUp}
       key={'image_container-' + id}
       data-hook={'image-item'}
-        style={displayed ? {} : backgroundStyle}
+        style={displayed ? {} : {...backgroundStyle, ...restOfDimensions}}
         >
         {this.useCssScrolling ? <canvas
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
             className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
-            style={imageDimensions}
+            style={restOfDimensions}
             {...imageProps}
           /> : <img
             onLoad={actions.setItemLoaded}
@@ -47,7 +47,7 @@ export default class ImageItem extends React.Component {
             src={resized_url.img}
             alt={isThumbnail ? '' : alt}
             onError={actions.setItemError}
-            style={imageDimensions}
+            style={restOfDimensions}
             {...imageProps}
           />}
       </div>;

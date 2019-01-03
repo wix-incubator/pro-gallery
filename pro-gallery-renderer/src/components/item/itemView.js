@@ -631,7 +631,8 @@ class ItemView extends React.Component {
         right: 'auto',
         bottom: 'auto',
         width: style.width,
-        height: style.height + styleParams.externalInfoHeight
+        height: style.height + styleParams.externalInfoHeight,
+        transition: 'all 0.4s ease'
       });
     } else if (utils.positioningType === 'transform') {
       Object.assign(itemStyles, {
@@ -642,7 +643,8 @@ class ItemView extends React.Component {
         right: 'auto',
         bottom: 'auto',
         width: style.width,
-        height: style.height + styleParams.externalInfoHeight
+        height: style.height + styleParams.externalInfoHeight,
+        transition: 'all 0.4s ease'
       });
     }
 
@@ -661,6 +663,7 @@ class ItemView extends React.Component {
     }
     styles.height = height + 'px';
     styles.borderRadius = borderRadius + 'px';
+    Object.assign(styles, this.getImageDimensions());
     return styles;
   }
 
@@ -817,42 +820,60 @@ class ItemView extends React.Component {
       }
     }
   }
+  composeItem() {
+    const {photoId, id, hash, idx} = this.props;
+    const {directLink} = this.props;
+    const {itemClick} = this.props.styleParams;
+    const {url, target} = (directLink || {});
+    const shouldUseDirectLink = this.useRefactoredProGallery && url && target && itemClick === 'link';
+    const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
+    const innderDiv =
+			<div className={this.getItemContainerClass()}
+				id={cssScrollHelper.getDomId(this.props)}
+				ref={e => this.itemContainer = e}
+				onMouseOver={this.onMouseOver}
+				onClick={onClick}
+				onKeyDown={this.onKeyPress}
+				tabIndex={this.getItemContainerTabIndex()}
+				data-hash={hash}
+				data-id={photoId}
+				data-idx={idx}
+				aria-label={this.getItemAriaLabel()}
+				role="link"
+				aria-level="0"
+				data-hook="item-container"
+				key={'item-container-' + id}
+				style={this.getItemContainerStyles()}
+				{...this.getSEOLink()}
+			>
+				{this.getTopInfoElementIfNeeded()}
+				<div data-hook="item-wrapper" className={this.getItemWrapperClass()}
+					key={'item-wrapper-' + id}
+					style={this.getItemWrapperStyles()}
+					>
+					{this.getItemInner()}
+				</div>
+				{this.getBottomInfoElementIfNeeded()}
+			</div>
+			;
+    return (
+			shouldUseDirectLink ?
+				<a href={url} target={target}>
+					{innderDiv}
+				</a>				:
+			innderDiv
+    );
+  }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
     const rendered = this.useRefactoredProGallery ? (this.state.renderedVertically && this.state.renderedHorizontally) : true;
-    const {photoId, id, hash, idx} = this.props;
+    //const {photoId, id, hash, idx} = this.props;
     if (this.useRefactoredProGallery && !rendered) {
       return null;
     }
     return (
-      <div className={this.getItemContainerClass()}
-          id={cssScrollHelper.getDomId(this.props)}
-          ref={e => this.itemContainer = e}
-          onMouseOver={this.onMouseOver}
-          onClick={this.onItemClick}
-          onKeyDown={this.onKeyPress}
-          tabIndex={this.getItemContainerTabIndex()}
-          data-hash={hash}
-          data-id={photoId}
-          data-idx={idx}
-          aria-label={this.getItemAriaLabel()}
-          role="link"
-          aria-level="0"
-          data-hook="item-container"
-          key={'item-container-' + id}
-          style={this.getItemContainerStyles()}
-          {...this.getSEOLink()}
-      >
-        {this.getTopInfoElementIfNeeded()}
-        <div data-hook="item-wrapper" className={this.getItemWrapperClass()}
-          key={'item-wrapper-' + id}
-          style={this.getItemWrapperStyles()}
-          >
-          {this.getItemInner()}
-        </div>
-        {this.getBottomInfoElementIfNeeded()}
-      </div>
+      this.composeItem()
     );
   }
 }

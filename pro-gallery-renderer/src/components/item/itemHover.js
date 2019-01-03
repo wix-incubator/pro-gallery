@@ -34,12 +34,13 @@ export default class ItemHover extends React.Component {
       return null;
     }
     const hoverClass = this.getHoverClass();
+    const {marginLeft, marginTop, ...restOfDimensions} = imageDimensions || {};
 
     return (<div
         className={hoverClass}
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
-        style={imageDimensions}
+        style={restOfDimensions}
         onTouchStart={actions.handleItemMouseDown}
         onTouchEnd={actions.handleItemMouseUp}
         >

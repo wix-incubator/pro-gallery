@@ -19,10 +19,10 @@ class CssScrollHelper {
     //padding: [belowScreen, aboveScreen]
     this.inScreenPadding = [0, 0];
     this.aboveScreenPadding = [0, Infinity];
-    this.justBelowScreenPadding = [this.screenSize, 0];
+    this.justBelowScreenPadding = [1000, 0];
     this.belowScreenPadding = [Infinity, 0];
-    this.highResPadding = [this.screenSize * 3, Infinity];
-    this.lowResPadding = [this.screenSize * 8, Infinity];
+    this.highResPadding = [3000, Infinity];
+    this.lowResPadding = [8000, Infinity];
 
     this.scrollCss = [];
     this.scrollCssProps = [];
@@ -41,6 +41,9 @@ class CssScrollHelper {
       return '';
     }
     this.screenSize = styleParams.oneRow ? window.screen.width : window.screen.height;
+    if (utils.isMobile()) {
+      this.screenSize *= (320 / window.screen.width);
+    }
     this.maxHeight = (styleParams.oneRow ? items[items.length - 1].offset.right : items[items.length - 1].offset.top + scrollBase) + this.screenSize;
     return items.map(item => this.calcScrollCssForItem({item, scrollBase, styleParams})).join(`\n`);
   }
@@ -62,8 +65,8 @@ class CssScrollHelper {
     const imageTop = styleParams.oneRow ? (item.offset.left - this.screenSize) : (item.offset.top - this.screenSize + _scrollBase);
     const imageBottom = styleParams.oneRow ? (item.offset.left + item.width) : (item.offset.top + item.height + _scrollBase);
     const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
-    const ceil = (num, step) => Math.min(this.maxHeight, (Math.ceil(num / step) * step));
-    const floor = (num, step) => Math.max(0, Math.floor(num / step) * step);
+    const ceil = (num, step) => Math.ceil(Math.min(this.maxHeight, num) / step) * step;
+    const floor = (num, step) => Math.floor(Math.max(0, num) / step) * step;
     const domId = this.getDomId(item);
     return (padding, suffix) => {
       let from = floor(imageTop - padding[0], minStep);
@@ -71,6 +74,10 @@ class CssScrollHelper {
       const scrollClasses = [];
       while (from < to) {
         const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
+        if (largestDividerIdx === -1) {
+          console.error('largestDividerIdx is -1. Couldn\'t find index in pgScrollSteps array.\nfrom =', from, '\nto =', to, '\npadding[0] =', padding[0], '\npadding[1] =', padding[1]);
+          break;
+        }
         scrollClasses.push(`.${this.pgScrollClassName}-${largestDividerIdx}-${from} ~ div #${domId} ${suffix}`);
         from += this.pgScrollSteps[largestDividerIdx];
         // console.count('pgScroll class created');
@@ -120,16 +127,16 @@ class CssScrollHelper {
 
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: opacity(0);}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: opacity(0);}`;
       //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: opacity(1) !important; transition: filter 1.5s ease ${animationTiming}ms;}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important; transition: filter 1.5s ease ${animationTiming}ms;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: grayscale(100%);}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%);}`;
       //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: grayscale(0) !important; transition: filter 1s ease ${animationTiming + 200}ms;}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, ' .gallery-item-wrapper') + `{filter: grayscale(0) !important; transition: filter 1s ease ${animationTiming + 200}ms;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SLIDE_UP) {
@@ -141,23 +148,31 @@ class CssScrollHelper {
 
     if (scrollAnimation === Consts.scrollAnimations.BLURRED) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{filter: blur(40px) opacity(0);}`;
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: blur(40px) opacity(0);}`;
       //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{filter: blur(0) opacity(1) !important; transition: filter 600ms ease ${animationTiming}ms;}`;
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, ' .gallery-item-wrapper') + `{filter: blur(0) opacity(1) !important; transition: filter 600ms ease ${animationTiming}ms;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.ZOOM_IN) {
+    if (scrollAnimation === Consts.scrollAnimations.EXPAND) {
       //hide items below screen
       this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: scale(0.8);}`;
       //show items in screen
       this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: scale(1) !important; transition: transform 800ms ease;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
+    if (scrollAnimation === Consts.scrollAnimations.SHRINK) {
       //hide items below screen
       this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, '') + `{transform: scale(1.05);}`;
       //show items in screen
       this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, '') + `{transform: scale(1) !important; transition: transform 800ms ease;}`;
+    }
+
+
+    if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
+      //hide items below screen
+      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, ' .gallery-item-wrapper') + `{transform: scale(1.1);}`;
+      //show items in screen
+      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, ' .gallery-item-wrapper') + `{transform: scale(1) !important; transition: transform 800ms ease;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.ONE_COLOR) {
@@ -167,20 +182,6 @@ class CssScrollHelper {
       this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: opacity(0)}`;
       //show items in screen
       this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important; transition: filter 1.5s ease ${animationTiming}ms;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.PARALLAX) {
-      //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, ' .gallery-item-wrapper') + `{transform: translateY(-5%) scale(1.1);}`;
-      //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, ' .gallery-item-wrapper') + `{transform: translateY(5%) scale(1.1)!important; transition: transform 800ms ease;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT2) {
-      //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(this.justBelowScreenPadding, ' .gallery-item-wrapper') + `{transform: scale(1.1);}`;
-      //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(this.aboveScreenPadding, ' .gallery-item-wrapper') + `{transform: scale(1) !important; transition: transform 800ms ease;}`;
     }
 
   }

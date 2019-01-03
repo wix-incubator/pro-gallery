@@ -121,6 +121,7 @@ class GalleryItem {
       type: this.type,
       url: this.url,
       alt: this.alt,
+      directLink: this.directLink,
       linkUrl: this.linkUrl,
       linkOpenType: this.linkOpenType,
       originalsUrl: this.getOriginalsUrl(),
