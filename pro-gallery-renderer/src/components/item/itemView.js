@@ -714,6 +714,12 @@ class ItemView extends React.Component {
     if (type === 'text') {
       classNames.push('gallery-item-wrapper-text');
     }
+    if (utils.shouldDebug('hoverScale')) {
+      classNames.push('scale-on-hover');
+    }
+    if (utils.shouldDebug('hoverBnw')) {
+      classNames.push('bnw-on-hover');
+    }
     return classNames.join(' ');
   }
   getItemContainerTabIndex() {

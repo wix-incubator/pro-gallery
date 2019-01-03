@@ -37,13 +37,13 @@ export default class ImageItem extends React.Component {
         >
         {this.useCssScrolling ? <canvas
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-            className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+            className={'gallery-item-content gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
             style={restOfDimensions}
             {...imageProps}
           /> : <img
             onLoad={actions.setItemLoaded}
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-            className={'gallery-item-visible gallery-item ' + (loaded ? 'gallery-item-loaded' : 'gallery-item-hidden')}
+            className={'gallery-item-content gallery-item-visible gallery-item ' + (loaded ? 'gallery-item-loaded' : 'gallery-item-hidden')}
             src={resized_url.img}
             alt={isThumbnail ? '' : alt}
             onError={actions.setItemError}

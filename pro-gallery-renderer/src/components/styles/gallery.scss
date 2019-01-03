@@ -1328,22 +1328,38 @@
             }
           }
 
-          &.hovered,
-          &:hover:not(.hide-hover) {
+        }
 
-            &:before {
-              background: $bg-dark-opacity;
-            }
+        .gallery-item-hover.hovered,
+        &:hover .gallery-item-hover:not(.hide-hover) {
 
-            .gallery-item-social-button,
-            .gallery-item-title,
-            .gallery-item-description,
-            .custom-button-wrapper,
-            .gallery-item-social-share-box {
-              opacity: 1;
-            }
+          &:before {
+            background: $bg-dark-opacity;
+          }
+
+          .gallery-item-social-button,
+          .gallery-item-title,
+          .gallery-item-description,
+          .custom-button-wrapper,
+          .gallery-item-social-share-box {
+            opacity: 1;
           }
         }
+
+        &.scale-on-hover {
+          &:hover .gallery-item-content {
+            transition: transform .8s ease !important;
+            transform: scale(1.2);
+          }
+        }
+
+        &.bnw-on-hover {
+          &:hover .gallery-item-content {
+            transition: filter .8s ease !important;
+            filter: grayscale(1);
+          }
+        }
+
       }
 
       .gallery-item-bottom-info, .gallery-item-top-info {
