@@ -1333,6 +1333,8 @@
         .gallery-item-hover.hovered,
         &:hover .gallery-item-hover:not(.hide-hover) {
 
+          transition: none;
+
           &:before {
             background: $bg-dark-opacity;
           }
@@ -1342,7 +1344,42 @@
           .gallery-item-description,
           .custom-button-wrapper,
           .gallery-item-social-share-box {
+            transition: inherit;
             opacity: 1;
+          }
+        }
+
+        &.hover-animation-slide-down {
+          .gallery-item-hover:not(.hide-hover) {
+            &:before {
+              transform: translateY(-100%);
+            }
+          }
+          &:hover .gallery-item-hover:not(.hide-hover) {
+            * {
+              transition: opacity .2s ease .6s !important;
+            }
+            &:before {
+              transition: transform .8s ease !important;
+              transform: translateY(0);
+            }
+          }
+        }
+
+        &.hover-animation-scale {
+          .gallery-item-hover:not(.hide-hover) {
+            &:before {
+              transform: scale(0);
+            }
+          }
+          &:hover .gallery-item-hover:not(.hide-hover) {
+            * {
+              transition: opacity .2s ease .6s !important;
+            }
+            &:before {
+              transition: transform .8s ease !important;
+              transform: scale(1);
+            }
           }
         }
 

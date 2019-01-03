@@ -714,10 +714,16 @@ class ItemView extends React.Component {
     if (type === 'text') {
       classNames.push('gallery-item-wrapper-text');
     }
-    if (utils.shouldDebug('hoverScale')) {
+    if (utils.shouldDebug('hoverAnimationOverlaySlideDown')) {
+      classNames.push('hover-animation-slide-down');
+    }
+    if (utils.shouldDebug('hoverAnimationOverlayScale')) {
+      classNames.push('hover-animation-scale');
+    }
+    if (utils.shouldDebug('hoverAnimationImageScale')) {
       classNames.push('scale-on-hover');
     }
-    if (utils.shouldDebug('hoverBnw')) {
+    if (utils.shouldDebug('hoverAnimationImageBnw')) {
       classNames.push('bnw-on-hover');
     }
     return classNames.join(' ');
