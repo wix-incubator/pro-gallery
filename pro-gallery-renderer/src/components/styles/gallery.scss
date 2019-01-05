@@ -1414,6 +1414,7 @@
         .gallery-item-hover:not(.hide-hover) {
           &:before {
             transform: scale(0);
+            border-radius: 100%;
           }
         }
         &:hover .gallery-item-hover:not(.hide-hover) {
@@ -1421,8 +1422,9 @@
             transition: opacity .2s ease .6s !important;
           }
           &:before {
-            transition: transform .8s ease !important;
+            transition: transform .8s ease, border-radius .8s ease !important;
             transform: scale(1);
+            border-radius: 0;
           }
         }
       }
