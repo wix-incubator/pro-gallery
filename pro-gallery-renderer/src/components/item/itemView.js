@@ -704,8 +704,10 @@ class ItemView extends React.Component {
       clickable: styleParams.itemClick !== 'nothing',
       'hover-animation-slide-down': utils.shouldDebug('hoverAnimationOverlaySlideDown'),
       'hover-animation-scale': utils.shouldDebug('hoverAnimationOverlayScale'),
+      'colorize-on-hover': utils.shouldDebug('hoverAnimationImageColorize'),
       'scale-on-hover': utils.shouldDebug('hoverAnimationImageScale'),
       'zoom-on-hover': utils.shouldDebug('hoverAnimationImageZoom'),
+      'blur-on-hover': utils.shouldDebug('hoverAnimationImageBlur'),
       'bnw-on-hover': utils.shouldDebug('hoverAnimationImageBnw'),
     });
     return className;
