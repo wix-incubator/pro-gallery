@@ -1,0 +1,19 @@
+@keyframes :global(scroll-animation-fade) { 
+  from {
+    filter: opacity(0);
+  }
+
+  to {
+    filter: opacity(1);
+  }
+}
+
+@keyframes :global(scroll-animation-grayscale) {
+  from {
+    filter: grayscale(1);
+  }
+
+  to {
+    filter: grayscale(0);
+  }
+}

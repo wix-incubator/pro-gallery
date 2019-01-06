@@ -17,13 +17,14 @@ class CssScrollHelper {
     this.screenSize = Math.max(window.screen.width, window.screen.height);
 
     //padding: [belowScreen, aboveScreen]
+    //padding: [above images, below image]
     this.inScreenPadding = () => [0, 0];
     this.aboveScreenPadding = () => [0, Infinity];
-    this.justBelowScreenPadding = itemHeight => [1000, -1 * (itemHeight + this.screenSize)];
-    this.justBelowAndInScreenPadding = () => [1000, 0];
+    this.justBelowScreenPadding = itemHeight => [5120, -1 * (itemHeight + this.screenSize)];
+    this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
-    this.highResPadding = () => [3000, Infinity];
-    this.lowResPadding = () => [8000, Infinity];
+    this.highResPadding = () => [5120, Infinity];
+    this.lowResPadding = () => [10240, Infinity];
 
     this.scrollCss = [];
     this.scrollCssProps = [];
@@ -118,31 +119,27 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors}) {
-    // const scrollAnimation = styleParams.scrollAnimation;
-
-    const scrollAnimation = Consts.scrollAnimations.FADE_IN;
+    const scrollAnimation = styleParams.scrollAnimation;
 
     if ((!scrollAnimation) || scrollAnimation === Consts.scrollAnimations.NO_EFFECT) {
       return;
     }
 
-    const animationTiming = (((idx % 3) + 2) * 50); //100 - 200
+    const animationTiming = (((idx % 4) + 1) * 100); //100 - 400
 
     const justBelowScreenPadding = this.justBelowScreenPadding(styleParams.oneRow ? item.width : item.height);
     const justBelowAndInScreenPadding = this.justBelowAndInScreenPadding();
+    const inScreenPadding = this.inScreenPadding();
+    const animationProps = (animationName, animationDuration) => `${animationName} ${animationDuration}s ease-in ${animationTiming}ms 1 normal backwards paused;`;
 
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
-      //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: opacity(0);}`;
-      //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{transition: filter 1.5s ease ${animationTiming}ms;}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade', 1.5)}}`;
+      this.scrollCss[idx] += createScrollSelectors(inScreenPadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
-      //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%);}`;
-      //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{transition: filter 1s ease ${animationTiming + 200}ms;}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-grayscale', 1)}}`;
+      this.scrollCss[idx] += createScrollSelectors(inScreenPadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SLIDE_UP) {
