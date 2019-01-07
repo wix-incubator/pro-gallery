@@ -22,12 +22,6 @@ class DimensionsHelper {
     this.container = container || this.container;
   }
 
-  getDimensionFix() {
-    return this.getOrPutInCache('dimensionFix', () => {
-      return (Number(this.styles.imageMargin) - Number(this.styles.galleryMargin));
-    });
-  }
-
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
       const res = {
@@ -58,7 +52,7 @@ class DimensionsHelper {
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
       const domWidth = () => window.isMock ? utils.getScreenWidth() : window.innerWidth;
-      return Math.floor((this.container.width > 0 ? this.container.width : domWidth()) + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
+      return Math.floor(this.container.width > 0 ? this.container.width : domWidth()); //add margins to width and then remove them in css negative margins
     });
   }
 
@@ -67,7 +61,7 @@ class DimensionsHelper {
     return this.getOrPutInCache('galleryHeight', () => {
       //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
       const domHeight = () => window.isMock ? utils.getScreenHeight() : window.innerHeight;//() => protectGalleryHeight(this.container.windowHeight, offsetTop);
-      return Math.floor((this.container.height > 0 ? this.container.height : domHeight()) + this.getDimensionFix());
+      return Math.floor(this.container.height > 0 ? this.container.height : domHeight());
     });
   }
 
