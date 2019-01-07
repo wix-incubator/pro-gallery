@@ -37,7 +37,7 @@ class GalleryView extends React.Component {
 
     if (activeItemIdx) {
 
-      const findNeighborItem = this.props.galleryStructure.findNeighborItem;
+      const findNeighborItem = utils.useRefactoredProGallery ? this.props.actions.findNeighborItem : this.props.galleryStructure.findNeighborItem;
       const idx = Number(activeItemIdx);
 
       let newIdx = -1;

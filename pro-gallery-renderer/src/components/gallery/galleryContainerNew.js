@@ -373,7 +373,7 @@ export class GalleryContainer extends React.Component {
     const nextState = {
       scroll: Object.assign(this.state.scroll, {isInfinite})
     };
-    const galleryState = this.reCreateGalleryExpensively(this.props, nextState);
+    const galleryState = this.reCreateGalleryExpensively(this.props, {...this.state, ...nextState});
     this.setState({
       ...nextState,
       ...galleryState
@@ -477,6 +477,7 @@ export class GalleryContainer extends React.Component {
           domId = {this.props.domId}
           currentHover = {this.state.currentHover}
           actions = {_.merge(this.props.actions, {
+            findNeighborItem: this.layouter.findNeighborItem,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
             toggleFullscreen: this.toggleFullscreen,
             setWixHeight: _.noop,
