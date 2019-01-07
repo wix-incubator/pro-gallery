@@ -87,6 +87,9 @@ class galleryDriver {
       galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
+      itemEnableShadow: false,
+      itemShadowOpacityAndColor: {value: 'rgba(0, 0, 0, 0.2)'},
+      itemShadowBlur: 20
     };
 
     this.scroll = {

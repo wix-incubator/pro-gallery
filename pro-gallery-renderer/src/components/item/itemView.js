@@ -601,16 +601,24 @@ class ItemView extends React.Component {
   getItemContainerStyles() {
     const {styleParams, style, transform} = this.props;
     const wrapperWidth = style.width;
-    const borderRadius = (styleParams.borderRadius < 100 ? styleParams.borderRadius : Math.min(parseInt(style.width), parseInt(style.height)));
 
-    let boxShadow = {};
-    if (styleParams.boxShadow > 0) {
-      const shadowOffset = Math.round(styleParams.imageMargin * styleParams.boxShadow / 5);
-      const shadowSpread = Math.min(15, Math.round(styleParams.imageMargin * styleParams.boxShadow / 2));
-      boxShadow = {
-        boxShadow: `${shadowOffset}px ${shadowOffset}px ${shadowSpread}px 0 rgba(0,0,0,0.2)`
-      };
+    const border = {};
+    if (styleParams.itemBorderWidth) {
+      Object.assign(border, {
+        borderWidth: styleParams.itemBorderWidth + 'px',
+        borderStyle: 'solid',
+        borderColor: styleParams.itemBorderColor.value
+      });
     }
+
+    const boxShadow = {};
+    if (styleParams.itemEnableShadow) {
+      Object.assign(boxShadow, {
+        boxShadow: `-10px -10px ${styleParams.itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`
+      });
+    }
+
+
     const itemStyles = {
       width: wrapperWidth,
       margin: styleParams.imageMargin + 'px',
@@ -620,7 +628,7 @@ class ItemView extends React.Component {
       right: style.right,
       bottom: style.bottom,
       overflowY: styleParams.isSlideshow ? 'visible' : 'inherit',
-      borderRadius: borderRadius + 'px'
+      borderRadius: styleParams.itemBorderRadius + 'px',
     };
 
     if (utils.positioningType === 'absolute') {
@@ -648,13 +656,12 @@ class ItemView extends React.Component {
       });
     }
 
-    const styles = _.merge(itemStyles, transform, boxShadow);
+    const styles = _.merge(itemStyles, transform, border, boxShadow);
 
     return styles;
   }
   getItemWrapperStyles() {
     const {styleParams, style, type} = this.props;
-    const borderRadius = (styleParams.borderRadius < 100 ? styleParams.borderRadius : Math.min(parseInt(style.width), parseInt(style.height)));
     const height = style.height;
     const styles = {};
     styles.backgroundColor = styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit';
@@ -662,7 +669,9 @@ class ItemView extends React.Component {
       styles.backgroundColor = styles.backgroundColor || 'transparent';
     }
     styles.height = height + 'px';
-    styles.borderRadius = borderRadius + 'px';
+    if (styleParams.itemBorderWidth) {
+      styles.margin = -styleParams.itemBorderWidth + 'px';
+    }
     Object.assign(styles, this.getImageDimensions());
     return styles;
   }

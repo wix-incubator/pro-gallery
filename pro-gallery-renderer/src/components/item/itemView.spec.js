@@ -435,14 +435,18 @@ describe('Item View', () => {
     it('should have boxshadow only if defined', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
-          boxShadow: 5,
+          itemEnableShadow: true,
+          itemShadowOpacityAndColor: {value: 'rgba(0, 0, 0, 0.2)'},
+          itemShadowBlur: 20,
           imageMargin: 5}});
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
-      expect(style.boxShadow).to.equal('5px 5px 13px 0 rgba(0,0,0,0.2)');
+      expect(style.boxShadow).to.equal('-10px -10px 20px rgba(0, 0, 0, 0.2)');
       driver.set.props({
         styleParams: {
-          boxShadow: 0,
+          itemEnableShadow: false,
+          itemShadowOpacityAndColor: {value: 'rgba(0, 0, 0, 0.2)'},
+          itemShadowBlur: 20,
           imageMargin: 5}});
       style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal(undefined);

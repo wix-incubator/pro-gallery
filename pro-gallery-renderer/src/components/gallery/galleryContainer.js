@@ -163,8 +163,6 @@ export class GalleryContainer extends React.Component {
       },
       collageAmount: 0.8,
       collageDensity: 0.8,
-      borderRadius: 0,
-      boxShadow: 0,
       imageMargin: 5,
       galleryMargin: 0,
       floatingImages: 0,
@@ -192,7 +190,13 @@ export class GalleryContainer extends React.Component {
       isAutoSlideshow: false,
       autoSlideshowInterval: 4,
       arrowsSize: 23,
-      imageLoadingMode: Consts.loadingMode.BLUR
+      imageLoadingMode: Consts.loadingMode.BLUR,
+      itemBorderWidth: 0,
+      itemBorderColor: 'color-5',
+      itemBorderRadius: 0,
+      itemEnableShadow: false,
+      itemShadowOpacityAndColor: {value: 'rgba(0, 0, 0, 0.2)'},
+      itemShadowBlur: 20
     };
 
     const galleryWidth = this.getGalleryWidth();
@@ -565,8 +569,6 @@ export class GalleryContainer extends React.Component {
       collageDensity: (spacingVersionManager.isNewSpacing() ? numFromSeed(1, 100, 'collageDensity') : numFromSeed(5, 10, 'collageDensity')) / 100,
       groupTypes: ['1'].concat(_.filter('2h,2v,3t,3b,3l,3r,3h,3v'.split(','), (type, i) => boolFromSeed('groupTypes' + i))),
       oneRow: boolFromSeed('oneRow'),
-      borderRadius: 0,
-      boxShadow: 0,
       imageMargin: numFromSeed(0, (spacingVersionManager.isNewSpacing() ? (numFromSeed(300, 800, 'gallerySize') / 5) : 5), 'imageMargin'),
       galleryMargin: (spacingVersionManager.isNewSpacing() ? 0 : numFromSeed(0, 5, 'imageMargin')),
       floatingImages: 0,
@@ -1050,8 +1052,6 @@ export class GalleryContainer extends React.Component {
       collageDensity: undefined,
       groupTypes: undefined,
       oneRow: undefined,
-      borderRadius: undefined,
-      boxShadow: undefined,
       imageMargin: undefined,
       galleryMargin: undefined,
       floatingImages: undefined,
@@ -1212,12 +1212,28 @@ export class GalleryContainer extends React.Component {
       stateStyles.rotatingCropRatios = String(wixStyles.rotatingCropRatios);
     }
 
-    if (canSet('borderRadius')) {
-      stateStyles.borderRadius = Number(wixStyles.borderRadius);
+    if (canSet('itemBorderWidth')) {
+      stateStyles.itemBorderWidth = Number(wixStyles.itemBorderWidth);
     }
 
-    if (canSet('boxShadow')) {
-      stateStyles.boxShadow = Number(wixStyles.boxShadow) / 100;
+    if (canSet('itemBorderColor')) {
+      stateStyles.itemBorderColor = wixStyles.itemBorderColor;
+    }
+
+    if (canSet('itemBorderRadius')) {
+      stateStyles.itemBorderRadius = Number(wixStyles.itemBorderRadius);
+    }
+
+    if (canSet('itemEnableShadow')) {
+      stateStyles.itemEnableShadow = wixStyles.itemEnableShadow;
+    }
+
+    if (canSet('itemShadowOpacityAndColor')) {
+      stateStyles.itemShadowOpacityAndColor = wixStyles.itemShadowOpacityAndColor;
+    }
+
+    if (canSet('itemShadowBlur')) {
+      stateStyles.itemShadowBlur = Number(wixStyles.itemShadowBlur);
     }
 
     if (canSet('imageMargin')) {

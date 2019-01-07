@@ -110,7 +110,7 @@ storiesOf('Eyes', module)
         galleryLayout: 1,
         allowDownload: true,
         gallerySize: 10,
-        borderRadius: 50
+        itemBorderRadius: 50
       }}
       forceHover= {true}
       {...props}
