@@ -125,66 +125,59 @@ class CssScrollHelper {
       return;
     }
 
-    const animationTiming = (((idx % 4) + 1) * 100); //100 - 400
+    const _animationTiming = (((idx % 4) + 1) * 100); //100 - 400
 
     const justBelowScreenPadding = this.justBelowScreenPadding(styleParams.oneRow ? item.width : item.height);
     const justBelowAndInScreenPadding = this.justBelowAndInScreenPadding();
     const inScreenPadding = this.inScreenPadding();
-    const animationProps = (animationName, animationDuration) => `${animationName} ${animationDuration}s ease-in ${animationTiming}ms 1 normal backwards paused;`;
+    const animationProps = (animationName, animationDuration, animationTiming) => `${animationName} ${animationDuration}s ease-in ${animationTiming}ms 1 normal backwards paused;`;
 
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade', 1.5)}}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 1.5, _animationTiming)}}`;
       this.scrollCss[idx] += createScrollSelectors(inScreenPadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-grayscale', 1)}}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-grayscale', 1, _animationTiming + 200)}}`;
       this.scrollCss[idx] += createScrollSelectors(inScreenPadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SLIDE_UP) {
       //push down items under screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, '') + `{transform: translateY(100px);}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, '') + `{animation: ${animationProps('scroll-animation-slide-up', 1, 0)}}`;
       //push back items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, '') + `{transition: transform 1s ease;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.BLURRED) {
-      //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: blur(40px) opacity(0);}`;
-      //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{transition: filter 600ms ease ${animationTiming}ms;}`;
+      this.scrollCss[idx] += createScrollSelectors(inScreenPadding, '') + `{animation-play-state: running;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.EXPAND) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, '') + `{transform: scale(0.8);}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, '') + `{animation: ${animationProps('scroll-animation-expand', 0.8, 0)}}`;
       //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, '') + `{transition: transform 800ms ease;}`;
+      this.scrollCss[idx] += createScrollSelectors(inScreenPadding, '') + `{animation-play-state: running;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SHRINK) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, '') + `{transform: scale(1.05);}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, '') + `{animation: ${animationProps('scroll-animation-shrink', 0.8, 0)}}`;
       //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, '') + `{transition: transform 800ms ease;}`;
+      this.scrollCss[idx] += createScrollSelectors(inScreenPadding, '') + `{animation-play-state: running;}`;
     }
 
 
     if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, ' .gallery-item-wrapper') + `{transform: scale(1.1);}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-zoom-out', 0.8, 0)}}`;
       //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{transition: transform 800ms ease;}`;
+      this.scrollCss[idx] += createScrollSelectors(inScreenPadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor = styleParams.oneColorAnimationColor && styleParams.oneColorAnimationColor.value ? styleParams.oneColorAnimationColor.value : 'transparent';
       //hide items below screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
-      this.scrollCss[idx] += createScrollSelectors(justBelowScreenPadding, ' .gallery-item-wrapper') + `{filter: opacity(0)}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
+      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 1.5, _animationTiming)}}`;
       //show items in screen
-      this.scrollCss[idx] += createScrollSelectors(justBelowAndInScreenPadding, ' .gallery-item-wrapper') + `{transition: filter 1.5s ease ${animationTiming}ms;}`;
+      this.scrollCss[idx] += createScrollSelectors(inScreenPadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
     }
 
   }

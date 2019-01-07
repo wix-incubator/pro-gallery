@@ -1,4 +1,4 @@
-@keyframes :global(scroll-animation-fade) { 
+@keyframes :global(scroll-animation-fade-in) {
   from {
     filter: opacity(0);
   }
@@ -10,10 +10,50 @@
 
 @keyframes :global(scroll-animation-grayscale) {
   from {
-    filter: grayscale(1);
+    filter: grayscale(100%);
   }
 
   to {
     filter: grayscale(0);
+  }
+}
+
+@keyframes :global(scroll-animation-slide-up) {
+  from {
+    transform: translateY(100px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes :global(scroll-animation-expand) {
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes :global(scroll-animation-shrink) {
+  from {
+    transform: scale(1.05);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes :global(scroll-animation-zoom-out) {
+  from {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1);
   }
 }

@@ -640,7 +640,7 @@ class ItemView extends React.Component {
         bottom: 'auto',
         width: style.width,
         height: style.height + styleParams.externalInfoHeight,
-        transition: 'all 0.4s ease'
+        transition: 'top 0.4s ease, left 0.4s ease, width 0.4s ease, height 0.4s ease'
       });
     } else if (utils.positioningType === 'transform') {
       Object.assign(itemStyles, {
@@ -652,7 +652,7 @@ class ItemView extends React.Component {
         bottom: 'auto',
         width: style.width,
         height: style.height + styleParams.externalInfoHeight,
-        transition: 'all 0.4s ease'
+        transition: 'top 0.4s ease, left 0.4s ease, width 0.4s ease, height 0.4s ease'
       });
     }
 
