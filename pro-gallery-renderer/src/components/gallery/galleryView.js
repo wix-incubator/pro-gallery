@@ -159,6 +159,7 @@ class GalleryView extends React.Component {
            style={{
              height: galleryHeight,
              width: this.props.container.galleryWidth,
+             overflowX: 'hidden'
            }}
            onKeyDown={this.handleArrowKeys}
       >
