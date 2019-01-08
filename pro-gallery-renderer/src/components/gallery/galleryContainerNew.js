@@ -454,11 +454,14 @@ export class GalleryContainer extends React.Component {
       this.props.onAppLoaded();
     }
     const isInfinite = this.isInfiniteScroll();
+
+    const maxSize = this.galleryStructure.galleryItems.length && Number(this.galleryStructure.galleryItems[this.galleryStructure.galleryItems.length - 1][styles.oneRow ? 'right' : 'bottom']);
+
     return (
       <div>
         {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
         <style key="scrollCss">{this.scrollCss}</style>
-        <CssSrollIndicator oneRow={this.state.styles.oneRow} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
+        <CssSrollIndicator maxSize={maxSize} oneRow={styles.oneRow} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
 				<ViewComponent
 					isInDisplay = {this.props.isInDisplay}
 					scrollingElement = {this._scrollingElement}
