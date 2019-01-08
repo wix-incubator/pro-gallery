@@ -98,7 +98,7 @@ class LoveButton extends React.Component {
   counterClassName() {
     switch (this.props.layout) {
       case 'fullscreen':
-        return 'fullscreen-social-love-count shown ' + this.viewClassName();
+        return 'fullscreen-social-love-count pro-fullscreen-shown ' + this.viewClassName();
       default:
         return 'block-fullscreen gallery-item-social-love-count ' + this.viewClassName();
     }
