@@ -40,8 +40,7 @@ class CssScrollHelper {
     const isScrollStart = pos < minStep;
     const isScrollEnd = pos > maxSize - minStep;
     const scrollEdgeClass = `${this.pgScrollClassName}-${(isScrollEnd ? 'end' : isScrollStart ? 'start' : 'mid')}`;
-    scrollPositions.push(scrollEdgeClass);
-    return scrollPositions;
+    return scrollEdgeClass + ' ' + scrollPositions;
   }
 
   calcScrollCss({items, scrollBase, styleParams}) {
