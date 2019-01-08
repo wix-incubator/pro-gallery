@@ -48,7 +48,6 @@
     "axios": "^0.16.2"
   },
   "devDependencies": {
-    "photography-client-lib": "^1.0.162",
     "@storybook/addon-actions": "^3.4.7",
     "@storybook/addon-links": "^3.4.7",
     "@storybook/addons": "^3.4.7",
@@ -77,6 +76,7 @@
     "match-screenshot": "^1.0.14",
     "nock": "^9.3.3",
     "node-sass": "^4.9.0",
+    "photography-client-lib": "^1.0.173",
     "puppeteer": "^1.5.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
