@@ -17,7 +17,8 @@ class Utils extends RenderUtils {
   }
 
   get useRefactoredProGallery() {
-    return (!!(experiments['specs.pro-gallery.newGalleryContainer'] === 'true' || experiments['specs.pro-gallery.useRefactoredProGallery'] === 'true')) || (window && window.isSSR) || this.isOOI() || this.isVerbose(); //on SSR use only refactor gallery
+    return (!!(experiments['specs.pro-gallery.newGalleryContainer'] === 'true' || experiments['specs.pro-gallery.useRefactoredProGallery'] === 'true')) || (window && window.isSSR); //on SSR use only refactor gallery
+    // return (!!(experiments['specs.pro-gallery.newGalleryContainer'] === 'true' || experiments['specs.pro-gallery.useRefactoredProGallery'] === 'true')) || (window && window.isSSR) || this.isOOI() || this.isVerbose(); //on SSR use only refactor gallery
   }
 
   isWixIframe() {
