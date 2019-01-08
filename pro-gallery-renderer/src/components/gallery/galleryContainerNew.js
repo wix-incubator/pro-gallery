@@ -27,7 +27,7 @@ export class GalleryContainer extends React.Component {
     const initialState = {
       pgScroll: 0,
       scroll: {
-        isInfinite: this.isInfiniteScroll()
+        isInfinite: this.isInfiniteScroll(props.styles)
       },
       currentHover: -1
     };
@@ -101,7 +101,7 @@ export class GalleryContainer extends React.Component {
         return false; // no new continainer
       }
       const containerHasChanged = {
-        height: !state.styles.oneRow ? false : (!!container.height && (container.height !== this.props.container.height)),
+        height: !state.styles.oneRow && state.styles.enableInfiniteScroll ? false : (!!container.height && (container.height !== this.props.container.height)),
         width: !!container.width && (container.width !== this.props.container.width),
         scrollBase: !!container.scrollBase && (container.scrollBase !== this.props.container.scrollBase),
       };
@@ -232,10 +232,8 @@ export class GalleryContainer extends React.Component {
         scrollBase: this.calcScrollBase(container),
       });
       dimentionsHelper.updateParams({container: _container});
-      _scroll = Object.assign({}, scroll, {isInfinite: isNew.styles ? _styles.enableInfiniteScroll : this.isInfiniteScroll()});
       newState.styles = _styles;
       newState.container = _container;
-      newState.scroll = _scroll;
     } else {
       _styles = state.styles;
       _container = state.container;
@@ -270,7 +268,7 @@ export class GalleryContainer extends React.Component {
       });
 
       const layout = this.layouter.createLayout(layoutParams);
-      const isInfinite = (isNew.scroll || _styles.enableInfiniteScroll || this.infiniteScrollChanged) && !_styles.oneRow;
+      const isInfinite = this.isInfiniteScroll(_styles);
 
       if (isNew.addedItems) {
         const existingLayout = this.galleryStructure || layout;
@@ -363,7 +361,7 @@ export class GalleryContainer extends React.Component {
     if (!gotStylesParams) {
       return false;
     } else {
-      //DO NOT allow infinite scroll only if both styleParams and state are FALSE
+			//DO NOT allow infinite scroll only if both styleParams and state are FALSE
       return !!((styleParamsInfiniteScroll || stateInfiniteScroll));
     }
   }
@@ -455,7 +453,7 @@ export class GalleryContainer extends React.Component {
     if (typeof this.props.onAppLoaded === 'function') {
       this.props.onAppLoaded();
     }
-
+    const isInfinite = this.isInfiniteScroll();
     return (
       <div>
         {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
@@ -473,7 +471,7 @@ export class GalleryContainer extends React.Component {
           watermark = {this.props.watermarkData}
           settings = {this.props.settings}
           gotScrollEvent = {true}
-          scroll = {{isInfinite: this.state.scroll.isInfinite}}
+          scroll = {{isInfinite}}
           domId = {this.props.domId}
           currentHover = {this.state.currentHover}
           actions = {_.merge(this.props.actions, {
