@@ -34,13 +34,8 @@ class CssScrollHelper {
     return `pgi${String(idx)}${String(id).slice(-5, -1)}`;
   }
 
-  calcScrollClasses(pos, maxSize) {
-    const scrollPositions = this.pgScrollSteps.map((step, idx) => `${this.pgScrollClassName}-${idx}-${Math.floor(pos / step) * step}`).join(' ');
-    const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
-    const isScrollStart = pos < minStep;
-    const isScrollEnd = pos > maxSize - minStep;
-    const scrollEdgeClass = `${this.pgScrollClassName}-${(isScrollEnd ? 'end' : isScrollStart ? 'start' : 'mid')}`;
-    return scrollEdgeClass + ' ' + scrollPositions;
+  calcScrollClasses(scrollTop) {
+    return this.pgScrollSteps.map((step, idx) => `${this.pgScrollClassName}-${idx}-${Math.floor(scrollTop / step) * step}`).join(' ');
   }
 
   calcScrollCss({items, scrollBase, styleParams}) {
@@ -52,9 +47,7 @@ class CssScrollHelper {
     //   this.screenSize *= (320 / window.screen.width);
     // }
     this.maxHeight = (styleParams.oneRow ? items[items.length - 1].offset.right : items[items.length - 1].offset.top + scrollBase) + this.screenSize;
-    const itemsCss = items.map(item => this.calcScrollCssForItem({item, scrollBase, styleParams})).join(`\n`);
-
-    return itemsCss;
+    return items.map(item => this.calcScrollCssForItem({item, scrollBase, styleParams})).join(`\n`);
   }
 
   shouldCalcScrollCss({id, top, left, width, height, resized_url, idx, type}, scrollBase, styleParams) {

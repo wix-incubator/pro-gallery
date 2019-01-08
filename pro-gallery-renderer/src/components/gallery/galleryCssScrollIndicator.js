@@ -102,7 +102,7 @@ export default class CssScrollIndicator extends React.Component {
 
   render() {
     return (
-        <div data-hook="css-scroll-indicator" className={cssScrollHelper.calcScrollClasses(this.state.scrollTop, this.props.maxSize)}/>
+        <div data-hook="css-scroll-indicator" className={cssScrollHelper.calcScrollClasses(this.state.scrollTop)}/>
     );
 
   }
