@@ -357,8 +357,8 @@ export class GalleryContainer extends React.Component {
     const styleParamsInfiniteScroll = styles.enableInfiniteScroll;//_.get(this, 'state.styleParams.enableInfiniteScroll'); //if undefined -> enable infinite scroll
     const stateInfiniteScroll = this.state && this.state.scroll.isInfinite;//_.get(this, 'state.scroll.isInfinite'); //if defined -> override style params
     const gotStylesParams = styles.gotStyleParams;//_.get(this, 'state.styleParams.gotStyleParams'); //if false -> do not allow infinite scroll yet
-
-    if (!gotStylesParams) {
+    const isVertical = styles.isVertical;
+    if (!gotStylesParams || !isVertical) {
       return false;
     } else {
 			//DO NOT allow infinite scroll only if both styleParams and state are FALSE
