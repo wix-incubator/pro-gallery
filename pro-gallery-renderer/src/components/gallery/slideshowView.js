@@ -37,7 +37,11 @@ class SlideshowView extends React.Component {
   isFirstItem() {
     let pos;
     if (this.useRefactoredProGallery) {
-      pos = this.props.styleParams.oneRow ? this.props.scroll.left : this.props.scroll.top;
+      if (this.container) {
+        pos = this.props.styleParams.oneRow ? this.container.scrollLeft : this.container.scrollTop;
+      } else {
+        pos = 0;
+      }
     } else {
       pos = this.props.scroll.top;
     }
@@ -48,12 +52,16 @@ class SlideshowView extends React.Component {
   isLastItem() {
     let pos;
     if (this.useRefactoredProGallery) {
-      pos = this.props.styleParams.oneRow ? this.props.scroll.left : this.props.scroll.top;
+      if (this.container) {
+        pos = this.props.styleParams.oneRow ? this.container.scrollLeft : this.container.scrollTop;
+      } else {
+        pos = 0;
+      }
     } else {
       pos = this.props.scroll.top;
     }
-    const [lastGroup] = this.props.galleryStructure.groups.slice(-1);
-    const lastItem = () => (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastGroup || (this.props.container.galleryWidth + pos >= lastGroup.right);
+    const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
+    const lastItem = () => (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastItemInGallery || (this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right);
     return lastItem() && !this.enableSlideshowLoop;
   }
 //__________________________________Slide show loop functions_____________________________________________

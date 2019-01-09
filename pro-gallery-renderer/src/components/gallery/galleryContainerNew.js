@@ -27,7 +27,7 @@ export class GalleryContainer extends React.Component {
     const initialState = {
       pgScroll: 0,
       scroll: {
-        isInfinite: this.isInfiniteScroll(props.styles)
+        isInfinite: undefined//this.isInfiniteScroll(props.styles)
       },
       currentHover: -1
     };
@@ -87,7 +87,7 @@ export class GalleryContainer extends React.Component {
 
     const isInfiniteScrollChanged = () => {
       if (!this.infiniteScrollChanged && (state.scroll.isInfinite !== this.props.styles.enableInfiniteScroll)) {
-        this.infiniteScrollChanged = true;
+        this.infiniteScrollChanged = state.scroll.isInfinite;
         return true;
       }
       return false;
@@ -357,7 +357,7 @@ export class GalleryContainer extends React.Component {
     const styleParamsInfiniteScroll = styles.enableInfiniteScroll;//_.get(this, 'state.styleParams.enableInfiniteScroll'); //if undefined -> enable infinite scroll
     const stateInfiniteScroll = this.state && this.state.scroll.isInfinite;//_.get(this, 'state.scroll.isInfinite'); //if defined -> override style params
     const gotStylesParams = styles.gotStyleParams;//_.get(this, 'state.styleParams.gotStyleParams'); //if false -> do not allow infinite scroll yet
-    const isVertical = styles.isVertical;
+    const isVertical = !styles.oneRow;
     if (!gotStylesParams || !isVertical) {
       return false;
     } else {

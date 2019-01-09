@@ -106,6 +106,7 @@ class GalleryItem {
     this.transform = scheme.transform;
     this.orientation = scheme.orientation;
     this.visibility = scheme.visibility;
+    this.directLink = scheme.dto.directLink;
   }
 
   renderProps(config) {
