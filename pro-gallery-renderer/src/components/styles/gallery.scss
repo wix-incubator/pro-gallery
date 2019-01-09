@@ -1017,7 +1017,6 @@
 
           &:before {
             content: ' ';
-            transition: opacity 0.5s ease;
             position: absolute;
             top: 0;
             left: 0;
@@ -1025,7 +1024,6 @@
             height: 100%;
             margin: 0;
             box-sizing: border-box;
-            border-radius: 0;
             z-index: -1;
           }
 

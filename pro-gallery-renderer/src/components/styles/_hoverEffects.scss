@@ -23,13 +23,14 @@
         }
       }
 
-      &.hover-animation-slide-down {
+      &.hover-animation-slide-up {
         .gallery-item-hover:not(.hide-hover) {
           &:before {
-            transform: translateY(-100%);
+            transform: translateY(100%);
           }
         }
 
+        .gallery-item-hover.hovered,
         &:hover .gallery-item-hover:not(.hide-hover) {
           * {
             transition: opacity .2s ease .6s !important;
@@ -42,7 +43,7 @@
         }
       }
 
-      &.hover-animation-scale {
+      &.hover-animation-expand {
         .gallery-item-hover:not(.hide-hover) {
           &:before {
             transform: scale(0);
@@ -50,6 +51,7 @@
           }
         }
 
+        .gallery-item-hover.hovered,
         &:hover .gallery-item-hover:not(.hide-hover) {
           * {
             transition: opacity .2s ease .6s !important;
@@ -63,18 +65,35 @@
         }
       }
 
-      &.scale-on-hover {
-        &:hover {
+      &.zoom-in-on-hover {
+        &:hover .gallery-item-content {
+          //TODO: do not work on text item
           transition: transform .8s ease !important;
           transform: scale(1.2);
+          //TODO: because of the z-index, the overlay on hover is not shown
+          z-index: 99999;
         }
       }
 
-      &.zoom-on-hover {
+      &.blur-on-hover {
         &:hover .gallery-item-content {
+          transition: filter .8s ease !important;
+          filter: blur(10px);
+        }
+      }
+
+      &.grayscale-on-hover {
+        &:hover .gallery-item-content {
+          //TODO: do not work on text item
+          transition: filter .8s ease !important;
+          filter: grayscale(1);
+        }
+      }
+
+      &.expand-on-hover {
+        &:hover {
           transition: transform .8s ease !important;
           transform: scale(1.2);
-          z-index: 99999;
         }
       }
 
@@ -86,20 +105,6 @@
         &:hover .gallery-item-wrapper {
           transition: filter .8s ease !important;
           filter: grayscale(0);
-        }
-      }
-
-      &.bnw-on-hover {
-        &:hover .gallery-item-content {
-          transition: filter .8s ease !important;
-          filter: grayscale(1);
-        }
-      }
-
-      &.blur-on-hover {
-        &:hover .gallery-item-content {
-          transition: filter .8s ease !important;
-          filter: blur(10px);
         }
       }
     }

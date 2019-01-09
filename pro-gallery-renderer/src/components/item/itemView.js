@@ -708,16 +708,25 @@ class ItemView extends React.Component {
 
   getItemContainerClass() {
     const {styleParams} = this.props;
+    const overlayAnimation = styleParams.overlayAnimation;
+    const imageHoverAnimation = styleParams.imageHoverAnimation;
     const className = classNames('gallery-item-container', 'visible', {
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',
-      'hover-animation-slide-down': utils.shouldDebug('hoverAnimationOverlaySlideDown'),
-      'hover-animation-scale': utils.shouldDebug('hoverAnimationOverlayScale'),
-      'colorize-on-hover': utils.shouldDebug('hoverAnimationImageColorize'),
-      'scale-on-hover': utils.shouldDebug('hoverAnimationImageScale'),
-      'zoom-on-hover': utils.shouldDebug('hoverAnimationImageZoom'),
-      'blur-on-hover': utils.shouldDebug('hoverAnimationImageBlur'),
-      'bnw-on-hover': utils.shouldDebug('hoverAnimationImageBnw'),
+
+      //overlay animations
+      'hover-animation-expand': overlayAnimation === Consts.overlayAnimations.EXPAND,
+      'hover-animation-slide-up': overlayAnimation === Consts.overlayAnimations.SLIDE_UP,
+      'hover-animation-slide-right': overlayAnimation === Consts.overlayAnimations.SLIDE_RIGHT, //not implemented yet
+
+      //Image hover animations
+      'zoom-in-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.ZOOM_IN,
+      'blur-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.BLUR,
+      'grayscale-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.GRAYSCALE,
+      'expand-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.EXPAND,
+      'shrink-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.SHRINK, //not implemented yet
+      'slide-up-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.SLIDE_UP, //not implemented yet
+      'colorize-on-hover': utils.shouldDebug('hoverAnimationImageColorize'), //will be in the future?
     });
     return className;
   }
