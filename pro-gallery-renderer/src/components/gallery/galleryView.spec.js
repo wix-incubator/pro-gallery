@@ -70,6 +70,7 @@ describe('Gallery View', () => {
       const spy = sinon.spy(GalleryView.prototype, 'showMoreItems');
       Object.assign(initialGalleryViewProps, {
         scroll: {isInfinite: false},
+        styleParams: {isVertical: true}
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
