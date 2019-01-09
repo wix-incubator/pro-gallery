@@ -20,6 +20,7 @@ describe('GalleryItem ', () => {
   let config;
   beforeEach(() => {
     config = {createdBy: 'Yonatan', dto: sampleItem, wixImage: {
+      scheme: {cropType: 'aaa', dto: {directLink: {}}},
       url: 'aaaaaaaa',
       height: 300,
       width: 300,
@@ -56,7 +57,7 @@ describe('GalleryItem ', () => {
     expect(antiGalleryItem.id).equal(undefined);
   });
   it('cubeType is fill if scheme.cropType is undefined', () => {
-    Object.assign(config, {scheme: {cropType: 'aaa'}});
+    Object.assign(config, {scheme: {cropType: 'aaa', dto: {directLink: {}}}});
     galleryItem = new GalleryItem(config);
     expect(galleryItem.cubeType).equal('aaa');
     expect(antiGalleryItem.cubeType).equal('fill');
