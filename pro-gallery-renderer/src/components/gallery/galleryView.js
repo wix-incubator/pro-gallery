@@ -230,7 +230,7 @@ class GalleryView extends React.Component {
     const styleParams = this.props.styleParams;
     let showMoreButton = false;
     const windowHeight = utils.getWindowHeight();
-    const shouldShowButton = (!this.props.scroll.isInfinite && this.props.styleParams.isVertical && (this.props.galleryStructure.height > windowHeight));
+    const shouldShowButton = (!this.props.scroll.isInfinite && !this.props.styleParams.oneRow && (this.props.galleryStructure.height > windowHeight));
     const btnStyle = this.returnButtonStyle(styleParams);
 
     if (shouldShowButton) {
