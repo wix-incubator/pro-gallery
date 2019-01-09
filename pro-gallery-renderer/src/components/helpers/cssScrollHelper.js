@@ -35,7 +35,7 @@ class CssScrollHelper {
   }
 
   calcScrollClasses(scrollTop) {
-    return this.pgScrollSteps.map((step, idx) => `${this.pgScrollClassName}-${idx}-${Math.floor(scrollTop / step) * step}`).join(' ');
+    return `${this.pgScrollClassName}-${scrollTop} ` + this.pgScrollSteps.map((step, idx) => `${this.pgScrollClassName}-${idx}-${Math.floor(scrollTop / step) * step}`).join(' ');
   }
 
   calcScrollCss({items, scrollBase, styleParams}) {
