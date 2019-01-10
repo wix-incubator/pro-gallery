@@ -428,7 +428,7 @@ export class GalleryContainer extends React.Component {
       oneRow: this.state.styles.oneRow,
       galleryWidth: this.state.container.galleryWidth,
       galleryHeight: this.state.container.galleryHeight,
-      top: this.state.scroll.top,
+      top: 0,
       items: this.galleryStructure.items,
       itemIdx,
       fixedScroll,

@@ -101,6 +101,7 @@ export default class CssScrollIndicator extends React.Component {
   }
 
   componentWillReceiveProps() {
+    this.toggleEventListeners(false);
     this.toggleEventListeners(true);
   }
 
