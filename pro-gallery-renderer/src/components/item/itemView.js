@@ -639,6 +639,7 @@ class ItemView extends React.Component {
         bottom: 'auto',
         width: style.width,
         height: style.height + (styleParams.externalInfoHeight || 0),
+        margin: 0,
         transition: 'top 0.4s ease, left 0.4s ease, width 0.4s ease, height 0.4s ease'
       });
     } else if (utils.positioningType === 'transform') {

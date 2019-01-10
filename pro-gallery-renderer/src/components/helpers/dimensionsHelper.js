@@ -24,7 +24,7 @@ class DimensionsHelper {
 
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
-      return (Number(this.styles.imageMargin || 0) - Number(this.styles.galleryMargin || 0));
+      return (Number(this.styles.imageMargin) - Number(this.styles.galleryMargin));
     });
   }
 
@@ -67,7 +67,7 @@ class DimensionsHelper {
     return this.getOrPutInCache('galleryHeight', () => {
       //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
       const domHeight = () => window.isMock ? utils.getScreenHeight() : window.innerHeight;//() => protectGalleryHeight(this.container.windowHeight, offsetTop);
-      return Math.floor((this.container.height > 0 ? this.container.height : domHeight()) + this.getDimensionFix());
+      return Math.floor((this.container.height > 0 ? this.container.height : domHeight())/*  + this.getDimensionFix() */);
     });
   }
 

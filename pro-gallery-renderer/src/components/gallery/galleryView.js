@@ -288,7 +288,7 @@ class GalleryView extends React.Component {
     return (
     <div className={'pro-gallery-parent-container'}
       key={`pro-gallery-${this.id}`}
-      style={this.getStyles()}
+      // style={this.getStyles()}
     >
       {screenLogs}
       {emptyState}

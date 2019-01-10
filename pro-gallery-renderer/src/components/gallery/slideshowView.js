@@ -719,7 +719,10 @@ class SlideshowView extends React.Component {
       console.timeEnd('Rendering Gallery took ');
     }
 
-    return (<div className={this.getClassNames()} style={this.getStyles()}>
+    return (<div
+      className={this.getClassNames()}
+      // style={this.getStyles()}
+    >
       {thumbnails[0]}
       {gallery}
       {thumbnails[1]}
