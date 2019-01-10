@@ -16,8 +16,8 @@ describe('Gallery', () => {
 
   it('renders default items', async () => {
     await driver.openGallery('Gallery', 'Default');
-    expect((await driver.find.hook('item-container')).length).to.equal(11);
-    expect((await driver.find.hook('gallery-item-social-button')).length).to.equal(11);
+    expect((await driver.find.hook('item-container')).length).to.equal(50);
+    expect((await driver.find.hook('gallery-item-social-button')).length).to.equal(50);
     expect((await driver.find.hook('item-download')).length).to.equal(0);
   });
   it('renders empty with no items', async () => {
