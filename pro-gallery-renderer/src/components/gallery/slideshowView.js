@@ -195,7 +195,7 @@ class SlideshowView extends React.Component {
   }
 
   handleKeypress(e) {
-    if (!utils.isInWix()) {
+    if (!utils.isInWix() && !utils.isOOI()) {
       return;
     }
     switch (e.charCode || e.keyCode) {
