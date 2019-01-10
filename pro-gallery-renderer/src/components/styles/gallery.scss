@@ -13,12 +13,6 @@
     transition: opacity 2s ease;
   }
 
-  #content {
-    display: block;
-    overflow: hidden;
-    position: relative;
-  }
-
   #gallery-loader {
     position: fixed;
     top: 50%;
@@ -311,7 +305,6 @@
         }
       }
 
-
       .gallery-item-container {
         .gallery-item-wrapper {
           .gallery-item-hover {
@@ -557,6 +550,8 @@
       transition-property: transform, margin, top, left, width, height;
       will-change: transform, margin, top, left, width, height;
       box-sizing: border-box;
+      font-family: $font-light;
+      font-size: 11px;
 
       &:hover {
         .gallery-item-bottom-info, .gallery-item-top-info {
@@ -1490,6 +1485,16 @@
       }
     }
 
+    .hide-scrollbars {
+      -ms-overflow-style: none;
+      overflow: -moz-scrollbars-none;
+    
+      &::-webkit-scrollbar,
+      ::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+      }
+    }
   }
 
   .screen-logs {

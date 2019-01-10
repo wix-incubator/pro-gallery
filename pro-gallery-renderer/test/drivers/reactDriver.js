@@ -135,6 +135,28 @@ class galleryDriver {
       playVideo: this.get.playVideo,
       pauseVideo: this.get.pauseVideo
     };
+
+    this.visibilityState = {
+      visible: {
+        visibleHorizontally: true,
+        visibleVertically: true,
+        renderedVertically: true,
+        renderedHorizontally: true,
+      },
+      rendered: {
+        visibleHorizontally: false,
+        visibleVertically: false,
+        renderedVertically: true,
+        renderedHorizontally: true,
+      },
+      hidden: {
+        visibleHorizontally: false,
+        visibleVertically: false,
+        renderedVertically: false,
+        renderedHorizontally: false,
+      },
+    };
+
   }
 
   get get() {
@@ -156,6 +178,7 @@ class galleryDriver {
       videoRemoved: this.videoRemoved,
       playVideo: this.playVideo,
       pauseVideo: this.pauseVideo,
+      visibilityState: this.visibilityState,
     };
   }
 
@@ -292,7 +315,15 @@ class galleryDriver {
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
 
         const galleryItem = new GalleryItem({dto: itemDto});
-        return _.merge(galleryItem.renderProps(newGalleryConfig), {config: newGalleryConfig, visible: true});
+        return _.merge(galleryItem.renderProps(newGalleryConfig), {
+          scrollingElement: {
+            vertical: () => window,
+            horizontal: () => window
+          },
+          store: mockStore({}),
+          config: newGalleryConfig,
+          visible: true
+        });
 
       },
 

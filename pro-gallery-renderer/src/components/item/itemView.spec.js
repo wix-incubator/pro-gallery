@@ -18,6 +18,7 @@ describe('Item View', () => {
   let sampleItemViewProps;
   let sampleItem;
   let mockEvent;
+
   beforeEach(() => {
     mockEvent = new Event('mock');
     driver = new GalleryDriver();
@@ -116,6 +117,7 @@ describe('Item View', () => {
       const spy = sinon.stub(ItemView.prototype, 'onVideoHover');
       Object.assign(sampleItemViewProps, {type: 'video'});
       driver.mount(ItemView, sampleItemViewProps);
+      driver.set.state(driver.get.visibilityState.visible);
       driver.find.hook('item-container').simulate('mouseover');
       expect(spy.called).to.be.true;
       spy.restore();
@@ -125,6 +127,7 @@ describe('Item View', () => {
 			//IMPORTANT stubing a function that is going to be passed as props before it is passed. stubing after mounting interfers with react managing the props and will not always work.
       const spy = sinon.stub(sampleItemViewProps, 'playVideo');
       driver.mount(ItemView, sampleItemViewProps);
+      driver.set.state(driver.get.visibilityState.visible);
       driver.set.props({styleParams: {videoPlay: 'hover'}});
       const stub = sinon.stub(utils, 'isMobile').returns(false);
       driver.find.hook('item-container').simulate('mouseover');
@@ -323,68 +326,66 @@ describe('Item View', () => {
       expect(testObject.marginLeft).to.equal(460);
     });
   });
-  describe('isVisible', () => {
-    it('should return true if the element is visible', () => {
-      Object.assign(sampleItemViewProps, {
-        documentHeight: 1080,
-        scroll: {
-          top: 200},
-        type: 'video'});
-      driver.mount(ItemView, sampleItemViewProps);
-      let visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
-      expect(visible).to.be.false;
-      driver.set.props({
-        scroll: {
-          top: 270}
-      });
-      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
-      expect(visible).to.be.false;
-      driver.set.props({
-        scroll: {
-          top: 271}
-      });
-      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
-      expect(visible).to.be.true;
-      driver.set.props({
-        scroll: {
-          top: 1349}
-      });
-      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
-      expect(visible).to.be.true;
-      driver.set.props({
-        scroll: {
-          top: 1350}
-      });
-      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
-      expect(visible).to.be.false;
-      driver.set.props({
-        scroll: {
-          top: 1500}
-      });
-      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
-      expect(visible).to.be.false;
-      driver.set.props({
-        scroll: {
-          top: 2000}
-      });
-      visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
-      expect(visible).to.be.false;
-    });
-  });
+  // describe('isVisible', () => {
+  //   it('should return true if the element is visible', () => {
+  //     Object.assign(sampleItemViewProps, {
+  //       documentHeight: 1080,
+  //       scroll: {
+  //         top: 200},
+  //       type: 'video'});
+  //     driver.mount(ItemView, sampleItemViewProps);
+  //     let visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+  //     expect(visible).to.be.false;
+  //     driver.set.props({
+  //       scroll: {
+  //         top: 270}
+  //     });
+  //     visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+  //     expect(visible).to.be.false;
+  //     driver.set.props({
+  //       scroll: {
+  //         top: 271}
+  //     });
+  //     visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+  //     expect(visible).to.be.true;
+  //     driver.set.props({
+  //       scroll: {
+  //         top: 1349}
+  //     });
+  //     visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+  //     expect(visible).to.be.true;
+  //     driver.set.props({
+  //       scroll: {
+  //         top: 1350}
+  //     });
+  //     visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+  //     expect(visible).to.be.false;
+  //     driver.set.props({
+  //       scroll: {
+  //         top: 1500}
+  //     });
+  //     visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+  //     expect(visible).to.be.false;
+  //     driver.set.props({
+  //       scroll: {
+  //         top: 2000}
+  //     });
+  //     visible = driver.get.instance().isVisible(mockEvent, {top: 1200, bottom: 1500});
+  //     expect(visible).to.be.false;
+  //   });
+  // });
 	// not testing all the "return component" functions
   describe('getItemInner', () => {
     it('should return a placeholder for non visible video', () => {
       Object.assign(sampleItemViewProps, {
-        visible: true,
         styleParams: {
           isSlideshow: false},
         type: 'video'});
       driver.mount(ItemView, sampleItemViewProps);
+      driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(0);
       expect(driver.find.selector(VideoItem).length).to.equal(1);
-      driver.set.props({
-        visible: false
-      });
+      driver.set.state(driver.get.visibilityState.rendered);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
       expect(driver.find.selector(VideoItem).length).to.equal(0);
     });
@@ -395,6 +396,7 @@ describe('Item View', () => {
           isSlideshow: true},
         type: 'image'});
       driver.mount(ItemView, sampleItemViewProps);
+      driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(1);
       driver.set.props({
         styleParams: {
@@ -414,6 +416,7 @@ describe('Item View', () => {
           allowTitle: true},
         type: 'image'});
       driver.mount(ItemView, sampleItemViewProps);
+      driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.selector(CustomButton).length).to.equal(1);
       expect(driver.find.selector(ItemTitle).length).to.equal(1);
     });

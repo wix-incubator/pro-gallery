@@ -24,7 +24,7 @@ class DimensionsHelper {
 
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
-      return (Number(this.styles.imageMargin) - Number(this.styles.galleryMargin));
+      return (Number(this.styles.imageMargin || 0) - Number(this.styles.galleryMargin || 0));
     });
   }
 

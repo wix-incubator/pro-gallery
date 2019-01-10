@@ -106,7 +106,6 @@ class GalleryItem {
     this.transform = scheme.transform;
     this.orientation = scheme.orientation;
     this.visibility = scheme.visibility;
-    this.directLink = scheme.dto.directLink;
   }
 
   renderProps(config) {
@@ -1121,6 +1120,10 @@ class GalleryItem {
 
   get isTransparent() {
     return this.url && (this.url.indexOf('.png') > 0 || this.url.indexOf('.gif') > 0);
+  }
+
+  get directLink() {
+    return this.dto.directLink || '';
   }
 }
 

@@ -1,187 +1,181 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {ProGallery} from '../src/index';
+import {getProGalleryStyles} from 'photography-client-lib/dist/src/utils/proGalleryStyleBuilder';
 
-const props = {
-  items: require('../test/images-mock').testImages
-};
+const createProps = (styles, items) => ({
+  useRefactoredProGallery: true,
+  styles: {...getProGalleryStyles({}), ...styles},
+  container: {},
+  items: items || require('../test/images-mock').testImages
+});
 
 storiesOf('Gallery', module)
-	.add('Default', () => <ProGallery />)
-	.add('collage', () => (
-		<ProGallery
-      styles={{
+  .add('Default', () => (
+    <ProGallery
+      {...createProps({})}
+    />
+  ))
+  .add('collage', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 0,
         itemClick: 'expand'
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Masonry', () => (
-		<ProGallery
-      styles={{
+  ))
+  .add('Masonry', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 1,
         itemClick: 'expand',
         allowSocial: false,
         allowDownload: true,
         loveButton: false
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Grid', () => (
-		<ProGallery
-      styles={{
+  ))
+  .add('Grid', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 2,
         itemClick: 'expand'
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Thumbnails', () => (
-		<ProGallery
-      styles={{
+  ))
+  .add('Thumbnails', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 3,
         itemClick: 'expand'
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Slider', () => (
-		<ProGallery
-      styles={{
+  ))
+  .add('Slider', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 4,
         itemClick: 'expand'
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Slide Show', () => (
-		<ProGallery
-      styles={{
+  ))
+  .add('Slide Show', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 5,
         itemClick: 'expand'
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Strip', () => (
-		<ProGallery
-      styles={{
+  ))
+  .add('Strip', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 6,
         itemClick: 'expand'
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Column', () => (
-		<ProGallery
-      styles={{
+  ))
+  .add('Column', () => (
+    <ProGallery
+      {...createProps({
         galleryLayout: 7,
         itemClick: 'expand'
-      }}
-      {...props}
+      })}
 		/>
-	))
-	.add('Empty Gallery', () => (
-		<ProGallery
-			items={[]}
+  ))
+  .add('Empty Gallery', () => (
+    <ProGallery
+      {...createProps({}, [])}
+
 		/>
-	))
-;
+  ));
 
 storiesOf('Eyes', module)
   .add('Collage', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 0,
         allowSocial: false,
         allowDownload: true,
         allowTitle: false
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
   ))
   .add('Masonry', () => (
     <ProGallery
-      items
-      styles={{
+      {...createProps({
         galleryLayout: 1,
         allowDownload: true,
         gallerySize: 10,
         itemBorderRadius: 50
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
   ))
   .add('Grid 1', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 2,
         loveButton: false,
         titlePlacement: 'SHOW_ON_HOVER',
         allowTitle: true,
         allowDescription: true,
         gallerySize: 5
-      }}
+      })}
       forceHover= {true}
-      {...props}
+
     />
   ))
   .add('Grid 2', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 2,
         imageMargin: 0,
         titlePlacement: 'SHOW_ABOVE',
         allowTitle: true,
         allowDescription: false
-      }}
+      })}
       forceHover= {true}
-      {...props}
+
     />
   ))
   .add('Grid 3', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 2,
         imageMargin: 100,
         gallerySize: 10,
         titlePlacement: 'SHOW_BELOW',
         allowTitle: true,
         allowDescription: false
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
   ))
   .add('Thumbnails 1', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 3,
         titlePlacement: 'DONT_SHOW',
         thumbnailSpacings: 5
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
   ))
   .add('Thumbnails 2', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 3,
         galleryThumbnailsAlignment: 'left',
         allowDownload: true
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
   ))
   .add('Slider', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 4,
         allowSocial: false,
         allowDownload: true,
@@ -189,30 +183,26 @@ storiesOf('Eyes', module)
         allowTitle: true,
         allowDescription: true,
         galleryTextAlign: 'left'
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
   ))
   .add('Slideshow', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 5,
         allowDescription: true
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
   ))
   .add('Strip', () => (
     <ProGallery
-      styles={{
+      {...createProps({
         galleryLayout: 6,
         loveButton: false,
         allowDownload: true
-      }}
+      })}
       forceHover= {true}
-      {...props}
     />
-  ))
-;
+  ));

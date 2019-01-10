@@ -43,7 +43,7 @@ class ItemView extends React.Component {
       renderedVertically: true,
       visibleHorizontally: true,
       renderedHorizontally: true,
-      previewHover: this.props.previewHover,
+      previewHover: props.previewHover,
       scroll: {
         top: 0,
         left: 0,
@@ -595,7 +595,7 @@ class ItemView extends React.Component {
   }
 
   showHover() {
-    return (this.props.currentHover === this.props.idx || this.state.previewHover);
+    return (this.props.currentHover === this.props.idx || this.state.previewHover || this.props.previewHover);
   }
 
   getItemContainerStyles() {
@@ -630,7 +630,6 @@ class ItemView extends React.Component {
       overflowY: styleParams.isSlideshow ? 'visible' : 'inherit',
       borderRadius: styleParams.itemBorderRadius + 'px',
     };
-
     if (utils.positioningType === 'absolute') {
       Object.assign(itemStyles, {
         position: 'absolute',
@@ -639,7 +638,7 @@ class ItemView extends React.Component {
         right: 'auto',
         bottom: 'auto',
         width: style.width,
-        height: style.height + styleParams.externalInfoHeight,
+        height: style.height + (styleParams.externalInfoHeight || 0),
         transition: 'top 0.4s ease, left 0.4s ease, width 0.4s ease, height 0.4s ease'
       });
     } else if (utils.positioningType === 'transform') {
@@ -651,7 +650,7 @@ class ItemView extends React.Component {
         right: 'auto',
         bottom: 'auto',
         width: style.width,
-        height: style.height + styleParams.externalInfoHeight,
+        height: style.height + (styleParams.externalInfoHeight || 0),
         transition: 'top 0.4s ease, left 0.4s ease, width 0.4s ease, height 0.4s ease'
       });
     }
@@ -852,7 +851,7 @@ class ItemView extends React.Component {
     const {url, target} = (directLink || {});
     const shouldUseDirectLink = this.useRefactoredProGallery && url && target && itemClick === 'link';
     const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
-    const innderDiv =
+    const innerDiv =
 			<div className={this.getItemContainerClass()}
 				id={cssScrollHelper.getDomId(this.props)}
 				ref={e => this.itemContainer = e}
@@ -880,13 +879,14 @@ class ItemView extends React.Component {
 				</div>
 				{this.getBottomInfoElementIfNeeded()}
 			</div>
-			;
+      ;
+
     return (
 			shouldUseDirectLink ?
 				<a href={url} target={target}>
-					{innderDiv}
+					{innerDiv}
 				</a>				:
-			innderDiv
+			innerDiv
     );
   }
   //-----------------------------------------| RENDER |--------------------------------------------//
