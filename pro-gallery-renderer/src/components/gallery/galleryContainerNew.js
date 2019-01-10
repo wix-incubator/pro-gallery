@@ -33,6 +33,9 @@ export class GalleryContainer extends React.Component {
     };
 
     this.items = [];
+    this.itemsDimensions = {};
+    this.preloadedItems = {};
+
     const galleryState = this.reCreateGalleryExpensively(props, initialState);
 
     this.state = {
@@ -51,7 +54,7 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.getMoreItemsIfNeeded(0);
-
+    this.loadItemsDimensions();
     //calcScrollBase (read the dom)
     this.setState({
       container: Object.assign({}, this.state.container, dimentionsHelper.getGalleryDimensions(), {
@@ -72,6 +75,86 @@ export class GalleryContainer extends React.Component {
     }
 
     if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
+  }
+
+  loadItemsDimensions() { //TODO: move call to handleNewGalleryStructure
+
+    const preloadItem = (item, onload) => {
+      if (!item || !item.itemId || !item.isGalleryItem) {
+        return;
+      }
+      try {
+        const id = item.itemId;
+        if (typeof this.preloadedItems[id] !== 'undefined') {
+          return;
+        }
+        this.preloadedItems[id] = new Image();
+        if (utils.isVerbose()) {
+          console.log('Preloading item #' + item);
+        }
+        this.preloadedItems[id].src = item.thumbnail_url.img;
+        if (typeof onload === 'function') {
+          this.preloadedItems[id].onload = e => {
+            onload(e);
+          };
+        }
+        return this.preloadedItems[id];
+      } catch (e) {
+        console.error('Could not preload item', item, e);
+        return;
+      }
+    };
+
+    const throttledReCreateGallery = _.throttle(() => {
+      const newState = this.reCreateGalleryExpensively(this.props, this.state);
+      if (Object.keys(newState).length > 0) {
+        this.setState(newState, () => {
+          this.handleNewGalleryStructure();
+        });
+      }
+    }, 1000);
+
+    const {galleryItems} = this.galleryStructure;
+
+    if (!galleryItems) {
+      return;
+    }
+
+    const itemsWithoutDimensions = galleryItems.filter((item, idx) => {
+      try {
+        return (item.isVisible && item.isDimensionless);
+      } catch (e) {
+        return false;
+      }
+    });
+
+    this.itemsDimensions = {};
+    itemsWithoutDimensions.forEach((item, idx, items) => {
+      preloadItem(item, e => {
+        try {
+          if (utils.isVerbose()) {
+            console.log('item loaded event', idx, e);
+          }
+          const ele = e.srcElement;
+          const _item = this.items.find(itm => itm.itemId === item.itemId);
+          if (_item) {
+            this.itemsDimensions[_item.itemId] = {
+              width: ele.width,
+              height: ele.height,
+            };
+
+            //rebuild the gallery after every dimension update
+            if (Object.keys(this.itemsDimensions).length > 0) {
+              throttledReCreateGallery();
+            }
+
+          }
+        } catch (e) {
+          console.error('Could not calc element dimensions', e);
+        }
+      });
+    });
+
   }
 
   handleNavigation(isInDisplay) {
@@ -197,6 +280,10 @@ export class GalleryContainer extends React.Component {
 
     let _styles, _container, scroll, _scroll;
     items = items || this.items;
+    Object.entries(this.itemsDimensions).forEach(([itemId, itemDim]) => {
+      const item = items.find(itm => itm.itemId === itemId);
+      Object.assign(item.metaData, itemDim);
+    });
 
     const isNew = this.isNew({items, styles, container, watermarkData}, state);
     const newState = {};
