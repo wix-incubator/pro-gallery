@@ -93,7 +93,7 @@ export class GalleryContainer extends React.Component {
         if (utils.isVerbose()) {
           console.log('Preloading item #' + item);
         }
-        this.preloadedItems[id].src = item.thumbnail_url.img;
+        this.preloadedItems[id].src = item.sample_url.img;
         if (typeof onload === 'function') {
           this.preloadedItems[id].onload = e => {
             onload(e);
