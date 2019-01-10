@@ -708,6 +708,11 @@
             overflow: hidden;
             text-align: center; //for grid crop
 
+            .iframe {
+              left: 0;
+              top: 0;
+            }
+
             &.playing {
 
               button,
