@@ -7,13 +7,13 @@ const createProps = (styles, items) => ({
   useRefactoredProGallery: true,
   styles: {...getProGalleryStyles({}), ...styles},
   container: {},
-  items: items || require('../test/images-mock').testImages
+  items: items || require('../test/images-mock').testImages.slice(0, 50)
 });
 
 storiesOf('Gallery', module)
   .add('Default', () => (
     <ProGallery
-      {...createProps({})}
+      {...createProps({}, [])}
     />
   ))
   .add('collage', () => (
