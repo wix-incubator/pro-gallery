@@ -697,7 +697,7 @@ function getExternalInfoHeight(styleParams) {
     descriptionFontSize = itemDescriptionFontSlideshow ? getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
   }
 
-  return titleFontSize + 3 * descriptionFontSize + paddingTopAndBottom + totalSpaceBetweenElements + defaultButtonHeight;
+  return 10 + titleFontSize + (3 * descriptionFontSize) + paddingTopAndBottom + totalSpaceBetweenElements + defaultButtonHeight; // HACK  +10 for spare place. we can not really know that this is the final font - thus, this whole calc to get the bottom info height will break one day again.
 }
 
 function getFontLineHeight(font) {
