@@ -119,6 +119,7 @@ describe('Eyes layout tests', () => {
   });
   it('Column layout - iPhone', async () => {
     await driver.openGallery('Gallery', 'Column');
+    await driver.waitFor.timer(1000);
     await driver.actions.click('nav-arrow-next');
     await driver.waitFor.timer(1000);
     await expect(await driver.grab.screenshot()).toMatchScreenshot({key: 'Column layout after a click right', version: 'v1.0.1'});

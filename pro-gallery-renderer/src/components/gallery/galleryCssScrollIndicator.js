@@ -100,6 +100,10 @@ export default class CssScrollIndicator extends React.Component {
     this.toggleEventListeners(true);
   }
 
+  componentWillReceiveProps() {
+    this.toggleEventListeners(true);
+  }
+
   render() {
     return (
         <div data-hook="css-scroll-indicator" className={cssScrollHelper.calcScrollClasses(this.state.scrollTop)}/>
