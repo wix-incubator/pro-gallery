@@ -57,22 +57,23 @@ describe('Gallery View', () => {
 
   describe('More Button tests ', () => {
     it('should hide load more button when infinte scroll enable', () => {
-      Object.assign(initialGalleryViewProps, {
-        scroll: {isInfinite: true},
-        galleryStructure: {height: 100}
-      });
+      Object.assign(initialGalleryViewProps,
+				{galleryStructure: {height: 100}},
+      );
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+      Object.assign(galleryViewProps,
+				{displayShowMore: false},
+      );
       driver.mount(GalleryView, galleryViewProps);
       expect(driver.find.hook('show-more').length).to.equal(0);
     });
 
     it('should load more photos when clicked on load more', () => {
       const spy = sinon.spy(GalleryView.prototype, 'showMoreItems');
-      Object.assign(initialGalleryViewProps, {
-        scroll: {isInfinite: false},
-        styleParams: {isVertical: true}
-      });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+      Object.assign(galleryViewProps,
+        {displayShowMore: true}
+      );
       driver.mount(GalleryView, galleryViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'toggleInfiniteScroll');
       expect(driver.find.hook('show-more').length).to.equal(1);
