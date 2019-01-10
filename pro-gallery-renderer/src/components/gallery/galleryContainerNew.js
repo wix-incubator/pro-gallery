@@ -245,7 +245,7 @@ export class GalleryContainer extends React.Component {
       }
       return items.reduce((is, item, idx) => {
         //check that all the items' ids are identical
-        return is || !item || !_items[idx] || item.itemId !== _items[idx].id;
+        return is || !item || !_items[idx] || item.itemId !== _items[idx].id || JSON.stringify({...item.metaData}) !== JSON.stringify({..._items[idx].metaData});
       }, false);
     };
 
