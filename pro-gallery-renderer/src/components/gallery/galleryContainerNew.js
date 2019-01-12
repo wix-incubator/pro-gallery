@@ -475,9 +475,11 @@ export class GalleryContainer extends React.Component {
       //TODO - add support for horizontal galleries
       const {oneRow} = this.state.styles;
 
-      const gallerySize = (oneRow ? this.galleryStructure.columns[0].width : this.galleryStructure.height);
-      const scrollEnd = (oneRow ? scrollPos + window.screen.width : scrollPos + this.state.container.scrollBase + window.screen.height);
-      const getItemsDistance = 2 * (oneRow ? window.screen.width : window.screen.height);
+      const [lastItem] = this.galleryStructure.galleryItems.slice(-1);
+      const gallerySize = lastItem.offset[(oneRow ? 'right' : 'bottom')];
+      const screenSize = (oneRow ? window.screen.width : window.screen.height);
+      const scrollEnd = scrollPos + screenSize + (oneRow ? 0 : this.state.container.scrollBase);
+      const getItemsDistance = 2 * screenSize;
 
       if (gallerySize - scrollEnd < getItemsDistance) { //only when the last item turns visible we should try getting more items
         this.gettingMoreItems = true;
