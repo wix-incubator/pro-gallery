@@ -169,7 +169,8 @@ export default class Layouter {
       this.groups = [];
       this.strips = [];
 
-      this.gallerySize = Math.floor(this.styleParams.gallerySize) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
+      const gallerySizeVal = (typeof this.styleParams.gallerySize === 'function') ? this.styleParams.gallerySize() : this.styleParams.gallerySize;
+      this.gallerySize = Math.floor(gallerySizeVal) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
       this.galleryWidth = Math.floor(this.container.galleryWidth);
       this.maxGroupSize = this.getMaxGroupSize();
 
