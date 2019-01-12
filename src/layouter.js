@@ -192,10 +192,12 @@ export default class Layouter {
       this.numOfCols = this.calcNumberOfColumns(this.galleryWidth, this.gallerySize);
       this.gallerySize = this.styleParams.isVertical ? Math.floor(this.galleryWidth / this.numOfCols) : this.gallerySize;
 
-      const columnWidths = this.styleParams.columnWidths ? this.styleParams.columnWidths.split(',') : false;
-      this.columns = Array(this.numOfCols).fill(0).map((column, idx) => new Column(idx, (columnWidths ? columnWidths[idx] : this.gallerySize), this.styleParams.cubeRatio));
-      this.columns[this.numOfCols - 1].width += (this.galleryWidth - this.columns.reduce((col, sum) => col.width + sum, 0)); //the last group compensates for half pixels in other groups
-      this.columns[this.numOfCols - 1].cubeRatio = this.styleParams.cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
+      const {columnWidths, cubeRatio} = this.styleParams;
+
+      const columnWidthsArr = (columnWidths && columnWidths.length > 0) ? columnWidths.split(',') : false;
+      this.columns = Array(this.numOfCols).fill(0).map((column, idx) => new Column(idx, (columnWidthsArr ? columnWidthsArr[idx] : this.gallerySize), this.styleParams.cubeRatio));
+      this.columns[this.numOfCols - 1].width += (this.galleryWidth - this.columns.reduce((sum, col) => col.width + sum, 0)); //the last group compensates for half pixels in other groups
+      this.columns[this.numOfCols - 1].cubeRatio = cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
 
       this.maxLoops = this.srcItems.length * 10;
     }
