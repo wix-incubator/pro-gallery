@@ -721,7 +721,7 @@ class SlideshowView extends React.Component {
 
     return (<div
       className={this.getClassNames()}
-    	style={this.getStyles()}
+			style={this.getStyles()}
     >
       {thumbnails[0]}
       {gallery}
