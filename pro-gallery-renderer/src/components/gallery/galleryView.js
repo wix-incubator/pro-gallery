@@ -239,7 +239,7 @@ class GalleryView extends React.Component {
     if (shouldShowButton) {
       const buttonText = styleParams.loadMoreButtonText || 'Load More';
       showMoreButton = (
-        <div className="show-more-container">
+        <div className={'show-more-container' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')}>
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
             className="show-more"

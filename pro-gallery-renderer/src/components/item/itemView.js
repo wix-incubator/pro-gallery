@@ -727,12 +727,15 @@ class ItemView extends React.Component {
       'shrink-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.SHRINK, //not implemented yet
       'slide-up-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.SLIDE_UP, //not implemented yet
       'colorize-on-hover': utils.shouldDebug('hoverAnimationImageColorize'), //will be in the future?
+
+      'pro-gallery-mobile-indicator': utils.isMobile(),
     });
     return className;
   }
   getItemWrapperClass() {
     const {styleParams, type} = this.props;
     const classNames = ['gallery-item-wrapper', 'visible'];
+
     if (styleParams.cubeImages) {
       classNames.push('cube-type-' + styleParams.cubeType);
     }

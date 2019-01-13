@@ -369,7 +369,7 @@ class SlideshowView extends React.Component {
                 Object.assign(itemStyle, thumbnailOffset);
                 return (<div
                   key={'thumbnail-' + thumbnailItem.id}
-                  className={'thumbnailItem' + (highlighted ? ' pro-gallery-thumbnails-highlighted gallery-item-container highlight' : '')}
+                  className={'thumbnailItem' + (highlighted ? (' pro-gallery-thumbnails-highlighted gallery-item-container highlight' + utils.isMobile() ? ' pro-gallery-mobile-indicator' : '') : '')}
                   data-key={thumbnailItem.id}
                   style={itemStyle}
                   onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
@@ -480,7 +480,7 @@ class SlideshowView extends React.Component {
 
     return [
       (this.isFirstItem() ? '' : <button
-        className={'nav-arrows-container prev '}
+        className={'nav-arrows-container prev ' + utils.isMobile() ? 'pro-gallery-mobile-indicator ' : ''}
         onClick={() => this._nextItem(-1)}
         aria-label="Previous Item"
         tabIndex={utils.getTabIndex('slideshowPrev')}
