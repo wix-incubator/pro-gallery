@@ -66,8 +66,9 @@ class DimensionsHelper {
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
       //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
+      const dimensionFix = () => this.styles.oneRow ? this.getDimensionFix() : 0;
       const domHeight = () => window.isMock ? utils.getScreenHeight() : window.innerHeight;//() => protectGalleryHeight(this.container.windowHeight, offsetTop);
-      return Math.floor((this.container.height > 0 ? this.container.height : domHeight())/*  + this.getDimensionFix() */);
+      return Math.floor((this.container.height > 0 ? this.container.height : domHeight()) + dimensionFix());
     });
   }
 
