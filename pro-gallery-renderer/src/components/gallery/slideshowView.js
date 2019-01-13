@@ -369,7 +369,7 @@ class SlideshowView extends React.Component {
                 Object.assign(itemStyle, thumbnailOffset);
                 return (<div
                   key={'thumbnail-' + thumbnailItem.id}
-                  className={'thumbnailItem' + (highlighted ? (' pro-gallery-thumbnails-highlighted gallery-item-container highlight' + utils.isMobile() ? ' pro-gallery-mobile-indicator' : '') : '')}
+                  className={'thumbnailItem' + (highlighted ? (' pro-gallery-thumbnails-highlighted gallery-item-container highlight' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')) : '')}
                   data-key={thumbnailItem.id}
                   style={itemStyle}
                   onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
