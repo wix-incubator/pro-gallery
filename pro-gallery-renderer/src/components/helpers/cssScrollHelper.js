@@ -11,7 +11,7 @@ import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 class CssScrollHelper {
 
   constructor() {
-    this.pgScrollSteps = [5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10];
+    this.pgScrollSteps = [10240, 5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10];
     this.pgScrollClassName = 'pgscl';
 
     this.screenSize = Math.max(window.screen.width, window.screen.height);
@@ -34,8 +34,12 @@ class CssScrollHelper {
     return `pgi${String(idx)}${String(id).slice(-5, -1)}`;
   }
 
+  buildScrollClassName(idx, val) {
+    return `${this.pgScrollClassName}-${this.pgScrollSteps[idx]}-${val}`;
+  }
+
   calcScrollClasses(scrollTop) {
-    return `${this.pgScrollClassName}-${scrollTop} ` + this.pgScrollSteps.map((step, idx) => `${this.pgScrollClassName}-${idx}-${Math.floor(scrollTop / step) * step}`).join(' ');
+    return `${this.pgScrollClassName}-${scrollTop} ` + this.pgScrollSteps.map((step, idx) => this.buildScrollClassName(idx, (Math.floor(scrollTop / step) * step))).join(' ');
   }
 
   calcScrollCss({items, scrollBase, styleParams}) {
@@ -80,7 +84,7 @@ class CssScrollHelper {
           console.error('largestDividerIdx is -1. Couldn\'t find index in pgScrollSteps array.\nfrom =', from, '\nto =', to, '\npadding[0] =', padding[0], '\npadding[1] =', padding[1]);
           break;
         }
-        scrollClasses.push(`.${this.pgScrollClassName}-${largestDividerIdx}-${from} ~ div #${domId} ${suffix}`);
+        scrollClasses.push(`.${this.buildScrollClassName(largestDividerIdx, from)} ~ div #${domId} ${suffix}`);
         from += this.pgScrollSteps[largestDividerIdx];
         // console.count('pgScroll class created');
       }

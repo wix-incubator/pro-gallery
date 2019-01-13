@@ -14,14 +14,6 @@ export default class CssScrollIndicator extends React.Component {
     };
   }
 
-  toggleEventListeners(isInDisplay) {
-    if (isInDisplay && !this.scrollEventListenerSet) {
-      this.initScrollListener();
-    } else {
-      this.removeScrollListener(); //for guy to add the remove function
-    }
-  }
-
   removeScrollListener() {
     if (this.scrollEventListenerSet) {
       const scrollingElement = this.props.scrollingElement;
@@ -44,70 +36,68 @@ export default class CssScrollIndicator extends React.Component {
   }
 
   initScrollListener() {
-    if (!this.scrollEventListenerSet) {
-      this.scrollEventListenerSet = true;
-      const scrollInterval = 500;
+    if (this.scrollEventListenerSet) {
+      this.removeScrollListener();
+    }
 
-      const scrollingElement = this.props.scrollingElement;
-      const {oneRow} = this.props;
-      if (oneRow) {
-            //Horizontal Scroll
-        this.onHorizontalScroll = e => {
-          const target = (e.currentTarget || e.target || e);
-          const left = (target && (target.scrollX || target.scrollLeft || target.x));
-          if (left >= 0) {
-            this.setState({
-              scrollTop: left, //todo use both scrollTop and scrollLeft
-              scrollLeft: left
-            });
-            this.props.getMoreItemsIfNeeded(left);
-          }
-        };
-        try {
-          scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
-        } catch (e) {
-          //
+    this.scrollEventListenerSet = true;
+
+    const scrollingElement = this.props.scrollingElement;
+    const {oneRow} = this.props;
+    if (oneRow) {
+      //Horizontal Scroll
+      this.onHorizontalScroll = e => {
+        const target = (e.currentTarget || e.target || e);
+        const left = (target && (target.scrollX || target.scrollLeft || target.x));
+        if (left >= 0) {
+          this.setState({
+            scrollTop: left, //todo use both scrollTop and scrollLeft
+            scrollLeft: left
+          });
+          this.props.getMoreItemsIfNeeded(left);
         }
-      } else {
-            //Vertical Scroll
-        // this.onVerticalScroll = _.throttle(e => {
-        this.onVerticalScroll = e => {
-          const target = (e.currentTarget || e.target || e);
-          const top = (target && (target.scrollY || target.scrollTop || target.y));
-          if (top >= 0) {
-            this.setState({
-              scrollTop: top
-            });
-            this.props.getMoreItemsIfNeeded(top);
-          }
-        };
-        // }, scrollInterval);
-        try {
-          scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
-        } catch (e) {
+      };
+      try {
+        scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
+      } catch (e) {
           //
+      }
+    } else {
+      //Vertical Scroll
+      this.onVerticalScroll = e => {
+        const target = (e.currentTarget || e.target || e);
+        const top = (target && (target.scrollY || target.scrollTop || target.y));
+        if (top >= 0) {
+          this.setState({
+            scrollTop: top
+          });
+          this.props.getMoreItemsIfNeeded(top);
         }
+      };
+      try {
+        scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
+      } catch (e) {
+          //
       }
     }
   }
 
 
   componentWillUnmount() {
-    this.toggleEventListeners(false);
+    this.removeScrollListener();
   }
 
   componentDidMount() {
-    this.toggleEventListeners(true);
+    this.initScrollListener();
   }
 
   componentWillReceiveProps() {
-    this.toggleEventListeners(false);
-    this.toggleEventListeners(true);
+    this.initScrollListener();
   }
 
   render() {
     return (
-        <div data-hook="css-scroll-indicator" className={cssScrollHelper.calcScrollClasses(this.state.scrollTop)}/>
+        <div data-hook="css-scroll-indicator" className={cssScrollHelper.calcScrollClasses(this.state.scrollTop)} style={{display: 'none'}} />
     );
 
   }
