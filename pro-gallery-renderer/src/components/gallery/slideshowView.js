@@ -480,7 +480,7 @@ class SlideshowView extends React.Component {
 
     return [
       (this.isFirstItem() ? '' : <button
-        className={'nav-arrows-container prev ' + utils.isMobile() ? 'pro-gallery-mobile-indicator ' : ''}
+        className={'nav-arrows-container prev ' + (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')}
         onClick={() => this._nextItem(-1)}
         aria-label="Previous Item"
         tabIndex={utils.getTabIndex('slideshowPrev')}
