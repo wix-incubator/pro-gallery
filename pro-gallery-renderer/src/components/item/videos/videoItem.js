@@ -124,14 +124,14 @@ class VideoItem extends React.Component {
     ];
 
     const videoPreloader = <div className="pro-circle-preloader" key={'video-preloader-' + this.props.idx}/>;
-
+    const {marginLeft, marginTop, ...restOfDimensions} = this.props.imageDimensions || {};
     const {videoPlay, itemClick} = this.props.styleParams;
     const video = this.canVideoPlayInGallery(itemClick, videoPlay) ? (
       <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"
           key={'video_container-' + this.props.id}
-          style={this.props.loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...this.props.imageDimensions}}
+          style={this.props.loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
         >
           {this.createPlayerElement()}
           {videoControls}
