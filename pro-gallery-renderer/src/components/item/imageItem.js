@@ -11,6 +11,17 @@ export default class ImageItem extends React.Component {
     this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.useCssScrolling = this.useRefactoredProGallery;
   }
+
+  componentDidMount() {
+    if (this.useCssScrolling) {
+      try {
+        this.props.actions.setItemLoaded();
+      } catch (e) {
+        //
+      }
+    }
+  }
+
   render() {
     const {isThumbnail, alt, visible, loaded, displayed, styleParams, imageDimensions, resized_url, id, actions, settings} = this.props;
     const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
