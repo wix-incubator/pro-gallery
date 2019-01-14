@@ -6,8 +6,6 @@ export default class ImageItem extends React.Component {
 
   constructor() {
     super();
-    this.scrollCss = '';
-    this.domId = 'pgi' + Math.floor(Math.random() * 1000000);
     this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.useCssScrolling = this.useRefactoredProGallery;
   }

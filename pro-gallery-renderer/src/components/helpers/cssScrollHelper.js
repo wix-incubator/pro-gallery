@@ -35,7 +35,7 @@ class CssScrollHelper {
   }
 
   buildScrollClassName(idx, val) {
-    return `${this.pgScrollClassName}-${this.pgScrollSteps[idx]}-${val}`;
+    return `${this.pgScrollClassName}-x${this.pgScrollSteps[idx]}-${val}`;
   }
 
   calcScrollClasses(scrollTop) {
