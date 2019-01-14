@@ -19,7 +19,9 @@ export default class ProGallery extends React.Component {
 
   constructor(props) {
     super();
-    console.count('[OOISSR] proGallery constructor', window.isMock);
+    if (utils.isVerbose()) {
+      console.count('[OOISSR] proGallery constructor', window.isMock);
+    }
     const isSSR = !!window.isMock;
     this.canRender = !isSSR || props.allowSSR === true; //do not render if it is SSR
     if (this.canRender) {
@@ -41,7 +43,9 @@ export default class ProGallery extends React.Component {
 
   init(props) {
     this.domId = props.domId || Math.floor(Math.random() * 10000);
-    console.log('[OOISSR] proGallery init', window.isMock);
+    if (utils.isVerbose()) {
+      console.log('[OOISSR] proGallery init', window.isMock);
+    }
     const middlewares = [thunkMiddleware, videoMiddleware({videoQueue: new VideoQueue(), utils})];
     this.store = createStore(galleryReducers, /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {}, applyMiddleware(...middlewares));
     this.initStoreEvents(this.store);

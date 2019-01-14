@@ -226,8 +226,9 @@ class SlideshowView extends React.Component {
       currentIdx += this.numOfThumbnails;
       items = this.ItemsForSlideshowLoopThumbnails;
     }
-
-    utils.isVerbose() && console.log('creating thumbnails for idx', currentIdx);
+    if (utils.isVerbose()) {
+      console.log('creating thumbnails for idx', currentIdx);
+    }
 
     let width = this.props.styleParams.thumbnailSize;
     let height = this.props.styleParams.thumbnailSize;
@@ -393,7 +394,9 @@ class SlideshowView extends React.Component {
   }
 
   setCurrentItemByScroll() {
-    utils.isVerbose() && console.log('Setting current Idx by scroll', this.isAutoScrolling);
+    if (utils.isVerbose()) {
+      console.log('Setting current Idx by scroll', this.isAutoScrolling);
+    }
 
     if (this.isAutoScrolling) {
       //avoid this function if the scroll was originated by us (arrows or thumbnails)
@@ -706,7 +709,7 @@ class SlideshowView extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    if (utils.isDev()) {
+    if (utils.isVerbose()) {
       console.count('galleryView render');
       console.count('Rendering Gallery count');
       console.time('Rendering Gallery took ');
@@ -715,7 +718,7 @@ class SlideshowView extends React.Component {
     const gallery = this.createGallery();
     const thumbnails = this.getThumbnails();
 
-    if (utils.isDev()) {
+    if (utils.isVerbose()) {
       console.timeEnd('Rendering Gallery took ');
     }
 

@@ -22,7 +22,9 @@ export class GalleryContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
+    if (utils.isVerbose()) {
+      console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
+    }
 
     const initialState = {
       pgScroll: 0,
@@ -372,9 +374,13 @@ export class GalleryContainer extends React.Component {
         });
       }
       if (window.isSSR && isFullwidth) {
-        console.time('fullwidthLayoutsCss!');
+        if (utils.isVerbose()) {
+          console.time('fullwidthLayoutsCss!');
+        }
         this.fullwidthLayoutsCss = createCssLayouts(layoutParams, utils.isMobile());
-        console.timeEnd('fullwidthLayoutsCss!');
+        if (utils.isVerbose()) {
+          console.timeEnd('fullwidthLayoutsCss!');
+        }
       } else {
         this.fullwidthLayoutsCss = [];
       }
