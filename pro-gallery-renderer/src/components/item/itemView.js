@@ -776,19 +776,23 @@ class ItemView extends React.Component {
 
   }
   componentDidUpdate(prevProps, prevState) {
-    if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
+    try {
+      if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
 			//check if thumbnailId has changed to the current item
-      const isAnotherItemInFocus = window.document.activeElement.className.indexOf('gallery-item-container') >= 0;
-      const isShowMoreInFocus = window.document.activeElement.className.indexOf('show-more') >= 0;
-      if (isAnotherItemInFocus || isShowMoreInFocus) {
-        if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
+        const isAnotherItemInFocus = String(window.document.activeElement.className).indexOf('gallery-item-container') >= 0;
+        const isShowMoreInFocus = String(window.document.activeElement.className).indexOf('show-more') >= 0;
+        if (isAnotherItemInFocus || isShowMoreInFocus) {
+          if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
 					// if the highlighted thumbnail changed and it is the same as this itemview's
-          this.itemContainer.focus();
-        } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
+            this.itemContainer.focus();
+          } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
 					//check if currentIdx has changed to the current item
-          this.itemContainer.focus();
+            this.itemContainer.focus();
+          }
         }
       }
+    } catch (e) {
+      console.error('Could not set focus to active element', e);
     }
   }
   removeScrollListener() {
