@@ -7,7 +7,7 @@ import GalleryView from './galleryView.js';
 import SlideshowView from './slideshowView.js';
 import {addLayoutStyles} from '../helpers/layoutHelper';
 import {ItemsHelper} from '../helpers/itemsHelper';
-import dimentionsHelper from '../helpers/dimensionsHelper';
+import dimensionsHelper from '../helpers/dimensionsHelper';
 import {scrollToItemImp} from '../helpers/scrollHelper';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
@@ -36,7 +36,7 @@ export class GalleryContainer extends React.Component {
     this.itemsDimensions = {};
     this.preloadedItems = {};
 
-    const galleryState = this.reCreateGalleryExpensively(props, initialState);
+    const galleryState = window.isSSR ? this.reCreateGalleryExpensively(props, initialState) : {};
 
     this.state = {
       ...initialState,
@@ -53,15 +53,19 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.getMoreItemsIfNeeded(0);
+    //const container = Object.assign({}, this.state.container, dimensionsHelper.getGalleryDimensions());
+    const galleryState = this.reCreateGalleryExpensively(this.props);
     this.loadItemsDimensions();
-    //calcScrollBase (read the dom)
-    this.setState({
-      container: Object.assign({}, this.state.container, dimentionsHelper.getGalleryDimensions(), {
-        scrollBase: this.calcScrollBase(this.state.container),
-      })
-    }, () => {
-      this.handleNewGalleryStructure();
-    });
+    if (Object.keys(galleryState).length > 0) {
+      this.setState(galleryState, () => {
+        this.handleNewGalleryStructure();
+      });
+    }
+    // this.setState({
+    //   container: Object.assign({}, this.state.container, dimensionsHelper.getGalleryDimensions())
+    // }, () => {
+    //   this.handleNewGalleryStructure();
+    // });
 
   }
 
@@ -275,10 +279,7 @@ export class GalleryContainer extends React.Component {
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNT] reCreateGalleryExpensively');
     }
-    const isFullwidth = (container && ((container.width === '100%' /*regular*/) || (container.width === '' /*mesh*/)));
-    if (isFullwidth) {
-      container.width = window.isMock ? utils.getScreenWidth() : window.innerWidth;
-    }
+
     const state = curState || this.state || {};
 
     let _styles, _container, scroll, _scroll;
@@ -315,20 +316,17 @@ export class GalleryContainer extends React.Component {
       container = container || state.container;
       scroll = state.scroll;
 
-      dimentionsHelper.updateParams({styles, container});
+      dimensionsHelper.updateParams({styles, container, domId: this.props.domId});
       _styles = addLayoutStyles(styles, container);
-      dimentionsHelper.updateParams({styles: _styles});
-      _container = Object.assign({}, container, dimentionsHelper.getGalleryDimensions(), {
-        scrollBase: this.calcScrollBase(container),
-      });
-      dimentionsHelper.updateParams({container: _container});
+      dimensionsHelper.updateParams({styles: _styles});
+      _container = Object.assign({}, container, dimensionsHelper.getGalleryDimensions(container));
+      dimensionsHelper.updateParams({container: _container});
       newState.styles = _styles;
       newState.container = _container;
     } else {
       _styles = state.styles;
       _container = state.container;
     }
-
     if (!this.galleryStructure || isNew.any) {
       if (utils.isVerbose()) {
         console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively (isNew)');
@@ -373,6 +371,7 @@ export class GalleryContainer extends React.Component {
           lastVisibleItemIdx: this.lastVisibleItemIdx,
         });
       }
+      const isFullwidth = dimensionsHelper.isFullWidth();
       if (window.isSSR && isFullwidth) {
         if (utils.isVerbose()) {
           console.time('fullwidthLayoutsCss!');
@@ -402,23 +401,6 @@ export class GalleryContainer extends React.Component {
     } else {
       return {};
     }
-  }
-
-  calcScrollBase(container) {
-    container = container || this.props.container;
-    let {scrollBase} = container;
-    try {
-      if (!(scrollBase >= 0)) {
-        scrollBase = 0;
-      }
-      const {y} = window.document.getElementById(`pro-gallery-${this.props.domId}`).getBoundingClientRect();
-      if (y >= 0) {
-        scrollBase += y;
-      }
-    } catch (e) {
-      //
-    }
-    return scrollBase;
   }
 
   getScrollingElement() {

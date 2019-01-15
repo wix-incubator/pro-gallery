@@ -6,6 +6,7 @@ class DimensionsHelper {
   constructor() {
     this.styles = {};
     this.container = {};
+    this.domId = '';
     this._cache = {};
   }
   getOrPutInCache(field, createValue) {
@@ -16,10 +17,14 @@ class DimensionsHelper {
   dumpCache() {
     this._cache = {};
   }
-  updateParams({styles, container}) {
+  updateParams({styles, container, domId}) {
     this.dumpCache();
+    this.domId = domId || this.domId;
     this.styles = styles || this.styles;
-    this.container = container || this.container;
+    if (container) {
+      container = this.fixContainerIfNeeded(container);
+      this.container = container || this.container;
+    }
   }
 
   getDimensionFix() {
@@ -28,11 +33,71 @@ class DimensionsHelper {
     });
   }
 
+  isFullWidth(container = this.container) {
+    return this.getOrPutInCache('isFullWidth', () => {
+      return (container && ((container.width === '100%' /*regular*/) || (container.width === '' /*mesh*/)));
+    });
+  }
+
+  fixContainerIfNeeded(container)	{
+    const isFullWidth = this.isFullWidth(container);
+    if (isFullWidth) {
+      const calcWidth = this.getBoundingRect().width;
+      container.width = calcWidth;
+    }
+    return container;
+  }
+
+  calcBoundingRect() {
+    if (utils.isVerbose()) {
+      console.count('calcBoundingRect');
+    }
+    try {
+      return window.document.getElementById(`pro-gallery-${this.domId}`).getBoundingClientRect();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  getBoundingRect() {
+    return this.getOrPutInCache('boundingRect', () => {
+      return this.calcBoundingRect() || {
+        x: 0,
+        y: 0,
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+    });
+  }
+
+  calcScrollBase() {
+    return this.getOrPutInCache('scrollBase', () => {
+      let {scrollBase} = this.container;
+      try {
+        if (!(scrollBase >= 0)) {
+          scrollBase = 0;
+        }
+        const {y} = this.getBoundingRect();
+        if (y >= 0) {
+          scrollBase += y;
+        }
+      } catch (e) {
+        //
+      }
+      return scrollBase;
+    });
+
+  }
+
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
+      const container = this.container;
       const res = {
         galleryWidth: this.getGalleryWidth(),
-        galleryHeight: this.getGalleryHeight()
+        galleryHeight: this.getGalleryHeight(),
+        scrollBase: this.calcScrollBase(),
+        height: container.height,
+        width: container.width,
       };
       if (this.styles.hasThumbnails) {
         const fixedThumbnailSize = this.styles.thumbnailSize + this.styles.galleryMargin + 3 * this.styles.thumbnailSpacings;
