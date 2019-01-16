@@ -144,10 +144,10 @@ class GalleryView extends React.Component {
           paddingTop = firstRenderedGroup.top || 0;
         }
 
-        return !!column.galleryGroups.length && (
+        return (
           <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
               style={{width: column.width, paddingTop}}>
-            {column.galleryGroups.map(group => group.rendered || this.useCssScrolling ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+            {!!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered || this.useCssScrolling ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
           </div>
         );
       });

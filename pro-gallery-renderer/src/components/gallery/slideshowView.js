@@ -548,12 +548,12 @@ class SlideshowView extends React.Component {
           _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
         }
 
-        return !!column.galleryGroups.length && (
+        return (
           <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
-               style={columnStyle}>
+            style={columnStyle}>
             <div className="gallery-left-padding" style={{width: marginLeft}}></div>
-            {this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
-            {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+            {!!column.galleryGroups.length && this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
+            {!!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
           </div>
         );
       } else {
@@ -562,12 +562,12 @@ class SlideshowView extends React.Component {
         if (this.props.styleParams.isSlideshow) {
           _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
         }
-        return !!column.galleryGroups.length && (
+        return (
         <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
           style={columnStyle}
           >
-          {this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
-          {column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
+          {!!column.galleryGroups.length && this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
+          {!!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
         </div>
         );
       }
