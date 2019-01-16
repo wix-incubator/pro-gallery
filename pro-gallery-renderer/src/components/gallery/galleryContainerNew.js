@@ -120,11 +120,11 @@ export class GalleryContainer extends React.Component {
       }
     }, 1000);
 
-    const {galleryItems} = this.galleryStructure;
-
-    if (!galleryItems) {
+    if (!(this.galleryStructure && this.galleryStructure.galleryItems && this.galleryStructure.galleryItems.length > 0)) {
       return;
     }
+
+    const {galleryItems} = this.galleryStructure;
 
     const itemsWithoutDimensions = galleryItems.filter((item, idx) => {
       try {
