@@ -47,7 +47,7 @@ describe('Slideshow View', () => {
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
-      expect(driver.find.hook('gallery-column').length).to.equal(0);
+      expect(driver.find.hook('gallery-column').length).to.equal(1);
     });
 
     it('should create GalleryEmpty', () => {
