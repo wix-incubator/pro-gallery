@@ -194,7 +194,7 @@ export class GalleryContainer extends React.Component {
       }
       const containerHasChanged = {
         height: !state.styles.oneRow && state.styles.enableInfiniteScroll ? false : (!!container.height && (container.height !== this.props.container.height)),
-        width: !!container.width && (container.width !== this.props.container.width),
+        width: dimensionsHelper.isFullWidth(container) || (!!container.width && (container.width !== this.props.container.width)),
         scrollBase: !!container.scrollBase && (container.scrollBase !== this.props.container.scrollBase),
       };
       return Object.keys(containerHasChanged).reduce((is, key) => is || containerHasChanged[key], false);
