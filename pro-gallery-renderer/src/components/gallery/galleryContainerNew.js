@@ -459,7 +459,14 @@ export class GalleryContainer extends React.Component {
   }
 
   getMoreItemsIfNeeded(scrollPos) {
-    if (this.galleryStructure && this.props.getMoreItems && !this.gettingMoreItems && this.props.totalItemsCount > this.state.items.length) { //more items can be fetched from the server
+    if (
+      this.galleryStructure &&
+      this.galleryStructure.galleryItems &&
+      this.galleryStructure.galleryItems.length > 0 &&
+      !this.gettingMoreItems &&
+      (typeof this.props.getMoreItems === 'function') &&
+      this.props.totalItemsCount > this.state.items.length
+    ) { //more items can be fetched from the server
       //TODO - add support for horizontal galleries
       const {oneRow} = this.state.styles;
 
