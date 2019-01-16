@@ -55,7 +55,6 @@ export class GalleryContainer extends React.Component {
     this.getMoreItemsIfNeeded(0);
     //const container = Object.assign({}, this.state.container, dimensionsHelper.getGalleryDimensions());
     const galleryState = this.reCreateGalleryExpensively(this.props);
-    this.loadItemsDimensions();
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
         this.handleNewGalleryStructure();
@@ -294,6 +293,10 @@ export class GalleryContainer extends React.Component {
 
     if (utils.isVerbose()) {
       console.log('PROGALLERY reCreateGalleryExpensively', isNew, {items, styles, container, watermarkData});
+    }
+
+    if (isNew.items) {
+      this.loadItemsDimensions();
     }
 
     if (isNew.items && !isNew.addedItems) {

@@ -105,13 +105,12 @@ class CssScrollHelper {
     const createScrollSelectors = this.createScrollSelectorsFunction({item, scrollBase, styleParams});
 
     //load hi-res image + loading transition
-    if (!window.isSSR) {
-      this.scrollCss[idx] += createScrollSelectors(this.highResPadding(), `.image-item>canvas`) + `{opacity: 1; transition: opacity 1s ease 2s; background-image: url(${resized_url.img})}`;
+    if (!window.isSSR && !item.isDimensionless) {
+      this.scrollCss[idx] += createScrollSelectors(this.highResPadding(), `.image-item>canvas`) + `{opacity: 1; transition: opacity 1s ease 1s; background-image: url(${resized_url.img})}`;
     }
 
     //add the blurry image
-    if (!utils.deviceHasMemoryIssues() && styleParams.imageLoadingMode !== Consts.loadingMode.COLOR && (!item.isTransparent || window.isSSR)) {
-      // add blurred background-image
+    if (!utils.deviceHasMemoryIssues() && styleParams.imageLoadingMode !== Consts.loadingMode.COLOR && (!item.isTransparent || window.isSSR) && !item.isDimensionless) {
       this.scrollCss[idx] += createScrollSelectors(this.lowResPadding(), `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
     }
 
