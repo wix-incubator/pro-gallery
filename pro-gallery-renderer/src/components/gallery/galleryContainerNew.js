@@ -83,7 +83,7 @@ export class GalleryContainer extends React.Component {
     if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
   }
 
-  loadItemsDimensions() { //TODO: move call to handleNewGalleryStructure
+  loadItemsDimensions() {
 
     const preloadItem = (item, onload) => {
       if (!item || !item.itemId || !item.isGalleryItem) {
@@ -295,10 +295,6 @@ export class GalleryContainer extends React.Component {
       console.log('PROGALLERY reCreateGalleryExpensively', isNew, {items, styles, container, watermarkData});
     }
 
-    if (isNew.items) {
-      this.loadItemsDimensions();
-    }
-
     if (isNew.items && !isNew.addedItems) {
       this.items = items.map(item => {
         return ItemsHelper.convertDtoToLayoutItem(item);
@@ -374,6 +370,11 @@ export class GalleryContainer extends React.Component {
           lastVisibleItemIdx: this.lastVisibleItemIdx,
         });
       }
+
+      if (isNew.items) {
+        this.loadItemsDimensions();
+      }
+
       const isFullwidth = dimensionsHelper.isFullWidth();
       if (window.isSSR && isFullwidth) {
         if (utils.isVerbose()) {
@@ -525,7 +526,7 @@ export class GalleryContainer extends React.Component {
       <div>
         {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
         <style key="scrollCss">{this.scrollCss}</style>
-				<CssSrollIndicator oneRow={this.state.styles.oneRow} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
+				<CssSrollIndicator oneRow={this.state.styles.oneRow} scrollBase={this.state.container.scrollBase} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
 				<ViewComponent
 					isInDisplay = {this.props.isInDisplay}
 					scrollingElement = {this._scrollingElement}
