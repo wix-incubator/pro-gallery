@@ -68,7 +68,7 @@ describe('Gallery View', () => {
       expect(driver.find.hook('show-more').length).to.equal(0);
     });
 
-    it.only('toggle to infiniteScroll mode when load more button is clicked', () => {
+    it('toggle to infiniteScroll mode when load more button is clicked', () => {
       const spy = sinon.spy(GalleryView.prototype, 'showMoreItems');
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       Object.assign(galleryViewProps,
