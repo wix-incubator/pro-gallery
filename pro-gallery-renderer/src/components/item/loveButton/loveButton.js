@@ -2,7 +2,6 @@ import React from 'react';
 import utils from '../../../utils';
 import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
 import _ from 'lodash';
-import styles from './loveButton.scss';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
 
 class LoveButton extends React.Component {
@@ -76,7 +75,6 @@ class LoveButton extends React.Component {
     className.push(this.viewClassName());
     if (this.state.isLoved) {
       className.push('progallery-svg-font-icons-love_full pro-gallery-loved');
-      className.push(styles.loved);
     } else {
       className.push('progallery-svg-font-icons-love_empty');
     }
@@ -137,6 +135,7 @@ class LoveButton extends React.Component {
   render() {
     const loveCounter = this.createLoveCounter();
     const clickAction = utils.getMobileEnabledClick(this.toggleLove);
+    const loveColor = this.state.isLoved ? {color: 'red'} : {};
 
     return (
         <span data-hook="love-button"
@@ -149,6 +148,7 @@ class LoveButton extends React.Component {
           data-hook="love-icon"
           className={this.buttonClasssName()}
           role="checkbox"
+          style={loveColor}
           />
           {loveCounter}
         </span>
