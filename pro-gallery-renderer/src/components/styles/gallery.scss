@@ -778,7 +778,7 @@
           box-sizing: border-box;
           display: flex;
           //border-radius: $image-radius+px;
-          z-index: 3;
+          z-index: 15;
 
           >div {
             height: 100%;
@@ -842,7 +842,7 @@
 
           .gallery-item-social {
             overflow: visible;
-            z-index: 4;
+            z-index: 16;
             transition: opacity 0.4s ease;
             margin: 40px -15px 0;
 
@@ -896,7 +896,7 @@
               //width: 0;
               width: 210px;
               overflow: visible;
-              z-index: 4;
+              z-index: 16;
               font-size: 12px;
               transform: none !important;
               transition: opacity 0.4s ease;
@@ -959,7 +959,7 @@
           box-sizing: border-box;
           border-radius: 0;
           //border-radius: $image-radius+px;
-          z-index: 3;
+          z-index: 15;
           overflow: hidden;
 
           .custom-button-wrapper {
@@ -1095,7 +1095,7 @@
             width: 100%;
             height: 100%;
             overflow: visible;
-            z-index: 4;
+            z-index: 16;
             transition: opacity 0.4s ease;
 
             &.short-item,
@@ -1252,7 +1252,7 @@
             max-width: 300px;
             min-width: 200px;
             overflow: visible;
-            z-index: 4;
+            z-index: 16;
             font-size: 12px;
             opacity: 0;
             transform: translateX(-50%);
