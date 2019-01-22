@@ -113,8 +113,8 @@ export default class Layouter {
         if (this.styleParams.isVertical) {
 
       //---------------------| COLUMNS GALLERY |----------------------//
-      //remove items from the last 7 groups;
-          const lastGroups = this.groups.slice(-7);
+      //remove items from the last 3 groups;
+          const lastGroups = this.groups.slice(-3);
           lastGroups.forEach(group => {
             const column = this.columns[group.columnIdx];
             if (column) {
@@ -132,17 +132,22 @@ export default class Layouter {
         } else {
 
         //---------------------| STRIPS GALLERY |----------------------//
-          const lastStrip = this.strips[this.strips.length - 1];
-          if (lastStrip) {
-            this.strips.splice(-1, 1);
-            const groups = lastStrip.groups;
-            groups.forEach(group => {
-              this.groups.splice(-1, 1);
-              group.items.forEach(() => {
-                this.layoutItems.splice(-1, 1);
-                this.pointer--;
-              });
-              this.groupIdx--;
+          //remove items from the last 2 strips;
+          const lastStrips = this.strips.slice(-2);
+          if (lastStrips) {
+            lastStrips.forEach(lastStrip => {
+              if (lastStrip) {
+                this.strips.splice(-1, 1);
+                const groups = lastStrip.groups;
+                groups.forEach(group => {
+                  this.groups.splice(-1, 1);
+                  group.items.forEach(() => {
+                    this.layoutItems.splice(-1, 1);
+                    this.pointer--;
+                  });
+                  this.groupIdx--;
+                });
+              }
             });
             this.galleryHeight = this.strips.reduce((totalHeight, strip) => totalHeight += strip.height, 0);
           // this.strip = this.strips[this.strips.length - 1];
