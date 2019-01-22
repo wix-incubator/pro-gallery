@@ -134,7 +134,6 @@ export class GalleryContainer extends React.Component {
       }
     });
 
-    this.itemsDimensions = {};
     itemsWithoutDimensions.forEach((item, idx, items) => {
       preloadItem(item, e => {
         try {
