@@ -113,8 +113,8 @@ export default class Layouter {
         if (this.styleParams.isVertical) {
 
       //---------------------| COLUMNS GALLERY |----------------------//
-      //remove items from the last 3 groups;
-          const lastGroups = this.groups.slice(-3);
+      //remove items from the last 7 groups;
+          const lastGroups = this.groups.slice(-7);
           lastGroups.forEach(group => {
             const column = this.columns[group.columnIdx];
             if (column) {
