@@ -22,10 +22,17 @@ export default class TextItem extends React.Component {
     this.props.actions.setItemLoaded();
   }
 
+  processInnerhtml(html) {
+    // Remove html class name from inner html elements
+    // In older version of the text editor we used font themes (set as classes). Without the iframe it clashes with Santa's css
+    return html.replace(/class=\"font_\d+\"/gm, '');
+  }
+
   render() {
     const {visible, id, styleParams, html, style, actions} = this.props;
+    const processedHtml = this.processInnerhtml(html);
     const dimensions = this.getTextDimensions();
-    const htmlParam = {dangerouslySetInnerHTML: {__html: html}};
+    const htmlParam = {dangerouslySetInnerHTML: {__html: processedHtml}};
     const styleIsDimensions = {style: {dimensions}};
     const changeBgColor = {style: Object.assign(dimensions, styleParams.cubeType === 'fit' ? {backgroundColor: style.bgColor} : {})};
     const show = (visible || styleParams.hasThumbnails);
