@@ -36,15 +36,16 @@ class CssScrollHelper {
     return `pgi${String(idx)}${shortId}`;
   }
 
-  buildScrollClassName(idx, val) {
-    return `${this.pgScrollClassName}_${val}-${this.pgScrollSteps[idx] + Number(val)}`;
+  buildScrollClassName(galleryDomId, idx, val) {
+    const shortId = String(galleryDomId).replace(/[\W]+/g, '').slice(-8);
+    return `${this.pgScrollClassName}_${shortId}_${val}-${this.pgScrollSteps[idx] + Number(val)}`;
   }
 
-  calcScrollClasses(scrollTop) {
-    return `${this.pgScrollClassName}-${scrollTop} ` + this.pgScrollSteps.map((step, idx) => this.buildScrollClassName(idx, (Math.floor(scrollTop / step) * step))).join(' ');
+  calcScrollClasses(galleryDomId, scrollTop) {
+    return `${this.pgScrollClassName}-${scrollTop} ` + this.pgScrollSteps.map((step, idx) => this.buildScrollClassName(galleryDomId, idx, (Math.floor(scrollTop / step) * step))).join(' ');
   }
 
-  calcScrollCss({items, styleParams}) {
+  calcScrollCss({galleryDomId, items, styleParams}) {
     if (!(items && items.length)) {
       return '';
     }
@@ -57,7 +58,7 @@ class CssScrollHelper {
     const maxStep = this.pgScrollSteps[0];
     this.minHeight = 0 - maxStep;
     this.maxHeight = (Math.ceil(((styleParams.oneRow ? right : top) + this.screenSize) / maxStep) + 1) * maxStep;
-    return items.map(item => this.calcScrollCssForItem({item, styleParams})).join(`\n`);
+    return items.map(item => this.calcScrollCssForItem({galleryDomId, item, styleParams})).join(`\n`);
   }
 
   shouldCalcScrollCss({id, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, idx, type}, styleParams) {
@@ -72,7 +73,7 @@ class CssScrollHelper {
     return true;
   }
 
-  createScrollSelectorsFunction({item, styleParams}) {
+  createScrollSelectorsFunction({galleryDomId, item, styleParams}) {
     const imageTop = styleParams.oneRow ? (item.offset.left - this.screenSize) : (item.offset.top - this.screenSize);
     const imageBottom = styleParams.oneRow ? (item.offset.left + item.width) : (item.offset.top + item.height);
     const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
@@ -93,7 +94,7 @@ class CssScrollHelper {
           console.error('largestDividerIdx is -1. Couldn\'t find index in pgScrollSteps array.\nfrom =', from, '\nto =', to, '\npadding[0] =', padding[0], '\npadding[1] =', padding[1]);
           break;
         }
-        scrollClasses.push(`.${this.buildScrollClassName(largestDividerIdx, from)} ~ div #${domId} ${suffix}`);
+        scrollClasses.push(`.${this.buildScrollClassName(galleryDomId, largestDividerIdx, from)} ~ div #${domId} ${suffix}`);
         from += this.pgScrollSteps[largestDividerIdx];
         // console.count('pgScroll class created');
       }
@@ -101,7 +102,7 @@ class CssScrollHelper {
     };
   }
 
-  calcScrollCssForItem({item, styleParams}) {
+  calcScrollCssForItem({galleryDomId, item, styleParams}) {
 
     const {resized_url, idx} = item;
 
@@ -111,7 +112,7 @@ class CssScrollHelper {
 
     this.scrollCss[idx] = '';
 
-    const createScrollSelectors = this.createScrollSelectorsFunction({item, styleParams});
+    const createScrollSelectors = this.createScrollSelectorsFunction({galleryDomId, item, styleParams});
 
     //load hi-res image + loading transition
     if (!window.isSSR && !item.isDimensionless) {

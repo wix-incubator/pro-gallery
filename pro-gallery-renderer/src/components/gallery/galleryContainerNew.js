@@ -11,7 +11,7 @@ import dimensionsHelper from '../helpers/dimensionsHelper';
 import {scrollToItemImp} from '../helpers/scrollHelper';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
-import CssSrollIndicator from './galleryCssScrollIndicator';
+import CssScrollIndicator from './galleryCssScrollIndicator';
 import {Layouter} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 import {createCssLayouts} from '../helpers/cssLayoutsHelper.js';
@@ -285,7 +285,9 @@ export class GalleryContainer extends React.Component {
     items = items || this.items;
     Object.entries(this.itemsDimensions).forEach(([itemId, itemDim]) => {
       const item = items.find(itm => itm.itemId === itemId);
-      Object.assign(item.metaData, itemDim);
+      if (item) {
+        Object.assign(item.metaData, itemDim);
+      }
     });
 
     const isNew = this.isNew({items, styles, container, watermarkData}, state);
@@ -389,9 +391,9 @@ export class GalleryContainer extends React.Component {
       }
 
       this.scrollCss = cssScrollHelper.calcScrollCss({
+        galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: _styles,
-        scrollBase: _container.scrollBase
       });
 
     }
@@ -526,7 +528,13 @@ export class GalleryContainer extends React.Component {
       <div>
         {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
         <style key="scrollCss">{this.scrollCss}</style>
-				<CssSrollIndicator oneRow={this.state.styles.oneRow} scrollBase={this.state.container.scrollBase} scrollingElement={this._scrollingElement} getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}/>
+        <CssScrollIndicator
+          galleryDomId={this.props.domId}
+          oneRow={this.state.styles.oneRow}
+          scrollBase={this.state.container.scrollBase}
+          scrollingElement={this._scrollingElement}
+          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+        />
 				<ViewComponent
 					isInDisplay = {this.props.isInDisplay}
 					scrollingElement = {this._scrollingElement}
