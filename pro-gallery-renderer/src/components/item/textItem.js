@@ -25,7 +25,11 @@ export default class TextItem extends React.Component {
   processInnerhtml(html) {
     // Remove html class name from inner html elements
     // In older version of the text editor we used font themes (set as classes). Without the iframe it clashes with Santa's css
-    return html.replace(/class=\"font_\d+\"/gm, '');
+    try {
+      return html.replace(/class=\"font_\d+\"/gm, '');
+    } catch (e) {
+      return html;
+    }
   }
 
   render() {
