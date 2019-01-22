@@ -32,7 +32,8 @@ class CssScrollHelper {
   }
 
   getDomId({id, idx}) {
-    return `pgi${String(idx)}${String(id).slice(-5, -1)}`;
+    const shortId = String(id).replace(/[\W]+/g, '').slice(-5);
+    return `pgi${String(idx)}${shortId}`;
   }
 
   buildScrollClassName(idx, val) {
@@ -59,11 +60,11 @@ class CssScrollHelper {
     return items.map(item => this.calcScrollCssForItem({item, styleParams})).join(`\n`);
   }
 
-  shouldCalcScrollCss({id, top, left, width, height, resized_url, idx, type}, styleParams) {
+  shouldCalcScrollCss({id, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, idx, type}, styleParams) {
     if (type === 'video' || type === 'text') {
       return false;
     }
-    const scrollCssProps = JSON.stringify({id, top, left, width, height, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
+    const scrollCssProps = JSON.stringify({id, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
     if (scrollCssProps === this.scrollCssProps[idx]) {
       return false;
     }
@@ -102,7 +103,7 @@ class CssScrollHelper {
 
   calcScrollCssForItem({item, styleParams}) {
 
-    const {resized_url, uniqueId, idx} = item;
+    const {resized_url, idx} = item;
 
     if (!this.shouldCalcScrollCss(item, styleParams)) {
       return this.scrollCss[idx];
