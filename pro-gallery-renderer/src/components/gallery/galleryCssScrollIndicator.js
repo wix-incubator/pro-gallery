@@ -96,9 +96,10 @@ export default class CssScrollIndicator extends React.Component {
   }
 
   render() {
-    const scrollTop = this.state.scrollTop - (this.props.scrollBase || 0);
+    const verticalScrollBase = ((!this.props.oneRow && this.props.scrollBase > 0) ? this.props.scrollBase : 0);
+    const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
     return (
-        <div data-hook="css-scroll-indicator" data-scroll-base={this.props.scrollBase} data-scroll-top={this.state.scrollTop} className={cssScrollHelper.calcScrollClasses(scrollTop)} style={{display: 'none'}} />
+        <div data-hook="css-scroll-indicator" data-scroll-base={verticalScrollBase} data-scroll-top={this.state.scrollTop} className={cssScrollHelper.calcScrollClasses(scrollTopWithoutBase)} style={{display: 'none'}} />
     );
 
   }
