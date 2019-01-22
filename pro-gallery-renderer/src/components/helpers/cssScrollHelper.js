@@ -55,7 +55,7 @@ class CssScrollHelper {
     const {top, right} = lastItem.offset;
     const maxStep = this.pgScrollSteps[0];
     this.minHeight = 0 - maxStep;
-    this.maxHeight = Math.ceil(((styleParams.oneRow ? right : top) + this.screenSize) % maxStep + 1) * maxStep;
+    this.maxHeight = (Math.ceil(((styleParams.oneRow ? right : top) + this.screenSize) / maxStep) + 1) * maxStep;
     return items.map(item => this.calcScrollCssForItem({item, styleParams})).join(`\n`);
   }
 
