@@ -3,7 +3,7 @@ import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 
 // const CDN_URL = 'https://static.wixstatic.com/media/';
 const desktopWidths = [1024, 1280, 1366, 1680, 1920, 2560];
-const mobileWidths = [320, 375, 414, 480, 600, 768, 900];
+const mobileWidths = [320];//, 375, 414, 480, 600, 768, 900]; (mobile is currently fixed to 320px)
 
 const getImageStyle = item => ({
   top: item.offset.top,
