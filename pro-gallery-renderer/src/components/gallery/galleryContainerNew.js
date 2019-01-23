@@ -174,10 +174,21 @@ export class GalleryContainer extends React.Component {
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
     if (typeof this.props.handleNewGalleryStructure === 'function') {
-      const {items, container, styles} = this.state;
-      const {layout} = this;
+      const {container} = this.state;
+      const partialStyleParams = _.pick(this.state.styles,
+        ['isSlideshow',
+          'slideshowInfoSize',
+          'galleryThumbnailsAlignment',
+          'thumbnailSize',
+          'isSlider',
+          'galleryWidth',
+          'isInAdi',
+          'oneRow',
+          'enableInfiniteScroll']);
+      const numOfItems = this.state.items.length;
+      const layoutHeight = this.layout.height;
       const isInfinite = this.containerGrowthDirection() === 'vertical';
-      this.props.handleNewGalleryStructure({items, container, styles, layout, isInfinite});
+      this.props.handleNewGalleryStructure({numOfItems, container, partialStyleParams, layoutHeight, isInfinite});
     }
   }
 
