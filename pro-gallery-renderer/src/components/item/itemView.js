@@ -478,12 +478,13 @@ class ItemView extends React.Component {
     return <VideoItemPlaceholder id={this.props.idx} resized_url={this.props.resized_url} hover={itemHover} />;
   }
 
-  getTextItem() {
+  getTextItem(imageDimensions) {
     const props = _.pick(this.props, ['id', 'styleParams', 'style', 'html', 'cubeRatio']);
     return <TextItem
 							{...props}
 							visible = {this.getItemVisibility()}
               key="textItem"
+              imageDimensions={imageDimensions}
               actions={{
                 handleItemMouseDown: this.handleItemMouseDown,
                 handleItemMouseUp: this.handleItemMouseUp,
@@ -515,7 +516,7 @@ class ItemView extends React.Component {
         }
         break;
       case 'text':
-        itemInner = [this.getTextItem(), itemHover];
+        itemInner = [this.getTextItem(imageDimensions), itemHover];
         break;
       case 'image':
       case 'picture':
@@ -664,9 +665,11 @@ class ItemView extends React.Component {
     const {styleParams, style, type} = this.props;
     const height = style.height;
     const styles = {};
-    styles.backgroundColor = styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit';
+    if (type === 'text') {
+      styles.backgroundColor = styleParams.cubeType !== 'fit' ? 'transparent' : 'inherit';
+    }
     if (type !== 'text') {
-      styles.backgroundColor = styles.backgroundColor || 'transparent';
+      styles.backgroundColor = (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') || 'transparent';
     }
     styles.height = height + 'px';
     if (styleParams.itemBorderWidth) {
@@ -708,30 +711,33 @@ class ItemView extends React.Component {
 
   getItemContainerClass() {
     const {styleParams} = this.props;
+    const isNOTslideshow = !styleParams.isSlideshow;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
     const className = classNames('gallery-item-container', 'visible', {
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',
+      hovered: this.showHover() === true,
 
       //overlay animations
-      'hover-animation-expand': overlayAnimation === Consts.overlayAnimations.EXPAND,
-      'hover-animation-slide-up': overlayAnimation === Consts.overlayAnimations.SLIDE_UP,
-      'hover-animation-slide-right': overlayAnimation === Consts.overlayAnimations.SLIDE_RIGHT, //not implemented yet
+      'hover-animation-fade-in': isNOTslideshow && overlayAnimation === Consts.overlayAnimations.FADE_IN,
+      'hover-animation-expand': isNOTslideshow && overlayAnimation === Consts.overlayAnimations.EXPAND,
+      'hover-animation-slide-up': isNOTslideshow && overlayAnimation === Consts.overlayAnimations.SLIDE_UP,
+      'hover-animation-slide-right': isNOTslideshow && overlayAnimation === Consts.overlayAnimations.SLIDE_RIGHT,
 
-      //Image hover animations
-      'zoom-in-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.ZOOM_IN,
-      'blur-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.BLUR,
-      'grayscale-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.GRAYSCALE,
-      'expand-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.EXPAND,
-      'shrink-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.SHRINK, //not implemented yet
-      'slide-up-on-hover': imageHoverAnimation === Consts.imageHoverAnimations.SLIDE_UP, //not implemented yet
-      'colorize-on-hover': utils.shouldDebug('hoverAnimationImageColorize'), //will be in the future?
+      //image hover animations
+      'zoom-in-on-hover': isNOTslideshow && imageHoverAnimation === Consts.imageHoverAnimations.ZOOM_IN,
+      'blur-on-hover': isNOTslideshow && imageHoverAnimation === Consts.imageHoverAnimations.BLUR,
+      'grayscale-on-hover': isNOTslideshow && imageHoverAnimation === Consts.imageHoverAnimations.GRAYSCALE,
+      'shrink-on-hover': isNOTslideshow && imageHoverAnimation === Consts.imageHoverAnimations.SHRINK,
+      'invert-on-hover': isNOTslideshow && imageHoverAnimation === Consts.imageHoverAnimations.INVERT,
+      'color-in-on-hover': isNOTslideshow && imageHoverAnimation === Consts.imageHoverAnimations.COLOR_IN,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
     });
     return className;
   }
+
   getItemWrapperClass() {
     const {styleParams, type} = this.props;
     const classNames = ['gallery-item-wrapper', 'visible'];

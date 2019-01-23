@@ -26,6 +26,7 @@ export default class ImageItem extends React.Component {
     const backgroundStyle = (this.useCssScrolling || utils.deviceHasMemoryIssues() || styleParams.imageLoadingMode === Consts.loadingMode.COLOR) ? {} : {backgroundImage: `url(${resized_url.thumb})`}; //remove this inline style if rendered padding (using css) is used
     const {marginLeft, marginTop, ...restOfDimensions} = imageDimensions || {};
     const imageItemClassName = [
+      'gallery-item-content',
       'image-item',
       'gallery-item-visible',
       'gallery-item',
@@ -46,13 +47,13 @@ export default class ImageItem extends React.Component {
         >
         {this.useCssScrolling ? <canvas
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-            className={'gallery-item-content gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+            className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
             style={restOfDimensions}
             {...imageProps}
           /> : <img
             onLoad={actions.setItemLoaded}
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-            className={'gallery-item-content gallery-item-visible gallery-item ' + (loaded ? 'gallery-item-loaded' : 'gallery-item-hidden')}
+            className={'gallery-item-visible gallery-item ' + (loaded ? 'gallery-item-loaded' : 'gallery-item-hidden')}
             src={resized_url.img}
             alt={isThumbnail ? '' : alt}
             onError={actions.setItemError}

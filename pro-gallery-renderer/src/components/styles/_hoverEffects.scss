@@ -5,7 +5,7 @@
     .gallery-item-container {
 
       .gallery-item-hover.hovered,
-      &:hover .gallery-item-hover:not(.hide-hover) {
+      &:hover .gallery-item-hover {
 
         transition: none;
 
@@ -23,90 +23,208 @@
         }
       }
 
-      &.hover-animation-slide-up {
-        .gallery-item-hover:not(.hide-hover) {
+      //===================================================================
+      //overlay animations
+
+      &.hover-animation-fade-in {
+        .gallery-item-hover {
           &:before {
-            transform: translateY(100%);
+            filter: opacity(0);
           }
         }
 
         .gallery-item-hover.hovered,
-        &:hover .gallery-item-hover:not(.hide-hover) {
+        &:hover .gallery-item-hover {
           * {
-            transition: opacity .2s ease .6s !important;
+            transition: opacity .4s ease !important;
           }
 
           &:before {
-            transition: transform .8s ease !important;
-            transform: translateY(0);
+            transition: filter .4s ease !important;
+            filter: opacity(1);
           }
         }
       }
 
       &.hover-animation-expand {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
-            transform: scale(0);
-            border-radius: 100%;
+            transform: scale(0.9);
+            filter: opacity(0);
           }
         }
 
         .gallery-item-hover.hovered,
-        &:hover .gallery-item-hover:not(.hide-hover) {
+        &:hover .gallery-item-hover {
           * {
-            transition: opacity .2s ease .6s !important;
+            transition: opacity .4s ease !important;
           }
 
           &:before {
-            transition: transform .8s ease, border-radius .8s ease !important;
+            transition: transform .4s ease, filter .2s ease !important;
             transform: scale(1);
-            border-radius: 0;
+            filter: opacity(1);
           }
         }
       }
 
+      &.hover-animation-slide-up {
+        .gallery-item-hover {
+          &:before {
+            transform: translateY(30%);
+            filter: opacity(0);
+          }
+        }
+
+        .gallery-item-hover.hovered,
+        &:hover .gallery-item-hover {
+          * {
+            transition: opacity .3s ease !important;
+          }
+
+          &:before {
+            transition: transform .2s ease, filter .05s ease !important;
+            transform: translateY(0);
+            filter: opacity(1);
+          }
+        }
+      }
+
+      &.hover-animation-slide-right {
+        .gallery-item-hover {
+          &:before {
+            transform: translateX(-100%);
+            filter: opacity(0);
+          }
+        }
+
+        .gallery-item-hover.hovered,
+        &:hover .gallery-item-hover {
+          * {
+            transition: opacity .3s ease !important;
+          }
+
+          &:before {
+            transition: transform .2s ease, filter .05s ease !important;
+            transform: translateX(0);
+            filter: opacity(1);
+          }
+        }
+      }
+
+      //&.hover-animation-radius {
+      //  .gallery-item-hover {
+      //    &:before {
+      //      transform: scale(0);
+      //      border-radius: 100%;
+      //    }
+      //  }
+      //
+      //  .gallery-item-hover.hovered,
+      //  &:hover .gallery-item-hover {
+      //    * {
+      //      transition: opacity .2s ease .6s !important;
+      //    }
+      //
+      //    &:before {
+      //      transition: transform .8s ease, border-radius .8s ease !important;
+      //      transform: scale(1);
+      //      border-radius: 0;
+      //    }
+      //  }
+      //}
+
+
+
+      //===================================================================
+      //image hover animations
+
       &.zoom-in-on-hover {
-        &:hover .gallery-item-content {
-          //TODO: do not work on text item
-          transition: transform .8s ease !important;
-          transform: scale(1.2);
-          //TODO: because of the z-index, the overlay on hover is not shown
-          z-index: 99999;
+        &.hovered,
+        &:hover {
+          .gallery-item-content {
+            transition: transform 1.2s ease-out !important;
+            transform: scale(1.1);
+          }
         }
       }
 
       &.blur-on-hover {
-        &:hover .gallery-item-content {
-          transition: filter .8s ease !important;
-          filter: blur(10px);
+        &.hovered,
+        &:hover {
+          .gallery-item-content {
+            .gallery-item {
+              transition: filter .2s linear !important;
+              filter: blur(6px);
+            }
+          }
         }
       }
 
       &.grayscale-on-hover {
-        &:hover .gallery-item-content {
-          //TODO: do not work on text item
-          transition: filter .8s ease !important;
-          filter: grayscale(1);
-        }
-      }
-
-      &.expand-on-hover {
+        &.hovered,
         &:hover {
-          transition: transform .8s ease !important;
-          transform: scale(1.2);
+          .gallery-item-content {
+            transition: filter .6s ease !important;
+            filter: grayscale(1);
+          }
         }
       }
 
-      &.colorize-on-hover {
-        .gallery-item-wrapper {
+      &.shrink-on-hover {
+        &.hovered,
+        &:hover {
+          .gallery-item-content {
+            transition: transform .2s ease !important;
+            transform: scale(0.985);
+          }
+          .gallery-item-hover {
+            transition: transform .2s ease !important;
+            transform: scale(0.985);
+          }
+        }
+      }
+
+      &.invert-on-hover {
+        &.hovered,
+        &:hover {
+          .gallery-item-content {
+            transition: filter .6s ease !important;
+            filter: invert(1);
+          }
+        }
+      }
+
+      &.color-in-on-hover {
+        .gallery-item-content {
           filter: grayscale(1);
         }
 
-        &:hover .gallery-item-wrapper {
-          transition: filter .8s ease !important;
-          filter: grayscale(0);
+        &.hovered,
+        &:hover {
+          .gallery-item-content {
+            transition: filter .6s ease !important;
+            filter: grayscale(0);
+          }
         }
       }
+
+      //&.slide-up-on-hover {
+      //  &.hovered,
+      //  &:hover {
+      //    transition: transform .8s ease !important;
+      //    transform: translateY(-5%);
+      //  }
+      //}
+
+      //&.expand-on-hover {
+      //  &.hovered,
+      //  &:hover {
+      //    transition: transform .4s ease !important;
+      //    transform: scale(1.03);
+      //    z-index: 9999;
+      //  }
+      //}
     }
   }
 }

@@ -33,7 +33,7 @@ export default class TextItem extends React.Component {
   }
 
   render() {
-    const {visible, id, styleParams, html, style, actions} = this.props;
+    const {visible, id, styleParams, html, style, actions, imageDimensions} = this.props;
     const processedHtml = this.processInnerhtml(html);
     const dimensions = this.getTextDimensions();
     const htmlParam = {dangerouslySetInnerHTML: {__html: processedHtml}};
@@ -44,14 +44,20 @@ export default class TextItem extends React.Component {
       ...htmlParam,
       ...changeBgColor
     } : {...styleIsDimensions};
+    const itemContentStyle = {
+      height: imageDimensions ? imageDimensions.height : 'inherit',
+      backgroundColor: styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit'
+    };
 
     return (
-        <div className={'gallery-item-content gallery-item-visible gallery-item gallery-item-loaded text-item'}
+      <div className={'gallery-item-content'} style={itemContentStyle}>
+        <div className={'gallery-item-visible gallery-item gallery-item-loaded text-item'}
           key={'item-text-' + id}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
           data-hook="text-item"
           {...attributes}/>
+      </div>
     );
   }
 }
