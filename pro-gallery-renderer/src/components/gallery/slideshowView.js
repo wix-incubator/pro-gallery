@@ -677,7 +677,6 @@ class SlideshowView extends React.Component {
       this.setFlattenItems(this.props.galleryStructure);
     }
 
-    window.addEventListener('keydown', this.handleKeypress);
     window.addEventListener('gallery_navigation_out', () => { //TODO remove after full refactor release
       utils.setStateAndLog(this, 'Next Item', {
         isInView: false
@@ -724,7 +723,8 @@ class SlideshowView extends React.Component {
 
     return (<div
       className={this.getClassNames()}
-			style={this.getStyles()}
+      style={this.getStyles()}
+      onKeyDown={this.handleKeypress}
     >
       {thumbnails[0]}
       {gallery}
