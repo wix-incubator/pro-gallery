@@ -18,9 +18,11 @@ export default class ItemHover extends React.Component {
       hoverClass.push('default');
     }
 
-    // if (forceShowHover && utils.isEditor()) {
     if (forceShowHover) {
+      //in mobile, when item is hovered (tapped, with all the right configurations), forceShowHover is true
       hoverClass.push('hovered');
+    } else if (utils.isMobile()) {
+      hoverClass.push('hide-hover');
     }
 
     return hoverClass.join(' ');

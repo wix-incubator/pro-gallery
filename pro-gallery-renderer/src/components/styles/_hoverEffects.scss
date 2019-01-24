@@ -5,7 +5,7 @@
     .gallery-item-container {
 
       .gallery-item-hover.hovered,
-      &:hover .gallery-item-hover {
+      &:hover .gallery-item-hover:not(.hide-hover) {
 
         transition: none;
 
@@ -27,14 +27,14 @@
       //overlay animations
 
       &.hover-animation-fade-in {
-        .gallery-item-hover {
+        .gallery-item-hover:not(.hide-hover) {
           &:before {
             filter: opacity(0);
           }
         }
 
         .gallery-item-hover.hovered,
-        &:hover .gallery-item-hover {
+        &:hover .gallery-item-hover:not(.hide-hover) {
           * {
             transition: opacity .4s ease !important;
           }
@@ -47,7 +47,7 @@
       }
 
       &.hover-animation-expand {
-        .gallery-item-hover {
+        .gallery-item-hover:not(.hide-hover) {
           &:before {
             transform: scale(0.9);
             filter: opacity(0);
@@ -55,7 +55,7 @@
         }
 
         .gallery-item-hover.hovered,
-        &:hover .gallery-item-hover {
+        &:hover .gallery-item-hover:not(.hide-hover) {
           * {
             transition: opacity .4s ease !important;
           }
@@ -69,7 +69,7 @@
       }
 
       &.hover-animation-slide-up {
-        .gallery-item-hover {
+        .gallery-item-hover:not(.hide-hover) {
           &:before {
             transform: translateY(30%);
             filter: opacity(0);
@@ -77,7 +77,7 @@
         }
 
         .gallery-item-hover.hovered,
-        &:hover .gallery-item-hover {
+        &:hover .gallery-item-hover:not(.hide-hover) {
           * {
             transition: opacity .3s ease !important;
           }
@@ -91,7 +91,7 @@
       }
 
       &.hover-animation-slide-right {
-        .gallery-item-hover {
+        .gallery-item-hover:not(.hide-hover) {
           &:before {
             transform: translateX(-100%);
             filter: opacity(0);
@@ -99,7 +99,7 @@
         }
 
         .gallery-item-hover.hovered,
-        &:hover .gallery-item-hover {
+        &:hover .gallery-item-hover:not(.hide-hover) {
           * {
             transition: opacity .3s ease !important;
           }
@@ -113,7 +113,7 @@
       }
 
       //&.hover-animation-radius {
-      //  .gallery-item-hover {
+      //  .gallery-item-hover:not(.hide-hover) {
       //    &:before {
       //      transform: scale(0);
       //      border-radius: 100%;
@@ -121,7 +121,7 @@
       //  }
       //
       //  .gallery-item-hover.hovered,
-      //  &:hover .gallery-item-hover {
+      //  &:hover .gallery-item-hover:not(.hide-hover) {
       //    * {
       //      transition: opacity .2s ease .6s !important;
       //    }
@@ -139,7 +139,7 @@
       //===================================================================
       //image hover animations
 
-      &.zoom-in-on-hover {
+      &.zoom-in-on-hover:not(.hide-hover) {
         &.hovered,
         &:hover {
           .gallery-item-content {
@@ -149,7 +149,7 @@
         }
       }
 
-      &.blur-on-hover {
+      &.blur-on-hover:not(.hide-hover) {
         &.hovered,
         &:hover {
           .gallery-item-content {
@@ -161,7 +161,7 @@
         }
       }
 
-      &.grayscale-on-hover {
+      &.grayscale-on-hover:not(.hide-hover) {
         &.hovered,
         &:hover {
           .gallery-item-content {
@@ -171,21 +171,21 @@
         }
       }
 
-      &.shrink-on-hover {
+      &.shrink-on-hover:not(.hide-hover) {
         &.hovered,
         &:hover {
           .gallery-item-content {
             transition: transform .2s ease !important;
             transform: scale(0.985);
           }
-          .gallery-item-hover {
+          .gallery-item-hover:not(.hide-hover) {
             transition: transform .2s ease !important;
             transform: scale(0.985);
           }
         }
       }
 
-      &.invert-on-hover {
+      &.invert-on-hover:not(.hide-hover) {
         &.hovered,
         &:hover {
           .gallery-item-content {
@@ -200,8 +200,8 @@
           filter: grayscale(1);
         }
 
-        &.hovered,
-        &:hover {
+        &.hovered:not(.hide-hover),
+        &:hover:not(.hide-hover) {
           .gallery-item-content {
             transition: filter .6s ease !important;
             filter: grayscale(0);
