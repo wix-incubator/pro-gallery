@@ -131,6 +131,7 @@ class GalleryItem {
       full_url: this.full_url,
       download_url: this.download_url,
       sample_url: this.sample_url,
+      preload_url: this.preload_url,
       square_url: this.square_url,
       pixel_url: this.pixel_url,
       resized_url: this.resized_url,
@@ -290,6 +291,14 @@ class GalleryItem {
       return this.resizeUrlImp_sdk(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint);
     } else {
       return this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint);
+    }
+  }
+
+  prefixUrlIfNeeded(originalUrl) {
+    if (utils.isExternalUrl(originalUrl)) {
+      return originalUrl;
+    } else { //todo remove when supporting focal point
+      return 'https://static.wixstatic.com/media/' + originalUrl;
     }
   }
 
@@ -518,13 +527,12 @@ class GalleryItem {
     this.thumbnail_url = this.resizedUrl('fit', this.thumbnailWidth, this.thumbnailHeight, {quality: 30}, false);
     this.square_url = this.resizedUrl('fill', 100, 100, {quality: 80}, false);
     this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams, false);
-
     this.sample_url = this.resizedUrl('fit', 500, 500, this.sharpParams, false, true);
-
     this.download_url = utils.isStoreGallery() ? this.sample_url : {img: this.getOriginalsUrl(), mp4: this.full_url.mp4};
     if (this.download_url.img) {
       this.download_url.img += `?dn=${this.fileName}`; //https://jira.wixpress.com/browse/PHOT-129#
     }
+    this.preload_url = this.prefixUrlIfNeeded(this.url);
 
   }
 
