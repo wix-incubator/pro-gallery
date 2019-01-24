@@ -128,13 +128,14 @@ export class GalleryContainer extends React.Component {
 
     const itemsWithoutDimensions = galleryItems.filter((item, idx) => {
       try {
-        return (item.isVisible && item.isDimensionless);
+        return (item.isVisible && item.isDimensionless && !item.isPreloaded);
       } catch (e) {
         return false;
       }
     });
 
     itemsWithoutDimensions.forEach((item, idx, items) => {
+      item.isPreloaded = true;
       preloadItem(item, e => {
         try {
           if (utils.isVerbose()) {
@@ -143,15 +144,22 @@ export class GalleryContainer extends React.Component {
           const ele = e.srcElement;
           const _item = this.items.find(itm => itm.itemId === item.itemId);
           if (_item) {
-            this.itemsDimensions[_item.itemId] = {
+            const itemDim = {
               width: ele.width,
               height: ele.height,
+              measured: true
             };
 
-            //rebuild the gallery after every dimension update
-            if (Object.keys(this.itemsDimensions).length > 0) {
-              throttledReCreateGallery();
+            Object.assign(_item, itemDim);
+            if (typeof _item.metaData === 'object') {
+              Object.assign(_item.metaData, itemDim);
             }
+            this.itemsDimensions[_item.itemId] = itemDim;
+
+            //rebuild the gallery after every dimension update
+            // if (Object.keys(this.itemsDimensions).length > 0) {
+            throttledReCreateGallery();
+            // }
 
           }
         } catch (e) {
@@ -244,29 +252,54 @@ export class GalleryContainer extends React.Component {
       }, true);
     };
 
-    const itemsHaveChanged = items => {
-      const _items = this.items;
-      if (items === this.items) {
+    const itemsHaveChanged = newItems => {
+      const existingItems = this.items;
+      if (newItems === this.items) {
         return false; //it is the exact same object
       }
-      if (!items) {
+      if (!newItems) {
         return false; // new items do not exist (use old items)
       }
-      if (!state.items || !_items) {
+      if (!state.items || !existingItems) {
         return true; // old items do not exist
       }
-      if (_items.length !== items.length) {
+      if (existingItems.length !== newItems.length) {
         return true; // more new items than old items (or vice versa)
       }
-      return items.reduce((is, item, idx) => {
-        //check that all the items' ids are identical
-        return is || !item || !_items[idx] || item.itemId !== _items[idx].id || JSON.stringify({...item.metaData}) !== JSON.stringify({..._items[idx].metaData});
+      return newItems.reduce((is, newItem, idx) => {
+        //check that all the items are identical
+        const existingItem = existingItems[idx];
+        try {
+          return is || !newItem || !existingItem || newItem.itemId !== existingItem.itemId;
+        } catch (e) {
+          return true;
+        }
       }, false);
+    };
+
+    const itemsMetadata = newItems => {
+      const existingItems = this.items;
+
+      if (Object.keys(this.itemsDimensions).length > 0) {
+        return true; //still have items dimensions that needs to be applied
+      }
+
+      return newItems.reduce((is, newItem, idx) => {
+        //check that all the items are identical
+        const existingItem = existingItems[idx];
+        try {
+          return is || JSON.stringify(newItem.metaData) !== JSON.stringify(existingItem.metaData);
+        } catch (e) {
+          return true;
+        }
+      }, false);
+
     };
 
     const isNew = {
       items: itemsHaveChanged(items),
       addedItems: itemsWereAdded(items),
+      itemsMetadata: itemsMetadata(items),
       styles: stylesHaveChanged(styles),
       container: containerHadChanged(container),
       watermark: !!watermarkData && (watermarkData !== this.props.watermarkData),
@@ -293,12 +326,6 @@ export class GalleryContainer extends React.Component {
 
     let _styles, _container, scroll, _scroll;
     items = items || this.items;
-    Object.entries(this.itemsDimensions).forEach(([itemId, itemDim]) => {
-      const item = items.find(itm => itm.itemId === itemId);
-      if (item) {
-        Object.assign(item.metaData, itemDim);
-      }
-    });
 
     const isNew = this.isNew({items, styles, container, watermarkData}, state);
     const newState = {};
@@ -307,7 +334,13 @@ export class GalleryContainer extends React.Component {
       console.log('PROGALLERY reCreateGalleryExpensively', isNew, {items, styles, container, watermarkData});
     }
 
-    if (isNew.items && !isNew.addedItems) {
+    if (isNew.itemsMetadata && !isNew.items && !isNew.addedItems) {
+      //if only the items metadata has changed - use the modified items (probably with the measured width and height)
+      this.itemsDimensions = {};
+      items = this.items;
+    }
+
+    if (isNew.itemsMetadata || (isNew.items && !isNew.addedItems)) {
       this.items = items.map(item => {
         return ItemsHelper.convertDtoToLayoutItem(item);
       });
