@@ -1,6 +1,8 @@
 import Consts from 'photography-client-lib/dist/src/utils/consts';
 import utils from '../../utils/index.js';
 import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper';
+
 /*
     TODO:
     - handle horizontal scroll
@@ -18,13 +20,37 @@ class CssScrollHelper {
 
     //padding: [belowScreen, aboveScreen]
     //padding: [above images, below image]
+
+    let highResPadding;
+    switch (experiments['specs.pro-gallery.scrollPreloading']) {
+      case '0':
+        highResPadding = [0, 0];
+        break;
+      case '20':
+        highResPadding = [640, 2560];
+        break;
+      case '40':
+        highResPadding = [1280, 5120];
+        break;
+      case '60':
+        highResPadding = [2560, 10240];
+        break;
+      case '100':
+        highResPadding = [Infinity, Infinity];
+        break;
+      default:
+      case '80':
+        highResPadding = [5120, Infinity];
+        break;
+    }
+
     this.allPagePadding = () => [Infinity, Infinity];
     this.inScreenPadding = () => [0, 0];
     this.aboveScreenPadding = () => [0, Infinity];
     this.justBelowScreenPadding = itemHeight => [5120, -1 * (itemHeight + this.screenSize)];
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
-    this.highResPadding = () => [5120, Infinity];
+    this.highResPadding = () => highResPadding || [5120, Infinity];
     this.lowResPadding = () => [10240, Infinity];
 
     this.scrollCss = [];
