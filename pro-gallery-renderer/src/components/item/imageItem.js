@@ -47,7 +47,9 @@ export default class ImageItem extends React.Component {
         >
         {this.useCssScrolling ? <canvas
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-            className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+						className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+						role="img"
+						arial-label={alt}
             style={restOfDimensions}
             {...imageProps}
           /> : <img
