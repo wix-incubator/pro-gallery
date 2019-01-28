@@ -91,6 +91,9 @@ class CssScrollHelper {
     if (type === 'video' || type === 'text') {
       return false;
     }
+    if (!this.scrollCss[idx]) {
+      return true; //recalc as long as no css was created
+    }
     const scrollCssProps = JSON.stringify({id, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
     if (scrollCssProps === this.scrollCssProps[idx]) {
       return false;
