@@ -136,6 +136,9 @@ class CssScrollHelper {
     const {resized_url, idx} = item;
 
     if (!this.shouldCalcScrollCss(item, styleParams)) {
+      if (utils.isVerbose()) {
+        console.log('CSS SCROLL - skipping css calc for item', item, this.scrollCss[idx]);
+      }
       return this.scrollCss[idx];
     }
 
@@ -155,6 +158,10 @@ class CssScrollHelper {
 
     //scrollAnimation [DEMO]
     this.createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors});
+
+    if (utils.isVerbose()) {
+      console.log('CSS SCROLL - css calc for item', item, this.scrollCss[idx]);
+    }
 
     return this.scrollCss[idx];
     // console.count('pgScroll item created');
