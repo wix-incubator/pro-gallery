@@ -137,7 +137,7 @@ class CssScrollHelper {
 
     if (!this.shouldCalcScrollCss(item, styleParams)) {
       if (utils.isVerbose()) {
-        console.log('CSS SCROLL - skipping css calc for item', item, this.scrollCss[idx]);
+        console.log('CSS SCROLL - skipping css calc for item #' + idx, item, this.scrollCss[idx]);
       }
       return this.scrollCss[idx];
     }
@@ -160,7 +160,7 @@ class CssScrollHelper {
     this.createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors});
 
     if (utils.isVerbose()) {
-      console.log('CSS SCROLL - css calc for item', item, this.scrollCss[idx]);
+      console.log('CSS SCROLL - css calc for item #' + idx, item, this.scrollCss[idx]);
     }
 
     return this.scrollCss[idx];
