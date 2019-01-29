@@ -142,18 +142,18 @@ class CssScrollHelper {
       return this.scrollCss[idx];
     }
 
-    this.scrollCss[idx] = '';
+    let scrollCss = '';
 
     const createScrollSelectors = this.createScrollSelectorsFunction({galleryDomId, item, styleParams});
 
     //load hi-res image + loading transition
     if (!window.isSSR && !item.isDimensionless) {
-      this.scrollCss[idx] += createScrollSelectors(this.highResPadding(), `.image-item>canvas`) + `{opacity: 1; transition: opacity .4s linear; background-image: url(${resized_url.img})}`;
+      scrollCss += createScrollSelectors(this.highResPadding(), `.image-item>canvas`) + `{opacity: 1; transition: opacity .4s linear; background-image: url(${resized_url.img})}`;
     }
 
     //add the blurry image
     if (!utils.deviceHasMemoryIssues() && styleParams.imageLoadingMode !== Consts.loadingMode.COLOR && (!item.isTransparent || window.isSSR) && !item.isDimensionless) {
-      this.scrollCss[idx] += createScrollSelectors(this.lowResPadding(), `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
+      scrollCss += createScrollSelectors(this.lowResPadding(), `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
     }
 
     //scrollAnimation [DEMO]
@@ -162,6 +162,8 @@ class CssScrollHelper {
     if (utils.isVerbose()) {
       console.log('CSS SCROLL - css calc for item #' + idx, item, this.scrollCss[idx]);
     }
+
+    this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
 
     return this.scrollCss[idx];
     // console.count('pgScroll item created');
