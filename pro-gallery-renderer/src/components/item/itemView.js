@@ -72,6 +72,7 @@ class ItemView extends React.Component {
       top: 0,
       left: 0
     };
+    this.activeElement = '';
   }
 
   //-------------------------------------------| INIT |--------------------------------------------//
@@ -105,6 +106,7 @@ class ItemView extends React.Component {
     this.onMouseOver = this.onMouseOver.bind(this);
     this.setVisibilityState = this.setVisibilityState.bind(this);
     this.setPreviewHover = this.setPreviewHover.bind(this);
+    this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(this);
 
     if (utils.isEditor()) {
       Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
@@ -751,9 +753,37 @@ class ItemView extends React.Component {
     }
     return classNames.join(' ');
   }
+
   getItemContainerTabIndex() {
     const tabIndex = this.isHighlight() ? utils.getTabIndex('currentThumbnail') : (this.props.currentIdx === this.props.idx ? utils.getTabIndex('currentGalleryItem') : -1);
     return tabIndex;
+  }
+
+  changeActiveElementIfNeeded(prevProps) {
+    try {
+      if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
+        const activeElement = window.document.activeElement;
+			//check if thumbnailId has changed to the current item
+        const isThisGalleryItemInFocus = () => !!window.document.querySelector(`#pro-gallery-${this.props.galleryDomId} #${String(activeElement.id)}`);
+        const isGalleryItemInFocus = () => String(activeElement.className).indexOf('gallery-item-container') >= 0;
+        const hasActiveElementChanged = () => !!activeElement.id && this.activeElement !== activeElement.id;
+        if (hasActiveElementChanged()) {
+          this.activeElement = activeElement.id;
+          if (isGalleryItemInFocus() && isThisGalleryItemInFocus()) {
+            if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
+            // if the highlighted thumbnail changed and it is the same as this itemview's
+              this.itemContainer.focus();
+            } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
+            //check if currentIdx has changed to the current item
+              this.itemContainer.focus();
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Could not set focus to active element', e);
+    }
+
   }
   //-----------------------------------------| REACT |--------------------------------------------//
 
@@ -774,39 +804,21 @@ class ItemView extends React.Component {
       setInitialVisibility({props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
     }
   }
+
   componentWillUnmount() {
     if (this.shouldListenToScroll && this.useRefactoredProGallery) {
       this.removeScrollListener();
     }
   }
-  componentWillReceiveProps(nextProps) {
 
+  componentWillReceiveProps(nextProps) {
+    //
   }
+
   componentDidUpdate(prevProps, prevState) {
-    try {
-      if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
-        const activeElement = window.document.activeElement;
-			//check if thumbnailId has changed to the current item
-        const isThisGalleryItemInFocus = () => !!window.document.querySelector(`#pro-gallery-${this.props.galleryDomId} #${String(activeElement.id)}`);
-        const isGalleryItemInFocus = () => String(activeElement.className).indexOf('gallery-item-container') >= 0;
-        const hasActiveElementChanged = () => this.activeElement !== activeElement;
-        if (hasActiveElementChanged()) {
-          this.activeElement = activeElement;
-          if (isGalleryItemInFocus() && isThisGalleryItemInFocus()) {
-            if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
-            // if the highlighted thumbnail changed and it is the same as this itemview's
-              this.itemContainer.focus();
-            } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
-            //check if currentIdx has changed to the current item
-              this.itemContainer.focus();
-            }
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Could not set focus to active element', e);
-    }
+    this.changeActiveElementIfNeeded(prevProps);
   }
+
   removeScrollListener() {
     if (this.scrollEventListenerSet) {
       this.scrollEventListenerSet = false;
