@@ -22,25 +22,32 @@ class CssScrollHelper {
     //padding: [above images, below image]
 
     let highResPadding;
+    let lowResPadding;
     switch (experiments['specs.pro-gallery.scrollPreloading']) {
       case '0':
         highResPadding = [0, 0];
+        lowResPadding = [0, 0];
         break;
       case '20':
         highResPadding = [640, 2560];
+        lowResPadding = [1280, 2560];
         break;
       case '40':
         highResPadding = [1280, 5120];
+        lowResPadding = [2560, 5120];
         break;
       case '60':
         highResPadding = [2560, 10240];
+        lowResPadding = [5120, 10240];
         break;
       case '100':
         highResPadding = [Infinity, Infinity];
+        lowResPadding = [Infinity, Infinity];
         break;
       default:
       case '80':
         highResPadding = [5120, Infinity];
+        lowResPadding = [10240, Infinity];
         break;
     }
 
@@ -51,7 +58,7 @@ class CssScrollHelper {
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
     this.highResPadding = () => highResPadding || [5120, Infinity];
-    this.lowResPadding = () => [10240, Infinity];
+    this.lowResPadding = () => lowResPadding || [10240, Infinity];
 
     this.scrollCss = [];
     this.scrollCssProps = [];
@@ -117,6 +124,9 @@ class CssScrollHelper {
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
+      if (utils.isVerbose()) {
+        console.log(`CSS SCROLL - item #${item.idx} display range is: (${from} - ${to})`);
+      }
       const scrollClasses = [];
       while (from < to) {
         const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
