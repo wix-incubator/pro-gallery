@@ -57,9 +57,9 @@ class CssScrollHelper {
     this.scrollCssProps = [];
   }
 
-  getDomId({id, idx}) {
-    const shortId = String(id).replace(/[\W]+/g, '').slice(-5);
-    return `pgi${String(idx)}${shortId}`;
+  getDomId({id}) {
+    const shortId = String(id).replace(/[\W]+/g, '');
+    return `pgi${shortId}`;
   }
 
   buildScrollClassName(galleryDomId, idx, val) {
@@ -87,19 +87,20 @@ class CssScrollHelper {
     return items.map(item => this.calcScrollCssForItem({galleryDomId, item, styleParams})).join(`\n`);
   }
 
-  shouldCalcScrollCss({id, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, idx, type}, styleParams) {
+  shouldCalcScrollCss({id, idx, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, type}, styleParams) {
     if (type === 'video' || type === 'text') {
       return false;
     }
-    if (!this.scrollCss[idx]) {
-      return true; //recalc as long as no css was created
-    }
-    const scrollCssProps = JSON.stringify({id, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
-    if (scrollCssProps === this.scrollCssProps[idx]) {
-      return false;
-    }
-    this.scrollCssProps[idx] = scrollCssProps;
     return true;
+    // if (!this.scrollCss[idx]) {
+    //   return true; //recalc as long as no css was created
+    // }
+    // const scrollCssProps = JSON.stringify({id, idx, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
+    // if (scrollCssProps === this.scrollCssProps[idx]) {
+    //   return false;
+    // }
+    // this.scrollCssProps[idx] = scrollCssProps;
+    // return true;
   }
 
   createScrollSelectorsFunction({galleryDomId, item, styleParams}) {

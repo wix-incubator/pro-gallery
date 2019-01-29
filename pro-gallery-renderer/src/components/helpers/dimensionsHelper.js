@@ -42,10 +42,14 @@ class DimensionsHelper {
   fixContainerIfNeeded(container)	{
     const isFullWidth = this.isFullWidth(container);
     if (isFullWidth) {
+      const _container = {...container};
       const calcWidth = this.getBoundingRect().width;
-      container.width = calcWidth;
+      _container.width = calcWidth;
+      return _container;
+    } else {
+      return container;
     }
-    return container;
+
   }
 
   calcBoundingRect() {

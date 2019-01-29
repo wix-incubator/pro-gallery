@@ -69,18 +69,29 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const galleryState = this.reCreateGalleryExpensively(nextProps);
-    if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
-        this.handleNewGalleryStructure();
-      });
+    let hasPropsChanged = true;
+    try {
+      hasPropsChanged = (JSON.stringify(this.props) !== JSON.stringify(nextProps));
+    } catch (e) {
+      console.error('Cannot compare props', e);
     }
+    if (hasPropsChanged) {
+      if (utils.isVerbose()) {
+        console.log('New props arrived', utils.printableObjectsDiff(this.props, nextProps));
+      }
+      const galleryState = this.reCreateGalleryExpensively(nextProps);
+      if (Object.keys(galleryState).length > 0) {
+        this.setState(galleryState, () => {
+          this.handleNewGalleryStructure();
+        });
+      }
 
-    if (!!nextProps.currentIdx && nextProps.currentIdx > 0) {
-      this.scrollToItem(nextProps.currentIdx, false, true, 0);
+      if (!!nextProps.currentIdx && nextProps.currentIdx > 0) {
+        this.scrollToItem(nextProps.currentIdx, false, true, 0);
+      }
+
+      if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
     }
-
-    if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
   }
 
   loadItemsDimensions() {
@@ -394,19 +405,17 @@ export class GalleryContainer extends React.Component {
 
     if ((isNew.itemsDimensions || isNew.itemsMetadata) && !isNew.items && !isNew.addedItems) {
       //if only the items metadata has changed - use the modified items (probably with the measured width and height)
-      this.items = this.items.map(item => {
-        return (Object.assign(item, {...this.itemsDimensions[item.itemId]}));
-      });
-      newState.items = this.items.map(item => item.id);
+      this.items = this.items.map(item => Object.assign(item, {...this.itemsDimensions[item.itemId]}));
+      newState.items = this.items.map(item => item.itemId);
     } else if (isNew.items && !isNew.addedItems) {
-      this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
-      newState.items = this.items.map(item => item.id);
+      this.items = items.map(item => Object.assign(ItemsHelper.convertDtoToLayoutItem(item), {...this.itemsDimensions[item.itemId]}));
+      newState.items = this.items.map(item => item.itemId);
       this.gettingMoreItems = false; //probably finished getting more items
     } else if (isNew.addedItems) {
       this.items = this.items.concat(items.slice(this.items.length).map(item => {
         return ItemsHelper.convertDtoToLayoutItem(item);
       }));
-      newState.items = this.items.map(item => item.id);
+      newState.items = this.items.map(item => item.itemId);
       this.gettingMoreItems = false; //probably finished getting more items
     }
 
