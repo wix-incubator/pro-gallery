@@ -785,16 +785,21 @@ class ItemView extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     try {
       if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
+        const activeElement = window.document.activeElement;
 			//check if thumbnailId has changed to the current item
-        const isAnotherItemInFocus = String(window.document.activeElement.className).indexOf('gallery-item-container') >= 0;
-        const isShowMoreInFocus = String(window.document.activeElement.className).indexOf('show-more') >= 0;
-        if (isAnotherItemInFocus || isShowMoreInFocus) {
-          if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
-					// if the highlighted thumbnail changed and it is the same as this itemview's
-            this.itemContainer.focus();
-          } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
-					//check if currentIdx has changed to the current item
-            this.itemContainer.focus();
+        const isThisGalleryItemInFocus = () => !!window.document.querySelector(`#pro-gallery-${this.props.galleryDomId} #${String(activeElement.id)}`);
+        const isGalleryItemInFocus = () => String(activeElement.className).indexOf('gallery-item-container') >= 0;
+        const hasActiveElementChanged = () => this.activeElement !== activeElement;
+        if (hasActiveElementChanged()) {
+          this.activeElement = activeElement;
+          if (isGalleryItemInFocus() && isThisGalleryItemInFocus()) {
+            if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
+            // if the highlighted thumbnail changed and it is the same as this itemview's
+              this.itemContainer.focus();
+            } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
+            //check if currentIdx has changed to the current item
+              this.itemContainer.focus();
+            }
           }
         }
       }

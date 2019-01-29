@@ -392,13 +392,13 @@ export class GalleryContainer extends React.Component {
       console.log('PROGALLERY reCreateGalleryExpensively', isNew, {items, styles, container, watermarkData});
     }
 
-    if (isNew.itemsDimensions && !isNew.items && !isNew.addedItems) {
+    if ((isNew.itemsDimensions || isNew.itemsMetadata) && !isNew.items && !isNew.addedItems) {
       //if only the items metadata has changed - use the modified items (probably with the measured width and height)
       this.items = this.items.map(item => {
         return (Object.assign(item, {...this.itemsDimensions[item.itemId]}));
       });
       newState.items = this.items.map(item => item.id);
-    } else if ((isNew.items || isNew.itemsMetadata) && !isNew.addedItems) {
+    } else if (isNew.items && !isNew.addedItems) {
       this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
       newState.items = this.items.map(item => item.id);
       this.gettingMoreItems = false; //probably finished getting more items
