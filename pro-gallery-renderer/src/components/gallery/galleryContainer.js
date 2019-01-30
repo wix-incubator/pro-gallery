@@ -1379,9 +1379,10 @@ export class GalleryContainer extends React.Component {
     if (canSet('itemFont')) {
       stateStyles.itemFont = wixStyles.itemFont;
       if (utils.isMobile()) {
-        stateStyles.itemFont.value = stateStyles.itemFont.value.slice(5, -1);
+        stateStyles.itemFont.value = stateStyles.itemFont.value.replace(/^font\s*:\s*/, '');
+        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '');
         if (stateStyles.itemFont.value.indexOf('underline') > 0) {
-          stateStyles.itemFont.value = stateStyles.itemFont.value.slice(0, -26);
+          stateStyles.itemFont.value = stateStyles.itemFont.value.replace('underline', '');
           stateStyles.textDecorationTitle = 'underline';
         } else {
           stateStyles.textDecorationTitle = 'none';
@@ -1394,9 +1395,10 @@ export class GalleryContainer extends React.Component {
     if (canSet('itemFontSlideshow')) {
       stateStyles.itemFontSlideshow = wixStyles.itemFontSlideshow;
       if (utils.isMobile()) {
-        stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.slice(5, -1);
+        stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.replace(/^font\s*:\s*/, '');
+        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '');
         if (stateStyles.itemFontSlideshow.value.indexOf('underline') > 0 && stateStyles.isSlideshowFont) {
-          stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.slice(0, -26);
+          stateStyles.itemFontSlideshow.value = stateStyles.itemFontSlideshow.value.replace('underline', '');
           stateStyles.textDecorationTitle = 'underline';
         } else {
           stateStyles.textDecorationTitle = 'none';
@@ -1407,9 +1409,10 @@ export class GalleryContainer extends React.Component {
     if (canSet('itemDescriptionFont')) {
       stateStyles.itemDescriptionFont = wixStyles.itemDescriptionFont;
       if (utils.isMobile()) {
-        stateStyles.itemDescriptionFont.value = stateStyles.itemDescriptionFont.value.slice(5, -1);
+        stateStyles.itemDescriptionFont.value = stateStyles.itemDescriptionFont.value.replace(/^font\s*:\s*/, '');
+        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '');
         if (stateStyles.itemDescriptionFont.value.indexOf('underline') > 0) {
-          stateStyles.itemDescriptionFont.value = stateStyles.itemDescriptionFont.value.slice(0, -26);
+          stateStyles.itemDescriptionFont.value = stateStyles.itemDescriptionFont.value.replace('underline', '');
           stateStyles.textDecorationDesc = 'underline';
         } else {
           stateStyles.textDecorationDesc = 'none';
@@ -1420,9 +1423,10 @@ export class GalleryContainer extends React.Component {
     if (canSet('itemDescriptionFontSlideshow')) {
       stateStyles.itemDescriptionFontSlideshow = wixStyles.itemDescriptionFontSlideshow;
       if (utils.isMobile()) {
-        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.slice(5, -1);
+        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.replace(/^font\s*:\s*/, '');
+        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '');
         if (stateStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0 && stateStyles.isSlideshowFont) {
-          stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.slice(0, -26);
+          stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.replace('underline', '');
           stateStyles.textDecorationDesc = 'underline';
         } else {
           stateStyles.textDecorationDesc = 'none';
@@ -1508,9 +1512,10 @@ export class GalleryContainer extends React.Component {
     if (canSet('loadMoreButtonFont')) {
       stateStyles.loadMoreButtonFont = wixStyles.loadMoreButtonFont;
       if (utils.isMobile()) {
-        stateStyles.loadMoreButtonFont.value = stateStyles.loadMoreButtonFont.value.slice(5, -1);
+        stateStyles.loadMoreButtonFont.value = stateStyles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
+        stateStyles.itemDescriptionFontSlideshow.value = stateStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '');
         if (stateStyles.loadMoreButtonFont.value.indexOf('underline') > 0) {
-          stateStyles.loadMoreButtonFont.value = stateStyles.loadMoreButtonFont.value.slice(0, -26);
+          stateStyles.loadMoreButtonFont.value = stateStyles.loadMoreButtonFont.value.replace('underline', '');
           stateStyles.textDecorationLoadMore = 'underline';
         } else {
           stateStyles.textDecorationLoadMore = 'none';

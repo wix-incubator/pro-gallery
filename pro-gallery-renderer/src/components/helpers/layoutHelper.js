@@ -507,18 +507,20 @@ function processLayouts(styles) {
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {
       if (!_.isUndefined(processedStyles.itemFontSlideshow)) {
-        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(5, -1);
-        if (processedStyles.itemFontSlideshow.value.indexOf('underline') > 0) {
-          processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.slice(0, -26);
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(/^font\s*:\s*/, '');
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(/;$/, '');
+        if (processedStyles.itemFontSlideshow.value.indexOf('underline') > -1) {
+          processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace('underline', '');
           processedStyles.textDecorationTitle = 'underline';
         } else {
           processedStyles.textDecorationTitle = 'none';
         }
       }
       if (!_.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
-        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(5, -1);
-        if (processedStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > 0) {
-          processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.slice(0, -26);
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(/^font\s*:\s*/, '');
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '');
+        if (processedStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > -1) {
+          processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace('underline', '');
           processedStyles.textDecorationDesc = 'underline';
         } else {
           processedStyles.textDecorationDesc = 'none';
@@ -526,18 +528,20 @@ function processLayouts(styles) {
       }
     } else {
       if (!_.isUndefined(processedStyles.itemFont)) {
-        processedStyles.itemFont.value = processedStyles.itemFont.value.slice(5, -1);
-        if (processedStyles.itemFont.value.indexOf('underline') > 0) {
-          processedStyles.itemFont.value = processedStyles.itemFont.value.slice(0, -26);
+        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(/^font\s*:\s*/, '');
+        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(/;$/, '');
+        if (processedStyles.itemFont.value.indexOf('underline') > -1) {
+          processedStyles.itemFont.value = processedStyles.itemFont.value.replace('underline', '');
           processedStyles.textDecorationTitle = 'underline';
         } else {
           processedStyles.textDecorationTitle = 'none';
         }
       }
       if (!_.isUndefined(processedStyles.itemDescriptionFont)) {
-        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(5, -1);
-        if (processedStyles.itemDescriptionFont.value.indexOf('underline') > 0) {
-          processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.slice(0, -26);
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(/^font\s*:\s*/, '');
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(/;$/, '');
+        if (processedStyles.itemDescriptionFont.value.indexOf('underline') > -1) {
+          processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace('underline', '');
           processedStyles.textDecorationDesc = 'underline';
         } else {
           processedStyles.textDecorationDesc = 'none';
@@ -566,9 +570,10 @@ function processLayouts(styles) {
   }
 
   if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
-    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.slice(5, -1);
-    if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > 0) {
-      processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.slice(0, -26);
+    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
+    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(/;$/, '');
+    if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > -1) {
+      processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace('underline', '');
       processedStyles.textDecorationLoadMore = 'underline';
     } else {
       processedStyles.textDecorationLoadMore = 'none';
