@@ -18,12 +18,27 @@ class CssScrollHelper {
 
     this.screenSize = Math.max(window.screen.width, window.screen.height);
 
+    this.scrollCss = [];
+    this.scrollCssProps = [];
+    this.calcScrollPaddings();
+  }
+
+  calcScrollPaddings() {
+
     //padding: [belowScreen, aboveScreen]
     //padding: [above images, below image]
+    this.allPagePadding = () => [Infinity, Infinity];
+    this.inScreenPadding = () => [0, 0];
+    this.aboveScreenPadding = () => [0, Infinity];
+    this.justBelowScreenPadding = itemHeight => [5120, -1 * (itemHeight + this.screenSize)];
+    this.justBelowAndInScreenPadding = () => [5120, 0];
+    this.belowScreenPadding = () => [Infinity, 0];
 
     let highResPadding;
     let lowResPadding;
-    switch (experiments['specs.pro-gallery.scrollPreloading']) {
+    const scrollPreloading = experiments['specs.pro-gallery.scrollPreloading'];
+
+    switch (scrollPreloading) {
       case '0':
         highResPadding = [0, 0];
         lowResPadding = [0, 0];
@@ -51,17 +66,9 @@ class CssScrollHelper {
         break;
     }
 
-    this.allPagePadding = () => [Infinity, Infinity];
-    this.inScreenPadding = () => [0, 0];
-    this.aboveScreenPadding = () => [0, Infinity];
-    this.justBelowScreenPadding = itemHeight => [5120, -1 * (itemHeight + this.screenSize)];
-    this.justBelowAndInScreenPadding = () => [5120, 0];
-    this.belowScreenPadding = () => [Infinity, 0];
     this.highResPadding = () => highResPadding || [5120, Infinity];
     this.lowResPadding = () => lowResPadding || [10240, Infinity];
 
-    this.scrollCss = [];
-    this.scrollCssProps = [];
   }
 
   getDomId({id}) {
@@ -83,9 +90,8 @@ class CssScrollHelper {
       return '';
     }
     this.screenSize = styleParams.oneRow ? window.innerWidth : window.innerHeight;
-    // if (utils.isMobile()) {
-    //   this.screenSize *= (320 / window.screen.width);
-    // }
+    this.calcScrollPaddings();
+
     const [lastItem] = items.slice(-1);
     const {top, right} = lastItem.offset;
     const maxStep = this.pgScrollSteps[0];
