@@ -69,28 +69,41 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let hasPropsChanged = true;
-    try {
-      hasPropsChanged = (JSON.stringify(this.props) !== JSON.stringify(nextProps));
-    } catch (e) {
-      console.error('Cannot compare props', e);
-    }
-    if (hasPropsChanged) {
-      if (utils.isVerbose()) {
-        console.log('New props arrived', utils.printableObjectsDiff(this.props, nextProps));
-      }
+
+    const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
         this.setState(galleryState, () => {
           this.handleNewGalleryStructure();
         });
       }
+    };
+
+    const debouncedReCreateGallery = _.debounce(reCreateGallery, 1000);
+
+    let hasPropsChanged = true;
+    try {
+      hasPropsChanged = (JSON.stringify(this.props) !== JSON.stringify(nextProps));
+    } catch (e) {
+      console.error('Cannot compare props', e);
+    }
+
+    if (hasPropsChanged) {
+      if (utils.isVerbose()) {
+        console.log('New props arrived', utils.printableObjectsDiff(this.props, nextProps));
+      }
+
+      reCreateGallery();
 
       if (!!nextProps.currentIdx && nextProps.currentIdx > 0) {
         this.scrollToItem(nextProps.currentIdx, false, true, 0);
       }
 
       if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
+
+    } else {
+      //this is a hack, because in fullwidth, new props arrive without any changes
+      debouncedReCreateGallery();
     }
   }
 
