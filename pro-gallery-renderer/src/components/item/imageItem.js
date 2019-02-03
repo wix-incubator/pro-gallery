@@ -49,7 +49,8 @@ export default class ImageItem extends React.Component {
             key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
 						className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
 						role="img"
-						arial-label={alt}
+            arial-label={alt}
+            data-src={resized_url.img}
             style={restOfDimensions}
             {...imageProps}
           /> : <img
