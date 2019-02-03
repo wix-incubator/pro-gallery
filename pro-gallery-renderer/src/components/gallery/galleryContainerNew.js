@@ -36,7 +36,7 @@ export class GalleryContainer extends React.Component {
     this.itemsDimensions = {};
     this.preloadedItems = {};
 
-    const galleryState = window.isSSR ? this.reCreateGalleryExpensively(props, initialState) : {};
+    const galleryState = this.reCreateGalleryExpensively(props, initialState);
 
     this.state = {
       ...initialState,
@@ -406,6 +406,7 @@ export class GalleryContainer extends React.Component {
     }
 
     const state = curState || this.state || {};
+    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     let _styles, _container;
 
@@ -496,7 +497,6 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensions();
       }
 
-      const isFullwidth = dimensionsHelper.isFullWidth();
       if (window.isSSR && isFullwidth) {
         if (utils.isVerbose()) {
           console.time('fullwidthLayoutsCss!');
