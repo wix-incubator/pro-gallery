@@ -79,11 +79,11 @@
         .gallery-item-hover.hovered,
         &:hover .gallery-item-hover:not(.hide-hover) {
           * {
-            transition: opacity .3s ease !important;
+            transition: opacity .4s cubic-bezier(.3,.13,.12,1) !important;
           }
 
           &:before {
-            transition: transform .2s ease, filter .05s ease !important;
+            transition: transform .4s cubic-bezier(.3,.13,.12,1), filter .05s ease !important;
             transform: translateY(0);
             filter: opacity(1);
           }
@@ -101,11 +101,11 @@
         .gallery-item-hover.hovered,
         &:hover .gallery-item-hover:not(.hide-hover) {
           * {
-            transition: opacity .3s ease !important;
+            transition: opacity .4s cubic-bezier(.3,.13,.12,1) !important;
           }
 
           &:before {
-            transition: transform .2s ease, filter .05s ease !important;
+            transition: transform .4s cubic-bezier(.3,.13,.12,1), filter .05s ease !important;
             transform: translateX(0);
             filter: opacity(1);
           }
@@ -143,7 +143,7 @@
         &.hovered,
         &:hover {
           .gallery-item-content {
-            transition: transform 1.2s ease-out !important;
+            transition: transform 2.2s cubic-bezier(.14,.4,.09,.99) !important;
             transform: scale(1.1);
           }
         }
