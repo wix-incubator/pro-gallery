@@ -125,9 +125,9 @@ class CssScrollHelper {
     const domId = this.getDomId(item);
     return (padding, suffix) => {
       const [before, after] = padding;
-      // if (before === Infinity && after === Infinity) {
-      //   return `.#${domId} ${suffix}`;
-      // }
+      if (before === Infinity && after === Infinity) {
+        return `#${domId} ${suffix}`;
+      }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
       if (utils.isVerbose()) {
