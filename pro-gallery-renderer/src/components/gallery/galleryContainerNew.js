@@ -79,7 +79,9 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    const debouncedReCreateGallery = _.debounce(reCreateGallery, 1000);
+    if (this.reCreateGalleryTimer) {
+      clearTimeout(this.reCreateGalleryTimer);
+    }
 
     let hasPropsChanged = true;
     try {
@@ -99,11 +101,13 @@ export class GalleryContainer extends React.Component {
         this.scrollToItem(nextProps.currentIdx, false, true, 0);
       }
 
-      if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
+      if (this.props.isInDisplay !== nextProps.isInDisplay) {
+        this.handleNavigation(nextProps.isInDisplay);
+      }
 
     } else {
       //this is a hack, because in fullwidth, new props arrive without any changes
-      debouncedReCreateGallery();
+      this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
     }
   }
 
