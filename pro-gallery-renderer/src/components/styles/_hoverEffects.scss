@@ -27,7 +27,7 @@
       //overlay animations
 
       &.hover-animation-fade-in {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             filter: opacity(0);
           }
@@ -47,7 +47,7 @@
       }
 
       &.hover-animation-expand {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             transform: scale(0.9);
             filter: opacity(0);
@@ -69,7 +69,7 @@
       }
 
       &.hover-animation-slide-up {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             transform: translateY(30%);
             filter: opacity(0);
@@ -91,7 +91,7 @@
       }
 
       &.hover-animation-slide-right {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             transform: translateX(-100%);
             filter: opacity(0);
@@ -113,7 +113,7 @@
       }
 
       //&.hover-animation-radius {
-      //  .gallery-item-hover:not(.hide-hover) {
+      //  .gallery-item-hover {
       //    &:before {
       //      transform: scale(0);
       //      border-radius: 100%;
@@ -209,7 +209,7 @@
         }
       }
 
-      //&.slide-up-on-hover {
+      //&.slide-up-on-hover:not(.hide-hover) {
       //  &.hovered,
       //  &:hover {
       //    transition: transform .8s ease !important;
@@ -217,7 +217,7 @@
       //  }
       //}
 
-      //&.expand-on-hover {
+      //&.expand-on-hover:not(.hide-hover) {
       //  &.hovered,
       //  &:hover {
       //    transition: transform .4s ease !important;
