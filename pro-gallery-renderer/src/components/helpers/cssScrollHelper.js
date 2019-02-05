@@ -36,7 +36,7 @@ class CssScrollHelper {
 
     let highResPadding;
     let lowResPadding;
-    const scrollPreloading = experiments['specs.pro-gallery.scrollPreloading'];
+    const scrollPreloading = experiments('specs.pro-gallery.scrollPreloading');
 
     switch (scrollPreloading) {
       case '0':
