@@ -648,7 +648,9 @@ export class GalleryContainer extends React.Component {
     const displayShowMore = this.containerGrowthDirection() === 'none';
 
     return (
-      <div data-key="pro-gallery-inner-container" key="pro-gallery-inner-container">
+      <div>
+        {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
+        <style key="scrollCss">{this.scrollCss}</style>
         <CssScrollIndicator
           galleryDomId={this.props.domId}
           oneRow={this.state.styles.oneRow}
@@ -683,8 +685,6 @@ export class GalleryContainer extends React.Component {
           store = {this.props.store}
           { ...this.props.gallery }
         />
-        <style data-key="scrollCss" key="scrollCss">{this.scrollCss}</style>
-        {this.fullwidthLayoutsCss.map((css, idx) => <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>{css}</style>)}
       </div>
     );
   }
