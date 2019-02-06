@@ -36,7 +36,8 @@ export class GalleryContainer extends React.Component {
     this.itemsDimensions = {};
     this.preloadedItems = {};
 
-    const galleryState = this.reCreateGalleryExpensively(props, initialState);
+    //todo!!! in client, we need to use the mock window until the component is mounted
+    const galleryState = window.isSSR ? this.reCreateGalleryExpensively(props, initialState) : {};
 
     this.state = {
       ...initialState,
