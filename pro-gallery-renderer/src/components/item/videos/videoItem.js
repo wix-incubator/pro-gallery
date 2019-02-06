@@ -89,7 +89,16 @@ class VideoItem extends React.Component {
   }
 
   createImageElement() {
-    return <img onLoad={this.props.actions.setItemLoaded}
+    return <img ref={img => {
+			// onLoad replacement for SSR
+      if (!img) {
+        return;
+      }
+      img.onload = this.props.actions.setItemLoaded; //initializing onLoad for further calls
+      if (img.complete && !this.props.loadingStatus.loaded) {
+        this.props.actions.setItemLoaded(); //first call, will not be called again because if it was called once loadingStatus.loaded will be true
+      }
+    }}
                 onError={this.props.actions.setItemError}
                 key={'image-' + this.props.id}
                 className={'gallery-item-hidden gallery-item-visible gallery-item ' + (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') + (this.props.loadingStatus.failed ? ' failed ' : '')}
