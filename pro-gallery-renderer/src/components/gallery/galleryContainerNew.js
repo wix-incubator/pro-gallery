@@ -36,6 +36,7 @@ export class GalleryContainer extends React.Component {
     this.itemsDimensions = {};
     this.preloadedItems = {};
 
+    //todo!!! in client, we need to use the mock window until the component is mounted
     const galleryState = window.isSSR ? this.reCreateGalleryExpensively(props, initialState) : {};
 
     this.state = {
@@ -79,7 +80,9 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    const debouncedReCreateGallery = _.debounce(reCreateGallery, 1000);
+    if (this.reCreateGalleryTimer) {
+      clearTimeout(this.reCreateGalleryTimer);
+    }
 
     let hasPropsChanged = true;
     try {
@@ -99,11 +102,13 @@ export class GalleryContainer extends React.Component {
         this.scrollToItem(nextProps.currentIdx, false, true, 0);
       }
 
-      if (this.props.isInDisplay !== nextProps.isInDisplay) this.handleNavigation(nextProps.isInDisplay);
+      if (this.props.isInDisplay !== nextProps.isInDisplay) {
+        this.handleNavigation(nextProps.isInDisplay);
+      }
 
     } else {
       //this is a hack, because in fullwidth, new props arrive without any changes
-      debouncedReCreateGallery();
+      this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
     }
   }
 
@@ -406,6 +411,7 @@ export class GalleryContainer extends React.Component {
     }
 
     const state = curState || this.state || {};
+    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     let _styles, _container;
 
@@ -496,7 +502,6 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensions();
       }
 
-      const isFullwidth = dimensionsHelper.isFullWidth();
       if (window.isSSR && isFullwidth) {
         if (utils.isVerbose()) {
           console.time('fullwidthLayoutsCss!');
@@ -644,9 +649,7 @@ export class GalleryContainer extends React.Component {
     const displayShowMore = this.containerGrowthDirection() === 'none';
 
     return (
-      <div>
-        {this.fullwidthLayoutsCss.map((css, idx) => <style key={`cssLayout-${idx}`}>{css}</style>)}
-        <style key="scrollCss">{this.scrollCss}</style>
+      <div data-key="pro-gallery-inner-container" key="pro-gallery-inner-container">
         <CssScrollIndicator
           galleryDomId={this.props.domId}
           oneRow={this.state.styles.oneRow}
@@ -681,6 +684,8 @@ export class GalleryContainer extends React.Component {
           store = {this.props.store}
           { ...this.props.gallery }
         />
+        <style data-key="scrollCss" key="scrollCss">{this.scrollCss}</style>
+        {this.fullwidthLayoutsCss.map((css, idx) => <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>{css}</style>)}
       </div>
     );
   }

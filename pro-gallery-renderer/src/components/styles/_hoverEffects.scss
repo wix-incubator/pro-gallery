@@ -27,7 +27,7 @@
       //overlay animations
 
       &.hover-animation-fade-in {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             filter: opacity(0);
           }
@@ -47,7 +47,7 @@
       }
 
       &.hover-animation-expand {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             transform: scale(0.9);
             filter: opacity(0);
@@ -69,7 +69,7 @@
       }
 
       &.hover-animation-slide-up {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             transform: translateY(30%);
             filter: opacity(0);
@@ -79,11 +79,11 @@
         .gallery-item-hover.hovered,
         &:hover .gallery-item-hover:not(.hide-hover) {
           * {
-            transition: opacity .3s ease !important;
+            transition: opacity .4s cubic-bezier(.3,.13,.12,1) !important;
           }
 
           &:before {
-            transition: transform .2s ease, filter .05s ease !important;
+            transition: transform .4s cubic-bezier(.3,.13,.12,1), filter .05s ease !important;
             transform: translateY(0);
             filter: opacity(1);
           }
@@ -91,7 +91,7 @@
       }
 
       &.hover-animation-slide-right {
-        .gallery-item-hover:not(.hide-hover) {
+        .gallery-item-hover {
           &:before {
             transform: translateX(-100%);
             filter: opacity(0);
@@ -101,11 +101,11 @@
         .gallery-item-hover.hovered,
         &:hover .gallery-item-hover:not(.hide-hover) {
           * {
-            transition: opacity .3s ease !important;
+            transition: opacity .4s cubic-bezier(.3,.13,.12,1) !important;
           }
 
           &:before {
-            transition: transform .2s ease, filter .05s ease !important;
+            transition: transform .4s cubic-bezier(.3,.13,.12,1), filter .05s ease !important;
             transform: translateX(0);
             filter: opacity(1);
           }
@@ -113,7 +113,7 @@
       }
 
       //&.hover-animation-radius {
-      //  .gallery-item-hover:not(.hide-hover) {
+      //  .gallery-item-hover {
       //    &:before {
       //      transform: scale(0);
       //      border-radius: 100%;
@@ -143,7 +143,7 @@
         &.hovered,
         &:hover {
           .gallery-item-content {
-            transition: transform 1.2s ease-out !important;
+            transition: transform 2.2s cubic-bezier(.14,.4,.09,.99) !important;
             transform: scale(1.1);
           }
         }
@@ -209,7 +209,7 @@
         }
       }
 
-      //&.slide-up-on-hover {
+      //&.slide-up-on-hover:not(.hide-hover) {
       //  &.hovered,
       //  &:hover {
       //    transition: transform .8s ease !important;
@@ -217,7 +217,7 @@
       //  }
       //}
 
-      //&.expand-on-hover {
+      //&.expand-on-hover:not(.hide-hover) {
       //  &.hovered,
       //  &:hover {
       //    transition: transform .4s ease !important;

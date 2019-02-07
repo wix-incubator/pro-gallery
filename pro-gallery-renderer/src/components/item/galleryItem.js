@@ -278,7 +278,7 @@ class GalleryItem {
   }
 
   useImageClientApi() {
-    const isSdkExperimentOn = !(experiments['specs.pro-gallery.ImageClientApi'] === 'false'); //use the new api unless the experiment is specifically turned off
+    const isSdkExperimentOn = !(experiments('specs.pro-gallery.ImageClientApi') === 'false'); //use the new api unless the experiment is specifically turned off
     const isImageSizeAvailable = !this.isDimensionless;
     // const isSSR = !(window && window.document) || window.isMock; //the image client lib can only be used in the client (dahh)
     const hasWatermark = !!this.watermark;
