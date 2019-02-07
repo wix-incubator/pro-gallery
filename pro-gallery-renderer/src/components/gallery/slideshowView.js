@@ -691,7 +691,7 @@ class SlideshowView extends React.Component {
       this.startAutoSlideshowIfNeeded(this.props.styleParams);
     });
 
-    this.container = window.document.getElementById('gallery-horizontal-scroll');
+    this.container = window.document.querySelector(`#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`);
     if (this.container) {
       this.container.addEventListener('scroll', this._setCurrentItemByScroll);
     }
