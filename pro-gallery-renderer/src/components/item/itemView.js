@@ -876,6 +876,11 @@ class ItemView extends React.Component {
       }
     }
   }
+
+  onContextMenu = e => {
+    e.preventDefault(e);
+  }
+
   composeItem() {
     const {photoId, id, hash, idx} = this.props;
     const {directLink} = this.props;
@@ -884,7 +889,8 @@ class ItemView extends React.Component {
     const shouldUseDirectLink = this.useRefactoredProGallery && url && target && itemClick === 'link';
     const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
     const innerDiv =
-			<div className={this.getItemContainerClass()}
+      <div className={this.getItemContainerClass()}
+        onContextMenu={this.onContextMenu}
 				id={cssScrollHelper.getDomId(this.props)}
 				ref={e => this.itemContainer = e}
 				onMouseOver={this.onMouseOver}
