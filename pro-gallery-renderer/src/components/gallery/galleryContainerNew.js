@@ -36,20 +36,38 @@ export class GalleryContainer extends React.Component {
     this.itemsDimensions = {};
     this.preloadedItems = {};
 
+    this.state = initialState;
+
     //todo!!! in client, we need to use the mock window until the component is mounted
-    const galleryState = window.isSSR ? this.reCreateGalleryExpensively(props, initialState) : {};
+    if (utils.isSSR()) {
+      this.initialGalleryState = this.reCreateGalleryExpensively(props, initialState);
+      try {
+        this.galleryInitialStateJson = JSON.stringify(this.initialGalleryState);
+      } catch (e) {
+        //todo - report to sentry
+        this.galleryInitialStateJson = null;
+      }
+    } else {
+      try {
+        this.initialGalleryState = JSON.parse(window.document.querySelector(`#pro-gallery-${props.domId} #ssr-state-to-hydrate`).innerHTML);
+      } catch (e) {
+        //todo - report to sentry
+        this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
+      }
+    }
 
     this.state = {
       ...initialState,
-      ...galleryState,
+      ...this.initialGalleryState,
     };
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
     this.scrollToItem = this.scrollToItem.bind(this);
-    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
+    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.state.galleryStructure.galleryItems[itemIdx])) : () => {};
     this._scrollingElement = this.getScrollingElement();
     this.setCurrentHover = this.setCurrentHover.bind(this);
+
   }
 
   componentDidMount() {
@@ -156,11 +174,11 @@ export class GalleryContainer extends React.Component {
       }
     }, 2500);
 
-    if (!(this.galleryStructure && this.galleryStructure.galleryItems && this.galleryStructure.galleryItems.length > 0)) {
+    if (!(this.state.galleryStructure && this.state.galleryStructure.galleryItems && this.state.galleryStructure.galleryItems.length > 0)) {
       return;
     }
 
-    const {galleryItems} = this.galleryStructure;
+    const {galleryItems} = this.state.galleryStructure;
 
     const itemsWithoutDimensions = galleryItems.filter((item, idx) => {
       try {
@@ -453,7 +471,7 @@ export class GalleryContainer extends React.Component {
       _styles = state.styles;
       _container = state.container;
     }
-    if (!this.galleryStructure || isNew.any) {
+    if (!this.state.galleryStructure || isNew.any) {
       if (utils.isVerbose()) {
         console.count('PROGALLERY [COUNT] - reCreateGalleryExpensively (isNew)');
       }
@@ -484,14 +502,14 @@ export class GalleryContainer extends React.Component {
       this.layout = this.layouter.createLayout(layoutParams);
 
       if (isNew.addedItems) {
-        const existingLayout = this.galleryStructure || this.layout;
-        this.galleryStructure = ItemsHelper.convertExistingStructureToGalleryItems(existingLayout, this.layout, {
+        const existingLayout = this.state.galleryStructure || this.layout;
+        newState.galleryStructure = ItemsHelper.convertExistingStructureToGalleryItems(existingLayout, this.layout, {
           watermark: watermarkData,
           sharpParams: _styles.sharpParams,
           lastVisibleItemIdx: this.lastVisibleItemIdx,
         });
       } else {
-        this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
+        newState.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
           watermark: watermarkData,
           sharpParams: _styles.sharpParams,
           lastVisibleItemIdx: this.lastVisibleItemIdx,
@@ -516,7 +534,7 @@ export class GalleryContainer extends React.Component {
 
       this.scrollCss = cssScrollHelper.calcScrollCss({
         galleryDomId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
+        items: newState.galleryStructure.galleryItems,
         styleParams: _styles,
       });
 
@@ -547,7 +565,7 @@ export class GalleryContainer extends React.Component {
       galleryWidth: this.state.container.galleryWidth,
       galleryHeight: this.state.container.galleryHeight,
       top: 0,
-      items: this.galleryStructure.items,
+      items: this.state.galleryStructure.items,
       itemIdx,
       fixedScroll,
       isManual,
@@ -590,9 +608,9 @@ export class GalleryContainer extends React.Component {
 
   getMoreItemsIfNeeded(scrollPos) {
     if (
-      this.galleryStructure &&
-      this.galleryStructure.galleryItems &&
-      this.galleryStructure.galleryItems.length > 0 &&
+      this.state.galleryStructure &&
+      this.state.galleryStructure.galleryItems &&
+      this.state.galleryStructure.galleryItems.length > 0 &&
       !this.gettingMoreItems &&
       (typeof this.props.getMoreItems === 'function') &&
       this.props.totalItemsCount > this.state.items.length
@@ -600,7 +618,7 @@ export class GalleryContainer extends React.Component {
       //TODO - add support for horizontal galleries
       const {oneRow} = this.state.styles;
 
-      const [lastItem] = this.galleryStructure.galleryItems.slice(-1);
+      const [lastItem] = this.state.galleryStructure.galleryItems.slice(-1);
       const gallerySize = lastItem.offset[(oneRow ? 'right' : 'bottom')];
       const screenSize = (oneRow ? window.screen.width : window.screen.height);
       const scrollEnd = scrollPos + screenSize + (oneRow ? 0 : this.state.container.scrollBase);
@@ -663,7 +681,7 @@ export class GalleryContainer extends React.Component {
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount = {this.props.renderedItemsCount}
           items = {this.items}
-          galleryStructure = {this.galleryStructure}
+          galleryStructure = {this.state.galleryStructure}
           styleParams = {styles}
           container = {this.state.container}
           watermark = {this.props.watermarkData}
@@ -684,6 +702,7 @@ export class GalleryContainer extends React.Component {
           store = {this.props.store}
           { ...this.props.gallery }
         />
+        {this.galleryInitialStateJson && <div id="ssr-state-to-hydrate" style={{display: 'none'}}>{this.galleryInitialStateJson}</div>}
         <style data-key="scrollCss" key="scrollCss">{this.scrollCss}</style>
         {this.fullwidthLayoutsCss.map((css, idx) => <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>{css}</style>)}
       </div>
