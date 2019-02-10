@@ -877,7 +877,7 @@ class ItemView extends React.Component {
     }
   }
 
-  onContextMenu = e => {
+  onContextMenu(e) {
     e.preventDefault(e);
   }
 
@@ -890,7 +890,7 @@ class ItemView extends React.Component {
     const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
     const innerDiv =
       <div className={this.getItemContainerClass()}
-        onContextMenu={this.onContextMenu}
+        onContextMenu={e => this.onContextMenu(e)}
 				id={cssScrollHelper.getDomId(this.props)}
 				ref={e => this.itemContainer = e}
 				onMouseOver={this.onMouseOver}

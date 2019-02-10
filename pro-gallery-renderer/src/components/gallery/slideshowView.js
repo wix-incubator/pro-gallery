@@ -373,7 +373,7 @@ class SlideshowView extends React.Component {
                   className={'thumbnailItem' + (highlighted ? (' pro-gallery-thumbnails-highlighted gallery-item-container highlight' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')) : '')}
                   data-key={thumbnailItem.id}
                   style={itemStyle}
-                  onContextMenu={this.onContextMenu}
+                  onContextMenu={e => this.onContextMenu(e)}
                   onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
                 />);
               })}
@@ -382,7 +382,7 @@ class SlideshowView extends React.Component {
     );
   }
 
-  onContextMenu = e => {
+  onContextMenu(e) {
     e.preventDefault(e);
   }
 
