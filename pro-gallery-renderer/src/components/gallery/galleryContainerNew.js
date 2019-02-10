@@ -531,11 +531,12 @@ export class GalleryContainer extends React.Component {
       } else {
         this.fullwidthLayoutsCss = [];
       }
-
+      const allowPreloading = utils.isEditor() || (this.containerGrowthDirection(_styles) !== 'none');
       this.scrollCss = cssScrollHelper.calcScrollCss({
         galleryDomId: this.props.domId,
         items: newState.galleryStructure.galleryItems,
         styleParams: _styles,
+        allowPreloading
       });
 
     }
@@ -575,11 +576,12 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  containerGrowthDirection() {
+  containerGrowthDirection(styles = false) {
+    const _styles = styles || this.state.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
     const {enableInfiniteScroll, gotStyleParams} = this.props.styles;
     const {showMoreClicked} = this.state;
-    const {oneRow} = this.state.styles;
+    const {oneRow} = _styles;
     if (oneRow) {
       return 'horizontal';
     } else if (!gotStyleParams || (!enableInfiniteScroll && !showMoreClicked)) {
@@ -592,6 +594,12 @@ export class GalleryContainer extends React.Component {
   toggleInfiniteScroll(forceVal) {
     if (forceVal !== this.state.showMoreClicked) { //forceVal is undefined or different than existing val
       const showMoreClicked = forceVal || !this.state.showMoreClicked;
+      this.scrollCss = cssScrollHelper.calcScrollCss({
+        galleryDomId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: this.state.styles,
+        allowPreloading: true
+      });
       this.setState({
         showMoreClicked
       }, () => {
