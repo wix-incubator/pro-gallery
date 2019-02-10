@@ -20,10 +20,10 @@ class CssScrollHelper {
 
     this.scrollCss = [];
     this.scrollCssProps = [];
-    this.calcScrollPaddings();
+    this.calcScrollPaddings(false);
   }
 
-  calcScrollPaddings() {
+  calcScrollPaddings(allowPreloading = true) {
 
     //padding: [belowScreen, aboveScreen]
     //padding: [above images, below image]
@@ -55,19 +55,19 @@ class CssScrollHelper {
         highResPadding = [2560, 10240];
         lowResPadding = [5120, 10240];
         break;
-      case '100':
-        highResPadding = [Infinity, Infinity];
-        lowResPadding = [Infinity, Infinity];
-        break;
       default:
       case '80':
         highResPadding = [5120, Infinity];
         lowResPadding = [10240, Infinity];
         break;
+      case '100':
+        highResPadding = [Infinity, Infinity];
+        lowResPadding = [Infinity, Infinity];
+        break;
     }
 
-    this.highResPadding = () => highResPadding || [5120, Infinity];
-    this.lowResPadding = () => lowResPadding || [10240, Infinity];
+    this.highResPadding = () => allowPreloading ? (highResPadding || [5120, Infinity]) : [0, 0];
+    this.lowResPadding = () => allowPreloading ? (lowResPadding || [10240, Infinity]) : [0, 0];
 
   }
 
@@ -85,12 +85,12 @@ class CssScrollHelper {
     return `${this.pgScrollClassName}-${scrollTop} ` + this.pgScrollSteps.map((step, idx) => this.buildScrollClassName(galleryDomId, idx, (Math.floor(scrollTop / step) * step))).join(' ');
   }
 
-  calcScrollCss({galleryDomId, items, styleParams}) {
+  calcScrollCss({galleryDomId, items, styleParams, allowPreloading}) {
     if (!(items && items.length)) {
       return '';
     }
     this.screenSize = styleParams.oneRow ? Math.min(window.innerWidth, window.screen.width) : Math.min(window.innerHeight, window.screen.height);
-    this.calcScrollPaddings();
+    this.calcScrollPaddings(allowPreloading);
 
     const [lastItem] = items.slice(-1);
     const {top, right} = lastItem.offset;
