@@ -658,8 +658,8 @@ export class GalleryContainer extends React.Component {
   render() {
 
     if (!this.canRender()) {
-  return null;
-}
+      return null;
+    }
 
     const {styles} = this.state;
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
