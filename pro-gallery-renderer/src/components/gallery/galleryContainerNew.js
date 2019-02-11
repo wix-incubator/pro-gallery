@@ -49,7 +49,11 @@ export class GalleryContainer extends React.Component {
       }
     } else {
       try {
-        this.initialGalleryState = JSON.parse(window.document.querySelector(`#pro-gallery-${props.domId} #ssr-state-to-hydrate`).innerHTML);
+        if (utils.shouldDebug('hydrate')) {
+          this.initialGalleryState = JSON.parse(window.document.querySelector(`#pro-gallery-${props.domId} #ssr-state-to-hydrate`).innerHTML);
+        } else {
+          this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
+        }
       } catch (e) {
         //todo - report to sentry
         this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
