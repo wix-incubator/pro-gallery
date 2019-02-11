@@ -195,59 +195,43 @@ class CssScrollHelper {
 
     const _animationTiming = (((idx % 3) + 1) * 100); //100 - 300
 
-    const animationPreparationPadding = this.allPagePadding();
     const animationActivePadding = this.aboveScreenPadding();
 
-    const animationProps = (animationName, animationDuration, animationProgression, animationTiming) => `${animationName} ${animationDuration}s ${animationProgression} ${animationTiming}ms 1 normal backwards paused;`;
+    const animationProps = (animationName, animationDuration, animationProgression, animationTiming) => `${animationName} ${animationDuration}s ${animationProgression} ${animationTiming}ms 1 normal backwards running;`;
 
     let scrollAnimationCss = '';
 
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 0.8, 'ease-in', _animationTiming)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 0.8, 'ease-in', _animationTiming)}}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-grayscale', 0.6, 'ease-in', _animationTiming + 200)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-grayscale', 0.6, 'ease-in', _animationTiming + 200)}}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SLIDE_UP) {
-      //push down items under screen
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{animation: ${animationProps('scroll-animation-slide-up', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      //push back items in screen
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation-play-state: running;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation: ${animationProps('scroll-animation-slide-up', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.EXPAND) {
-      //hide items below screen
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{animation: ${animationProps('scroll-animation-expand', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      //show items in screen
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation-play-state: running;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation: ${animationProps('scroll-animation-expand', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SHRINK) {
-      //hide items below screen
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{animation: ${animationProps('scroll-animation-shrink', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      //show items in screen
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation-play-state: running;}`;
+
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation: ${animationProps('scroll-animation-shrink', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
     }
 
 
     if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
-      //hide items below screen
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-zoom-out', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      //show items in screen
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-zoom-out', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor = styleParams.oneColorAnimationColor && styleParams.oneColorAnimationColor.value ? styleParams.oneColorAnimationColor.value : 'transparent';
-      //hide items below screen
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 0.6, 'ease-in', _animationTiming)}}`;
-      //show items in screen
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
+
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{background-color: ${oneColorAnimationColor};}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 0.6, 'ease-in', _animationTiming)}}`;
     }
 
     return scrollAnimationCss;
