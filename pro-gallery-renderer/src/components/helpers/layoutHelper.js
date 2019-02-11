@@ -561,6 +561,7 @@ function processLayouts(styles) {
   if (processedStyles.oneRow) {
 		//if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
+    processedStyles.scrollAnimation = Consts.scrollAnimations.NO_EFFECT;
   }
   if (processedStyles.imageMargin > 0) {
     if (utils.isMobile()) {
@@ -667,6 +668,7 @@ function processLayouts(styles) {
   } else if (processedStyles.gallerySizeType === 'ratio' && processedStyles.gallerySizeRatio > 0) {
     processedStyles.gallerySize = (window && window.innerWidth || 980) * (processedStyles.gallerySizeRatio / 100);
   }
+
   return processedStyles;
 }
 
