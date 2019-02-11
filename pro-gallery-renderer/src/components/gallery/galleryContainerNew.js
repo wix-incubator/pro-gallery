@@ -655,12 +655,11 @@ export class GalleryContainer extends React.Component {
     }
     return can;
   }
-
   render() {
 
     if (!this.canRender()) {
-      return null;
-    }
+  return null;
+}
 
     const {styles} = this.state;
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
@@ -673,19 +672,20 @@ export class GalleryContainer extends React.Component {
       this.props.onAppLoaded();
     }
     const displayShowMore = this.containerGrowthDirection() === 'none';
+    const findNeighborItem = this.layouter ? this.layouter.findNeighborItem : _.noop;
 
     return (
       <div data-key="pro-gallery-inner-container" key="pro-gallery-inner-container">
-        <CssScrollIndicator
-          galleryDomId={this.props.domId}
-          oneRow={this.state.styles.oneRow}
-          scrollBase={this.state.container.scrollBase}
-          scrollingElement={this._scrollingElement}
-          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+			<CssScrollIndicator
+			galleryDomId={this.props.domId}
+			oneRow={this.state.styles.oneRow}
+			scrollBase={this.state.container.scrollBase}
+			scrollingElement={this._scrollingElement}
+			getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
         />
 				<ViewComponent
-					isInDisplay = {this.props.isInDisplay}
-					scrollingElement = {this._scrollingElement}
+				isInDisplay = {this.props.isInDisplay}
+				scrollingElement = {this._scrollingElement}
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount = {this.props.renderedItemsCount}
           items = {this.items}
@@ -700,7 +700,7 @@ export class GalleryContainer extends React.Component {
           domId = {this.props.domId}
           currentHover = {this.state.currentHover}
           actions = {_.merge(this.props.actions, {
-            findNeighborItem: this.layouter.findNeighborItem,
+            findNeighborItem,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
             toggleFullscreen: this.toggleFullscreen,
             setWixHeight: _.noop,
