@@ -35,7 +35,7 @@ export class GalleryContainer extends React.Component {
     this.items = [];
     this.itemsDimensions = {};
     this.preloadedItems = {};
-
+    this.fullwidthLayoutsCss = [];
     this.state = initialState;
 
     //todo!!! in client, we need to use the mock window until the component is mounted
