@@ -600,7 +600,7 @@ export class GalleryContainer extends React.Component {
       const showMoreClicked = forceVal || !this.state.showMoreClicked;
       this.scrollCss = cssScrollHelper.calcScrollCss({
         galleryDomId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
+        items: this.state.galleryStructure.galleryItems,
         styleParams: this.state.styles,
         allowPreloading: true
       });
