@@ -713,6 +713,7 @@ export class GalleryContainer extends React.Component {
     }
     const displayShowMore = this.containerGrowthDirection() === 'none';
     const findNeighborItem = this.layouter ? this.layouter.findNeighborItem : _.noop;
+    const ssrDisableTransition = !!utils.isSSR() && 'div.pro-gallery-parent-container * { transition: none !important }';
 
     return (
       <div data-key="pro-gallery-inner-container" key="pro-gallery-inner-container">
@@ -724,8 +725,8 @@ export class GalleryContainer extends React.Component {
 			getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
         />
 				<ViewComponent
-				isInDisplay = {this.props.isInDisplay}
-				scrollingElement = {this._scrollingElement}
+          isInDisplay = {this.props.isInDisplay}
+          scrollingElement = {this._scrollingElement}
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount = {this.props.renderedItemsCount}
           items = {this.items}
@@ -753,6 +754,7 @@ export class GalleryContainer extends React.Component {
         {this.galleryInitialStateJson && <div id="ssr-state-to-hydrate" style={{display: 'none'}}>{this.galleryInitialStateJson}</div>}
         <style data-key="scrollCss" key="scrollCss">{this.scrollCss}</style>
         {this.fullwidthLayoutsCss.map((css, idx) => <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>{css}</style>)}
+        {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
       </div>
     );
   }
