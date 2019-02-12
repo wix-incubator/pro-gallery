@@ -546,7 +546,8 @@
       outline: none;
       text-decoration: none;
       color: inherit;
-      transition: all .4s ease;
+      transition-duration: .8s;
+      transition-timing-function: linear;
       transition-property: transform, margin, top, left, width, height;
       will-change: transform, margin, top, left, width, height;
       box-sizing: border-box;
