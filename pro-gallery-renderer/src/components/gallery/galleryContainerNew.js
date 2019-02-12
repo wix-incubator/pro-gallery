@@ -49,7 +49,7 @@ export class GalleryContainer extends React.Component {
       }
     } else {
       try {
-        if (utils.shouldDebug('hydrate')) {
+        if (!utils.shouldDebug('no_hydrate')) {
           const state = JSON.parse(window.document.querySelector(`#pro-gallery-${props.domId} #ssr-state-to-hydrate`).innerHTML);
           this.reCreateGalleryFromState({items: props.items, styles: state.styles, container: state.container});
           this.initialGalleryState = state;
