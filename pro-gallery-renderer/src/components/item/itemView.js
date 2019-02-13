@@ -667,8 +667,7 @@ class ItemView extends React.Component {
     const styles = {};
     if (type === 'text') {
       styles.backgroundColor = styleParams.cubeType !== 'fit' ? 'transparent' : 'inherit';
-    }
-    if (type !== 'text') {
+    } else {
       styles.backgroundColor = (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') || 'transparent';
     }
     styles.height = height + 'px';
