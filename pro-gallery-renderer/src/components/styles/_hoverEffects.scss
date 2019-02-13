@@ -174,6 +174,8 @@
       &.shrink-on-hover:not(.hide-hover) {
         &.hovered,
         &:hover {
+          background-color: transparent !important;
+
           .gallery-item-content {
             transition: transform .2s ease !important;
             transform: scale(0.985);
