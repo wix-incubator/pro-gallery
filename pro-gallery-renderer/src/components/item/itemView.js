@@ -307,7 +307,9 @@ class ItemView extends React.Component {
   }
 
   shouldHover() {
-    if (this.props.styleParams.isSlideshow) {
+    if (this.props.styleParams.alwaysShowHover === true) {
+      return true;
+    } else if (this.props.styleParams.isSlideshow) {
       return false;
     } else if (this.props.styleParams.allowHover === false) {
       return false;
@@ -598,7 +600,10 @@ class ItemView extends React.Component {
   }
 
   showHover() {
-    return (this.props.currentHover === this.props.idx || this.state.previewHover || this.props.previewHover);
+    return ((this.props.currentHover === this.props.idx) ||
+              this.state.previewHover ||
+               this.props.previewHover ||
+               this.props.styleParams.alwaysShowHover === true);
   }
 
   getItemContainerStyles() {
