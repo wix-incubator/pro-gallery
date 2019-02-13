@@ -3,6 +3,12 @@
 @import 'scrollAnimations.scss';
 
 :global {
+
+  div[data-collapsed="true"] .pro-gallery-parent-container .gallery-item,
+  div[data-hidden="true"] .pro-gallery-parent-container .gallery-item {
+    background-image: none !important; 
+  }
+
   html.pro-gallery {
     width: 100%;
     height: auto;
