@@ -122,7 +122,8 @@ class DimensionsHelper {
         scrollBase: this.calcScrollBase(),
         height: container.height,
         width: container.width,
-        scrollHeight: window.document.body.scrollHeight,
+        documentHeight: window.document.body.scrollHeight,
+        windowWidth: window.innerWidth,
       };
       if (this.styles.hasThumbnails) {
         const fixedThumbnailSize = this.styles.thumbnailSize + this.styles.galleryMargin + 3 * this.styles.thumbnailSpacings;
