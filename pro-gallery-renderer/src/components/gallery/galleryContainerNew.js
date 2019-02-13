@@ -679,7 +679,6 @@ export class GalleryContainer extends React.Component {
           //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
           this.gettingMoreItems = false;
         }, 2000);
-        console.error('Could not get more items from server: itemsPromise is not a promise?!?!?');
       }
     }
   }
