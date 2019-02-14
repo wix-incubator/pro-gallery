@@ -29,7 +29,7 @@ class CssScrollHelper {
     //padding: [above images, below image]
     this.allPagePadding = () => [Infinity, Infinity];
     this.inScreenPadding = () => [0, 0];
-    this.aboveScreenPadding = () => [0, Infinity];
+    this.justBelowAndAboveScreenPadding = () => [160, Infinity];
     this.justBelowScreenPadding = itemHeight => [5120, -1 * (itemHeight + this.screenSize)];
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
@@ -190,7 +190,7 @@ class CssScrollHelper {
 
     const _animationTiming = (((idx % 3) + 1) * 100); //100 - 300
 
-    const animationActivePadding = this.aboveScreenPadding();
+    const animationActivePadding = this.justBelowAndAboveScreenPadding();
 
     const animationProps = (animationName, animationDuration, animationProgression, animationTiming) => `${animationName} ${animationDuration}s ${animationProgression} ${animationTiming}ms 1 normal backwards running;`;
 
