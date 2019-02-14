@@ -29,7 +29,7 @@ class CssScrollHelper {
     //padding: [above images, below image]
     this.allPagePadding = () => [Infinity, Infinity];
     this.inScreenPadding = () => [0, 0];
-    this.aboveScreenPadding = () => [0, Infinity];
+    this.justBelowAndAboveScreenPadding = () => [160, Infinity];
     this.justBelowScreenPadding = itemHeight => [5120, -1 * (itemHeight + this.screenSize)];
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
@@ -150,27 +150,22 @@ class CssScrollHelper {
 
   calcScrollCssForItem({galleryDomId, item, styleParams}) {
 
-    const {resized_url, idx} = item;
-
-    if (!this.shouldCalcScrollCss(item, styleParams)) {
-      if (utils.isVerbose()) {
-        console.log('CSS SCROLL - skipping css calc for item #' + idx, item, this.scrollCss[idx]);
-      }
-      return this.scrollCss[idx];
-    }
+    const {type, resized_url, idx} = item;
 
     let scrollCss = '';
-
     const createScrollSelectors = this.createScrollSelectorsFunction({galleryDomId, item, styleParams});
 
-    //load hi-res image + loading transition
-    if (!window.isSSR && !item.isDimensionless) {
-      scrollCss += createScrollSelectors(this.highResPadding(), `.image-item>canvas`) + `{opacity: 1; transition: opacity .4s linear; background-image: url(${resized_url.img})}`;
-    }
+    if (type !== 'video' && type !== 'text') {
 
-    //add the blurry image
-    if (!utils.deviceHasMemoryIssues() && styleParams.imageLoadingMode !== Consts.loadingMode.COLOR && (!item.isTransparent || window.isSSR) && !item.isDimensionless) {
-      scrollCss += createScrollSelectors(this.lowResPadding(), `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
+      //load hi-res image + loading transition
+      if (!window.isSSR && !item.isDimensionless) {
+        scrollCss += createScrollSelectors(this.highResPadding(), `.image-item>canvas`) + `{opacity: 1; transition: opacity .4s linear; background-image: url(${resized_url.img})}`;
+      }
+
+      //add the blurry image
+      if (!utils.deviceHasMemoryIssues() && styleParams.imageLoadingMode !== Consts.loadingMode.COLOR && (!item.isTransparent || window.isSSR) && !item.isDimensionless) {
+        scrollCss += createScrollSelectors(this.lowResPadding(), `.image-item`) + `{background-image: url(${resized_url.thumb})}`;
+      }
     }
 
     //scrollAnimation [DEMO]
@@ -195,7 +190,7 @@ class CssScrollHelper {
 
     const _animationTiming = (((idx % 3) + 1) * 100); //100 - 300
 
-    const animationActivePadding = this.aboveScreenPadding();
+    const animationActivePadding = this.justBelowAndAboveScreenPadding();
 
     const animationProps = (animationName, animationDuration, animationProgression, animationTiming) => `${animationName} ${animationDuration}s ${animationProgression} ${animationTiming}ms 1 normal backwards running;`;
 
