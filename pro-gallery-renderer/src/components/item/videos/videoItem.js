@@ -152,7 +152,7 @@ class VideoItem extends React.Component {
           className={baseClassName}
           data-hook="video_container-image-element"
           key={'video_container-' + this.props.id}
-          style={{backgroundImage: `url(${this.props.resized_url.thumb})`, ...this.props.imageDimensions}}
+          style={{backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
         >
           {this.createImageElement()}
           {videoControls}

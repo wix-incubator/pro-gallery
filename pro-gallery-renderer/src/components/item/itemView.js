@@ -921,13 +921,11 @@ class ItemView extends React.Component {
 			</div>
       ;
 
-    return (
-			shouldUseDirectLink ?
-				<a href={url} target={target}>
-					{innerDiv}
-				</a>				:
-			innerDiv
-    );
+    if (shouldUseDirectLink) {
+      return (<a href={url} target={target}>{innerDiv}</a>);
+    } else {
+      return innerDiv;
+    }
   }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
