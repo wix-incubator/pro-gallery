@@ -55,6 +55,7 @@ export default class CssScrollIndicator extends React.Component {
             scrollLeft: left
           });
           this.props.getMoreItemsIfNeeded(left);
+          this.props.enableScrollPreload();
         }
       };
       try {
@@ -72,6 +73,7 @@ export default class CssScrollIndicator extends React.Component {
             scrollTop: top
           });
           this.props.getMoreItemsIfNeeded(top);
+          this.props.enableScrollPreload();
         }
       };
       try {
