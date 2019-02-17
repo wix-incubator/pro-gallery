@@ -8,9 +8,9 @@ export default class TextItem extends React.Component {
     //text dimensions include scaling
     const transform = 'translate(0, 0) scale(' + (isVerticalItem ? (style.height / style.maxHeight) : (style.width / style.maxWidth)) + ')';
     return {
-      margin: (Math.floor(style.maxHeight - style.height) / -2) + 'px ' + (Math.floor(style.maxWidth - style.width) / -2) + 'px',
       width: style.maxWidth + 'px',
       height: style.maxHeight + 'px',
+      transformOrigin: '0 0',
       WebkitTransform: transform,
       MsTransform: transform,
       OTransform: transform,
