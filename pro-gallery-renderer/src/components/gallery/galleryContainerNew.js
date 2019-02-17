@@ -15,6 +15,7 @@ import CssScrollIndicator from './galleryCssScrollIndicator';
 import {Layouter} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 import {createCssLayouts} from '../helpers/cssLayoutsHelper.js';
+import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper';
 import _ from 'lodash';
 import utils from '../../utils';
 
@@ -37,6 +38,7 @@ export class GalleryContainer extends React.Component {
     this.preloadedItems = {};
     this.fullwidthLayoutsCss = [];
     this.state = initialState;
+    this.gotFirstScrollEvent = !experiments('specs.pro-gallery.dynamicScrollPreloading');
 
     //todo!!! in client, we need to use the mock window until the component is mounted
     if (utils.isSSR()) {
@@ -68,6 +70,7 @@ export class GalleryContainer extends React.Component {
     };
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
+    this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
     this.scrollToItem = this.scrollToItem.bind(this);
     this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
@@ -453,7 +456,7 @@ export class GalleryContainer extends React.Component {
       sharpParams: styles.sharpParams,
     });
 
-    const allowPreloading = utils.isEditor() || (this.containerGrowthDirection(styles) !== 'none');
+    const allowPreloading = utils.isEditor() || (this.gotFirstScrollEvent && (this.containerGrowthDirection(styles) !== 'none'));
     this.scrollCss = cssScrollHelper.calcScrollCss({
       galleryDomId: this.props.domId,
       items: this.galleryStructure.galleryItems,
@@ -571,7 +574,7 @@ export class GalleryContainer extends React.Component {
       } else {
         this.fullwidthLayoutsCss = [];
       }
-      const allowPreloading = utils.isEditor() || (this.containerGrowthDirection(_styles) !== 'none');
+      const allowPreloading = utils.isEditor() || (this.gotFirstScrollEvent && (this.containerGrowthDirection(_styles) !== 'none'));
       this.scrollCss = cssScrollHelper.calcScrollCss({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
@@ -654,6 +657,19 @@ export class GalleryContainer extends React.Component {
     );
   }
 
+  enableScrollPreload() {
+    if (!this.gotFirstScrollEvent) {
+      this.gotFirstScrollEvent = true;
+      const allowPreloading = (this.containerGrowthDirection() !== 'none');
+      this.scrollCss = cssScrollHelper.calcScrollCss({
+        galleryDomId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: this.state.styles,
+        allowPreloading,
+      });
+    }
+  }
+
   getMoreItemsIfNeeded(scrollPos) {
     if (
       this.galleryStructure &&
@@ -722,6 +738,7 @@ export class GalleryContainer extends React.Component {
 			scrollBase={this.state.container.scrollBase}
 			scrollingElement={this._scrollingElement}
 			getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+			enableScrollPreload={this.enableScrollPreload}
         />
 				<ViewComponent
           isInDisplay = {this.props.isInDisplay}

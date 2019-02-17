@@ -888,44 +888,48 @@ class ItemView extends React.Component {
     const {directLink} = this.props;
     const {itemClick} = this.props.styleParams;
     const {url, target} = (directLink || {});
-    const shouldUseDirectLink = this.useRefactoredProGallery && url && target && itemClick === 'link';
+    const shouldUseDirectLink = !!(this.useRefactoredProGallery && url && target && itemClick === 'link');
     const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
+    const linkParams = shouldUseDirectLink ? {href: url, target} : {};
     const innerDiv =
-      <div className={this.getItemContainerClass()}
-        onContextMenu={e => this.onContextMenu(e)}
-				id={cssScrollHelper.getDomId(this.props)}
-				ref={e => this.itemContainer = e}
-				onMouseOver={this.onMouseOver}
-				onClick={onClick}
-				onKeyDown={this.onKeyPress}
-				tabIndex={this.getItemContainerTabIndex()}
-				data-hash={hash}
-				data-id={photoId}
-				data-idx={idx}
-				aria-label={this.getItemAriaLabel()}
-				role="link"
-				aria-level="0"
-				data-hook="item-container"
-				key={'item-container-' + id}
-				style={this.getItemContainerStyles()}
-				{...this.getSEOLink()}
-			>
-				{this.getTopInfoElementIfNeeded()}
-				<div data-hook="item-wrapper" className={this.getItemWrapperClass()}
-					key={'item-wrapper-' + id}
-					style={this.getItemWrapperStyles()}
-					>
-					{this.getItemInner()}
-				</div>
-				{this.getBottomInfoElementIfNeeded()}
-			</div>
-      ;
+      <a
+        data-id={photoId}
+        data-idx={idx}
+        key={'item-container-link-' + id}
+        {...linkParams}
+      >
+        <div className={this.getItemContainerClass()}
+          onContextMenu={e => this.onContextMenu(e)}
+          id={cssScrollHelper.getDomId(this.props)}
+          ref={e => this.itemContainer = e}
+          onMouseOver={this.onMouseOver}
+          onClick={onClick}
+          onKeyDown={this.onKeyPress}
+          tabIndex={this.getItemContainerTabIndex()}
+          data-hash={hash}
+          data-id={photoId}
+          data-idx={idx}
+          aria-label={this.getItemAriaLabel()}
+          role="link"
+          aria-level="0"
+          data-hook="item-container"
+          key={'item-container-' + id}
+          style={this.getItemContainerStyles()}
+          {...this.getSEOLink()}
+          >
+          {this.getTopInfoElementIfNeeded()}
+          <div data-hook="item-wrapper" className={this.getItemWrapperClass()}
+            key={'item-wrapper-' + id}
+            style={this.getItemWrapperStyles()}
+            >
+            {this.getItemInner()}
+          </div>
+          {this.getBottomInfoElementIfNeeded()}
+        </div>
+      </a>
+    ;
 
-    if (shouldUseDirectLink) {
-      return (<a href={url} target={target}>{innerDiv}</a>);
-    } else {
-      return innerDiv;
-    }
+    return innerDiv;
   }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
