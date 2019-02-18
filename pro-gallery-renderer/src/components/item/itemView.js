@@ -635,7 +635,7 @@ class ItemView extends React.Component {
       left: style.left,
       right: style.right,
       bottom: style.bottom,
-      overflowY: styleParams.isSlideshow ? 'visible' : 'inherit',
+      overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       borderRadius: styleParams.itemBorderRadius + 'px',
     };
     if (utils.positioningType === 'absolute') {
