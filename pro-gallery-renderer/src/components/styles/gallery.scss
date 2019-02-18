@@ -4,8 +4,8 @@
 
 :global {
 
-  div[data-collapsed="true"] .pro-gallery-parent-container .gallery-item,
-  div[data-hidden="true"] .pro-gallery-parent-container .gallery-item {
+  *[data-collapsed="true"] .pro-gallery-parent-container .gallery-item,
+  *[data-hidden="true"] .pro-gallery-parent-container .gallery-item {
     background-image: none !important; 
   }
 
