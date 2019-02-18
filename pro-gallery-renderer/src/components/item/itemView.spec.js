@@ -465,7 +465,7 @@ describe('Item View', () => {
         styleParams: {
           isSlideshow: false}});
       style = driver.find.hook('item-container').get(0).props.style;
-      expect(style.overflowY).to.equal('inherit');
+      expect(style.overflowY).to.equal('hidden');
     });
     it('item-Wrapper should have class based on cubeType', () => {
       Object.assign(sampleItemViewProps, {

@@ -456,7 +456,7 @@ export class GalleryContainer extends React.Component {
       sharpParams: styles.sharpParams,
     });
 
-    const allowPreloading = utils.isEditor() || (this.gotFirstScrollEvent && (this.containerGrowthDirection(styles) !== 'none'));
+    const allowPreloading = utils.isEditor() || this.gotFirstScrollEvent;
     this.scrollCss = cssScrollHelper.calcScrollCss({
       galleryDomId: this.props.domId,
       items: this.galleryStructure.galleryItems,
@@ -574,7 +574,7 @@ export class GalleryContainer extends React.Component {
       } else {
         this.fullwidthLayoutsCss = [];
       }
-      const allowPreloading = utils.isEditor() || (this.gotFirstScrollEvent && (this.containerGrowthDirection(_styles) !== 'none'));
+      const allowPreloading = utils.isEditor() || this.gotFirstScrollEvent || state.showMoreClicked;
       this.scrollCss = cssScrollHelper.calcScrollCss({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
@@ -637,12 +637,14 @@ export class GalleryContainer extends React.Component {
   toggleInfiniteScroll(forceVal) {
     if (forceVal !== this.state.showMoreClicked) { //forceVal is undefined or different than existing val
       const showMoreClicked = forceVal || !this.state.showMoreClicked;
-      this.scrollCss = cssScrollHelper.calcScrollCss({
-        galleryDomId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
-        allowPreloading: true
-      });
+      if (!this.gotFirstScrollEvent) { //we already called to calcScrollCss with allowPreloading = true
+        this.scrollCss = cssScrollHelper.calcScrollCss({
+          galleryDomId: this.props.domId,
+          items: this.galleryStructure.galleryItems,
+          styleParams: this.state.styles,
+          allowPreloading: true
+        });
+      }
       this.setState({
         showMoreClicked
       }, () => {
@@ -660,13 +662,14 @@ export class GalleryContainer extends React.Component {
   enableScrollPreload() {
     if (!this.gotFirstScrollEvent) {
       this.gotFirstScrollEvent = true;
-      const allowPreloading = (this.containerGrowthDirection() !== 'none');
-      this.scrollCss = cssScrollHelper.calcScrollCss({
-        galleryDomId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
-        allowPreloading,
-      });
+      if (!this.state.showMoreClicked) { //we already called to calcScrollCss with allowPreloading = true
+        this.scrollCss = cssScrollHelper.calcScrollCss({
+          galleryDomId: this.props.domId,
+          items: this.galleryStructure.galleryItems,
+          styleParams: this.state.styles,
+          allowPreloading: true,
+        });
+      }
     }
   }
 
