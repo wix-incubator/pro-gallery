@@ -7,6 +7,7 @@ import Consts from 'photography-client-lib/dist/src/utils/consts';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import {settingsVersionManager} from 'photography-client-lib/dist/src/versioning/features/settings';
+import _ from 'lodash';
 
 
 export default class Texts extends React.Component {
@@ -154,6 +155,7 @@ export default class Texts extends React.Component {
 
   }
 
+  debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
   tryFixLineHeight() {
     try {
       lineHeightFixer.fix(this.props, this.container);
@@ -167,7 +169,7 @@ export default class Texts extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (lineHeightFixer.shouldFix(prevProps, this.props)) {
-      this.tryFixLineHeight();
+      this.debouncedTryFixLineHeight();
     }
   }
 

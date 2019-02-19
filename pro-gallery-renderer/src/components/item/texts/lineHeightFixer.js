@@ -67,27 +67,30 @@ class LineHeightFixer {
   }
 
   shouldFix(oldOptions, newOptions) {
-    const {styleParams, title, description, isSmallItem} = oldOptions;
+    const {styleParams, title, description, isSmallItem, style} = oldOptions;
     const newStyleParams = newOptions.styleParams;
     const newTitle = newOptions.title;
     const newDescription = newOptions.description;
     const newIsSmallItems = newOptions.isSmallItem;
+    const newStyle = newOptions.style;
     const newIsSocialPopulated = newStyleParams.allowSocial ||
       newStyleParams.loveButton ||
       newStyleParams.allowDownload;
     const oldIsSocialPopulated = styleParams.allowSocial ||
       styleParams.loveButton ||
-      styleParams.allowDownload;
+			styleParams.allowDownload;
     return (
-      styleParams.isSlideshow !== newStyleParams.isSlideshow ||
-      styleParams.allowTitle !== newStyleParams.allowTitle ||
-      styleParams.allowDescription !== newStyleParams.allowDescription ||
-      styleParams.slideshowInfoSize !== newStyleParams.slideshowInfoSize ||
-      styleParams.externalInfoHeight !== newStyleParams.externalInfoHeight ||
-      oldIsSocialPopulated !== newIsSocialPopulated ||
-      title !== newTitle ||
-      description !== newDescription ||
-      isSmallItem !== newIsSmallItems
+			style.height !== newStyle.height ||
+			style.width !== newStyle.width ||
+			styleParams.isSlideshow !== newStyleParams.isSlideshow ||
+			styleParams.allowTitle !== newStyleParams.allowTitle ||
+			styleParams.allowDescription !== newStyleParams.allowDescription ||
+			styleParams.slideshowInfoSize !== newStyleParams.slideshowInfoSize ||
+			styleParams.externalInfoHeight !== newStyleParams.externalInfoHeight ||
+			oldIsSocialPopulated !== newIsSocialPopulated ||
+			title !== newTitle ||
+			description !== newDescription ||
+			isSmallItem !== newIsSmallItems
     );
   }
 
