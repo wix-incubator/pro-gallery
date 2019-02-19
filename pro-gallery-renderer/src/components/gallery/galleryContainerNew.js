@@ -30,7 +30,8 @@ export class GalleryContainer extends React.Component {
     const initialState = {
       pgScroll: 0,
       showMoreClicked: false,
-      currentHover: -1
+      currentHover: -1,
+      gotFirstScrollEvent: !experiments('specs.pro-gallery.dynamicScrollPreloading')
     };
 
     this.items = [];
@@ -38,8 +39,6 @@ export class GalleryContainer extends React.Component {
     this.preloadedItems = {};
     this.fullwidthLayoutsCss = [];
     this.state = initialState;
-    this.gotFirstScrollEvent = !experiments('specs.pro-gallery.dynamicScrollPreloading');
-
     //todo!!! in client, we need to use the mock window until the component is mounted
     if (utils.isSSR()) {
       this.initialGalleryState = this.reCreateGalleryExpensively(props, initialState);
@@ -53,7 +52,7 @@ export class GalleryContainer extends React.Component {
       try {
         if (!utils.shouldDebug('no_hydrate')) {
           const state = JSON.parse(window.document.querySelector(`#pro-gallery-${props.domId} #ssr-state-to-hydrate`).innerHTML);
-          this.reCreateGalleryFromState({items: props.items, styles: state.styles, container: state.container});
+          this.reCreateGalleryFromState({items: props.items, styles: state.styles, container: state.container, gotFirstScrollEvent: initialState.gotFirstScrollEvent});
           this.initialGalleryState = state;
         } else {
           this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
@@ -432,7 +431,7 @@ export class GalleryContainer extends React.Component {
     return isNew;
   }
 
-  reCreateGalleryFromState({items, styles, container}) {
+  reCreateGalleryFromState({items, styles, container, gotFirstScrollEvent}) {
 
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
@@ -456,7 +455,7 @@ export class GalleryContainer extends React.Component {
       sharpParams: styles.sharpParams,
     });
 
-    const allowPreloading = utils.isEditor() || this.gotFirstScrollEvent;
+    const allowPreloading = utils.isEditor() || gotFirstScrollEvent;
     this.scrollCss = cssScrollHelper.calcScrollCss({
       galleryDomId: this.props.domId,
       items: this.galleryStructure.galleryItems,
@@ -574,7 +573,7 @@ export class GalleryContainer extends React.Component {
       } else {
         this.fullwidthLayoutsCss = [];
       }
-      const allowPreloading = utils.isEditor() || this.gotFirstScrollEvent || state.showMoreClicked;
+      const allowPreloading = utils.isEditor() || state.gotFirstScrollEvent || state.showMoreClicked;
       this.scrollCss = cssScrollHelper.calcScrollCss({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
@@ -637,7 +636,7 @@ export class GalleryContainer extends React.Component {
   toggleInfiniteScroll(forceVal) {
     if (forceVal !== this.state.showMoreClicked) { //forceVal is undefined or different than existing val
       const showMoreClicked = forceVal || !this.state.showMoreClicked;
-      if (!this.gotFirstScrollEvent) { //we already called to calcScrollCss with allowPreloading = true
+      if (!this.state.gotFirstScrollEvent) { //we already called to calcScrollCss with allowPreloading = true
         this.scrollCss = cssScrollHelper.calcScrollCss({
           galleryDomId: this.props.domId,
           items: this.galleryStructure.galleryItems,
@@ -660,8 +659,7 @@ export class GalleryContainer extends React.Component {
   }
 
   enableScrollPreload() {
-    if (!this.gotFirstScrollEvent) {
-      this.gotFirstScrollEvent = true;
+    if (!this.state.gotFirstScrollEvent) {
       if (!this.state.showMoreClicked) { //we already called to calcScrollCss with allowPreloading = true
         this.scrollCss = cssScrollHelper.calcScrollCss({
           galleryDomId: this.props.domId,
@@ -670,6 +668,9 @@ export class GalleryContainer extends React.Component {
           allowPreloading: true,
         });
       }
+      this.setState({
+        gotFirstScrollEvent: true
+      });
     }
   }
 
