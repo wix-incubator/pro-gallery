@@ -8,9 +8,15 @@ import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import {settingsVersionManager} from 'photography-client-lib/dist/src/versioning/features/settings';
 import _ from 'lodash';
+import {SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION} from 'constants';
 
 
 export default class Texts extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
+  }
 
   getElementClassNames() {
     const {showShare, styleParams, isNarrow} = this.props;
@@ -155,7 +161,6 @@ export default class Texts extends React.Component {
 
   }
 
-  debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
   tryFixLineHeight() {
     try {
       lineHeightFixer.fix(this.props, this.container);
