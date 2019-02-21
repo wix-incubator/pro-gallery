@@ -163,8 +163,8 @@ class CssScrollHelper {
     }
 
     //scrollAnimation
-    if (utils.shouldDebug('scrollAnimationsOriginal')) {
-      scrollCss += this.createScrollAnimationsIfNeededAnimations({idx, item, styleParams, createScrollSelectors});
+    if (utils.shouldDebug('scrollAnimationsTransitions')) {
+      scrollCss += this.createScrollAnimationsIfNeededTransitions({idx, item, styleParams, createScrollSelectors});
     } else {
       scrollCss += this.createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors});
     }
@@ -179,7 +179,7 @@ class CssScrollHelper {
     // console.count('pgScroll item created');
   }
 
-  createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors}) {
+  createScrollAnimationsIfNeededTransitions({idx, item, styleParams, createScrollSelectors}) {
     const scrollAnimation = styleParams.scrollAnimation;
 
     if (utils.isSSR()) {
@@ -243,7 +243,7 @@ class CssScrollHelper {
     return scrollAnimationCss;
   }
 
-  createScrollAnimationsIfNeededAnimations({idx, item, styleParams, createScrollSelectors}) {
+  createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors}) {
     const scrollAnimation = styleParams.scrollAnimation;
 
     if (utils.isSSR()) {
