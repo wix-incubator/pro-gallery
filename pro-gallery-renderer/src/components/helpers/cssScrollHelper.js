@@ -84,6 +84,9 @@ class CssScrollHelper {
       return '';
     }
     this.screenSize = styleParams.oneRow ? Math.min(window.innerWidth, window.screen.width) : Math.min(window.innerHeight, window.screen.height);
+    if (!styleParams.oneRow && utils.isiPhone()) {
+      this.screenSize += 100;
+    }
     this.calcScrollPaddings(allowPreloading);
 
     const [lastItem] = items.slice(-1);
@@ -192,8 +195,7 @@ class CssScrollHelper {
 
     const _animationTiming = (((idx % 3) + 1) * 100); //100 - 300
 
-    const animationPreparationPadding = this.justBelowScreenPadding(styleParams.oneRow ? item.width : item.height);
-    const animationPreparationAndActivePadding = this.justBelowAndAboveScreenPadding();
+    const animationPreparationPadding = this.allPagePadding();
     const animationActivePadding = this.aboveScreenPadding();
 
     //const animationActivePadding = this.justBelowAndInScreenPadding();
@@ -202,42 +204,42 @@ class CssScrollHelper {
     let scrollAnimationCss = '';
 
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0);}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{transition: filter 0.8s ease-in ${_animationTiming}ms;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.8s ease-in ${_animationTiming}ms !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%);}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{transition: filter 0.6s ease-in ${_animationTiming + 200}ms;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%); transition: filter 0.6s ease-in ${_animationTiming + 200}ms !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: grayscale(0) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SLIDE_UP) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: translateY(100px);}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transition: transform 0.8s cubic-bezier(.13,.78,.53,.92);}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: translateY(100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transform: translateY(0) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.EXPAND) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(0.95);}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transition: transform 0.8s cubic-bezier(.13,.78,.53,.92);}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(0.95); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SHRINK) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(1.05);}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transition: transform 0.8s cubic-bezier(.13,.78,.53,.92);}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(1.05); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transform: scale(1) !important;}`;
     }
 
 
     if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{transform: scale(1.1);}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{transition: transform 0.8s cubic-bezier(.13,.78,.53,.92);}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{transform: scale(1.1); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor = styleParams.oneColorAnimationColor && styleParams.oneColorAnimationColor.value ? styleParams.oneColorAnimationColor.value : 'transparent';
 
-      scrollAnimationCss += createScrollSelectors(animationPreparationAndActivePadding, '') + `{background-color: ${oneColorAnimationColor};}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0);}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{transition: filter 0.6s ease-in ${_animationTiming}ms;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.6s ease-in ${_animationTiming}ms !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
     }
 
     return scrollAnimationCss;
