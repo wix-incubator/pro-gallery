@@ -562,7 +562,7 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensions();
       }
 
-      if (window.isSSR && isFullwidth) {
+      if (window.isSSR && isFullwidth && !_styles.oneRow) {
         if (utils.isVerbose()) {
           console.time('fullwidthLayoutsCss!');
         }
