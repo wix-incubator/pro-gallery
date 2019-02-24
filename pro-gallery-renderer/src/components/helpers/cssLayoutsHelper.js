@@ -2,7 +2,7 @@ import {createLayout} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 
 // const CDN_URL = 'https://static.wixstatic.com/media/';
-const desktopWidths = [480, 768, 1024, 1280, 1680, 1920, 2560];
+const desktopWidths = [480, 768, 1024, 1280, 1440, 1680, 1920, 2560];
 const mobileWidths = [320];//, 375, 414, 480, 600, 768, 900]; (mobile is currently fixed to 320px)
 
 const getImageStyle = item => ({
