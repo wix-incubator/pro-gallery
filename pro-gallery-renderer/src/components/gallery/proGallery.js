@@ -71,7 +71,7 @@ export default class ProGallery extends React.Component {
           <ProGalleryComponent
             {...this.props}
             domId={this.domId}
-            items={this.props.items || require('../../constants/default-images.js').defaultImages}
+            items={this.props.items || []}
             store={this.store}
             watermarkData={this.props.watermarkData}
             settings={this.props.settings || {}}
