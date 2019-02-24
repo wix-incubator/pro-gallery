@@ -84,7 +84,7 @@ class CssScrollHelper {
       return '';
     }
     this.screenSize = styleParams.oneRow ? Math.min(window.innerWidth, window.screen.width) : Math.min(window.innerHeight, window.screen.height);
-    if (!styleParams.oneRow && utils.isiPhone()) {
+    if (!styleParams.oneRow && utils.isMobile()) {
       this.screenSize += 100;
     }
     this.calcScrollPaddings(allowPreloading);

@@ -128,9 +128,9 @@
       //
       //  .gallery-item-hover.hovered,
       //  &:hover .gallery-item-hover:not(.hide-hover) {
-      //    
+      //
       //      transition: opacity .2s ease .6s !important;
-      //    
+      //
       //
       //    &:before {
       //      transition: transform .8s ease, border-radius .8s ease !important;
@@ -187,6 +187,7 @@
       }
 
       &.shrink-on-hover:not(.hide-hover) {
+        transition: background-color .4s ease !important;
 
         .gallery-item-content,
         .gallery-item-hover:not(.hide-hover) {
