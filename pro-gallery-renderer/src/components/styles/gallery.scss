@@ -1,12 +1,11 @@
 @import 'consts.scss';
 @import 'hoverEffects.scss';
-@import 'scrollAnimations.scss';
 
 :global {
 
   *[data-collapsed="true"] .pro-gallery-parent-container .gallery-item,
   *[data-hidden="true"] .pro-gallery-parent-container .gallery-item {
-    background-image: none !important; 
+    background-image: none !important;
   }
 
   html.pro-gallery {

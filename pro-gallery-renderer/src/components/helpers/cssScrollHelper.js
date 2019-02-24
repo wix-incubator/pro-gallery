@@ -166,11 +166,7 @@ class CssScrollHelper {
     }
 
     //scrollAnimation
-    if (utils.shouldDebug('scrollAnimationsTransitions')) {
-      scrollCss += this.createScrollAnimationsIfNeededTransitions({idx, item, styleParams, createScrollSelectors});
-    } else {
-      scrollCss += this.createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors});
-    }
+    scrollCss += this.createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors});
 
     if (utils.isVerbose()) {
       console.log('CSS SCROLL - css calc for item #' + idx, item, this.scrollCss[idx]);
@@ -182,7 +178,7 @@ class CssScrollHelper {
     // console.count('pgScroll item created');
   }
 
-  createScrollAnimationsIfNeededTransitions({idx, item, styleParams, createScrollSelectors}) {
+  createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors}) {
     const scrollAnimation = styleParams.scrollAnimation;
 
     if (utils.isSSR()) {
@@ -197,9 +193,6 @@ class CssScrollHelper {
 
     const animationPreparationPadding = this.allPagePadding();
     const animationActivePadding = this.aboveScreenPadding();
-
-    //const animationActivePadding = this.justBelowAndInScreenPadding();
-    //const animationPreparationPadding = this.justBelowAndAboveScreenPadding();
 
     let scrollAnimationCss = '';
 
@@ -245,67 +238,6 @@ class CssScrollHelper {
     return scrollAnimationCss;
   }
 
-  createScrollAnimationsIfNeeded({idx, item, styleParams, createScrollSelectors}) {
-    const scrollAnimation = styleParams.scrollAnimation;
-
-    if (utils.isSSR()) {
-      return '';
-    }
-
-    if ((!scrollAnimation) || scrollAnimation === Consts.scrollAnimations.NO_EFFECT) {
-      return '';
-    }
-
-    const _animationTiming = (((idx % 3) + 1) * 100); //100 - 300
-
-    const animationPreparationPadding = this.justBelowAndAboveScreenPadding();
-    const animationActivePadding = this.aboveScreenPadding();
-
-    const animationProps = (animationName, animationDuration, animationProgression, animationTiming) => `${animationName} ${animationDuration}s ${animationProgression} ${animationTiming}ms 1 normal backwards paused;`;
-
-    let scrollAnimationCss = '';
-
-    if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 0.8, 'ease-in', _animationTiming)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-grayscale', 0.6, 'ease-in', _animationTiming + 200)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.SLIDE_UP) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{animation: ${animationProps('scroll-animation-slide-up', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation-play-state: running;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.EXPAND) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{animation: ${animationProps('scroll-animation-expand', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation-play-state: running;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.SHRINK) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{animation: ${animationProps('scroll-animation-shrink', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{animation-play-state: running;}`;
-    }
-
-
-    if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-zoom-out', 0.8, 'cubic-bezier(.13,.78,.53,.92)', 0)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
-    }
-
-    if (scrollAnimation === Consts.scrollAnimations.ONE_COLOR) {
-      const oneColorAnimationColor = styleParams.oneColorAnimationColor && styleParams.oneColorAnimationColor.value ? styleParams.oneColorAnimationColor.value : 'transparent';
-
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{animation: ${animationProps('scroll-animation-fade-in', 0.6, 'ease-in', _animationTiming)}}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{animation-play-state: running;}`;
-    }
-
-    return scrollAnimationCss;
-  }
 }
 
 export const cssScrollHelper = new CssScrollHelper();
