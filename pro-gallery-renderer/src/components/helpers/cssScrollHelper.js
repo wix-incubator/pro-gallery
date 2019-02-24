@@ -85,7 +85,7 @@ class CssScrollHelper {
     }
     this.screenSize = styleParams.oneRow ? Math.min(window.innerWidth, window.screen.width) : Math.min(window.innerHeight, window.screen.height);
     if (!styleParams.oneRow && utils.isMobile()) {
-      this.screenSize += 100;
+      this.screenSize += 50;
     }
     this.calcScrollPaddings(allowPreloading);
 
@@ -204,12 +204,12 @@ class CssScrollHelper {
     let scrollAnimationCss = '';
 
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.8s ease-in ${_animationTiming}ms !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.8s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%); transition: filter 0.6s ease-in ${_animationTiming + 200}ms !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%); transition: filter 0.6s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: grayscale(0) !important;}`;
     }
 
@@ -238,7 +238,7 @@ class CssScrollHelper {
       const oneColorAnimationColor = styleParams.oneColorAnimationColor && styleParams.oneColorAnimationColor.value ? styleParams.oneColorAnimationColor.value : 'transparent';
 
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.6s ease-in ${_animationTiming}ms !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.6s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
     }
 
