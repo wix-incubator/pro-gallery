@@ -193,7 +193,7 @@ class CssScrollHelper {
       return '';
     }
 
-    const _animationTiming = (((idx % 3) + 1) * 100); //100 - 300
+    const _randomTiming = (((idx % 3) + 1) * 100); //100 - 300
 
     const animationPreparationPadding = this.allPagePadding();
     const animationActivePadding = this.aboveScreenPadding();
@@ -204,12 +204,12 @@ class CssScrollHelper {
     let scrollAnimationCss = '';
 
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.8s ease-in !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%); transition: filter 0.6s ease-in !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: grayscale(100%); transition: filter 1.${200 + _randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: grayscale(0) !important;}`;
     }
 
@@ -219,18 +219,18 @@ class CssScrollHelper {
     }
 
     if (scrollAnimation === Consts.scrollAnimations.EXPAND) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(0.95); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === Consts.scrollAnimations.SHRINK) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(1.05); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transform: scale(1) !important;}`;
     }
 
 
     if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{transform: scale(1.1); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{transform: scale(1.1); transition: transform 1.2s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{transform: scale(1) !important;}`;
     }
 
@@ -238,7 +238,7 @@ class CssScrollHelper {
       const oneColorAnimationColor = styleParams.oneColorAnimationColor && styleParams.oneColorAnimationColor.value ? styleParams.oneColorAnimationColor.value : 'transparent';
 
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.6s ease-in !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 0.${600 + _randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
     }
 
