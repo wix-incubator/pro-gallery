@@ -160,7 +160,7 @@ class GalleryView extends React.Component {
       <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
            style={{
              height: galleryHeight,
-             width: this.props.container.galleryWidth,
+            //  width: this.props.container.galleryWidth,
              overflowX: 'hidden'
            }}
            onKeyDown={this.handleArrowKeys}

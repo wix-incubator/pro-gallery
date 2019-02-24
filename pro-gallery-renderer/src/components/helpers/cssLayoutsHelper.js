@@ -29,8 +29,8 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
         if (i < 50) {
           const style = getImageStyle(item);
           const top = `top:${Math.round(10000 * (style.top / layoutWidth)) / 100}vw !important;`;
-          const left = `left:${Math.round(10000 * (style.left / layoutWidth)) / 100}vw !important;`;
-          const width = `width:${Math.round(10000 * (style.width / layoutWidth)) / 100}vw !important;`;
+          const left = `left:${Math.round(10000 * (style.left / layoutWidth)) / 100}% !important;`;
+          const width = `width:${Math.round(10000 * (style.width / layoutWidth)) / 100}% !important;`;
           const height = `height:${Math.round(10000 * (style.height / layoutWidth)) / 100}vw !important;`;
           const transition = 'all 0.4s ease';
           cssStr += `#${id} {${top}${left}${width}${height}${transition}}`;
