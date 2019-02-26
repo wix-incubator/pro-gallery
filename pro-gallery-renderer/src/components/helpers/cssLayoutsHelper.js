@@ -10,7 +10,6 @@ const getImageStyle = item => ({
   left: item.offset.left,
   width: item.width,
   height: item.height,
-  // backgroundImage: `url(${getImageSrc(item)})`
 });
 
 const createCssFromLayouts = (layouts, styleParams, widths) => {
@@ -34,8 +33,7 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
           const height = `height:${Math.round(10000 * (style.height / layoutWidth)) / 100}vw !important;`;
           const leftPercent = `left:${Math.round(10000 * (style.left / layoutWidth)) / 100}% !important;`;
           const widthPercent = `width:${Math.round(10000 * (style.width / layoutWidth)) / 100}% !important;`;
-          const transition = 'all 0.4s ease';
-          cssStr += `#${id} {${top}${leftPercent}${widthPercent}${height}${transition}}`;
+          cssStr += `#${id} {${top}${leftPercent}${widthPercent}${height}}`;
           cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${width}${height}}`;
         } else {
           cssStr += `#${id}{display:none;}`;

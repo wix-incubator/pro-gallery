@@ -196,6 +196,18 @@ class CssScrollHelper {
 
     let scrollAnimationCss = '';
 
+    //notice: these animations must have the blurry image
+    // if (scrollAnimation === Consts.scrollAnimations.MAIN_COLOR) {
+    //   scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
+    //   scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' canvas') + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
+    //   scrollAnimationCss += createScrollSelectors(animationActivePadding, ' canvas') + `{filter: opacity(1) !important;}`;
+    // }
+
+    // if (scrollAnimation === Consts.scrollAnimations.BLUR) {
+    //   scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' canvas') + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
+    //   scrollAnimationCss += createScrollSelectors(animationActivePadding, ' canvas') + `{filter: opacity(1) !important;}`;
+    // }
+
     if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
