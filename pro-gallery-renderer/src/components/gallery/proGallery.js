@@ -6,7 +6,7 @@ import {createStore, applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import galleryReducers from '../../reducers/index.js';
 import {toggleHoverPreview} from '../../actions/galleryActions.js';
-import Loadable from 'react-loadable';
+import GalleryContainer from './galleryContainer.js';
 import GalleryContainerNew from './galleryContainerNew.js';
 import utils from '../../utils';
 import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
@@ -64,14 +64,7 @@ export default class ProGallery extends React.Component {
   }
 
   render() {
-    const ProGalleryComponent = (this.props.useRefactoredProGallery === true) ?
-      GalleryContainerNew : Loadable({
-        loader: () => import('./galleryContainer.js'),
-        loading() {
-          return null;
-        },
-      });
-
+    const ProGalleryComponent = this.props.useRefactoredProGallery === true ? GalleryContainerNew : GalleryContainer;
     return this.canRender && (
       <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
         <Provider store={this.store}>
