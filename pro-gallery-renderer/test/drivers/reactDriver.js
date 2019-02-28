@@ -3,7 +3,7 @@ import {Layouter} from 'pro-gallery-layouter';
 import GalleryItem from '../../src/components/item/galleryItem';
 import {testImages} from '../images-mock.js';
 import {mount, shallow, configure} from 'enzyme';
-import {GalleryContainer} from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
+import {GalleryContainer} from '../../src/components/gallery/galleryContainerNew.js'; //import GalleryContainer before the connect (without redux)
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
 import Consts from 'photography-client-lib/dist/src/utils/consts';
