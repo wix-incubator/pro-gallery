@@ -14,6 +14,7 @@ export class Item {
       config.dto = {};
     }
 
+    this.config = config;
     this.dto = config.dto;
     this.idx = config.idx;
     this.inGroupIdx = config.inGroupIdx;

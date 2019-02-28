@@ -1,5 +1,5 @@
+import {Item} from './item.js';
 import {utils} from './utils';
-import cloneDeep from 'lodash.clonedeep';
 
 const GROUP_TYPES_BY_RATIOS_V = {
   lll: '1,2h',
@@ -91,8 +91,10 @@ export class Group {
     } else if (this.dummyItems[idx]) {
       return this.dummyItems[idx];
     } else {
-      const item = cloneDeep(this.items[this.items.length - 1]);
-      item.id += 'dummy';
+      const item = new Item({...this.items[this.items.length - 1].config});
+
+      // const item = {...(this.items[this.items.length - 1])};
+      // item.id += 'dummy';
       item.idx = this.idx * (idx + 1) + 1;
       item.type = 'dummy';
       this.dummyItems[idx] = item;

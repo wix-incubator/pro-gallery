@@ -1,8 +1,6 @@
-import cloneDeep from 'lodash.clonedeep';
-
 class LayoutsStore {
   set layout(_layout) {
-    this._layout = cloneDeep(_layout);
+    this._layout = {..._layout};
   }
 
   get layout() {
