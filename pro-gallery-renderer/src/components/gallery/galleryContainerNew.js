@@ -141,6 +141,27 @@ export class GalleryContainer extends React.Component {
 
   loadItemsDimensionsIfNeeded() {
 
+    if (utils.isSSR()) {
+      return;
+    }
+    if (!(this.galleryStructure && this.galleryStructure.galleryItems && this.galleryStructure.galleryItems.length > 0)) {
+      return;
+    }
+
+    const {galleryItems} = this.galleryStructure;
+
+    const itemsWithoutDimensions = galleryItems.filter((item, idx) => {
+      try {
+        return (item.isVisible && item.isDimensionless && !item.isPreloaded);
+      } catch (e) {
+        return false;
+      }
+    });
+
+    if (!itemsWithoutDimensions.length) {
+      return;
+    }
+
     const preloadItem = (item, onload) => {
       if (!item || !item.itemId || !item.isGalleryItem) {
         return;
@@ -182,20 +203,6 @@ export class GalleryContainer extends React.Component {
         });
       }
     }, 2500);
-
-    if (!(this.galleryStructure && this.galleryStructure.galleryItems && this.galleryStructure.galleryItems.length > 0)) {
-      return;
-    }
-
-    const {galleryItems} = this.galleryStructure;
-
-    const itemsWithoutDimensions = galleryItems.filter((item, idx) => {
-      try {
-        return (item.isVisible && item.isDimensionless && !item.isPreloaded);
-      } catch (e) {
-        return false;
-      }
-    });
 
     itemsWithoutDimensions.forEach((item, idx, items) => {
       item.isPreloaded = true;
@@ -563,7 +570,7 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      if (window.isSSR && isFullwidth && !_styles.oneRow) {
+      if (utils.isSSR() && isFullwidth && !_styles.oneRow) {
         if (utils.isVerbose()) {
           console.time('fullwidthLayoutsCss!');
         }
@@ -574,6 +581,7 @@ export class GalleryContainer extends React.Component {
       } else {
         this.fullwidthLayoutsCss = [];
       }
+
       const allowPreloading = utils.isEditor() || state.gotFirstScrollEvent || state.showMoreClicked;
       this.scrollCss = cssScrollHelper.calcScrollCss({
         galleryDomId: this.props.domId,
