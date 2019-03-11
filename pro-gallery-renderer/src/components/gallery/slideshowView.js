@@ -29,21 +29,15 @@ class SlideshowView extends React.Component {
       isInView: true,
     };
     appPartiallyLoaded('pro-gallery-statics');
-
-    this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.enableSlideshowLoop = false;
   }
 
   isFirstItem() {
     let pos;
-    if (this.useRefactoredProGallery) {
-      if (this.container) {
-        pos = this.props.styleParams.oneRow ? this.container.scrollLeft : this.container.scrollTop;
-      } else {
-        pos = 0;
-      }
+    if (this.container) {
+      pos = this.props.styleParams.oneRow ? this.container.scrollLeft : this.container.scrollTop;
     } else {
-      pos = this.props.scroll.top;
+      pos = 0;
     }
     const firstItem = () => (this.state.currentIdx === 0) || (pos === 0);
     return firstItem() && !this.enableSlideshowLoop;
@@ -51,14 +45,10 @@ class SlideshowView extends React.Component {
 
   isLastItem() {
     let pos;
-    if (this.useRefactoredProGallery) {
-      if (this.container) {
-        pos = this.props.styleParams.oneRow ? this.container.scrollLeft : this.container.scrollTop;
-      } else {
-        pos = 0;
-      }
+    if (this.container) {
+      pos = this.props.styleParams.oneRow ? this.container.scrollLeft : this.container.scrollTop;
     } else {
-      pos = this.props.scroll.top;
+      pos = 0;
     }
     const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
     const lastItem = () => (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastItemInGallery || (this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right);
@@ -543,40 +533,18 @@ class SlideshowView extends React.Component {
 
     return this.props.galleryStructure.columns.map((column, c) => {
 
-      if (utils.useRelativePositioning) {
-        let marginLeft = 0;
-        const firstGroup = _.find(column.groups, group => group.rendered) || {};
-        const columnStyle = {width: column.width};
-        if (this.props.gotScrollEvent) {
-          marginLeft = firstGroup.left || 0;
-        }
-        if (this.props.styleParams.isSlideshow) {
-          _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
-        }
-
-        return (
-          <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
-            style={columnStyle}>
-            <div className="gallery-left-padding" style={{width: marginLeft}}></div>
-            {!!column.galleryGroups.length && this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
-            {!!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
-          </div>
-        );
-      } else {
-
-        const columnStyle = {width: column.width, height: this.props.container.galleryHeight};
-        if (this.props.styleParams.isSlideshow) {
-          _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
-        }
-        return (
+      const columnStyle = {width: column.width, height: this.props.container.galleryHeight};
+      if (this.props.styleParams.isSlideshow) {
+        _.merge(columnStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
+      }
+      return (
         <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
           style={columnStyle}
           >
           {!!column.galleryGroups.length && this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
           {!!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
         </div>
-        );
-      }
+      );
     });
   }
 
@@ -654,11 +622,9 @@ class SlideshowView extends React.Component {
       this.ItemsForSlideshowLoopThumbnails = false;
     }
     this.shouldEnableSlideshowLoop(); // check if need to enable slideshow loop
-    if (this.useRefactoredProGallery) {
-      if (this.props.isInDisplay !== props.isInDisplay) {
-        this.setState({isInView: props.isInDisplay}, () => this.startAutoSlideshowIfNeeded(props.styleParams));
+    if (this.props.isInDisplay !== props.isInDisplay) {
+      this.setState({isInView: props.isInDisplay}, () => this.startAutoSlideshowIfNeeded(props.styleParams));
 
-      }
     }
     if (!utils.isSite()) {
       if (( //check that the change is related to the slideshow settings
