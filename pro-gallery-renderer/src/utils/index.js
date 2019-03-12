@@ -4,23 +4,6 @@ import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper'
 
 class Utils extends RenderUtils {
 
-  get positioningType() {
-    let pt = (experiments('specs.pro-gallery.itemsPositioning')) || 'relative';
-    if (this.useRefactoredProGallery) {
-      pt = 'absolute'; //on OOI / SSR use only absolute positioning
-    }
-    return pt;
-  }
-
-  get useRelativePositioning() {
-    return !(this.positioningType === 'absolute' || this.positioningType === 'transform');
-  }
-
-  get useRefactoredProGallery() {
-    return (!!(experiments('specs.pro-gallery.newGalleryContainer') === 'true' || experiments('specs.pro-gallery.useRefactoredProGallery') === 'true')) || (window && window.isSSR) || this.isOOI() || this.isDev() || this.isTest(); //on SSR use only refactor gallery
-    // return (!!(experiments('specs.pro-gallery.newGalleryContainer') === 'true' || experiments('specs.pro-gallery.useRefactoredProGallery') === 'true')) || (window && window.isSSR) || this.isOOI() || this.isVerbose(); //on SSR use only refactor gallery
-  }
-
   isWixIframe() {
     return (window && !window.isMock) && (window.Wix && !window.Wix.isMock) && (window.top !== window.self);
   }

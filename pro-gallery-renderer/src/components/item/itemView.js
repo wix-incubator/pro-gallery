@@ -55,7 +55,6 @@ class ItemView extends React.Component {
       height: 768
     };
     this.shouldListenToScroll = this.props.type === 'video';
-    this.useRefactoredProGallery = utils.useRefactoredProGallery;
     this.renderedPaddingMultiply = 2;
     this.visiblePaddingMultiply = 0;
     this.videoPlayVerticalTolerance = (this.props.offset.bottom - this.props.offset.top) / 2;
@@ -269,12 +268,9 @@ class ItemView extends React.Component {
   }
 
   getItemVisibility() {
-    if (this.useRefactoredProGallery) {
-      return this.state.visibleHorizontally && this.state.visibleVertically;
-    } else {
-      return this.props.visible;
-    }
+    return this.state.visibleHorizontally && this.state.visibleVertically;
   }
+
   isSmallItem() {
     return this.props.isSmallItem && !this.props.styleParams.isSlideshow;
   }
@@ -348,29 +344,12 @@ class ItemView extends React.Component {
     );
   }
 
-  isVisible(elment, clientRect) {
-    if (this.useRefactoredProGallery) {
-      return this.state.playVertically && this.state.playHorizontally;
-    } else {
-      if (typeof clientRect === 'undefined') {
-        const domElment = ReactDOM.findDOMNode(elment.video);
-        if (!domElment) {
-          return false;
-        }
-        clientRect = domElment.getBoundingClientRect();
-      }
-      const {top, bottom} = clientRect;
-      const windowHeight = this.props.documentHeight;
-      const scrollPosition = this.props.scroll.top;
-      const videoHeight = bottom - top;
-      const tolerance = videoHeight / 2;
-      const res = top + tolerance > scrollPosition && bottom - tolerance < scrollPosition + windowHeight;
-      return res;
-    }
+  isVisible() {
+    return this.state.playVertically && this.state.playHorizontally;
   }
 
   videoOnMount(videoElement) {
-    this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible(videoElement)});
+    this.props.videoAdded({idx: this.props.idx, isVisible: () => this.isVisible()});
   }
 
   videoOnUnmount() {
@@ -638,29 +617,16 @@ class ItemView extends React.Component {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       borderRadius: styleParams.itemBorderRadius + 'px',
     };
-    if (utils.positioningType === 'absolute') {
-      Object.assign(itemStyles, {
-        position: 'absolute',
-        top: this.props.offset.top,
-        left: this.props.offset.left,
-        right: 'auto',
-        bottom: 'auto',
-        width: style.width,
-        height: style.height + (styleParams.externalInfoHeight || 0),
-        margin: styleParams.oneRow ? (styleParams.imageMargin + 'px') : 0,
-      });
-    } else if (utils.positioningType === 'transform') {
-      Object.assign(itemStyles, {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        transform: `translate3d(${this.props.offset.left}px, ${this.props.offset.top}px, 0)`,
-        right: 'auto',
-        bottom: 'auto',
-        width: style.width,
-        height: style.height + (styleParams.externalInfoHeight || 0),
-      });
-    }
+    Object.assign(itemStyles, {
+      position: 'absolute',
+      top: this.props.offset.top,
+      left: this.props.offset.left,
+      right: 'auto',
+      bottom: 'auto',
+      width: style.width,
+      height: style.height + (styleParams.externalInfoHeight || 0),
+      margin: styleParams.oneRow ? (styleParams.imageMargin + 'px') : 0,
+    });
 
     const styles = _.merge(itemStyles, transform, border, boxShadow);
 
@@ -801,14 +767,14 @@ class ItemView extends React.Component {
 
       }
     }
-    if (this.shouldListenToScroll && this.useRefactoredProGallery) {
+    if (this.shouldListenToScroll) {
       this.initScrollListener();
       setInitialVisibility({props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState});
     }
   }
 
   componentWillUnmount() {
-    if (this.shouldListenToScroll && this.useRefactoredProGallery) {
+    if (this.shouldListenToScroll) {
       this.removeScrollListener();
     }
   }
@@ -888,7 +854,7 @@ class ItemView extends React.Component {
     const {directLink} = this.props;
     const {itemClick} = this.props.styleParams;
     const {url, target} = (directLink || {});
-    const shouldUseDirectLink = !!(this.useRefactoredProGallery && url && target && itemClick === 'link');
+    const shouldUseDirectLink = !!(url && target && itemClick === 'link');
     const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
     const linkParams = shouldUseDirectLink ? {href: url, target} : {};
     const innerDiv =
@@ -934,9 +900,9 @@ class ItemView extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const rendered = this.useRefactoredProGallery ? (this.state.renderedVertically && this.state.renderedHorizontally) : true;
+    const rendered = (this.state.renderedVertically && this.state.renderedHorizontally);
     //const {photoId, id, hash, idx} = this.props;
-    if (this.useRefactoredProGallery && !rendered) {
+    if (!rendered) {
       return null;
     }
     return (

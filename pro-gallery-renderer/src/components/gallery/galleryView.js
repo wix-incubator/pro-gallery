@@ -27,9 +27,6 @@ class GalleryView extends React.Component {
       currentIdx: 0,
     };
     appPartiallyLoaded('pro-gallery-statics');
-
-    this.useCssScrolling = utils.useRefactoredProGallery;
-
   }
 
   handleArrowKeys(e) {
@@ -37,7 +34,6 @@ class GalleryView extends React.Component {
 
     if (activeItemIdx) {
 
-      // const findNeighborItem = utils.useRefactoredProGallery ? this.props.actions.findNeighborItem : this.props.galleryStructure.findNeighborItem;
       const findNeighborItem = this.props.actions.findNeighborItem || this.props.galleryStructure.findNeighborItem || (() => {}); //temp change for tests to pass
 
       const idx = Number(activeItemIdx);
@@ -92,7 +88,7 @@ class GalleryView extends React.Component {
     if (utils.isAccessibilityEnabled()) { // tal - I left this check since we do not want to focus the last item in non-accessibility mode
       //find the last visible item and focus on it
       try {
-        const lastItemIdx = utils.useRefactoredProGallery ? this.lastVisibleItemIdx() : this.props.galleryStructure.lastVisibleItemIdx();
+        const lastItemIdx = this.lastVisibleItemIdx();
         utils.setStateAndLog(this, 'Focus on Last Gallery Item', {
           currentIdx: lastItemIdx + 1
         }, () => {
@@ -115,46 +111,10 @@ class GalleryView extends React.Component {
     let galleryHeight;
     if (showMore) {
       galleryHeight = (this.props.container.galleryHeight - (showMoreContainerHeight * utils.getViewportScaleRatio()));
-    } else if (!utils.useRelativePositioning) {
+    } else {
       galleryHeight = this.props.galleryStructure.height + 'px';
-    } else {
-      galleryHeight = '100%';
     }
-
-    let layout;
-
-    if (utils.useRelativePositioning) {
-
-      const columns = this.props.galleryStructure.columns;
-
-      layout = _.map(columns, (column, c) => {
-
-        let paddingTop = 0;
-        if (this.props.gotScrollEvent) {
-          let firstRenderedGroup = _.find(column.groups, group => group.rendered);
-          if (!firstRenderedGroup) {
-            if (this.props.scroll.top > 0 && column.groups.length > 0) {
-            //gallery is above the fold
-              firstRenderedGroup = {top: column.groups[column.groups.length - 1].bottom};
-            } else {
-            //gallery is below the fold
-              firstRenderedGroup = {top: 0};
-            }
-          }
-          paddingTop = firstRenderedGroup.top || 0;
-        }
-
-        return (
-          <div data-hook="gallery-column" className="gallery-column" key={'column' + c}
-              style={{width: column.width, paddingTop}}>
-            {!!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered || this.useCssScrolling ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
-          </div>
-        );
-      });
-
-    } else {
-      layout = this.props.galleryStructure.galleryItems.map(item => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(galleryConfig, {visible: item.isVisible})), {store: this.props.store})));
-    }
+    const layout = this.props.galleryStructure.galleryItems.map(item => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(galleryConfig, {visible: item.isVisible})), {store: this.props.store})));
 
     return (
       <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
@@ -232,7 +192,7 @@ class GalleryView extends React.Component {
   createShowMoreButton() {
     const styleParams = this.props.styleParams;
     let showMoreButton = false;
-    const buttonState = utils.useRefactoredProGallery ? this.props.displayShowMore : !this.props.scroll.isInfinite;
+    const buttonState = this.props.displayShowMore;
     const shouldShowButton = (buttonState && (this.props.galleryStructure.height > this.props.container.height));
     const btnStyle = this.returnButtonStyle(styleParams);
 
