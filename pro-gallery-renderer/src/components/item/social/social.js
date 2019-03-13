@@ -1,11 +1,11 @@
 import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
-import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
-import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import {logger} from '@wix/photography-client-lib/dist/src/utils/biLogger';
 import _ from 'lodash';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 export default class Social extends React.Component {
 

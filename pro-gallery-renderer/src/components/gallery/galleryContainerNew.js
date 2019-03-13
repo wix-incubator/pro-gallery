@@ -10,12 +10,12 @@ import {ItemsHelper} from '../helpers/itemsHelper';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import {scrollToItemImp} from '../helpers/scrollHelper';
 import {pauseVideo} from '../../actions/itemViewActions.js';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import CssScrollIndicator from './galleryCssScrollIndicator';
 import {Layouter} from 'pro-gallery-layouter';
 import {cssScrollHelper} from '../helpers/cssScrollHelper.js';
 import {createCssLayouts} from '../helpers/cssLayoutsHelper.js';
-import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper';
+import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import _ from 'lodash';
 import utils from '../../utils';
 

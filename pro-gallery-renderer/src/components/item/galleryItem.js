@@ -2,9 +2,9 @@
 import utils from '../../utils/index';
 import {Item} from 'pro-gallery-layouter';
 import _ from 'lodash';
-import watermarkApi from 'photography-client-lib/dist/src/store/watermarkApi';
+import watermarkApi from '@wix/photography-client-lib/dist/src/store/watermarkApi';
 import * as imageSdk from 'image-client-api/dist/imageClientSDK';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class GalleryItem {
 

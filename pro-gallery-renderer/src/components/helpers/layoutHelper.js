@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import utils from '../../utils';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
-import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/features/layouts';
-import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import {layoutsVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/layouts';
+import {spacingVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/spacing';
 import dimensionsHelper from './dimensionsHelper';
 import {getFixedLayouts} from './fixedLayoutsHelper';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import designConsts from '../../constants/designConsts';
 
 const emptyLayout = {

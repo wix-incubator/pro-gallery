@@ -3,10 +3,10 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
-import {settingsVersionManager} from 'photography-client-lib/dist/src/versioning/features/settings';
+import {settingsVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/settings';
 import _ from 'lodash';
 import {SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION} from 'constants';
 

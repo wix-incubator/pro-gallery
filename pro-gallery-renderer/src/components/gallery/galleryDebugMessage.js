@@ -1,6 +1,6 @@
 import React from 'react';
 import utils from '../../utils/index.js';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class GalleryDebugMessage extends React.Component {
 

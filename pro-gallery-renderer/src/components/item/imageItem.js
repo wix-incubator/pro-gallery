@@ -1,6 +1,6 @@
 import React from 'react';
 import utils from '../../utils/index.js';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 
 export default class ImageItem extends React.Component {
 

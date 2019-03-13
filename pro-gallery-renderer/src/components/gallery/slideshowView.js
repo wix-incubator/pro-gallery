@@ -4,9 +4,9 @@ import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryEmpty from './galleryEmpty.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import {appPartiallyLoaded} from 'photography-client-lib/dist/src/utils/performanceUtils';
+import {appPartiallyLoaded} from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 utils.fixViewport('Gallery');
 

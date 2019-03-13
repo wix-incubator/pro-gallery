@@ -8,7 +8,7 @@ import GalleryItem from './galleryItem';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import utils from '../../utils/index';
-import watermarkApi from 'photography-client-lib/dist/src/store/watermarkApi';
+import watermarkApi from '@wix/photography-client-lib/dist/src/store/watermarkApi';
 
 
 

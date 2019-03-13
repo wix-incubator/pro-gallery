@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import designConsts from '../../../constants/designConsts.js';
 
 const minWidthToShowContent = 135;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {ProGallery} from '../src/index';
-import {getProGalleryStyles} from 'photography-client-lib/dist/src/utils/proGalleryStyleBuilder';
+import {getProGalleryStyles} from '@wix/photography-client-lib/dist/src/utils/proGalleryStyleBuilder';
 
 const createProps = (styles, items) => ({
   useRefactoredProGallery: true,

@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
-import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 export default class Share extends React.Component {
   constructor(props) {

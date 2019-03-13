@@ -1,5 +1,5 @@
 import utils from '../utils/index';
-import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
+import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
 
 import {
   SET_WIX_DATA,

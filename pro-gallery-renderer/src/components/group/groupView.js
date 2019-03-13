@@ -2,7 +2,7 @@ import React from 'react';
 import ItemContainer from '../item/itemContainer.js';
 import _ from 'lodash';
 import utils from '../../utils';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class GroupView extends React.Component {
 

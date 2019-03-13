@@ -1,5 +1,5 @@
 import * as actions from '../constants/actionTypes.js';
-import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 export function toggleLove(itemId) {
 

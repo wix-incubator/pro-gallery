@@ -1,7 +1,7 @@
-import Consts from 'photography-client-lib/dist/src/utils/consts';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import utils from '../../utils/index.js';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
-import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 class CssScrollHelper {
 

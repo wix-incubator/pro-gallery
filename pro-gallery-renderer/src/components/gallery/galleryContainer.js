@@ -10,17 +10,17 @@ import GalleryItem from '../item/galleryItem';
 import GalleryGroup from '../group/galleryGroup';
 import _ from 'lodash';
 import utils from '../../utils';
-import {spacingVersionManager} from 'photography-client-lib/dist/src/versioning/features/spacing';
-import {layoutsVersionManager} from 'photography-client-lib/dist/src/versioning/features/layouts';
-import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
-import {logger} from 'photography-client-lib/dist/src/utils/biLogger';
-import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
+import {spacingVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/spacing';
+import {layoutsVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/layouts';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import {logger} from '@wix/photography-client-lib/dist/src/utils/biLogger';
+import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import axios from 'axios';
 import prependHttpExtra from 'prepend-http-extra';
 import {pauseVideo} from '../../actions/itemViewActions.js';
 import {getFixedLayouts} from '../helpers/fixedLayoutsHelper.js';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import designConsts from '../../constants/designConsts.js';
 
 try {

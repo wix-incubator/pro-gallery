@@ -6,7 +6,7 @@ import {mount} from 'enzyme';
 import React from 'react';
 import {use, spy, expect} from 'chai';
 import {testImages} from '../../../../test/images-mock.js';
-import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 import spies from 'chai-spies';
 import sinon from 'sinon';
 

@@ -9,18 +9,18 @@ import ItemHover from './itemHover.js';
 import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
-import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
-import {itemActions} from 'photography-client-lib/dist/src/item/itemActions';
-import Consts from 'photography-client-lib/dist/src/utils/consts';
-import * as performanceUtils from 'photography-client-lib/dist/src/utils/performanceUtils';
+import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import * as performanceUtils from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import * as actions from '../../actions/galleryActions.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import {setHorizontalVisibility, setVerticalVisibility, setInitialVisibility} from '../helpers/scrollHelper.js';
 import {cssScrollHelper} from '../helpers/cssScrollHelper';
-import {settingsVersionManager} from 'photography-client-lib/dist/src/versioning/features/settings';
+import {settingsVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/settings';
 
 
 class ItemView extends React.Component {

@@ -1,6 +1,6 @@
-import RenderUtils from 'photography-client-lib/dist/src/utils/renderUtils';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
-import experiments from 'photography-client-lib/dist/src/sdk/experimentsWrapper';
+import RenderUtils from '@wix/photography-client-lib/dist/src/utils/renderUtils';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 class Utils extends RenderUtils {
 

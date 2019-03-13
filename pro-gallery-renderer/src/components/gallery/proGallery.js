@@ -8,11 +8,11 @@ import galleryReducers from '../../reducers/index.js';
 import {toggleHoverPreview} from '../../actions/galleryActions.js';
 import GalleryContainerNew from './galleryContainerNew.js';
 import utils from '../../utils';
-import Wix from 'photography-client-lib/dist/src/sdk/WixSdkWrapper';
+import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import videoActionTypes from '../../constants/videoActionTypes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import {VideoQueue} from '../item/videos/video-queue';
-import window from 'photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 export default class ProGallery extends React.Component {
 
