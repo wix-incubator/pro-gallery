@@ -27,6 +27,14 @@ export class GalleryContainer extends React.Component {
       console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
     }
 
+    this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
+    this.enableScrollPreload = this.enableScrollPreload.bind(this);
+    this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
+    this.scrollToItem = this.scrollToItem.bind(this);
+    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
+    this._scrollingElement = this.getScrollingElement();
+    this.setCurrentHover = this.setCurrentHover.bind(this);
+
     const initialState = {
       pgScroll: 0,
       showMoreClicked: false,
@@ -39,7 +47,7 @@ export class GalleryContainer extends React.Component {
     this.preloadedItems = {};
     this.fullwidthLayoutsCss = [];
     this.state = initialState;
-    //todo!!! in client, we need to use the mock window until the component is mounted
+
     if (utils.isSSR()) {
       this.initialGalleryState = this.reCreateGalleryExpensively(props, initialState);
       try {
@@ -68,19 +76,16 @@ export class GalleryContainer extends React.Component {
       ...this.initialGalleryState,
     };
 
-    this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
-    this.enableScrollPreload = this.enableScrollPreload.bind(this);
-    this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
-    this.scrollToItem = this.scrollToItem.bind(this);
-    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
-    this._scrollingElement = this.getScrollingElement();
-    this.setCurrentHover = this.setCurrentHover.bind(this);
+    try {
+      this.props.registerToComponentDidLayout(this.componentDidLayout.bind(this));
+    } catch (e) {
+      console.error('Could not register to componentDidLayot', e);
+    }
 
   }
 
   componentDidMount() {
     this.getMoreItemsIfNeeded(0);
-    //const container = Object.assign({}, this.state.container, dimensionsHelper.getGalleryDimensions());
     const galleryState = this.reCreateGalleryExpensively(this.props);
     this.loadItemsDimensionsIfNeeded();
     if (Object.keys(galleryState).length > 0) {
@@ -88,12 +93,15 @@ export class GalleryContainer extends React.Component {
         this.handleNewGalleryStructure();
       });
     }
-    // this.setState({
-    //   container: Object.assign({}, this.state.container, dimensionsHelper.getGalleryDimensions())
-    // }, () => {
-    //   this.handleNewGalleryStructure();
-    // });
+  }
 
+  componentDidLayout() {
+    const galleryState = this.reCreateGalleryExpensively(this.props);
+    if (Object.keys(galleryState).length > 0) {
+      this.setState(galleryState, () => {
+        this.handleNewGalleryStructure();
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -736,9 +744,6 @@ export class GalleryContainer extends React.Component {
       console.log('PROGALLERY [RENDER] - GalleryContainer', this.state.container.scrollBase, {state: this.state, items: this.items});
     }
 
-    if (typeof this.props.onAppLoaded === 'function') {
-      this.props.onAppLoaded();
-    }
     const displayShowMore = this.containerGrowthDirection() === 'none';
     const findNeighborItem = this.layouter ? this.layouter.findNeighborItem : _.noop;
     const ssrDisableTransition = !!utils.isSSR() && 'div.pro-gallery-parent-container * { transition: none !important }';
