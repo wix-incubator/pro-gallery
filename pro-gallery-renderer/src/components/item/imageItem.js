@@ -34,25 +34,14 @@ export default class ImageItem extends React.Component {
       key={'image_container-' + id}
       data-hook={'image-item'}
         style={displayed ? {} : {...backgroundStyle, ...restOfDimensions}}
-        >
-        {this.useCssScrolling ? <canvas
-            key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-						className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
-						role="img"
-            arial-label={alt}
-            data-src={resized_url.img}
-            style={restOfDimensions}
-            {...imageProps}
-          /> : <img
-            onLoad={actions.setItemLoaded}
-            key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-            className={'gallery-item-visible gallery-item ' + (loaded ? 'gallery-item-loaded' : 'gallery-item-hidden')}
-            src={resized_url.img}
-            alt={isThumbnail ? '' : alt}
-            onError={actions.setItemError}
-            style={restOfDimensions}
-            {...imageProps}
-          />}
-    </div>);
+        ><canvas
+          key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
+          className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+          role="img"
+          arial-label={alt}
+          data-src={resized_url.img}
+          style={restOfDimensions}
+          {...imageProps}
+        /></div>);
   }
 }
