@@ -79,7 +79,7 @@ export class GalleryContainer extends React.Component {
     try {
       this.props.registerToComponentDidLayout(this.componentDidLayout.bind(this));
     } catch (e) {
-      console.error('Could not register to componentDidLayot', e);
+      // console.error('Could not register to componentDidLayot', e);
     }
 
   }
