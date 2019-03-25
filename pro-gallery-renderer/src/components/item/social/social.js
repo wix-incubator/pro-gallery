@@ -8,6 +8,11 @@ import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 export default class Social extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onDownloadKeyPress = this.onDownloadKeyPress.bind(this);
+    this.onDownloadTextKeyPress = this.onDownloadTextKeyPress.bind(this);
+  }
 
   getSocialShare() {
     const {styleParams, id, actions} = this.props;
@@ -15,10 +20,12 @@ export default class Social extends React.Component {
       const slideshowShareButton = <i className={'block-fullscreen progallery-svg-font-icons-share-store'} />;
       if (utils.isSite()) {
         const slideshowShare = (styleParams.isSlideshow ? actions.getShare() : '');
-        return <div className={'block-fullscreen gallery-item-social-share gallery-item-social-button'}
+        return <div
+          className={'block-fullscreen gallery-item-social-share gallery-item-social-button'}
           data-hook="gallery-item-social-button"
           key={'item-social-share-' + id}
-          onClick={e => actions.toggleShare(e, true)}>
+          onClick={e => actions.toggleShare(e, true)}
+        >
           {slideshowShareButton}
           {slideshowShare}
         </div>;
@@ -39,7 +46,7 @@ export default class Social extends React.Component {
 
   getLoveButton() {
     const {styleParams, love} = this.props;
-    const props = _.pick(this.props, ['id', 'item', 'idx', 'styleParams', 'hashtag', 'love']);
+    const props = _.pick(this.props, ['id', 'item', 'idx', 'currentIdx', 'styleParams', 'hashtag', 'love']);
     return styleParams.loveButton ? (
       <LoveButton
         {...props}
@@ -60,6 +67,9 @@ export default class Social extends React.Component {
       const genralProps = {
         className,
         'data-hook': 'item-download',
+        'aria-label': 'Download',
+        role: 'button',
+        tabIndex: styleParams.isSlideshow && this.props.currentIdx === this.props.idx ? 0 : -1
       };
       const downloadLink = download_url.mp4 || download_url.webm || download_url.img;
       const itemProps = {
@@ -71,6 +81,7 @@ export default class Social extends React.Component {
           window.open(downloadLink, '_blank');
           logger.trackBi(logger.biEvents.download, {origin: 'gallery'});
         },
+        onKeyDown: e => this.onDownloadKeyPress(e, downloadLink)
       };
       if (type === 'text') {
         return <a
@@ -78,7 +89,8 @@ export default class Social extends React.Component {
           onClick={e => {
             e.stopPropagation();
             itemActions.downloadTextItem(item, 'gallery');
-          }} >
+          }}
+          onKeyDown={ e => this.onDownloadTextKeyPress(e, item)}>
           {downloadIcon}
         </a>;
       } else {
@@ -89,7 +101,6 @@ export default class Social extends React.Component {
         return <a
           {...genralProps}
           download="download"
-          role="button"
           {...props}
         >
           {downloadIcon}
@@ -97,6 +108,28 @@ export default class Social extends React.Component {
       }
     }
     return '';
+  }
+
+  onDownloadKeyPress(e, downloadLink) {
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.stopPropagation();
+        e.preventDefault();
+        window.open(downloadLink, '_blank');
+        logger.trackBi(logger.biEvents.download, {origin: 'gallery'});
+        return false;
+    }
+  }
+
+  onDownloadTextKeyPress(e, item) {
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.stopPropagation();
+        itemActions.downloadTextItem(item, 'gallery');
+        return false;
+    }
   }
 
   render() {

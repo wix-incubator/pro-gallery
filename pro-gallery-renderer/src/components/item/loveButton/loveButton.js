@@ -9,6 +9,7 @@ class LoveButton extends React.Component {
     super(props);
     this.toggleLove = this.toggleLove.bind(this);
     this.updateLoveCount = this.updateLoveCount.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
 
     this.state = {
       isLoved: itemActions.isLoved(props.itemId),
@@ -27,6 +28,18 @@ class LoveButton extends React.Component {
         isLoved: currIsLoved,
         loveCount: currLoveCount,
       });
+    }
+  }
+
+  onKeyPress(e) {
+    const callToggleLove = this.toggleLove;
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.preventDefault();
+        e.stopPropagation();
+        callToggleLove(e);
+        return false;
     }
   }
 
@@ -138,17 +151,21 @@ class LoveButton extends React.Component {
     const loveColor = this.state.isLoved ? {color: 'red'} : {};
 
     return (
-        <span data-hook="love-button"
-         className={this.containerClassName()}
-         onMouseOver = {this.createMouseOver()}
-         onMouseOut = {this.createMouseOut()}
-         {...clickAction}
-              >
+        <span
+          data-hook="love-button"
+          className={this.containerClassName()}
+          onMouseOver = {this.createMouseOver()}
+          onMouseOut = {this.createMouseOut()}
+          {...clickAction}
+          onKeyDown={this.onKeyPress}
+          tabIndex={(this.props.styleParams.isSlideshow && this.props.currentIdx === this.props.idx) ? 0 : -1}
+        >
           <button
-          data-hook="love-icon"
-          className={this.buttonClasssName()}
-          role="checkbox"
-          style={loveColor}
+            data-hook="love-icon"
+            className={this.buttonClasssName()}
+            role="checkbox"
+            style={loveColor}
+            tabIndex={-1}
           />
           {loveCounter}
         </span>

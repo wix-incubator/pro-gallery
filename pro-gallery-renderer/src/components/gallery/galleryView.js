@@ -202,6 +202,7 @@ class GalleryView extends React.Component {
         <div className={'show-more-container' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')}>
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
+            id={'show-more-' + this.props.galleryDomId}
             className="show-more"
             onClick={this.showMoreItems}
             data-hook="show-more"

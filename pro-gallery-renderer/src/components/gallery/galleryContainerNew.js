@@ -761,6 +761,7 @@ export class GalleryContainer extends React.Component {
 			enableScrollPreload={this.enableScrollPreload}
         />
 				<ViewComponent
+          galleryDomId={this.props.domId}
           isInDisplay = {this.props.isInDisplay}
           scrollingElement = {this._scrollingElement}
           totalItemsCount = {this.props.totalItemsCount} //the items passed in the props might not be all the items

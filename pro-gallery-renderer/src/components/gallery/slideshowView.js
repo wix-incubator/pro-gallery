@@ -557,13 +557,15 @@ class SlideshowView extends React.Component {
       _.merge(galleryStyle, {paddingBottom: this.props.styleParams.slideshowInfoSize});
     }
 
-    return <div id="pro-gallery-container" className={'pro-gallery inline-styles one-row hide-scrollbars ' + (this.props.styleParams.enableScroll ? ' slider ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
-                style={galleryStyle}
+    return <div
+      id="pro-gallery-container"
+      className={'pro-gallery inline-styles one-row hide-scrollbars ' + (this.props.styleParams.enableScroll ? ' slider ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
+      style={galleryStyle}
     >
       {this.createEmptyState()}
       {this.createDebugMsg()}
-      {this.createLayout()}
       {this.createNavArrows()}
+      {this.createLayout()}
     </div>;
   }
 

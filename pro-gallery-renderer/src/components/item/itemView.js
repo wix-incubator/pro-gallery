@@ -183,6 +183,7 @@ class ItemView extends React.Component {
         e.stopPropagation();
         this.onItemClick(e, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         return false;
+      default: return true;
     }
   }
 
@@ -372,7 +373,7 @@ class ItemView extends React.Component {
   }
 
   getSocial() {
-    const props = _.pick(this.props, ['html', 'hashtag', 'photoId', 'item', 'idx', 'id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
+    const props = _.pick(this.props, ['html', 'hashtag', 'photoId', 'item', 'idx', 'currentIdx', 'id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
     return <Social {...props}
               showShare={this.state.showShare}
               isSmallItem={this.isSmallItem()}
@@ -519,7 +520,6 @@ class ItemView extends React.Component {
           <div className="gallery-item-info gallery-item-bottom-info" data-hook="gallery-item-info-buttons" style={style}>
             <div>
               {social}
-              {share}
               {itemTexts}
             </div>
           </div> :
@@ -731,20 +731,21 @@ class ItemView extends React.Component {
     try {
       if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
         const activeElement = window.document.activeElement;
-			//check if thumbnailId has changed to the current item
+
+        //check if focus is on 'gallery-item-container' in current gallery
         const isThisGalleryItemInFocus = () => !!window.document.querySelector(`#pro-gallery-${this.props.galleryDomId} #${String(activeElement.id)}`);
         const isGalleryItemInFocus = () => String(activeElement.className).indexOf('gallery-item-container') >= 0;
-        const hasActiveElementChanged = () => !!activeElement.id && this.activeElement !== activeElement.id;
-        if (hasActiveElementChanged()) {
-          this.activeElement = activeElement.id;
-          if (isGalleryItemInFocus() && isThisGalleryItemInFocus()) {
-            if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
+        //check if focus is on 'load-more' in current gallery
+        const isThisGalleryShowMoreInFocus = () => !!window.document.querySelector(`#pro-gallery-${this.props.galleryDomId} #${String(activeElement.id)}`);
+        const isShowMoreInFocus = () => String(activeElement.className).indexOf('show-more') >= 0;
+
+        if ((isGalleryItemInFocus() && isThisGalleryItemInFocus()) || (isShowMoreInFocus() && isThisGalleryShowMoreInFocus())) {
+          if ((this.props.thumbnailHighlightId !== prevProps.thumbnailHighlightId) && (this.props.thumbnailHighlightId === this.props.id)) {
             // if the highlighted thumbnail changed and it is the same as this itemview's
-              this.itemContainer.focus();
-            } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
+            this.itemContainer.focus();
+          } else if ((this.props.currentIdx !== prevProps.currentIdx) && (this.props.currentIdx === this.props.idx)) {
             //check if currentIdx has changed to the current item
-              this.itemContainer.focus();
-            }
+            this.itemContainer.focus();
           }
         }
       }
