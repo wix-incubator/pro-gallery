@@ -97,8 +97,8 @@ describe('Share:', () => {
   });
 
   describe('Related functions: ', () => {
-    it('calls handleShareArrowNavigation onKeyDown', () => {
-      const spy = sinon.spy(Share.prototype, 'handleShareArrowNavigation');
+    it('calls handleKeyDown onKeyDown', () => {
+      const spy = sinon.spy(Share.prototype, 'handleKeyDown');
       driver.mount(Share, sampleItemViewProps);
       driver.find.hook('social-share-box').simulate('keydown');
       expect(spy.called).to.be.true;
@@ -127,49 +127,67 @@ describe('Share:', () => {
       spy.restore();
       stubFocus.restore();
     });
-    describe('handleShareArrowNavigation: ', () => {
+    describe('handleKeyDown: ', () => {
       it('calls setStateAndLog for the "up" codes', () => {
         const spy = sinon.spy(utils, 'setStateAndLog');
+        Object.assign(sampleItemViewProps, {
+          showShare: true
+        });
         driver.mount(Share, sampleItemViewProps);
         driver.set.state({showShare: true});
         driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleShareArrowNavigation({keyCode: null, charCode: 38, preventDefault() {}, stopPropagation() {}});
+        driver.get.instance().handleKeyDown({keyCode: null, charCode: 38, preventDefault() {}, stopPropagation() {}});
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(1);
         spy.restore();
       });
       it('calls setStateAndLog for the "down" codes', () => {
         const spy = sinon.spy(utils, 'setStateAndLog');
+        Object.assign(sampleItemViewProps, {
+          showShare: true
+        });
         driver.mount(Share, sampleItemViewProps);
         driver.set.state({showShare: true});
         driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleShareArrowNavigation({keyCode: 40, charCode: null, preventDefault() {}, stopPropagation() {}});
+        driver.get.instance().handleKeyDown({keyCode: 40, charCode: null, preventDefault() {}, stopPropagation() {}});
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(3);
         spy.restore();
       });
       it('calls setStateAndLog for the "escape" codes', () => {
         const spy = sinon.spy(utils, 'setStateAndLog');
+        Object.assign(sampleItemViewProps, {
+          showShare: true
+        });
         driver.mount(Share, sampleItemViewProps);
         driver.set.state({showShare: true});
         driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleShareArrowNavigation({keyCode: 27, charCode: null, preventDefault() {}, stopPropagation() {}});
+        driver.get.instance().handleKeyDown({keyCode: 27, charCode: null, preventDefault() {}, stopPropagation() {}});
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(0);
         spy.restore();
       });
       it('calls setStateAndLog for the "enter" codes while toggleing showShare', () => {
         const spy = sinon.spy(utils, 'setStateAndLog');
+
+        //props.showShare = true && state.showShare = true
+        Object.assign(sampleItemViewProps, {
+          showShare: true
+        });
         driver.mount(Share, sampleItemViewProps);
         driver.set.state({showShare: true});
         driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleShareArrowNavigation({keyCode: 32, charCode: null, preventDefault() {}, stopPropagation() {}});
+        driver.get.instance().handleKeyDown({keyCode: 32, charCode: null, preventDefault() {}, stopPropagation() {}});
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(0);
-        driver.get.instance().handleShareArrowNavigation({keyCode: 32, charCode: null, preventDefault() {}, stopPropagation() {}});
+
+        //props.showShare = false && state.showShare = false
+        Object.assign(sampleItemViewProps, {
+          showShare: false
+        });
+        driver.mount(Share, sampleItemViewProps);
+        driver.get.instance().handleKeyDown({keyCode: 32, charCode: null, preventDefault() {}, stopPropagation() {}});
         expect(driver.get.state().focusedShareIcon).to.equal(1);
-        driver.get.instance().handleShareArrowNavigation({keyCode: 13, charCode: null, preventDefault() {}, stopPropagation() {}});
-        expect(driver.get.state().focusedShareIcon).to.equal(0);
         spy.restore();
       });
     });
