@@ -10,7 +10,10 @@ export default class CustomButton extends React.Component {
     const defaultText = utils.isStoreGallery() ? 'Buy Now' : 'Click here';
     const buttonText = styleParams.customButtonText || defaultText;
     return (
-      <div className="custom-button-wrapper" style={{justifyContent: styleParams.galleryHorizontalAlign}}>
+      <div className="custom-button-wrapper" style={{
+        justifyContent: styleParams.galleryHorizontalAlign,
+        zIndex: 17
+      }}>
         {this.props.small ?
           <CustomButtonIcon /> :
           <button data-hook="custom-button-button" onClick={() => logger.trackBi(logger.biEvents.buyNowClick)}
