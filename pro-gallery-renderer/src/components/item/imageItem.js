@@ -6,7 +6,9 @@ export default class ImageItem extends React.Component {
 
   componentDidMount() {
     try {
-      this.props.actions.setItemLoaded();
+      if (typeof this.props.actions.setItemLoaded === 'function') {
+        this.props.actions.setItemLoaded();
+      }
     } catch (e) {
       console.error(e);
     }

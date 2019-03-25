@@ -114,7 +114,7 @@ class GalleryView extends React.Component {
     } else {
       galleryHeight = this.props.galleryStructure.height + 'px';
     }
-    const layout = this.props.galleryStructure.galleryItems.map(item => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(galleryConfig, {visible: item.isVisible})), {store: this.props.store})));
+    const layout = this.props.galleryStructure.galleryItems.map((item, index) => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(galleryConfig, {visible: item.isVisible}, {key: `ItemContainer-${item.id}-${index}`})), {store: this.props.store})));
 
     return (
       <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
