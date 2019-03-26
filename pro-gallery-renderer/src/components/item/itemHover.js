@@ -46,7 +46,7 @@ export default class ItemHover extends React.Component {
         onTouchEnd={actions.handleItemMouseUp}
         >
           <div className="gallery-item-hover-inner">
-            {this.props.render(this.props)}
+            {this.props.render ? this.props.render(this.props) : this.props.children}
           </div>
         </div>);
   }
