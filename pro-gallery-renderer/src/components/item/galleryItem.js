@@ -155,7 +155,9 @@ class GalleryItem {
       styleParams: config.styleParams,
       actions: config.actions,
       currentIdx: config.currentIdx,
-      currentHover: config.currentHover
+      currentHover: config.currentHover,
+      customInfoRenderer: config.customInfoRenderer,
+      customHoverRenderer: config.customHoverRenderer
     }, config);
 
   }

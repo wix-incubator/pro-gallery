@@ -10,6 +10,11 @@
         &:before {
           opacity: 0;
         }
+
+        .gallery-item-hover-inner {
+          opacity: 0;
+        }
+
       }
 
       .gallery-item-hover.hovered,
@@ -22,6 +27,7 @@
           background: $bg-dark-opacity;
         }
 
+        .gallery-item-hover-inner,
         .gallery-item-social-button,
         .gallery-item-title,
         .gallery-item-description,

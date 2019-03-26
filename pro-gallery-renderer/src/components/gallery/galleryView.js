@@ -141,6 +141,8 @@ class GalleryView extends React.Component {
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
       currentHover: this.props.currentHover,
+      customHoverRenderer: this.props.customHoverRenderer,
+      customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
       actions: {
         toggleFullscreen: this.props.actions.toggleFullscreen,

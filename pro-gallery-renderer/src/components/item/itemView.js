@@ -403,7 +403,9 @@ class ItemView extends React.Component {
   }
 
   getItemHover(children, imageDimensions) {
-    const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
+    // const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
+    const {customHoverRenderer, ...props} = this.props;
+    const renderFunction = customHoverRenderer ? (props => customHoverRenderer(props)) : (() => children);
     return <ItemHover {...props}
             forceShowHover={this.showHover()}
             shouldHover={this.shouldHover()}
@@ -413,9 +415,8 @@ class ItemView extends React.Component {
               handleItemMouseDown: this.handleItemMouseDown,
               handleItemMouseUp: this.handleItemMouseUp,
             }}
-            >
-              {children}
-            </ItemHover>;
+            render={renderFunction}
+            />;
   }
 
   getImageItem(imageDimensions) {
@@ -561,7 +562,8 @@ class ItemView extends React.Component {
     let info = null;
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
-    const itemTexts = this.getItemTextsDetails();
+    const {customInfoRenderer} = this.props;
+    const itemTexts = customInfoRenderer ? customInfoRenderer(this.props) : this.getItemTextsDetails();
     if (itemTexts) {
       info = (
         <div style={{height: styleParams.externalInfoHeight, textAlign: styleParams.galleryTextAlign}}

@@ -777,6 +777,8 @@ export class GalleryContainer extends React.Component {
           displayShowMore = {displayShowMore}
           domId = {this.props.domId}
           currentHover = {this.state.currentHover}
+          customHoverRenderer = {this.props.customHoverRenderer}
+          customInfoRenderer = {this.props.customInfoRenderer}
           actions = {_.merge(this.props.actions, {
             findNeighborItem,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
