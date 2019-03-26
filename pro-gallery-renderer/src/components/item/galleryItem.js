@@ -873,8 +873,15 @@ class GalleryItem {
   }
 
   get linkData() {
-    if (this.metadata.link) {
-      return this.metadata.link.data || {};
+    if (this.metadata.link && this.metadata.link.data) {
+      return this.metadata.link.data;
+    } else if (this.isWixUrl) {
+      return {
+        type: 'web',
+        url: this.linkUrl
+      };
+    } else {
+      return {};
     }
   }
 
@@ -936,7 +943,7 @@ class GalleryItem {
           return 'Go to Link';
         }
       case 'web':
-        return this.linkUrl;
+        return this.linkTitleFromUrl || this.linkUrl;
       case 'page':
         return this.linkTitle;
       default:
@@ -1064,6 +1071,16 @@ class GalleryItem {
       this.metadata.link = {};
     }
     this.metadata.link.url = value;
+  }
+
+  get isWixUrl() {
+    return (this.linkUrl && this.linkUrl.indexOf('wix') === 0);
+  }
+
+  get linkTitleFromUrl() {
+    const regex = /[^\/]*\.\w+$/g;
+    const match = regex.exec(this.linkUrl)[0];
+    return match.split('.')[0];
   }
 
   get unprotectedLinkOpenType() {
