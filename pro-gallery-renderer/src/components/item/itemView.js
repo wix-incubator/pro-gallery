@@ -216,7 +216,7 @@ class ItemView extends React.Component {
       } else {
         this.props.actions.setCurrentHover(this.props.idx);
       }
-    } else if (itemClick === 'expand' || itemClick === 'link' || itemClick === 'popup' || itemClick === 'itemUrl') {
+    } else if (itemClick !== 'nothing') {
       this.props.actions.toggleFullscreen(this.props.idx);
     }
   }

@@ -117,13 +117,18 @@ export class GalleryContainer extends React.Component {
       }
     };
 
+    const getSignificantProps = props => {
+      const {domId, styles, container, items} = props;
+      return {domId, styles, container, items};
+    };
+
     if (this.reCreateGalleryTimer) {
       clearTimeout(this.reCreateGalleryTimer);
     }
 
     let hasPropsChanged = true;
     try {
-      hasPropsChanged = (JSON.stringify(this.props) !== JSON.stringify(nextProps));
+      hasPropsChanged = (JSON.stringify(getSignificantProps(this.props)) !== JSON.stringify(getSignificantProps(nextProps)));
     } catch (e) {
       console.error('Cannot compare props', e);
     }
@@ -640,12 +645,12 @@ export class GalleryContainer extends React.Component {
   containerGrowthDirection(styles = false) {
     const _styles = styles || this.state.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
-    const {enableInfiniteScroll, gotStyleParams} = this.props.styles;
+    const {enableInfiniteScroll} = this.props.styles;
     const {showMoreClicked} = this.state;
     const {oneRow} = _styles;
     if (oneRow) {
       return 'horizontal';
-    } else if (!gotStyleParams || (!enableInfiniteScroll && !showMoreClicked)) {
+    } else if (!enableInfiniteScroll && !showMoreClicked) {
       return 'none'; //vertical gallery with showMore button enabled and not clicked
     } else {
       return 'vertical';
