@@ -405,7 +405,6 @@ class ItemView extends React.Component {
   getItemHover(children, imageDimensions) {
     // const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     const {customHoverRenderer, ...props} = this.props;
-    const renderFunction = customHoverRenderer ? (props => customHoverRenderer(props)) : (() => children);
     return <ItemHover {...props}
             forceShowHover={this.showHover()}
             shouldHover={this.shouldHover()}
@@ -415,8 +414,8 @@ class ItemView extends React.Component {
               handleItemMouseDown: this.handleItemMouseDown,
               handleItemMouseUp: this.handleItemMouseUp,
             }}
-            render={renderFunction}
-            />;
+            render={customHoverRenderer}
+            >{children}</ItemHover>;
   }
 
   getImageItem(imageDimensions) {
