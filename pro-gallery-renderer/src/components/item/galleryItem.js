@@ -549,7 +549,6 @@ class GalleryItem {
     const urls = {};
 
     if (this.metadata.posters || this.metadata.customPoster) {
-      const maxHeight = 720;
       const qualities = this.metadata.qualities;
       const poster = this.metadata.customPoster || (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null);
       if (poster) {
@@ -559,7 +558,7 @@ class GalleryItem {
           const mp4Qualities = qualities.filter(video => video.formats[0] === 'mp4');
           //search for the first quality bigger that the required one
           for (let quality, q = 0; quality = mp4Qualities[q]; q++) {
-            if (quality.height >= requiredHeight || quality.height >= maxHeight || !mp4Qualities[q + 1]) {
+            if (quality.height >= requiredHeight || !mp4Qualities[q + 1]) {
               suffix += quality.quality; //e.g. 720p
               for (let format, i = 0; format = quality.formats[i]; i++) {
                 urls[format] = window.location.protocol + '//video.wixstatic.com/video/' + this.url + suffix + '/' + format + '/file.' + format;

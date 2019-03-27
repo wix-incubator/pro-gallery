@@ -1,12 +1,22 @@
 import React from 'react';
-import ReactPlayer from 'react-player-fork';
+import ReactPlayer from 'react-player';
 import utils from '../../../utils';
+import Player from '@vimeo/player';
+import * as VideoGallerySDK from '@wix/video-gallery-sdk';
 
 class VideoItem extends React.Component {
 
   constructor(props) {
     super(props);
-
+    if (props.videoUrl && props.videoUrl.includes('wix:video://')) {
+      this.shouldWaitForWixUrl = true;
+    } else {
+      this.shouldWaitForWixUrl = false;
+    }
+		//Vimeo player must be loaded by us, problem with requireJS
+    if (!(window && window.Vimeo) && props.videoUrl && props.videoUrl.includes('vimeo.com')) {
+      window.Vimeo = {Player};
+    }
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.state = {
@@ -30,7 +40,23 @@ class VideoItem extends React.Component {
   }
 
   //-----------------------------------------| UTILS |--------------------------------------------//
-
+  initWixCodeVideoUrl() {
+    const id = this.props.url;
+    const requiredHeight = this.props.imageDimensions.height;
+    VideoGallerySDK.getVideoURLs(id).then(urls => {
+      const mp4Qualities = urls.filter(video => video.type === 'MP4');
+      let currentQuality;
+      for (let quality, q = 0; quality = mp4Qualities[q]; q++) {
+        currentQuality = Number(quality.quality.slice(0, -1));
+        if (currentQuality >= requiredHeight || !mp4Qualities[q + 1]) {
+          this.setState({
+            wixLocalUrl: window.location.protocol + mp4Qualities[q].url,
+            urlIsReady: true});
+          break;
+        }
+      }
+    });
+  }
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
@@ -38,6 +64,7 @@ class VideoItem extends React.Component {
     const videoDimensionsCss = {
       width: isWiderThenContainer ? '100%' : 'auto',
       height: isWiderThenContainer ? 'auto' : '100%',
+      opacity: this.props.loadingStatus ? '1' : '0'
     };
 
     if (this.props.styleParams.cubeImages && this.props.styleParams.cubeType === 'fill') { //grid crop mode
@@ -51,12 +78,18 @@ class VideoItem extends React.Component {
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
     }
+    let url;
+    if (this.shouldWaitForWixUrl) {
+      url = this.state.wixLocalUrl;
+    } else {
+      url = this.props.videoUrl ? this.props.videoUrl : this.props.resized_url.mp4;
+    }
     return <ReactPlayer
       className={'gallery-item-visible video gallery-item'}
       width="100%"
       height="100%"
       onReady={this.props.actions.setItemLoaded}
-      url={this.props.videoUrl ? this.props.videoUrl : this.props.resized_url.mp4}
+      url = {url}
       loop={!!this.props.styleParams.videoLoop}
       ref={player => this.video = player}
 			volume={this.props.styleParams.videoSound ? 0.8 : 0}
@@ -74,16 +107,16 @@ class VideoItem extends React.Component {
       onPlay={() => {
         this.setState({playing: true});
       }}
-      fileConfig={
-      {
-        attributes: {
-          muted: !this.props.styleParams.videoSound,
-          preload: 'metadata',
-          poster: this.props.resized_url.img,
-          style: videoDimensionsCss
-        }
-      }
-      }
+			config={{
+  file: {
+    attributes: {
+      muted: !this.props.styleParams.videoSound,
+      preload: 'metadata',
+      poster: this.props.resized_url.img,
+      style: videoDimensionsCss
+    }
+  }
+}}
       key={'video-' + this.props.id}
     />;
   }
@@ -105,7 +138,11 @@ class VideoItem extends React.Component {
                 src={this.props.resized_url.img}
                 />;
   }
-
+  componentWillMount() {
+    if (this.shouldWaitForWixUrl) {
+      this.initWixCodeVideoUrl();
+    }
+  }
   componentDidMount() {
     this.props.onMount(this);
   }
@@ -120,11 +157,16 @@ class VideoItem extends React.Component {
     else if (!utils.isMobile() && videoPlay !== 'onClick') return true;
     else return false;
   }
-
+  shouldRender() {
+    if (this.shouldWaitForWixUrl && !this.state.urlIsReady)			{
+      return false;
+    }
+    return true;
+  }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    let baseClassName = 'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item' + (utils.isiPhone() ? ' ios' : '') + (this.props.loaded ? 'gallery-item-loaded' : '');
+    let baseClassName = 'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item' + (utils.isiPhone() ? ' ios' : '') + (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '');
     if (this.state.playing) {
       baseClassName += ' playing';
     }
@@ -136,15 +178,15 @@ class VideoItem extends React.Component {
     const videoPreloader = <div className="pro-circle-preloader" key={'video-preloader-' + this.props.idx}/>;
     const {marginLeft, marginTop, ...restOfDimensions} = this.props.imageDimensions || {};
     const {videoPlay, itemClick} = this.props.styleParams;
-    const video = this.canVideoPlayInGallery(itemClick, videoPlay) ? (
+    const video = this.canVideoPlayInGallery(itemClick, videoPlay) && this.shouldRender() ? (
       <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"
           key={'video_container-' + this.props.id}
-          style={this.props.loaded || utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
-        >
-          {this.createPlayerElement()}
-          {videoControls}
+          style={utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
+					>
+					{this.createPlayerElement()}
+					{videoControls}
           {videoPreloader}
         </div>
     ) : (

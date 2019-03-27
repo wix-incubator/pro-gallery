@@ -493,10 +493,10 @@ class ItemView extends React.Component {
         itemInner = <div/>;
         break;
       case 'video':
-        if (!visible) {
-          itemInner = this.getVideoItemPlaceholder(itemHover);
-        } else {
+        if (visible) {
           itemInner = this.getVideoItem(imageDimensions, itemHover);
+        } else {
+          itemInner = this.getVideoItemPlaceholder(itemHover);
         }
         break;
       case 'text':
