@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player';
 import utils from '../../../utils';
 import Player from '@vimeo/player';
 import * as VideoGallerySDK from '@wix/video-gallery-sdk';
+import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class VideoItem extends React.Component {
 
