@@ -26,27 +26,16 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@vimeo/player": "^2.8.2",
-    "@wix/video-gallery-sdk": "^1.0.48",
-    "pro-gallery-layouter": "^2.0.25",
-=======
     "@vimeo/player": "2.8.2",
     "@wix/video-gallery-sdk": "1.0.48",
->>>>>>> [pgr+pfr] package json: defined versions for video related dependencies
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
     "dotenv": "^6.0.0",
     "image-client-api": "1.3130.0",
     "prepend-http-extra": "^1.0.0",
-<<<<<<< HEAD
-    "react-player": "^1.10.0",
-    "react-player-fork": "^0.12.106",
-=======
     "pro-gallery-layouter": "^2.0.25",
     "react-player-fork": "^0.12.106",	
     "react-player": "1.10.0",
->>>>>>> [pgr+pfr] package json: defined versions for video related dependencies
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
