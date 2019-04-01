@@ -1080,8 +1080,9 @@ class GalleryItem {
 
   get linkTitleFromUrl() {
     const regex = /[^\/]*\.\w+$/g;
-    const match = regex.exec(this.linkUrl)[0];
-    return match.split('.')[0];
+    const regexRes = regex.exec(this.linkUrl)[0];
+    const match = regexRes && regexRes[0];
+    return match && match.split('.')[0];
   }
 
   get unprotectedLinkOpenType() {
