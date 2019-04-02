@@ -1080,7 +1080,7 @@ class GalleryItem {
 
   get linkTitleFromUrl() {
     const regex = /[^\/]*\.\w+$/g;
-    const regexRes = regex.exec(this.linkUrl)[0];
+    const regexRes = regex.exec(this.linkUrl);
     const match = regexRes && regexRes[0];
     return match && match.split('.')[0];
   }
