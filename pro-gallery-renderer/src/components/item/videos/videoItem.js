@@ -95,8 +95,6 @@ class VideoItem extends React.Component {
       ref={player => this.video = player}
 			volume={this.props.styleParams.videoSound ? 0.8 : 0}
       playing={this.props.playing}
-      poster={this.props.resized_url.img}
-      mockPlayer={!this.state.playedOnce && (this.props.isExternalVideo || utils.isMobile())}
       onEnded={() => {
         this.setState({playing: false});
         this.props.onEnd();
@@ -158,7 +156,10 @@ class VideoItem extends React.Component {
     else if (!utils.isMobile() && videoPlay !== 'onClick') return true;
     else return false;
   }
-  shouldRender() {
+  shouldRenderVideo() {
+    if (!this.state.playedOnce && (this.props.isExternalVideo || utils.isMobile())) {
+      return false;
+    }
     if (this.shouldWaitForWixUrl && !this.state.urlIsReady)			{
       return false;
     }
@@ -179,7 +180,7 @@ class VideoItem extends React.Component {
     const videoPreloader = <div className="pro-circle-preloader" key={'video-preloader-' + this.props.idx}/>;
     const {marginLeft, marginTop, ...restOfDimensions} = this.props.imageDimensions || {};
     const {videoPlay, itemClick} = this.props.styleParams;
-    const video = this.canVideoPlayInGallery(itemClick, videoPlay) && this.shouldRender() ? (
+    const video = this.canVideoPlayInGallery(itemClick, videoPlay) && this.shouldRenderVideo() ? (
       <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"

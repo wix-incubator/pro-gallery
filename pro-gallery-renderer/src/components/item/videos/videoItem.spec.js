@@ -27,13 +27,16 @@ describe('Video Item ', () => {
     });
   });
 
-  it('should create PlayerElement if video can play in gallery', () => {
+  it('should create PlayerElement if video can play in gallery, and is set to play', () => {
     //utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(true);
     Object.assign(sampleItemViewProps.styleParams, {
-      itemClick: 'link'
+      itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
+    driver.set.props(
+      {playing: true
+      });
     expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(0);
 
@@ -41,6 +44,9 @@ describe('Video Item ', () => {
       itemClick: 'nothing'
     });
     driver.mount(VideoItem, sampleItemViewProps);
+    driver.set.props(
+      {playing: true
+      });
     expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     stub.restore();
@@ -51,12 +57,18 @@ describe('Video Item ', () => {
       itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
+    driver.set.props(
+      {playing: true
+      });
     expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     Object.assign(sampleItemViewProps.styleParams, {
       itemClick: 'nothing',
     });
     driver.mount(VideoItem, sampleItemViewProps);
+    driver.set.props(
+      {playing: true
+      });
     expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     stub.restore();
@@ -67,12 +79,18 @@ describe('Video Item ', () => {
       videoPlay: 'hover',
     });
     driver.mount(VideoItem, sampleItemViewProps);
+    driver.set.props(
+      {playing: true
+      });
     expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     Object.assign(sampleItemViewProps.styleParams, {
       videoPlay: 'auto',
     });
     driver.mount(VideoItem, sampleItemViewProps);
+    driver.set.props(
+      {playing: true
+      });
     expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     stub.restore();
