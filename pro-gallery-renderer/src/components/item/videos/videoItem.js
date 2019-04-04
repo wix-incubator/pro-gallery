@@ -32,6 +32,12 @@ class VideoItem extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentIdx !== this.props.currentIdx) {
+      this.fixIFrameTabIndexIfNeeded();
+    }
+  }
+
   play() {
     this.props.playVideo(this.props.idx);
   }
@@ -87,10 +93,11 @@ class VideoItem extends React.Component {
     }
     return <ReactPlayer
       className={'gallery-item-visible video gallery-item'}
+      id={`video-${this.props.id}`}
       width="100%"
       height="100%"
       onReady={this.props.actions.setItemLoaded}
-      url = {url}
+      url={url}
       loop={!!this.props.styleParams.videoLoop}
       ref={player => this.video = player}
 			volume={this.props.styleParams.videoSound ? 0.8 : 0}
@@ -106,18 +113,36 @@ class VideoItem extends React.Component {
       onPlay={() => {
         this.setState({playing: true});
       }}
-			config={{
-  file: {
-    attributes: {
-      muted: !this.props.styleParams.videoSound,
-      preload: 'metadata',
-      poster: this.props.resized_url.img,
-      style: videoDimensionsCss
-    }
-  }
-}}
+      onReady={() => {
+        this.fixIFrameTabIndexIfNeeded();
+      }}
+      config={{
+        file: {
+          attributes: {
+            muted: !this.props.styleParams.videoSound,
+            preload: 'metadata',
+            poster: this.props.resized_url.img,
+            style: videoDimensionsCss
+          }
+        }
+      }}
       key={'video-' + this.props.id}
     />;
+  }
+
+  fixIFrameTabIndexIfNeeded() {
+    if (this.props.isExternalVideo) {
+      const videoGalleryItem = window.document && window.document.getElementById(`video-${this.props.id}`);
+      const videoIFrames = videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
+      const videoIFrame = videoIFrames && videoIFrames[0];
+      if (videoIFrame) {
+        if (this.props.currentIdx === this.props.idx) {
+          videoIFrame.setAttribute('tabIndex', '0');
+        } else {
+          videoIFrame.setAttribute('tabIndex', '-1');
+        }
+      }
+    }
   }
 
   createImageElement() {
