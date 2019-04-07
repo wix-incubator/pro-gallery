@@ -40,9 +40,6 @@ export class GalleryContainer extends React.Component {
       showMoreClicked: false,
       currentHover: -1,
       gotFirstScrollEvent: !experiments('specs.pro-gallery.dynamicScrollPreloading'),
-      items: [],
-      styles: {},
-      container: {}
     };
 
     this.items = [];
