@@ -705,6 +705,9 @@ export class GalleryContainer extends React.Component {
       this.galleryStructure.galleryItems.length > 0 &&
       !this.gettingMoreItems &&
       (typeof this.props.getMoreItems === 'function') &&
+      this.state.items &&
+      this.state.styles &&
+      this.state.container &&
       this.props.totalItemsCount > this.state.items.length
     ) { //more items can be fetched from the server
       //TODO - add support for horizontal galleries
