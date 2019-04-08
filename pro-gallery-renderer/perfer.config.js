@@ -1,7 +1,4 @@
 module.exports = {
-  puppeteerOptions: {
-    devtools: true
-  },
   setup: require.resolve('./perfer-setup'),
   sites: [{
     name: 'root',
