@@ -23,7 +23,9 @@
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
     "start-no-test": "PORT=9837 yoshi start --no-test",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "pretest:performance": "npm run build-storybook",
+    "test:performance": "perfer"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
@@ -53,6 +55,7 @@
     "@storybook/addon-links": "^3.4.7",
     "@storybook/addons": "^3.4.7",
     "@storybook/react": "^3.4.7",
+    "@wix/bolt-performance": "^0.3.8",
     "axios": "^0.16.2",
     "babel-core": "^6.26.3",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
