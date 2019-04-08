@@ -8,8 +8,8 @@ import GalleryItem from './components/item/galleryItem';
 import {CommonItemContainer} from './components/item/commonItemContainer';
 
 export {
-    ProGallery,
-    LoveButton,
-    GalleryItem,
-    CommonItemContainer
+  ProGallery,
+  LoveButton,
+  GalleryItem,
+  CommonItemContainer
 };

@@ -7,16 +7,16 @@ import {LoveButton} from './loveButton.js';
 export const LoveButtonContainer = props => {
 
   return (
-        <LoveButton
-            toggleLove={props.actions.toggleLove}
-            photoId={props.photoId}
-            showCounter={props.showCounter}
-            isLoved={props.isLoved}
-            count={props.count}
-            device={props.device}
-            layout={props.layout}
-            isStoreGallery={props.isStoreGallery}
-        />
+    <LoveButton
+      toggleLove={props.actions.toggleLove}
+      photoId={props.photoId}
+      showCounter={props.showCounter}
+      isLoved={props.isLoved}
+      count={props.count}
+      device={props.device}
+      layout={props.layout}
+      isStoreGallery={props.isStoreGallery}
+    />
   );
 };
 
@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(LoveButtonContainer);
 

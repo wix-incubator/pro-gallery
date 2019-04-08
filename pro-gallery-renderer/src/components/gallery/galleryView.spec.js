@@ -58,11 +58,11 @@ describe('Gallery View', () => {
   describe('More Button tests ', () => {
     it('should hide load more button when infinte scroll enable', () => {
       Object.assign(initialGalleryViewProps,
-				{galleryStructure: {height: 100}},
+        {galleryStructure: {height: 100}},
       );
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       Object.assign(galleryViewProps,
-				{displayShowMore: false},
+        {displayShowMore: false},
       );
       driver.mount(GalleryView, galleryViewProps);
       expect(driver.find.hook('show-more').length).to.equal(0);

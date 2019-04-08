@@ -14,7 +14,7 @@ class VideoItem extends React.Component {
     } else {
       this.shouldWaitForWixUrl = false;
     }
-		//Vimeo player must be loaded by us, problem with requireJS
+    //Vimeo player must be loaded by us, problem with requireJS
     if (!(window && window.Vimeo) && props.videoUrl && props.videoUrl.includes('vimeo.com')) {
       window.Vimeo = {Player};
     }
@@ -100,7 +100,7 @@ class VideoItem extends React.Component {
       url={url}
       loop={!!this.props.styleParams.videoLoop}
       ref={player => this.video = player}
-			volume={this.props.styleParams.videoSound ? 0.8 : 0}
+      volume={this.props.styleParams.videoSound ? 0.8 : 0}
       playing={this.props.playing}
       onEnded={() => {
         this.setState({playing: false});
@@ -147,7 +147,7 @@ class VideoItem extends React.Component {
 
   createImageElement() {
     return <img ref={img => {
-			// onLoad replacement for SSR
+      // onLoad replacement for SSR
       if (!img) {
         return;
       }
@@ -156,11 +156,11 @@ class VideoItem extends React.Component {
         this.props.actions.setItemLoaded(); //first call, will not be called again because if it was called once loadingStatus.loaded will be true
       }
     }}
-                onError={this.props.actions.setItemError}
-                key={'image-' + this.props.id}
-                className={'gallery-item-hidden gallery-item-visible gallery-item ' + (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') + (this.props.loadingStatus.failed ? ' failed ' : '')}
-                src={this.props.resized_url.img}
-                />;
+    onError={this.props.actions.setItemError}
+    key={'image-' + this.props.id}
+    className={'gallery-item-hidden gallery-item-visible gallery-item ' + (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') + (this.props.loadingStatus.failed ? ' failed ' : '')}
+    src={this.props.resized_url.img}
+    />;
   }
   componentWillMount() {
     if (this.shouldWaitForWixUrl) {
@@ -207,26 +207,26 @@ class VideoItem extends React.Component {
     const {videoPlay, itemClick} = this.props.styleParams;
     const video = this.canVideoPlayInGallery(itemClick, videoPlay) && this.shouldRenderVideo() ? (
       <div
-          className={baseClassName + ' animated fadeIn '}
-          data-hook="video_container-video-player-element"
-          key={'video_container-' + this.props.id}
-          style={utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
-					>
-					{this.createPlayerElement()}
-					{videoControls}
-          {videoPreloader}
-        </div>
+        className={baseClassName + ' animated fadeIn '}
+        data-hook="video_container-video-player-element"
+        key={'video_container-' + this.props.id}
+        style={utils.deviceHasMemoryIssues() ? {} : {backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
+      >
+        {this.createPlayerElement()}
+        {videoControls}
+        {videoPreloader}
+      </div>
     ) : (
       <div
-          className={baseClassName}
-          data-hook="video_container-image-element"
-          key={'video_container-' + this.props.id}
-          style={{backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
-        >
-          {this.createImageElement()}
-          {videoControls}
-          {videoPreloader}
-        </div>
+        className={baseClassName}
+        data-hook="video_container-image-element"
+        key={'video_container-' + this.props.id}
+        style={{backgroundImage: `url(${this.props.resized_url.thumb})`, ...restOfDimensions}}
+      >
+        {this.createImageElement()}
+        {videoControls}
+        {videoPreloader}
+      </div>
     );
 
 

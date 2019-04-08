@@ -364,99 +364,99 @@ class ItemView extends React.Component {
     const shouldShowButton = (isImage || !utils.isStoreGallery()) && useCustomButton;
 
     return <Texts {...props}
-              key={`item-texts-${props.id}`}
-              itemContainer={this.itemContainer}
-              showShare={this.state.showShare}
-              isSmallItem={this.isSmallItem()}
-              titlePlacement={this.props.styleParams.titlePlacement}
-              shouldShowButton={shouldShowButton} />;
+      key={`item-texts-${props.id}`}
+      itemContainer={this.itemContainer}
+      showShare={this.state.showShare}
+      isSmallItem={this.isSmallItem()}
+      titlePlacement={this.props.styleParams.titlePlacement}
+      shouldShowButton={shouldShowButton} />;
   }
 
   getSocial() {
     const props = _.pick(this.props, ['html', 'hashtag', 'photoId', 'item', 'idx', 'currentIdx', 'id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
     return <Social {...props}
-              showShare={this.state.showShare}
-              isSmallItem={this.isSmallItem()}
-              isVerticalContainer={this.isVerticalContainer()}
-              key={`item-social-${props.id}`}
-              actions={{
-                openItemShopInFullScreen: this.openItemShopInFullScreen,
-                toggleShare: this.toggleShare,
-                getShare: this.getShare,
-                showTooltip: itemActions.showTooltip,
-                hideTooltip: itemActions.hideTooltip,
-              }}
-              />;
+      showShare={this.state.showShare}
+      isSmallItem={this.isSmallItem()}
+      isVerticalContainer={this.isVerticalContainer()}
+      key={`item-social-${props.id}`}
+      actions={{
+        openItemShopInFullScreen: this.openItemShopInFullScreen,
+        toggleShare: this.toggleShare,
+        getShare: this.getShare,
+        showTooltip: itemActions.showTooltip,
+        hideTooltip: itemActions.hideTooltip,
+      }}
+    />;
   }
 
   getShare() {
     const props = _.pick(this.props, ['styleParams', 'id', 'type', 'style', 'currentIdx', 'idx']);
     return <Share {...props}
-              allProps={this.props}
-              key={`item-share-${props.id}`}
-              showShare={this.state.showShare}
-              isVerticalContainer={this.isVerticalContainer()}
-              actions={{
-                toggleShare: this.toggleShare,
-              }}
-              />;
+      allProps={this.props}
+      key={`item-share-${props.id}`}
+      showShare={this.state.showShare}
+      isVerticalContainer={this.isVerticalContainer()}
+      actions={{
+        toggleShare: this.toggleShare,
+      }}
+    />;
   }
 
   getItemHover(children, imageDimensions) {
     // const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     const {customHoverRenderer, ...props} = this.props;
     return <ItemHover {...props}
-            forceShowHover={this.showHover()}
-            shouldHover={this.shouldHover()}
-            imageDimensions={imageDimensions}
-            key="hover"
-            actions={{
-              handleItemMouseDown: this.handleItemMouseDown,
-              handleItemMouseUp: this.handleItemMouseUp,
-            }}
-            render={customHoverRenderer}
-            >{children}</ItemHover>;
+      forceShowHover={this.showHover()}
+      shouldHover={this.shouldHover()}
+      imageDimensions={imageDimensions}
+      key="hover"
+      actions={{
+        handleItemMouseDown: this.handleItemMouseDown,
+        handleItemMouseUp: this.handleItemMouseUp,
+      }}
+      render={customHoverRenderer}
+    >{children}</ItemHover>;
   }
 
   getImageItem(imageDimensions) {
     const props = _.pick(this.props, ['alt', 'title', 'description', 'id', 'idx', 'styleParams', 'resized_url', 'settings']);
     return <ImageItem {...props}
-            key="imageItem"
-						visible = {this.getItemVisibility()}
-            loaded={this.state.loaded}
-            displayed={this.state.displayed}
-            imageDimensions={imageDimensions}
-            isThumbnail={!!this.props.thumbnailHighlightId}
-            actions={{
-              handleItemMouseDown: this.handleItemMouseDown,
-              handleItemMouseUp: this.handleItemMouseUp,
-              setItemLoaded: this.setItemLoaded,
-              setItemError: this.setItemError,
-            }}
-           />;
+      key="imageItem"
+      visible = {this.getItemVisibility()}
+      loaded={this.state.loaded}
+      displayed={this.state.displayed}
+      imageDimensions={imageDimensions}
+      isThumbnail={!!this.props.thumbnailHighlightId}
+      actions={{
+        handleItemMouseDown: this.handleItemMouseDown,
+        handleItemMouseUp: this.handleItemMouseUp,
+        setItemLoaded: this.setItemLoaded,
+        setItemError: this.setItemError,
+      }}
+    />;
   }
 
   getVideoItem(imageDimensions, itemHover) {
     return <VideoItem
-            {...this.props}
-            onMount={this.videoOnMount.bind(this)}
-            onUnmount={this.videoOnUnmount.bind(this)}
-            onEnd={this.props.videoEnded.bind(this)}
-            key={'video' + this.props.idx}
-            hover={itemHover}
-            imageDimensions={imageDimensions}
-            loadingStatus={{
-              failed: this.state.failed,
-              loaded: this.state.loaded,
-            }}
-            onClick={this.handleVideoClick}
-            actions={_.merge({}, this.props.actions, {
-              setItemLoaded: this.setItemLoaded,
-              setItemError: this.setItemError,
-              handleItemMouseDown: this.handleItemMouseDown,
-              handleItemMouseUp: this.handleItemMouseUp,
-            })}
-            />;
+      {...this.props}
+      onMount={this.videoOnMount.bind(this)}
+      onUnmount={this.videoOnUnmount.bind(this)}
+      onEnd={this.props.videoEnded.bind(this)}
+      key={'video' + this.props.idx}
+      hover={itemHover}
+      imageDimensions={imageDimensions}
+      loadingStatus={{
+        failed: this.state.failed,
+        loaded: this.state.loaded,
+      }}
+      onClick={this.handleVideoClick}
+      actions={_.merge({}, this.props.actions, {
+        setItemLoaded: this.setItemLoaded,
+        setItemError: this.setItemError,
+        handleItemMouseDown: this.handleItemMouseDown,
+        handleItemMouseUp: this.handleItemMouseUp,
+      })}
+    />;
   }
   getVideoItemPlaceholder(itemHover) {
     return <VideoItemPlaceholder id={this.props.idx} resized_url={this.props.resized_url} hover={itemHover} />;
@@ -465,16 +465,16 @@ class ItemView extends React.Component {
   getTextItem(imageDimensions) {
     const props = _.pick(this.props, ['id', 'styleParams', 'style', 'html', 'cubeRatio']);
     return <TextItem
-							{...props}
-							visible = {this.getItemVisibility()}
-              key="textItem"
-              imageDimensions={imageDimensions}
-              actions={{
-                handleItemMouseDown: this.handleItemMouseDown,
-                handleItemMouseUp: this.handleItemMouseUp,
-                setItemLoaded: this.setItemLoaded,
-              }}
-              />;
+      {...props}
+      visible = {this.getItemVisibility()}
+      key="textItem"
+      imageDimensions={imageDimensions}
+      actions={{
+        handleItemMouseDown: this.handleItemMouseDown,
+        handleItemMouseUp: this.handleItemMouseUp,
+        setItemLoaded: this.setItemLoaded,
+      }}
+    />;
   }
 
   getItemInner() {
@@ -566,13 +566,13 @@ class ItemView extends React.Component {
     if (itemTexts) {
       info = (
         <div style={{height: styleParams.externalInfoHeight, textAlign: styleParams.galleryTextAlign}}
-             className={elementName}
-             onMouseOver={() => {
-               utils.isMobile() ? _.noop() : this.props.actions.setCurrentHover(this.props.idx);
-             }}
-             onMouseOut={() => {
-               utils.isMobile() ? _.noop() : this.props.actions.setCurrentHover(-1);
-             }}>
+          className={elementName}
+          onMouseOver={() => {
+            utils.isMobile() ? _.noop() : this.props.actions.setCurrentHover(this.props.idx);
+          }}
+          onMouseOut={() => {
+            utils.isMobile() ? _.noop() : this.props.actions.setCurrentHover(-1);
+          }}>
           {itemTexts}
         </div>);
     }
@@ -815,7 +815,7 @@ class ItemView extends React.Component {
     if (!this.scrollEventListenerSet) {
       this.scrollEventListenerSet = true;
       const scrollInterval = 500;
-		//Vertical Scroll
+      //Vertical Scroll
       this.onVerticalScroll = _.throttle(e => {
         const target = this.normalizeWixParams(e);
         this.setState({
@@ -824,13 +824,13 @@ class ItemView extends React.Component {
             vertical: target
           })
         },
-					() => setVerticalVisibility({target, props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState})
-				);
+        () => setVerticalVisibility({target, props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState})
+        );
       }, scrollInterval);
       const {scrollingElement} = this.props;
       scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
 
-    //Horizontal Scroll
+      //Horizontal Scroll
       const {oneRow} = this.props.styleParams;
       if (oneRow) {
         this.onHorizontalScroll = _.throttle(({target}) => {
@@ -840,7 +840,7 @@ class ItemView extends React.Component {
               horizontal: target
             })
           }, () => setHorizontalVisibility({target, props: this.props, screenSize: this.screenSize, padding: this.padding, callback: this.setVisibilityState})
-				);
+          );
         }, scrollInterval);
         scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
       }
@@ -884,12 +884,12 @@ class ItemView extends React.Component {
           key={'item-container-' + id}
           style={this.getItemContainerStyles()}
           {...this.getSEOLink()}
-          >
+        >
           {this.getTopInfoElementIfNeeded()}
           <div data-hook="item-wrapper" className={this.getItemWrapperClass()}
             key={'item-wrapper-' + id}
             style={this.getItemWrapperStyles()}
-            >
+          >
             {this.getItemInner()}
           </div>
           {this.getBottomInfoElementIfNeeded()}

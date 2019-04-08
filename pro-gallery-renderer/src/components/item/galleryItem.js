@@ -493,7 +493,7 @@ class GalleryItem {
 
       const retUrl = resizer((prefix + originalUrl), this.maxWidth, this.maxHeight, requiredWidth, requiredHeight, options);
 
-		/*
+      /*
       console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
         originalUrl,
         resizeMethod,

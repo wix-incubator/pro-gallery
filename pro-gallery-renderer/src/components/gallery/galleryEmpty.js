@@ -8,7 +8,7 @@ class GalleryEmpty extends React.Component {
 
   componentWillMount() {
     this.props.actions.setWixHeight(390, window.innerHeight);
-		//TODO-NewGalleryContianer - remove this function because the functionality is now in the TPAwrapper
+    //TODO-NewGalleryContianer - remove this function because the functionality is now in the TPAwrapper
   }
 
   render() {
@@ -24,7 +24,7 @@ class GalleryEmpty extends React.Component {
         <div className="pro-gallery-empty-info">
           {translationUtils.getByKey('Gallery_ArtStore_Organize_Images_EmptyState_Text')}<br/>
         </div>
-        </div>) : (
+      </div>) : (
       <div>
         <div className="pro-gallery-empty-title">
           {translationUtils.getByKey('Gallery_Empty_Title')}<br/>

@@ -11,7 +11,7 @@ export default class galleryDriver {
     this.debug = false;
   }
 
-// we should look at opening one browser insead of opening one every test. this might require takeing it out of the driver.
+  // we should look at opening one browser insead of opening one every test. this might require takeing it out of the driver.
   async openGallery(kind = 'Gallery', name = 'Default', device = 'Desktop') {
     if (this.debug) {
       this.browser = await puppeteer.launch({

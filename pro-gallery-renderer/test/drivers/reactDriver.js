@@ -108,7 +108,7 @@ class galleryDriver {
       scrollToItem: _.noop,
       toggleShare: _.noop
     };
-		//video functions used passed by commonItemcontainer decorator
+    //video functions used passed by commonItemcontainer decorator
     this.videoEnded = _.noop;
     this.videoAdded = _.noop;
     this.videoRemoved = _.noop;

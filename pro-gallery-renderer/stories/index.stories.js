@@ -22,7 +22,7 @@ storiesOf('Gallery', module)
         galleryLayout: 0,
         itemClick: 'expand'
       })}
-		/>
+    />
   ))
   .add('Masonry', () => (
     <ProGallery
@@ -33,7 +33,7 @@ storiesOf('Gallery', module)
         allowDownload: true,
         loveButton: false
       })}
-		/>
+    />
   ))
   .add('Grid', () => (
     <ProGallery
@@ -41,7 +41,7 @@ storiesOf('Gallery', module)
         galleryLayout: 2,
         itemClick: 'expand'
       })}
-		/>
+    />
   ))
   .add('Thumbnails', () => (
     <ProGallery
@@ -49,7 +49,7 @@ storiesOf('Gallery', module)
         galleryLayout: 3,
         itemClick: 'expand'
       })}
-		/>
+    />
   ))
   .add('Slider', () => (
     <ProGallery
@@ -57,7 +57,7 @@ storiesOf('Gallery', module)
         galleryLayout: 4,
         itemClick: 'expand'
       })}
-		/>
+    />
   ))
   .add('Slide Show', () => (
     <ProGallery
@@ -65,7 +65,7 @@ storiesOf('Gallery', module)
         galleryLayout: 5,
         itemClick: 'expand'
       })}
-		/>
+    />
   ))
   .add('Strip', () => (
     <ProGallery
@@ -73,7 +73,7 @@ storiesOf('Gallery', module)
         galleryLayout: 6,
         itemClick: 'expand'
       })}
-		/>
+    />
   ))
   .add('Column', () => (
     <ProGallery
@@ -81,13 +81,13 @@ storiesOf('Gallery', module)
         galleryLayout: 7,
         itemClick: 'expand'
       })}
-		/>
+    />
   ))
   .add('Empty Gallery', () => (
     <ProGallery
       {...createProps({}, [])}
 
-		/>
+    />
   ));
 
 storiesOf('Eyes', module)

@@ -50,7 +50,7 @@ describe('GalleryItem ', () => {
     expect(galleryItem.style).to.deep.equal({width: 1920, cubedWidth: 1920, height: 1000, cubedHeight: 1000});
     expect(antiGalleryItem.style).to.deep.equal({width: 1, cubedWidth: 1, height: 1, cubedHeight: 1});
   });
-	//not testing missuse of item-core
+  //not testing missuse of item-core
 
   it('should use processScheme on scheme created from dto, does not have scheme parameters (undefined) without dto', () => {
     expect(galleryItem.id).equal('8b72558253b2502b401bb46e5599f22a');
@@ -136,7 +136,7 @@ describe('GalleryItem ', () => {
     expect(galleryItem.defaultLinkText).to.equal('Go to Link');
   });
   it('getting correct resized url', () => {
-		//2 tests of the output.
+    //2 tests of the output.
     const url = galleryItem.resizedUrl('fill', 100, 100, {quality: 80}, false);
     const object = {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
       thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_70,blur_30/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'};
@@ -175,11 +175,11 @@ describe('GalleryItem ', () => {
     spyerror.restore();
   });
   it('should get a new watermark if there is none in the config', done => {
-		//IMOPRTANT -
-		// notice that the watermarkData is a promise. thus it resolves into .then and assignes the strings only after the data returns.
-		// to stub such a function into returning something(an object in this example), it is not enought to use "returns" but we need to use "resolves" because we will then have a .then function attached.
-		// now that we have .then, we can not simply "expect" strings to be assigned immediately. the will be undefined.
-		// to counter this i put the creation of the class in a promise of it's own. and in the resolving .then I use the "expects".
+    //IMOPRTANT -
+    // notice that the watermarkData is a promise. thus it resolves into .then and assignes the strings only after the data returns.
+    // to stub such a function into returning something(an object in this example), it is not enought to use "returns" but we need to use "resolves" because we will then have a .then function attached.
+    // now that we have .then, we can not simply "expect" strings to be assigned immediately. the will be undefined.
+    // to counter this i put the creation of the class in a promise of it's own. and in the resolving .then I use the "expects".
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
     const stubApi = sinon.stub(watermarkApi, 'getWatermarkData').resolves({imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300});
     const spyerror = sinon.spy(console, 'error');

@@ -21,7 +21,7 @@ export default ({videoQueue, utils}) => store => {
 
   return next => action => {
     const {
-			type,
+      type,
       payload
     } = action;
     const {gallery: {videoPlayMode}} = store.getState();

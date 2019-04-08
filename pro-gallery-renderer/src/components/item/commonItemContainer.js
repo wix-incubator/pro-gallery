@@ -52,12 +52,12 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
       const {photoId} = this.props;
       const {isLoved, loveCount} = this.state;
       return <ComposedComponent
-          {...this.props}
-          love={{
-            isLoved,
-            count: loveCount + (isLoved ? 1 : 0),
-            toggleLove: this.toggleLove.bind(this)
-          }}
+        {...this.props}
+        love={{
+          isLoved,
+          count: loveCount + (isLoved ? 1 : 0),
+          toggleLove: this.toggleLove.bind(this)
+        }}
       />;
     }
   }

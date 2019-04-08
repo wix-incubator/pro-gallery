@@ -760,15 +760,15 @@ export class GalleryContainer extends React.Component {
 
     return (
       <div data-key="pro-gallery-inner-container" key="pro-gallery-inner-container">
-			<CssScrollIndicator
-			galleryDomId={this.props.domId}
-			oneRow={this.state.styles.oneRow}
-			scrollBase={this.state.container.scrollBase}
-			scrollingElement={this._scrollingElement}
-			getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
-			enableScrollPreload={this.enableScrollPreload}
+        <CssScrollIndicator
+          galleryDomId={this.props.domId}
+          oneRow={this.state.styles.oneRow}
+          scrollBase={this.state.container.scrollBase}
+          scrollingElement={this._scrollingElement}
+          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+          enableScrollPreload={this.enableScrollPreload}
         />
-				<ViewComponent
+        <ViewComponent
           galleryDomId={this.props.domId}
           isInDisplay = {this.props.isInDisplay}
           scrollingElement = {this._scrollingElement}

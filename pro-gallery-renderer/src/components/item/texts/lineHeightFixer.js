@@ -80,7 +80,7 @@ class LineHeightFixer {
       styleParams.loveButton ||
 			styleParams.allowDownload;
     return (
-			style.height !== newStyle.height ||
+      style.height !== newStyle.height ||
 			style.width !== newStyle.width ||
 			styleParams.isSlideshow !== newStyleParams.isSlideshow ||
 			styleParams.allowTitle !== newStyleParams.allowTitle ||

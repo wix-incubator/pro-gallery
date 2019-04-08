@@ -54,7 +54,7 @@ class SlideshowView extends React.Component {
     const lastItem = () => (this.state.currentIdx >= this.props.totalItemsCount - 1) || !lastItemInGallery || (this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right);
     return lastItem() && !this.enableSlideshowLoop;
   }
-//__________________________________Slide show loop functions_____________________________________________
+  //__________________________________Slide show loop functions_____________________________________________
   shouldEnableSlideshowLoop() {
     const {galleryLayout, slideshowLoop} = this.props.styleParams;
     const {renderedItemsCount, totalItemsCount} = this.props;
@@ -89,15 +89,15 @@ class SlideshowView extends React.Component {
     Object.keys(items).forEach(idx => {
       const _idx = Number(idx);
       let biasIdx;
-    //bias all items idx by the number of added items
+      //bias all items idx by the number of added items
       biasIdx = _idx + numOfThumbnails;
       biasedItems[biasIdx] = items[idx];
-    //create the first copy of items
+      //create the first copy of items
       if (_idx > items.length - numOfThumbnails - 1) {
         biasIdx = _idx - items.length + numOfThumbnails;
         biasedItems[biasIdx] = items[idx];
       }
-    //create the end items
+      //create the end items
       if (_idx < numOfThumbnails) {
         biasIdx = _idx + numOfThumbnails + items.length;
         biasedItems[biasIdx] = items[idx];
@@ -115,7 +115,7 @@ class SlideshowView extends React.Component {
       return React.createElement(GroupView, _.merge(galleryGroups[galleryGroups.length - 1].renderProps(galleryConfig), {store: this.props.store}));
     }
   }
-//__________________________________end of slide show loop functions__________________________
+  //__________________________________end of slide show loop functions__________________________
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
     const {scrollToItem} = this.props.actions;
@@ -134,20 +134,20 @@ class SlideshowView extends React.Component {
     }
 
     if (isAutoTrigger) {
-			// ---- Called by the Auto Slideshow ---- //
+      // ---- Called by the Auto Slideshow ---- //
       if (this.isLastItem()) {
         nextItem = 0;
         scrollDuration = 0;
       }
     } else {
-		// ---- Called by the user (arrows, keys etc.) ---- //
+      // ---- Called by the user (arrows, keys etc.) ---- //
       this.startAutoSlideshowIfNeeded(this.props.styleParams);
       const isScrollingPastEdge = ((direction === 1 && this.isLastItem()) || (direction === -1 && this.isFirstItem()));
       if (isScrollingPastEdge) {
         return;
       }
     }
-		// ---- navigate ---- //
+    // ---- navigate ---- //
     try {
       scrollToItem(nextItem, false, true, scrollDuration);
     } catch (e) {
@@ -339,35 +339,35 @@ class SlideshowView extends React.Component {
     const {thumbnailSize} = this.props.styleParams;
     return (
       <div className={'pro-gallery inline-styles thumbnails-gallery ' + (oneRow ? ' one-row hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
-          style={{
-            width,
-            height,
-            margin: thumbnailsMargin
-          }}
-          data-hook="gallery-thumbnails">
-          <div data-hook="gallery-thumbnails-column" className={'galleryColumn'} key={'thumbnails-column'}
-            style={Object.assign(thumbnailsStyle, {width, height})}>
-              {thumbnailItems.map((item, idx) => {
-                const thumbnailItem = this.enableSlideshowLoop ? getThumbnailItemForSlideshowLoop(item.itemId) : item;
-                const highlighted = this.enableSlideshowLoop ? (idx === highlighledIdxForSlideshowLoop) : (thumbnailItem.idx === currentIdx);
-                const itemStyle = {
-                  width: thumbnailSize,
-                  height: thumbnailSize,
-                  margin: thumbnailSpacings,
-                  backgroundImage: `url(${thumbnailItem.thumbnail_url.img})`,
-                };
-                const thumbnailOffset = oneRow ? {left: (thumbnailSize * idx) + 2 * idx * thumbnailSpacings} : {top: (thumbnailSize * idx) + 2 * idx * thumbnailSpacings};
-                Object.assign(itemStyle, thumbnailOffset);
-                return (<div
-                  key={'thumbnail-' + thumbnailItem.id}
-                  className={'thumbnailItem' + (highlighted ? (' pro-gallery-thumbnails-highlighted gallery-item-container highlight' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')) : '')}
-                  data-key={thumbnailItem.id}
-                  style={itemStyle}
-                  onContextMenu={e => this.onContextMenu(e)}
-                  onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
-                />);
-              })}
-          </div>
+        style={{
+          width,
+          height,
+          margin: thumbnailsMargin
+        }}
+        data-hook="gallery-thumbnails">
+        <div data-hook="gallery-thumbnails-column" className={'galleryColumn'} key={'thumbnails-column'}
+          style={Object.assign(thumbnailsStyle, {width, height})}>
+          {thumbnailItems.map((item, idx) => {
+            const thumbnailItem = this.enableSlideshowLoop ? getThumbnailItemForSlideshowLoop(item.itemId) : item;
+            const highlighted = this.enableSlideshowLoop ? (idx === highlighledIdxForSlideshowLoop) : (thumbnailItem.idx === currentIdx);
+            const itemStyle = {
+              width: thumbnailSize,
+              height: thumbnailSize,
+              margin: thumbnailSpacings,
+              backgroundImage: `url(${thumbnailItem.thumbnail_url.img})`,
+            };
+            const thumbnailOffset = oneRow ? {left: (thumbnailSize * idx) + 2 * idx * thumbnailSpacings} : {top: (thumbnailSize * idx) + 2 * idx * thumbnailSpacings};
+            Object.assign(itemStyle, thumbnailOffset);
+            return (<div
+              key={'thumbnail-' + thumbnailItem.id}
+              className={'thumbnailItem' + (highlighted ? (' pro-gallery-thumbnails-highlighted gallery-item-container highlight' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')) : '')}
+              data-key={thumbnailItem.id}
+              style={itemStyle}
+              onContextMenu={e => this.onContextMenu(e)}
+              onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
+            />);
+          })}
+        </div>
       </div>
     );
   }
@@ -488,9 +488,9 @@ class SlideshowView extends React.Component {
       >
         <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
           <path id="_250_middle_right_copy_3" data-name="250 middle right  copy 3" className="slideshow-arrow"
-                style={svgStyle}
-                d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
-                transform="translate(-133 -225)"/>
+            style={svgStyle}
+            d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
+            transform="translate(-133 -225)"/>
         </svg>
 
       </button>),
@@ -505,9 +505,9 @@ class SlideshowView extends React.Component {
       >
         <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
           <path id="_250_middle_right_copy_2" data-name="250 middle right  copy 2" className="slideshow-arrow"
-                style={svgStyle}
-                d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
-                transform="translate(-855 -230)"/>
+            style={svgStyle}
+            d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
+            transform="translate(-855 -230)"/>
         </svg>
       </button>)
     ];
@@ -542,7 +542,7 @@ class SlideshowView extends React.Component {
       return (
         <div data-hook="gallery-column" id="gallery-horizontal-scroll" className="gallery-horizontal-scroll gallery-column hide-scrollbars" key={'column' + c}
           style={columnStyle}
-          >
+        >
           {!!column.galleryGroups.length && this.InsertLastItemAsTheFirstItem(column.galleryGroups, galleryConfig)}
           {!!column.galleryGroups.length && column.galleryGroups.map(group => group.rendered ? React.createElement(GroupView, _.merge(group.renderProps(galleryConfig), {store: this.props.store})) : false)}
         </div>
@@ -632,9 +632,9 @@ class SlideshowView extends React.Component {
     }
     if (!utils.isSite()) {
       if (( //check that the change is related to the slideshow settings
-          (this.props.styleParams.isAutoSlideshow !== props.styleParams.isAutoSlideshow) ||
+        (this.props.styleParams.isAutoSlideshow !== props.styleParams.isAutoSlideshow) ||
           (this.props.styleParams.autoSlideshowInterval !== props.styleParams.autoSlideshowInterval)
-				)) {
+      )) {
         this.startAutoSlideshowIfNeeded(props.styleParams);
       }
     }
@@ -643,9 +643,9 @@ class SlideshowView extends React.Component {
 
   createEmptyState() {
     return ((!(this.props.renderedItemsCount > 0) && utils.isEditor()) ?
-    (<GalleryEmpty actions={{
-      setWixHeight: this.props.actions.setWixHeight
-    }}/>) : '');
+      (<GalleryEmpty actions={{
+        setWixHeight: this.props.actions.setWixHeight
+      }}/>) : '');
   }
 
   componentDidMount() {

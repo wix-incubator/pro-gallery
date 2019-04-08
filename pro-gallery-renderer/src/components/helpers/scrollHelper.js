@@ -8,7 +8,7 @@ export function scrollToItemImp(scrollParams) {
   const {durationInMS, horizontalElement, scrollingElement, oneRow, galleryWidth, galleryHeight, top, items, itemIdx, fixedScroll, isManual} = scrollParams;
 
   if (fixedScroll === true) {
-      //scroll by half the container size
+    //scroll by half the container size
 
     if (oneRow) {
       pos = horizontalElement.scrollLeft + itemIdx * galleryWidth / 2;
@@ -18,7 +18,7 @@ export function scrollToItemImp(scrollParams) {
 
   } else {
 
-      //scroll to specific item
+    //scroll to specific item
     if (utils.isVerbose()) {
       console.log('Scrolling to items #' + itemIdx);
     }
@@ -41,7 +41,7 @@ export function scrollToItemImp(scrollParams) {
         window.galleryWixCodeApi.onItemChanged(item);
       }
 
-        //set scroll to place the item in the middle of the component
+      //set scroll to place the item in the middle of the component
       const diff = (galleryWidth - item.width) / 2;
       if (diff > 0) {
         pos -= diff;
@@ -112,10 +112,10 @@ function setInitialVisibility({props, screenSize, padding, callback}) {
   }, props, screenSize, padding, callback});
 }
 export {
-	isWithinPaddingHorizontally,
-	isWithinPaddingVertically,
-	setHorizontalVisibility,
-	setVerticalVisibility,
-	setInitialVisibility,
+  isWithinPaddingHorizontally,
+  isWithinPaddingVertically,
+  setHorizontalVisibility,
+  setVerticalVisibility,
+  setInitialVisibility,
 }
 ;

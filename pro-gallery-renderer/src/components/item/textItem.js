@@ -5,7 +5,7 @@ export default class TextItem extends React.Component {
   getTextDimensions() {
     const {style, styleParams, cubeRatio} = this.props;
     const isVerticalItem = style.ratio < (cubeRatio - 0.01);
-		//text dimensions include scaling
+    //text dimensions include scaling
     const textHeight = (isVerticalItem ? (style.height / style.maxHeight) : (style.width / style.maxWidth)) * style.maxHeight;
     const marginTop = styleParams.cubeType === 'fit' ? 0 : (style.height - textHeight) / 2;
     const transform = 'translate(0, 0) scale(' + (isVerticalItem ? (style.height / style.maxHeight) : (style.width / style.maxWidth)) + ')';

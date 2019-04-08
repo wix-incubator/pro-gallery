@@ -23,12 +23,12 @@ class GroupView extends React.Component {
       height: (this.props.totalHeight)
     };
     return (
-        <div
-          key={`group_${this.props.idx}`}
-          data-hook={'group-view'}
-        >
-          {this.createDom(true)}
-        </div>);
+      <div
+        key={`group_${this.props.idx}`}
+        data-hook={'group-view'}
+      >
+        {this.createDom(true)}
+      </div>);
   }
 }
 

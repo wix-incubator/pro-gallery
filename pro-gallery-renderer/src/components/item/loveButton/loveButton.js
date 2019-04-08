@@ -118,9 +118,9 @@ class LoveButton extends React.Component {
   createLoveCounter() {
     const count = this.state.loveCount + (this.state.isLoved ? 1 : 0);
     return !!this.props.showCounter && (count > 0) ? (
-    <i
-      data-hook="love-counter"
-      className={this.counterClassName()}>{count}</i>) : null;
+      <i
+        data-hook="love-counter"
+        className={this.counterClassName()}>{count}</i>) : null;
   }
 
   createMouseOver() {
@@ -151,24 +151,24 @@ class LoveButton extends React.Component {
     const loveColor = this.state.isLoved ? {color: 'red'} : {};
 
     return (
-        <span
-          data-hook="love-button"
-          className={this.containerClassName()}
-          onMouseOver = {this.createMouseOver()}
-          onMouseOut = {this.createMouseOut()}
-          {...clickAction}
-          onKeyDown={this.onKeyPress}
-          tabIndex={(this.props.styleParams.isSlideshow && this.props.currentIdx === this.props.idx) ? 0 : -1}
-        >
-          <button
-            data-hook="love-icon"
-            className={this.buttonClasssName()}
-            role="checkbox"
-            style={loveColor}
-            tabIndex={-1}
-          />
-          {loveCounter}
-        </span>
+      <span
+        data-hook="love-button"
+        className={this.containerClassName()}
+        onMouseOver = {this.createMouseOver()}
+        onMouseOut = {this.createMouseOut()}
+        {...clickAction}
+        onKeyDown={this.onKeyPress}
+        tabIndex={(this.props.styleParams.isSlideshow && this.props.currentIdx === this.props.idx) ? 0 : -1}
+      >
+        <button
+          data-hook="love-icon"
+          className={this.buttonClasssName()}
+          role="checkbox"
+          style={loveColor}
+          tabIndex={-1}
+        />
+        {loveCounter}
+      </span>
     );
   }
 }

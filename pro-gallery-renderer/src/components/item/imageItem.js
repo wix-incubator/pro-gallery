@@ -35,15 +35,15 @@ export default class ImageItem extends React.Component {
       onTouchEnd={actions.handleItemMouseUp}
       key={'image_container-' + id}
       data-hook={'image-item'}
-        style={displayed ? {} : {...backgroundStyle, ...restOfDimensions}}
-        ><canvas
-          key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
-          className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
-          role="img"
-          arial-label={alt}
-          data-src={resized_url.img}
-          style={restOfDimensions}
-          {...imageProps}
-        /></div>);
+      style={displayed ? {} : {...backgroundStyle, ...restOfDimensions}}
+    ><canvas
+        key={((styleParams.cubeImages && styleParams.cubeType === 'fill') ? 'cubed-' : '') + 'image'}
+        className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+        role="img"
+        arial-label={alt}
+        data-src={resized_url.img}
+        style={restOfDimensions}
+        {...imageProps}
+      /></div>);
   }
 }

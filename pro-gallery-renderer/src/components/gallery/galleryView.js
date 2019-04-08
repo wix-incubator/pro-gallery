@@ -118,12 +118,12 @@ class GalleryView extends React.Component {
 
     return (
       <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
-           style={{
-             height: galleryHeight,
-            //  width: this.props.container.galleryWidth,
-             overflowX: 'hidden'
-           }}
-           onKeyDown={this.handleArrowKeys}
+        style={{
+          height: galleryHeight,
+          //  width: this.props.container.galleryWidth,
+          overflowX: 'hidden'
+        }}
+        onKeyDown={this.handleArrowKeys}
       >
         {debugMsg}
         {layout}
@@ -153,9 +153,9 @@ class GalleryView extends React.Component {
 
   createEmptyState() {
     return ((!(this.props.renderedItemsCount > 0) && utils.isEditor()) ?
-    (<GalleryEmpty actions={{
-      setWixHeight: this.props.actions.setWixHeight
-    }}/>) : '');
+      (<GalleryEmpty actions={{
+        setWixHeight: this.props.actions.setWixHeight
+      }}/>) : '');
   }
 
   screenLogs() {

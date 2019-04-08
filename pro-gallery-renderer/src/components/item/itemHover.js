@@ -38,14 +38,14 @@ export default class ItemHover extends React.Component {
     //width and height will be taken from the gallery.scss and not be inline
 
     return (<div
-        className={hoverClass}
-        key={'item-hover-' + idx}
-        data-hook={'item-hover-' + idx}
-        style={restOfDimensions}
-        onTouchStart={actions.handleItemMouseDown}
-        onTouchEnd={actions.handleItemMouseUp}
-        >
-          {this.props.render ? <div className="gallery-item-hover-inner">{this.props.render(this.props)}</div> : this.props.children}
-        </div>);
+      className={hoverClass}
+      key={'item-hover-' + idx}
+      data-hook={'item-hover-' + idx}
+      style={restOfDimensions}
+      onTouchStart={actions.handleItemMouseDown}
+      onTouchEnd={actions.handleItemMouseUp}
+    >
+      {this.props.render ? <div className="gallery-item-hover-inner">{this.props.render(this.props)}</div> : this.props.children}
+    </div>);
   }
 }

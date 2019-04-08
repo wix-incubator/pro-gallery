@@ -36,7 +36,7 @@ export default class Social extends React.Component {
           onMouseOver={e => itemActions.showTooltip(e, 'Gallery_Sharing_Disabled_In_Editor')}
           onMouseOut={() => itemActions.hideTooltip()}
           onClick={e => e.stopPropagation()}
-          >
+        >
           {slideshowShareButton}
         </div>;
       }
@@ -53,7 +53,7 @@ export default class Social extends React.Component {
         itemId={this.props.photoId}
         layout={styleParams.isSlideshow ? 'slideshow' : 'gallery'}
         showCounter={love && love.showCounter}
-        />
+      />
     ) : '';
   }
 
@@ -162,7 +162,7 @@ export default class Social extends React.Component {
         className={'gallery-item-social gallery-item-direction-' + styleParams.galleryTextAlign + ' ' + classes}
         key={'item-social-' + id}
         data-hook="item-social"
-        >
+      >
         {loveButton}
         {download}
         {socialShare}

@@ -142,24 +142,24 @@ export default class Share extends React.Component {
     if (styleParams.allowSocial) {
       const minDimension = 200;
       return <div
-          data-hook="social-share-box"
-          className={'block-fullscreen gallery-item-social-share-box ' + (this.props.showShare ? ' opened ' : ' hidden ') + (this.state.showShare ? ' hovered ' : '') + (isVerticalContainer ? ' vertical-item ' : '')}
-          ref={e => this.socialShareBox = e}
-          onClick={e => actions.toggleShare(e, false)}
-          onMouseOut={e => actions.toggleShare(e, false)}
-          style={{
-            transform: (isVerticalContainer ? ('translateY(-50%) ' + (style.height > minDimension ? '' : 'scale(' + style.height / minDimension + ')')) : ('translateX(-50%) ' + (style.width > minDimension ? '' : 'scale(' + style.width / minDimension + ')')))
-          }}
-          tabIndex={(styleParams.isSlideshow && this.props.currentIdx === this.props.idx) ? 0 : -1}
-          onKeyDown={e => this.handleKeyDown(e, type)}
-          aria-label={'Share'}
-          role="button"
-          key={'item-social-share-container-' + id}
-          >
-            {_.map(this.shareArr, (network, i) => {
-              return this.getShareItem(network, i);
-            })}
-        </div>;
+        data-hook="social-share-box"
+        className={'block-fullscreen gallery-item-social-share-box ' + (this.props.showShare ? ' opened ' : ' hidden ') + (this.state.showShare ? ' hovered ' : '') + (isVerticalContainer ? ' vertical-item ' : '')}
+        ref={e => this.socialShareBox = e}
+        onClick={e => actions.toggleShare(e, false)}
+        onMouseOut={e => actions.toggleShare(e, false)}
+        style={{
+          transform: (isVerticalContainer ? ('translateY(-50%) ' + (style.height > minDimension ? '' : 'scale(' + style.height / minDimension + ')')) : ('translateX(-50%) ' + (style.width > minDimension ? '' : 'scale(' + style.width / minDimension + ')')))
+        }}
+        tabIndex={(styleParams.isSlideshow && this.props.currentIdx === this.props.idx) ? 0 : -1}
+        onKeyDown={e => this.handleKeyDown(e, type)}
+        aria-label={'Share'}
+        role="button"
+        key={'item-social-share-container-' + id}
+      >
+        {_.map(this.shareArr, (network, i) => {
+          return this.getShareItem(network, i);
+        })}
+      </div>;
     }
     return false;
   }

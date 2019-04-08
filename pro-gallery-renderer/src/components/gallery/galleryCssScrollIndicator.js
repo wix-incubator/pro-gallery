@@ -61,7 +61,7 @@ export default class CssScrollIndicator extends React.Component {
       try {
         scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
       } catch (e) {
-          //
+        //
       }
     } else {
       //Vertical Scroll
@@ -79,7 +79,7 @@ export default class CssScrollIndicator extends React.Component {
       try {
         scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
       } catch (e) {
-          //
+        //
       }
     }
   }
@@ -102,7 +102,7 @@ export default class CssScrollIndicator extends React.Component {
     const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
     const {galleryDomId} = this.props;
     return (
-        <div key="css-scroll-indicator" data-hook="css-scroll-indicator" data-scroll-base={verticalScrollBase} data-scroll-top={this.state.scrollTop} className={cssScrollHelper.calcScrollClasses(galleryDomId, scrollTopWithoutBase)} style={{display: 'none'}} />
+      <div key="css-scroll-indicator" data-hook="css-scroll-indicator" data-scroll-base={verticalScrollBase} data-scroll-top={this.state.scrollTop} className={cssScrollHelper.calcScrollClasses(galleryDomId, scrollTopWithoutBase)} style={{display: 'none'}} />
     );
 
   }

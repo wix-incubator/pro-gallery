@@ -101,7 +101,7 @@ describe('Slideshow View', () => {
       clock.tick(450); // does not navigate more than once every 400 ms
       driver.get.instance().handleKeypress({keyCode: null, charCode: 34, preventDefault() {}, stopPropagation() {}});
       expect(driver.get.state('currentIdx')).to.equal(4);
-			//nextItem - backward
+      //nextItem - backward
       clock.tick(450); // does not navigate more than once every 400 ms
       driver.get.instance().handleKeypress({keyCode: 38, charCode: null, preventDefault() {}, stopPropagation() {}});
       expect(driver.get.state('currentIdx')).to.equal(3);
@@ -153,11 +153,11 @@ describe('Slideshow View', () => {
   });
 
   describe('Auto Slideshow', () => {
-		//IMPORTANT - I used useFakeTimers() to run this test. if you have something that happens only X time after a click etc. you can also use this.
-		//Why not setTimeout?, setTimeout will actually wait the time you ask it to and that means a higher time cost on our tests.
-		//the fake timers "fakes" the time passing and then proceeds to the next line in the test.
-		//In this test i use 900 + 300 ms timers but in fact the test run for about 240 ms in total.
-		//To use fake timers you need to set them up. preferably in the beforeEact and afterEach. you can see how to do it in this file.
+    //IMPORTANT - I used useFakeTimers() to run this test. if you have something that happens only X time after a click etc. you can also use this.
+    //Why not setTimeout?, setTimeout will actually wait the time you ask it to and that means a higher time cost on our tests.
+    //the fake timers "fakes" the time passing and then proceeds to the next line in the test.
+    //In this test i use 900 + 300 ms timers but in fact the test run for about 240 ms in total.
+    //To use fake timers you need to set them up. preferably in the beforeEact and afterEach. you can see how to do it in this file.
     it('startAutoSlideshow is called if needed', () => {
       Object.assign(initialGalleryViewProps.styleParams, {
         isAutoSlideshow: true,

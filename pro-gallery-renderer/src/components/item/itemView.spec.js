@@ -124,7 +124,7 @@ describe('Item View', () => {
     });
     it('onVideoHover does not execute if played on mobile or if not defined as hover play', () => {
       Object.assign(sampleItemViewProps, {type: 'video'});
-			//IMPORTANT stubing a function that is going to be passed as props before it is passed. stubing after mounting interfers with react managing the props and will not always work.
+      //IMPORTANT stubing a function that is going to be passed as props before it is passed. stubing after mounting interfers with react managing the props and will not always work.
       const spy = sinon.stub(sampleItemViewProps, 'playVideo');
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.state(driver.get.visibilityState.visible);
@@ -177,7 +177,7 @@ describe('Item View', () => {
       driver.find.hook('item-container').simulate('click');
       expect(spyPlay.called).to.be.false;
       expect(spyPause.called).to.be.true;
-			// the props are toggled useing redux. to be tested in the e2e tests. here I hardcode a toggle for props.playing
+      // the props are toggled useing redux. to be tested in the e2e tests. here I hardcode a toggle for props.playing
       driver.set.props({
         playing: false
       });
@@ -189,7 +189,7 @@ describe('Item View', () => {
       spyPlay.restore();
       spyPause.restore();
     });
-		// following will always fail for video items. it looks to me like a bug. videos will never have hover on mobile
+    // following will always fail for video items. it looks to me like a bug. videos will never have hover on mobile
     // it('should toggleHover onClick when the device is mobile and the onclick is styles to nothing', () => {
     //   const mobileStub = sinon.stub(utils, 'isMobile').returns(true);
     //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'nothing', videoPlay: 'onClick'}});
@@ -203,12 +203,12 @@ describe('Item View', () => {
   });
   describe('toggleFullscreenIfNeeded', () => {
     it('should call toggleFullscreen only if the target item does not have block-fullscreen class', () => {
-			// not testing this.
+      // not testing this.
     });
   });
-	// not testing "if" isSmallItem
-	// not testing "if" isVerticalContainer
-	// not testing "if" shouldShowHoverOnMobile
+  // not testing "if" isSmallItem
+  // not testing "if" isVerticalContainer
+  // not testing "if" shouldShowHoverOnMobile
   // describe('shouldHover', () => {
   //   it('should return true/false on different item parameters', () => {
   //     Object.assign(sampleItemViewProps);
@@ -224,7 +224,7 @@ describe('Item View', () => {
   //       }
   //     });
   //     expect(instance.shouldHover()).to.be.true;
-	// 		//IMPORTANT after stubing, there is no need to "restub" to change the return value. the stub variable has the functions
+  // 		//IMPORTANT after stubing, there is no need to "restub" to change the return value. the stub variable has the functions
   //     stubEditor.returns(true);
   //     expect(instance.shouldHover()).to.equal(driver.get.state('showHover'));
   //     stubEditor.returns(false);
@@ -268,7 +268,7 @@ describe('Item View', () => {
           height: 1000,
           cubedHeight: 1000}});
       driver.mount(ItemView, sampleItemViewProps);
-			//IMPORTANT use deep when trying to compare objects
+      //IMPORTANT use deep when trying to compare objects
       expect(driver.get.instance().getImageDimensions()).to.deep.equal({width: 1920, height: 1000});
 
       driver.set.props({
@@ -301,7 +301,7 @@ describe('Item View', () => {
           cubedWidth: 1920,
           height: 1000,
           cubedHeight: 1000}});
-			//IMPORTANT notice marginTop is -0. if it was just 0 it wouldnt deep equal the -0 that returns from the function (the value is devided by -2 in the function)
+      //IMPORTANT notice marginTop is -0. if it was just 0 it wouldnt deep equal the -0 that returns from the function (the value is devided by -2 in the function)
       let testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1920);
       expect(testObject.height).to.equal(1000);
@@ -374,7 +374,7 @@ describe('Item View', () => {
   //     expect(visible).to.be.false;
   //   });
   // });
-	// not testing all the "return component" functions
+  // not testing all the "return component" functions
   describe('getItemInner', () => {
     it('should return a placeholder for non visible video', () => {
       Object.assign(sampleItemViewProps, {
@@ -405,7 +405,7 @@ describe('Item View', () => {
       expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(0);
     });
   });
-	//openItemShopInFullScreen not tested
+  //openItemShopInFullScreen not tested
   describe('getBottomInfoElement', () => {
     it('should create a CustomButton/ItemTitle if needed', () => {
       Object.assign(sampleItemViewProps, {
@@ -422,7 +422,7 @@ describe('Item View', () => {
     });
 
   });
-	//compunentDidUpdate not tested
+  //compunentDidUpdate not tested
   describe('render', () => {
     it('should create a href only if itemClick is expand', () => {
       Object.assign(sampleItemViewProps, {

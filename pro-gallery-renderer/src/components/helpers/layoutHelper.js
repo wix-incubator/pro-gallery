@@ -106,7 +106,7 @@ function getStyleBySeed(seed) {
 }
 
 function getStyleByGalleryType(styles, container) {
-    //legacy layouts
+  //legacy layouts
   const {galleryType, gallerySize} = styles;
 
   const galleryTypes = {
@@ -227,7 +227,7 @@ function getStyleByGalleryType(styles, container) {
 }
 
 function getStyleByLayout(styles, container) {
-    //new layouts
+  //new layouts
   let {galleryLayout, gallerySize, magicLayoutSeed} = styles;
 
   const layouts = {
@@ -426,20 +426,20 @@ function getStyleByLayout(styles, container) {
   };
 
   const galleyLayoutList = [
-    'empty',      // -1
-    'collage',    // 0
-    'masonry',    // 1
-    'grid',       // 2
+    'empty', // -1
+    'collage', // 0
+    'masonry', // 1
+    'grid', // 2
     'thumbnails', // 3
-    'slider',     // 4
-    'slideshow',  // 5
-    'panorama',   // 6
-    'column',     // 7
-    'magic',      // 8
-    'fullsize',   // 9
-    'bricks',     // 10
-    'alternate',  // 11
-    'mix',         // 12
+    'slider', // 4
+    'slideshow', // 5
+    'panorama', // 6
+    'column', // 7
+    'magic', // 8
+    'fullsize', // 9
+    'bricks', // 10
+    'alternate', // 11
+    'mix', // 12
   ];
 
   let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
@@ -476,14 +476,14 @@ function addLayoutStyles(styles, container) {
   const galleryLayoutV2 = styles.galleryLayout;
 
   if (!_.isUndefined(galleryLayoutV1) && _.isUndefined(galleryLayoutV2)) {
-		//legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
+    //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
     styles = Object.assign(styles, getStyleByGalleryType(styles, container)); //legacy layouts
     styles.layoutsVersion = 1;
     const selectedLayoutVars = ['galleryType', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
     styles.selectedLayout = selectedLayoutVars.map(key => String(styles[key])).join('|');
   } else {
-		//new layouts
+    //new layouts
     if (utils.isVerbose()) {
       console.log('Using galleryLayout for defaults', styles);
     }
@@ -559,7 +559,7 @@ function processLayouts(styles) {
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
 
   if (processedStyles.oneRow) {
-		//if oneRow is true, use horizontal layouts only
+    //if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
     processedStyles.scrollAnimation = Consts.scrollAnimations.NO_EFFECT;
   }
@@ -586,29 +586,29 @@ function processLayouts(styles) {
   } else if (processedStyles.isGrid && !_.isUndefined(processedStyles.galleryImageRatioFromWix)) {
     processedStyles.cubeRatio = processedStyles.galleryImageRatioFromWix;
   }
-//Used to look like that before the split :
-// if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
-// 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
-// } else if (stateStyles.isSlider && _.isUndefined(stateStyles.cubeRatio)) {
-// 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
-// } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
-// 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
-// }
+  //Used to look like that before the split :
+  // if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
+  // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
+  // } else if (stateStyles.isSlider && _.isUndefined(stateStyles.cubeRatio)) {
+  // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
+  // } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
+  // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
+  // }
 
   if ((processedStyles.isGrid && !processedStyles.oneRow) || (layoutsVersionManager.allowFixedColumnsInMasonry() && processedStyles.isMasonry && processedStyles.isVertical)) {
-// if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
-//If toggle is for Items per row, fill the fixedColumns with the number of items
-//If toggle is responsive, make fixedColumns to be 0 or undefined;
-//Show the new controls only on Vertical scroll (one ow is false)
+    // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
+    //If toggle is for Items per row, fill the fixedColumns with the number of items
+    //If toggle is responsive, make fixedColumns to be 0 or undefined;
+    //Show the new controls only on Vertical scroll (one ow is false)
     processedStyles.fixedColumns = String(processedStyles.gridStyle) === '1' ? (Number(processedStyles.numberOfImagesPerRow)) : 0;
     processedStyles.groupTypes = '1';
     processedStyles.groupSize = 1;
     processedStyles.collageAmount = 0;
     processedStyles.collageDensity = 0;
-// }
+    // }
   }
 
-//TODO this needs to split, need to leave the wixStyles assign in the statics section
+  //TODO this needs to split, need to leave the wixStyles assign in the statics section
   if (!_.isUndefined(processedStyles.numberOfImagesPerCol) && processedStyles.isGrid && processedStyles.oneRow) {
     processedStyles.fixedColumns = 0;
     switch (processedStyles.numberOfImagesPerCol) {
@@ -634,13 +634,13 @@ function processLayouts(styles) {
     }
   }
 
-	//returned to the statics because it was the definition of the object.
+  //returned to the statics because it was the definition of the object.
   // processedStyles.sharpParams = {
   //   quality: 90,
   //   usm: {}
   // };
 
-//Backwards compatibility for masonry layout
+  //Backwards compatibility for masonry layout
   if (String(processedStyles.galleryLayout) === '1') {
     if (processedStyles.isVertical) {
       processedStyles.gallerySize = Math.round(processedStyles.gallerySize * 8 + 200);
@@ -662,7 +662,7 @@ function processLayouts(styles) {
   }
 
 
-//in case a special gallery size was specified, use it
+  //in case a special gallery size was specified, use it
   if (processedStyles.gallerySizeType === 'px' && processedStyles.gallerySizePx > 0) {
     processedStyles.gallerySize = processedStyles.gallerySizePx;
   } else if (processedStyles.gallerySizeType === 'ratio' && processedStyles.gallerySizeRatio > 0) {

@@ -39,14 +39,14 @@ class ItemContainer extends React.Component {
   render() {
     this.props.love.showCounter = this.props.styleParams.loveCounter && !this.isSmallItem() && !this.isNarrow();
     return (
-        <ItemView
-            layout="galleryItem"
-            className="image"
-            isSmallItem={this.isSmallItem()}
-            isNarrow={this.isNarrow()}
-            isShort={this.isShort()}
-            {...this.props}
-        />
+      <ItemView
+        layout="galleryItem"
+        className="image"
+        isSmallItem={this.isSmallItem()}
+        isNarrow={this.isNarrow()}
+        isShort={this.isShort()}
+        {...this.props}
+      />
     );
   }
 }

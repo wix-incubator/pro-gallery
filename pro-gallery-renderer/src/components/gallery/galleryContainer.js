@@ -939,20 +939,20 @@ export class GalleryContainer extends React.Component {
     };
 
     const galleyLayoutList = [
-      'empty',      // -1
-      'collage',    // 0
-      'masonry',    // 1
-      'grid',       // 2
+      'empty', // -1
+      'collage', // 0
+      'masonry', // 1
+      'grid', // 2
       'thumbnails', // 3
-      'slider',     // 4
-      'slideshow',  // 5
-      'panorama',   // 6
-      'column',     // 7
-      'magic',      // 8
-      'fullsize',   // 9
-      'bricks',      //10
-      'alternate',   //11
-      'mix',         //12
+      'slider', // 4
+      'slideshow', // 5
+      'panorama', // 6
+      'column', // 7
+      'magic', // 8
+      'fullsize', // 9
+      'bricks', //10
+      'alternate', //11
+      'mix', //12
     ];
 
     let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
@@ -3255,72 +3255,72 @@ export class GalleryContainer extends React.Component {
 
     return this.shouldRender() && (
       this.state.styleParams.oneRow ?
-      <SlideshowView
-      totalItemsCount = {this.state.totalItemsCount}
-      renderedItemsCount = {this.state.renderedItemsCount}
-      items = {this.currentItems()}
-      galleryStructure = {this.galleryStructure}
-      styleParams = {this.state.styleParams}
-      container = {this.state.container}
-      scroll = {_.merge({}, this.state.scroll, {
-        isInfinite: this.isInfiniteScroll()
-      })}
-      watermark = {this.props.watermarkData}
-      settings = {this.props.settings}
-      gotScrollEvent = {this.state.gotScrollEvent}
-      convertToGalleryItems = {GalleryContainer.convertToGalleryItems}
-      convertDtoToLayoutItem = {GalleryContainer.convertDtoToLayoutItem}
-      domId = {this.props.domId}
-      currentHover = {this.state.currentHover}
-      actions = {_.merge(this.props.actions, {
-        toggleInfiniteScroll: this.toggleInfiniteScroll,
-        toggleFullscreen: this.toggleFullscreen,
-        setWixHeight: this.setWixHeight,
-        scrollToItem: this.scrollToItem,
-        setCurrentHover: this.setCurrentHover
-      })}
-      debug = {{
-        lastHeight: this.lastHeight,
-        newHeight: this.newHeight,
-        resizeCount: this.resizeCount,
-        orientationCount: this.orientationCount,
-        maxGalleryWidth: this.props.maxGalleryWidth
-      }}
-      store = {this.props.store}
-      { ...this.props.gallery }
-      /> :
-      <GalleryView
-      totalItemsCount = {this.state.totalItemsCount}
-      renderedItemsCount = {this.state.renderedItemsCount}
-      items = {this.currentItems()}
-      galleryStructure = {this.galleryStructure}
-      styleParams = {this.state.styleParams}
-      container = {this.state.container}
-      scroll = {_.merge({}, this.state.scroll, {
-        isInfinite: this.isInfiniteScroll()
-      })}
-      watermark = {this.props.watermarkData}
-      settings = {this.props.settings}
-      gotScrollEvent = {this.state.gotScrollEvent}
-      domId = {this.props.domId}
-      currentHover = {this.state.currentHover}
-      actions = {_.merge(this.props.actions, {
-        toggleInfiniteScroll: this.toggleInfiniteScroll,
-        toggleFullscreen: this.toggleFullscreen,
-        setWixHeight: this.setWixHeight,
-        scrollToItem: this.scrollToItem,
-        setCurrentHover: this.setCurrentHover
-      })}
-      debug = {{
-        lastHeight: this.lastHeight,
-        newHeight: this.newHeight,
-        resizeCount: this.resizeCount,
-        orientationCount: this.orientationCount,
-        maxGalleryWidth: this.props.maxGalleryWidth
-      }}
-      store = {this.props.store} { ...this.props.gallery
-      }
-      />
+        <SlideshowView
+          totalItemsCount = {this.state.totalItemsCount}
+          renderedItemsCount = {this.state.renderedItemsCount}
+          items = {this.currentItems()}
+          galleryStructure = {this.galleryStructure}
+          styleParams = {this.state.styleParams}
+          container = {this.state.container}
+          scroll = {_.merge({}, this.state.scroll, {
+            isInfinite: this.isInfiniteScroll()
+          })}
+          watermark = {this.props.watermarkData}
+          settings = {this.props.settings}
+          gotScrollEvent = {this.state.gotScrollEvent}
+          convertToGalleryItems = {GalleryContainer.convertToGalleryItems}
+          convertDtoToLayoutItem = {GalleryContainer.convertDtoToLayoutItem}
+          domId = {this.props.domId}
+          currentHover = {this.state.currentHover}
+          actions = {_.merge(this.props.actions, {
+            toggleInfiniteScroll: this.toggleInfiniteScroll,
+            toggleFullscreen: this.toggleFullscreen,
+            setWixHeight: this.setWixHeight,
+            scrollToItem: this.scrollToItem,
+            setCurrentHover: this.setCurrentHover
+          })}
+          debug = {{
+            lastHeight: this.lastHeight,
+            newHeight: this.newHeight,
+            resizeCount: this.resizeCount,
+            orientationCount: this.orientationCount,
+            maxGalleryWidth: this.props.maxGalleryWidth
+          }}
+          store = {this.props.store}
+          { ...this.props.gallery }
+        /> :
+        <GalleryView
+          totalItemsCount = {this.state.totalItemsCount}
+          renderedItemsCount = {this.state.renderedItemsCount}
+          items = {this.currentItems()}
+          galleryStructure = {this.galleryStructure}
+          styleParams = {this.state.styleParams}
+          container = {this.state.container}
+          scroll = {_.merge({}, this.state.scroll, {
+            isInfinite: this.isInfiniteScroll()
+          })}
+          watermark = {this.props.watermarkData}
+          settings = {this.props.settings}
+          gotScrollEvent = {this.state.gotScrollEvent}
+          domId = {this.props.domId}
+          currentHover = {this.state.currentHover}
+          actions = {_.merge(this.props.actions, {
+            toggleInfiniteScroll: this.toggleInfiniteScroll,
+            toggleFullscreen: this.toggleFullscreen,
+            setWixHeight: this.setWixHeight,
+            scrollToItem: this.scrollToItem,
+            setCurrentHover: this.setCurrentHover
+          })}
+          debug = {{
+            lastHeight: this.lastHeight,
+            newHeight: this.newHeight,
+            resizeCount: this.resizeCount,
+            orientationCount: this.orientationCount,
+            maxGalleryWidth: this.props.maxGalleryWidth
+          }}
+          store = {this.props.store} { ...this.props.gallery
+          }
+        />
     );
   }
 }
