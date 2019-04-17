@@ -793,7 +793,8 @@ export class GalleryContainer extends React.Component {
             toggleFullscreen: this.toggleFullscreen,
             setWixHeight: _.noop,
             scrollToItem: this.scrollToItem,
-            setCurrentHover: this.setCurrentHover
+            setCurrentHover: this.setCurrentHover,
+            setAppLoaded: this.props.setAppLoaded
           })}
           store = {this.props.store}
           { ...this.props.gallery }
