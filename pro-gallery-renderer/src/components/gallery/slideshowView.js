@@ -529,7 +529,8 @@ class SlideshowView extends React.Component {
       galleryDomId: this.props.domId,
       actions: {
         toggleFullscreen: this.props.actions.toggleFullscreen,
-        setCurrentHover: this.props.actions.setCurrentHover
+        setCurrentHover: this.props.actions.setCurrentHover,
+        setAppLoaded: this.props.actions.setAppLoaded
       }
     };
 

@@ -1,6 +1,5 @@
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ImageItem from './imageItem.js';
 import VideoItem from './videos/videoItem';
 import TextItem from './textItem.js';
@@ -125,7 +124,9 @@ class ItemView extends React.Component {
     });
   }
   setItemLoaded() {
-    performanceUtils.appLoaded('pro-gallery-statics');
+    if (!_.isUndefined(this.props.actions.setAppLoaded)) {
+      this.props.actions.setAppLoaded();
+    }
     performanceUtils.itemLoaded();
     this.setState({
       failed: false,
