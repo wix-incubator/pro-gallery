@@ -208,7 +208,7 @@ class ItemView extends React.Component {
     const {itemClick} = this.props.styleParams;
 
     e.preventDefault();
-		// make sure isThumbnail is correct
+    // make sure isThumbnail is correct
     if (!_.isBoolean(isThumbnail)) {
       isThumbnail = !!this.props.thumbnailHighlightId;
     }
