@@ -30,6 +30,7 @@ class SlideshowView extends React.Component {
     };
     appPartiallyLoaded('pro-gallery-statics');
     this.enableSlideshowLoop = false;
+    this.lastCurrentItem = undefined;
   }
 
   isFirstItem() {
@@ -70,12 +71,14 @@ class SlideshowView extends React.Component {
     this.setState({
       currentIdx: scrollIndex
     }, () => {
+      this.onCurrentItemChanged();
       scrollToItem(secondScroll, false, true, scrollDuration);
       setTimeout(() => {
         this.shouldInsertLastItem = false;
         this.setState({
           currentIdx: scrollIndex
         }, () => {
+          this.onCurrentItemChanged();
           scrollToItem(scrollIndex, false, true, 0);
         });
       }, 600);
@@ -157,9 +160,16 @@ class SlideshowView extends React.Component {
     }
     utils.setStateAndLog(this, 'Next Item', {
       currentIdx: nextItem
+    }, () => {
+      this.onCurrentItemChanged();
     });
   }
-
+  onCurrentItemChanged() {
+    if (this.lastCurrentItem !== this.state.currentIdx) {
+      this.lastCurrentItem = this.state.currentIdx;
+      this.props.actions.onCurrentItemChanged(this.state.currentIdx);
+    }
+  }
   stopAutoSlideshow() {
     clearInterval(this.autoSlideshowInterval);
   }
@@ -179,6 +189,8 @@ class SlideshowView extends React.Component {
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
     utils.setStateAndLog(this, 'Scroll to Item', {
       currentIdx: itemIdx
+    }, () => {
+      this.onCurrentItemChanged();
     });
 
     this.props.actions.scrollToItem(itemIdx, false, true, scrollDuration);
@@ -424,6 +436,8 @@ class SlideshowView extends React.Component {
     if (!_.isUndefined(currentIdx)) {
       utils.setStateAndLog(this, 'Set Current Item', {
         currentIdx
+      }, () => {
+        this.onCurrentItemChanged();
       });
     }
     return (currentIdx);
@@ -528,7 +542,7 @@ class SlideshowView extends React.Component {
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
       actions: {
-        toggleFullscreen: this.props.actions.toggleFullscreen,
+        onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,
         setAppLoaded: this.props.actions.setAppLoaded
       }

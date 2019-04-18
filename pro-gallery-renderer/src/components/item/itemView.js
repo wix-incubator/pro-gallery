@@ -187,38 +187,47 @@ class ItemView extends React.Component {
       default: return true;
     }
   }
+  handleThumbnailItemClick() {
+    _.isFunction(this.props.actions.scrollToItem) && this.props.actions.scrollToItem(this.props.idx);
+  }
+  handleGalleryItemClick(itemClick) {
+    const {videoPlay} = this.props.styleParams;
 
-  onItemClick(e, isThumbnail) {
+    _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked')) && window.galleryWixCodeApi.onItemClicked(this.props);		//TODO remove after OOI is fully integrated
 
-    e.preventDefault();
-
-    const {itemClick, videoPlay} = this.props.styleParams;
-
-    if (!_.isBoolean(isThumbnail)) {
-      isThumbnail = !!this.props.thumbnailHighlightId;
-    }
-    if (!isThumbnail && _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked'))) {
-      window.galleryWixCodeApi.onItemClicked(this.props);
-    }
-    if (isThumbnail === true && _.isFunction(this.props.actions.scrollToItem)) {
-      //the click is on a thumbnail
-      this.props.actions.scrollToItem(this.props.idx);
-    } else if (this.props.type === 'video' && itemClick === 'nothing') {
-      const shouldTogglePlay = itemClick !== 'expand' && (videoPlay === 'onClick' || utils.isMobile());
+    if (this.props.type === 'video' && itemClick === 'nothing') {
+      const shouldTogglePlay = videoPlay === 'onClick' || utils.isMobile();
       if (shouldTogglePlay) {
         this.props.playing ? this.props.pauseVideo(this.props.idx) : this.props.playVideo(this.props.idx);
       }
+    }
+    this.props.actions.onItemClicked(this.props.idx);
+  }
+
+  onItemClick(e, isThumbnail) {
+    const {itemClick} = this.props.styleParams;
+
+    e.preventDefault();
+		// make sure isThumbnail is correct
+    if (!_.isBoolean(isThumbnail)) {
+      isThumbnail = !!this.props.thumbnailHighlightId;
+    }
+
+    if (isThumbnail) {
+      this.handleThumbnailItemClick();
     } else if (this.shouldShowHoverOnMobile()) {
-      if (this.props.currentHover === this.props.idx) {
-        if (itemClick !== 'nothing') {
-          this.props.actions.toggleFullscreen(this.props.idx);
-        }
-        this.props.actions.setCurrentHover(-1);
-      } else {
-        this.props.actions.setCurrentHover(this.props.idx);
-      }
-    } else if (itemClick !== 'nothing') {
-      this.props.actions.toggleFullscreen(this.props.idx);
+      this.handleHoverClickOnMobile(itemClick);
+    } else {
+      this.handleGalleryItemClick(itemClick);
+    }
+  }
+  handleHoverClickOnMobile(itemClick) {
+    const isClickOnCurrentHoveredItem = this.props.currentHover === this.props.idx;
+    if (isClickOnCurrentHoveredItem) {
+      this.props.actions.onItemClicked(this.props.idx);
+      this.props.actions.setCurrentHover(-1);
+    } else {
+      this.props.actions.setCurrentHover(this.props.idx);
     }
   }
 
@@ -232,7 +241,7 @@ class ItemView extends React.Component {
       console.warn('Blocked fullscreen!', e);
       return;
     } else if (this.props.styleParams.fullscreen) {
-      this.props.actions.toggleFullscreen(this.props.idx);
+      this.props.actions.onItemClicked(this.props.idx);
     }
   }
 
@@ -288,7 +297,7 @@ class ItemView extends React.Component {
       if (isSlideshow) {
         return false;
       }
-      if (itemClick === 'nothing') {
+      if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if ((allowTitle || allowDescription) && (titlePlacement === Consts.placements.SHOW_ON_HOVER) && isNewMobileSettings) {
         return true;

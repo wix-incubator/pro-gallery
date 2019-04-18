@@ -102,7 +102,8 @@ class galleryDriver {
 
     this.actions = {
       toggleInfiniteScroll: _.noop,
-      toggleFullscreen: _.noop,
+      onItemClicked: _.noop,
+      onCurrentItemChanged: _.noop,
       pauseAllVideos: _.noop,
       setWixHeight: _.noop,
       scrollToItem: _.noop,

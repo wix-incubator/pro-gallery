@@ -150,18 +150,18 @@ describe('Item View', () => {
       expect(spy.called).to.be.true;
       spy.restore();
     });
-    it('should toggleFullscreen for items with link', () => {
+    it('should onItemClicked for items with link', () => {
       Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'link', videoPlay: 'onClick'}});
       driver.mount(ItemView, sampleItemViewProps);
-      const stub = sinon.stub(driver.get.props().actions, 'toggleFullscreen');
+      const stub = sinon.stub(driver.get.props().actions, 'onItemClicked');
       driver.find.hook('item-container').simulate('click');
       expect(stub.called).to.be.true;
       stub.restore();
     });
-    it('should toggleFullscreen for items with expand', () => {
+    it('should onItemClicked for items with expand', () => {
       Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'expand', videoPlay: 'onClick'}});
       driver.mount(ItemView, sampleItemViewProps);
-      const stub = sinon.stub(driver.get.props().actions, 'toggleFullscreen');
+      const stub = sinon.stub(driver.get.props().actions, 'onItemClicked');
       driver.find.hook('item-container').simulate('click');
       expect(stub.called).to.be.true;
       stub.restore();
@@ -202,7 +202,7 @@ describe('Item View', () => {
     // });
   });
   describe('toggleFullscreenIfNeeded', () => {
-    it('should call toggleFullscreen only if the target item does not have block-fullscreen class', () => {
+    it('should call onItemClicked only if the target item does not have block-fullscreen class', () => {
       // not testing this.
     });
   });

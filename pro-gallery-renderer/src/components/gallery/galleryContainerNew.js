@@ -31,7 +31,8 @@ export class GalleryContainer extends React.Component {
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
     this.scrollToItem = this.scrollToItem.bind(this);
-    this.toggleFullscreen = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
+    this.onItemClicked = (typeof props.onItemClicked === 'function') ? (itemIdx => this.props.onItemClicked(this.galleryStructure.galleryItems[itemIdx])) : () => {};
+    this.onCurrentItemChanged = (typeof props.onCurrentItemChanged === 'function') ? (itemIdx => this.props.onCurrentItemChanged(this.galleryStructure.galleryItems[itemIdx])) : () => {};
     this._scrollingElement = this.getScrollingElement();
     this.setCurrentHover = this.setCurrentHover.bind(this);
 
@@ -790,7 +791,8 @@ export class GalleryContainer extends React.Component {
           actions = {_.merge(this.props.actions, {
             findNeighborItem,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
-            toggleFullscreen: this.toggleFullscreen,
+            onItemClicked: this.onItemClicked,
+            onCurrentItemChanged: this.onCurrentItemChanged,
             setWixHeight: _.noop,
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
