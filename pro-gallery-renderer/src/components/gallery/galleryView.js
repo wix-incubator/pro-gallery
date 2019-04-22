@@ -4,7 +4,6 @@ import GalleryDebugMessage from '../gallery/galleryDebugMessage';
 import _ from 'lodash';
 import GalleryEmpty from '../gallery/galleryEmpty';
 import utils from '../../utils/index.js';
-import {appPartiallyLoaded} from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
 
@@ -26,7 +25,6 @@ class GalleryView extends React.Component {
     this.state = {
       currentIdx: 0,
     };
-    appPartiallyLoaded('pro-gallery-statics');
   }
 
   handleArrowKeys(e) {

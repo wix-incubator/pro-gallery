@@ -4,7 +4,6 @@ import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryEmpty from './galleryEmpty.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import {appPartiallyLoaded} from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import _ from 'lodash';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
@@ -28,7 +27,6 @@ class SlideshowView extends React.Component {
       currentIdx: 0,
       isInView: true,
     };
-    appPartiallyLoaded('pro-gallery-statics');
     this.enableSlideshowLoop = false;
     this.lastCurrentItem = undefined;
   }
