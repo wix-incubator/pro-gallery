@@ -492,6 +492,7 @@ export class GalleryContainer extends React.Component {
 
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNT] reCreateGalleryExpensively');
+      console.time('PROGALLERY [TIME] reCreateGalleryExpensively');
     }
 
     const state = curState || this.state || {};
@@ -610,6 +611,7 @@ export class GalleryContainer extends React.Component {
 
     if (utils.isVerbose()) {
       console.log('PROGALLERY [RENDERS] - reCreateGalleryExpensively', {isNew}, {items, styles, container, watermarkData});
+      console.timeEnd('PROGALLERY [TIME] reCreateGalleryExpensively');
     }
 
     if (isNew.any) {
