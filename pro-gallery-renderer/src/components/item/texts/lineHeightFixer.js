@@ -28,7 +28,7 @@ class LineHeightFixer {
   }
 
   getSavedDisplay(element) {
-    return (element && element.getAttribute('data-display')) || '-webkit-box';
+    return (element && element.getAttribute('data-display')) || 'flex';
   }
 
   removeElement(element) {
