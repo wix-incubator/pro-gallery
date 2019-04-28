@@ -977,6 +977,7 @@
             display: flex;
             justify-content: center;
             opacity: 0;
+            -webkit-box-pack: center;
             transition: opacity 0.4s ease;
             color: $white;
 
