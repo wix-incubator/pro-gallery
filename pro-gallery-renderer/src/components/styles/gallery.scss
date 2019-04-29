@@ -814,9 +814,8 @@
             height: auto;
             color: $text-dark;
             display: block;
-            /* autoprefixer: off */
+            /* autoprefixer: ignore next */
             -webkit-box-orient: vertical;
-            /* autoprefixer: on */
             transition: opacity 0.4s ease;
             text-overflow: ellipsis;
           }
@@ -829,9 +828,8 @@
             color: $text-dark;
             overflow: hidden;
             display: block;
-            /* autoprefixer: off */
+            /* autoprefixer: ignore next */
             -webkit-box-orient: vertical;
-            /* autoprefixer: on */
             transition: opacity 0.4s ease;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -847,9 +845,8 @@
               height: auto;
               color: $text-dark;
               overflow: hidden;
-              /* autoprefixer: off */
+              /* autoprefixer: ignore next */
               -webkit-box-orient: vertical;
-              /* autoprefixer: on */
               white-space: nowrap;
               text-overflow: ellipsis;
               display: inline;
@@ -997,9 +994,8 @@
               color: $white;
               overflow: hidden;
               display: block;
-              /* autoprefixer: off */
+              /* autoprefixer: ignore next */
               -webkit-box-orient: vertical;
-              /* autoprefixer: on */
               -webkit-line-clamp: 1;
               text-overflow: ellipsis;
               opacity: 0;
@@ -1090,10 +1086,8 @@
             color: $white;
             overflow: hidden;
             display: -webkit-box;
-            box-orient: vertical;
-            /* autoprefixer: off */
+            /* autoprefixer: ignore next */
             -webkit-box-orient: vertical;
-            /* autoprefixer: on */
             opacity: 0;
             transition: opacity 0.4s ease;
           }
@@ -1104,9 +1098,8 @@
             color: $white;
             overflow: hidden;
             display: -webkit-box;
-            /* autoprefixer: off */
+            /* autoprefixer: ignore next */
             -webkit-box-orient: vertical;
-            /* autoprefixer: on */
             opacity: 0;
             transition: opacity 0.4s ease;
             white-space: normal;
@@ -1364,10 +1357,8 @@
         .gallery-item-title {
           -webkit-line-clamp: 1;
           overflow: hidden;
-          display: -webkit-box;
-          /* autoprefixer: off */
+          /* autoprefixer: ignore next */
           -webkit-box-orient: vertical;
-          /* autoprefixer: on */
           text-overflow: ellipsis;
         }
 
@@ -1375,9 +1366,8 @@
           -webkit-line-clamp: 1;
           overflow: hidden;
           display: -webkit-box;
-          /* autoprefixer: off */
+          /* autoprefixer: ignore next */
           -webkit-box-orient: vertical;
-          /* autoprefixer: on */
           text-overflow: ellipsis;
 
           >span {
