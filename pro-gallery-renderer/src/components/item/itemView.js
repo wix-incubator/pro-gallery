@@ -866,9 +866,13 @@ class ItemView extends React.Component {
     const {directLink} = this.props;
     const {itemClick} = this.props.styleParams;
     const {url, target} = (directLink || {});
+    const isSEO = utils.isSEOBot();
+    const isPremium = utils.isPremium();
+    const shouldUseNofollow = isSEO && !isPremium;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');
     const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
-    const linkParams = shouldUseDirectLink ? {href: url, target} : {};
+    const seoLinkParams = shouldUseNofollow ? {rel: 'nofollow'} : {};
+    const linkParams = shouldUseDirectLink ? {href: url, target, ...seoLinkParams} : {};
     const innerDiv =
       <a
         data-id={photoId}

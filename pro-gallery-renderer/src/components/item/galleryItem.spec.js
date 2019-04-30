@@ -139,7 +139,8 @@ describe('GalleryItem ', () => {
     //2 tests of the output.
     const url = galleryItem.resizedUrl('fill', 100, 100, {quality: 80}, false);
     const object = {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_70,blur_30/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'};
+      thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_70,blur_30/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+      seoLink: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'};
     expect(url).to.deep.equal(object);
   });
   it('should send error if watermark is a string that cant be parsed to an object', () => {

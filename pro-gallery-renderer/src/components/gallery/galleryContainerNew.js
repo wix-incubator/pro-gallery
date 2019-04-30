@@ -480,7 +480,7 @@ export class GalleryContainer extends React.Component {
     });
 
     const allowPreloading = utils.isEditor() || gotFirstScrollEvent;
-    this.scrollCss = cssScrollHelper.calcScrollCss({
+    this.scrollCss = this.getScrollCssIfNeeded({
       galleryDomId: this.props.domId,
       items: this.galleryStructure.galleryItems,
       styleParams: styles,
@@ -600,7 +600,7 @@ export class GalleryContainer extends React.Component {
       }
 
       const allowPreloading = utils.isEditor() || state.gotFirstScrollEvent || state.showMoreClicked;
-      this.scrollCss = cssScrollHelper.calcScrollCss({
+      this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: _styles,
@@ -659,12 +659,31 @@ export class GalleryContainer extends React.Component {
       return 'vertical';
     }
   }
+  getScrollCssIfNeeded({
+    galleryDomId,
+    items,
+    styleParams,
+    allowPreloading
+  }) {
+    const isSEO = utils.isSEOBot();
+    const shouldUseScrollCss = !isSEO;
 
+    if (shouldUseScrollCss) {
+      return cssScrollHelper.calcScrollCss({
+        galleryDomId,
+        items,
+        styleParams,
+        allowPreloading
+      });
+    } else {
+      return '';
+    }
+  }
   toggleInfiniteScroll(forceVal) {
     if (forceVal !== this.state.showMoreClicked) { //forceVal is undefined or different than existing val
       const showMoreClicked = forceVal || !this.state.showMoreClicked;
       if (!this.state.gotFirstScrollEvent) { //we already called to calcScrollCss with allowPreloading = true
-        this.scrollCss = cssScrollHelper.calcScrollCss({
+        this.scrollCss = this.getScrollCssIfNeeded({
           galleryDomId: this.props.domId,
           items: this.galleryStructure.galleryItems,
           styleParams: this.state.styles,
@@ -688,7 +707,7 @@ export class GalleryContainer extends React.Component {
   enableScrollPreload() {
     if (!this.state.gotFirstScrollEvent) {
       if (!this.state.showMoreClicked) { //we already called to calcScrollCss with allowPreloading = true
-        this.scrollCss = cssScrollHelper.calcScrollCss({
+        this.scrollCss = this.getScrollCssIfNeeded({
           galleryDomId: this.props.domId,
           items: this.galleryStructure.galleryItems,
           styleParams: this.state.styles,

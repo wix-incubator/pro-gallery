@@ -585,6 +585,7 @@ class GalleryItem {
       const fp = (noCrop !== true && this.isCropped && this.focalPoint);
       urls.img = this.resizeUrlImp(this.url, resizeMethod, requiredWidth, requiredHeight, sharpParams, showFaces, true, fp);
       urls.thumb = this.resizeUrlImp(this.url, resizeMethod, thumbSize, (thumbSize * requiredHeight / requiredWidth), {...sharpParams, quality: 70, blur: 30}, showFaces, true, fp, true);
+      urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
     }
 
     // if (window.isWebpSupported && !utils.isStoreGallery()) {
