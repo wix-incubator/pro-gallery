@@ -18,7 +18,6 @@ export default class CustomButton extends React.Component {
           <CustomButtonIcon /> :
           <button data-hook="custom-button-button" onClick={() => logger.trackBi(logger.biEvents.buyNowClick)}
             tabIndex={-1}
-            style={{'-webkit-box-orient': 'vertical'}}
           >
             {buttonText}
             <div className="overlay"></div>

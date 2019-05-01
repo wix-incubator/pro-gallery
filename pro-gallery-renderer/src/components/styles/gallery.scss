@@ -814,7 +814,7 @@
             height: auto;
             color: $text-dark;
             display: block;
-            /* autoprefixer: ignore next */
+            /*! autoprefixer: ignore next */
             -webkit-box-orient: vertical;
             transition: opacity 0.4s ease;
             text-overflow: ellipsis;
@@ -828,7 +828,7 @@
             color: $text-dark;
             overflow: hidden;
             display: block;
-            /* autoprefixer: ignore next */
+            /*! autoprefixer: ignore next */
             -webkit-box-orient: vertical;
             transition: opacity 0.4s ease;
             white-space: nowrap;
@@ -845,7 +845,7 @@
               height: auto;
               color: $text-dark;
               overflow: hidden;
-              /* autoprefixer: ignore next */
+              /*! autoprefixer: ignore next */
               -webkit-box-orient: vertical;
               white-space: nowrap;
               text-overflow: ellipsis;
@@ -994,7 +994,7 @@
               color: $white;
               overflow: hidden;
               display: block;
-              /* autoprefixer: ignore next */
+              /*! autoprefixer: ignore next */
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 1;
               text-overflow: ellipsis;
@@ -1086,7 +1086,7 @@
             color: $white;
             overflow: hidden;
             display: -webkit-box;
-            /* autoprefixer: ignore next */
+            /*! autoprefixer: ignore next */
             -webkit-box-orient: vertical;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -1098,7 +1098,7 @@
             color: $white;
             overflow: hidden;
             display: -webkit-box;
-            /* autoprefixer: ignore next */
+            /*! autoprefixer: ignore next */
             -webkit-box-orient: vertical;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -1357,7 +1357,7 @@
         .gallery-item-title {
           -webkit-line-clamp: 1;
           overflow: hidden;
-          /* autoprefixer: ignore next */
+          /*! autoprefixer: ignore next */
           -webkit-box-orient: vertical;
           text-overflow: ellipsis;
         }
@@ -1366,7 +1366,7 @@
           -webkit-line-clamp: 1;
           overflow: hidden;
           display: -webkit-box;
-          /* autoprefixer: ignore next */
+          /*! autoprefixer: ignore next */
           -webkit-box-orient: vertical;
           text-overflow: ellipsis;
 
