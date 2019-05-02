@@ -637,6 +637,7 @@
           &.text-item {
 
             box-sizing: border-box;
+            /*! autoprefixer: ignore next */
             -webkit-font-smoothing: antialiased;
             white-space: initial;
 
@@ -736,6 +737,7 @@
             i {
               display: inline-block;
               text-rendering: auto;
+              /*! autoprefixer: ignore next */
               -webkit-font-smoothing: antialiased;
               position: absolute;
               z-index: 11;
@@ -980,6 +982,7 @@
             display: flex;
             justify-content: center;
             opacity: 0;
+            /*! autoprefixer: ignore next */
             -webkit-box-pack: center;
             transition: opacity 0.4s ease;
             color: $white;
@@ -1355,6 +1358,7 @@
         cursor: pointer;
 
         .gallery-item-title {
+          /*! autoprefixer: ignore next */
           -webkit-line-clamp: 1;
           overflow: hidden;
           /*! autoprefixer: ignore next */
@@ -1363,6 +1367,7 @@
         }
 
         .gallery-item-description {
+          /*! autoprefixer: ignore next */
           -webkit-line-clamp: 1;
           overflow: hidden;
           display: -webkit-box;
