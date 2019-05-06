@@ -1,7 +1,7 @@
 import React from 'react';
 import utils from '../../utils/index.js';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
-
+import experiments, {experimentsWrapper} from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 export default class ImageItem extends React.Component {
 
   componentDidMount() {
@@ -19,7 +19,7 @@ export default class ImageItem extends React.Component {
     const imageProps = (settings && settings.imageProps && (typeof settings.imageProps === 'function')) ? settings.imageProps(id) : {};
     const backgroundStyle = {}; //remove this inline style if rendered padding (using css) is used
     const {marginLeft, marginTop, ...restOfDimensions} = imageDimensions || {};
-    const isSEO = utils.isSEOBot();
+    const isSEO = utils.isSEOBot() || (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
     const isPremium = utils.isPremium();
     const imageItemClassName = [
       'gallery-item-content',

@@ -20,6 +20,7 @@ import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import {setHorizontalVisibility, setVerticalVisibility, setInitialVisibility} from '../helpers/scrollHelper.js';
 import {cssScrollHelper} from '../helpers/cssScrollHelper';
 import {settingsVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/settings';
+import experiments, {experimentsWrapper} from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 
 class ItemView extends React.Component {
@@ -866,7 +867,7 @@ class ItemView extends React.Component {
     const {directLink} = this.props;
     const {itemClick} = this.props.styleParams;
     const {url, target} = (directLink || {});
-    const isSEO = utils.isSEOBot();
+    const isSEO = utils.isSEOBot() || (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
     const isPremium = utils.isPremium();
     const shouldUseNofollow = isSEO && !isPremium;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');
