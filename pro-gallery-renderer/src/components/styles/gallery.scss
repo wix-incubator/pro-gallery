@@ -563,6 +563,7 @@
       box-sizing: border-box;
       font-family: $font-light;
       font-size: 11px;
+      cursor: default;
 
       &:hover {
         .gallery-item-bottom-info, .gallery-item-top-info {
