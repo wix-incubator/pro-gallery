@@ -9,6 +9,7 @@ import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
 import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import * as performanceUtils from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import * as actions from '../../actions/galleryActions.js';
@@ -393,15 +394,14 @@ class ItemView extends React.Component {
         openItemShopInFullScreen: this.openItemShopInFullScreen,
         toggleShare: this.toggleShare,
         getShare: this.getShare,
-        showTooltip: this.props.actions.itemActions.showTooltip,
-        hideTooltip: this.props.actions.itemActions.hideTooltip,
-        itemActions: this.props.actions.itemActions
+        showTooltip: itemActions.showTooltip,
+        hideTooltip: itemActions.hideTooltip,
       }}
     />;
   }
 
   getShare() {
-    const props = _.pick(this.props, ['styleParams', 'id', 'type', 'style', 'currentIdx', 'idx', 'actions']);
+    const props = _.pick(this.props, ['styleParams', 'id', 'type', 'style', 'currentIdx', 'idx']);
     return <Share {...props}
       allProps={this.props}
       key={`item-share-${props.id}`}
@@ -686,7 +686,7 @@ class ItemView extends React.Component {
     const link = {};
     if (styleParams.itemClick === 'expand') {
       // For SEO only! - don't add it if the user chose not to open in expand mode.
-      link.href = this.props.actions.itemActions.getShareUrl(this.props);
+      link.href = itemActions.getShareUrl(this.props);
     }
     return link;
   }

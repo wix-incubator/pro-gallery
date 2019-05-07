@@ -18,7 +18,6 @@ import {createCssLayouts} from '../helpers/cssLayoutsHelper.js';
 import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import _ from 'lodash';
 import utils from '../../utils';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 export class GalleryContainer extends React.Component {
 
@@ -818,8 +817,7 @@ export class GalleryContainer extends React.Component {
             setWixHeight: _.noop,
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
-            setAppLoaded: this.props.setAppLoaded,
-            itemActions: this.props.itemActions ? this.props.itemActions : itemActions
+            setAppLoaded: this.props.setAppLoaded
           })}
           store = {this.props.store}
           { ...this.props.gallery }

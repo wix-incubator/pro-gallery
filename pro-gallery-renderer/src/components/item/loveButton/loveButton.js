@@ -1,5 +1,6 @@
 import React from 'react';
 import utils from '../../../utils';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 import _ from 'lodash';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
@@ -11,15 +12,15 @@ class LoveButton extends React.Component {
     this.onKeyPress = this.onKeyPress.bind(this);
 
     this.state = {
-      isLoved: this.props.actions.itemActions.isLoved(props.itemId),
-      loveCount: this.props.actions.itemActions.getLoveCount(props.itemId),
+      isLoved: itemActions.isLoved(props.itemId),
+      loveCount: itemActions.getLoveCount(props.itemId),
       animate: false
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const currIsLoved = this.props.actions.itemActions.isLoved(nextProps.itemId);
-    const currLoveCount = this.props.actions.itemActions.getLoveCount(nextProps.itemId);
+    const currIsLoved = itemActions.isLoved(nextProps.itemId);
+    const currLoveCount = itemActions.getLoveCount(nextProps.itemId);
     if (nextProps.itemId !== this.props.itemId ||
         this.state.isLoved !== currIsLoved ||
         this.state.loveCount !== currLoveCount) {
@@ -47,8 +48,8 @@ class LoveButton extends React.Component {
     e.preventDefault();
     const item = _.pick(this.props, ['layout', 'type', 'itemId', 'id', 'item', 'idx', 'hashtag']);
     Object.assign(item, {type: 'image'});
-    this.props.actions.itemActions.postLoveActivity(item);
-    this.props.actions.itemActions.toggleLove(item.itemId, item.layout);
+    itemActions.postLoveActivity(item);
+    itemActions.toggleLove(item.itemId, item.layout);
     this.setState({
       animate: !this.state.isLoved,
       isLoved: !this.state.isLoved
@@ -125,7 +126,7 @@ class LoveButton extends React.Component {
   createMouseOver() {
     return e => {
       if (this.props.isSettings) {
-        this.props.actions.itemActions.showTooltip(e, 'This option is not available in editor');
+        itemActions.showTooltip(e, 'This option is not available in editor');
       }
     };
   }
@@ -133,14 +134,14 @@ class LoveButton extends React.Component {
   createMouseOut() {
     return () => {
       if (this.props.isSettings) {
-        this.props.actions.itemActions.hideTooltip();
+        itemActions.hideTooltip();
       }
     };
   }
 
   updateLoveCount() {
     this.setState({
-      loveCount: this.props.actions.itemActions.getLoveCount(this.props.itemId)
+      loveCount: itemActions.getLoveCount(this.props.itemId)
     });
   }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 export default class Share extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ export default class Share extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         if (this.state.showShare) {
-          this.props.actions.itemActions.share(this.shareArr[this.state.focusedShareIcon - 1], this.props, 'gallery');
+          itemActions.share(this.shareArr[this.state.focusedShareIcon - 1], this.props, 'gallery');
           this.props.actions.toggleShare(e, false);
           utils.setStateAndLog(this, 'Share Keypress', {
             showShare: false,
@@ -124,7 +125,7 @@ export default class Share extends React.Component {
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-        allProps.actions.itemActions.share(network, allProps, 'gallery');
+        itemActions.share(network, allProps, 'gallery');
       }}
       data-hook={network + '-share-button'}
       ref={button => this.buttons[idx] = button}
