@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import LoveButtonReducer from './loveButtonReducer.js';
 import GalleryReducer from './galleryReducer.js';
 import FullscreenReducer from './fullscreenReducer.js';

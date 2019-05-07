@@ -1,8 +1,8 @@
-module.exports = function (wallaby) {
+module.exports = function(wallaby) {
   const config = require('yoshi/config/wallaby-mocha')(wallaby);
   config.tests.push({
     pattern: 'test/e2e/*',
-    ignore: true
+    ignore: true,
   });
   return config;
 };

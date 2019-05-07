@@ -1,15 +1,12 @@
-'use strict';
-
-
 import ImageItem from './imageItem.js';
-import {mount} from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
 import utils from '../../utils';
-import {use, spy, expect} from 'chai';
+import { use, spy, expect } from 'chai';
 import spies from 'chai-spies';
 import ItemView from './itemView.js';
-import GalleryDriver from '../../../test/drivers/reactDriver.js';
-import {testImages} from '../../../test/images-mock';
+import GalleryDriver from '../../../__tests__/drivers/reactDriver.js';
+import { testImages } from '../../../__tests__/images-mock';
 import sinon from 'sinon';
 
 describe('Image Item', () => {
@@ -27,12 +24,15 @@ describe('Image Item', () => {
   });
 
   it('should set grid-fit if cubeType is fit', () => {
-    Object.assign(imageItemsProps, {styleParams: {cubeType: 'fit', cubeImages: true}});
+    Object.assign(imageItemsProps, {
+      styleParams: { cubeType: 'fit', cubeImages: true },
+    });
     galleryDriver.mount(ImageItem, imageItemsProps);
-    expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be.true;
+    expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be
+      .true;
   });
 
-//These tests are not working with the new gallery container (using css scroll)
+  //These tests are not working with the new gallery container (using css scroll)
   // it('should set backgroundImage if not loaded or if device has memory issues', () => {
   //   Object.assign(imageItemsProps, {loaded: false, resized_url: {thumb: 'test'}});
   //   let stub = sinon.stub(utils, 'deviceHasMemoryIssues').returns(false);

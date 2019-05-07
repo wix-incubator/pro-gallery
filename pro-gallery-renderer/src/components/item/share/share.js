@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 export default class Share extends React.Component {
   constructor(props) {
@@ -13,13 +13,14 @@ export default class Share extends React.Component {
     this.shareArr = this.getShareArr(this.props.type);
     this.state = {
       showShare: false,
-      focusedShareIcon: 0
+      focusedShareIcon: 0,
     };
-
   }
 
   getShareArr(type) {
-    return (type === 'text' ? ['facebook', 'twitter', 'tumblr', 'email'] : ['facebook', 'twitter', 'pinterest', 'tumblr', 'email']);
+    return type === 'text'
+      ? ['facebook', 'twitter', 'tumblr', 'email']
+      : ['facebook', 'twitter', 'pinterest', 'tumblr', 'email'];
   }
 
   handleKeyDown(e, type) {
@@ -31,7 +32,7 @@ export default class Share extends React.Component {
           e.preventDefault();
           e.stopPropagation();
           utils.setStateAndLog(this, 'Share Keypress', {
-            focusedShareIcon: Math.max(1, this.state.focusedShareIcon - 1)
+            focusedShareIcon: Math.max(1, this.state.focusedShareIcon - 1),
           });
           return false;
         case 39: //right
@@ -40,7 +41,10 @@ export default class Share extends React.Component {
           e.preventDefault();
           e.stopPropagation();
           utils.setStateAndLog(this, 'Share Keypress', {
-            focusedShareIcon: Math.min(type === 'text' ? 4 : 5, this.state.focusedShareIcon + 1)
+            focusedShareIcon: Math.min(
+              type === 'text' ? 4 : 5,
+              this.state.focusedShareIcon + 1,
+            ),
           });
           return false;
         case 9: //tab
@@ -53,7 +57,6 @@ export default class Share extends React.Component {
             focusedShareIcon: 0,
           });
           return false;
-
       }
     }
 
@@ -63,7 +66,11 @@ export default class Share extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         if (this.state.showShare) {
-          itemActions.share(this.shareArr[this.state.focusedShareIcon - 1], this.props, 'gallery');
+          itemActions.share(
+            this.shareArr[this.state.focusedShareIcon - 1],
+            this.props,
+            'gallery',
+          );
           this.props.actions.toggleShare(e, false);
           utils.setStateAndLog(this, 'Share Keypress', {
             showShare: false,
@@ -94,9 +101,16 @@ export default class Share extends React.Component {
       });
     }
     try {
-      if (utils.isSite() && !utils.isMobile() && window.document && window.document.activeElement && window.document.activeElement.className) {
+      if (
+        utils.isSite() &&
+        !utils.isMobile() &&
+        window.document &&
+        window.document.activeElement &&
+        window.document.activeElement.className
+      ) {
         const activeElement = window.document.activeElement;
-        const isShareItemInFocus = () => String(activeElement.className).indexOf('network-') >= 0;
+        const isShareItemInFocus = () =>
+          String(activeElement.className).indexOf('network-') >= 0;
 
         if (!this.state.showShare && isShareItemInFocus()) {
           this.socialShareBox.focus();
@@ -107,59 +121,102 @@ export default class Share extends React.Component {
       if (focusedButton > 0) {
         this.buttons[focusedButton - 1].focus();
       }
-
     } catch (e) {
       console.warn('Cannot focus on share icon', this.props.focus, e);
     }
   }
 
   getShareItem(network, idx) {
-    const {allProps} = this.props;
+    const { allProps } = this.props;
     const shareIconsNumber = this.shareArr.length;
-    return <button
-      className={`block-fullscreen has-custom-focus network-${idx + 1} progallery-svg-font-icons-` + network + (utils.isSite() ? '' : ' inactive ')}
-      style={{
-        top: this.props.isVerticalContainer ? `calc(100% / 6 * ${idx + 1} + -10px ${shareIconsNumber === 4 ? '+ 100% / 12' : ''})` : '',
-        left: this.props.isVerticalContainer ? '' : `calc(100% / 6 * ${idx + 1} + -10px ${shareIconsNumber === 4 ? '+ 100% / 12' : ''})`
-      }}
-      onClick={e => {
-        e.preventDefault();
-        e.stopPropagation();
-        itemActions.share(network, allProps, 'gallery');
-      }}
-      data-hook={network + '-share-button'}
-      ref={button => this.buttons[idx] = button}
-      title={`Share on ${network}`}
-      aria-label={`Share on ${network}, ${idx + 1} of ${this.shareArr.length}`}
-      aria-live="assertive"
-      role="button"
-      tabIndex={-1}
-      key={network + '-share-icon'}/>;
+    return (
+      <button
+        className={
+          `block-fullscreen has-custom-focus network-${idx +
+            1} progallery-svg-font-icons-` +
+          network +
+          (utils.isSite() ? '' : ' inactive ')
+        }
+        style={{
+          top: this.props.isVerticalContainer
+            ? `calc(100% / 6 * ${idx + 1} + -10px ${
+                shareIconsNumber === 4 ? '+ 100% / 12' : ''
+              })`
+            : '',
+          left: this.props.isVerticalContainer
+            ? ''
+            : `calc(100% / 6 * ${idx + 1} + -10px ${
+                shareIconsNumber === 4 ? '+ 100% / 12' : ''
+              })`,
+        }}
+        onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          itemActions.share(network, allProps, 'gallery');
+        }}
+        data-hook={network + '-share-button'}
+        ref={button => (this.buttons[idx] = button)}
+        title={`Share on ${network}`}
+        aria-label={`Share on ${network}, ${idx + 1} of ${
+          this.shareArr.length
+        }`}
+        aria-live="assertive"
+        role="button"
+        tabIndex={-1}
+        key={network + '-share-icon'}
+      />
+    );
   }
 
   render() {
-    const {styleParams, id, isVerticalContainer, actions, style, type} = this.props;
+    const {
+      styleParams,
+      id,
+      isVerticalContainer,
+      actions,
+      style,
+      type,
+    } = this.props;
     if (styleParams.allowSocial) {
       const minDimension = 200;
-      return <div
-        data-hook="social-share-box"
-        className={'block-fullscreen gallery-item-social-share-box ' + (this.props.showShare ? ' opened ' : ' hidden ') + (this.state.showShare ? ' hovered ' : '') + (isVerticalContainer ? ' vertical-item ' : '')}
-        ref={e => this.socialShareBox = e}
-        onClick={e => actions.toggleShare(e, false)}
-        onMouseOut={e => actions.toggleShare(e, false)}
-        style={{
-          transform: (isVerticalContainer ? ('translateY(-50%) ' + (style.height > minDimension ? '' : 'scale(' + style.height / minDimension + ')')) : ('translateX(-50%) ' + (style.width > minDimension ? '' : 'scale(' + style.width / minDimension + ')')))
-        }}
-        tabIndex={(styleParams.isSlideshow && this.props.currentIdx === this.props.idx) ? 0 : -1}
-        onKeyDown={e => this.handleKeyDown(e, type)}
-        aria-label={'Share'}
-        role="button"
-        key={'item-social-share-container-' + id}
-      >
-        {_.map(this.shareArr, (network, i) => {
-          return this.getShareItem(network, i);
-        })}
-      </div>;
+      return (
+        <div
+          data-hook="social-share-box"
+          className={
+            'block-fullscreen gallery-item-social-share-box ' +
+            (this.props.showShare ? ' opened ' : ' hidden ') +
+            (this.state.showShare ? ' hovered ' : '') +
+            (isVerticalContainer ? ' vertical-item ' : '')
+          }
+          ref={e => (this.socialShareBox = e)}
+          onClick={e => actions.toggleShare(e, false)}
+          onMouseOut={e => actions.toggleShare(e, false)}
+          style={{
+            transform: isVerticalContainer
+              ? 'translateY(-50%) ' +
+                (style.height > minDimension
+                  ? ''
+                  : 'scale(' + style.height / minDimension + ')')
+              : 'translateX(-50%) ' +
+                (style.width > minDimension
+                  ? ''
+                  : 'scale(' + style.width / minDimension + ')'),
+          }}
+          tabIndex={
+            styleParams.isSlideshow && this.props.currentIdx === this.props.idx
+              ? 0
+              : -1
+          }
+          onKeyDown={e => this.handleKeyDown(e, type)}
+          aria-label={'Share'}
+          role="button"
+          key={'item-social-share-container-' + id}
+        >
+          {_.map(this.shareArr, (network, i) => {
+            return this.getShareItem(network, i);
+          })}
+        </div>
+      );
     }
     return false;
   }

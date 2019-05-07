@@ -1,38 +1,39 @@
-'use strict';
-import {mount} from 'enzyme';
-import GalleryDriver from '../../../test/drivers/reactDriver';
-import {testImages} from '../../../test/images-mock';
-import {Item} from 'pro-gallery-layouter';
+import { mount } from 'enzyme';
+import GalleryDriver from '../../../__tests__/drivers/reactDriver';
+import { testImages } from '../../../__tests__/images-mock';
+import { Item } from 'pro-gallery-layouter';
 import React from 'react';
 import GalleryItem from './galleryItem';
-import {expect} from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import utils from '../../utils/index';
 import watermarkApi from '@wix/photography-client-lib/dist/src/store/watermarkApi';
 
-
-
 describe('GalleryItem ', () => {
-
   let galleryItem;
   let antiGalleryItem;
   const sampleItem = testImages[0];
   let config;
   beforeEach(() => {
-    config = {createdBy: 'Yonatan', dto: sampleItem, wixImage: {
-      scheme: {cropType: 'aaa', dto: {directLink: {}}},
-      url: 'aaaaaaaa',
-      height: 300,
-      width: 300,
-      focalPoint: 3,
-      name: 'aaa',
-      fileName: 'wixData.title',
-      title: '',
-      type: 'wixData.type',
-      link: 'this.initialLinkObject',
-      sourceName: 'wixData.sourceName',
-      tags: 'wixData.tags',
-      wm: 'wixData.wm'}};
+    config = {
+      createdBy: 'Yonatan',
+      dto: sampleItem,
+      wixImage: {
+        scheme: { cropType: 'aaa', dto: { directLink: {} } },
+        url: 'aaaaaaaa',
+        height: 300,
+        width: 300,
+        focalPoint: 3,
+        name: 'aaa',
+        fileName: 'wixData.title',
+        title: '',
+        type: 'wixData.type',
+        link: 'this.initialLinkObject',
+        sourceName: 'wixData.sourceName',
+        tags: 'wixData.tags',
+        wm: 'wixData.wm',
+      },
+    };
     galleryItem = new GalleryItem(config);
     antiGalleryItem = new GalleryItem({});
   });
@@ -47,8 +48,18 @@ describe('GalleryItem ', () => {
     expect(galleryItem.isGalleryItem).to.equal(true);
   });
   it('recieves correct styles from dto', () => {
-    expect(galleryItem.style).to.deep.equal({width: 1920, cubedWidth: 1920, height: 1000, cubedHeight: 1000});
-    expect(antiGalleryItem.style).to.deep.equal({width: 1, cubedWidth: 1, height: 1, cubedHeight: 1});
+    expect(galleryItem.style).to.deep.equal({
+      width: 1920,
+      cubedWidth: 1920,
+      height: 1000,
+      cubedHeight: 1000,
+    });
+    expect(antiGalleryItem.style).to.deep.equal({
+      width: 1,
+      cubedWidth: 1,
+      height: 1,
+      cubedHeight: 1,
+    });
   });
   //not testing missuse of item-core
 
@@ -57,60 +68,80 @@ describe('GalleryItem ', () => {
     expect(antiGalleryItem.id).equal(undefined);
   });
   it('cubeType is fill if scheme.cropType is undefined', () => {
-    Object.assign(config, {scheme: {cropType: 'aaa', dto: {directLink: {}}}});
+    Object.assign(config, {
+      scheme: { cropType: 'aaa', dto: { directLink: {} } },
+    });
     galleryItem = new GalleryItem(config);
     expect(galleryItem.cubeType).equal('aaa');
     expect(antiGalleryItem.cubeType).equal('fill');
   });
   it('createFromWixImage', () => {
-    Object.assign(config, {orderIndex: 1});
+    Object.assign(config, { orderIndex: 1 });
     galleryItem = new GalleryItem(config);
     expect(galleryItem.metaData.width).to.deep.equal(300); //metaData is taken from metadata after the crateFromWixImage
     expect(galleryItem.metaData.height).to.deep.equal(300);
   });
   it('createFromWixVideo', () => {
     delete config.wixImage;
-    Object.assign(config, {orderIndex: 1, wixVideo: {
-      fileOutput: {image: {aa: {url: 'media/aaa', width: 100, height: 100}}, video: [{height: 100, width: 100, quality: 'high', format: 'mp4'}, {height: 200, width: 200, quality: 'high', format: 'best'}]},
-      fileInput: {duration: 100},
-      fileBaseUrl: 'video/asdasd',
-      url: 'aaaaaaaa',
-      height: 300,
-      width: 300,
-      focalPoint: 3,
-      name: 'aaa',
-      fileName: 'wixData.title',
-      title: '',
-      type: 'wixData.type',
-      link: 'this.initialLinkObject',
-      sourceName: 'wixData.sourceName',
-      tags: 'wixData.tags',
-      wm: 'wixData.wm'
-    }});
+    Object.assign(config, {
+      orderIndex: 1,
+      wixVideo: {
+        fileOutput: {
+          image: { aa: { url: 'media/aaa', width: 100, height: 100 } },
+          video: [
+            { height: 100, width: 100, quality: 'high', format: 'mp4' },
+            { height: 200, width: 200, quality: 'high', format: 'best' },
+          ],
+        },
+        fileInput: { duration: 100 },
+        fileBaseUrl: 'video/asdasd',
+        url: 'aaaaaaaa',
+        height: 300,
+        width: 300,
+        focalPoint: 3,
+        name: 'aaa',
+        fileName: 'wixData.title',
+        title: '',
+        type: 'wixData.type',
+        link: 'this.initialLinkObject',
+        sourceName: 'wixData.sourceName',
+        tags: 'wixData.tags',
+        wm: 'wixData.wm',
+      },
+    });
     galleryItem = new GalleryItem(config);
     expect(galleryItem.metaData.height).to.deep.equal(100);
     expect(galleryItem.metaData.width).to.deep.equal(100);
   });
   it('createFromExternal', () => {
     delete config.wixImage;
-    Object.assign(config, {orderIndex: 1, wixExternal: {
-      fileOutput: {image: {aa: {url: 'media/aaa', width: 100, height: 100}}, video: [{height: 100, width: 100, quality: 'high', format: 'mp4'}, {height: 200, width: 200, quality: 'high', format: 'best'}]},
-      fileInput: {duration: 100},
-      fileBaseUrl: 'video/asdasd',
-      posters: [{url: 'media/aaa', width: 100, height: 100}],
-      url: 'aaaaaaaa',
-      height: 300,
-      width: 300,
-      focalPoint: 3,
-      name: 'aaa',
-      fileName: 'wixData.title',
-      title: '',
-      type: 'wixData.type',
-      link: 'this.initialLinkObject',
-      sourceName: 'wixData.sourceName',
-      tags: 'wixData.tags',
-      wm: 'wixData.wm'
-    }});
+    Object.assign(config, {
+      orderIndex: 1,
+      wixExternal: {
+        fileOutput: {
+          image: { aa: { url: 'media/aaa', width: 100, height: 100 } },
+          video: [
+            { height: 100, width: 100, quality: 'high', format: 'mp4' },
+            { height: 200, width: 200, quality: 'high', format: 'best' },
+          ],
+        },
+        fileInput: { duration: 100 },
+        fileBaseUrl: 'video/asdasd',
+        posters: [{ url: 'media/aaa', width: 100, height: 100 }],
+        url: 'aaaaaaaa',
+        height: 300,
+        width: 300,
+        focalPoint: 3,
+        name: 'aaa',
+        fileName: 'wixData.title',
+        title: '',
+        type: 'wixData.type',
+        link: 'this.initialLinkObject',
+        sourceName: 'wixData.sourceName',
+        tags: 'wixData.tags',
+        wm: 'wixData.wm',
+      },
+    });
     galleryItem = new GalleryItem(config);
     expect(galleryItem.metaData.height).to.deep.equal(1080); //these width/height numbers are hard coded for externals so it doesnt take it from anywhere else.
     expect(galleryItem.metaData.width).to.deep.equal(1920);
@@ -120,33 +151,100 @@ describe('GalleryItem ', () => {
     galleryItem.linkData = undefined;
     expect(galleryItem.defaultLinkText).to.equal('Go to Link');
     galleryItem.linkType = 'wix';
-    galleryItem.linkData = {type: 'PageLink', pageName: 'yo', phoneNumber: '5557525', anchorName: 'foo', url: 'abcd', recipient: 'bar', name: 'yonatan'};
+    galleryItem.linkData = {
+      type: 'PageLink',
+      pageName: 'yo',
+      phoneNumber: '5557525',
+      anchorName: 'foo',
+      url: 'abcd',
+      recipient: 'bar',
+      name: 'yonatan',
+    };
     expect(galleryItem.defaultLinkText).to.equal('Go to Page yo');
-    galleryItem.linkData = {type: 'AnchorLink', pageName: 'yo', phoneNumber: '5557525', anchorName: 'foo', url: 'abcd', recipient: 'bar', name: 'yonatan'};
+    galleryItem.linkData = {
+      type: 'AnchorLink',
+      pageName: 'yo',
+      phoneNumber: '5557525',
+      anchorName: 'foo',
+      url: 'abcd',
+      recipient: 'bar',
+      name: 'yonatan',
+    };
     expect(galleryItem.defaultLinkText).to.equal('Scroll to foo');
-    galleryItem.linkData = {type: 'ExternalLink', pageName: 'yo', phoneNumber: '5557525', anchorName: 'foo', url: 'abcd', recipient: 'bar', name: 'yonatan'};
+    galleryItem.linkData = {
+      type: 'ExternalLink',
+      pageName: 'yo',
+      phoneNumber: '5557525',
+      anchorName: 'foo',
+      url: 'abcd',
+      recipient: 'bar',
+      name: 'yonatan',
+    };
     expect(galleryItem.defaultLinkText).to.equal('abcd');
-    galleryItem.linkData = {type: 'EmailLink', pageName: 'yo', phoneNumber: '5557525', anchorName: 'foo', url: 'abcd', recipient: 'bar', name: 'yonatan'};
+    galleryItem.linkData = {
+      type: 'EmailLink',
+      pageName: 'yo',
+      phoneNumber: '5557525',
+      anchorName: 'foo',
+      url: 'abcd',
+      recipient: 'bar',
+      name: 'yonatan',
+    };
     expect(galleryItem.defaultLinkText).to.equal('Email bar');
-    galleryItem.linkData = {type: 'PhoneLink', pageName: 'yo', phoneNumber: '5557525', anchorName: 'foo', url: 'abcd', recipient: 'bar', name: 'yonatan'};
+    galleryItem.linkData = {
+      type: 'PhoneLink',
+      pageName: 'yo',
+      phoneNumber: '5557525',
+      anchorName: 'foo',
+      url: 'abcd',
+      recipient: 'bar',
+      name: 'yonatan',
+    };
     expect(galleryItem.defaultLinkText).to.equal('Call 5557525');
-    galleryItem.linkData = {type: 'DocumentLink', pageName: 'yo', phoneNumber: '5557525', anchorName: 'foo', url: 'abcd', recipient: 'bar', name: 'yonatan'};
+    galleryItem.linkData = {
+      type: 'DocumentLink',
+      pageName: 'yo',
+      phoneNumber: '5557525',
+      anchorName: 'foo',
+      url: 'abcd',
+      recipient: 'bar',
+      name: 'yonatan',
+    };
     expect(galleryItem.defaultLinkText).to.equal('Open yonatan');
-    galleryItem.linkData = {type: 'foobar', pageName: 'yo', phoneNumber: '5557525', anchorName: 'foo', url: 'abcd', recipient: 'bar', name: 'yonatan'};
+    galleryItem.linkData = {
+      type: 'foobar',
+      pageName: 'yo',
+      phoneNumber: '5557525',
+      anchorName: 'foo',
+      url: 'abcd',
+      recipient: 'bar',
+      name: 'yonatan',
+    };
     expect(galleryItem.defaultLinkText).to.equal('Go to Link');
   });
   it('getting correct resized url', () => {
     //2 tests of the output.
-    const url = galleryItem.resizedUrl('fill', 100, 100, {quality: 80}, false);
-    const object = {img: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      thumb: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_70,blur_30/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      seoLink: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg'};
+    const url = galleryItem.resizedUrl(
+      'fill',
+      100,
+      100,
+      { quality: 80 },
+      false,
+    );
+    const object = {
+      img:
+        'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+      thumb:
+        'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_70,blur_30/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+      seoLink:
+        'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+    };
     expect(url).to.deep.equal(object);
   });
   it('should send error if watermark is a string that cant be parsed to an object', () => {
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
     const spyerror = sinon.stub(console, 'error');
-    Object.assign(config, {watermark: 'ssss', type: 'image'});
+    Object.assign(config, { watermark: 'ssss', type: 'image' });
     galleryItem = new GalleryItem(config);
     expect(spyerror.called).to.equal(true);
     expect(galleryItem.watermarkStrSdk).to.equal(undefined);
@@ -156,7 +254,11 @@ describe('GalleryItem ', () => {
   it('should parse into a water mark object if watermark is a string that can be parsed', () => {
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
     const spyerror = sinon.stub(console, 'error');
-    Object.assign(config, {watermark: '{"imageUrl": "aaa", "opacity": 0.5, "position": 1, "size": 300}', type: 'image'});
+    Object.assign(config, {
+      watermark:
+        '{"imageUrl": "aaa", "opacity": 0.5, "position": 1, "size": 300}',
+      type: 'image',
+    });
     galleryItem = new GalleryItem(config);
     expect(spyerror.called).to.equal(false);
     expect(galleryItem.watermarkStr).to.equal(',wm_aaa-0.5-1-300');
@@ -167,7 +269,10 @@ describe('GalleryItem ', () => {
   it('should work with a watermark object', () => {
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
     const spyerror = sinon.spy(console, 'error');
-    Object.assign(config, {watermark: {imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300}, type: 'image'});
+    Object.assign(config, {
+      watermark: { imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300 },
+      type: 'image',
+    });
     galleryItem = new GalleryItem(config);
     expect(spyerror.called).to.equal(false);
     expect(galleryItem.watermarkStr).to.equal(',wm_aaa-0.5-1-300');
@@ -182,9 +287,11 @@ describe('GalleryItem ', () => {
     // now that we have .then, we can not simply "expect" strings to be assigned immediately. the will be undefined.
     // to counter this i put the creation of the class in a promise of it's own. and in the resolving .then I use the "expects".
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
-    const stubApi = sinon.stub(watermarkApi, 'getWatermarkData').resolves({imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300});
+    const stubApi = sinon
+      .stub(watermarkApi, 'getWatermarkData')
+      .resolves({ imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300 });
     const spyerror = sinon.spy(console, 'error');
-    Object.assign(config, {type: 'image'});
+    Object.assign(config, { type: 'image' });
     const resolvingItem = new Promise(resolve => {
       galleryItem = new GalleryItem(config);
       resolve();
@@ -201,9 +308,11 @@ describe('GalleryItem ', () => {
   });
   it('should get a new watermark if there is none in the config, if imageUrl is missing. return empty strings', done => {
     const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
-    const stubApi = sinon.stub(watermarkApi, 'getWatermarkData').resolves({opacity: 0.5, position: 1, size: 300});
+    const stubApi = sinon
+      .stub(watermarkApi, 'getWatermarkData')
+      .resolves({ opacity: 0.5, position: 1, size: 300 });
     const spyerror = sinon.spy(console, 'error');
-    Object.assign(config, {type: 'image'});
+    Object.assign(config, { type: 'image' });
     const resolvingItem = new Promise(resolve => {
       galleryItem = new GalleryItem(config);
       resolve();
@@ -226,7 +335,7 @@ describe('GalleryItem ', () => {
     stubPreview.returns(false);
     expect(galleryItem.linkOpenType).to.equal('_blank'); // that blank is not the same as before, its the last return
     galleryItem.metadata.link = {
-      targetBlank: true
+      targetBlank: true,
     };
     expect(galleryItem.linkOpenType).to.equal('_blank');
     galleryItem.link.targetBlank = false;

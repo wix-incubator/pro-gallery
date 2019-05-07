@@ -1,26 +1,22 @@
 import React from 'react';
-import {storiesOf} from '@storybook/react';
-import {ProGallery} from '../src/index';
-import {getProGalleryStyles} from '@wix/photography-client-lib/dist/src/utils/proGalleryStyleBuilder';
+import { storiesOf } from '@storybook/react';
+import { ProGallery } from '../src/index';
+import { getProGalleryStyles } from '@wix/photography-client-lib/dist/src/utils/proGalleryStyleBuilder';
 
 const createProps = (styles, items) => ({
   useRefactoredProGallery: true,
-  styles: {...getProGalleryStyles({}), ...styles},
+  styles: { ...getProGalleryStyles({}), ...styles },
   container: {},
-  items: items || require('../test/images-mock').testImages.slice(0, 50)
+  items: items || require('../__tests__/images-mock').testImages.slice(0, 50),
 });
 
 storiesOf('Gallery', module)
-  .add('Default', () => (
-    <ProGallery
-      {...createProps({})}
-    />
-  ))
+  .add('Default', () => <ProGallery {...createProps({})} />)
   .add('collage', () => (
     <ProGallery
       {...createProps({
         galleryLayout: 0,
-        itemClick: 'expand'
+        itemClick: 'expand',
       })}
     />
   ))
@@ -31,7 +27,7 @@ storiesOf('Gallery', module)
         itemClick: 'expand',
         allowSocial: false,
         allowDownload: true,
-        loveButton: false
+        loveButton: false,
       })}
     />
   ))
@@ -39,7 +35,7 @@ storiesOf('Gallery', module)
     <ProGallery
       {...createProps({
         galleryLayout: 2,
-        itemClick: 'expand'
+        itemClick: 'expand',
       })}
     />
   ))
@@ -47,7 +43,7 @@ storiesOf('Gallery', module)
     <ProGallery
       {...createProps({
         galleryLayout: 3,
-        itemClick: 'expand'
+        itemClick: 'expand',
       })}
     />
   ))
@@ -55,7 +51,7 @@ storiesOf('Gallery', module)
     <ProGallery
       {...createProps({
         galleryLayout: 4,
-        itemClick: 'expand'
+        itemClick: 'expand',
       })}
     />
   ))
@@ -63,7 +59,7 @@ storiesOf('Gallery', module)
     <ProGallery
       {...createProps({
         galleryLayout: 5,
-        itemClick: 'expand'
+        itemClick: 'expand',
       })}
     />
   ))
@@ -71,7 +67,7 @@ storiesOf('Gallery', module)
     <ProGallery
       {...createProps({
         galleryLayout: 6,
-        itemClick: 'expand'
+        itemClick: 'expand',
       })}
     />
   ))
@@ -79,16 +75,11 @@ storiesOf('Gallery', module)
     <ProGallery
       {...createProps({
         galleryLayout: 7,
-        itemClick: 'expand'
+        itemClick: 'expand',
       })}
     />
   ))
-  .add('Empty Gallery', () => (
-    <ProGallery
-      {...createProps({}, [])}
-
-    />
-  ));
+  .add('Empty Gallery', () => <ProGallery {...createProps({}, [])} />);
 
 storiesOf('Eyes', module)
   .add('Collage', () => (
@@ -97,9 +88,9 @@ storiesOf('Eyes', module)
         galleryLayout: 0,
         allowSocial: false,
         allowDownload: true,
-        allowTitle: false
+        allowTitle: false,
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ))
   .add('Masonry', () => (
@@ -108,9 +99,9 @@ storiesOf('Eyes', module)
         galleryLayout: 1,
         allowDownload: true,
         gallerySize: 10,
-        itemBorderRadius: 50
+        itemBorderRadius: 50,
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ))
   .add('Grid 1', () => (
@@ -121,10 +112,9 @@ storiesOf('Eyes', module)
         titlePlacement: 'SHOW_ON_HOVER',
         allowTitle: true,
         allowDescription: true,
-        gallerySize: 5
+        gallerySize: 5,
       })}
-      forceHover= {true}
-
+      forceHover={true}
     />
   ))
   .add('Grid 2', () => (
@@ -134,10 +124,9 @@ storiesOf('Eyes', module)
         imageMargin: 0,
         titlePlacement: 'SHOW_ABOVE',
         allowTitle: true,
-        allowDescription: false
+        allowDescription: false,
       })}
-      forceHover= {true}
-
+      forceHover={true}
     />
   ))
   .add('Grid 3', () => (
@@ -148,9 +137,9 @@ storiesOf('Eyes', module)
         gallerySize: 10,
         titlePlacement: 'SHOW_BELOW',
         allowTitle: true,
-        allowDescription: false
+        allowDescription: false,
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ))
   .add('Thumbnails 1', () => (
@@ -158,9 +147,9 @@ storiesOf('Eyes', module)
       {...createProps({
         galleryLayout: 3,
         titlePlacement: 'DONT_SHOW',
-        thumbnailSpacings: 5
+        thumbnailSpacings: 5,
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ))
   .add('Thumbnails 2', () => (
@@ -168,9 +157,9 @@ storiesOf('Eyes', module)
       {...createProps({
         galleryLayout: 3,
         galleryThumbnailsAlignment: 'left',
-        allowDownload: true
+        allowDownload: true,
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ))
   .add('Slider', () => (
@@ -182,18 +171,18 @@ storiesOf('Eyes', module)
         titlePlacement: 'SHOW_ON_HOVER',
         allowTitle: true,
         allowDescription: true,
-        galleryTextAlign: 'left'
+        galleryTextAlign: 'left',
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ))
   .add('Slideshow', () => (
     <ProGallery
       {...createProps({
         galleryLayout: 5,
-        allowDescription: true
+        allowDescription: true,
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ))
   .add('Strip', () => (
@@ -201,8 +190,8 @@ storiesOf('Eyes', module)
       {...createProps({
         galleryLayout: 6,
         loveButton: false,
-        allowDownload: true
+        allowDownload: true,
       })}
-      forceHover= {true}
+      forceHover={true}
     />
   ));

@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import utils from '../../utils';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
-import {layoutsVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/layouts';
-import {spacingVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/spacing';
+import { layoutsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/layouts';
+import { spacingVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/spacing';
 import dimensionsHelper from './dimensionsHelper';
-import {getFixedLayouts} from './fixedLayoutsHelper';
+import { getFixedLayouts } from './fixedLayoutsHelper';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import designConsts from '../../constants/designConsts';
 
@@ -53,7 +53,7 @@ function getStyleBySeed(seed) {
   };
 
   const mergeSeeds = (s1, s2) => {
-    return Math.floor(((s1 / s2) - Math.floor(s1 / s2)) * 10000000);
+    return Math.floor((s1 / s2 - Math.floor(s1 / s2)) * 10000000);
   };
 
   const numFromSeed = (min, max, strSeed) => {
@@ -72,11 +72,26 @@ function getStyleBySeed(seed) {
     isVertical: boolFromSeed('isVertical'),
     gallerySize: numFromSeed(300, 800, 'gallerySize'),
     collageAmount: numFromSeed(5, 10, 'collageAmount') / 10,
-    collageDensity: (spacingVersionManager.isNewSpacing() ? numFromSeed(1, 100, 'collageDensity') : numFromSeed(5, 10, 'collageDensity')) / 100,
-    groupTypes: ['1'].concat(_.filter('2h,2v,3t,3b,3l,3r,3h,3v'.split(','), (type, i) => boolFromSeed('groupTypes' + i))),
+    collageDensity:
+      (spacingVersionManager.isNewSpacing()
+        ? numFromSeed(1, 100, 'collageDensity')
+        : numFromSeed(5, 10, 'collageDensity')) / 100,
+    groupTypes: ['1'].concat(
+      _.filter('2h,2v,3t,3b,3l,3r,3h,3v'.split(','), (type, i) =>
+        boolFromSeed('groupTypes' + i),
+      ),
+    ),
     oneRow: boolFromSeed('oneRow'),
-    imageMargin: numFromSeed(0, (spacingVersionManager.isNewSpacing() ? (numFromSeed(300, 800, 'gallerySize') / 5) : 5), 'imageMargin'),
-    galleryMargin: (spacingVersionManager.isNewSpacing() ? 0 : numFromSeed(0, 5, 'imageMargin')),
+    imageMargin: numFromSeed(
+      0,
+      spacingVersionManager.isNewSpacing()
+        ? numFromSeed(300, 800, 'gallerySize') / 5
+        : 5,
+      'imageMargin',
+    ),
+    galleryMargin: spacingVersionManager.isNewSpacing()
+      ? 0
+      : numFromSeed(0, 5, 'imageMargin'),
     floatingImages: 0,
     chooseBestGroup: boolFromSeed('chooseBestGroup'),
     smartCrop: boolFromSeed('smartCrop'),
@@ -93,7 +108,7 @@ function getStyleBySeed(seed) {
     enableInfiniteScroll: 1,
   };
 
-    //force adjustments
+  //force adjustments
   if (style.oneRow) {
     style.isVertical = false;
   }
@@ -107,7 +122,7 @@ function getStyleBySeed(seed) {
 
 function getStyleByGalleryType(styles, container) {
   //legacy layouts
-  const {galleryType, gallerySize} = styles;
+  const { galleryType, gallerySize } = styles;
 
   const galleryTypes = {
     collage_ver: () => ({
@@ -117,7 +132,7 @@ function getStyleByGalleryType(styles, container) {
       groupSize: 3,
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
       gallerySize: Math.round(gallerySize * 5 + 500),
-      fixedColumns: 0
+      fixedColumns: 0,
     }),
     collage_hor: () => ({
       cubeImages: false,
@@ -126,7 +141,7 @@ function getStyleByGalleryType(styles, container) {
       groupSize: 3,
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
       gallerySize: Math.round(gallerySize * 5 + 500),
-      fixedColumns: 0
+      fixedColumns: 0,
     }),
     grid: () => ({
       cubeImages: true,
@@ -136,7 +151,7 @@ function getStyleByGalleryType(styles, container) {
       groupTypes: '1',
       gallerySize: Math.round(gallerySize * 8.5 + 150),
       fixedColumns: 0,
-      isGrid: true
+      isGrid: true,
     }),
     masonry_ver: () => ({
       cubeImages: false,
@@ -145,7 +160,7 @@ function getStyleByGalleryType(styles, container) {
       groupSize: 1,
       groupTypes: '1',
       gallerySize: Math.round(gallerySize * 8 + 200),
-      fixedColumns: 0
+      fixedColumns: 0,
     }),
     masonry_hor: () => ({
       cubeImages: false,
@@ -154,7 +169,7 @@ function getStyleByGalleryType(styles, container) {
       groupSize: 1,
       groupTypes: '1',
       gallerySize: Math.round(gallerySize * 5 + 200),
-      fixedColumns: 0
+      fixedColumns: 0,
     }),
     one_col: () => ({
       cubeImages: false,
@@ -163,7 +178,7 @@ function getStyleByGalleryType(styles, container) {
       groupSize: 1,
       groupTypes: '1',
       gallerySize: () => dimensionsHelper.getGalleryWidth(), //'full_width';
-      fixedColumns: 1
+      fixedColumns: 1,
     }),
     one_row: () => ({
       cubeImages: false,
@@ -172,7 +187,7 @@ function getStyleByGalleryType(styles, container) {
       groupSize: 1,
       groupTypes: '1',
       gallerySize: () => dimensionsHelper.getGalleryHeight(),
-      fixedColumns: 0
+      fixedColumns: 0,
     }),
     slideshow: () => ({
       showArrows: true,
@@ -183,8 +198,8 @@ function getStyleByGalleryType(styles, container) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      fixedColumns: 1
-    })
+      fixedColumns: 1,
+    }),
   };
 
   let styleState;
@@ -192,7 +207,7 @@ function getStyleByGalleryType(styles, container) {
   switch (galleryType) {
     case '-1': //empty
       styleState = {
-        gallerySize
+        gallerySize,
       };
       break;
     case '0': //vertical collage
@@ -223,12 +238,11 @@ function getStyleByGalleryType(styles, container) {
   }
 
   return styleState;
-
 }
 
 function getStyleByLayout(styles, container) {
   //new layouts
-  let {galleryLayout, gallerySize, magicLayoutSeed} = styles;
+  let { galleryLayout, gallerySize, magicLayoutSeed } = styles;
 
   const layouts = {
     collage: () => ({
@@ -245,7 +259,7 @@ function getStyleByLayout(styles, container) {
       isMasonry: false,
       isColumns: false,
       isSlideshow: false,
-      cropOnlyFill: false
+      cropOnlyFill: false,
     }),
     masonry: () => ({
       showArrows: false,
@@ -283,7 +297,7 @@ function getStyleByLayout(styles, container) {
       isGrid: true,
       isMasonry: false,
       isSlideshow: false,
-      minItemSize: 50
+      minItemSize: 50,
     }),
     thumbnails: () => ({
       showArrows: true,
@@ -306,7 +320,7 @@ function getStyleByLayout(styles, container) {
       cropOnlyFill: false,
       floatingImages: 0,
       galleryMargin: 0,
-      imageMargin: 0
+      imageMargin: 0,
     }),
     slider: () => ({
       showArrows: true,
@@ -325,7 +339,7 @@ function getStyleByLayout(styles, container) {
       isColumns: false,
       isMasonry: false,
       isSlideshow: false,
-      cropOnlyFill: true
+      cropOnlyFill: true,
     }),
     slideshow: () => ({
       showArrows: true,
@@ -349,7 +363,7 @@ function getStyleByLayout(styles, container) {
       cropOnlyFill: false,
       floatingImages: 0,
       galleryMargin: 0,
-      imageMargin: 0
+      imageMargin: 0,
     }),
     panorama: () => ({
       showArrows: false,
@@ -368,7 +382,7 @@ function getStyleByLayout(styles, container) {
       isMasonry: false,
       isSlider: false,
       isSlideshow: false,
-      cropOnlyFill: false
+      cropOnlyFill: false,
     }),
     column: () => ({
       showArrows: true,
@@ -390,7 +404,7 @@ function getStyleByLayout(styles, container) {
       isMasonry: false,
       isSlider: false,
       isSlideshow: false,
-      cropOnlyFill: false
+      cropOnlyFill: false,
     }),
     fullsize: () => ({
       showArrows: true,
@@ -414,10 +428,10 @@ function getStyleByLayout(styles, container) {
       cropOnlyFill: false,
       floatingImages: 0,
       galleryMargin: 0,
-      imageMargin: 0
+      imageMargin: 0,
     }),
     empty: () => ({
-      gallerySize: Math.round(gallerySize * 9 + 100)
+      gallerySize: Math.round(gallerySize * 9 + 100),
     }),
     magic: () => getStyleBySeed(magicLayoutSeed),
     bricks: () => getFixedLayouts(0),
@@ -465,13 +479,11 @@ function getStyleByLayout(styles, container) {
   }
 
   return _.merge(layouts[layoutName](), specialMobileStoreConfig, {
-    galleryLayout
+    galleryLayout,
   });
-
 }
 
 function addLayoutStyles(styles, container) {
-
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
@@ -480,16 +492,41 @@ function addLayoutStyles(styles, container) {
 
     styles = Object.assign(styles, getStyleByGalleryType(styles, container)); //legacy layouts
     styles.layoutsVersion = 1;
-    const selectedLayoutVars = ['galleryType', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
-    styles.selectedLayout = selectedLayoutVars.map(key => String(styles[key])).join('|');
+    const selectedLayoutVars = [
+      'galleryType',
+      'galleryThumbnailsAlignment',
+      'magicLayoutSeed',
+      'imageResize',
+      'isVertical',
+      'scrollDirection',
+      'enableInfiniteScroll',
+    ];
+    styles.selectedLayout = selectedLayoutVars
+      .map(key => String(styles[key]))
+      .join('|');
   } else {
     //new layouts
     if (utils.isVerbose()) {
       console.log('Using galleryLayout for defaults', styles);
     }
-    styles = Object.assign({}, emptyLayout, styles, getStyleByLayout(styles, container)); //legacy layouts
-    const selectedLayoutVars = ['galleryLayout', 'galleryThumbnailsAlignment', 'magicLayoutSeed', 'imageResize', 'isVertical', 'scrollDirection', 'enableInfiniteScroll'];
-    styles.selectedLayout = selectedLayoutVars.map(key => String(styles[key])).join('|');
+    styles = Object.assign(
+      {},
+      emptyLayout,
+      styles,
+      getStyleByLayout(styles, container),
+    ); //legacy layouts
+    const selectedLayoutVars = [
+      'galleryLayout',
+      'galleryThumbnailsAlignment',
+      'magicLayoutSeed',
+      'imageResize',
+      'isVertical',
+      'scrollDirection',
+      'enableInfiniteScroll',
+    ];
+    styles.selectedLayout = selectedLayoutVars
+      .map(key => String(styles[key]))
+      .join('|');
     styles.layoutsVersion = 2;
     styles.selectedLayoutV2 = galleryLayoutV2;
     if (utils.isVerbose()) {
@@ -507,20 +544,42 @@ function processLayouts(styles) {
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {
       if (!_.isUndefined(processedStyles.itemFontSlideshow)) {
-        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(/^font\s*:\s*/, '');
-        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(/;$/, '');
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
+          /^font\s*:\s*/,
+          '',
+        );
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
+          /;$/,
+          '',
+        );
         if (processedStyles.itemFontSlideshow.value.indexOf('underline') > -1) {
-          processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace('underline', '');
+          processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
+            'underline',
+            '',
+          );
           processedStyles.textDecorationTitle = 'underline';
         } else {
           processedStyles.textDecorationTitle = 'none';
         }
       }
       if (!_.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
-        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(/^font\s*:\s*/, '');
-        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '');
-        if (processedStyles.itemDescriptionFontSlideshow.value.indexOf('underline') > -1) {
-          processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace('underline', '');
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
+          /^font\s*:\s*/,
+          '',
+        );
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
+          /;$/,
+          '',
+        );
+        if (
+          processedStyles.itemDescriptionFontSlideshow.value.indexOf(
+            'underline',
+          ) > -1
+        ) {
+          processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
+            'underline',
+            '',
+          );
           processedStyles.textDecorationDesc = 'underline';
         } else {
           processedStyles.textDecorationDesc = 'none';
@@ -528,20 +587,40 @@ function processLayouts(styles) {
       }
     } else {
       if (!_.isUndefined(processedStyles.itemFont)) {
-        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(/^font\s*:\s*/, '');
-        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(/;$/, '');
+        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
+          /^font\s*:\s*/,
+          '',
+        );
+        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
+          /;$/,
+          '',
+        );
         if (processedStyles.itemFont.value.indexOf('underline') > -1) {
-          processedStyles.itemFont.value = processedStyles.itemFont.value.replace('underline', '');
+          processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
+            'underline',
+            '',
+          );
           processedStyles.textDecorationTitle = 'underline';
         } else {
           processedStyles.textDecorationTitle = 'none';
         }
       }
       if (!_.isUndefined(processedStyles.itemDescriptionFont)) {
-        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(/^font\s*:\s*/, '');
-        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(/;$/, '');
-        if (processedStyles.itemDescriptionFont.value.indexOf('underline') > -1) {
-          processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace('underline', '');
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
+          /^font\s*:\s*/,
+          '',
+        );
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
+          /;$/,
+          '',
+        );
+        if (
+          processedStyles.itemDescriptionFont.value.indexOf('underline') > -1
+        ) {
+          processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
+            'underline',
+            '',
+          );
           processedStyles.textDecorationDesc = 'underline';
         } else {
           processedStyles.textDecorationDesc = 'none';
@@ -549,11 +628,20 @@ function processLayouts(styles) {
       }
     }
   }
-  if ((!processedStyles.isVertical || processedStyles.groupSize > 1 || processedStyles.oneRow === true) && !processedStyles.isSlider && !processedStyles.isColumns) {
+  if (
+    (!processedStyles.isVertical ||
+      processedStyles.groupSize > 1 ||
+      processedStyles.oneRow === true) &&
+    !processedStyles.isSlider &&
+    !processedStyles.isColumns
+  ) {
     processedStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
   } else {
-    const defaultValue = utils.isStoreGallery() ? Consts.placements.SHOW_BELOW : Consts.placements.SHOW_ON_HOVER;
-    processedStyles.titlePlacement = processedStyles.titlePlacement || defaultValue;
+    const defaultValue = utils.isStoreGallery()
+      ? Consts.placements.SHOW_BELOW
+      : Consts.placements.SHOW_ON_HOVER;
+    processedStyles.titlePlacement =
+      processedStyles.titlePlacement || defaultValue;
   }
 
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
@@ -571,10 +659,19 @@ function processLayouts(styles) {
   }
 
   if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
-    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
-    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(/;$/, '');
+    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
+      /^font\s*:\s*/,
+      '',
+    );
+    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
+      /;$/,
+      '',
+    );
     if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > -1) {
-      processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace('underline', '');
+      processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
+        'underline',
+        '',
+      );
       processedStyles.textDecorationLoadMore = 'underline';
     } else {
       processedStyles.textDecorationLoadMore = 'none';
@@ -583,7 +680,10 @@ function processLayouts(styles) {
 
   if (processedStyles.isSlider) {
     processedStyles.cubeRatio = processedStyles.gallerySliderImageRatio;
-  } else if (processedStyles.isGrid && !_.isUndefined(processedStyles.galleryImageRatioFromWix)) {
+  } else if (
+    processedStyles.isGrid &&
+    !_.isUndefined(processedStyles.galleryImageRatioFromWix)
+  ) {
     processedStyles.cubeRatio = processedStyles.galleryImageRatioFromWix;
   }
   //Used to look like that before the split :
@@ -595,12 +695,20 @@ function processLayouts(styles) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
   // }
 
-  if ((processedStyles.isGrid && !processedStyles.oneRow) || (layoutsVersionManager.allowFixedColumnsInMasonry() && processedStyles.isMasonry && processedStyles.isVertical)) {
+  if (
+    (processedStyles.isGrid && !processedStyles.oneRow) ||
+    (layoutsVersionManager.allowFixedColumnsInMasonry() &&
+      processedStyles.isMasonry &&
+      processedStyles.isVertical)
+  ) {
     // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
     //If toggle is for Items per row, fill the fixedColumns with the number of items
     //If toggle is responsive, make fixedColumns to be 0 or undefined;
     //Show the new controls only on Vertical scroll (one ow is false)
-    processedStyles.fixedColumns = String(processedStyles.gridStyle) === '1' ? (Number(processedStyles.numberOfImagesPerRow)) : 0;
+    processedStyles.fixedColumns =
+      String(processedStyles.gridStyle) === '1'
+        ? Number(processedStyles.numberOfImagesPerRow)
+        : 0;
     processedStyles.groupTypes = '1';
     processedStyles.groupSize = 1;
     processedStyles.collageAmount = 0;
@@ -609,7 +717,11 @@ function processLayouts(styles) {
   }
 
   //TODO this needs to split, need to leave the wixStyles assign in the statics section
-  if (!_.isUndefined(processedStyles.numberOfImagesPerCol) && processedStyles.isGrid && processedStyles.oneRow) {
+  if (
+    !_.isUndefined(processedStyles.numberOfImagesPerCol) &&
+    processedStyles.isGrid &&
+    processedStyles.oneRow
+  ) {
     processedStyles.fixedColumns = 0;
     switch (processedStyles.numberOfImagesPerCol) {
       case 1:
@@ -643,9 +755,13 @@ function processLayouts(styles) {
   //Backwards compatibility for masonry layout
   if (String(processedStyles.galleryLayout) === '1') {
     if (processedStyles.isVertical) {
-      processedStyles.gallerySize = Math.round(processedStyles.gallerySize * 8 + 200);
+      processedStyles.gallerySize = Math.round(
+        processedStyles.gallerySize * 8 + 200,
+      );
     } else {
-      processedStyles.gallerySize = Math.round(processedStyles.gallerySize * 5 + 200);
+      processedStyles.gallerySize = Math.round(
+        processedStyles.gallerySize * 5 + 200,
+      );
     }
   }
 
@@ -657,16 +773,27 @@ function processLayouts(styles) {
     processedStyles.numberOfImagesPerRow = 1;
   }
 
-  if (processedStyles.fixedColumns > 0 && utils.isMobile() && (typeof processedStyles.m_numberOfImagesPerRow === 'undefined')) {
+  if (
+    processedStyles.fixedColumns > 0 &&
+    utils.isMobile() &&
+    typeof processedStyles.m_numberOfImagesPerRow === 'undefined'
+  ) {
     processedStyles.fixedColumns = 1;
   }
 
-
   //in case a special gallery size was specified, use it
-  if (processedStyles.gallerySizeType === 'px' && processedStyles.gallerySizePx > 0) {
+  if (
+    processedStyles.gallerySizeType === 'px' &&
+    processedStyles.gallerySizePx > 0
+  ) {
     processedStyles.gallerySize = processedStyles.gallerySizePx;
-  } else if (processedStyles.gallerySizeType === 'ratio' && processedStyles.gallerySizeRatio > 0) {
-    processedStyles.gallerySize = (window && window.innerWidth || 980) * (processedStyles.gallerySizeRatio / 100);
+  } else if (
+    processedStyles.gallerySizeType === 'ratio' &&
+    processedStyles.gallerySizeRatio > 0
+  ) {
+    processedStyles.gallerySize =
+      ((window && window.innerWidth) || 980) *
+      (processedStyles.gallerySizeRatio / 100);
   }
 
   return processedStyles;
@@ -682,7 +809,11 @@ function getExternalInfoHeight(styleParams) {
     useCustomButton,
   } = styleParams;
 
-  if (titlePlacement === 'SHOW_ON_HOVER' || titlePlacement === 'DONT_SHOW' || (!allowTitle && !allowDescription && !useCustomButton)) {
+  if (
+    titlePlacement === 'SHOW_ON_HOVER' ||
+    titlePlacement === 'DONT_SHOW' ||
+    (!allowTitle && !allowDescription && !useCustomButton)
+  ) {
     return 0;
   }
 
@@ -691,31 +822,55 @@ function getExternalInfoHeight(styleParams) {
   const defaultItemFontSize = 22;
   const defaultItemDescriptionFontSize = 15;
 
-  let totalSpaceBetweenElements = useCustomButton && (allowTitle || allowDescription) ? designConsts.spaceBetweenElements : 0;
+  let totalSpaceBetweenElements =
+    useCustomButton && (allowTitle || allowDescription)
+      ? designConsts.spaceBetweenElements
+      : 0;
   let titleFontSize = 0;
   let descriptionFontSize = 0;
 
   if (allowTitle) {
-    titleFontSize = itemFontSlideshow ? getFontLineHeight(itemFontSlideshow) : defaultItemFontSize;
-    totalSpaceBetweenElements += allowDescription ? designConsts.spaceBetweenTitleAndDescription : 0;
+    titleFontSize = itemFontSlideshow
+      ? getFontLineHeight(itemFontSlideshow)
+      : defaultItemFontSize;
+    totalSpaceBetweenElements += allowDescription
+      ? designConsts.spaceBetweenTitleAndDescription
+      : 0;
   }
 
   if (allowDescription) {
-    descriptionFontSize = itemDescriptionFontSlideshow ? getFontLineHeight(itemDescriptionFontSlideshow) : defaultItemDescriptionFontSize;
+    descriptionFontSize = itemDescriptionFontSlideshow
+      ? getFontLineHeight(itemDescriptionFontSlideshow)
+      : defaultItemDescriptionFontSize;
   }
 
-  return 10 + titleFontSize + (3 * descriptionFontSize) + paddingTopAndBottom + totalSpaceBetweenElements + defaultButtonHeight; // HACK  +10 for spare place. we can not really know that this is the final font - thus, this whole calc to get the bottom info height will break one day again.
+  return (
+    10 +
+    titleFontSize +
+    3 * descriptionFontSize +
+    paddingTopAndBottom +
+    totalSpaceBetweenElements +
+    defaultButtonHeight
+  ); // HACK  +10 for spare place. we can not really know that this is the final font - thus, this whole calc to get the bottom info height will break one day again.
 }
 
 function getFontLineHeight(font) {
-  if (font.value.match(/\/(\d+)px/)) { //lineHeight is in px
+  if (font.value.match(/\/(\d+)px/)) {
+    //lineHeight is in px
     return parseInt(font.value.match(/\/(\d+)px/)[1]);
-  } else if (font.value.match(/\/(\d+)%/)) { //lineHeight is in percentage
+  } else if (font.value.match(/\/(\d+)%/)) {
+    //lineHeight is in percentage
     return font.size * (parseInt(font.value.match(/\/(\d+)%/)[1]) / 100);
-  } else if (font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)) { //lineHeight is in em or without any units (which means em too)
-    return font.size * parseFloat(font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)[1]);
+  } else if (font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)) {
+    //lineHeight is in em or without any units (which means em too)
+    return (
+      font.size * parseFloat(font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)[1])
+    );
   } else {
-    console.error('GalleryContainer -> getFontLineHeight -> font lineHeight do not match any pattern. font value: ', font.value);
+    console.error(
+      'GalleryContainer -> getFontLineHeight -> font lineHeight do not match any pattern. font value: ',
+      font.value,
+    );
     return font.size;
   }
 }
@@ -725,7 +880,10 @@ function isSlideshowFont(styles) {
   if (galleryLayout === 5) {
     return true;
   }
-  if (styles.titlePlacement === 'SHOW_ABOVE' || styles.titlePlacement === 'SHOW_BELOW') {
+  if (
+    styles.titlePlacement === 'SHOW_ABOVE' ||
+    styles.titlePlacement === 'SHOW_BELOW'
+  ) {
     if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
       return true;
     } else if (galleryLayout === 1 && styles.isVertical) {
@@ -737,6 +895,4 @@ function isSlideshowFont(styles) {
   return false;
 }
 
-export {
-  addLayoutStyles
-};
+export { addLayoutStyles };

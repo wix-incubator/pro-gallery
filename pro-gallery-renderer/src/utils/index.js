@@ -3,13 +3,16 @@ import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 class Utils extends RenderUtils {
-
   isWixIframe() {
-    return (window && !window.isMock) && (window.Wix && !window.Wix.isMock) && (window.top !== window.self);
+    return (
+      window &&
+      !window.isMock &&
+      (window.Wix && !window.Wix.isMock) &&
+      window.top !== window.self
+    );
   }
 
   scrollTo(element, to, duration, isHorizontal, callback) {
-
     if (this.isMobile()) {
       duration = 0; //do not animate scroll on mobile (looks jumpy and buggy)
     }
@@ -25,10 +28,10 @@ class Utils extends RenderUtils {
 
       currentTime /= duration / 2;
       if (currentTime < 1) {
-        return change / 2 * currentTime * currentTime + start;
+        return (change / 2) * currentTime * currentTime + start;
       }
       currentTime--;
-      return -change / 2 * (currentTime * (currentTime - 2) - 1) + start;
+      return (-change / 2) * (currentTime * (currentTime - 2) - 1) + start;
     };
 
     const start = isHorizontal ? element.scrollLeft : element.scrollTop;
@@ -54,7 +57,6 @@ class Utils extends RenderUtils {
       } else {
         element.scrollTop = val;
       }
-
     };
 
     element.setAttribute('data-scrolling', 'true');

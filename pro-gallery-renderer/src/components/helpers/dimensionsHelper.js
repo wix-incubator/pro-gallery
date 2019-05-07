@@ -17,7 +17,7 @@ class DimensionsHelper {
   dumpCache() {
     this._cache = {};
   }
-  updateParams({styles, container, domId}) {
+  updateParams({ styles, container, domId }) {
     this.dumpCache();
     this.domId = domId || this.domId;
     this.styles = styles || this.styles;
@@ -29,28 +29,32 @@ class DimensionsHelper {
 
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
-      return (Number(this.styles.imageMargin) - Number(this.styles.galleryMargin));
+      return (
+        Number(this.styles.imageMargin) - Number(this.styles.galleryMargin)
+      );
     });
   }
 
   isFullWidth(container = this.container) {
     return this.getOrPutInCache('isFullWidth', () => {
       //if the container width is not a number, it is fullwidth (e.g.: "", "100%", "calc(100% + -160px)")
-      return (container && (String(parseInt(container.width)) !== String(container.width)));
+      return (
+        container &&
+        String(parseInt(container.width)) !== String(container.width)
+      );
     });
   }
 
-  fixContainerIfNeeded(container)	{
+  fixContainerIfNeeded(container) {
     const isFullWidth = this.isFullWidth(container);
     if (isFullWidth) {
-      const _container = {...container};
+      const _container = { ...container };
       const calcWidth = this.getBoundingRect().width;
       _container.width = calcWidth;
       return _container;
     } else {
       return container;
     }
-
   }
 
   calcBoundingRect() {
@@ -58,7 +62,9 @@ class DimensionsHelper {
       console.count('calcBoundingRect');
     }
     try {
-      return window.document.getElementById(`pro-gallery-${this.domId}`).getBoundingClientRect();
+      return window.document
+        .getElementById(`pro-gallery-${this.domId}`)
+        .getBoundingClientRect();
     } catch (e) {
       return false;
     }
@@ -66,12 +72,14 @@ class DimensionsHelper {
 
   getBoundingRect() {
     return this.getOrPutInCache('boundingRect', () => {
-      return this.calcBoundingRect() || {
-        x: 0,
-        y: 0,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
+      return (
+        this.calcBoundingRect() || {
+          x: 0,
+          y: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }
+      );
     });
   }
   calcBodyBoundingRect() {
@@ -87,17 +95,19 @@ class DimensionsHelper {
 
   getBodyBoundingRect() {
     return this.getOrPutInCache('bodyBoundingRect', () => {
-      return this.calcBodyBoundingRect() || {
-        x: 0,
-        y: 0,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
+      return (
+        this.calcBodyBoundingRect() || {
+          x: 0,
+          y: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }
+      );
     });
   }
   calcScrollBase() {
     return this.getOrPutInCache('scrollBase', () => {
-      let {scrollBase} = this.container;
+      let { scrollBase } = this.container;
       try {
         if (!(scrollBase >= 0)) {
           scrollBase = 0;
@@ -111,7 +121,6 @@ class DimensionsHelper {
       }
       return scrollBase;
     });
-
   }
 
   getGalleryDimensions() {
@@ -127,7 +136,10 @@ class DimensionsHelper {
         windowWidth: window.innerWidth,
       };
       if (this.styles.hasThumbnails) {
-        const fixedThumbnailSize = this.styles.thumbnailSize + this.styles.galleryMargin + 3 * this.styles.thumbnailSpacings;
+        const fixedThumbnailSize =
+          this.styles.thumbnailSize +
+          this.styles.galleryMargin +
+          3 * this.styles.thumbnailSpacings;
         switch (this.styles.galleryThumbnailsAlignment) {
           case 'top':
           case 'bottom':
@@ -149,18 +161,26 @@ class DimensionsHelper {
 
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
-      const domWidth = () => window.isMock ? utils.getScreenWidth() : window.innerWidth;
-      return Math.floor((this.container.width > 0 ? this.container.width : domWidth()) + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
+      const domWidth = () =>
+        window.isMock ? utils.getScreenWidth() : window.innerWidth;
+      return Math.floor(
+        (this.container.width > 0 ? this.container.width : domWidth()) +
+          this.getDimensionFix() * 2,
+      ); //add margins to width and then remove them in css negative margins
     });
   }
-
 
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
       //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
-      const dimensionFix = () => this.styles.oneRow ? this.getDimensionFix() : 0;
-      const domHeight = () => window.isMock ? utils.getScreenHeight() : window.innerHeight;//() => protectGalleryHeight(this.container.windowHeight, offsetTop);
-      return Math.floor((this.container.height > 0 ? this.container.height : domHeight()) + dimensionFix());
+      const dimensionFix = () =>
+        this.styles.oneRow ? this.getDimensionFix() : 0;
+      const domHeight = () =>
+        window.isMock ? utils.getScreenHeight() : window.innerHeight; //() => protectGalleryHeight(this.container.windowHeight, offsetTop);
+      return Math.floor(
+        (this.container.height > 0 ? this.container.height : domHeight()) +
+          dimensionFix(),
+      );
     });
   }
 

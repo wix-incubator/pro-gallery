@@ -1,16 +1,15 @@
 //Yonatan Hattav Jun21
-'use strict';
 
 import VideoItem from './videos/videoItem.js';
 import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
 import CustomButton from './buttons/customButton.js';
 import ItemTitle from './texts/itemTitle.js';
-import {spy, expect, chai} from 'chai';
+import { spy, expect, chai } from 'chai';
 import sinon from 'sinon';
-import utils from '../../../src/utils/index.js';
+import utils from '../../utils/index';
 import React from 'react';
-import GalleryDriver from '../../../test/drivers/reactDriver';
-import {testImages} from '../../../test/images-mock';
+import GalleryDriver from '../../../__tests__/drivers/reactDriver';
+import { testImages } from '../../../__tests__/images-mock';
 import ItemView from './itemView';
 
 describe('Item View', () => {
@@ -47,7 +46,6 @@ describe('Item View', () => {
       expect(driver.get.state('retries')).to.equal(4);
       expect(driver.get.state('failed')).to.be.true;
     });
-
   });
   describe('item loaded setItemLoaded', () => {
     it('should set states when called', () => {
@@ -55,7 +53,7 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.state({
         failed: true,
-        loaded: false
+        loaded: false,
       });
       driver.get.instance().setItemLoaded();
       expect(driver.get.state('failed')).to.be.false;
@@ -66,22 +64,45 @@ describe('Item View', () => {
   });
   describe('toggleShare', () => {
     it('should not be fired if hovering over icons', () => {
-
       driver.mount(ItemView, sampleItemViewProps);
       let spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
+      driver.get.instance().toggleShare({
+        type: 'click',
+        target: { tagName: 'button' },
+        relatedTarget: { tagName: 'button' },
+        stopPropagation: () => {},
+        preventDefault: () => {},
+      });
       expect(spy.called).to.be.true; //called on any event type other than mouseout
       spy.restore();
       spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
+      driver.get.instance().toggleShare({
+        type: 'mouseout',
+        target: { tagName: 'foo' },
+        relatedTarget: { tagName: 'button' },
+        stopPropagation: () => {},
+        preventDefault: () => {},
+      });
       expect(spy.called).to.be.false; //not called is mouseout but one of the tagName isnt listed
       spy.restore();
       spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'button'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}, preventDefault: () => {}});
+      driver.get.instance().toggleShare({
+        type: 'mouseout',
+        target: { tagName: 'button' },
+        relatedTarget: { tagName: 'foo' },
+        stopPropagation: () => {},
+        preventDefault: () => {},
+      });
       expect(spy.called).to.be.false; //not called is mouseout but at least one of the tagName isnt listed
       spy.restore();
       spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({type: 'mouseout', target: {tagName: 'foo'}, relatedTarget: {tagName: 'foo'}, stopPropagation: () => {}, preventDefault: () => {}});
+      driver.get.instance().toggleShare({
+        type: 'mouseout',
+        target: { tagName: 'foo' },
+        relatedTarget: { tagName: 'foo' },
+        stopPropagation: () => {},
+        preventDefault: () => {},
+      });
       expect(spy.called).to.be.true; // called if mouseout but no listed tagName
       spy.restore();
     });
@@ -89,13 +110,34 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       const spy = sinon.spy(ItemView.prototype, 'setState');
       driver.set.state({
-        showShare: true
+        showShare: true,
       });
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
+      driver.get.instance().toggleShare({
+        type: 'click',
+        target: { tagName: 'button' },
+        relatedTarget: { tagName: 'button' },
+        stopPropagation: () => {},
+        preventDefault: () => {},
+      });
       expect(driver.get.state().showShare).to.be.false; //when forceVal is not sent - toggles showShare
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}});
+      driver.get.instance().toggleShare({
+        type: 'click',
+        target: { tagName: 'button' },
+        relatedTarget: { tagName: 'button' },
+        stopPropagation: () => {},
+        preventDefault: () => {},
+      });
       expect(driver.get.state().showShare).to.be.true; //when forceVal is not sent - toggles showShare
-      driver.get.instance().toggleShare({type: 'click', target: {tagName: 'button'}, relatedTarget: {tagName: 'button'}, stopPropagation: () => {}, preventDefault: () => {}}, true);
+      driver.get.instance().toggleShare(
+        {
+          type: 'click',
+          target: { tagName: 'button' },
+          relatedTarget: { tagName: 'button' },
+          stopPropagation: () => {},
+          preventDefault: () => {},
+        },
+        true,
+      );
       expect(driver.get.state().showShare).to.be.true; //assignes forceVal to showShare if it is defined
       spy.restore();
     });
@@ -115,7 +157,7 @@ describe('Item View', () => {
   describe('onMouseOver', () => {
     it('should call onVideoHover when hovering and the type is video', () => {
       const spy = sinon.stub(ItemView.prototype, 'onVideoHover');
-      Object.assign(sampleItemViewProps, {type: 'video'});
+      Object.assign(sampleItemViewProps, { type: 'video' });
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.state(driver.get.visibilityState.visible);
       driver.find.hook('item-container').simulate('mouseover');
@@ -123,35 +165,40 @@ describe('Item View', () => {
       spy.restore();
     });
     it('onVideoHover does not execute if played on mobile or if not defined as hover play', () => {
-      Object.assign(sampleItemViewProps, {type: 'video'});
+      Object.assign(sampleItemViewProps, { type: 'video' });
       //IMPORTANT stubing a function that is going to be passed as props before it is passed. stubing after mounting interfers with react managing the props and will not always work.
       const spy = sinon.stub(sampleItemViewProps, 'playVideo');
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.state(driver.get.visibilityState.visible);
-      driver.set.props({styleParams: {videoPlay: 'hover'}});
+      driver.set.props({ styleParams: { videoPlay: 'hover' } });
       const stub = sinon.stub(utils, 'isMobile').returns(false);
       driver.find.hook('item-container').simulate('mouseover');
       expect(spy.called).to.be.true;
       stub.restore();
       spy.restore();
     });
-
-
   });
   describe('onItemClick', () => {
     it('should scroll to item on click if item is thumbnail and not if its not', () => {
-      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image'});
+      Object.assign(sampleItemViewProps, {
+        thumbnailHighlightId: null,
+        type: 'image',
+      });
       driver.mount(ItemView, sampleItemViewProps);
       const spy = sinon.stub(driver.get.props().actions, 'scrollToItem');
       driver.find.hook('item-container').simulate('click');
       expect(spy.called).to.be.false;
-      driver.set.props({thumbnailHighlightId: '1'});
+      driver.set.props({ thumbnailHighlightId: '1' });
       driver.find.hook('item-container').simulate('click');
       expect(spy.called).to.be.true;
       spy.restore();
     });
     it('should onItemClicked for items with link', () => {
-      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'link', videoPlay: 'onClick'}});
+      Object.assign(sampleItemViewProps, {
+        thumbnailHighlightId: null,
+        type: 'image',
+        styleParams: { itemClick: 'link', videoPlay: 'onClick' },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'onItemClicked');
       driver.find.hook('item-container').simulate('click');
@@ -159,7 +206,11 @@ describe('Item View', () => {
       stub.restore();
     });
     it('should onItemClicked for items with expand', () => {
-      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'expand', videoPlay: 'onClick'}});
+      Object.assign(sampleItemViewProps, {
+        thumbnailHighlightId: null,
+        type: 'image',
+        styleParams: { itemClick: 'expand', videoPlay: 'onClick' },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'onItemClicked');
       driver.find.hook('item-container').simulate('click');
@@ -167,19 +218,23 @@ describe('Item View', () => {
       stub.restore();
     });
     it.skip('should toggle playVideo/pauseVideo for video items that are not expand and the video is styled to play onclick/the device is mobile/', () => {
-      Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'video', styleParams: {itemClick: 'foo', videoPlay: 'onClick'}});
+      Object.assign(sampleItemViewProps, {
+        thumbnailHighlightId: null,
+        type: 'video',
+        styleParams: { itemClick: 'foo', videoPlay: 'onClick' },
+      });
       const spyPlay = sinon.stub(sampleItemViewProps, 'playVideo');
       const spyPause = sinon.stub(sampleItemViewProps, 'pauseVideo');
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.props({
-        playing: true
+        playing: true,
       });
       driver.find.hook('item-container').simulate('click');
       expect(spyPlay.called).to.be.false;
       expect(spyPause.called).to.be.true;
       // the props are toggled useing redux. to be tested in the e2e tests. here I hardcode a toggle for props.playing
       driver.set.props({
-        playing: false
+        playing: false,
       });
       spyPlay.called = false;
       spyPause.called = false;
@@ -256,7 +311,8 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           cubeImages: false,
-          cubeType: 'fit'},
+          cubeType: 'fit',
+        },
         style: {
           bgColor: 'none',
           maxWidth: 1920,
@@ -266,15 +322,21 @@ describe('Item View', () => {
           width: 1920,
           cubedWidth: 1920,
           height: 1000,
-          cubedHeight: 1000}});
+          cubedHeight: 1000,
+        },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       //IMPORTANT use deep when trying to compare objects
-      expect(driver.get.instance().getImageDimensions()).to.deep.equal({width: 1920, height: 1000});
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal({
+        width: 1920,
+        height: 1000,
+      });
 
       driver.set.props({
         styleParams: {
           cubeImages: true,
-          cubeType: 'foo'},
+          cubeType: 'foo',
+        },
         style: {
           bgColor: 'none',
           maxWidth: 1920,
@@ -284,13 +346,19 @@ describe('Item View', () => {
           width: 1920,
           cubedWidth: 1920,
           height: 1000,
-          cubedHeight: 1000}});
-      expect(driver.get.instance().getImageDimensions()).to.deep.equal({width: 1920, height: 1000});
+          cubedHeight: 1000,
+        },
+      });
+      expect(driver.get.instance().getImageDimensions()).to.deep.equal({
+        width: 1920,
+        height: 1000,
+      });
 
       driver.set.props({
         styleParams: {
           cubeImages: true,
-          cubeType: 'fit'},
+          cubeType: 'fit',
+        },
         style: {
           bgColor: 'none',
           maxWidth: 1920,
@@ -300,7 +368,9 @@ describe('Item View', () => {
           width: 1920,
           cubedWidth: 1920,
           height: 1000,
-          cubedHeight: 1000}});
+          cubedHeight: 1000,
+        },
+      });
       //IMPORTANT notice marginTop is -0. if it was just 0 it wouldnt deep equal the -0 that returns from the function (the value is devided by -2 in the function)
       let testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1920);
@@ -309,7 +379,8 @@ describe('Item View', () => {
       driver.set.props({
         styleParams: {
           cubeImages: true,
-          cubeType: 'fit'},
+          cubeType: 'fit',
+        },
         style: {
           bgColor: 'none',
           maxWidth: 1920,
@@ -319,7 +390,9 @@ describe('Item View', () => {
           width: 1920,
           cubedWidth: 1920,
           height: 1000,
-          cubedHeight: 1000}});
+          cubedHeight: 1000,
+        },
+      });
       testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1000);
       expect(testObject.height).to.equal(1000);
@@ -379,8 +452,10 @@ describe('Item View', () => {
     it('should return a placeholder for non visible video', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
-          isSlideshow: false},
-        type: 'video'});
+          isSlideshow: false,
+        },
+        type: 'video',
+      });
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(0);
@@ -393,14 +468,17 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         visible: true,
         styleParams: {
-          isSlideshow: true},
-        type: 'image'});
+          isSlideshow: true,
+        },
+        type: 'image',
+      });
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(1);
       driver.set.props({
         styleParams: {
-          isSlideshow: false}
+          isSlideshow: false,
+        },
       });
       expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(0);
     });
@@ -413,57 +491,74 @@ describe('Item View', () => {
         styleParams: {
           useCustomButton: true,
           titlePlacement: 'SHOW_BELOW',
-          allowTitle: true},
-        type: 'image'});
+          allowTitle: true,
+        },
+        type: 'image',
+      });
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.selector(CustomButton).length).to.equal(1);
       expect(driver.find.selector(ItemTitle).length).to.equal(1);
     });
-
   });
   //compunentDidUpdate not tested
   describe('render', () => {
     it('should create a href only if itemClick is expand', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
-          itemClick: 'foo'}});
+          itemClick: 'foo',
+        },
+      });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.selector('div[href][data-hook="item-container"]').length).to.equal(0);
+      expect(
+        driver.find.selector('div[href][data-hook="item-container"]').length,
+      ).to.equal(0);
       driver.set.props({
         styleParams: {
-          itemClick: 'expand'}});
-      expect(driver.find.selector('div[href][data-hook="item-container"]').length).to.equal(1);
+          itemClick: 'expand',
+        },
+      });
+      expect(
+        driver.find.selector('div[href][data-hook="item-container"]').length,
+      ).to.equal(1);
     });
     it('should have boxshadow only if defined', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           itemEnableShadow: true,
-          itemShadowOpacityAndColor: {value: 'rgba(0, 0, 0, 0.2)'},
+          itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
           itemShadowBlur: 20,
-          imageMargin: 5}});
+          imageMargin: 5,
+        },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('-10px -10px 20px rgba(0, 0, 0, 0.2)');
       driver.set.props({
         styleParams: {
           itemEnableShadow: false,
-          itemShadowOpacityAndColor: {value: 'rgba(0, 0, 0, 0.2)'},
+          itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
           itemShadowBlur: 20,
-          imageMargin: 5}});
+          imageMargin: 5,
+        },
+      });
       style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal(undefined);
     });
     it('should toggle overflowY visible/inherit', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
-          isSlideshow: true}});
+          isSlideshow: true,
+        },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('visible');
       driver.set.props({
         styleParams: {
-          isSlideshow: false}});
+          isSlideshow: false,
+        },
+      });
       style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('hidden');
     });
@@ -471,30 +566,39 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           cubeImages: true,
-          cubeType: 'foo'}});
+          cubeType: 'foo',
+        },
+      });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.hook('item-wrapper').hasClass('cube-type-foo')).to.equal(true);
+      expect(
+        driver.find.hook('item-wrapper').hasClass('cube-type-foo'),
+      ).to.equal(true);
       driver.set.props({
         styleParams: {
-          cubeImages: false}});
-      expect(driver.find.hook('item-wrapper').hasClass('cube-type-foo')).to.equal(false);
+          cubeImages: false,
+        },
+      });
+      expect(
+        driver.find.hook('item-wrapper').hasClass('cube-type-foo'),
+      ).to.equal(false);
     });
-    it('should toggle overflowY visible/inherit', () => {
+    it('should toggle overflowY visible/inherit test2', () => {
       Object.assign(sampleItemViewProps, {
-        style: {bgColor: 'red'},
+        style: { bgColor: 'red' },
         styleParams: {
-          cubeType: 'fit'}});
+          cubeType: 'fit',
+        },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
       driver.set.props({
         styleParams: {
-          cubeType: 'foot'}});
+          cubeType: 'foot',
+        },
+      });
       style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('red');
     });
   });
 });
-
-
-

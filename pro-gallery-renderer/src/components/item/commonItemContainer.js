@@ -1,8 +1,12 @@
 import React from 'react';
-import {videoEnded, videoAdded, videoRemoved} from '../../actions/galleryActions.js';
-import {playVideo, pauseVideo} from '../../actions/itemViewActions.js';
-import {connect} from 'react-redux';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import {
+  videoEnded,
+  videoAdded,
+  videoRemoved,
+} from '../../actions/galleryActions.js';
+import { playVideo, pauseVideo } from '../../actions/itemViewActions.js';
+import { connect } from 'react-redux';
+import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 export const CommonItemContainerNotConnected = ComposedComponent => {
@@ -14,7 +18,7 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
 
       this.state = {
         isLoved: itemActions.isLoved(props.photoId),
-        loveCount: 0
+        loveCount: 0,
       };
     }
 
@@ -27,7 +31,7 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
     }
 
     componentWillReceiveProps(nextProps) {
-      const {photoId} = nextProps;
+      const { photoId } = nextProps;
       this.setState({
         isLoved: itemActions.isLoved(photoId),
         loveCount: itemActions.getLoveCount(photoId),
@@ -36,7 +40,7 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
 
     updateLoveCount() {
       this.setState({
-        loveCount: itemActions.getLoveCount(this.props.photoId)
+        loveCount: itemActions.getLoveCount(this.props.photoId),
       });
     }
 
@@ -44,21 +48,23 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
       itemActions.postLoveActivity(this.props);
       itemActions.toggleLove(this.props.photoId, 'gallery');
       this.setState({
-        isLoved: !this.state.isLoved
+        isLoved: !this.state.isLoved,
       });
     }
 
     render() {
-      const {photoId} = this.props;
-      const {isLoved, loveCount} = this.state;
-      return <ComposedComponent
-        {...this.props}
-        love={{
-          isLoved,
-          count: loveCount + (isLoved ? 1 : 0),
-          toggleLove: this.toggleLove.bind(this)
-        }}
-      />;
+      const { photoId } = this.props;
+      const { isLoved, loveCount } = this.state;
+      return (
+        <ComposedComponent
+          {...this.props}
+          love={{
+            isLoved,
+            count: loveCount + (isLoved ? 1 : 0),
+            toggleLove: this.toggleLove.bind(this),
+          }}
+        />
+      );
     }
   }
 
@@ -66,18 +72,21 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
 };
 
 export const CommonItemContainer = ComposedComponent => {
-  const commonItemContainerNotConnected = CommonItemContainerNotConnected(ComposedComponent);
+  const commonItemContainerNotConnected = CommonItemContainerNotConnected(
+    ComposedComponent,
+  );
 
   const mapStateToProps = (state, ownProps) => {
     const galleryState = state.gallery || {};
-    return ({
+    return {
       playing: galleryState.videoIndexPlay === ownProps.idx,
       documentHeight: galleryState.documentHeight,
       previewHover: galleryState.previewHover,
-    });
+    };
   };
 
   return connect(
-    mapStateToProps, {videoEnded, videoAdded, videoRemoved, playVideo, pauseVideo}
+    mapStateToProps,
+    { videoEnded, videoAdded, videoRemoved, playVideo, pauseVideo },
   )(commonItemContainerNotConnected);
 };

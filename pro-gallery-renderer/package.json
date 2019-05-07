@@ -16,13 +16,13 @@
     "build": "yoshi build",
     "precommit": " ",
     "pretest": "yoshi build",
-    "test": "yoshi test",
+    "test": "yoshi test --mocha",
     "posttest": "yoshi lint",
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
-    "start-no-test": "PORT=9837 yoshi start --no-test",
+    "start-with-test": "PORT=9837 yoshi start --with-test",
     "build-storybook": "build-storybook",
     "pretest:performance": "npm run build-storybook",
     "test:performance": "perfer"
@@ -30,13 +30,11 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "@wix/video-gallery-sdk": "1.0.48",
-    "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
     "dotenv": "^6.0.0",
     "image-client-api": "1.3130.0",
     "prepend-http-extra": "^1.0.0",
     "pro-gallery-layouter": "^2.0.25",
-    "react-player-fork": "^0.12.106",
     "react-player": "1.10.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
@@ -51,21 +49,13 @@
     "axios": "^0.16.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.4.7",
-    "@storybook/addon-links": "^3.4.7",
-    "@storybook/addons": "^3.4.7",
-    "@storybook/react": "^3.4.7",
+    "@storybook/addon-actions": "^4.0.0",
+    "@storybook/addon-links": "^4.0.0",
+    "@storybook/addons": "^4.0.0",
+    "@storybook/react": "^4.0.0",
     "@wix/perfer": "^0.3.8",
+    "@wix/photography-client-lib": "^1.0.176",
     "axios": "^0.16.2",
-    "babel-core": "^6.26.3",
-    "babel-plugin-dynamic-import-webpack": "^1.0.1",
-    "babel-plugin-react-css-modules": "^3.3.2",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-preset-env": "^1.5.2",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-3": "^6.5.0",
     "chai": "^4.1.2",
     "chai-enzyme": "^1.0.0-beta.1",
     "chai-spies": "^0.7.1",
@@ -79,76 +69,23 @@
     "lodash": "^4.17.4",
     "match-screenshot": "^1.0.14",
     "nock": "^9.3.3",
-    "node-sass": "^4.9.0",
-    "@wix/photography-client-lib": "^1.0.176",
     "puppeteer": "^1.5.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-test-renderer": "^16.4.1",
-    "sass-loader": "^7.0.3",
+    "redux-mock-store": "^1.3.0",
     "sinon": "^6.0.0",
     "svg-inline-loader": "^0.8.0",
-    "wallaby-webpack": "^3.9.7",
-    "redux-mock-store": "^1.3.0",
-    "yoshi": "^1.2.0"
+    "yoshi": "^4.0.0",
+    "yoshi-style-dependencies": "^4.0.0"
   },
   "babel": {
     "presets": [
-      "es2015",
-      "react",
-      "stage-3"
-    ],
-    "plugins": [
-      "transform-class-properties",
-      "transform-runtime",
-      "syntax-dynamic-import",
-      "dynamic-import-webpack"
-    ],
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ]
-        ]
-      },
-      "development": {
-        "presets": [
-          "env"
-        ]
-      }
-    }
+      "yoshi"
+    ]
   },
   "eslintConfig": {
-    "extends": "wix/esnext",
-    "rules": {
-      "no-unused-vars": 0,
-      "camelcase": 0,
-      "no-mixed-operators": 0,
-      "new-cap": 0,
-      "default-case": 0,
-      "max-params": 0,
-      "no-cond-assign": 0,
-      "max-depth": 0,
-      "no-useless-escape": 0,
-      "no-eval": 0,
-      "curly": 0,
-      "curly-style": 0
-    },
-    "globals": {
-      "fetch": true,
-      "Image": true,
-      "prerenderedGallery": true,
-      "Event": true,
-      "HTMLElement": true,
-      "window": true,
-      "document": true
-    }
+    "extends": "yoshi"
   },
   "unpkg": true,
   "publishConfig": {

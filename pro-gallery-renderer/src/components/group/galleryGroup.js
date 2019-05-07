@@ -1,12 +1,10 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
 import _ from 'lodash';
-import {Group} from 'pro-gallery-layouter';
+import { Group } from 'pro-gallery-layouter';
 
 class GalleryGroup {
-
   constructor(config) {
-
     this.uniqueId = utils.generateUUID();
     this.isGalleryGroup = true;
 
@@ -22,7 +20,7 @@ class GalleryGroup {
     if (config.scheme) {
       this.processScheme(config.scheme);
     } else {
-      this.processScheme(new Group({dto: config.dto}).scheme);
+      this.processScheme(new Group({ dto: config.dto }).scheme);
     }
 
     if (config.items) {
@@ -30,7 +28,6 @@ class GalleryGroup {
     } else {
       console.warn('Pro Gallery created Gallery Group without items', config);
     }
-
   }
 
   processScheme(scheme) {
@@ -50,7 +47,6 @@ class GalleryGroup {
   }
 
   renderProps(galleryConfig) {
-
     return {
       className: 'group',
       id: this.id,
@@ -75,7 +71,6 @@ class GalleryGroup {
   get key() {
     return 'group_' + this.id;
   }
-
 }
 
 /*

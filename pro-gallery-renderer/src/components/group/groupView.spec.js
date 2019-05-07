@@ -1,11 +1,8 @@
-'use strict';
-
-import GalleryDriver from '../../../test/drivers/reactDriver';
+import GalleryDriver from '../../../__tests__/drivers/reactDriver';
 import React from 'react';
-import {expect} from 'chai';
+import { expect } from 'chai';
 import GroupView from './groupView';
 import GalleryItem from '../item/galleryItem';
-
 
 describe('Group View ', () => {
   let galleryDriver;
@@ -15,8 +12,9 @@ describe('Group View ', () => {
     galleryDriver = new GalleryDriver();
     groupViewProps = galleryDriver.props.groupView();
     groupViewProps.items = groupViewProps.items.slice(1, 6);
-    Object.assign(groupViewProps, {galleryConfig: galleryDriver.galleryConfig});
-
+    Object.assign(groupViewProps, {
+      galleryConfig: galleryDriver.galleryConfig,
+    });
   });
   it('should init', () => {
     galleryDriver.shallow(GroupView, groupViewProps);

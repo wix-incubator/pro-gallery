@@ -1,19 +1,16 @@
-'use strict';
-
 import LoveButton from './loveButton.js';
-import GalleryDriver from '../../../../test/drivers/reactDriver.js';
-import {mount} from 'enzyme';
+import GalleryDriver from '../../../../__tests__/drivers/reactDriver.js';
+import { mount } from 'enzyme';
 import React from 'react';
-import {use, spy, expect} from 'chai';
-import {testImages} from '../../../../test/images-mock.js';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import { use, spy, expect } from 'chai';
+import { testImages } from '../../../../__tests__/images-mock.js';
+import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import spies from 'chai-spies';
 import sinon from 'sinon';
 
 use(spies);
 
 describe('Love Button', () => {
-
   let driver;
   let sampleItemViewProps;
   let sampleItem;
@@ -26,11 +23,10 @@ describe('Love Button', () => {
     Object.assign(sampleItemViewProps, {
       itemId: 1245,
       isSettings: true,
-      showCounter: true
+      showCounter: true,
     });
     stub_postLoveActivity = sinon.stub(itemActions, 'postLoveActivity');
     stub_isLoved = sinon.stub(itemActions, 'toggleLove');
-
   });
   afterEach(() => {
     stub_postLoveActivity.restore();
@@ -38,7 +34,6 @@ describe('Love Button', () => {
   });
 
   it('should toggle love', () => {
-
     driver.mount(LoveButton, sampleItemViewProps);
     expect(driver.get.state().isLoved).to.equal(false);
     driver.find.hook('love-icon').simulate('click');
@@ -84,6 +79,4 @@ describe('Love Button', () => {
     expect(stub.called).to.be.true;
     stub.restore();
   });
-
 });
-

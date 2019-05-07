@@ -1,21 +1,20 @@
-'use strict';
-
 import React from 'react';
-import {expect} from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import utils from '../../../utils';
-import {VideoQueue} from './video-queue';
+import { VideoQueue } from './video-queue';
 import videoMiddleware from './videoMiddleware';
-
 
 describe('Video Item ', () => {
   const store = {
     getState() {
-      return {gallery: {
-        videoPlayMode: 1
-      }};
+      return {
+        gallery: {
+          videoPlayMode: 1,
+        },
+      };
     },
-    dispatch: action => {}
+    dispatch: action => {},
   };
   const next = action => {};
   let videoQueue;
@@ -27,27 +26,27 @@ describe('Video Item ', () => {
 
   beforeEach(() => {
     videoQueue = new VideoQueue();
-    middleware = videoMiddleware({videoQueue, utils})(store)(next);
+    middleware = videoMiddleware({ videoQueue, utils })(store)(next);
     videoData1 = {
       idx: 1,
-      isVisible: () => true
+      isVisible: () => true,
     };
     videoData2 = {
       idx: 2,
-      isVisible: () => true
+      isVisible: () => true,
     };
   });
 
   it('video added and video removed effecting the queue', () => {
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData1
+      payload: videoData1,
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(1);
     action = {
       type: 'VIDEO_REMOVED',
-      payload: 1
+      payload: 1,
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(-1);
@@ -57,25 +56,25 @@ describe('Video Item ', () => {
     stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData1
+      payload: videoData1,
     };
     middleware(action);
     videoData2 = {
       idx: 2,
-      isVisible: () => false
+      isVisible: () => false,
     };
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData2
+      payload: videoData2,
     };
     middleware(action);
     const videoData3 = {
       idx: 3,
-      isVisible: () => true
+      isVisible: () => true,
     };
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData3
+      payload: videoData3,
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(1);
@@ -91,25 +90,25 @@ describe('Video Item ', () => {
     stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData1
+      payload: videoData1,
     };
     middleware(action);
     videoData2 = {
       idx: 2,
-      isVisible: () => false
+      isVisible: () => false,
     };
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData2
+      payload: videoData2,
     };
     middleware(action);
     const videoData3 = {
       idx: 3,
-      isVisible: () => true
+      isVisible: () => true,
     };
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData3
+      payload: videoData3,
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(1);
@@ -125,12 +124,12 @@ describe('Video Item ', () => {
     stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData1
+      payload: videoData1,
     };
     middleware(action);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData2
+      payload: videoData2,
     };
     middleware(action);
     action = {
@@ -145,12 +144,12 @@ describe('Video Item ', () => {
     stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData1
+      payload: videoData1,
     };
     middleware(action);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData2
+      payload: videoData2,
     };
     middleware(action);
     action = {
@@ -165,16 +164,16 @@ describe('Video Item ', () => {
     stub = sinon.stub(utils, 'isEditor').returns(false);
     videoData1 = {
       idx: 1,
-      isVisible: () => false
+      isVisible: () => false,
     };
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData1
+      payload: videoData1,
     };
     middleware(action);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData2
+      payload: videoData2,
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(1);
@@ -190,16 +189,16 @@ describe('Video Item ', () => {
     stub = sinon.stub(utils, 'isEditor').returns(false);
     videoData1 = {
       idx: 1,
-      isVisible: () => false
+      isVisible: () => false,
     };
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData1
+      payload: videoData1,
     };
     middleware(action);
     action = {
       type: 'VIDEO_ADDED',
-      payload: videoData2
+      payload: videoData2,
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(1);

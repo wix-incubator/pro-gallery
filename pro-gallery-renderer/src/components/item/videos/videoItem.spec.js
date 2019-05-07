@@ -1,15 +1,12 @@
-'use strict';
-
-import GalleryDriver from '../../../../test/drivers/reactDriver';
-import {testVideos} from '../../../../test/images-mock';
+import GalleryDriver from '../../../../__tests__/drivers/reactDriver';
+import { testVideos } from '../../../../__tests__/images-mock';
 import React from 'react';
 import sinon from 'sinon';
 import VideoItem from './videoItem';
-import {expect} from 'chai';
+import { expect } from 'chai';
 import utils from '../../../utils';
 
 describe('Video Item ', () => {
-
   let driver;
   let sampleItem;
   let sampleItemViewProps;
@@ -23,7 +20,7 @@ describe('Video Item ', () => {
       playing: false,
       onMount: () => {},
       onUnmount: () => {},
-      loadingStatus: {}
+      loadingStatus: {},
     });
   });
 
@@ -34,21 +31,25 @@ describe('Video Item ', () => {
       itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    driver.set.props(
-      {playing: true
-      });
-    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
+    driver.set.props({ playing: true });
+    expect(
+      driver.find.hook('video_container-video-player-element').length,
+    ).to.equal(1);
+    expect(driver.find.hook('video_container-image-element').length).to.equal(
+      0,
+    );
 
     Object.assign(sampleItemViewProps.styleParams, {
-      itemClick: 'nothing'
+      itemClick: 'nothing',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    driver.set.props(
-      {playing: true
-      });
-    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
+    driver.set.props({ playing: true });
+    expect(
+      driver.find.hook('video_container-video-player-element').length,
+    ).to.equal(1);
+    expect(driver.find.hook('video_container-image-element').length).to.equal(
+      0,
+    );
     stub.restore();
 
     //!utils.isMobile() && itemClick !== 'expand'
@@ -57,20 +58,24 @@ describe('Video Item ', () => {
       itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    driver.set.props(
-      {playing: true
-      });
-    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
+    driver.set.props({ playing: true });
+    expect(
+      driver.find.hook('video_container-video-player-element').length,
+    ).to.equal(1);
+    expect(driver.find.hook('video_container-image-element').length).to.equal(
+      0,
+    );
     Object.assign(sampleItemViewProps.styleParams, {
       itemClick: 'nothing',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    driver.set.props(
-      {playing: true
-      });
-    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
+    driver.set.props({ playing: true });
+    expect(
+      driver.find.hook('video_container-video-player-element').length,
+    ).to.equal(1);
+    expect(driver.find.hook('video_container-image-element').length).to.equal(
+      0,
+    );
     stub.restore();
 
     //!utils.isMobile() && videoPlay !== 'onClick'
@@ -79,47 +84,59 @@ describe('Video Item ', () => {
       videoPlay: 'hover',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    driver.set.props(
-      {playing: true
-      });
-    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
+    driver.set.props({ playing: true });
+    expect(
+      driver.find.hook('video_container-video-player-element').length,
+    ).to.equal(1);
+    expect(driver.find.hook('video_container-image-element').length).to.equal(
+      0,
+    );
     Object.assign(sampleItemViewProps.styleParams, {
       videoPlay: 'auto',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    driver.set.props(
-      {playing: true
-      });
-    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
+    driver.set.props({ playing: true });
+    expect(
+      driver.find.hook('video_container-video-player-element').length,
+    ).to.equal(1);
+    expect(driver.find.hook('video_container-image-element').length).to.equal(
+      0,
+    );
     stub.restore();
   });
 
   it('source should have right src', () => {
     Object.assign(sampleItemViewProps, {
-      videoUrl: ''
+      videoUrl: '',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    expect(driver.find.selector('ReactPlayer').props().url).equal(sampleItemViewProps.resized_url.mp4);
-    expect(driver.find.selector('ReactPlayer').props().config.file.attributes.poster).equal(sampleItemViewProps.resized_url.img);
+    expect(driver.find.selector('ReactPlayer').props().url).equal(
+      sampleItemViewProps.resized_url.mp4,
+    );
+    expect(
+      driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
+    ).equal(sampleItemViewProps.resized_url.img);
     Object.assign(sampleItemViewProps, {
-      videoUrl: 'https://www.youtube.com/watch?v=2J5GzHoKl1Q'
+      videoUrl: 'https://www.youtube.com/watch?v=2J5GzHoKl1Q',
     });
     driver.mount(VideoItem, sampleItemViewProps);
-    expect(driver.find.selector('ReactPlayer').props().url).equal('https://www.youtube.com/watch?v=2J5GzHoKl1Q');
-    expect(driver.find.selector('ReactPlayer').props().config.file.attributes.poster).equal(sampleItemViewProps.resized_url.img);
+    expect(driver.find.selector('ReactPlayer').props().url).equal(
+      'https://www.youtube.com/watch?v=2J5GzHoKl1Q',
+    );
+    expect(
+      driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
+    ).equal(sampleItemViewProps.resized_url.img);
   });
 
   it('video controls should appear if not hidePlay', () => {
     Object.assign(sampleItemViewProps, {
-      hidePlay: false
+      hidePlay: false,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.hook('play-triangle').length).to.equal(1);
     expect(driver.find.hook('play-background').length).to.equal(1);
     Object.assign(sampleItemViewProps, {
-      hidePlay: true
+      hidePlay: true,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.hook('play-triangle').length).to.equal(0);

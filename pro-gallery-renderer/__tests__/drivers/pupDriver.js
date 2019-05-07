@@ -3,7 +3,6 @@ import puppeteer from 'puppeteer';
 const devices = require('puppeteer/DeviceDescriptors');
 
 export default class galleryDriver {
-
   constructor() {
     this.browser = {};
     this.page = {};
@@ -18,14 +17,20 @@ export default class galleryDriver {
         slowMo: 200,
         devtools: true,
         headless: false,
-        args: ['--no-sandbox']});
+        args: ['--no-sandbox'],
+      });
     } else {
-      this.browser = await puppeteer.launch({args: ['--no-sandbox']});
+      this.browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     }
-    this.page = await this.goAndWait(this.browser, this.getPageUrl(kind, name), device);
+    this.page = await this.goAndWait(
+      this.browser,
+      this.getPageUrl(kind, name),
+      device,
+    );
     this.frames = await this.page.frames();
-    this.galleryFrame = this.frames.find(f => f.name() === 'storybook-preview-iframe');
-
+    this.galleryFrame = this.frames.find(
+      f => f.name() === 'storybook-preview-iframe',
+    );
   }
 
   async closeGallery() {
@@ -45,12 +50,13 @@ export default class galleryDriver {
       case 'iPhone':
         await page.emulate(devices['iPhone X']);
         break;
-      default: await page.setViewport({
-        width: 1920,
-        height: 1080
-      });
+      default:
+        await page.setViewport({
+          width: 1920,
+          height: 1080,
+        });
     }
-    await page.goto(url, {waitUntil: 'networkidle2'});
+    await page.goto(url, { waitUntil: 'networkidle2' });
     return page;
   }
 
@@ -60,23 +66,30 @@ export default class galleryDriver {
 
   get find() {
     return {
-      hook: async str => (await this.galleryFrame.$$(`[data-hook="${str}"]`)),
-      items: async () => (await this.galleryFrame.$$('.gallery-item-container')),
+      hook: async str => await this.galleryFrame.$$(`[data-hook="${str}"]`),
+      items: async () => await this.galleryFrame.$$('.gallery-item-container'),
     };
   }
   get grab() {
     return {
-      hook: async str => (await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`)),
-      value: async str => (await window.document.querySelector(`[data-hook="${str}"]`)),
-      html: async str => (await this.page.$eval(`[data-hook="${str}"]`, element => {
-        return element.innerHTML;
-      })),
+      hook: async str =>
+        await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`),
+      value: async str =>
+        await window.document.querySelector(`[data-hook="${str}"]`),
+      html: async str =>
+        await this.page.$eval(`[data-hook="${str}"]`, element => {
+          return element.innerHTML;
+        }),
       style: async (str, prop) => {
         const getStyles = (element, prop) => {
           const styles = window.getComputedStyle(element);
-          return (styles.getPropertyValue(`${prop}`));
+          return styles.getPropertyValue(`${prop}`);
         };
-        return (await this.galleryFrame.$eval(`[data-hook="${str}"]`, getStyles, prop));
+        return await this.galleryFrame.$eval(
+          `[data-hook="${str}"]`,
+          getStyles,
+          prop,
+        );
       },
       numOfPages: async () => {
         const a = await this.browser.pages();
@@ -84,28 +97,39 @@ export default class galleryDriver {
       },
       screenshot: async path => {
         await this.waitFor.timer(1000);
-        return path ? await this.page.screenshot({path: `${path}.png`}) : await this.page.screenshot();
-      }
+        return path
+          ? await this.page.screenshot({ path: `${path}.png` })
+          : await this.page.screenshot();
+      },
     };
   }
   get waitFor() {
     return {
-      hookToExist: async str => (await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`, {timeout: 3000})),
-      hookToBeVisible: async str => (await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`, {visible: true})),
-      hookToBeHidden: async str => (await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`, {hidden: true})),
-      timer: async time => (await this.galleryFrame.waitFor(time)),
+      hookToExist: async str =>
+        await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`, {
+          timeout: 3000,
+        }),
+      hookToBeVisible: async str =>
+        await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`, {
+          visible: true,
+        }),
+      hookToBeHidden: async str =>
+        await this.galleryFrame.waitForSelector(`[data-hook="${str}"]`, {
+          hidden: true,
+        }),
+      timer: async time => await this.galleryFrame.waitFor(time),
       newPage: async (timeoutSec = 5000) => {
         return new Promise((resolve, reject) => {
           this.browser.on('targetcreated', resolve);
           this.galleryFrame.waitFor(timeoutSec).then(reject);
         });
-      }
+      },
     };
   }
   get actions() {
     return {
-      hover: async str => (await this.galleryFrame.hover(`[data-hook="${str}"]`)),
-      click: async str => (await this.galleryFrame.click(`[data-hook="${str}"]`))
+      hover: async str => await this.galleryFrame.hover(`[data-hook="${str}"]`),
+      click: async str => await this.galleryFrame.click(`[data-hook="${str}"]`),
       // debug: () => {
       //   debugger;
       // }

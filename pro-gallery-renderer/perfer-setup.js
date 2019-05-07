@@ -7,7 +7,7 @@ module.exports = async () => {
   return {
     cleanup: async () => {
       await server.close();
-    }
+    },
   };
 };
 

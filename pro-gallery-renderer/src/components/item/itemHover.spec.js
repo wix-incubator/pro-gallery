@@ -1,18 +1,15 @@
-'use strict';
-
 import React from 'react';
-import {use, spy, expect} from 'chai';
+import { use, spy, expect } from 'chai';
 import spies from 'chai-spies';
 import sinon from 'sinon';
-import GalleryDriver from '../../../test/drivers/reactDriver';
-import {testImages} from '../../../test/images-mock';
+import GalleryDriver from '../../../__tests__/drivers/reactDriver';
+import { testImages } from '../../../__tests__/images-mock';
 import ItemHover from './itemHover';
 import utils from '../../utils/index.js';
 
 use(spies);
 
 describe('ItemHover', () => {
-
   let driver;
   let sampleItem;
   let sampleItemViewProps;
@@ -31,43 +28,42 @@ describe('ItemHover', () => {
       shouldHover: true,
       imageDimensions: {
         height: `calc(100% - 80px)`,
-        marginTop: 10
+        marginTop: 10,
       },
       actions: {
         handleItemMouseDown: () => {},
-        handleItemMouseUp: () => {}
+        handleItemMouseUp: () => {},
       },
       forceShowHover: true,
-      itemType: 'image'
+      itemType: 'image',
     });
   });
 
   it('should rendered or not according to "shouldHover" prop', () => {
     Object.assign(sampleItemViewProps, {
-      shouldHover: false
+      shouldHover: false,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.hook('item-hover-1').length).to.equal(0);
 
     Object.assign(sampleItemViewProps, {
-      shouldHover: true
+      shouldHover: true,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.hook('item-hover-1').length).to.equal(1);
   });
 
   it('className should be correct', () => {
-
     //-------| item type |-------
 
     Object.assign(sampleItemViewProps, {
-      itemType: 'video'
+      itemType: 'video',
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'gallery-item-hover-video').to.equal(true);
 
     Object.assign(sampleItemViewProps, {
-      itemType: 'image'
+      itemType: 'image',
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'gallery-item-hover').to.equal(true);
@@ -78,7 +74,7 @@ describe('ItemHover', () => {
       isSlider: false,
       isSlideshow: false,
       hasThumbnails: false,
-      galleryVerticalAlign: 'center'
+      galleryVerticalAlign: 'center',
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'center').to.equal(false);
@@ -87,7 +83,7 @@ describe('ItemHover', () => {
       isSlider: true,
       isSlideshow: false,
       hasThumbnails: false,
-      galleryVerticalAlign: 'center'
+      galleryVerticalAlign: 'center',
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'center').to.equal(true);
@@ -96,7 +92,7 @@ describe('ItemHover', () => {
       isSlider: false,
       isSlideshow: true,
       hasThumbnails: false,
-      galleryVerticalAlign: 'center'
+      galleryVerticalAlign: 'center',
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'center').to.equal(true);
@@ -105,7 +101,7 @@ describe('ItemHover', () => {
       isSlider: false,
       isSlideshow: false,
       hasThumbnails: true,
-      galleryVerticalAlign: 'center'
+      galleryVerticalAlign: 'center',
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'center').to.equal(true);
@@ -113,13 +109,13 @@ describe('ItemHover', () => {
     //-------| fullscreen |-------
 
     Object.assign(sampleItemViewProps.styleParams, {
-      fullscreen: true
+      fullscreen: true,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'fullscreen-enabled').to.equal(true);
 
     Object.assign(sampleItemViewProps.styleParams, {
-      fullscreen: false
+      fullscreen: false,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'fullscreen-disabled').to.equal(true);
@@ -131,7 +127,7 @@ describe('ItemHover', () => {
     itemHoverHasClass(driver, 'default').to.equal(true);
 
     Object.assign(sampleItemViewProps.styleParams, {
-      itemOpacity: 0
+      itemOpacity: 0,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'default').to.equal(false);
@@ -166,5 +162,3 @@ describe('ItemHover', () => {
     stub.restore();
   });
 });
-
-

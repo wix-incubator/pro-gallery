@@ -1,15 +1,11 @@
-'use strict';
-
 import React from 'react';
-import {use, spy, expect} from 'chai';
+import { use, spy, expect } from 'chai';
 import spies from 'chai-spies';
-import GalleryDriver from '../../../../test/drivers/reactDriver.js';
-import {testImages} from '../../../../test/images-mock';
+import GalleryDriver from '../../../../__tests__/drivers/reactDriver.js';
+import { testImages } from '../../../../__tests__/images-mock';
 import sinon from 'sinon';
 import Texts from './texts.js';
 import lineHeightFixer from './lineHeightFixer.js';
-
-
 
 use(spies);
 
@@ -62,6 +58,8 @@ describe('Text elements', () => {
     // make allowAnyAction() return false;
     itemViewProps.styleParams.loveButton = itemViewProps.styleParams.allowSocial = itemViewProps.styleParams.allowDownload = false;
     galleryDriver.mount(Texts, itemViewProps);
-    expect(galleryDriver.find.hook('item-title').get(0).props.style.marginBottom).to.equal(0);
+    expect(
+      galleryDriver.find.hook('item-title').get(0).props.style.marginBottom,
+    ).to.equal(0);
   });
 });

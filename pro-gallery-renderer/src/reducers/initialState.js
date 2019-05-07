@@ -7,8 +7,7 @@ export default {
     videoIndexPlay: -1,
     lastVideoPlayed: -1,
     isInView: true,
-    documentHeight: utils.getScreenHeight()
+    documentHeight: utils.getScreenHeight(),
   },
-  fullscreen: {
-  }
+  fullscreen: {},
 };

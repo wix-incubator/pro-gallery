@@ -1,17 +1,12 @@
-'use strict';
-
-import GalleryDriver from '../../../test/drivers/reactDriver';
+import GalleryDriver from '../../../__tests__/drivers/reactDriver';
 
 describe('Gallery Services', () => {
-
   let galleryDriver;
   let galleryViewProps;
 
   beforeEach(() => {
-
     galleryDriver = new GalleryDriver();
     galleryViewProps = galleryDriver.props.galleryView();
-
   });
 
   describe(' gallery api ', () => {
@@ -19,6 +14,4 @@ describe('Gallery Services', () => {
     //   expect(galleryViewProps.items).toBe()
     // })
   });
-
 });
-

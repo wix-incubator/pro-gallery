@@ -1,22 +1,19 @@
-import React, {PropTypes} from 'react';
-import {GalleryItem} from '../../pro-gallery-renderer/src';
+import React from 'react';
+import GalleryItem from '../item/galleryItem';
 
 const GalleryPlainView = props => {
-  const {
-    galleryData,
-    watermarkData
-  } = props;
-  return (<div>
-    {galleryData.photos.map((item, index) => {
-      const core = new GalleryItem({dto: item, watermark: watermarkData});
-      const imageUrl = core.resizedUrl('fit', 250, 250, null, null).img;
-      return <img key={index} src={imageUrl}/>;
-    })}
-  </div>);
+  const { galleryData, watermarkData } = props;
+  return (
+    <div>
+      {galleryData.photos.map((item, index) => {
+        const core = new GalleryItem({ dto: item, watermark: watermarkData });
+        const imageUrl = core.resizedUrl('fit', 250, 250, null, null).img;
+        return <img alt="" key={index} src={imageUrl} />;
+      })}
+    </div>
+  );
 };
 
-GalleryPlainView.propTypes = {
-
-};
+GalleryPlainView.propTypes = {};
 
 export default GalleryPlainView;

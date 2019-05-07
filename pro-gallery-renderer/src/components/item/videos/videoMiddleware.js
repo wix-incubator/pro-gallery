@@ -1,10 +1,10 @@
 import * as types from '../../../constants/galleryTypes';
-import {PLAY_VIDEO, PAUSE_VIDEO} from '../../../actions/itemViewActions.js';
+import { PLAY_VIDEO, PAUSE_VIDEO } from '../../../actions/itemViewActions.js';
 import videoPlayModes from './videoPlayModes';
-export default ({videoQueue, utils}) => store => {
 
+export default ({ videoQueue, utils }) => store => {
   const playVideo = i => {
-    store.dispatch({type: types.SET_VIDEO_PLAY_INDEX, payload: i});
+    store.dispatch({ type: types.SET_VIDEO_PLAY_INDEX, payload: i });
   };
 
   const playCurrentVideo = () => {
@@ -20,11 +20,10 @@ export default ({videoQueue, utils}) => store => {
   };
 
   return next => action => {
+    const { type, payload } = action;
     const {
-      type,
-      payload
-    } = action;
-    const {gallery: {videoPlayMode}} = store.getState();
+      gallery: { videoPlayMode },
+    } = store.getState();
     // This doesn't affect autoplay
     switch (type) {
       case types.VIDEO_ADDED:
@@ -38,7 +37,9 @@ export default ({videoQueue, utils}) => store => {
     next(action);
 
     // Auto-play handling
-    const isAutoPlay = videoPlayMode === videoPlayModes.autoPlay || videoPlayMode === videoPlayModes.refactoredAutoPlay;
+    const isAutoPlay =
+      videoPlayMode === videoPlayModes.autoPlay ||
+      videoPlayMode === videoPlayModes.refactoredAutoPlay;
     let indexToPlay = null;
     if (utils.isEditor() && payload !== -1) {
       stopPlaying();
@@ -50,7 +51,9 @@ export default ({videoQueue, utils}) => store => {
           break;
         case types.EDITOR_MODE_CHANGED:
         case types.GALLERY_WINDOW_LAYOUT_CHANGED:
-          indexToPlay = videoQueue.isCurrentVideoVisible() ? playCurrentVideo() : playNextVideo();
+          indexToPlay = videoQueue.isCurrentVideoVisible()
+            ? playCurrentVideo()
+            : playNextVideo();
           break;
         case types.VIDEO_ADDED:
           playCurrentVideo();

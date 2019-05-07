@@ -1,7 +1,7 @@
 export class VideoQueue {
   constructor() {
     this.que = [];
-    this.dummyVideo = {idx: -1, isVisible: () => false};
+    this.dummyVideo = { idx: -1, isVisible: () => false };
     this.video = this.dummyVideo;
   }
   current() {
@@ -32,7 +32,9 @@ export class VideoQueue {
         break;
       }
     }
-    return (this.que[queIndex] && this.que[queIndex].isVisible()) ? this.que[queIndex] : this.dummyVideo;
+    return this.que[queIndex] && this.que[queIndex].isVisible()
+      ? this.que[queIndex]
+      : this.dummyVideo;
   }
 
   isEmpty() {

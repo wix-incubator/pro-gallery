@@ -1,10 +1,5 @@
-
 export function getFixedLayouts(layoutNumber) {
-  const LayoutsNameList = [
-    'bricks',
-    'alternate',
-    'mix'
-  ];
+  const LayoutsNameList = ['bricks', 'alternate', 'mix'];
   const layouts = {
     bricks: {
       sampleSize: 100,
@@ -74,7 +69,7 @@ export function getFixedLayouts(layoutNumber) {
       placeGroupsLtr: false,
       at: 1538490323024,
       rotatingCropRatios: '',
-    }
+    },
   };
   const layoutName = LayoutsNameList[layoutNumber];
   return layouts[layoutName];

@@ -1,11 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as actions from '../../../actions/LoveButtonActions.js';
-import {LoveButton} from './loveButton.js';
+import { LoveButton } from './loveButton.js';
 
 export const LoveButtonContainer = props => {
-
   return (
     <LoveButton
       toggleLove={props.actions.toggleLove}
@@ -26,12 +25,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(actions, dispatch),
   };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LoveButtonContainer);
-

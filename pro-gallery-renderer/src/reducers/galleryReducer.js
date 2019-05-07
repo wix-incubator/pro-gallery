@@ -10,12 +10,12 @@ import {
   EDITOR_MODE_CHANGED,
   TOGGLE_HOVER_PREVIEW,
   TOGGLE_ISINVIEW,
-  SET_VIDEO_PLAY_INDEX
+  SET_VIDEO_PLAY_INDEX,
 } from '../constants/galleryTypes.js';
 
 import videoActions from '../constants/videoActionTypes';
 
-import {PLAY_VIDEO, PAUSE_VIDEO} from '../actions/itemViewActions.js';
+import { PLAY_VIDEO, PAUSE_VIDEO } from '../actions/itemViewActions.js';
 import initialState from './initialState.js';
 
 import _ from 'lodash';
@@ -27,7 +27,7 @@ export default function galleryReducer(state = initialState.gallery, action) {
       if (action.boundingRectAndOffsets) {
         const res = action.boundingRectAndOffsets;
         const scrollBase = res.offsets.y;
-        const scrollTop = ((-1) * res.rect.top) / utils.getViewportScaleRatio();
+        const scrollTop = (-1 * res.rect.top) / utils.getViewportScaleRatio();
         let maxGalleryWidth;
         if (res && res.rect && !_.isUndefined(res.rect.width)) {
           maxGalleryWidth = res.rect.width;
@@ -39,7 +39,6 @@ export default function galleryReducer(state = initialState.gallery, action) {
           scrollTop,
           maxGalleryWidth,
         });
-
       } else {
         return _.merge({}, state, {
           wixInit: true,
@@ -49,37 +48,44 @@ export default function galleryReducer(state = initialState.gallery, action) {
 
     case videoActions.videoModeChanged: {
       const newVideoPlayMode = action.payload;
-      const {videoPlayMode} = state;
+      const { videoPlayMode } = state;
       if (videoPlayMode !== newVideoPlayMode) {
-        state = {...state, videoPlayMode: newVideoPlayMode};
+        state = { ...state, videoPlayMode: newVideoPlayMode };
       }
 
       break;
     }
     case SET_ITEMS:
-      return _.merge({}, state, {items: action.items});
+      return _.merge({}, state, { items: action.items });
     case SET_RENDERED_ITEMS_COUNT:
-      return _.merge({}, state, {renderedItemsCount: action.count});
+      return _.merge({}, state, { renderedItemsCount: action.count });
     case GALLERY_WINDOW_LAYOUT_CHANGED: {
-      const documentHeight = {documentHeight: action.documentHeight};
+      const documentHeight = { documentHeight: action.documentHeight };
       return _.merge({}, state, documentHeight);
     }
     case SET_VIDEO_PLAY_INDEX:
       if (state.isInView) {
-        state = {...state, videoIndexPlay: action.payload, lastVideoPlayed: action.payload};
+        state = {
+          ...state,
+          videoIndexPlay: action.payload,
+          lastVideoPlayed: action.payload,
+        };
       }
       break;
     case PLAY_VIDEO:
       if (state.isInView) {
-        return _.merge({}, state, {videoIndexPlay: action.idx, lastVideoPlayed: action.idx});
+        return _.merge({}, state, {
+          videoIndexPlay: action.idx,
+          lastVideoPlayed: action.idx,
+        });
       }
       break;
     case PAUSE_VIDEO:
-      return _.merge({}, state, {videoIndexPlay: -1});
+      return _.merge({}, state, { videoIndexPlay: -1 });
     case TOGGLE_HOVER_PREVIEW:
-      return _.merge({}, state, {previewHover: action.toggle});
+      return _.merge({}, state, { previewHover: action.toggle });
     case TOGGLE_ISINVIEW:
-      return _.merge({}, state, {isInView: action.toggle});
+      return _.merge({}, state, { isInView: action.toggle });
     default:
       return state;
   }

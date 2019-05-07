@@ -1,8 +1,8 @@
 import React from 'react';
 import GroupView from '../group/groupView.js';
-import GalleryDebugMessage from '../gallery/galleryDebugMessage';
+import GalleryDebugMessage from './galleryDebugMessage';
 import _ from 'lodash';
-import GalleryEmpty from '../gallery/galleryEmpty';
+import GalleryEmpty from './galleryEmpty';
 import utils from '../../utils/index.js';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
@@ -10,7 +10,6 @@ import ItemContainer from '../item/itemContainer.js';
 utils.fixViewport('Gallery');
 
 class GalleryView extends React.Component {
-
   constructor(props) {
     super(props);
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
@@ -28,11 +27,15 @@ class GalleryView extends React.Component {
   }
 
   handleArrowKeys(e) {
-    const activeItemIdx = (window.document.activeElement.getAttribute('data-idx'));
+    const activeItemIdx = window.document.activeElement.getAttribute(
+      'data-idx',
+    );
 
     if (activeItemIdx) {
-
-      const findNeighborItem = this.props.actions.findNeighborItem || this.props.galleryStructure.findNeighborItem || (() => {}); //temp change for tests to pass
+      const findNeighborItem =
+        this.props.actions.findNeighborItem ||
+        this.props.galleryStructure.findNeighborItem ||
+        (() => {}); //temp change for tests to pass
 
       const idx = Number(activeItemIdx);
 
@@ -57,7 +60,7 @@ class GalleryView extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         utils.setStateAndLog(this, 'Set Gallery Current Item', {
-          currentIdx: newIdx
+          currentIdx: newIdx,
         });
         return false;
       }
@@ -79,23 +82,29 @@ class GalleryView extends React.Component {
 
   lastVisibleItemIdx() {
     //the item must be visible and about the show more button
-    return this.lastVisibleItemIdxInHeight(this.props.container.galleryHeight - 100);
+    return this.lastVisibleItemIdxInHeight(
+      this.props.container.galleryHeight - 100,
+    );
   }
   showMoreItems() {
-
-    if (utils.isAccessibilityEnabled()) { // tal - I left this check since we do not want to focus the last item in non-accessibility mode
+    if (utils.isAccessibilityEnabled()) {
+      // tal - I left this check since we do not want to focus the last item in non-accessibility mode
       //find the last visible item and focus on it
       try {
         const lastItemIdx = this.lastVisibleItemIdx();
-        utils.setStateAndLog(this, 'Focus on Last Gallery Item', {
-          currentIdx: lastItemIdx + 1
-        }, () => {
-          this.props.actions.toggleInfiniteScroll();
-        });
+        utils.setStateAndLog(
+          this,
+          'Focus on Last Gallery Item',
+          {
+            currentIdx: lastItemIdx + 1,
+          },
+          () => {
+            this.props.actions.toggleInfiniteScroll();
+          },
+        );
       } catch (e) {
         console.warn('Cannot find item to focus', e);
       }
-
     } else {
       this.props.actions.toggleInfiniteScroll();
     }
@@ -108,18 +117,42 @@ class GalleryView extends React.Component {
 
     let galleryHeight;
     if (showMore) {
-      galleryHeight = (this.props.container.galleryHeight - (showMoreContainerHeight * utils.getViewportScaleRatio()));
+      galleryHeight =
+        this.props.container.galleryHeight -
+        showMoreContainerHeight * utils.getViewportScaleRatio();
     } else {
       galleryHeight = this.props.galleryStructure.height + 'px';
     }
-    const layout = this.props.galleryStructure.galleryItems.map((item, index) => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(galleryConfig, {visible: item.isVisible}, {key: `ItemContainer-${item.id}-${index}`})), {store: this.props.store})));
+    const layout = this.props.galleryStructure.galleryItems.map((item, index) =>
+      React.createElement(
+        ItemContainer,
+        _.merge(
+          item.renderProps(
+            _.merge(
+              galleryConfig,
+              { visible: item.isVisible },
+              { key: `ItemContainer-${item.id}-${index}` },
+            ),
+          ),
+          { store: this.props.store },
+        ),
+      ),
+    );
 
     return (
-      <div id="pro-gallery-container" className={'pro-gallery inline-styles ' + (this.props.styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') + (utils.isAccessibilityEnabled() ? ' accessible ' : '')}
+      <div
+        id="pro-gallery-container"
+        className={
+          'pro-gallery inline-styles ' +
+          (this.props.styleParams.oneRow
+            ? ' one-row slider hide-scrollbars '
+            : '') +
+          (utils.isAccessibilityEnabled() ? ' accessible ' : '')
+        }
         style={{
           height: galleryHeight,
           //  width: this.props.container.galleryWidth,
-          overflowX: 'hidden'
+          overflowX: 'hidden',
         }}
         onKeyDown={this.handleArrowKeys}
       >
@@ -145,22 +178,35 @@ class GalleryView extends React.Component {
       actions: {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,
-        setAppLoaded: this.props.actions.setAppLoaded
-      }
+        setAppLoaded: this.props.actions.setAppLoaded,
+      },
     };
   }
 
   createEmptyState() {
-    return ((!(this.props.renderedItemsCount > 0) && utils.isEditor()) ?
-      (<GalleryEmpty actions={{
-        setWixHeight: this.props.actions.setWixHeight
-      }}/>) : '');
+    return !(this.props.renderedItemsCount > 0) && utils.isEditor() ? (
+      <GalleryEmpty
+        actions={{
+          setWixHeight: this.props.actions.setWixHeight,
+        }}
+      />
+    ) : (
+      ''
+    );
   }
 
   screenLogs() {
-    return ((utils.shouldDebug('screenLogs')) ? (
-      <div className="screen-logs">URL width: {utils.parseGetParam('width')}, Container: {JSON.stringify(this.props.container.galleryWidth)}, window.document.body.clientWidth {document.body.clientWidth}, window.innerWidth {window.innerWidth}, window.screen.width: {window.screen.width}</div>
-    ) : '');
+    return utils.shouldDebug('screenLogs') ? (
+      <div className="screen-logs">
+        URL width: {utils.parseGetParam('width')}, Container:{' '}
+        {JSON.stringify(this.props.container.galleryWidth)},
+        window.document.body.clientWidth {document.body.clientWidth},
+        window.innerWidth {window.innerWidth}, window.screen.width:{' '}
+        {window.screen.width}
+      </div>
+    ) : (
+      ''
+    );
   }
 
   returnButtonStyle(styleParams) {
@@ -172,7 +218,8 @@ class GalleryView extends React.Component {
       }
       if (typeof styleParams.loadMoreButtonFontColor !== 'undefined') {
         btnStyle.color = styleParams.loadMoreButtonFontColor.value;
-        btnStyle.textDecorationColor = styleParams.loadMoreButtonFontColor.value;
+        btnStyle.textDecorationColor =
+          styleParams.loadMoreButtonFontColor.value;
       }
       if (typeof styleParams.loadMoreButtonColor !== 'undefined') {
         btnStyle.background = styleParams.loadMoreButtonColor.value;
@@ -194,13 +241,20 @@ class GalleryView extends React.Component {
     const styleParams = this.props.styleParams;
     let showMoreButton = false;
     const buttonState = this.props.displayShowMore;
-    const shouldShowButton = (buttonState && (this.props.galleryStructure.height > this.props.container.height));
+    const shouldShowButton =
+      buttonState &&
+      this.props.galleryStructure.height > this.props.container.height;
     const btnStyle = this.returnButtonStyle(styleParams);
 
     if (shouldShowButton) {
       const buttonText = styleParams.loadMoreButtonText || 'Load More';
       showMoreButton = (
-        <div className={'show-more-container' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')}>
+        <div
+          className={
+            'show-more-container' +
+            (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
+          }
+        >
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
             id={'show-more-' + this.props.galleryDomId}
@@ -209,7 +263,9 @@ class GalleryView extends React.Component {
             data-hook="show-more"
             aria-label={buttonText}
             style={btnStyle}
-          >{buttonText}</button>
+          >
+            {buttonText}
+          </button>
         </div>
       );
     }
@@ -218,9 +274,12 @@ class GalleryView extends React.Component {
   }
 
   getStyles() {
-    const marginExceptBottom = (-1) * (this.props.styleParams.imageMargin - this.props.styleParams.galleryMargin);
+    const marginExceptBottom =
+      -1 *
+      (this.props.styleParams.imageMargin -
+        this.props.styleParams.galleryMargin);
     return {
-      margin: `${marginExceptBottom}px ${marginExceptBottom}px 0 ${marginExceptBottom}px`
+      margin: `${marginExceptBottom}px ${marginExceptBottom}px 0 ${marginExceptBottom}px`,
     };
   }
 
@@ -230,10 +289,19 @@ class GalleryView extends React.Component {
     if (utils.isVerbose()) {
       console.count('galleryView render');
       console.time('Rendering Gallery took ');
-      console.log('[DEBUG_RENDER] GalleryView styleParams', this.props.styleParams);
-      console.log('[DEBUG_RENDER] GalleryView props changed', utils.printableObjectsDiff((this.lastProps || {}), this.props));
+      console.log(
+        '[DEBUG_RENDER] GalleryView styleParams',
+        this.props.styleParams,
+      );
+      console.log(
+        '[DEBUG_RENDER] GalleryView props changed',
+        utils.printableObjectsDiff(this.lastProps || {}, this.props),
+      );
       this.lastProps = _.cloneDeep(this.props);
-      console.log('[DEBUG_RENDER] GalleryView state changed', utils.printableObjectsDiff((this.lastState || {}), this.state));
+      console.log(
+        '[DEBUG_RENDER] GalleryView state changed',
+        utils.printableObjectsDiff(this.lastState || {}, this.state),
+      );
       this.lastState = _.cloneDeep(this.state);
       this.renderCount = (this.renderCount || 0) + 1;
     }
@@ -248,7 +316,8 @@ class GalleryView extends React.Component {
     const screenLogs = this.screenLogs();
 
     return (
-      <div className={'pro-gallery-parent-container'}
+      <div
+        className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
         // style={this.getStyles()}
       >
@@ -258,7 +327,6 @@ class GalleryView extends React.Component {
         {showMore}
       </div>
     );
-
   }
 }
 

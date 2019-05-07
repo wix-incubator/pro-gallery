@@ -1,6 +1,6 @@
 import React from 'react';
 import utils from '../../../utils';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import _ from 'lodash';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
@@ -14,16 +14,18 @@ class LoveButton extends React.Component {
     this.state = {
       isLoved: itemActions.isLoved(props.itemId),
       loveCount: itemActions.getLoveCount(props.itemId),
-      animate: false
+      animate: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const currIsLoved = itemActions.isLoved(nextProps.itemId);
     const currLoveCount = itemActions.getLoveCount(nextProps.itemId);
-    if (nextProps.itemId !== this.props.itemId ||
-        this.state.isLoved !== currIsLoved ||
-        this.state.loveCount !== currLoveCount) {
+    if (
+      nextProps.itemId !== this.props.itemId ||
+      this.state.isLoved !== currIsLoved ||
+      this.state.loveCount !== currLoveCount
+    ) {
       this.setState({
         isLoved: currIsLoved,
         loveCount: currLoveCount,
@@ -46,13 +48,21 @@ class LoveButton extends React.Component {
   toggleLove(e) {
     e.stopPropagation();
     e.preventDefault();
-    const item = _.pick(this.props, ['layout', 'type', 'itemId', 'id', 'item', 'idx', 'hashtag']);
-    Object.assign(item, {type: 'image'});
+    const item = _.pick(this.props, [
+      'layout',
+      'type',
+      'itemId',
+      'id',
+      'item',
+      'idx',
+      'hashtag',
+    ]);
+    Object.assign(item, { type: 'image' });
     itemActions.postLoveActivity(item);
     itemActions.toggleLove(item.itemId, item.layout);
     this.setState({
       animate: !this.state.isLoved,
-      isLoved: !this.state.isLoved
+      isLoved: !this.state.isLoved,
     });
   }
 
@@ -81,7 +91,7 @@ class LoveButton extends React.Component {
         break;
       default:
         className.push('gallery-item-social-love');
-        if (!(utils.isStoreGallery())) {
+        if (!utils.isStoreGallery()) {
           className.push('block-fullscreen');
         }
     }
@@ -109,18 +119,25 @@ class LoveButton extends React.Component {
   counterClassName() {
     switch (this.props.layout) {
       case 'fullscreen':
-        return 'fullscreen-social-love-count pro-fullscreen-shown ' + this.viewClassName();
+        return (
+          'fullscreen-social-love-count pro-fullscreen-shown ' +
+          this.viewClassName()
+        );
       default:
-        return 'block-fullscreen gallery-item-social-love-count ' + this.viewClassName();
+        return (
+          'block-fullscreen gallery-item-social-love-count ' +
+          this.viewClassName()
+        );
     }
   }
 
   createLoveCounter() {
     const count = this.state.loveCount + (this.state.isLoved ? 1 : 0);
-    return !!this.props.showCounter && (count > 0) ? (
-      <i
-        data-hook="love-counter"
-        className={this.counterClassName()}>{count}</i>) : null;
+    return !!this.props.showCounter && count > 0 ? (
+      <i data-hook="love-counter" className={this.counterClassName()}>
+        {count}
+      </i>
+    ) : null;
   }
 
   createMouseOver() {
@@ -141,24 +158,29 @@ class LoveButton extends React.Component {
 
   updateLoveCount() {
     this.setState({
-      loveCount: itemActions.getLoveCount(this.props.itemId)
+      loveCount: itemActions.getLoveCount(this.props.itemId),
     });
   }
 
   render() {
     const loveCounter = this.createLoveCounter();
     const clickAction = utils.getMobileEnabledClick(this.toggleLove);
-    const loveColor = this.state.isLoved ? {color: 'red'} : {};
+    const loveColor = this.state.isLoved ? { color: 'red' } : {};
 
     return (
       <span
         data-hook="love-button"
         className={this.containerClassName()}
-        onMouseOver = {this.createMouseOver()}
-        onMouseOut = {this.createMouseOut()}
+        onMouseOver={this.createMouseOver()}
+        onMouseOut={this.createMouseOut()}
         {...clickAction}
         onKeyDown={this.onKeyPress}
-        tabIndex={(this.props.styleParams.isSlideshow && this.props.currentIdx === this.props.idx) ? 0 : -1}
+        tabIndex={
+          this.props.styleParams.isSlideshow &&
+          this.props.currentIdx === this.props.idx
+            ? 0
+            : -1
+        }
       >
         <button
           data-hook="love-icon"

@@ -1,6 +1,12 @@
-const {spawn} = require('child_process');
+const { spawn } = require('child_process');
 
 let storyBook;
+window.HTMLMediaElement.prototype.play = () => {
+  /* do nothing */
+};
+window.open = () => {
+  /* do nothing */
+};
 function sleep(ms) {
   return new Promise(resolve => {
     setTimeout(resolve, ms);

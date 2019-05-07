@@ -5,7 +5,6 @@ import utils from '../../utils';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class GroupView extends React.Component {
-
   constructor(props) {
     super(props);
     this.displayName = 'GroupView';
@@ -14,21 +13,27 @@ class GroupView extends React.Component {
   }
 
   createDom(visible) {
-    return this.props.items.map(item => React.createElement(ItemContainer, _.merge(item.renderProps(_.merge(this.props.galleryConfig, {visible})), {store: this.props.store})));
+    return this.props.items.map(item =>
+      React.createElement(
+        ItemContainer,
+        _.merge(
+          item.renderProps(_.merge(this.props.galleryConfig, { visible })),
+          { store: this.props.store },
+        ),
+      ),
+    );
   }
 
   render() {
     const groupStyle = {
       width: this.props.width,
-      height: (this.props.totalHeight)
+      height: this.props.totalHeight,
     };
     return (
-      <div
-        key={`group_${this.props.idx}`}
-        data-hook={'group-view'}
-      >
+      <div key={`group_${this.props.idx}`} data-hook={'group-view'}>
         {this.createDom(true)}
-      </div>);
+      </div>
+    );
   }
 }
 

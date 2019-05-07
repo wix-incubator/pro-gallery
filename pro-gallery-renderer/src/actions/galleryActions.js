@@ -18,21 +18,20 @@ import {
 
 export function initWixData() {
   if (utils.isInWix() && !utils.isDemo()) {
-    return function (dispatch) {
+    return function(dispatch) {
       Wix.getBoundingRectAndOffsets(res => {
         dispatch({
           type: SET_WIX_DATA,
-          boundingRectAndOffsets: res
+          boundingRectAndOffsets: res,
         });
       });
     };
   } else {
     return {
-      type: SET_WIX_DATA
+      type: SET_WIX_DATA,
     };
   }
 }
-
 
 // export function setItems(items) {
 //     return {
@@ -51,60 +50,60 @@ export function initWixData() {
 
 export function navigationIn() {
   return {
-    type: NAVIGATION_IN
+    type: NAVIGATION_IN,
   };
 }
 
 export function videoPlayModeChanged(videoPlayMode) {
   return {
     videoPlayMode,
-    type: VIDEO_PLAY_MODE
+    type: VIDEO_PLAY_MODE,
   };
 }
 
 export function videoEnded(idx) {
   return {
-    type: VIDEO_ENDED
+    type: VIDEO_ENDED,
   };
 }
 
 export function videoAdded(videoData) {
   return {
     payload: videoData,
-    type: VIDEO_ADDED
+    type: VIDEO_ADDED,
   };
 }
 
 export function videoRemoved(index) {
   return {
     type: VIDEO_REMOVED,
-    payload: index
+    payload: index,
   };
 }
 
-export function galleryWindowLayoutChanged({documentHeight}) {
+export function galleryWindowLayoutChanged({ documentHeight }) {
   return {
     documentHeight,
-    type: GALLERY_WINDOW_LAYOUT_CHANGED
+    type: GALLERY_WINDOW_LAYOUT_CHANGED,
   };
 }
 
 export function editorModeChanged() {
   return {
-    type: EDITOR_MODE_CHANGED
+    type: EDITOR_MODE_CHANGED,
   };
 }
 
 export function toggleHoverPreview(toggle) {
   return {
     type: TOGGLE_HOVER_PREVIEW,
-    toggle
+    toggle,
   };
 }
 
 export function toggleIsInView(toggle) {
   return {
     type: TOGGLE_ISINVIEW,
-    toggle
+    toggle,
   };
 }

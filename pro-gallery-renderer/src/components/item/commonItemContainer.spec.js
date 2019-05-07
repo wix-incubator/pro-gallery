@@ -1,10 +1,11 @@
-'use strict';
-
-import {CommonItemContainerNotConnected} from './commonItemContainer.js';
-import {shallow} from 'enzyme';
+import { CommonItemContainerNotConnected } from './commonItemContainer.js';
+import { configure, shallow } from 'enzyme';
 import React from 'react';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
-import {expect} from 'chai';
+import { expect } from 'chai';
+
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 class DummyComponent extends React.Component {
   render() {
@@ -15,7 +16,6 @@ class DummyComponent extends React.Component {
 describe('Common Item Container', () => {
   describe('When creating an item container', () => {
     it('should have a love property', () => {
-
       const EnhancedComponent = CommonItemContainerNotConnected(DummyComponent);
 
       const MountedEnhancedComponent = shallow(<EnhancedComponent />);
@@ -32,7 +32,5 @@ describe('Common Item Container', () => {
     //   MountedEnhancedComponent.prop('love').toggleLove();
     //   expect(MountedEnhancedComponent.state('isLoved')).to.equal(true);
     // });
-
   });
-
 });

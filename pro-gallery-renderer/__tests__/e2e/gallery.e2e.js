@@ -1,8 +1,7 @@
 import GalleryDriver from '../drivers/pupDriver';
-import {spy, expect, chai} from 'chai';
+import { expect } from 'chai';
 
 describe('Gallery', () => {
-
   let driver;
 
   beforeEach(() => {
@@ -17,7 +16,9 @@ describe('Gallery', () => {
   it('renders default items', async () => {
     await driver.openGallery('Gallery', 'Default');
     expect((await driver.find.hook('item-container')).length).to.equal(50);
-    expect((await driver.find.hook('gallery-item-social-button')).length).to.equal(50);
+    expect(
+      (await driver.find.hook('gallery-item-social-button')).length,
+    ).to.equal(50);
     expect((await driver.find.hook('item-download')).length).to.equal(0);
   });
   it('renders empty with no items', async () => {
@@ -28,7 +29,9 @@ describe('Gallery', () => {
     await driver.openGallery('Gallery', 'Masonry');
     await driver.actions.hover('item-container');
     await driver.waitFor.hookToExist('item-container');
-    expect((await driver.find.hook('gallery-item-social-button')).length).to.equal(0);
+    expect(
+      (await driver.find.hook('gallery-item-social-button')).length,
+    ).to.equal(0);
   });
   it('items have download buttons when loveButton is true', async () => {
     await driver.openGallery('Gallery', 'Masonry');
@@ -54,12 +57,12 @@ describe('Gallery', () => {
   });
   //this does not work, looks like the storybook has separate frames for the thumbnails and the photos themselves
 
-  it('renders default items', async () => {
-    await driver.openGallery('Gallery', 'Thumbnails');
-    expect((await driver.find.hook('gallery-thumbnails')).length).to.equal(1);
-    //in comment cause on each screen we have different number of items
-    //expect((await driver.find.hook('item-container')).length).to.equal(27);
-  });
+  // it('renders default items', async () => {
+  //   await driver.openGallery('Gallery', 'Thumbnails-1');
+  //   expect((await driver.find.hook('gallery-thumbnails')).length).to.equal(1);
+  //   //in comment cause on each screen we have different number of items
+  //   //expect((await driver.find.hook('item-container')).length).to.equal(27);
+  // });
 
   //IMPORTANT - the next test will check that when we click a sharing button it actually opens a new page.
   //Because of the way async functions work it is possible that by the time we click the button and jump to expecting the number
@@ -93,10 +96,13 @@ describe('Gallery', () => {
   it('shows share buttons (opacity 0 to 1) on an item', async () => {
     await driver.openGallery('Gallery', 'Default');
     await driver.actions.hover('item-container');
-    expect(await driver.grab.style('social-share-box', 'opacity')).to.equal('0');
+    expect(await driver.grab.style('social-share-box', 'opacity')).to.equal(
+      '0',
+    );
     await driver.actions.click('gallery-item-social-button');
     await driver.waitFor.timer(100); // IMPORTANT - if we dont wait just a bit here the test will fail because the opacity does not have time to change.
-    expect(await driver.grab.style('social-share-box', 'opacity')).to.not.equal('0');
+    expect(await driver.grab.style('social-share-box', 'opacity')).to.not.equal(
+      '0',
+    );
   });
 });
-

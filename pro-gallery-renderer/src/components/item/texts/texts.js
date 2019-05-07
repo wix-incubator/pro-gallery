@@ -6,20 +6,18 @@ import lineHeightFixer from './lineHeightFixer.js';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
-import {settingsVersionManager} from '@wix/photography-client-lib/dist/src/versioning/features/settings';
+import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
 import _ from 'lodash';
-import {SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION} from 'constants';
-
+import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
 
 export default class Texts extends React.Component {
-
   constructor(props) {
     super(props);
     this.debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
   }
 
   getElementClassNames() {
-    const {showShare, styleParams, isNarrow} = this.props;
+    const { showShare, styleParams, isNarrow } = this.props;
     const classNames = ['gallery-item-text'];
     if (showShare) {
       classNames.push('hidden');
@@ -35,13 +33,21 @@ export default class Texts extends React.Component {
   }
 
   allowAnyAction() {
-    const {styleParams} = this.props;
-    return styleParams.loveButton || styleParams.allowSocial || styleParams.allowDownload;
+    const { styleParams } = this.props;
+    return (
+      styleParams.loveButton ||
+      styleParams.allowSocial ||
+      styleParams.allowDownload
+    );
   }
 
   getElementStyle() {
-    const {styleParams, style} = this.props;
-    const textsDisplayOnHover = !styleParams.isSlideshow && !styleParams.isSlider && !styleParams.hasThumbnails && (styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER);
+    const { styleParams, style } = this.props;
+    const textsDisplayOnHover =
+      !styleParams.isSlideshow &&
+      !styleParams.isSlider &&
+      !styleParams.hasThumbnails &&
+      styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
     const isCentered = style.justifyContent === 'center';
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,
@@ -50,7 +56,11 @@ export default class Texts extends React.Component {
     };
 
     //Set the texts fixed height considering the height of the love and share buttons which is about 100px;
-    if (textsDisplayOnHover && this.allowAnyAction() && (styleParams.allowTitle || styleParams.allowDescription)) {
+    if (
+      textsDisplayOnHover &&
+      this.allowAnyAction() &&
+      (styleParams.allowTitle || styleParams.allowDescription)
+    ) {
       elementStyle.paddingBottom = 70;
     }
 
@@ -62,28 +72,41 @@ export default class Texts extends React.Component {
   }
 
   getItemTexts() {
-    const {title, description, id, styleParams, style, isSmallItem, isNarrow, shouldShowButton} = this.props;
+    const {
+      title,
+      description,
+      id,
+      styleParams,
+      style,
+      isSmallItem,
+      isNarrow,
+      shouldShowButton,
+    } = this.props;
     const shouldShowTitle = title && !isSmallItem && styleParams.allowTitle;
-    const shouldShowDescription = description && !isSmallItem && styleParams.allowDescription;
+    const shouldShowDescription =
+      description && !isSmallItem && styleParams.allowDescription;
     const isNewMobileSettings = settingsVersionManager.newMobileSettings();
     const titleSpanStyle = {};
     const descSpanStyle = {};
     let titleStyle, descStyle;
     if (shouldShowDescription) {
-      titleStyle = {marginBottom: designConsts.spaceBetweenTitleAndDescription};
+      titleStyle = {
+        marginBottom: designConsts.spaceBetweenTitleAndDescription,
+      };
     } else if (shouldShowButton) {
-      titleStyle = {marginBottom: designConsts.spaceBetweenElements};
+      titleStyle = { marginBottom: designConsts.spaceBetweenElements };
     } else {
-      titleStyle = {marginBottom: 0};
+      titleStyle = { marginBottom: 0 };
     }
 
     if (shouldShowButton) {
-      descStyle = {marginBottom: designConsts.spaceBetweenElements};
+      descStyle = { marginBottom: designConsts.spaceBetweenElements };
     } else {
-      descStyle = {marginBottom: 0};
+      descStyle = { marginBottom: 0 };
     }
 
-    if (utils.isMobile() && isNewMobileSettings) { // ovveride desktop color and fonts
+    if (utils.isMobile() && isNewMobileSettings) {
+      // ovveride desktop color and fonts
       if (styleParams.isSlideshowFont) {
         if (typeof styleParams.itemFontSlideshow !== 'undefined') {
           titleStyle.font = styleParams.itemFontSlideshow.value;
@@ -95,11 +118,15 @@ export default class Texts extends React.Component {
         }
         if (typeof styleParams.itemFontColorSlideshow !== 'undefined') {
           titleStyle.color = styleParams.itemFontColorSlideshow.value;
-          titleStyle.textDecorationColor = styleParams.itemFontColorSlideshow.value;
+          titleStyle.textDecorationColor =
+            styleParams.itemFontColorSlideshow.value;
         }
-        if (typeof styleParams.itemDescriptionFontColorSlideshow !== 'undefined') {
+        if (
+          typeof styleParams.itemDescriptionFontColorSlideshow !== 'undefined'
+        ) {
           descStyle.color = styleParams.itemDescriptionFontColorSlideshow.value;
-          descStyle.textDecorationColor = styleParams.itemDescriptionFontColorSlideshow.value;
+          descStyle.textDecorationColor =
+            styleParams.itemDescriptionFontColorSlideshow.value;
         }
       } else {
         if (typeof styleParams.itemFont !== 'undefined') {
@@ -116,29 +143,36 @@ export default class Texts extends React.Component {
         }
         if (typeof styleParams.itemDescriptionFontColor !== 'undefined') {
           descStyle.color = styleParams.itemDescriptionFontColor.value;
-          descStyle.textDecorationColor = styleParams.itemDescriptionFontColor.value;
+          descStyle.textDecorationColor =
+            styleParams.itemDescriptionFontColor.value;
         }
       }
     }
 
-    const titleElem = shouldShowTitle && <ItemTitle
-      key={'item-title-' + id}
-      title={title}
-      style={titleStyle}
-      spanStyle={titleSpanStyle}
-    />;
-    const descriptionElem = shouldShowDescription && <ItemDescription
-      key={'item-description-' + id}
-      description={description}
-      style={descStyle}
-      spanStyle={descSpanStyle}
-    />;
-    const buttonElem = shouldShowButton && <CustomButton
-      type="button"
-      styleParams={styleParams}
-      style={style}
-      small={isNarrow}
-    />;
+    const titleElem = shouldShowTitle && (
+      <ItemTitle
+        key={'item-title-' + id}
+        title={title}
+        style={titleStyle}
+        spanStyle={titleSpanStyle}
+      />
+    );
+    const descriptionElem = shouldShowDescription && (
+      <ItemDescription
+        key={'item-description-' + id}
+        description={description}
+        style={descStyle}
+        spanStyle={descSpanStyle}
+      />
+    );
+    const buttonElem = shouldShowButton && (
+      <CustomButton
+        type="button"
+        styleParams={styleParams}
+        style={style}
+        small={isNarrow}
+      />
+    );
 
     const shouldHideElement = !titleElem && !descriptionElem && !buttonElem;
     if (shouldHideElement) {
@@ -149,16 +183,17 @@ export default class Texts extends React.Component {
     const classNames = this.getElementClassNames();
 
     return (
-      <div style={elementStyle}
-        ref={x => this.container = x}
+      <div
+        style={elementStyle}
+        ref={x => (this.container = x)}
         className={classNames}
-        dir="auto" >
+        dir="auto"
+      >
         {titleElem}
         {descriptionElem}
         {buttonElem}
       </div>
     );
-
   }
 
   tryFixLineHeight() {
@@ -169,7 +204,6 @@ export default class Texts extends React.Component {
         console.error('Error on componentDidUpdate', e);
       }
     }
-
   }
 
   componentDidUpdate(prevProps) {
@@ -180,11 +214,9 @@ export default class Texts extends React.Component {
 
   componentDidMount() {
     this.tryFixLineHeight();
-    setTimeout(
-      () => {
-        this.tryFixLineHeight(); //waiting for wix inline styles to take affect
-      }, 1000
-    );
+    setTimeout(() => {
+      this.tryFixLineHeight(); //waiting for wix inline styles to take affect
+    }, 1000);
   }
 
   render() {

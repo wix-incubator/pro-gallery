@@ -1,17 +1,16 @@
 //Yonatan Hattav 12 Jun 2018
-'use strict';
+
 import ItemView from '../itemView.js';
-import GalleryDriver from '../../../../test/drivers/reactDriver.js';
+import GalleryDriver from '../../../../__tests__/drivers/reactDriver.js';
 import Share from './share.js';
 import React from 'react';
-import {spy, expect, chai} from 'chai';
+import { spy, expect, chai } from 'chai';
 import sinon from 'sinon';
-import {testImages} from '../../../../test/images-mock.js';
-import utils from '../../../../src/utils/index.js';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import { testImages } from '../../../../__tests__/images-mock.js';
+import utils from '../../../utils/index';
+import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 describe('Share:', () => {
-
   let driver;
   let sampleItemViewProps;
   let sampleItem;
@@ -33,55 +32,80 @@ describe('Share:', () => {
     it('Toggles inactive based on utils.isSite function', () => {
       const stub = sinon.stub(utils, 'isSite').returns(true);
       driver.mount(Share, sampleItemViewProps);
-      expect(driver.find.hook('facebook-share-button').hasClass('inactive')).to.equal(false);
+      expect(
+        driver.find.hook('facebook-share-button').hasClass('inactive'),
+      ).to.equal(false);
       stub.returns(false);
       driver.mount(Share, sampleItemViewProps);
-      expect(driver.find.hook('facebook-share-button').hasClass('inactive')).to.equal(true);
+      expect(
+        driver.find.hook('facebook-share-button').hasClass('inactive'),
+      ).to.equal(true);
       stub.restore();
     });
   });
   describe('Share component: ', () => {
     it('renders the root div when allowSocial is true', () => {
-      Object.assign(sampleItemViewProps, {styleParams: {allowSocial: true}});
+      Object.assign(sampleItemViewProps, {
+        styleParams: { allowSocial: true },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.hook('social-share-box').length).to.equal(1);
     });
     it('does not render the root div when allowSocial is false', () => {
-      Object.assign(sampleItemViewProps, {styleParams: {allowSocial: false}});
+      Object.assign(sampleItemViewProps, {
+        styleParams: { allowSocial: false },
+      });
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.hook('social-share-box').length).to.equal(0);
     });
     it('Toggles classes based on props and state', () => {
       driver.mount(Share, sampleItemViewProps);
-      driver.set.props({showShare: false, isVerticalContainer: false});
-      driver.set.state({showShare: false});
-      expect(driver.find.hook('social-share-box').hasClass('hidden')).to.equal(true);
-      expect(driver.find.hook('social-share-box').hasClass('vertical-item')).to.equal(false);
-      expect(driver.find.hook('social-share-box').hasClass('hovered')).to.equal(false);
-      driver.set.props({showShare: true, isVerticalContainer: true});
-      driver.set.state({showShare: true});
-      expect(driver.find.hook('social-share-box').hasClass('hidden')).to.equal(false);
-      expect(driver.find.hook('social-share-box').hasClass('vertical-item')).to.equal(true);
-      expect(driver.find.hook('social-share-box').hasClass('hovered')).to.equal(true);
+      driver.set.props({ showShare: false, isVerticalContainer: false });
+      driver.set.state({ showShare: false });
+      expect(driver.find.hook('social-share-box').hasClass('hidden')).to.equal(
+        true,
+      );
+      expect(
+        driver.find.hook('social-share-box').hasClass('vertical-item'),
+      ).to.equal(false);
+      expect(driver.find.hook('social-share-box').hasClass('hovered')).to.equal(
+        false,
+      );
+      driver.set.props({ showShare: true, isVerticalContainer: true });
+      driver.set.state({ showShare: true });
+      expect(driver.find.hook('social-share-box').hasClass('hidden')).to.equal(
+        false,
+      );
+      expect(
+        driver.find.hook('social-share-box').hasClass('vertical-item'),
+      ).to.equal(true);
+      expect(driver.find.hook('social-share-box').hasClass('hovered')).to.equal(
+        true,
+      );
     });
     it('There are 5 children under Share box', () => {
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.hook('social-share-box').children().length).to.equal(5);
+      expect(driver.find.hook('social-share-box').children().length).to.equal(
+        5,
+      );
     });
     it('creates one share component per ItemView', () => {
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.selector(Share).length).to.equal(1);
     });
     it('should have a correct transform formula', () => {
-      Object.assign(sampleItemViewProps, {style: {height: 321, width: 123}, isVerticalContainer: false});
+      Object.assign(sampleItemViewProps, {
+        style: { height: 321, width: 123 },
+        isVerticalContainer: false,
+      });
       driver.mount(Share, sampleItemViewProps);
       let style = driver.find.hook('social-share-box').get(0).props.style;
       expect(style.transform).to.equal('translateX(-50%) scale(0.615)');
-      driver.set.props({isVerticalContainer: true});
+      driver.set.props({ isVerticalContainer: true });
       //driver.update();
       style = driver.find.hook('social-share-box').get(0).props.style;
       expect(style.transform).to.equal('translateY(-50%) ');
-      driver.set.props({style: {height: 123, width: 321}});
+      driver.set.props({ style: { height: 123, width: 321 } });
       //driver.update();
       style = driver.find.hook('social-share-box').get(0).props.style;
       expect(style.transform).to.equal('translateY(-50%) scale(0.615)');
@@ -90,9 +114,11 @@ describe('Share:', () => {
 
   describe('Share component on a text type item: ', () => {
     it('creates only 4 share buttons if the item type is text', () => {
-      Object.assign(sampleItemViewProps, {type: 'text'});
+      Object.assign(sampleItemViewProps, { type: 'text' });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.hook('social-share-box').children().length).to.equal(4);
+      expect(driver.find.hook('social-share-box').children().length).to.equal(
+        4,
+      );
     });
   });
 
@@ -122,7 +148,7 @@ describe('Share:', () => {
       const spy = sinon.stub(console, 'warn');
       const stubFocus = sinon.stub(HTMLElement.prototype, 'focus').throws();
       driver.mount(Share, sampleItemViewProps);
-      driver.set.state({focusedShareIcon: 1});
+      driver.set.state({ focusedShareIcon: 1 });
       expect(spy.called).to.be.true;
       spy.restore();
       stubFocus.restore();
@@ -131,12 +157,17 @@ describe('Share:', () => {
       it('calls setStateAndLog for the "up" codes', () => {
         const spy = sinon.spy(utils, 'setStateAndLog');
         Object.assign(sampleItemViewProps, {
-          showShare: true
+          showShare: true,
         });
         driver.mount(Share, sampleItemViewProps);
-        driver.set.state({showShare: true});
-        driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleKeyDown({keyCode: null, charCode: 38, preventDefault() {}, stopPropagation() {}});
+        driver.set.state({ showShare: true });
+        driver.set.state({ focusedShareIcon: 2 });
+        driver.get.instance().handleKeyDown({
+          keyCode: null,
+          charCode: 38,
+          preventDefault() {},
+          stopPropagation() {},
+        });
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(1);
         spy.restore();
@@ -144,12 +175,17 @@ describe('Share:', () => {
       it('calls setStateAndLog for the "down" codes', () => {
         const spy = sinon.spy(utils, 'setStateAndLog');
         Object.assign(sampleItemViewProps, {
-          showShare: true
+          showShare: true,
         });
         driver.mount(Share, sampleItemViewProps);
-        driver.set.state({showShare: true});
-        driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleKeyDown({keyCode: 40, charCode: null, preventDefault() {}, stopPropagation() {}});
+        driver.set.state({ showShare: true });
+        driver.set.state({ focusedShareIcon: 2 });
+        driver.get.instance().handleKeyDown({
+          keyCode: 40,
+          charCode: null,
+          preventDefault() {},
+          stopPropagation() {},
+        });
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(3);
         spy.restore();
@@ -157,12 +193,17 @@ describe('Share:', () => {
       it('calls setStateAndLog for the "escape" codes', () => {
         const spy = sinon.spy(utils, 'setStateAndLog');
         Object.assign(sampleItemViewProps, {
-          showShare: true
+          showShare: true,
         });
         driver.mount(Share, sampleItemViewProps);
-        driver.set.state({showShare: true});
-        driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleKeyDown({keyCode: 27, charCode: null, preventDefault() {}, stopPropagation() {}});
+        driver.set.state({ showShare: true });
+        driver.set.state({ focusedShareIcon: 2 });
+        driver.get.instance().handleKeyDown({
+          keyCode: 27,
+          charCode: null,
+          preventDefault() {},
+          stopPropagation() {},
+        });
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(0);
         spy.restore();
@@ -172,21 +213,31 @@ describe('Share:', () => {
 
         //props.showShare = true && state.showShare = true
         Object.assign(sampleItemViewProps, {
-          showShare: true
+          showShare: true,
         });
         driver.mount(Share, sampleItemViewProps);
-        driver.set.state({showShare: true});
-        driver.set.state({focusedShareIcon: 2});
-        driver.get.instance().handleKeyDown({keyCode: 32, charCode: null, preventDefault() {}, stopPropagation() {}});
+        driver.set.state({ showShare: true });
+        driver.set.state({ focusedShareIcon: 2 });
+        driver.get.instance().handleKeyDown({
+          keyCode: 32,
+          charCode: null,
+          preventDefault() {},
+          stopPropagation() {},
+        });
         expect(spy.called).to.be.true;
         expect(driver.get.state().focusedShareIcon).to.equal(0);
 
         //props.showShare = false && state.showShare = false
         Object.assign(sampleItemViewProps, {
-          showShare: false
+          showShare: false,
         });
         driver.mount(Share, sampleItemViewProps);
-        driver.get.instance().handleKeyDown({keyCode: 32, charCode: null, preventDefault() {}, stopPropagation() {}});
+        driver.get.instance().handleKeyDown({
+          keyCode: 32,
+          charCode: null,
+          preventDefault() {},
+          stopPropagation() {},
+        });
         expect(driver.get.state().focusedShareIcon).to.equal(1);
         spy.restore();
       });

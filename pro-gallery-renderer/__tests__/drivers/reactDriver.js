@@ -1,9 +1,8 @@
-'use strict';
-import {Layouter} from 'pro-gallery-layouter';
+import { Layouter } from 'pro-gallery-layouter';
 import GalleryItem from '../../src/components/item/galleryItem';
-import {testImages} from '../images-mock.js';
-import {mount, shallow, configure} from 'enzyme';
-import {GalleryContainer} from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
+import { testImages } from '../images-mock.js';
+import { mount, shallow, configure } from 'enzyme';
+import { GalleryContainer } from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
@@ -12,17 +11,14 @@ import utils from '../../src/utils';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
 
-configure({adapter: new Adapter()});
+configure({ adapter: new Adapter() });
 const mockStore = configureStore();
 
-
 class galleryDriver {
-
   constructor() {
     this.initDefaults();
     window.isTest = true;
   }
-
 
   initDefaults() {
     //override utils functions
@@ -37,7 +33,7 @@ class galleryDriver {
         visibleTop: 0,
         visibleBottom: 1000,
         renderedTop: 0,
-        renderedBottom: 3000
+        renderedBottom: 3000,
       },
     };
 
@@ -65,7 +61,7 @@ class galleryDriver {
       videoPlay: 'hover',
       sharpParams: {
         quality: 90,
-        usm: {}// do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
+        usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
       },
       collageAmount: 0.8,
       collageDensity: 0.8,
@@ -88,14 +84,14 @@ class galleryDriver {
       thumbnailSpacings: 0,
       titlePlacement: Consts.placements.SHOW_ON_HOVER,
       itemEnableShadow: false,
-      itemShadowOpacityAndColor: {value: 'rgba(0, 0, 0, 0.2)'},
-      itemShadowBlur: 20
+      itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
+      itemShadowBlur: 20,
     };
 
     this.scroll = {
       top: 0,
       base: 0,
-      isInfinite: true
+      isInfinite: true,
     };
 
     this.items = _.cloneDeep(testImages);
@@ -107,7 +103,7 @@ class galleryDriver {
       pauseAllVideos: _.noop,
       setWixHeight: _.noop,
       scrollToItem: _.noop,
-      toggleShare: _.noop
+      toggleShare: _.noop,
     };
     //video functions used passed by commonItemcontainer decorator
     this.videoEnded = _.noop;
@@ -120,10 +116,12 @@ class galleryDriver {
       items: this.items,
       container: this.container,
       styleParams: this.styleParams,
-      gotScrollEvent: true
+      gotScrollEvent: true,
     };
 
-    this.galleryStructure = GalleryContainer.convertToGalleryItems(new Layouter(this.layoutParams));
+    this.galleryStructure = GalleryContainer.convertToGalleryItems(
+      new Layouter(this.layoutParams),
+    );
 
     this.galleryConfig = {
       container: this.get.container,
@@ -134,7 +132,7 @@ class galleryDriver {
       videoAdded: this.get.videoAdded,
       videoRemoved: this.videoRemoved,
       playVideo: this.get.playVideo,
-      pauseVideo: this.get.pauseVideo
+      pauseVideo: this.get.pauseVideo,
     };
 
     this.visibilityState = {
@@ -157,7 +155,6 @@ class galleryDriver {
         renderedHorizontally: false,
       },
     };
-
   }
 
   get get() {
@@ -185,20 +182,14 @@ class galleryDriver {
 
   get mount() {
     const res = (Component, props) => {
-      this.wrapper = mount(<Component
-        {...props}
-      />);
+      this.wrapper = mount(<Component {...props} />);
       return this;
     };
     res.galleryContainer = props => {
       const defaultProps = this.props.galleryContainer();
-      props = _.merge(defaultProps, (props || {}));
+      props = _.merge(defaultProps, props || {});
       this.wrapper = mount(
-        <GalleryContainer
-          store={mockStore({})}
-          actions={{}}
-          {...props}
-        />
+        <GalleryContainer store={mockStore({})} actions={{}} {...props} />,
       );
       return this;
     };
@@ -207,9 +198,7 @@ class galleryDriver {
 
   get shallow() {
     const res = (Component, props) => {
-      this.wrapper = shallow(<Component
-        {...props}
-      />);
+      this.wrapper = shallow(<Component {...props} />);
       return this;
     };
     return res;
@@ -222,14 +211,14 @@ class galleryDriver {
       },
       props: (props, callback = () => {}) => {
         return this.wrapper.setProps(props, callback);
-      }
+      },
     };
   }
 
   get find() {
     return {
       hook: str => {
-        return this.wrapper.find({'data-hook': str});
+        return this.wrapper.find({ 'data-hook': str });
       },
       id: str => {
         return this.wrapper.find(`#${str}`);
@@ -256,20 +245,19 @@ class galleryDriver {
       galleryContainer: () => {
         const layout = {
           width: window.innerWidth,
-          height: window.innerHeight
+          height: window.innerHeight,
         };
 
         return {
           wixInit: true,
           items: this.items,
           totalItemsCount: this.items.length,
-          layout
+          layout,
         };
       },
 
       galleryView: galleryViewProps => {
-
-        if (typeof (galleryViewProps) === 'undefined') {
+        if (typeof galleryViewProps === 'undefined') {
           galleryViewProps = {
             totalItemsCount: 100,
             renderedItemsCount: 20,
@@ -278,17 +266,19 @@ class galleryDriver {
             scroll: this.scroll,
             container: this.container,
             styleParams: this.styleParams,
-            actions: this.actions
+            actions: this.actions,
           };
         }
 
         const layoutParams = {
           items: galleryViewProps.items,
           container: galleryViewProps.container,
-          styleParams: galleryViewProps.styleParams
+          styleParams: galleryViewProps.styleParams,
         };
 
-        const galleryStructure = GalleryContainer.convertToGalleryItems(new Layouter(layoutParams));
+        const galleryStructure = GalleryContainer.convertToGalleryItems(
+          new Layouter(layoutParams),
+        );
 
         return {
           totalItemsCount: galleryViewProps.totalItemsCount || 100,
@@ -301,44 +291,53 @@ class galleryDriver {
           actions: galleryViewProps.actions,
           store: mockStore({}),
           convertToGalleryItems: GalleryContainer.convertToGalleryItems,
-          convertDtoToLayoutItem: GalleryContainer.convertDtoToLayoutItem
+          convertDtoToLayoutItem: GalleryContainer.convertDtoToLayoutItem,
         };
-
       },
 
       groupView: () => {
         const galleryViewProps = this.props.galleryView();
-        return _.merge(galleryViewProps, {rendered: true, visible: true, items: galleryViewProps.items.map(item => new GalleryItem({dto: item}))});
+        return _.merge(galleryViewProps, {
+          rendered: true,
+          visible: true,
+          items: galleryViewProps.items.map(
+            item => new GalleryItem({ dto: item }),
+          ),
+        });
       },
 
       itemView: (itemDto, galleryConfig) => {
-
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
 
-        const galleryItem = new GalleryItem({dto: itemDto});
+        const galleryItem = new GalleryItem({ dto: itemDto });
         return _.merge(galleryItem.renderProps(newGalleryConfig), {
           scrollingElement: {
             vertical: () => window,
-            horizontal: () => window
+            horizontal: () => window,
           },
           store: mockStore({}),
           config: newGalleryConfig,
-          visible: true
+          visible: true,
         });
-
       },
 
       textView: (itemDto, galleryConfig) => {
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
-        const galleryItem = new GalleryItem({dto: itemDto});
-        const itemViewPropsObj = _.merge(galleryItem.renderProps(newGalleryConfig), {config: newGalleryConfig, visible: true});
-        return _.merge(itemViewPropsObj, {actions: {handleItemMouseDown: () => {},
-          handleItemMouseUp: () => {},
-          setItemLoaded: () => {}}});
-      }
+        const galleryItem = new GalleryItem({ dto: itemDto });
+        const itemViewPropsObj = _.merge(
+          galleryItem.renderProps(newGalleryConfig),
+          { config: newGalleryConfig, visible: true },
+        );
+        return _.merge(itemViewPropsObj, {
+          actions: {
+            handleItemMouseDown: () => {},
+            handleItemMouseUp: () => {},
+            setItemLoaded: () => {},
+          },
+        });
+      },
     };
   }
-
 }
 
 export default galleryDriver;

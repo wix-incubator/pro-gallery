@@ -1,14 +1,11 @@
-'use strict';
-
 import utils from '../../utils';
-import GalleryDriver from '../../../test/drivers/reactDriver';
+import GalleryDriver from '../../../__tests__/drivers/reactDriver';
 import React from 'react';
 import SlideshowView from './slideshowView';
-import {expect} from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 
 describe('Slideshow View', () => {
-
   let driver;
   let initialGalleryViewProps;
   let galleryViewProps;
@@ -18,22 +15,19 @@ describe('Slideshow View', () => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
     Object.assign(initialGalleryViewProps.styleParams, {
-      oneRow: true
+      oneRow: true,
     });
     clock = sinon.useFakeTimers();
-
   });
 
   afterEach(() => {
     clock.restore();
-
   });
 
   describe('init of different items', () => {
-
     it('init one item gallery', () => {
       Object.assign(initialGalleryViewProps, {
-        items: [initialGalleryViewProps.items[0]]
+        items: [initialGalleryViewProps.items[0]],
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -43,7 +37,7 @@ describe('Slideshow View', () => {
 
     it('init empty gallery', () => {
       Object.assign(initialGalleryViewProps, {
-        items: []
+        items: [],
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -54,7 +48,7 @@ describe('Slideshow View', () => {
       const stub = sinon.stub(utils, 'isEditor').returns(true);
       Object.assign(initialGalleryViewProps, {
         items: [],
-        renderedItemsCount: -1
+        renderedItemsCount: -1,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -71,7 +65,7 @@ describe('Slideshow View', () => {
       expect(driver.find.hook('nav-arrow-back').length).to.equal(0);
       //one item
       Object.assign(initialGalleryViewProps, {
-        items: [initialGalleryViewProps.items[0]]
+        items: [initialGalleryViewProps.items[0]],
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -81,42 +75,90 @@ describe('Slideshow View', () => {
   });
 
   describe('Scroll', () => {
-
     it('Handle keypress correctly (next/prev image)', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
-      const stubLast = sinon.stub(SlideshowView.prototype, 'isLastItem').returns(false);
-      const stubFirst = sinon.stub(SlideshowView.prototype, 'isFirstItem').returns(true);
+      const stubLast = sinon
+        .stub(SlideshowView.prototype, 'isLastItem')
+        .returns(false);
+      const stubFirst = sinon
+        .stub(SlideshowView.prototype, 'isFirstItem')
+        .returns(true);
       expect(driver.get.state('currentIdx')).to.equal(0);
       //nextItem - forward
-      driver.get.instance().handleKeypress({keyCode: 39, charCode: null, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: 39,
+        charCode: null,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(1);
       stubFirst.returns(false);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: 40, charCode: null, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: 40,
+        charCode: null,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(2);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: null, charCode: 32, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: null,
+        charCode: 32,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(3);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: null, charCode: 34, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: null,
+        charCode: 34,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(4);
       //nextItem - backward
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: 38, charCode: null, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: 38,
+        charCode: null,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(3);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: 37, charCode: null, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: 37,
+        charCode: null,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(2);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: null, charCode: 33, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: null,
+        charCode: 33,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(1);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: null, charCode: 33, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: null,
+        charCode: 33,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(0);
       stubFirst.returns(true);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({keyCode: null, charCode: 33, preventDefault() {}, stopPropagation() {}});
+      driver.get.instance().handleKeypress({
+        keyCode: null,
+        charCode: 33,
+        preventDefault() {},
+        stopPropagation() {},
+      });
       expect(driver.get.state('currentIdx')).to.equal(0);
       stubLast.restore();
       stubFirst.restore();
@@ -124,7 +166,7 @@ describe('Slideshow View', () => {
 
     it('Handle nav arrows click correctly (next/prev image)', () => {
       Object.assign(initialGalleryViewProps.scroll, {
-        top: 1
+        top: 1,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -140,15 +182,16 @@ describe('Slideshow View', () => {
   });
 
   describe('Thumbnails', () => {
-
     it('Thumbnails are created if layout is Thumbnails', () => {
       Object.assign(initialGalleryViewProps.styleParams, {
-        hasThumbnails: true
+        hasThumbnails: true,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.find.hook('gallery-thumbnails').length).to.equal(1);
-      expect(driver.find.hook('gallery-thumbnails-column').length).to.not.equal(0);
+      expect(driver.find.hook('gallery-thumbnails-column').length).to.not.equal(
+        0,
+      );
     });
   });
 
@@ -180,10 +223,12 @@ describe('Slideshow View', () => {
     it('nextItem works with normal or last items', () => {
       Object.assign(initialGalleryViewProps.styleParams, {
         isAutoSlideshow: true,
-        autoSlideshowInterval: 10
+        autoSlideshowInterval: 10,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
-      const stubLast = sinon.stub(SlideshowView.prototype, 'isLastItem').returns(false);
+      const stubLast = sinon
+        .stub(SlideshowView.prototype, 'isLastItem')
+        .returns(false);
       const stubUtils = sinon.stub(utils, 'isSite').returns(false);
       driver.mount(SlideshowView, galleryViewProps);
       const spy = sinon.spy(driver.get.props().actions, 'scrollToItem');
@@ -197,4 +242,3 @@ describe('Slideshow View', () => {
     });
   });
 });
-
