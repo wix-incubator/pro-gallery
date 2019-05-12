@@ -42,7 +42,6 @@ export default class ImageItem extends React.Component {
     const isSEO =
       utils.isSEOBot() ||
       (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
-    const isPremium = utils.isPremium();
     const imageItemClassName = [
       'gallery-item-content',
       'image-item',

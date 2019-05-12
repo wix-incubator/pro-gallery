@@ -1096,7 +1096,7 @@ class ItemView extends React.Component {
     const isSEO =
       utils.isSEOBot() ||
       (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
-    const isPremium = utils.isPremium();
+    const isPremium = this.props.isPremiumSite;
     const shouldUseNofollow = isSEO && !isPremium;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');
     const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
