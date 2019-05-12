@@ -6,6 +6,7 @@ import { GalleryContainer } from '../../src/components/gallery/galleryContainer.
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
 import React from 'react';
 import utils from '../../src/utils';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
@@ -104,6 +105,7 @@ class galleryDriver {
       setWixHeight: _.noop,
       scrollToItem: _.noop,
       toggleShare: _.noop,
+      itemActions,
     };
     //video functions used passed by commonItemcontainer decorator
     this.videoEnded = _.noop;
@@ -253,6 +255,7 @@ class galleryDriver {
           items: this.items,
           totalItemsCount: this.items.length,
           layout,
+          actions: this.actions,
         };
       },
 
@@ -318,6 +321,9 @@ class galleryDriver {
           store: mockStore({}),
           config: newGalleryConfig,
           visible: true,
+          actions: {
+            itemActions
+          },
         });
       },
 
@@ -333,6 +339,7 @@ class galleryDriver {
             handleItemMouseDown: () => {},
             handleItemMouseUp: () => {},
             setItemLoaded: () => {},
+            itemActions,
           },
         });
       },

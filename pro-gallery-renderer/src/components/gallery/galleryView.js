@@ -179,6 +179,7 @@ class GalleryView extends React.Component {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,
         setAppLoaded: this.props.actions.setAppLoaded,
+        itemActions: this.props.actions.itemActions
       },
     };
   }

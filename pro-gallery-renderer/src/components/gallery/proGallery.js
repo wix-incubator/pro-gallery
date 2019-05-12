@@ -11,6 +11,8 @@ import videoActionTypes from '../../constants/videoActionTypes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import { VideoQueue } from '../item/videos/video-queue';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+
 
 export default class ProGallery extends React.Component {
   constructor(props) {
@@ -82,6 +84,7 @@ export default class ProGallery extends React.Component {
               watermarkData={this.props.watermarkData}
               settings={this.props.settings || {}}
               offsetTop={this.props.offsetTop}
+              itemActions={this.props.itemActions ? this.props.itemActions : itemActions}
             />
           </Provider>
         </div>

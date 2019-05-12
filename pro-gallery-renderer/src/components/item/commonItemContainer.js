@@ -6,7 +6,6 @@ import {
 } from '../../actions/galleryActions.js';
 import { playVideo, pauseVideo } from '../../actions/itemViewActions.js';
 import { connect } from 'react-redux';
-import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 export const CommonItemContainerNotConnected = ComposedComponent => {
@@ -17,7 +16,7 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
       this.updateLoveCount = this.updateLoveCount.bind(this);
 
       this.state = {
-        isLoved: itemActions.isLoved(props.photoId),
+        isLoved: this.props.actions.itemActions.isLoved(props.photoId),
         loveCount: 0,
       };
     }
@@ -33,20 +32,20 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
     componentWillReceiveProps(nextProps) {
       const { photoId } = nextProps;
       this.setState({
-        isLoved: itemActions.isLoved(photoId),
-        loveCount: itemActions.getLoveCount(photoId),
+        isLoved: this.props.actions.itemActions.isLoved(photoId),
+        loveCount: this.props.actions.itemActions.getLoveCount(photoId),
       });
     }
 
     updateLoveCount() {
       this.setState({
-        loveCount: itemActions.getLoveCount(this.props.photoId),
+        loveCount: this.props.actions.itemActions.getLoveCount(this.props.photoId),
       });
     }
 
     toggleLove() {
-      itemActions.postLoveActivity(this.props);
-      itemActions.toggleLove(this.props.photoId, 'gallery');
+      this.props.actions.itemActions.postLoveActivity(this.props);
+      this.props.actions.itemActions.toggleLove(this.props.photoId, 'gallery');
       this.setState({
         isLoved: !this.state.isLoved,
       });

@@ -949,6 +949,7 @@ export class GalleryContainer extends React.Component {
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
             setAppLoaded: this.props.setAppLoaded,
+            itemActions: this.props.itemActions
           })}
           store={this.props.store}
           {...this.props.gallery}

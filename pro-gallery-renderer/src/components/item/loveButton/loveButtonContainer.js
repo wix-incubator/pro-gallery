@@ -15,6 +15,7 @@ export const LoveButtonContainer = props => {
       device={props.device}
       layout={props.layout}
       isStoreGallery={props.isStoreGallery}
+      actions={props.actions}
     />
   );
 };

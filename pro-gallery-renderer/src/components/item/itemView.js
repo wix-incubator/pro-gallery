@@ -8,7 +8,6 @@ import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
 import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
-import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import * as performanceUtils from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import * as actions from '../../actions/galleryActions.js';
@@ -458,63 +457,35 @@ class ItemView extends React.Component {
   }
 
   getSocial() {
-    const props = _.pick(this.props, [
-      'html',
-      'hashtag',
-      'photoId',
-      'item',
-      'idx',
-      'currentIdx',
-      'id',
-      'styleParams',
-      'style',
-      'love',
-      'isDemo',
-      'type',
-      'download_url',
-      'originalsUrl',
-      'isNarrow',
-      'isShort',
-    ]);
-    return (
-      <Social
-        {...props}
-        showShare={this.state.showShare}
-        isSmallItem={this.isSmallItem()}
-        isVerticalContainer={this.isVerticalContainer()}
-        key={`item-social-${props.id}`}
-        actions={{
-          openItemShopInFullScreen: this.openItemShopInFullScreen,
-          toggleShare: this.toggleShare,
-          getShare: this.getShare,
-          showTooltip: itemActions.showTooltip,
-          hideTooltip: itemActions.hideTooltip,
-        }}
-      />
-    );
+    const props = _.pick(this.props, ['html', 'hashtag', 'photoId', 'item', 'idx', 'currentIdx', 'id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
+    return <Social {...props}
+      showShare={this.state.showShare}
+      isSmallItem={this.isSmallItem()}
+      isVerticalContainer={this.isVerticalContainer()}
+      key={`item-social-${props.id}`}
+      actions={{
+        openItemShopInFullScreen: this.openItemShopInFullScreen,
+        toggleShare: this.toggleShare,
+        getShare: this.getShare,
+        showTooltip: this.props.actions.itemActions.showTooltip,
+        hideTooltip: this.props.actions.itemActions.hideTooltip,
+        itemActions: this.props.actions.itemActions
+      }}
+    />;
   }
 
   getShare() {
-    const props = _.pick(this.props, [
-      'styleParams',
-      'id',
-      'type',
-      'style',
-      'currentIdx',
-      'idx',
-    ]);
-    return (
-      <Share
-        {...props}
-        allProps={this.props}
-        key={`item-share-${props.id}`}
-        showShare={this.state.showShare}
-        isVerticalContainer={this.isVerticalContainer()}
-        actions={{
-          toggleShare: this.toggleShare,
-        }}
-      />
-    );
+    const props = _.pick(this.props, ['styleParams', 'id', 'type', 'style', 'currentIdx', 'idx', 'actions']);
+    return <Share {...props}
+      allProps={this.props}
+      key={`item-share-${props.id}`}
+      showShare={this.state.showShare}
+      isVerticalContainer={this.isVerticalContainer()}
+      actions={{
+        toggleShare: this.toggleShare,
+        itemActions: this.props.actions.itemActions
+      }}
+    />;
   }
 
   getItemHover(children, imageDimensions) {
@@ -865,7 +836,7 @@ class ItemView extends React.Component {
     const link = {};
     if (styleParams.itemClick === 'expand') {
       // For SEO only! - don't add it if the user chose not to open in expand mode.
-      link.href = itemActions.getShareUrl(this.props);
+      link.href = this.props.actions.itemActions.getShareUrl(this.props);
     }
     return link;
   }
