@@ -33,7 +33,6 @@
         .gallery-item-description,
         .custom-button-wrapper,
         .gallery-item-social-share-box:not(.hidden) {
-          transition: inherit;
           opacity: 1 !important;
         }
       }
@@ -48,6 +47,15 @@
           &:before {
             transition: filter .4s ease, opacity .4s ease !important;
             filter: opacity(0);
+          }
+
+          .gallery-item-hover-inner,
+          .gallery-item-social-button,
+          .gallery-item-title,
+          .gallery-item-description,
+          .custom-button-wrapper,
+          .gallery-item-social-share-box:not(.hidden) {
+            transition: opacity .4s ease;
           }
         }
 
@@ -68,6 +76,15 @@
             transition: transform .4s ease, filter .2s ease, opacity .4s ease !important;
             transform: scale(0.9);
             filter: opacity(0);
+          }
+
+          .gallery-item-hover-inner,
+          .gallery-item-social-button,
+          .gallery-item-title,
+          .gallery-item-description,
+          .custom-button-wrapper,
+          .gallery-item-social-share-box:not(.hidden) {
+            transition: opacity .2s ease;
           }
         }
 
@@ -91,6 +108,15 @@
             transform: translateY(100%);
             filter: opacity(0);
           }
+
+          .gallery-item-hover-inner,
+          .gallery-item-social-button,
+          .gallery-item-title,
+          .gallery-item-description,
+          .custom-button-wrapper,
+          .gallery-item-social-share-box:not(.hidden) {
+            transition: opacity .4s ease;
+          }
         }
 
         .gallery-item-hover.hovered,
@@ -111,6 +137,15 @@
             transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
             transform: translateX(-100%);
             filter: opacity(0);
+          }
+
+          .gallery-item-hover-inner,
+          .gallery-item-social-button,
+          .gallery-item-title,
+          .gallery-item-description,
+          .custom-button-wrapper,
+          .gallery-item-social-share-box:not(.hidden) {
+            transition: opacity .4s ease;
           }
         }
 
