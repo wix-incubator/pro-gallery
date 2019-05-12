@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
+
 export default class Share extends React.Component {
   constructor(props) {
     super(props);
