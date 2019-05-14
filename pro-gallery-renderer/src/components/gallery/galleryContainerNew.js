@@ -46,6 +46,7 @@ export class GalleryContainer extends React.Component {
         : () => {};
     this._scrollingElement = this.getScrollingElement();
     this.setCurrentHover = this.setCurrentHover.bind(this);
+    this.duplicateGalleryItems = this.duplicateGalleryItems.bind(this);
 
     const initialState = {
       pgScroll: 0,
@@ -835,6 +836,20 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  duplicateGalleryItems() {
+    const galleryState = this.reCreateGalleryExpensively({
+      ...this.props,
+      items: this.items.concat(
+        ...this.items.slice(0, this.props.totalItemsCount),
+      ),
+    });
+    if (Object.keys(galleryState).length > 0) {
+      this.setState(galleryState, () => {
+        this.handleNewGalleryStructure();
+      });
+    }
+  }
+
   getMoreItemsIfNeeded(scrollPos) {
     if (
       this.galleryStructure &&
@@ -844,8 +859,7 @@ export class GalleryContainer extends React.Component {
       typeof this.props.getMoreItems === 'function' &&
       this.state.items &&
       this.state.styles &&
-      this.state.container &&
-      this.props.totalItemsCount > this.state.items.length
+      this.state.container
     ) {
       //more items can be fetched from the server
       //TODO - add support for horizontal galleries
@@ -860,12 +874,16 @@ export class GalleryContainer extends React.Component {
 
       if (gallerySize - scrollEnd < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
-        this.gettingMoreItems = true;
-        this.props.getMoreItems(this.state.items.length);
-        setTimeout(() => {
-          //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
-          this.gettingMoreItems = false;
-        }, 2000);
+        if (this.state.items.length < this.props.totalItemsCount) {
+          this.gettingMoreItems = true;
+          this.props.getMoreItems(this.state.items.length);
+          setTimeout(() => {
+            //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
+            this.gettingMoreItems = false;
+          }, 2000);
+        } else if (this.state.styles.slideshowLoop) {
+          this.duplicateGalleryItems();
+        }
       }
     }
   }
@@ -950,6 +968,7 @@ export class GalleryContainer extends React.Component {
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
             setAppLoaded: this.props.setAppLoaded,
+            duplicateGalleryItems: this.duplicateGalleryItems,
             itemActions: this.props.itemActions
           })}
           store={this.props.store}

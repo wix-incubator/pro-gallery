@@ -1085,7 +1085,9 @@ class ItemView extends React.Component {
   }
 
   onContextMenu(e) {
-    e.preventDefault(e);
+    if (!utils.isDev()) {
+      e.preventDefault(e);
+    }
   }
 
   composeItem() {
