@@ -409,7 +409,6 @@ function getStyleByLayout(styles, container) {
       isSlider: false,
       isSlideshow: false,
       cropOnlyFill: false,
-      slideshowLoop: false,
     }),
     fullsize: () => ({
       showArrows: true,

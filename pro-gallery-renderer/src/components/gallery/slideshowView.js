@@ -265,7 +265,7 @@ class SlideshowView extends React.Component {
         break;
     }
 
-    this.firstItemIdx = currentIdx - Math.floor(numOfThumbnails / 2) - 1;
+    this.firstItemIdx = currentIdx - Math.floor(numOfThumbnails / 2);
     this.lastItemIdx = this.firstItemIdx + numOfThumbnails;
 
     if (this.firstItemIdx < 0) {
