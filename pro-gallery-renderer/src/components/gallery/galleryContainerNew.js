@@ -452,7 +452,8 @@ export class GalleryContainer extends React.Component {
             is ||
             !newItem ||
             !existingItem ||
-            newItem.itemId !== existingItem.itemId;
+            newItem.itemId !== existingItem.itemId ||
+            newItem.mediaUrl !== existingItem.mediaUrl;
           if (itemsChanged) {
             reason.items = `items #${idx} id was changed.`;
           }
