@@ -22,7 +22,8 @@ describe('Video Item ', () => {
   let videoData1;
   let videoData2;
   let action;
-  let stub;
+  let isEditorStub;
+  let isPreviewStub;
 
   beforeEach(() => {
     videoQueue = new VideoQueue();
@@ -35,6 +36,13 @@ describe('Video Item ', () => {
       idx: 2,
       isVisible: () => true,
     };
+    isEditorStub = sinon.stub(utils, 'isEditor').returns(false);
+    isPreviewStub = sinon.stub(utils, 'isPreview').returns(false);
+  });
+
+  afterEach(() => {
+    isEditorStub.restore();
+    isPreviewStub.restore();
   });
 
   it('video added and video removed effecting the queue', () => {
@@ -53,7 +61,6 @@ describe('Video Item ', () => {
   });
 
   it('not editor && if autoplay & video ended, should play next visible video', () => {
-    stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
       payload: videoData1,
@@ -83,11 +90,9 @@ describe('Video Item ', () => {
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(3);
-    stub.restore();
   });
 
   it('not editor && if autoplay & navigation in, should play next visible video', () => {
-    stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
       payload: videoData1,
@@ -117,11 +122,9 @@ describe('Video Item ', () => {
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(3);
-    stub.restore();
   });
 
   it('not editor && if autoplay & editor mode changed, should still play current if visible', () => {
-    stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
       payload: videoData1,
@@ -137,11 +140,9 @@ describe('Video Item ', () => {
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(1);
-    stub.restore();
   });
 
   it('not editor && if autoplay & gallery window layout changed, should still play current if visible', () => {
-    stub = sinon.stub(utils, 'isEditor').returns(false);
     action = {
       type: 'VIDEO_ADDED',
       payload: videoData1,
@@ -157,11 +158,9 @@ describe('Video Item ', () => {
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(1);
-    stub.restore();
   });
 
   it('not editor && if autoplay & editor mode changed, should play next visible if current is not visible', () => {
-    stub = sinon.stub(utils, 'isEditor').returns(false);
     videoData1 = {
       idx: 1,
       isVisible: () => false,
@@ -182,11 +181,9 @@ describe('Video Item ', () => {
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(2);
-    stub.restore();
   });
 
   it('not editor && if autoplay & gallery window layout changed, should play next visible if current is not visible', () => {
-    stub = sinon.stub(utils, 'isEditor').returns(false);
     videoData1 = {
       idx: 1,
       isVisible: () => false,
@@ -207,6 +204,5 @@ describe('Video Item ', () => {
     };
     middleware(action);
     expect(videoQueue.current()).to.equal(2);
-    stub.restore();
   });
 });

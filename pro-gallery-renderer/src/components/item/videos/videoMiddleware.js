@@ -46,13 +46,6 @@ export default ({ videoQueue, utils }) => store => {
     } else if (isAutoPlay) {
       switch (type) {
         case types.NAVIGATION_IN:
-        case types.VIDEO_MODE_CHANGED:
-          if (utils.isPreview()) {
-            videoQueue.isCurrentVideoVisible()
-              ? playCurrentVideo()
-              : playNextVideo();
-          }
-          break;
         case types.VIDEO_ENDED:
           playNextVideo();
           break;
@@ -64,6 +57,13 @@ export default ({ videoQueue, utils }) => store => {
           break;
         case types.VIDEO_ADDED:
           playCurrentVideo();
+          break;
+        case types.VIDEO_MODE_CHANGED:
+          if (utils.isPreview()) {
+            videoQueue.isCurrentVideoVisible()
+              ? playCurrentVideo()
+              : playNextVideo();
+          }
           break;
         default:
           break;
