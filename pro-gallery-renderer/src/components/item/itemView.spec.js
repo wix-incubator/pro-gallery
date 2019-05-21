@@ -179,23 +179,8 @@ describe('Item View', () => {
     });
   });
   describe('onItemClick', () => {
-    it('should scroll to item on click if item is thumbnail and not if its not', () => {
-      Object.assign(sampleItemViewProps, {
-        thumbnailHighlightId: null,
-        type: 'image',
-      });
-      driver.mount(ItemView, sampleItemViewProps);
-      const spy = sinon.stub(driver.get.props().actions, 'scrollToItem');
-      driver.find.hook('item-container').simulate('click');
-      expect(spy.called).to.be.false;
-      driver.set.props({ thumbnailHighlightId: '1' });
-      driver.find.hook('item-container').simulate('click');
-      expect(spy.called).to.be.true;
-      spy.restore();
-    });
     it('should onItemClicked for items with link', () => {
       Object.assign(sampleItemViewProps, {
-        thumbnailHighlightId: null,
         type: 'image',
         styleParams: { itemClick: 'link', videoPlay: 'onClick' },
       });

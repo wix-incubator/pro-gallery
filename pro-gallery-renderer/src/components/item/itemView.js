@@ -243,8 +243,10 @@ class ItemView extends React.Component {
         gallery_id: this.props.galleryId,
       });
     }
-
-    if (this.props.styleParams.itemClick === 'link') {
+    const { directLink } = this.props;
+    const { url, target } = directLink || {};
+    const shouldUseDirectLink = !!(url && target && this.props.styleParams.itemClick === 'link');
+    if (shouldUseDirectLink) {
       return _.noop;
     }
 
