@@ -564,6 +564,7 @@
       font-family: $font-light;
       font-size: 11px;
       cursor: default;
+      scroll-snap-align: center;
 
       &:hover {
         .gallery-item-bottom-info, .gallery-item-top-info {
@@ -1418,6 +1419,7 @@
       &.slider {
         .gallery-column {
           overflow-x: scroll;
+          scroll-snap-type: x mandatory;
         }
       }
     }
