@@ -175,12 +175,13 @@ class GalleryView extends React.Component {
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
+      galleryId: this.props.galleryId,
       isPremiumSite: this.props.isPremiumSite,
       actions: {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,
         setAppLoaded: this.props.actions.setAppLoaded,
-        itemActions: this.props.actions.itemActions
+        itemActions: this.props.actions.itemActions,
       },
     };
   }

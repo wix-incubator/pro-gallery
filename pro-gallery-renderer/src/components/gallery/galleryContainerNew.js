@@ -942,6 +942,7 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           galleryDomId={this.props.domId}
+          galleryId={this.props.galleryId}
           isInDisplay={this.props.isInDisplay}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
@@ -970,7 +971,7 @@ export class GalleryContainer extends React.Component {
             setCurrentHover: this.setCurrentHover,
             setAppLoaded: this.props.setAppLoaded,
             duplicateGalleryItems: this.duplicateGalleryItems,
-            itemActions: this.props.itemActions
+            itemActions: this.props.itemActions,
           })}
           store={this.props.store}
           {...this.props.gallery}

@@ -5,6 +5,7 @@ import GalleryEmpty from './galleryEmpty.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
 
 utils.fixViewport('Gallery');
 
@@ -168,6 +169,18 @@ class SlideshowView extends React.Component {
 
   scrollToThumbnail(itemIdx, scrollDuration = 400) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
+
+    if (utils.isOOI()) {
+      logger.trackBi(logger.biEvents.item_clicked, {
+        action: 'thumbnail',
+        media: 'undefined',
+        layout: utils.getGalleryLayoutName(
+          this.props.styleParams.galleryLayout,
+        ),
+        gallery_id: this.props.galleryId,
+      });
+    }
+
     this.isAutoScrolling = true;
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
     utils.setStateAndLog(
@@ -641,6 +654,7 @@ class SlideshowView extends React.Component {
       customInfoRenderer: this.props.customInfoRenderer,
       isPremiumSite: this.props.isPremiumSite,
       galleryDomId: this.props.domId,
+      galleryId: this.props.galleryId,
       actions: {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,
