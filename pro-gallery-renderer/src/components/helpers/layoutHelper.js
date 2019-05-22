@@ -357,7 +357,7 @@ function getStyleByLayout(styles, container) {
       fixedColumns: 1,
       oneRow: true,
       hasThumbnails: false,
-      enableScroll: false,
+      enableScroll: true,
       isGrid: false,
       isColumns: false,
       isMasonry: false,
