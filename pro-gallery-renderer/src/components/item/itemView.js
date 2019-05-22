@@ -119,7 +119,6 @@ class ItemView extends React.Component {
     this.getItemContainerClass = this.getItemContainerClass.bind(this);
     this.getItemWrapperClass = this.getItemWrapperClass.bind(this);
     this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
-    this.getSEOLink = this.getSEOLink.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.setVisibilityState = this.setVisibilityState.bind(this);
@@ -869,15 +868,6 @@ class ItemView extends React.Component {
       typeName + ', ' + title + (utils.isStoreGallery() ? ', Buy Now' : '');
     return label;
   }
-  getSEOLink() {
-    const { styleParams } = this.props;
-    const link = {};
-    if (styleParams.itemClick === 'expand') {
-      // For SEO only! - don't add it if the user chose not to open in expand mode.
-      link.href = this.props.actions.itemActions.getShareUrl(this.props);
-    }
-    return link;
-  }
 
   getItemContainerClass() {
     const { styleParams } = this.props;
@@ -1163,12 +1153,11 @@ class ItemView extends React.Component {
           data-id={photoId}
           data-idx={idx}
           aria-label={this.getItemAriaLabel()}
-          role="link"
+          role="link" //left for accessibility
           aria-level="0"
           data-hook="item-container"
           key={'item-container-' + id}
           style={this.getItemContainerStyles()}
-          {...this.getSEOLink()}
         >
           {this.getTopInfoElementIfNeeded()}
           <div

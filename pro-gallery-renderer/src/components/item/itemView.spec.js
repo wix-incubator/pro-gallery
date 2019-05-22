@@ -488,25 +488,6 @@ describe('Item View', () => {
   });
   //compunentDidUpdate not tested
   describe('render', () => {
-    it('should create a href only if itemClick is expand', () => {
-      Object.assign(sampleItemViewProps, {
-        styleParams: {
-          itemClick: 'foo',
-        },
-      });
-      driver.mount(ItemView, sampleItemViewProps);
-      expect(
-        driver.find.selector('div[href][data-hook="item-container"]').length,
-      ).to.equal(0);
-      driver.set.props({
-        styleParams: {
-          itemClick: 'expand',
-        },
-      });
-      expect(
-        driver.find.selector('div[href][data-hook="item-container"]').length,
-      ).to.equal(1);
-    });
     it('should have boxshadow only if defined', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
