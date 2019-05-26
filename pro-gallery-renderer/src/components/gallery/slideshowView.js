@@ -413,7 +413,7 @@ class SlideshowView extends React.Component {
         >
           {thumbnailItems.map((item, idx) => {
             const thumbnailItem = this.props.styleParams.slideshowLoop
-              ? getThumbnailItemForSlideshowLoop(item.itemId)
+              ? getThumbnailItemForSlideshowLoop(item.itemId || item.photoId)
               : item;
             const highlighted = this.props.styleParams.slideshowLoop
               ? idx === highlighledIdxForSlideshowLoop
