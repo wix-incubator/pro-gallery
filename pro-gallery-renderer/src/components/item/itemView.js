@@ -238,14 +238,13 @@ class ItemView extends React.Component {
       logger.trackBi(logger.biEvents.item_clicked, {
         action: this.props.styleParams.itemClick,
         media: this.props.type,
-        layout: utils.getGalleryLayoutName(this.props.styleParams.galleryLayout),
+        layout: utils.getGalleryLayoutName(
+          this.props.styleParams.galleryLayout,
+        ),
         gallery_id: this.props.galleryId,
       });
     }
-    const { directLink } = this.props;
-    const { url, target } = directLink || {};
-    const shouldUseDirectLink = !!(url && target && this.props.styleParams.itemClick === 'link');
-    if (shouldUseDirectLink) {
+    if (this.shouldUseDirectLink()) {
       return _.noop;
     }
 
@@ -259,10 +258,35 @@ class ItemView extends React.Component {
       this.handleGalleryItemClick(itemClick);
     }
   }
+
+  shouldUseDirectLink = () => {
+    const { directLink } = this.props;
+    const { url, target } = directLink || {};
+    const useDirectLink = !!(
+      url &&
+      target &&
+      this.props.styleParams.itemClick === 'link'
+    );
+    const shouldUseDirectLinkMobileSecondClick =
+      this.shouldShowHoverOnMobile() &&
+      this.isClickOnCurrentHoveredItem() &&
+      useDirectLink;
+
+    if (shouldUseDirectLinkMobileSecondClick) {
+      this.props.actions.setCurrentHover(-1);
+      return true;
+    }
+    if (useDirectLink && !this.shouldShowHoverOnMobile()) {
+      return true;
+    }
+    return false;
+  };
+
+  isClickOnCurrentHoveredItem = () =>
+    this.props.currentHover === this.props.idx;
+
   handleHoverClickOnMobile(itemClick) {
-    const isClickOnCurrentHoveredItem =
-      this.props.currentHover === this.props.idx;
-    if (isClickOnCurrentHoveredItem) {
+    if (this.isClickOnCurrentHoveredItem()) {
       this.props.actions.onItemClicked(this.props.idx);
       this.props.actions.setCurrentHover(-1);
     } else {
