@@ -969,7 +969,7 @@ export class GalleryContainer extends React.Component {
             setWixHeight: _.noop,
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
-            setAppLoaded: this.props.setAppLoaded,
+            onItemCreated: this.props.onItemCreated,
             duplicateGalleryItems: this.duplicateGalleryItems,
             itemActions: this.props.itemActions,
           })}

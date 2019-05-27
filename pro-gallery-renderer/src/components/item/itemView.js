@@ -31,6 +31,9 @@ class ItemView extends React.Component {
   constructor(props) {
     performanceUtils.itemLoadStart();
     super(props);
+    if (!_.isUndefined(this.props.actions.onItemCreated)) {
+      this.props.actions.onItemCreated();
+    }
 
     this.init();
 
@@ -147,9 +150,6 @@ class ItemView extends React.Component {
     });
   }
   setItemLoaded() {
-    if (!_.isUndefined(this.props.actions.setAppLoaded)) {
-      this.props.actions.setAppLoaded();
-    }
     performanceUtils.itemLoaded();
     this.setState({
       failed: false,

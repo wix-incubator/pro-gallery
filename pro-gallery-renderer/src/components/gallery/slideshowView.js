@@ -658,7 +658,7 @@ class SlideshowView extends React.Component {
       actions: {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,
-        setAppLoaded: this.props.actions.setAppLoaded,
+        onItemCreated: this.props.actions.onItemCreated,
         itemActions: this.props.actions.itemActions,
       },
     };
