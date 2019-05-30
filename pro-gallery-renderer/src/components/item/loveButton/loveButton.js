@@ -13,16 +13,22 @@ class LoveButton extends React.Component {
     this.state = {
       isLoved: this.props.actions.itemActions.isLoved(props.itemId),
       loveCount: this.props.actions.itemActions.getLoveCount(props.itemId),
-      animate: false
+      animate: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const currIsLoved = this.props.actions.itemActions.isLoved(nextProps.itemId);
-    const currLoveCount = this.props.actions.itemActions.getLoveCount(nextProps.itemId);
-    if (nextProps.itemId !== this.props.itemId ||
-        this.state.isLoved !== currIsLoved ||
-        this.state.loveCount !== currLoveCount) {
+    const currIsLoved = this.props.actions.itemActions.isLoved(
+      nextProps.itemId,
+    );
+    const currLoveCount = this.props.actions.itemActions.getLoveCount(
+      nextProps.itemId,
+    );
+    if (
+      nextProps.itemId !== this.props.itemId ||
+      this.state.isLoved !== currIsLoved ||
+      this.state.loveCount !== currLoveCount
+    ) {
       this.setState({
         isLoved: currIsLoved,
         loveCount: currLoveCount,
@@ -45,8 +51,16 @@ class LoveButton extends React.Component {
   toggleLove(e) {
     e.stopPropagation();
     e.preventDefault();
-    const item = _.pick(this.props, ['layout', 'type', 'itemId', 'id', 'item', 'idx', 'hashtag']);
-    Object.assign(item, {type: 'image'});
+    const item = _.pick(this.props, [
+      'layout',
+      'type',
+      'itemId',
+      'id',
+      'item',
+      'idx',
+      'hashtag',
+    ]);
+    Object.assign(item, { type: 'image' });
     this.props.actions.itemActions.postLoveActivity(item);
     this.props.actions.itemActions.toggleLove(item.itemId, item.layout);
     this.setState({
@@ -132,7 +146,10 @@ class LoveButton extends React.Component {
   createMouseOver() {
     return e => {
       if (this.props.isSettings) {
-        this.props.actions.itemActions.showTooltip(e, 'This option is not available in editor');
+        this.props.actions.itemActions.showTooltip(
+          e,
+          'This option is not available in editor',
+        );
       }
     };
   }
@@ -147,7 +164,7 @@ class LoveButton extends React.Component {
 
   updateLoveCount() {
     this.setState({
-      loveCount: this.props.actions.itemActions.getLoveCount(this.props.itemId)
+      loveCount: this.props.actions.itemActions.getLoveCount(this.props.itemId),
     });
   }
 

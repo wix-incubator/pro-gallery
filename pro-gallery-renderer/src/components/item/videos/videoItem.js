@@ -73,44 +73,48 @@ class VideoItem extends React.Component {
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
     }
-    const url = this.props.videoUrl ? this.props.videoUrl : this.props.resized_url.mp4;
-    return <ReactPlayer
-      className={'gallery-item-visible video gallery-item'}
-      id={`video-${this.props.id}`}
-      width="100%"
-      height="100%"
-      onReady={this.props.actions.setItemLoaded}
-      url={url}
-      loop={!!this.props.styleParams.videoLoop}
-      ref={player => this.video = player}
-      volume={this.props.styleParams.videoSound ? 0.8 : 0}
-      playing={this.props.playing}
-      onEnded={() => {
-        this.setState({playing: false});
-        this.props.onEnd();
-      }}
-      onPause={() => {
-        this.setState({playing: false});
-      }}
-      playbackRate={this.props.styleParams.videoSpeed || 1}
-      onPlay={() => {
-        this.setState({playing: true});
-      }}
-      onReady={() => {
-        this.fixIFrameTabIndexIfNeeded();
-      }}
-      config={{
-        file: {
-          attributes: {
-            muted: !this.props.styleParams.videoSound,
-            preload: 'metadata',
-            poster: this.props.resized_url.img,
-            style: videoDimensionsCss
-          }
-        }
-      }}
-      key={'video-' + this.props.id}
-    />;
+    const url = this.props.videoUrl
+      ? this.props.videoUrl
+      : this.props.resized_url.mp4;
+    return (
+      <ReactPlayer
+        className={'gallery-item-visible video gallery-item'}
+        id={`video-${this.props.id}`}
+        width="100%"
+        height="100%"
+        onReady={this.props.actions.setItemLoaded}
+        url={url}
+        loop={!!this.props.styleParams.videoLoop}
+        ref={player => (this.video = player)}
+        volume={this.props.styleParams.videoSound ? 0.8 : 0}
+        playing={this.props.playing}
+        onEnded={() => {
+          this.setState({ playing: false });
+          this.props.onEnd();
+        }}
+        onPause={() => {
+          this.setState({ playing: false });
+        }}
+        playbackRate={this.props.styleParams.videoSpeed || 1}
+        onPlay={() => {
+          this.setState({ playing: true });
+        }}
+        onReady={() => {
+          this.fixIFrameTabIndexIfNeeded();
+        }}
+        config={{
+          file: {
+            attributes: {
+              muted: !this.props.styleParams.videoSound,
+              preload: 'metadata',
+              poster: this.props.resized_url.img,
+              style: videoDimensionsCss,
+            },
+          },
+        }}
+        key={'video-' + this.props.id}
+      />
+    );
   }
 
   fixIFrameTabIndexIfNeeded() {

@@ -21,11 +21,7 @@
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
-    "storybook": "start-storybook -p 6006",
-    "start-with-test": "PORT=9837 yoshi start --with-test",
-    "build-storybook": "build-storybook",
-    "pretest:performance": "npm run build && npm run build-storybook",
-    "test:performance": "perfer"
+    "start-with-test": "PORT=9837 yoshi start --with-test"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
@@ -48,11 +44,6 @@
     "axios": "^0.16.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^4.0.0",
-    "@storybook/addon-links": "^4.0.0",
-    "@storybook/addons": "^4.0.0",
-    "@storybook/react": "^4.0.0",
-    "@wix/perfer": "^0.3.8",
     "@wix/photography-client-lib": "^1.0.283",
     "axios": "^0.16.2",
     "chai": "^4.1.2",

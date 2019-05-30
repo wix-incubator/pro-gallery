@@ -65,7 +65,11 @@ export default class Share extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         if (this.state.showShare) {
-          this.props.actions.itemActions.share(this.shareArr[this.state.focusedShareIcon - 1], this.props, 'gallery');
+          this.props.actions.itemActions.share(
+            this.shareArr[this.state.focusedShareIcon - 1],
+            this.props,
+            'gallery',
+          );
           this.props.actions.toggleShare(e, false);
           utils.setStateAndLog(this, 'Share Keypress', {
             showShare: false,
@@ -124,25 +128,43 @@ export default class Share extends React.Component {
   getShareItem(network, idx) {
     const { allProps } = this.props;
     const shareIconsNumber = this.shareArr.length;
-    return <button
-      className={`block-fullscreen has-custom-focus network-${idx + 1} progallery-svg-font-icons-` + network + (utils.isSite() ? '' : ' inactive ')}
-      style={{
-        top: this.props.isVerticalContainer ? `calc(100% / 6 * ${idx + 1} + -10px ${shareIconsNumber === 4 ? '+ 100% / 12' : ''})` : '',
-        left: this.props.isVerticalContainer ? '' : `calc(100% / 6 * ${idx + 1} + -10px ${shareIconsNumber === 4 ? '+ 100% / 12' : ''})`
-      }}
-      onClick={e => {
-        e.preventDefault();
-        e.stopPropagation();
-        this.props.actions.itemActions.share(network, allProps, 'gallery');
-      }}
-      data-hook={network + '-share-button'}
-      ref={button => this.buttons[idx] = button}
-      title={`Share on ${network}`}
-      aria-label={`Share on ${network}, ${idx + 1} of ${this.shareArr.length}`}
-      aria-live="assertive"
-      role="button"
-      tabIndex={-1}
-      key={network + '-share-icon'}/>;
+    return (
+      <button
+        className={
+          `block-fullscreen has-custom-focus network-${idx +
+            1} progallery-svg-font-icons-` +
+          network +
+          (utils.isSite() ? '' : ' inactive ')
+        }
+        style={{
+          top: this.props.isVerticalContainer
+            ? `calc(100% / 6 * ${idx + 1} + -10px ${
+                shareIconsNumber === 4 ? '+ 100% / 12' : ''
+              })`
+            : '',
+          left: this.props.isVerticalContainer
+            ? ''
+            : `calc(100% / 6 * ${idx + 1} + -10px ${
+                shareIconsNumber === 4 ? '+ 100% / 12' : ''
+              })`,
+        }}
+        onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.props.actions.itemActions.share(network, allProps, 'gallery');
+        }}
+        data-hook={network + '-share-button'}
+        ref={button => (this.buttons[idx] = button)}
+        title={`Share on ${network}`}
+        aria-label={`Share on ${network}, ${idx + 1} of ${
+          this.shareArr.length
+        }`}
+        aria-live="assertive"
+        role="button"
+        tabIndex={-1}
+        key={network + '-share-icon'}
+      />
+    );
   }
 
   render() {
