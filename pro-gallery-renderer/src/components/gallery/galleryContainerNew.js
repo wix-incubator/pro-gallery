@@ -777,7 +777,7 @@ export class GalleryContainer extends React.Component {
   }
   getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
     const isSEO =
-      utils.isSEOBot() ||
+      !!this.props.isInSEO ||
       (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
     const shouldUseScrollCss = !isSEO;
 
@@ -961,6 +961,7 @@ export class GalleryContainer extends React.Component {
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
           isPremiumSite={this.props.isPremiumSite}
+          isInSEO={this.props.isInSEO}
           actions={_.merge(this.props.actions, {
             findNeighborItem,
             toggleInfiniteScroll: this.toggleInfiniteScroll,

@@ -655,6 +655,7 @@ class SlideshowView extends React.Component {
       isPremiumSite: this.props.isPremiumSite,
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
+      isInSEO: this.props.isInSEO,
       actions: {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,

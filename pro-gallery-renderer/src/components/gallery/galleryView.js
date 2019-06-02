@@ -177,6 +177,7 @@ class GalleryView extends React.Component {
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
       isPremiumSite: this.props.isPremiumSite,
+      isInSEO: this.props.isInSEO,
       actions: {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,

@@ -40,7 +40,7 @@ export default class ImageItem extends React.Component {
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
     const isSEO =
-      utils.isSEOBot() ||
+      !!this.props.isInSEO ||
       (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
     const imageItemClassName = [
       'gallery-item-content',

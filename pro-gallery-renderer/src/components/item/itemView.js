@@ -580,6 +580,7 @@ class ItemView extends React.Component {
       'styleParams',
       'resized_url',
       'settings',
+      'isInSEO',
     ]);
     return (
       <ImageItem
@@ -1148,7 +1149,7 @@ class ItemView extends React.Component {
     const { itemClick } = this.props.styleParams;
     const { url, target } = directLink || {};
     const isSEO =
-      utils.isSEOBot() ||
+      !!this.props.isInSEO ||
       (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
     const isPremium = this.props.isPremiumSite;
     const shouldUseNofollow = isSEO && !isPremium;
