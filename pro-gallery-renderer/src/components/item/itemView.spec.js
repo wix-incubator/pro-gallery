@@ -493,18 +493,22 @@ describe('Item View', () => {
         styleParams: {
           itemEnableShadow: true,
           itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
-          itemShadowBlur: 20,
+          itemShadowBlur: 15,
+          itemShadowDirection: 0,
+          itemShadowSize: 18,
           imageMargin: 5,
         },
       });
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
-      expect(style.boxShadow).to.equal('-10px -10px 20px rgba(0, 0, 0, 0.2)');
+      expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
       driver.set.props({
         styleParams: {
           itemEnableShadow: false,
           itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
           itemShadowBlur: 20,
+          itemShadowDirection: 135,
+          itemShadowSize: 10,
           imageMargin: 5,
         },
       });

@@ -499,7 +499,7 @@
 
     .gallery-column {
       float: left;
-      overflow: hidden;
+      // overflow: hidden;
       position: relative;
       transform-style: preserve-3d;
       backface-visibility: hidden;
@@ -1419,7 +1419,7 @@
       &.slider {
         .gallery-column {
           overflow-x: scroll;
-          scroll-snap-type: mandatory;
+          scroll-snap-type: x mandatory;
         }
       }
     }

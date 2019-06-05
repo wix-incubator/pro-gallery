@@ -151,13 +151,24 @@ class GalleryView extends React.Component {
         }
         style={{
           height: galleryHeight,
-          //  width: this.props.container.galleryWidth,
           overflowX: 'hidden',
+          //  width: this.props.container.galleryWidth,
         }}
         onKeyDown={this.handleArrowKeys}
       >
-        {debugMsg}
-        {layout}
+        <div
+          id="pro-gallery-margin-container"
+          style={{
+            margin: this.props.styleParams.galleryMargin + 'px',
+            height: galleryHeight,
+            width: this.props.container.galleryWidth,
+            overflow: 'visible',
+            position: 'relative',
+          }}
+        >
+          {debugMsg}
+          {layout}
+        </div>
       </div>
     );
   }

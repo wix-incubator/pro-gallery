@@ -819,8 +819,17 @@ class ItemView extends React.Component {
 
     const boxShadow = {};
     if (styleParams.itemEnableShadow) {
+      const {
+        itemShadowBlur,
+        itemShadowDirection,
+        itemShadowSize,
+      } = styleParams;
+      const alpha =
+        ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
+      const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
+      const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
       Object.assign(boxShadow, {
-        boxShadow: `-10px -10px ${styleParams.itemShadowBlur}px ${
+        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${
           styleParams.itemShadowOpacityAndColor.value
         }`,
       });

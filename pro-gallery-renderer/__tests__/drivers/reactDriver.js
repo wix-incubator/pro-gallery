@@ -87,6 +87,8 @@ class galleryDriver {
       itemEnableShadow: false,
       itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
       itemShadowBlur: 20,
+      itemShadowDirection: 135,
+      itemShadowSize: 10,
     };
 
     this.scroll = {
