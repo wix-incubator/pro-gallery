@@ -78,13 +78,11 @@ export default class Texts extends React.Component {
       id,
       styleParams,
       style,
-      isSmallItem,
       isNarrow,
       shouldShowButton,
     } = this.props;
-    const shouldShowTitle = title && !isSmallItem && styleParams.allowTitle;
-    const shouldShowDescription =
-      description && !isSmallItem && styleParams.allowDescription;
+    const shouldShowTitle = title && styleParams.allowTitle;
+    const shouldShowDescription = description && styleParams.allowDescription;
     const isNewMobileSettings = settingsVersionManager.newMobileSettings();
     const titleSpanStyle = {};
     const descSpanStyle = {};

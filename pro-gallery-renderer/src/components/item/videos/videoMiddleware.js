@@ -58,6 +58,13 @@ export default ({ videoQueue, utils }) => store => {
         case types.VIDEO_ADDED:
           playCurrentVideo();
           break;
+        case types.VIDEO_MODE_CHANGED:
+          if (utils.isPreview()) {
+            videoQueue.isCurrentVideoVisible()
+              ? playCurrentVideo()
+              : playNextVideo();
+          }
+          break;
         default:
           break;
       }

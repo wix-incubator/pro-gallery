@@ -777,7 +777,7 @@ export class GalleryContainer extends React.Component {
   }
   getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
     const isSEO =
-      utils.isSEOBot() ||
+      !!this.props.isInSEO ||
       (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
     const shouldUseScrollCss = !isSEO;
 
@@ -942,6 +942,7 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           galleryDomId={this.props.domId}
+          galleryId={this.props.galleryId}
           isInDisplay={this.props.isInDisplay}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
@@ -960,6 +961,7 @@ export class GalleryContainer extends React.Component {
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
           isPremiumSite={this.props.isPremiumSite}
+          isInSEO={this.props.isInSEO}
           actions={_.merge(this.props.actions, {
             findNeighborItem,
             toggleInfiniteScroll: this.toggleInfiniteScroll,
@@ -968,9 +970,9 @@ export class GalleryContainer extends React.Component {
             setWixHeight: _.noop,
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
-            setAppLoaded: this.props.setAppLoaded,
+            onItemCreated: this.props.onItemCreated,
             duplicateGalleryItems: this.duplicateGalleryItems,
-            itemActions: this.props.itemActions
+            itemActions: this.props.itemActions,
           })}
           store={this.props.store}
           {...this.props.gallery}

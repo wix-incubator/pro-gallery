@@ -69,11 +69,10 @@ class LineHeightFixer {
   }
 
   shouldFix(oldOptions, newOptions) {
-    const { styleParams, title, description, isSmallItem, style } = oldOptions;
+    const { styleParams, title, description, style } = oldOptions;
     const newStyleParams = newOptions.styleParams;
     const newTitle = newOptions.title;
     const newDescription = newOptions.description;
-    const newIsSmallItems = newOptions.isSmallItem;
     const newStyle = newOptions.style;
     const newIsSocialPopulated =
       newStyleParams.allowSocial ||
@@ -93,8 +92,7 @@ class LineHeightFixer {
       styleParams.externalInfoHeight !== newStyleParams.externalInfoHeight ||
       oldIsSocialPopulated !== newIsSocialPopulated ||
       title !== newTitle ||
-      description !== newDescription ||
-      isSmallItem !== newIsSmallItems
+      description !== newDescription
     );
   }
 
@@ -144,7 +142,7 @@ class LineHeightFixer {
       return;
     }
 
-    const { styleParams, title, description, isSmallItem } = options;
+    const { styleParams, title, description } = options;
 
     let textPlacementAboveOrBelow = false;
     if (
@@ -221,7 +219,7 @@ class LineHeightFixer {
       }
     }
 
-    const shouldDisplayTitle = title && !isSmallItem && styleParams.allowTitle;
+    const shouldDisplayTitle = title && styleParams.allowTitle;
     if (shouldDisplayTitle) {
       this.showElement(titleElement);
       this.setCss(titleElement, { overflow: 'visible' });
@@ -267,7 +265,6 @@ class LineHeightFixer {
 
     const shouldDisplayDescription =
       descriptionElement &&
-      !isSmallItem &&
       styleParams.allowDescription &&
       description &&
       availableHeight > 0;

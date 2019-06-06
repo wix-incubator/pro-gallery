@@ -151,13 +151,24 @@ class GalleryView extends React.Component {
         }
         style={{
           height: galleryHeight,
-          //  width: this.props.container.galleryWidth,
           overflowX: 'hidden',
+          //  width: this.props.container.galleryWidth,
         }}
         onKeyDown={this.handleArrowKeys}
       >
-        {debugMsg}
-        {layout}
+        <div
+          id="pro-gallery-margin-container"
+          style={{
+            margin: this.props.styleParams.galleryMargin + 'px',
+            height: galleryHeight,
+            width: this.props.container.galleryWidth,
+            overflow: 'visible',
+            position: 'relative',
+          }}
+        >
+          {debugMsg}
+          {layout}
+        </div>
       </div>
     );
   }
@@ -175,12 +186,14 @@ class GalleryView extends React.Component {
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
+      galleryId: this.props.galleryId,
       isPremiumSite: this.props.isPremiumSite,
+      isInSEO: this.props.isInSEO,
       actions: {
         onItemClicked: this.props.actions.onItemClicked,
         setCurrentHover: this.props.actions.setCurrentHover,
-        setAppLoaded: this.props.actions.setAppLoaded,
-        itemActions: this.props.actions.itemActions
+        onItemCreated: this.props.actions.onItemCreated,
+        itemActions: this.props.actions.itemActions,
       },
     };
   }

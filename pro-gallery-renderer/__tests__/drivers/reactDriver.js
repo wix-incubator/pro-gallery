@@ -6,7 +6,7 @@ import { GalleryContainer } from '../../src/components/gallery/galleryContainer.
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
-import {itemActions} from '@wix/photography-client-lib/dist/src/item/itemActions';
+import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import React from 'react';
 import utils from '../../src/utils';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
@@ -87,6 +87,8 @@ class galleryDriver {
       itemEnableShadow: false,
       itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
       itemShadowBlur: 20,
+      itemShadowDirection: 135,
+      itemShadowSize: 10,
     };
 
     this.scroll = {
@@ -322,7 +324,7 @@ class galleryDriver {
           config: newGalleryConfig,
           visible: true,
           actions: {
-            itemActions
+            itemActions,
           },
         });
       },

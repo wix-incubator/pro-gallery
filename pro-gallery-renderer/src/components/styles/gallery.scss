@@ -121,7 +121,7 @@
 
   .nav-arrows-container {
     left: auto;
-    z-index: 17;
+    z-index: 1;
     position: absolute;
     width: 100px;
     height: 100px;
@@ -499,7 +499,7 @@
 
     .gallery-column {
       float: left;
-      overflow: hidden;
+      // overflow: hidden;
       position: relative;
       transform-style: preserve-3d;
       backface-visibility: hidden;
@@ -564,6 +564,7 @@
       font-family: $font-light;
       font-size: 11px;
       cursor: default;
+      scroll-snap-align: center;
 
       &:hover {
         .gallery-item-bottom-info, .gallery-item-top-info {
@@ -1418,6 +1419,7 @@
       &.slider {
         .gallery-column {
           overflow-x: scroll;
+          scroll-snap-type: x mandatory;
         }
       }
     }

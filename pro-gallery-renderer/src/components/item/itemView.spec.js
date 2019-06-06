@@ -179,23 +179,8 @@ describe('Item View', () => {
     });
   });
   describe('onItemClick', () => {
-    it('should scroll to item on click if item is thumbnail and not if its not', () => {
-      Object.assign(sampleItemViewProps, {
-        thumbnailHighlightId: null,
-        type: 'image',
-      });
-      driver.mount(ItemView, sampleItemViewProps);
-      const spy = sinon.stub(driver.get.props().actions, 'scrollToItem');
-      driver.find.hook('item-container').simulate('click');
-      expect(spy.called).to.be.false;
-      driver.set.props({ thumbnailHighlightId: '1' });
-      driver.find.hook('item-container').simulate('click');
-      expect(spy.called).to.be.true;
-      spy.restore();
-    });
     it('should onItemClicked for items with link', () => {
       Object.assign(sampleItemViewProps, {
-        thumbnailHighlightId: null,
         type: 'image',
         styleParams: { itemClick: 'link', videoPlay: 'onClick' },
       });
@@ -503,42 +488,27 @@ describe('Item View', () => {
   });
   //compunentDidUpdate not tested
   describe('render', () => {
-    it('should create a href only if itemClick is expand', () => {
-      Object.assign(sampleItemViewProps, {
-        styleParams: {
-          itemClick: 'foo',
-        },
-      });
-      driver.mount(ItemView, sampleItemViewProps);
-      expect(
-        driver.find.selector('div[href][data-hook="item-container"]').length,
-      ).to.equal(0);
-      driver.set.props({
-        styleParams: {
-          itemClick: 'expand',
-        },
-      });
-      expect(
-        driver.find.selector('div[href][data-hook="item-container"]').length,
-      ).to.equal(1);
-    });
     it('should have boxshadow only if defined', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           itemEnableShadow: true,
           itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
-          itemShadowBlur: 20,
+          itemShadowBlur: 15,
+          itemShadowDirection: 0,
+          itemShadowSize: 18,
           imageMargin: 5,
         },
       });
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
-      expect(style.boxShadow).to.equal('-10px -10px 20px rgba(0, 0, 0, 0.2)');
+      expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
       driver.set.props({
         styleParams: {
           itemEnableShadow: false,
           itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
           itemShadowBlur: 20,
+          itemShadowDirection: 135,
+          itemShadowSize: 10,
           imageMargin: 5,
         },
       });

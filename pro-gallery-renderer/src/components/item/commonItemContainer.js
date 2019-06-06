@@ -39,7 +39,9 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
 
     updateLoveCount() {
       this.setState({
-        loveCount: this.props.actions.itemActions.getLoveCount(this.props.photoId),
+        loveCount: this.props.actions.itemActions.getLoveCount(
+          this.props.photoId,
+        ),
       });
     }
 

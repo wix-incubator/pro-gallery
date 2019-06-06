@@ -2,17 +2,12 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import utils from '../../../utils';
 import Player from '@vimeo/player';
-import * as VideoGallerySDK from '@wix/video-gallery-sdk';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class VideoItem extends React.Component {
   constructor(props) {
     super(props);
-    if (props.videoUrl && props.videoUrl.includes('wix:video://')) {
-      this.shouldWaitForWixUrl = true;
-    } else {
-      this.shouldWaitForWixUrl = false;
-    }
+
     //Vimeo player must be loaded by us, problem with requireJS
     if (
       !(window && window.Vimeo) &&
@@ -50,24 +45,6 @@ class VideoItem extends React.Component {
   }
 
   //-----------------------------------------| UTILS |--------------------------------------------//
-  initWixCodeVideoUrl() {
-    const id = this.props.url;
-    const requiredHeight = this.props.imageDimensions.height;
-    VideoGallerySDK.getVideoURLs(id).then(urls => {
-      const mp4Qualities = urls.filter(video => video.type === 'MP4');
-      let currentQuality;
-      for (let quality, q = 0; (quality = mp4Qualities[q]); q++) {
-        currentQuality = Number(quality.quality.slice(0, -1));
-        if (currentQuality >= requiredHeight || !mp4Qualities[q + 1]) {
-          this.setState({
-            wixLocalUrl: window.location.protocol + mp4Qualities[q].url,
-            urlIsReady: true,
-          });
-          break;
-        }
-      }
-    });
-  }
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
@@ -96,14 +73,9 @@ class VideoItem extends React.Component {
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
     }
-    let url;
-    if (this.shouldWaitForWixUrl) {
-      url = this.state.wixLocalUrl;
-    } else {
-      url = this.props.videoUrl
-        ? this.props.videoUrl
-        : this.props.resized_url.mp4;
-    }
+    const url = this.props.videoUrl
+      ? this.props.videoUrl
+      : this.props.resized_url.mp4;
     return (
       <ReactPlayer
         className={'gallery-item-visible video gallery-item'}
@@ -187,11 +159,7 @@ class VideoItem extends React.Component {
       />
     );
   }
-  componentWillMount() {
-    if (this.shouldWaitForWixUrl) {
-      this.initWixCodeVideoUrl();
-    }
-  }
+
   componentDidMount() {
     this.props.onMount(this);
   }
@@ -211,9 +179,6 @@ class VideoItem extends React.Component {
       !this.state.playedOnce &&
       (this.props.isExternalVideo || utils.isMobile())
     ) {
-      return false;
-    }
-    if (this.shouldWaitForWixUrl && !this.state.urlIsReady) {
       return false;
     }
     return true;

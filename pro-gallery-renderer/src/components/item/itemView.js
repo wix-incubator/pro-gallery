@@ -25,11 +25,15 @@ import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/ver
 import experiments, {
   experimentsWrapper,
 } from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
+import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
 
 class ItemView extends React.Component {
   constructor(props) {
     performanceUtils.itemLoadStart();
     super(props);
+    if (!_.isUndefined(this.props.actions.onItemCreated)) {
+      this.props.actions.onItemCreated();
+    }
 
     this.init();
 
@@ -118,7 +122,6 @@ class ItemView extends React.Component {
     this.getItemContainerClass = this.getItemContainerClass.bind(this);
     this.getItemWrapperClass = this.getItemWrapperClass.bind(this);
     this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
-    this.getSEOLink = this.getSEOLink.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.setVisibilityState = this.setVisibilityState.bind(this);
@@ -147,9 +150,6 @@ class ItemView extends React.Component {
     });
   }
   setItemLoaded() {
-    if (!_.isUndefined(this.props.actions.setAppLoaded)) {
-      this.props.actions.setAppLoaded();
-    }
     performanceUtils.itemLoaded();
     this.setState({
       failed: false,
@@ -209,16 +209,13 @@ class ItemView extends React.Component {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
-        this.onItemClick(e, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        this.onItemClick(e); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         return false;
       default:
         return true;
     }
   }
-  handleThumbnailItemClick() {
-    _.isFunction(this.props.actions.scrollToItem) &&
-      this.props.actions.scrollToItem(this.props.idx);
-  }
+
   handleGalleryItemClick(itemClick) {
     const { videoPlay } = this.props.styleParams;
 
@@ -236,27 +233,60 @@ class ItemView extends React.Component {
     this.props.actions.onItemClicked(this.props.idx);
   }
 
-  onItemClick(e, isThumbnail) {
+  onItemClick(e) {
+    if (utils.isOOI()) {
+      logger.trackBi(logger.biEvents.item_clicked, {
+        action: this.props.styleParams.itemClick,
+        media: this.props.type,
+        layout: utils.getGalleryLayoutName(
+          this.props.styleParams.galleryLayout,
+        ),
+        gallery_id: this.props.galleryId,
+      });
+    }
+    if (this.shouldUseDirectLink()) {
+      return _.noop;
+    }
+
     const { itemClick } = this.props.styleParams;
 
     e.preventDefault();
-    // make sure isThumbnail is correct
-    if (!_.isBoolean(isThumbnail)) {
-      isThumbnail = !!this.props.thumbnailHighlightId;
-    }
 
-    if (isThumbnail) {
-      this.handleThumbnailItemClick();
-    } else if (this.shouldShowHoverOnMobile()) {
+    if (this.shouldShowHoverOnMobile()) {
       this.handleHoverClickOnMobile(itemClick);
     } else {
       this.handleGalleryItemClick(itemClick);
     }
   }
+
+  shouldUseDirectLink = () => {
+    const { directLink } = this.props;
+    const { url, target } = directLink || {};
+    const useDirectLink = !!(
+      url &&
+      target &&
+      this.props.styleParams.itemClick === 'link'
+    );
+    const shouldUseDirectLinkMobileSecondClick =
+      this.shouldShowHoverOnMobile() &&
+      this.isClickOnCurrentHoveredItem() &&
+      useDirectLink;
+
+    if (shouldUseDirectLinkMobileSecondClick) {
+      this.props.actions.setCurrentHover(-1);
+      return true;
+    }
+    if (useDirectLink && !this.shouldShowHoverOnMobile()) {
+      return true;
+    }
+    return false;
+  };
+
+  isClickOnCurrentHoveredItem = () =>
+    this.props.currentHover === this.props.idx;
+
   handleHoverClickOnMobile(itemClick) {
-    const isClickOnCurrentHoveredItem =
-      this.props.currentHover === this.props.idx;
-    if (isClickOnCurrentHoveredItem) {
+    if (this.isClickOnCurrentHoveredItem()) {
       this.props.actions.onItemClicked(this.props.idx);
       this.props.actions.setCurrentHover(-1);
     } else {
@@ -457,35 +487,66 @@ class ItemView extends React.Component {
   }
 
   getSocial() {
-    const props = _.pick(this.props, ['html', 'hashtag', 'photoId', 'item', 'idx', 'currentIdx', 'id', 'styleParams', 'style', 'love', 'isDemo', 'type', 'download_url', 'originalsUrl', 'isNarrow', 'isShort']);
-    return <Social {...props}
-      showShare={this.state.showShare}
-      isSmallItem={this.isSmallItem()}
-      isVerticalContainer={this.isVerticalContainer()}
-      key={`item-social-${props.id}`}
-      actions={{
-        openItemShopInFullScreen: this.openItemShopInFullScreen,
-        toggleShare: this.toggleShare,
-        getShare: this.getShare,
-        showTooltip: this.props.actions.itemActions.showTooltip,
-        hideTooltip: this.props.actions.itemActions.hideTooltip,
-        itemActions: this.props.actions.itemActions
-      }}
-    />;
+    const props = _.pick(this.props, [
+      'html',
+      'hashtag',
+      'photoId',
+      'item',
+      'idx',
+      'currentIdx',
+      'id',
+      'styleParams',
+      'style',
+      'love',
+      'isDemo',
+      'type',
+      'download_url',
+      'originalsUrl',
+      'isNarrow',
+      'isShort',
+    ]);
+    return (
+      <Social
+        {...props}
+        showShare={this.state.showShare}
+        isSmallItem={this.isSmallItem()}
+        isVerticalContainer={this.isVerticalContainer()}
+        key={`item-social-${props.id}`}
+        actions={{
+          openItemShopInFullScreen: this.openItemShopInFullScreen,
+          toggleShare: this.toggleShare,
+          getShare: this.getShare,
+          showTooltip: this.props.actions.itemActions.showTooltip,
+          hideTooltip: this.props.actions.itemActions.hideTooltip,
+          itemActions: this.props.actions.itemActions,
+        }}
+      />
+    );
   }
 
   getShare() {
-    const props = _.pick(this.props, ['styleParams', 'id', 'type', 'style', 'currentIdx', 'idx', 'actions']);
-    return <Share {...props}
-      allProps={this.props}
-      key={`item-share-${props.id}`}
-      showShare={this.state.showShare}
-      isVerticalContainer={this.isVerticalContainer()}
-      actions={{
-        toggleShare: this.toggleShare,
-        itemActions: this.props.actions.itemActions
-      }}
-    />;
+    const props = _.pick(this.props, [
+      'styleParams',
+      'id',
+      'type',
+      'style',
+      'currentIdx',
+      'idx',
+      'actions',
+    ]);
+    return (
+      <Share
+        {...props}
+        allProps={this.props}
+        key={`item-share-${props.id}`}
+        showShare={this.state.showShare}
+        isVerticalContainer={this.isVerticalContainer()}
+        actions={{
+          toggleShare: this.toggleShare,
+          itemActions: this.props.actions.itemActions,
+        }}
+      />
+    );
   }
 
   getItemHover(children, imageDimensions) {
@@ -519,6 +580,7 @@ class ItemView extends React.Component {
       'styleParams',
       'resized_url',
       'settings',
+      'isInSEO',
     ]);
     return (
       <ImageItem
@@ -757,8 +819,17 @@ class ItemView extends React.Component {
 
     const boxShadow = {};
     if (styleParams.itemEnableShadow) {
+      const {
+        itemShadowBlur,
+        itemShadowDirection,
+        itemShadowSize,
+      } = styleParams;
+      const alpha =
+        ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
+      const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
+      const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
       Object.assign(boxShadow, {
-        boxShadow: `-10px -10px ${styleParams.itemShadowBlur}px ${
+        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${
           styleParams.itemShadowOpacityAndColor.value
         }`,
       });
@@ -830,15 +901,6 @@ class ItemView extends React.Component {
     const label =
       typeName + ', ' + title + (utils.isStoreGallery() ? ', Buy Now' : '');
     return label;
-  }
-  getSEOLink() {
-    const { styleParams } = this.props;
-    const link = {};
-    if (styleParams.itemClick === 'expand') {
-      // For SEO only! - don't add it if the user chose not to open in expand mode.
-      link.href = this.props.actions.itemActions.getShareUrl(this.props);
-    }
-    return link;
   }
 
   getItemContainerClass() {
@@ -1096,12 +1158,11 @@ class ItemView extends React.Component {
     const { itemClick } = this.props.styleParams;
     const { url, target } = directLink || {};
     const isSEO =
-      utils.isSEOBot() ||
+      !!this.props.isInSEO ||
       (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
     const isPremium = this.props.isPremiumSite;
     const shouldUseNofollow = isSEO && !isPremium;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');
-    const onClick = shouldUseDirectLink ? _.noop : this.onItemClick;
     const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
     const linkParams = shouldUseDirectLink
       ? { href: url, target, ...seoLinkParams }
@@ -1119,19 +1180,18 @@ class ItemView extends React.Component {
           id={cssScrollHelper.getDomId(this.props)}
           ref={e => (this.itemContainer = e)}
           onMouseOver={this.onMouseOver}
-          onClick={onClick}
+          onClick={this.onItemClick}
           onKeyDown={this.onKeyPress}
           tabIndex={this.getItemContainerTabIndex()}
           data-hash={hash}
           data-id={photoId}
           data-idx={idx}
           aria-label={this.getItemAriaLabel()}
-          role="link"
+          role="link" //left for accessibility
           aria-level="0"
           data-hook="item-container"
           key={'item-container-' + id}
           style={this.getItemContainerStyles()}
-          {...this.getSEOLink()}
         >
           {this.getTopInfoElementIfNeeded()}
           <div
