@@ -72,7 +72,7 @@ describe('Gallery View', () => {
       driver.mount(GalleryView, galleryViewProps);
       const stub = sinon.stub(
         driver.get.props().actions,
-        'toggleInfiniteScroll',
+        'toggleLoadMoreItems',
       );
       expect(driver.find.hook('show-more').length).to.equal(1);
       driver.find.hook('show-more').simulate('click');

@@ -100,7 +100,7 @@ class galleryDriver {
     this.items = _.cloneDeep(testImages);
 
     this.actions = {
-      toggleInfiniteScroll: _.noop,
+      toggleLoadMoreItems: _.noop,
       onItemClicked: _.noop,
       onCurrentItemChanged: _.noop,
       pauseAllVideos: _.noop,
