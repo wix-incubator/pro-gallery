@@ -6,6 +6,7 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
+import { isGalleryInViewport } from './galleryHelpers.js';
 
 utils.fixViewport('Gallery');
 
@@ -162,10 +163,17 @@ class SlideshowView extends React.Component {
       return;
     if (!(isAutoSlideshow && autoSlideshowInterval > 0 && this.state.isInView))
       return;
-    this.autoSlideshowInterval = setInterval(() => {
-      this._nextItem(1, true, 800);
-    }, autoSlideshowInterval * 1000);
+    this.autoSlideshowInterval = setInterval(
+      this.autoScrollToNextItem.bind(this),
+      autoSlideshowInterval * 1000,
+    );
   }
+
+  autoScrollToNextItem = () => {
+    if (isGalleryInViewport(this.props.container)) {
+      this._nextItem(1, true, 800);
+    }
+  };
 
   scrollToThumbnail(itemIdx, scrollDuration = 400) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
