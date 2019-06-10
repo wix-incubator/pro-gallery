@@ -28,7 +28,7 @@ export class GalleryContainer extends React.Component {
 
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
-    this.toggleInfiniteScroll = this.toggleInfiniteScroll.bind(this); //TODO check if needed
+    this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
     this.onItemClicked =
       typeof props.onItemClicked === 'function'
@@ -50,7 +50,9 @@ export class GalleryContainer extends React.Component {
 
     const initialState = {
       pgScroll: 0,
-      showMoreClicked: false,
+      showMoreClickedAtLeastOnce: false,
+      initialGalleryHeight: undefined,
+      needToHandleShowMoreClick: false,
       currentHover: -1,
       gotFirstScrollEvent: !experiments(
         'specs.pro-gallery.dynamicScrollPreloading',
@@ -306,7 +308,7 @@ export class GalleryContainer extends React.Component {
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
     if (typeof this.props.handleNewGalleryStructure === 'function') {
-      const { container } = this.state;
+      const { container, needToHandleShowMoreClick, initialGalleryHeight } = this.state;
       const partialStyleParams = _.pick(this.state.styles, [
         'isSlideshow',
         'slideshowInfoSize',
@@ -320,14 +322,26 @@ export class GalleryContainer extends React.Component {
       ]);
       const numOfItems = this.state.items.length;
       const layoutHeight = this.layout.height;
-      const isInfinite = this.containerGrowthDirection() === 'vertical';
+      const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
+      let updatedHeight = false;
+      const needToUpdateHeightNotInfinite =
+        !isInfinite && needToHandleShowMoreClick;
+      if (needToUpdateHeightNotInfinite) {
+        const showMoreContainerHeight = 138; //according to the scss
+        updatedHeight =
+          container.height + (initialGalleryHeight - showMoreContainerHeight * utils.getViewportScaleRatio());
+      }
       this.props.handleNewGalleryStructure({
         numOfItems,
         container,
         partialStyleParams,
         layoutHeight,
         isInfinite,
+        updatedHeight,
       });
+      if (needToHandleShowMoreClick) {
+        this.setState({ needToHandleShowMoreClick: false });
+      }
     }
   }
 
@@ -705,7 +719,9 @@ export class GalleryContainer extends React.Component {
       }
 
       const allowPreloading =
-        utils.isEditor() || state.gotFirstScrollEvent || state.showMoreClicked;
+        utils.isEditor() ||
+        state.gotFirstScrollEvent ||
+        state.showMoreClickedAtLeastOnce;
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
@@ -761,20 +777,26 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  containerGrowthDirection(styles = false) {
+  containerInfiniteGrowthDirection(styles = false) {
     const _styles = styles || this.state.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
     const { enableInfiniteScroll } = this.props.styles;
-    const { showMoreClicked } = this.state;
-    const { oneRow } = _styles;
+    const { showMoreClickedAtLeastOnce } = this.state;
+    const { oneRow, loadMoreAmount } = _styles;
     if (oneRow) {
       return 'horizontal';
-    } else if (!enableInfiniteScroll && !showMoreClicked) {
-      return 'none'; //vertical gallery with showMore button enabled and not clicked
+    } else if (!enableInfiniteScroll) {
+      //vertical gallery with showMore button enabled
+      if (showMoreClickedAtLeastOnce && loadMoreAmount === 'all') {
+        return 'vertical';
+      } else {
+        return 'none';
+      }
     } else {
       return 'vertical';
     }
   }
+
   getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
     const isSEO =
       !!this.props.isInSEO ||
@@ -792,22 +814,36 @@ export class GalleryContainer extends React.Component {
       return '';
     }
   }
-  toggleInfiniteScroll(forceVal) {
-    if (forceVal !== this.state.showMoreClicked) {
-      //forceVal is undefined or different than existing val
-      const showMoreClicked = forceVal || !this.state.showMoreClicked;
-      if (!this.state.gotFirstScrollEvent) {
-        //we already called to calcScrollCss with allowPreloading = true
-        this.scrollCss = this.getScrollCssIfNeeded({
-          galleryDomId: this.props.domId,
-          items: this.galleryStructure.galleryItems,
-          styleParams: this.state.styles,
-          allowPreloading: true,
-        });
-      }
+
+  toggleLoadMoreItems() {
+    const showMoreClickedAtLeastOnce = true;
+    const needToHandleShowMoreClick = true;
+    if (!this.state.gotFirstScrollEvent) {
+      //we already called to calcScrollCss with allowPreloading = true
+      this.scrollCss = this.getScrollCssIfNeeded({
+        galleryDomId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: this.state.styles,
+        allowPreloading: true,
+      });
+    }
+    //before clicking "load more" at the first time
+    if (!this.state.showMoreClickedAtLeastOnce) {
+      const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
         {
-          showMoreClicked,
+          showMoreClickedAtLeastOnce,
+          initialGalleryHeight,
+          needToHandleShowMoreClick,
+        },
+        () => {
+          this.handleNewGalleryStructure();
+        },
+      );
+    } else {//from second click
+      this.setState(
+        {
+          needToHandleShowMoreClick,
         },
         () => {
           this.handleNewGalleryStructure();
@@ -822,7 +858,7 @@ export class GalleryContainer extends React.Component {
 
   enableScrollPreload() {
     if (!this.state.gotFirstScrollEvent) {
-      if (!this.state.showMoreClicked) {
+      if (!this.state.showMoreClickedAtLeastOnce) {
         //we already called to calcScrollCss with allowPreloading = true
         this.scrollCss = this.getScrollCssIfNeeded({
           galleryDomId: this.props.domId,
@@ -919,7 +955,7 @@ export class GalleryContainer extends React.Component {
       );
     }
 
-    const displayShowMore = this.containerGrowthDirection() === 'none';
+    const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
       : _.noop;
@@ -964,7 +1000,7 @@ export class GalleryContainer extends React.Component {
           isInSEO={this.props.isInSEO}
           actions={_.merge(this.props.actions, {
             findNeighborItem,
-            toggleInfiniteScroll: this.toggleInfiniteScroll,
+            toggleLoadMoreItems: this.toggleLoadMoreItems,
             onItemClicked: this.onItemClicked,
             onCurrentItemChanged: this.onCurrentItemChanged,
             setWixHeight: _.noop,

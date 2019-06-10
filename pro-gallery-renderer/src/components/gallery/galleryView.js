@@ -99,14 +99,14 @@ class GalleryView extends React.Component {
             currentIdx: lastItemIdx + 1,
           },
           () => {
-            this.props.actions.toggleInfiniteScroll();
+            this.props.actions.toggleLoadMoreItems();
           },
         );
       } catch (e) {
         console.warn('Cannot find item to focus', e);
       }
     } else {
-      this.props.actions.toggleInfiniteScroll();
+      this.props.actions.toggleLoadMoreItems();
     }
   }
 
