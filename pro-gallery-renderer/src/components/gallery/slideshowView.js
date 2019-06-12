@@ -584,12 +584,18 @@ class SlideshowView extends React.Component {
       top: `calc(50% - 50px + ${this.props.styleParams.imageMargin /
         2}px - ${slideshowSpace / 2}px)`,
     };
+    //
+    // const arrowsPlaceHolder = this.props.styleParams.arrowsPosition ? Math.max(this.props.styleParams.arrowsSize * 1.5, 100): 0;
+    const arrowsExternalPos =
+      this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition
+        ? this.props.styleParams.arrowsSize + 50 + 10
+        : 0;
     // left & right: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
     const prevContainerStyle = {
-      left: `${this.props.styleParams.imageMargin}px`,
+      left: `${this.props.styleParams.imageMargin - arrowsExternalPos}px`,
     };
     const nextContainerStyle = {
-      right: `${this.props.styleParams.imageMargin}px`,
+      right: `${this.props.styleParams.imageMargin - arrowsExternalPos}px`,
     };
 
     return [
@@ -707,9 +713,16 @@ class SlideshowView extends React.Component {
   }
 
   createGallery() {
+    // When arrows are set outside of the gallery, gallery is resized and needs to be positioned
+    const galleryStyleForExternalArrows =
+      this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition
+        ? { overflow: 'visible', left: this.props.styleParams.arrowsSize + 20 + this.props.styleParams.imageMargin}
+        : {};
+
     const galleryStyle = {
       height: this.props.container.galleryHeight,
       width: this.props.container.galleryWidth,
+      ...galleryStyleForExternalArrows,
     };
     if (this.props.styleParams.isSlideshow) {
       _.merge(galleryStyle, {
