@@ -27,7 +27,7 @@
     "@vimeo/player": "2.8.2",
     "classnames": "^2.2.5",
     "dotenv": "^6.0.0",
-    "image-client-api": "1.3364.0",
+    "image-client-api": "^1.3565.0",
     "prepend-http-extra": "^1.0.0",
     "pro-gallery-layouter": "^2.0.25",
     "react-player": "1.10.0",
