@@ -167,8 +167,10 @@ class DimensionsHelper {
         (this.container.width > 0 ? this.container.width : domWidth()) +
           this.getDimensionFix() * 2,
       ); //add margins to width and then remove them in css negative margins
+
+      console.log(this.styles.imageMargin);
       if (this.styles.arrowsPosition && this.styles.oneRow) {
-        width -= 2 * (this.styles.arrowsSize + 20 + this.styles.imageMargin);
+        width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
       }
       return width;
     });
