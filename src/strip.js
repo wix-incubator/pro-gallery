@@ -9,7 +9,9 @@ export class Strip {
     this.isFullWidth = true;
 
     this.idx = config.idx;
-    this.styleParams = config.styleParams;
+    this.groupsPerStrip = config.groupsPerStrip;
+    this.oneRow = config.oneRow;
+    this.gallerySize = config.gallerySize;
     this.container = config.container;
   }
 
@@ -58,12 +60,13 @@ export class Strip {
       return false;
     }
 
-    if (this.styleParams.groupsPerStrip > 0) {
-      return this.groups.length >= this.styleParams.groupsPerStrip;
+    const {groupsPerStrip, oneRow, gallerySize} = this;
+
+    if (groupsPerStrip > 0) {
+      return this.groups.length >= groupsPerStrip;
     }
 
     const {galleryWidth} = this.container;
-    const {oneRow, gallerySize} = this.styleParams;
 
     let isStripSmallEnough;
     if (oneRow) {

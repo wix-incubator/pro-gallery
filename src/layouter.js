@@ -154,7 +154,9 @@ export default class Layouter {
             this.strip = new Strip({
               idx: this.strips.length,
               container: this.container,
-              styleParams: this.styleParams
+              groupsPerStrip: this.styleParams.groupsPerStrip,
+              oneRow: this.styleParams.oneRow,
+              gallerySize: this.gallerySize
             });
           }
         }
@@ -174,8 +176,18 @@ export default class Layouter {
       this.groups = [];
       this.strips = [];
 
-      const gallerySizeVal = (typeof this.styleParams.gallerySize === 'function') ? this.styleParams.gallerySize() : this.styleParams.gallerySize;
-      this.gallerySize = Math.floor(gallerySizeVal) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
+      if (this.styleParams.forceFullHeight) {
+        this.gallerySize = (Math.sqrt(this.container.galleryHeight * this.container.galleryWidth / this.srcItems.length));
+      } else {
+        let gallerySizeVal;
+        if (typeof this.styleParams.gallerySize === 'function') {
+          gallerySizeVal = this.styleParams.gallerySize();
+        } else {
+          gallerySizeVal = this.styleParams.gallerySize;
+        }
+        this.gallerySize = Math.floor(gallerySizeVal) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
+      }
+
       this.galleryWidth = Math.floor(this.container.galleryWidth);
       this.maxGroupSize = this.getMaxGroupSize();
 
@@ -189,7 +201,9 @@ export default class Layouter {
       this.strip = new Strip({
         idx: 1,
         container: this.container,
-        styleParams: this.styleParams
+        groupsPerStrip: this.styleParams.groupsPerStrip,
+        oneRow: this.styleParams.oneRow,
+        gallerySize: this.gallerySize
       });
 
       this.galleryHeight = 0;
@@ -288,7 +302,9 @@ export default class Layouter {
           this.strip = new Strip({
             idx: this.strip.idx + 1,
             container: this.container,
-            styleParams: this.styleParams
+            groupsPerStrip: this.styleParams.groupsPerStrip,
+            oneRow: this.styleParams.oneRow,
+            gallerySize: this.gallerySize
           });
 
           //reset the group (this group will be rebuilt)
@@ -361,6 +377,22 @@ export default class Layouter {
       }
 
       this.pointer++;
+    }
+
+    if (this.styleParams.forceFullHeight) {
+      const stretchRatio = this.container.galleryHeight / this.galleryHeight;
+      this.items.map(item => {
+        item.cubeImages = true;
+        item.cubeRatio = item.ratio = (item.width / (item.height * stretchRatio));
+        item.height *= stretchRatio;
+        return item;
+      });
+      this.groups.map(group => {
+        group.height *= stretchRatio;
+        group.setTop(group.top * stretchRatio);
+        group.resizeItems();
+        return group;
+      });
     }
 
     //results
