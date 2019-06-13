@@ -119,6 +119,19 @@
     z-index: 100;
   }
 
+  .auto-slideshow-button {
+    left: auto;
+    z-index: 1;
+    position: absolute;
+    height: 100px;
+    display: flex;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.9;
+    font-size: 15px;
+    align-items: top;
+  }
+  
   .nav-arrows-container {
     left: auto;
     z-index: 1;

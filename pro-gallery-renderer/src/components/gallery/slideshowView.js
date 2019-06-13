@@ -7,6 +7,10 @@ import _ from 'lodash';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
 import { isGalleryInViewport } from './galleryHelpers.js';
+// eslint-disable-next-line import/no-unresolved
+import playSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/Play.svg';
+// eslint-disable-next-line import/no-unresolved
+import pauseSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/pause.svg';
 
 utils.fixViewport('Gallery');
 
@@ -16,6 +20,7 @@ class SlideshowView extends React.Component {
 
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
+    this.onAutoSlideShowButtonClick = this.onAutoSlideShowButtonClick.bind(this);
     this.startAutoSlideshowIfNeeded = this.startAutoSlideshowIfNeeded.bind(
       this,
     );
@@ -34,8 +39,10 @@ class SlideshowView extends React.Component {
       flatItems: [],
       currentIdx: 0,
       isInView: true,
+      shouldStopAutoSlideShow: false,
     };
     this.lastCurrentItem = undefined;
+    this.shouldCreateSlideShowPlayButton = false;
   }
 
   isFirstItem() {
@@ -161,7 +168,14 @@ class SlideshowView extends React.Component {
     this.stopAutoSlideshow();
     if (!(galleryLayout === 5 || galleryLayout === 4 || galleryLayout === 3))
       return;
-    if (!(isAutoSlideshow && autoSlideshowInterval > 0 && this.state.isInView))
+    if (
+      !(
+        isAutoSlideshow &&
+        autoSlideshowInterval > 0 &&
+        this.state.isInView &&
+        !this.state.shouldStopAutoSlideShow
+      )
+    )
       return;
     this.autoSlideshowInterval = setInterval(
       this.autoScrollToNextItem.bind(this),
@@ -749,6 +763,77 @@ class SlideshowView extends React.Component {
         {this.createDebugMsg()}
         {this.createNavArrows()}
         {this.createLayout()}
+        {this.createAutoSlideShowPlayButton()}
+        {this.createSlideShowCounter()}
+      </div>
+    );
+  }
+
+  onAutoSlideShowButtonClick() {
+    const currShouldStopAutoSlideShow = this.state.shouldStopAutoSlideShow;
+    this.setState(
+      { shouldStopAutoSlideShow: !currShouldStopAutoSlideShow },
+      () => {
+        this.startAutoSlideshowIfNeeded(this.props.styleParams);
+      },
+    );
+  }
+
+  createAutoSlideShowPlayButton() {
+    if (!this.shouldCreateSlideShowPlayButton) {
+      return '';
+    }
+    let right = this.props.styleParams.imageMargin;
+    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
+      right += 50;
+    }
+    const containerStyle = {
+      width: '60px',
+      paddingTop: '25px',
+      right: `${right}px`,
+      top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
+        2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
+    };
+    const svgIcon = this.state.shouldStopAutoSlideShow ? (
+      <div>{playSvg()}</div>
+    ) : (
+      <div>{pauseSvg()}</div>
+    );
+    return (
+      <button
+        className={'auto-slideshow-button'}
+        onClick={() => {
+          this.onAutoSlideShowButtonClick();
+        }}
+        data-hook="auto-slideshow-button"
+        style={containerStyle}
+      >
+        {svgIcon}
+      </button>
+    );
+  }
+
+  createSlideShowCounter() {
+    if (!this.shouldCreateSlideShowPlayButton) {
+      return '';
+    }
+    let right = this.props.styleParams.imageMargin;
+    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
+      right += 50;
+    }
+    const containerStyle = {
+      paddingTop: '24px',
+      right: `${right}px`,
+      top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
+        2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
+    };
+    return (
+      <div
+        className={'auto-slideshow-button'}
+        data-hook="auto-slideshow-button"
+        style={containerStyle}
+      >
+        <div>{this.state.currentIdx + '/' + this.props.totalItemsCount}</div>
       </div>
     );
   }
@@ -829,6 +914,11 @@ class SlideshowView extends React.Component {
         this.startAutoSlideshowIfNeeded(props.styleParams);
       }
     }
+    this.shouldCreateSlideShowPlayButton =
+      props.styleParams.galleryLayout === 5 &&
+      props.styleParams.isSlideshow &&
+      props.styleParams.isAutoSlideshow &&
+      props.styleParams.playButtonForAutoSlideShow;
   }
 
   createEmptyState() {
