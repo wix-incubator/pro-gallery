@@ -139,7 +139,7 @@ describe('ItemHover', () => {
     });
     stub = sinon.stub(utils, 'isMobile').returns(true);
     driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'hovered').to.equal(true);
+    itemHoverHasClass(driver, 'force-hover').to.equal(true);
     itemHoverHasClass(driver, 'hide-hover').to.equal(false);
     stub.restore();
 
@@ -148,7 +148,7 @@ describe('ItemHover', () => {
     });
     stub = sinon.stub(utils, 'isMobile').returns(true);
     driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'hovered').to.equal(false);
+    itemHoverHasClass(driver, 'force-hover').to.equal(false);
     itemHoverHasClass(driver, 'hide-hover').to.equal(true);
     stub.restore();
 
@@ -157,7 +157,7 @@ describe('ItemHover', () => {
     });
     stub = sinon.stub(utils, 'isMobile').returns(false);
     driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'hovered').to.equal(false);
+    itemHoverHasClass(driver, 'force-hover').to.equal(false);
     itemHoverHasClass(driver, 'hide-hover').to.equal(false);
     stub.restore();
   });

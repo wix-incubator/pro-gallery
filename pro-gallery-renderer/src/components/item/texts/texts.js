@@ -8,7 +8,6 @@ import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
 import _ from 'lodash';
-import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
 
 export default class Texts extends React.Component {
   constructor(props) {
@@ -47,7 +46,9 @@ export default class Texts extends React.Component {
       !styleParams.isSlideshow &&
       !styleParams.isSlider &&
       !styleParams.hasThumbnails &&
-      styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER;
+      (styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER ||
+        styleParams.titlePlacement === Consts.placements.SHOW_NOT_ON_HOVER ||
+        styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS);
     const isCentered = style.justifyContent === 'center';
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,

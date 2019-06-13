@@ -22,9 +22,7 @@ import {
 } from '../helpers/scrollHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
-import experiments, {
-  experimentsWrapper,
-} from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
+import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
 
 class ItemView extends React.Component {
@@ -375,7 +373,9 @@ class ItemView extends React.Component {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        titlePlacement === Consts.placements.SHOW_ON_HOVER &&
+        (titlePlacement === Consts.placements.SHOW_ON_HOVER ||
+          titlePlacement === Consts.placements.SHOW_NOT_ON_HOVER ||
+          titlePlacement === Consts.placements.SHOW_ALWAYS) &&
         isNewMobileSettings
       ) {
         return true;
@@ -555,7 +555,7 @@ class ItemView extends React.Component {
     return (
       <ItemHover
         {...props}
-        forceShowHover={this.showHover()}
+        forceShowHover={this.simulateOverlayHover()}
         shouldHover={this.shouldHover()}
         imageDimensions={imageDimensions}
         key="hover"
@@ -664,10 +664,12 @@ class ItemView extends React.Component {
     const { placements } = Consts;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
-    const itemTexts =
-      styleParams.titlePlacement !== placements.SHOW_ON_HOVER
-        ? null
-        : this.getItemTextsDetails(); //if titlePlacement (title & description) is not SHOW_ON_HOVER, it is not part of the hover
+    let itemTexts =
+      styleParams.titlePlacement === placements.SHOW_ON_HOVER ||
+      styleParams.titlePlacement === placements.SHOW_NOT_ON_HOVER ||
+      styleParams.titlePlacement === placements.SHOW_ALWAYS
+        ? this.getItemTextsDetails()
+        : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
     const social = this.getSocial();
     const share = this.getShare();
     const itemHover = this.getItemHover(
@@ -696,7 +698,7 @@ class ItemView extends React.Component {
     }
 
     if (styleParams.isSlideshow) {
-      const itemTexts = this.getItemTextsDetails();
+      itemTexts = this.getItemTextsDetails();
       const style = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
@@ -795,12 +797,19 @@ class ItemView extends React.Component {
     return info;
   }
 
-  showHover() {
+  simulateHover() {
     return (
       this.props.currentHover === this.props.idx ||
       this.state.previewHover ||
       this.props.previewHover ||
       this.props.styleParams.alwaysShowHover === true
+    );
+  }
+
+  simulateOverlayHover() {
+    return (
+      this.simulateHover() ||
+      this.props.styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS
     );
   }
 
@@ -911,8 +920,10 @@ class ItemView extends React.Component {
     const className = classNames('gallery-item-container', 'visible', {
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',
-      hovered: this.showHover(),
-      'hide-hover': !this.showHover() && utils.isMobile(),
+      'simulate-hover': this.simulateHover(),
+      'hide-hover': !this.simulateHover() && utils.isMobile(),
+      'invert-hover':
+        styleParams.titlePlacement === Consts.placements.SHOW_NOT_ON_HOVER,
 
       //overlay animations
       'hover-animation-fade-in':
@@ -945,6 +956,9 @@ class ItemView extends React.Component {
       'color-in-on-hover':
         isNOTslideshow &&
         imageHoverAnimation === Consts.imageHoverAnimations.COLOR_IN,
+      'darkened-on-hover':
+        isNOTslideshow &&
+        imageHoverAnimation === Consts.imageHoverAnimations.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
     });

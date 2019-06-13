@@ -633,12 +633,16 @@ function processLayouts(styles) {
       }
     }
   }
+
   if (
+    //TODO: Does it means if ?(Slideshow or Thumbnails) && (title is above or below)?
     (!processedStyles.isVertical ||
       processedStyles.groupSize > 1 ||
       processedStyles.oneRow === true) &&
     !processedStyles.isSlider &&
-    !processedStyles.isColumns
+    !processedStyles.isColumns &&
+    (processedStyles.titlePlacement === Consts.placements.SHOW_BELOW ||
+      processedStyles.titlePlacement === Consts.placements.SHOW_ABOVE)
   ) {
     processedStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
   } else {
@@ -815,8 +819,7 @@ function getExternalInfoHeight(styleParams) {
   } = styleParams;
 
   if (
-    titlePlacement === 'SHOW_ON_HOVER' ||
-    titlePlacement === 'DONT_SHOW' ||
+    (titlePlacement !== 'SHOW_ABOVE' && titlePlacement !== 'SHOW_BELOW') ||
     (!allowTitle && !allowDescription && !useCustomButton)
   ) {
     return 0;
