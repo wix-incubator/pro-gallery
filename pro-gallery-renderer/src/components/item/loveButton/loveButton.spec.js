@@ -1,9 +1,9 @@
 import LoveButton from './loveButton.js';
-import GalleryDriver from '../../../../__tests__/drivers/reactDriver.js';
+import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import { mount } from 'enzyme';
 import React from 'react';
 import { use, spy, expect } from 'chai';
-import { testImages } from '../../../../__tests__/images-mock.js';
+import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import spies from 'chai-spies';
 import sinon from 'sinon';

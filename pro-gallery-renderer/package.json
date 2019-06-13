@@ -16,7 +16,7 @@
     "build": "yoshi build",
     "precommit": " ",
     "pretest": "yoshi build",
-    "test": "yoshi test --mocha",
+    "test": "yoshi test",
     "posttest": "yoshi lint",
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
@@ -102,5 +102,14 @@
       "react-dom": "ReactDOM"
     },
     "exports": "@wix/pro-gallery-renderer"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^-!svg-react-loader.*$": "<rootDir>/__testsDrivers__/svgImportMock.js"
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/dist"
+    ]
   }
 }

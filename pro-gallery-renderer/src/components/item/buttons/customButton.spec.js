@@ -4,8 +4,8 @@ import { use, spy, expect } from 'chai';
 import spies from 'chai-spies';
 import sinon from 'sinon';
 import utils from '../../../utils';
-import GalleryDriver from '../../../../__tests__/drivers/reactDriver.js';
-import { testImages } from '../../../../__tests__/images-mock.js';
+import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver';
+import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 
 use(spies);
 

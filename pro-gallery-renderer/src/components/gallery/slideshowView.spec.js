@@ -1,5 +1,5 @@
 import utils from '../../utils';
-import GalleryDriver from '../../../__tests__/drivers/reactDriver';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import React from 'react';
 import SlideshowView from './slideshowView';
 import { expect } from 'chai';

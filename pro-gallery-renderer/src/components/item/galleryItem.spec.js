@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
-import GalleryDriver from '../../../__tests__/drivers/reactDriver';
-import { testImages } from '../../../__tests__/images-mock';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
+import { testImages } from '../../../__testsDrivers__/images-mock';
 import { Item } from 'pro-gallery-layouter';
 import React from 'react';
 import GalleryItem from './galleryItem';

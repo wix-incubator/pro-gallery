@@ -2,8 +2,8 @@ import React from 'react';
 import { use, spy, expect } from 'chai';
 import spies from 'chai-spies';
 import sinon from 'sinon';
-import GalleryDriver from '../../../__tests__/drivers/reactDriver';
-import { testImages } from '../../../__tests__/images-mock';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
+import { testImages } from '../../../__testsDrivers__/images-mock';
 import ItemHover from './itemHover';
 import utils from '../../utils/index.js';
 

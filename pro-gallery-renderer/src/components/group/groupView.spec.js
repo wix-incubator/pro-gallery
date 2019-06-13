@@ -1,4 +1,4 @@
-import GalleryDriver from '../../../__tests__/drivers/reactDriver';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import React from 'react';
 import { expect } from 'chai';
 import GroupView from './groupView';

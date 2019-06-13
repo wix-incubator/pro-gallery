@@ -1,5 +1,5 @@
-import 'jsdom-global/register';
-import GalleryDriver from '../../../__tests__/drivers/reactDriver';
+
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import _ from 'lodash';
 import { expect } from 'chai';
 

@@ -1,4 +1,4 @@
-import GalleryDriver from '../../../__tests__/drivers/reactDriver';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import GalleryView from './galleryView';
 import utils from '../../utils/index';
 import { expect } from 'chai';

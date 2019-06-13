@@ -8,8 +8,8 @@ import { spy, expect, chai } from 'chai';
 import sinon from 'sinon';
 import utils from '../../utils/index';
 import React from 'react';
-import GalleryDriver from '../../../__tests__/drivers/reactDriver';
-import { testImages } from '../../../__tests__/images-mock';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
+import { testImages } from '../../../__testsDrivers__/images-mock';
 import ItemView from './itemView';
 
 describe('Item View', () => {

@@ -1,12 +1,12 @@
 //Yonatan Hattav 12 Jun 2018
 
 import ItemView from '../itemView.js';
-import GalleryDriver from '../../../../__tests__/drivers/reactDriver.js';
+import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import Share from './share.js';
 import React from 'react';
 import { spy, expect, chai } from 'chai';
 import sinon from 'sinon';
-import { testImages } from '../../../../__tests__/images-mock.js';
+import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 

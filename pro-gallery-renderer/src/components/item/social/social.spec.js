@@ -1,14 +1,14 @@
 //Yonatan Hattav 19 Jun 2018
 
 import ItemView from '../itemView.js';
-import GalleryDriver from '../../../../__tests__/drivers/reactDriver.js';
+import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import Social from './social.js';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { use, spy, expect, chai } from 'chai';
 import sinon from 'sinon';
 import chaiEnzyme from 'chai-enzyme';
-import { testImages } from '../../../../__tests__/images-mock.js';
+import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
 import LoveButton from '../loveButton/loveButton.js';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
