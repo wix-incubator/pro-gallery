@@ -309,8 +309,9 @@ export class Item {
       if (this.dynamicCropRatios) {
         const dynamicCropRatio = this.dynamicCropRatios.map(r => {
           if (r.type === '%') {
-            const dim = this.container[r.dim] - (2 * this.galleryMargin);
-            return r.val * dim - Math.ceil(2 * this.imageMargin);
+            const dim = this.container[r.dim] + (r.dim === 'galleryHeight' ? this.imageMargin : 0);
+            const relativeDim = r.val * dim - (2 * this.imageMargin);
+            return relativeDim;
           } else {
             return r.val;
           }
