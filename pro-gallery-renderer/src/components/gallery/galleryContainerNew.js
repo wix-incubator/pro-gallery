@@ -25,7 +25,7 @@ export class GalleryContainer extends React.Component {
     if (utils.isVerbose()) {
       console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
     }
-
+    utils.updateViewMode(props.viewMode);
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
@@ -137,6 +137,7 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    utils.updateViewMode(nextProps.viewMode);
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
@@ -308,7 +309,11 @@ export class GalleryContainer extends React.Component {
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
     if (typeof this.props.handleNewGalleryStructure === 'function') {
-      const { container, needToHandleShowMoreClick, initialGalleryHeight } = this.state;
+      const {
+        container,
+        needToHandleShowMoreClick,
+        initialGalleryHeight,
+      } = this.state;
       const partialStyleParams = _.pick(this.state.styles, [
         'isSlideshow',
         'slideshowInfoSize',
@@ -329,7 +334,9 @@ export class GalleryContainer extends React.Component {
       if (needToUpdateHeightNotInfinite) {
         const showMoreContainerHeight = 138; //according to the scss
         updatedHeight =
-          container.height + (initialGalleryHeight - showMoreContainerHeight * utils.getViewportScaleRatio());
+          container.height +
+          (initialGalleryHeight -
+            showMoreContainerHeight * utils.getViewportScaleRatio());
       }
       this.props.handleNewGalleryStructure({
         numOfItems,
@@ -558,7 +565,6 @@ export class GalleryContainer extends React.Component {
     this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
       sharpParams: styles.sharpParams,
     });
-
     const allowPreloading = utils.isEditor() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
       galleryDomId: this.props.domId,
@@ -840,7 +846,8 @@ export class GalleryContainer extends React.Component {
           this.handleNewGalleryStructure();
         },
       );
-    } else {//from second click
+    } else {
+      //from second click
       this.setState(
         {
           needToHandleShowMoreClick,
