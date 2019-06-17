@@ -1432,7 +1432,7 @@
       &.slider {
         .gallery-column {
           overflow-x: scroll;
-          scroll-snap-type: x mandatory;
+          scroll-snap-type: mandatory;
         }
       }
     }
