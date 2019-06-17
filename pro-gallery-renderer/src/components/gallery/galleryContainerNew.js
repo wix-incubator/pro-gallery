@@ -25,7 +25,7 @@ export class GalleryContainer extends React.Component {
     if (utils.isVerbose()) {
       console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
     }
-    //utils.updateViewMode(props.viewMode);
+    utils.updateViewMode(props.viewMode);
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
