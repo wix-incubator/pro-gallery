@@ -169,8 +169,18 @@ class VideoItem extends React.Component {
   }
 
   canVideoPlayInGallery(itemClick, videoPlay) {
-    if (utils.isMobile() && itemClick !== 'expand') return true;
-    else if (!utils.isMobile() && itemClick !== 'expand') return true;
+    if (
+      utils.isMobile() &&
+      itemClick !== 'expand' &&
+      itemClick !== 'fullscreen'
+    )
+      return true;
+    else if (
+      !utils.isMobile() &&
+      itemClick !== 'expand' &&
+      itemClick !== 'fullscreen'
+    )
+      return true;
     else if (!utils.isMobile() && videoPlay !== 'onClick') return true;
     else return false;
   }

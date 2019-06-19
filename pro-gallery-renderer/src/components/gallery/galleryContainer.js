@@ -1767,6 +1767,9 @@ export class GalleryContainer extends React.Component {
         case 2:
           stateStyles.itemClick = 'nothing';
           break;
+        case 3:
+          stateStyles.itemClick = 'fullscreen';
+          break;
       }
     }
 
