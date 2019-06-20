@@ -655,6 +655,19 @@ function processLayouts(styles) {
 
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
 
+  if (processedStyles.itemEnableShadow) {
+    if (processedStyles.oneRow) {
+      processedStyles.itemEnableShadow = false;
+    } else {
+      //add galleryMargin to allow the shadow to be seen
+      processedStyles.galleryMargin = Math.max(
+        processedStyles.galleryMargin,
+        (processedStyles.itemShadowSize || 10) +
+          (processedStyles.itemShadowBlur || 20),
+      );
+    }
+  }
+
   if (processedStyles.oneRow) {
     //if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
