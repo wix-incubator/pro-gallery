@@ -655,6 +655,12 @@ function processLayouts(styles) {
 
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
 
+  if (processedStyles.cubeType === 'fit') {
+    processedStyles.itemBorderWidth = 0;
+    processedStyles.itemBorderRadius = 0;
+    processedStyles.itemEnableShadow = false;
+  }
+
   if (processedStyles.itemEnableShadow) {
     if (processedStyles.oneRow) {
       processedStyles.itemEnableShadow = false;
