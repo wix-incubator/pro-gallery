@@ -601,7 +601,7 @@ class SlideshowView extends React.Component {
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
       this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition
-        ? `-${this.props.styleParams.arrowsSize + 50 + 20}px`
+        ? `-${this.props.styleParams.arrowsSize + 50 + 10}px`
         : `${this.props.styleParams.imageMargin}px`;
     // left & right: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
     const prevContainerStyle = {
