@@ -635,22 +635,22 @@ function processLayouts(styles) {
   }
 
   if (
-    //TODO: Does it means if ?(Slideshow or Thumbnails) && (title is above or below)?
-    (!processedStyles.isVertical ||
-      processedStyles.groupSize > 1 ||
-      processedStyles.oneRow === true) &&
+    (!processedStyles.isVertical || processedStyles.groupSize > 1 || processedStyles.oneRow === true) &&
     !processedStyles.isSlider &&
-    !processedStyles.isColumns &&
-    (processedStyles.titlePlacement === Consts.placements.SHOW_BELOW ||
-      processedStyles.titlePlacement === Consts.placements.SHOW_ABOVE)
+    !processedStyles.isColumns
   ) {
     processedStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
-  } else {
-    const defaultValue = utils.isStoreGallery()
-      ? Consts.placements.SHOW_BELOW
-      : Consts.placements.SHOW_ON_HOVER;
-    processedStyles.titlePlacement =
-      processedStyles.titlePlacement || defaultValue;
+  }
+
+  if (processedStyles.titlePlacement === Consts.placements.SHOW_ON_HOVER) {
+    if (processedStyles.hoveringBehaviour === Consts.infoBehaviourOnHover.DISAPPEARS) {
+      processedStyles.titlePlacement = Consts.placements.SHOW_NOT_ON_HOVER;
+    } else if (processedStyles.hoveringBehaviour === Consts.infoBehaviourOnHover.NO_CHANGE) {
+      processedStyles.titlePlacement = Consts.placements.SHOW_ALWAYS;
+    } else {
+      //processedStyles.hoveringBehaviour === Consts.infoBehaviourOnHover.APPEARS
+      processedStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+    }
   }
 
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
