@@ -655,7 +655,9 @@ function processLayouts(styles) {
 
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
 
-  if (processedStyles.cubeType === 'fit') {
+  if (processedStyles.cubeType === 'fit' &&
+    (processedStyles.isGrid || processedStyles.hasThumbnails || processedStyles.isSlider || processedStyles.isSlideshow)
+  ) {
     processedStyles.itemBorderWidth = 0;
     processedStyles.itemBorderRadius = 0;
     processedStyles.itemEnableShadow = false;
