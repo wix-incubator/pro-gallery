@@ -725,6 +725,12 @@ class GalleryItem {
         (this.metadata.posters
           ? this.metadata.posters[this.metadata.posters.length - 1]
           : null);
+
+      if (utils.isExternalUrl(this.url)) {
+        const format = this.url.split('.').slice(-1)[0];
+        urls[format] = this.url;
+      }
+
       if (poster) {
         if (qualities && qualities.length) {
           let suffix = '/';
