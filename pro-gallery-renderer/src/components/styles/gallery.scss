@@ -1432,7 +1432,10 @@
       &.slider {
         .gallery-column {
           overflow-x: scroll;
-          scroll-snap-type: mandatory;
+
+          &[data-scrolling=""] { //do not apply during auto scroll
+            scroll-snap-type: x mandatory;
+          }
         }
       }
     }
