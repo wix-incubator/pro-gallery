@@ -783,17 +783,23 @@ class SlideshowView extends React.Component {
     if (!this.shouldCreateSlideShowPlayButton) {
       return '';
     }
-    let right = this.props.styleParams.imageMargin;
-    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
-      right += 50;
-    }
     const containerStyle = {
-      width: '60px',
       paddingTop: '25px',
-      right: `${right}px`,
       top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
         2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
     };
+
+    let imageMargin = this.props.styleParams.imageMargin;
+    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
+      imageMargin += 50;
+    }
+
+    this.props.styleParams.galleryTextAlign === 'right'
+      ? Object.assign(containerStyle, { left: `${imageMargin + 50}px` })
+      : Object.assign(containerStyle, {
+          right: `${imageMargin}px`,
+          width: '60px',
+        });
     const svgIcon = this.state.shouldStopAutoSlideShow ? (
       <div>{playSvg()}</div>
     ) : (
@@ -817,23 +823,28 @@ class SlideshowView extends React.Component {
     if (!this.shouldCreateSlideShowPlayButton) {
       return '';
     }
-    let right = this.props.styleParams.imageMargin;
-    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
-      right += 50;
-    }
     const containerStyle = {
-      paddingTop: '24px',
-      right: `${right}px`,
+      paddingTop: '23px',
       top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
         2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
     };
+    let imageMargin = this.props.styleParams.imageMargin;
+    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
+      imageMargin += 50;
+    }
+
+    this.props.styleParams.galleryTextAlign === 'right'
+      ? Object.assign(containerStyle, { left: `${imageMargin}px` })
+      : Object.assign(containerStyle, { right: `${imageMargin}px` });
     return (
       <div
         className={'auto-slideshow-button'}
         data-hook="auto-slideshow-button"
         style={containerStyle}
       >
-        <div>{this.state.currentIdx + '/' + this.props.totalItemsCount}</div>
+        <div style={{ fontSize: '15px', lineHeight: 'normal' }}>
+          {this.state.currentIdx + '/' + this.props.totalItemsCount}
+        </div>
       </div>
     );
   }
