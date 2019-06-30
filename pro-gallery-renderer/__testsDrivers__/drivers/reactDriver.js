@@ -2,7 +2,8 @@ import { Layouter } from 'pro-gallery-layouter';
 import GalleryItem from '../../src/components/item/galleryItem';
 import { testImages } from '../images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
-import { GalleryContainer } from '../../src/components/gallery/galleryContainer.js'; //import GalleryContainer before the connect (without redux)
+import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew.js'; //import GalleryContainer before the connect (without redux)
+import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
@@ -123,7 +124,7 @@ class galleryDriver {
       gotScrollEvent: true,
     };
 
-    this.galleryStructure = GalleryContainer.convertToGalleryItems(
+    this.galleryStructure = ItemsHelper.convertToGalleryItems(
       new Layouter(this.layoutParams),
     );
 
@@ -281,7 +282,7 @@ class galleryDriver {
           styleParams: galleryViewProps.styleParams,
         };
 
-        const galleryStructure = GalleryContainer.convertToGalleryItems(
+        const galleryStructure = ItemsHelper.convertToGalleryItems(
           new Layouter(layoutParams),
         );
 
@@ -295,8 +296,8 @@ class galleryDriver {
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
           store: mockStore({}),
-          convertToGalleryItems: GalleryContainer.convertToGalleryItems,
-          convertDtoToLayoutItem: GalleryContainer.convertDtoToLayoutItem,
+          convertToGalleryItems: ItemsHelper.convertToGalleryItems,
+          convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
         };
       },
 
