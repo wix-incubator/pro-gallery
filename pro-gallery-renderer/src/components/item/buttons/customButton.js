@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomButtonIcon from './customButtonIcon.js';
 import utils from '../../../utils/index.js';
-import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
+import { events } from '../../../utils/consts';
 
 export default class CustomButton extends React.Component {
   render() {
@@ -21,7 +21,9 @@ export default class CustomButton extends React.Component {
         ) : (
           <button
             data-hook="custom-button-button"
-            onClick={() => logger.trackBi(logger.biEvents.buyNowClick)}
+            onClick={() =>
+              this.props.actions.eventsListener(events.ON_BUY_NOW_CLICKED)
+            }
             tabIndex={-1}
           >
             {buttonText}

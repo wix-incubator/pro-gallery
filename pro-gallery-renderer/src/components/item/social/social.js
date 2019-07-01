@@ -1,11 +1,10 @@
 import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
-import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
-import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
 import _ from 'lodash';
 import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import { events } from '../../../utils/consts';
 
 export default class Social extends React.Component {
   constructor(props) {
@@ -128,7 +127,7 @@ export default class Social extends React.Component {
           e.stopPropagation();
           e.preventDefault();
           window.open(downloadLink, '_blank');
-          logger.trackBi(logger.biEvents.download, { origin: 'gallery' });
+          this.props.actions.eventsListener(events.ON_DOWNLOAD_BUTTON_CLICKED);
         },
         onKeyDown: e => this.onDownloadKeyPress(e, downloadLink),
       };
@@ -173,7 +172,7 @@ export default class Social extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         window.open(downloadLink, '_blank');
-        logger.trackBi(logger.biEvents.download, { origin: 'gallery' });
+        this.props.actions.eventsListener(events.ON_DOWNLOAD_BUTTON_CLICKED);
         return false;
     }
   }

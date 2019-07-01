@@ -170,6 +170,9 @@ export default class Texts extends React.Component {
         styleParams={styleParams}
         style={style}
         small={isNarrow}
+        actions={{
+          eventsListener: this.props.actions.eventsListener,
+        }}
       />
     );
 

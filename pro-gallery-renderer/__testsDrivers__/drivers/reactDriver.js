@@ -102,8 +102,7 @@ class galleryDriver {
 
     this.actions = {
       toggleLoadMoreItems: _.noop,
-      onItemClicked: _.noop,
-      onCurrentItemChanged: _.noop,
+      eventsListener: _.noop,
       pauseAllVideos: _.noop,
       setWixHeight: _.noop,
       scrollToItem: _.noop,

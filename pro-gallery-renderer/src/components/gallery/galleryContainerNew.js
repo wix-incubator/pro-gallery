@@ -18,6 +18,7 @@ import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import _ from 'lodash';
 import utils from '../../utils';
+import { events } from '../../utils/consts';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -30,20 +31,6 @@ export class GalleryContainer extends React.Component {
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
-    this.onItemClicked =
-      typeof props.onItemClicked === 'function'
-        ? itemIdx =>
-            this.props.onItemClicked(
-              this.galleryStructure.galleryItems[itemIdx],
-            )
-        : () => {};
-    this.onCurrentItemChanged =
-      typeof props.onCurrentItemChanged === 'function'
-        ? itemIdx =>
-            this.props.onCurrentItemChanged(
-              this.galleryStructure.galleryItems[itemIdx],
-            )
-        : () => {};
     this._scrollingElement = this.getScrollingElement();
     this.setCurrentHover = this.setCurrentHover.bind(this);
     this.duplicateGalleryItems = this.duplicateGalleryItems.bind(this);
@@ -308,47 +295,48 @@ export class GalleryContainer extends React.Component {
 
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
-    if (typeof this.props.handleNewGalleryStructure === 'function') {
-      const {
-        container,
-        needToHandleShowMoreClick,
-        initialGalleryHeight,
-      } = this.state;
-      const partialStyleParams = _.pick(this.state.styles, [
-        'isSlideshow',
-        'slideshowInfoSize',
-        'galleryThumbnailsAlignment',
-        'thumbnailSize',
-        'isSlider',
-        'galleryWidth',
-        'isInAdi',
-        'oneRow',
-        'enableInfiniteScroll',
-      ]);
-      const numOfItems = this.state.items.length;
-      const layoutHeight = this.layout.height;
-      const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
-      let updatedHeight = false;
-      const needToUpdateHeightNotInfinite =
-        !isInfinite && needToHandleShowMoreClick;
-      if (needToUpdateHeightNotInfinite) {
-        const showMoreContainerHeight = 138; //according to the scss
-        updatedHeight =
-          container.height +
-          (initialGalleryHeight -
-            showMoreContainerHeight * utils.getViewportScaleRatio());
-      }
-      this.props.handleNewGalleryStructure({
-        numOfItems,
-        container,
-        partialStyleParams,
-        layoutHeight,
-        isInfinite,
-        updatedHeight,
-      });
-      if (needToHandleShowMoreClick) {
-        this.setState({ needToHandleShowMoreClick: false });
-      }
+    const {
+      container,
+      needToHandleShowMoreClick,
+      initialGalleryHeight,
+    } = this.state;
+    const partialStyleParams = _.pick(this.state.styles, [
+      'isSlideshow',
+      'slideshowInfoSize',
+      'galleryThumbnailsAlignment',
+      'thumbnailSize',
+      'isSlider',
+      'galleryWidth',
+      'isInAdi',
+      'oneRow',
+      'enableInfiniteScroll',
+    ]);
+    const numOfItems = this.state.items.length;
+    const layoutHeight = this.layout.height;
+    const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
+    let updatedHeight = false;
+    const needToUpdateHeightNotInfinite =
+      !isInfinite && needToHandleShowMoreClick;
+    if (needToUpdateHeightNotInfinite) {
+      const showMoreContainerHeight = 138; //according to the scss
+      updatedHeight =
+        container.height +
+        (initialGalleryHeight -
+          showMoreContainerHeight * utils.getViewportScaleRatio());
+    }
+
+    const onGalleryChangeData = {
+      numOfItems,
+      container,
+      partialStyleParams,
+      layoutHeight,
+      isInfinite,
+      updatedHeight,
+    };
+    this.props.eventsListener(events.ON_GALLERY_CHANGE, onGalleryChangeData);
+
+    if (needToHandleShowMoreClick) {
+      this.setState({ needToHandleShowMoreClick: false });
     }
   }
 
@@ -900,7 +888,6 @@ export class GalleryContainer extends React.Component {
       this.galleryStructure.galleryItems &&
       this.galleryStructure.galleryItems.length > 0 &&
       !this.gettingMoreItems &&
-      typeof this.props.getMoreItems === 'function' &&
       this.state.items &&
       this.state.styles &&
       this.state.container
@@ -920,7 +907,10 @@ export class GalleryContainer extends React.Component {
         //only when the last item turns visible we should try getting more items
         if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
-          this.props.getMoreItems(this.state.items.length);
+          this.props.eventsListener(
+            events.NEED_MORE_ITEMS,
+            this.state.items.length,
+          );
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
             this.gettingMoreItems = false;
@@ -1008,12 +998,10 @@ export class GalleryContainer extends React.Component {
           actions={_.merge(this.props.actions, {
             findNeighborItem,
             toggleLoadMoreItems: this.toggleLoadMoreItems,
-            onItemClicked: this.onItemClicked,
-            onCurrentItemChanged: this.onCurrentItemChanged,
+            eventsListener: this.props.eventsListener,
             setWixHeight: _.noop,
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
-            onItemCreated: this.props.onItemCreated,
             duplicateGalleryItems: this.duplicateGalleryItems,
             itemActions: this.props.itemActions,
           })}

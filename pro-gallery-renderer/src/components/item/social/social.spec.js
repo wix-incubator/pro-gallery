@@ -12,7 +12,6 @@ import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
 import LoveButton from '../loveButton/loveButton.js';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
-import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 describe('Social:', () => {
@@ -244,7 +243,6 @@ describe('Social:', () => {
     it('should create a different onClick functions for text items', () => {
       const stubSite = sinon.stub(utils, 'isSite').returns(false);
       const stubiOS = sinon.stub(utils, 'isiOS').returns(false);
-      let stubLogger = sinon.stub(logger, 'trackBi');
       let stubItemActions = sinon.stub(itemActions, 'downloadTextItem');
       Object.assign(sampleItemViewProps, {
         type: 'text',
@@ -254,15 +252,11 @@ describe('Social:', () => {
       driver.mount(ItemView, sampleItemViewProps);
       driver.find.hook('item-download').simulate('click', mockEvent);
       expect(stubItemActions.called).to.be.true;
-      expect(stubLogger.called).to.be.false;
-      stubLogger.restore();
       stubItemActions.restore();
-      stubLogger = sinon.stub(logger, 'trackBi');
       stubItemActions = sinon.stub(itemActions, 'downloadTextItem');
       driver.set.props({ type: 'image' });
       driver.find.hook('item-download').simulate('click', mockEvent);
       expect(stubItemActions.called).to.be.false;
-      expect(stubLogger.called).to.be.true;
       stubSite.restore();
       stubiOS.restore();
     });

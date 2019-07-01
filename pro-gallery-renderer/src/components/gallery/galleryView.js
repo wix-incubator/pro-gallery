@@ -190,9 +190,8 @@ class GalleryView extends React.Component {
       isPremiumSite: this.props.isPremiumSite,
       isInSEO: this.props.isInSEO,
       actions: {
-        onItemClicked: this.props.actions.onItemClicked,
+        eventsListener: this.props.actions.eventsListener,
         setCurrentHover: this.props.actions.setCurrentHover,
-        onItemCreated: this.props.actions.onItemCreated,
         itemActions: this.props.actions.itemActions,
       },
     };

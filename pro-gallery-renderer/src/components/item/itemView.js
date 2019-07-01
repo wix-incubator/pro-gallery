@@ -23,15 +23,13 @@ import {
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
 import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
-import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
+import { events } from '../../utils/consts';
 
 class ItemView extends React.Component {
   constructor(props) {
     performanceUtils.itemLoadStart();
     super(props);
-    if (!_.isUndefined(this.props.actions.onItemCreated)) {
-      this.props.actions.onItemCreated();
-    }
+    this.props.actions.eventsListener(events.ON_ITEM_CREATED);
 
     this.init();
 
@@ -228,20 +226,12 @@ class ItemView extends React.Component {
           : this.props.playVideo(this.props.idx);
       }
     }
-    this.props.actions.onItemClicked(this.props.idx);
+    this.props.actions.eventsListener(events.ON_ITEM_ACTION_TRIGGERED, this.props);
+    //this.props.actions.onItemClicked(this.props.idx);
   }
 
   onItemClick(e) {
-    if (utils.isOOI()) {
-      logger.trackBi(logger.biEvents.item_clicked, {
-        action: this.props.styleParams.itemClick,
-        media: this.props.type,
-        layout: utils.getGalleryLayoutName(
-          this.props.styleParams.galleryLayout,
-        ),
-        gallery_id: this.props.galleryId,
-      });
-    }
+    this.props.actions.eventsListener(events.ON_ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
       return _.noop;
     }
@@ -285,7 +275,8 @@ class ItemView extends React.Component {
 
   handleHoverClickOnMobile(itemClick) {
     if (this.isClickOnCurrentHoveredItem()) {
-      this.props.actions.onItemClicked(this.props.idx);
+      this.props.actions.eventsListener(events.ON_ITEM_ACTION_TRIGGERED, this.props);
+      //this.props.actions.onItemClicked(this.props.idx);
       this.props.actions.setCurrentHover(-1);
     } else {
       this.props.actions.setCurrentHover(this.props.idx);
@@ -305,7 +296,8 @@ class ItemView extends React.Component {
       console.warn('Blocked fullscreen!', e);
       return;
     } else if (this.props.styleParams.fullscreen) {
-      this.props.actions.onItemClicked(this.props.idx);
+      this.props.actions.eventsListener(events.ON_ITEM_ACTION_TRIGGERED, this.props);
+      //this.props.actions.onItemClicked(this.props.idx);
     }
   }
 
@@ -482,6 +474,9 @@ class ItemView extends React.Component {
         isSmallItem={this.isSmallItem()}
         titlePlacement={this.props.styleParams.titlePlacement}
         shouldShowButton={shouldShowButton}
+        actions={{
+          eventsListener: this.props.actions.eventsListener,
+        }}
       />
     );
   }
@@ -519,6 +514,7 @@ class ItemView extends React.Component {
           showTooltip: this.props.actions.itemActions.showTooltip,
           hideTooltip: this.props.actions.itemActions.hideTooltip,
           itemActions: this.props.actions.itemActions,
+          eventsListener: this.props.actions.eventsListener,
         }}
       />
     );

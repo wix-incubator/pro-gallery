@@ -5,12 +5,12 @@ import GalleryEmpty from './galleryEmpty.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
-import { logger } from '@wix/photography-client-lib/dist/src/utils/biLogger';
 import { isGalleryInViewport } from './galleryHelpers.js';
 // eslint-disable-next-line import/no-unresolved
 import playSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/Play.svg';
 // eslint-disable-next-line import/no-unresolved
 import pauseSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/pause.svg';
+import { events } from '../../utils/consts';
 
 utils.fixViewport('Gallery');
 
@@ -152,7 +152,11 @@ class SlideshowView extends React.Component {
   onCurrentItemChanged() {
     if (this.lastCurrentItem !== this.state.currentIdx) {
       this.lastCurrentItem = this.state.currentIdx;
-      this.props.actions.onCurrentItemChanged(this.state.currentIdx);
+      //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
+      this.props.actions.eventsListener(
+        events.ON_CURRENT_ITEM_CHANGED,
+        this.props.galleryStructure.galleryItems[this.state.currentIdx],
+      );
     }
   }
   stopAutoSlideshow() {
@@ -192,16 +196,7 @@ class SlideshowView extends React.Component {
   scrollToThumbnail(itemIdx, scrollDuration = 400) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
-    if (utils.isOOI()) {
-      logger.trackBi(logger.biEvents.item_clicked, {
-        action: 'thumbnail',
-        media: 'undefined',
-        layout: utils.getGalleryLayoutName(
-          this.props.styleParams.galleryLayout,
-        ),
-        gallery_id: this.props.galleryId,
-      });
-    }
+    this.props.actions.eventsListener(events.ON_THUMBNAIL_CLICKED, this.props);
 
     this.isAutoScrolling = true;
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
@@ -684,9 +679,8 @@ class SlideshowView extends React.Component {
       galleryId: this.props.galleryId,
       isInSEO: this.props.isInSEO,
       actions: {
-        onItemClicked: this.props.actions.onItemClicked,
+        eventsListener: this.props.actions.eventsListener,
         setCurrentHover: this.props.actions.setCurrentHover,
-        onItemCreated: this.props.actions.onItemCreated,
         itemActions: this.props.actions.itemActions,
       },
     };
