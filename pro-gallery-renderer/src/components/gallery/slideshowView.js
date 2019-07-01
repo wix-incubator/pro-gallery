@@ -20,7 +20,9 @@ class SlideshowView extends React.Component {
 
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
-    this.onAutoSlideShowButtonClick = this.onAutoSlideShowButtonClick.bind(this);
+    this.onAutoSlideShowButtonClick = this.onAutoSlideShowButtonClick.bind(
+      this,
+    );
     this.startAutoSlideshowIfNeeded = this.startAutoSlideshowIfNeeded.bind(
       this,
     );
@@ -43,6 +45,7 @@ class SlideshowView extends React.Component {
     };
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
+    this.shouldCreateSlideShowNumbers = false;
   }
 
   isFirstItem() {
@@ -758,7 +761,7 @@ class SlideshowView extends React.Component {
         {this.createNavArrows()}
         {this.createLayout()}
         {this.createAutoSlideShowPlayButton()}
-        {this.createSlideShowCounter()}
+        {this.createSlideShowNumbers()}
       </div>
     );
   }
@@ -787,12 +790,14 @@ class SlideshowView extends React.Component {
     if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
       imageMargin += 50;
     }
-
+    const rightMargin = this.shouldCreateSlideShowNumbers
+      ? imageMargin + 50
+      : imageMargin;
     this.props.styleParams.galleryTextAlign === 'right'
-      ? Object.assign(containerStyle, { left: `${imageMargin + 50}px` })
+      ? Object.assign(containerStyle, { left: `${rightMargin}px` })
       : Object.assign(containerStyle, {
           right: `${imageMargin}px`,
-          width: '60px',
+          width: this.shouldCreateSlideShowNumbers ? '60px' : '10px',
         });
     const svgIcon = this.state.shouldStopAutoSlideShow ? (
       <div>{playSvg()}</div>
@@ -813,8 +818,8 @@ class SlideshowView extends React.Component {
     );
   }
 
-  createSlideShowCounter() {
-    if (!this.shouldCreateSlideShowPlayButton) {
+  createSlideShowNumbers() {
+    if (!this.shouldCreateSlideShowNumbers) {
       return '';
     }
     const containerStyle = {
@@ -919,11 +924,16 @@ class SlideshowView extends React.Component {
         this.startAutoSlideshowIfNeeded(props.styleParams);
       }
     }
-    this.shouldCreateSlideShowPlayButton =
+    const isAutoSlideShow =
       props.styleParams.galleryLayout === 5 &&
       props.styleParams.isSlideshow &&
-      props.styleParams.isAutoSlideshow &&
-      props.styleParams.playButtonForAutoSlideShow;
+      props.styleParams.isAutoSlideshow;
+
+    this.shouldCreateSlideShowPlayButton =
+      isAutoSlideShow && props.styleParams.playButtonForAutoSlideShow;
+
+    this.shouldCreateSlideShowNumbers =
+      isAutoSlideShow && props.styleParams.allowSlideshowNumbers;
   }
 
   createEmptyState() {
