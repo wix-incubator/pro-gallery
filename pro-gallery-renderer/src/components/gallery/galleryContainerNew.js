@@ -34,6 +34,7 @@ export class GalleryContainer extends React.Component {
     this._scrollingElement = this.getScrollingElement();
     this.setCurrentHover = this.setCurrentHover.bind(this);
     this.duplicateGalleryItems = this.duplicateGalleryItems.bind(this);
+    this.eventsListener = this.eventsListener.bind(this);
 
     const initialState = {
       pgScroll: 0,
@@ -333,7 +334,7 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
-    this.props.eventsListener(events.ON_GALLERY_CHANGE, onGalleryChangeData);
+    this.eventsListener(events.ON_GALLERY_CHANGE, onGalleryChangeData);
 
     if (needToHandleShowMoreClick) {
       this.setState({ needToHandleShowMoreClick: false });
@@ -882,6 +883,12 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  eventsListener(eventName, eventData) {
+    if (typeof this.props.eventsListener === 'function') {
+      this.props.eventsListener(eventName, eventData);
+    }
+  }
+
   getMoreItemsIfNeeded(scrollPos) {
     if (
       this.galleryStructure &&
@@ -907,10 +914,7 @@ export class GalleryContainer extends React.Component {
         //only when the last item turns visible we should try getting more items
         if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
-          this.props.eventsListener(
-            events.NEED_MORE_ITEMS,
-            this.state.items.length,
-          );
+          this.eventsListener(events.NEED_MORE_ITEMS, this.state.items.length);
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
             this.gettingMoreItems = false;
@@ -998,7 +1002,7 @@ export class GalleryContainer extends React.Component {
           actions={_.merge(this.props.actions, {
             findNeighborItem,
             toggleLoadMoreItems: this.toggleLoadMoreItems,
-            eventsListener: this.props.eventsListener,
+            eventsListener: this.eventsListener,
             setWixHeight: _.noop,
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
