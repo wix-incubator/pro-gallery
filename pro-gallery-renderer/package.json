@@ -1,4 +1,5 @@
 {
+  "publishScoped": false,
   "private": false,
   "name": "@wix/pro-gallery-renderer",
   "version": "1.0.0",
