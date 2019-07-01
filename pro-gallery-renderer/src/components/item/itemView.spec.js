@@ -11,6 +11,7 @@ import React from 'react';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import { testImages } from '../../../__testsDrivers__/images-mock';
 import ItemView from './itemView';
+import { events } from '../../utils/consts';
 
 describe('Item View', () => {
   let driver;
@@ -185,9 +186,9 @@ describe('Item View', () => {
         styleParams: { itemClick: 'link', videoPlay: 'onClick' },
       });
       driver.mount(ItemView, sampleItemViewProps);
-      const stub = sinon.stub(driver.get.props().actions, 'onItemClicked');
+      const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-container').simulate('click');
-      expect(stub.called).to.be.true;
+      expect(stub.calledWith(events.ON_ITEM_CLICKED)).to.be.true;
       stub.restore();
     });
     it('should onItemClicked for items with expand', () => {
@@ -197,9 +198,9 @@ describe('Item View', () => {
         styleParams: { itemClick: 'expand', videoPlay: 'onClick' },
       });
       driver.mount(ItemView, sampleItemViewProps);
-      const stub = sinon.stub(driver.get.props().actions, 'onItemClicked');
+      const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-container').simulate('click');
-      expect(stub.called).to.be.true;
+      expect(stub.calledWith(events.ON_ITEM_ACTION_TRIGGERED)).to.be.true;
       stub.restore();
     });
     it.skip('should toggle playVideo/pauseVideo for video items that are not expand and the video is styled to play onclick/the device is mobile/', () => {
