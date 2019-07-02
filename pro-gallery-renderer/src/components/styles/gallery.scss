@@ -1433,7 +1433,7 @@
         .gallery-column {
           overflow-x: scroll;
 
-          &:not([data-scrolling="true"]) { //do not apply during auto scroll
+          &.scroll-snap:not([data-scrolling="true"]) { //do not apply during auto scroll
             scroll-snap-type: x mandatory;
           }
         }
