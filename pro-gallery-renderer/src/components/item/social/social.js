@@ -127,7 +127,10 @@ export default class Social extends React.Component {
           e.stopPropagation();
           e.preventDefault();
           window.open(downloadLink, '_blank');
-          this.props.actions.eventsListener(events.ON_DOWNLOAD_BUTTON_CLICKED);
+          this.props.actions.eventsListener(
+            events.ON_DOWNLOAD_BUTTON_CLICKED,
+            this.props,
+          );
         },
         onKeyDown: e => this.onDownloadKeyPress(e, downloadLink),
       };
@@ -172,7 +175,10 @@ export default class Social extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         window.open(downloadLink, '_blank');
-        this.props.actions.eventsListener(events.ON_DOWNLOAD_BUTTON_CLICKED);
+        this.props.actions.eventsListener(
+          events.ON_DOWNLOAD_BUTTON_CLICKED,
+          this.props,
+        );
         return false;
     }
   }

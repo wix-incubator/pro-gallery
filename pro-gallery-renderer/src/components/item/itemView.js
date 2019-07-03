@@ -29,7 +29,7 @@ class ItemView extends React.Component {
   constructor(props) {
     performanceUtils.itemLoadStart();
     super(props);
-    this.props.actions.eventsListener(events.ON_ITEM_CREATED);
+    this.props.actions.eventsListener(events.ON_ITEM_CREATED, this.props);
 
     this.init();
 

@@ -22,7 +22,10 @@ export default class CustomButton extends React.Component {
           <button
             data-hook="custom-button-button"
             onClick={() =>
-              this.props.actions.eventsListener(events.ON_BUY_NOW_CLICKED)
+              this.props.actions.eventsListener(
+                events.ON_BUY_NOW_CLICKED,
+                this.props,
+              )
             }
             tabIndex={-1}
           >
