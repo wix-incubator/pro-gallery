@@ -1,9 +1,6 @@
 import React from 'react';
-import utils from '../../utils/index.js';
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
-import experiments, {
-  experimentsWrapper,
-} from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
+import LOADING_MODE from '../../utils/constants/loadingMode';
+import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 export default class ImageItem extends React.Component {
   componentDidMount() {
@@ -51,7 +48,7 @@ export default class ImageItem extends React.Component {
       styleParams.cubeImages && styleParams.cubeType === 'fit'
         ? 'grid-fit'
         : '',
-      styleParams.imageLoadingMode === Consts.loadingMode.COLOR
+      styleParams.imageLoadingMode === LOADING_MODE.COLOR
         ? 'load-with-color'
         : '',
     ].join(' ');

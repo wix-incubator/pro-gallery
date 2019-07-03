@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import utils from '../../utils';
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import PLACEMENTS from '../../utils/constants/placements';
+import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';
+import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
+import window from '../../utils/window/windowWrapper';
 import { layoutsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/layouts';
 import { spacingVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/spacing';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import designConsts from '../../constants/designConsts';
 
 const emptyLayout = {
@@ -639,17 +641,17 @@ function processLayouts(styles) {
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
-    processedStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
-  if (processedStyles.titlePlacement === Consts.placements.SHOW_ON_HOVER) {
-    if (processedStyles.hoveringBehaviour === Consts.infoBehaviourOnHover.DISAPPEARS) {
-      processedStyles.titlePlacement = Consts.placements.SHOW_NOT_ON_HOVER;
-    } else if (processedStyles.hoveringBehaviour === Consts.infoBehaviourOnHover.NO_CHANGE) {
-      processedStyles.titlePlacement = Consts.placements.SHOW_ALWAYS;
+  if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) {
+    if (processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS) {
+      processedStyles.titlePlacement = PLACEMENTS.SHOW_NOT_ON_HOVER;
+    } else if (processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE) {
+      processedStyles.titlePlacement = PLACEMENTS.SHOW_ALWAYS;
     } else {
-      //processedStyles.hoveringBehaviour === Consts.infoBehaviourOnHover.APPEARS
-      processedStyles.titlePlacement = Consts.placements.SHOW_ON_HOVER;
+      //processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.APPEARS
+      processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
     }
   }
 
@@ -679,7 +681,7 @@ function processLayouts(styles) {
   if (processedStyles.oneRow) {
     //if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
-    processedStyles.scrollAnimation = Consts.scrollAnimations.NO_EFFECT;
+    processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
   }
   if (processedStyles.imageMargin > 0) {
     if (utils.isMobile()) {
@@ -797,7 +799,7 @@ function processLayouts(styles) {
 
   if (processedStyles.forceMobileCustomButton) {
     processedStyles.gallerySize = Math.round(30 * 8.5 + 150);
-    processedStyles.titlePlacement = Consts.placements.SHOW_BELOW;
+    processedStyles.titlePlacement = PLACEMENTS.SHOW_BELOW;
     processedStyles.galleryLayout = 2;
     processedStyles.fixedColumns = 1;
     processedStyles.numberOfImagesPerRow = 1;

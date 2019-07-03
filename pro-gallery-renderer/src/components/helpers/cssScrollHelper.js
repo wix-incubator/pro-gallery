@@ -1,6 +1,7 @@
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import LOADING_MODE from '../../utils/constants/loadingMode';
+import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
 import utils from '../../utils/index.js';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 class CssScrollHelper {
@@ -247,7 +248,7 @@ class CssScrollHelper {
       //add the blurry image
       if (
         !utils.deviceHasMemoryIssues() &&
-        styleParams.imageLoadingMode !== Consts.loadingMode.COLOR &&
+        styleParams.imageLoadingMode !== LOADING_MODE.COLOR &&
         (!item.isTransparent || window.isSSR) &&
         !item.isDimensionless
       ) {
@@ -293,7 +294,7 @@ class CssScrollHelper {
 
     if (
       !scrollAnimation ||
-      scrollAnimation === Consts.scrollAnimations.NO_EFFECT
+      scrollAnimation === SCROLL_ANIMATIONS.NO_EFFECT
     ) {
       return '';
     }
@@ -306,18 +307,18 @@ class CssScrollHelper {
     let scrollAnimationCss = '';
 
     //notice: these animations must have the blurry image
-    // if (scrollAnimation === Consts.scrollAnimations.MAIN_COLOR) {
+    // if (scrollAnimation === SCROLL_ANIMATIONS.MAIN_COLOR) {
     //   scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
     //   scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' canvas') + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
     //   scrollAnimationCss += createScrollSelectors(animationActivePadding, ' canvas') + `{filter: opacity(1) !important;}`;
     // }
 
-    // if (scrollAnimation === Consts.scrollAnimations.BLUR) {
+    // if (scrollAnimation === SCROLL_ANIMATIONS.BLUR) {
     //   scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' canvas') + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
     //   scrollAnimationCss += createScrollSelectors(animationActivePadding, ' canvas') + `{filter: opacity(1) !important;}`;
     // }
 
-    if (scrollAnimation === Consts.scrollAnimations.FADE_IN) {
+    if (scrollAnimation === SCROLL_ANIMATIONS.FADE_IN) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -331,7 +332,7 @@ class CssScrollHelper {
         ) + `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.GRAYSCALE) {
+    if (scrollAnimation === SCROLL_ANIMATIONS.GRAYSCALE) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -346,7 +347,7 @@ class CssScrollHelper {
         ) + `{filter: grayscale(0) !important;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.SLIDE_UP) {
+    if (scrollAnimation === SCROLL_ANIMATIONS.SLIDE_UP) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: translateY(100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -355,7 +356,7 @@ class CssScrollHelper {
         `{transform: translateY(0) !important;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.EXPAND) {
+    if (scrollAnimation === SCROLL_ANIMATIONS.EXPAND) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -364,7 +365,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.SHRINK) {
+    if (scrollAnimation === SCROLL_ANIMATIONS.SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -373,7 +374,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.ZOOM_OUT) {
+    if (scrollAnimation === SCROLL_ANIMATIONS.ZOOM_OUT) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -387,7 +388,7 @@ class CssScrollHelper {
         ) + `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === Consts.scrollAnimations.ONE_COLOR) {
+    if (scrollAnimation === SCROLL_ANIMATIONS.ONE_COLOR) {
       const oneColorAnimationColor =
         styleParams.oneColorAnimationColor &&
         styleParams.oneColorAnimationColor.value

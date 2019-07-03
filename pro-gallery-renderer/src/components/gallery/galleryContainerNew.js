@@ -10,7 +10,7 @@ import { ItemsHelper } from '../helpers/itemsHelper';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import { scrollToItemImp } from '../helpers/scrollHelper';
 import { pauseVideo } from '../../actions/itemViewActions.js';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 import CssScrollIndicator from './galleryCssScrollIndicator';
 import { Layouter } from 'pro-gallery-layouter';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
@@ -18,7 +18,7 @@ import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import _ from 'lodash';
 import utils from '../../utils';
-import { events } from '../../utils/consts';
+import EVENTS from '../../utils/constants/events';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -334,7 +334,7 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
-    this.eventsListener(events.ON_GALLERY_CHANGE, onGalleryChangeData);
+    this.eventsListener(EVENTS.ON_GALLERY_CHANGE, onGalleryChangeData);
 
     if (needToHandleShowMoreClick) {
       this.setState({ needToHandleShowMoreClick: false });
@@ -914,7 +914,7 @@ export class GalleryContainer extends React.Component {
         //only when the last item turns visible we should try getting more items
         if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
-          this.eventsListener(events.NEED_MORE_ITEMS, this.state.items.length);
+          this.eventsListener(EVENTS.NEED_MORE_ITEMS, this.state.items.length);
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
             this.gettingMoreItems = false;

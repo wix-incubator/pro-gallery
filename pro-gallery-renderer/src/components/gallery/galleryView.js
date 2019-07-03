@@ -1,10 +1,9 @@
 import React from 'react';
-import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage';
 import _ from 'lodash';
 import GalleryEmpty from './galleryEmpty';
 import utils from '../../utils/index.js';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
 
 utils.fixViewport('Gallery');

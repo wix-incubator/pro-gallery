@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import utils from '../../utils';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 
 export function scrollToItemImp(scrollParams) {
   let pos;

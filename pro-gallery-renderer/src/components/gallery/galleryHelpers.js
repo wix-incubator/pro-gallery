@@ -1,4 +1,4 @@
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 
 export function isGalleryInViewport(container) {
   const haveAllVariablesForViewPortCalc = !!(

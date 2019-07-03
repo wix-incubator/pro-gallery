@@ -2,9 +2,9 @@ import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 import _ from 'lodash';
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
-import { events } from '../../../utils/consts';
+import window from '../../../utils/window/windowWrapper';
+import EVENTS from '../../../utils/constants/events';
+import PLACEMENTS from '../../../utils/constants/placements';
 
 export default class Social extends React.Component {
   constructor(props) {
@@ -128,7 +128,7 @@ export default class Social extends React.Component {
           e.preventDefault();
           window.open(downloadLink, '_blank');
           this.props.actions.eventsListener(
-            events.ON_DOWNLOAD_BUTTON_CLICKED,
+            EVENTS.ON_DOWNLOAD_BUTTON_CLICKED,
             this.props,
           );
         },
@@ -176,7 +176,7 @@ export default class Social extends React.Component {
         e.preventDefault();
         window.open(downloadLink, '_blank');
         this.props.actions.eventsListener(
-          events.ON_DOWNLOAD_BUTTON_CLICKED,
+          EVENTS.ON_DOWNLOAD_BUTTON_CLICKED,
           this.props,
         );
         return false;
@@ -213,8 +213,8 @@ export default class Social extends React.Component {
       styleParams.loveButton ||
       styleParams.allowDownload;
     const textPlacementAboveOrBelow =
-      styleParams.titlePlacement === Consts.placements.SHOW_BELOW ||
-      styleParams.titlePlacement === Consts.placements.SHOW_ABOVE;
+      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
 
     const classes = [
       [showShare, 'hidden'],

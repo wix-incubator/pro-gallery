@@ -6,7 +6,7 @@ import {
 } from '../../actions/galleryActions.js';
 import { playVideo, pauseVideo } from '../../actions/itemViewActions.js';
 import { connect } from 'react-redux';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 
 export const CommonItemContainerNotConnected = ComposedComponent => {
   class InnerComponent extends React.Component {

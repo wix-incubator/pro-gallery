@@ -1,7 +1,7 @@
 import React from 'react';
 import utils from '../../../utils';
+import window from '../../../utils/window/windowWrapper';
 import _ from 'lodash';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class LoveButton extends React.Component {
   constructor(props) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import utils from '../../../utils';
+import window from '../../../utils/window/windowWrapper';
 import Player from '@vimeo/player';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class VideoItem extends React.Component {
   constructor(props) {

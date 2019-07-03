@@ -4,13 +4,13 @@ import GroupView from '../group/groupView.js';
 import GalleryEmpty from './galleryEmpty.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
 // eslint-disable-next-line import/no-unresolved
 import playSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/Play.svg';
 // eslint-disable-next-line import/no-unresolved
 import pauseSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/pause.svg';
-import { events } from '../../utils/consts';
+import EVENTS from '../../utils/constants/events';
 
 utils.fixViewport('Gallery');
 
@@ -157,7 +157,7 @@ class SlideshowView extends React.Component {
       this.lastCurrentItem = this.state.currentIdx;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
       this.props.actions.eventsListener(
-        events.ON_CURRENT_ITEM_CHANGED,
+        EVENTS.ON_CURRENT_ITEM_CHANGED,
         this.props.galleryStructure.galleryItems[this.state.currentIdx],
       );
     }
@@ -199,7 +199,7 @@ class SlideshowView extends React.Component {
   scrollToThumbnail(itemIdx, scrollDuration = 400) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
-    this.props.actions.eventsListener(events.ON_THUMBNAIL_CLICKED, this.props);
+    this.props.actions.eventsListener(EVENTS.ON_THUMBNAIL_CLICKED, this.props);
 
     this.isAutoScrolling = true;
     this.startAutoSlideshowIfNeeded(this.props.styleParams);

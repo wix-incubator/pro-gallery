@@ -10,7 +10,7 @@ import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import videoActionTypes from '../../constants/videoActionTypes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import { VideoQueue } from '../item/videos/video-queue';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 export default class ProGallery extends React.Component {

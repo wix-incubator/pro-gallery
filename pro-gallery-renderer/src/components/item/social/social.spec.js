@@ -3,16 +3,14 @@
 import ItemView from '../itemView.js';
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import Social from './social.js';
-import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { use, spy, expect, chai } from 'chai';
+import { spy, expect } from 'chai';
 import sinon from 'sinon';
-import chaiEnzyme from 'chai-enzyme';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
+import window from '../../../utils/window/windowWrapper';
 import LoveButton from '../loveButton/loveButton.js';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 describe('Social:', () => {
   let driver;

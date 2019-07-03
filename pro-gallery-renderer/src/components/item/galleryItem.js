@@ -1,10 +1,10 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
+import window from '../../utils/window/windowWrapper';
 import { Item } from 'pro-gallery-layouter';
 import _ from 'lodash';
 import watermarkApi from '@wix/photography-client-lib/dist/src/store/watermarkApi';
 import * as imageSdk from 'image-client-api/dist/imageClientSDK';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 
 class GalleryItem {
   constructor(config) {

@@ -8,13 +8,12 @@ import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
 import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
 import * as performanceUtils from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import * as actions from '../../actions/galleryActions.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
+import window from '../../utils/window/windowWrapper';
 import _ from 'lodash';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
 import {
   setHorizontalVisibility,
   setVerticalVisibility,
@@ -23,13 +22,16 @@ import {
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
 import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
-import { events } from '../../utils/consts';
+import EVENTS from '../../utils/constants/events';
+import PLACEMENTS from '../../utils/constants/placements';
+import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
+import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
 
 class ItemView extends React.Component {
   constructor(props) {
     performanceUtils.itemLoadStart();
     super(props);
-    this.props.actions.eventsListener(events.ON_ITEM_CREATED, this.props);
+    this.props.actions.eventsListener(EVENTS.ON_ITEM_CREATED, this.props);
 
     this.init();
 
@@ -226,12 +228,15 @@ class ItemView extends React.Component {
           : this.props.playVideo(this.props.idx);
       }
     }
-    this.props.actions.eventsListener(events.ON_ITEM_ACTION_TRIGGERED, this.props);
+    this.props.actions.eventsListener(
+      EVENTS.ON_ITEM_ACTION_TRIGGERED,
+      this.props,
+    );
     //this.props.actions.onItemClicked(this.props.idx);
   }
 
   onItemClick(e) {
-    this.props.actions.eventsListener(events.ON_ITEM_CLICKED, this.props);
+    this.props.actions.eventsListener(EVENTS.ON_ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
       return _.noop;
     }
@@ -275,7 +280,10 @@ class ItemView extends React.Component {
 
   handleHoverClickOnMobile(itemClick) {
     if (this.isClickOnCurrentHoveredItem()) {
-      this.props.actions.eventsListener(events.ON_ITEM_ACTION_TRIGGERED, this.props);
+      this.props.actions.eventsListener(
+        EVENTS.ON_ITEM_ACTION_TRIGGERED,
+        this.props,
+      );
       //this.props.actions.onItemClicked(this.props.idx);
       this.props.actions.setCurrentHover(-1);
     } else {
@@ -296,7 +304,10 @@ class ItemView extends React.Component {
       console.warn('Blocked fullscreen!', e);
       return;
     } else if (this.props.styleParams.fullscreen) {
-      this.props.actions.eventsListener(events.ON_ITEM_ACTION_TRIGGERED, this.props);
+      this.props.actions.eventsListener(
+        EVENTS.ON_ITEM_ACTION_TRIGGERED,
+        this.props,
+      );
       //this.props.actions.onItemClicked(this.props.idx);
     }
   }
@@ -365,9 +376,9 @@ class ItemView extends React.Component {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        (titlePlacement === Consts.placements.SHOW_ON_HOVER ||
-          titlePlacement === Consts.placements.SHOW_NOT_ON_HOVER ||
-          titlePlacement === Consts.placements.SHOW_ALWAYS) &&
+        (titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
+          titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
+          titlePlacement === PLACEMENTS.SHOW_ALWAYS) &&
         isNewMobileSettings
       ) {
         return true;
@@ -657,13 +668,12 @@ class ItemView extends React.Component {
   getItemInner() {
     const { styleParams, type } = this.props;
     const visible = this.getItemVisibility();
-    const { placements } = Consts;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
     let itemTexts =
-      styleParams.titlePlacement === placements.SHOW_ON_HOVER ||
-      styleParams.titlePlacement === placements.SHOW_NOT_ON_HOVER ||
-      styleParams.titlePlacement === placements.SHOW_ALWAYS
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
         ? this.getItemTextsDetails()
         : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
     const social = this.getSocial();
@@ -732,7 +742,7 @@ class ItemView extends React.Component {
     const { styleParams } = this.props;
 
     if (
-      styleParams.titlePlacement === Consts.placements.SHOW_BELOW &&
+      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW &&
       (styleParams.allowTitle ||
         styleParams.allowDescription ||
         styleParams.useCustomButton)
@@ -747,7 +757,7 @@ class ItemView extends React.Component {
     const { styleParams } = this.props;
 
     if (
-      styleParams.titlePlacement === Consts.placements.SHOW_ABOVE &&
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE &&
       (styleParams.allowTitle ||
         styleParams.allowDescription ||
         styleParams.useCustomButton)
@@ -805,7 +815,7 @@ class ItemView extends React.Component {
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS
+      this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
     );
   }
 
@@ -919,42 +929,34 @@ class ItemView extends React.Component {
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
-        styleParams.titlePlacement === Consts.placements.SHOW_NOT_ON_HOVER,
+        styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER,
 
       //overlay animations
       'hover-animation-fade-in':
-        isNOTslideshow && overlayAnimation === Consts.overlayAnimations.FADE_IN,
+        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.FADE_IN,
       'hover-animation-expand':
-        isNOTslideshow && overlayAnimation === Consts.overlayAnimations.EXPAND,
+        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.EXPAND,
       'hover-animation-slide-up':
-        isNOTslideshow &&
-        overlayAnimation === Consts.overlayAnimations.SLIDE_UP,
+        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.SLIDE_UP,
       'hover-animation-slide-right':
-        isNOTslideshow &&
-        overlayAnimation === Consts.overlayAnimations.SLIDE_RIGHT,
+        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.SLIDE_RIGHT,
 
       //image hover animations
       'zoom-in-on-hover':
-        isNOTslideshow &&
-        imageHoverAnimation === Consts.imageHoverAnimations.ZOOM_IN,
+        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.ZOOM_IN,
       'blur-on-hover':
-        isNOTslideshow &&
-        imageHoverAnimation === Consts.imageHoverAnimations.BLUR,
+        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.BLUR,
       'grayscale-on-hover':
         isNOTslideshow &&
-        imageHoverAnimation === Consts.imageHoverAnimations.GRAYSCALE,
+        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.GRAYSCALE,
       'shrink-on-hover':
-        isNOTslideshow &&
-        imageHoverAnimation === Consts.imageHoverAnimations.SHRINK,
+        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.SHRINK,
       'invert-on-hover':
-        isNOTslideshow &&
-        imageHoverAnimation === Consts.imageHoverAnimations.INVERT,
+        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.INVERT,
       'color-in-on-hover':
-        isNOTslideshow &&
-        imageHoverAnimation === Consts.imageHoverAnimations.COLOR_IN,
+        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.COLOR_IN,
       'darkened-on-hover':
-        isNOTslideshow &&
-        imageHoverAnimation === Consts.imageHoverAnimations.DARKENED,
+        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
     });

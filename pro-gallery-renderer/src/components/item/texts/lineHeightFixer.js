@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import PLACEMENTS from '../../../utils/constants/placements';
+import window from '../../../utils/window/windowWrapper';
 import designConsts from '../../../constants/designConsts.js';
 
 const minWidthToShowContent = 135;
@@ -121,7 +121,7 @@ class LineHeightFixer {
         socialMarginBottom;
     } else if (textPlacementAboveOrBelow) {
       const className =
-        styleParams.titlePlacement === Consts.placements.SHOW_BELOW
+        styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW
           ? 'gallery-item-bottom-info'
           : 'gallery-item-top-info';
       const elements = itemContainer.getElementsByClassName(className);
@@ -146,8 +146,8 @@ class LineHeightFixer {
 
     let textPlacementAboveOrBelow = false;
     if (
-      styleParams.titlePlacement === Consts.placements.SHOW_BELOW ||
-      styleParams.titlePlacement === Consts.placements.SHOW_ABOVE
+      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE
     ) {
       textPlacementAboveOrBelow = true;
     }

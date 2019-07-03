@@ -3,7 +3,7 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import PLACEMENTS from '../../../utils/constants/placements';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
@@ -46,9 +46,9 @@ export default class Texts extends React.Component {
       !styleParams.isSlideshow &&
       !styleParams.isSlider &&
       !styleParams.hasThumbnails &&
-      (styleParams.titlePlacement === Consts.placements.SHOW_ON_HOVER ||
-        styleParams.titlePlacement === Consts.placements.SHOW_NOT_ON_HOVER ||
-        styleParams.titlePlacement === Consts.placements.SHOW_ALWAYS);
+      (styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
+        styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
+        styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS);
     const isCentered = style.justifyContent === 'center';
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,

@@ -1,7 +1,7 @@
 import React from 'react';
 import translationUtils from '@wix/photography-client-lib/dist/src/utils/translationUtils';
 import utils from '../../utils';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../utils/window/windowWrapper';
 
 class GalleryEmpty extends React.Component {
   componentWillMount() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomButtonIcon from './customButtonIcon.js';
 import utils from '../../../utils/index.js';
-import { events } from '../../../utils/consts';
+import EVENTS from '../../../utils/constants/events';
 
 export default class CustomButton extends React.Component {
   render() {
@@ -23,7 +23,7 @@ export default class CustomButton extends React.Component {
             data-hook="custom-button-button"
             onClick={() =>
               this.props.actions.eventsListener(
-                events.ON_BUY_NOW_CLICKED,
+                EVENTS.ON_BUY_NOW_CLICKED,
                 this.props,
               )
             }

@@ -1,4 +1,4 @@
-export const events = {
+const EVENTS = {
   ON_ITEM_CREATED: 'ON_ITEM_CREATED',
   ON_GALLERY_CHANGE: 'ON_GALLERY_CHANGE',
   ON_ITEM_ACTION_TRIGGERED: 'ON_ITEM_ACTION_TRIGGERED',
@@ -10,3 +10,5 @@ export const events = {
 
   NEED_MORE_ITEMS: 'NEED_MORE_ITEMS',
 };
+
+export default EVENTS;

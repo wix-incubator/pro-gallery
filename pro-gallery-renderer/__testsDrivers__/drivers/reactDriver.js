@@ -6,11 +6,11 @@ import { GalleryContainer } from '../../src/components/gallery/galleryContainerN
 import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
 import _ from 'lodash';
 import configureStore from 'redux-mock-store';
-import Consts from '@wix/photography-client-lib/dist/src/utils/consts';
+import PLACEMENTS from '../../src/utils/constants/placements';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import React from 'react';
 import utils from '../../src/utils';
-import window from '@wix/photography-client-lib/dist/src/sdk/windowWrapper';
+import window from '../../src/utils/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
@@ -84,7 +84,7 @@ class galleryDriver {
       thumbnailSize: utils.isMobile() ? 90 : 120,
       galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,
-      titlePlacement: Consts.placements.SHOW_ON_HOVER,
+      titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
       itemEnableShadow: false,
       itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
       itemShadowBlur: 20,
