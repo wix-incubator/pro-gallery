@@ -941,7 +941,8 @@ class ItemView extends React.Component {
 
       //image hover animations
       'zoom-in-on-hover':
-        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.ZOOM_IN,
+        isNOTslideshow &&
+        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.ZOOM_IN,
       'blur-on-hover':
         isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.BLUR,
       'grayscale-on-hover':
@@ -952,9 +953,11 @@ class ItemView extends React.Component {
       'invert-on-hover':
         isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.INVERT,
       'color-in-on-hover':
-        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.COLOR_IN,
+        isNOTslideshow &&
+        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.COLOR_IN,
       'darkened-on-hover':
-        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.DARKENED,
+        isNOTslideshow &&
+        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
     });
@@ -1089,13 +1092,14 @@ class ItemView extends React.Component {
       } catch (e) {}
     }
   }
-  normalizeWixParams(e) {
+  normalizeScrollParams(e) {
+    Object.assign(e, { ...e.currentTarget });
     const target = {
-      scrollY: e.scrollTop || e.y || 0,
-      scrollX: e.scrollLeft || e.x || 0,
-      offsetTop: e.y,
-      clientWidth: e.documentWidth,
-      clientHeight: e.documentHeight,
+      scrollY: e.scrollTop || e.y || e.scrollY || 0,
+      scrollX: e.scrollLeft || e.x || e.scrollX || 0,
+      offsetTop: e.y || 0,
+      clientWidth: e.documentWidth || e.innerWidth,
+      clientHeight: e.documentHeight || e.innerHeight,
     };
     return target;
   }
@@ -1105,7 +1109,7 @@ class ItemView extends React.Component {
       const scrollInterval = 500;
       //Vertical Scroll
       this.onVerticalScroll = _.throttle(e => {
-        const target = this.normalizeWixParams(e);
+        const target = this.normalizeScrollParams(e);
         this.setState(
           {
             scroll: Object.assign(this.state.scroll, {
