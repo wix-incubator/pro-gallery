@@ -51,50 +51,6 @@
     }
   }
 
-  .pro-gallery-empty {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-
-    .pro-gallery-empty-wrapper {
-      position: fixed;
-      top: calc(50% - 200px);
-      left: calc(50% - 200px);
-      height: 390px;
-      width: 350px;
-      padding-bottom: 66px;
-      box-sizing: border-box;
-
-      .pro-gallery-empty-image {
-        margin: 66px auto 35px;
-        width: 262px;
-        height: 132px;
-        background-image: url('../../assets/images/emptystate.svg');
-        background-size: contain;
-      }
-
-      .pro-gallery-empty-title {
-        color: $wix-blue-hover;
-        font-family: $font-normal;
-        font-size: 20px;
-        line-height: 25px;
-        text-align: center;
-        margin-bottom: 10px;
-      }
-
-      .pro-gallery-empty-info {
-        color: $wix-blue-hover;
-        font-family: $font-light;
-        font-size: 14px;
-        line-height: 20px;
-        text-align: center;
-      }
-    }
-  }
-
   .more-items-loader {
     display: block;
     width: 100%;
@@ -131,7 +87,7 @@
     font-size: 15px;
     align-items: top;
   }
-  
+
   .nav-arrows-container {
     left: auto;
     z-index: 1;

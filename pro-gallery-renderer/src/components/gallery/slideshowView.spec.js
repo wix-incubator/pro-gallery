@@ -50,18 +50,6 @@ describe('Slideshow View', () => {
       expect(driver.find.hook('gallery-column').length).to.equal(1);
     });
 
-    it('should create GalleryEmpty', () => {
-      const stub = sinon.stub(utils, 'isEditor').returns(true);
-      Object.assign(initialGalleryViewProps, {
-        items: [],
-        renderedItemsCount: -1,
-      });
-      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
-      driver.mount(SlideshowView, galleryViewProps);
-      expect(driver.find.selector('GalleryEmpty').length).to.equal(1);
-      stub.restore();
-    });
-
     it('should show next-arrow if more then one item, otherwise no next-arrow', () => {
       //expect images-moch.testImages to contain more than 1 image
       //=> more than 1 item
