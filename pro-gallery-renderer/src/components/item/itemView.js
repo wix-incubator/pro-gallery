@@ -8,7 +8,6 @@ import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
 import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
-import * as performanceUtils from '@wix/photography-client-lib/dist/src/utils/performanceUtils';
 import * as actions from '../../actions/galleryActions.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
@@ -29,7 +28,6 @@ import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
 
 class ItemView extends React.Component {
   constructor(props) {
-    performanceUtils.itemLoadStart();
     super(props);
     this.props.actions.eventsListener(EVENTS.ON_ITEM_CREATED, this.props);
 
@@ -148,7 +146,7 @@ class ItemView extends React.Component {
     });
   }
   setItemLoaded() {
-    performanceUtils.itemLoaded();
+    this.props.actions.eventsListener(EVENTS.ON_ITEM_LOADED, this.props);
     this.setState({
       failed: false,
       loaded: true,
