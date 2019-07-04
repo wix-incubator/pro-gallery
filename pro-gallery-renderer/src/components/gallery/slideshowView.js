@@ -1,6 +1,7 @@
 import utils from '../../utils';
 import React from 'react';
 import GroupView from '../group/groupView.js';
+import GalleryEmpty from './galleryEmpty.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import window from '../../utils/window/windowWrapper';
@@ -26,6 +27,7 @@ class SlideshowView extends React.Component {
       this,
     );
     this.handleKeypress = this.handleKeypress.bind(this);
+    this.createEmptyState = this.createEmptyState.bind(this);
     this._setCurrentItemByScroll = _.throttle(
       this.setCurrentItemByScroll,
       600,
@@ -754,6 +756,7 @@ class SlideshowView extends React.Component {
         }
         style={galleryStyle}
       >
+        {this.createEmptyState()}
         {this.createDebugMsg()}
         {this.createNavArrows()}
         {this.createLayout()}
@@ -931,6 +934,18 @@ class SlideshowView extends React.Component {
 
     this.shouldCreateSlideShowNumbers =
       isAutoSlideShow && props.styleParams.allowSlideshowNumbers;
+  }
+
+  createEmptyState() {
+    return !(this.props.renderedItemsCount > 0) && utils.isEditor() ? (
+      <GalleryEmpty
+        actions={{
+          setWixHeight: this.props.actions.setWixHeight,
+        }}
+      />
+    ) : (
+      ''
+    );
   }
 
   componentDidMount() {
