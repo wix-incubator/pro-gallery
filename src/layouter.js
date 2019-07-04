@@ -1,14 +1,12 @@
-import {utils} from './utils';
-import {Item} from './item.js';
-import {Group} from './group.js';
-import {Strip} from './strip.js';
-import {Column} from './column.js';
+import { utils } from './utils';
+import { Item } from './item.js';
+import { Group } from './group.js';
+import { Strip } from './strip.js';
+import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
 
 export default class Layouter {
-
   constructor(layoutParams) {
-
     this.ready = false;
     this.pointer = 0;
     this.layoutItems = [];
@@ -25,7 +23,10 @@ export default class Layouter {
   updateParams(layoutParams) {
     this.srcItems = layoutParams.items;
     this.styleParams = utils.convertStyleParams(layoutParams.styleParams);
-    this.container = utils.convertContainer(layoutParams.container, this.styleParams);
+    this.container = utils.convertContainer(
+      layoutParams.container,
+      this.styleParams,
+    );
 
     const options = layoutParams.options || {};
     this.useExistingLayout = !!options.useExistingLayout;
@@ -86,7 +87,7 @@ export default class Layouter {
 
   saveExistingLayout() {
     if (this.useLayoutStore) {
-      layoutsStore.layout = ({
+      layoutsStore.layout = {
         pointer: this.pointer,
         layoutItems: this.layoutItems,
         groups: this.groups,
@@ -98,22 +99,18 @@ export default class Layouter {
         gallerySize: this.gallerySize,
         galleryHeight: this.galleryHeight,
         columns: this.columns,
-      });
+      };
     }
   }
 
   prepareLayoutParams() {
-
     if (this.useExistingLayout && this.pointer > 0) {
-
       if (this.useLayoutStore) {
         Object.assign(this, layoutsStore.layout);
       } else {
-
         if (this.styleParams.isVertical) {
-
-      //---------------------| COLUMNS GALLERY |----------------------//
-      //remove items from the last 3 groups;
+          //---------------------| COLUMNS GALLERY |----------------------//
+          //remove items from the last 3 groups;
           const lastGroups = this.groups.slice(-3);
           lastGroups.forEach(group => {
             const column = this.columns[group.columnIdx];
@@ -128,10 +125,8 @@ export default class Layouter {
             });
             this.groupIdx--;
           });
-
         } else {
-
-        //---------------------| STRIPS GALLERY |----------------------//
+          //---------------------| STRIPS GALLERY |----------------------//
           //remove items from the last 2 strips;
           const lastStrips = this.strips.slice(-2);
           if (lastStrips) {
@@ -149,14 +144,17 @@ export default class Layouter {
                 });
               }
             });
-            this.galleryHeight = this.strips.reduce((totalHeight, strip) => totalHeight += strip.height, 0);
-          // this.strip = this.strips[this.strips.length - 1];
+            this.galleryHeight = this.strips.reduce(
+              (totalHeight, strip) => (totalHeight += strip.height),
+              0,
+            );
+            // this.strip = this.strips[this.strips.length - 1];
             this.strip = new Strip({
               idx: this.strips.length,
               container: this.container,
               groupsPerStrip: this.styleParams.groupsPerStrip,
               oneRow: this.styleParams.oneRow,
-              gallerySize: this.gallerySize
+              gallerySize: this.gallerySize,
             });
           }
         }
@@ -166,10 +164,7 @@ export default class Layouter {
 
       this.item = {};
       this.maxLoops = this.srcItems.length * 10;
-
-
     } else {
-
       this.pointer = 0;
       this.firstGroup = false;
       this.layoutItems = [];
@@ -177,7 +172,10 @@ export default class Layouter {
       this.strips = [];
 
       if (this.styleParams.forceFullHeight) {
-        this.gallerySize = (Math.sqrt(this.container.galleryHeight * this.container.galleryWidth / this.srcItems.length));
+        this.gallerySize = Math.sqrt(
+          (this.container.galleryHeight * this.container.galleryWidth) /
+            this.srcItems.length,
+        );
       } else {
         let gallerySizeVal;
         if (typeof this.styleParams.gallerySize === 'function') {
@@ -185,7 +183,11 @@ export default class Layouter {
         } else {
           gallerySizeVal = this.styleParams.gallerySize;
         }
-        this.gallerySize = Math.floor(gallerySizeVal) + Math.ceil(2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin));
+        this.gallerySize =
+          Math.floor(gallerySizeVal) +
+          Math.ceil(
+            2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin),
+          );
       }
 
       this.galleryWidth = Math.floor(this.container.galleryWidth);
@@ -195,7 +197,7 @@ export default class Layouter {
       this.item = {};
 
       this.groupItems = [];
-      this.group;
+      this.group = {};
       this.bounds = this.container.bounds || {};
 
       this.strip = new Strip({
@@ -203,28 +205,46 @@ export default class Layouter {
         container: this.container,
         groupsPerStrip: this.styleParams.groupsPerStrip,
         oneRow: this.styleParams.oneRow,
-        gallerySize: this.gallerySize
+        gallerySize: this.gallerySize,
       });
 
       this.galleryHeight = 0;
 
-      this.numOfCols = this.calcNumberOfColumns(this.galleryWidth, this.gallerySize);
-      this.gallerySize = this.styleParams.isVertical ? Math.floor(this.galleryWidth / this.numOfCols) : this.gallerySize;
+      this.numOfCols = this.calcNumberOfColumns(
+        this.galleryWidth,
+        this.gallerySize,
+      );
+      this.gallerySize = this.styleParams.isVertical
+        ? Math.floor(this.galleryWidth / this.numOfCols)
+        : this.gallerySize;
 
-      const {columnWidths, cubeRatio} = this.styleParams;
+      const { columnWidths, cubeRatio } = this.styleParams;
 
-      const columnWidthsArr = (columnWidths && columnWidths.length > 0) ? columnWidths.split(',') : false;
-      this.columns = Array(this.numOfCols).fill(0).map((column, idx) => new Column(idx, (columnWidthsArr ? columnWidthsArr[idx] : this.gallerySize), this.styleParams.cubeRatio));
-      this.columns[this.numOfCols - 1].width += (this.galleryWidth - this.columns.reduce((sum, col) => col.width + sum, 0)); //the last group compensates for half pixels in other groups
-      this.columns[this.numOfCols - 1].cubeRatio = cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
+      const columnWidthsArr =
+        columnWidths && columnWidths.length > 0
+          ? columnWidths.split(',')
+          : false;
+      this.columns = Array(this.numOfCols)
+        .fill(0)
+        .map(
+          (column, idx) =>
+            new Column(
+              idx,
+              columnWidthsArr ? columnWidthsArr[idx] : this.gallerySize,
+              this.styleParams.cubeRatio,
+            ),
+        );
+      this.columns[this.numOfCols - 1].width +=
+        this.galleryWidth -
+        this.columns.reduce((sum, col) => col.width + sum, 0); //the last group compensates for half pixels in other groups
+      this.columns[this.numOfCols - 1].cubeRatio =
+        cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
 
       this.maxLoops = this.srcItems.length * 10;
     }
-
   }
 
   createLayout(layoutParams) {
-
     if (typeof layoutParams !== 'undefined') {
       this.updateParams(layoutParams);
     }
@@ -236,7 +256,6 @@ export default class Layouter {
     this.prepareLayoutParams();
 
     while (this.srcItems[this.pointer]) {
-
       if (this.imagesLeft === 6) {
         this.saveExistingLayout();
       }
@@ -253,14 +272,17 @@ export default class Layouter {
         scrollTop: this.galleryHeight,
         dto: this.srcItems[this.pointer],
         container: this.container,
-        styleParams: this.styleParams
+        styleParams: this.styleParams,
       });
 
       this.layoutItems[this.pointer] = this.item;
 
       //push the image to a group - until its full
       this.groupItems.push(this.item);
-      if ((this.groupItems.length < this.maxGroupSize) && this.srcItems[this.pointer + 1]) {
+      if (
+        this.groupItems.length < this.maxGroupSize &&
+        this.srcItems[this.pointer + 1]
+      ) {
         this.pointer++;
         continue;
       }
@@ -268,31 +290,30 @@ export default class Layouter {
       this.group = new Group({
         idx: this.groupIdx,
         stripIdx: this.strip.idx,
-        inStripIdx: (this.strip.groups.length + 1),
+        inStripIdx: this.strip.groups.length + 1,
         top: this.galleryHeight,
         items: this.groupItems,
         isLastItems: this.isLastImages,
         gallerySize: this.gallerySize,
         showAllItems: this.showAllItems,
         container: this.container,
-        styleParams: this.styleParams
+        styleParams: this.styleParams,
       });
       this.groups[this.groupIdx] = this.group;
 
       //take back the pointer in case the group was created with less items
-      this.pointer += (this.group.realItems.length - this.groupItems.length);
+      this.pointer += this.group.realItems.length - this.groupItems.length;
 
       this.groupIdx++;
       this.groupItems = [];
 
       //resize and fit the group in the strip / column
       if (!this.styleParams.isVertical) {
-
         //---------------------| STRIPS GALLERY |----------------------//
 
         if (this.strip.isFull(this.group, this.isLastImage)) {
           //close the current strip
-          this.strip.resizeToHeight((this.galleryWidth / this.strip.ratio));
+          this.strip.resizeToHeight(this.galleryWidth / this.strip.ratio);
           this.strip.setWidth(this.galleryWidth);
           this.galleryHeight += this.strip.height;
           this.columns[0].addGroups(this.strip.groups);
@@ -304,11 +325,11 @@ export default class Layouter {
             container: this.container,
             groupsPerStrip: this.styleParams.groupsPerStrip,
             oneRow: this.styleParams.oneRow,
-            gallerySize: this.gallerySize
+            gallerySize: this.gallerySize,
           });
 
           //reset the group (this group will be rebuilt)
-          this.pointer -= (this.group.realItems.length - 1);
+          this.pointer -= this.group.realItems.length - 1;
           this.groupIdx--;
           continue;
         }
@@ -323,25 +344,28 @@ export default class Layouter {
 
         if (this.isLastImage && this.strip.hasGroups) {
           if (this.styleParams.oneRow) {
-            this.strip.height = this.container.galleryHeight + (this.styleParams.imageMargin - this.styleParams.galleryMargin);
+            this.strip.height =
+              this.container.galleryHeight +
+              (this.styleParams.imageMargin - this.styleParams.galleryMargin);
           } else if (this.gallerySize * 1.5 < this.strip.height) {
-              //stretching the this.strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
+            //stretching the this.strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
             this.strip.height = this.gallerySize;
             this.strip.markAsIncomplete();
           }
 
           this.strip.resizeToHeight(this.strip.height);
-          this.galleryHeight += (this.strip.height);
+          this.galleryHeight += this.strip.height;
           this.columns[0].addGroups(this.strip.groups);
           this.strips.push(this.strip);
         }
-
       } else {
-
         //---------------------| COLUMNS GALLERY |----------------------//
 
         //find the shortest column
-        const minCol = this.findShortestColumn(this.columns, this.groups.length - 1);
+        const minCol = this.findShortestColumn(
+          this.columns,
+          this.groups.length - 1,
+        );
 
         //resize the group and images
         this.group.fixItemsRatio(minCol.cubeRatio); //fix last column's items ratio (caused by stretching it to fill the screen)
@@ -365,7 +389,11 @@ export default class Layouter {
 
       //set the group visibility
 
-      if (!this.skipVisibilitiesCalc && !this.gotScrollEvent && this.pointer < 10) {
+      if (
+        !this.skipVisibilitiesCalc &&
+        !this.gotScrollEvent &&
+        this.pointer < 10
+      ) {
         //until the first scroll event, make sure the first 10 groups are displayed
         this.group.calcVisibilities(true);
       } else {
@@ -383,7 +411,7 @@ export default class Layouter {
       const stretchRatio = this.container.galleryHeight / this.galleryHeight;
       this.items.map(item => {
         item.cubeImages = true;
-        item.cubeRatio = item.ratio = (item.width / (item.height * stretchRatio));
+        item.cubeRatio = item.ratio = item.width / (item.height * stretchRatio);
         item.height *= stretchRatio;
         return item;
       });
@@ -398,7 +426,9 @@ export default class Layouter {
     //results
     this.lastGroup = this.group;
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
-    this.height = this.galleryHeight - (this.styleParams.imageMargin - this.styleParams.galleryMargin) * 2;
+    this.height =
+      this.galleryHeight -
+      (this.styleParams.imageMargin - this.styleParams.galleryMargin) * 2;
 
     if (!this.skipVisibilitiesCalc) {
       this.calcVisibilities(this.bounds);
@@ -407,7 +437,6 @@ export default class Layouter {
     this.ready = true;
 
     return this.scheme;
-
   }
 
   calcVisibilities(bounds) {
@@ -436,13 +465,11 @@ export default class Layouter {
   }
 
   findNeighborItem(itemIdx, dir) {
-
     const currentItem = this.layoutItems[itemIdx];
 
     let neighborItem;
 
     const findClosestItem = (currentItemX, currentItemY, condition) => {
-
       let minDistance = null;
       let minDistanceItem = {};
 
@@ -452,10 +479,15 @@ export default class Layouter {
 
       // each(slice(this.layoutItems, itemIdx - 50, itemIdx + 50), (item) => {
       this.layoutItems.forEach(item => {
-        itemY = item.offset.top + (item.height / 2);
-        itemX = item.offset.left + (item.width / 2);
-        distance = Math.sqrt(Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2));
-        if ((minDistance === null || (distance > 0 && distance < minDistance)) && condition(currentItemX, currentItemY, itemX, itemY)) {
+        itemY = item.offset.top + item.height / 2;
+        itemX = item.offset.left + item.width / 2;
+        distance = Math.sqrt(
+          Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2),
+        );
+        if (
+          (minDistance === null || (distance > 0 && distance < minDistance)) &&
+          condition(currentItemX, currentItemY, itemX, itemY)
+        ) {
           minDistance = distance;
           minDistanceItem = item;
         }
@@ -466,37 +498,36 @@ export default class Layouter {
     switch (dir) {
       case 'up':
         neighborItem = findClosestItem(
-          (currentItem.offset.left + (currentItem.width / 2)),
-          (currentItem.offset.top),
-          (curX, curY, itmX, itmY) => itmY < curY
+          currentItem.offset.left + currentItem.width / 2,
+          currentItem.offset.top,
+          (curX, curY, itmX, itmY) => itmY < curY,
         );
         break;
 
       case 'left':
         neighborItem = findClosestItem(
-          (currentItem.offset.left),
-          (currentItem.offset.top + (currentItem.height / 2)),
-          (curX, curY, itmX) => itmX < curX
+          currentItem.offset.left,
+          currentItem.offset.top + currentItem.height / 2,
+          (curX, curY, itmX) => itmX < curX,
         );
         break;
 
       case 'down':
         neighborItem = findClosestItem(
-          (currentItem.offset.left + (currentItem.width / 2)),
-          (currentItem.offset.bottom),
-          (curX, curY, itmX, itmY) => itmY > curY
+          currentItem.offset.left + currentItem.width / 2,
+          currentItem.offset.bottom,
+          (curX, curY, itmX, itmY) => itmY > curY,
         );
         break;
 
       default:
       case 'right':
         neighborItem = findClosestItem(
-          (currentItem.offset.right),
-          (currentItem.offset.top + (currentItem.height / 2)),
-          (curX, curY, itmX) => itmX > curX
+          currentItem.offset.right,
+          currentItem.offset.top + currentItem.height / 2,
+          (curX, curY, itmX) => itmX > curX,
         );
         break;
-
     }
 
     if (neighborItem.idx >= 0) {
@@ -505,19 +536,22 @@ export default class Layouter {
       console.warn('Could not find offset for itemIdx', itemIdx, dir);
       return itemIdx; //stay on the same item
     }
-
   }
 
   getMaxGroupSize() {
     let _maxGroupSize = 1;
     try {
-      const groupTypes = (typeof this.styleParams.groupTypes === 'string' && this.styleParams.groupTypes.length > 0) ? this.styleParams.groupTypes.split(',') : this.styleParams.groupTypes;
+      const groupTypes =
+        typeof this.styleParams.groupTypes === 'string' &&
+        this.styleParams.groupTypes.length > 0
+          ? this.styleParams.groupTypes.split(',')
+          : this.styleParams.groupTypes;
       _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
         return Math.max(curSize, parseInt(groupType));
       }, 1);
       _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
     } catch (e) {
-      console.error('couldn\'t calculate max group size - returing 3 (?)', e);
+      console.error("couldn't calculate max group size - returing 3 (?)", e);
       _maxGroupSize = 3;
     }
     return _maxGroupSize;

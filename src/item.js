@@ -1,7 +1,6 @@
-import {utils} from './utils';
+import { utils } from './utils';
 
 export class Item {
-
   /* @ngInject */
   constructor(config) {
     this.style = {};
@@ -22,7 +21,7 @@ export class Item {
     this.cubeType = 'fill';
 
     if (config.styleParams) {
-      const {styleParams} = config;
+      const { styleParams } = config;
       this.cubeType = styleParams.cubeType;
       this.cubeImages = styleParams.cubeImages;
       this._cubeRatio = styleParams.cubeRatio;
@@ -39,26 +38,25 @@ export class Item {
       top: 0,
       left: 0,
       right: 0,
-      bottom: 0
+      bottom: 0,
     };
     this._group = {};
     this.calcPinOffset = () => 0;
 
     this.resize(1);
-
   }
 
   fixMetadataVerticalVideoRatio(metadata) {
-    if (metadata.qualities && metadata.qualities[0]) { //fix incorrect width height for vertical videos
-      const {qualities} = metadata;
-      const {height, width} = qualities[qualities.length - 1];
+    if (metadata.qualities && metadata.qualities[0]) {
+      //fix incorrect width height for vertical videos
+      const { qualities } = metadata;
+      const { height, width } = qualities[qualities.length - 1];
       metadata.height = height;
       metadata.width = width;
     }
   }
 
   resize(scaleOrDimensions) {
-
     let scale = 1;
     if (scaleOrDimensions === false) {
       return;
@@ -83,7 +81,6 @@ export class Item {
   }
 
   pinToCorner(cornerName, pinAfter = false) {
-
     const isTop = cornerName.indexOf('top') >= 0;
     const isLeft = cornerName.indexOf('left') >= 0;
 
@@ -96,7 +93,7 @@ export class Item {
     this.isPinnedTop = isTop;
     this.isPinnedLeft = isLeft;
     this.pinAfter = pinAfter;
-    this.pinAfterType = isTop ? 'top' : (isLeft ? 'left' : '');
+    this.pinAfterType = isTop ? 'top' : isLeft ? 'left' : '';
     this.calcPinOffset = (groupSize, dir) => {
       if (!this.pinAfter) {
         return 0;
@@ -116,7 +113,6 @@ export class Item {
         return 0;
       }
     };
-
   }
 
   setPosition(position) {
@@ -124,7 +120,7 @@ export class Item {
   }
 
   getPosition(pos) {
-    return (parseInt(pos, 10) >= 0 ? pos : 'auto');
+    return parseInt(pos, 10) >= 0 ? pos : 'auto';
   }
 
   get top() {
@@ -157,8 +153,16 @@ export class Item {
 
   get offset() {
     const offset = {
-      top: this._groupOffset.top + (this.isPinnedTop ? this.calcPinOffset(this._group.height, 'top') : (this._group.height - this.outerHeight)) || 0,
-      left: this._groupOffset.left + (this.isPinnedLeft ? this.calcPinOffset(this._group.width, 'left') : (this._group.width - this.outerWidth)) || 0,
+      top:
+        this._groupOffset.top +
+          (this.isPinnedTop
+            ? this.calcPinOffset(this._group.height, 'top')
+            : this._group.height - this.outerHeight) || 0,
+      left:
+        this._groupOffset.left +
+          (this.isPinnedLeft
+            ? this.calcPinOffset(this._group.width, 'left')
+            : this._group.width - this.outerWidth) || 0,
     };
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
@@ -167,25 +171,35 @@ export class Item {
 
   get transform() {
     if (this.floatingImages > 0) {
-
       const m = this.imageMargin;
       const g = this.galleryMargin;
 
-      const spaceLeft = (this.offset.left > 0) ? m : g;
-      const spaceRight = (this.container.galleryWidth - this.offset.right > 2 * m) ? m : g;
-      const spaceUp = (this.offset.top > 0) ? m : g;
-      const spaceDown = (this.container.galleryHeight - this.offset.bottom > 2 * m) ? m : g;
+      const spaceLeft = this.offset.left > 0 ? m : g;
+      const spaceRight =
+        this.container.galleryWidth - this.offset.right > 2 * m ? m : g;
+      const spaceUp = this.offset.top > 0 ? m : g;
+      const spaceDown =
+        this.container.galleryHeight - this.offset.bottom > 2 * m ? m : g;
 
-      const horizontalShift = utils.hashToInt(this.hash + this.offset.right + 'x', -1 * spaceLeft, spaceRight) * this.floatingImages;
-      const verticalShift = utils.hashToInt(this.hash + this.offset.top + 'y', -1 * spaceUp, spaceDown) * this.floatingImages;
+      const horizontalShift =
+        utils.hashToInt(
+          this.hash + this.offset.right + 'x',
+          -1 * spaceLeft,
+          spaceRight,
+        ) * this.floatingImages;
+      const verticalShift =
+        utils.hashToInt(
+          this.hash + this.offset.top + 'y',
+          -1 * spaceUp,
+          spaceDown,
+        ) * this.floatingImages;
 
       return {
-        transform: `translate3d(${horizontalShift}px, ${verticalShift}px, 0)`
+        transform: `translate3d(${horizontalShift}px, ${verticalShift}px, 0)`,
       };
     } else {
       return {};
     }
-
   }
 
   get id() {
@@ -208,7 +222,7 @@ export class Item {
   }
 
   get outerWidth() {
-    return this.width + (2 * this.margins);
+    return this.width + 2 * this.margins;
   }
 
   get orgWidth() {
@@ -217,8 +231,8 @@ export class Item {
 
   get width() {
     let width;
-    if (this.cubeImages && (this.ratio >= this.cubeRatio)) {
-      width = this.style.cubedWidth || (this.orgHeight * this.cubeRatio);
+    if (this.cubeImages && this.ratio >= this.cubeRatio) {
+      width = this.style.cubedWidth || this.orgHeight * this.cubeRatio;
     } else {
       width = this.orgWidth;
     }
@@ -230,7 +244,7 @@ export class Item {
   }
 
   get outerHeight() {
-    return this.height + (2 * this.margins);
+    return this.height + 2 * this.margins;
   }
 
   get orgHeight() {
@@ -239,8 +253,8 @@ export class Item {
 
   get height() {
     let height;
-    if (this.cubeImages && (this.ratio < this.cubeRatio)) {
-      height = this.style.cubedHeight || (this.orgWidth / this.cubeRatio);
+    if (this.cubeImages && this.ratio < this.cubeRatio) {
+      height = this.style.cubedHeight || this.orgWidth / this.cubeRatio;
     } else {
       height = this.orgHeight;
     }
@@ -269,7 +283,7 @@ export class Item {
     let ratio;
     if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
       const cropRatiosArr = String(this.rotatingCropRatios).split(',');
-      ratio = cropRatiosArr[(this.idx) % cropRatiosArr.length];
+      ratio = cropRatiosArr[this.idx % cropRatiosArr.length];
     }
     if (!ratio && typeof this._cubeRatio === 'function') {
       ratio = this._cubeRatio();
@@ -292,13 +306,13 @@ export class Item {
             if (val.indexOf('%') > 0) {
               return {
                 type: '%',
-                val: (parseFloat(val.replace('%', ''))) / 100,
-                dim: (idx === 0) ? 'galleryWidth' : 'galleryHeight'
+                val: parseFloat(val.replace('%', '')) / 100,
+                dim: idx === 0 ? 'galleryWidth' : 'galleryHeight',
               };
             } else {
               return {
                 type: 'px',
-                val: parseInt(val.replace('px', ''))
+                val: parseInt(val.replace('px', '')),
               };
             }
           });
@@ -309,8 +323,10 @@ export class Item {
       if (this.dynamicCropRatios) {
         const dynamicCropRatio = this.dynamicCropRatios.map(r => {
           if (r.type === '%') {
-            const dim = this.container[r.dim] + (r.dim === 'galleryHeight' ? this.imageMargin : 0);
-            const relativeDim = r.val * dim - (2 * this.imageMargin);
+            const dim =
+              this.container[r.dim] +
+              (r.dim === 'galleryHeight' ? this.imageMargin : 0);
+            const relativeDim = r.val * dim - 2 * this.imageMargin;
             return relativeDim;
           } else {
             return r.val;
@@ -324,9 +340,9 @@ export class Item {
 
     if (this.smartCrop === true) {
       if (this.isPortrait) {
-        return Math.min(ratio, (1 / ratio));
+        return Math.min(ratio, 1 / ratio);
       } else {
-        return Math.max(ratio, (1 / ratio));
+        return Math.max(ratio, 1 / ratio);
       }
     } else {
       return ratio;
@@ -341,7 +357,7 @@ export class Item {
   }
 
   get orientation() {
-    return ((this.ratio < 0.999) ? 'portrait' : 'landscape'); //make sure that almost square images get the same treatment
+    return this.ratio < 0.999 ? 'portrait' : 'landscape'; //make sure that almost square images get the same treatment
   }
 
   get isPortrait() {
@@ -389,7 +405,7 @@ export class Item {
       orientation: this.orientation,
       isPortrait: this.isPortrait,
       isLandscape: this.isLandscape,
-      visibility: this.visibility
+      visibility: this.visibility,
     };
   }
 }

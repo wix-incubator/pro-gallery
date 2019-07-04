@@ -1,6 +1,4 @@
-
 export class Strip {
-
   constructor(config) {
     this.ratio = 0;
     this.groups = [];
@@ -55,25 +53,25 @@ export class Strip {
   }
 
   isFull(newGroup, isLastImage) {
-
     if (!this.hasGroups) {
       return false;
     }
 
-    const {groupsPerStrip, oneRow, gallerySize} = this;
+    const { groupsPerStrip, oneRow, gallerySize } = this;
 
     if (groupsPerStrip > 0) {
       return this.groups.length >= groupsPerStrip;
     }
 
-    const {galleryWidth} = this.container;
+    const { galleryWidth } = this.container;
 
     let isStripSmallEnough;
     if (oneRow) {
       isStripSmallEnough = false; //onerow layout is one long strip
     } else {
-      const withNewGroup = ((galleryWidth / (this.ratio + newGroup.ratio)) - gallerySize); //start a new strip BEFORE adding the current group
-      const withoutNewGroup = ((galleryWidth / (this.ratio)) - gallerySize); //start a new strip AFTER adding the current group
+      const withNewGroup =
+        galleryWidth / (this.ratio + newGroup.ratio) - gallerySize; //start a new strip BEFORE adding the current group
+      const withoutNewGroup = galleryWidth / this.ratio - gallerySize; //start a new strip AFTER adding the current group
       if (isNaN(withNewGroup) || isNaN(withoutNewGroup)) {
         isStripSmallEnough = false;
       } else if (withoutNewGroup < 0) {
@@ -83,22 +81,19 @@ export class Strip {
         //adding the new group makes is small enough
         // check if adding the new group makes the strip TOO small
         //so - without the new group, the strip is larger than the required size - but adding the new group might make it too small
-        isStripSmallEnough = (Math.abs(withoutNewGroup) < Math.abs(withNewGroup));
-
+        isStripSmallEnough = Math.abs(withoutNewGroup) < Math.abs(withNewGroup);
       } else {
         isStripSmallEnough = false;
       }
 
-
       if (isStripSmallEnough && isLastImage) {
         //if it is the last image - prefer adding it to the last strip rather putting it on a new strip
-        isStripSmallEnough = ((Number(Math.abs(withoutNewGroup))) < Math.abs(withNewGroup));
+        isStripSmallEnough =
+          Number(Math.abs(withoutNewGroup)) < Math.abs(withNewGroup);
       }
-
     }
 
     return isStripSmallEnough;
-
   }
 
   get hasGroups() {
@@ -116,7 +111,7 @@ export class Strip {
       width: this.width,
       height: this.height,
       ratio: this.ratio,
-      isFullWidth: this.isFullWidth
+      isFullWidth: this.isFullWidth,
     };
   }
 }

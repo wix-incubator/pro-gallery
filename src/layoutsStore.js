@@ -1,6 +1,6 @@
 class LayoutsStore {
   set layout(_layout) {
-    this._layout = {..._layout};
+    this._layout = { ..._layout };
   }
 
   get layout() {

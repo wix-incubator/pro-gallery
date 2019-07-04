@@ -1,4 +1,3 @@
-'use strict';
 /* eslint-disable */
 
 import Layouter from '../src/layouter.js';

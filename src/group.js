@@ -1,5 +1,5 @@
-import {Item} from './item.js';
-import {utils} from './utils';
+import { Item } from './item.js';
+import { utils } from './utils';
 
 const GROUP_TYPES_BY_RATIOS_V = {
   lll: '1,2h',
@@ -30,7 +30,6 @@ const GROUP_SIZES_BY_MAX_SIZE = {
 };
 
 export class Group {
-
   constructor(config) {
     this.idx = config.idx;
     this.stripIdx = config.stripIdx;
@@ -43,7 +42,7 @@ export class Group {
     this.gallerySize = config.gallerySize;
 
     if (config.styleParams) {
-      const {styleParams} = config;
+      const { styleParams } = config;
       this.oneRow = styleParams.oneRow;
       this.cubeType = styleParams.cubeType;
       this.cubeImages = styleParams.cubeImages;
@@ -72,7 +71,6 @@ export class Group {
       this.resize();
       forcedGroupSize--;
     }
-
   }
 
   resize() {
@@ -91,7 +89,7 @@ export class Group {
     } else if (this.dummyItems[idx]) {
       return this.dummyItems[idx];
     } else {
-      const item = new Item({...this.items[this.items.length - 1].config});
+      const item = new Item({ ...this.items[this.items.length - 1].config });
 
       // const item = {...(this.items[this.items.length - 1])};
       // item.id += 'dummy';
@@ -103,7 +101,6 @@ export class Group {
   }
 
   fixItemsRatio(ratio) {
-
     for (const item of this.items) {
       item.cubeRatio = ratio;
       item.resize(1);
@@ -111,7 +108,6 @@ export class Group {
   }
 
   round() {
-
     //round all sizes to full pixels
 
     if (this.isLastGroup && !this.oneRow) {
@@ -126,7 +122,7 @@ export class Group {
       item.height = Math.round(item.height);
       item.group = {
         width: this.width,
-        height: this.height
+        height: this.height,
       };
     }
     const m = this.imageMargin * 2;
@@ -139,61 +135,78 @@ export class Group {
         break;
       case '2v':
         this.safeGetItem(0).width = this.safeGetItem(1).width = this.width - m;
-        this.safeGetItem(0).height = this.height - this.safeGetItem(1).height - 2 * m;
+        this.safeGetItem(0).height =
+          this.height - this.safeGetItem(1).height - 2 * m;
         break;
       case '2h':
-        this.safeGetItem(0).height = this.safeGetItem(1).height = this.height - m;
-        this.safeGetItem(0).width = this.width - this.safeGetItem(1).width - 2 * m;
+        this.safeGetItem(0).height = this.safeGetItem(1).height =
+          this.height - m;
+        this.safeGetItem(0).width =
+          this.width - this.safeGetItem(1).width - 2 * m;
         break;
       case '3t':
         this.safeGetItem(0).width = this.width - m;
-        this.safeGetItem(0).height = this.height - this.safeGetItem(1).height - 2 * m;
-        this.safeGetItem(1).width = this.width - this.safeGetItem(2).width - 2 * m;
+        this.safeGetItem(0).height =
+          this.height - this.safeGetItem(1).height - 2 * m;
+        this.safeGetItem(1).width =
+          this.width - this.safeGetItem(2).width - 2 * m;
         this.safeGetItem(2).height = this.safeGetItem(1).height;
         break;
       case '3b':
-        this.safeGetItem(0).width = this.width - this.safeGetItem(1).width - 2 * m;
+        this.safeGetItem(0).width =
+          this.width - this.safeGetItem(1).width - 2 * m;
         this.safeGetItem(1).height = this.safeGetItem(0).height;
-        this.safeGetItem(2).height = this.height - this.safeGetItem(1).height - 2 * m;
+        this.safeGetItem(2).height =
+          this.height - this.safeGetItem(1).height - 2 * m;
         this.safeGetItem(2).width = this.width - m;
         break;
       case '3l':
-        this.safeGetItem(1).height = this.height - this.safeGetItem(2).height - 2 * m;
+        this.safeGetItem(1).height =
+          this.height - this.safeGetItem(2).height - 2 * m;
         this.safeGetItem(2).width = this.safeGetItem(1).width;
-        this.safeGetItem(0).width = this.width - this.safeGetItem(1).width - 2 * m;
+        this.safeGetItem(0).width =
+          this.width - this.safeGetItem(1).width - 2 * m;
         this.safeGetItem(0).height = this.height - m;
         break;
       case '3r':
-        this.safeGetItem(0).height = this.height - this.safeGetItem(1).height - 2 * m;
+        this.safeGetItem(0).height =
+          this.height - this.safeGetItem(1).height - 2 * m;
         this.safeGetItem(1).width = this.safeGetItem(0).width;
-        this.safeGetItem(2).width = this.width - this.safeGetItem(1).width - 2 * m;
+        this.safeGetItem(2).width =
+          this.width - this.safeGetItem(1).width - 2 * m;
         this.safeGetItem(2).height = this.height - m;
         break;
       case '3v':
         this.safeGetItem(0).width = this.width - m;
         this.safeGetItem(1).width = this.width - m;
         this.safeGetItem(2).width = this.width - m;
-        this.safeGetItem(2).height = this.height - this.safeGetItem(0).height - this.safeGetItem(1).height - 3 * m;
+        this.safeGetItem(2).height =
+          this.height -
+          this.safeGetItem(0).height -
+          this.safeGetItem(1).height -
+          3 * m;
         break;
       case '3h':
         this.safeGetItem(0).height = this.height - m;
         this.safeGetItem(1).height = this.height - m;
         this.safeGetItem(2).height = this.height - m;
-        this.safeGetItem(2).width = this.width - this.safeGetItem(0).width - this.safeGetItem(1).width - 3 * m;
+        this.safeGetItem(2).width =
+          this.width -
+          this.safeGetItem(0).width -
+          this.safeGetItem(1).width -
+          3 * m;
         break;
     }
-
   }
 
   getGroupType(forcedGroupSize) {
-
     //---------| Override with specifically defined rotating group types (ignores everything else)
     if (this.rotatingGroupTypes) {
       const groupTypesArr = String(this.rotatingGroupTypes).split(',');
       return groupTypesArr[this.idx % groupTypesArr.length];
 
-    // } else if (this.isLastItems) {
-    //   return this.groupTypes.split(',')[0] || '1';
+      // } else if (this.isLastItems) {
+      //   return this.groupTypes.split(',')[0] || '1';
     } else {
       //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
 
@@ -220,17 +233,20 @@ export class Group {
       let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
 
       if (this.chooseBestGroup) {
-
         //map the group to l=landscape and p=portrait
         //create a string to state the images group's type
-        const ratios = this.items.map(item => item.orientation.slice(0, 1)).join('');
-        optionalTypes = (isV ? GROUP_TYPES_BY_RATIOS_V : GROUP_TYPES_BY_RATIOS_H)[ratios];
+        const ratios = this.items
+          .map(item => item.orientation.slice(0, 1))
+          .join('');
+        optionalTypes = (isV
+          ? GROUP_TYPES_BY_RATIOS_V
+          : GROUP_TYPES_BY_RATIOS_H)[ratios];
       } else if (this.items.length === 3 || forcedGroupSize === 3) {
-        optionalTypes = (isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v');
+        optionalTypes = isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v';
       }
 
       if (this.items.length === 2 || forcedGroupSize === 2) {
-        optionalTypes = (isV ? '1,2h' : '1,2v');
+        optionalTypes = isV ? '1,2h' : '1,2v';
       }
       if (this.items.length === 1 || forcedGroupSize === 1) {
         optionalTypes = '1';
@@ -240,20 +256,19 @@ export class Group {
 
       //---------| Override with specifically defined group types
       if (this.groupTypes) {
-
         // let groupTypesArr = union(['1'], this.groupTypes.split(','));
         const groupTypesArr = this.groupTypes.split(',');
 
         if (groupTypesArr.length > 1) {
           groupTypes = groupTypes.filter(gt => groupTypesArr.indexOf(gt) >= 0);
 
-          if (groupTypes.length === 0) { //there is no match between required group types and the optional ones - use
+          if (groupTypes.length === 0) {
+            //there is no match between required group types and the optional ones - use
             groupTypes = ['1'];
           }
         } else {
           groupTypes = groupTypesArr;
         }
-
       }
 
       //---------| Calc collage density
@@ -265,10 +280,15 @@ export class Group {
         //use the collage amount to determine the optional groupsize
         const maxGroupType = parseInt(groupTypes[groupTypes.length - 1]);
         const optionalGroupSizes = GROUP_SIZES_BY_MAX_SIZE[maxGroupType];
-        const targetGroupSizes = optionalGroupSizes[Math.floor(collageDensity * (optionalGroupSizes.length - 1))];
+        const targetGroupSizes =
+          optionalGroupSizes[
+            Math.floor(collageDensity * (optionalGroupSizes.length - 1))
+          ];
         // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
 
-        groupTypes = groupTypes.filter(groupType => targetGroupSizes.indexOf(parseInt(groupType)) >= 0);
+        groupTypes = groupTypes.filter(
+          groupType => targetGroupSizes.indexOf(parseInt(groupType)) >= 0,
+        );
 
         if (groupTypes.length === 0) {
           groupTypes = ['1'];
@@ -289,21 +309,20 @@ export class Group {
     let seed;
     if (this.isVertical) {
       //vertical galleries random is not relevant (previous group is in another column)
-      seed = utils.hashToInt(this.items[0].hash) % (numOfOptions);
+      seed = utils.hashToInt(this.items[0].hash) % numOfOptions;
     } else {
       seed = (this.inStripIdx + this.stripIdx) % numOfOptions;
     }
 
     if (this.layoutsVersion === 1 && this.collageAmount >= 0) {
       //backwards compatibility
-      seed += ((this.collageAmount) - 0.5) * numOfOptions;
+      seed += (this.collageAmount - 0.5) * numOfOptions;
     }
 
-    return Math.round(Math.min(Math.max(0, seed), (numOfOptions - 1)));
+    return Math.round(Math.min(Math.max(0, seed), numOfOptions - 1));
   }
 
   placeItems(forcedGroupSize) {
-
     this.type = this.getGroupType(forcedGroupSize);
 
     //---------| Render the images by the groupType
@@ -314,8 +333,7 @@ export class Group {
 
     switch (this.type) {
       default:
-      case '1' :
-
+      case '1':
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
         items.push(item);
@@ -325,7 +343,6 @@ export class Group {
         break;
 
       case '2v':
-
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
         items.push(item);
@@ -341,7 +358,6 @@ export class Group {
         break;
 
       case '2h':
-
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
         item.innerOffset = [0, 0];
@@ -359,7 +375,6 @@ export class Group {
         break;
 
       case '3b':
-
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
         items.push(item);
@@ -381,7 +396,6 @@ export class Group {
         break;
 
       case '3t':
-
         item = this.safeGetItem(1);
         item.pinToCorner('bottom-left');
         items.push(item);
@@ -403,7 +417,6 @@ export class Group {
         break;
 
       case '3r':
-
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
         items.push(item);
@@ -425,7 +438,6 @@ export class Group {
         break;
 
       case '3l':
-
         item = this.safeGetItem(1);
         item.pinToCorner('top-right');
         items.push(item);
@@ -447,7 +459,6 @@ export class Group {
         break;
 
       case '3v':
-
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
         item.setPosition('relative');
@@ -473,7 +484,6 @@ export class Group {
         break;
 
       case '3h':
-
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
         item.setPosition('relative');
@@ -503,7 +513,6 @@ export class Group {
     this.height = h;
     this.items = items;
     this.placed = true;
-
   }
 
   resizeToHeight(height) {
@@ -520,18 +529,21 @@ export class Group {
   }
 
   resizeItems() {
-    const items = (['3b', '3r'].indexOf(this.type) >= 0) ? this.items.slice().reverse() : this.items;
+    const items =
+      ['3b', '3r'].indexOf(this.type) >= 0
+        ? this.items.slice().reverse()
+        : this.items;
     items.forEach((item, i) => {
       item.resize(this.getItemDimensions(items, i));
       item.group = {
         top: this.top,
         left: this.left,
         width: this.width,
-        height: this.height
+        height: this.height,
       };
       item.groupOffset = {
         bottom: this.top + this.height,
-        right: this.left + this.width
+        right: this.left + this.width,
       };
     });
   }
@@ -665,7 +677,7 @@ export class Group {
         Rm = 1 - Rg;
         break;
       case '2h':
-        Rg = (R[0] + R[1]);
+        Rg = R[0] + R[1];
         Rm = 2 - Rg;
         break;
       case '2v':
@@ -673,7 +685,7 @@ export class Group {
         Rm = 1 - 2 * Rg;
         break;
       case '3h':
-        Rg = (R[0] + R[1] + R[2]);
+        Rg = R[0] + R[1] + R[2];
         Rm = 3 - Rg;
         break;
       case '3v':
@@ -682,11 +694,11 @@ export class Group {
         break;
       case '3t':
         Rg = 1 / (1 / (R[2] + R[1]) + 1 / R[0]);
-        Rm = ((2 / (R[2] + R[1]) + 1 / R[0]) - 2) * Rg;
+        Rm = (2 / (R[2] + R[1]) + 1 / R[0] - 2) * Rg;
         break;
       case '3b':
         Rg = 1 / (1 / (R[0] + R[1]) + 1 / R[2]);
-        Rm = ((2 / (R[0] + R[1]) + 1 / R[2]) - 2) * Rg;
+        Rm = (2 / (R[0] + R[1]) + 1 / R[2] - 2) * Rg;
         break;
       case '3l':
         Rg = (R[0] * R[1] + R[1] * R[2] + R[0] * R[2]) / (R[1] + R[2]);
@@ -707,7 +719,7 @@ export class Group {
     for (const item of this.items) {
       item.groupOffset = {
         top,
-        bottom: top + this.height
+        bottom: top + this.height,
       };
     }
   }
@@ -717,7 +729,7 @@ export class Group {
     for (const item of this.items) {
       item.groupOffset = {
         left,
-        right: left + this.width
+        right: left + this.width,
       };
     }
   }
@@ -726,22 +738,30 @@ export class Group {
     if (bounds === true || this.showAllItems === true) {
       this.onscreen = this.visible = this.rendered = this.required = true;
     } else if (this.oneRow) {
-      this.onscreen = this.right >= bounds.onscreenTop && this.left <= bounds.onscreenBottom;
-      this.visible = this.right >= bounds.visibleTop && this.left <= bounds.visibleBottom;
-      this.rendered = this.right >= bounds.renderedTop && this.left <= bounds.renderedBottom;
-      this.required = this.right >= bounds.requiredTop && this.left <= bounds.requiredBottom;
+      this.onscreen =
+        this.right >= bounds.onscreenTop && this.left <= bounds.onscreenBottom;
+      this.visible =
+        this.right >= bounds.visibleTop && this.left <= bounds.visibleBottom;
+      this.rendered =
+        this.right >= bounds.renderedTop && this.left <= bounds.renderedBottom;
+      this.required =
+        this.right >= bounds.requiredTop && this.left <= bounds.requiredBottom;
     } else {
-      this.onscreen = this.bottom >= bounds.onscreenTop && this.top <= bounds.onscreenBottom;
-      this.visible = this.bottom >= bounds.visibleTop && this.top <= bounds.visibleBottom;
-      this.rendered = this.bottom >= bounds.renderedTop && this.top <= bounds.renderedBottom;
-      this.required = this.bottom >= bounds.requiredTop && this.top <= bounds.requiredBottom;
+      this.onscreen =
+        this.bottom >= bounds.onscreenTop && this.top <= bounds.onscreenBottom;
+      this.visible =
+        this.bottom >= bounds.visibleTop && this.top <= bounds.visibleBottom;
+      this.rendered =
+        this.bottom >= bounds.renderedTop && this.top <= bounds.renderedBottom;
+      this.required =
+        this.bottom >= bounds.requiredTop && this.top <= bounds.requiredBottom;
     }
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].visibility = {
         onscreen: this.onscreen,
         visible: this.visible,
         rendered: this.rendered,
-        required: this.required
+        required: this.required,
       };
     }
   }
@@ -789,7 +809,7 @@ export class Group {
     } else {
       return this.items.reduce((i, item) => {
         const isInSize = Math.min(item.width, item.height) >= this.minItemSize;
-        return (i && isInSize);
+        return i && isInSize;
       }, true);
     }
   }
@@ -813,7 +833,7 @@ export class Group {
       bottom: this.bottom,
       visible: this.visible,
       rendered: this.rendered,
-      required: this.required
+      required: this.required,
     };
   }
 }

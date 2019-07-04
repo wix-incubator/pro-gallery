@@ -33,7 +33,7 @@
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "wallaby-webpack": "^3.9.9",
-    "yoshi": "^1.2.0"
+    "yoshi": "^4.10.1"
   },
   "babel": {
     "presets": [
@@ -70,7 +70,7 @@
     }
   },
   "eslintConfig": {
-    "extends": "wix/esnext",
+    "extends": "yoshi",
     "rules": {
       "no-mixed-operators": 0,
       "no-loop-func": 0
