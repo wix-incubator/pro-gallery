@@ -130,7 +130,7 @@ export default class Social extends React.Component {
           e.preventDefault();
           window.open(downloadLink, '_blank');
           this.props.actions.eventsListener(
-            EVENTS.ON_DOWNLOAD_BUTTON_CLICKED,
+            EVENTS.DOWNLOAD_BUTTON_CLICKED,
             this.props,
           );
         },
@@ -178,7 +178,7 @@ export default class Social extends React.Component {
         e.preventDefault();
         window.open(downloadLink, '_blank');
         this.props.actions.eventsListener(
-          EVENTS.ON_DOWNLOAD_BUTTON_CLICKED,
+          EVENTS.DOWNLOAD_BUTTON_CLICKED,
           this.props,
         );
         return false;

@@ -157,7 +157,7 @@ class SlideshowView extends React.Component {
       this.lastCurrentItem = this.state.currentIdx;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
       this.props.actions.eventsListener(
-        EVENTS.ON_CURRENT_ITEM_CHANGED,
+        EVENTS.CURRENT_ITEM_CHANGED,
         this.props.galleryStructure.galleryItems[this.state.currentIdx],
       );
     }
@@ -199,7 +199,7 @@ class SlideshowView extends React.Component {
   scrollToThumbnail(itemIdx, scrollDuration = 400) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
-    this.props.actions.eventsListener(EVENTS.ON_THUMBNAIL_CLICKED, this.props);
+    this.props.actions.eventsListener(EVENTS.THUMBNAIL_CLICKED, this.props);
 
     this.isAutoScrolling = true;
     this.startAutoSlideshowIfNeeded(this.context.styleParams);

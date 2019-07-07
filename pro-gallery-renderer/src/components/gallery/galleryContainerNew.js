@@ -342,7 +342,7 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
-    this.eventsListener(EVENTS.ON_GALLERY_CHANGE, onGalleryChangeData);
+    this.eventsListener(EVENTS.GALLERY_CHANGE, onGalleryChangeData);
 
     if (needToHandleShowMoreClick) {
       this.setStateAndContext({ needToHandleShowMoreClick: false });

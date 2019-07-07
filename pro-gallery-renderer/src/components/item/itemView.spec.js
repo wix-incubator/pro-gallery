@@ -188,7 +188,7 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-container').simulate('click');
-      expect(stub.calledWith(EVENTS.ON_ITEM_CLICKED)).to.be.true;
+      expect(stub.calledWith(EVENTS.ITEM_CLICKED)).to.be.true;
       stub.restore();
     });
     it('should onItemClicked for items with expand', () => {
@@ -200,7 +200,7 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-container').simulate('click');
-      expect(stub.calledWith(EVENTS.ON_ITEM_ACTION_TRIGGERED)).to.be.true;
+      expect(stub.calledWith(EVENTS.ITEM_ACTION_TRIGGERED)).to.be.true;
       stub.restore();
     });
     it.skip('should toggle playVideo/pauseVideo for video items that are not expand and the video is styled to play onclick/the device is mobile/', () => {

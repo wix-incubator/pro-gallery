@@ -24,7 +24,7 @@ export default class CustomButton extends React.Component {
             data-hook="custom-button-button"
             onClick={() =>
               this.props.actions.eventsListener(
-                EVENTS.ON_BUY_NOW_CLICKED,
+                EVENTS.BUY_NOW_CLICKED,
                 this.props,
               )
             }

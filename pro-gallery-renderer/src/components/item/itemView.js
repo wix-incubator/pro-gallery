@@ -29,7 +29,7 @@ import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
-    this.props.actions.eventsListener(EVENTS.ON_ITEM_CREATED, this.props);
+    this.props.actions.eventsListener(EVENTS.ITEM_CREATED, this.props);
 
     this.init();
 
@@ -146,7 +146,7 @@ class ItemView extends React.Component {
     });
   }
   setItemLoaded() {
-    this.props.actions.eventsListener(EVENTS.ON_ITEM_LOADED, this.props);
+    this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
     this.setState({
       failed: false,
       loaded: true,
@@ -227,14 +227,14 @@ class ItemView extends React.Component {
       }
     }
     this.props.actions.eventsListener(
-      EVENTS.ON_ITEM_ACTION_TRIGGERED,
+      EVENTS.ITEM_ACTION_TRIGGERED,
       this.props,
     );
     //this.props.actions.onItemClicked(this.props.idx);
   }
 
   onItemClick(e) {
-    this.props.actions.eventsListener(EVENTS.ON_ITEM_CLICKED, this.props);
+    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
       return _.noop;
     }
@@ -279,7 +279,7 @@ class ItemView extends React.Component {
   handleHoverClickOnMobile(itemClick) {
     if (this.isClickOnCurrentHoveredItem()) {
       this.props.actions.eventsListener(
-        EVENTS.ON_ITEM_ACTION_TRIGGERED,
+        EVENTS.ITEM_ACTION_TRIGGERED,
         this.props,
       );
       //this.props.actions.onItemClicked(this.props.idx);
@@ -303,7 +303,7 @@ class ItemView extends React.Component {
       return;
     } else if (this.context.styleParams.fullscreen) {
       this.props.actions.eventsListener(
-        EVENTS.ON_ITEM_ACTION_TRIGGERED,
+        EVENTS.ITEM_ACTION_TRIGGERED,
         this.props,
       );
       //this.props.actions.onItemClicked(this.props.idx);
