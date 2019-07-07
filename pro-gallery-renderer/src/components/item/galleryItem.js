@@ -186,7 +186,6 @@ class GalleryItem {
         isExternalVideo: this.isExternalVideo,
         scroll: config.scroll,
         visible: config.visible,
-        styleParams: config.styleParams,
         actions: config.actions,
         currentIdx: config.currentIdx,
         currentHover: config.currentHover,

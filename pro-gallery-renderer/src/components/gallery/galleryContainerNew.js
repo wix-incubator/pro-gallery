@@ -15,9 +15,10 @@ import CssScrollIndicator from './galleryCssScrollIndicator';
 import { Layouter } from 'pro-gallery-layouter';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import _ from 'lodash';
 import utils from '../../utils';
+import { featureManager } from '../helpers/versionsHelper';
+import { GalleryContext } from '../../context/GalleryContext.js';
 import EVENTS from '../../utils/constants/events';
 
 export class GalleryContainer extends React.Component {
@@ -27,6 +28,7 @@ export class GalleryContainer extends React.Component {
       console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
     }
     utils.updateViewMode(props.viewMode);
+    featureManager.freezeDate = props.dateCreated;
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
@@ -42,9 +44,7 @@ export class GalleryContainer extends React.Component {
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
       currentHover: -1,
-      gotFirstScrollEvent: !experiments(
-        'specs.pro-gallery.dynamicScrollPreloading',
-      ),
+      gotFirstScrollEvent: false,
     };
 
     this.items = [];
@@ -109,7 +109,7 @@ export class GalleryContainer extends React.Component {
     const galleryState = this.reCreateGalleryExpensively(this.props);
     this.loadItemsDimensionsIfNeeded();
     if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
+      this.setStateAndContext(galleryState, () => {
         this.handleNewGalleryStructure();
       });
     }
@@ -118,7 +118,7 @@ export class GalleryContainer extends React.Component {
   componentDidLayout() {
     const galleryState = this.reCreateGalleryExpensively(this.props);
     if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
+      this.setStateAndContext(galleryState, () => {
         this.handleNewGalleryStructure();
       });
     }
@@ -129,7 +129,7 @@ export class GalleryContainer extends React.Component {
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
-        this.setState(galleryState, () => {
+        this.setStateAndContext(galleryState, () => {
           this.handleNewGalleryStructure();
         });
       }
@@ -174,6 +174,14 @@ export class GalleryContainer extends React.Component {
       //this is a hack, because in fullwidth, new props arrive without any changes
       this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
     }
+  }
+
+  setStateAndContext(newState, callback = () => {}) {
+    if (typeof newState.styles === 'object') {
+      this.context.set.styleParams(newState.styles);
+    }
+
+    this.setState(newState, callback);
   }
 
   loadItemsDimensionsIfNeeded() {
@@ -245,7 +253,7 @@ export class GalleryContainer extends React.Component {
 
       const newState = this.reCreateGalleryExpensively(params, this.state);
       if (Object.keys(newState).length > 0) {
-        this.setState(newState, () => {
+        this.setStateAndContext(newState, () => {
           this.handleNewGalleryStructure();
         });
       }
@@ -337,7 +345,7 @@ export class GalleryContainer extends React.Component {
     this.eventsListener(EVENTS.ON_GALLERY_CHANGE, onGalleryChangeData);
 
     if (needToHandleShowMoreClick) {
-      this.setState({ needToHandleShowMoreClick: false });
+      this.setStateAndContext({ needToHandleShowMoreClick: false });
     }
   }
 
@@ -793,9 +801,7 @@ export class GalleryContainer extends React.Component {
   }
 
   getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
-    const isSEO =
-      !!this.props.isInSEO ||
-      (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
+    const isSEO = !!this.props.isInSEO;
     const shouldUseScrollCss = !isSEO;
 
     if (shouldUseScrollCss) {
@@ -825,7 +831,7 @@ export class GalleryContainer extends React.Component {
     //before clicking "load more" at the first time
     if (!this.state.showMoreClickedAtLeastOnce) {
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
-      this.setState(
+      this.setStateAndContext(
         {
           showMoreClickedAtLeastOnce,
           initialGalleryHeight,
@@ -837,7 +843,7 @@ export class GalleryContainer extends React.Component {
       );
     } else {
       //from second click
-      this.setState(
+      this.setStateAndContext(
         {
           needToHandleShowMoreClick,
         },
@@ -849,7 +855,7 @@ export class GalleryContainer extends React.Component {
   }
 
   setCurrentHover(idx) {
-    this.setState({ currentHover: idx });
+    this.setStateAndContext({ currentHover: idx });
   }
 
   enableScrollPreload() {
@@ -863,7 +869,7 @@ export class GalleryContainer extends React.Component {
           allowPreloading: true,
         });
       }
-      this.setState({
+      this.setStateAndContext({
         gotFirstScrollEvent: true,
       });
     }
@@ -877,7 +883,7 @@ export class GalleryContainer extends React.Component {
       ),
     });
     if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
+      this.setStateAndContext(galleryState, () => {
         this.handleNewGalleryStructure();
       });
     }
@@ -885,6 +891,7 @@ export class GalleryContainer extends React.Component {
 
   eventsListener(eventName, eventData) {
     if (typeof this.props.eventsListener === 'function') {
+      eventData.styleParams = this.context.styleParams;
       this.props.eventsListener(eventName, eventData);
     }
   }
@@ -940,6 +947,7 @@ export class GalleryContainer extends React.Component {
     }
     return can;
   }
+
   render() {
     if (!this.canRender()) {
       return null;
@@ -986,7 +994,6 @@ export class GalleryContainer extends React.Component {
           renderedItemsCount={this.props.renderedItemsCount}
           items={this.items}
           galleryStructure={this.galleryStructure}
-          styleParams={styles}
           container={this.state.container}
           watermark={this.props.watermarkData}
           settings={this.props.settings}
@@ -1030,6 +1037,8 @@ export class GalleryContainer extends React.Component {
     );
   }
 }
+
+GalleryContainer.contextType = GalleryContext;
 
 function mapStateToProps(state) {
   return state.gallery;

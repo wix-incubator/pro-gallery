@@ -13,6 +13,8 @@ import { VideoQueue } from '../item/videos/video-queue';
 import window from '../../utils/window/windowWrapper';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 
+import { GalleryProvider } from '../../context/GalleryContext';
+
 export default class ProGallery extends React.Component {
   constructor(props) {
     super();
@@ -75,18 +77,20 @@ export default class ProGallery extends React.Component {
       this.canRender && (
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
           <Provider store={this.store}>
-            <GalleryContainerNew
-              {...this.props}
-              domId={this.domId}
-              items={this.props.items || []}
-              store={this.store}
-              watermarkData={this.props.watermarkData}
-              settings={this.props.settings || {}}
-              offsetTop={this.props.offsetTop}
-              itemActions={
-                this.props.itemActions ? this.props.itemActions : itemActions
-              }
-            />
+            <GalleryProvider>
+              <GalleryContainerNew
+                {...this.props}
+                domId={this.domId}
+                items={this.props.items || []}
+                store={this.store}
+                watermarkData={this.props.watermarkData}
+                settings={this.props.settings || {}}
+                offsetTop={this.props.offsetTop}
+                itemActions={
+                  this.props.itemActions ? this.props.itemActions : itemActions
+                }
+              />
+            </GalleryProvider>
           </Provider>
         </div>
       )

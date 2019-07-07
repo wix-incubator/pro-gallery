@@ -19,8 +19,8 @@ import {
   setInitialVisibility,
 } from '../helpers/scrollHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
-import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
+import { featureManager } from '../helpers/versionsHelper';
+import { GalleryContext } from '../../context/GalleryContext.js';
 import EVENTS from '../../utils/constants/events';
 import PLACEMENTS from '../../utils/constants/placements';
 import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
@@ -193,7 +193,7 @@ class ItemView extends React.Component {
   }
 
   onVideoHover() {
-    const { videoPlay } = this.props.styleParams;
+    const { videoPlay } = this.context.styleParams;
     if (videoPlay === 'hover' && !utils.isMobile()) {
       this.props.playVideo(this.props.idx);
     }
@@ -213,7 +213,7 @@ class ItemView extends React.Component {
   }
 
   handleGalleryItemClick(itemClick) {
-    const { videoPlay } = this.props.styleParams;
+    const { videoPlay } = this.context.styleParams;
 
     _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked')) &&
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
@@ -239,7 +239,7 @@ class ItemView extends React.Component {
       return _.noop;
     }
 
-    const { itemClick } = this.props.styleParams;
+    const { itemClick } = this.context.styleParams;
 
     e.preventDefault();
 
@@ -256,7 +256,7 @@ class ItemView extends React.Component {
     const useDirectLink = !!(
       url &&
       target &&
-      this.props.styleParams.itemClick === 'link'
+      this.context.styleParams.itemClick === 'link'
     );
     const shouldUseDirectLinkMobileSecondClick =
       this.shouldShowHoverOnMobile() &&
@@ -301,7 +301,7 @@ class ItemView extends React.Component {
     ) {
       console.warn('Blocked fullscreen!', e);
       return;
-    } else if (this.props.styleParams.fullscreen) {
+    } else if (this.context.styleParams.fullscreen) {
       this.props.actions.eventsListener(
         EVENTS.ON_ITEM_ACTION_TRIGGERED,
         this.props,
@@ -350,7 +350,9 @@ class ItemView extends React.Component {
   }
 
   isSmallItem() {
-    return this.props.isSmallItem && !this.props.styleParams.isSlideshow;
+    return (
+      this.props.isSmallItem && !this.context.styleParams.isSlideshow
+    );
   }
 
   isVerticalContainer() {
@@ -365,8 +367,8 @@ class ItemView extends React.Component {
         titlePlacement,
         itemClick,
         isSlideshow,
-      } = this.props.styleParams;
-      const isNewMobileSettings = settingsVersionManager.newMobileSettings();
+      } = this.context.styleParams;
+      const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (isSlideshow) {
         return false;
       }
@@ -396,11 +398,13 @@ class ItemView extends React.Component {
   }
 
   shouldHover() {
-    if (this.props.styleParams.alwaysShowHover === true) {
+    const styleParams = this.context.styleParams;
+
+    if (styleParams.alwaysShowHover === true) {
       return true;
-    } else if (this.props.styleParams.isSlideshow) {
+    } else if (styleParams.isSlideshow) {
       return false;
-    } else if (this.props.styleParams.allowHover === false) {
+    } else if (styleParams.allowHover === false) {
       return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
@@ -413,7 +417,9 @@ class ItemView extends React.Component {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    const { styleParams, cubeRatio, style } = this.props;
+    const { cubeRatio, style } = this.props;
+    const styleParams = this.context.styleParams;
+
     const imageIsWider = style.ratio >= cubeRatio;
     const imageMarginLeft = Math.round(
       (style.height * style.ratio - style.width) / -2,
@@ -468,9 +474,11 @@ class ItemView extends React.Component {
       'style',
       'isNarrow',
     ]);
+    const styleParams = this.context.styleParams;
+
     const isImage =
       this.props.type === 'image' || this.props.type === 'picture';
-    const useCustomButton = this.props.styleParams.useCustomButton === true;
+    const useCustomButton = styleParams.useCustomButton === true;
     const shouldShowButton =
       (isImage || !utils.isStoreGallery()) && useCustomButton;
 
@@ -481,7 +489,7 @@ class ItemView extends React.Component {
         itemContainer={this.itemContainer}
         showShare={this.state.showShare}
         isSmallItem={this.isSmallItem()}
-        titlePlacement={this.props.styleParams.titlePlacement}
+        titlePlacement={styleParams.titlePlacement}
         shouldShowButton={shouldShowButton}
         actions={{
           eventsListener: this.props.actions.eventsListener,
@@ -499,7 +507,6 @@ class ItemView extends React.Component {
       'idx',
       'currentIdx',
       'id',
-      'styleParams',
       'style',
       'love',
       'isDemo',
@@ -509,9 +516,12 @@ class ItemView extends React.Component {
       'isNarrow',
       'isShort',
     ]);
+    const styleParams = this.context.styleParams;
+
     return (
       <Social
         {...props}
+        styleParams={styleParams}
         showShare={this.state.showShare}
         isSmallItem={this.isSmallItem()}
         isVerticalContainer={this.isVerticalContainer()}
@@ -531,7 +541,6 @@ class ItemView extends React.Component {
 
   getShare() {
     const props = _.pick(this.props, [
-      'styleParams',
       'id',
       'type',
       'style',
@@ -539,9 +548,11 @@ class ItemView extends React.Component {
       'idx',
       'actions',
     ]);
+    const styleParams = this.context.styleParams;
     return (
       <Share
         {...props}
+        styleParams={styleParams}
         allProps={this.props}
         key={`item-share-${props.id}`}
         showShare={this.state.showShare}
@@ -582,7 +593,6 @@ class ItemView extends React.Component {
       'description',
       'id',
       'idx',
-      'styleParams',
       'resized_url',
       'settings',
       'isInSEO',
@@ -590,6 +600,7 @@ class ItemView extends React.Component {
     return (
       <ImageItem
         {...props}
+        styleParams={this.context.styleParams}
         key="imageItem"
         visible={this.getItemVisibility()}
         loaded={this.state.loaded}
@@ -641,16 +652,11 @@ class ItemView extends React.Component {
   }
 
   getTextItem(imageDimensions) {
-    const props = _.pick(this.props, [
-      'id',
-      'styleParams',
-      'style',
-      'html',
-      'cubeRatio',
-    ]);
+    const props = _.pick(this.props, ['id', 'style', 'html', 'cubeRatio']);
     return (
       <TextItem
         {...props}
+        styleParams={this.context.styleParams}
         visible={this.getItemVisibility()}
         key="textItem"
         imageDimensions={imageDimensions}
@@ -664,7 +670,8 @@ class ItemView extends React.Component {
   }
 
   getItemInner() {
-    const { styleParams, type } = this.props;
+    const { type } = this.props;
+    const styleParams = this.context.styleParams;
     const visible = this.getItemVisibility();
     let itemInner;
     const imageDimensions = this.getImageDimensions();
@@ -737,7 +744,7 @@ class ItemView extends React.Component {
   }
 
   getBottomInfoElementIfNeeded() {
-    const { styleParams } = this.props;
+    const styleParams = this.context.styleParams;
 
     if (
       styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW &&
@@ -752,7 +759,7 @@ class ItemView extends React.Component {
   }
 
   getTopInfoElementIfNeeded() {
-    const { styleParams } = this.props;
+    const styleParams = this.context.styleParams;
 
     if (
       styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE &&
@@ -767,7 +774,7 @@ class ItemView extends React.Component {
   }
 
   getInfoElement(elementName) {
-    const { styleParams } = this.props;
+    const styleParams = this.context.styleParams;
     let info = null;
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
@@ -806,20 +813,21 @@ class ItemView extends React.Component {
       this.props.currentHover === this.props.idx ||
       this.state.previewHover ||
       this.props.previewHover ||
-      this.props.styleParams.alwaysShowHover === true
+      this.context.styleParams.alwaysShowHover === true
     );
   }
 
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
+      this.context.styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
     );
   }
 
   getItemContainerStyles() {
-    const { styleParams, style, transform } = this.props;
+    const { style, transform } = this.props;
     const wrapperWidth = style.width;
+    const styleParams = this.context.styleParams;
 
     const border = {};
     if (styleParams.itemBorderWidth) {
@@ -875,7 +883,9 @@ class ItemView extends React.Component {
     return styles;
   }
   getItemWrapperStyles() {
-    const { styleParams, style, type } = this.props;
+    const { style, type } = this.props;
+    const styleParams = this.context.styleParams;
+
     const height = style.height;
     const styles = {};
     if (type === 'text') {
@@ -917,7 +927,7 @@ class ItemView extends React.Component {
   }
 
   getItemContainerClass() {
-    const { styleParams } = this.props;
+    const styleParams = this.context.styleParams;
     const isNOTslideshow = !styleParams.isSlideshow;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
@@ -965,7 +975,8 @@ class ItemView extends React.Component {
   }
 
   getItemWrapperClass() {
-    const { styleParams, type } = this.props;
+    const { type } = this.props;
+    const styleParams = this.context.styleParams;
     const classNames = ['gallery-item-wrapper', 'visible'];
 
     if (styleParams.cubeImages) {
@@ -1084,7 +1095,7 @@ class ItemView extends React.Component {
       scrollingElement
         .vertical()
         .removeEventListener('scroll', this.onVerticalScroll);
-      const { oneRow } = this.props.styleParams;
+      const { oneRow } = this.context.styleParams;
       try {
         scrollingElement
           .horizontal()
@@ -1133,7 +1144,7 @@ class ItemView extends React.Component {
         .addEventListener('scroll', this.onVerticalScroll);
 
       //Horizontal Scroll
-      const { oneRow } = this.props.styleParams;
+      const { oneRow } = this.context.styleParams;
       if (oneRow) {
         this.onHorizontalScroll = _.throttle(({ target }) => {
           this.setState(
@@ -1169,11 +1180,9 @@ class ItemView extends React.Component {
   composeItem() {
     const { photoId, id, hash, idx } = this.props;
     const { directLink } = this.props;
-    const { itemClick } = this.props.styleParams;
+    const { itemClick } = this.context.styleParams;
     const { url, target } = directLink || {};
-    const isSEO =
-      !!this.props.isInSEO ||
-      (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
+    const isSEO = !!this.props.isInSEO;
     const isPremium = this.props.isPremiumSite;
     const shouldUseNofollow = isSEO && !isPremium;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');
@@ -1234,5 +1243,7 @@ class ItemView extends React.Component {
     return this.composeItem();
   }
 }
+
+ItemView.contextType = GalleryContext;
 
 export default ItemView;

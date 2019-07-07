@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import utils from '../../utils';
+import { featureManager } from './versionsHelper';
 import PLACEMENTS from '../../utils/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
 import window from '../../utils/window/windowWrapper';
-import { layoutsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/layouts';
-import { spacingVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/spacing';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../constants/designConsts';
@@ -75,7 +74,7 @@ function getStyleBySeed(seed) {
     gallerySize: numFromSeed(300, 800, 'gallerySize'),
     collageAmount: numFromSeed(5, 10, 'collageAmount') / 10,
     collageDensity:
-      (spacingVersionManager.isNewSpacing()
+      (featureManager.supports.spacingCalculation
         ? numFromSeed(1, 100, 'collageDensity')
         : numFromSeed(5, 10, 'collageDensity')) / 100,
     groupTypes: ['1'].concat(
@@ -86,12 +85,12 @@ function getStyleBySeed(seed) {
     oneRow: boolFromSeed('oneRow'),
     imageMargin: numFromSeed(
       0,
-      spacingVersionManager.isNewSpacing()
+      featureManager.supports.spacingCalculation
         ? numFromSeed(300, 800, 'gallerySize') / 5
         : 5,
       'imageMargin',
     ),
-    galleryMargin: spacingVersionManager.isNewSpacing()
+    galleryMargin: featureManager.supports.spacingCalculation
       ? 0
       : numFromSeed(0, 5, 'imageMargin'),
     floatingImages: 0,
@@ -637,7 +636,9 @@ function processLayouts(styles) {
   }
 
   if (
-    (!processedStyles.isVertical || processedStyles.groupSize > 1 || processedStyles.oneRow === true) &&
+    (!processedStyles.isVertical ||
+      processedStyles.groupSize > 1 ||
+      processedStyles.oneRow === true) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
@@ -645,9 +646,13 @@ function processLayouts(styles) {
   }
 
   if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) {
-    if (processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS) {
+    if (
+      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS
+    ) {
       processedStyles.titlePlacement = PLACEMENTS.SHOW_NOT_ON_HOVER;
-    } else if (processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE) {
+    } else if (
+      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE
+    ) {
       processedStyles.titlePlacement = PLACEMENTS.SHOW_ALWAYS;
     } else {
       //processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.APPEARS
@@ -657,8 +662,12 @@ function processLayouts(styles) {
 
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
 
-  if (processedStyles.cubeType === 'fit' &&
-    (processedStyles.isGrid || processedStyles.hasThumbnails || processedStyles.isSlider || processedStyles.isSlideshow)
+  if (
+    processedStyles.cubeType === 'fit' &&
+    (processedStyles.isGrid ||
+      processedStyles.hasThumbnails ||
+      processedStyles.isSlider ||
+      processedStyles.isSlideshow)
   ) {
     processedStyles.itemBorderWidth = 0;
     processedStyles.itemBorderRadius = 0;
@@ -729,7 +738,7 @@ function processLayouts(styles) {
 
   if (
     (processedStyles.isGrid && !processedStyles.oneRow) ||
-    (layoutsVersionManager.allowFixedColumnsInMasonry() &&
+    (featureManager.supports.fixedColumnsInMasonry &&
       processedStyles.isMasonry &&
       processedStyles.isVertical)
   ) {

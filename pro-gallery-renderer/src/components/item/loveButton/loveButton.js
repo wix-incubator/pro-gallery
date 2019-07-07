@@ -2,6 +2,7 @@ import React from 'react';
 import utils from '../../../utils';
 import window from '../../../utils/window/windowWrapper';
 import _ from 'lodash';
+import { GalleryContext } from '../../../context/GalleryContext.js';
 
 class LoveButton extends React.Component {
   constructor(props) {
@@ -182,7 +183,7 @@ class LoveButton extends React.Component {
         {...clickAction}
         onKeyDown={this.onKeyPress}
         tabIndex={
-          this.props.styleParams.isSlideshow &&
+          this.context.styleParams.isSlideshow &&
           this.props.currentIdx === this.props.idx
             ? 0
             : -1
@@ -200,5 +201,7 @@ class LoveButton extends React.Component {
     );
   }
 }
+
+LoveButton.contextType = GalleryContext;
 
 export default LoveButton;

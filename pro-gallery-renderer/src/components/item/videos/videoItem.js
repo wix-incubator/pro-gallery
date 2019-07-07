@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player';
 import utils from '../../../utils';
 import window from '../../../utils/window/windowWrapper';
 import Player from '@vimeo/player';
+import { GalleryContext } from '../../../context/GalleryContext.js';
 
 class VideoItem extends React.Component {
   constructor(props) {
@@ -56,8 +57,8 @@ class VideoItem extends React.Component {
     };
 
     if (
-      this.props.styleParams.cubeImages &&
-      this.props.styleParams.cubeType === 'fill'
+      this.context.styleParams.cubeImages &&
+      this.context.styleParams.cubeType === 'fill'
     ) {
       //grid crop mode
       [videoDimensionsCss.width, videoDimensionsCss.height] = [
@@ -84,9 +85,9 @@ class VideoItem extends React.Component {
         height="100%"
         onReady={this.props.actions.setItemLoaded}
         url={url}
-        loop={!!this.props.styleParams.videoLoop}
+        loop={!!this.context.styleParams.videoLoop}
         ref={player => (this.video = player)}
-        volume={this.props.styleParams.videoSound ? 0.8 : 0}
+        volume={this.context.styleParams.videoSound ? 0.8 : 0}
         playing={this.props.playing}
         onEnded={() => {
           this.setState({ playing: false });
@@ -95,7 +96,7 @@ class VideoItem extends React.Component {
         onPause={() => {
           this.setState({ playing: false });
         }}
-        playbackRate={this.props.styleParams.videoSpeed || 1}
+        playbackRate={this.context.styleParams.videoSpeed || 1}
         onPlay={() => {
           this.setState({ playing: true });
         }}
@@ -105,7 +106,7 @@ class VideoItem extends React.Component {
         config={{
           file: {
             attributes: {
-              muted: !this.props.styleParams.videoSound,
+              muted: !this.context.styleParams.videoSound,
               preload: 'metadata',
               poster: this.props.resized_url.img,
               style: videoDimensionsCss,
@@ -230,7 +231,7 @@ class VideoItem extends React.Component {
     );
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
-    const { videoPlay, itemClick } = this.props.styleParams;
+    const { videoPlay, itemClick } = this.context.styleParams;
     const video =
       this.canVideoPlayInGallery(itemClick, videoPlay) &&
       this.shouldRenderVideo() ? (
@@ -276,5 +277,7 @@ class VideoItem extends React.Component {
     );
   }
 }
+
+VideoItem.contextType = GalleryContext;
 
 export default VideoItem;

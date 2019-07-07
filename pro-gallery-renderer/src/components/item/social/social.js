@@ -2,6 +2,7 @@ import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 import _ from 'lodash';
+import { GalleryContext } from '../../../context/GalleryContext.js';
 import window from '../../../utils/window/windowWrapper';
 import EVENTS from '../../../utils/constants/events';
 import PLACEMENTS from '../../../utils/constants/placements';
@@ -14,7 +15,8 @@ export default class Social extends React.Component {
   }
 
   getSocialShare() {
-    const { styleParams, id, actions } = this.props;
+    const styleParams = this.context.styleParams;
+    const { id, actions } = this.props;
     if (styleParams.allowSocial) {
       const slideshowShareButton = (
         <i
@@ -248,3 +250,5 @@ export default class Social extends React.Component {
     );
   }
 }
+
+Social.contextType = GalleryContext;

@@ -4,6 +4,7 @@ import _ from 'lodash';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
+import { GalleryContext } from '../../context/GalleryContext.js';
 
 utils.fixViewport('Gallery');
 
@@ -141,7 +142,7 @@ class GalleryView extends React.Component {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles ' +
-          (this.props.styleParams.oneRow
+          (this.context.styleParams.oneRow
             ? ' one-row slider hide-scrollbars '
             : '') +
           (utils.isAccessibilityEnabled() ? ' accessible ' : '')
@@ -156,7 +157,7 @@ class GalleryView extends React.Component {
         <div
           id="pro-gallery-margin-container"
           style={{
-            margin: this.props.styleParams.galleryMargin + 'px',
+            margin: this.context.styleParams.galleryMargin + 'px',
             height: galleryHeight,
             width: this.props.container.galleryWidth,
             overflow: 'visible',
@@ -175,7 +176,7 @@ class GalleryView extends React.Component {
       scrollingElement: this.props.scrollingElement,
       scroll: this.props.scroll,
       container: this.props.container,
-      styleParams: this.props.styleParams,
+      styleParams: this.context.styleParams,
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
@@ -237,7 +238,7 @@ class GalleryView extends React.Component {
   }
 
   createShowMoreButton() {
-    const styleParams = this.props.styleParams;
+    const styleParams = this.context.styleParams;
     let showMoreButton = false;
     const buttonState = this.props.displayShowMore;
     const shouldShowButton =
@@ -275,8 +276,8 @@ class GalleryView extends React.Component {
   getStyles() {
     const marginExceptBottom =
       -1 *
-      (this.props.styleParams.imageMargin -
-        this.props.styleParams.galleryMargin);
+      (this.context.styleParams.imageMargin -
+        this.context.styleParams.galleryMargin);
     return {
       margin: `${marginExceptBottom}px ${marginExceptBottom}px 0 ${marginExceptBottom}px`,
     };
@@ -290,7 +291,7 @@ class GalleryView extends React.Component {
       console.time('Rendering Gallery took ');
       console.log(
         '[DEBUG_RENDER] GalleryView styleParams',
-        this.props.styleParams,
+        this.context.styleParams,
       );
       console.log(
         '[DEBUG_RENDER] GalleryView props changed',
@@ -326,5 +327,7 @@ class GalleryView extends React.Component {
     );
   }
 }
+
+GalleryView.contextType = GalleryContext;
 
 export default GalleryView;

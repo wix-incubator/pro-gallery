@@ -1,6 +1,6 @@
 import React from 'react';
+import { GalleryContext } from '../../context/GalleryContext.js';
 import LOADING_MODE from '../../utils/constants/loadingMode';
-import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 export default class ImageItem extends React.Component {
   componentDidMount() {
@@ -15,18 +15,15 @@ export default class ImageItem extends React.Component {
 
   render() {
     const {
-      isThumbnail,
       alt,
-      visible,
-      loaded,
       displayed,
-      styleParams,
       imageDimensions,
       resized_url,
       id,
       actions,
       settings,
     } = this.props;
+    const styleParams = this.context.styleParams;
     const imageProps =
       settings &&
       settings.imageProps &&
@@ -36,9 +33,7 @@ export default class ImageItem extends React.Component {
     const backgroundStyle = {}; //remove this inline style if rendered padding (using css) is used
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
-    const isSEO =
-      !!this.props.isInSEO ||
-      (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
+    const isSEO = !!this.props.isInSEO;
     const imageItemClassName = [
       'gallery-item-content',
       'image-item',
@@ -103,3 +98,5 @@ export default class ImageItem extends React.Component {
     return renderedItem;
   }
 }
+
+ImageItem.contextType = GalleryContext;

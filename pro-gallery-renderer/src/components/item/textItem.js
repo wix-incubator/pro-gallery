@@ -1,8 +1,10 @@
 import React from 'react';
+import { GalleryContext } from '../../context/GalleryContext.js';
 
 export default class TextItem extends React.Component {
   getTextDimensions() {
-    const { style, styleParams, cubeRatio } = this.props;
+    const styleParams = this.context.styleParams;
+    const { style, cubeRatio } = this.props;
     const isVerticalItem = style.ratio < cubeRatio - 0.01;
     //text dimensions include scaling
     const textHeight =
@@ -94,3 +96,5 @@ export default class TextItem extends React.Component {
     );
   }
 }
+
+TextItem.contextType = GalleryContext;

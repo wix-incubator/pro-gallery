@@ -2,6 +2,7 @@ import React from 'react';
 
 import ItemView from './itemView.js';
 import { CommonItemContainer } from './commonItemContainer.js';
+import { GalleryContext } from '../../context/GalleryContext.js';
 
 class ItemContainer extends React.Component {
   constructor(props, context) {
@@ -14,8 +15,8 @@ class ItemContainer extends React.Component {
     const maxHeight = 90;
 
     if (
-      this.props.styleParams.cubeImages &&
-      this.props.styleParams.cubeType === 'fit'
+      this.context.styleParams.cubeImages &&
+      this.context.styleParams.cubeType === 'fit'
     ) {
       if (this.props.style.orientation === 'landscape') {
         //wide image
@@ -42,7 +43,7 @@ class ItemContainer extends React.Component {
 
   render() {
     this.props.love.showCounter =
-      this.props.styleParams.loveCounter &&
+      this.context.styleParams.loveCounter &&
       !this.isSmallItem() &&
       !this.isNarrow();
     return (
@@ -57,5 +58,7 @@ class ItemContainer extends React.Component {
     );
   }
 }
+
+ItemContainer.contextType = GalleryContext;
 
 export default CommonItemContainer(ItemContainer);
