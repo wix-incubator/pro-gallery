@@ -1,12 +1,11 @@
 import React from 'react';
 import CustomButtonIcon from './customButtonIcon.js';
 import utils from '../../../utils/index.js';
-import { GalleryContext } from '../../../context/GalleryContext.js';
 import EVENTS from '../../../utils/constants/events';
 
 export default class CustomButton extends React.Component {
   render() {
-    const styleParams = this.context.styleParams;
+    const { styleParams } = this.props;
     const defaultText = utils.isStoreGallery() ? 'Buy Now' : 'Click here';
     const buttonText = styleParams.customButtonText || defaultText;
     return (
@@ -38,5 +37,3 @@ export default class CustomButton extends React.Component {
     );
   }
 }
-
-CustomButton.contextType = GalleryContext;

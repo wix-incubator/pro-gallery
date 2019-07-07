@@ -9,7 +9,6 @@ import { isGalleryInViewport } from './galleryHelpers.js';
 import playSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/Play.svg';
 // eslint-disable-next-line import/no-unresolved
 import pauseSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/pause.svg';
-import { GalleryContext } from '../../context/GalleryContext.js';
 import EVENTS from '../../utils/constants/events';
 
 utils.fixViewport('Gallery');
@@ -50,7 +49,7 @@ class SlideshowView extends React.Component {
   isFirstItem() {
     let pos;
     if (this.container) {
-      pos = this.context.styleParams.oneRow
+      pos = this.props.styleParams.oneRow
         ? this.container.scrollLeft
         : this.container.scrollTop;
     } else {
@@ -63,7 +62,7 @@ class SlideshowView extends React.Component {
   isLastItem() {
     let pos;
     if (this.container) {
-      pos = this.context.styleParams.oneRow
+      pos = this.props.styleParams.oneRow
         ? this.container.scrollLeft
         : this.container.scrollTop;
     } else {
@@ -74,7 +73,7 @@ class SlideshowView extends React.Component {
       this.state.currentIdx >= this.props.totalItemsCount - 1 ||
       !lastItemInGallery ||
       this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right;
-    return lastItem() && !this.context.styleParams.slideshowLoop;
+    return lastItem() && !this.props.styleParams.slideshowLoop;
   }
   //__________________________________Slide show loop functions_____________________________________________
 
@@ -82,8 +81,7 @@ class SlideshowView extends React.Component {
     const items = this.props.items;
     const biasedItems = [];
     const numOfThumbnails = Math.ceil(
-      this.props.container.galleryWidth /
-        this.context.styleParams.thumbnailSize,
+      this.props.container.galleryWidth / this.props.styleParams.thumbnailSize,
     );
     // need to create new item ! not just to copy the last once - the react view refferce one of them
     Object.keys(items).forEach(idx => {
@@ -125,7 +123,7 @@ class SlideshowView extends React.Component {
       }
     } else {
       // ---- Called by the user (arrows, keys etc.) ---- //
-      this.startAutoSlideshowIfNeeded(this.context.styleParams);
+      this.startAutoSlideshowIfNeeded(this.props.styleParams);
       const isScrollingPastEdge =
         (direction === 1 && this.isLastItem()) ||
         (direction === -1 && this.isFirstItem());
@@ -202,7 +200,7 @@ class SlideshowView extends React.Component {
     this.props.actions.eventsListener(EVENTS.THUMBNAIL_CLICKED, this.props);
 
     this.isAutoScrolling = true;
-    this.startAutoSlideshowIfNeeded(this.context.styleParams);
+    this.startAutoSlideshowIfNeeded(this.props.styleParams);
     utils.setStateAndLog(
       this,
       'Scroll to Item',
@@ -242,7 +240,7 @@ class SlideshowView extends React.Component {
   createThumbnails(thumbnailPosition) {
     let items = this.props.items;
     let currentIdx = this.state.currentIdx;
-    if (this.context.styleParams.slideshowLoop) {
+    if (this.props.styleParams.slideshowLoop) {
       if (!this.ItemsForSlideshowLoopThumbnails) {
         this.createNewItemsForSlideshowLoopThumbnails();
       }
@@ -253,8 +251,8 @@ class SlideshowView extends React.Component {
       console.log('creating thumbnails for idx', currentIdx);
     }
 
-    let width = this.context.styleParams.thumbnailSize;
-    let height = this.context.styleParams.thumbnailSize;
+    let width = this.props.styleParams.thumbnailSize;
+    let height = this.props.styleParams.thumbnailSize;
     let oneRow;
     let numOfThumbnails;
     let numOfWholeThumbnails;
@@ -264,36 +262,36 @@ class SlideshowView extends React.Component {
       case 'bottom':
         width =
           this.props.container.galleryWidth +
-          this.context.styleParams.thumbnailSpacings;
+          this.props.styleParams.thumbnailSpacings;
         height =
-          this.context.styleParams.thumbnailSize +
-          this.context.styleParams.thumbnailSpacings;
+          this.props.styleParams.thumbnailSize +
+          this.props.styleParams.thumbnailSpacings;
         oneRow = true;
         numOfThumbnails = Math.ceil(
-          width / this.context.styleParams.thumbnailSize,
+          width / this.props.styleParams.thumbnailSize,
         );
         numOfWholeThumbnails = Math.floor(
-          (width + this.context.styleParams.thumbnailSpacings) /
-            (this.context.styleParams.thumbnailSize +
-              this.context.styleParams.thumbnailSpacings * 2),
+          (width + this.props.styleParams.thumbnailSpacings) /
+            (this.props.styleParams.thumbnailSize +
+              this.props.styleParams.thumbnailSpacings * 2),
         );
         break;
       case 'left':
       case 'right':
         height =
           this.props.container.galleryHeight +
-          2 * this.context.styleParams.thumbnailSpacings;
+          2 * this.props.styleParams.thumbnailSpacings;
         width =
-          this.context.styleParams.thumbnailSize +
-          2 * this.context.styleParams.thumbnailSpacings;
+          this.props.styleParams.thumbnailSize +
+          2 * this.props.styleParams.thumbnailSpacings;
         oneRow = false;
         numOfThumbnails = Math.ceil(
-          height / this.context.styleParams.thumbnailSize,
+          height / this.props.styleParams.thumbnailSize,
         );
         numOfWholeThumbnails = Math.floor(
           height /
-            (this.context.styleParams.thumbnailSize +
-              this.context.styleParams.thumbnailSpacings * 2),
+            (this.props.styleParams.thumbnailSize +
+              this.props.styleParams.thumbnailSpacings * 2),
         );
         break;
     }
@@ -326,9 +324,9 @@ class SlideshowView extends React.Component {
     }
 
     const thumbnailsContainerSize =
-      numOfThumbnails * this.context.styleParams.thumbnailSize +
+      numOfThumbnails * this.props.styleParams.thumbnailSize +
       ((numOfThumbnails - 1) * 2 + 1) *
-        this.context.styleParams.thumbnailSpacings;
+        this.props.styleParams.thumbnailSpacings;
     const thumbnailsStyle = { width, height };
 
     if (
@@ -383,8 +381,8 @@ class SlideshowView extends React.Component {
     }
 
     let thumbnailsMargin;
-    const thumbnailSpacings = this.context.styleParams.thumbnailSpacings;
-    switch (this.context.styleParams.galleryThumbnailsAlignment) {
+    const thumbnailSpacings = this.props.styleParams.thumbnailSpacings;
+    switch (this.props.styleParams.galleryThumbnailsAlignment) {
       case 'bottom':
         thumbnailsMargin = `${thumbnailSpacings}px -${thumbnailSpacings}px 0 -${thumbnailSpacings}px`;
         break;
@@ -402,7 +400,7 @@ class SlideshowView extends React.Component {
       this.props.galleryStructure.galleryItems.find(item => item.id === itemId);
     const highlighledIdxForSlideshowLoop = Math.floor(numOfThumbnails / 2);
     let thumbnailItems;
-    if (this.context.styleParams.slideshowLoop) {
+    if (this.props.styleParams.slideshowLoop) {
       thumbnailItems = items.slice(this.firstItemIdx, this.lastItemIdx + 1);
     } else {
       thumbnailItems = this.props.galleryStructure.galleryItems.slice(
@@ -410,7 +408,7 @@ class SlideshowView extends React.Component {
         this.lastItemIdx + 1,
       );
     }
-    const { thumbnailSize } = this.context.styleParams;
+    const { thumbnailSize } = this.props.styleParams;
     return (
       <div
         className={
@@ -432,10 +430,10 @@ class SlideshowView extends React.Component {
           style={Object.assign(thumbnailsStyle, { width, height })}
         >
           {thumbnailItems.map((item, idx) => {
-            const thumbnailItem = this.context.styleParams.slideshowLoop
+            const thumbnailItem = this.props.styleParams.slideshowLoop
               ? getThumbnailItemForSlideshowLoop(item.itemId || item.photoId)
               : item;
-            const highlighted = this.context.styleParams.slideshowLoop
+            const highlighted = this.props.styleParams.slideshowLoop
               ? idx === highlighledIdxForSlideshowLoop
               : thumbnailItem.idx === currentIdx;
             const itemStyle = {
@@ -515,7 +513,7 @@ class SlideshowView extends React.Component {
       //while the scroll is animating, prevent the reaction to this event
       return;
     }
-    this.startAutoSlideshowIfNeeded(this.context.styleParams);
+    this.startAutoSlideshowIfNeeded(this.props.styleParams);
     const scrollLeft = (this.container && this.container.scrollLeft) || 0;
 
     const items = this.state.flatItems;
@@ -561,7 +559,7 @@ class SlideshowView extends React.Component {
           0,
         );
         const isAllItemsFitsGalleryWidth =
-          this.context.styleParams.oneRow &&
+          this.props.styleParams.oneRow &&
           this.props.container.galleryWidth >= allGroupsWidth;
         return isAllItemsFitsGalleryWidth;
       },
@@ -572,7 +570,7 @@ class SlideshowView extends React.Component {
       return null;
     }
 
-    const arrowWidth = this.context.styleParams.arrowsSize;
+    const arrowWidth = this.props.styleParams.arrowsSize;
 
     const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
     const scalePercentage = arrowWidth / arrowOrigWidth;
@@ -580,29 +578,28 @@ class SlideshowView extends React.Component {
 
     const svgStyle = {};
     if (utils.isMobile()) {
-      if (typeof this.context.styleParams.arrowsColor !== 'undefined') {
-        svgStyle.fill = this.context.styleParams.arrowsColor.value;
+      if (typeof this.props.styleParams.arrowsColor !== 'undefined') {
+        svgStyle.fill = this.props.styleParams.arrowsColor.value;
       }
     }
 
     // nav-arrows-container width is 100. arrowWidth + padding on each side should be 100
     const containerPadding = (100 - arrowWidth) / 2;
-    const slideshowSpace = this.context.styleParams.isSlideshow
-      ? this.context.styleParams.slideshowInfoSize
+    const slideshowSpace = this.props.styleParams.isSlideshow
+      ? this.props.styleParams.slideshowInfoSize
       : 0;
-    // top: this.context.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly. 50% is the middle, 50px is half of nav-arrows-container height
+    // top: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly. 50% is the middle, 50px is half of nav-arrows-container height
     const containerStyle = {
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
-      top: `calc(50% - 50px + ${this.context.styleParams.imageMargin /
+      top: `calc(50% - 50px + ${this.props.styleParams.imageMargin /
         2}px - ${slideshowSpace / 2}px)`,
     };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
-      this.context.styleParams.oneRow &&
-      this.context.styleParams.arrowsPosition
-        ? `-${this.context.styleParams.arrowsSize + 50 + 10}px`
-        : `${this.context.styleParams.imageMargin}px`;
-    // left & right: this.context.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+      this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition
+        ? `-${this.props.styleParams.arrowsSize + 50 + 10}px`
+        : `${this.props.styleParams.imageMargin}px`;
+    // left & right: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
     const prevContainerStyle = {
       left: arrowsPos,
     };
@@ -670,7 +667,7 @@ class SlideshowView extends React.Component {
       scrollingElement: this.props.scrollingElement,
       renderedItemsCount: this.props.renderedItemsCount,
       scroll: this.props.scroll,
-      styleParams: this.context.styleParams,
+      styleParams: this.props.styleParams,
       container: this.props.container,
       watermark: this.props.watermark,
       settings: this.props.settings,
@@ -694,9 +691,9 @@ class SlideshowView extends React.Component {
         width: column.width,
         height: this.props.container.galleryHeight,
       };
-      if (this.context.styleParams.isSlideshow) {
+      if (this.props.styleParams.isSlideshow) {
         _.merge(columnStyle, {
-          paddingBottom: this.context.styleParams.slideshowInfoSize,
+          paddingBottom: this.props.styleParams.slideshowInfoSize,
         });
       }
       return (
@@ -726,14 +723,13 @@ class SlideshowView extends React.Component {
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized and needs to be positioned
     const galleryStyleForExternalArrows =
-      this.context.styleParams.oneRow &&
-      this.context.styleParams.arrowsPosition
+      this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition
         ? {
             overflow: 'visible',
             left:
-              this.context.styleParams.arrowsSize +
+              this.props.styleParams.arrowsSize +
               40 +
-              this.context.styleParams.imageMargin,
+              this.props.styleParams.imageMargin,
           }
         : {};
 
@@ -742,9 +738,9 @@ class SlideshowView extends React.Component {
       width: this.props.container.galleryWidth,
       ...galleryStyleForExternalArrows,
     };
-    if (this.context.styleParams.isSlideshow) {
+    if (this.props.styleParams.isSlideshow) {
       _.merge(galleryStyle, {
-        paddingBottom: this.context.styleParams.slideshowInfoSize,
+        paddingBottom: this.props.styleParams.slideshowInfoSize,
       });
     }
 
@@ -753,7 +749,7 @@ class SlideshowView extends React.Component {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles one-row hide-scrollbars ' +
-          (this.context.styleParams.enableScroll ? ' slider ' : '') +
+          (this.props.styleParams.enableScroll ? ' slider ' : '') +
           (utils.isAccessibilityEnabled() ? ' accessible ' : '')
         }
         style={galleryStyle}
@@ -772,7 +768,7 @@ class SlideshowView extends React.Component {
     this.setState(
       { shouldStopAutoSlideShow: !currShouldStopAutoSlideShow },
       () => {
-        this.startAutoSlideshowIfNeeded(this.context.styleParams);
+        this.startAutoSlideshowIfNeeded(this.props.styleParams);
       },
     );
   }
@@ -783,18 +779,18 @@ class SlideshowView extends React.Component {
     }
     const containerStyle = {
       paddingTop: '25px',
-      top: `calc(100% - 100px + ${this.context.styleParams.imageMargin /
-        2}px - ${this.context.styleParams.slideshowInfoSize / 2}px)`,
+      top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
+        2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
     };
 
-    let imageMargin = this.context.styleParams.imageMargin;
+    let imageMargin = this.props.styleParams.imageMargin;
     if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
       imageMargin += 50;
     }
     const rightMargin = this.shouldCreateSlideShowNumbers
       ? imageMargin + 50
       : imageMargin;
-    this.context.styleParams.galleryTextAlign === 'right'
+    this.props.styleParams.galleryTextAlign === 'right'
       ? Object.assign(containerStyle, { left: `${rightMargin}px` })
       : Object.assign(containerStyle, {
           right: `${imageMargin}px`,
@@ -825,15 +821,15 @@ class SlideshowView extends React.Component {
     }
     const containerStyle = {
       paddingTop: '23px',
-      top: `calc(100% - 100px + ${this.context.styleParams.imageMargin /
-        2}px - ${this.context.styleParams.slideshowInfoSize / 2}px)`,
+      top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
+        2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
     };
-    let imageMargin = this.context.styleParams.imageMargin;
+    let imageMargin = this.props.styleParams.imageMargin;
     if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
       imageMargin += 50;
     }
 
-    this.context.styleParams.galleryTextAlign === 'right'
+    this.props.styleParams.galleryTextAlign === 'right'
       ? Object.assign(containerStyle, { left: `${imageMargin}px` })
       : Object.assign(containerStyle, { right: `${imageMargin}px` });
     return (
@@ -850,8 +846,8 @@ class SlideshowView extends React.Component {
   }
 
   getThumbnails() {
-    const hasThumbnails = this.context.styleParams.hasThumbnails;
-    const thumbnailsPosition = this.context.styleParams
+    const hasThumbnails = this.props.styleParams.hasThumbnails;
+    const thumbnailsPosition = this.props.styleParams
       .galleryThumbnailsAlignment;
 
     const thumbnailsGallery = hasThumbnails
@@ -876,13 +872,13 @@ class SlideshowView extends React.Component {
 
   getClassNames() {
     let classNames = '';
-    if (this.context.styleParams.isSlideshow) {
+    if (this.props.styleParams.isSlideshow) {
       classNames = ' gallery-slideshow';
-    } else if (this.context.styleParams.isSlider) {
+    } else if (this.props.styleParams.isSlider) {
       classNames = ' gallery-slider';
-    } else if (this.context.styleParams.hasThumbnails) {
+    } else if (this.props.styleParams.hasThumbnails) {
       classNames = ' gallery-thumbnails';
-    } else if (this.context.styleParams.isColumns) {
+    } else if (this.props.styleParams.isColumns) {
       classNames = ' gallery-columns';
     }
 
@@ -897,8 +893,8 @@ class SlideshowView extends React.Component {
     return {
       margin:
         -1 *
-        (this.context.styleParams.imageMargin -
-          this.context.styleParams.galleryMargin),
+        (this.props.styleParams.imageMargin -
+          this.props.styleParams.galleryMargin),
     };
   }
 
@@ -917,9 +913,9 @@ class SlideshowView extends React.Component {
     if (!utils.isSite()) {
       if (
         //check that the change is related to the slideshow settings
-        this.context.styleParams.isAutoSlideshow !==
+        this.props.styleParams.isAutoSlideshow !==
           props.styleParams.isAutoSlideshow ||
-        this.context.styleParams.autoSlideshowInterval !==
+        this.props.styleParams.autoSlideshowInterval !==
           props.styleParams.autoSlideshowInterval
       ) {
         this.startAutoSlideshowIfNeeded(props.styleParams);
@@ -954,7 +950,7 @@ class SlideshowView extends React.Component {
       utils.setStateAndLog(this, 'Next Item', {
         isInView: true,
       });
-      this.startAutoSlideshowIfNeeded(this.context.styleParams);
+      this.startAutoSlideshowIfNeeded(this.props.styleParams);
     });
 
     this.container = window.document.querySelector(
@@ -964,7 +960,7 @@ class SlideshowView extends React.Component {
       this.container.addEventListener('scroll', this._setCurrentItemByScroll);
     }
     this.setCurrentItemByScroll();
-    this.startAutoSlideshowIfNeeded(this.context.styleParams);
+    this.startAutoSlideshowIfNeeded(this.props.styleParams);
   }
 
   componentWillUnmount() {
@@ -1005,7 +1001,5 @@ class SlideshowView extends React.Component {
     );
   }
 }
-
-SlideshowView.contextType = GalleryContext;
 
 export default SlideshowView;

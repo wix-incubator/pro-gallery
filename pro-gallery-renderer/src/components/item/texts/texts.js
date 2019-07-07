@@ -6,9 +6,8 @@ import lineHeightFixer from './lineHeightFixer.js';
 import PLACEMENTS from '../../../utils/constants/placements';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
-import { featureManager } from '../../helpers/versionsHelper';
+import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
 import _ from 'lodash';
-import { GalleryContext } from '../../../context/GalleryContext.js';
 
 export default class Texts extends React.Component {
   constructor(props) {
@@ -17,8 +16,7 @@ export default class Texts extends React.Component {
   }
 
   getElementClassNames() {
-    const styleParams = this.context.styleParams;
-    const { showShare, isNarrow } = this.props;
+    const { showShare, styleParams, isNarrow } = this.props;
     const classNames = ['gallery-item-text'];
     if (showShare) {
       classNames.push('hidden');
@@ -86,7 +84,7 @@ export default class Texts extends React.Component {
     } = this.props;
     const shouldShowTitle = title && styleParams.allowTitle;
     const shouldShowDescription = description && styleParams.allowDescription;
-    const isNewMobileSettings = featureManager.supports.mobileSettings;
+    const isNewMobileSettings = settingsVersionManager.newMobileSettings();
     const titleSpanStyle = {};
     const descSpanStyle = {};
     let titleStyle, descStyle;
@@ -227,5 +225,3 @@ export default class Texts extends React.Component {
     return this.getItemTexts();
   }
 }
-
-Texts.contextType = GalleryContext;
