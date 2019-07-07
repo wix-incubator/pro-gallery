@@ -1,7 +1,6 @@
 import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
 import _ from 'lodash';
-import GalleryEmpty from './galleryEmpty';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
@@ -14,7 +13,6 @@ class GalleryView extends React.Component {
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
-    this.createEmptyState = this.createEmptyState.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
     this.createGallery = this.createGallery.bind(this);
 
@@ -196,18 +194,6 @@ class GalleryView extends React.Component {
     };
   }
 
-  createEmptyState() {
-    return !(this.props.renderedItemsCount > 0) && utils.isEditor() ? (
-      <GalleryEmpty
-        actions={{
-          setWixHeight: this.props.actions.setWixHeight,
-        }}
-      />
-    ) : (
-      ''
-    );
-  }
-
   screenLogs() {
     return utils.shouldDebug('screenLogs') ? (
       <div className="screen-logs">
@@ -321,7 +307,6 @@ class GalleryView extends React.Component {
 
     const showMore = this.createShowMoreButton();
     const gallery = this.createGallery(showMore);
-    const emptyState = this.createEmptyState();
 
     if (utils.isVerbose()) {
       console.timeEnd('Rendering Gallery took ');
@@ -335,7 +320,6 @@ class GalleryView extends React.Component {
         // style={this.getStyles()}
       >
         {screenLogs}
-        {emptyState}
         {gallery}
         {showMore}
       </div>
