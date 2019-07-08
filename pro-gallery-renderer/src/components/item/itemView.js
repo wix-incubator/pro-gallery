@@ -20,7 +20,6 @@ import {
 } from '../helpers/scrollHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
-import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import EVENTS from '../../utils/constants/events';
 import PLACEMENTS from '../../utils/constants/placements';
 import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
@@ -226,10 +225,7 @@ class ItemView extends React.Component {
           : this.props.playVideo(this.props.idx);
       }
     }
-    this.props.actions.eventsListener(
-      EVENTS.ITEM_ACTION_TRIGGERED,
-      this.props,
-    );
+    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
     //this.props.actions.onItemClicked(this.props.idx);
   }
 
@@ -842,9 +838,7 @@ class ItemView extends React.Component {
       const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
       const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
       Object.assign(boxShadow, {
-        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${
-          styleParams.itemShadowOpacityAndColor.value
-        }`,
+        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`,
       });
     }
 
@@ -1171,9 +1165,7 @@ class ItemView extends React.Component {
     const { directLink } = this.props;
     const { itemClick } = this.props.styleParams;
     const { url, target } = directLink || {};
-    const isSEO =
-      !!this.props.isInSEO ||
-      (experiments && experiments('specs.pro-gallery.SEOBotView') === 'true');
+    const isSEO = !!this.props.isInSEO;
     const isPremium = this.props.isPremiumSite;
     const shouldUseNofollow = isSEO && !isPremium;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');
