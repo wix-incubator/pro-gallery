@@ -10,7 +10,6 @@ import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
 import window from '../../../utils/window/windowWrapper';
 import LoveButton from '../loveButton/loveButton.js';
-import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 describe('Social:', () => {
   let driver;
@@ -237,26 +236,6 @@ describe('Social:', () => {
         stubSite.restore();
         stubiOS.restore();
       });
-    });
-    it('should create a different onClick functions for text items', () => {
-      const stubSite = sinon.stub(utils, 'isSite').returns(false);
-      const stubiOS = sinon.stub(utils, 'isiOS').returns(false);
-      let stubItemActions = sinon.stub(itemActions, 'downloadTextItem');
-      Object.assign(sampleItemViewProps, {
-        type: 'text',
-        styleParams: { allowDownload: true },
-        isDemo: false,
-      });
-      driver.mount(ItemView, sampleItemViewProps);
-      driver.find.hook('item-download').simulate('click', mockEvent);
-      expect(stubItemActions.called).to.be.true;
-      stubItemActions.restore();
-      stubItemActions = sinon.stub(itemActions, 'downloadTextItem');
-      driver.set.props({ type: 'image' });
-      driver.find.hook('item-download').simulate('click', mockEvent);
-      expect(stubItemActions.called).to.be.false;
-      stubSite.restore();
-      stubiOS.restore();
     });
   });
 });

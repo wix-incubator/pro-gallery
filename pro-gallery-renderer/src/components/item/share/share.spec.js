@@ -8,7 +8,6 @@ import { spy, expect, chai } from 'chai';
 import sinon from 'sinon';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
-import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 
 describe('Share:', () => {
   let driver;
@@ -23,12 +22,6 @@ describe('Share:', () => {
   });
 
   describe('a single sharing button', () => {
-    it('calls the functions under onClick', () => {
-      const stub = sinon.stub(itemActions, 'share');
-      driver.mount(Share, sampleItemViewProps);
-      driver.find.hook('facebook-share-button').simulate('click', mockEvent);
-      expect(stub.called).to.be.true;
-    });
     it('Toggles inactive based on utils.isSite function', () => {
       const stub = sinon.stub(utils, 'isSite').returns(true);
       driver.mount(Share, sampleItemViewProps);

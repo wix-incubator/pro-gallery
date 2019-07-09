@@ -46,13 +46,22 @@ export default class Social extends React.Component {
             }
             data-hook="gallery-item-social-button"
             key={'item-social-share-' + id}
-            onMouseOver={e =>
-              actions.itemActions.showTooltip(
-                e,
-                'Gallery_Sharing_Disabled_In_Editor',
+            onMouseOver={e => {
+              const mouseOverData = {
+                event: e,
+                key: 'Gallery_Sharing_Disabled_In_Editor',
+              };
+              actions.eventsListener(
+                EVENTS.PREVIEW_SHARE_BUTTON_MOUSE_OVER,
+                mouseOverData,
+              );
+            }}
+            onMouseOut={() =>
+              actions.eventsListener(
+                EVENTS.PREVIEW_SHARE_BUTTON_MOUSE_OUT,
+                this.props,
               )
             }
-            onMouseOut={() => actions.itemActions.hideTooltip()}
             onClick={e => e.stopPropagation()}
           >
             {slideshowShareButton}
@@ -73,6 +82,7 @@ export default class Social extends React.Component {
       'styleParams',
       'hashtag',
       'love',
+      'type',
       'actions',
     ]);
     return styleParams.loveButton ? (
@@ -88,7 +98,6 @@ export default class Social extends React.Component {
   }
 
   getDownload() {
-    const item = _.pick(this.props, ['html', 'style']);
     const { styleParams, isDemo, type, download_url, actions } = this.props;
     if (
       styleParams.allowDownload &&
@@ -140,29 +149,49 @@ export default class Social extends React.Component {
             {...genralProps}
             onClick={e => {
               e.stopPropagation();
-              actions.itemActions.downloadTextItem(item, 'gallery');
+              actions.eventsListener(
+                EVENTS.TEXT_DOWNLOAD_BUTTON_CLICKED,
+                this.props,
+              );
             }}
-            onKeyDown={e => this.onDownloadTextKeyPress(e, item)}
+            onKeyDown={e => this.onDownloadTextKeyPress(e)}
           >
             {downloadIcon}
           </a>
         );
       } else {
-        const props = isDemo
-          ? {
-              onMouseOver: e =>
-                actions.itemActions.showTooltip(
-                  e,
-                  'Gallery_Hover_Download_FreeImages_Text',
-                ),
-              onMouseOut: () => actions.itemActions.hideTooltip(),
-            }
-          : itemProps;
-        return (
-          <a {...genralProps} download="download" {...props}>
-            {downloadIcon}
-          </a>
-        );
+        if (!isDemo) {
+          return (
+            <a {...genralProps} download="download" {...itemProps}>
+              {downloadIcon}
+            </a>
+          );
+        } else {
+          return (
+            <a
+              {...genralProps}
+              download="download"
+              onMouseOver={e => {
+                const mouseOverData = {
+                  event: e,
+                  key: 'Gallery_Hover_Download_FreeImages_Text',
+                };
+                actions.eventsListener(
+                  EVENTS.DEMO_DOWNLOAD_BUTTON_MOUSE_OVER,
+                  mouseOverData,
+                );
+              }}
+              onMouseOut={() =>
+                actions.eventsListener(
+                  EVENTS.DEMO_DOWNLOAD_BUTTON_MOUSE_OUT,
+                  this.props,
+                )
+              }
+            >
+              {downloadIcon}
+            </a>
+          );
+        }
       }
     }
     return '';
@@ -183,12 +212,15 @@ export default class Social extends React.Component {
     }
   }
 
-  onDownloadTextKeyPress(e, item) {
+  onDownloadTextKeyPress(e) {
     switch (e.keyCode || e.charCode) {
       case 32: //space
       case 13: //enter
         e.stopPropagation();
-        this.props.actions.itemActions.downloadTextItem(item, 'gallery');
+        this.props.actions.eventsListener(
+          EVENTS.TEXT_DOWNLOAD_BUTTON_CLICKED,
+          this.props,
+        );
         return false;
     }
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
+import EVENTS from '../../../utils/constants/events';
 
 export default class Share extends React.Component {
   constructor(props) {
@@ -65,10 +66,14 @@ export default class Share extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         if (this.state.showShare) {
-          this.props.actions.itemActions.share(
-            this.shareArr[this.state.focusedShareIcon - 1],
-            this.props,
-            'gallery',
+          const { allProps } = this.props;
+          const shareData = {
+            network: this.shareArr[this.state.focusedShareIcon - 1],
+            shareProps: allProps,
+          };
+          this.props.actions.eventsListener(
+            EVENTS.SHARE_BUTTON_CLICKED,
+            shareData,
           );
           this.props.actions.toggleShare(e, false);
           utils.setStateAndLog(this, 'Share Keypress', {
@@ -151,7 +156,14 @@ export default class Share extends React.Component {
         onClick={e => {
           e.preventDefault();
           e.stopPropagation();
-          this.props.actions.itemActions.share(network, allProps, 'gallery');
+          const shareData = {
+            network,
+            shareProps: allProps,
+          };
+          this.props.actions.eventsListener(
+            EVENTS.ON_SHARE_BUTTON_CLICKED,
+            shareData,
+          );
         }}
         data-hook={network + '-share-button'}
         ref={button => (this.buttons[idx] = button)}

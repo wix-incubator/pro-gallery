@@ -516,8 +516,6 @@ class ItemView extends React.Component {
           openItemShopInFullScreen: this.openItemShopInFullScreen,
           toggleShare: this.toggleShare,
           getShare: this.getShare,
-          showTooltip: this.props.actions.itemActions.showTooltip,
-          hideTooltip: this.props.actions.itemActions.hideTooltip,
           itemActions: this.props.actions.itemActions,
           eventsListener: this.props.actions.eventsListener,
         }}
@@ -544,7 +542,7 @@ class ItemView extends React.Component {
         isVerticalContainer={this.isVerticalContainer()}
         actions={{
           toggleShare: this.toggleShare,
-          itemActions: this.props.actions.itemActions,
+          eventsListener: this.props.actions.eventsListener,
         }}
       />
     );

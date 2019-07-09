@@ -46,8 +46,8 @@ export const CommonItemContainerNotConnected = ComposedComponent => {
     }
 
     toggleLove() {
-      this.props.actions.itemActions.postLoveActivity(this.props);
-      this.props.actions.itemActions.toggleLove(this.props.photoId, 'gallery');
+      //this.props.actions.itemActions.postLoveActivity(this.props);
+      //this.props.actions.itemActions.toggleLove(this.props.photoId, 'gallery');
       this.setState({
         isLoved: !this.state.isLoved,
       });

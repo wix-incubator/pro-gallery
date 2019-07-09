@@ -1,7 +1,7 @@
 import React from 'react';
 import utils from '../../../utils';
 import window from '../../../utils/window/windowWrapper';
-import _ from 'lodash';
+import EVENTS from '../../../utils/constants/events';
 
 class LoveButton extends React.Component {
   constructor(props) {
@@ -51,18 +51,7 @@ class LoveButton extends React.Component {
   toggleLove(e) {
     e.stopPropagation();
     e.preventDefault();
-    const item = _.pick(this.props, [
-      'layout',
-      'type',
-      'itemId',
-      'id',
-      'item',
-      'idx',
-      'hashtag',
-    ]);
-    Object.assign(item, { type: 'image' });
-    this.props.actions.itemActions.postLoveActivity(item);
-    this.props.actions.itemActions.toggleLove(item.itemId, item.layout);
+    this.props.actions.eventsListener(EVENTS.LOVE_BUTTON_CLICKED, this.props);
     this.setState({
       animate: !this.state.isLoved,
       isLoved: !this.state.isLoved,
@@ -145,10 +134,14 @@ class LoveButton extends React.Component {
 
   createMouseOver() {
     return e => {
-      if (this.props.isSettings) {
-        this.props.actions.itemActions.showTooltip(
-          e,
-          'This option is not available in editor',
+      if (!utils.isSite()) {
+        const mouseOverData = {
+          event: e,
+          key: 'This option is not available in editor',
+        };
+        this.props.actions.eventsListener(
+          EVENTS.PREVIEW_LOVE_BUTTON_MOUSE_OVER,
+          mouseOverData,
         );
       }
     };
@@ -156,8 +149,11 @@ class LoveButton extends React.Component {
 
   createMouseOut() {
     return () => {
-      if (this.props.isSettings) {
-        this.props.actions.itemActions.hideTooltip();
+      if (!utils.isSite()) {
+        this.props.actions.eventsListener(
+          EVENTS.PREVIEW_LOVE_BUTTON_MOUSE_OUT,
+          this.props,
+        );
       }
     };
   }
@@ -170,7 +166,9 @@ class LoveButton extends React.Component {
 
   render() {
     const loveCounter = this.createLoveCounter();
-    const clickAction = utils.getMobileEnabledClick(this.toggleLove);
+    const clickAction = utils.isSite()
+      ? utils.getMobileEnabledClick(this.toggleLove)
+      : { onClick: e => e.stopPropagation() };
     const loveColor = this.state.isLoved ? { color: 'red' } : {};
 
     return (
