@@ -161,7 +161,7 @@ export default class Share extends React.Component {
             shareProps: allProps,
           };
           this.props.actions.eventsListener(
-            EVENTS.ON_SHARE_BUTTON_CLICKED,
+            EVENTS.SHARE_BUTTON_CLICKED,
             shareData,
           );
         }}
