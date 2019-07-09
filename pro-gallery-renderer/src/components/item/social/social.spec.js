@@ -3,13 +3,13 @@
 import ItemView from '../itemView.js';
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import Social from './social.js';
-import React from 'react';
-import { spy, expect } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
 import window from '../../../utils/window/windowWrapper';
 import LoveButton from '../loveButton/loveButton.js';
+import EVENTS from '../../../utils/constants/events';
 
 describe('Social:', () => {
   let driver;
@@ -235,6 +235,25 @@ describe('Social:', () => {
         expect(driver.find.hook('item-download').length).to.equal(1); // isSite:false,isiOS:false,allowDownload:true,isDemo:flase
         stubSite.restore();
         stubiOS.restore();
+      });
+      it('should call eventsListener with different event for text items', () => {
+        const stubSite = sinon.stub(utils, 'isSite').returns(false);
+        const stubiOS = sinon.stub(utils, 'isiOS').returns(false);
+        const stub = sinon.stub(sampleItemViewProps.actions, 'eventsListener');
+        Object.assign(sampleItemViewProps, {
+          type: 'text',
+          styleParams: { allowDownload: true },
+          isDemo: false,
+        });
+        driver.mount(ItemView, sampleItemViewProps);
+        driver.find.hook('item-download').simulate('click', mockEvent);
+        expect(stub.calledWith(EVENTS.TEXT_DOWNLOAD_BUTTON_CLICKED)).to.be.true;
+        driver.set.props({ type: 'image' });
+        driver.find.hook('item-download').simulate('click', mockEvent);
+        expect(stub.calledWith(EVENTS.DOWNLOAD_BUTTON_CLICKED)).to.be.true;
+        stubSite.restore();
+        stubiOS.restore();
+        stub.restore();
       });
     });
   });

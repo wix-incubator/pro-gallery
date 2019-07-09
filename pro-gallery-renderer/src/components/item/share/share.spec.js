@@ -3,11 +3,11 @@
 import ItemView from '../itemView.js';
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import Share from './share.js';
-import React from 'react';
-import { spy, expect, chai } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
+import EVENTS from '../../../utils/constants/events';
 
 describe('Share:', () => {
   let driver;
@@ -22,6 +22,13 @@ describe('Share:', () => {
   });
 
   describe('a single sharing button', () => {
+    it('calls eventsListener onClick', () => {
+      const stub = sinon.stub(sampleItemViewProps.actions, 'eventsListener');
+      driver.mount(Share, sampleItemViewProps);
+      driver.find.hook('facebook-share-button').simulate('click', mockEvent);
+      expect(stub.calledWith(EVENTS.SHARE_BUTTON_CLICKED)).to.be.true;
+      stub.restore();
+    });
     it('Toggles inactive based on utils.isSite function', () => {
       const stub = sinon.stub(utils, 'isSite').returns(true);
       driver.mount(Share, sampleItemViewProps);

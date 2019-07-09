@@ -324,7 +324,7 @@ class galleryDriver {
           config: newGalleryConfig,
           visible: true,
           actions: {
-            itemActions,
+            eventsListener: () => {},
           },
         });
       },

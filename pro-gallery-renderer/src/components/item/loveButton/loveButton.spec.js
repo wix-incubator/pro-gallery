@@ -1,11 +1,11 @@
 import LoveButton from './loveButton.js';
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
-import React from 'react';
 import { use, expect } from 'chai';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import spies from 'chai-spies';
 import sinon from 'sinon';
+import EVENTS from '../../../utils/constants/events';
 
 use(spies);
 
@@ -13,7 +13,6 @@ describe('Love Button', () => {
   let driver;
   let sampleItemViewProps;
   let sampleItem;
-  let stub_isLoved;
   beforeEach(() => {
     driver = new GalleryDriver();
     sampleItem = testImages[0];
@@ -23,10 +22,6 @@ describe('Love Button', () => {
       isSettings: true,
       showCounter: true,
     });
-    stub_isLoved = sinon.stub(itemActions, 'toggleLove');
-  });
-  afterEach(() => {
-    stub_isLoved.restore();
   });
 
   it('should toggle love', () => {
@@ -44,6 +39,13 @@ describe('Love Button', () => {
     expect(driver.get.state().isLoved).to.equal(true);
     expect(driver.find.hook('love-counter').length).to.equal(1);
     expect(driver.find.hook('love-counter').text()).to.equal('1');
+    stub.restore();
+  });
+  it('check eventsListener called on toggle', () => {
+    const stub = sinon.stub(sampleItemViewProps.actions, 'eventsListener');
+    driver.mount(LoveButton, sampleItemViewProps);
+    driver.find.hook('love-icon').simulate('click');
+    expect(stub.calledWith(EVENTS.LOVE_BUTTON_CLICKED)).to.be.true;
     stub.restore();
   });
 });
