@@ -2,7 +2,6 @@ import LOADING_MODE from '../../utils/constants/loadingMode';
 import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
-import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 
 class CssScrollHelper {
   constructor() {
@@ -42,42 +41,8 @@ class CssScrollHelper {
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
 
-    let highResPadding;
-    let lowResPadding;
-    const scrollPreloading = experiments('specs.pro-gallery.scrollPreloading');
-
-    switch (scrollPreloading) {
-      case '0':
-        highResPadding = [0, 0];
-        lowResPadding = [0, 0];
-        break;
-      case '20':
-        highResPadding = [640, 2560];
-        lowResPadding = [1280, 2560];
-        break;
-      case '40':
-        highResPadding = [1280, 5120];
-        lowResPadding = [2560, 5120];
-        break;
-      case '60':
-        highResPadding = [2560, 10240];
-        lowResPadding = [5120, 10240];
-        break;
-      default:
-      case '80':
-        highResPadding = [5120, Infinity];
-        lowResPadding = [10240, Infinity];
-        break;
-      case '100':
-        highResPadding = [Infinity, Infinity];
-        lowResPadding = [Infinity, Infinity];
-        break;
-    }
-
-    this.highResPadding = () =>
-      allowPreloading ? highResPadding || [5120, Infinity] : [0, 0];
-    this.lowResPadding = () =>
-      allowPreloading ? lowResPadding || [10240, Infinity] : [0, 0];
+    this.highResPadding = () => allowPreloading ? [5120, Infinity] : [0, 0];
+    this.lowResPadding = () => allowPreloading ? [10240, Infinity] : [0, 0];
   }
 
   getDomId({ id }) {
@@ -138,36 +103,11 @@ class CssScrollHelper {
       .join(`\n`);
   }
 
-  shouldCalcScrollCss(
-    {
-      id,
-      idx,
-      top,
-      left,
-      width,
-      resizeWidth,
-      maxWidth,
-      height,
-      resizeHeight,
-      maxHeight,
-      resized_url,
-      type,
-    },
-    styleParams,
-  ) {
+  shouldCalcScrollCss({type}, styleParams) {
     if (type === 'video' || type === 'text') {
       return false;
     }
     return true;
-    // if (!this.scrollCss[idx]) {
-    //   return true; //recalc as long as no css was created
-    // }
-    // const scrollCssProps = JSON.stringify({id, idx, top, left, width, resizeWidth, maxWidth, height, resizeHeight, maxHeight, resized_url, oneRow: styleParams.oneRow, loadingMode: styleParams.imageLoadingMode, isSSR: window.isSSR});
-    // if (scrollCssProps === this.scrollCssProps[idx]) {
-    //   return false;
-    // }
-    // this.scrollCssProps[idx] = scrollCssProps;
-    // return true;
   }
 
   createScrollSelectorsFunction({ galleryDomId, item, styleParams }) {
@@ -240,7 +180,7 @@ class CssScrollHelper {
       if (!window.isSSR && !item.isDimensionless) {
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.image-item>canvas`) +
-          `{opacity: 1; transition: opacity .4s linear; background-image: url(${
+          `{opacity: 1; transition: opacity 1s linear; background-image: url(${
             resized_url.img
           })}`;
       }

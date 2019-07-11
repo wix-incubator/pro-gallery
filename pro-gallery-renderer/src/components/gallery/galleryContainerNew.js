@@ -15,7 +15,6 @@ import CssScrollIndicator from './galleryCssScrollIndicator';
 import { Layouter } from 'pro-gallery-layouter';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import experiments from '@wix/photography-client-lib/dist/src/sdk/experimentsWrapper';
 import _ from 'lodash';
 import utils from '../../utils';
 import EVENTS from '../../utils/constants/events';
@@ -42,9 +41,7 @@ export class GalleryContainer extends React.Component {
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
       currentHover: -1,
-      gotFirstScrollEvent: !experiments(
-        'specs.pro-gallery.dynamicScrollPreloading',
-      ),
+      gotFirstScrollEvent: false,
     };
 
     this.items = [];

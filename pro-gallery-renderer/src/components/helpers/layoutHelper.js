@@ -4,8 +4,7 @@ import PLACEMENTS from '../../utils/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
 import window from '../../utils/window/windowWrapper';
-import { layoutsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/layouts';
-import { spacingVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/spacing';
+import { featureManager } from '../helpers/versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../constants/designConsts';
@@ -75,7 +74,7 @@ function getStyleBySeed(seed) {
     gallerySize: numFromSeed(300, 800, 'gallerySize'),
     collageAmount: numFromSeed(5, 10, 'collageAmount') / 10,
     collageDensity:
-      (spacingVersionManager.isNewSpacing()
+      (featureManager.supports.spacingCalculation
         ? numFromSeed(1, 100, 'collageDensity')
         : numFromSeed(5, 10, 'collageDensity')) / 100,
     groupTypes: ['1'].concat(
@@ -86,12 +85,12 @@ function getStyleBySeed(seed) {
     oneRow: boolFromSeed('oneRow'),
     imageMargin: numFromSeed(
       0,
-      spacingVersionManager.isNewSpacing()
+      featureManager.supports.spacingCalculation
         ? numFromSeed(300, 800, 'gallerySize') / 5
         : 5,
       'imageMargin',
     ),
-    galleryMargin: spacingVersionManager.isNewSpacing()
+    galleryMargin: featureManager.supports.spacingCalculation
       ? 0
       : numFromSeed(0, 5, 'imageMargin'),
     floatingImages: 0,
@@ -739,7 +738,7 @@ function processLayouts(styles) {
 
   if (
     (processedStyles.isGrid && !processedStyles.oneRow) ||
-    (layoutsVersionManager.allowFixedColumnsInMasonry() &&
+    (featureManager.supports.fixedColumnsInMasonry &&
       processedStyles.isMasonry &&
       processedStyles.isVertical)
   ) {
