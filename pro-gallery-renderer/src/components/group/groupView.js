@@ -17,6 +17,7 @@ class GroupView extends React.Component {
         _.merge(
           item.renderProps(_.merge(this.props.galleryConfig, { visible })),
           { store: this.props.store },
+          { ...this.props.itemsLoveData[item.id] },
         ),
       ),
     );

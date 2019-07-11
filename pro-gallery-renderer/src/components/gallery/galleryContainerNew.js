@@ -983,6 +983,7 @@ export class GalleryContainer extends React.Component {
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
           items={this.items}
+          itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={styles}
           container={this.state.container}
@@ -1005,7 +1006,6 @@ export class GalleryContainer extends React.Component {
             scrollToItem: this.scrollToItem,
             setCurrentHover: this.setCurrentHover,
             duplicateGalleryItems: this.duplicateGalleryItems,
-            itemActions: this.props.itemActions,
           })}
           store={this.props.store}
           {...this.props.gallery}

@@ -663,6 +663,8 @@ class SlideshowView extends React.Component {
   }
 
   createLayout() {
+    const { itemsLoveData } = this.props;
+
     const galleryConfig = {
       scrollingElement: this.props.scrollingElement,
       renderedItemsCount: this.props.renderedItemsCount,
@@ -682,7 +684,6 @@ class SlideshowView extends React.Component {
       actions: {
         eventsListener: this.props.actions.eventsListener,
         setCurrentHover: this.props.actions.setCurrentHover,
-        itemActions: this.props.actions.itemActions,
       },
     };
 
@@ -711,6 +712,7 @@ class SlideshowView extends React.Component {
                     GroupView,
                     _.merge(group.renderProps(galleryConfig), {
                       store: this.props.store,
+                      itemsLoveData,
                     }),
                   )
                 : false,

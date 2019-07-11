@@ -1,49 +1,26 @@
 import React from 'react';
 import utils from '../../../utils';
-import window from '../../../utils/window/windowWrapper';
 import EVENTS from '../../../utils/constants/events';
 
 class LoveButton extends React.Component {
   constructor(props) {
     super(props);
     this.toggleLove = this.toggleLove.bind(this);
-    this.updateLoveCount = this.updateLoveCount.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
 
     this.state = {
-      isLoved: this.props.actions.itemActions.isLoved(props.itemId),
-      loveCount: this.props.actions.itemActions.getLoveCount(props.itemId),
+      loveButtonToggledToLove: undefined,
       animate: false,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const currIsLoved = this.props.actions.itemActions.isLoved(
-      nextProps.itemId,
-    );
-    const currLoveCount = this.props.actions.itemActions.getLoveCount(
-      nextProps.itemId,
-    );
-    if (
-      nextProps.itemId !== this.props.itemId ||
-      this.state.isLoved !== currIsLoved ||
-      this.state.loveCount !== currLoveCount
-    ) {
-      this.setState({
-        isLoved: currIsLoved,
-        loveCount: currLoveCount,
-      });
-    }
-  }
-
   onKeyPress(e) {
-    const callToggleLove = this.toggleLove;
     switch (e.keyCode || e.charCode) {
       case 32: //space
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
-        callToggleLove(e);
+        this.toggleLove(e);
         return false;
     }
   }
@@ -53,17 +30,9 @@ class LoveButton extends React.Component {
     e.preventDefault();
     this.props.actions.eventsListener(EVENTS.LOVE_BUTTON_CLICKED, this.props);
     this.setState({
-      animate: !this.state.isLoved,
-      isLoved: !this.state.isLoved,
+      animate: !this.isLoved(),
+      loveButtonToggledToLove: !this.isLoved(),
     });
-  }
-
-  componentDidMount() {
-    window.addEventListener('love_count_fetched', this.updateLoveCount);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('love_count_fetched', this.updateLoveCount);
   }
 
   containerClassName() {
@@ -88,7 +57,7 @@ class LoveButton extends React.Component {
         }
     }
     className.push(this.viewClassName());
-    if (this.state.isLoved) {
+    if (this.isLoved()) {
       className.push('progallery-svg-font-icons-love_full pro-gallery-loved');
     } else {
       className.push('progallery-svg-font-icons-love_empty');
@@ -123,8 +92,24 @@ class LoveButton extends React.Component {
     }
   }
 
+  isLoved() {
+    return typeof this.state.loveButtonToggledToLove === 'undefined'
+      ? this.props.isLoved
+      : this.state.loveButtonToggledToLove;
+  }
+
+  localLoveCount() {
+    if (this.props.isLoved === true && this.state.loveButtonToggledToLove === false) {
+      return -1;
+    } else if (!this.props.isLoved && this.state.loveButtonToggledToLove === true) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   createLoveCounter() {
-    const count = this.state.loveCount + (this.state.isLoved ? 1 : 0);
+    const count = (this.props.loveCount || 0) + this.localLoveCount();
     return !!this.props.showCounter && count > 0 ? (
       <i data-hook="love-counter" className={this.counterClassName()}>
         {count}
@@ -158,18 +143,12 @@ class LoveButton extends React.Component {
     };
   }
 
-  updateLoveCount() {
-    this.setState({
-      loveCount: this.props.actions.itemActions.getLoveCount(this.props.itemId),
-    });
-  }
-
   render() {
     const loveCounter = this.createLoveCounter();
     const clickAction = utils.isSite()
       ? utils.getMobileEnabledClick(this.toggleLove)
       : { onClick: e => e.stopPropagation() };
-    const loveColor = this.state.isLoved ? { color: 'red' } : {};
+    const loveColor = this.isLoved() ? { color: 'red' } : {};
 
     return (
       <span

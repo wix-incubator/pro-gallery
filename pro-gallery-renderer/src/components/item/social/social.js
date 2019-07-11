@@ -73,7 +73,7 @@ export default class Social extends React.Component {
   }
 
   getLoveButton() {
-    const { styleParams, love } = this.props;
+    const { styleParams, isNarrow, isSmallItem } = this.props;
     const props = _.pick(this.props, [
       'id',
       'item',
@@ -81,16 +81,17 @@ export default class Social extends React.Component {
       'currentIdx',
       'styleParams',
       'hashtag',
-      'love',
       'type',
       'actions',
+      'loveCount',
+      'isLoved',
     ]);
     return styleParams.loveButton ? (
       <LoveButton
         {...props}
         itemId={this.props.photoId}
         layout={styleParams.isSlideshow ? 'slideshow' : 'gallery'}
-        showCounter={love && love.showCounter}
+        showCounter={styleParams.loveCounter && !isSmallItem && !isNarrow}
       />
     ) : (
       ''

@@ -346,7 +346,40 @@ class ItemView extends React.Component {
   }
 
   isSmallItem() {
-    return this.props.isSmallItem && !this.props.styleParams.isSlideshow;
+    if (this.props.styleParams.isSlideshow) {
+      return false;
+    }
+
+    let isSmallItem;
+    const maxWidth = 90;
+    const maxHeight = 90;
+    if (
+      this.props.styleParams.cubeImages &&
+      this.props.styleParams.cubeType === 'fit'
+    ) {
+      if (this.props.style.orientation === 'landscape') {
+        //wide image
+        isSmallItem =
+          this.props.style.width / this.props.style.ratio <= maxHeight;
+      } else {
+        //tall image
+        isSmallItem =
+          this.props.style.height * this.props.style.ratio <= maxWidth;
+      }
+    } else {
+      isSmallItem =
+        this.props.style.width <= maxWidth ||
+        this.props.style.height <= maxHeight;
+    }
+    return isSmallItem;
+  }
+
+  isNarrow() {
+    return this.props.style.width < 200;
+  }
+
+  isShort() {
+    return this.props.style.height < 150;
   }
 
   isVerticalContainer() {
@@ -462,7 +495,6 @@ class ItemView extends React.Component {
       'id',
       'styleParams',
       'style',
-      'isNarrow',
     ]);
     const isImage =
       this.props.type === 'image' || this.props.type === 'picture';
@@ -477,6 +509,7 @@ class ItemView extends React.Component {
         itemContainer={this.itemContainer}
         showShare={this.state.showShare}
         isSmallItem={this.isSmallItem()}
+        isNarrow={this.isNarrow()}
         titlePlacement={this.props.styleParams.titlePlacement}
         shouldShowButton={shouldShowButton}
         actions={{
@@ -497,26 +530,26 @@ class ItemView extends React.Component {
       'id',
       'styleParams',
       'style',
-      'love',
       'isDemo',
       'type',
       'download_url',
       'originalsUrl',
-      'isNarrow',
-      'isShort',
+      'loveCount',
+      'isLoved',
     ]);
     return (
       <Social
         {...props}
         showShare={this.state.showShare}
         isSmallItem={this.isSmallItem()}
+        isNarrow={this.isNarrow()}
+        isShort={this.isShort()}
         isVerticalContainer={this.isVerticalContainer()}
         key={`item-social-${props.id}`}
         actions={{
           openItemShopInFullScreen: this.openItemShopInFullScreen,
           toggleShare: this.toggleShare,
           getShare: this.getShare,
-          itemActions: this.props.actions.itemActions,
           eventsListener: this.props.actions.eventsListener,
         }}
       />

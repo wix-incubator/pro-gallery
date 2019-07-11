@@ -2,7 +2,6 @@ import LoveButton from './loveButton.js';
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import { use, expect } from 'chai';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
-import { itemActions } from '@wix/photography-client-lib/dist/src/item/itemActions';
 import spies from 'chai-spies';
 import sinon from 'sinon';
 import EVENTS from '../../../utils/constants/events';
@@ -19,27 +18,26 @@ describe('Love Button', () => {
     sampleItemViewProps = driver.props.itemView(sampleItem);
     Object.assign(sampleItemViewProps, {
       itemId: 1245,
-      isSettings: true,
       showCounter: true,
+      isLoved: false,
+      loveCount: 0,
     });
   });
 
   it('should toggle love', () => {
     driver.mount(LoveButton, sampleItemViewProps);
-    expect(driver.get.state().isLoved).to.equal(false);
+    expect(driver.get.state().loveButtonToggledToLove).to.equal(undefined);
     driver.find.hook('love-icon').simulate('click');
-    expect(driver.get.state().isLoved).to.equal(true);
+    expect(driver.get.state().loveButtonToggledToLove).to.equal(true);
   });
 
   it('should increase love count when clicked', () => {
-    const stub = sinon.stub(itemActions, 'isLoved').returns(false);
     driver.mount(LoveButton, sampleItemViewProps);
-    expect(driver.get.state().loveCount).to.equal(0);
+    expect(driver.get.state().loveButtonToggledToLove).to.equal(undefined);
     driver.find.hook('love-icon').simulate('click');
-    expect(driver.get.state().isLoved).to.equal(true);
+    expect(driver.get.state().loveButtonToggledToLove).to.equal(true);
     expect(driver.find.hook('love-counter').length).to.equal(1);
     expect(driver.find.hook('love-counter').text()).to.equal('1');
-    stub.restore();
   });
   it('check eventsListener called on toggle', () => {
     const stub = sinon.stub(sampleItemViewProps.actions, 'eventsListener');

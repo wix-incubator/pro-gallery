@@ -108,6 +108,7 @@ class GalleryView extends React.Component {
   }
 
   createGallery(showMore) {
+    const { itemsLoveData } = this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
@@ -127,6 +128,7 @@ class GalleryView extends React.Component {
           item.renderProps(
             _.merge(
               galleryConfig,
+              { ...itemsLoveData[item.id] },
               { visible: item.isVisible },
               { key: `ItemContainer-${item.id}-${index}` },
             ),
@@ -189,7 +191,6 @@ class GalleryView extends React.Component {
       actions: {
         eventsListener: this.props.actions.eventsListener,
         setCurrentHover: this.props.actions.setCurrentHover,
-        itemActions: this.props.actions.itemActions,
       },
     };
   }
