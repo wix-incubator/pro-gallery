@@ -5,10 +5,8 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import window from '../../utils/window/windowWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
-// eslint-disable-next-line import/no-unresolved
-import playSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/Play.svg';
-// eslint-disable-next-line import/no-unresolved
-import pauseSvg from '-!svg-react-loader!../../assets/images/auto-slideshow-button/pause.svg';
+import PlayIcon from '../../svgIcons/dist/components/Play';
+import PauseIcon from '../../svgIcons/dist/components/pause';
 import EVENTS from '../../utils/constants/events';
 
 utils.fixViewport('Gallery');
@@ -779,10 +777,10 @@ class SlideshowView extends React.Component {
     if (!this.shouldCreateSlideShowPlayButton) {
       return '';
     }
-    const containerStyle = {
+    let containerStyle = {
       paddingTop: '25px',
-      top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
-        2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
+      top: `calc(100% - ${this.props.styleParams.slideshowInfoSize}px + 3px)`,
+      height: '42px',
     };
 
     let imageMargin = this.props.styleParams.imageMargin;
@@ -792,17 +790,14 @@ class SlideshowView extends React.Component {
     const rightMargin = this.shouldCreateSlideShowNumbers
       ? imageMargin + 50
       : imageMargin;
-    this.props.styleParams.galleryTextAlign === 'right'
-      ? Object.assign(containerStyle, { left: `${rightMargin}px` })
-      : Object.assign(containerStyle, {
-          right: `${imageMargin}px`,
-          width: this.shouldCreateSlideShowNumbers ? '60px' : '10px',
-        });
-    const svgIcon = this.state.shouldStopAutoSlideShow ? (
-      <div>{playSvg()}</div>
-    ) : (
-      <div>{pauseSvg()}</div>
-    );
+    containerStyle =
+      this.props.styleParams.galleryTextAlign === 'right'
+        ? { ...containerStyle, left: `${rightMargin}px` }
+        : {
+            ...containerStyle,
+            right: `${imageMargin}px`,
+            width: this.shouldCreateSlideShowNumbers ? '60px' : '10px',
+          };
     return (
       <button
         className={'auto-slideshow-button'}
@@ -812,7 +807,11 @@ class SlideshowView extends React.Component {
         data-hook="auto-slideshow-button"
         style={containerStyle}
       >
-        {svgIcon}
+        {this.state.shouldStopAutoSlideShow ? (
+          <PlayIcon width="10px" height="100%" />
+        ) : (
+          <PauseIcon width="10px" height="100%" />
+        )}
       </button>
     );
   }
@@ -821,19 +820,19 @@ class SlideshowView extends React.Component {
     if (!this.shouldCreateSlideShowNumbers) {
       return '';
     }
-    const containerStyle = {
+    let containerStyle = {
       paddingTop: '23px',
-      top: `calc(100% - 100px + ${this.props.styleParams.imageMargin /
-        2}px - ${this.props.styleParams.slideshowInfoSize / 2}px)`,
+      top: `calc(100% - ${this.props.styleParams.slideshowInfoSize}px + 3px)`,
     };
     let imageMargin = this.props.styleParams.imageMargin;
     if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
       imageMargin += 50;
     }
 
-    this.props.styleParams.galleryTextAlign === 'right'
-      ? Object.assign(containerStyle, { left: `${imageMargin}px` })
-      : Object.assign(containerStyle, { right: `${imageMargin}px` });
+    containerStyle =
+      this.props.styleParams.galleryTextAlign === 'right'
+        ? { ...containerStyle, left: `${imageMargin}px` }
+        : { ...containerStyle, right: `${imageMargin}px` };
     return (
       <div
         className={'auto-slideshow-button'}
