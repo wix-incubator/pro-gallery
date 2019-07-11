@@ -4,7 +4,7 @@ import PLACEMENTS from '../../utils/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
 import window from '../../utils/window/windowWrapper';
-import { featureManager } from '../helpers/versionsHelper';
+import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../constants/designConsts';

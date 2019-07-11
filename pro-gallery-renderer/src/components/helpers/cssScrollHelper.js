@@ -41,8 +41,8 @@ class CssScrollHelper {
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
 
-    this.highResPadding = () => allowPreloading ? [5120, Infinity] : [0, 0];
-    this.lowResPadding = () => allowPreloading ? [10240, Infinity] : [0, 0];
+    this.highResPadding = () => (allowPreloading ? [5120, Infinity] : [0, 0]);
+    this.lowResPadding = () => (allowPreloading ? [10240, Infinity] : [0, 0]);
   }
 
   getDomId({ id }) {
@@ -103,7 +103,7 @@ class CssScrollHelper {
       .join(`\n`);
   }
 
-  shouldCalcScrollCss({type}, styleParams) {
+  shouldCalcScrollCss({ type }, styleParams) {
     if (type === 'video' || type === 'text') {
       return false;
     }
