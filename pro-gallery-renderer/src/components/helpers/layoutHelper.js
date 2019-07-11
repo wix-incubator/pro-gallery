@@ -637,7 +637,9 @@ function processLayouts(styles) {
   }
 
   if (
-    (!processedStyles.isVertical || processedStyles.groupSize > 1 || processedStyles.oneRow === true) &&
+    (!processedStyles.isVertical ||
+      processedStyles.groupSize > 1 ||
+      processedStyles.oneRow === true) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
@@ -645,9 +647,13 @@ function processLayouts(styles) {
   }
 
   if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) {
-    if (processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS) {
+    if (
+      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS
+    ) {
       processedStyles.titlePlacement = PLACEMENTS.SHOW_NOT_ON_HOVER;
-    } else if (processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE) {
+    } else if (
+      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE
+    ) {
       processedStyles.titlePlacement = PLACEMENTS.SHOW_ALWAYS;
     } else {
       //processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.APPEARS
@@ -657,8 +663,12 @@ function processLayouts(styles) {
 
   processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
 
-  if (processedStyles.cubeType === 'fit' &&
-    (processedStyles.isGrid || processedStyles.hasThumbnails || processedStyles.isSlider || processedStyles.isSlideshow)
+  if (
+    processedStyles.cubeType === 'fit' &&
+    (processedStyles.isGrid ||
+      processedStyles.hasThumbnails ||
+      processedStyles.isSlider ||
+      processedStyles.isSlideshow)
   ) {
     processedStyles.itemBorderWidth = 0;
     processedStyles.itemBorderRadius = 0;

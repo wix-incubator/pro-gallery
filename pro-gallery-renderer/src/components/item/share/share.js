@@ -1,9 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
+import { GalleryContext } from '../../../context/GalleryContext.js';
 import EVENTS from '../../../utils/constants/events';
 
 export default class Share extends React.Component {
+  static contextType = GalleryContext;
+
   constructor(props) {
     super(props);
 
@@ -188,6 +191,7 @@ export default class Share extends React.Component {
       style,
       type,
     } = this.props;
+
     if (styleParams.allowSocial) {
       const minDimension = 200;
       return (

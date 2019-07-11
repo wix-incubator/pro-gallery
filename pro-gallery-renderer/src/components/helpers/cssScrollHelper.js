@@ -292,10 +292,7 @@ class CssScrollHelper {
       return '';
     }
 
-    if (
-      !scrollAnimation ||
-      scrollAnimation === SCROLL_ANIMATIONS.NO_EFFECT
-    ) {
+    if (!scrollAnimation || scrollAnimation === SCROLL_ANIMATIONS.NO_EFFECT) {
       return '';
     }
 

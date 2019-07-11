@@ -1,7 +1,10 @@
 import React from 'react';
+import { GalleryContext } from '../../context/GalleryContext.js';
 import LOADING_MODE from '../../utils/constants/loadingMode';
 
 export default class ImageItem extends React.Component {
+  static contextType = GalleryContext;
+
   componentDidMount() {
     try {
       if (typeof this.props.actions.setItemLoaded === 'function') {
@@ -14,17 +17,14 @@ export default class ImageItem extends React.Component {
 
   render() {
     const {
-      isThumbnail,
       alt,
-      visible,
-      loaded,
       displayed,
-      styleParams,
       imageDimensions,
       resized_url,
       id,
       actions,
       settings,
+      styleParams,
     } = this.props;
     const imageProps =
       settings &&

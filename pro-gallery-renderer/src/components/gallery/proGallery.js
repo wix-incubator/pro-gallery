@@ -82,7 +82,9 @@ export default class ProGallery extends React.Component {
               watermarkData={this.props.watermarkData}
               settings={this.props.settings || {}}
               offsetTop={this.props.offsetTop}
-              itemsLoveData={this.props.itemsLoveData ? this.props.itemsLoveData : {}}
+              itemsLoveData={
+                this.props.itemsLoveData ? this.props.itemsLoveData : {}
+              }
             />
           </Provider>
         </div>

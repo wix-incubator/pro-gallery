@@ -19,13 +19,16 @@ import {
   setInitialVisibility,
 } from '../helpers/scrollHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
+import { featureManager } from '../helpers/versionsHelper';
+import { GalleryContext } from '../../context/GalleryContext.js';
 import EVENTS from '../../utils/constants/events';
 import PLACEMENTS from '../../utils/constants/placements';
 import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
 import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
 
 class ItemView extends React.Component {
+  static contextType = GalleryContext;
+
   constructor(props) {
     super(props);
     this.props.actions.eventsListener(EVENTS.ITEM_CREATED, this.props);
@@ -395,7 +398,7 @@ class ItemView extends React.Component {
         itemClick,
         isSlideshow,
       } = this.props.styleParams;
-      const isNewMobileSettings = settingsVersionManager.newMobileSettings();
+      const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (isSlideshow) {
         return false;
       }
@@ -425,11 +428,13 @@ class ItemView extends React.Component {
   }
 
   shouldHover() {
-    if (this.props.styleParams.alwaysShowHover === true) {
+    const { styleParams } = this.props;
+
+    if (styleParams.alwaysShowHover === true) {
       return true;
-    } else if (this.props.styleParams.isSlideshow) {
+    } else if (styleParams.isSlideshow) {
       return false;
-    } else if (this.props.styleParams.allowHover === false) {
+    } else if (styleParams.allowHover === false) {
       return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
@@ -496,6 +501,7 @@ class ItemView extends React.Component {
       'styleParams',
       'style',
     ]);
+
     const isImage =
       this.props.type === 'image' || this.props.type === 'picture';
     const useCustomButton = this.props.styleParams.useCustomButton === true;
@@ -537,6 +543,7 @@ class ItemView extends React.Component {
       'loveCount',
       'isLoved',
     ]);
+
     return (
       <Social
         {...props}
@@ -675,6 +682,7 @@ class ItemView extends React.Component {
       'html',
       'cubeRatio',
     ]);
+
     return (
       <TextItem
         {...props}
@@ -869,7 +877,9 @@ class ItemView extends React.Component {
       const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
       const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
       Object.assign(boxShadow, {
-        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`,
+        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${
+          styleParams.itemShadowOpacityAndColor.value
+        }`,
       });
     }
 
@@ -899,6 +909,7 @@ class ItemView extends React.Component {
 
     return styles;
   }
+
   getItemWrapperStyles() {
     const { styleParams, style, type } = this.props;
     const height = style.height;

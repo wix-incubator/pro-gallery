@@ -99,9 +99,15 @@ class LoveButton extends React.Component {
   }
 
   localLoveCount() {
-    if (this.props.isLoved === true && this.state.loveButtonToggledToLove === false) {
+    if (
+      this.props.isLoved === true &&
+      this.state.loveButtonToggledToLove === false
+    ) {
       return -1;
-    } else if (!this.props.isLoved && this.state.loveButtonToggledToLove === true) {
+    } else if (
+      !this.props.isLoved &&
+      this.state.loveButtonToggledToLove === true
+    ) {
       return 1;
     } else {
       return 0;
@@ -117,32 +123,6 @@ class LoveButton extends React.Component {
     ) : null;
   }
 
-  createMouseOver() {
-    return e => {
-      if (!utils.isSite()) {
-        const mouseOverData = {
-          event: e,
-          key: 'This option is not available in editor',
-        };
-        this.props.actions.eventsListener(
-          EVENTS.PREVIEW_LOVE_BUTTON_MOUSE_OVER,
-          mouseOverData,
-        );
-      }
-    };
-  }
-
-  createMouseOut() {
-    return () => {
-      if (!utils.isSite()) {
-        this.props.actions.eventsListener(
-          EVENTS.PREVIEW_LOVE_BUTTON_MOUSE_OUT,
-          this.props,
-        );
-      }
-    };
-  }
-
   render() {
     const loveCounter = this.createLoveCounter();
     const clickAction = utils.isSite()
@@ -154,8 +134,6 @@ class LoveButton extends React.Component {
       <span
         data-hook="love-button"
         className={this.containerClassName()}
-        onMouseOver={this.createMouseOver()}
-        onMouseOut={this.createMouseOut()}
         {...clickAction}
         onKeyDown={this.onKeyPress}
         tabIndex={

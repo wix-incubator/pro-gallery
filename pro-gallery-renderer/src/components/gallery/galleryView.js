@@ -238,7 +238,7 @@ class GalleryView extends React.Component {
   }
 
   createShowMoreButton() {
-    const styleParams = this.props.styleParams;
+    const { styleParams } = this.props;
     let showMoreButton = false;
     const buttonState = this.props.displayShowMore;
     const shouldShowButton =

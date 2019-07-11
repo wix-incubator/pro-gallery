@@ -2,11 +2,14 @@ import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 import _ from 'lodash';
+import { GalleryContext } from '../../../context/GalleryContext.js';
 import window from '../../../utils/window/windowWrapper';
 import EVENTS from '../../../utils/constants/events';
 import PLACEMENTS from '../../../utils/constants/placements';
 
 export default class Social extends React.Component {
+  static contextType = GalleryContext;
+
   constructor(props) {
     super(props);
     this.onDownloadKeyPress = this.onDownloadKeyPress.bind(this);
@@ -46,22 +49,6 @@ export default class Social extends React.Component {
             }
             data-hook="gallery-item-social-button"
             key={'item-social-share-' + id}
-            onMouseOver={e => {
-              const mouseOverData = {
-                event: e,
-                key: 'Gallery_Sharing_Disabled_In_Editor',
-              };
-              actions.eventsListener(
-                EVENTS.PREVIEW_SHARE_BUTTON_MOUSE_OVER,
-                mouseOverData,
-              );
-            }}
-            onMouseOut={() =>
-              actions.eventsListener(
-                EVENTS.PREVIEW_SHARE_BUTTON_MOUSE_OUT,
-                this.props,
-              )
-            }
             onClick={e => e.stopPropagation()}
           >
             {slideshowShareButton}
@@ -169,26 +156,7 @@ export default class Social extends React.Component {
           );
         } else {
           return (
-            <a
-              {...genralProps}
-              download="download"
-              onMouseOver={e => {
-                const mouseOverData = {
-                  event: e,
-                  key: 'Gallery_Hover_Download_FreeImages_Text',
-                };
-                actions.eventsListener(
-                  EVENTS.DEMO_DOWNLOAD_BUTTON_MOUSE_OVER,
-                  mouseOverData,
-                );
-              }}
-              onMouseOut={() =>
-                actions.eventsListener(
-                  EVENTS.DEMO_DOWNLOAD_BUTTON_MOUSE_OUT,
-                  this.props,
-                )
-              }
-            >
+            <a {...genralProps} download="download">
               {downloadIcon}
             </a>
           );

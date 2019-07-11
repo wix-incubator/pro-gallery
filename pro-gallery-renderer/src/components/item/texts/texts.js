@@ -6,10 +6,13 @@ import lineHeightFixer from './lineHeightFixer.js';
 import PLACEMENTS from '../../../utils/constants/placements';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
-import { settingsVersionManager } from '@wix/photography-client-lib/dist/src/versioning/features/settings';
+import { featureManager } from '../../helpers/versionsHelper';
 import _ from 'lodash';
+import { GalleryContext } from '../../../context/GalleryContext.js';
 
 export default class Texts extends React.Component {
+  static contextType = GalleryContext;
+
   constructor(props) {
     super(props);
     this.debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
@@ -84,7 +87,7 @@ export default class Texts extends React.Component {
     } = this.props;
     const shouldShowTitle = title && styleParams.allowTitle;
     const shouldShowDescription = description && styleParams.allowDescription;
-    const isNewMobileSettings = settingsVersionManager.newMobileSettings();
+    const isNewMobileSettings = featureManager.supports.mobileSettings;
     const titleSpanStyle = {};
     const descSpanStyle = {};
     let titleStyle, descStyle;
