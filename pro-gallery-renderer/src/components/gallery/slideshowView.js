@@ -5,8 +5,8 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import window from '../../utils/window/windowWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
-import PlayIcon from '../../../dist/src/assets/images/react-svg/components/Play';
-import PauseIcon from '../../../dist/src/assets/images/react-svg/components/pause';
+import PlayIcon from '../../assets/images/react-svg/components/Play';
+import PauseIcon from '../../assets/images/react-svg/components/pause';
 import EVENTS from '../../utils/constants/events';
 
 utils.fixViewport('Gallery');
