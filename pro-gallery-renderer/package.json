@@ -13,14 +13,14 @@
     "dist"
   ],
   "scripts": {
-    "start": "PORT=9837 yoshi start",
+    "start": "npm run build-svg && PORT=9837 yoshi start",
     "build": "npm run build-svg && yoshi build",
-    "build-svg": "svg2react-icon src/assets/images/svg-src src/svgIcons/dist",
+    "build-svg": "svg2react-icon src/assets/images/svg-src src/assets/images/react-svg",
     "precommit": " ",
     "pretest": "yoshi build",
     "test": "yoshi test",
     "posttest": "yoshi lint",
-    "release": "yoshi release",
+    "release": "npm run build-svg && yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "start-with-test": "PORT=9837 yoshi start --with-test"
