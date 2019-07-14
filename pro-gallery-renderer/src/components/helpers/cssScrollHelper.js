@@ -180,7 +180,7 @@ class CssScrollHelper {
       if (!window.isSSR && !item.isDimensionless) {
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.image-item>canvas`) +
-          `{opacity: 1; transition: opacity 1s linear; background-image: url(${
+          `{opacity: 1; transition: opacity .4s linear; background-image: url(${
             resized_url.img
           })}`;
       }
