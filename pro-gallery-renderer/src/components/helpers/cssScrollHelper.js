@@ -41,10 +41,8 @@ class CssScrollHelper {
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
 
-    this.highResPadding = () =>
-      allowPreloading ? [Infinity, Infinity] : [0, 0];
-    this.lowResPadding = () =>
-      allowPreloading ? [Infinity, Infinity] : [0, 0];
+    this.highResPadding = () => (allowPreloading ? [5120, Infinity] : [0, 0]);
+    this.lowResPadding = () => (allowPreloading ? [10240, Infinity] : [0, 0]);
   }
 
   getDomId({ id }) {
@@ -182,7 +180,9 @@ class CssScrollHelper {
       if (!window.isSSR && !item.isDimensionless) {
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.image-item>canvas`) +
-          `{opacity: 1; transition: opacity 1s linear; background-image: url(${resized_url.img})}`;
+          `{opacity: 1; transition: opacity 1s linear; background-image: url(${
+            resized_url.img
+          })}`;
       }
 
       //add the blurry image
