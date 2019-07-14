@@ -833,6 +833,8 @@ class SlideshowView extends React.Component {
       this.props.styleParams.galleryTextAlign === 'right'
         ? { ...containerStyle, left: `${imageMargin}px` }
         : { ...containerStyle, right: `${imageMargin}px` };
+    const currentIdx = this.state.currentIdx + 1;
+    const totalItems = this.props.totalItemsCount + 1;
     return (
       <div
         className={'auto-slideshow-button'}
@@ -840,7 +842,7 @@ class SlideshowView extends React.Component {
         style={containerStyle}
       >
         <div style={{ fontSize: '15px', lineHeight: 'normal' }}>
-          {this.state.currentIdx + '/' + this.props.totalItemsCount}
+          {currentIdx + '/' + totalItems}
         </div>
       </div>
     );
