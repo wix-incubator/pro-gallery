@@ -803,7 +803,8 @@ class SlideshowView extends GalleryComponent {
         }}
         data-hook="auto-slideshow-button"
         style={{
-          paddingTop: '25px',
+          paddingTop: '23px',
+          background: 'white',
           top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
           height: '42px',
           ...side,
@@ -845,6 +846,8 @@ class SlideshowView extends GalleryComponent {
         data-hook="auto-slideshow-button"
         style={{
           paddingTop: '23px',
+          background: 'white',
+          height: '42px',
           top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
           ...side,
         }}
