@@ -82,6 +82,7 @@ export default class Texts extends GalleryComponent {
       style,
       isNarrow,
       shouldShowButton,
+      container,
     } = this.props;
     const shouldShowTitle = title && styleParams.allowTitle;
     const shouldShowDescription = description && styleParams.allowDescription;
@@ -147,6 +148,23 @@ export default class Texts extends GalleryComponent {
             styleParams.itemDescriptionFontColor.value;
         }
       }
+    }
+
+    if (
+      styleParams.isSlideshow &&
+      container &&
+      container.galleryWidth &&
+      container.galleryWidth < 800
+    ) {
+      let maxWidth = container.galleryWidth;
+      if (styleParams.allowSlideshowNumbers) {
+        maxWidth -= 30;
+      }
+      if (styleParams.playButtonForAutoSlideShow) {
+        maxWidth -= 30;
+      }
+      titleStyle.maxWidth = maxWidth;
+      descStyle.maxWidth = maxWidth;
     }
 
     const titleElem = shouldShowTitle && (

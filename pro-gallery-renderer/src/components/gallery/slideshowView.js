@@ -774,28 +774,24 @@ class SlideshowView extends GalleryComponent {
     );
   }
 
+  isFullWidthGallery() {
+    return this.props.container.galleryWidth >= utils.getWindowWidth() - 10;
+  }
+
   createAutoSlideShowPlayButton() {
     if (!this.shouldCreateSlideShowPlayButton) {
       return '';
     }
-    let containerStyle = {
-      paddingTop: '25px',
-      top: `calc(100% - ${this.props.styleParams.slideshowInfoSize}px + 3px)`,
-      height: '42px',
-    };
+    const {
+      styleParams: { galleryTextAlign, slideshowInfoSize },
+    } = this.props;
 
-    let imageMargin = this.props.styleParams.imageMargin;
-    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
-      imageMargin += 50;
-    }
-    const rightMargin = this.shouldCreateSlideShowNumbers
-      ? imageMargin + 50
-      : imageMargin;
-    containerStyle =
-      this.props.styleParams.galleryTextAlign === 'right'
-        ? { ...containerStyle, left: `${rightMargin}px` }
+    const imageMargin =
+      this.props.styleParams.imageMargin + (this.isFullWidthGallery() ? 50 : 0);
+    const side =
+      galleryTextAlign === 'right'
+        ? { left: `${imageMargin}px` }
         : {
-            ...containerStyle,
             right: `${imageMargin}px`,
             width: this.shouldCreateSlideShowNumbers ? '60px' : '10px',
           };
@@ -806,7 +802,12 @@ class SlideshowView extends GalleryComponent {
           this.onAutoSlideShowButtonClick();
         }}
         data-hook="auto-slideshow-button"
-        style={containerStyle}
+        style={{
+          paddingTop: '25px',
+          top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
+          height: '42px',
+          ...side,
+        }}
       >
         {this.state.shouldStopAutoSlideShow ? (
           <PlayIcon width="10px" height="100%" />
@@ -821,29 +822,35 @@ class SlideshowView extends GalleryComponent {
     if (!this.shouldCreateSlideShowNumbers) {
       return '';
     }
-    let containerStyle = {
-      paddingTop: '23px',
-      top: `calc(100% - ${this.props.styleParams.slideshowInfoSize}px + 3px)`,
-    };
-    let imageMargin = this.props.styleParams.imageMargin;
-    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
-      imageMargin += 50;
-    }
+    const {
+      totalItemsCount,
+      styleParams: { galleryTextAlign, slideshowInfoSize },
+    } = this.props;
 
-    containerStyle =
-      this.props.styleParams.galleryTextAlign === 'right'
-        ? { ...containerStyle, left: `${imageMargin}px` }
-        : { ...containerStyle, right: `${imageMargin}px` };
-    const currentIdx = this.state.currentIdx + 1;
-    const totalItems = this.props.totalItemsCount + 1;
+    const imageMargin =
+      this.props.styleParams.imageMargin + (this.isFullWidthGallery() ? 50 : 0);
+
+    const leftMargin = this.shouldCreateSlideShowPlayButton
+      ? imageMargin + 25
+      : imageMargin;
+
+    const side =
+      galleryTextAlign === 'right'
+        ? { left: `${leftMargin}px` }
+        : { right: `${imageMargin}px` };
+
     return (
       <div
         className={'auto-slideshow-button'}
         data-hook="auto-slideshow-button"
-        style={containerStyle}
+        style={{
+          paddingTop: '23px',
+          top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
+          ...side,
+        }}
       >
         <div style={{ fontSize: '15px', lineHeight: 'normal' }}>
-          {currentIdx + '/' + totalItems}
+          {this.state.currentIdx + 1 + '/' + (totalItemsCount + 1)}
         </div>
       </div>
     );
@@ -886,7 +893,7 @@ class SlideshowView extends GalleryComponent {
       classNames = ' gallery-columns';
     }
 
-    if (this.props.container.galleryWidth >= utils.getWindowWidth() - 10) {
+    if (this.isFullWidthGallery()) {
       classNames += ' streched';
     }
 

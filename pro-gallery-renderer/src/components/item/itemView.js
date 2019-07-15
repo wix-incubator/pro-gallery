@@ -498,6 +498,7 @@ class ItemView extends GalleryComponent {
       'id',
       'styleParams',
       'style',
+      'container',
     ]);
 
     const isImage =
