@@ -2,14 +2,12 @@ import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 import _ from 'lodash';
-import { GalleryContext } from '../../../context/GalleryContext.js';
+import { GalleryComponent } from '../../galleryComponent';
 import window from '../../../utils/window/windowWrapper';
 import EVENTS from '../../../utils/constants/events';
 import PLACEMENTS from '../../../utils/constants/placements';
 
-export default class Social extends React.Component {
-  static contextType = GalleryContext;
-
+export default class Social extends GalleryComponent {
   constructor(props) {
     super(props);
     this.onDownloadKeyPress = this.onDownloadKeyPress.bind(this);

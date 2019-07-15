@@ -1,7 +1,8 @@
 import React from 'react';
 import utils from '../../../utils';
+import { GalleryComponent } from '../../galleryComponent';
 
-class VideoItemPlaceholder extends React.Component {
+class VideoItemPlaceholder extends GalleryComponent {
   render() {
     const baseClassName =
       'gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item';

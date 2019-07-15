@@ -1,6 +1,7 @@
 import React from 'react';
+import { GalleryComponent } from '../../galleryComponent';
 
-export default class ItemTitle extends React.Component {
+export default class ItemTitle extends GalleryComponent {
   render() {
     const { title, style, spanStyle } = this.props;
     return (

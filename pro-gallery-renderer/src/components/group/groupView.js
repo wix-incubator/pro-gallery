@@ -1,8 +1,9 @@
 import React from 'react';
 import ItemContainer from '../item/itemContainer.js';
 import _ from 'lodash';
+import { GalleryComponent } from '../galleryComponent';
 
-class GroupView extends React.Component {
+class GroupView extends GalleryComponent {
   constructor(props) {
     super(props);
     this.displayName = 'GroupView';

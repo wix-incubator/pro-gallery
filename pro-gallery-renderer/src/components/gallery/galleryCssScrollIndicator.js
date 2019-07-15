@@ -1,8 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
+import { GalleryComponent } from '../galleryComponent';
 
-export default class CssScrollIndicator extends React.Component {
+export default class CssScrollIndicator extends GalleryComponent {
   constructor() {
     super();
 

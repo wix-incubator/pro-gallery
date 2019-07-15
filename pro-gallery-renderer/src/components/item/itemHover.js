@@ -1,8 +1,9 @@
 import React from 'react';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
+import { GalleryComponent } from '../galleryComponent';
 
-export default class ItemHover extends React.Component {
+export default class ItemHover extends GalleryComponent {
   getHoverClass() {
     const { styleParams, forceShowHover, itemType } = this.props;
     const hoverClass =

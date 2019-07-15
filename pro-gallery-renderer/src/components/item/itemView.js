@@ -20,15 +20,13 @@ import {
 } from '../helpers/scrollHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
-import { GalleryContext } from '../../context/GalleryContext.js';
+import { GalleryComponent } from '../galleryComponent';
 import EVENTS from '../../utils/constants/events';
 import PLACEMENTS from '../../utils/constants/placements';
 import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
 import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
 
-class ItemView extends React.Component {
-  static contextType = GalleryContext;
-
+class ItemView extends GalleryComponent {
   constructor(props) {
     super(props);
     this.props.actions.eventsListener(EVENTS.ITEM_CREATED, this.props);

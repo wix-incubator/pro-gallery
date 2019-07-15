@@ -8,11 +8,9 @@ import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';
 import _ from 'lodash';
-import { GalleryContext } from '../../../context/GalleryContext.js';
+import { GalleryComponent } from '../../galleryComponent';
 
-export default class Texts extends React.Component {
-  static contextType = GalleryContext;
-
+export default class Texts extends GalleryComponent {
   constructor(props) {
     super(props);
     this.debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);

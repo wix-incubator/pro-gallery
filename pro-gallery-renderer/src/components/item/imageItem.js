@@ -1,10 +1,8 @@
 import React from 'react';
-import { GalleryContext } from '../../context/GalleryContext.js';
 import LOADING_MODE from '../../utils/constants/loadingMode';
+import { GalleryComponent } from '../galleryComponent';
 
-export default class ImageItem extends React.Component {
-  static contextType = GalleryContext;
-
+export default class ImageItem extends GalleryComponent {
   componentDidMount() {
     try {
       if (typeof this.props.actions.setItemLoaded === 'function') {

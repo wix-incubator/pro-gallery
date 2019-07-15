@@ -18,8 +18,9 @@ import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import _ from 'lodash';
 import utils from '../../utils';
 import EVENTS from '../../utils/constants/events';
+import { GalleryComponent } from '../galleryComponent';
 
-export class GalleryContainer extends React.Component {
+export class GalleryContainer extends GalleryComponent {
   constructor(props) {
     super(props);
     if (utils.isVerbose()) {

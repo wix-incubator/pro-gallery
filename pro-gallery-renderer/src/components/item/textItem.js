@@ -1,9 +1,7 @@
 import React from 'react';
-import { GalleryContext } from '../../context/GalleryContext.js';
+import { GalleryComponent } from '../galleryComponent';
 
-export default class TextItem extends React.Component {
-  static contextType = GalleryContext;
-
+export default class TextItem extends GalleryComponent {
   getTextDimensions() {
     const { style, styleParams, cubeRatio } = this.props;
     const isVerticalItem = style.ratio < cubeRatio - 0.01;

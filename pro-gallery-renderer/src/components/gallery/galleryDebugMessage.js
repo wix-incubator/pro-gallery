@@ -1,8 +1,9 @@
 import React from 'react';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
+import { GalleryComponent } from '../galleryComponent';
 
-class GalleryDebugMessage extends React.Component {
+class GalleryDebugMessage extends GalleryComponent {
   render() {
     if (utils.getTopUrlParam('pgdebug') !== 'true') {
       return false;

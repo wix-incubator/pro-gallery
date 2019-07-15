@@ -6,9 +6,10 @@ import {
 } from '../../actions/galleryActions.js';
 import { playVideo, pauseVideo } from '../../actions/itemViewActions.js';
 import { connect } from 'react-redux';
+import { GalleryComponent } from '../galleryComponent';
 
 export const CommonItemContainerNotConnected = ComposedComponent => {
-  class InnerComponent extends React.Component {
+  class InnerComponent extends GalleryComponent {
     render() {
       return <ComposedComponent {...this.props} />;
     }

@@ -1,12 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
-import { GalleryContext } from '../../../context/GalleryContext.js';
+import { GalleryComponent } from '../../galleryComponent';
 import EVENTS from '../../../utils/constants/events';
 
-export default class Share extends React.Component {
-  static contextType = GalleryContext;
-
+export default class Share extends GalleryComponent {
   constructor(props) {
     super(props);
 

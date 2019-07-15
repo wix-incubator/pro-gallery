@@ -1,8 +1,9 @@
 import React from 'react';
 import utils from '../../../utils';
 import EVENTS from '../../../utils/constants/events';
+import { GalleryComponent } from '../../galleryComponent';
 
-class LoveButton extends React.Component {
+class LoveButton extends GalleryComponent {
   constructor(props) {
     super(props);
     this.toggleLove = this.toggleLove.bind(this);

@@ -1,6 +1,11 @@
 import React from 'react';
 
-const GalleryContext = React.createContext({});
+let GalleryContext;
+try {
+  GalleryContext = React.createContext({});
+} catch (e) {
+  GalleryContext = null;
+}
 
 class GalleryProvider extends React.Component {
   constructor(props) {
@@ -23,12 +28,16 @@ class GalleryProvider extends React.Component {
   }
 
   render() {
-    const value = { ...this.value, ...this.state };
-    return (
-      <GalleryContext.Provider value={value}>
-        {this.props.children}
-      </GalleryContext.Provider>
-    );
+    if (GalleryContext) {
+      const value = { ...this.value, ...this.state };
+      return (
+        <GalleryContext.Provider value={value}>
+          {this.props.children}
+        </GalleryContext.Provider>
+      );
+    } else {
+      return this.props.children;
+    }
   }
 }
 

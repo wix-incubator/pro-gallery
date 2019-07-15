@@ -11,8 +11,9 @@ import videoActionTypes from '../../constants/videoActionTypes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import { VideoQueue } from '../item/videos/video-queue';
 import window from '../../utils/window/windowWrapper';
+import { GalleryComponent } from '../galleryComponent';
 
-export default class ProGallery extends React.Component {
+export default class ProGallery extends GalleryComponent {
   constructor(props) {
     super();
     if (utils.isVerbose()) {

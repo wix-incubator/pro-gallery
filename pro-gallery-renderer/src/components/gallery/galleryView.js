@@ -4,10 +4,11 @@ import _ from 'lodash';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
+import { GalleryComponent } from '../galleryComponent';
 
 utils.fixViewport('Gallery');
 
-class GalleryView extends React.Component {
+class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
     this.handleArrowKeys = this.handleArrowKeys.bind(this);

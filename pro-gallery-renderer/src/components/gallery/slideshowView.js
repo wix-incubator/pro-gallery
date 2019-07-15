@@ -8,10 +8,11 @@ import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../assets/images/react-svg/components/Play';
 import PauseIcon from '../../assets/images/react-svg/components/pause';
 import EVENTS from '../../utils/constants/events';
+import { GalleryComponent } from '../galleryComponent';
 
 utils.fixViewport('Gallery');
 
-class SlideshowView extends React.Component {
+class SlideshowView extends GalleryComponent {
   constructor(props) {
     super(props);
 

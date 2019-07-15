@@ -3,8 +3,9 @@ import ReactPlayer from 'react-player';
 import utils from '../../../utils';
 import window from '../../../utils/window/windowWrapper';
 import Player from '@vimeo/player';
+import { GalleryComponent } from '../../galleryComponent';
 
-class VideoItem extends React.Component {
+class VideoItem extends GalleryComponent {
   constructor(props) {
     super(props);
 
