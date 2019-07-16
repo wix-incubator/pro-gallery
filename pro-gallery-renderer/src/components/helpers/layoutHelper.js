@@ -240,7 +240,6 @@ function getStyleByGalleryType(styles, container) {
 
   return styleState;
 }
-
 function getStyleByLayout(styles, container) {
   //new layouts
   let { galleryLayout, gallerySize, magicLayoutSeed } = styles;
@@ -307,11 +306,11 @@ function getStyleByLayout(styles, container) {
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
-      cubeRatio: () => dimensionsHelper.getGalleryRatio(),
+      cubeRatio: '100%/100%',
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: () => dimensionsHelper.getGalleryWidth(),
+      gallerySize: container.galleryWidth,
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: true,
@@ -334,7 +333,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryHeight(),
+      gallerySize: container.galleryHeight,
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
@@ -349,7 +348,7 @@ function getStyleByLayout(styles, container) {
       showArrows: true,
       cubeImages: true,
       smartCrop: false,
-      cubeRatio: () => dimensionsHelper.getGalleryRatio(),
+      cubeRatio: '100%/100%',
       isVertical: false,
       gallerySize: 550,
       galleryType: 'Strips',
@@ -376,7 +375,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryWidth(),
+      gallerySize: container.galleryWidth,
       oneRow: false,
       fixedColumns: 1,
       hasThumbnails: false,
@@ -399,7 +398,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryHeight(),
+      gallerySize: container.galleryHeight,
       fixedColumns: 0,
       hasThumbnails: false,
       oneRow: true,
@@ -416,11 +415,11 @@ function getStyleByLayout(styles, container) {
       cubeImages: true,
       smartCrop: false,
       cubeType: 'fill',
-      cubeRatio: () => dimensionsHelper.getGalleryRatio(),
+      cubeRatio: '100%/100%',
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: () => dimensionsHelper.getGalleryWidth(),
+      gallerySize: container.galleryWidth,
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: false,
