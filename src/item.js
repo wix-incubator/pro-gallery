@@ -301,7 +301,6 @@ export class Item {
         const dynamicCropRegex = /^\d*\.?\d*(%|px)\/\d*\.?\d*(%|px)$/;
         const match = dynamicCropRegex.exec(ratio);
         if (match) {
-          console.error(match);
           this.dynamicCropRatios = ratio.split('/').map((val, idx) => {
             if (val.indexOf('%') > 0) {
               return {
