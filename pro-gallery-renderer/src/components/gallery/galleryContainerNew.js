@@ -627,14 +627,14 @@ export class GalleryContainer extends GalleryComponent {
         container,
         domId: this.props.domId,
       });
+      _styles = addLayoutStyles(styles, container);
+      dimensionsHelper.updateParams({ styles: _styles });
       _container = Object.assign(
         {},
         container,
         dimensionsHelper.getGalleryDimensions(container),
       );
       dimensionsHelper.updateParams({ container: _container });
-      _styles = addLayoutStyles(styles, _container);
-      dimensionsHelper.updateParams({ styles: _styles });
       newState.styles = _styles;
       newState.container = _container;
     } else {

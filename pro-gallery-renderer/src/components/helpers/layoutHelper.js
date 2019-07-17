@@ -121,7 +121,7 @@ function getStyleBySeed(seed) {
   return style;
 }
 
-function getStyleByGalleryType(styles, container) {
+function getStyleByGalleryType(styles) {
   //legacy layouts
   const { galleryType, gallerySize } = styles;
 
@@ -240,7 +240,7 @@ function getStyleByGalleryType(styles, container) {
 
   return styleState;
 }
-function getStyleByLayout(styles, container) {
+function getStyleByLayout(styles) {
   //new layouts
   let { galleryLayout, gallerySize, magicLayoutSeed } = styles;
 
@@ -310,7 +310,7 @@ function getStyleByLayout(styles, container) {
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: container.galleryWidth,
+      gallerySize: () => dimensionsHelper.getGalleryWidth(),
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: true,
@@ -333,7 +333,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: container.galleryHeight,
+      gallerySize: () => dimensionsHelper.getGalleryHeight(),
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
@@ -375,7 +375,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: container.galleryWidth,
+      gallerySize: () => dimensionsHelper.getGalleryWidth(),
       oneRow: false,
       fixedColumns: 1,
       hasThumbnails: false,
@@ -398,7 +398,7 @@ function getStyleByLayout(styles, container) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: container.galleryHeight,
+      gallerySize: () => dimensionsHelper.getGalleryHeight(),
       fixedColumns: 0,
       hasThumbnails: false,
       oneRow: true,
@@ -419,7 +419,7 @@ function getStyleByLayout(styles, container) {
       isVertical: false,
       galleryType: 'Strips',
       groupSize: 1,
-      gallerySize: container.galleryWidth,
+      gallerySize: () => dimensionsHelper.getGalleryWidth(),
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: false,
@@ -488,14 +488,14 @@ function getStyleByLayout(styles, container) {
   });
 }
 
-function addLayoutStyles(styles, container) {
+function addLayoutStyles(styles) {
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
   if (!_.isUndefined(galleryLayoutV1) && _.isUndefined(galleryLayoutV2)) {
     //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
-    styles = Object.assign(styles, getStyleByGalleryType(styles, container)); //legacy layouts
+    styles = Object.assign(styles, getStyleByGalleryType(styles)); //legacy layouts
     styles.layoutsVersion = 1;
     const selectedLayoutVars = [
       'galleryType',
@@ -518,7 +518,7 @@ function addLayoutStyles(styles, container) {
       {},
       emptyLayout,
       styles,
-      getStyleByLayout(styles, container),
+      getStyleByLayout(styles),
     ); //legacy layouts
     const selectedLayoutVars = [
       'galleryLayout',
