@@ -627,7 +627,7 @@ export class GalleryContainer extends GalleryComponent {
         container,
         domId: this.props.domId,
       });
-      _styles = addLayoutStyles(styles, container);
+      _styles = addLayoutStyles(styles);
       dimensionsHelper.updateParams({ styles: _styles });
       _container = Object.assign(
         {},
