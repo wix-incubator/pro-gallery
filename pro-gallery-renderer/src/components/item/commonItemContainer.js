@@ -28,7 +28,6 @@ export const CommonItemContainer = ComposedComponent => {
     return {
       playing: galleryState.videoIndexPlay === ownProps.idx,
       documentHeight: galleryState.documentHeight,
-      previewHover: galleryState.previewHover,
     };
   };
 

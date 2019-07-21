@@ -7,7 +7,6 @@ import ItemHover from './itemHover.js';
 import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
-import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import * as actions from '../../actions/galleryActions.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
@@ -45,7 +44,6 @@ class ItemView extends GalleryComponent {
       renderedVertically: true,
       visibleHorizontally: true,
       renderedHorizontally: true,
-      previewHover: props.previewHover,
       scroll: {
         top: 0,
         left: 0,
@@ -121,20 +119,9 @@ class ItemView extends GalleryComponent {
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.setVisibilityState = this.setVisibilityState.bind(this);
-    this.setPreviewHover = this.setPreviewHover.bind(this);
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this,
     );
-
-    if (utils.isEditor()) {
-      Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, data => {
-        setTimeout(() => {
-          data.detail === 2
-            ? this.setPreviewHover(true)
-            : this.setPreviewHover(false);
-        }, 50);
-      });
-    }
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -175,12 +162,6 @@ class ItemView extends GalleryComponent {
     }
     this.setState({
       showShare: _.isUndefined(forceVal) ? !this.state.showShare : !!forceVal,
-    });
-  }
-
-  setPreviewHover(val) {
-    this.setState({
-      previewHover: val,
     });
   }
 
@@ -395,6 +376,8 @@ class ItemView extends GalleryComponent {
         titlePlacement,
         itemClick,
         isSlideshow,
+        alwaysShowHover,
+        previewHover,
       } = this.props.styleParams;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (isSlideshow) {
@@ -411,7 +394,10 @@ class ItemView extends GalleryComponent {
       ) {
         return true;
       }
-      if (utils.isEditor() && this.state.previewHover) {
+      if (alwaysShowHover) {
+        return true;
+      }
+      if (utils.isEditor() && previewHover) {
         return true;
       }
     }
@@ -429,6 +415,8 @@ class ItemView extends GalleryComponent {
     const { styleParams } = this.props;
 
     if (styleParams.alwaysShowHover === true) {
+      return true;
+    } else if (utils.isEditor() && styleParams.previewHover === true) {
       return true;
     } else if (styleParams.isSlideshow) {
       return false;
@@ -838,9 +826,8 @@ class ItemView extends GalleryComponent {
   simulateHover() {
     return (
       this.props.currentHover === this.props.idx ||
-      this.state.previewHover ||
-      this.props.previewHover ||
-      this.props.styleParams.alwaysShowHover === true
+      this.props.styleParams.alwaysShowHover === true ||
+      (utils.isEditor() && this.props.styleParams.previewHover === true)
     );
   }
 

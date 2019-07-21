@@ -85,7 +85,7 @@ class GalleryView extends GalleryComponent {
     );
   }
   showMoreItems() {
-    if (utils.isAccessibilityEnabled()) {
+    if (this.props.styleParams.isAccessible) {
       // tal - I left this check since we do not want to focus the last item in non-accessibility mode
       //find the last visible item and focus on it
       try {
@@ -147,7 +147,7 @@ class GalleryView extends GalleryComponent {
           (this.props.styleParams.oneRow
             ? ' one-row slider hide-scrollbars '
             : '') +
-          (utils.isAccessibilityEnabled() ? ' accessible ' : '')
+          (this.props.styleParams.isAccessible ? ' accessible ' : '')
         }
         style={{
           height: galleryHeight,

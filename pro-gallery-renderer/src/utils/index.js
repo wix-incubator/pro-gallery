@@ -1,4 +1,3 @@
-import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
 import _ from 'lodash';
 import window from './window/windowWrapper';
 
@@ -485,27 +484,6 @@ class Utils {
       } catch (e) {
         return false;
       }
-    });
-  }
-
-  isAccessibilityEnabled() {
-    return this.getOrPutFromCache('isAccessibilityEnabled', () => {
-      if (!this.isSite()) {
-        return false;
-      }
-      const isDevAccessibility = this.shouldDebug('accessibility');
-      if (this.isOOI() && window) {
-        return isDevAccessibility || window.isAccessibilityEnabled;
-      } else if (Wix && typeof Wix.isVisualFocusEnabled === 'function') {
-        try {
-          Wix.isVisualFocusEnabled(isIt => {
-            return isIt || isDevAccessibility;
-          });
-        } catch (e) {
-          //
-        }
-      }
-      return isDevAccessibility;
     });
   }
 

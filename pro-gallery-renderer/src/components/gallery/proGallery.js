@@ -3,11 +3,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import galleryReducers from '../../reducers/index.js';
-import { toggleHoverPreview } from '../../actions/galleryActions.js';
 import GalleryContainerNew from './galleryContainerNew.js';
 import utils from '../../utils';
-import Wix from '@wix/photography-client-lib/dist/src/sdk/WixSdkWrapper';
-import videoActionTypes from '../../constants/videoActionTypes';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import { VideoQueue } from '../item/videos/video-queue';
 import window from '../../utils/window/windowWrapper';
@@ -26,22 +23,6 @@ export default class ProGallery extends GalleryComponent {
     }
   }
 
-  componentDidMount() {
-    if (this.store && this.store.dispatch && this.props.forceHover === true) {
-      this.store.dispatch(toggleHoverPreview(this.props.forceHover));
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.store &&
-      this.store.dispatch &&
-      nextProps.forceHover !== this.props.forceHover
-    ) {
-      this.store.dispatch(toggleHoverPreview(nextProps.forceHover));
-    }
-  }
-
   init(props) {
     this.domId = props.domId || Math.floor(Math.random() * 10000);
     if (utils.isVerbose()) {
@@ -56,18 +37,6 @@ export default class ProGallery extends GalleryComponent {
       /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {},
       applyMiddleware(...middlewares),
     );
-    this.initStoreEvents(this.store);
-  }
-
-  initStoreEvents(store) {
-    if (Wix && Wix.addEventListener) {
-      Wix.addEventListener(Wix.Events.STYLE_PARAMS_CHANGE, styleParams => {
-        store.dispatch({
-          type: videoActionTypes.videoModeChanged,
-          payload: styleParams.numbers.videoPlay,
-        });
-      });
-    }
   }
 
   render() {

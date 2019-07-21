@@ -1,14 +1,7 @@
 import {
-  SET_WIX_DATA,
   SET_ITEMS,
   SET_RENDERED_ITEMS_COUNT,
-  VIDEO_ENDED,
-  VIDEO_ADDED,
   GALLERY_WINDOW_LAYOUT_CHANGED,
-  VIDEO_PLAY_MODE,
-  NAVIGATION_IN,
-  EDITOR_MODE_CHANGED,
-  TOGGLE_HOVER_PREVIEW,
   TOGGLE_ISINVIEW,
   SET_VIDEO_PLAY_INDEX,
 } from '../constants/galleryTypes.js';
@@ -19,33 +12,9 @@ import { PLAY_VIDEO, PAUSE_VIDEO } from '../actions/itemViewActions.js';
 import initialState from './initialState.js';
 
 import _ from 'lodash';
-import utils from '../utils';
 
 export default function galleryReducer(state = initialState.gallery, action) {
   switch (action.type) {
-    case SET_WIX_DATA:
-      if (action.boundingRectAndOffsets) {
-        const res = action.boundingRectAndOffsets;
-        const scrollBase = res.offsets.y;
-        const scrollTop = (-1 * res.rect.top) / utils.getViewportScaleRatio();
-        let maxGalleryWidth;
-        if (res && res.rect && !_.isUndefined(res.rect.width)) {
-          maxGalleryWidth = res.rect.width;
-        }
-
-        return _.merge({}, state, {
-          wixInit: true,
-          scrollBase,
-          scrollTop,
-          maxGalleryWidth,
-        });
-      } else {
-        return _.merge({}, state, {
-          wixInit: true,
-          scrollBase: 0,
-        });
-      }
-
     case videoActions.videoModeChanged: {
       const newVideoPlayMode = action.payload;
       const { videoPlayMode } = state;
@@ -82,8 +51,6 @@ export default function galleryReducer(state = initialState.gallery, action) {
       break;
     case PAUSE_VIDEO:
       return _.merge({}, state, { videoIndexPlay: -1 });
-    case TOGGLE_HOVER_PREVIEW:
-      return _.merge({}, state, { previewHover: action.toggle });
     case TOGGLE_ISINVIEW:
       return _.merge({}, state, { isInView: action.toggle });
     default:

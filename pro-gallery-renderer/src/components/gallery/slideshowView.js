@@ -413,7 +413,7 @@ class SlideshowView extends GalleryComponent {
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
           (oneRow ? ' one-row hide-scrollbars ' : '') +
-          (utils.isAccessibilityEnabled() ? ' accessible ' : '')
+          (this.props.styleParams.isAccessible ? ' accessible ' : '')
         }
         style={{
           width,
@@ -751,7 +751,7 @@ class SlideshowView extends GalleryComponent {
         className={
           'pro-gallery inline-styles one-row hide-scrollbars ' +
           (this.props.styleParams.enableScroll ? ' slider ' : '') +
-          (utils.isAccessibilityEnabled() ? ' accessible ' : '')
+          (this.props.styleParams.isAccessible ? ' accessible ' : '')
         }
         style={galleryStyle}
       >
