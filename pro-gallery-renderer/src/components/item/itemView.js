@@ -414,12 +414,12 @@ class ItemView extends GalleryComponent {
   shouldHover() {
     const { styleParams } = this.props;
 
-    if (styleParams.alwaysShowHover === true) {
+    if (styleParams.isSlideshow) {
+      return false;
+    } else if (styleParams.alwaysShowHover === true) {
       return true;
     } else if (utils.isEditor() && styleParams.previewHover === true) {
       return true;
-    } else if (styleParams.isSlideshow) {
-      return false;
     } else if (styleParams.allowHover === false) {
       return false;
     } else if (utils.isMobile()) {
