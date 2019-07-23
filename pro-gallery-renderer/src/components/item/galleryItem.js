@@ -305,7 +305,7 @@ class GalleryItem {
       sharpParams,
   ) {
 
-    const resizeUrl = this.itemResizer || ((item, url) => url); //defensive code - in case the itemResizer was not defined
+    const resizeUrl = this.itemResizer || ((item, url) => url || ''); //defensive code - in case the itemResizer was not defined
 
     requiredWidth = Math.ceil(requiredWidth);
     requiredHeight = Math.ceil(requiredHeight);
@@ -355,8 +355,6 @@ class GalleryItem {
       { ...sharpParams, quality: 30, blur: 30 },
       focalPoint,
     );
-
-  
 
     urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
   

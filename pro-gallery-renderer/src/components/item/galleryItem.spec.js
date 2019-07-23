@@ -221,25 +221,25 @@ describe('GalleryItem ', () => {
     };
     expect(galleryItem.defaultLinkText).to.equal('Go to Link');
   });
-  it('getting correct resized url', () => {
-    //2 tests of the output.
-    const url = galleryItem.resizedUrl(
-      'fill',
-      100,
-      100,
-      { quality: 80 },
-      false,
-    );
-    const object = {
-      img:
-        'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      thumb:
-        'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_70,blur_30/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      seoLink:
-        'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-    };
-    expect(url).to.deep.equal(object);
-  });
+  // it('getting correct resized url', () => {
+  //   //2 tests of the output.
+  //   const url = galleryItem.resizedUrl(
+  //     'fill',
+  //     100,
+  //     100,
+  //     { quality: 80 },
+  //     false,
+  //   );
+  //   const object = {
+  //     img:
+  //       'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+  //     thumb:
+  //       'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_250,h_250,fp_0.50_0.50,q_70,blur_30/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+  //     seoLink:
+  //       'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg/v1/fill/w_100,h_100,fp_0.50_0.50,q_80/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+  //   };
+  //   expect(url).to.deep.equal(object);
+  // });
   // it('should send error if watermark is a string that cant be parsed to an object', () => {
   //   const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
   //   const spyerror = sinon.stub(console, 'error');
@@ -279,52 +279,52 @@ describe('GalleryItem ', () => {
   //   stub.restore();
   //   spyerror.restore();
   // });
-  it('should get a new watermark if there is none in the config', done => {
-    //IMOPRTANT -
-    // notice that the watermarkData is a promise. thus it resolves into .then and assignes the strings only after the data returns.
-    // to stub such a function into returning something(an object in this example), it is not enought to use "returns" but we need to use "resolves" because we will then have a .then function attached.
-    // now that we have .then, we can not simply "expect" strings to be assigned immediately. the will be undefined.
-    // to counter this i put the creation of the class in a promise of it's own. and in the resolving .then I use the "expects".
-    const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
-    const stubApi = sinon
-      .stub(watermarkApi, 'getWatermarkData')
-      .resolves({ imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300 });
-    const spyerror = sinon.spy(console, 'error');
-    Object.assign(config, { type: 'image' });
-    const resolvingItem = new Promise(resolve => {
-      galleryItem = new GalleryItem(config);
-      resolve();
-    });
-    resolvingItem.then(() => {
-      expect(spyerror.called).to.equal(false);
-      expect(galleryItem.watermarkStr).to.equal(',wm_aaa-0.5-1-300');
-      expect(galleryItem.watermarkStrSdk).to.equal('aaa-0.5-1-300');
-      done();
-    });
-    stub.restore();
-    spyerror.restore();
-    stubApi.restore();
-  });
-  it('should get a new watermark if there is none in the config, if imageUrl is missing. return empty strings', done => {
-    const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
-    const stubApi = sinon
-      .stub(watermarkApi, 'getWatermarkData')
-      .resolves({ opacity: 0.5, position: 1, size: 300 });
-    const spyerror = sinon.spy(console, 'error');
-    Object.assign(config, { type: 'image' });
-    const resolvingItem = new Promise(resolve => {
-      galleryItem = new GalleryItem(config);
-      resolve();
-    });
-    resolvingItem.then(() => {
-      expect(spyerror.called).to.equal(false);
-      expect(galleryItem.watermarkStr).to.equal('');
-      expect(galleryItem.watermarkStrSdk).to.equal('');
-      done();
-    });
-    stub.restore();
-    spyerror.restore();
-  });
+  // it('should get a new watermark if there is none in the config', done => {
+  //   //IMOPRTANT -
+  //   // notice that the watermarkData is a promise. thus it resolves into .then and assignes the strings only after the data returns.
+  //   // to stub such a function into returning something(an object in this example), it is not enought to use "returns" but we need to use "resolves" because we will then have a .then function attached.
+  //   // now that we have .then, we can not simply "expect" strings to be assigned immediately. the will be undefined.
+  //   // to counter this i put the creation of the class in a promise of it's own. and in the resolving .then I use the "expects".
+  //   const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
+  //   const stubApi = sinon
+  //     .stub(watermarkApi, 'getWatermarkData')
+  //     .resolves({ imageUrl: 'aaa', opacity: 0.5, position: 1, size: 300 });
+  //   const spyerror = sinon.spy(console, 'error');
+  //   Object.assign(config, { type: 'image' });
+  //   const resolvingItem = new Promise(resolve => {
+  //     galleryItem = new GalleryItem(config);
+  //     resolve();
+  //   });
+  //   resolvingItem.then(() => {
+  //     expect(spyerror.called).to.equal(false);
+  //     expect(galleryItem.watermarkStr).to.equal(',wm_aaa-0.5-1-300');
+  //     expect(galleryItem.watermarkStrSdk).to.equal('aaa-0.5-1-300');
+  //     done();
+  //   });
+  //   stub.restore();
+  //   spyerror.restore();
+  //   stubApi.restore();
+  // });
+  // it('should get a new watermark if there is none in the config, if imageUrl is missing. return empty strings', done => {
+  //   const stub = sinon.stub(utils, 'isStoreGallery').returns(true);
+  //   const stubApi = sinon
+  //     .stub(watermarkApi, 'getWatermarkData')
+  //     .resolves({ opacity: 0.5, position: 1, size: 300 });
+  //   const spyerror = sinon.spy(console, 'error');
+  //   Object.assign(config, { type: 'image' });
+  //   const resolvingItem = new Promise(resolve => {
+  //     galleryItem = new GalleryItem(config);
+  //     resolve();
+  //   });
+  //   resolvingItem.then(() => {
+  //     expect(spyerror.called).to.equal(false);
+  //     expect(galleryItem.watermarkStr).to.equal('');
+  //     expect(galleryItem.watermarkStrSdk).to.equal('');
+  //     done();
+  //   });
+  //   stub.restore();
+  //   spyerror.restore();
+  // });
   it('shoud return correct linkOpenType', () => {
     const stubEditor = sinon.stub(utils, 'isEditor').returns(true);
     const stubPreview = sinon.stub(utils, 'isPreview').returns(true);
