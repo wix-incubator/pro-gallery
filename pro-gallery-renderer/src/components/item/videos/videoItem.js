@@ -76,7 +76,7 @@ class VideoItem extends GalleryComponent {
     }
     const url = this.props.videoUrl
       ? this.props.videoUrl
-      : this.props.resized_url.mp4;
+      : this.props.resized_url.video;
     return (
       <ReactPlayer
         className={'gallery-item-visible video gallery-item'}

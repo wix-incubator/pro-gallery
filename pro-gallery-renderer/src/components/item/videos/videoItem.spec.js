@@ -111,7 +111,7 @@ describe('Video Item ', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.selector('ReactPlayer').props().url).equal(
-      sampleItemViewProps.resized_url.mp4,
+      sampleItemViewProps.resized_url.video,
     );
     expect(
       driver.find.selector('ReactPlayer').props().config.file.attributes.poster,

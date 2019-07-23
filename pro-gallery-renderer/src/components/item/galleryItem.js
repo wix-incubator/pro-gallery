@@ -1,16 +1,15 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
-import window from '../../utils/window/windowWrapper';
 import { Item } from 'pro-gallery-layouter';
 import _ from 'lodash';
-import watermarkApi from '@wix/photography-client-lib/dist/src/store/watermarkApi';
-import * as imageSdk from 'image-client-api/dist/imageClientSDK';
+import RESIZE_METHODS from '../../constants/resizeMethods';
 
 class GalleryItem {
   constructor(config) {
     this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
     this.createdBy = config.createdBy;
+    this.itemResizer = config.itemResizer;
 
     if (config.dto && config.dto.dto) {
       config.dto = config.dto.dto; //defence patch due to mis-use of item-core
@@ -61,47 +60,27 @@ class GalleryItem {
         this.dto.metaData = utils.parseStringObject(itemMetadata);
       }
     }
-    if (utils.isStoreGallery() && !this.isVideo) {
-      this.watermark = config.watermark;
-      if (!this.watermark) {
-        watermarkApi
-          .getWatermarkData() //this request should be sync (the watermark should have been cached by the gallery or the fullscreen)
-          .then(data => {
-            this.watermark = data;
-            this.watermarkStrSdk =
-              this.watermark && this.watermark.imageUrl
-                ? `${this.watermark.imageUrl}-${this.watermark.opacity}-${
-                    this.watermark.position
-                  }-${this.watermark.size}`
-                : '';
-            this.watermarkStr =
-              this.watermark && this.watermark.imageUrl
-                ? `,wm_${this.watermarkStrSdk}`
-                : '';
-          });
-      } else {
-        // protect against watermark being a string - it happens some times.
-        if (typeof this.watermark === 'string') {
-          try {
-            this.watermark = JSON.parse(this.watermark);
-          } catch (error) {
-            console.error(
-              `item-core - given watermark (${
-                this.watermark
-              }) is not an object`,
-              error,
-            );
-          }
-        }
-        this.watermarkStr = '';
-        if (this.watermark.imageUrl) {
-          this.watermarkStrSdk = `${this.watermark.imageUrl}-${
-            this.watermark.opacity
-          }-${this.watermark.position}-${this.watermark.size}`;
-          this.watermarkStr = `,wm_${this.watermarkStrSdk}`;
-        }
-      }
-    }
+    // if (utils.isStoreGallery() && !this.isVideo) {
+    //   this.watermark = config.watermark;
+    //   // protect against watermark being a string - it happens some times.
+    //   if (typeof this.watermark === 'string') {
+    //     try {
+    //       this.watermark = JSON.parse(this.watermark);
+    //     } catch (error) {
+    //       console.error(
+    //         `item-core - given watermark (${this.watermark}) is not an object`,
+    //         error,
+    //       );
+    //     }
+    //   }
+    //   this.watermarkStr = '';
+    //   if (this.watermark.imageUrl) {
+    //     this.watermarkStrSdk = `${this.watermark.imageUrl}-${
+    //       this.watermark.opacity
+    //     }-${this.watermark.position}-${this.watermark.size}`;
+    //     this.watermarkStr = `,wm_${this.watermarkStrSdk}`;
+    //   }
+    // }
 
     this.sharpParams = _.merge({}, config.sharpParams);
     if (!this.sharpParams.quality) {
@@ -128,7 +107,7 @@ class GalleryItem {
     this.ratio = scheme.ratio;
     this.cubeRatio = scheme.cropRatio;
     this.cubeImages = scheme.isCropped;
-    this.cubeType = scheme.cropType || 'fill';
+    this.cubeType = scheme.cropType || RESIZE_METHODS.FILL;
     this.offset = scheme.offset;
     this.group = scheme.group;
     this.transform = scheme.transform;
@@ -154,7 +133,6 @@ class GalleryItem {
         linkType: this.linkType,
         linkOpenType: this.linkOpenType,
         linkData: this.linkData,
-        originalsUrl: this.getOriginalsUrl(),
         title: this.title,
         fileName: this.fileName,
         description: this.description,
@@ -203,13 +181,12 @@ class GalleryItem {
       isDemo: metadata.isDemo,
       orderIndex: this.orderIndex,
       itemId: this.dto.itemId,
-      originalUrl: this.getOriginalsUrl(),
       itemUrl: this.url,
       itemHeight: metadata.height,
       title: metadata.title,
       itemWidth: metadata.width,
       itemType: metadata.type || 'image',
-      imageUrl: this.resizedUrl('fit', 200, 200, null, null).img,
+      imageUrl: this.resizedUrl(RESIZE_METHODS.FIT, 200, 200, null, null).img,
       imagePurchasedUrl: this.dto.mediaUrl,
       fpX: focalPoint[0],
       fpY: focalPoint[1],
@@ -321,511 +298,91 @@ class GalleryItem {
     };
   }
 
-  useImageClientApi() {
-    const isImageSizeAvailable = !this.isDimensionless;
-    // const isSSR = !(window && window.document) || window.isMock; //the image client lib can only be used in the client (dahh)
-    const hasWatermark = !!this.watermark;
-
-    return isImageSizeAvailable && !hasWatermark;
-  }
-
-  resizeUrlImp(
-    originalUrl,
-    resizeMethod,
-    requiredWidth,
-    requiredHeight,
-    sharpParams,
-    faces = false,
-    allowWatermark = false,
-    focalPoint,
-    forceManual,
+  resizedUrl (
+      resizeMethod,
+      requiredWidth,
+      requiredHeight,
+      sharpParams,
   ) {
-    if (forceManual !== true && this.useImageClientApi()) {
-      return this.resizeUrlImp_sdk(
-        originalUrl,
-        resizeMethod,
-        requiredWidth,
-        requiredHeight,
-        sharpParams,
-        faces,
-        allowWatermark,
-        focalPoint,
-      );
-    } else {
-      return this.resizeUrlImp_manual(
-        originalUrl,
-        resizeMethod,
-        requiredWidth,
-        requiredHeight,
-        sharpParams,
-        faces,
-        allowWatermark,
-        focalPoint,
-      );
-    }
-  }
 
-  prefixUrlIfNeeded(originalUrl) {
-    if (utils.isExternalUrl(originalUrl)) {
-      return originalUrl;
-    } else {
-      //todo remove when supporting focal point
-      return 'https://static.wixstatic.com/media/' + originalUrl;
-    }
-  }
-
-  resizeUrlImp_manual(
-    originalUrl,
-    resizeMethod,
-    requiredWidth,
-    requiredHeight,
-    sharpParams,
-    faces = false,
-    allowWatermark = false,
-    focalPoint,
-  ) {
-    requiredWidth = Math.ceil(requiredWidth);
-    requiredHeight = Math.ceil(requiredHeight);
-
-    const requiredRatio = requiredWidth / requiredHeight;
-    const showWatermark = allowWatermark && this.watermarkStr;
-
-    // assign sharp default parameters
-    sharpParams = sharpParams || {};
-
-    // calc default quality
-    if (!sharpParams.quality) {
-      sharpParams.quality = 90;
-    }
-
-    //don't allow quality above 90 till we have proper UI indication
-    sharpParams.quality = Math.min(90, sharpParams.quality);
-
-    if (sharpParams.allowUsm === true) {
-      sharpParams.usm.usm_a = Math.min(
-        5,
-        Math.max(0, sharpParams.usm.usm_a || 0),
-      );
-      sharpParams.usm.usm_r = Math.min(
-        128,
-        Math.max(0, sharpParams.usm.usm_r || 0),
-      ); //should be max 500 - but it's returning a 404
-      sharpParams.usm.usm_t = Math.min(
-        1,
-        Math.max(0, sharpParams.usm.usm_t || 0),
-      );
-    }
-
-    const focalPointObj = { x: 50, y: 50 };
-    if (focalPoint && focalPoint[0] >= 0 && focalPoint[1] >= 0) {
-      focalPointObj.x = Math.round(focalPoint[0] * 100);
-      focalPointObj.y = Math.round(focalPoint[1] * 100);
-    }
-
-    if (utils.isExternalUrl(originalUrl)) {
-      return originalUrl;
-    } else if (!focalPoint) {
-      //todo remove when supporting focal point
-      let retUrl =
-        'https://static.wixstatic.com/media/' +
-        originalUrl +
-        '/v1/' +
-        resizeMethod +
-        '/';
-      retUrl += 'w_' + requiredWidth;
-      retUrl += ',h_' + requiredHeight;
-      if (resizeMethod === 'fill') {
-        retUrl += `,fp_0.${focalPointObj.x}_0.${focalPointObj.y}`;
-      }
-      // retUrl += ',al_' + (faces ? 'fs' : 'c');
-      retUrl += ',q_' + sharpParams.quality;
-      if (sharpParams.blur) {
-        retUrl += ',blur_' + sharpParams.blur;
-      }
-
-      retUrl +=
-        sharpParams.usm && sharpParams.usm.usm_r
-          ? ',usm_' +
-            sharpParams.usm.usm_r.toFixed(2) +
-            '_' +
-            sharpParams.usm.usm_a.toFixed(2) +
-            '_' +
-            sharpParams.usm.usm_t.toFixed(2)
-          : '';
-      // Important to use this as the last param
-      if (showWatermark) {
-        retUrl += this.watermarkStr;
-      }
-      retUrl += '/' + originalUrl;
-      return retUrl;
-    } else {
-      let scale;
-      let x;
-      let y;
-      let orgW;
-      let orgH;
-
-      //find the scale
-      if (this.ratio > requiredRatio) {
-        //wide image (relative to required ratio
-        scale = requiredHeight / this.maxHeight;
-        orgW = Math.floor(requiredHeight * this.ratio);
-        y = 0;
-        x = Math.round(orgW * focalPoint[0] - requiredWidth / 2);
-        x = Math.min(orgW - requiredWidth, x);
-        x = Math.max(0, x);
-      } else {
-        //narrow image
-
-        scale = requiredWidth / this.maxWidth;
-        orgH = Math.floor(requiredWidth / this.ratio);
-        x = 0;
-        y = Math.round(orgH * focalPoint[1] - requiredHeight / 2);
-        y = Math.min(orgH - requiredHeight, y);
-        y = Math.max(0, y);
-      }
-
-      //make sure scale is not lower than needed
-      //scale must be higher to prevent cases that there will be white margins (or 404)
-      scale = Math.ceil(scale * 100) / 100;
-
-      let retUrl =
-        'https://static.wixstatic.com/media/' + originalUrl + '/v1/crop/';
-      retUrl += 'w_' + requiredWidth;
-      retUrl += ',h_' + requiredHeight;
-      retUrl += ',x_' + x;
-      retUrl += ',y_' + y;
-      retUrl += ',scl_' + scale.toFixed(2);
-      retUrl += ',q_' + sharpParams.quality;
-      if (sharpParams.blur) {
-        retUrl += ',blur_' + sharpParams.blur;
-      }
-      retUrl +=
-        sharpParams.usm && sharpParams.usm.usm_r
-          ? ',usm_' +
-            sharpParams.usm.usm_r.toFixed(2) +
-            '_' +
-            sharpParams.usm.usm_a.toFixed(2) +
-            '_' +
-            sharpParams.usm.usm_t.toFixed(2)
-          : '';
-      // Important to use this as the last param
-      if (showWatermark) {
-        retUrl += this.watermarkStr;
-      }
-      retUrl += '/' + originalUrl;
-      return retUrl;
-    }
-  }
-
-  resizeUrlImp_sdk(
-    originalUrl,
-    resizeMethod,
-    requiredWidth,
-    requiredHeight,
-    sharpParams,
-    faces = false,
-    allowWatermark = false,
-    focalPoint,
-  ) {
-    // assign default parameters
-    originalUrl = originalUrl || '';
-    sharpParams = sharpParams || {};
-
-    // calc default quality
-    if (sharpParams.quality > 0) {
-      //don't allow quality above 90 till we have proper UI indication
-      sharpParams.quality = Math.min(90, sharpParams.quality);
-    }
-
-    const focalPointObj = { x: 50, y: 50 };
-    if (focalPoint && focalPoint[0] >= 0 && focalPoint[1] >= 0) {
-      focalPointObj.x = Math.round(focalPoint[0] * 100);
-      focalPointObj.y = Math.round(focalPoint[1] * 100);
-    }
-
-    if (sharpParams.allowUsm === true && sharpParams.usm) {
-      sharpParams.usm.usm_a = Math.min(
-        5,
-        Math.max(0, sharpParams.usm.usm_a || 0),
-      );
-      sharpParams.usm.usm_r = Math.min(
-        128,
-        Math.max(0, sharpParams.usm.usm_r || 0),
-      ); //should be max 500 - but it's returning a 404
-      sharpParams.usm.usm_t = Math.min(
-        1,
-        Math.max(0, sharpParams.usm.usm_t || 0),
-      );
-    } else {
-      sharpParams.usm = {
-        usm_a: 0,
-        usm_r: 0,
-        usm_t: 0,
-      };
-    }
-
-    if (utils.isExternalUrl(originalUrl)) {
-      return originalUrl;
-    } else {
-      let resizer = _.noop;
-      if (resizeMethod === 'fit') {
-        // function getScaleToFitImageURL(relativeUrl, sourceWidth, sourceHeight, targetWidth, targetHeight, options) {
-        resizer = imageSdk.getScaleToFitImageURL;
-      } else {
-        // function getScaleToFillImageURL(relativeUrl, sourceWidth, sourceHeight, targetWidth, targetHeight, options) {
-        resizer = imageSdk.getScaleToFillImageURL;
-      }
-
-      /**
-       * the transform options
-       * @typedef  {object}   ImageTransformOptions
-       * @property {boolean}  [progressive]               image transform progressive
-       * @property {number}   [quality]                   image transform quality
-       * @property {string}   [watermark]                 image watermark id
-       * @property {object}   [unsharpMask]               unsharpMask filter
-       * @property {number}   [unsharpMask.radius]        unsharpMask radius
-       * @property {number}   [unsharpMask.amount]        unsharpMask amount
-       * @property {number}   [unsharpMask.threshold]     unsharpMask threshold
-       */
-
-      const options = {};
-      if (sharpParams.quality > 0) {
-        options.quality = sharpParams.quality;
-      }
-      if (sharpParams.blur > 0) {
-        options.filters = {
-          blur: sharpParams.blur,
-        };
-      }
-      if (focalPointObj) {
-        options.focalPoint = focalPointObj;
-      }
-      if (sharpParams && sharpParams.usm) {
-        options.unsharpMask = {
-          radius: parseFloat(sharpParams.usm.usm_r),
-          amount: parseFloat(sharpParams.usm.usm_a),
-          threshold: parseFloat(sharpParams.usm.usm_t),
-        };
-      }
-      if (this.watermarkStrSdk) {
-        options.watermark = this.watermarkStrSdk;
-      }
-
-      let prefix = '';
-      if (originalUrl.indexOf('/') < 0) {
-        prefix = 'media/';
-      }
-
-      const retUrl = resizer(
-        prefix + originalUrl,
-        this.maxWidth,
-        this.maxHeight,
-        requiredWidth,
-        requiredHeight,
-        options,
-      );
-
-      /*
-      console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', this.resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
-        originalUrl,
-        resizeMethod,
-        orgWidth: this.maxWidth,
-        orgHeight: this.maxHeight,
-        requiredWidth,
-        requiredHeight,
-        options
-      });
- 		*/
-      return retUrl;
-    }
-  }
-
-  createUrls() {
-    const devicePixelRatio = this.useImageClientApi()
-      ? 1
-      : utils.getDevicePixelRatio(); // when using ImageClientAPI the devicePixelRatio is added automatically
-    const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
-    const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
-    // const maxWidth = this.cubeImages ? Math.min(this.maxWidth, this.maxHeight) : this.maxWidth;
-    // const maxHeight = this.cubeImages ? Math.min(this.maxWidth, this.maxHeight) : this.maxHeight;
-    this.resizeWidth = Math.min(
-      maxWidth,
-      Math.ceil(this.width * devicePixelRatio),
-    );
-    this.resizeHeight = Math.min(
-      maxHeight,
-      Math.ceil(this.height * devicePixelRatio),
-    );
-    this.resized_url = this.resizedUrl(
-      this.cubeType,
-      this.resizeWidth,
-      this.resizeHeight,
-      this.sharpParams,
-      false,
-    );
-
-    this.pixel_url = this.resizedUrl('fill', 1, 1, { quality: 5 }, false);
-
-    const maxDimension = 500;
-    this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
-    this.thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
-    this.thumbnail_url = this.resizedUrl(
-      'fit',
-      this.thumbnailWidth,
-      this.thumbnailHeight,
-      { quality: 30 },
-      false,
-    );
-    this.square_url = this.resizedUrl('fill', 100, 100, { quality: 80 }, false);
-    this.full_url = this.resizedUrl(
-      this.cubeType,
-      this.maxWidth,
-      this.maxHeight,
-      this.sharpParams,
-      false,
-    );
-    this.sample_url = this.resizedUrl(
-      'fit',
-      500,
-      500,
-      this.sharpParams,
-      false,
-      true,
-    );
-    this.download_url = utils.isStoreGallery()
-      ? this.sample_url
-      : { img: this.getOriginalsUrl(), mp4: this.full_url.mp4 };
-    if (this.download_url.img) {
-      this.download_url.img += `?dn=${this.fileName}`; //https://jira.wixpress.com/browse/PHOT-129#
-    }
-    this.preload_url = this.prefixUrlIfNeeded(this.url);
-  }
-
-  resizedUrl(
-    resizeMethod,
-    requiredWidth,
-    requiredHeight,
-    sharpParams,
-    showFaces,
-    noCrop,
-  ) {
-    if (this.isText) {
-      return {};
-    }
+    const resizeUrl = this.itemResizer || ((item, url) => url); //defensive code - in case the itemResizer was not defined
 
     requiredWidth = Math.ceil(requiredWidth);
     requiredHeight = Math.ceil(requiredHeight);
     const thumbSize = 250;
+  
+    const focalPoint = resizeMethod === RESIZE_METHODS.FILL && this.isCropped && this.focalPoint;
 
     const urls = {};
+    let imgUrl = this.url;
+  
+    if (this.isText) {
+      return {};
 
-    if (this.metadata.posters || this.metadata.customPoster) {
-      const qualities = this.metadata.qualities;
-      const poster =
-        this.metadata.customPoster ||
-        (this.metadata.posters
-          ? this.metadata.posters[this.metadata.posters.length - 1]
-          : null);
+    } else if (this.isVideo) {
+
+      imgUrl = this.poster;
 
       if (utils.isExternalUrl(this.url)) {
-        const format = this.url.split('.').slice(-1)[0];
-        urls[format] = this.url;
-      }
-
-      if (poster) {
-        if (qualities && qualities.length) {
-          let suffix = '/';
-
-          const mp4Qualities = qualities.filter(
-            video => video.formats[0] === 'mp4',
-          );
-          //search for the first quality bigger that the required one
-          for (let quality, q = 0; (quality = mp4Qualities[q]); q++) {
-            if (quality.height >= requiredHeight || !mp4Qualities[q + 1]) {
-              suffix += quality.quality; //e.g. 720p
-              for (let format, i = 0; (format = quality.formats[i]); i++) {
-                urls[format] =
-                  window.location.protocol +
-                  '//video.wixstatic.com/video/' +
-                  this.url +
-                  suffix +
-                  '/' +
-                  format +
-                  '/file.' +
-                  format;
-              }
-              break;
-            }
-          }
-          // const wixQualities = qualities.filter(video => video.formats[0] === 'wix');
-          // urls.wix = window.location.protocol + '//video.wixstatic.com/video/' + this.url + suffix + '/' + format + '/file.' + format;
-
-          const ratio = poster.width / poster.height;
-          const isWider = ratio > 1;
-          if (isWider) {
-            requiredWidth = Math.ceil(requiredHeight * ratio);
-          } else {
-            requiredHeight = Math.ceil(requiredWidth / ratio);
-          }
-        }
-
-        urls.img = this.resizeUrlImp(
-          poster.url,
-          resizeMethod,
+        urls.video = this.url;
+      } else {
+        urls.video = resizeUrl(
+          this, 
+          this.url,
+          RESIZE_METHODS.VIDEO,
           requiredWidth,
           requiredHeight,
-          sharpParams,
-          showFaces,
-          false,
-        );
-        urls.thumb = this.resizeUrlImp(
-          poster.url,
-          resizeMethod,
-          thumbSize,
-          (thumbSize * requiredHeight) / requiredWidth,
-          { ...sharpParams, quality: 70, blur: 30 },
-          false,
-          false,
-          true,
-        );
+        )
       }
-    } else {
-      const fp = noCrop !== true && this.isCropped && this.focalPoint;
-      urls.img = this.resizeUrlImp(
-        this.url,
-        resizeMethod,
-        requiredWidth,
-        requiredHeight,
-        sharpParams,
-        showFaces,
-        true,
-        fp,
-      );
-      urls.thumb = this.resizeUrlImp(
-        this.url,
-        resizeMethod,
-        thumbSize,
-        (thumbSize * requiredHeight) / requiredWidth,
-        { ...sharpParams, quality: 70, blur: 30 },
-        showFaces,
-        true,
-        fp,
-        true,
-      );
-      urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
     }
+            
+    urls.img = resizeUrl(
+      this,
+      imgUrl,
+      resizeMethod,
+      requiredWidth,
+      requiredHeight,
+      sharpParams,
+      focalPoint,
+    );
 
-    // if (window.isWebpSupported && !utils.isStoreGallery()) {
-    //   urls.thumb = urls.thumb.replace(/\.jpg$/i, '.webp');
-    //   urls.img = urls.img.replace(/\.jpg$/i, '.webp');
-    // }
+    urls.thumb = resizeUrl(
+      this,
+      imgUrl,
+      resizeMethod,
+      thumbSize,
+      (thumbSize * requiredHeight) / requiredWidth,
+      { ...sharpParams, quality: 30, blur: 30 },
+      focalPoint,
+    );
 
+  
+
+    urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
+  
     return urls;
-  }
+  };
 
-  getOriginalsUrl() {
-    return 'https://static.wixstatic.com/media/' + this.url;
+  createUrls() {
+    const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
+    const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
+    const maxDimension = 500;
+
+    const thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
+    const thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
+    
+    const resizeWidth = Math.min(maxWidth, Math.ceil(this.width));
+    const resizeHeight = Math.min(maxHeight, Math.ceil(this.height));
+    
+    this.resized_url = this.resizedUrl(this.cubeType, resizeWidth, resizeHeight, this.sharpParams);
+    this.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, { quality: 5 });
+    this.thumbnail_url = this.resizedUrl(RESIZE_METHODS.FIT, thumbnailWidth, thumbnailHeight, { quality: 30 });
+    this.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, { quality: 80 });
+    this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams);
+    this.sample_url = this.resizedUrl(RESIZE_METHODS.FIT, 500, 500, this.sharpParams);
+    this.preload_url = this.resized_url;
+    this.download_url = utils.isStoreGallery() ? this.sample_url : this.full_url;
+    this.download_url.img += `?dn=${this.fileName}`;
   }
 
   updateSharpParams() {
@@ -881,7 +438,7 @@ class GalleryItem {
   }
 
   get isCropped() {
-    return this.cubeImages && this.cubeType === 'fill';
+    return this.cubeImages && this.cubeType === RESIZE_METHODS.FILL;
   }
 
   get focalPoint() {
@@ -893,65 +450,6 @@ class GalleryItem {
   }
 
   //----------------------------------------------------------------//
-
-  get demoTitle() {
-    return 'I am a title, only a sample title but still a title. ';
-  }
-
-  get demoDescription() {
-    return 'I am a description, the best description ever! Here is some lorem ipsum for you: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-  }
-
-  get demoExif() {
-    return {
-      GPSVersionID: '2.2.0.0',
-      GPSAltitudeRef: '1.8',
-      GPSAltitude: '0',
-      Make: 'LG Electronics',
-      Model: 'LG-H815L',
-      Orientation: 'right-top',
-      XResolution: '72',
-      YResolution: '72',
-      ResolutionUnit: '2',
-      Software: 'Picasa',
-      DateTime: '2016:04:17 07:19:25',
-      YCbCrPositioning: '1',
-      ExposureTime: '0.041666666666666664',
-      FNumber: '1.8',
-      ExifIFDPointer: '214',
-      ExposureProgram: 'Undefined',
-      GPSInfoIFDPointer: '1262',
-      PhotographicSensitivity: '200',
-      ExifVersion: '0220',
-      DateTimeOriginal: '2016:04:17 07:19:25',
-      DateTimeDigitized: '2016:04:17 07:19:25',
-      ComponentsConfiguration: 'YCbCr',
-      ShutterSpeedValue: '4.585',
-      ApertureValue: '1.69',
-      BrightnessValue: '-0.88',
-      ExposureBias: '0',
-      MeteringMode: 'CenterWeightedAverage',
-      Flash: 'Flash did not fire, compulsory flash mode',
-      FocalLength: '4.42',
-      UserComment:
-        '32,32,32,70,77,49,32,32,32,70,67,48,48,48,48,48,48,48,48,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0',
-      SubSecTime: '802528',
-      SubSecTimeOriginal: '802528',
-      SubSecTimeDigitized: '802528',
-      FlashpixVersion: '0100',
-      ColorSpace: '1',
-      PixelXDimension: '5312',
-      PixelYDimension: '2988',
-      InteroperabilityIFDPointer: '1320',
-      SensingMethod: 'Undefined',
-      SceneType: 'Directly photographed',
-      ExposureMode: '0',
-      WhiteBalance: 'Auto white balance',
-      DigitalZoomRatio: '1',
-      SceneCaptureType: 'Standard',
-      ImageUniqueID: '36f6e92221e27c830000000000000000',
-    };
-  }
 
   get photoId() {
     return this.id;
@@ -1020,12 +518,24 @@ class GalleryItem {
     return !!this.dto.i;
   }
 
-  get isVideo() {
-    return this.type === 'video';
-  }
-
   get videoUrl() {
     return this.metadata.videoUrl;
+  }
+
+  get poster() {
+    return (
+      this.metadata.poster ||
+      this.metadata.customPoster ||
+      (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1].url : null)
+    )
+  }
+
+  get qualities() {
+    return (
+      this.metadata.qualities ||
+      this.metadata.customPoster ||
+      (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1].url : null)
+    )
   }
 
   get isExternalVideo() {
@@ -1197,50 +707,6 @@ class GalleryItem {
       default:
         return '';
     }
-    /*
-        const wixLinkDataSamples = {
-          page: {
-            pageId: "#c1dmp",
-            type: "PageLink"
-          },
-          anchor: {
-            anchorDataId: "",
-            anchorName: "Anchor 1",
-            pageId: "#masterPage",
-            type: "AnchorLink"
-          },
-          web: {
-            target: "_self",
-            type: "ExternalLink",
-            url: "http://google.com"
-          },
-          email: {
-            recipient: "guyso@wix.com",
-            subject: "subject",
-            type: "EmailLink"
-          },
-          phone: {
-            phoneNumber: "0547787444",
-            type: "PhoneLink"
-          },
-          document: {
-            docId: "0d72ac_7395fddc29a84899a472b5fcf0dee3ed.doc",
-            name: "חוזה-שכירות-משנה-בלתי-מוגנת.doc",
-            type: "DocumentLink"
-          },
-          scroll: {
-            anchorDataId: "SCROLL_TO_TOP",
-            anchorName: "Top of Page",
-            pageId: "#masterPage",
-            type: "AnchorLink"
-          },
-          lightbox: {
-            pageId: "#zwjzg",
-            type: "PageLink"
-          }
-
-        }
-    */
   }
 
   get defaultLinkValue() {
@@ -1386,6 +852,10 @@ class GalleryItem {
 
   get isText() {
     return this.type === 'text';
+  }
+
+  get isVideo() {
+    return this.type === 'video';
   }
 
   get isVisible() {

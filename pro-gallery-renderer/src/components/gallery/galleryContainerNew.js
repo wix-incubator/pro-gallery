@@ -18,9 +18,9 @@ import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import _ from 'lodash';
 import utils from '../../utils';
 import EVENTS from '../../utils/constants/events';
-import { GalleryComponent } from '../galleryComponent';
+import { extractContextFields, GalleryProvider } from '../../context/GalleryContext';
 
-export class GalleryContainer extends GalleryComponent {
+export class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
     if (utils.isVerbose()) {
@@ -682,6 +682,7 @@ export class GalleryContainer extends GalleryComponent {
             watermark: watermarkData,
             sharpParams: _styles.sharpParams,
             lastVisibleItemIdx: this.lastVisibleItemIdx,
+            itemResizer: this.props.itemResizer
           },
         );
       } else {
@@ -689,6 +690,7 @@ export class GalleryContainer extends GalleryComponent {
           watermark: watermarkData,
           sharpParams: _styles.sharpParams,
           lastVisibleItemIdx: this.lastVisibleItemIdx,
+          itemResizer: this.props.itemResizer
         });
       }
 
@@ -961,68 +963,70 @@ export class GalleryContainer extends GalleryComponent {
       'div.pro-gallery-parent-container * { transition: none !important }';
 
     return (
-      <div
-        data-key="pro-gallery-inner-container"
-        key="pro-gallery-inner-container"
-      >
-        <CssScrollIndicator
-          galleryDomId={this.props.domId}
-          oneRow={this.state.styles.oneRow}
-          scrollBase={this.state.container.scrollBase}
-          scrollingElement={this._scrollingElement}
-          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
-          enableScrollPreload={this.enableScrollPreload}
-        />
-        <ViewComponent
-          galleryDomId={this.props.domId}
-          galleryId={this.props.galleryId}
-          isInDisplay={this.props.isInDisplay}
-          scrollingElement={this._scrollingElement}
-          totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
-          renderedItemsCount={this.props.renderedItemsCount}
-          items={this.items}
-          itemsLoveData={this.props.itemsLoveData}
-          galleryStructure={this.galleryStructure}
-          styleParams={styles}
-          container={this.state.container}
-          watermark={this.props.watermarkData}
-          settings={this.props.settings}
-          gotScrollEvent={true}
-          scroll={{}} //todo: remove after refactor is 100%
-          displayShowMore={displayShowMore}
-          domId={this.props.domId}
-          currentHover={this.state.currentHover}
-          customHoverRenderer={this.props.customHoverRenderer}
-          customInfoRenderer={this.props.customInfoRenderer}
-          isPremiumSite={this.props.isPremiumSite}
-          isInSEO={this.props.isInSEO}
-          actions={_.merge(this.props.actions, {
-            findNeighborItem,
-            toggleLoadMoreItems: this.toggleLoadMoreItems,
-            eventsListener: this.eventsListener,
-            setWixHeight: _.noop,
-            scrollToItem: this.scrollToItem,
-            setCurrentHover: this.setCurrentHover,
-            duplicateGalleryItems: this.duplicateGalleryItems,
-          })}
-          store={this.props.store}
-          {...this.props.gallery}
-        />
-        {this.galleryInitialStateJson && (
-          <div id="ssr-state-to-hydrate" style={{ display: 'none' }}>
-            {this.galleryInitialStateJson}
-          </div>
-        )}
-        <style data-key="scrollCss" key="scrollCss">
-          {this.scrollCss}
-        </style>
-        {this.fullwidthLayoutsCss.map((css, idx) => (
-          <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>
-            {css}
+      <GalleryProvider {...extractContextFields({...this.state, ...this.props})} >
+        <div
+          data-key="pro-gallery-inner-container"
+          key="pro-gallery-inner-container"
+        >
+          <CssScrollIndicator
+            galleryDomId={this.props.domId}
+            oneRow={this.state.styles.oneRow}
+            scrollBase={this.state.container.scrollBase}
+            scrollingElement={this._scrollingElement}
+            getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+            enableScrollPreload={this.enableScrollPreload}
+          />
+          <ViewComponent
+            galleryDomId={this.props.domId}
+            galleryId={this.props.galleryId}
+            isInDisplay={this.props.isInDisplay}
+            scrollingElement={this._scrollingElement}
+            totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
+            renderedItemsCount={this.props.renderedItemsCount}
+            items={this.items}
+            itemsLoveData={this.props.itemsLoveData}
+            galleryStructure={this.galleryStructure}
+            styleParams={styles}
+            container={this.state.container}
+            watermark={this.props.watermarkData}
+            settings={this.props.settings}
+            gotScrollEvent={true}
+            scroll={{}} //todo: remove after refactor is 100%
+            displayShowMore={displayShowMore}
+            domId={this.props.domId}
+            currentHover={this.state.currentHover}
+            customHoverRenderer={this.props.customHoverRenderer}
+            customInfoRenderer={this.props.customInfoRenderer}
+            isPremiumSite={this.props.isPremiumSite}
+            isInSEO={this.props.isInSEO}
+            actions={_.merge(this.props.actions, {
+              findNeighborItem,
+              toggleLoadMoreItems: this.toggleLoadMoreItems,
+              eventsListener: this.eventsListener,
+              setWixHeight: _.noop,
+              scrollToItem: this.scrollToItem,
+              setCurrentHover: this.setCurrentHover,
+              duplicateGalleryItems: this.duplicateGalleryItems,
+            })}
+            store={this.props.store}
+            {...this.props.gallery}
+          />
+          {this.galleryInitialStateJson && (
+            <div id="ssr-state-to-hydrate" style={{ display: 'none' }}>
+              {this.galleryInitialStateJson}
+            </div>
+          )}
+          <style data-key="scrollCss" key="scrollCss">
+            {this.scrollCss}
           </style>
-        ))}
-        {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
-      </div>
+          {this.fullwidthLayoutsCss.map((css, idx) => (
+            <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>
+              {css}
+            </style>
+          ))}
+          {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
+        </div>
+      </GalleryProvider>
     );
   }
 }

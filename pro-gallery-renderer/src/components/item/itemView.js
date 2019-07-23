@@ -526,7 +526,6 @@ class ItemView extends GalleryComponent {
       'isDemo',
       'type',
       'download_url',
-      'originalsUrl',
       'loveCount',
       'isLoved',
     ]);

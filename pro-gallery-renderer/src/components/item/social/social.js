@@ -114,7 +114,7 @@ export default class Social extends GalleryComponent {
             : -1,
       };
       const downloadLink =
-        download_url.mp4 || download_url.webm || download_url.img;
+        download_url.video || download_url.webm || download_url.img;
       const itemProps = {
         target: '_blank',
         href: downloadLink,
