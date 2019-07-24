@@ -55,10 +55,12 @@ export default class ItemHover extends GalleryComponent {
     //width and height will be taken from the gallery.scss and not be inline
 
     return (
-      <div className={hoverClass}>
+      <div
+        className={hoverClass}
+        key={'item-hover-' + idx}
+        data-hook={'item-hover-' + idx}
+      >
         <div
-          key={'item-hover-' + idx}
-          data-hook={'item-hover-' + idx}
           style={{
             ...restOfDimensions,
             ...getHoverStyle(styleParams),
