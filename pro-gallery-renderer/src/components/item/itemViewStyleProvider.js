@@ -33,7 +33,7 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
     borderStyle: 'solid',
     borderRadius: borderRadius,
     borderWidth: borderWidth + 'px',
-    borderColor: borderColor.value,
+    borderColor: borderColor && borderColor.value,
   };
 }
 
