@@ -523,17 +523,13 @@ class GalleryItem {
   get poster() {
     return (
       this.metadata.poster ||
-      this.metadata.customPoster ||
+      (this.metadata.customPoster && this.metadata.customPoster.url) ||
       (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1].url : null)
     )
   }
 
   get qualities() {
-    return (
-      this.metadata.qualities ||
-      this.metadata.customPoster ||
-      (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1].url : null)
-    )
+    return (this.metadata.qualities)
   }
 
   get isExternalVideo() {
