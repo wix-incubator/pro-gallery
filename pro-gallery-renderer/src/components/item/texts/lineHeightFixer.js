@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
 import PLACEMENTS from '../../../utils/constants/placements';
+import INFO_TYPE from '../../../utils/constants/infoType';
 import window from '../../../utils/window/windowWrapper';
 import designConsts from '../../../constants/designConsts.js';
 
@@ -52,7 +53,7 @@ class LineHeightFixer {
       const display = this.getSavedDisplay(element);
       this.setCss(element, { visibility: 'visible', display });
     } else {
-      this.setCss(element, { visibility: 'visible' });
+      this.setCss(element, { visibility: 'visible', display: '-webkit-box' });
     }
   }
 
@@ -90,6 +91,14 @@ class LineHeightFixer {
       styleParams.allowDescription !== newStyleParams.allowDescription ||
       styleParams.slideshowInfoSize !== newStyleParams.slideshowInfoSize ||
       styleParams.externalInfoHeight !== newStyleParams.externalInfoHeight ||
+      styleParams.textImageSpace !== newStyleParams.textImageSpace ||
+      styleParams.textsVerticalPadding !==
+        newStyleParams.textsVerticalPadding ||
+      styleParams.textsHorizontalPadding !==
+        newStyleParams.textsHorizontalPadding ||
+      styleParams.titleDescriptionSpace !==
+        newStyleParams.titleDescriptionSpace ||
+      styleParams.imageInfoType !== newStyleParams.imageInfoType ||
       oldIsSocialPopulated !== newIsSocialPopulated ||
       title !== newTitle ||
       description !== newDescription
@@ -129,7 +138,15 @@ class LineHeightFixer {
       const elementPadding =
         parseInt(this.getCss(element, 'padding-top')) +
         parseInt(this.getCss(element, 'padding-bottom'));
-      availableHeight = styleParams.externalInfoHeight - elementPadding;
+      const margin =
+        styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
+        styleParams.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER &&
+        (styleParams.allowTitle || styleParams.allowDescription) &&
+        styleParams.textImageSpace
+          ? styleParams.textImageSpace
+          : 0;
+      availableHeight =
+        styleParams.externalInfoHeight - elementPadding - margin;
     } else {
       availableHeight = textsContainerHeight;
     }
@@ -220,11 +237,16 @@ class LineHeightFixer {
     }
 
     const shouldDisplayTitle = title && styleParams.allowTitle;
+    let titleNumOfAvailableLines = 0;
     if (shouldDisplayTitle) {
       this.showElement(titleElement);
       this.setCss(titleElement, { overflow: 'visible' });
       if (titleElements.length === 1) {
-        let titleHeight = parseInt(titleElement.clientHeight);
+        let titleHeight = // when padding is large and the we decrease padding the clientHeight stay small
+          parseInt(titleElement.children[0].offsetHeight) >
+          parseInt(titleElement.clientHeight)
+            ? parseInt(titleElement.children[0].offsetHeight)
+            : parseInt(titleElement.clientHeight);
         const titleLineHeight = parseInt(
           this.getCss(titleElement, 'line-height'),
         );
@@ -232,22 +254,22 @@ class LineHeightFixer {
         if (titleHeight >= titleLineHeight) {
           numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
         }
-        const numOfAvailableLines = Math.floor(
+        titleNumOfAvailableLines = Math.floor(
           availableHeight / titleLineHeight,
         );
 
-        if (numOfAvailableLines === 0) {
+        if (titleNumOfAvailableLines === 0) {
           this.removeElement(titleElement);
         } else {
           this.setCss(titleElement, { overflow: 'hidden' });
 
           const isTitleFitInAvailableHeight =
-            numOfAvailableLines <= numOfTitleLines;
+            titleNumOfAvailableLines <= numOfTitleLines;
           if (isTitleFitInAvailableHeight) {
             this.setCss(titleElement, {
-              '-webkit-line-clamp': numOfAvailableLines + '',
+              '-webkit-line-clamp': titleNumOfAvailableLines + '',
             });
-            titleHeight = titleLineHeight * numOfAvailableLines;
+            titleHeight = titleLineHeight * titleNumOfAvailableLines;
           } else {
             this.setCss(titleElement, { '-webkit-line-clamp': 'none' });
             titleHeight = titleLineHeight * numOfTitleLines;
@@ -267,11 +289,13 @@ class LineHeightFixer {
       descriptionElement &&
       styleParams.allowDescription &&
       description &&
-      availableHeight > 0;
+      availableHeight > 0 &&
+      ((shouldDisplayTitle && titleNumOfAvailableLines > 0) ||
+        !shouldDisplayTitle); // when there s no place for title the description not suppose to be shown
     if (shouldDisplayDescription) {
-      this.showElement(descriptionElement, !textPlacementAboveOrBelow); //if textPlacementAboveOrBelow, descriptionElement should not get 'display: -webkit-box'
+      this.showElement(descriptionElement, !textPlacementAboveOrBelow); //if textPlacementAboveOrBelw, descriptionElement should not get 'display: -webkit-box'
       if (shouldDisplayTitle) {
-        availableHeight -= designConsts.spaceBetweenTitleAndDescription;
+        availableHeight -= styleParams.titleDescriptionSpace;
       }
       if (availableHeight < 0) {
         availableHeight = 0;

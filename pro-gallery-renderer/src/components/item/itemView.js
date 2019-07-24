@@ -24,6 +24,12 @@ import EVENTS from '../../utils/constants/events';
 import PLACEMENTS from '../../utils/constants/placements';
 import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
 import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
+import {
+  getOuterInfoStyle,
+  getInnerInfoStyle,
+  getContainerStyle,
+  getImageStyle,
+} from './itemViewStyleProvider';
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -125,7 +131,6 @@ class ItemView extends GalleryComponent {
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
-
   setItemError() {
     this.setState({
       retries: this.state.retries + 1,
@@ -798,24 +803,23 @@ class ItemView extends GalleryComponent {
       : this.getItemTextsDetails();
     if (itemTexts) {
       info = (
-        <div
-          style={{
-            height: styleParams.externalInfoHeight,
-            textAlign: styleParams.galleryTextAlign,
-          }}
-          className={elementName}
-          onMouseOver={() => {
-            utils.isMobile()
-              ? _.noop()
-              : this.props.actions.setCurrentHover(this.props.idx);
-          }}
-          onMouseOut={() => {
-            utils.isMobile()
-              ? _.noop()
-              : this.props.actions.setCurrentHover(-1);
-          }}
-        >
-          {itemTexts}
+        <div style={getOuterInfoStyle(styleParams)}>
+          <div
+            style={getInnerInfoStyle(styleParams)}
+            className={elementName}
+            onMouseOver={() => {
+              utils.isMobile()
+                ? _.noop()
+                : this.props.actions.setCurrentHover(this.props.idx);
+            }}
+            onMouseOut={() => {
+              utils.isMobile()
+                ? _.noop()
+                : this.props.actions.setCurrentHover(-1);
+            }}
+          >
+            {itemTexts}
+          </div>
         </div>
       );
     }
@@ -840,15 +844,7 @@ class ItemView extends GalleryComponent {
   getItemContainerStyles() {
     const { styleParams, style, transform } = this.props;
     const wrapperWidth = style.width;
-
-    const border = {};
-    if (styleParams.itemBorderWidth) {
-      Object.assign(border, {
-        borderWidth: styleParams.itemBorderWidth + 'px',
-        borderStyle: 'solid',
-        borderColor: styleParams.itemBorderColor.value,
-      });
-    }
+    const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const boxShadow = {};
     if (styleParams.itemEnableShadow) {
@@ -862,9 +858,7 @@ class ItemView extends GalleryComponent {
       const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
       const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
       Object.assign(boxShadow, {
-        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${
-          styleParams.itemShadowOpacityAndColor.value
-        }`,
+        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`,
       });
     }
 
@@ -877,7 +871,6 @@ class ItemView extends GalleryComponent {
       right: style.right,
       bottom: style.bottom,
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
-      borderRadius: styleParams.itemBorderRadius + 'px',
     };
     Object.assign(itemStyles, {
       position: 'absolute',
@@ -890,7 +883,12 @@ class ItemView extends GalleryComponent {
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     });
 
-    const styles = _.merge(itemStyles, transform, border, boxShadow);
+    const styles = _.merge(
+      itemStyles,
+      transform,
+      containerStyleByStyleParams,
+      boxShadow,
+    );
 
     return styles;
   }
@@ -908,11 +906,12 @@ class ItemView extends GalleryComponent {
         'transparent';
     }
     styles.height = height + 'px';
-    if (styleParams.itemBorderWidth) {
-      styles.margin = -styleParams.itemBorderWidth + 'px';
-    }
-    Object.assign(styles, this.getImageDimensions());
-    return styles;
+    styles.margin = -styleParams.itemBorderWidth + 'px';
+
+    return {
+      ...styles,
+      ...this.getImageDimensions(),
+    };
   }
 
   getItemAriaLabel() {
@@ -1228,12 +1227,20 @@ class ItemView extends GalleryComponent {
         >
           {this.getTopInfoElementIfNeeded()}
           <div
-            data-hook="item-wrapper"
-            className={this.getItemWrapperClass()}
-            key={'item-wrapper-' + id}
-            style={this.getItemWrapperStyles()}
+            style={
+              this.props.styleParams.isSlideshow
+                ? {}
+                : getImageStyle(this.props.styleParams)
+            }
           >
-            {this.getItemInner()}
+            <div
+              data-hook="item-wrapper"
+              className={this.getItemWrapperClass()}
+              key={'item-wrapper-' + id}
+              style={this.getItemWrapperStyles()}
+            >
+              {this.getItemInner()}
+            </div>
           </div>
           {this.getBottomInfoElementIfNeeded()}
         </div>

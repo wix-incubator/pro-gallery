@@ -92,7 +92,7 @@ export default class Texts extends GalleryComponent {
     let titleStyle, descStyle;
     if (shouldShowDescription) {
       titleStyle = {
-        marginBottom: designConsts.spaceBetweenTitleAndDescription,
+        marginBottom: styleParams.titleDescriptionSpace,
       };
     } else if (shouldShowButton) {
       titleStyle = { marginBottom: designConsts.spaceBetweenElements };

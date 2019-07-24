@@ -8,6 +8,7 @@ import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../constants/designConsts';
+import INFO_TYPE from '../../utils/constants/infoType';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -514,12 +515,7 @@ function addLayoutStyles(styles) {
     if (utils.isVerbose()) {
       console.log('Using galleryLayout for defaults', styles);
     }
-    styles = Object.assign(
-      {},
-      emptyLayout,
-      styles,
-      getStyleByLayout(styles),
-    ); //legacy layouts
+    styles = Object.assign({}, emptyLayout, styles, getStyleByLayout(styles)); //legacy layouts
     const selectedLayoutVars = [
       'galleryLayout',
       'galleryThumbnailsAlignment',
@@ -839,11 +835,35 @@ function processLayouts(styles) {
   return processedStyles;
 }
 
+function getHeightFromStyleParams(styleParams) {
+  let additionalHeight = styleParams.textBoxHeight;
+  if (
+    (styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW) &&
+    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
+    (styleParams.allowTitle || styleParams.allowDescription)
+  ) {
+    additionalHeight += styleParams.textImageSpace;
+    additionalHeight += styleParams.textBoxBorderWidth * 2;
+  }
+  return additionalHeight;
+}
+
 function getExternalInfoHeight(styleParams) {
+  if (!shouldShowTextBox(styleParams)) {
+    return 0;
+  }
+
+  if (!styleParams.textBoxHeight) {
+    return getHeightByContent(styleParams);
+  }
+
+  return getHeightFromStyleParams(styleParams);
+}
+
+function shouldShowTextBox(styleParams) {
   const {
     titlePlacement,
-    itemFontSlideshow,
-    itemDescriptionFontSlideshow,
     allowTitle,
     allowDescription,
     useCustomButton,
@@ -853,6 +873,21 @@ function getExternalInfoHeight(styleParams) {
     (titlePlacement !== 'SHOW_ABOVE' && titlePlacement !== 'SHOW_BELOW') ||
     (!allowTitle && !allowDescription && !useCustomButton)
   ) {
+    return false;
+  }
+  return true;
+}
+
+function getHeightByContent(styleParams) {
+  const {
+    itemFontSlideshow,
+    itemDescriptionFontSlideshow,
+    allowTitle,
+    allowDescription,
+    useCustomButton,
+  } = styleParams;
+
+  if (!shouldShowTextBox(styleParams)) {
     return 0;
   }
 
@@ -934,4 +969,4 @@ function isSlideshowFont(styles) {
   return false;
 }
 
-export { addLayoutStyles };
+export { addLayoutStyles, getHeightByContent };

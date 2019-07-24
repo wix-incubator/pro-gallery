@@ -2,6 +2,7 @@ import React from 'react';
 import utils from '../../utils/index.js';
 import _ from 'lodash';
 import { GalleryComponent } from '../galleryComponent';
+import { getHoverStyle } from './itemHoverStyleProvider';
 
 export default class ItemHover extends GalleryComponent {
   getHoverClass() {
@@ -38,7 +39,13 @@ export default class ItemHover extends GalleryComponent {
   }
 
   render() {
-    const { shouldHover, imageDimensions, actions, idx } = this.props;
+    const {
+      shouldHover,
+      imageDimensions,
+      actions,
+      idx,
+      styleParams,
+    } = this.props;
     if (!shouldHover) {
       return null;
     }
@@ -52,7 +59,10 @@ export default class ItemHover extends GalleryComponent {
         className={hoverClass}
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
-        style={restOfDimensions}
+        style={{
+          ...restOfDimensions,
+          ...getHoverStyle(styleParams),
+        }}
         onTouchStart={actions.handleItemMouseDown}
         onTouchEnd={actions.handleItemMouseUp}
       >
