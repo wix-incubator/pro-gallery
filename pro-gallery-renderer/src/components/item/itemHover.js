@@ -55,24 +55,25 @@ export default class ItemHover extends GalleryComponent {
     //width and height will be taken from the gallery.scss and not be inline
 
     return (
-      <div
-        className={hoverClass}
-        key={'item-hover-' + idx}
-        data-hook={'item-hover-' + idx}
-        style={{
-          ...restOfDimensions,
-          ...getHoverStyle(styleParams),
-        }}
-        onTouchStart={actions.handleItemMouseDown}
-        onTouchEnd={actions.handleItemMouseUp}
-      >
-        {this.props.render ? (
-          <div className="gallery-item-hover-inner">
-            {this.props.render(this.props)}
-          </div>
-        ) : (
-          this.props.children
-        )}
+      <div className={hoverClass}>
+        <div
+          key={'item-hover-' + idx}
+          data-hook={'item-hover-' + idx}
+          style={{
+            ...restOfDimensions,
+            ...getHoverStyle(styleParams),
+          }}
+          onTouchStart={actions.handleItemMouseDown}
+          onTouchEnd={actions.handleItemMouseUp}
+        >
+          {this.props.render ? (
+            <div className="gallery-item-hover-inner">
+              {this.props.render(this.props)}
+            </div>
+          ) : (
+            this.props.children
+          )}
+        </div>
       </div>
     );
   }
