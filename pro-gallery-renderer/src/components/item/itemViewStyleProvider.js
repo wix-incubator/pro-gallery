@@ -30,10 +30,10 @@ export function getImageStyle(styleParams) {
 function getBorderStyle(borderRadius, borderWidth, borderColor) {
   return {
     overflow: 'hidden',
-    borderStyle: 'solid',
     borderRadius: borderRadius,
     borderWidth: borderWidth + 'px',
     borderColor: borderColor && borderColor.value,
+    ...(borderWidth && { borderStyle: 'solid' }),
   };
 }
 
