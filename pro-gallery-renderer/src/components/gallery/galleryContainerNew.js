@@ -682,7 +682,7 @@ export class GalleryContainer extends React.Component {
             watermark: watermarkData,
             sharpParams: _styles.sharpParams,
             lastVisibleItemIdx: this.lastVisibleItemIdx,
-            itemResizer: this.props.itemResizer
+            resizeMediaUrl: this.props.resizeMediaUrl
           },
         );
       } else {
@@ -690,7 +690,7 @@ export class GalleryContainer extends React.Component {
           watermark: watermarkData,
           sharpParams: _styles.sharpParams,
           lastVisibleItemIdx: this.lastVisibleItemIdx,
-          itemResizer: this.props.itemResizer
+          resizeMediaUrl: this.props.resizeMediaUrl
         });
       }
 

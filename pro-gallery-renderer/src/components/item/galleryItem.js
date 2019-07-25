@@ -9,7 +9,7 @@ class GalleryItem {
     this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
     this.createdBy = config.createdBy;
-    this.itemResizer = config.itemResizer;
+    this.resizeMediaUrl = config.resizeMediaUrl;
 
     if (config.dto && config.dto.dto) {
       config.dto = config.dto.dto; //defence patch due to mis-use of item-core
@@ -305,7 +305,7 @@ class GalleryItem {
       sharpParams,
   ) {
 
-    const resizeUrl = this.itemResizer || ((item, url) => url || ''); //defensive code - in case the itemResizer was not defined
+    const resizeUrl = this.resizeMediaUrl || ((item, url) => url || ''); //defensive code - in case the resizeMediaUrl was not defined
 
     requiredWidth = Math.ceil(requiredWidth);
     requiredHeight = Math.ceil(requiredHeight);
