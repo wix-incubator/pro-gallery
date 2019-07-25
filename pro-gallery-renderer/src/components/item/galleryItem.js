@@ -305,7 +305,13 @@ class GalleryItem {
       sharpParams,
   ) {
 
-    const resizeUrl = this.resizeMediaUrl || ((item, url) => url || ''); //defensive code - in case the resizeMediaUrl was not defined
+    const resizeUrl = (item, url, ...args) => {
+      let resizedUrl = url;
+      if (typeof this.resizeMediaUrl === 'function') {
+        resizedUrl = this.resizeMediaUrl(item, url, ...args);
+      }
+      return String(resizedUrl || '');
+    };
 
     requiredWidth = Math.ceil(requiredWidth);
     requiredHeight = Math.ceil(requiredHeight);
@@ -356,7 +362,7 @@ class GalleryItem {
       focalPoint,
     );
 
-    urls.seoLink = (typeof urls.img === 'string') ? urls.img.replace(/\.webp$/i, '.jpg') : ''; //SEO needs .jpg instead of .webp, replace does not mutate
+    urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
   
     return urls;
   };
