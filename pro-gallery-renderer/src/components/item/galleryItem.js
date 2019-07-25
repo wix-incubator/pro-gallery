@@ -356,7 +356,7 @@ class GalleryItem {
       focalPoint,
     );
 
-    urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
+    urls.seoLink = (typeof urls.img === 'string') ? urls.img.replace(/\.webp$/i, '.jpg') : ''; //SEO needs .jpg instead of .webp, replace does not mutate
   
     return urls;
   };
