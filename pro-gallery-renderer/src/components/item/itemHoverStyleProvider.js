@@ -6,7 +6,13 @@ export function getHoverStyle(styleParams) {
     justifyContent: 'center',
     paddingLeft: styleParams.textsHorizontalPadding + 'px',
     paddingRight: styleParams.textsHorizontalPadding + 'px',
-    paddingTop: styleParams.textsVerticalPadding + 'px',
-    paddingBottom: styleParams.textsVerticalPadding + 'px',
+    paddingTop:
+      (styleParams.galleryVerticalAlign !== 'center'
+        ? styleParams.textsVerticalPadding
+        : 0) + 'px',
+    paddingBottom:
+      (styleParams.galleryVerticalAlign !== 'center'
+        ? styleParams.textsVerticalPadding
+        : 0) + 'px',
   };
 }
