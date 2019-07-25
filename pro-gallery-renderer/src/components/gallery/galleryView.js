@@ -161,7 +161,7 @@ class GalleryView extends GalleryComponent {
           style={{
             margin: this.props.styleParams.galleryMargin + 'px',
             height: galleryHeight,
-            width: this.props.container.galleryWidth,
+            width: utils.isSSR() ? '100%' : this.props.container.galleryWidth,
             overflow: 'visible',
             position: 'relative',
           }}
