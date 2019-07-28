@@ -655,7 +655,11 @@ function processLayouts(styles) {
     }
   }
 
-  processedStyles.externalInfoHeight = getExternalInfoHeight(processedStyles);
+  processedStyles.textBoxHeight = getTextBoxHeight(processedStyles);
+  processedStyles.externalInfoHeight = getHeightFromStyleParams(
+    processedStyles,
+    processedStyles.textBoxHeight,
+  );
 
   if (
     processedStyles.cubeType === 'fit' &&
@@ -835,8 +839,8 @@ function processLayouts(styles) {
   return processedStyles;
 }
 
-function getHeightFromStyleParams(styleParams) {
-  let additionalHeight = styleParams.textBoxHeight;
+function getHeightFromStyleParams(styleParams, textBoxHeight) {
+  let additionalHeight = textBoxHeight;
   if (
     (styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
       styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW) &&
@@ -849,16 +853,16 @@ function getHeightFromStyleParams(styleParams) {
   return additionalHeight;
 }
 
-function getExternalInfoHeight(styleParams) {
+function getTextBoxHeight(styleParams) {
   if (!shouldShowTextBox(styleParams)) {
     return 0;
   }
 
   if (!styleParams.textBoxHeight) {
     return getHeightByContent(styleParams);
+  } else {
+    return styleParams.textBoxHeight;
   }
-
-  return getHeightFromStyleParams(styleParams);
 }
 
 function shouldShowTextBox(styleParams) {

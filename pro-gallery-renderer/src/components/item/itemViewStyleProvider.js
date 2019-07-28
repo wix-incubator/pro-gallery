@@ -58,7 +58,7 @@ export function getOuterInfoStyle(styleParams) {
 
 export function getInnerInfoStyle(styleParams) {
   return {
-    height: styleParams.textBoxHeight || styleParams.externalInfoHeight,
+    height: styleParams.textBoxHeight,
     ...((styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND ||
       styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND) &&
       styleParams.textBoxFillColor &&
