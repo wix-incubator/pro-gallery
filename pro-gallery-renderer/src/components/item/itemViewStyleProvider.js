@@ -10,20 +10,37 @@ export function getContainerStyle(styleParams) {
         styleParams.itemBorderWidth,
         styleParams.itemBorderColor,
       ),
+      ...boxShadow(styleParams),
     }),
   };
 }
 
+function boxShadow(styleParams) {
+  let boxShadow = {};
+  if (styleParams.itemEnableShadow) {
+    const { itemShadowBlur, itemShadowDirection, itemShadowSize } = styleParams;
+    const alpha =
+      ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
+    const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
+    const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
+    boxShadow = {
+      boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`,
+    };
+  }
+  return boxShadow;
+}
+
 export function getImageStyle(styleParams) {
   return {
-    ...((styleParams.imageInfoType === INFO_TYPE.NO_BACKGROUND ||
-      styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) && {
-      ...getBorderStyle(
-        styleParams.itemBorderRadius,
-        styleParams.itemBorderWidth,
-        styleParams.itemBorderColor,
-      ),
-    }),
+    ...(!(styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) &&
+      (styleParams.imageInfoType === INFO_TYPE.NO_BACKGROUND ||
+        styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) && {
+        ...getBorderStyle(
+          styleParams.itemBorderRadius,
+          styleParams.itemBorderWidth,
+          styleParams.itemBorderColor,
+        ),
+      }),
   };
 }
 

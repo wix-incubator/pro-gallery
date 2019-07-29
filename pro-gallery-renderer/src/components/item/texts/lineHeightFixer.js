@@ -99,6 +99,8 @@ class LineHeightFixer {
       styleParams.titleDescriptionSpace !==
         newStyleParams.titleDescriptionSpace ||
       styleParams.imageInfoType !== newStyleParams.imageInfoType ||
+      styleParams.itemDescriptionFont !== newStyleParams.itemDescriptionFont ||
+      styleParams.itemFont !== newStyleParams.itemFont ||
       oldIsSocialPopulated !== newIsSocialPopulated ||
       title !== newTitle ||
       description !== newDescription
