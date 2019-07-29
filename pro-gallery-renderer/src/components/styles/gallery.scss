@@ -1019,7 +1019,7 @@
           }
 
           .gallery-item-text {
-            padding: 0px 30px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             margin: 0;
@@ -1356,6 +1356,15 @@
           }
         }
       }
+    }
+
+    .gallery-item-top-info {	
+      padding-top: 30px;	
+      padding-bottom: 15px;	
+    }	
+    .gallery-item-bottom-info {	
+      padding-top: 15px;	
+      padding-bottom: 30px;	
     }
 
     &.one-row {
