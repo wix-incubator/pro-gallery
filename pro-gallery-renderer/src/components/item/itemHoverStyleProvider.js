@@ -4,6 +4,7 @@ export function getHoverStyle(styleParams) {
     flexDirection: 'column',
     height: '100%',
     justifyContent: 'center',
+    boxSizing: 'border-box',
     paddingLeft: styleParams.textsHorizontalPadding + 'px',
     paddingRight: styleParams.textsHorizontalPadding + 'px',
     paddingTop:
