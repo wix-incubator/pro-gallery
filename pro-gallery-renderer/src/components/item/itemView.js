@@ -803,10 +803,9 @@ class ItemView extends GalleryComponent {
       : this.getItemTextsDetails();
     if (itemTexts) {
       info = (
-        <div style={getOuterInfoStyle(styleParams)}>
+        <div style={getOuterInfoStyle(styleParams)} className={elementName}>
           <div
             style={getInnerInfoStyle(styleParams)}
-            className={elementName}
             onMouseOver={() => {
               utils.isMobile()
                 ? _.noop()

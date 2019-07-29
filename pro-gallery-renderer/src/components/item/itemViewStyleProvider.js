@@ -88,5 +88,6 @@ export function getInnerInfoStyle(styleParams) {
     paddingRight: styleParams.textsHorizontalPadding + 'px',
     paddingLeft: styleParams.textsHorizontalPadding + 'px',
     overflow: 'hidden',
+    boxSizing: 'border-box',
   };
 }
