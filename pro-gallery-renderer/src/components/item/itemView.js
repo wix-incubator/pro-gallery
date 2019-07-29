@@ -846,22 +846,6 @@ class ItemView extends GalleryComponent {
     const wrapperWidth = style.width;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
-    const boxShadow = {};
-    if (styleParams.itemEnableShadow) {
-      const {
-        itemShadowBlur,
-        itemShadowDirection,
-        itemShadowSize,
-      } = styleParams;
-      const alpha =
-        ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
-      const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
-      const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
-      Object.assign(boxShadow, {
-        boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`,
-      });
-    }
-
     const itemStyles = {
       width: wrapperWidth,
       margin: styleParams.imageMargin + 'px',
@@ -883,12 +867,7 @@ class ItemView extends GalleryComponent {
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     });
 
-    const styles = _.merge(
-      itemStyles,
-      transform,
-      containerStyleByStyleParams,
-      boxShadow,
-    );
+    const styles = _.merge(itemStyles, transform, containerStyleByStyleParams);
 
     return styles;
   }
