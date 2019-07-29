@@ -157,7 +157,7 @@ export default class Texts extends GalleryComponent {
       container.galleryWidth < 800
     ) {
       let maxWidth = container.galleryWidth;
-      if (styleParams.allowSlideshowNumbers) {
+      if (styleParams.allowSlideshowCounter) {
         maxWidth -= 30;
       }
       if (styleParams.playButtonForAutoSlideShow) {

@@ -780,7 +780,7 @@ class SlideshowView extends GalleryComponent {
 
   createAutoSlideShowPlayButton() {
     if (!this.shouldCreateSlideShowPlayButton) {
-      return '';
+      return false;
     }
     const {
       styleParams: { galleryTextAlign, slideshowInfoSize },
@@ -793,7 +793,7 @@ class SlideshowView extends GalleryComponent {
         ? { left: `${imageMargin}px` }
         : {
             right: `${imageMargin}px`,
-            width: this.shouldCreateSlideShowNumbers ? '60px' : '10px',
+            width: this.shouldCreateSlideShowNumbers ? '60px' : '25px',
           };
     return (
       <button
@@ -821,7 +821,7 @@ class SlideshowView extends GalleryComponent {
 
   createSlideShowNumbers() {
     if (!this.shouldCreateSlideShowNumbers) {
-      return '';
+      return false;
     }
     const {
       totalItemsCount,
@@ -853,7 +853,7 @@ class SlideshowView extends GalleryComponent {
         }}
       >
         <div style={{ fontSize: '15px', lineHeight: 'normal' }}>
-          {this.state.currentIdx + 1 + '/' + (totalItemsCount + 1)}
+          {this.state.currentIdx + 1 + '/' + totalItemsCount}
         </div>
       </div>
     );
@@ -944,7 +944,7 @@ class SlideshowView extends GalleryComponent {
       isAutoSlideShow && props.styleParams.playButtonForAutoSlideShow;
 
     this.shouldCreateSlideShowNumbers =
-      isAutoSlideShow && props.styleParams.allowSlideshowNumbers;
+      isAutoSlideShow && props.styleParams.allowSlideshowCounter;
   }
 
   componentDidMount() {
