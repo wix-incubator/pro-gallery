@@ -498,6 +498,7 @@ describe('Item View', () => {
           itemShadowDirection: 0,
           itemShadowSize: 18,
           imageMargin: 5,
+          imageInfoType: 'ATTACHED_BACKGROUND',
         },
       });
       driver.mount(ItemView, sampleItemViewProps);
@@ -511,6 +512,7 @@ describe('Item View', () => {
           itemShadowDirection: 135,
           itemShadowSize: 10,
           imageMargin: 5,
+          imageInfoType: 'ATTACHED_BACKGROUND',
         },
       });
       style = driver.find.hook('item-container').get(0).props.style;
