@@ -84,12 +84,12 @@ export function getInnerInfoStyle(styleParams) {
       }),
     textAlign: styleParams.galleryTextAlign,
     ...(styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE && {
-      paddingBottom: styleParams.textsVerticalPadding + 30 + 'px',
-      paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
-    }),
-    ...(styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW && {
       paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
       paddingTop: styleParams.textsVerticalPadding + 30 + 'px',
+    }),
+    ...(styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW && {
+      paddingBottom: styleParams.textsVerticalPadding + 30 + 'px',
+      paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
     }),
     paddingRight: styleParams.textsHorizontalPadding + 'px',
     paddingLeft: styleParams.textsHorizontalPadding + 'px',
