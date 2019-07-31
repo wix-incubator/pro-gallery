@@ -73,6 +73,16 @@ export function getOuterInfoStyle(styleParams) {
   return {};
 }
 
+function getInfoHorizontalPadding(styleParams) {
+  if (
+    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND ||
+    styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND
+  ) {
+    return styleParams.textsHorizontalPadding + 30;
+  }
+  return styleParams.textsHorizontalPadding;
+}
+
 export function getInnerInfoStyle(styleParams) {
   return {
     height: styleParams.textBoxHeight,
@@ -91,8 +101,8 @@ export function getInnerInfoStyle(styleParams) {
       paddingBottom: styleParams.textsVerticalPadding + 30 + 'px',
       paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
     }),
-    paddingRight: styleParams.textsHorizontalPadding + 'px',
-    paddingLeft: styleParams.textsHorizontalPadding + 'px',
+    paddingRight: getInfoHorizontalPadding(styleParams) + 'px',
+    paddingLeft: getInfoHorizontalPadding(styleParams) + 'px',
     overflow: 'hidden',
     boxSizing: 'border-box',
   };
