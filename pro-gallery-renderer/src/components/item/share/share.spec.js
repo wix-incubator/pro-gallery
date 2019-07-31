@@ -8,6 +8,8 @@ import sinon from 'sinon';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
 import EVENTS from '../../../utils/constants/events';
+import { viewModeWrapper } from '../../../utils/window/viewModeWrapper';
+import VIEW_MODE from '../../../utils/constants/viewMode';
 
 describe('Share:', () => {
   let driver;
@@ -29,18 +31,17 @@ describe('Share:', () => {
       expect(stub.calledWith(EVENTS.SHARE_BUTTON_CLICKED)).to.be.true;
       stub.restore();
     });
-    it('Toggles inactive based on utils.isSite function', () => {
-      const stub = sinon.stub(utils, 'isSite').returns(true);
+    it('Toggles inactive based on isSiteMode() function (from viewModeWrapper)', () => {
       driver.mount(Share, sampleItemViewProps);
       expect(
         driver.find.hook('facebook-share-button').hasClass('inactive'),
       ).to.equal(false);
-      stub.returns(false);
+      viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
       driver.mount(Share, sampleItemViewProps);
       expect(
         driver.find.hook('facebook-share-button').hasClass('inactive'),
       ).to.equal(true);
-      stub.restore();
+      viewModeWrapper.setViewMode(VIEW_MODE.SITE);
     });
   });
   describe('Share component: ', () => {

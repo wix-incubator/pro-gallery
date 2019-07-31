@@ -1,8 +1,11 @@
 import * as types from '../../../constants/galleryTypes';
-import { PLAY_VIDEO, PAUSE_VIDEO } from '../../../actions/itemViewActions.js';
 import videoPlayModes from './videoPlayModes';
+import {
+  isEditMode,
+  isPreviewMode,
+} from '../../../utils/window/viewModeWrapper';
 
-export default ({ videoQueue, utils }) => store => {
+export default ({ videoQueue }) => store => {
   const playVideo = i => {
     store.dispatch({ type: types.SET_VIDEO_PLAY_INDEX, payload: i });
   };
@@ -41,7 +44,7 @@ export default ({ videoQueue, utils }) => store => {
       videoPlayMode === videoPlayModes.autoPlay ||
       videoPlayMode === videoPlayModes.refactoredAutoPlay;
     let indexToPlay = null;
-    if (utils.isEditor() && payload !== -1) {
+    if (isEditMode() && payload !== -1) {
       stopPlaying();
     } else if (isAutoPlay) {
       switch (type) {
@@ -59,7 +62,7 @@ export default ({ videoQueue, utils }) => store => {
           playCurrentVideo();
           break;
         case types.VIDEO_MODE_CHANGED:
-          if (utils.isPreview()) {
+          if (isPreviewMode()) {
             videoQueue.isCurrentVideoVisible()
               ? playCurrentVideo()
               : playNextVideo();

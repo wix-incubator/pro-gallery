@@ -4,6 +4,7 @@ import LoveButton from '../loveButton/loveButton.js';
 import _ from 'lodash';
 import { GalleryComponent } from '../../galleryComponent';
 import window from '../../../utils/window/windowWrapper';
+import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
 import EVENTS from '../../../utils/constants/events';
 import PLACEMENTS from '../../../utils/constants/placements';
 
@@ -22,7 +23,7 @@ export default class Social extends GalleryComponent {
           className={'block-fullscreen progallery-svg-font-icons-share-store'}
         />
       );
-      if (utils.isSite()) {
+      if (isSiteMode() || isSEOMode()) {
         const slideshowShare = styleParams.isSlideshow
           ? actions.getShare()
           : '';
@@ -88,7 +89,7 @@ export default class Social extends GalleryComponent {
     if (
       styleParams.allowDownload &&
       !utils.isiOS() &&
-      !(utils.isSite() && isDemo)
+      !((isSiteMode() || isSEOMode()) && isDemo)
     ) {
       const className =
         'block-fullscreen gallery-item-social-download ' +

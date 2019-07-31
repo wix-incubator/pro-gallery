@@ -802,13 +802,7 @@ class GalleryItem {
   }
 
   get linkOpenType() {
-    if (utils.isEditor() || utils.isPreview()) {
-      //in preview never open link in current window (causes many errors)
-      return '_blank';
-    } else if (
-      this.metadata.link &&
-      !_.isUndefined(this.metadata.link.target)
-    ) {
+    if (this.metadata.link && !_.isUndefined(this.metadata.link.target)) {
       return this.unprotectedLinkOpenType;
     } else if (
       this.metadata.link &&

@@ -188,7 +188,6 @@ class GalleryView extends GalleryComponent {
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
       isPremiumSite: this.props.isPremiumSite,
-      isInSEO: this.props.isInSEO,
       actions: {
         eventsListener: this.props.actions.eventsListener,
         setCurrentHover: this.props.actions.setCurrentHover,

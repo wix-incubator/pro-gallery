@@ -326,13 +326,7 @@ describe('GalleryItem ', () => {
   //   spyerror.restore();
   // });
   it('shoud return correct linkOpenType', () => {
-    const stubEditor = sinon.stub(utils, 'isEditor').returns(true);
-    const stubPreview = sinon.stub(utils, 'isPreview').returns(true);
     expect(galleryItem.linkOpenType).to.equal('_blank');
-    stubEditor.returns(false);
-    expect(galleryItem.linkOpenType).to.equal('_blank');
-    stubPreview.returns(false);
-    expect(galleryItem.linkOpenType).to.equal('_blank'); // that blank is not the same as before, its the last return
     galleryItem.metadata.link = {
       targetBlank: true,
     };
@@ -341,8 +335,6 @@ describe('GalleryItem ', () => {
     expect(galleryItem.linkOpenType).to.equal('_top');
     galleryItem.linkOpenType = 'target';
     expect(galleryItem.linkOpenType).to.equal('target');
-    stubEditor.restore();
-    stubPreview.restore();
   });
   it('getDataForShop snapshot', () => {
     expect(galleryItem.getDataForShop().itemHeight).to.equal(1000);

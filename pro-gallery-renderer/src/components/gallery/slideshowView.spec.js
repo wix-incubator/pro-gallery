@@ -1,9 +1,10 @@
-import utils from '../../utils';
+import { viewModeWrapper } from '../../utils/window/viewModeWrapper';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import React from 'react';
 import SlideshowView from './slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import VIEW_MODE from '../../utils/constants/viewMode';
 
 describe('Slideshow View', () => {
   let driver;
@@ -203,7 +204,7 @@ describe('Slideshow View', () => {
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       const stub = sinon.stub(SlideshowView.prototype, 'nextItem');
-      const stubUtils = sinon.stub(utils, 'isSite').returns(false);
+      viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
       driver.mount(SlideshowView, galleryViewProps);
       expect(stub.called).to.equal(false);
       clock.tick(900);
@@ -211,7 +212,7 @@ describe('Slideshow View', () => {
       clock.tick(300);
       expect(stub.called).to.equal(true);
       stub.restore();
-      stubUtils.restore();
+      viewModeWrapper.setViewMode(VIEW_MODE.SITE);
     });
 
     it('nextItem works with normal or last items', () => {
@@ -223,7 +224,7 @@ describe('Slideshow View', () => {
       const stubLast = sinon
         .stub(SlideshowView.prototype, 'isLastItem')
         .returns(false);
-      const stubUtils = sinon.stub(utils, 'isSite').returns(false);
+      viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
       driver.mount(SlideshowView, galleryViewProps);
       const spy = sinon.spy(driver.get.props().actions, 'scrollToItem');
       driver.get.instance().nextItem(1, true);
@@ -231,7 +232,7 @@ describe('Slideshow View', () => {
       stubLast.returns(true);
       driver.get.instance().nextItem(1, true);
       expect(driver.get.state('currentIdx')).to.equal(0);
-      stubUtils.restore();
+      viewModeWrapper.setViewMode(VIEW_MODE.SITE);
       stubLast.restore();
     });
   });

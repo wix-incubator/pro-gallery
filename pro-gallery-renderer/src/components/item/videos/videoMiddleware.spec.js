@@ -1,7 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
-import utils from '../../../utils';
 import { VideoQueue } from './video-queue';
 import videoMiddleware from './videoMiddleware';
 
@@ -22,12 +20,10 @@ describe('Video Item ', () => {
   let videoData1;
   let videoData2;
   let action;
-  let isEditorStub;
-  let isPreviewStub;
 
   beforeEach(() => {
     videoQueue = new VideoQueue();
-    middleware = videoMiddleware({ videoQueue, utils })(store)(next);
+    middleware = videoMiddleware({ videoQueue })(store)(next);
     videoData1 = {
       idx: 1,
       isVisible: () => true,
@@ -36,13 +32,6 @@ describe('Video Item ', () => {
       idx: 2,
       isVisible: () => true,
     };
-    isEditorStub = sinon.stub(utils, 'isEditor').returns(false);
-    isPreviewStub = sinon.stub(utils, 'isPreview').returns(false);
-  });
-
-  afterEach(() => {
-    isEditorStub.restore();
-    isPreviewStub.restore();
   });
 
   it('video added and video removed effecting the queue', () => {

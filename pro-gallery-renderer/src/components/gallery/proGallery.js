@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import galleryReducers from '../../reducers/index.js';
 import GalleryContainerNew from './galleryContainerNew.js';
 import utils from '../../utils';
+import { viewModeWrapper } from '../../utils/window/viewModeWrapper';
 import videoMiddleware from '../item/videos/videoMiddleware';
 import { VideoQueue } from '../item/videos/video-queue';
 import window from '../../utils/window/windowWrapper';
@@ -24,19 +25,30 @@ export default class ProGallery extends GalleryComponent {
   }
 
   init(props) {
+    if (typeof props.viewMode !== 'undefined') {
+      viewModeWrapper.setViewMode(props.viewMode);
+    }
     this.domId = props.domId || Math.floor(Math.random() * 10000);
     if (utils.isVerbose()) {
       console.log('[OOISSR] proGallery init', window.isMock);
     }
     const middlewares = [
       thunkMiddleware,
-      videoMiddleware({ videoQueue: new VideoQueue(), utils }),
+      videoMiddleware({
+        videoQueue: new VideoQueue(),
+      }),
     ];
     this.store = createStore(
       galleryReducers,
       /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {},
       applyMiddleware(...middlewares),
     );
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.viewMode !== nextProps.viewMode) {
+      viewModeWrapper.setViewMode(nextProps.viewMode);
+    }
   }
 
   render() {

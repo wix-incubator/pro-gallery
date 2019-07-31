@@ -1,5 +1,6 @@
 import React from 'react';
 import utils from '../../../utils';
+import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
 import EVENTS from '../../../utils/constants/events';
 import { GalleryComponent } from '../../galleryComponent';
 
@@ -126,9 +127,10 @@ class LoveButton extends GalleryComponent {
 
   render() {
     const loveCounter = this.createLoveCounter();
-    const clickAction = utils.isSite()
-      ? utils.getMobileEnabledClick(this.toggleLove)
-      : { onClick: e => e.stopPropagation() };
+    const clickAction =
+      isSiteMode() || isSEOMode()
+        ? utils.getMobileEnabledClick(this.toggleLove)
+        : { onClick: e => e.stopPropagation() };
     const loveColor = this.isLoved() ? { color: 'red' } : {};
 
     return (

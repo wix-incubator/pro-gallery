@@ -4,6 +4,7 @@ import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import _ from 'lodash';
 import window from '../../utils/window/windowWrapper';
+import { isEditMode, isPreviewMode } from '../../utils/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../assets/images/react-svg/components/Play';
 import PauseIcon from '../../assets/images/react-svg/components/pause';
@@ -215,9 +216,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   handleKeypress(e) {
-    if (!utils.isInWix() && !utils.isOOI()) {
-      return;
-    }
     switch (e.charCode || e.keyCode) {
       case 38: //up
       case 37: //left
@@ -679,7 +677,6 @@ class SlideshowView extends GalleryComponent {
       isPremiumSite: this.props.isPremiumSite,
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
-      isInSEO: this.props.isInSEO,
       actions: {
         eventsListener: this.props.actions.eventsListener,
         setCurrentHover: this.props.actions.setCurrentHover,
@@ -924,7 +921,7 @@ class SlideshowView extends GalleryComponent {
         this.startAutoSlideshowIfNeeded(props.styleParams),
       );
     }
-    if (!utils.isSite()) {
+    if (isEditMode() || isPreviewMode()) {
       if (
         //check that the change is related to the slideshow settings
         this.props.styleParams.isAutoSlideshow !==

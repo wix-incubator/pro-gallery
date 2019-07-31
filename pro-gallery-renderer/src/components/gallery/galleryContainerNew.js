@@ -17,8 +17,12 @@ import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import _ from 'lodash';
 import utils from '../../utils';
+import { isEditMode, isSEOMode } from '../../utils/window/viewModeWrapper';
 import EVENTS from '../../utils/constants/events';
-import { extractContextFields, GalleryProvider } from '../../context/GalleryContext';
+import {
+  extractContextFields,
+  GalleryProvider,
+} from '../../context/GalleryContext';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -26,7 +30,6 @@ export class GalleryContainer extends React.Component {
     if (utils.isVerbose()) {
       console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
     }
-    utils.updateViewMode(props.viewMode);
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
@@ -123,7 +126,6 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    utils.updateViewMode(nextProps.viewMode);
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
@@ -552,7 +554,7 @@ export class GalleryContainer extends React.Component {
     this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
       sharpParams: styles.sharpParams,
     });
-    const allowPreloading = utils.isEditor() || gotFirstScrollEvent;
+    const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
       galleryDomId: this.props.domId,
       items: this.galleryStructure.galleryItems,
@@ -682,7 +684,7 @@ export class GalleryContainer extends React.Component {
             watermark: watermarkData,
             sharpParams: _styles.sharpParams,
             lastVisibleItemIdx: this.lastVisibleItemIdx,
-            resizeMediaUrl: this.props.resizeMediaUrl
+            resizeMediaUrl: this.props.resizeMediaUrl,
           },
         );
       } else {
@@ -690,7 +692,7 @@ export class GalleryContainer extends React.Component {
           watermark: watermarkData,
           sharpParams: _styles.sharpParams,
           lastVisibleItemIdx: this.lastVisibleItemIdx,
-          resizeMediaUrl: this.props.resizeMediaUrl
+          resizeMediaUrl: this.props.resizeMediaUrl,
         });
       }
 
@@ -714,7 +716,7 @@ export class GalleryContainer extends React.Component {
       }
 
       const allowPreloading =
-        utils.isEditor() ||
+        isEditMode() ||
         state.gotFirstScrollEvent ||
         state.showMoreClickedAtLeastOnce;
       this.scrollCss = this.getScrollCssIfNeeded({
@@ -793,7 +795,7 @@ export class GalleryContainer extends React.Component {
   }
 
   getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
-    const isSEO = !!this.props.isInSEO;
+    const isSEO = isSEOMode();
     const shouldUseScrollCss = !isSEO;
 
     if (shouldUseScrollCss) {
@@ -963,7 +965,9 @@ export class GalleryContainer extends React.Component {
       'div.pro-gallery-parent-container * { transition: none !important }';
 
     return (
-      <GalleryProvider {...extractContextFields({...this.state, ...this.props})} >
+      <GalleryProvider
+        {...extractContextFields({ ...this.state, ...this.props })}
+      >
         <div
           data-key="pro-gallery-inner-container"
           key="pro-gallery-inner-container"
@@ -998,7 +1002,6 @@ export class GalleryContainer extends React.Component {
             customHoverRenderer={this.props.customHoverRenderer}
             customInfoRenderer={this.props.customInfoRenderer}
             isPremiumSite={this.props.isPremiumSite}
-            isInSEO={this.props.isInSEO}
             actions={_.merge(this.props.actions, {
               findNeighborItem,
               toggleLoadMoreItems: this.toggleLoadMoreItems,

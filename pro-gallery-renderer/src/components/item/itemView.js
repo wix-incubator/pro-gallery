@@ -20,6 +20,11 @@ import {
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';
+import {
+  isEditMode,
+  isSiteMode,
+  isSEOMode,
+} from '../../utils/window/viewModeWrapper';
 import EVENTS from '../../utils/constants/events';
 import PLACEMENTS from '../../utils/constants/placements';
 import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
@@ -402,7 +407,7 @@ class ItemView extends GalleryComponent {
       if (alwaysShowHover) {
         return true;
       }
-      if (utils.isEditor() && previewHover) {
+      if (isEditMode() && previewHover) {
         return true;
       }
     }
@@ -423,7 +428,7 @@ class ItemView extends GalleryComponent {
       return false;
     } else if (styleParams.alwaysShowHover === true) {
       return true;
-    } else if (utils.isEditor() && styleParams.previewHover === true) {
+    } else if (isEditMode() && styleParams.previewHover === true) {
       return true;
     } else if (styleParams.allowHover === false) {
       return false;
@@ -610,7 +615,6 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'resized_url',
       'settings',
-      'isInSEO',
     ]);
     return (
       <ImageItem
@@ -830,7 +834,7 @@ class ItemView extends GalleryComponent {
     return (
       this.props.currentHover === this.props.idx ||
       this.props.styleParams.alwaysShowHover === true ||
-      (utils.isEditor() && this.props.styleParams.previewHover === true)
+      (isEditMode() && this.props.styleParams.previewHover === true)
     );
   }
 
@@ -988,7 +992,7 @@ class ItemView extends GalleryComponent {
   changeActiveElementIfNeeded(prevProps) {
     try {
       if (
-        utils.isSite() &&
+        (isSiteMode() || isSEOMode()) &&
         !utils.isMobile() &&
         window.document &&
         window.document.activeElement &&
@@ -1170,7 +1174,7 @@ class ItemView extends GalleryComponent {
     const { directLink } = this.props;
     const { itemClick } = this.props.styleParams;
     const { url, target } = directLink || {};
-    const isSEO = !!this.props.isInSEO;
+    const isSEO = isSEOMode();
     const isPremium = this.props.isPremiumSite;
     const shouldUseNofollow = isSEO && !isPremium;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');

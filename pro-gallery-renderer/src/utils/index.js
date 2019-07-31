@@ -1,28 +1,19 @@
 import _ from 'lodash';
 import window from './window/windowWrapper';
+import {
+  isSiteMode,
+  isEditMode,
+  isPreviewMode,
+  isSEOMode,
+} from './window/viewModeWrapper';
 
 class Utils {
   constructor() {
     this._cache = {};
     this._hash2int = {};
     this._params = {};
-    this._useCache = this.shouldUseCache();
+    this._useCache = !isEditMode() && !isPreviewMode();
     this.setIsWixMobile = this.setIsWixMobile.bind(this);
-  }
-
-  shouldUseCache() {
-    let viewMode = true;
-    try {
-      viewMode =
-        window &&
-        window.Wix &&
-        window.Wix.Utils &&
-        window.Wix.Utils.getViewMode();
-    } catch (e) {}
-    if (this.isUndefined(viewMode)) {
-      return true;
-    }
-    return viewMode !== 'editor' && viewMode !== 'preview';
   }
 
   isUndefined(something) {
@@ -39,35 +30,6 @@ class Utils {
     }
     this._cache[fld] = func();
     return this._cache[fld];
-  }
-
-  isDemo() {
-    return this.parseGetParam('demo') === '1';
-  }
-
-  isInWix() {
-    return (
-      this.isTest() ||
-      this.getOrPutFromCache('isInWix', () => {
-        try {
-          return (
-            top !== self &&
-            document.location.host === 'progallery.wix.com' &&
-            document.location.search.indexOf('instance=') >= 0
-          );
-        } catch (e) {
-          return false;
-        }
-      })
-    );
-  }
-
-  isSemiNative() {
-    try {
-      return window.semiNative;
-    } catch (e) {
-      return false;
-    }
   }
 
   hashToInt(str, min, max) {
@@ -202,7 +164,7 @@ class Utils {
       }
     };
 
-    if (!this.isSite()) {
+    if (isEditMode() || isPreviewMode()) {
       return _isWixMobile();
     } else {
       return this.getOrPutFromCache('isWixMobile', _isWixMobile);
@@ -228,7 +190,7 @@ class Utils {
         return check;
       };
 
-      if (!this.isSite()) {
+      if (isEditMode() || isPreviewMode()) {
         return _isUserAgentMobile();
       } else {
         return this.getOrPutFromCache('isUserAgentMobile', _isUserAgentMobile);
@@ -254,7 +216,7 @@ class Utils {
 
     if (this.isTest()) {
       return false;
-    } else if (!this.isSite()) {
+    } else if (isEditMode() || isPreviewMode()) {
       return _isMobile();
     } else {
       return this.getOrPutFromCache('isMobile', _isMobile);
@@ -272,7 +234,6 @@ class Utils {
   isDev() {
     return this.getOrPutFromCache('isDev', () => {
       return (
-        this.isLocal() ||
         (this.isOOI() && process.env.NODE_ENV === 'development') ||
         this.shouldDebug('ph_local') ||
         !!this.parseGetParam('debug') ||
@@ -287,25 +248,8 @@ class Utils {
     );
   }
 
-  isLocal() {
-    return this.getOrPutFromCache('isLocal', () => {
-      const ipRegex = /([0-9]{1,3}\.){3}[0-9]{1,3}:[0-9]{1,5}/; //matches 111.222.333.444:9999
-      const host = window.location.hostname || '';
-      const isLocal =
-        host === 'local.wix.com' ||
-        host === '0.0.0.0' ||
-        host.indexOf('localhost') >= 0 ||
-        ipRegex.exec(host) !== null;
-      return isLocal;
-    });
-  }
-
   isStoreGallery() {
     return this.getOrPutFromCache('isStoreGallery', () => {
-      if (this.isSemiNative()) {
-        return false;
-      }
-
       try {
         return window.location.search.toLowerCase().indexOf('isstore') > -1;
       } catch (e) {
@@ -328,99 +272,6 @@ class Utils {
         typeof self !== 'undefined' &&
         (top === self || self.location.origin.includes('editor.wix.com')))
     );
-  }
-
-  updateViewMode(forceVal) {
-    //NOTICE: this method must be called after each EDIT_MODE_CHANGED event to clear the cache
-    if (typeof forceVal === 'string' && this.isOOI()) {
-      this._cache.viewMode = forceVal.toLowerCase();
-      return this._cache.viewMode;
-    }
-    try {
-      if (
-        window &&
-        window.Wix &&
-        window.Wix.Utils &&
-        window.Wix.Utils.getViewMode
-      ) {
-        this._cache.viewMode = window.Wix.Utils.getViewMode();
-        return this._cache.viewMode;
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
-  getViewModeFromCache() {
-    return this.getOrPutFromCache('viewMode', () => {
-      try {
-        if (this.isOOI()) {
-          //maybe should use !isInWix() instead isOOI(), but seems that isInWix() is not working good as well (it's using isTest but isTest is not good for OOI)
-          if (this.isVerbose()) {
-            console.warn(
-              'OOI - viewMode not found, returning site if not in wix.com(old test)',
-            );
-          }
-          try {
-            return window.location.host.includes('wix.com')
-              ? 'undefined'
-              : 'site';
-          } catch (e) {
-            return 'undefined';
-          }
-        }
-        if (this.isSSR()) {
-          return 'site';
-        }
-        if (
-          window &&
-          window.Wix &&
-          window.Wix.Utils &&
-          window.Wix.Utils.getViewMode
-        ) {
-          return window.Wix.Utils.getViewMode();
-        }
-        return 'undefined';
-      } catch (e) {
-        return false;
-      }
-    });
-  }
-
-  isEditor() {
-    //New OOI api
-    if (this.isOOI()) {
-      return this.getViewModeFromCache() === 'editor';
-    }
-
-    //Old iframe api
-    if (!this.isInWix()) {
-      return false;
-    }
-    return this.getViewModeFromCache() === 'editor';
-  }
-
-  isPreview() {
-    //New OOI api
-    if (this.isOOI()) {
-      return this.getViewModeFromCache() === 'preview';
-    }
-
-    //Old iframe api
-    if (!this.isInWix()) {
-      return false;
-    }
-    return this.getViewModeFromCache() === 'preview';
-  }
-
-  isSite() {
-    //New OOI api
-    if (this.isOOI()) {
-      return this.getViewModeFromCache() === 'site';
-    }
-
-    //Old iframe api
-    return !this.isEditor() && !this.isPreview();
   }
 
   generateUUID() {
@@ -463,9 +314,6 @@ class Utils {
   }
 
   isLandscape() {
-    if (this.isSemiNative()) {
-      return false;
-    }
     return this.getOrPutFromCache('isLandscape', () => {
       if (!this.isMobile()) {
         return false;
@@ -621,11 +469,11 @@ class Utils {
   }
 
   getScreenWidth() {
-    if (this.isPreview() && this.isMobile()) {
+    if (isPreviewMode() && this.isMobile()) {
       // In editor preview-mode, the screen is still a desktop, but the viewport in which the preview mode renders us is only 320, so 'window.screen.width' returns a wrong value.
       return 320;
     }
-    if (this.isTest() || this.isSemiNative()) {
+    if (this.isTest()) {
       return 1920;
     }
     try {
@@ -640,7 +488,7 @@ class Utils {
   }
 
   getScreenHeight() {
-    if (this.isTest() || this.isSemiNative()) {
+    if (this.isTest()) {
       return 1200;
     }
     try {
@@ -655,12 +503,12 @@ class Utils {
   }
 
   fixViewport() {
-    if (this.isSemiNative() || !this.isInWix()) {
+    if (this.isOOI()) {
       return;
     }
     try {
       this._cache.isLandscape = undefined;
-      if (this.isSite() && this.isMobile() && !this.isMobileViewer()) {
+      if ((isSiteMode() || isSEOMode()) && this.isMobile() && !this.isMobileViewer()) {
         //using isUserAgentMobile creates a bug in mobile view when configured to show desktop on mobile (so isWixMobile is false)
         const viewportAspectRatio = this.getViewportScaleRatio();
         window.document.body.style.transform =
@@ -675,9 +523,6 @@ class Utils {
   }
 
   isLandscape() {
-    if (this.isSemiNative()) {
-      return false;
-    }
     if (!this.isUndefined(this._cache.isLandscape)) {
       return this._cache.isLandscape;
     }
@@ -731,7 +576,7 @@ class Utils {
       !this.isOOI() &&
       this.isMobile() &&
       !this.isMobileViewer() &&
-      this.isSite() &&
+      (isSiteMode() || isSEOMode()) &&
       !shouldIgnoreRatio
     ) {
       return 320 / this.getScreenWidth();

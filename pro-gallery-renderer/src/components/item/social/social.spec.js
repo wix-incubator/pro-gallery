@@ -10,6 +10,8 @@ import utils from '../../../utils/index';
 import window from '../../../utils/window/windowWrapper';
 import LoveButton from '../loveButton/loveButton.js';
 import EVENTS from '../../../utils/constants/events';
+import { viewModeWrapper } from '../../../utils/window/viewModeWrapper';
+import VIEW_MODE from '../../../utils/constants/viewMode';
 
 describe('Social:', () => {
   let driver;
@@ -89,8 +91,7 @@ describe('Social:', () => {
     });
   });
   describe('social button (getSocialShare)', () => {
-    it('should call toggleShare onClick if isSite is true', () => {
-      const stub = sinon.stub(utils, 'isSite').returns(true);
+    it('should call toggleShare onClick if isSiteMode() is true (from viewModeWrapper)', () => {
       driver.mount(Social, sampleItemViewProps);
       let spy = sinon.spy(driver.get.props().actions, 'toggleShare');
       driver.find
@@ -98,14 +99,14 @@ describe('Social:', () => {
         .simulate('click', mockEvent);
       expect(spy.called).to.be.true;
       spy.restore();
-      stub.returns(false);
+      viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
       driver.mount(Social, sampleItemViewProps);
       spy = sinon.spy(driver.get.props().actions, 'toggleShare');
       driver.find
         .hook('gallery-item-social-button')
         .simulate('click', mockEvent);
       expect(spy.called).to.be.false;
-      stub.restore();
+      viewModeWrapper.setViewMode(VIEW_MODE.SITE);
       spy.restore();
     });
     it('should not exist if allowSocial is false', () => {
@@ -116,7 +117,6 @@ describe('Social:', () => {
       expect(driver.find.hook('gallery-item-social-button').length).to.equal(0);
     });
     it('should get a Share component if its a slideshow', () => {
-      const stub = sinon.stub(utils, 'isSite').returns(true);
       Object.assign(sampleItemViewProps, {
         styleParams: { allowSocial: true, isSlideshow: true },
       });
@@ -134,7 +134,6 @@ describe('Social:', () => {
           '[data-hook="item-social"] > [data-hook="gallery-item-social-button"] > Share',
         ).length,
       ).to.equal(0);
-      stub.restore();
     });
   });
   describe('love button (getLoveButton)', () => {
@@ -172,72 +171,71 @@ describe('Social:', () => {
   describe('Download button (getDownload)', () => {
     describe('should have a download button only in the right constellation of params -', () => {
       it('allowParams-toggles', () => {
-        const stubSite = sinon.stub(utils, 'isSite').returns(false);
+        viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
         const stubiOS = sinon.stub(utils, 'isiOS').returns(false);
         Object.assign(sampleItemViewProps, {
           styleParams: { allowDownload: true },
           isDemo: true,
         });
         driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(1); // isSite:false,isiOS:false,allowDownload:true,isDemo:true
+        expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:true,isDemo:true
         driver.set.props({
           styleParams: { allowDownload: false },
           isDemo: true,
         });
-        expect(driver.find.hook('item-download').length).to.equal(0); // isSite:false,isiOS:false,allowDownload:false,isDemo:true
-        stubSite.restore();
+        expect(driver.find.hook('item-download').length).to.equal(0); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:false,isDemo:true
+        viewModeWrapper.setViewMode(VIEW_MODE.SITE);
         stubiOS.restore();
       });
       it('isiOS-toggles', () => {
-        const stubSite = sinon.stub(utils, 'isSite').returns(false);
+        viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
         let stubiOS = sinon.stub(utils, 'isiOS').returns(false);
         Object.assign(sampleItemViewProps, {
           styleParams: { allowDownload: true },
           isDemo: true,
         });
         driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(1); // isSite:false,isiOS:false,allowDownload:true,isDemo:true
+        expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:true,isDemo:true
         stubiOS.restore();
         stubiOS = sinon.stub(utils, 'isiOS').returns(true);
         driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(0); // isSite:false,isiOS:ture,allowDownload:true,isDemo:true
-        stubSite.restore();
+        expect(driver.find.hook('item-download').length).to.equal(0); // isSiteMode(from viewModeWrapper):false,isiOS:ture,allowDownload:true,isDemo:true
+        viewModeWrapper.setViewMode(VIEW_MODE.SITE);
         stubiOS.restore();
       });
-      it('isSite value doesnt matter while isDemo is false', () => {
-        const stubSite = sinon.stub(utils, 'isSite').returns(false);
+      it('isSiteMode() (from viewModeWrapper) value doesnt matter while isDemo is false', () => {
+        viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
         const stubiOS = sinon.stub(utils, 'isiOS').returns(false);
         Object.assign(sampleItemViewProps, {
           styleParams: { allowDownload: true },
           isDemo: false,
         });
         driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(1); // isSite:false,isiOS:false,allowDownload:true,isDemo:false
-        stubSite.returns(true);
+        expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:true,isDemo:false
+        viewModeWrapper.setViewMode(VIEW_MODE.SITE);
         driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(1); // isSite:true,isiOS:false,allowDownload:true,isDemo:false
-        stubSite.restore();
+        expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):true,isiOS:false,allowDownload:true,isDemo:false
         stubiOS.restore();
       });
-      it('isDemo value doesnt matter while isSite is false', () => {
-        const stubSite = sinon.stub(utils, 'isSite').returns(false);
+      it('isDemo value doesnt matter while isSiteMode() is false (from viewModeWrapper)', () => {
+        viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
         const stubiOS = sinon.stub(utils, 'isiOS').returns(false);
         Object.assign(sampleItemViewProps, {
           styleParams: { allowDownload: true },
           isDemo: true,
         });
         driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(1); // isSite:false,isiOS:false,allowDownload:true,isDemo:true
+        expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:true,isDemo:true
         driver.set.props({
           styleParams: { allowDownload: true },
           isDemo: false,
         });
-        expect(driver.find.hook('item-download').length).to.equal(1); // isSite:false,isiOS:false,allowDownload:true,isDemo:flase
-        stubSite.restore();
+        expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:true,isDemo:flase
+        viewModeWrapper.setViewMode(VIEW_MODE.SITE);
         stubiOS.restore();
       });
       it('should call eventsListener with different event for text items', () => {
-        const stubSite = sinon.stub(utils, 'isSite').returns(false);
+        viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
         const stubiOS = sinon.stub(utils, 'isiOS').returns(false);
         const stub = sinon.stub(sampleItemViewProps.actions, 'eventsListener');
         Object.assign(sampleItemViewProps, {
@@ -251,7 +249,7 @@ describe('Social:', () => {
         driver.set.props({ type: 'image' });
         driver.find.hook('item-download').simulate('click', mockEvent);
         expect(stub.calledWith(EVENTS.DOWNLOAD_BUTTON_CLICKED)).to.be.true;
-        stubSite.restore();
+        viewModeWrapper.setViewMode(VIEW_MODE.SITE);
         stubiOS.restore();
         stub.restore();
       });

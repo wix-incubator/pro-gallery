@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import utils from '../../../utils/index.js';
 import { GalleryComponent } from '../../galleryComponent';
+import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
 import EVENTS from '../../../utils/constants/events';
 
 export default class Share extends GalleryComponent {
@@ -107,7 +108,7 @@ export default class Share extends GalleryComponent {
     }
     try {
       if (
-        utils.isSite() &&
+        (isSiteMode() || isSEOMode()) &&
         !utils.isMobile() &&
         window.document &&
         window.document.activeElement &&
@@ -140,7 +141,7 @@ export default class Share extends GalleryComponent {
           `block-fullscreen has-custom-focus network-${idx +
             1} progallery-svg-font-icons-` +
           network +
-          (utils.isSite() ? '' : ' inactive ')
+          (isSiteMode() || isSEOMode() ? '' : ' inactive ')
         }
         style={{
           top: this.props.isVerticalContainer

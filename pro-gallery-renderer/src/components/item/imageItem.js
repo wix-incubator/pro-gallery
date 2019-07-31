@@ -1,6 +1,7 @@
 import React from 'react';
 import LOADING_MODE from '../../utils/constants/loadingMode';
 import { GalleryComponent } from '../galleryComponent';
+import { isSEOMode } from '../../utils/window/viewModeWrapper';
 
 export default class ImageItem extends GalleryComponent {
   componentDidMount() {
@@ -33,7 +34,7 @@ export default class ImageItem extends GalleryComponent {
     const backgroundStyle = {}; //remove this inline style if rendered padding (using css) is used
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
-    const isSEO = !!this.props.isInSEO;
+    const isSEO = isSEOMode();
     const imageItemClassName = [
       'gallery-item-content',
       'image-item',
