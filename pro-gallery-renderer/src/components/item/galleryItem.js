@@ -316,12 +316,12 @@ class GalleryItem {
     requiredWidth = Math.ceil(requiredWidth);
     requiredHeight = Math.ceil(requiredHeight);
     const thumbSize = 250;
-  
+
     const focalPoint = resizeMethod === RESIZE_METHODS.FILL && this.isCropped && this.focalPoint;
 
     const urls = {};
     let imgUrl = this.url;
-  
+
     if (this.isText) {
       return {};
 
@@ -333,7 +333,7 @@ class GalleryItem {
         urls.video = this.url;
       } else {
         urls.video = resizeUrl(
-          this, 
+          this,
           this.url,
           RESIZE_METHODS.VIDEO,
           requiredWidth,
@@ -341,7 +341,7 @@ class GalleryItem {
         )
       }
     }
-            
+
     urls.img = resizeUrl(
       this,
       imgUrl,
@@ -363,7 +363,7 @@ class GalleryItem {
     );
 
     urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
-  
+
     return urls;
   };
 
@@ -374,15 +374,15 @@ class GalleryItem {
 
     const thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
     const thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
-    
+
     const resizeWidth = Math.min(maxWidth, Math.ceil(this.width));
     const resizeHeight = Math.min(maxHeight, Math.ceil(this.height));
-    
+
     this.resized_url = this.resizedUrl(this.cubeType, resizeWidth, resizeHeight, this.sharpParams);
     this.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, { quality: 5 });
     this.thumbnail_url = this.resizedUrl(RESIZE_METHODS.FIT, thumbnailWidth, thumbnailHeight, { quality: 30 });
     this.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, { quality: 80 });
-    this.full_url = this.resizedUrl(this.cubeType, this.maxWidth, this.maxHeight, this.sharpParams);
+    this.full_url = this.resizedUrl(RESIZE_METHODS.FULL, this.maxWidth, this.maxHeight, this.sharpParams);
     this.sample_url = this.resizedUrl(RESIZE_METHODS.FIT, 500, 500, this.sharpParams);
     this.preload_url = this.resized_url;
     this.download_url = utils.isStoreGallery() ? this.sample_url : this.full_url;
