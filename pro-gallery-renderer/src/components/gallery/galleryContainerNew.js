@@ -220,12 +220,19 @@ export class GalleryContainer extends React.Component {
         if (utils.isVerbose()) {
           console.log('Preloading item #' + item);
         }
-        this.preloadedItems[id].src = item.preload_url;
+        
+        if (typeof item.preload_url === 'string') {
+          this.preloadedItems[id].src = item.preload_url;
+        } else if (typeof item.preload_url === 'object' && item.preload_url.thumb) {
+          this.preloadedItems[id].src = item.preload_url.thumb;
+        }
+        
         if (typeof onload === 'function') {
           this.preloadedItems[id].onload = e => {
             onload(e);
           };
         }
+        
         return this.preloadedItems[id];
       } catch (e) {
         console.error('Could not preload item', item, e);
