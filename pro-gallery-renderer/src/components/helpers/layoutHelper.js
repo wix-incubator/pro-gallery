@@ -680,8 +680,8 @@ function processLayouts(styles) {
       //add galleryMargin to allow the shadow to be seen
       processedStyles.galleryMargin = Math.max(
         processedStyles.galleryMargin,
-        (processedStyles.itemShadowSize || 10) +
-          (processedStyles.itemShadowBlur || 20),
+        (processedStyles.itemShadowSize || 0) +
+          (processedStyles.itemShadowBlur || 0),
       );
     }
   }
