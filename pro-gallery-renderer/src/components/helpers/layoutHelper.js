@@ -9,6 +9,7 @@ import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../constants/designConsts';
 import INFO_TYPE from '../../utils/constants/infoType';
+import CALCULATION_OPTIONS from '../../utils/constants/calculationOptions';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -858,7 +859,7 @@ function getTextBoxHeight(styleParams) {
     return 0;
   }
 
-  if (!styleParams.textBoxHeight) {
+  if (styleParams.calculateTextBoxHeightMode === CALCULATION_OPTIONS.AUTOMATIC) {
     return getHeightByContent(styleParams);
   } else {
     return styleParams.textBoxHeight;
@@ -973,4 +974,4 @@ function isSlideshowFont(styles) {
   return false;
 }
 
-export { addLayoutStyles, getHeightByContent };
+export { addLayoutStyles };

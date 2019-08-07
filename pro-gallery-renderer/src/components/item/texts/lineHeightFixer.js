@@ -100,6 +100,8 @@ class LineHeightFixer {
         newStyleParams.titleDescriptionSpace ||
       styleParams.imageInfoType !== newStyleParams.imageInfoType ||
       styleParams.itemDescriptionFont !== newStyleParams.itemDescriptionFont ||
+      styleParams.calculateTextBoxHeightMode !==
+        newStyleParams.calculateTextBoxHeightMode ||
       styleParams.itemFont !== newStyleParams.itemFont ||
       oldIsSocialPopulated !== newIsSocialPopulated ||
       title !== newTitle ||
