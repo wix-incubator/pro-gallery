@@ -50,7 +50,10 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
     borderRadius: borderRadius,
     borderWidth: borderWidth + 'px',
     borderColor: borderColor && borderColor.value,
-    ...(borderWidth && { borderStyle: 'solid' }),
+    ...(borderWidth && {
+      borderStyle: 'solid',
+      '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
+    }),
   };
 }
 
