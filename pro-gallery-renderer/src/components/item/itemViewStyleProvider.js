@@ -96,12 +96,9 @@ export function getInnerInfoStyle(styleParams) {
         backgroundColor: styleParams.textBoxFillColor.value,
       }),
     textAlign: styleParams.galleryTextAlign,
-    ...(styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE && {
+    ...((styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE) && {
       paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
-      paddingTop: styleParams.textsVerticalPadding + 30 + 'px',
-    }),
-    ...(styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW && {
-      paddingBottom: styleParams.textsVerticalPadding + 30 + 'px',
       paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
     }),
     paddingRight: getInfoHorizontalPadding(styleParams) + 'px',
