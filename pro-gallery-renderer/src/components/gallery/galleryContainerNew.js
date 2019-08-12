@@ -821,6 +821,7 @@ export class GalleryContainer extends React.Component {
   }
 
   toggleLoadMoreItems() {
+    this.eventsListener(EVENTS.LOAD_MORE_CLICKED, this.galleryStructure.galleryItems);
     const showMoreClickedAtLeastOnce = true;
     const needToHandleShowMoreClick = true;
     if (!this.state.gotFirstScrollEvent) {
