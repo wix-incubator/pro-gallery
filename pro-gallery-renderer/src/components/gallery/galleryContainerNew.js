@@ -560,6 +560,7 @@ export class GalleryContainer extends React.Component {
     this.layout = this.layouter.createLayout(layoutParams);
     this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
       sharpParams: styles.sharpParams,
+      resizeMediaUrl: this.props.resizeMediaUrl,
     });
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
