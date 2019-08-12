@@ -321,6 +321,7 @@ export class GalleryContainer extends React.Component {
     ]);
     const numOfItems = this.state.items.length;
     const layoutHeight = this.layout.height;
+    const layoutItems = this.layout.items;
     const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
     let updatedHeight = false;
     const needToUpdateHeightNotInfinite =
@@ -338,6 +339,7 @@ export class GalleryContainer extends React.Component {
       container,
       partialStyleParams,
       layoutHeight,
+      layoutItems,
       isInfinite,
       updatedHeight,
     };
