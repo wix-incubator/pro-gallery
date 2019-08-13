@@ -1379,8 +1379,12 @@
         .gallery-column {
           overflow-x: scroll;
 
-          &.scroll-snap:not([data-scrolling="true"]) { //do not apply during auto scroll
+          &.scroll-snap {
             scroll-snap-type: x mandatory;
+          }
+
+          > .gallery-horizontal-scroll-inner {
+            position: relative;
           }
         }
       }

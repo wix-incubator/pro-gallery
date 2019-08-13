@@ -65,7 +65,7 @@ export function scrollToItemImp(scrollParams) {
   }
 
   if (oneRow) {
-    utils.scrollTo(
+    utils.horizontalCssScrollTo(
       horizontalElement,
       Math.round(pos * utils.getViewportScaleRatio()),
       durationInMS,

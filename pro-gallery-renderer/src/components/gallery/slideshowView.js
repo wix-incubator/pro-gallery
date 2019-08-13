@@ -701,6 +701,9 @@ class SlideshowView extends GalleryComponent {
           key={'column' + c}
           style={columnStyle}
         >
+          <div
+            className="gallery-horizontal-scroll-inner"
+          >
           {!!column.galleryGroups.length &&
             column.galleryGroups.map(group =>
               group.rendered
@@ -713,6 +716,7 @@ class SlideshowView extends GalleryComponent {
                   )
                 : false,
             )}
+          </div>  
         </div>
       );
     });
