@@ -93,31 +93,12 @@ export class GalleryContainer extends React.Component {
       ...initialState,
       ...this.initialGalleryState,
     };
-
-    try {
-      if (typeof this.props.registerToComponentDidLayout === 'function') {
-        this.props.registerToComponentDidLayout(
-          this.componentDidLayout.bind(this),
-        );
-      }
-    } catch (e) {
-      console.error('Could not register to componentDidLayot', e);
-    }
   }
 
   componentDidMount() {
     this.getMoreItemsIfNeeded(0);
     const galleryState = this.reCreateGalleryExpensively(this.props);
     this.loadItemsDimensionsIfNeeded();
-    if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
-        this.handleNewGalleryStructure();
-      });
-    }
-  }
-
-  componentDidLayout() {
-    const galleryState = this.reCreateGalleryExpensively(this.props);
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
         this.handleNewGalleryStructure();
@@ -220,19 +201,22 @@ export class GalleryContainer extends React.Component {
         if (utils.isVerbose()) {
           console.log('Preloading item #' + item);
         }
-        
+
         if (typeof item.preload_url === 'string') {
           this.preloadedItems[id].src = item.preload_url;
-        } else if (typeof item.preload_url === 'object' && item.preload_url.thumb) {
+        } else if (
+          typeof item.preload_url === 'object' &&
+          item.preload_url.thumb
+        ) {
           this.preloadedItems[id].src = item.preload_url.thumb;
         }
-        
+
         if (typeof onload === 'function') {
           this.preloadedItems[id].onload = e => {
             onload(e);
           };
         }
-        
+
         return this.preloadedItems[id];
       } catch (e) {
         console.error('Could not preload item', item, e);
@@ -821,7 +805,10 @@ export class GalleryContainer extends React.Component {
   }
 
   toggleLoadMoreItems() {
-    this.eventsListener(EVENTS.LOAD_MORE_CLICKED, this.galleryStructure.galleryItems);
+    this.eventsListener(
+      EVENTS.LOAD_MORE_CLICKED,
+      this.galleryStructure.galleryItems,
+    );
     const showMoreClickedAtLeastOnce = true;
     const needToHandleShowMoreClick = true;
     if (!this.state.gotFirstScrollEvent) {
