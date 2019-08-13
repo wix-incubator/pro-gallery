@@ -1175,8 +1175,8 @@ class ItemView extends GalleryComponent {
     const { itemClick } = this.props.styleParams;
     const { url, target } = directLink || {};
     const isSEO = isSEOMode();
-    const isPremium = this.props.isPremiumSite;
-    const shouldUseNofollow = isSEO && !isPremium;
+    const noFollowForSEO = this.props.noFollowForSEO;
+    const shouldUseNofollow = isSEO && noFollowForSEO;
     const shouldUseDirectLink = !!(url && target && itemClick === 'link');
     const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
     const linkParams = shouldUseDirectLink

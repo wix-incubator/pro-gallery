@@ -187,7 +187,7 @@ class GalleryView extends GalleryComponent {
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
-      isPremiumSite: this.props.isPremiumSite,
+      noFollowForSEO: this.props.noFollowForSEO,
       actions: {
         eventsListener: this.props.actions.eventsListener,
         setCurrentHover: this.props.actions.setCurrentHover,

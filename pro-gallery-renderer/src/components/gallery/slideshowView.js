@@ -674,7 +674,7 @@ class SlideshowView extends GalleryComponent {
       currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
-      isPremiumSite: this.props.isPremiumSite,
+      noFollowForSEO: this.props.noFollowForSEO,
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
       actions: {
