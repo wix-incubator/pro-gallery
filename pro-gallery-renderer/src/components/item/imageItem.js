@@ -73,6 +73,7 @@ export default class ImageItem extends GalleryComponent {
         arial-label={alt}
         alt={alt}
         src={resized_url.seoLink}
+        loading="lazy"
         style={restOfDimensions}
         {...imageProps}
       />
