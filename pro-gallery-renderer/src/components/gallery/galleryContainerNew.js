@@ -100,13 +100,18 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     // this.getMoreItemsIfNeeded(0);
-    // const galleryState = this.reCreateGalleryExpensively(this.props);
     this.loadItemsDimensionsIfNeeded();
-    // if (Object.keys(galleryState).length > 0) {
-    //   this.setState(galleryState, () => {
-    //     this.handleNewGalleryStructure();
-    //   });
-    // }
+    try {
+      if (Object.keys(this.initialGalleryState || {}).length === 0) { //hydrate phase did not happen - do it client side
+        const galleryState = this.reCreateGalleryExpensively(this.props);
+        if (Object.keys(galleryState).length > 0) {
+          this.setState(galleryState, () => {
+            this.handleNewGalleryStructure();
+          });
+        }
+      }
+    } catch (e) {
+    }
   }
 
   componentWillReceiveProps(nextProps) {
