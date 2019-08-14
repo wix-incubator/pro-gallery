@@ -7,16 +7,10 @@ import ItemHover from './itemHover.js';
 import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
-import * as actions from '../../actions/galleryActions.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
 import _ from 'lodash';
-import {
-  setHorizontalVisibility,
-  setVerticalVisibility,
-  setInitialVisibility,
-} from '../helpers/scrollHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';
@@ -49,55 +43,8 @@ class ItemView extends GalleryComponent {
       displayed: false,
       retries: 0,
       showShare: false,
-      playVertically: false,
-      playHorizontally: true,
-      visibleVertically: true,
-      renderedVertically: true,
-      visibleHorizontally: true,
-      renderedHorizontally: true,
-      scroll: {
-        top: 0,
-        left: 0,
-      },
     };
 
-    this.screenSize = (window && window.screen) || {
-      width: 1366,
-      height: 768,
-    };
-    this.shouldListenToScroll = this.props.type === 'video';
-    this.renderedPaddingMultiply = 2;
-    this.visiblePaddingMultiply = 0;
-    this.videoPlayVerticalTolerance =
-      (this.props.offset.bottom - this.props.offset.top) / 2;
-    this.videoPlayHorizontalTolerance =
-      (this.props.offset.right - this.props.offset.left) / 2;
-    this.padding = {
-      renderedVertical:
-        utils.parseGetParam('renderedPadding') ||
-        this.screenSize.height * this.renderedPaddingMultiply,
-      visibleVertical:
-        utils.parseGetParam('displayPadding') ||
-        this.screenSize.height * this.visiblePaddingMultiply,
-      playVertical:
-        utils.parseGetParam('playPadding') ||
-        this.screenSize.height * this.visiblePaddingMultiply -
-          this.videoPlayVerticalTolerance,
-      renderedHorizontal:
-        utils.parseGetParam('renderedPadding') ||
-        this.screenSize.width * this.renderedPaddingMultiply,
-      visibleHorizontal:
-        utils.parseGetParam('displayPadding') ||
-        this.screenSize.width * this.visiblePaddingMultiply,
-      playHorizontal:
-        utils.parseGetParam('playPadding') ||
-        this.screenSize.width * this.visiblePaddingMultiply -
-          this.videoPlayHorizontalTolerance,
-    };
-    this.galleryScroll = {
-      top: 0,
-      left: 0,
-    };
     this.activeElement = '';
   }
 
@@ -129,7 +76,6 @@ class ItemView extends GalleryComponent {
     this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
-    this.setVisibilityState = this.setVisibilityState.bind(this);
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this,
     );
@@ -176,18 +122,9 @@ class ItemView extends GalleryComponent {
   }
 
   onMouseOver() {
-    this.onMouseOverEvent.itemIdx = this.props.idx;
+    this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    this.onMouseOverEvent.itemIdx = this.props.idx; //VIDEOREWORK why do we need this?
     window.dispatchEvent(this.onMouseOverEvent);
-    if (this.props.type === 'video') {
-      this.onVideoHover();
-    }
-  }
-
-  onVideoHover() {
-    const { videoPlay } = this.props.styleParams;
-    if (videoPlay === 'hover' && !utils.isMobile()) {
-      this.props.playVideo(this.props.idx);
-    }
   }
 
   onKeyPress(e) {
@@ -203,22 +140,10 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  handleGalleryItemClick(itemClick) {
-    const { videoPlay } = this.props.styleParams;
-
+  handleGalleryItemClick() {
     _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked')) &&
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
-
-    if (this.props.type === 'video' && itemClick === 'nothing') {
-      const shouldTogglePlay = videoPlay === 'onClick' || utils.isMobile();
-      if (shouldTogglePlay) {
-        this.props.playing
-          ? this.props.pauseVideo(this.props.idx)
-          : this.props.playVideo(this.props.idx);
-      }
-    }
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
-    //this.props.actions.onItemClicked(this.props.idx);
   }
 
   onItemClick(e) {
@@ -227,14 +152,12 @@ class ItemView extends GalleryComponent {
       return _.noop;
     }
 
-    const { itemClick } = this.props.styleParams;
-
     e.preventDefault();
 
     if (this.shouldShowHoverOnMobile()) {
-      this.handleHoverClickOnMobile(itemClick);
+      this.handleHoverClickOnMobile();
     } else {
-      this.handleGalleryItemClick(itemClick);
+      this.handleGalleryItemClick();
     }
   }
 
@@ -252,7 +175,7 @@ class ItemView extends GalleryComponent {
       useDirectLink;
 
     if (shouldUseDirectLinkMobileSecondClick) {
-      this.props.actions.setCurrentHover(-1);
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
       return true;
     }
     if (useDirectLink && !this.shouldShowHoverOnMobile()) {
@@ -264,16 +187,12 @@ class ItemView extends GalleryComponent {
   isClickOnCurrentHoveredItem = () =>
     this.props.currentHover === this.props.idx;
 
-  handleHoverClickOnMobile(itemClick) {
+  handleHoverClickOnMobile() {
     if (this.isClickOnCurrentHoveredItem()) {
-      this.props.actions.eventsListener(
-        EVENTS.ITEM_ACTION_TRIGGERED,
-        this.props,
-      );
-      //this.props.actions.onItemClicked(this.props.idx);
-      this.props.actions.setCurrentHover(-1);
+      this.handleGalleryItemClick();
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
     } else {
-      this.props.actions.setCurrentHover(this.props.idx);
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
     }
   }
 
@@ -294,7 +213,6 @@ class ItemView extends GalleryComponent {
         EVENTS.ITEM_ACTION_TRIGGERED,
         this.props,
       );
-      //this.props.actions.onItemClicked(this.props.idx);
     }
   }
 
@@ -318,24 +236,6 @@ class ItemView extends GalleryComponent {
   }
 
   //-----------------------------------------| UTILS |--------------------------------------------//
-
-  setVisibilityState(state) {
-    const newState = {};
-    Object.keys(state).forEach(key => {
-      if (state[key] !== this.state[key]) {
-        newState[key] = state[key];
-      }
-    });
-    this.setState(newState, () => {
-      this.props.store.dispatch(
-        actions.galleryWindowLayoutChanged(this.screenSize.height),
-      );
-    });
-  }
-
-  getItemVisibility() {
-    return this.state.visibleHorizontally && this.state.visibleVertically;
-  }
 
   isSmallItem() {
     if (this.props.styleParams.isSlideshow) {
@@ -473,21 +373,6 @@ class ItemView extends GalleryComponent {
         };
   }
 
-  isVisible() {
-    return this.state.playVertically && this.state.playHorizontally;
-  }
-
-  videoOnMount(videoElement) {
-    this.props.videoAdded({
-      idx: this.props.idx,
-      isVisible: () => this.isVisible(),
-    });
-  }
-
-  videoOnUnmount() {
-    this.props.videoRemoved(this.props.idx);
-  }
-
   getItemTextsDetails() {
     const props = _.pick(this.props, [
       'title',
@@ -620,7 +505,6 @@ class ItemView extends GalleryComponent {
       <ImageItem
         {...props}
         key="imageItem"
-        visible={this.getItemVisibility()}
         loaded={this.state.loaded}
         displayed={this.state.displayed}
         imageDimensions={imageDimensions}
@@ -639,9 +523,7 @@ class ItemView extends GalleryComponent {
     return (
       <VideoItem
         {...this.props}
-        onMount={this.videoOnMount.bind(this)}
-        onUnmount={this.videoOnUnmount.bind(this)}
-        onEnd={this.props.videoEnded.bind(this)}
+        playing={this.props.idx === this.props.playingVideoIdx}
         key={'video' + this.props.idx}
         hover={itemHover}
         imageDimensions={imageDimensions}
@@ -649,7 +531,6 @@ class ItemView extends GalleryComponent {
           failed: this.state.failed,
           loaded: this.state.loaded,
         }}
-        onClick={this.handleVideoClick}
         actions={_.merge({}, this.props.actions, {
           setItemLoaded: this.setItemLoaded,
           setItemError: this.setItemError,
@@ -659,11 +540,36 @@ class ItemView extends GalleryComponent {
       />
     );
   }
-  getVideoItemPlaceholder(itemHover) {
+  getVideoItemPlaceholder(imageDimensions, itemHover) {
+    const props = _.pick(this.props, [
+      'alt',
+      'title',
+      'description',
+      'id',
+      'idx',
+      'styleParams',
+      'resized_url',
+      'settings',
+    ]);
     return (
       <VideoItemPlaceholder
+        {...props}
+        loadingStatus={{
+          failed: this.state.failed,
+          loaded: this.state.loaded,
+        }}
+        key="videoPlaceholder"
+        loaded={this.state.loaded}
+        displayed={this.state.displayed}
+        imageDimensions={imageDimensions}
+        isThumbnail={!!this.props.thumbnailHighlightId}
+        actions={{
+          handleItemMouseDown: this.handleItemMouseDown,
+          handleItemMouseUp: this.handleItemMouseUp,
+          setItemLoaded: this.setItemLoaded,
+          setItemError: this.setItemError,
+        }}
         id={this.props.idx}
-        resized_url={this.props.resized_url}
         hover={itemHover}
       />
     );
@@ -681,7 +587,6 @@ class ItemView extends GalleryComponent {
     return (
       <TextItem
         {...props}
-        visible={this.getItemVisibility()}
         key="textItem"
         imageDimensions={imageDimensions}
         actions={{
@@ -695,7 +600,6 @@ class ItemView extends GalleryComponent {
 
   getItemInner() {
     const { styleParams, type } = this.props;
-    const visible = this.getItemVisibility();
     let itemInner;
     const imageDimensions = this.getImageDimensions();
     let itemTexts =
@@ -716,10 +620,13 @@ class ItemView extends GalleryComponent {
         itemInner = <div />;
         break;
       case 'video':
-        if (visible) {
+        if (
+          this.props.idx === this.props.playingVideoIdx ||
+          this.props.idx === this.props.nextVideoIdx
+        ) {
           itemInner = this.getVideoItem(imageDimensions, itemHover);
         } else {
-          itemInner = this.getVideoItemPlaceholder(itemHover);
+          itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
         }
         break;
       case 'text':
@@ -814,12 +721,15 @@ class ItemView extends GalleryComponent {
             onMouseOver={() => {
               utils.isMobile()
                 ? _.noop()
-                : this.props.actions.setCurrentHover(this.props.idx);
+                : this.props.actions.eventsListener(
+                    EVENTS.HOVER_SET,
+                    this.props.idx,
+                  );
             }}
             onMouseOut={() => {
               utils.isMobile()
                 ? _.noop()
-                : this.props.actions.setCurrentHover(-1);
+                : this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
           >
             {itemTexts}
@@ -1055,21 +965,6 @@ class ItemView extends GalleryComponent {
         React.initializeTouchEvents(true);
       } catch (e) {}
     }
-    if (this.shouldListenToScroll) {
-      this.initScrollListener();
-      setInitialVisibility({
-        props: this.props,
-        screenSize: this.screenSize,
-        padding: this.padding,
-        callback: this.setVisibilityState,
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.shouldListenToScroll) {
-      this.removeScrollListener();
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -1078,89 +973,6 @@ class ItemView extends GalleryComponent {
 
   componentDidUpdate(prevProps, prevState) {
     this.changeActiveElementIfNeeded(prevProps);
-  }
-
-  removeScrollListener() {
-    if (this.scrollEventListenerSet) {
-      this.scrollEventListenerSet = false;
-      const { scrollingElement } = this.props;
-      scrollingElement
-        .vertical()
-        .removeEventListener('scroll', this.onVerticalScroll);
-      const { oneRow } = this.props.styleParams;
-      try {
-        scrollingElement
-          .horizontal()
-          .removeEventListener('scroll', this.onHorizontalScroll);
-      } catch (e) {}
-    }
-  }
-  normalizeScrollParams(e) {
-    Object.assign(e, { ...e.currentTarget });
-    const target = {
-      scrollY: e.scrollTop || e.y || e.scrollY || 0,
-      scrollX: e.scrollLeft || e.x || e.scrollX || 0,
-      offsetTop: e.y || 0,
-      clientWidth: e.documentWidth || e.innerWidth,
-      clientHeight: e.documentHeight || e.innerHeight,
-    };
-    return target;
-  }
-  initScrollListener() {
-    if (!this.scrollEventListenerSet) {
-      this.scrollEventListenerSet = true;
-      const scrollInterval = 500;
-      //Vertical Scroll
-      this.onVerticalScroll = _.throttle(e => {
-        const target = this.normalizeScrollParams(e);
-        this.setState(
-          {
-            scroll: Object.assign(this.state.scroll, {
-              top: target.scrollY,
-              vertical: target,
-            }),
-          },
-          () =>
-            setVerticalVisibility({
-              target,
-              props: this.props,
-              screenSize: this.screenSize,
-              padding: this.padding,
-              callback: this.setVisibilityState,
-            }),
-        );
-      }, scrollInterval);
-      const { scrollingElement } = this.props;
-      scrollingElement
-        .vertical()
-        .addEventListener('scroll', this.onVerticalScroll);
-
-      //Horizontal Scroll
-      const { oneRow } = this.props.styleParams;
-      if (oneRow) {
-        this.onHorizontalScroll = _.throttle(({ target }) => {
-          this.setState(
-            {
-              scroll: Object.assign(this.state.scroll, {
-                left: target.scrollLeft,
-                horizontal: target,
-              }),
-            },
-            () =>
-              setHorizontalVisibility({
-                target,
-                props: this.props,
-                screenSize: this.screenSize,
-                padding: this.padding,
-                callback: this.setVisibilityState,
-              }),
-          );
-        }, scrollInterval);
-        scrollingElement
-          .horizontal()
-          .addEventListener('scroll', this.onHorizontalScroll);
-      }
-    }
   }
 
   onContextMenu(e) {
@@ -1195,6 +1007,9 @@ class ItemView extends GalleryComponent {
           id={cssScrollHelper.getDomId(this.props)}
           ref={e => (this.itemContainer = e)}
           onMouseOver={this.onMouseOver}
+          onMouseOut={() => {
+            this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+          }}
           onClick={this.onItemClick}
           onKeyDown={this.onKeyPress}
           tabIndex={this.getItemContainerTabIndex()}
@@ -1234,12 +1049,6 @@ class ItemView extends GalleryComponent {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const rendered =
-      this.state.renderedVertically && this.state.renderedHorizontally;
-    //const {photoId, id, hash, idx} = this.props;
-    if (!rendered) {
-      return null;
-    }
     return this.composeItem();
   }
 }

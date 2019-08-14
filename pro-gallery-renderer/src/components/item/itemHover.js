@@ -6,11 +6,8 @@ import { getHoverStyle } from './itemHoverStyleProvider';
 
 export default class ItemHover extends GalleryComponent {
   getHoverClass() {
-    const { styleParams, forceShowHover, itemType } = this.props;
-    const hoverClass =
-      itemType === 'video'
-        ? ['gallery-item-hover-video']
-        : ['gallery-item-hover'];
+    const { styleParams, forceShowHover } = this.props;
+    const hoverClass = ['gallery-item-hover'];
 
     if (
       styleParams.isSlider ||

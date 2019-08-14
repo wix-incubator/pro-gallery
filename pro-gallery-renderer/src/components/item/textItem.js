@@ -46,7 +46,6 @@ export default class TextItem extends GalleryComponent {
 
   render() {
     const {
-      visible,
       id,
       styleParams,
       html,
@@ -57,7 +56,6 @@ export default class TextItem extends GalleryComponent {
     const processedHtml = this.processInnerhtml(html);
     const dimensions = this.getTextDimensions();
     const htmlParam = { dangerouslySetInnerHTML: { __html: processedHtml } };
-    const styleIsDimensions = { style: { dimensions } };
     const changeBgColor = {
       style: Object.assign(
         dimensions,
@@ -66,13 +64,10 @@ export default class TextItem extends GalleryComponent {
           : {},
       ),
     };
-    const show = visible || styleParams.hasThumbnails;
-    const attributes = show
-      ? {
-          ...htmlParam,
-          ...changeBgColor,
-        }
-      : { ...styleIsDimensions };
+    const attributes = {
+      ...htmlParam,
+      ...changeBgColor,
+    };
     const itemContentStyle = {
       height: imageDimensions ? imageDimensions.height : 'inherit',
       backgroundColor:

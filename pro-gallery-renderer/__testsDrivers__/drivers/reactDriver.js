@@ -5,7 +5,6 @@ import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew.js'; //import GalleryContainer before the connect (without redux)
 import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
 import _ from 'lodash';
-import configureStore from 'redux-mock-store';
 import PLACEMENTS from '../../src/utils/constants/placements';
 import React from 'react';
 import utils from '../../src/utils';
@@ -13,7 +12,6 @@ import window from '../../src/utils/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
-const mockStore = configureStore();
 
 class galleryDriver {
   constructor() {
@@ -102,18 +100,12 @@ class galleryDriver {
     this.actions = {
       toggleLoadMoreItems: _.noop,
       eventsListener: _.noop,
+      onItemClick: _.noop,
       pauseAllVideos: _.noop,
       setWixHeight: _.noop,
       scrollToItem: _.noop,
       toggleShare: _.noop,
     };
-
-    //video functions used passed by commonItemcontainer decorator
-    this.videoEnded = _.noop;
-    this.videoAdded = _.noop;
-    this.videoRemoved = _.noop;
-    this.playVideo = _.noop;
-    this.pauseVideo = _.noop;
 
     this.layoutParams = {
       items: this.items,
@@ -131,32 +123,6 @@ class galleryDriver {
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions,
-      videoEnded: this.get.videoEnded,
-      videoAdded: this.get.videoAdded,
-      videoRemoved: this.videoRemoved,
-      playVideo: this.get.playVideo,
-      pauseVideo: this.get.pauseVideo,
-    };
-
-    this.visibilityState = {
-      visible: {
-        visibleHorizontally: true,
-        visibleVertically: true,
-        renderedVertically: true,
-        renderedHorizontally: true,
-      },
-      rendered: {
-        visibleHorizontally: false,
-        visibleVertically: false,
-        renderedVertically: true,
-        renderedHorizontally: true,
-      },
-      hidden: {
-        visibleHorizontally: false,
-        visibleVertically: false,
-        renderedVertically: false,
-        renderedHorizontally: false,
-      },
     };
   }
 
@@ -174,12 +140,6 @@ class galleryDriver {
       instance: () => this.wrapper.instance(),
       props: str => this.wrapper.props(str),
       node: () => this.wrapper.getNode(),
-      videoEnded: this.videoEnded,
-      videoAdded: this.videoAdded,
-      videoRemoved: this.videoRemoved,
-      playVideo: this.playVideo,
-      pauseVideo: this.pauseVideo,
-      visibilityState: this.visibilityState,
     };
   }
 
@@ -191,9 +151,7 @@ class galleryDriver {
     res.galleryContainer = props => {
       const defaultProps = this.props.galleryContainer();
       props = _.merge(defaultProps, props || {});
-      this.wrapper = mount(
-        <GalleryContainer store={mockStore({})} actions={{}} {...props} />,
-      );
+      this.wrapper = mount(<GalleryContainer actions={{}} {...props} />);
       return this;
     };
     return res;
@@ -295,7 +253,6 @@ class galleryDriver {
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
           itemsLoveData: galleryViewProps.itemsLoveData,
-          store: mockStore({}),
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
         };
@@ -321,7 +278,6 @@ class galleryDriver {
             vertical: () => window,
             horizontal: () => window,
           },
-          store: mockStore({}),
           config: newGalleryConfig,
           visible: true,
           actions: {

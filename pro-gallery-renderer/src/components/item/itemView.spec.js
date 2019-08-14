@@ -155,30 +155,6 @@ describe('Item View', () => {
   //     expect(driver.get.state().showHover).to.be.true;
   //   });
   // });
-  describe('onMouseOver', () => {
-    it('should call onVideoHover when hovering and the type is video', () => {
-      const spy = sinon.stub(ItemView.prototype, 'onVideoHover');
-      Object.assign(sampleItemViewProps, { type: 'video' });
-      driver.mount(ItemView, sampleItemViewProps);
-      driver.set.state(driver.get.visibilityState.visible);
-      driver.find.hook('item-container').simulate('mouseover');
-      expect(spy.called).to.be.true;
-      spy.restore();
-    });
-    it('onVideoHover does not execute if played on mobile or if not defined as hover play', () => {
-      Object.assign(sampleItemViewProps, { type: 'video' });
-      //IMPORTANT stubing a function that is going to be passed as props before it is passed. stubing after mounting interfers with react managing the props and will not always work.
-      const spy = sinon.stub(sampleItemViewProps, 'playVideo');
-      driver.mount(ItemView, sampleItemViewProps);
-      driver.set.state(driver.get.visibilityState.visible);
-      driver.set.props({ styleParams: { videoPlay: 'hover' } });
-      const stub = sinon.stub(utils, 'isMobile').returns(false);
-      driver.find.hook('item-container').simulate('mouseover');
-      expect(spy.called).to.be.true;
-      stub.restore();
-      spy.restore();
-    });
-  });
   describe('onItemClick', () => {
     it('should onItemClicked for items with link', () => {
       Object.assign(sampleItemViewProps, {
@@ -191,11 +167,12 @@ describe('Item View', () => {
       expect(stub.calledWith(EVENTS.ITEM_CLICKED)).to.be.true;
       stub.restore();
     });
+
     it('should onItemClicked for items with expand', () => {
       Object.assign(sampleItemViewProps, {
         thumbnailHighlightId: null,
         type: 'image',
-        styleParams: { itemClick: 'expand', videoPlay: 'onClick' },
+        styleParams: { itemClick: 'expand' },
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
@@ -203,33 +180,7 @@ describe('Item View', () => {
       expect(stub.calledWith(EVENTS.ITEM_ACTION_TRIGGERED)).to.be.true;
       stub.restore();
     });
-    it.skip('should toggle playVideo/pauseVideo for video items that are not expand and the video is styled to play onclick/the device is mobile/', () => {
-      Object.assign(sampleItemViewProps, {
-        thumbnailHighlightId: null,
-        type: 'video',
-        styleParams: { itemClick: 'foo', videoPlay: 'onClick' },
-      });
-      const spyPlay = sinon.stub(sampleItemViewProps, 'playVideo');
-      const spyPause = sinon.stub(sampleItemViewProps, 'pauseVideo');
-      driver.mount(ItemView, sampleItemViewProps);
-      driver.set.props({
-        playing: true,
-      });
-      driver.find.hook('item-container').simulate('click');
-      expect(spyPlay.called).to.be.false;
-      expect(spyPause.called).to.be.true;
-      // the props are toggled useing redux. to be tested in the e2e tests. here I hardcode a toggle for props.playing
-      driver.set.props({
-        playing: false,
-      });
-      spyPlay.called = false;
-      spyPause.called = false;
-      driver.find.hook('item-container').simulate('click');
-      expect(spyPlay.called).to.be.true;
-      expect(spyPause.called).to.be.false;
-      spyPlay.restore();
-      spyPause.restore();
-    });
+
     // following will always fail for video items. it looks to me like a bug. videos will never have hover on mobile
     // it('should toggleHover onClick when the device is mobile and the onclick is styles to nothing', () => {
     //   const mobileStub = sinon.stub(utils, 'isMobile').returns(true);
@@ -435,20 +386,17 @@ describe('Item View', () => {
   // });
   // not testing all the "return component" functions
   describe('getItemInner', () => {
-    it('should return a placeholder for non visible video', () => {
+    it('should return a placeholder for non playing video', () => {
       Object.assign(sampleItemViewProps, {
+        currentPlayingIdx: 1,
         styleParams: {
           isSlideshow: false,
         },
         type: 'video',
+        idx: 0,
       });
       driver.mount(ItemView, sampleItemViewProps);
-      driver.set.state(driver.get.visibilityState.visible);
-      expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(0);
-      expect(driver.find.selector(VideoItem).length).to.equal(1);
-      driver.set.state(driver.get.visibilityState.rendered);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
-      expect(driver.find.selector(VideoItem).length).to.equal(0);
     });
     it('should create a separate div for buttons when in slideshow', () => {
       Object.assign(sampleItemViewProps, {

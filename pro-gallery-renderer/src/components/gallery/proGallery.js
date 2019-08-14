@@ -1,13 +1,7 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import galleryReducers from '../../reducers/index.js';
 import GalleryContainerNew from './galleryContainerNew.js';
 import utils from '../../utils';
 import { viewModeWrapper } from '../../utils/window/viewModeWrapper';
-import videoMiddleware from '../item/videos/videoMiddleware';
-import { VideoQueue } from '../item/videos/video-queue';
 import window from '../../utils/window/windowWrapper';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -32,17 +26,6 @@ export default class ProGallery extends GalleryComponent {
     if (utils.isVerbose()) {
       console.log('[OOISSR] proGallery init', window.isMock);
     }
-    const middlewares = [
-      thunkMiddleware,
-      videoMiddleware({
-        videoQueue: new VideoQueue(),
-      }),
-    ];
-    this.store = createStore(
-      galleryReducers,
-      /* { gallery: { videoPlayMode: videoPlayModes.hover } } */ {},
-      applyMiddleware(...middlewares),
-    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,20 +38,17 @@ export default class ProGallery extends GalleryComponent {
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
-          <Provider store={this.store}>
-            <GalleryContainerNew
-              {...this.props}
-              domId={this.domId}
-              items={this.props.items || []}
-              store={this.store}
-              watermarkData={this.props.watermarkData}
-              settings={this.props.settings || {}}
-              offsetTop={this.props.offsetTop}
-              itemsLoveData={
-                this.props.itemsLoveData ? this.props.itemsLoveData : {}
-              }
-            />
-          </Provider>
+          <GalleryContainerNew
+            {...this.props}
+            domId={this.domId}
+            items={this.props.items || []}
+            watermarkData={this.props.watermarkData}
+            settings={this.props.settings || {}}
+            offsetTop={this.props.offsetTop}
+            itemsLoveData={
+              this.props.itemsLoveData ? this.props.itemsLoveData : {}
+            }
+          />
         </div>
       )
     );

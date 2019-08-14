@@ -28,27 +28,6 @@ describe('Text Item', () => {
     expect(galleryDriver.find.hook('text-item').length).to.equal(1);
   });
 
-  it('shoud render html given in props when visible is true', () => {
-    Object.assign(textItemProps, { visible: true });
-    Object.assign(textItemProps, { html: 'test' });
-    galleryDriver.mount(TextItem, textItemProps);
-    expect(galleryDriver.text).to.equal('test');
-
-    Object.assign(textItemProps, { visible: false });
-    Object.assign(textItemProps, { styleParams: { hasThumbnails: false } });
-    Object.assign(textItemProps, { html: 'test' });
-    galleryDriver.mount(TextItem, textItemProps);
-    expect(galleryDriver.text).to.equal('');
-  });
-
-  it('shoud render html given in props when hasThumbnails is true', () => {
-    Object.assign(textItemProps, { visible: false });
-    Object.assign(textItemProps, { styleParams: { hasThumbnails: true } });
-    Object.assign(textItemProps, { html: 'test' });
-    galleryDriver.mount(TextItem, textItemProps);
-    expect(galleryDriver.text).to.equal('test');
-  });
-
   it('should set background color', () => {
     Object.assign(textItemProps, { styleParams: { cubeType: 'fit' } });
     Object.assign(textItemProps, { style: { bgColor: 'red' } });

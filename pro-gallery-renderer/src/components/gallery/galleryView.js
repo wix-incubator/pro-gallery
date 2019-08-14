@@ -134,7 +134,6 @@ class GalleryView extends GalleryComponent {
               { key: `ItemContainer-${item.id}-${index}` },
             ),
           ),
-          { store: this.props.store },
         ),
       ),
     );
@@ -187,10 +186,11 @@ class GalleryView extends GalleryComponent {
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
+      playingVideoIdx: this.props.playingVideoIdx,
+      nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       actions: {
         eventsListener: this.props.actions.eventsListener,
-        setCurrentHover: this.props.actions.setCurrentHover,
       },
     };
   }

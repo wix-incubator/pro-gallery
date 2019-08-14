@@ -1,17 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actions from '../../actions/galleryActions.js';
-import videoActionTypes from '../../constants/videoActionTypes';
 import GalleryView from './galleryView.js';
 import SlideshowView from './slideshowView.js';
 import { addLayoutStyles } from '../helpers/layoutHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import { scrollToItemImp } from '../helpers/scrollHelper';
-import { pauseVideo } from '../../actions/itemViewActions.js';
 import window from '../../utils/window/windowWrapper';
-import CssScrollIndicator from './galleryCssScrollIndicator';
+import ScrollIndicator from './galleryScrollIndicator';
 import { Layouter } from 'pro-gallery-layouter';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
@@ -23,6 +18,7 @@ import {
   extractContextFields,
   GalleryProvider,
 } from '../../context/GalleryContext';
+import VideoScrollHelper from '../helpers/videoScrollHelper.js';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -35,9 +31,10 @@ export class GalleryContainer extends React.Component {
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
     this._scrollingElement = this.getScrollingElement();
-    this.setCurrentHover = this.setCurrentHover.bind(this);
     this.duplicateGalleryItems = this.duplicateGalleryItems.bind(this);
     this.eventsListener = this.eventsListener.bind(this);
+    this.onGalleryScroll = this.onGalleryScroll.bind(this);
+    this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
 
     const initialState = {
       pgScroll: 0,
@@ -46,6 +43,8 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick: false,
       currentHover: -1,
       gotFirstScrollEvent: false,
+      playingVideoIdx: -1,
+      nextVideoIdx: -1,
     };
 
     this.items = [];
@@ -53,6 +52,10 @@ export class GalleryContainer extends React.Component {
     this.preloadedItems = {};
     this.fullwidthLayoutsCss = [];
     this.state = initialState;
+    const videoScrollHelperConfig = {
+      setPlayingVideos: this.setPlayingIdxState,
+    };
+    this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
 
     if (utils.isSSR()) {
       this.initialGalleryState = this.reCreateGalleryExpensively(
@@ -278,10 +281,9 @@ export class GalleryContainer extends React.Component {
 
   handleNavigation(isInDisplay) {
     if (isInDisplay) {
-      this.props.store.dispatch(actions.toggleIsInView(true));
+      this.videoScrollHelper.trigger.INIT_SCROLL();
     } else {
-      this.props.store.dispatch(actions.toggleIsInView(false));
-      this.props.store.dispatch(pauseVideo());
+      this.videoScrollHelper.stop();
     }
   }
 
@@ -528,7 +530,6 @@ export class GalleryContainer extends React.Component {
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
-
     const layoutParams = {
       items: this.items,
       container,
@@ -547,6 +548,12 @@ export class GalleryContainer extends React.Component {
     this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
       sharpParams: styles.sharpParams,
       resizeMediaUrl: this.props.resizeMediaUrl,
+    });
+    this.videoScrollHelper.updateGalleryStructure({
+      galleryStructure: this.galleryStructure,
+      scrollBase: this.state.container.scrollBase,
+      videoPlay: this.state.styles.videoPlay,
+      oneRow: this.state.styles.oneRow,
     });
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
@@ -662,11 +669,6 @@ export class GalleryContainer extends React.Component {
         this.layouter = new Layouter(layoutParams);
       }
 
-      this.props.store.dispatch({
-        type: videoActionTypes.videoModeChanged,
-        payload: _styles.videoPlay,
-      });
-
       this.layout = this.layouter.createLayout(layoutParams);
 
       if (isNew.addedItems) {
@@ -689,7 +691,13 @@ export class GalleryContainer extends React.Component {
           resizeMediaUrl: this.props.resizeMediaUrl,
         });
       }
-
+      this.videoScrollHelper.updateGalleryStructure({
+        galleryStructure: this.galleryStructure,
+        scrollBase: _container.scrollBase,
+        videoPlay: _styles.videoPlay,
+        oneRow: _styles.oneRow,
+        cb: this.setPlayingIdxState,
+      });
       if (isNew.items) {
         this.loadItemsDimensionsIfNeeded();
       }
@@ -788,6 +796,20 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  setPlayingIdxState(playingVideoIdx, nextVideoIdx) {
+    this.setState({
+      playingVideoIdx,
+      nextVideoIdx,
+    });
+  }
+
+  onGalleryScroll({ top, left }) {
+    this.videoScrollHelper.trigger.SCROLL({
+      top,
+      left,
+    });
+  }
+
   getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
     const isSEO = isSEOMode();
     const shouldUseScrollCss = !isSEO;
@@ -846,10 +868,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  setCurrentHover(idx) {
-    this.setState({ currentHover: idx });
-  }
-
   enableScrollPreload() {
     if (!this.state.gotFirstScrollEvent) {
       if (!this.state.showMoreClickedAtLeastOnce) {
@@ -882,6 +900,13 @@ export class GalleryContainer extends React.Component {
   }
 
   eventsListener(eventName, eventData) {
+    this.videoScrollHelper.handleEvent({
+      eventName,
+      eventData,
+    });
+    if (eventName === EVENTS.HOVER_SET) {
+      this.setState({ currentHover: eventData });
+    }
     if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData);
     }
@@ -970,13 +995,14 @@ export class GalleryContainer extends React.Component {
           data-key="pro-gallery-inner-container"
           key="pro-gallery-inner-container"
         >
-          <CssScrollIndicator
+          <ScrollIndicator
             galleryDomId={this.props.domId}
             oneRow={this.state.styles.oneRow}
             scrollBase={this.state.container.scrollBase}
             scrollingElement={this._scrollingElement}
             getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
             enableScrollPreload={this.enableScrollPreload}
+            onScroll={this.onGalleryScroll}
           />
           <ViewComponent
             galleryDomId={this.props.domId}
@@ -999,6 +1025,8 @@ export class GalleryContainer extends React.Component {
             currentHover={this.state.currentHover}
             customHoverRenderer={this.props.customHoverRenderer}
             customInfoRenderer={this.props.customInfoRenderer}
+            playingVideoIdx={this.state.playingVideoIdx}
+            nextVideoIdx={this.state.nextVideoIdx}
             noFollowForSEO={this.props.noFollowForSEO}
             actions={_.merge(this.props.actions, {
               findNeighborItem,
@@ -1006,10 +1034,8 @@ export class GalleryContainer extends React.Component {
               eventsListener: this.eventsListener,
               setWixHeight: _.noop,
               scrollToItem: this.scrollToItem,
-              setCurrentHover: this.setCurrentHover,
               duplicateGalleryItems: this.duplicateGalleryItems,
             })}
-            store={this.props.store}
             {...this.props.gallery}
           />
           {this.galleryInitialStateJson && (
@@ -1032,17 +1058,4 @@ export class GalleryContainer extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return state.gallery;
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch),
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GalleryContainer);
+export default GalleryContainer;

@@ -113,11 +113,7 @@ function isWithinPaddingHorizontally({
   right,
   screenWidth,
   padding,
-  oneRow,
 }) {
-  if (!oneRow) {
-    return true;
-  }
   const res = getDistanceFromScreen({
     offset: 0,
     scroll: target.scrollLeft,
@@ -182,7 +178,6 @@ function setHorizontalVisibility({
       right,
       screenWidth: screenSize.width,
       padding: padding.playHorizontal,
-      oneRow: styleParams.oneRow,
     }),
     visibleHorizontally: isWithinPaddingHorizontally({
       target,
@@ -190,7 +185,6 @@ function setHorizontalVisibility({
       right,
       screenWidth: screenSize.width,
       padding: padding.visibleHorizontal,
-      oneRow: styleParams.oneRow,
     }),
     renderedHorizontally: isWithinPaddingHorizontally({
       target,
@@ -198,7 +192,6 @@ function setHorizontalVisibility({
       right,
       screenWidth: screenSize.width,
       padding: padding.renderedHorizontal,
-      oneRow: styleParams.oneRow,
     }),
   });
 }

@@ -677,9 +677,10 @@ class SlideshowView extends GalleryComponent {
       noFollowForSEO: this.props.noFollowForSEO,
       galleryDomId: this.props.domId,
       galleryId: this.props.galleryId,
+      playingVideoIdx: this.props.playingVideoIdx,
+      nextVideoIdx: this.props.nextVideoIdx,
       actions: {
         eventsListener: this.props.actions.eventsListener,
-        setCurrentHover: this.props.actions.setCurrentHover,
       },
     };
 
@@ -710,7 +711,6 @@ class SlideshowView extends GalleryComponent {
                 ? React.createElement(
                     GroupView,
                     _.merge(group.renderProps(galleryConfig), {
-                      store: this.props.store,
                       itemsLoveData,
                     }),
                   )

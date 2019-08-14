@@ -3,14 +3,15 @@ import _ from 'lodash';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
 
-export default class CssScrollIndicator extends GalleryComponent {
-  constructor() {
+export default class ScrollIndicator extends GalleryComponent {
+  constructor(props) {
     super();
 
     this.state = {
       scrollTop: 0,
       scrollLeft: 0,
     };
+    this.debouncedOnScroll = _.debounce(props.onScroll, 50);
   }
 
   removeScrollListener() {
@@ -46,49 +47,48 @@ export default class CssScrollIndicator extends GalleryComponent {
     this.scrollEventListenerSet = true;
 
     const scrollingElement = this.props.scrollingElement;
-    const { oneRow } = this.props;
-    if (oneRow) {
-      //Horizontal Scroll
-      this.onHorizontalScroll = e => {
-        const target = e.currentTarget || e.target || e;
-        const left =
-          target && (target.scrollX || target.scrollLeft || target.x);
-        if (left >= 0) {
-          this.setState({
-            scrollTop: left, //todo use both scrollTop and scrollLeft
-            scrollLeft: left,
-          });
-          this.props.getMoreItemsIfNeeded(left);
-          this.props.enableScrollPreload();
-        }
-      };
-      try {
-        scrollingElement
-          .horizontal()
-          .addEventListener('scroll', this.onHorizontalScroll);
-      } catch (e) {
-        //
+    //Horizontal Scroll
+    this.onHorizontalScroll = e => {
+      const target = e.currentTarget || e.target || e;
+      const top = target && (target.scrollY || target.scrollTop || target.y);
+      const left = target && (target.scrollX || target.scrollLeft || target.x);
+      if (left >= 0) {
+        this.setState({
+          scrollTop: left, //todo use both scrollTop and scrollLeft
+          scrollLeft: left,
+        });
+        this.props.getMoreItemsIfNeeded(left);
+        this.props.enableScrollPreload();
+        this.debouncedOnScroll({ top, left });
       }
-    } else {
-      //Vertical Scroll
-      this.onVerticalScroll = e => {
-        const target = e.currentTarget || e.target || e;
-        const top = target && (target.scrollY || target.scrollTop || target.y);
-        if (top >= 0) {
-          this.setState({
-            scrollTop: top,
-          });
-          this.props.getMoreItemsIfNeeded(top);
-          this.props.enableScrollPreload();
-        }
-      };
-      try {
-        scrollingElement
-          .vertical()
-          .addEventListener('scroll', this.onVerticalScroll);
-      } catch (e) {
-        //
+    };
+    try {
+      scrollingElement
+        .horizontal()
+        .addEventListener('scroll', this.onHorizontalScroll);
+    } catch (e) {
+      //
+    }
+    //Vertical Scroll
+    this.onVerticalScroll = e => {
+      const target = e.currentTarget || e.target || e;
+      const top = target && (target.scrollY || target.scrollTop || target.y);
+      const left = target && (target.scrollX || target.scrollLeft || target.x);
+      if (top >= 0) {
+        this.setState({
+          scrollTop: top,
+        });
+        this.props.getMoreItemsIfNeeded(top);
+        this.props.enableScrollPreload();
+        this.debouncedOnScroll({ top, left });
       }
+    };
+    try {
+      scrollingElement
+        .vertical()
+        .addEventListener('scroll', this.onVerticalScroll);
+    } catch (e) {
+      //
     }
   }
 

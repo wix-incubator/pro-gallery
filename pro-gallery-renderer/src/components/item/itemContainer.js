@@ -1,7 +1,5 @@
 import React from 'react';
-
 import ItemView from './itemView.js';
-import { CommonItemContainer } from './commonItemContainer.js';
 import { GalleryComponent } from '../galleryComponent';
 
 class ItemContainer extends GalleryComponent {
@@ -10,4 +8,4 @@ class ItemContainer extends GalleryComponent {
   }
 }
 
-export default CommonItemContainer(ItemContainer);
+export default ItemContainer;

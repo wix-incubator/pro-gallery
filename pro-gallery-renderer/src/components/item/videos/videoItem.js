@@ -4,6 +4,7 @@ import utils from '../../../utils';
 import window from '../../../utils/window/windowWrapper';
 import Player from '@vimeo/player';
 import { GalleryComponent } from '../../galleryComponent';
+import EVENTS from '../../../utils/constants/events';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -83,7 +84,6 @@ class VideoItem extends GalleryComponent {
         id={`video-${this.props.id}`}
         width="100%"
         height="100%"
-        onReady={this.props.actions.setItemLoaded}
         url={url}
         loop={!!this.props.styleParams.videoLoop}
         ref={player => (this.video = player)}
@@ -91,7 +91,7 @@ class VideoItem extends GalleryComponent {
         playing={this.props.playing}
         onEnded={() => {
           this.setState({ playing: false });
-          this.props.onEnd();
+          this.props.actions.eventsListener(EVENTS.VIDEO_ENDED, this.props);
         }}
         onPause={() => {
           this.setState({ playing: false });
@@ -102,6 +102,7 @@ class VideoItem extends GalleryComponent {
         }}
         onReady={() => {
           this.fixIFrameTabIndexIfNeeded();
+          this.props.actions.setItemLoaded();
         }}
         config={{
           file: {
@@ -159,14 +160,6 @@ class VideoItem extends GalleryComponent {
         src={this.props.resized_url.img}
       />
     );
-  }
-
-  componentDidMount() {
-    this.props.onMount(this);
-  }
-
-  componentWillUnmount() {
-    this.props.onUnmount();
   }
 
   canVideoPlayInGallery(itemClick, videoPlay) {
@@ -258,7 +251,7 @@ class VideoItem extends GalleryComponent {
           data-hook="video_container-image-element"
           key={'video_container-' + this.props.id}
           style={{
-            backgroundImage: `url(${this.props.resized_url.thumb})`,
+            backgroundImage: `url(${this.props.resized_url.img})`,
             ...restOfDimensions,
           }}
         >
