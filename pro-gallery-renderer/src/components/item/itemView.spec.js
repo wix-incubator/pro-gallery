@@ -194,7 +194,7 @@ describe('Item View', () => {
     // });
   });
   describe('toggleFullscreenIfNeeded', () => {
-    it('should call onItemClicked only if the target item does not have block-fullscreen class', () => {
+    it('should call onItemClicked if the target item does not have block-fullscreen class', () => {
       // not testing this.
     });
   });
@@ -407,7 +407,6 @@ describe('Item View', () => {
         type: 'image',
       });
       driver.mount(ItemView, sampleItemViewProps);
-      driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(1);
       driver.set.props({
         styleParams: {
@@ -430,14 +429,13 @@ describe('Item View', () => {
         type: 'image',
       });
       driver.mount(ItemView, sampleItemViewProps);
-      driver.set.state(driver.get.visibilityState.visible);
       expect(driver.find.selector(CustomButton).length).to.equal(1);
       expect(driver.find.selector(ItemTitle).length).to.equal(1);
     });
   });
   //compunentDidUpdate not tested
   describe('render', () => {
-    it('should have boxshadow only if defined', () => {
+    it('should have boxshadow if defined', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           itemEnableShadow: true,

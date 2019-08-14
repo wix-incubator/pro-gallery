@@ -60,7 +60,7 @@ describe('ItemHover', () => {
       itemType: 'video',
     });
     driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'gallery-item-hover-video').to.equal(true);
+    itemHoverHasClass(driver, 'gallery-item-hover').to.equal(true);
 
     Object.assign(sampleItemViewProps, {
       itemType: 'image',
