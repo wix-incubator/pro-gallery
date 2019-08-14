@@ -70,7 +70,7 @@ export default class ImageItem extends GalleryComponent {
             : '') + 'image'
         }
         className={'gallery-item-visible gallery-item gallery-item-preloaded'}
-        arial-label={alt}
+        aria-label={alt}
         alt={alt}
         src={resized_url.seoLink}
         loading="lazy"
@@ -89,7 +89,7 @@ export default class ImageItem extends GalleryComponent {
           'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'
         }
         role="img"
-        arial-label={alt}
+        aria-label={alt}
         data-src={resized_url.img}
         style={restOfDimensions}
         {...imageProps}
