@@ -53,7 +53,7 @@ export class GalleryContainer extends React.Component {
     this.fullwidthLayoutsCss = [];
     this.state = initialState;
     const videoScrollHelperConfig = {
-      setPlayingVideos: this.setPlayingIdxState,
+      setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
     };
     this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
 
