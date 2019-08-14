@@ -8,7 +8,9 @@ export function isGalleryInViewport(container) {
     window &&
     window.document &&
     window.document.documentElement &&
-    Number.isInteger(window.document.documentElement.scrollTop) &&
+    (Number.isInteger(window.document.documentElement.scrollTop) ||
+      (window.document.scrollingElement &&
+        Number.isInteger(window.document.scrollingElement.scrollTop))) &&
     Number.isInteger(window.document.documentElement.offsetHeight)
   );
   const inTopViewPort =
@@ -18,7 +20,8 @@ export function isGalleryInViewport(container) {
   const inBottomViewPort =
     haveAllVariablesForViewPortCalc &&
     container.scrollBase <
-      window.document.documentElement.scrollTop +
+      (window.document.documentElement.scrollTop ||
+        window.document.scrollingElement.scrollTop) +
         window.document.documentElement.offsetHeight;
   return (
     (inTopViewPort && inBottomViewPort) || !haveAllVariablesForViewPortCalc
