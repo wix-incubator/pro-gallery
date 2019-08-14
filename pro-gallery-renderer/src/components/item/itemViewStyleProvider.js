@@ -52,7 +52,6 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
     borderColor: borderColor && borderColor.value,
     ...(borderWidth && {
       borderStyle: 'solid',
-      '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
     }),
   };
 }
