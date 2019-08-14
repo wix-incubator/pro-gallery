@@ -60,27 +60,6 @@ class GalleryItem {
         this.dto.metaData = utils.parseStringObject(itemMetadata);
       }
     }
-    // if (utils.isStoreGallery() && !this.isVideo) {
-    //   this.watermark = config.watermark;
-    //   // protect against watermark being a string - it happens some times.
-    //   if (typeof this.watermark === 'string') {
-    //     try {
-    //       this.watermark = JSON.parse(this.watermark);
-    //     } catch (error) {
-    //       console.error(
-    //         `item-core - given watermark (${this.watermark}) is not an object`,
-    //         error,
-    //       );
-    //     }
-    //   }
-    //   this.watermarkStr = '';
-    //   if (this.watermark.imageUrl) {
-    //     this.watermarkStrSdk = `${this.watermark.imageUrl}-${
-    //       this.watermark.opacity
-    //     }-${this.watermark.position}-${this.watermark.size}`;
-    //     this.watermarkStr = `,wm_${this.watermarkStrSdk}`;
-    //   }
-    // }
 
     this.sharpParams = _.merge({}, config.sharpParams);
     if (!this.sharpParams.quality) {
@@ -89,9 +68,18 @@ class GalleryItem {
     if (!this.sharpParams.usm) {
       this.sharpParams.usm = {};
     }
+    this.resetUrls();
     this.updateSharpParams();
 
-    this.createUrls();
+  }
+
+  update(config) {
+    this.dto = {...config.dto};
+    if (config.scheme) {
+      this.processScheme(config.scheme);
+    }
+    this.resetUrls();
+    this.updateSharpParams();
   }
 
   processScheme(scheme) {
@@ -366,27 +354,76 @@ class GalleryItem {
 
     return urls;
   };
+  resetUrls() {
 
-  createUrls() {
+    const maxDimension = 500;
     const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
     const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
-    const maxDimension = 500;
 
-    const thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
-    const thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
+    this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
+    this.thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
+    this.resizeWidth = Math.min(maxWidth, Math.ceil(this.width));
+    this.resizeHeight = Math.min(maxHeight, Math.ceil(this.height));
 
-    const resizeWidth = Math.min(maxWidth, Math.ceil(this.width));
-    const resizeHeight = Math.min(maxHeight, Math.ceil(this.height));
+    this.urls = {};
+  }
 
-    this.resized_url = this.resizedUrl(this.cubeType, resizeWidth, resizeHeight, this.sharpParams);
-    this.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, { quality: 5 });
-    this.thumbnail_url = this.resizedUrl(RESIZE_METHODS.FIT, thumbnailWidth, thumbnailHeight, { quality: 30 });
-    this.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, { quality: 80 });
-    this.full_url = this.resizedUrl(RESIZE_METHODS.FULL, this.maxWidth, this.maxHeight, this.sharpParams);
-    this.sample_url = this.resizedUrl(RESIZE_METHODS.FIT, 500, 500, this.sharpParams);
-    this.preload_url = this.resized_url;
-    this.download_url = utils.isStoreGallery() ? this.sample_url : this.full_url;
-    this.download_url.img += `?dn=${this.fileName}`;
+
+  get resized_url() {
+    if (!this.urls.resized_url) {
+      this.urls.resized_url = this.resizedUrl(this.cubeType, this.resizeWidth, this.resizeHeight, this.sharpParams);
+    }
+    return this.urls.resized_url;
+  }
+  
+  get pixel_url() {
+    if (!this.urls.pixel_url) {
+      this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, { quality: 5 });
+    }
+    return this.urls.pixel_url;
+  }
+  
+  get thumbnail_url() {
+    if (!this.urls.thumbnail_url) {
+      this.urls.thumbnail_url = this.resizedUrl(RESIZE_METHODS.FIT, this.thumbnailWidth, this.thumbnailHeight, { quality: 30 });
+    }
+    return this.urls.thumbnail_url;
+  }
+  
+  get square_url() {
+    if (!this.urls.square_url) {
+      this.urls.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, { quality: 80 });
+    }
+    return this.urls.square_url;
+  }
+  
+  get full_url() {
+    if (!this.urls.full_url) {
+      this.urls.full_url = this.resizedUrl(RESIZE_METHODS.FULL, this.maxWidth, this.maxHeight, this.sharpParams);
+    }
+    return this.urls.full_url;
+  }
+  
+  get sample_url() {
+    if (!this.urls.sample_url) {
+      this.urls.sample_url = this.resizedUrl(RESIZE_METHODS.FIT, 500, 500, this.sharpParams);
+    }
+    return this.urls.sample_url;
+  }
+  
+  get preload_url() {
+    if (!this.urls.preload_url) {
+      this.urls.preload_url = this.resized_url;
+    }
+    return this.urls.preload_url;
+  }
+  
+  get download_url() {
+    if (!this.urls.download_url) {
+      this.urls.download_url = utils.isStoreGallery() ? this.sample_url : this.full_url;
+      this.urls.download_url.img += `?dn=${this.fileName}`;
+    }
+    return this.urls.download_url;
   }
 
   updateSharpParams() {

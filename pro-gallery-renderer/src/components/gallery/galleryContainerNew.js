@@ -99,14 +99,14 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.getMoreItemsIfNeeded(0);
-    const galleryState = this.reCreateGalleryExpensively(this.props);
+    // this.getMoreItemsIfNeeded(0);
+    // const galleryState = this.reCreateGalleryExpensively(this.props);
     this.loadItemsDimensionsIfNeeded();
-    if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
-        this.handleNewGalleryStructure();
-      });
-    }
+    // if (Object.keys(galleryState).length > 0) {
+    //   this.setState(galleryState, () => {
+    //     this.handleNewGalleryStructure();
+    //   });
+    // }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -670,26 +670,25 @@ export class GalleryContainer extends React.Component {
       }
 
       this.layout = this.layouter.createLayout(layoutParams);
-
+      const itemConfig = {
+        watermark: watermarkData,
+        sharpParams: _styles.sharpParams,
+        lastVisibleItemIdx: this.lastVisibleItemIdx,
+        resizeMediaUrl: this.props.resizeMediaUrl,
+      };
+      const existingLayout = this.galleryStructure || this.layout;
       if (isNew.addedItems) {
-        const existingLayout = this.galleryStructure || this.layout;
         this.galleryStructure = ItemsHelper.convertExistingStructureToGalleryItems(
           existingLayout,
           this.layout,
-          {
-            watermark: watermarkData,
-            sharpParams: _styles.sharpParams,
-            lastVisibleItemIdx: this.lastVisibleItemIdx,
-            resizeMediaUrl: this.props.resizeMediaUrl,
-          },
+          itemConfig,
         );
       } else {
-        this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
-          watermark: watermarkData,
-          sharpParams: _styles.sharpParams,
-          lastVisibleItemIdx: this.lastVisibleItemIdx,
-          resizeMediaUrl: this.props.resizeMediaUrl,
-        });
+        this.galleryStructure = ItemsHelper.convertToGalleryItems(
+          this.layout, 
+          itemConfig,
+          existingLayout.galleryItems
+        );
       }
       this.videoScrollHelper.updateGalleryStructure({
         galleryStructure: this.galleryStructure,
