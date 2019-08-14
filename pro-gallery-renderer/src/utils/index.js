@@ -508,7 +508,11 @@ class Utils {
     }
     try {
       this._cache.isLandscape = undefined;
-      if ((isSiteMode() || isSEOMode()) && this.isMobile() && !this.isMobileViewer()) {
+      if (
+        (isSiteMode() || isSEOMode()) &&
+        this.isMobile() &&
+        !this.isMobileViewer()
+      ) {
         //using isUserAgentMobile creates a bug in mobile view when configured to show desktop on mobile (so isWixMobile is false)
         const viewportAspectRatio = this.getViewportScaleRatio();
         window.document.body.style.transform =
@@ -665,9 +669,7 @@ class Utils {
     animateScroll();
   }
 
-
-  horizontalCssScrollTo(scroller, to, duration, callback = (() => {})) {
-
+  horizontalCssScrollTo(scroller, to, duration, callback = () => {}) {
     const start = scroller.scrollLeft;
     const change = to - start;
 
@@ -677,19 +679,20 @@ class Utils {
 
     Object.assign(scrollerInner.style, {
       transition: `margin ${duration}ms linear`,
-      marginLeft: `-${change}px`
+      '-webkit-transition': `margin ${duration}ms linear`,
+      marginLeft: `-${change}px`,
     });
 
     setTimeout(() => {
       Object.assign(scrollerInner.style, {
         transition: `none`,
-        marginLeft: 0
+        '-webkit-transition': `none`,
+        marginLeft: 0,
       });
       scroller.scrollLeft = to;
       scroller.setAttribute('data-scrolling', '');
-      (typeof callback === 'function') && callback();
+      typeof callback === 'function' && callback();
     }, duration);
-
   }
 
   // isVerbose() {
