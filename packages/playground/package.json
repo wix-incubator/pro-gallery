@@ -1,0 +1,133 @@
+{
+  "name": "pro-playground",
+  "version": "1.0.3",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "7.4.3",
+    "antd": "^3.20.7",
+    "axios": "^0.18.0",
+    "css-animation": "1.5.0",
+    "image-client-api": "^1.3130.0",
+    "pro-gallery": "^1.0.0",
+    "pro-gallery-layouter": "^2.0.35",
+    "react": "^16.8.6",
+    "react-color": "^2.17.3",
+    "react-dom": "^16.8.6",
+    "react-syntax-highlighter": "^10.3.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^4.3.2",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-named-asset-import": "^0.3.2",
+    "babel-preset-react-app": "^9.0.0",
+    "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-loader": "^2.2.1",
+    "eslint-plugin-flowtype": "^2.50.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.5.0",
+    "file-loader": "^4.1.0",
+    "gh-pages": "2.0.1",
+    "gh-pages-with-token": "^1.0.0",
+    "html-webpack-plugin": "^4.0.0-beta.5",
+    "jest": "^24.8.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "pnp-webpack-plugin": "^1.5.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-normalize": "^8.0.1",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-safe-parser": "^4.0.1",
+    "react-app-polyfill": "^1.0.1",
+    "react-dev-utils": "^9.0.1",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.38.0",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-manifest-plugin": "^2.0.4",
+    "workbox-webpack-plugin": "^4.3.1"
+  },
+  "resolutions": {
+    "css-animation": "1.5.0"
+  },
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": " ",
+    "deploy": "node scripts/build.js && gh-pages-with-token -d build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jest-environment-jsdom-fourteen",
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "homepage": "https://wix-incubator.github.io/pro-gallery/"
+}

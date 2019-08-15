@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="72px" height="72px" viewBox="0 0 72 72" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>magic</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="46" height="46"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="magic">
+            <g id="Magic-thumbnail" transform="translate(13.000000, 13.000000)">
+                <g id="Group-4">
+                    <g id="Group-3-Copy-2">
+                        <circle id="Oval" stroke="#EAF7FF" stroke-width="2" cx="28" cy="12" r="3"></circle>
+                        <g id="Group-2">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Mask" fill="#7FCBF7" xlink:href="#path-1"></use>
+                            <g mask="url(#mask-2)">
+                                <g transform="translate(32.964446, 33.855467) rotate(44.000000) translate(-32.964446, -33.855467) translate(12.464446, 29.355467)">
+                                    <path d="M0.877134091,5.57938395 C0.850233976,5.03063519 1.273131,4.53813959 1.82706358,4.47878967 L40.4264069,0.343145751 L41,8.08578644 L2.00877516,8.08578644 C1.45164402,8.08578644 0.978270177,7.64250902 0.951293034,7.09218893 L0.877134091,5.57938395 Z" id="Rectangle-3" fill="#D3EDFF"></path>
+                                    <path d="M0.877134091,5.57938395 C0.850233976,5.03063519 1.26890156,4.54574331 1.82936394,4.49479218 L8.60660172,3.87867966 L8.82428683,8.08578644 L1.99095133,8.08578644 C1.44366402,8.08578644 0.978270177,7.64250902 0.951293034,7.09218893 L0.877134091,5.57938395 Z" id="Rectangle-3-Copy" fill="#EAF7FF"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <polygon id="Shape-Copy-8" fill="#D3EDFF" points="22 15.5 24.6810016 14.6811403 25.4997278 12 26.318454 14.6811403 29 15.5 26.318454 16.3188597 25.4997278 19 24.6810016 16.3188597"></polygon>
+                    <polygon id="Shape-Copy-9" fill="#D3EDFF" points="25 7 26.5320009 6.53208016 26.9998445 5 27.467688 6.53208016 29 7 27.467688 7.46791984 26.9998445 9 26.5320009 7.46791984"></polygon>
+                    <polygon id="Shape-Copy-10" fill="#D3EDFF" points="30 11 32.2980014 10.2981202 32.9997667 8 33.701532 10.2981202 36 11 33.701532 11.7018798 32.9997667 14 32.2980014 11.7018798"></polygon>
+                    <polygon id="Shape-Copy-12" fill="#D3EDFF" points="33 4.5 34.1490007 4.14906012 34.4998834 3 34.850766 4.14906012 36 4.5 34.850766 4.85093988 34.4998834 6 34.1490007 4.85093988"></polygon>
+                    <polygon id="Shape-Copy-14" fill="#D3EDFF" points="40 3 40.7660005 2.76604008 40.9999222 2 41.233844 2.76604008 42 3 41.233844 3.23395992 40.9999222 4 40.7660005 3.23395992"></polygon>
+                    <polygon id="Shape-Copy-13" fill="#D3EDFF" points="38 7 38.7660005 6.76604008 38.9999222 6 39.233844 6.76604008 40 7 39.233844 7.23395992 38.9999222 8 38.7660005 7.23395992"></polygon>
+                    <polygon id="Shape-Copy-11" fill="#D3EDFF" points="16 10.5 18.6810016 9.68114028 19.4997278 7 20.318454 9.68114028 23 10.5 20.318454 11.3188597 19.4997278 14 18.6810016 11.3188597"></polygon>
+                    <polygon id="Shape-Copy-2" fill="#D3EDFF" points="7 17 10.8300023 15.8302004 11.9996112 12 13.16922 15.8302004 17 17 13.16922 18.1697996 11.9996112 22 10.8300023 18.1697996"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

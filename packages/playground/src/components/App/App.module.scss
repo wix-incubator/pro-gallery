@@ -1,0 +1,87 @@
+// body {
+//   overflow: hidden;
+// }
+
+.main {
+
+  width: 100%;
+  height: 100%;
+
+  .toggleButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 50;
+  }
+
+  .sideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: auto;
+    background: #fefefe;
+    border-right: 1px solid #ccc;
+    transition: width .3s ease;
+  }
+
+  .gallery {
+    transition: padding .3s ease;
+  }
+
+  .fullscreen {
+    position: fixed;
+    top: 0;
+    left: auto;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    transition: opacity 1s ease;
+  }
+
+  .heading {
+    overflow: auto;
+    height: 53px;
+    line-height: 53px;
+    z-index: 1;
+    width: 100%;
+    padding-left: 60px;
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .codePanel {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    right: 0;
+    width: 600px;
+    transition: all .3s ease;
+    margin-right: -594px;
+    background-color: #313f53;
+
+    &.show {
+      margin-right: 0;
+    }
+
+    &:hover:not(.show) {
+      margin-right: -588px;
+    }
+
+    .codeTab {
+      position: absolute;
+      width: 64px;
+      height: 48px;
+      top: 24px;
+      left: -48px;
+      background-color: #313f53;
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      border-top-left-radius: 24px;
+      border-bottom-left-radius: 24px;
+    }
+  }
+}
