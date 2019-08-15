@@ -9,6 +9,11 @@ class GalleryItem {
     this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
     this.createdBy = config.createdBy;
+    
+    this.update(config);
+  }
+
+  update(config) {
     this.resizeMediaUrl = config.resizeMediaUrl;
 
     if (config.dto && config.dto.dto) {
@@ -71,15 +76,6 @@ class GalleryItem {
     this.resetUrls();
     this.updateSharpParams();
 
-  }
-
-  update(config) {
-    this.dto = {...config.dto};
-    if (config.scheme) {
-      this.processScheme(config.scheme);
-    }
-    this.resetUrls();
-    this.updateSharpParams();
   }
 
   processScheme(scheme) {
