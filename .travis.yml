@@ -1,0 +1,13 @@
+language: node_js
+install:
+- npm install
+script:
+- npm run lint    || travis_terminate 1;
+- npm run build   || travis_terminate 1;
+- npm run test    || travis_terminate 1;
+- npm run publish || travis_terminate 1;
+- npm run deploy  || travis_terminate 1;
+notifications:
+  email:
+    recipients:
+    - guyso@wix.com
