@@ -1,0 +1,82 @@
+{
+  "private": false,
+  "name": "pro-gallery-layouter",
+  "version": "2.0.0",
+  "author": {
+    "name": "Guy Sopher",
+    "email": "guyso@wix.com",
+    "url": ""
+  },
+  "main": "dist/src/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "PORT=8293 yoshi start",
+    "build": "yoshi build",
+    "precommit": "yoshi lint",
+    "pretest": "yoshi build",
+    "test": "yoshi test",
+    "posttest": "yoshi lint",
+    "release": "yoshi release"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.22.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-stage-3": "^6.5.0",
+    "chai": "^4.1.2",
+    "deep-freeze": "0.0.1",
+    "husky": "^0.13.4",
+    "jsdom": "11.2.0",
+    "jsdom-global": "3.0.2",
+    "wallaby-webpack": "^3.9.9",
+    "yoshi": "^4.10.1"
+  },
+  "babel": {
+    "presets": [
+      "stage-3"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      },
+      "development": {
+        "presets": [
+          "env"
+        ]
+      }
+    }
+  },
+  "yoshi": {
+    "servers": {
+      "cdn": {
+        "port": 4662
+      }
+    }
+  },
+  "eslintConfig": {
+    "extends": "yoshi",
+    "rules": {
+      "no-mixed-operators": 0,
+      "no-loop-func": 0
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

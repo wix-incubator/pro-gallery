@@ -1,0 +1,10 @@
+{
+  "generator-wix-js": {
+    "promptValues": {
+      "authorName": "Guy Sopher",
+      "authorEmail": "guyso@wix.com",
+      "organization": "wix.com",
+      "groupId": "exposure"
+    }
+  }
+}
