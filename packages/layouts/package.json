@@ -1,10 +1,10 @@
 {
   "private": false,
-  "name": "pro-gallery-layouter",
-  "version": "2.0.0",
+  "name": "pro-layouts",
+  "version": "1.0.3",
   "author": {
     "name": "Guy Sopher",
-    "email": "guyso@wix.com",
+    "email": "guysopher@gmail.com",
     "url": ""
   },
   "main": "dist/src/index.js",
