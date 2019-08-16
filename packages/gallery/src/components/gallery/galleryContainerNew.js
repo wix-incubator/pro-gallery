@@ -102,16 +102,19 @@ export class GalleryContainer extends React.Component {
     // this.getMoreItemsIfNeeded(0);
     this.loadItemsDimensionsIfNeeded();
     try {
-      if (Object.keys(this.initialGalleryState || {}).length === 0) { //hydrate phase did not happen - do it client side
+      if (Object.keys(this.initialGalleryState || {}).length === 0) {
+        //hydrate phase did not happen - do it client side
         const galleryState = this.reCreateGalleryExpensively(this.props);
         if (Object.keys(galleryState).length > 0) {
           this.setState(galleryState, () => {
             this.handleNewGalleryStructure();
+            this.eventsListener(EVENTS.APP_LOADED, {});
           });
+        } else {
+          this.eventsListener(EVENTS.APP_LOADED, {});
         }
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   componentWillReceiveProps(nextProps) {
@@ -690,9 +693,9 @@ export class GalleryContainer extends React.Component {
         );
       } else {
         this.galleryStructure = ItemsHelper.convertToGalleryItems(
-          this.layout, 
+          this.layout,
           itemConfig,
-          existingLayout.galleryItems
+          existingLayout.galleryItems,
         );
       }
       this.videoScrollHelper.updateGalleryStructure({
