@@ -13,7 +13,7 @@ function SideBar() {
     preset,
     setPreset,
     setStyleParams,
-    styleParams
+    styleParams,
   } = useGalleryContext();
 
   const conclusions =
@@ -79,10 +79,10 @@ function SideBar() {
           />
         </Collapse.Panel>
       ))}
-      <Collapse.Panel header="Benchmarks" key="3">
+      <Collapse.Panel header="Benchmarks" key="13">
         <Benchmarks />
       </Collapse.Panel>
-      <Collapse.Panel header="Code" key="4">
+      <Collapse.Panel header="Code" key="14">
         <CodePanel />
       </Collapse.Panel>
     </Collapse>

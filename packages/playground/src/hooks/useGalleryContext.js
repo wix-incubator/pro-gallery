@@ -29,6 +29,13 @@ export function useGalleryContext() {
     setContext({styleParams: processNewStyle({...context.styleParams, [newProp]: value}, newProp)});
   };
 
+  const setItems = items => {
+    setContext({items});
+  };
+
+  const setGalleryReady = galleryReady => {
+    setContext({galleryReady});
+  };
 
   const res = {
     showSide: context.showSide,
@@ -37,6 +44,10 @@ export function useGalleryContext() {
     setPreset,
     styleParams: context.styleParams,
     setStyleParams,
+    items: context.items,
+    setItems,
+    galleryReady: context.galleryReady,
+    setGalleryReady,
     dimensions: {
       width: context.galleryWidth,
       height: context.galleryHeight,

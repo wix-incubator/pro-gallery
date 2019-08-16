@@ -18,9 +18,8 @@ import s from './App.module.scss';
 
 export function App() {
 
-  const {setDimentions, styleParams} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, setGalleryReady} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
-  const [images, setImages] = useState(mixAndSlice(testItems, ITEMS_BATCH_SIZE));
   const [fullscreenIdx, setFullscreenIdx] = useState(-1);
 
   const switchState = () => {
@@ -42,14 +41,17 @@ export function App() {
 
   const eventListener = (eventName, eventData) => {
     switch (eventName) {
+      case GALLERY_EVENTS.APP_LOADED: 
+        setGalleryReady(true);
+        break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS: 
-        setImages(images.concat(mixAndSlice(testItems, ITEMS_BATCH_SIZE)));
+        setItems(getItems().concat(mixAndSlice(testItems, ITEMS_BATCH_SIZE)));
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED: 
         setFullscreenIdx(eventData.idx);
         break;
       default: 
-        console.log({eventName, eventData});
+        // console.log({eventName, eventData});
         break;
     }
   }
@@ -57,6 +59,10 @@ export function App() {
   const container = {
     height: window.innerHeight,
     width: window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0)
+  }
+
+  const getItems = () => {
+    return items || mixAndSlice(testItems, ITEMS_BATCH_SIZE);
   }
 
   return (
@@ -72,7 +78,7 @@ export function App() {
         <ProGallery
           scrollingElement={window}
           container={container}
-          items={images}
+          items={getItems()}
           styles={styleParams}
           eventsListener={eventListener}
           totalItemsCount={Infinity}

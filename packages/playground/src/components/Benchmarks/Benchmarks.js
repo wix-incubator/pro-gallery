@@ -3,6 +3,7 @@ import {
   Divider,
   Button,
   InputNumber,
+  Radio,
   Form,
   Card,
   Row,
@@ -16,12 +17,18 @@ import { testImages as images } from "../App/images";
 import { mixAndSlice } from "../../utils/utils";
 
 function Benchmarks() {
-  const { styleParams } = useGalleryContext();
+  const { styleParams, setItems, galleryReady, setGalleryReady } = useGalleryContext();
 
-  const [numberOfRuns, setNumberOfRuns] = React.useState(100);
+  const [numberOfRuns, setNumberOfRuns] = React.useState(10);
   const [numberOfImages, setNumberOfImages] = React.useState(50);
   const [results, setResults] = React.useState(null);
   const [status, setStatus] = React.useState(false);
+
+  const BENCHMARK_TYPES = {
+    LAYOUT: 'LAYOUT',
+    GALLERY: 'GALLERY'
+  };
+  const [benchmarkType, setBenchmarkType] = React.useState(BENCHMARK_TYPES.LAYOUT);
 
   const convertDtoToLayoutItem = dto => {
     const isLayoutItem = !!(dto.id && dto.width > 0 && dto.height > 0);
@@ -71,7 +78,43 @@ function Benchmarks() {
     return duration;
   };
 
-  const runBenchmarks = () => {
+  const createGalleries = (layouts) => {
+
+    return new Promise((resolve, reject) => {
+      
+      const reCreateGalleryIfPossible = () => {
+        if (galleryReady === true) {
+          setItems(mixAndSlice(images, numberOfImages));
+          setGalleryReady(false);
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      let runs = numberOfRuns;
+      const startTime = Date.now();
+
+      const interval = setInterval(() => {
+        if (runs > 0) {
+          const success = reCreateGalleryIfPossible();
+          if (success) {
+            runs--;
+            setStatus(`Created ${numberOfRuns - runs} Galleries`)
+          }
+        } else if (runs <= 0) {
+          clearInterval(interval);
+          const duration = Date.now() - startTime;
+          resolve(duration)
+        }
+      }, 10);
+
+
+
+    });
+  }
+
+  const runLayoutsBenchmarks = () => {
     setStatus("Preparing Images");
     setResults(null);
     setTimeout(() => {
@@ -99,6 +142,50 @@ function Benchmarks() {
     }, 0);
   };
 
+  const runGalleryBenchmarks = () => {
+    setStatus("Preparing Images");
+    setResults(null);
+    setTimeout(() => {
+      const layouts = prepareImages();
+      setStatus("Creating Galleries");
+      setTimeout(() => {
+        createGalleries(layouts).then((duration) => {
+          setResults(
+            <ul>
+              <li>
+                Created {numberOfRuns} Layouts with {numberOfImages} images.
+              </li>
+              <li>Total duration was {duration}ms</li>
+              <li>Average gallery creation took {Math.round((1000 * duration) / numberOfRuns) / 1000}ms</li>
+              <li>
+                Average duration per image is{" "}
+                {Math.round((1000 * duration) / numberOfRuns / numberOfImages) /
+                  1000}
+                ms
+              </li>
+            </ul>
+          );
+          setStatus(false);
+        });
+      }, 0);
+    }, 0);
+
+  }
+
+  const renderOptions = (selected, options, onChange) => {
+    return (
+      <Row>
+      <Col span={24}>
+        <Radio.Group block value={selected} onChange={onChange} style={{width: '100%'}}>
+          {options.map(option => (
+            <Radio.Button value={option}>{option}</Radio.Button>
+          ))}
+        </Radio.Group>
+      </Col>
+      </Row>
+    )
+
+  }
   const renderSlider = (min, max, value, onChange) => (
     <Row>
       <Col span={18}>
@@ -126,6 +213,9 @@ function Benchmarks() {
   return (
     <div className={s.wrapper}>
       <Form layout="vertical">
+        <Form.Item key={"type"} label="Benchmark Type" labelPlacement={"top"}>
+          {renderOptions(benchmarkType, [BENCHMARK_TYPES.LAYOUT, BENCHMARK_TYPES.GALLERY], setBenchmarkType)}
+        </Form.Item>
         <Form.Item key={"runs"} label="Number of Runs" labelPlacement={"top"}>
           {renderSlider(0, 1000, numberOfRuns, val => setNumberOfRuns(val))}
         </Form.Item>
@@ -139,8 +229,8 @@ function Benchmarks() {
           )}
         </Form.Item>
 
-        <Button block onClick={runBenchmarks} loading={!!status}>
-          {status || "Create Layouts"}
+        <Button block onClick={benchmarkType === BENCHMARK_TYPES.LAYOUT ? runLayoutsBenchmarks : runGalleryBenchmarks} loading={!!status}>
+          {status || "Start"}
         </Button>
 
         {results && (
@@ -151,11 +241,13 @@ function Benchmarks() {
             </Card>
           </div>
         )}
-
+{/* 
         <Button block type="link" href="https://bundlephobia.com/result?p=pro-layouts@latest" target="_blank">
           Layouter Bundle Size
         </Button>
-    
+
+ */}        
+            
       </Form>
     </div>
   );
