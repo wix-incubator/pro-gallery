@@ -1,4 +1,4 @@
-import { Layouter } from 'pro-gallery-layouter';
+import { Layouter } from 'pro-layouts';
 import GalleryItem from '../../src/components/item/galleryItem';
 import { testImages } from '../images-mock.js';
 import { mount, shallow, configure } from 'enzyme';

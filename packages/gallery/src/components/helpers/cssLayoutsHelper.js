@@ -1,4 +1,4 @@
-import { createLayout } from 'pro-gallery-layouter';
+import { createLayout } from 'pro-layouts';
 import { cssScrollHelper } from './cssScrollHelper.js';
 
 // const CDN_URL = 'https://static.wixstatic.com/media/';

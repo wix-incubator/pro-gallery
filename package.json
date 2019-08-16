@@ -26,10 +26,10 @@
     "gh-pages": "2.0.1",
     "lerna": "^3.13.3",
     "lerna-packages": "0.0.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.4",
     "semver": "^6.3.0"
   },
   "dependencies": {
-    "babel-eslint": "^10.0.1"
+    "babel-eslint": "^10.0.2"
   }
 }

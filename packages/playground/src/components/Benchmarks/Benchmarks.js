@@ -11,7 +11,7 @@ import {
 } from "antd";
 import s from "./Benchmarks.module.scss";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
-import { createLayout } from "pro-gallery-layouter";
+import { createLayout } from "pro-layouts";
 import { testImages as images } from "../App/images";
 import { mixAndSlice } from "../../utils/utils";
 
@@ -152,7 +152,7 @@ function Benchmarks() {
           </div>
         )}
 
-        <Button block type="link" href="https://bundlephobia.com/result?p=pro-gallery-layouter@latest" target="_blank">
+        <Button block type="link" href="https://bundlephobia.com/result?p=pro-layouts@latest" target="_blank">
           Layouter Bundle Size
         </Button>
     

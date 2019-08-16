@@ -1,7 +1,7 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
 import _ from 'lodash';
-import { Group } from 'pro-gallery-layouter';
+import { Group } from 'pro-layouts';
 
 class GalleryGroup {
   constructor(config) {

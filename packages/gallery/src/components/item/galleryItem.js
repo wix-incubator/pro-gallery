@@ -1,6 +1,6 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
-import { Item } from 'pro-gallery-layouter';
+import { Item } from 'pro-layouts';
 import _ from 'lodash';
 import RESIZE_METHODS from '../../constants/resizeMethods';
 

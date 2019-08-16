@@ -7,7 +7,7 @@ import dimensionsHelper from '../helpers/dimensionsHelper';
 import { scrollToItemImp } from '../helpers/scrollHelper';
 import window from '../../utils/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
-import { Layouter } from 'pro-gallery-layouter';
+import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import _ from 'lodash';

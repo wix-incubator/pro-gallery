@@ -1,5 +1,5 @@
-# Pro Gallery Layouter ([DEMO](https://wix-incubator.github.io/pro-gallery-layouter/))
-[![Build Status](https://travis-ci.org/wix-incubator/pro-gallery-layouter.svg?branch=master)](https://travis-ci.org/wix-incubator/pro-gallery-layouter)
+# Pro Gallery Layouter ([DEMO](https://wix-incubator.github.io/pro-layouts/))
+[![Build Status](https://travis-ci.org/wix-incubator/pro-layouts.svg?branch=master)](https://travis-ci.org/wix-incubator/pro-layouts)
 
 This module creates a layout from a list of items, each containing an id, width and height. The layout is fitted to a specified container and is adjusted by a set of style params. It also handles viewport visibility to render only the items in the viewport.
 
@@ -11,11 +11,11 @@ This module creates a layout from a list of items, each containing an id, width 
 
 # Getting started
 ## Installation
-`npm i pro-gallery-layouter`
+`npm i pro-layouts`
 
 ## Usage
 ```javascript
-import {createLayout} from 'pro-gallery-layouter';
+import {createLayout} from 'pro-layouts';
 
 const layoutParams = {
   styleParams: {/* ... */},
@@ -274,7 +274,7 @@ _(arrayof [group](#group))_
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createLayout} from 'pro-gallery-layouter';
+import {createLayout} from 'pro-layouts';
 
 const getImageStyle = item => ({
   ...item.offset,

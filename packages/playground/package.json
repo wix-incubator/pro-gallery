@@ -9,7 +9,7 @@
     "css-animation": "1.5.0",
     "image-client-api": "^1.3130.0",
     "pro-gallery": "^1.0.4",
-    "pro-gallery-layouter": "^2.0.35",
+    "pro-layouts": "^1.0.0",
     "react": "^16.8.6",
     "react-color": "^2.17.3",
     "react-dom": "^16.8.6",

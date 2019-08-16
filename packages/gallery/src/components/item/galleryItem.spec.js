@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import { testImages } from '../../../__testsDrivers__/images-mock';
-import { Item } from 'pro-gallery-layouter';
+import { Item } from 'pro-layouts';
 import React from 'react';
 import GalleryItem from './galleryItem';
 import { expect } from 'chai';

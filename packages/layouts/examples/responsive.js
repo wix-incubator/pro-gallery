@@ -1,4 +1,4 @@
-import {Layouter} from 'pro-gallery-layouter';
+import {Layouter} from 'pro-layouts';
 
 //create random colored boxes
 function generateUUID() {
