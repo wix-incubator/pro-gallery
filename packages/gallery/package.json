@@ -74,7 +74,10 @@
     ]
   },
   "eslintConfig": {
-    "extends": "yoshi"
+    "extends": "yoshi",
+    "rules": {
+      "import/no-unresolved": "off"
+    }
   },
   "unpkg": true,
   "publishConfig": {
