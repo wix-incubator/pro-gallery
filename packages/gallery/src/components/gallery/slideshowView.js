@@ -10,6 +10,7 @@ import PlayIcon from '../../assets/images/react-svg/components/Play';
 import PauseIcon from '../../assets/images/react-svg/components/pause';
 import EVENTS from '../../utils/constants/events';
 import { GalleryComponent } from '../galleryComponent';
+import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
 
 utils.fixViewport('Gallery');
 
@@ -437,7 +438,10 @@ class SlideshowView extends GalleryComponent {
               width: thumbnailSize,
               height: thumbnailSize,
               margin: thumbnailSpacings,
-              backgroundImage: `url(${thumbnailItem.thumbnail_url.img})`,
+              backgroundImage: `url(${thumbnailItem.createUrl(
+                URL_SIZES.THUMBNAIL,
+                URL_TYPES.HIGH_RES,
+              )})`,
             };
             const thumbnailOffset = oneRow
               ? { left: thumbnailSize * idx + 2 * idx * thumbnailSpacings }

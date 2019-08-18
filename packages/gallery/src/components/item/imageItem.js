@@ -2,6 +2,7 @@ import React from 'react';
 import LOADING_MODE from '../../utils/constants/loadingMode';
 import { GalleryComponent } from '../galleryComponent';
 import { isSEOMode } from '../../utils/window/viewModeWrapper';
+import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
 
 export default class ImageItem extends GalleryComponent {
   componentDidMount() {
@@ -19,7 +20,7 @@ export default class ImageItem extends GalleryComponent {
       alt,
       displayed,
       imageDimensions,
-      resized_url,
+      createUrl,
       id,
       actions,
       settings,
@@ -72,7 +73,7 @@ export default class ImageItem extends GalleryComponent {
         className={'gallery-item-visible gallery-item gallery-item-preloaded'}
         aria-label={alt}
         alt={alt}
-        src={resized_url.seoLink}
+        src={createUrl(URL_SIZES.RESIZED, URL_TYPES.SEO)}
         loading="lazy"
         style={restOfDimensions}
         {...imageProps}
@@ -90,7 +91,7 @@ export default class ImageItem extends GalleryComponent {
         }
         role="img"
         aria-label={alt}
-        data-src={resized_url.img}
+        data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
         style={restOfDimensions}
         {...imageProps}
       />

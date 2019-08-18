@@ -3,12 +3,25 @@ import utils from '../../utils/index';
 import { Item } from 'pro-layouts';
 import _ from 'lodash';
 import RESIZE_METHODS from '../../constants/resizeMethods';
+import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
 
 class GalleryItem {
   constructor(config) {
     this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
     this.createdBy = config.createdBy;
+    this._cachedUrls = {};
+
+    this.resized_url = this.resized_url.bind(this);
+    this.pixel_url = this.pixel_url.bind(this);
+    this.thumbnail_url = this.thumbnail_url.bind(this);
+    this.square_url = this.square_url.bind(this);
+    this.full_url = this.full_url.bind(this);
+    this.sample_url = this.sample_url.bind(this);
+    this.preload_url = this.preload_url.bind(this);
+    this.download_url = this.download_url.bind(this);
+
+    this.createUrl = this.createUrl.bind(this);
 
     this.update(config);
   }
@@ -99,64 +112,46 @@ class GalleryItem {
   }
 
   renderProps(config) {
-    return _.merge(
-      {
-        className: 'image',
-        key: this.key,
-        idx: this.idx,
-        photoId: this.photoId,
-        id: this.id,
-        hash: this.id,
-        html: this.html,
-        type: this.type,
-        url: this.url,
-        alt: this.alt,
-        directLink: this.directLink,
-        linkUrl: this.linkUrl,
-        linkType: this.linkType,
-        linkOpenType: this.linkOpenType,
-        linkData: this.linkData,
-        title: this.title,
-        fileName: this.fileName,
-        description: this.description,
-        full_url: this.full_url,
-        download_url: this.download_url,
-        sample_url: this.sample_url,
-        preload_url: this.preload_url,
-        square_url: this.square_url,
-        pixel_url: this.pixel_url,
-        resized_url: this.resized_url,
-        thumbnail_url: this.thumbnail_url,
-        cubeImages: this.cubeImages,
-        cubeType: this.cubeType,
-        cubeRatio: this.cubeRatio,
-        transform: this.transform,
-        offset: this.offset,
-        style: _.merge(
-          {
-            bgColor: this.bgColor,
-            maxWidth: this.maxWidth,
-            maxHeight: this.maxHeight,
-            ratio: this.ratio,
-            orientation: this.orientation,
-          },
-          this.style,
-        ),
-        isDemo: this.isDemo,
-        videoUrl: this.videoUrl,
-        isExternalVideo: this.isExternalVideo,
-        scroll: config.scroll,
-        visible: config.visible,
-        styleParams: config.styleParams,
-        actions: config.actions,
-        currentIdx: config.currentIdx,
-        currentHover: config.currentHover,
-        customInfoRenderer: config.customInfoRenderer,
-        customHoverRenderer: config.customHoverRenderer,
+    return {
+      className: 'image',
+      key: this.key,
+      idx: this.idx,
+      photoId: this.photoId,
+      id: this.id,
+      hash: this.id,
+      html: this.html,
+      type: this.type,
+      url: this.url,
+      alt: this.alt,
+      directLink: this.directLink,
+      linkUrl: this.linkUrl,
+      linkType: this.linkType,
+      linkOpenType: this.linkOpenType,
+      linkData: this.linkData,
+      title: this.title,
+      fileName: this.fileName,
+      description: this.description,
+      createUrl: this.createUrl,
+      cubeImages: this.cubeImages,
+      cubeType: this.cubeType,
+      cubeRatio: this.cubeRatio,
+      transform: this.transform,
+      offset: this.offset,
+      style: {
+        bgColor: this.bgColor,
+        maxWidth: this.maxWidth,
+        maxHeight: this.maxHeight,
+        ratio: this.ratio,
+        orientation: this.orientation,
+        ...this.style,
       },
-      config,
-    );
+      isDemo: this.isDemo,
+      videoUrl: this.videoUrl,
+      isExternalVideo: this.isExternalVideo,
+      ...config,
+    };
   }
+
   getDataForShop() {
     const focalPoint = this.focalPoint;
     const metadata = this.metadata;
@@ -283,11 +278,27 @@ class GalleryItem {
 
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams) {
     const resizeUrl = (item, url, ...args) => {
-      let resizedUrl = url;
+      let resizedUrl;
       if (typeof this.resizeMediaUrl === 'function') {
-        resizedUrl = this.resizeMediaUrl(item, url, ...args);
+        try {
+          const str = JSON.stringify({ url, ...args });
+          if (!this._cachedUrls[str]) {
+            this._cachedUrls[str] = String(
+              this.resizeMediaUrl(item, url, ...args) || '',
+            );
+            console.log('Creating urls for item #' + this.idx, {
+              url,
+              ...args,
+            });
+          }
+          resizedUrl = this._cachedUrls[str];
+        } catch (e) {
+          resizedUrl = String(url);
+        }
+      } else {
+        resizedUrl = String(url);
       }
-      return String(resizedUrl || '');
+      return resizedUrl;
     };
 
     requiredWidth = Math.ceil(requiredWidth);
@@ -306,39 +317,44 @@ class GalleryItem {
       imgUrl = this.poster;
 
       if (utils.isExternalUrl(this.url)) {
-        urls.video = this.url;
+        urls[URL_TYPES.VIDEO] = () => this.url;
       } else {
-        urls.video = resizeUrl(
-          this,
-          this.url,
-          RESIZE_METHODS.VIDEO,
-          requiredWidth,
-          requiredHeight,
-        );
+        urls[URL_TYPES.VIDEO] = () =>
+          resizeUrl(
+            this,
+            this.url,
+            RESIZE_METHODS.VIDEO,
+            requiredWidth,
+            requiredHeight,
+          );
       }
     }
 
-    urls.img = resizeUrl(
-      this,
-      imgUrl,
-      resizeMethod,
-      requiredWidth,
-      requiredHeight,
-      sharpParams,
-      focalPoint,
-    );
+    urls[URL_TYPES.IMAGE] = () =>
+      resizeUrl(
+        this,
+        imgUrl,
+        resizeMethod,
+        requiredWidth,
+        requiredHeight,
+        sharpParams,
+        focalPoint,
+      );
 
-    urls.thumb = resizeUrl(
-      this,
-      imgUrl,
-      resizeMethod,
-      thumbSize,
-      (thumbSize * requiredHeight) / requiredWidth,
-      { ...sharpParams, quality: 30, blur: 30 },
-      focalPoint,
-    );
+    urls[URL_TYPES.PRELOAD] = () =>
+      resizeUrl(
+        this,
+        imgUrl,
+        resizeMethod,
+        thumbSize,
+        (thumbSize * requiredHeight) / requiredWidth,
+        { ...sharpParams, quality: 30, blur: 30 },
+        focalPoint,
+      );
 
-    urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
+    urls[URL_TYPES.SEO] = () => ({
+      img: () => urls.img().replace(/\.webp$/i, '.jpg'),
+    }); //SEO needs .jpg instead of .webp, replace does not mutate
 
     return urls;
   }
@@ -355,7 +371,19 @@ class GalleryItem {
     this.urls = {};
   }
 
-  get resized_url() {
+  createUrl(size, type) {
+    if (!URL_TYPES[type] || !URL_SIZES[size]) {
+      return '';
+    } else {
+      try {
+        return this[URL_SIZES[size] + '_url']()[URL_TYPES[type]]();
+      } catch (e) {
+        return '';
+      }
+    }
+  }
+
+  resized_url() {
     if (!this.urls.resized_url) {
       this.urls.resized_url = this.resizedUrl(
         this.cubeType,
@@ -367,7 +395,7 @@ class GalleryItem {
     return this.urls.resized_url;
   }
 
-  get pixel_url() {
+  pixel_url() {
     if (!this.urls.pixel_url) {
       this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, {
         quality: 5,
@@ -376,7 +404,7 @@ class GalleryItem {
     return this.urls.pixel_url;
   }
 
-  get thumbnail_url() {
+  thumbnail_url() {
     if (!this.urls.thumbnail_url) {
       this.urls.thumbnail_url = this.resizedUrl(
         RESIZE_METHODS.FIT,
@@ -388,7 +416,7 @@ class GalleryItem {
     return this.urls.thumbnail_url;
   }
 
-  get square_url() {
+  square_url() {
     if (!this.urls.square_url) {
       this.urls.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, {
         quality: 80,
@@ -397,7 +425,7 @@ class GalleryItem {
     return this.urls.square_url;
   }
 
-  get full_url() {
+  full_url() {
     if (!this.urls.full_url) {
       this.urls.full_url = this.resizedUrl(
         RESIZE_METHODS.FULL,
@@ -409,7 +437,7 @@ class GalleryItem {
     return this.urls.full_url;
   }
 
-  get sample_url() {
+  sample_url() {
     if (!this.urls.sample_url) {
       this.urls.sample_url = this.resizedUrl(
         RESIZE_METHODS.FIT,
@@ -421,19 +449,20 @@ class GalleryItem {
     return this.urls.sample_url;
   }
 
-  get preload_url() {
+  preload_url() {
     if (!this.urls.preload_url) {
       this.urls.preload_url = this.resized_url;
     }
     return this.urls.preload_url;
   }
 
-  get download_url() {
+  download_url() {
     if (!this.urls.download_url) {
       this.urls.download_url = utils.isStoreGallery()
         ? this.sample_url
         : this.full_url;
-      this.urls.download_url.img += `?dn=${this.fileName}`;
+      //TODO - add to function
+      // this.urls.download_url.img += `?dn=${this.fileName}`;
     }
     return this.urls.download_url;
   }

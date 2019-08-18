@@ -7,6 +7,7 @@ import window from '../../../utils/window/windowWrapper';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
 import EVENTS from '../../../utils/constants/events';
 import PLACEMENTS from '../../../utils/constants/placements';
+import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
 
 export default class Social extends GalleryComponent {
   constructor(props) {
@@ -85,7 +86,7 @@ export default class Social extends GalleryComponent {
   }
 
   getDownload() {
-    const { styleParams, isDemo, type, download_url, actions } = this.props;
+    const { styleParams, isDemo, type, createUrl, actions } = this.props;
     if (
       styleParams.allowDownload &&
       !utils.isiOS() &&
@@ -115,7 +116,9 @@ export default class Social extends GalleryComponent {
             : -1,
       };
       const downloadLink =
-        download_url.video || download_url.webm || download_url.img;
+        createUrl(URL_SIZES.DOWNLOAD, URL_TYPES.VIDEO) ||
+        createUrl(URL_SIZES.DOWNLOAD, URL_TYPES.HIGH_RES);
+
       const itemProps = {
         target: '_blank',
         href: downloadLink,

@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import VideoItem from './videoItem';
 import { expect } from 'chai';
 import utils from '../../../utils';
+import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
 
 describe('Video Item ', () => {
   let driver;
@@ -110,11 +111,13 @@ describe('Video Item ', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.selector('ReactPlayer').props().url).equal(
-      sampleItemViewProps.resized_url.video,
+      sampleItemViewProps.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO),
     );
     expect(
       driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
-    ).equal(sampleItemViewProps.resized_url.img);
+    ).equal(
+      sampleItemViewProps.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES),
+    );
     Object.assign(sampleItemViewProps, {
       videoUrl: 'https://www.youtube.com/watch?v=2J5GzHoKl1Q',
     });
@@ -124,7 +127,9 @@ describe('Video Item ', () => {
     );
     expect(
       driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
-    ).equal(sampleItemViewProps.resized_url.img);
+    ).equal(
+      sampleItemViewProps.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES),
+    );
   });
 
   it('video controls should appear if not hidePlay', () => {

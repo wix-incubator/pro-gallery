@@ -5,6 +5,7 @@ import window from '../../../utils/window/windowWrapper';
 import Player from '@vimeo/player';
 import { GalleryComponent } from '../../galleryComponent';
 import EVENTS from '../../../utils/constants/events';
+import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -77,7 +78,7 @@ class VideoItem extends GalleryComponent {
     }
     const url = this.props.videoUrl
       ? this.props.videoUrl
-      : this.props.resized_url.video;
+      : this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO);
     return (
       <ReactPlayer
         className={'gallery-item-visible video gallery-item'}
@@ -109,7 +110,10 @@ class VideoItem extends GalleryComponent {
             attributes: {
               muted: !this.props.styleParams.videoSound,
               preload: 'metadata',
-              poster: this.props.resized_url.img,
+              poster: this.props.createUrl(
+                URL_SIZES.RESIZED,
+                URL_TYPES.HIGH_RES,
+              ),
               style: videoDimensionsCss,
             },
           },
@@ -158,7 +162,7 @@ class VideoItem extends GalleryComponent {
           (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
           (this.props.loadingStatus.failed ? ' failed ' : '')
         }
-        src={this.props.resized_url.img}
+        src={this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
       />
     );
   }
@@ -237,7 +241,10 @@ class VideoItem extends GalleryComponent {
             utils.deviceHasMemoryIssues()
               ? {}
               : {
-                  backgroundImage: `url(${this.props.resized_url.thumb})`,
+                  backgroundImage: `url(${this.props.createUrl(
+                    URL_SIZES.RESIZED,
+                    URL_TYPES.LOW_RES,
+                  )})`,
                   ...restOfDimensions,
                 }
           }
@@ -252,7 +259,10 @@ class VideoItem extends GalleryComponent {
           data-hook="video_container-image-element"
           key={'video_container-' + this.props.id}
           style={{
-            backgroundImage: `url(${this.props.resized_url.img})`,
+            backgroundImage: `url(${this.props.createUrl(
+              URL_SIZES.RESIZED,
+              URL_TYPES.HIGH_RES,
+            )})`,
             ...restOfDimensions,
           }}
         >

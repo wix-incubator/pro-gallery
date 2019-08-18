@@ -19,6 +19,7 @@ import {
   GalleryProvider,
 } from '../../context/GalleryContext';
 import VideoScrollHelper from '../helpers/videoScrollHelper.js';
+import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -215,11 +216,11 @@ export class GalleryContainer extends React.Component {
 
         if (typeof item.preload_url === 'string') {
           this.preloadedItems[id].src = item.preload_url;
-        } else if (
-          typeof item.preload_url === 'object' &&
-          item.preload_url.thumb
-        ) {
-          this.preloadedItems[id].src = item.preload_url.thumb;
+        } else {
+          this.preloadedItems[id].src = item.createUrl(
+            URL_SIZES.PRELOAD,
+            URL_TYPES.LOW_RES,
+          );
         }
 
         if (typeof onload === 'function') {

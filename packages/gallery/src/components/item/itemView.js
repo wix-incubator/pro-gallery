@@ -420,7 +420,7 @@ class ItemView extends GalleryComponent {
       'style',
       'isDemo',
       'type',
-      'download_url',
+      'createUrl',
       'loveCount',
       'isLoved',
     ]);
@@ -498,7 +498,7 @@ class ItemView extends GalleryComponent {
       'id',
       'idx',
       'styleParams',
-      'resized_url',
+      'createUrl',
       'settings',
     ]);
     return (
@@ -548,7 +548,7 @@ class ItemView extends GalleryComponent {
       'id',
       'idx',
       'styleParams',
-      'resized_url',
+      'createUrl',
       'settings',
     ]);
     return (

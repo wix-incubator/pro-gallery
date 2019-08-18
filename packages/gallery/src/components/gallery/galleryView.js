@@ -125,16 +125,12 @@ class GalleryView extends GalleryComponent {
     const layout = this.props.galleryStructure.galleryItems.map((item, index) =>
       React.createElement(
         ItemContainer,
-        _.merge(
-          item.renderProps(
-            _.merge(
-              galleryConfig,
-              { ...itemsLoveData[item.id] },
-              { visible: item.isVisible },
-              { key: `ItemContainer-${item.id}-${index}` },
-            ),
-          ),
-        ),
+        item.renderProps({
+          ...galleryConfig,
+          ...itemsLoveData[item.id],
+          visible: item.isVisible,
+          key: `ItemContainer-${item.id}-${index}`,
+        }),
       ),
     );
 

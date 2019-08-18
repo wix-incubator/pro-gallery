@@ -73,9 +73,4 @@ class GalleryGroup {
   }
 }
 
-/*
- <img onLoad={() => this.setItemLoaded()} className={'image' + (this.state.loaded ? '' : '-preload')}
- src={this.props.resized_url}/>
- */
-
 export default GalleryGroup;

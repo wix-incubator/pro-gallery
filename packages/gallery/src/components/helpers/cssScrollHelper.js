@@ -2,6 +2,7 @@ import LOADING_MODE from '../../utils/constants/loadingMode';
 import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
+import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
 
 class CssScrollHelper {
   constructor() {
@@ -166,7 +167,7 @@ class CssScrollHelper {
   }
 
   calcScrollCssForItem({ galleryDomId, item, styleParams }) {
-    const { type, resized_url, idx } = item;
+    const { type, createUrl, idx } = item;
 
     let scrollCss = '';
     const createScrollSelectors = this.createScrollSelectorsFunction({
@@ -180,7 +181,10 @@ class CssScrollHelper {
       if (!window.isSSR && !item.isDimensionless) {
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.image-item>canvas`) +
-          `{opacity: 1; background-image: url(${resized_url.img})}`;
+          `{opacity: 1; background-image: url(${createUrl(
+            URL_SIZES.RESIZED,
+            URL_TYPES.HIGH_RES,
+          )})}`;
       }
 
       //add the blurry image
@@ -192,7 +196,10 @@ class CssScrollHelper {
       ) {
         scrollCss +=
           createScrollSelectors(this.lowResPadding(), `.image-item`) +
-          `{background-image: url(${resized_url.thumb})}`;
+          `{background-image: url(${createUrl(
+            URL_SIZES.RESIZED,
+            URL_TYPES.LOW_RES,
+          )})}`;
       }
     }
 
