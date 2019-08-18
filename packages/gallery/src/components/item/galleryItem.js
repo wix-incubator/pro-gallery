@@ -10,16 +10,6 @@ class GalleryItem {
     this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
     this.createdBy = config.createdBy;
-    this._cachedUrls = {};
-
-    this.resized_url = this.resized_url.bind(this);
-    this.pixel_url = this.pixel_url.bind(this);
-    this.thumbnail_url = this.thumbnail_url.bind(this);
-    this.square_url = this.square_url.bind(this);
-    this.full_url = this.full_url.bind(this);
-    this.sample_url = this.sample_url.bind(this);
-    this.preload_url = this.preload_url.bind(this);
-    this.download_url = this.download_url.bind(this);
 
     this.createUrl = this.createUrl.bind(this);
 
@@ -368,6 +358,7 @@ class GalleryItem {
     this.resizeWidth = Math.min(maxWidth, Math.ceil(this.width));
     this.resizeHeight = Math.min(maxHeight, Math.ceil(this.height));
 
+    this._cachedUrls = {};
     this.urls = {};
   }
 
