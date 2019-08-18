@@ -376,14 +376,14 @@ class GalleryItem {
       return '';
     } else {
       try {
-        return this[URL_SIZES[size] + '_url']()[URL_TYPES[type]]();
+        return this[URL_SIZES[size] + '_url'][URL_TYPES[type]]();
       } catch (e) {
         return '';
       }
     }
   }
 
-  resized_url() {
+  get resized_url() {
     if (!this.urls.resized_url) {
       this.urls.resized_url = this.resizedUrl(
         this.cubeType,
@@ -395,7 +395,7 @@ class GalleryItem {
     return this.urls.resized_url;
   }
 
-  pixel_url() {
+  get pixel_url() {
     if (!this.urls.pixel_url) {
       this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, {
         quality: 5,
@@ -404,7 +404,7 @@ class GalleryItem {
     return this.urls.pixel_url;
   }
 
-  thumbnail_url() {
+  get thumbnail_url() {
     if (!this.urls.thumbnail_url) {
       this.urls.thumbnail_url = this.resizedUrl(
         RESIZE_METHODS.FIT,
@@ -416,7 +416,7 @@ class GalleryItem {
     return this.urls.thumbnail_url;
   }
 
-  square_url() {
+  get square_url() {
     if (!this.urls.square_url) {
       this.urls.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, {
         quality: 80,
@@ -425,7 +425,7 @@ class GalleryItem {
     return this.urls.square_url;
   }
 
-  full_url() {
+  get full_url() {
     if (!this.urls.full_url) {
       this.urls.full_url = this.resizedUrl(
         RESIZE_METHODS.FULL,
@@ -437,7 +437,7 @@ class GalleryItem {
     return this.urls.full_url;
   }
 
-  sample_url() {
+  get sample_url() {
     if (!this.urls.sample_url) {
       this.urls.sample_url = this.resizedUrl(
         RESIZE_METHODS.FIT,
@@ -449,14 +449,14 @@ class GalleryItem {
     return this.urls.sample_url;
   }
 
-  preload_url() {
+  get preload_url() {
     if (!this.urls.preload_url) {
       this.urls.preload_url = this.resized_url;
     }
     return this.urls.preload_url;
   }
 
-  download_url() {
+  get download_url() {
     if (!this.urls.download_url) {
       this.urls.download_url = utils.isStoreGallery()
         ? this.sample_url
