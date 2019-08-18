@@ -1,5 +1,4 @@
-import React from 'react';
-import { use, spy, expect } from 'chai';
+import { use, expect } from 'chai';
 import spies from 'chai-spies';
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
 import { testImages } from '../../../../__testsDrivers__/images-mock';

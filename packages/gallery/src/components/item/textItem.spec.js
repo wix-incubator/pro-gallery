@@ -1,10 +1,6 @@
 import TextItem from './textItem.js';
-import { shallow, mount } from 'enzyme';
-import React from 'react';
-import utils from '../../utils';
-import { use, spy, expect } from 'chai';
+import { use, expect } from 'chai';
 import spies from 'chai-spies';
-import ItemView from './itemView.js';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver.js';
 import { testImages } from '../../../__testsDrivers__/images-mock';
 import sinon from 'sinon';

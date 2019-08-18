@@ -1,6 +1,5 @@
 import { viewModeWrapper } from '../../utils/window/viewModeWrapper';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
-import React from 'react';
 import SlideshowView from './slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -226,7 +225,6 @@ describe('Slideshow View', () => {
         .returns(false);
       viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
       driver.mount(SlideshowView, galleryViewProps);
-      const spy = sinon.spy(driver.get.props().actions, 'scrollToItem');
       driver.get.instance().nextItem(1, true);
       expect(driver.get.state('currentIdx')).to.equal(1);
       stubLast.returns(true);

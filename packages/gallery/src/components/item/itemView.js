@@ -216,7 +216,7 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  handleItemMouseDown(e) {
+  handleItemMouseDown() {
     //check for long press
     // if (utils.isMobile()) {
     //   clearTimeout(this.longPressTimer);
@@ -228,7 +228,7 @@ class ItemView extends GalleryComponent {
     return true; //make sure the default event behaviour continues
   }
 
-  handleItemMouseUp(e) {
+  handleItemMouseUp() {
     if (utils.isMobile() && this.longPressTimer) {
       clearTimeout(this.longPressTimer);
     }
@@ -879,15 +879,15 @@ class ItemView extends GalleryComponent {
 
   getItemWrapperClass() {
     const { styleParams, type } = this.props;
-    const classNames = ['gallery-item-wrapper', 'visible'];
+    const classes = ['gallery-item-wrapper', 'visible'];
 
     if (styleParams.cubeImages) {
-      classNames.push('cube-type-' + styleParams.cubeType);
+      classes.push('cube-type-' + styleParams.cubeType);
     }
     if (type === 'text') {
-      classNames.push('gallery-item-wrapper-text');
+      classes.push('gallery-item-wrapper-text');
     }
-    return classNames.join(' ');
+    return classes.join(' ');
   }
 
   getItemContainerTabIndex() {
@@ -967,11 +967,7 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    //
-  }
-
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     this.changeActiveElementIfNeeded(prevProps);
   }
 
@@ -1018,7 +1014,6 @@ class ItemView extends GalleryComponent {
           data-idx={idx}
           aria-label={this.getItemAriaLabel()}
           role="link" //left for accessibility
-          aria-level="0"
           data-hook="item-container"
           key={'item-container-' + id}
           style={this.getItemContainerStyles()}

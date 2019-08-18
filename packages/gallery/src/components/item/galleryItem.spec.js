@@ -1,12 +1,6 @@
-import { mount } from 'enzyme';
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import { testImages } from '../../../__testsDrivers__/images-mock';
-import { Item } from 'pro-layouts';
-import React from 'react';
 import GalleryItem from './galleryItem';
 import { expect } from 'chai';
-import sinon from 'sinon';
-import utils from '../../utils/index';
 
 describe('GalleryItem ', () => {
   let galleryItem;

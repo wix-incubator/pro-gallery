@@ -22,8 +22,11 @@ export class ItemsHelper {
     }
   }
 
-  static convertToGalleryItems(galleryStructure, itemConfig = {}, existingItems = []) {
-    let pointer = 0;
+  static convertToGalleryItems(
+    galleryStructure,
+    itemConfig = {},
+    existingItems = [],
+  ) {
     galleryStructure.galleryItems = [];
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
@@ -43,13 +46,12 @@ export class ItemsHelper {
           let newItem;
           if (existingItem && existingItem.id && existingItem.id === item.id) {
             newItem = existingItem;
-            newItem.update(_itemConfig)
+            newItem.update(_itemConfig);
           } else {
             newItem = new GalleryItem(_itemConfig);
           }
           groupItems[i] = newItem;
           galleryStructure.galleryItems[item.idx] = groupItems[i];
-          pointer++;
         }
         column.galleryGroups[g] = new GalleryGroup({
           scheme: group,

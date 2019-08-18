@@ -9,7 +9,7 @@ class GalleryItem {
     this.uniqueId = utils.generateUUID();
     this.isGalleryItem = true;
     this.createdBy = config.createdBy;
-    
+
     this.update(config);
   }
 
@@ -75,7 +75,6 @@ class GalleryItem {
     }
     this.resetUrls();
     this.updateSharpParams();
-
   }
 
   processScheme(scheme) {
@@ -282,13 +281,7 @@ class GalleryItem {
     };
   }
 
-  resizedUrl (
-      resizeMethod,
-      requiredWidth,
-      requiredHeight,
-      sharpParams,
-  ) {
-
+  resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams) {
     const resizeUrl = (item, url, ...args) => {
       let resizedUrl = url;
       if (typeof this.resizeMediaUrl === 'function') {
@@ -301,16 +294,15 @@ class GalleryItem {
     requiredHeight = Math.ceil(requiredHeight);
     const thumbSize = 250;
 
-    const focalPoint = resizeMethod === RESIZE_METHODS.FILL && this.isCropped && this.focalPoint;
+    const focalPoint =
+      resizeMethod === RESIZE_METHODS.FILL && this.isCropped && this.focalPoint;
 
     const urls = {};
     let imgUrl = this.url;
 
     if (this.isText) {
       return {};
-
     } else if (this.isVideo) {
-
       imgUrl = this.poster;
 
       if (utils.isExternalUrl(this.url)) {
@@ -322,7 +314,7 @@ class GalleryItem {
           RESIZE_METHODS.VIDEO,
           requiredWidth,
           requiredHeight,
-        )
+        );
       }
     }
 
@@ -349,9 +341,8 @@ class GalleryItem {
     urls.seoLink = urls.img.replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
 
     return urls;
-  };
+  }
   resetUrls() {
-
     const maxDimension = 500;
     const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
     const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
@@ -364,59 +355,84 @@ class GalleryItem {
     this.urls = {};
   }
 
-
   get resized_url() {
     if (!this.urls.resized_url) {
-      this.urls.resized_url = this.resizedUrl(this.cubeType, this.resizeWidth, this.resizeHeight, this.sharpParams);
+      this.urls.resized_url = this.resizedUrl(
+        this.cubeType,
+        this.resizeWidth,
+        this.resizeHeight,
+        this.sharpParams,
+      );
     }
     return this.urls.resized_url;
   }
-  
+
   get pixel_url() {
     if (!this.urls.pixel_url) {
-      this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, { quality: 5 });
+      this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, {
+        quality: 5,
+      });
     }
     return this.urls.pixel_url;
   }
-  
+
   get thumbnail_url() {
     if (!this.urls.thumbnail_url) {
-      this.urls.thumbnail_url = this.resizedUrl(RESIZE_METHODS.FIT, this.thumbnailWidth, this.thumbnailHeight, { quality: 30 });
+      this.urls.thumbnail_url = this.resizedUrl(
+        RESIZE_METHODS.FIT,
+        this.thumbnailWidth,
+        this.thumbnailHeight,
+        { quality: 30 },
+      );
     }
     return this.urls.thumbnail_url;
   }
-  
+
   get square_url() {
     if (!this.urls.square_url) {
-      this.urls.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, { quality: 80 });
+      this.urls.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, {
+        quality: 80,
+      });
     }
     return this.urls.square_url;
   }
-  
+
   get full_url() {
     if (!this.urls.full_url) {
-      this.urls.full_url = this.resizedUrl(RESIZE_METHODS.FULL, this.maxWidth, this.maxHeight, this.sharpParams);
+      this.urls.full_url = this.resizedUrl(
+        RESIZE_METHODS.FULL,
+        this.maxWidth,
+        this.maxHeight,
+        this.sharpParams,
+      );
     }
     return this.urls.full_url;
   }
-  
+
   get sample_url() {
     if (!this.urls.sample_url) {
-      this.urls.sample_url = this.resizedUrl(RESIZE_METHODS.FIT, 500, 500, this.sharpParams);
+      this.urls.sample_url = this.resizedUrl(
+        RESIZE_METHODS.FIT,
+        500,
+        500,
+        this.sharpParams,
+      );
     }
     return this.urls.sample_url;
   }
-  
+
   get preload_url() {
     if (!this.urls.preload_url) {
       this.urls.preload_url = this.resized_url;
     }
     return this.urls.preload_url;
   }
-  
+
   get download_url() {
     if (!this.urls.download_url) {
-      this.urls.download_url = utils.isStoreGallery() ? this.sample_url : this.full_url;
+      this.urls.download_url = utils.isStoreGallery()
+        ? this.sample_url
+        : this.full_url;
       this.urls.download_url.img += `?dn=${this.fileName}`;
     }
     return this.urls.download_url;
@@ -563,12 +579,14 @@ class GalleryItem {
     return (
       this.metadata.poster ||
       (this.metadata.customPoster && this.metadata.customPoster.url) ||
-      (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1].url : null)
-    )
+      (this.metadata.posters
+        ? this.metadata.posters[this.metadata.posters.length - 1].url
+        : null)
+    );
   }
 
   get qualities() {
-    return (this.metadata.qualities)
+    return this.metadata.qualities;
   }
 
   get isExternalVideo() {
@@ -781,9 +799,9 @@ class GalleryItem {
   }
 
   get linkText() {
-    if (this.metadata.link) {
-      return this.metadata.link.text || this.defaultLinkText;
-    }
+    return (
+      (this.metadata.link && this.metadata.link.text) || this.defaultLinkText
+    );
   }
 
   set linkText(value) {
@@ -794,9 +812,7 @@ class GalleryItem {
   }
 
   get linkTitle() {
-    if (this.metadata.link) {
-      return this.metadata.link.title;
-    }
+    return this.metadata.link && this.metadata.link.title;
   }
 
   set linkTitle(value) {
@@ -807,9 +823,7 @@ class GalleryItem {
   }
 
   get linkUrl() {
-    if (this.metadata.link) {
-      return this.metadata.link.url;
-    }
+    return this.metadata.link && this.metadata.link.url;
   }
 
   set linkUrl(value) {
@@ -824,7 +838,7 @@ class GalleryItem {
   }
 
   get linkTitleFromUrl() {
-    const regex = /[^\/]*\.\w+$/g;
+    const regex = /[^/]*\.\w+$/g;
     const regexRes = regex.exec(this.linkUrl);
     const match = regexRes && regexRes[0];
     return match && match.split('.')[0];

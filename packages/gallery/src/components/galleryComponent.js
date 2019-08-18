@@ -1,5 +1,5 @@
-import React from "react";
-import { GalleryContext } from "../context/GalleryContext.js";
+import React from 'react';
+import { GalleryContext } from '../context/GalleryContext.js';
 
 export class GalleryComponent extends React.Component {
   static contextType = GalleryContext;

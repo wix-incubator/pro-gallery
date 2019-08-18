@@ -150,6 +150,7 @@ class LoveButton extends GalleryComponent {
           data-hook="love-icon"
           className={this.buttonClasssName()}
           role="checkbox"
+          aria-checked={this.isLoved()}
           style={loveColor}
           tabIndex={-1}
         />

@@ -1,6 +1,5 @@
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver';
 import { testVideos } from '../../../../__testsDrivers__/images-mock';
-import React from 'react';
 import sinon from 'sinon';
 import VideoItem from './videoItem';
 import { expect } from 'chai';

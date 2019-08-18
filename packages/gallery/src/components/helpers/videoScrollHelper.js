@@ -54,7 +54,7 @@ class VideoScrollHelper {
         lastItemCount, //make sure this is the right way
         newItemCount,
       );
-      newItems.map(item => {
+      newItems.forEach(item => {
         if (item.type === 'video') {
           this.videoItems.push({ ...item, videoPlayRating: item.idx });
         }

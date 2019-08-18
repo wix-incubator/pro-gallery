@@ -25,27 +25,23 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
         : `@media only screen and (min-width: ${(lastWidth * 2 + width) /
             3}px) {`;
       const layoutWidth = width - styleParams.imageMargin * 2;
+      const getRelativeDimension = val =>
+        Math.round(10000 * (val / layoutWidth)) / 100;
       layout.items.forEach((item, i) => {
         const id = cssScrollHelper.getDomId(item);
         if (i < 50) {
           const style = getImageStyle(item);
-          const top = `top:${Math.round(10000 * (style.top / layoutWidth)) /
-            100}vw !important;`;
-          // const left = `left:${Math.round(10000 * (style.left / layoutWidth)) / 100}vw !important;`;
-          const width = `width:${Math.round(
-            10000 * (style.width / layoutWidth),
-          ) / 100}vw !important;`;
-          const height = `height:${Math.round(
-            10000 * (style.height / layoutWidth),
-          ) / 100}vw !important;`;
-          const leftPercent = `left:${Math.round(
-            10000 * (style.left / layoutWidth),
-          ) / 100}% !important;`;
-          const widthPercent = `width:${Math.round(
-            10000 * (style.width / layoutWidth),
-          ) / 100}% !important;`;
-          cssStr += `#${id} {${top}${leftPercent}${widthPercent}${height}}`;
-          cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${width}${height}}`;
+          const Tvw = `top:${getRelativeDimension(style.top)}vw !important;`;
+          const Wvw = `width:${getRelativeDimension(
+            style.width,
+          )}vw !important;`;
+          const Hvw = `height:${getRelativeDimension(
+            style.height,
+          )}vw !important;`;
+          const Lpc = `left:${getRelativeDimension(style.left)}% !important;`;
+          const Wpc = `width:${getRelativeDimension(style.width)}% !important;`;
+          cssStr += `#${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
+          cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
         } else {
           cssStr += `#${id}{display:none;}`;
         }

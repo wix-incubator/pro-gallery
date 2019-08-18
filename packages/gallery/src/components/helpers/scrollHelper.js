@@ -32,7 +32,7 @@ export function scrollToItemImp(scrollParams) {
       console.log('Scrolling to items #' + itemIdx);
     }
 
-    const item = _.find(items, item => item.idx === itemIdx);
+    const item = _.find(items, itm => itm.idx === itemIdx);
     pos = oneRow ? _.get(item, 'offset.left') : _.get(item, 'offset.top');
 
     if (utils.isVerbose()) {
@@ -169,7 +169,7 @@ function setHorizontalVisibility({
   padding,
   callback,
 }) {
-  const { offset, styleParams, style } = props;
+  const { offset, style } = props;
   const right = offset.left + style.width;
   callback({
     playHorizontally: isWithinPaddingHorizontally({
@@ -197,13 +197,7 @@ function setHorizontalVisibility({
 }
 
 function setInitialVisibility({ props, screenSize, padding, callback }) {
-  const {
-    scrollBase,
-    height,
-    width,
-    galleryHeight,
-    galleryWidth,
-  } = props.container;
+  const { scrollBase } = props.container;
   setVerticalVisibility({
     target: {
       scrollY: props.scroll.scrollY || 0,

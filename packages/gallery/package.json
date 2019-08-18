@@ -76,7 +76,8 @@
   "eslintConfig": {
     "extends": "yoshi",
     "rules": {
-      "import/no-unresolved": "off"
+      "import/no-unresolved": "off",
+      "default-case": "off"
     }
   },
   "unpkg": true,

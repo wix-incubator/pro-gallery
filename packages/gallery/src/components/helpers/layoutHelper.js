@@ -244,7 +244,8 @@ function getStyleByGalleryType(styles) {
 }
 function getStyleByLayout(styles) {
   //new layouts
-  let { galleryLayout, gallerySize, magicLayoutSeed } = styles;
+  let { galleryLayout } = styles;
+  const { gallerySize, magicLayoutSeed } = styles;
 
   const layouts = {
     collage: () => ({
@@ -859,7 +860,9 @@ function getTextBoxHeight(styleParams) {
     return 0;
   }
 
-  if (styleParams.calculateTextBoxHeightMode === CALCULATION_OPTIONS.AUTOMATIC) {
+  if (
+    styleParams.calculateTextBoxHeightMode === CALCULATION_OPTIONS.AUTOMATIC
+  ) {
     return getHeightByContent(styleParams);
   } else {
     return styleParams.textBoxHeight;

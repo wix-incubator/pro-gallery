@@ -16,18 +16,18 @@ export function getContainerStyle(styleParams) {
 }
 
 function boxShadow(styleParams) {
-  let boxShadow = {};
+  let _boxShadow = {};
   if (styleParams.itemEnableShadow) {
     const { itemShadowBlur, itemShadowDirection, itemShadowSize } = styleParams;
     const alpha =
       ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
     const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
     const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
-    boxShadow = {
+    _boxShadow = {
       boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`,
     };
   }
-  return boxShadow;
+  return _boxShadow;
 }
 
 export function getImageStyle(styleParams) {

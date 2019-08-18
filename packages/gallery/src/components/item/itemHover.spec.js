@@ -1,5 +1,4 @@
-import React from 'react';
-import { use, spy, expect } from 'chai';
+import { use, expect } from 'chai';
 import spies from 'chai-spies';
 import sinon from 'sinon';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
@@ -15,8 +14,8 @@ describe('ItemHover', () => {
   let sampleItemViewProps;
   let stub;
 
-  function itemHoverHasClass(driver, className) {
-    return expect(driver.find.hook('item-hover-1').hasClass(className));
+  function itemHoverHasClass(_driver, className) {
+    return expect(_driver.find.hook('item-hover-1').hasClass(className));
   }
 
   beforeEach(() => {

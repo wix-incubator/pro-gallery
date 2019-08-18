@@ -1,6 +1,5 @@
 import CustomButton from './customButton.js';
-import React from 'react';
-import { use, spy, expect } from 'chai';
+import { use, expect } from 'chai';
 import spies from 'chai-spies';
 import sinon from 'sinon';
 import utils from '../../../utils';

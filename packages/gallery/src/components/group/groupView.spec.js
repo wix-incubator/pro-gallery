@@ -1,8 +1,6 @@
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
-import React from 'react';
 import { expect } from 'chai';
 import GroupView from './groupView';
-import GalleryItem from '../item/galleryItem';
 
 describe('Group View ', () => {
   let galleryDriver;

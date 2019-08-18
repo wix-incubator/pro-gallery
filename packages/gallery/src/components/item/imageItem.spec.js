@@ -1,13 +1,7 @@
 import ImageItem from './imageItem.js';
-import { mount } from 'enzyme';
-import React from 'react';
-import utils from '../../utils';
-import { use, spy, expect } from 'chai';
-import spies from 'chai-spies';
-import ItemView from './itemView.js';
+import { expect } from 'chai';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver.js';
 import { testImages } from '../../../__testsDrivers__/images-mock';
-import sinon from 'sinon';
 
 describe('Image Item', () => {
   let galleryDriver, sampleItem, imageItemsProps;

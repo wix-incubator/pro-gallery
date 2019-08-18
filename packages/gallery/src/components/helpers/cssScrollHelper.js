@@ -103,7 +103,7 @@ class CssScrollHelper {
       .join(`\n`);
   }
 
-  shouldCalcScrollCss({ type }, styleParams) {
+  shouldCalcScrollCss({ type }) {
     if (type === 'video' || type === 'text') {
       return false;
     }
@@ -218,12 +218,7 @@ class CssScrollHelper {
     // console.count('pgScroll item created');
   }
 
-  createScrollAnimationsIfNeeded({
-    idx,
-    item,
-    styleParams,
-    createScrollSelectors,
-  }) {
+  createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
     const scrollAnimation = styleParams.scrollAnimation;
 
     if (utils.isSSR()) {

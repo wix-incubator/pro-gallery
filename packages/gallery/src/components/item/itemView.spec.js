@@ -1,13 +1,10 @@
 //Yonatan Hattav Jun21
 
-import VideoItem from './videos/videoItem.js';
 import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
 import CustomButton from './buttons/customButton.js';
 import ItemTitle from './texts/itemTitle.js';
-import { spy, expect, chai } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-import utils from '../../utils/index';
-import React from 'react';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import { testImages } from '../../../__testsDrivers__/images-mock';
 import ItemView from './itemView';
@@ -17,10 +14,10 @@ describe('Item View', () => {
   let driver;
   let sampleItemViewProps;
   let sampleItem;
-  let mockEvent;
+  // let mockEvent;
 
   beforeEach(() => {
-    mockEvent = new Event('mock');
+    // mockEvent = new Event('mock');
     driver = new GalleryDriver();
     sampleItem = testImages[0];
     sampleItemViewProps = driver.props.itemView(sampleItem);

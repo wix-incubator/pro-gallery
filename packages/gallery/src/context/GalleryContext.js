@@ -9,7 +9,11 @@ try {
 
 const GALLERY_CONTEXT_FIELDS = ['watermark'];
 
-const extractContextFields = fields => GALLERY_CONTEXT_FIELDS.reduce((obj, field) => obj[field] = fields[field], {});
+const extractContextFields = fields =>
+  GALLERY_CONTEXT_FIELDS.reduce(
+    (obj, field) => (obj[field] = fields[field]),
+    {},
+  );
 
 class GalleryProvider extends React.Component {
   constructor(props) {

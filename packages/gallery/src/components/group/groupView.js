@@ -24,10 +24,6 @@ class GroupView extends GalleryComponent {
   }
 
   render() {
-    const groupStyle = {
-      width: this.props.width,
-      height: this.props.totalHeight,
-    };
     return (
       <div key={`group_${this.props.idx}`} data-hook={'group-view'}>
         {this.createDom(true)}
