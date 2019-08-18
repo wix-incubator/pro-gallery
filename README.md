@@ -85,7 +85,7 @@ npm i -g lerna
 
 3. Install Dependencies:
 ```
-lerna run bootstrap --hoist
+lerna bootstrap --hoist
 ```
 
 4. Run the packages:
