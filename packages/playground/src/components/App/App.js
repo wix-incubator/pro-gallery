@@ -16,6 +16,8 @@ import GALLERY_EVENTS from 'pro-gallery/dist/src/utils/constants/events';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
+const initialItems = mixAndSlice(testItems, ITEMS_BATCH_SIZE);
+
 export function App() {
 
   const {setDimentions, styleParams, setItems, items, setGalleryReady} = useGalleryContext();
@@ -62,7 +64,7 @@ export function App() {
   }
 
   const getItems = () => {
-    return items || mixAndSlice(testItems, ITEMS_BATCH_SIZE);
+    return items || initialItems;
   }
 
   return (
