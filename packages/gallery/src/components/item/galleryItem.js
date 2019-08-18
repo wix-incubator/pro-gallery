@@ -3,7 +3,7 @@ import utils from '../../utils/index';
 import { Item } from 'pro-layouts';
 import _ from 'lodash';
 import RESIZE_METHODS from '../../constants/resizeMethods';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import { URL_TYPES } from '../../constants/urlTypes';
 
 class GalleryItem {
   constructor(config) {
@@ -271,15 +271,11 @@ class GalleryItem {
       let resizedUrl;
       if (typeof this.resizeMediaUrl === 'function') {
         try {
-          const str = JSON.stringify({ url, ...args });
+          const str = String(utils.hashCode(JSON.stringify({ url, ...args })));
           if (!this._cachedUrls[str]) {
             this._cachedUrls[str] = String(
               this.resizeMediaUrl(item, url, ...args) || '',
             );
-            console.log('Creating urls for item #' + this.idx, {
-              url,
-              ...args,
-            });
           }
           resizedUrl = this._cachedUrls[str];
         } catch (e) {
@@ -320,7 +316,7 @@ class GalleryItem {
       }
     }
 
-    urls[URL_TYPES.IMAGE] = () =>
+    urls[URL_TYPES.HIGH_RES] = () =>
       resizeUrl(
         this,
         imgUrl,
@@ -331,7 +327,7 @@ class GalleryItem {
         focalPoint,
       );
 
-    urls[URL_TYPES.PRELOAD] = () =>
+    urls[URL_TYPES.LOW_RES] = () =>
       resizeUrl(
         this,
         imgUrl,
@@ -343,7 +339,8 @@ class GalleryItem {
       );
 
     urls[URL_TYPES.SEO] = () => ({
-      img: () => urls.img().replace(/\.webp$/i, '.jpg'),
+      [URL_TYPES.HIGH_RES]: () =>
+        urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, '.jpg'),
     }); //SEO needs .jpg instead of .webp, replace does not mutate
 
     return urls;
@@ -363,14 +360,10 @@ class GalleryItem {
   }
 
   createUrl(size, type) {
-    if (!URL_TYPES[type] || !URL_SIZES[size]) {
+    try {
+      return this[size + '_url'][type]();
+    } catch (e) {
       return '';
-    } else {
-      try {
-        return this[URL_SIZES[size] + '_url'][URL_TYPES[type]]();
-      } catch (e) {
-        return '';
-      }
     }
   }
 
