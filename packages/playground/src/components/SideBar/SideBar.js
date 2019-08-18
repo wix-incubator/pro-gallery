@@ -86,7 +86,7 @@ function SideBar() {
         <CodePanel />
       </Collapse.Panel>
     </Collapse>
-    {conclusions.map(conclusion => <Alert message={conclusion} type="info"/>)}
+    {conclusions.map((conclusion, idx) => <Alert key={idx} message={conclusion} type="info"/>)}
     </>
   );
 }
