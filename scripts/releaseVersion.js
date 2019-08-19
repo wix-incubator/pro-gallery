@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const {spawn, execSync} = require('child_process');
 const chalk = require('chalk');
-const semver = require('semver');
+const prompt = require('prompt');
 const {
     get,
     memoize
@@ -47,18 +47,36 @@ function getLatestCommit() {
 }
 
 function editChangelogAndUpdateVersion(bump) {
-    var editor = process.env.EDITOR || 'vim';
+    var editor = process.env.EDITOR || 'code';
     var child = spawn(editor, [CHANGELOG], {
         stdio: 'inherit'
     });
     
-    child.on('exit', function (e, code) {
-        log(`Saved ${CHANGELOG}, releasing new version`);
-        const bumpCommand = `lerna version ${bump} --yes --no-push`;
-        return execSync(`${bumpCommand}`, {
-            stdio: 'pipe'
-        });
+    prompt.start();
+    var property = {
+        name: 'yesno',
+        message: 'Do you want to release a new version? (y/n)',
+        validator: /y[es]*|n[o]?/,
+        warning: 'Must respond yes or no',
+        default: 'no'
+    };
+    prompt.get(property, function(err, result) {                
+        if(result === 'no'){
+            process.exit(0);
+        } else {
+            // child.on('exit', function (e, code) {
+            execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
+                stdio: 'pipe'
+            });
+            log(`Saved ${CHANGELOG}, releasing new version`);
+            const bumpCommand = `lerna version ${bump} --yes --no-push`;
+            execSync(`${bumpCommand}`, {
+                stdio: 'pipe'
+            });
+            // });
+        }
     });
+
 }
 
 function getBumpedVersion(version, bump) {
@@ -138,3 +156,4 @@ function run() {
 }
 
 run();
+
