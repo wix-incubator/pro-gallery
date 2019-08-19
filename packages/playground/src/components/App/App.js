@@ -17,10 +17,11 @@ import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
 const initialItems = mixAndSlice(testItems, ITEMS_BATCH_SIZE);
+var galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, setGalleryReady} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
   const [fullscreenIdx, setFullscreenIdx] = useState(-1);
 
@@ -41,10 +42,16 @@ export function App() {
     };
   }, [setDimentions, showSide]);
 
+  const setGalleryReady = () => {
+    window.dispatchEvent(galleryReadyEvent);
+  }
+
   const eventListener = (eventName, eventData) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED: 
-        setGalleryReady(true);
+      case GALLERY_EVENTS.GALLERY_CHANGE: 
+        console.log({eventName, eventData});
+        setGalleryReady();
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS: 
         setItems(getItems().concat(mixAndSlice(testItems, ITEMS_BATCH_SIZE)));

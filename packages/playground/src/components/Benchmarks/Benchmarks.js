@@ -17,7 +17,7 @@ import { testImages as images } from "../App/images";
 import { mixAndSlice } from "../../utils/utils";
 
 function Benchmarks() {
-  const { styleParams, setItems, galleryReady, setGalleryReady } = useGalleryContext();
+  const { styleParams, setItems } = useGalleryContext();
 
   const [numberOfRuns, setNumberOfRuns] = React.useState(10);
   const [numberOfImages, setNumberOfImages] = React.useState(50);
@@ -78,39 +78,37 @@ function Benchmarks() {
     return duration;
   };
 
-  const createGalleries = (layouts) => {
+  const createGalleries = () => {
 
-    return new Promise((resolve, reject) => {
-      
-      const reCreateGalleryIfPossible = () => {
-        if (galleryReady === true) {
-          setItems(mixAndSlice(images, numberOfImages));
-          setGalleryReady(false);
-          return true;
+    return new Promise((resolve) => {
+      const durations = [];
+      let endTime, startTime;
+      let runNumber = 0;
+      let items;
+
+      const endRun = () => {
+        endTime = Date.now();
+        durations[runNumber] = endTime - startTime;
+        runNumber++;
+        if (runNumber > numberOfRuns) {
+          window.removeEventListener('galleryReady', endRun);
+          const totalDuration = durations.reduce((sum, duration) => duration + sum, 0);
+          resolve(totalDuration);
         } else {
-          return false;
+          setStatus(`Created ${runNumber} Galleries`)
+          window.setTimeout(startRun, 50);
         }
       }
 
-      let runs = numberOfRuns;
-      const startTime = Date.now();
+      const startRun = () => {
+        items = mixAndSlice(images, numberOfImages)
+        startTime = Date.now();
+        setItems(items);
+      }
 
-      const interval = setInterval(() => {
-        if (runs > 0) {
-          const success = reCreateGalleryIfPossible();
-          if (success) {
-            runs--;
-            setStatus(`Created ${numberOfRuns - runs} Galleries`)
-          }
-        } else if (runs <= 0) {
-          clearInterval(interval);
-          const duration = Date.now() - startTime;
-          resolve(duration)
-        }
-      }, 10);
-
-
-
+      window.addEventListener('galleryReady', endRun)
+    
+      startRun();
     });
   }
 
