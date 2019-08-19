@@ -757,20 +757,14 @@ class ItemView extends GalleryComponent {
 
   getItemContainerStyles() {
     const { styleParams, style, transform } = this.props;
-    const wrapperWidth = style.width;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
+    if (utils.isSSR()) {
+      return { ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
+    }
+
     const itemStyles = {
-      width: wrapperWidth,
-      margin: styleParams.imageMargin + 'px',
-      position: style.position,
-      top: style.top,
-      left: style.left,
-      right: style.right,
-      bottom: style.bottom,
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
-    };
-    Object.assign(itemStyles, {
       position: 'absolute',
       top: this.props.offset.top,
       left: this.props.offset.left,
@@ -779,9 +773,13 @@ class ItemView extends GalleryComponent {
       width: style.width,
       height: style.height + (styleParams.externalInfoHeight || 0),
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
-    });
+    };
 
-    const styles = _.merge(itemStyles, transform, containerStyleByStyleParams);
+    const styles = {
+      ...itemStyles,
+      ...transform,
+      ...containerStyleByStyleParams,
+    };
 
     return styles;
   }
