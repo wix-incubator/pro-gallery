@@ -71,7 +71,9 @@ function editChangelogAndUpdateVersion(bump) {
         default: 'no'
     };
     prompt.get(property, function (err, result) {
-        if (result === 'yes') {
+        console.log(result);
+
+        if (result.yesno === 'yes' || result.yesno === 'y') {
             // child.on('exit', function (e, code) {
             execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
                 stdio: 'pipe'
