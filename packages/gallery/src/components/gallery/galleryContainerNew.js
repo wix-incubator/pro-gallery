@@ -90,6 +90,15 @@ export class GalleryContainer extends React.Component {
       } catch (e) {
         //todo - report to sentry
         this.initialGalleryState = {};
+        //hydrate phase did not happen - do it all over again
+        try {
+          const galleryState = this.reCreateGalleryExpensively(props);
+          if (Object.keys(galleryState).length > 0) {
+            this.initialGalleryState = galleryState;
+          }
+        } catch (e) {
+          //
+        }
       }
     }
 
@@ -100,23 +109,10 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    // this.getMoreItemsIfNeeded(0);
     this.loadItemsDimensionsIfNeeded();
-    try {
-      if (Object.keys(this.initialGalleryState || {}).length === 0) {
-        //hydrate phase did not happen - do it client side
-        const galleryState = this.reCreateGalleryExpensively(this.props);
-        if (Object.keys(galleryState).length > 0) {
-          this.setState(galleryState, () => {
-            this.handleNewGalleryStructure();
-            this.eventsListener(EVENTS.APP_LOADED, {});
-          });
-        } else {
-          this.eventsListener(EVENTS.APP_LOADED, {});
-        }
-      }
-    } catch (e) {}
-  }
+    this.handleNewGalleryStructure();
+    this.eventsListener(EVENTS.APP_LOADED, {});
+}
 
   componentWillReceiveProps(nextProps) {
     const reCreateGallery = () => {
@@ -139,9 +135,11 @@ export class GalleryContainer extends React.Component {
 
     let hasPropsChanged = true;
     try {
+      const currentSignificatProps = (getSignificantProps(this.props));
+      const nextSignificatProps = (getSignificantProps(nextProps));
       hasPropsChanged =
-        JSON.stringify(getSignificantProps(this.props)) !==
-        JSON.stringify(getSignificantProps(nextProps));
+        JSON.stringify(currentSignificatProps) !==
+        JSON.stringify(nextSignificatProps);
     } catch (e) {
       console.error('Cannot compare props', e);
     }
