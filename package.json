@@ -8,6 +8,7 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
+    "release": "node scripts/releaseVersion",
     "publish": "node scripts/publishPackages",
     "deploy": "npm run deploy --prefix packages/playground"
   },
