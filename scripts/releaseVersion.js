@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
-const {spawn, execSync} = require('child_process');
+const {
+    spawn,
+    execSync
+} = require('child_process');
 const chalk = require('chalk');
 const prompt = require('prompt');
 const {
@@ -12,6 +15,13 @@ const BUMP_TYPES = {
     PATCH: 'patch',
     MINOR: 'minor',
     MAJOR: 'major',
+};
+const PROJECTS = {
+    MAIN: 'main',
+    GALLERY: 'gallery',
+    LAYOUTS: 'layouts',
+    FULLSCREEN: 'fullscreen',
+    PLAYGROUND: 'playground',
 };
 const CHANGELOG = 'changelog.md';
 
@@ -51,19 +61,17 @@ function editChangelogAndUpdateVersion(bump) {
     var child = spawn(editor, [CHANGELOG], {
         stdio: 'inherit'
     });
-    
+
     prompt.start();
     var property = {
         name: 'yesno',
-        message: 'Do you want to release a new version? (y/n)',
+        message: 'Do you want to release a new version? (yN)',
         validator: /y[es]*|n[o]?/,
         warning: 'Must respond yes or no',
         default: 'no'
     };
-    prompt.get(property, function(err, result) {                
-        if(result === 'no'){
-            process.exit(0);
-        } else {
+    prompt.get(property, function (err, result) {
+        if (result === 'yes') {
             // child.on('exit', function (e, code) {
             execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
                 stdio: 'pipe'
@@ -74,6 +82,9 @@ function editChangelogAndUpdateVersion(bump) {
                 stdio: 'pipe'
             });
             // });
+        } else {
+            fail('not releasing by user request');
+            process.exit(0);
         }
     });
 
@@ -100,9 +111,38 @@ function writeToChangelog(str) {
     execSync(writeCommand);
 }
 
+function getDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var today = dd + '/' + mm + '/' + yyyy;
+    return today;
+}
+
 function formatForChangelog(version, commits) {
-    const versionStr = `##${version}`;
-    const commitsStr = String(commits).split(`\n`).filter(msg => msg.trim().length > 0).map(msg => ' - ' + msg).join(`\n`);
+
+    const versionStr = `## v${version} (${getDate()})`;
+    commits = String(commits).split(`\n`).filter(msg => msg.trim().length > 0);
+    const commitsByProject = commits.reduce((obj, commit) => {
+        const matchedProject = (commit.match(/\[.*\]/) || [''])[0].toLowerCase().replace(']', '').replace('[', '');
+        const project = PROJECTS[matchedProject.toUpperCase()] || 'other';
+        if (!obj[project]) {
+            obj[project] = '';
+        }
+        obj[project] += ' - ' + commit.substr(commit.indexOf(':') + 1) + `\n`;
+        return obj;
+    }, {});
+    let commitsStr = Object.entries(commitsByProject).map(([project, itsCommits]) => `\n#### ${project.toUpperCase()}\n${itsCommits}`).join(``);
+
+    // let commitsStr = String(commits).split(`\n`).filter(msg => msg.trim().length > 0).map(msg => ' - ' + msg).join(`\n`);
     return `${versionStr}\n ${commitsStr}`;
 }
 
@@ -117,7 +157,7 @@ function getVersionBump() {
 }
 
 function fail(message) {
-    console.log(chalk.red('Cannot publish new version, ' + message));
+    console.log(chalk.red('Not publishing new version, ' + message));
 }
 
 function log(message) {
@@ -156,4 +196,3 @@ function run() {
 }
 
 run();
-
