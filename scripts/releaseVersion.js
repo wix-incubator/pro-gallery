@@ -113,7 +113,7 @@ function getFlags() {
 function getVersionBump() {
     const flags = getFlags();
     flags.filter(flag => (!!BUMP_TYPES[flag.toUpperCase()]));
-    return flags[0] || false;
+    return flags[0] || BUMP_TYPES.PATCH;
 }
 
 function fail(message) {
@@ -136,7 +136,7 @@ function run() {
     }
     const bump = getVersionBump();
     if (!bump) {
-        fail('no bump argument specified');
+        fail('illeagal bump argument specified');
         return;
     } else {
         log(`Bumping a ${bump} version`);
