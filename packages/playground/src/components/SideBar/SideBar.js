@@ -7,6 +7,7 @@ import { Benchmarks } from "../Benchmarks";
 import { Collapse, Divider } from "antd";
 import {SECTIONS} from '../../utils/settingsManager';
 import { Alert } from 'antd';
+import s from './SideBar.module.scss';
 
 function SideBar() {
   const {
@@ -60,7 +61,8 @@ function SideBar() {
 
   return (
     <>
-    <Collapse defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}}>
+    <h3 className={s.title}>Gallery Settings</h3>
+    <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}}>
       <Collapse.Panel header="Layout" key="1">
         <LayoutPicker selectedLayout={preset} onSelectLayout={setPreset} />
         <Divider />
@@ -79,14 +81,19 @@ function SideBar() {
           />
         </Collapse.Panel>
       ))}
+    </Collapse>
+    <h3 className={s.title}>Playground Gizmos</h3>
+    <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}}>
       <Collapse.Panel header="Benchmarks" key="13">
         <Benchmarks />
       </Collapse.Panel>
       <Collapse.Panel header="Code" key="14">
         <CodePanel />
       </Collapse.Panel>
+      <Collapse.Panel header="ToDos" key="15">
+        {conclusions.map((conclusion, idx) => <Alert key={idx} message={conclusion} type="info"/>)}
+      </Collapse.Panel>
     </Collapse>
-    {conclusions.map((conclusion, idx) => <Alert key={idx} message={conclusion} type="info"/>)}
     </>
   );
 }
