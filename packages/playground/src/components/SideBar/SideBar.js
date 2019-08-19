@@ -1,18 +1,18 @@
 import React from "react";
-import { LayoutPicker } from "../LayoutPicker";
+// import { LayoutPicker } from "../LayoutPicker";
 import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
-import { Collapse, Divider } from "antd";
+import { Collapse } from "antd";
 import { SUB_SECTIONS, SECTIONS } from '../../utils/settingsManager';
 import { Alert } from 'antd';
 import s from './SideBar.module.scss';
 
 function SideBar() {
   const {
-    preset,
-    setPreset,
+    // preset,
+    // setPreset,
     setStyleParams,
     styleParams,
   } = useGalleryContext();

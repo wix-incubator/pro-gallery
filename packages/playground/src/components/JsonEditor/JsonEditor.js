@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Icon, Collapse, Switch, Radio, Input, Slider, Form, Checkbox, InputNumber, Row, Col, Button, Alert, Divider} from 'antd';
+import {Menu, Icon, Collapse, Switch, Input, Slider,, InputNumber, Row, Col, Button, Divider} from 'antd';
 import {INPUT_TYPES, settingsManager} from '../../utils/settingsManager';
 import ColorPicker from '../ColorPicker/ColorPicker';
 
