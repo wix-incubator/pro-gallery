@@ -96,7 +96,7 @@ export class GalleryContainer extends React.Component {
           if (Object.keys(galleryState).length > 0) {
             this.initialGalleryState = galleryState;
           }
-        } catch (e) {
+        } catch (_e) {
           //
         }
       }
@@ -112,7 +112,7 @@ export class GalleryContainer extends React.Component {
     this.loadItemsDimensionsIfNeeded();
     this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
-}
+  }
 
   componentWillReceiveProps(nextProps) {
     const reCreateGallery = () => {
@@ -135,8 +135,8 @@ export class GalleryContainer extends React.Component {
 
     let hasPropsChanged = true;
     try {
-      const currentSignificatProps = (getSignificantProps(this.props));
-      const nextSignificatProps = (getSignificantProps(nextProps));
+      const currentSignificatProps = getSignificantProps(this.props);
+      const nextSignificatProps = getSignificantProps(nextProps);
       hasPropsChanged =
         JSON.stringify(currentSignificatProps) !==
         JSON.stringify(nextSignificatProps);
