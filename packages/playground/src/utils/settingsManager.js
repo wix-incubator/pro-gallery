@@ -16,13 +16,10 @@ export const SECTIONS = {
   DESIGN: "Design",
   ADVANCED: "Advanced",
   EXPAND_MODE: "Expand Mode",
+  STORE: "Art Store",
 };
 
 export const SUB_SECTIONS = {
-  LAYOUT: {
-  },
-  SETTINGS: {
-  },
   DESIGN: {
     OVERLAY_AND_ICONS: "Overlay & Icons",
     TEXTS: "Texts",
@@ -32,7 +29,6 @@ export const SUB_SECTIONS = {
     EXPAND_MODE: "Expand Mode",
     ADVANCED: "Advanced",
   },
-  ADVANCED: {}
 };
 
 const showColorOverlay = (sp, context) => {
@@ -95,7 +91,7 @@ const canUseWatermark = (sp) => isStore(sp) && sp.canUseWatermark; // mediaUploa
 
 export const settingsManager = {
   isStore: {
-    section: SECTIONS.LAYOUT,
+    section: SECTIONS.STORE,
     title: 'Is store',
     description: "",
     type: INPUT_TYPES.BOOLEAN,
@@ -103,7 +99,7 @@ export const settingsManager = {
     isRelevant: () => true,
   },
   showAddToCartSection: {
-    section: SECTIONS.LAYOUT,
+    section: SECTIONS.STORE,
     title: 'show Add To Cart Section',
     description: "",
     type: INPUT_TYPES.BOOLEAN,
@@ -111,7 +107,7 @@ export const settingsManager = {
     isRelevant: sp => isStore(sp),
   },
   canUseWatermark: {
-    section: SECTIONS.LAYOUT,
+    section: SECTIONS.STORE,
     title: 'can Use Watermark',
     description: "",
     type: INPUT_TYPES.BOOLEAN,
@@ -120,6 +116,29 @@ export const settingsManager = {
   },
 
   //----------| LAYOUT SECTION |---------//
+  galleryLayout: {
+    section: SECTIONS.LAYOUT,
+    title: 'Gallery Layout',
+    description: "",
+    type: INPUT_TYPES.OPTIONS,
+    options: [
+      { value: Consts.layout.EMPTY, title: "EMPTY" },
+      { value: Consts.layout.COLLAGE, title: "COLLAGE" },
+      { value: Consts.layout.MASONRY, title: "MASONRY" },
+      { value: Consts.layout.GRID, title: "GRID" },
+      { value: Consts.layout.THUMBNAIL, title: "THUMBNAIL" },
+      { value: Consts.layout.SLIDER, title: "SLIDER" },
+      { value: Consts.layout.SLIDESHOW, title: "SLIDESHOW" },
+      { value: Consts.layout.PANORAMA, title: "PANORAMA" },
+      { value: Consts.layout.COLUMN, title: "COLUMN" },
+      { value: Consts.layout.MAGIC, title: "MAGIC" },
+      { value: Consts.layout.FULLSIZE, title: "FULLSIZE" },
+      { value: Consts.layout.BRICKS, title: "BRICKS" },
+      { value: Consts.layout.MIX, title: "MIX" },
+      { value: Consts.layout.ALTERNATE, title: "ALTERNATE" },
+    ],
+    isRelevant: () => true
+  },
   slideshowLoop: {
     section: SECTIONS.LAYOUT,
     title: 'Loop Images',
@@ -497,7 +516,7 @@ export const settingsManager = {
   //------------------------ Design ----------------------//
   itemOpacity: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Color Overlay',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -506,7 +525,7 @@ export const settingsManager = {
   },
   itemIconColorSlideshow: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Icon color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -515,7 +534,7 @@ export const settingsManager = {
   },
   itemIconColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Icon color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -524,7 +543,7 @@ export const settingsManager = {
   },
   arrowsSize: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Arrows Size',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -534,7 +553,7 @@ export const settingsManager = {
   },
   arrowsColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Arrows Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -543,7 +562,7 @@ export const settingsManager = {
   },
   arrowsPosition: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Navigation arrows position',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -555,7 +574,7 @@ export const settingsManager = {
   },
   overlayAnimation:  {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Choose an effect when hovering over an image',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -570,7 +589,7 @@ export const settingsManager = {
   },
   imageHoverAnimation: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
+    subSection: SUB_SECTIONS.DESIGN.OVERLAY_AND_ICONS,
     title: 'Choose an effect when hovering over an image',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -588,7 +607,7 @@ export const settingsManager = {
   },
   itemFont: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Title Font',
     description: "",
     type: INPUT_TYPES.FONT_PICKER,
@@ -597,7 +616,7 @@ export const settingsManager = {
   },
   itemFontColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Title Font Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -606,7 +625,7 @@ export const settingsManager = {
   },
   itemFontSlideshow: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Title Font',
     description: "",
     type: INPUT_TYPES.FONT_PICKER,
@@ -615,7 +634,7 @@ export const settingsManager = {
   },
   itemFontColorSlideshow: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Title Font Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -624,7 +643,7 @@ export const settingsManager = {
   },
   itemDescriptionFont: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Description Font',
     description: "",
     type: INPUT_TYPES.FONT_PICKER,
@@ -633,7 +652,7 @@ export const settingsManager = {
   },
   itemDescriptionFontColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Description Font Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -642,7 +661,7 @@ export const settingsManager = {
   },
   itemDescriptionFontSlideshow: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Description Font',
     description: "",
     type: INPUT_TYPES.Font,
@@ -650,7 +669,7 @@ export const settingsManager = {
   },
   itemDescriptionFontColorSlideshow: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Description Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -659,7 +678,7 @@ export const settingsManager = {
   },
   galleryHorizontalAlign: { // ALSO sets galleryTextAlign --- 
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text Alignment',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -673,7 +692,7 @@ export const settingsManager = {
   },
   galleryVerticalAlign: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Vertical Text Alignment',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -686,7 +705,7 @@ export const settingsManager = {
   },
   textBoxFillColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Fill Color & Opacity',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -695,7 +714,7 @@ export const settingsManager = {
   },
   calculateTextBoxHeightMode: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Calculate text box height:',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -707,7 +726,7 @@ export const settingsManager = {
   },
   textBoxHeight: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text Box Height',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -718,7 +737,7 @@ export const settingsManager = {
   },
   textImageSpace: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text Space From Image',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -729,7 +748,7 @@ export const settingsManager = {
   },
   textBoxBorderRadius: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text box corner radius',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -740,7 +759,7 @@ export const settingsManager = {
   },
   textBoxBorderWidth: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text box border width',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -751,7 +770,7 @@ export const settingsManager = {
   },
   textBoxBorderColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text box border color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -760,7 +779,7 @@ export const settingsManager = {
   },
   textsVerticalPadding: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text vertical padding',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -771,7 +790,7 @@ export const settingsManager = {
   },
   textsHorizontalPadding: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Text horizontal padding',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -782,7 +801,7 @@ export const settingsManager = {
   },
   titleDescriptionSpace: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.TEXTS,
+    subSection: SUB_SECTIONS.DESIGN.TEXTS,
     title: 'Title Description Space',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -793,7 +812,7 @@ export const settingsManager = {
   },
   useCustomButton: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Buy Now Button',
     description: "",
     type: INPUT_TYPES.BOOLEAN,
@@ -801,7 +820,7 @@ export const settingsManager = {
   },
   customButtonText: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Button Text',
     description: "",
     type: INPUT_TYPES.TEXT,
@@ -809,7 +828,7 @@ export const settingsManager = {
   },
   customButtonFontForHover: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Button Font Hover',
     description: "",
     type: INPUT_TYPES.FONT_PICKER,
@@ -818,7 +837,7 @@ export const settingsManager = {
   },
   customButtonFontColorForHover: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Button Font Color Hover',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -827,7 +846,7 @@ export const settingsManager = {
   },
   customButtonFont: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Button Font',
     description: "",
     type: INPUT_TYPES.FONT_PICKER,
@@ -838,7 +857,7 @@ export const settingsManager = {
   },
   customButtonFontColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Button Font Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -847,7 +866,7 @@ export const settingsManager = {
   },
   customButtonColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Button Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -856,7 +875,7 @@ export const settingsManager = {
   },
   customButtonBorderWidth: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Border Width',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -866,7 +885,7 @@ export const settingsManager = {
   },
   customButtonBorderColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Border Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -875,7 +894,7 @@ export const settingsManager = {
   },
   customButtonBorderRadius: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Border Radius',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -885,7 +904,7 @@ export const settingsManager = {
   },
   loadMoreButtonText: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'load more Button Text',
     description: "",
     type: INPUT_TYPES.TEXT,
@@ -893,7 +912,7 @@ export const settingsManager = {
   },
   loadMoreButtonFont: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'load more Button Font',
     description: "",
     type: INPUT_TYPES.FONT_PICKER,
@@ -902,7 +921,7 @@ export const settingsManager = {
   },
   loadMoreButtonFontColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'load more Button Font Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -911,7 +930,7 @@ export const settingsManager = {
   },
   loadMoreButtonColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'Button Color & Opacity',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -920,7 +939,7 @@ export const settingsManager = {
   },
   loadMoreButtonBorderWidth: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'load more Border Width',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -930,7 +949,7 @@ export const settingsManager = {
   },
   loadMoreButtonBorderColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'load more Border Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -939,7 +958,7 @@ export const settingsManager = {
   }, 
   loadMoreButtonBorderRadius: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.BUTTONS,
+    subSection: SUB_SECTIONS.DESIGN.BUTTONS,
     title: 'load More Border Radius',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -949,7 +968,7 @@ export const settingsManager = {
   },
   imageInfoType: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'Choose info layout',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -962,7 +981,7 @@ export const settingsManager = {
   },
   itemBorderWidth: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'item Border Width',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -973,7 +992,7 @@ export const settingsManager = {
   },
   itemBorderColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'item Border Color & Opacity',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -982,7 +1001,7 @@ export const settingsManager = {
   },
   itemBorderRadius: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'item Border Radius',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -993,7 +1012,7 @@ export const settingsManager = {
   },
   itemEnableShadow: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'Shadow',
     description: "",
     type: INPUT_TYPES.BOOLEAN,
@@ -1001,7 +1020,7 @@ export const settingsManager = {
   },
   itemShadowOpacityAndColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'Shadow Opacity & Color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -1010,7 +1029,7 @@ export const settingsManager = {
   },
   itemShadowBlur: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'Shadow Blur',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -1021,7 +1040,7 @@ export const settingsManager = {
   },
   itemShadowDirection: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'Shadow Direction',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -1032,7 +1051,7 @@ export const settingsManager = {
   },
   itemShadowSize: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'Shadow Size',
     description: "",
     type: INPUT_TYPES.NUMBER,
@@ -1043,7 +1062,7 @@ export const settingsManager = {
   },
   imageLoadingMode: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'What shows while image is loading?',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -1055,7 +1074,7 @@ export const settingsManager = {
   },
   imageLoadingColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
+    subSection: SUB_SECTIONS.DESIGN.ITEM_STYLE,
     title: 'Color Background Placeholder',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -1064,7 +1083,7 @@ export const settingsManager = {
   },
   expandAnimation: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.EXPAND_MODE,
+    subSection: SUB_SECTIONS.DESIGN.EXPAND_MODE,
     title: 'How does your expand mode open?',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -1077,7 +1096,7 @@ export const settingsManager = {
   },
   scrollAnimation: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
+    subSection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
     title: 'Choose how images appear when scrolling down the page',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -1095,7 +1114,7 @@ export const settingsManager = {
   },
   oneColorAnimationColor: {
     section: SECTIONS.DESIGN,
-    subsection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
+    subSection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
     title: 'Pick a color',
     description: "",
     type: INPUT_TYPES.COLOR_PICKER,
@@ -1125,7 +1144,7 @@ export const settingsManager = {
   },
   expandInfoPosition: {
     section: SECTIONS.EXPAND_MODE,
-    subsection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
+    subSection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
     title: 'Where does it appear?',
     description: "",
     type: INPUT_TYPES.OPTIONS,
@@ -1137,7 +1156,7 @@ export const settingsManager = {
   },
   defaultShowInfoExpand: {
     section: SECTIONS.EXPAND_MODE,
-    subsection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
+    subSection: SUB_SECTIONS.DESIGN.SCROLL_ANIMATION,
     title: 'Choose how images appear when scrolling down the page',
     description: "",
     type: INPUT_TYPES.OPTIONS,

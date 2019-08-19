@@ -1,5 +1,5 @@
 import React from 'react';
-import {Radio, Input, Slider, Form, Checkbox, InputNumber, Row, Col, Button, Alert} from 'antd';
+import {Menu, Icon, Collapse, Switch, Radio, Input, Slider, Form, Checkbox, InputNumber, Row, Col, Button, Alert, Divider} from 'antd';
 import {INPUT_TYPES, settingsManager} from '../../utils/settingsManager';
 import ColorPicker from '../ColorPicker/ColorPicker';
 
@@ -24,22 +24,39 @@ class JsonEditor extends React.Component {
     switch (settings.type) {
       case INPUT_TYPES.BOOLEAN:
         return (
-          <Checkbox
-            checked={theValue}
-            onChange={e => this.onFieldChanged(key, e.target.checked)}
+          <Switch
+          checkedChildren={<Icon type="check" />}
+          unCheckedChildren={<Icon type="close" />}
+          checked={theValue}
+          onChange={e => this.onFieldChanged(key, e)}
           />
+          //     <Checkbox
+          // style={{float: 'right'}}
+          // checked={theValue}
+          //   onChange={e => this.onFieldChanged(key, e.target.checked)}
+          // />
         );
       case INPUT_TYPES.OPTIONS:
         return (
-          <Radio.Group
-            onChange={val => this.onFieldChanged(key, val.target.value)}
-            size="medium"
-            value={theValue}
+          <Menu
+            onClick={val => {this.onFieldChanged(key, Number(val.key))}
+            style={{ width: 347 }}
+            defaultSelectedKeys={[String(theValue)]}
+            mode="vertical"
           >
             {settings.options.map(({value, title}) => (
-              <Radio value={value}>{title}</Radio>
+              <Menu.Item key={String(value)}>{title}</Menu.Item>
             ))}
-          </Radio.Group>
+          </Menu>
+          // <Radio.Group
+          //   onChange={val => this.onFieldChanged(key, val.target.value)}
+          //   size="medium"
+          //   value={theValue}
+          // >
+          //   {settings.options.map(({value, title}) => (
+          //     <Radio value={value}>{title}</Radio>
+          //   ))}
+          // </Radio.Group>
         );
       case INPUT_TYPES.NUMBER:
         if (settings.min >= 0 && settings.max > 0) {
@@ -78,6 +95,7 @@ class JsonEditor extends React.Component {
       case INPUT_TYPES.COLOR_PICKER:
           return (
             <ColorPicker 
+              style={{float: 'right'}}
               color={{
                   r: '241',
                   g: '112',
@@ -111,7 +129,7 @@ class JsonEditor extends React.Component {
 
 
   render() {
-    const {section, styleParams} = this.props;
+    const {section, subSection, styleParams} = this.props;
     const context = {
       isMobile: false,
     }
@@ -127,25 +145,34 @@ class JsonEditor extends React.Component {
     // json = removeFieldsNotNeeded(json, selectedLayout);
 
     const json = Object.entries(settingsManager)
-      .filter(([key, settings]) => settings.section === section && settings.isRelevant(styleParams, context))
+      .filter(([key, settings]) => settings.section === section && settings.subSection === subSection && settings.isRelevant(styleParams, context))
       .reduce((acc, [key]) => {
         acc[key] = settingsManager[key];
         acc[key].value = styleParams[key];
         return acc;
       }, {});
-
+  
     return (
-      <Form>
+      // <Form layout="vertical">
+      <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={'left'}>
         {Object.entries(json).map(([styleParam, settings]) => (
-            <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'}>
-              {this.renderEntryEditor(styleParam, settings)}
-              {
-                settings.alert ?
-                <Alert message={settings.alert} type="warning"/> : null
-              }
-            </Form.Item>
+          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} >
+              {/* <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'} style={{display: 'block', width: '100%'}}> */}
+                {this.renderEntryEditor(styleParam, settings)}
+                {
+                  settings.alert ?
+                  <div>
+                    <Divider/>
+                    <p>{settings.alert}</p>
+                  </div>
+                  : null
+                  // <Alert message={settings.alert} type="warning"/> : null
+                }
+              {/* </Form.Item> */}
+          </Collapse.Panel>
         ))}
-      </Form>
+      {/* </Form> */}
+      </Collapse>
     );
   }
 }

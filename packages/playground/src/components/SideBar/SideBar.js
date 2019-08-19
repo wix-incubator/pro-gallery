@@ -5,7 +5,7 @@ import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { Collapse, Divider } from "antd";
-import {SECTIONS} from '../../utils/settingsManager';
+import { SUB_SECTIONS, SECTIONS } from '../../utils/settingsManager';
 import { Alert } from 'antd';
 import s from './SideBar.module.scss';
 
@@ -59,28 +59,50 @@ function SideBar() {
   'm_playButtonForAutoSlideShow - defined but I don\'t see where we use it\n'+
   'mobileSwipeAnimation\n'];
 
+  console.log({SUB_SECTIONS});
+
   return (
     <>
     <h3 className={s.title}>Gallery Settings</h3>
-    <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}}>
+    <Collapse bordered={true} defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}} expandIconPosition={'right'}>
       <Collapse.Panel header="Layout" key="1">
-        <LayoutPicker selectedLayout={preset} onSelectLayout={setPreset} />
-        <Divider />
+        {/* <LayoutPicker selectedLayout={preset} onSelectLayout={setPreset} />
+        <Divider /> */}
         <JsonEditor 
           onChange={setStyleParams} 
           styleParams={styleParams}
           section={SECTIONS.LAYOUT}
         />
       </Collapse.Panel>
-      {Object.values(SECTIONS).map((section, idx) => ( section !== SECTIONS.LAYOUT && 
-        <Collapse.Panel header={section} key={idx + 1}>
-          <JsonEditor
-            section={section}
-            onChange={setStyleParams}
-            styleParams={styleParams}
-          />
-        </Collapse.Panel>
-      ))}
+      {Object.values(SECTIONS).map((section, idx) => {
+        if (section !== SECTIONS.LAYOUT) {
+          if (!SUB_SECTIONS[section.toUpperCase()]) {
+            return (
+              <Collapse.Panel header={section} key={idx + 1}>
+                <JsonEditor
+                  section={section}
+                  onChange={setStyleParams}
+                  styleParams={styleParams}
+                />
+              </Collapse.Panel>
+            )
+          } else {
+            return Object.values(SUB_SECTIONS[section.toUpperCase()]).map((subSection, subIdx) => {
+              return (
+                <Collapse.Panel header={`${section} > ${subSection}`} key={subIdx * 100 + idx + 1}>
+                  <JsonEditor
+                    section={section}
+                    subSection={subSection}
+                    onChange={setStyleParams}
+                    styleParams={styleParams}
+                  />
+                </Collapse.Panel>                
+              );
+            });
+          }
+        }
+        return null;
+      })}
     </Collapse>
     <h3 className={s.title}>Playground Gizmos</h3>
     <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}}>
