@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as lodash from './lodash';
 import window from './window/windowWrapper';
 import {
   isSiteMode,
@@ -14,6 +14,8 @@ class Utils {
     this._params = {};
     this._useCache = !isEditMode() && !isPreviewMode();
     this.setIsWixMobile = this.setIsWixMobile.bind(this);
+
+    Object.assign(this, lodash);
   }
 
   isUndefined(something) {

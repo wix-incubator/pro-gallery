@@ -201,7 +201,7 @@ class GalleryItem {
 
     let posters = _.map(
       wixData.fileOutput.image,
-      _.partialRight(_.pick, ['url', 'width', 'height']),
+      _.partialRight(utils.pick, ['url', 'width', 'height']),
     );
     posters = _.map(posters, p => {
       p.url = p.url.replace('media/', '');

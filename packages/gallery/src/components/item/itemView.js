@@ -375,7 +375,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemTextsDetails() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'title',
       'description',
       'fileName',
@@ -409,7 +409,7 @@ class ItemView extends GalleryComponent {
   }
 
   getSocial() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'html',
       'hashtag',
       'photoId',
@@ -446,7 +446,7 @@ class ItemView extends GalleryComponent {
   }
 
   getShare() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'styleParams',
       'id',
       'type',
@@ -471,7 +471,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemHover(children, imageDimensions) {
-    // const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
+    // const props = utils.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     const { customHoverRenderer, ...props } = this.props;
     return (
       <ItemHover
@@ -492,7 +492,7 @@ class ItemView extends GalleryComponent {
   }
 
   getImageItem(imageDimensions) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'alt',
       'title',
       'description',
@@ -542,7 +542,7 @@ class ItemView extends GalleryComponent {
     );
   }
   getVideoItemPlaceholder(imageDimensions, itemHover) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'alt',
       'title',
       'description',
@@ -577,7 +577,7 @@ class ItemView extends GalleryComponent {
   }
 
   getTextItem(imageDimensions) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'id',
       'styleParams',
       'style',

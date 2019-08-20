@@ -61,7 +61,7 @@ export default class Social extends GalleryComponent {
 
   getLoveButton() {
     const { styleParams, isNarrow, isSmallItem } = this.props;
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'id',
       'item',
       'idx',

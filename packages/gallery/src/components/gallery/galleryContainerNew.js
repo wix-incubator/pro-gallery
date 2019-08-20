@@ -301,7 +301,7 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick,
       initialGalleryHeight,
     } = this.state;
-    const partialStyleParams = _.pick(this.state.styles, [
+    const partialStyleParams = utils.pick(this.state.styles, [
       'isSlideshow',
       'slideshowInfoSize',
       'galleryThumbnailsAlignment',
