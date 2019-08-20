@@ -11,7 +11,7 @@ export default class ScrollIndicator extends GalleryComponent {
       scrollTop: 0,
       scrollLeft: 0,
     };
-    this.debouncedOnScroll = _.debounce(props.onScroll, 50);
+    this.debouncedOnScroll = utils.debounce(props.onScroll, 50);
   }
 
   removeScrollListener() {

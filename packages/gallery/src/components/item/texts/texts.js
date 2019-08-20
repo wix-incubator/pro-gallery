@@ -13,7 +13,7 @@ import { GalleryComponent } from '../../galleryComponent';
 export default class Texts extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
+    this.debouncedTryFixLineHeight = utils.debounce(this.tryFixLineHeight, 500);
   }
 
   getElementClassNames() {
