@@ -163,7 +163,7 @@ export class GalleryContainer extends React.Component {
       }
     } else {
       //this is a hack, because in fullwidth, new props arrive without any changes
-      //this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
+      this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
     }
   }
 
