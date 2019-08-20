@@ -9,7 +9,6 @@
  -  remove ugly comments from sidebar
 
 ---
-
 ## v1.2.0 (20/08/2019)
  
 #### PLAYGROUND
@@ -23,3 +22,9 @@
 
 #### MAIN
  -  add patch, minor and major scripts
+
+---
+## v1.2.1 (20/08/2019)
+ 
+#### GALLERY
+ -  re-add recreate gallery timer
