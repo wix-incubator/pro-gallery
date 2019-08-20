@@ -79,7 +79,7 @@ function editChangelogAndUpdateVersion(bump) {
                 stdio: 'pipe'
             });
             log(`Saved ${CHANGELOG}, releasing new version`);
-            const bumpCommand = `lerna version ${bump} --yes --no-push`;
+            const bumpCommand = `lerna version ${bump} --yes`;
             execSync(`${bumpCommand}`, {
                 stdio: 'pipe'
             });
