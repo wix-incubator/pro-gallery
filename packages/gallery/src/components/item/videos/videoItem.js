@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
 import utils from '../../../utils';
 import window from '../../../utils/window/windowWrapper';
-import Player from '@vimeo/player';
 import { GalleryComponent } from '../../galleryComponent';
 import EVENTS from '../../../utils/constants/events';
 import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
@@ -11,20 +9,30 @@ class VideoItem extends GalleryComponent {
   constructor(props) {
     super(props);
 
-    //Vimeo player must be loaded by us, problem with requireJS
-    if (
-      !(window && window.Vimeo) &&
-      props.videoUrl &&
-      props.videoUrl.includes('vimeo.com')
-    ) {
-      window.Vimeo = { Player };
-    }
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.state = {
       playedOnce: false,
       playing: false,
     };
+    this.ReactPlayer = null;
+    if (!utils.isSSR()) {
+      if (!(window && window.ReactPlayer)) {
+        import('react-player').then(ReactPlayer => {
+          window.ReactPlayer = ReactPlayer.default;
+        });
+      }
+      if (
+        //Vimeo player must be loaded by us, problem with requireJS
+        !(window && window.Vimeo) &&
+        props.videoUrl &&
+        props.videoUrl.includes('vimeo.com')
+      ) {
+        import('@vimeo/player').then(Player => {
+          window.Vimeo = { Player: Player.default };
+        });
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,6 +58,10 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
+    if (!(window && window.ReactPlayer)) {
+      return;
+    }
+    const PlayerElement = window.ReactPlayer;
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
 
     const videoDimensionsCss = {
@@ -80,7 +92,7 @@ class VideoItem extends GalleryComponent {
       ? this.props.videoUrl
       : this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO);
     return (
-      <ReactPlayer
+      <PlayerElement
         className={'gallery-item-visible video gallery-item'}
         id={`video-${this.props.id}`}
         width="100%"
