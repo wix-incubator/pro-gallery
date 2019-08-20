@@ -234,7 +234,7 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    const throttledReCreateGallery = _.throttle(() => {
+    const throttledReCreateGallery = utils.throttle(() => {
       const { items, styles, container, watermarkData } = this.props;
       const params = {
         items,

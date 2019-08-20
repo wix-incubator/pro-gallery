@@ -27,15 +27,8 @@ class SlideshowView extends GalleryComponent {
       this,
     );
     this.handleKeypress = this.handleKeypress.bind(this);
-    this._setCurrentItemByScroll = _.throttle(
-      this.setCurrentItemByScroll,
-      600,
-      { leading: false, trailing: true },
-    ).bind(this);
-    this._nextItem = _.throttle(this.nextItem, 400, {
-      leading: true,
-      trailing: false,
-    }).bind(this);
+    this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
+    this._nextItem = utils.throttle(this.nextItem, 400).bind(this);
     this.state = {
       flatItems: [],
       currentIdx: 0,
