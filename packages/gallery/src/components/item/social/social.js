@@ -1,7 +1,6 @@
 import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
-import _ from 'lodash';
 import { GalleryComponent } from '../../galleryComponent';
 import window from '../../../utils/window/windowWrapper';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';

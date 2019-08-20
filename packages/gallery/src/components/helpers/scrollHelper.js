@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import utils from '../../utils';
 import window from '../../utils/window/windowWrapper';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import utils from '../../utils/index.js';
-import _ from 'lodash';
 import { GalleryComponent } from '../galleryComponent';
 import { getHoverStyle } from './itemHoverStyleProvider';
 

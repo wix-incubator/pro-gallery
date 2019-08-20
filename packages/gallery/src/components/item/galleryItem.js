@@ -1,7 +1,6 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
 import { Item } from 'pro-layouts';
-import _ from 'lodash';
 import RESIZE_METHODS from '../../constants/resizeMethods';
 import { URL_TYPES } from '../../constants/urlTypes';
 
@@ -893,7 +892,7 @@ class GalleryItem {
       this.metadata.isDemo ||
       this.dto.isDemo ||
       this.metadata.sourceName === 'public' ||
-      _.includes(this.metadata.tags, '_paid')
+      (this.metadata.tags && Array.isArray(this.metadata.tags) && this.metadata.tags.indexOf('_paid') >= 0)
     );
   }
 

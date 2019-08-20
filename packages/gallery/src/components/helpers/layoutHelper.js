@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import utils from '../../utils';
 import PLACEMENTS from '../../utils/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';

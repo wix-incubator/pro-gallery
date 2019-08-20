@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import utils from '../../../utils/index.js';
 import PLACEMENTS from '../../../utils/constants/placements';
 import INFO_TYPE from '../../../utils/constants/infoType';

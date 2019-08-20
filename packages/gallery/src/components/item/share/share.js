@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import utils from '../../../utils/index.js';
 import { GalleryComponent } from '../../galleryComponent';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';

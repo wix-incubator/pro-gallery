@@ -1,6 +1,5 @@
 import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
-import _ from 'lodash';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';

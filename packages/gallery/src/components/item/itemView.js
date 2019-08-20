@@ -10,7 +10,6 @@ import Share from './share/share.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
-import _ from 'lodash';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';

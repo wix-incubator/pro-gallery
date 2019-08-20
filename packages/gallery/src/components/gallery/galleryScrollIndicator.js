@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import utils from '../../utils/index';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
 

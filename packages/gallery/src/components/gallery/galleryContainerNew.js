@@ -10,7 +10,6 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import _ from 'lodash';
 import utils from '../../utils';
 import { isEditMode, isSEOMode } from '../../utils/window/viewModeWrapper';
 import EVENTS from '../../utils/constants/events';

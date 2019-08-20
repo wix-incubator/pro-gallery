@@ -2,7 +2,6 @@ import utils from '../../utils';
 import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import _ from 'lodash';
 import window from '../../utils/window/windowWrapper';
 import { isEditMode, isPreviewMode } from '../../utils/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';

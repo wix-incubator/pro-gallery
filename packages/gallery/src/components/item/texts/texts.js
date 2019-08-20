@@ -7,7 +7,6 @@ import PLACEMENTS from '../../../utils/constants/placements';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';
-import _ from 'lodash';
 import { GalleryComponent } from '../../galleryComponent';
 
 export default class Texts extends GalleryComponent {
