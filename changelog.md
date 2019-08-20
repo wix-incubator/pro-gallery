@@ -1,6 +1,6 @@
 # Pro Gallery Change Log
 
-## v1.1.3 (19/08/2019)
+## v1.1.4 (19/08/2019)
  
 #### GALLERY
  -  Add windowWrapper to support SSR
@@ -8,7 +8,7 @@
 #### PLAYGROUND
  -  remove ugly comments from sidebar
 
-## v1.2.4 (20/08/2019)
+## v1.2.0 (20/08/2019)
  
 #### PLAYGROUND
  -  improve ui and usuability
