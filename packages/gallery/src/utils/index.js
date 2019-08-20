@@ -426,13 +426,13 @@ class Utils {
         if (Object.keys(change).length > 0) {
           console.log(`State Change Completed (${caller})`, change);
         }
-        if (_.isFunction(callback)) {
+        if (utils.isFunction(callback)) {
           callback.bind(that)();
         }
       });
     } else {
       that.setState(state, () => {
-        if (_.isFunction(callback)) {
+        if (utils.isFunction(callback)) {
           callback.bind(that)();
         }
       });

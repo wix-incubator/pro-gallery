@@ -75,7 +75,8 @@
     "extends": "yoshi",
     "rules": {
       "import/no-unresolved": "off",
-      "default-case": "off"
+      "default-case": "off",
+      "prettier/prettier": "off"
     }
   },
   "unpkg": true,

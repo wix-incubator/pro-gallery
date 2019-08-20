@@ -142,7 +142,7 @@ class ItemView extends GalleryComponent {
   }
 
   handleGalleryItemClick() {
-    _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked')) &&
+    utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked')) &&
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
   }
@@ -198,13 +198,13 @@ class ItemView extends GalleryComponent {
   }
 
   toggleFullscreenIfNeeded(e) {
-    let targetClass = _.get(e, 'target.className');
+    let targetClass = utils.get(e, 'target.className');
     if (_.isObject(targetClass)) {
       targetClass = _.valuesIn(targetClass);
     }
 
     if (
-      _.isFunction(targetClass.indexOf) &&
+      utils.isFunction(targetClass.indexOf) &&
       targetClass.indexOf('block-fullscreen') >= 0
     ) {
       console.warn('Blocked fullscreen!', e);

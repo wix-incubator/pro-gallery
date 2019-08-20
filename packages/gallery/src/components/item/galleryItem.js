@@ -858,7 +858,7 @@ class GalleryItem {
   }
 
   get unprotectedLinkOpenType() {
-    return _.get(this, 'metadata.link.target');
+    return utils.get(this, 'metadata.link.target');
   }
 
   get linkOpenType() {
