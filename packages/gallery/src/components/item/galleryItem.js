@@ -33,31 +33,6 @@ class GalleryItem {
       Object.assign(dto, this.dto, this.metadata);
       this.processScheme(new Item({ dto }).scheme);
     }
-    if (config.wixImage && utils.isNumber(config.orderIndex)) {
-      this.createFromWixImage(
-        config.wixImage,
-        config.orderIndex,
-        config.addWithTitles,
-        config.isSecure,
-      );
-    }
-
-    if (config.wixVideo && utils.isNumber(config.orderIndex)) {
-      this.createFromWixVideo(
-        config.wixVideo,
-        config.orderIndex,
-        config.addWithTitles,
-        config.isSecure,
-      );
-    }
-    if (config.wixExternal && utils.isNumber(config.orderIndex)) {
-      this.createFromExternal(
-        config.wixExternal,
-        config.orderIndex,
-        config.addWithTitles,
-        config.isSecure,
-      );
-    }
 
     if (this.dto) {
       const itemMetadata = this.dto.metaData || this.dto.metadata;
@@ -159,106 +134,10 @@ class GalleryItem {
     };
   }
 
-  createFromWixImage(wixData, orderIndex, addWithTitles, isSecure) {
-    const url = wixData.uri || wixData.relativeUri || wixData.url;
-    const itemId = url.slice(0, url.length - 4);
-    const metadata = {
-      createdOn: new Date().getTime(),
-      height: wixData.height,
-      width: wixData.width,
-      lastModified: new Date().getTime(),
-      focalPoint: wixData.focalPoint,
-      name: wixData.fileName,
-      fileName: wixData.title,
-      title: '',
-      type: wixData.type,
-      link: this.initialLinkObject,
-      sourceName: wixData.sourceName,
-      tags: wixData.tags,
-      wm: wixData.wm,
-      // title: wixData.title || '',
-      // description: wixData.description || '',
-    };
-
-    if (addWithTitles) {
-      metadata.title = wixData.title;
-    }
-
-    this.dto = { itemId, mediaUrl: url, orderIndex, metadata, isSecure };
-  }
-
-  createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
-    const qualities = (wixData.fileOutput.video || []).map(q => {
-      return {
-        height: q.height,
-        width: q.width,
-        quality: q.quality,
-        formats: [q.format],
-      };
-    });
-
-    const posters = (wixData.fileOutput.image || []).map(poster => {
-      const {url, width, height} = poster;
-      return {url: url.replace('media/', ''), width, height};
-    });
-
-    const resolution = this.getHighestMp4Resolution(qualities);
-    const metaData = {
-      createdOn: new Date().getTime(),
-      name: wixData.title,
-      lastModified: new Date().getTime(),
-      width: resolution.width,
-      height: resolution.height,
-      type: 'video',
-      posters,
-      customPoster: '',
-      isExternal: false,
-      duration: wixData.fileInput.duration,
-      qualities,
-      link: this.initialLinkObject,
-      // title: wixData.title,
-      // description: wixData.description,
-    };
-
-    if (addWithTitles) {
-      metaData.title = wixData.title;
-    }
-
-    const mediaUrl = wixData.fileBaseUrl.replace('video/', '');
-    this.dto = { itemId: wixData.id, mediaUrl, orderIndex, metaData, isSecure };
-  }
-
   getHighestMp4Resolution(qualities) {
     const mp4s = qualities.filter(video => video.formats[0] === 'mp4');
     const { width, height } = mp4s.sort((a, b) => b.width - a.width)[0];
     return { width, height };
-  }
-
-  createFromExternal(wixData, orderIndex, addWithTitles, isSecure) {
-    const metaData = {
-      createdOn: new Date().getTime(),
-      name: wixData.id,
-      videoId: wixData.id,
-      lastModified: new Date().getTime(),
-      height: 1080,
-      width: 1920,
-      source: wixData.source || '',
-      videoUrl: wixData.videoUrl || '',
-      isExternal: true,
-      type: 'video',
-      posters: wixData.posters,
-      customPoster: '',
-      duration: 0,
-      qualities: [],
-    };
-
-    this.dto = {
-      itemId: wixData.id,
-      mediaUrl: metaData.posters[0].url,
-      orderIndex,
-      metaData,
-      isSecure,
-    };
   }
 
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams) {
