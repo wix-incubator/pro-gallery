@@ -28,3 +28,11 @@
  
 #### GALLERY
  -  re-add recreate gallery timer
+
+---
+## v1.2.2 (20/08/2019)
+ 
+#### GALLERY
+ -  create item url for art store
+ -  upgrade file-loader to v4
+
