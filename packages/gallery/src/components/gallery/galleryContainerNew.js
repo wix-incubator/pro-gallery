@@ -1033,14 +1033,15 @@ export class GalleryContainer extends React.Component {
             playingVideoIdx={this.state.playingVideoIdx}
             nextVideoIdx={this.state.nextVideoIdx}
             noFollowForSEO={this.props.noFollowForSEO}
-            actions={Object.assign(this.props.actions, {
+            actions={{
+              ...this.props.actions, 
               findNeighborItem,
               toggleLoadMoreItems: this.toggleLoadMoreItems,
               eventsListener: this.eventsListener,
               setWixHeight: (() => {}),
               scrollToItem: this.scrollToItem,
               duplicateGalleryItems: this.duplicateGalleryItems,
-            })}
+            }}
             {...this.props.gallery}
           />
           {this.galleryInitialStateJson && (

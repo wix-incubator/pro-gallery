@@ -485,9 +485,11 @@ function getStyleByLayout(styles) {
     console.log('chosen layout is', layoutName);
   }
 
-  return Object.assign(layouts[layoutName](), specialMobileStoreConfig, {
-    galleryLayout,
-  });
+  return {
+    ...layouts[layoutName](), 
+    ...specialMobileStoreConfig, 
+    galleryLayout
+  };
 }
 
 function addLayoutStyles(styles) {

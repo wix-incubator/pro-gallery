@@ -531,12 +531,13 @@ class ItemView extends GalleryComponent {
           failed: this.state.failed,
           loaded: this.state.loaded,
         }}
-        actions={Object.assign({}, this.props.actions, {
+        actions={{
+          ...this.props.actions, 
           setItemLoaded: this.setItemLoaded,
           setItemError: this.setItemError,
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
-        })}
+        }}
       />
     );
   }
@@ -719,17 +720,13 @@ class ItemView extends GalleryComponent {
             style={getInnerInfoStyle(styleParams)}
             className={elementName}
             onMouseOver={() => {
-              utils.isMobile()
-                ? (() => {})()
-                : this.props.actions.eventsListener(
-                    EVENTS.HOVER_SET,
-                    this.props.idx,
-                  );
+              !utils.isMobile() && this.props.actions.eventsListener(
+                EVENTS.HOVER_SET,
+                this.props.idx,
+              );
             }}
             onMouseOut={() => {
-              utils.isMobile()
-                ? (() => {})()
-                : this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+              !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
           >
             {itemTexts}

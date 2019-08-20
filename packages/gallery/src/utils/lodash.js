@@ -51,9 +51,3 @@ export const isEqual = (obj1, obj2) => {
 export const isNumber = n => {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
-//   find: () => {},
-//   get: () => {},
-//   isUndefined: () => {},
-//   isNaN: () => {},
-//   clone: () => {},
-// }

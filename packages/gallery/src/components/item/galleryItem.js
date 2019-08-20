@@ -67,7 +67,7 @@ class GalleryItem {
       }
     }
 
-    this.sharpParams = Object.assign({}, config.sharpParams);
+    this.sharpParams = {...config.sharpParams};
     if (!this.sharpParams.quality) {
       this.sharpParams.quality = 90;
     }

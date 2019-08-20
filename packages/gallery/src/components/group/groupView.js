@@ -14,10 +14,10 @@ class GroupView extends GalleryComponent {
     return this.props.items.map(item =>
       React.createElement(
         ItemContainer,
-        Object.assign(
-          item.renderProps(Object.assign(this.props.galleryConfig, { visible })),
-          { ...this.props.itemsLoveData[item.id] },
-        ),
+        {
+          ...item.renderProps(Object.assign(this.props.galleryConfig, { visible })),
+          ...this.props.itemsLoveData[item.id]
+        },
       ),
     );
   }

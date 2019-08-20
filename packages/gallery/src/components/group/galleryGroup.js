@@ -14,7 +14,6 @@ class GalleryGroup {
       }
     }
     this.dto = Object.assign({}, config.dto);
-    Object.assign(this, config.dto);
 
     if (config.scheme) {
       this.processScheme(config.scheme);

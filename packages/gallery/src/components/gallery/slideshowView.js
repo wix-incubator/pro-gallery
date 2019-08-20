@@ -690,9 +690,10 @@ class SlideshowView extends GalleryComponent {
                 group.rendered
                   ? React.createElement(
                       GroupView,
-                      Object.assign(group.renderProps(galleryConfig), {
+                      {
                         itemsLoveData,
-                      }),
+                        ...group.renderProps(galleryConfig)
+                      },
                     )
                   : false,
               )}
