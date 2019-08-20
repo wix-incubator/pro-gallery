@@ -134,7 +134,7 @@ function getDate() {
 
 function formatForChangelog(version, commits) {
 
-    const versionStr = `## v${version} (${getDate()})`;
+    const versionStr = `\n---\n## v${version} (${getDate()})`;
     commits = String(commits).split(`\n`).filter(msg => msg.trim().length > 0);
     const commitsByProject = commits.reduce((obj, commit) => {
         const matchedProject = (commit.match(/\[.*\]/) || [''])[0].toLowerCase().replace(']', '').replace('[', '');
@@ -142,7 +142,8 @@ function formatForChangelog(version, commits) {
         if (!obj[project]) {
             obj[project] = '';
         }
-        obj[project] += ' - ' + commit.substr(commit.indexOf(':') + 1) + `\n`;
+        const textStartPos = Math.max(commit.indexOf(':'), commit.indexOf(']')) + 1;
+        obj[project] += ' - ' + commit.substr(textStartPos) + `\n`;
         return obj;
     }, {});
     let commitsStr = Object.entries(commitsByProject).map(([project, itsCommits]) => `\n#### ${project.toUpperCase()}\n${itsCommits}`).join(``);
