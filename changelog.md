@@ -7,3 +7,18 @@
 
 #### PLAYGROUND
  -  remove ugly comments from sidebar
+
+## v1.2.4 (20/08/2019)
+ 
+#### PLAYGROUND
+ -  improve ui and usuability
+ -  better gallery benchmarks render timing
+
+#### GALLERY
+ -  dynamic import of video modules
+ -  do not render poisition styles in SSR
+ -  move gallery creation to constructor
+
+#### MAIN
+ -  add patch, minor and major scripts
+
