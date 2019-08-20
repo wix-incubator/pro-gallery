@@ -64,7 +64,8 @@ function SideBar() {
   return (
     <>
     <h3 className={s.title}>Gallery Settings</h3>
-    <Collapse bordered={true} defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}} expandIconPosition={'right'}>
+    <div className={s.controls}>
+    <Collapse bordered={true} defaultActiveKey={[]} onChange={() => {}} expandIconPosition={'right'}>
       <Collapse.Panel header="Layout" key="1">
         {/* <LayoutPicker selectedLayout={preset} onSelectLayout={setPreset} />
         <Divider /> */}
@@ -104,18 +105,21 @@ function SideBar() {
         return null;
       })}
     </Collapse>
+    </div>
     <h3 className={s.title}>Playground Gizmos</h3>
-    <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '0 10px'}}>
-      <Collapse.Panel header="Benchmarks" key="13">
-        <Benchmarks />
-      </Collapse.Panel>
-      <Collapse.Panel header="Code" key="14">
-        <CodePanel />
-      </Collapse.Panel>
-      <Collapse.Panel header="ToDos" key="15">
-        {conclusions.map((conclusion, idx) => <Alert key={idx} message={conclusion} type="info"/>)}
-      </Collapse.Panel>
-    </Collapse>
+    <div className={s.controls}>
+      <Collapse bordered={true} defaultActiveKey={[]} onChange={() => {}}>
+        <Collapse.Panel header="Benchmarks" key="13">
+          <Benchmarks />
+        </Collapse.Panel>
+        <Collapse.Panel header="Code" key="14">
+          <CodePanel />
+        </Collapse.Panel>
+        <Collapse.Panel header="ToDos" key="15">
+          {conclusions.map((conclusion, idx) => <Alert key={idx} message={conclusion} type="info"/>)}
+        </Collapse.Panel>
+      </Collapse>
+    </div>
     </>
   );
 }
