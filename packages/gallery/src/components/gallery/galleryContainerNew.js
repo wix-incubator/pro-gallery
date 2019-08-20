@@ -87,9 +87,8 @@ export class GalleryContainer extends React.Component {
           this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
         }
       } catch (e) {
-        //todo - report to sentry
-        this.initialGalleryState = {};
         //hydrate phase did not happen - do it all over again
+        this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
           if (Object.keys(galleryState).length > 0) {

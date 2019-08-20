@@ -24,8 +24,7 @@ class GalleryItem {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = Object.assign({}, config.dto);
-    Object.assign(this, config.dto);
+    this.dto = {...config.dto};
 
     if (config.scheme) {
       this.processScheme(config.scheme);
