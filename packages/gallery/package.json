@@ -34,13 +34,11 @@
     "react-player": "1.10.0"
   },
   "peerDependencies": {
-    "axios": ">=0.18.1",
     "lodash": "^4.17.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "axios": ">=0.18.1",
     "chai": "^4.1.2",
     "chai-enzyme": "^1.0.0-beta.1",
     "chai-spies": "^0.7.1",
@@ -94,7 +92,6 @@
       }
     },
     "externals": {
-      "axios": "axios",
       "babel-runtime": "babel-runtime",
       "lodash": "_",
       "react": "React",
