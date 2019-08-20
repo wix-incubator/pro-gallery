@@ -154,7 +154,7 @@ class GalleryItem {
       title: metadata.title,
       itemWidth: metadata.width,
       itemType: metadata.type || 'image',
-      imageUrl: this.resizedUrl(RESIZE_METHODS.FIT, 200, 200, null, null).img,
+      imageUrl: this.resizedUrl(RESIZE_METHODS.FIT, 200, 200, null, null).img(),
       imagePurchasedUrl: this.dto.mediaUrl,
       fpX: focalPoint[0],
       fpY: focalPoint[1],
