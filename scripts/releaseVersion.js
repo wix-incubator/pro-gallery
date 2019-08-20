@@ -98,11 +98,14 @@ function getBumpedVersion(version, bump) {
         case BUMP_TYPES.PATCH:
             versionArr[2]++;
             break;
-        case BUMP_TYPES.MINOR:
+            case BUMP_TYPES.MINOR:
             versionArr[1]++;
+            versionArr[2] = 0;
             break;
         case BUMP_TYPES.MAJOR:
             versionArr[0]++;
+            versionArr[1] = 0;
+            versionArr[2] = 0;
             break;
     }
     return versionArr.join('.');
