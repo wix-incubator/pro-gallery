@@ -989,7 +989,7 @@ export class GalleryContainer extends React.Component {
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
-      : _.noop;
+      : (() => {});
     const ssrDisableTransition =
       !!utils.isSSR() &&
       'div.pro-gallery-parent-container * { transition: none !important }';
@@ -1035,11 +1035,11 @@ export class GalleryContainer extends React.Component {
             playingVideoIdx={this.state.playingVideoIdx}
             nextVideoIdx={this.state.nextVideoIdx}
             noFollowForSEO={this.props.noFollowForSEO}
-            actions={_.merge(this.props.actions, {
+            actions={Object.assign(this.props.actions, {
               findNeighborItem,
               toggleLoadMoreItems: this.toggleLoadMoreItems,
               eventsListener: this.eventsListener,
-              setWixHeight: _.noop,
+              setWixHeight: (() => {}),
               scrollToItem: this.scrollToItem,
               duplicateGalleryItems: this.duplicateGalleryItems,
             })}

@@ -486,7 +486,7 @@ function getStyleByLayout(styles) {
     console.log('chosen layout is', layoutName);
   }
 
-  return _.merge(layouts[layoutName](), specialMobileStoreConfig, {
+  return Object.assign(layouts[layoutName](), specialMobileStoreConfig, {
     galleryLayout,
   });
 }

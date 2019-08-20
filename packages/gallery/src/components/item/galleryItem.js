@@ -25,8 +25,8 @@ class GalleryItem {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = _.merge({}, config.dto);
-    _.merge(this, config.dto);
+    this.dto = Object.assign({}, config.dto);
+    Object.assign(this, config.dto);
 
     if (config.scheme) {
       this.processScheme(config.scheme);
@@ -69,7 +69,7 @@ class GalleryItem {
       }
     }
 
-    this.sharpParams = _.merge({}, config.sharpParams);
+    this.sharpParams = Object.assign({}, config.sharpParams);
     if (!this.sharpParams.quality) {
       this.sharpParams.quality = 90;
     }
@@ -154,7 +154,7 @@ class GalleryItem {
       title: metadata.title,
       itemWidth: metadata.width,
       itemType: metadata.type || 'image',
-      imageUrl: this.resizedUrl(RESIZE_METHODS.FIT, 200, 200, null, null).img,
+      imageUrl: this.resizedUrl(RESIZE_METHODS.FIT, 200, 200, null, null).img(),
       imagePurchasedUrl: this.dto.mediaUrl,
       fpX: focalPoint[0],
       fpY: focalPoint[1],

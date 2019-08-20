@@ -117,7 +117,8 @@ class ItemView extends GalleryComponent {
       return;
     }
     this.setState({
-      showShare: _.isUndefined(forceVal) ? !this.state.showShare : !!forceVal,
+      showShare:
+        typeof forceVal === 'undefined' ? !this.state.showShare : !!forceVal,
     });
   }
 
@@ -149,7 +150,7 @@ class ItemView extends GalleryComponent {
   onItemClick(e) {
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
-      return _.noop;
+      return (() => {});
     }
 
     e.preventDefault();
@@ -531,7 +532,7 @@ class ItemView extends GalleryComponent {
           failed: this.state.failed,
           loaded: this.state.loaded,
         }}
-        actions={_.merge({}, this.props.actions, {
+        actions={Object.assign({}, this.props.actions, {
           setItemLoaded: this.setItemLoaded,
           setItemError: this.setItemError,
           handleItemMouseDown: this.handleItemMouseDown,
@@ -720,7 +721,7 @@ class ItemView extends GalleryComponent {
             className={elementName}
             onMouseOver={() => {
               utils.isMobile()
-                ? _.noop()
+                ? (() => {})()
                 : this.props.actions.eventsListener(
                     EVENTS.HOVER_SET,
                     this.props.idx,
@@ -728,7 +729,7 @@ class ItemView extends GalleryComponent {
             }}
             onMouseOut={() => {
               utils.isMobile()
-                ? _.noop()
+                ? (() => {})()
                 : this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
           >

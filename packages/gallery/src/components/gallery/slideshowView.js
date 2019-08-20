@@ -694,7 +694,7 @@ class SlideshowView extends GalleryComponent {
         height: this.props.container.galleryHeight,
       };
       if (this.props.styleParams.isSlideshow) {
-        _.merge(columnStyle, {
+        Object.assign(columnStyle, {
           paddingBottom: this.props.styleParams.slideshowInfoSize,
         });
       }
@@ -712,7 +712,7 @@ class SlideshowView extends GalleryComponent {
                 group.rendered
                   ? React.createElement(
                       GroupView,
-                      _.merge(group.renderProps(galleryConfig), {
+                      Object.assign(group.renderProps(galleryConfig), {
                         itemsLoveData,
                       }),
                     )
@@ -743,7 +743,7 @@ class SlideshowView extends GalleryComponent {
       ...galleryStyleForExternalArrows,
     };
     if (this.props.styleParams.isSlideshow) {
-      _.merge(galleryStyle, {
+      Object.assign(galleryStyle, {
         paddingBottom: this.props.styleParams.slideshowInfoSize,
       });
     }

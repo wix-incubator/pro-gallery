@@ -15,8 +15,8 @@ class GroupView extends GalleryComponent {
     return this.props.items.map(item =>
       React.createElement(
         ItemContainer,
-        _.merge(
-          item.renderProps(_.merge(this.props.galleryConfig, { visible })),
+        Object.assign(
+          item.renderProps(Object.assign(this.props.galleryConfig, { visible })),
           { ...this.props.itemsLoveData[item.id] },
         ),
       ),

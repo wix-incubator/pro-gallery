@@ -14,8 +14,8 @@ class GalleryGroup {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = _.merge({}, config.dto);
-    _.merge(this, config.dto);
+    this.dto = Object.assign({}, config.dto);
+    Object.assign(this, config.dto);
 
     if (config.scheme) {
       this.processScheme(config.scheme);
