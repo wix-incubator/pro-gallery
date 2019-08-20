@@ -188,7 +188,7 @@ class GalleryItem {
   }
 
   createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
-    const qualities = wixData.fileOutput.video.map(q => {
+    const qualities = (wixData.fileOutput.video || []).map(q => {
       return {
         height: q.height,
         width: q.width,
@@ -197,7 +197,7 @@ class GalleryItem {
       };
     });
 
-    const posters = wixData.fileOutput.image.map(poster => {
+    const posters = (wixData.fileOutput.image || []).map(poster => {
       const {url, width, height} = poster;
       return {url: url.replace('media/', ''), width, height};
     });
