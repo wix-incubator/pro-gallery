@@ -109,7 +109,7 @@ class VideoItem extends GalleryComponent {
         onPause={() => {
           this.setState({ playing: false });
         }}
-        playbackRate={this.props.styleParams.videoSpeed || 1}
+        playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
         onPlay={() => {
           this.setState({ playing: true });
         }}
