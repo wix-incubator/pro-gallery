@@ -30,7 +30,6 @@ export const debounce = (callback, wait) => {
     }, wait);
   }
 }
-}
 
 export const get = (obj, path, defaultValue) => {
   const result = String.prototype.split.call(path, /[,[\].]+?/)
@@ -41,6 +40,17 @@ export const get = (obj, path, defaultValue) => {
 
 export const isFunction = something => typeof something === 'function';
 
+export const isEqual = (obj1, obj2) => {
+  try {
+    return JSON.stringify(obj1) === JSON.stringify(obj2)
+  } catch (e) {
+    return false;
+  }
+}
+
+export const isNumber = n => {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 //   find: () => {},
 //   get: () => {},
 //   isUndefined: () => {},

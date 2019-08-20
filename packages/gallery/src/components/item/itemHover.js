@@ -21,7 +21,7 @@ export default class ItemHover extends GalleryComponent {
       'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled'),
     );
 
-    if (_.isUndefined(styleParams.itemOpacity)) {
+    if (utils.isUndefined(styleParams.itemOpacity)) {
       hoverClass.push('default');
     }
 

@@ -199,8 +199,8 @@ class ItemView extends GalleryComponent {
 
   toggleFullscreenIfNeeded(e) {
     let targetClass = utils.get(e, 'target.className');
-    if (_.isObject(targetClass)) {
-      targetClass = _.valuesIn(targetClass);
+    if (typeof targetClass === 'object') {
+      targetClass = Object.values(targetClass);
     }
 
     if (

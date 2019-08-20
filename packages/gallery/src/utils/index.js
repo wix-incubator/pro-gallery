@@ -419,20 +419,20 @@ class Utils {
   setStateAndLog(that, caller, state, callback) {
     if (this.isVerbose()) {
       console.log(`State Change Called (${caller})`, state);
-      const oldState = _.clone(that.state);
+      const oldState = {...that.state};
       that.setState(state, () => {
-        const newState = _.clone(that.state);
+        const newState = {...that.state};
         const change = this.printableObjectsDiff(oldState, newState, 'state');
         if (Object.keys(change).length > 0) {
           console.log(`State Change Completed (${caller})`, change);
         }
-        if (utils.isFunction(callback)) {
+        if (this.isFunction(callback)) {
           callback.bind(that)();
         }
       });
     } else {
       that.setState(state, () => {
-        if (utils.isFunction(callback)) {
+        if (this.isFunction(callback)) {
           callback.bind(that)();
         }
       });
@@ -450,11 +450,10 @@ class Utils {
     };
 
     const getInnerDiff = (_obj1, _obj2, _prefix) => {
-      const innerDiff = _.reduce(
-        _obj1,
+      const innerDiff = _obj1.reduce(
         (res, v, k) => {
-          if (!_.isEqual(v, _obj2[k])) {
-            if (_.isArray(_obj2[k])) {
+          if (!this.isEqual(v, _obj2[k])) {
+            if (Array.isArray(_obj2[k])) {
               if (v.length !== _obj2[k].length) {
                 res[k + '.length'] =
                   '[' + v.length + '] => [' + _obj2[k].length + ']';
@@ -463,7 +462,7 @@ class Utils {
                 res,
                 getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k),
               );
-            } else if (_.isObject(_obj2[k])) {
+            } else if (typeof _obj2[k] === 'object') {
               res = Object.assign(
                 res,
                 getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k),

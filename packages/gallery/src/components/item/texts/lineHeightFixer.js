@@ -230,7 +230,7 @@ class LineHeightFixer {
         });
       }
 
-      const isButtonHeightAvailable = !_.isNaN(buttonHeight);
+      const isButtonHeightAvailable = !Number.isNaN(buttonHeight);
       if (isButtonHeightAvailable && customButtonExists) {
         availableHeight -= buttonHeight;
         availableHeight -= designConsts.spaceBetweenElements;

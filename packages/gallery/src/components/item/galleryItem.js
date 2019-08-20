@@ -35,7 +35,7 @@ class GalleryItem {
       Object.assign(dto, this.dto, this.metadata);
       this.processScheme(new Item({ dto }).scheme);
     }
-    if (config.wixImage && _.isNumber(config.orderIndex)) {
+    if (config.wixImage && utils.isNumber(config.orderIndex)) {
       this.createFromWixImage(
         config.wixImage,
         config.orderIndex,
@@ -44,7 +44,7 @@ class GalleryItem {
       );
     }
 
-    if (config.wixVideo && _.isNumber(config.orderIndex)) {
+    if (config.wixVideo && utils.isNumber(config.orderIndex)) {
       this.createFromWixVideo(
         config.wixVideo,
         config.orderIndex,
@@ -52,7 +52,7 @@ class GalleryItem {
         config.isSecure,
       );
     }
-    if (config.wixExternal && _.isNumber(config.orderIndex)) {
+    if (config.wixExternal && utils.isNumber(config.orderIndex)) {
       this.createFromExternal(
         config.wixExternal,
         config.orderIndex,
@@ -190,7 +190,7 @@ class GalleryItem {
   }
 
   createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
-    const qualities = _.map(wixData.fileOutput.video, q => {
+    const qualities = wixData.fileOutput.video.map(q => {
       return {
         height: q.height,
         width: q.width,
@@ -199,14 +199,11 @@ class GalleryItem {
       };
     });
 
-    let posters = _.map(
-      wixData.fileOutput.image,
-      _.partialRight(utils.pick, ['url', 'width', 'height']),
-    );
-    posters = _.map(posters, p => {
-      p.url = p.url.replace('media/', '');
-      return p;
+    const posters = wixData.fileOutput.image.map(poster => {
+      const {url, width, height} = poster;
+      return {url: url.replace('media/', ''), width, height};
     });
+
     const resolution = this.getHighestMp4Resolution(qualities);
     const metaData = {
       createdOn: new Date().getTime(),
@@ -479,7 +476,7 @@ class GalleryItem {
 
   get metadata() {
     let md = this.dto.metaData || this.dto.metadata;
-    if (_.isUndefined(md)) {
+    if (utils.isUndefined(md)) {
       // console.error('Item with no metadata' + JSON.stringify(this.dto));
       md = {};
     }
@@ -715,7 +712,7 @@ class GalleryItem {
   }
 
   get linkType() {
-    if (this.metadata.link && !_.isUndefined(this.metadata.link.type)) {
+    if (this.metadata.link && !utils.isUndefined(this.metadata.link.type)) {
       return this.metadata.link.type;
     } else if (this.linkUrl) {
       return 'web';
@@ -862,11 +859,11 @@ class GalleryItem {
   }
 
   get linkOpenType() {
-    if (this.metadata.link && !_.isUndefined(this.metadata.link.target)) {
+    if (this.metadata.link && !utils.isUndefined(this.metadata.link.target)) {
       return this.unprotectedLinkOpenType;
     } else if (
       this.metadata.link &&
-      !_.isUndefined(this.metadata.link.targetBlank)
+      !utils.isUndefined(this.metadata.link.targetBlank)
     ) {
       return this.metadata.link.targetBlank ? '_blank' : '_top';
     } else {

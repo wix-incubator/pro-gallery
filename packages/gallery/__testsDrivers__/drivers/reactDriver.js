@@ -95,7 +95,7 @@ class galleryDriver {
       isInfinite: true,
     };
 
-    this.items = _.cloneDeep(testImages);
+    this.items = [...testImages];
 
     this.actions = {
       toggleLoadMoreItems: (() => {}),
