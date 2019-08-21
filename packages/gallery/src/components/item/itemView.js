@@ -759,19 +759,19 @@ class ItemView extends GalleryComponent {
     const { styleParams, style, transform } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
-    if (utils.isSSR()) {
-      return { ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
-    }
+    // if (utils.isSSR()) {
+    //   return { ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
+    // }
 
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
-      top: this.props.offset.top,
-      left: this.props.offset.left,
+      // top: this.props.offset.top,
+      // left: this.props.offset.left,
+      // width: style.width,
+      // height: style.height + (styleParams.externalInfoHeight || 0),
       right: 'auto',
       bottom: 'auto',
-      width: style.width,
-      height: style.height + (styleParams.externalInfoHeight || 0),
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
 

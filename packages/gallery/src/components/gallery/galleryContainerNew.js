@@ -51,7 +51,7 @@ export class GalleryContainer extends React.Component {
     this.items = [];
     this.itemsDimensions = {};
     this.preloadedItems = {};
-    this.fullwidthLayoutsCss = [];
+    this.layoutCss = [];
     this.state = initialState;
     const videoScrollHelperConfig = {
       setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
@@ -709,20 +709,17 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      if (utils.isSSR() && isFullwidth && !_styles.oneRow) {
-        if (utils.isVerbose()) {
-          console.time('fullwidthLayoutsCss!');
-        }
-        this.fullwidthLayoutsCss = createCssLayouts(
+      const isApproximation = (utils.isSSR() && isFullwidth && !_styles.oneRow);
+      // if (isNew.items || isNew.styles || isNew.container) {
+        this.layoutCss = createCssLayouts({
+          isApproximation,
+          galleryStructure: this.galleryStructure,
           layoutParams,
-          utils.isMobile(),
-        );
-        if (utils.isVerbose()) {
-          console.timeEnd('fullwidthLayoutsCss!');
-        }
-      } else {
-        this.fullwidthLayoutsCss = [];
-      }
+          isMobile: utils.isMobile(),
+        });
+      // } else {
+
+      // }
 
       const allowPreloading =
         isEditMode() ||
@@ -1053,7 +1050,7 @@ export class GalleryContainer extends React.Component {
           <style data-key="scrollCss" key="scrollCss">
             {this.scrollCss}
           </style>
-          {this.fullwidthLayoutsCss.map((css, idx) => (
+          {this.layoutCss.map((css, idx) => (
             <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>
               {css}
             </style>
