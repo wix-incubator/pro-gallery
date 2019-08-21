@@ -17,10 +17,10 @@ const createExactCssForItems = (galleryItems, styleParams) => {
   galleryItems.forEach((item, i) => {
     const id = cssScrollHelper.getDomId(item);
     const style = getImageStyle(item, styleParams);
-    const T = `top:${style.top}px !important;`;
-    const L = `left:${style.left}px !important;`;
-    const W = `width:${style.width}px !important;`;
-    const H = `height:${style.height}px !important;`;
+    const T = `top:${style.top}px;`;
+    const L = `left:${style.left}px;`;
+    const W = `width:${style.width}px;`;
+    const H = `height:${style.height}px;`;
     cssStr += `#${id} {${T}${L}${W}${H}}`;
     // cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
   });

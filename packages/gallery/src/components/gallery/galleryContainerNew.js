@@ -536,6 +536,9 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
+
+    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
+
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
     const layoutParams = {
@@ -570,6 +573,29 @@ export class GalleryContainer extends React.Component {
       styleParams: styles,
       allowPreloading,
     });
+    this.createCssLayoutsIfNeeded(layoutParams);
+  }
+
+  createCssLayoutsIfNeeded(layoutParams, isApproximation = false, isNew = {}) {
+    if (isApproximation) {
+      this.layoutCss = createCssLayouts({
+        isApproximation,
+        layoutParams,
+        isMobile: utils.isMobile(),
+      });
+    } else if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
+      this.layoutCss = createCssLayouts({
+        galleryItems: this.galleryStructure.galleryItems,
+        layoutParams,
+        isMobile: utils.isMobile(),
+      });
+    } else {
+      this.layoutCss = this.layoutCss.concat(createCssLayouts({
+        galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
+        layoutParams,
+        isMobile: utils.isMobile(),
+      }));
+    }
   }
 
   reCreateGalleryExpensively(
@@ -710,30 +736,13 @@ export class GalleryContainer extends React.Component {
       }
 
       const isApproximation = (utils.isSSR() && isFullwidth && !_styles.oneRow);
-      if (isApproximation) {
-        this.layoutCss = createCssLayouts({
-          isApproximation,
-          layoutParams,
-          isMobile: utils.isMobile(),
-        });
-      } else if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
-        this.layoutCss = createCssLayouts({
-          galleryItems: this.galleryStructure.galleryItems,
-          layoutParams,
-          isMobile: utils.isMobile(),
-        });
-      } else {
-        this.layoutCss = this.layoutCss.concat(createCssLayouts({
-          galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
-          layoutParams,
-          isMobile: utils.isMobile(),
-        }));
-      }
+      this.createCssLayoutsIfNeeded(layoutParams, isApproximation, isNew);
 
       const allowPreloading =
         isEditMode() ||
         state.gotFirstScrollEvent ||
         state.showMoreClickedAtLeastOnce;
+        
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
