@@ -5,18 +5,18 @@ import { cssScrollHelper } from './cssScrollHelper.js';
 const desktopWidths = [480, 768, 1024, 1280, 1440, 1680, 1920, 2560];
 const mobileWidths = [320]; //, 375, 414, 480, 600, 768, 900]; (mobile is currently fixed to 320px)
 
-const getImageStyle = item => ({
+const getImageStyle = (item, styleParams) => ({
   top: item.offset.top,
   left: item.offset.left,
   width: item.width,
-  height: item.height,
+  height: item.height + (styleParams.externalInfoHeight || 0),
 });
 
-const createExactCssForItems = galleryItems => {
+const createExactCssForItems = (galleryItems, styleParams) => {
   let cssStr = '';
   galleryItems.forEach((item, i) => {
     const id = cssScrollHelper.getDomId(item);
-    const style = getImageStyle(item);
+    const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px !important;`;
     const L = `left:${style.left}px !important;`;
     const W = `width:${style.width}px !important;`;
@@ -35,7 +35,7 @@ const createCssFromLayout = (layout, styleParams, width) => {
   layout.items.forEach((item, i) => {
     const id = cssScrollHelper.getDomId(item);
     if (i < 50) {
-      const style = getImageStyle(item);
+      const style = getImageStyle(item, styleParams);
       const Tvw = `top:${getRelativeDimension(style.top)}vw;`;
       const Wvw = `width:${getRelativeDimension(style.width)}vw;`;
       const Hvw = `height:${getRelativeDimension(style.height)}vw;`;
@@ -95,6 +95,8 @@ export const createCssLayouts = ({
     for (let i = 0; i < galleryItems.length; i += chunkSize) {
       itemsBatchs.push(galleryItems.slice(i, i + chunkSize));
     }
-    return itemsBatchs.map(items => createExactCssForItems(items));
+    return itemsBatchs.map(items =>
+      createExactCssForItems(items, layoutParams.styleParams),
+    );
   }
 };
