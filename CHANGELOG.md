@@ -54,3 +54,10 @@
  -  add externalInfoSize to css
  -  do not recreate cssLayouts if not needed
 
+
+---
+## v1.2.5 (21/08/2019)
+ 
+#### GALLERY
+ -  add cssLayouts to hydrate phase
+
