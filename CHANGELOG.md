@@ -46,3 +46,11 @@
 #### PLAYGROUND
  -  ui improvements
 
+
+---
+## v1.2.4 (21/08/2019)
+ 
+#### GALLERY
+ -  add externalInfoSize to css
+ -  do not recreate cssLayouts if not needed
+
