@@ -36,3 +36,13 @@
  -  create item url for art store
  -  upgrade file-loader to v4
 
+
+---
+## v1.2.3 (21/08/2019)
+ 
+#### GALLERY
+ -  remove inline position styles - use only css
+
+#### PLAYGROUND
+ -  ui improvements
+
