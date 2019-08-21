@@ -17,10 +17,10 @@ const createExactCssForItems = galleryItems => {
   galleryItems.forEach((item, i) => {
     const id = cssScrollHelper.getDomId(item);
     const style = getImageStyle(item);
-    const T = `top:${style.top}px;`;
-    const L = `left:${style.left}px;`;
-    const W = `width:${style.width}px;`;
-    const H = `height:${style.height}px;`;
+    const T = `top:${style.top}px !important;`;
+    const L = `left:${style.left}px !important;`;
+    const W = `width:${style.width}px !important;`;
+    const H = `height:${style.height}px !important;`;
     cssStr += `#${id} {${T}${L}${W}${H}}`;
     // cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
   });
@@ -73,7 +73,7 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
 
 export const createCssLayouts = ({
   isApproximation,
-  galleryStructure,
+  galleryItems,
   layoutParams,
   isMobile,
 }) => {
@@ -92,11 +92,9 @@ export const createCssLayouts = ({
   } else {
     const chunkSize = 10;
     const itemsBatchs = [];
-    for (let i = 0; i < galleryStructure.galleryItems.length; i += chunkSize) {
-      itemsBatchs.push(galleryStructure.galleryItems.slice(i, i + chunkSize));
+    for (let i = 0; i < galleryItems.length; i += chunkSize) {
+      itemsBatchs.push(galleryItems.slice(i, i + chunkSize));
     }
-    return itemsBatchs.map(galleryItems =>
-      createExactCssForItems(galleryItems),
-    );
+    return itemsBatchs.map(items => createExactCssForItems(items));
   }
 };

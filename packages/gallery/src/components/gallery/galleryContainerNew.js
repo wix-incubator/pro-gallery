@@ -710,16 +710,25 @@ export class GalleryContainer extends React.Component {
       }
 
       const isApproximation = (utils.isSSR() && isFullwidth && !_styles.oneRow);
-      // if (isNew.items || isNew.styles || isNew.container) {
+      if (isApproximation) {
         this.layoutCss = createCssLayouts({
           isApproximation,
-          galleryStructure: this.galleryStructure,
           layoutParams,
           isMobile: utils.isMobile(),
         });
-      // } else {
-
-      // }
+      } else if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
+        this.layoutCss = createCssLayouts({
+          galleryItems: this.galleryStructure.galleryItems,
+          layoutParams,
+          isMobile: utils.isMobile(),
+        });
+      } else {
+        this.layoutCss = this.layoutCss.concat(createCssLayouts({
+          galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
+          layoutParams,
+          isMobile: utils.isMobile(),
+        }));
+      }
 
       const allowPreloading =
         isEditMode() ||
@@ -1051,7 +1060,7 @@ export class GalleryContainer extends React.Component {
             {this.scrollCss}
           </style>
           {this.layoutCss.map((css, idx) => (
-            <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>
+            <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`}>
               {css}
             </style>
           ))}
