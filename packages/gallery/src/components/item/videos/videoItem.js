@@ -15,7 +15,6 @@ class VideoItem extends GalleryComponent {
       playedOnce: false,
       playing: false,
     };
-    this.ReactPlayer = null;
     if (!utils.isSSR()) {
       if (!(window && window.ReactPlayer)) {
         import('react-player').then(ReactPlayer => {
