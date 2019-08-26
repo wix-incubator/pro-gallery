@@ -68,3 +68,10 @@
 #### GALLERY
  -  add another reCreateGallery after mount
 
+
+---
+## v1.2.7 (26/08/2019)
+ 
+#### GALLERY
+ -  fix video props in hydrate
+
