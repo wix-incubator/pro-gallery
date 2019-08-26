@@ -89,3 +89,10 @@
 #### GALLERY
  -  add idx to domId
 
+
+---
+## v1.2.10 (26/08/2019)
+ 
+#### OTHER
+ -  init playing video setState only after compDidMount
+
