@@ -93,18 +93,13 @@ class JsonEditor extends React.Component {
           );
         }
       case INPUT_TYPES.COLOR_PICKER:
-          return (
-            <ColorPicker 
-              style={{float: 'right'}}
-              color={{
-                  r: '241',
-                  g: '112',
-                  b: '19',
-                  a: '1',
-                }} 
-              colorChange={val => this.onFieldChanged(key, val)}
-            />
-          );
+        return (
+          <ColorPicker 
+            style={{float: 'right'}}
+            color={theValue} 
+            colorChanged={val => this.onFieldChanged(key, val)}
+          />
+        );
       case INPUT_TYPES.BUTTON:
         return (
           <Button onClick={() => {
@@ -162,6 +157,8 @@ class JsonEditor extends React.Component {
                 {
                   settings.alert ?
                   <div>
+                    <Divider/>
+                    <p><b>key: </b><code>{styleParam}</code></p>
                     <Divider/>
                     <p>{settings.alert}</p>
                   </div>
