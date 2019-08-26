@@ -75,3 +75,10 @@
 #### GALLERY
  -  fix video props in hydrate
 
+
+---
+## v1.2.8 (26/08/2019)
+ 
+#### GALLERY
+ -  always create new cssLayouts
+
