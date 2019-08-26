@@ -114,7 +114,7 @@ export class GalleryContainer extends React.Component {
       this.getMoreItemsIfNeeded(0);
       this.handleNewGalleryStructure();
       this.eventsListener(EVENTS.APP_LOADED, {});
-    }
+    };
     const galleryState = this.reCreateGalleryExpensively(this.props);
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
@@ -123,6 +123,7 @@ export class GalleryContainer extends React.Component {
     } else {
       onGalleryCreated();
     }
+    this.videoScrollHelper.initializePlayState();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -547,7 +548,6 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
-
     const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     //update this.items
@@ -594,7 +594,8 @@ export class GalleryContainer extends React.Component {
         layoutParams,
         isMobile: utils.isMobile(),
       });
-    } else { //if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
+    } else {
+      //if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
       this.layoutCss = createCssLayouts({
         galleryItems: this.galleryStructure.galleryItems,
         layoutParams,
@@ -746,14 +747,14 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      const isApproximation = (utils.isSSR() && isFullwidth && !_styles.oneRow);
+      const isApproximation = utils.isSSR() && isFullwidth && !_styles.oneRow;
       this.createCssLayoutsIfNeeded(layoutParams, isApproximation, isNew);
 
       const allowPreloading =
         isEditMode() ||
         state.gotFirstScrollEvent ||
         state.showMoreClickedAtLeastOnce;
-        
+
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
