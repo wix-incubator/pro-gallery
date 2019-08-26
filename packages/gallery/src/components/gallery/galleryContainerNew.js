@@ -115,7 +115,7 @@ export class GalleryContainer extends React.Component {
       this.handleNewGalleryStructure();
       this.eventsListener(EVENTS.APP_LOADED, {});
     }
-    const galleryState = this.reCreateGalleryExpensively(nextProps);
+    const galleryState = this.reCreateGalleryExpensively(this.props);
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
         onGalleryCreated();
