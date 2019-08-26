@@ -90,13 +90,17 @@ export const createCssLayouts = ({
     });
     return createCssFromLayouts(cssLayouts, layoutParams.styleParams, widths);
   } else {
-    const chunkSize = 10;
-    const itemsBatchs = [];
-    for (let i = 0; i < galleryItems.length; i += chunkSize) {
-      itemsBatchs.push(galleryItems.slice(i, i + chunkSize));
-    }
-    return itemsBatchs.map(items =>
-      createExactCssForItems(items, layoutParams.styleParams),
-    );
+    // const chunkSize = 10;
+    // const itemsBatchs = [];
+    // for (let i = 0; i < galleryItems.length; i += chunkSize) {
+    //   itemsBatchs.push(galleryItems.slice(i, i + chunkSize));
+    // }
+    // return galleryItems.map(items =>
+    //   createExactCssForItems(items, layoutParams.styleParams)
+    // );
+    const exactCss = [];
+    exactCss.push(createExactCssForItems(galleryItems, layoutParams.styleParams));
+    return exactCss;
+
   }
 };

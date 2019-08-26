@@ -46,9 +46,9 @@ class CssScrollHelper {
     this.lowResPadding = () => (allowPreloading ? [10240, Infinity] : [0, 0]);
   }
 
-  getDomId({ id }) {
+  getDomId({ id, idx }) {
     const shortId = String(id).replace(/[\W]+/g, '');
-    return `pgi${shortId}`;
+    return `pgi${shortId}_${idx}`;
   }
 
   buildScrollClassName(galleryDomId, idx, val) {

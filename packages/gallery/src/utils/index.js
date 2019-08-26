@@ -244,12 +244,30 @@ class Utils {
     }
   }
 
+  isLocal() {
+    try {
+      const host = window.location.hostname;
+      if (host === 'local.wix.com') {
+        return true;
+      }
+      if (host.indexOf('localhost') >= 0) {
+        return true;
+      }
+      if (this.parseGetParam('debug') === 'true') {
+        return true;
+      }
+      return false;
+    } catch (E) {
+      return false;
+    }
+  }
+
   isDev() {
     return this.getOrPutFromCache('isDev', () => {
       return (
-        (this.isOOI() && process.env.NODE_ENV === 'development') ||
+        this.isLocal() ||
         this.shouldDebug('ph_local') ||
-        !!this.parseGetParam('debug') ||
+        (this.isOOI() && process.env.NODE_ENV === 'development') ||
         (this.safeLocalStorage() || {}).forceDevMode === 'true'
       );
     });
