@@ -82,3 +82,10 @@
 #### GALLERY
  -  always create new cssLayouts
 
+
+---
+## v1.2.9 (26/08/2019)
+ 
+#### GALLERY
+ -  add idx to domId
+
