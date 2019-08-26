@@ -110,8 +110,19 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
-    this.handleNewGalleryStructure();
-    this.eventsListener(EVENTS.APP_LOADED, {});
+    const onGalleryCreated = () => {
+      this.getMoreItemsIfNeeded(0);
+      this.handleNewGalleryStructure();
+      this.eventsListener(EVENTS.APP_LOADED, {});
+    }
+    const galleryState = this.reCreateGalleryExpensively(nextProps);
+    if (Object.keys(galleryState).length > 0) {
+      this.setState(galleryState, () => {
+        onGalleryCreated();
+      });
+    } else {
+      onGalleryCreated();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
