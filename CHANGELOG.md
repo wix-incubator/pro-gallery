@@ -61,3 +61,10 @@
 #### GALLERY
  -  add cssLayouts to hydrate phase
 
+
+---
+## v1.2.6 (26/08/2019)
+ 
+#### GALLERY
+ -  add another reCreateGallery after mount
+
