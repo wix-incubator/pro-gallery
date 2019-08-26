@@ -756,7 +756,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { styleParams, style, transform } = this.props;
+    const { styleParams, style, transform, offset } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const itemStyles = {
@@ -772,8 +772,8 @@ class ItemView extends GalleryComponent {
     };
 
     const positionStyles = {
-      top: this.props.offset.top,
-      left: this.props.offset.left,
+      top: offset.top,
+      left: offset.left,
       width: style.width,
       height: style.height + (styleParams.externalInfoHeight || 0),
     };

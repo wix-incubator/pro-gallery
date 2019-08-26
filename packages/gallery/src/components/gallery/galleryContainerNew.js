@@ -594,19 +594,19 @@ export class GalleryContainer extends React.Component {
         layoutParams,
         isMobile: utils.isMobile(),
       });
-    } else if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
+    } else { //if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
       this.layoutCss = createCssLayouts({
         galleryItems: this.galleryStructure.galleryItems,
         layoutParams,
         isMobile: utils.isMobile(),
       });
-    } else {
+    } /* else {
       this.layoutCss = this.layoutCss.concat(createCssLayouts({
         galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
         layoutParams,
         isMobile: utils.isMobile(),
       }));
-    }
+    } */
   }
 
   reCreateGalleryExpensively(
