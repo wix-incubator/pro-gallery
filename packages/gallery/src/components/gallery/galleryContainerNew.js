@@ -573,9 +573,9 @@ export class GalleryContainer extends React.Component {
     });
     this.videoScrollHelper.updateGalleryStructure({
       galleryStructure: this.galleryStructure,
-      scrollBase: this.state.container.scrollBase,
-      videoPlay: this.state.styles.videoPlay,
-      oneRow: this.state.styles.oneRow,
+      scrollBase: container.scrollBase,
+      videoPlay: styles.videoPlay,
+      oneRow: styles.oneRow,
     });
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
