@@ -14,11 +14,14 @@ class VideoItem extends GalleryComponent {
     this.state = {
       playedOnce: false,
       playing: false,
+      reactPlayerLoaded: false,
+      vimeoPlayerLoaded: false,
     };
     if (!utils.isSSR()) {
       if (!(window && window.ReactPlayer)) {
         import('react-player').then(ReactPlayer => {
           window.ReactPlayer = ReactPlayer.default;
+          this.setState({ reactPlayerLoaded: true });
         });
       }
       if (
@@ -29,6 +32,7 @@ class VideoItem extends GalleryComponent {
       ) {
         import('@vimeo/player').then(Player => {
           window.Vimeo = { Player: Player.default };
+          this.setState({ vimeoPlayerLoaded: true });
         });
       }
     }
@@ -58,7 +62,7 @@ class VideoItem extends GalleryComponent {
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
     if (!(window && window.ReactPlayer)) {
-      return;
+      return null;
     }
     const PlayerElement = window.ReactPlayer;
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
