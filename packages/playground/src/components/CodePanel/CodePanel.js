@@ -58,7 +58,7 @@ function CodePanel() {
         </SyntaxHighlighter>
       </Modal>
       <Button icon="code" shape="" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)}>
-        Create React Code 
+        Generate Gallery Code 
       </Button>
     </div>
   );

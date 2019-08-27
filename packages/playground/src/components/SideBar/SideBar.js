@@ -112,7 +112,7 @@ function SideBar() {
         <Collapse.Panel header="Benchmarks" key="13">
           <Benchmarks />
         </Collapse.Panel>
-        <Collapse.Panel header="Code" key="14">
+        <Collapse.Panel header="Generate Code" key="14">
           <CodePanel />
         </Collapse.Panel>
         <Collapse.Panel header="ToDos" key="15">

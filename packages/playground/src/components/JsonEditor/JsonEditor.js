@@ -40,7 +40,7 @@ class JsonEditor extends React.Component {
         return (
           <Menu
             onClick={val => {this.onFieldChanged(key, (Number(val.key) === parseInt(val.key) ? Number(val.key) : val.key))}}
-            style={{ width: 347 }}
+            style={{ width: 367, borderRight: 'none' }}
             defaultSelectedKeys={[String(theValue)]}
             mode="vertical"
           >
@@ -155,14 +155,13 @@ class JsonEditor extends React.Component {
               {/* <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'} style={{display: 'block', width: '100%'}}> */}
                 {this.renderEntryEditor(styleParam, settings)}
                 {
-                  settings.alert ?
                   <div>
                     <Divider/>
                     <p><b>key: </b><code>{styleParam}</code></p>
-                    <Divider/>
-                    <p>{settings.alert}</p>
+                    <p><b>value: </b><code>{settings.value}</code></p>
+                    {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
+                    {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
                   </div>
-                  : null
                   // <Alert message={settings.alert} type="warning"/> : null
                 }
               {/* </Form.Item> */}
