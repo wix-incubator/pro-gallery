@@ -96,3 +96,12 @@
 #### OTHER
  -  init playing video setState only after compDidMount
 
+
+---
+## v1.2.11 (27/08/2019)
+ 
+#### GALLERY
+ -  use window outerWidth/Height for scroll calcs
+ -  lineHeightFixer - use default values when css is not found
+ -  fixed dynamic imports influence on the component (state vise).
+
