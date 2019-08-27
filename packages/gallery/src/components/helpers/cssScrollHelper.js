@@ -80,8 +80,8 @@ class CssScrollHelper {
       return '';
     }
     this.screenSize = styleParams.oneRow
-      ? Math.min(window.innerWidth, window.screen.width)
-      : Math.min(window.innerHeight, window.screen.height);
+      ? Math.min(window.outerWidth, window.screen.width)
+      : Math.min(window.outerHeight, window.screen.height);
     if (!styleParams.oneRow && utils.isMobile()) {
       this.screenSize += 50;
     }
