@@ -9,6 +9,8 @@ const dims = {
   height,
   innerWidth: width,
   innerHeight: height,
+  outerWidth: width,
+  outerHeight: height,
   clientWidth: width,
   clientHeight: height,
 };
