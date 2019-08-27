@@ -158,18 +158,7 @@ class VideoItem extends GalleryComponent {
 
   createImageElement() {
     return (
-      <img
-        ref={img => {
-          // onLoad replacement for SSR
-          if (!img) {
-            return;
-          }
-          img.onload = this.props.actions.setItemLoaded; //initializing onLoad for further calls
-          if (img.complete && !this.props.loadingStatus.loaded) {
-            this.props.actions.setItemLoaded(); //first call, will not be called again because if it was called once loadingStatus.loaded will be true
-          }
-        }}
-        onError={this.props.actions.setItemError}
+      <canvas
         key={'image-' + this.props.id}
         alt={this.props.title}
         className={
@@ -177,7 +166,7 @@ class VideoItem extends GalleryComponent {
           (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
           (this.props.loadingStatus.failed ? ' failed ' : '')
         }
-        src={this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
+        data-src={this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
       />
     );
   }
@@ -211,7 +200,7 @@ class VideoItem extends GalleryComponent {
 
   render() {
     let baseClassName =
-      'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item' +
+      'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
       (utils.isiPhone() ? ' ios' : '') +
       (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '');
     if (this.state.playing) {
