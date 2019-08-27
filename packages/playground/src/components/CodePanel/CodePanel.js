@@ -39,7 +39,7 @@ function CodePanel() {
       <Modal
         title="ProGallery Code"
         centered
-        width={window.innerWidth - 200}
+        width={window.innerWidth > 600 ? window.innerWidth - 200 : window.innerWidth}
         visible={modalVisible}
         onOk={onCopy}
         okText={hasCopied ? 'Copy Successful' : 'Copy to clipboard'}
@@ -96,8 +96,7 @@ ${styles}
     );
   }
 
-  // enjoy using the pro-gallery
-  // Enjoy using you new gallery!
+  // Enjoy using your new gallery!
   // For more options, visit https://github.com/wix-incubator/pro-gallery
 `;
 }
