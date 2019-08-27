@@ -39,7 +39,7 @@ class JsonEditor extends React.Component {
       case INPUT_TYPES.OPTIONS:
         return (
           <Menu
-            onClick={val => {this.onFieldChanged(key, (Number.isNumber(val.key) ? Number(val.key) : val.key))}}
+            onClick={val => {this.onFieldChanged(key, (Number(val.key) === parseInt(val.key) ? Number(val.key) : val.key))}}
             style={{ width: 347 }}
             defaultSelectedKeys={[String(theValue)]}
             mode="vertical"
