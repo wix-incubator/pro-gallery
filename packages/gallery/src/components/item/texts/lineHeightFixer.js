@@ -56,8 +56,8 @@ class LineHeightFixer {
     }
   }
 
-  getCss(element, rule) {
-    return window.getComputedStyle(element)[rule];
+  getCss(element, rule, _default) {
+    return window.getComputedStyle(element)[rule] || _default;
   }
 
   setCss(element, styles) {
@@ -123,7 +123,7 @@ class LineHeightFixer {
       const socialElement = socialElements.length > 0 && socialElements[0];
       const socialHeight = socialElement.clientHeight;
       const socialMarginBottom = parseInt(
-        this.getCss(socialElement, 'margin-bottom'),
+        this.getCss(socialElement, 'margin-bottom', 0),
       );
       const itemInfoChildDivPaddingTop = 24; //padding-top of the div inside gallery-item-info
       availableHeight =
@@ -139,8 +139,8 @@ class LineHeightFixer {
       const elements = itemContainer.getElementsByClassName(className);
       const element = elements.length > 0 && elements[0];
       const elementPadding =
-        parseInt(this.getCss(element, 'padding-top')) +
-        parseInt(this.getCss(element, 'padding-bottom'));
+        parseInt(this.getCss(element, 'padding-top', 0)) +
+        parseInt(this.getCss(element, 'padding-bottom', 0));
       const margin =
         styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
         styleParams.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER &&
@@ -251,7 +251,7 @@ class LineHeightFixer {
             ? parseInt(titleElement.children[0].offsetHeight)
             : parseInt(titleElement.clientHeight);
         const titleLineHeight = parseInt(
-          this.getCss(titleElement, 'line-height'),
+          this.getCss(titleElement, 'line-height', 1),
         );
         let numOfTitleLines = 1;
         if (titleHeight >= titleLineHeight) {
@@ -304,7 +304,7 @@ class LineHeightFixer {
         availableHeight = 0;
       }
       const lineHeight = parseInt(
-        this.getCss(descriptionElement, 'line-height'),
+        this.getCss(descriptionElement, 'line-height', 1),
       );
       const numOfLines = Math.floor(availableHeight / lineHeight);
       if (numOfLines === 0) {

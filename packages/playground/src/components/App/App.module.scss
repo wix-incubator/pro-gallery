@@ -20,7 +20,7 @@
     left: 0;
     bottom: 0;
     overflow: auto;
-    background: #fefefe;
+    background: #eee;
     border-right: 1px solid #ccc;
     transition: width .3s ease;
   }
@@ -43,12 +43,16 @@
   .heading {
     overflow: auto;
     height: 53px;
-    line-height: 53px;
+    line-height: 51px;
     z-index: 1;
     width: 100%;
     padding-left: 60px;
     font-size: 20px;
     border-bottom: 1px solid #ccc;
+    box-shadow: 0 -10px 20px 0 rgba(0, 0, 0, 0.2);
+    color: #333;
+    background: #fff;
+    font-variant-caps: all-petite-caps;
   }
 
   .codePanel {

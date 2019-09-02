@@ -46,9 +46,9 @@ class CssScrollHelper {
     this.lowResPadding = () => (allowPreloading ? [10240, Infinity] : [0, 0]);
   }
 
-  getDomId({ id }) {
+  getDomId({ id, idx }) {
     const shortId = String(id).replace(/[\W]+/g, '');
-    return `pgi${shortId}`;
+    return `pgi${shortId}_${idx}`;
   }
 
   buildScrollClassName(galleryDomId, idx, val) {
@@ -80,8 +80,8 @@ class CssScrollHelper {
       return '';
     }
     this.screenSize = styleParams.oneRow
-      ? Math.min(window.innerWidth, window.screen.width)
-      : Math.min(window.innerHeight, window.screen.height);
+      ? Math.min(window.outerWidth, window.screen.width)
+      : Math.min(window.outerHeight, window.screen.height);
     if (!styleParams.oneRow && utils.isMobile()) {
       this.screenSize += 50;
     }

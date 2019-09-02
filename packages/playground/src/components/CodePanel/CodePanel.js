@@ -1,16 +1,18 @@
 import React from 'react';
-import {Button} from 'antd';
+import {Modal, Button} from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 // choose highlighter style here: https://conorhastings.github.io/react-syntax-highlighter/demo/
 import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import s from './CodePanel.module.scss';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
+import {settingsManager} from '../../utils/settingsManager';
 
 function CodePanel() {
 
   const {styleParams} = useGalleryContext();
 
   const [hasCopied, setHasCopied] = React.useState(false);
+  const [modalVisible, set_modalVisible] = React.useState(false);
   let timerId;
 
   const onCopy = () => {
@@ -22,48 +24,81 @@ function CodePanel() {
     }, 3000);
   };
 
-  const code = getCode(styleParams);
+  const getStyleParams = () => {
+    return Object.entries(settingsManager)
+      .filter(([key, settings]) => Boolean(styleParams[key]) && settings.isRelevant(styleParams, {}))
+      .reduce((acc, [key]) => {
+        const val = typeof styleParams[key] === 'string' ? `'${styleParams[key]}'` : styleParams[key];
+        return acc.concat(`    ${key}: ${val},`);
+    }, []).join(`\n`);
+  }
+
+  const code = getCode(getStyleParams());
   return (
     <div className={s.wrapper}>
-      <Button disabled={hasCopied} className={s.copyButton} onClick={onCopy}>
-        {hasCopied ? 'Copy Successful' : 'Copy to clipboard'}
-      </Button>
-      <SyntaxHighlighter
-        useInlineStyles={true}
-        language={'javascript'}
-        style={tomorrowNightEighties}
-        codeTagProps={{
-          className: s.code,
-        }}
+      <Modal
+        title="ProGallery Code"
+        centered
+        width={window.innerWidth > 600 ? window.innerWidth - 200 : window.innerWidth}
+        visible={modalVisible}
+        onOk={onCopy}
+        okText={hasCopied ? 'Copy Successful' : 'Copy to clipboard'}
+        okButtonProps={{disabled: hasCopied}}
+        onCancel={() => set_modalVisible(false)}
       >
-        {code}
-      </SyntaxHighlighter>
+        <SyntaxHighlighter
+          useInlineStyles={true}
+          language={'javascript'}
+          style={tomorrowNightEighties}
+          codeTagProps={{
+            className: s.code,
+          }}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </Modal>
+      <Button icon="code" shape="" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)}>
+        Generate Gallery Code 
+      </Button>
     </div>
   );
 }
 
 function getCode(styles) {
-  return `import { ProGallery } from 'pro-gallery';
+  return `
+  import { ProGallery } from 'pro-gallery';
 
-const galleryStyles = ${JSON.stringify(styles, null, 4)};
+  // Add your images here...
+  const items = [];
 
-export function MyComponent({ onGetMoreItems }) {
-  return (
-    <ProGallery
-        at={Date.now()}
-        scrollingElement={window}
-        container={{
-          scrollBase: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }}
-        items={images}
-        getMoreItems={onGetMoreItems}
-        totalItemsCount={images.length}
-        styles={galleryStyles}
-    />
-  );
-}`;
+  // The styles of the gallery (from the playground current state)
+  const styles = {
+${styles}
+  };
+
+  // The size of the gallery container. The images will fit themselves in it
+  const container = {
+    width: window.innerWidth,
+    height: window.innerHeight
+  };
+
+  // The eventsListener will notify you anytime something has happened in the gallery.
+  const eventsListener = ({eventName, eventData}) => console.log({eventName, eventData}); 
+
+  export function MyComponent({ images, eventsListener }) {
+    return (
+      <ProGallery
+        items={items}
+        styles={styles}
+        container={container}
+        eventsListener={eventsListener}
+      />
+    );
+  }
+
+  // Enjoy using your new gallery!
+  // For more options, visit https://github.com/wix-incubator/pro-gallery
+`;
 }
 
 // proudly copy and pasted from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f

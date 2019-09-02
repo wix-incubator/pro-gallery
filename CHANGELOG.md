@@ -28,3 +28,80 @@
  
 #### GALLERY
  -  re-add recreate gallery timer
+
+---
+## v1.2.2 (20/08/2019)
+ 
+#### GALLERY
+ -  create item url for art store
+ -  upgrade file-loader to v4
+
+
+---
+## v1.2.3 (21/08/2019)
+ 
+#### GALLERY
+ -  remove inline position styles - use only css
+
+#### PLAYGROUND
+ -  ui improvements
+
+
+---
+## v1.2.4 (21/08/2019)
+ 
+#### GALLERY
+ -  add externalInfoSize to css
+ -  do not recreate cssLayouts if not needed
+
+
+---
+## v1.2.5 (21/08/2019)
+ 
+#### GALLERY
+ -  add cssLayouts to hydrate phase
+
+
+---
+## v1.2.6 (26/08/2019)
+ 
+#### GALLERY
+ -  add another reCreateGallery after mount
+
+
+---
+## v1.2.7 (26/08/2019)
+ 
+#### GALLERY
+ -  fix video props in hydrate
+
+
+---
+## v1.2.8 (26/08/2019)
+ 
+#### GALLERY
+ -  always create new cssLayouts
+
+
+---
+## v1.2.9 (26/08/2019)
+ 
+#### GALLERY
+ -  add idx to domId
+
+
+---
+## v1.2.10 (26/08/2019)
+ 
+#### OTHER
+ -  init playing video setState only after compDidMount
+
+
+---
+## v1.2.11 (27/08/2019)
+ 
+#### GALLERY
+ -  use window outerWidth/Height for scroll calcs
+ -  lineHeightFixer - use default values when css is not found
+ -  fixed dynamic imports influence on the component (state vise).
+

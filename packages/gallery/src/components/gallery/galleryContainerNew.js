@@ -50,7 +50,7 @@ export class GalleryContainer extends React.Component {
     this.items = [];
     this.itemsDimensions = {};
     this.preloadedItems = {};
-    this.fullwidthLayoutsCss = [];
+    this.layoutCss = [];
     this.state = initialState;
     const videoScrollHelperConfig = {
       setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
@@ -108,8 +108,20 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
-    this.handleNewGalleryStructure();
-    this.eventsListener(EVENTS.APP_LOADED, {});
+    const onGalleryCreated = () => {
+      this.getMoreItemsIfNeeded(0);
+      this.handleNewGalleryStructure();
+      this.eventsListener(EVENTS.APP_LOADED, {});
+    };
+    const galleryState = this.reCreateGalleryExpensively(this.props);
+    if (Object.keys(galleryState).length > 0) {
+      this.setState(galleryState, () => {
+        onGalleryCreated();
+      });
+    } else {
+      onGalleryCreated();
+    }
+    this.videoScrollHelper.initializePlayState();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -534,6 +546,8 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
+    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
+
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
     const layoutParams = {
@@ -557,9 +571,9 @@ export class GalleryContainer extends React.Component {
     });
     this.videoScrollHelper.updateGalleryStructure({
       galleryStructure: this.galleryStructure,
-      scrollBase: this.state.container.scrollBase,
-      videoPlay: this.state.styles.videoPlay,
-      oneRow: this.state.styles.oneRow,
+      scrollBase: container.scrollBase,
+      videoPlay: styles.videoPlay,
+      oneRow: styles.oneRow,
     });
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
@@ -568,6 +582,30 @@ export class GalleryContainer extends React.Component {
       styleParams: styles,
       allowPreloading,
     });
+    this.createCssLayoutsIfNeeded(layoutParams);
+  }
+
+  createCssLayoutsIfNeeded(layoutParams, isApproximation = false, isNew = {}) {
+    if (isApproximation) {
+      this.layoutCss = createCssLayouts({
+        isApproximation,
+        layoutParams,
+        isMobile: utils.isMobile(),
+      });
+    } else {
+      //if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
+      this.layoutCss = createCssLayouts({
+        galleryItems: this.galleryStructure.galleryItems,
+        layoutParams,
+        isMobile: utils.isMobile(),
+      });
+    } /* else {
+      this.layoutCss = this.layoutCss.concat(createCssLayouts({
+        galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
+        layoutParams,
+        isMobile: utils.isMobile(),
+      }));
+    } */
   }
 
   reCreateGalleryExpensively(
@@ -707,25 +745,14 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      if (utils.isSSR() && isFullwidth && !_styles.oneRow) {
-        if (utils.isVerbose()) {
-          console.time('fullwidthLayoutsCss!');
-        }
-        this.fullwidthLayoutsCss = createCssLayouts(
-          layoutParams,
-          utils.isMobile(),
-        );
-        if (utils.isVerbose()) {
-          console.timeEnd('fullwidthLayoutsCss!');
-        }
-      } else {
-        this.fullwidthLayoutsCss = [];
-      }
+      const isApproximation = utils.isSSR() && isFullwidth && !_styles.oneRow;
+      this.createCssLayoutsIfNeeded(layoutParams, isApproximation, isNew);
 
       const allowPreloading =
         isEditMode() ||
         state.gotFirstScrollEvent ||
         state.showMoreClickedAtLeastOnce;
+
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
@@ -1052,8 +1079,8 @@ export class GalleryContainer extends React.Component {
           <style data-key="scrollCss" key="scrollCss">
             {this.scrollCss}
           </style>
-          {this.fullwidthLayoutsCss.map((css, idx) => (
-            <style data-key={`cssLayout-${idx}`} key={`cssLayout-${idx}`}>
+          {this.layoutCss.map((css, idx) => (
+            <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`}>
               {css}
             </style>
           ))}

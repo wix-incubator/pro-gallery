@@ -61,9 +61,6 @@ class VideoScrollHelper {
         }
       });
     }
-    if (this.videoItems.length > 0 && !this.playing) {
-      this.initializePlayState();
-    }
   }
 
   //--------------------------triggers--------------------------------//

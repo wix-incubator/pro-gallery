@@ -39,8 +39,8 @@ class JsonEditor extends React.Component {
       case INPUT_TYPES.OPTIONS:
         return (
           <Menu
-            onClick={val => {this.onFieldChanged(key, Number(val.key))}}
-            style={{ width: 347 }}
+            onClick={val => {this.onFieldChanged(key, (Number(val.key) === parseInt(val.key) ? Number(val.key) : val.key))}}
+            style={{ width: 367, borderRight: 'none' }}
             defaultSelectedKeys={[String(theValue)]}
             mode="vertical"
           >
@@ -93,18 +93,13 @@ class JsonEditor extends React.Component {
           );
         }
       case INPUT_TYPES.COLOR_PICKER:
-          return (
-            <ColorPicker 
-              style={{float: 'right'}}
-              color={{
-                  r: '241',
-                  g: '112',
-                  b: '19',
-                  a: '1',
-                }} 
-              colorChange={val => this.onFieldChanged(key, val)}
-            />
-          );
+        return (
+          <ColorPicker 
+            style={{float: 'right'}}
+            color={theValue} 
+            colorChanged={val => this.onFieldChanged(key, val)}
+          />
+        );
       case INPUT_TYPES.BUTTON:
         return (
           <Button onClick={() => {
@@ -160,12 +155,13 @@ class JsonEditor extends React.Component {
               {/* <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'} style={{display: 'block', width: '100%'}}> */}
                 {this.renderEntryEditor(styleParam, settings)}
                 {
-                  settings.alert ?
                   <div>
                     <Divider/>
-                    <p>{settings.alert}</p>
+                    <p><b>key: </b><code>{styleParam}</code></p>
+                    <p><b>value: </b><code>{settings.value}</code></p>
+                    {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
+                    {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
                   </div>
-                  : null
                   // <Alert message={settings.alert} type="warning"/> : null
                 }
               {/* </Form.Item> */}

@@ -50,7 +50,6 @@ export function App() {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED: 
       case GALLERY_EVENTS.GALLERY_CHANGE: 
-        console.log({eventName, eventData});
         setGalleryReady();
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS: 

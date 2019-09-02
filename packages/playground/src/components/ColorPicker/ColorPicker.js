@@ -9,29 +9,32 @@ class ColorPicker extends React.Component {
 
     this.state = {
       displayColorPicker: false,
-      // color: {
-      //   r: '241',
-      //   g: '112',
-      //   b: '19',
-      //   a: '1',
-      // },
-      color: this.props.color,
+      color: this.rgbaToColor(props.color),
     };
   }
 
+  colorToRgba(color = {}) {
+    const {r = 0, g = 0, b = 0, a = 0} = color;
+    console.log({value:`rgba(${r},${g},${b},${a})`});
+    return {value:`rgba(${r},${g},${b},${a})`};
+  }
 
+  rgbaToColor(rgba = '') {
+    const [r = '0', g = '0', b = '0', a = '1'] = rgba.replace(`rgba(`, '').replace(`)`, '').split(',').map(String);
+    return {r, g, b, a};
+  }
 
   handleClick = () => {
     this.setState({ displayColorPicker: !this.state.displayColorPicker })
   };
-
+  
   handleClose = () => {
     this.setState({ displayColorPicker: false })
   };
-
+  
   handleChange = (color) => {
     this.setState({ color: color.rgb })
-    this.props.colorChanged && this.props.colorChanged(color.rgb);
+    this.props.colorChanged && this.props.colorChanged(this.colorToRgba(color.rgb));
   };
 
   render() {
