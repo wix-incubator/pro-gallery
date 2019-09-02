@@ -27,7 +27,7 @@ class SlideshowView extends GalleryComponent {
     );
     this.handleKeypress = this.handleKeypress.bind(this);
     this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
-    this._nextItem = utils.throttle(this.nextItem, 400).bind(this);
+    this._nextItem = utils.throttle(this.nextItem.bind(this), 400).bind(this);
     this.state = {
       currentIdx: 0,
       isInView: true,
@@ -495,7 +495,7 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
     const scrollLeft = (this.container && this.container.scrollLeft) || 0;
 
-    const items = this.galleryStructure.galleryItems;
+    const items = this.props.galleryStructure.galleryItems;
 
     let currentIdx;
 

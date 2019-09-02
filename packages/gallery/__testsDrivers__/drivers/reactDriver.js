@@ -280,6 +280,7 @@ class galleryDriver {
           config: newGalleryConfig,
           visible: true,
           actions: {
+            ...this.actions,
             eventsListener: () => {},
           },
           isLoved: false,
