@@ -1,8 +1,6 @@
 import CustomButton from './customButton.js';
 import { use, expect } from 'chai';
 import spies from 'chai-spies';
-import sinon from 'sinon';
-import utils from '../../../utils';
 import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 
@@ -32,28 +30,17 @@ describe('Custom Button', () => {
   });
 
   it('Button text should be correct', () => {
+    driver.mount(CustomButton, {
+      ...sampleItemViewProps,
+    });
+    expect(driver.find.hook('custom-button-button').text()).to.equal(
+      'Click here',
+    );
     //if not small && styleParams:customButtonText is set: text should be as the prop 'customButtonText'
     Object.assign(sampleItemViewProps.styleParams, {
       customButtonText: 'test',
     });
     driver.mount(CustomButton, { ...sampleItemViewProps, small: false });
     expect(driver.find.hook('custom-button-button').text()).to.equal('test');
-
-    //if not small && styleParams:customButtonText is empty && isStoreGallery: text should be 'Buy Now'
-    Object.assign(sampleItemViewProps.styleParams, {
-      customButtonText: '',
-    });
-    let stub = sinon.stub(utils, 'isStoreGallery').returns(true);
-    driver.mount(CustomButton, { ...sampleItemViewProps, small: false });
-    expect(driver.find.hook('custom-button-button').text()).to.equal('Buy Now');
-    stub.restore(stub);
-
-    //if not small && styleParams:customButtonText is empty && NOT isStoreGallery: text should be 'Click here'
-    stub = sinon.stub(utils, 'isStoreGallery').returns(false);
-    driver.mount(CustomButton, { ...sampleItemViewProps, small: false });
-    expect(driver.find.hook('custom-button-button').text()).to.equal(
-      'Click here',
-    );
-    stub.restore();
   });
 });
