@@ -1,4 +1,4 @@
-import VIEW_MODE from '../constants/viewMode';
+import VIEW_MODE from '../../constants/viewMode';
 
 class ViewModeWrapper {
   constructor() {
