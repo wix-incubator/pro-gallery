@@ -319,8 +319,8 @@ class GalleryItem {
       this.urls.download_url = utils.isStoreGallery()
         ? this.sample_url
         : this.full_url;
-      //TODO - add to function
-      // this.urls.download_url.img += `?dn=${this.fileName}`;
+      this.urls.download_url._img = this.urls.download_url.img;
+      this.urls.download_url.img = () => this.urls.download_url._img() + `?dn=${this.fileName}`;
     }
     return this.urls.download_url;
   }
@@ -532,7 +532,7 @@ class GalleryItem {
   }
 
   get fileName() {
-    return this.metadata.fileName || '';
+    return this.metadata.fileName || 'file';
   }
 
   set fileName(value) {
