@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomButtonIcon from './customButtonIcon.js';
-import EVENTS from '../../../utils/constants/events';
+import EVENTS from '../../../constants/events';
 import { GalleryComponent } from '../../galleryComponent';
 
 export default class CustomButton extends GalleryComponent {

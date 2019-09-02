@@ -18,10 +18,10 @@ import {
   isSiteMode,
   isSEOMode,
 } from '../../utils/window/viewModeWrapper';
-import EVENTS from '../../utils/constants/events';
-import PLACEMENTS from '../../utils/constants/placements';
-import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
-import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
+import EVENTS from '../../constants/events';
+import PLACEMENTS from '../../constants/placements';
+import OVERLAY_ANIMATIONS from '../../constants/overlayAnimations';
+import IMAGE_HOVER_ANIMATIONS from '../../constants/imageHoverAnimations';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,

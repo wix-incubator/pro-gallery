@@ -7,9 +7,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
-import EVENTS from '../../../utils/constants/events';
+import EVENTS from '../../../constants/events';
 import { viewModeWrapper } from '../../../utils/window/viewModeWrapper';
-import VIEW_MODE from '../../../utils/constants/viewMode';
+import VIEW_MODE from '../../../constants/viewMode';
 
 describe('Share:', () => {
   let driver;

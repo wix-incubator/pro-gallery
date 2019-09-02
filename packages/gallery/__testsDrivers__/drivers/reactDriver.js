@@ -4,7 +4,7 @@ import { testImages } from '../images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew.js'; //import GalleryContainer before the connect (without redux)
 import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
-import PLACEMENTS from '../../src/utils/constants/placements';
+import PLACEMENTS from '../../src/constants/placements';
 import React from 'react';
 import utils from '../../src/utils';
 import window from '../../src/utils/window/windowWrapper';

@@ -2,7 +2,7 @@ import React from 'react';
 import utils from '../../../utils';
 import window from '../../../utils/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
-import EVENTS from '../../../utils/constants/events';
+import EVENTS from '../../../constants/events';
 import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
 
 class VideoItem extends GalleryComponent {

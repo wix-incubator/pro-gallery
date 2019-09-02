@@ -1,7 +1,7 @@
 import React from 'react';
 import utils from '../../../utils';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
-import EVENTS from '../../../utils/constants/events';
+import EVENTS from '../../../constants/events';
 import { GalleryComponent } from '../../galleryComponent';
 
 class LoveButton extends GalleryComponent {

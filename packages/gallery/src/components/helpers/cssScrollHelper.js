@@ -1,5 +1,5 @@
-import LOADING_MODE from '../../utils/constants/loadingMode';
-import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
+import LOADING_MODE from '../../constants/loadingMode';
+import SCROLL_ANIMATIONS from '../../constants/scrollAnimations';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
 import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';

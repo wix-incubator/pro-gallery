@@ -1,14 +1,14 @@
 import utils from '../../utils';
-import PLACEMENTS from '../../utils/constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';
-import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
+import PLACEMENTS from '../../constants/placements';
+import INFO_BEHAVIOUR_ON_HOVER from '../../constants/infoBehaviourOnHover';
+import SCROLL_ANIMATIONS from '../../constants/scrollAnimations';
 import window from '../../utils/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../constants/designConsts';
-import INFO_TYPE from '../../utils/constants/infoType';
-import CALCULATION_OPTIONS from '../../utils/constants/calculationOptions';
+import INFO_TYPE from '../../constants/infoType';
+import CALCULATION_OPTIONS from '../../constants/calculationOptions';
 
 const emptyLayout = {
   galleryType: undefined,

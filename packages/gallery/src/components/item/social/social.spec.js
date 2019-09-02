@@ -9,9 +9,9 @@ import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import utils from '../../../utils/index';
 import window from '../../../utils/window/windowWrapper';
 import LoveButton from '../loveButton/loveButton.js';
-import EVENTS from '../../../utils/constants/events';
+import EVENTS from '../../../constants/events';
 import { viewModeWrapper } from '../../../utils/window/viewModeWrapper';
-import VIEW_MODE from '../../../utils/constants/viewMode';
+import VIEW_MODE from '../../../constants/viewMode';
 
 describe('Social:', () => {
   let driver;

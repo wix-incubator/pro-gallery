@@ -12,7 +12,7 @@ import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import utils from '../../utils';
 import { isEditMode, isSEOMode } from '../../utils/window/viewModeWrapper';
-import EVENTS from '../../utils/constants/events';
+import EVENTS from '../../constants/events';
 import {
   extractContextFields,
   GalleryProvider,

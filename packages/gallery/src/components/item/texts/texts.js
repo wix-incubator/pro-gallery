@@ -3,7 +3,7 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import PLACEMENTS from '../../../utils/constants/placements';
+import PLACEMENTS from '../../../constants/placements';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';

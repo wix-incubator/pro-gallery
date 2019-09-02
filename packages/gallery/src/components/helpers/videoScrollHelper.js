@@ -2,7 +2,7 @@ import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
 } from './scrollHelper';
-import EVENTS from '../../utils/constants/events';
+import EVENTS from '../../constants/events';
 import window from '../../utils/window/windowWrapper';
 
 const VIDEO_EVENTS = {

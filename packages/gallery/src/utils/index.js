@@ -468,8 +468,8 @@ class Utils {
     };
 
     const getInnerDiff = (_obj1, _obj2, _prefix) => {
-      const innerDiff = _obj1.reduce(
-        (res, v, k) => {
+      const innerDiff = Object.entries(_obj1).reduce(
+        (res, [k, v]) => {
           if (!this.isEqual(v, _obj2[k])) {
             if (Array.isArray(_obj2[k])) {
               if (v.length !== _obj2[k].length) {

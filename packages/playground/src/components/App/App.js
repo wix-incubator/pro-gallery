@@ -12,7 +12,7 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 // import '@wix/pro-fullscreen-renderer/dist/src/assets/styles/fullscreen.global.scss';
 
 import { ProGallery } from 'pro-gallery';
-import GALLERY_EVENTS from 'pro-gallery/dist/src/utils/constants/events';
+import GALLERY_EVENTS from 'pro-gallery/dist/src/constants/events';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 

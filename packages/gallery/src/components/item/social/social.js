@@ -4,8 +4,8 @@ import LoveButton from '../loveButton/loveButton.js';
 import { GalleryComponent } from '../../galleryComponent';
 import window from '../../../utils/window/windowWrapper';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
-import EVENTS from '../../../utils/constants/events';
-import PLACEMENTS from '../../../utils/constants/placements';
+import EVENTS from '../../../constants/events';
+import PLACEMENTS from '../../../constants/placements';
 import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
 
 export default class Social extends GalleryComponent {

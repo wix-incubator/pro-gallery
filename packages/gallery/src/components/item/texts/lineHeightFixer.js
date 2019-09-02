@@ -1,6 +1,6 @@
 import utils from '../../../utils/index.js';
-import PLACEMENTS from '../../../utils/constants/placements';
-import INFO_TYPE from '../../../utils/constants/infoType';
+import PLACEMENTS from '../../../constants/placements';
+import INFO_TYPE from '../../../constants/infoType';
 import window from '../../../utils/window/windowWrapper';
 import designConsts from '../../../constants/designConsts.js';
 

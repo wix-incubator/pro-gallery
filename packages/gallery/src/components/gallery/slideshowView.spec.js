@@ -3,7 +3,7 @@ import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import SlideshowView from './slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import VIEW_MODE from '../../utils/constants/viewMode';
+import VIEW_MODE from '../../constants/viewMode';
 
 describe('Slideshow View', () => {
   let driver;
