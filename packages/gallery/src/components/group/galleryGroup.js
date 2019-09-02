@@ -1,5 +1,6 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
+import _ from 'lodash';
 import { Group } from 'pro-layouts';
 
 class GalleryGroup {
@@ -13,7 +14,8 @@ class GalleryGroup {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = Object.assign({}, config.dto);
+    this.dto = _.merge({}, config.dto);
+    _.merge(this, config.dto);
 
     if (config.scheme) {
       this.processScheme(config.scheme);

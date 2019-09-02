@@ -1,6 +1,7 @@
 import React from 'react';
 import utils from '../../../utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
+import _ from 'lodash';
 import { GalleryComponent } from '../../galleryComponent';
 import window from '../../../utils/window/windowWrapper';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
@@ -60,7 +61,7 @@ export default class Social extends GalleryComponent {
 
   getLoveButton() {
     const { styleParams, isNarrow, isSmallItem } = this.props;
-    const props = utils.pick(this.props, [
+    const props = _.pick(this.props, [
       'id',
       'item',
       'idx',

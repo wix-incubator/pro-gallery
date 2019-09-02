@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import utils from '../../../utils/index.js';
 import { GalleryComponent } from '../../galleryComponent';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
@@ -224,7 +225,7 @@ export default class Share extends GalleryComponent {
           role="button"
           key={'item-social-share-container-' + id}
         >
-          {this.shareArr.map((network, i) => {
+          {_.map(this.shareArr, (network, i) => {
             return this.getShareItem(network, i);
           })}
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import utils from '../../utils/index.js';
+import _ from 'lodash';
 import { GalleryComponent } from '../galleryComponent';
 import { getHoverStyle } from './itemHoverStyleProvider';
 
@@ -20,7 +21,7 @@ export default class ItemHover extends GalleryComponent {
       'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled'),
     );
 
-    if (utils.isUndefined(styleParams.itemOpacity)) {
+    if (_.isUndefined(styleParams.itemOpacity)) {
       hoverClass.push('default');
     }
 

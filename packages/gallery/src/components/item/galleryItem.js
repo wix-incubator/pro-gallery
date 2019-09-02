@@ -1,6 +1,7 @@
 ////// <reference path="../../reference.ts" />
 import utils from '../../utils/index';
 import { Item } from 'pro-layouts';
+import _ from 'lodash';
 import RESIZE_METHODS from '../../constants/resizeMethods';
 import { URL_TYPES } from '../../constants/urlTypes';
 
@@ -24,7 +25,8 @@ class GalleryItem {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = {...config.dto};
+    this.dto = _.merge({}, config.dto);
+    _.merge(this, config.dto);
 
     if (config.scheme) {
       this.processScheme(config.scheme);
@@ -32,6 +34,31 @@ class GalleryItem {
       const dto = {};
       Object.assign(dto, this.dto, this.metadata);
       this.processScheme(new Item({ dto }).scheme);
+    }
+    if (config.wixImage && _.isNumber(config.orderIndex)) {
+      this.createFromWixImage(
+        config.wixImage,
+        config.orderIndex,
+        config.addWithTitles,
+        config.isSecure,
+      );
+    }
+
+    if (config.wixVideo && _.isNumber(config.orderIndex)) {
+      this.createFromWixVideo(
+        config.wixVideo,
+        config.orderIndex,
+        config.addWithTitles,
+        config.isSecure,
+      );
+    }
+    if (config.wixExternal && _.isNumber(config.orderIndex)) {
+      this.createFromExternal(
+        config.wixExternal,
+        config.orderIndex,
+        config.addWithTitles,
+        config.isSecure,
+      );
     }
 
     if (this.dto) {
@@ -42,7 +69,7 @@ class GalleryItem {
       }
     }
 
-    this.sharpParams = {...config.sharpParams};
+    this.sharpParams = _.merge({}, config.sharpParams);
     if (!this.sharpParams.quality) {
       this.sharpParams.quality = 90;
     }
@@ -134,10 +161,109 @@ class GalleryItem {
     };
   }
 
+  createFromWixImage(wixData, orderIndex, addWithTitles, isSecure) {
+    const url = wixData.uri || wixData.relativeUri || wixData.url;
+    const itemId = url.slice(0, url.length - 4);
+    const metadata = {
+      createdOn: new Date().getTime(),
+      height: wixData.height,
+      width: wixData.width,
+      lastModified: new Date().getTime(),
+      focalPoint: wixData.focalPoint,
+      name: wixData.fileName,
+      fileName: wixData.title,
+      title: '',
+      type: wixData.type,
+      link: this.initialLinkObject,
+      sourceName: wixData.sourceName,
+      tags: wixData.tags,
+      wm: wixData.wm,
+      // title: wixData.title || '',
+      // description: wixData.description || '',
+    };
+
+    if (addWithTitles) {
+      metadata.title = wixData.title;
+    }
+
+    this.dto = { itemId, mediaUrl: url, orderIndex, metadata, isSecure };
+  }
+
+  createFromWixVideo(wixData, orderIndex, addWithTitles, isSecure) {
+    const qualities = _.map(wixData.fileOutput.video, q => {
+      return {
+        height: q.height,
+        width: q.width,
+        quality: q.quality,
+        formats: [q.format],
+      };
+    });
+
+    let posters = _.map(
+      wixData.fileOutput.image,
+      _.partialRight(_.pick, ['url', 'width', 'height']),
+    );
+    posters = _.map(posters, p => {
+      p.url = p.url.replace('media/', '');
+      return p;
+    });
+    const resolution = this.getHighestMp4Resolution(qualities);
+    const metaData = {
+      createdOn: new Date().getTime(),
+      name: wixData.title,
+      lastModified: new Date().getTime(),
+      width: resolution.width,
+      height: resolution.height,
+      type: 'video',
+      posters,
+      customPoster: '',
+      isExternal: false,
+      duration: wixData.fileInput.duration,
+      qualities,
+      link: this.initialLinkObject,
+      // title: wixData.title,
+      // description: wixData.description,
+    };
+
+    if (addWithTitles) {
+      metaData.title = wixData.title;
+    }
+
+    const mediaUrl = wixData.fileBaseUrl.replace('video/', '');
+    this.dto = { itemId: wixData.id, mediaUrl, orderIndex, metaData, isSecure };
+  }
+
   getHighestMp4Resolution(qualities) {
     const mp4s = qualities.filter(video => video.formats[0] === 'mp4');
     const { width, height } = mp4s.sort((a, b) => b.width - a.width)[0];
     return { width, height };
+  }
+
+  createFromExternal(wixData, orderIndex, addWithTitles, isSecure) {
+    const metaData = {
+      createdOn: new Date().getTime(),
+      name: wixData.id,
+      videoId: wixData.id,
+      lastModified: new Date().getTime(),
+      height: 1080,
+      width: 1920,
+      source: wixData.source || '',
+      videoUrl: wixData.videoUrl || '',
+      isExternal: true,
+      type: 'video',
+      posters: wixData.posters,
+      customPoster: '',
+      duration: 0,
+      qualities: [],
+    };
+
+    this.dto = {
+      itemId: wixData.id,
+      mediaUrl: metaData.posters[0].url,
+      orderIndex,
+      metaData,
+      isSecure,
+    };
   }
 
   resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams) {
@@ -353,7 +479,7 @@ class GalleryItem {
 
   get metadata() {
     let md = this.dto.metaData || this.dto.metadata;
-    if (utils.isUndefined(md)) {
+    if (_.isUndefined(md)) {
       // console.error('Item with no metadata' + JSON.stringify(this.dto));
       md = {};
     }
@@ -589,7 +715,7 @@ class GalleryItem {
   }
 
   get linkType() {
-    if (this.metadata.link && !utils.isUndefined(this.metadata.link.type)) {
+    if (this.metadata.link && !_.isUndefined(this.metadata.link.type)) {
       return this.metadata.link.type;
     } else if (this.linkUrl) {
       return 'web';
@@ -732,15 +858,15 @@ class GalleryItem {
   }
 
   get unprotectedLinkOpenType() {
-    return utils.get(this, 'metadata.link.target');
+    return _.get(this, 'metadata.link.target');
   }
 
   get linkOpenType() {
-    if (this.metadata.link && !utils.isUndefined(this.metadata.link.target)) {
+    if (this.metadata.link && !_.isUndefined(this.metadata.link.target)) {
       return this.unprotectedLinkOpenType;
     } else if (
       this.metadata.link &&
-      !utils.isUndefined(this.metadata.link.targetBlank)
+      !_.isUndefined(this.metadata.link.targetBlank)
     ) {
       return this.metadata.link.targetBlank ? '_blank' : '_top';
     } else {
@@ -770,7 +896,7 @@ class GalleryItem {
       this.metadata.isDemo ||
       this.dto.isDemo ||
       this.metadata.sourceName === 'public' ||
-      (this.metadata.tags && Array.isArray(this.metadata.tags) && this.metadata.tags.indexOf('_paid') >= 0)
+      _.includes(this.metadata.tags, '_paid')
     );
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemContainer from '../item/itemContainer.js';
+import _ from 'lodash';
 import { GalleryComponent } from '../galleryComponent';
 
 class GroupView extends GalleryComponent {
@@ -14,10 +15,10 @@ class GroupView extends GalleryComponent {
     return this.props.items.map(item =>
       React.createElement(
         ItemContainer,
-        {
-          ...item.renderProps(Object.assign(this.props.galleryConfig, { visible })),
-          ...this.props.itemsLoveData[item.id]
-        },
+        _.merge(
+          item.renderProps(_.merge(this.props.galleryConfig, { visible })),
+          { ...this.props.itemsLoveData[item.id] },
+        ),
       ),
     );
   }

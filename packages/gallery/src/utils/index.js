@@ -1,4 +1,4 @@
-import * as lodash from './lodash';
+import _ from 'lodash';
 import window from './window/windowWrapper';
 import {
   isSiteMode,
@@ -14,8 +14,6 @@ class Utils {
     this._params = {};
     this._useCache = !isEditMode() && !isPreviewMode();
     this.setIsWixMobile = this.setIsWixMobile.bind(this);
-
-    Object.assign(this, lodash);
   }
 
   isUndefined(something) {
@@ -437,20 +435,20 @@ class Utils {
   setStateAndLog(that, caller, state, callback) {
     if (this.isVerbose()) {
       console.log(`State Change Called (${caller})`, state);
-      const oldState = {...that.state};
+      const oldState = _.clone(that.state);
       that.setState(state, () => {
-        const newState = {...that.state};
+        const newState = _.clone(that.state);
         const change = this.printableObjectsDiff(oldState, newState, 'state');
-        if (Object.keys(change).length > 0) {
+        if (_.keys(change).length > 0) {
           console.log(`State Change Completed (${caller})`, change);
         }
-        if (this.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           callback.bind(that)();
         }
       });
     } else {
       that.setState(state, () => {
-        if (this.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           callback.bind(that)();
         }
       });
@@ -464,24 +462,25 @@ class Utils {
       } else if (this.isUndefined(v)) {
         v = 'undefined';
       }
-      return String(v);
+      return _.toString(v);
     };
 
     const getInnerDiff = (_obj1, _obj2, _prefix) => {
-      const innerDiff = _obj1.reduce(
+      const innerDiff = _.reduce(
+        _obj1,
         (res, v, k) => {
-          if (!this.isEqual(v, _obj2[k])) {
-            if (Array.isArray(_obj2[k])) {
+          if (!_.isEqual(v, _obj2[k])) {
+            if (_.isArray(_obj2[k])) {
               if (v.length !== _obj2[k].length) {
                 res[k + '.length'] =
                   '[' + v.length + '] => [' + _obj2[k].length + ']';
               }
-              res = Object.assign(
+              res = _.merge(
                 res,
                 getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k),
               );
-            } else if (typeof _obj2[k] === 'object') {
-              res = Object.assign(
+            } else if (_.isObject(_obj2[k])) {
+              res = _.merge(
                 res,
                 getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k),
               );

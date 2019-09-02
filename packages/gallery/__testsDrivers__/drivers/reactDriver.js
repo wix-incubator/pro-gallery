@@ -4,6 +4,7 @@ import { testImages } from '../images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew.js'; //import GalleryContainer before the connect (without redux)
 import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
+import _ from 'lodash';
 import PLACEMENTS from '../../src/utils/constants/placements';
 import React from 'react';
 import utils from '../../src/utils';
@@ -94,16 +95,16 @@ class galleryDriver {
       isInfinite: true,
     };
 
-    this.items = [...testImages];
+    this.items = _.cloneDeep(testImages);
 
     this.actions = {
-      toggleLoadMoreItems: (() => {}),
-      eventsListener: (() => {}),
-      onItemClick: (() => {}),
-      pauseAllVideos: (() => {}),
-      setWixHeight: (() => {}),
-      scrollToItem: (() => {}),
-      toggleShare: (() => {}),
+      toggleLoadMoreItems: _.noop,
+      eventsListener: _.noop,
+      onItemClick: _.noop,
+      pauseAllVideos: _.noop,
+      setWixHeight: _.noop,
+      scrollToItem: _.noop,
+      toggleShare: _.noop,
     };
 
     this.layoutParams = {
@@ -149,7 +150,7 @@ class galleryDriver {
     };
     res.galleryContainer = props => {
       const defaultProps = this.props.galleryContainer();
-      props = Object.assign(defaultProps, props || {});
+      props = _.merge(defaultProps, props || {});
       this.wrapper = mount(<GalleryContainer actions={{}} {...props} />);
       return this;
     };
@@ -259,7 +260,7 @@ class galleryDriver {
 
       groupView: () => {
         const galleryViewProps = this.props.galleryView();
-        return Object.assign(galleryViewProps, {
+        return _.merge(galleryViewProps, {
           rendered: true,
           visible: true,
           items: galleryViewProps.items.map(
@@ -272,7 +273,7 @@ class galleryDriver {
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
 
         const galleryItem = new GalleryItem({ dto: itemDto });
-        return Object.assign(galleryItem.renderProps(newGalleryConfig), {
+        return _.merge(galleryItem.renderProps(newGalleryConfig), {
           scrollingElement: {
             vertical: () => window,
             horizontal: () => window,
@@ -290,11 +291,11 @@ class galleryDriver {
       textView: (itemDto, galleryConfig) => {
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
         const galleryItem = new GalleryItem({ dto: itemDto });
-        const itemViewPropsObj = Object.assign(
+        const itemViewPropsObj = _.merge(
           galleryItem.renderProps(newGalleryConfig),
           { config: newGalleryConfig, visible: true },
         );
-        return Object.assign(itemViewPropsObj, {
+        return _.merge(itemViewPropsObj, {
           actions: {
             handleItemMouseDown: () => {},
             handleItemMouseUp: () => {},
