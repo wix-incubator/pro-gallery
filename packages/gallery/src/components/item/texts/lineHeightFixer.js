@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import utils from '../../../utils/index.js';
 import PLACEMENTS from '../../../utils/constants/placements';
 import INFO_TYPE from '../../../utils/constants/infoType';
@@ -230,7 +229,7 @@ class LineHeightFixer {
         });
       }
 
-      const isButtonHeightAvailable = !_.isNaN(buttonHeight);
+      const isButtonHeightAvailable = !Number.isNaN(buttonHeight);
       if (isButtonHeightAvailable && customButtonExists) {
         availableHeight -= buttonHeight;
         availableHeight -= designConsts.spaceBetweenElements;

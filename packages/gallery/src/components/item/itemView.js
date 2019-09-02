@@ -10,7 +10,6 @@ import Share from './share/share.js';
 import classNames from 'classnames';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
-import _ from 'lodash';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';
@@ -117,7 +116,8 @@ class ItemView extends GalleryComponent {
       return;
     }
     this.setState({
-      showShare: _.isUndefined(forceVal) ? !this.state.showShare : !!forceVal,
+      showShare:
+        typeof forceVal === 'undefined' ? !this.state.showShare : !!forceVal,
     });
   }
 
@@ -141,7 +141,7 @@ class ItemView extends GalleryComponent {
   }
 
   handleGalleryItemClick() {
-    _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked')) &&
+    utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked')) &&
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
   }
@@ -149,7 +149,7 @@ class ItemView extends GalleryComponent {
   onItemClick(e) {
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
-      return _.noop;
+      return (() => {});
     }
 
     e.preventDefault();
@@ -197,13 +197,13 @@ class ItemView extends GalleryComponent {
   }
 
   toggleFullscreenIfNeeded(e) {
-    let targetClass = _.get(e, 'target.className');
-    if (_.isObject(targetClass)) {
-      targetClass = _.valuesIn(targetClass);
+    let targetClass = utils.get(e, 'target.className');
+    if (typeof targetClass === 'object') {
+      targetClass = Object.values(targetClass);
     }
 
     if (
-      _.isFunction(targetClass.indexOf) &&
+      utils.isFunction(targetClass.indexOf) &&
       targetClass.indexOf('block-fullscreen') >= 0
     ) {
       console.warn('Blocked fullscreen!', e);
@@ -374,7 +374,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemTextsDetails() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'title',
       'description',
       'fileName',
@@ -408,7 +408,7 @@ class ItemView extends GalleryComponent {
   }
 
   getSocial() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'html',
       'hashtag',
       'photoId',
@@ -445,7 +445,7 @@ class ItemView extends GalleryComponent {
   }
 
   getShare() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'styleParams',
       'id',
       'type',
@@ -470,7 +470,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemHover(children, imageDimensions) {
-    // const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
+    // const props = utils.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     const { customHoverRenderer, ...props } = this.props;
     return (
       <ItemHover
@@ -491,7 +491,7 @@ class ItemView extends GalleryComponent {
   }
 
   getImageItem(imageDimensions) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'alt',
       'title',
       'description',
@@ -531,17 +531,18 @@ class ItemView extends GalleryComponent {
           failed: this.state.failed,
           loaded: this.state.loaded,
         }}
-        actions={_.merge({}, this.props.actions, {
+        actions={{
+          ...this.props.actions, 
           setItemLoaded: this.setItemLoaded,
           setItemError: this.setItemError,
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
-        })}
+        }}
       />
     );
   }
   getVideoItemPlaceholder(imageDimensions, itemHover) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'alt',
       'title',
       'description',
@@ -576,7 +577,7 @@ class ItemView extends GalleryComponent {
   }
 
   getTextItem(imageDimensions) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'id',
       'styleParams',
       'style',
@@ -719,17 +720,13 @@ class ItemView extends GalleryComponent {
             style={getInnerInfoStyle(styleParams)}
             className={elementName}
             onMouseOver={() => {
-              utils.isMobile()
-                ? _.noop()
-                : this.props.actions.eventsListener(
-                    EVENTS.HOVER_SET,
-                    this.props.idx,
-                  );
+              !utils.isMobile() && this.props.actions.eventsListener(
+                EVENTS.HOVER_SET,
+                this.props.idx,
+              );
             }}
             onMouseOut={() => {
-              utils.isMobile()
-                ? _.noop()
-                : this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+              !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
           >
             {itemTexts}

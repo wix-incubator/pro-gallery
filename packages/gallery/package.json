@@ -34,7 +34,6 @@
     "react-player": "1.10.0"
   },
   "peerDependencies": {
-    "lodash": "^4.17.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
@@ -49,7 +48,6 @@
     "husky": "^0.13.4",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
-    "lodash": "^4.17.4",
     "match-screenshot": "^1.0.14",
     "nock": "^9.3.3",
     "node-sass": "^4.12.0",
@@ -75,7 +73,8 @@
     "extends": "yoshi",
     "rules": {
       "import/no-unresolved": "off",
-      "default-case": "off"
+      "default-case": "off",
+      "prettier/prettier": "off"
     }
   },
   "unpkg": true,
@@ -93,7 +92,6 @@
     },
     "externals": {
       "babel-runtime": "babel-runtime",
-      "lodash": "_",
       "react": "React",
       "react-dom": "ReactDOM"
     },

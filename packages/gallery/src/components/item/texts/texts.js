@@ -7,13 +7,12 @@ import PLACEMENTS from '../../../utils/constants/placements';
 import utils from '../../../utils';
 import designConsts from '../../../constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';
-import _ from 'lodash';
 import { GalleryComponent } from '../../galleryComponent';
 
 export default class Texts extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
+    this.debouncedTryFixLineHeight = utils.debounce(this.tryFixLineHeight, 500);
   }
 
   getElementClassNames() {

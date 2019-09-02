@@ -10,7 +10,6 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import _ from 'lodash';
 import utils from '../../utils';
 import { isEditMode, isSEOMode } from '../../utils/window/viewModeWrapper';
 import EVENTS from '../../utils/constants/events';
@@ -88,9 +87,8 @@ export class GalleryContainer extends React.Component {
           this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
         }
       } catch (e) {
-        //todo - report to sentry
-        this.initialGalleryState = {};
         //hydrate phase did not happen - do it all over again
+        this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
           if (Object.keys(galleryState).length > 0) {
@@ -246,7 +244,7 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    const throttledReCreateGallery = _.throttle(() => {
+    const throttledReCreateGallery = utils.throttle(() => {
       const { items, styles, container, watermarkData } = this.props;
       const params = {
         items,
@@ -313,7 +311,7 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick,
       initialGalleryHeight,
     } = this.state;
-    const partialStyleParams = _.pick(this.state.styles, [
+    const partialStyleParams = utils.pick(this.state.styles, [
       'isSlideshow',
       'slideshowInfoSize',
       'galleryThumbnailsAlignment',
@@ -1016,7 +1014,7 @@ export class GalleryContainer extends React.Component {
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
-      : _.noop;
+      : (() => {});
     const ssrDisableTransition =
       !!utils.isSSR() &&
       'div.pro-gallery-parent-container * { transition: none !important }';
@@ -1062,14 +1060,15 @@ export class GalleryContainer extends React.Component {
             playingVideoIdx={this.state.playingVideoIdx}
             nextVideoIdx={this.state.nextVideoIdx}
             noFollowForSEO={this.props.noFollowForSEO}
-            actions={_.merge(this.props.actions, {
+            actions={{
+              ...this.props.actions, 
               findNeighborItem,
               toggleLoadMoreItems: this.toggleLoadMoreItems,
               eventsListener: this.eventsListener,
-              setWixHeight: _.noop,
+              setWixHeight: (() => {}),
               scrollToItem: this.scrollToItem,
               duplicateGalleryItems: this.duplicateGalleryItems,
-            })}
+            }}
             {...this.props.gallery}
           />
           {this.galleryInitialStateJson && (

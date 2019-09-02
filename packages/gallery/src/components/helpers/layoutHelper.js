@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import utils from '../../utils';
 import PLACEMENTS from '../../utils/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';
@@ -80,7 +79,7 @@ function getStyleBySeed(seed) {
         ? numFromSeed(1, 100, 'collageDensity')
         : numFromSeed(5, 10, 'collageDensity')) / 100,
     groupTypes: ['1'].concat(
-      _.filter('2h,2v,3t,3b,3l,3r,3h,3v'.split(','), (type, i) =>
+      ('2h,2v,3t,3b,3l,3r,3h,3v').split(',').filter((type, i) =>
         boolFromSeed('groupTypes' + i),
       ),
     ),
@@ -116,7 +115,7 @@ function getStyleBySeed(seed) {
     style.isVertical = false;
   }
   style.galleryType = style.isVertical ? 'Columns' : 'Strips';
-  style.groupSize = parseInt(_.last(style.groupTypes));
+  style.groupSize = parseInt(style.groupTypes.slice(-1)[0]);
   style.groupTypes = style.groupTypes.join(',');
   style.minItemSize = style.gallerySize / style.groupSize / 2;
 
@@ -465,7 +464,7 @@ function getStyleByLayout(styles) {
   ];
 
   let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
-  if (_.isUndefined(layoutName)) {
+  if (utils.isUndefined(layoutName)) {
     galleryLayout = 0;
     layoutName = 'collage';
   }
@@ -474,16 +473,17 @@ function getStyleByLayout(styles) {
     console.log('chosen layout is', layoutName);
   }
 
-  return _.merge(layouts[layoutName](), {
-    galleryLayout,
-  });
+  return {
+    ...layouts[layoutName](), 
+    galleryLayout
+  };
 }
 
 function addLayoutStyles(styles) {
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
-  if (!_.isUndefined(galleryLayoutV1) && _.isUndefined(galleryLayoutV2)) {
+  if (!utils.isUndefined(galleryLayoutV1) && utils.isUndefined(galleryLayoutV2)) {
     //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
     styles = Object.assign(styles, getStyleByGalleryType(styles)); //legacy layouts
@@ -534,7 +534,7 @@ function processLayouts(styles) {
 
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {
-      if (!_.isUndefined(processedStyles.itemFontSlideshow)) {
+      if (!utils.isUndefined(processedStyles.itemFontSlideshow)) {
         processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
           /^font\s*:\s*/,
           '',
@@ -553,7 +553,7 @@ function processLayouts(styles) {
           processedStyles.textDecorationTitle = 'none';
         }
       }
-      if (!_.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
+      if (!utils.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
         processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
           /^font\s*:\s*/,
           '',
@@ -577,7 +577,7 @@ function processLayouts(styles) {
         }
       }
     } else {
-      if (!_.isUndefined(processedStyles.itemFont)) {
+      if (!utils.isUndefined(processedStyles.itemFont)) {
         processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
           /^font\s*:\s*/,
           '',
@@ -596,7 +596,7 @@ function processLayouts(styles) {
           processedStyles.textDecorationTitle = 'none';
         }
       }
-      if (!_.isUndefined(processedStyles.itemDescriptionFont)) {
+      if (!utils.isUndefined(processedStyles.itemDescriptionFont)) {
         processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
           /^font\s*:\s*/,
           '',
@@ -712,14 +712,14 @@ function processLayouts(styles) {
     processedStyles.cubeRatio = processedStyles.gallerySliderImageRatio;
   } else if (
     processedStyles.isGrid &&
-    !_.isUndefined(processedStyles.galleryImageRatioFromWix)
+    !utils.isUndefined(processedStyles.galleryImageRatioFromWix)
   ) {
     processedStyles.cubeRatio = processedStyles.galleryImageRatioFromWix;
   }
   //Used to look like that before the split :
   // if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
-  // } else if (stateStyles.isSlider && _.isUndefined(stateStyles.cubeRatio)) {
+  // } else if (stateStyles.isSlider && utils.isUndefined(stateStyles.cubeRatio)) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
   // } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
@@ -748,7 +748,7 @@ function processLayouts(styles) {
 
   //TODO this needs to split, need to leave the wixStyles assign in the statics section
   if (
-    !_.isUndefined(processedStyles.numberOfImagesPerCol) &&
+    !utils.isUndefined(processedStyles.numberOfImagesPerCol) &&
     processedStyles.isGrid &&
     processedStyles.oneRow
   ) {

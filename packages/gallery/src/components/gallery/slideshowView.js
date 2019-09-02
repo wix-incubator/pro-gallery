@@ -2,7 +2,6 @@ import utils from '../../utils';
 import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import _ from 'lodash';
 import window from '../../utils/window/windowWrapper';
 import { isEditMode, isPreviewMode } from '../../utils/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
@@ -27,17 +26,9 @@ class SlideshowView extends GalleryComponent {
       this,
     );
     this.handleKeypress = this.handleKeypress.bind(this);
-    this._setCurrentItemByScroll = _.throttle(
-      this.setCurrentItemByScroll,
-      600,
-      { leading: false, trailing: true },
-    ).bind(this);
-    this._nextItem = _.throttle(this.nextItem, 400, {
-      leading: true,
-      trailing: false,
-    }).bind(this);
+    this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
+    this._nextItem = utils.throttle(this.nextItem.bind(this), 400).bind(this);
     this.state = {
-      flatItems: [],
       currentIdx: 0,
       isInView: true,
       shouldStopAutoSlideShow: false,
@@ -479,20 +470,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  setFlattenItems(galleryStructure) {
-    const flatItems = _.flattenDeep(
-      galleryStructure.columns.map(column => {
-        return column.galleryGroups.map(group => {
-          return group.items;
-        });
-      }),
-    );
-
-    this.setState({
-      flatItems,
-    });
-  }
-
+  
   setCurrentItemByScroll() {
     if (utils.isVerbose()) {
       console.log('Setting current Idx by scroll', this.isAutoScrolling);
@@ -517,7 +495,7 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
     const scrollLeft = (this.container && this.container.scrollLeft) || 0;
 
-    const items = this.state.flatItems;
+    const items = this.props.galleryStructure.galleryItems;
 
     let currentIdx;
 
@@ -531,7 +509,7 @@ class SlideshowView extends GalleryComponent {
       }
     }
 
-    if (!_.isUndefined(currentIdx)) {
+    if (!utils.isUndefined(currentIdx)) {
       utils.setStateAndLog(
         this,
         'Set Current Item',
@@ -554,7 +532,7 @@ class SlideshowView extends GalleryComponent {
     const shouldNotRenderNavArrows = this.props.galleryStructure.columns.some(
       column => {
         const allRenderedGroups =
-          _.filter(column.groups, group => group.rendered) || [];
+          column.groups.filter(group => group.rendered) || [];
         const allGroupsWidth = allRenderedGroups.reduce(
           (sum, group) => sum + Math.max(0, group.width),
           0,
@@ -694,7 +672,7 @@ class SlideshowView extends GalleryComponent {
         height: this.props.container.galleryHeight,
       };
       if (this.props.styleParams.isSlideshow) {
-        _.merge(columnStyle, {
+        Object.assign(columnStyle, {
           paddingBottom: this.props.styleParams.slideshowInfoSize,
         });
       }
@@ -712,9 +690,10 @@ class SlideshowView extends GalleryComponent {
                 group.rendered
                   ? React.createElement(
                       GroupView,
-                      _.merge(group.renderProps(galleryConfig), {
+                      {
                         itemsLoveData,
-                      }),
+                        ...group.renderProps(galleryConfig)
+                      },
                     )
                   : false,
               )}
@@ -743,7 +722,7 @@ class SlideshowView extends GalleryComponent {
       ...galleryStyleForExternalArrows,
     };
     if (this.props.styleParams.isSlideshow) {
-      _.merge(galleryStyle, {
+      Object.assign(galleryStyle, {
         paddingBottom: this.props.styleParams.slideshowInfoSize,
       });
     }
@@ -919,7 +898,6 @@ class SlideshowView extends GalleryComponent {
 
   componentWillReceiveProps(props) {
     if (props.items) {
-      this.setFlattenItems(props.galleryStructure);
       this.ItemsForSlideshowLoopThumbnails = false;
     }
     if (this.props.isInDisplay !== props.isInDisplay) {
@@ -951,10 +929,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   componentDidMount() {
-    if (this.props.galleryStructure) {
-      this.setFlattenItems(this.props.galleryStructure);
-    }
-
     window.addEventListener('gallery_navigation_out', () => {
       //TODO remove after full refactor release
       utils.setStateAndLog(this, 'Next Item', {
