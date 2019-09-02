@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import utils from '../../utils';
 import window from '../../utils/window/windowWrapper';
 
@@ -32,8 +31,8 @@ export function scrollToItemImp(scrollParams) {
       console.log('Scrolling to items #' + itemIdx);
     }
 
-    const item = _.find(items, itm => itm.idx === itemIdx);
-    pos = oneRow ? _.get(item, 'offset.left') : _.get(item, 'offset.top');
+    const item = items.find(itm => itm.idx === itemIdx);
+    pos = oneRow ? utils.get(item, 'offset.left') : utils.get(item, 'offset.top');
 
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + pos, item);
@@ -47,7 +46,7 @@ export function scrollToItemImp(scrollParams) {
     if (oneRow) {
       if (
         isManual &&
-        _.isFunction(_.get(window, 'galleryWixCodeApi.onItemChanged'))
+        utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemChanged'))
       ) {
         window.galleryWixCodeApi.onItemChanged(item);
       }

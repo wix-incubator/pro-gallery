@@ -1,6 +1,5 @@
 import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
-import _ from 'lodash';
 import utils from '../../utils/index.js';
 import window from '../../utils/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
@@ -293,12 +292,12 @@ class GalleryView extends GalleryComponent {
         '[DEBUG_RENDER] GalleryView props changed',
         utils.printableObjectsDiff(this.lastProps || {}, this.props),
       );
-      this.lastProps = _.cloneDeep(this.props);
+      this.lastProps = {...this.props};
       console.log(
         '[DEBUG_RENDER] GalleryView state changed',
         utils.printableObjectsDiff(this.lastState || {}, this.state),
       );
-      this.lastState = _.cloneDeep(this.state);
+      this.lastState = {...this.state};
       this.renderCount = (this.renderCount || 0) + 1;
     }
 

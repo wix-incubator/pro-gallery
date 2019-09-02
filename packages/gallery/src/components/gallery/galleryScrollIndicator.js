@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import utils from '../../utils/index';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -11,7 +11,7 @@ export default class ScrollIndicator extends GalleryComponent {
       scrollTop: 0,
       scrollLeft: 0,
     };
-    this.debouncedOnScroll = _.debounce(props.onScroll, 50);
+    this.debouncedOnScroll = utils.debounce(props.onScroll, 50);
   }
 
   removeScrollListener() {
