@@ -1,14 +1,12 @@
 import React from 'react';
 import CustomButtonIcon from './customButtonIcon.js';
-import utils from '../../../utils/index.js';
 import EVENTS from '../../../utils/constants/events';
 import { GalleryComponent } from '../../galleryComponent';
 
 export default class CustomButton extends GalleryComponent {
   render() {
     const { styleParams } = this.props;
-    const defaultText = utils.isStoreGallery() ? 'Buy Now' : 'Click here';
-    const buttonText = styleParams.customButtonText || defaultText;
+    const buttonText = styleParams.customButtonText || 'Click here';
     return (
       <div
         className="custom-button-wrapper"

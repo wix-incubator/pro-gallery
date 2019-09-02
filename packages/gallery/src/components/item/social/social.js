@@ -115,9 +115,12 @@ export default class Social extends GalleryComponent {
             ? 0
             : -1,
       };
+      const downloadUrl = styleParams.isStoreGallery
+        ? URL_SIZES.DOWNLOAD_SAMPLE
+        : URL_SIZES.DOWNLOAD;
       const downloadLink =
-        createUrl(URL_SIZES.DOWNLOAD, URL_TYPES.VIDEO) ||
-        createUrl(URL_SIZES.DOWNLOAD, URL_TYPES.HIGH_RES);
+        createUrl(downloadUrl, URL_TYPES.VIDEO) ||
+        createUrl(downloadUrl, URL_TYPES.HIGH_RES);
 
       const itemProps = {
         target: '_blank',

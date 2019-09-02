@@ -54,7 +54,7 @@ class LoveButton extends GalleryComponent {
         break;
       default:
         className.push('gallery-item-social-love');
-        if (!utils.isStoreGallery()) {
+        if (!this.props.styleParams.isStoreGallery) {
           className.push('block-fullscreen');
         }
     }

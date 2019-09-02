@@ -388,7 +388,7 @@ class ItemView extends GalleryComponent {
       this.props.type === 'image' || this.props.type === 'picture';
     const useCustomButton = this.props.styleParams.useCustomButton === true;
     const shouldShowButton =
-      (isImage || !utils.isStoreGallery()) && useCustomButton;
+      (isImage || !this.props.styleParams.isStoreGallery) && useCustomButton;
 
     return (
       <Texts
@@ -810,7 +810,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemAriaLabel() {
-    const { type, title } = this.props;
+    const { type, title, styleParams } = this.props;
     let typeName;
     switch (type) {
       case 'dummy':
@@ -827,7 +827,7 @@ class ItemView extends GalleryComponent {
         break;
     }
     const label =
-      typeName + ', ' + title + (utils.isStoreGallery() ? ', Buy Now' : '');
+      typeName + ', ' + title + (styleParams.isStoreGallery ? ', Buy Now' : '');
     return label;
   }
 
