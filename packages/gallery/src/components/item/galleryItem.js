@@ -315,10 +315,16 @@ class GalleryItem {
   }
 
   get download_url() {
+    return this.getDownloadUrlAndSetIfNeeded(this.full_url);
+  }
+
+  get download_sample_url() {
+    return this.getDownloadUrlAndSetIfNeeded(this.sample_url);
+  }
+
+  getDownloadUrlAndSetIfNeeded(url) {
     if (!this.urls.download_url) {
-      this.urls.download_url = utils.isStoreGallery()
-        ? this.sample_url
-        : this.full_url;
+      this.urls.download_url = url;
       this.urls.download_url._img = this.urls.download_url.img;
       this.urls.download_url.img = () => this.urls.download_url._img() + `?dn=${this.fileName}`;
     }

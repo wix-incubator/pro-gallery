@@ -465,20 +465,8 @@ function getStyleByLayout(styles) {
 
   let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
   if (utils.isUndefined(layoutName)) {
-    if (utils.isStoreGallery()) {
-      galleryLayout = 2;
-      layoutName = 'grid';
-    } else {
       galleryLayout = 0;
       layoutName = 'collage';
-    }
-  }
-
-  const specialMobileStoreConfig = {};
-  if (utils.isStoreGallery() && utils.isMobile()) {
-    galleryLayout = 2;
-    layoutName = 'grid';
-    specialMobileStoreConfig.forceMobileCustomButton = true;
   }
 
   if (utils.isVerbose()) {
@@ -486,8 +474,7 @@ function getStyleByLayout(styles) {
   }
 
   return {
-    ...layouts[layoutName](), 
-    ...specialMobileStoreConfig, 
+    ...layouts[layoutName](),
     galleryLayout
   };
 }

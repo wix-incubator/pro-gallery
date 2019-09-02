@@ -7,6 +7,7 @@ export const URL_SIZES = {
   SAMPLE: 'sample',
   PRELOAD: 'preload',
   DOWNLOAD: 'download',
+  DOWNLOAD_SAMPLE: 'download_sample'
 };
 
 export const URL_TYPES = {
