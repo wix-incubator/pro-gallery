@@ -2,7 +2,7 @@
 /* tslint:disable */
 import PropTypes from 'prop-types';
 import React from 'react';
-const Play = ({size, ...props}) => (
+const play = ({size, ...props}) => (
   <svg viewBox="0 0 11 14" fill="currentColor" width={ size || "11" } height={ size || "14" } {...props}>
     <g id="final" stroke="none" fill="none" strokeWidth="1" fillRule="evenodd">
       <g id="Pause" transform="translate(-490 -763)" fill="currentColor">
@@ -15,10 +15,10 @@ const Play = ({size, ...props}) => (
     </g>
   </svg>
 );
-Play.displayName = 'Play';
-Play.propTypes = {
+play.displayName = 'play';
+play.propTypes = {
   size: PropTypes.string
 }
-export default Play;
+export default play;
 /* tslint:enable */
 /* eslint-enable */
