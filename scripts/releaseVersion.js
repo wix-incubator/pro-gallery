@@ -112,7 +112,7 @@ function getBumpedVersion(version, bump) {
 }
 
 function writeToChangelog(str) {
-    const writeCommand = `echo "${str}" >> ${CHANGELOG}`;
+    const writeCommand = `echo "${str.replace(/\"/g, '')}" >> ${CHANGELOG}`;
     execSync(writeCommand);
 }
 
