@@ -121,3 +121,16 @@
 #### GALLERY
  -  rename play svg
  -  bind setCurrentItemByScroll to this
+
+---
+## v1.2.13 (03/09/2019)
+ 
+#### GALLERY
+ -  remove comments from svg-fonts scss file (created errors in css dist file)
+ -  rename again that play button
+ -  rename play button again
+ -  fix references to play.js
+ -  rename play svg
+ -  rename play svg
+ -  bind setCurrentItemByScroll to this
+
