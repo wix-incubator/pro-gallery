@@ -1,7 +1,6 @@
 import {useContext} from 'react';
 import {GalleryContext} from './GalleryContext';
 import {getInitialStyleParams} from '../constants/styleParams';
-import {processNewStyle} from '../utils/styleProcessor';
 
 
 export function useGalleryContext() {

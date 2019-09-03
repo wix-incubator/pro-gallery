@@ -25,6 +25,8 @@ export function App() {
   const [showSide, setShowSide] = useState(true);
   const [fullscreenIdx, setFullscreenIdx] = useState(-1);
 
+  console.log({styleParams});
+  
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
     setDimentions(width, window.innerHeight);

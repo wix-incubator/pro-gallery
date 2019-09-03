@@ -1,10 +1,10 @@
 import Consts from "../utils/consts";
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
-  return {
-    ...defaultStyleParams,
-    ...styleParams[gallery]
-  };
+  return {};
+  //   ...defaultStyleParams,
+  //   ...styleParams[gallery]
+  // };
 }
 const defaultStyleParams = {
   useRefactoredGalleryContainer: false,
