@@ -59,8 +59,6 @@ function SideBar() {
   'm_playButtonForAutoSlideShow - defined but I don\'t see where we use it\n'+
   'mobileSwipeAnimation\n'];
 
-  console.log({SUB_SECTIONS});
-
   return (
     <>
     <h3 className={s.title}>Gallery Settings</h3>

@@ -26,7 +26,7 @@ export function useGalleryContext() {
   };
 
   const setStyleParams = (newProp, value) => {
-    setContext({styleParams: processNewStyle({...context.styleParams, [newProp]: value}, newProp)});
+    setContext({styleParams: {...context.styleParams, [newProp]: value}});
   };
 
   const setItems = items => {
