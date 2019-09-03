@@ -5,7 +5,7 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import window from '../../utils/window/windowWrapper';
 import { isEditMode, isPreviewMode } from '../../utils/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
-import PlayIcon from '../../assets/images/react-svg/components/Play';
+import PlayIcon from '../../assets/images/react-svg/components/play';
 import PauseIcon from '../../assets/images/react-svg/components/pause';
 import EVENTS from '../../constants/events';
 import { GalleryComponent } from '../galleryComponent';
