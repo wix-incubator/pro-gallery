@@ -1,14 +1,46 @@
 import Consts from "../utils/consts";
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
-  return {};
-  //   ...defaultStyleParams,
-  //   ...styleParams[gallery]
-  // };
+  const savedStyleParams = getStyleParamsFromUrl();
+  return {
+    ...defaultStyleParams,
+    ...styleParams[gallery],
+    ...savedStyleParams,
+  };
 }
+
+const formatValue = (val) => {
+  if (Number(val) === parseInt(val)) {
+    return Number(val);
+   } else if (val === 'true') {
+     return true;
+   } else if (val === 'false') {
+     return false;
+   } else {
+     return String(val);
+   }
+}
+
+
+const getStyleParamsFromUrl = () => {
+  try {
+    const styleParams = window.location.hash
+      .replace('#', '').split('&')
+      .map(styleParam => styleParam.split('='))
+      .reduce((obj, [styleParam, value]) => Object.assign(obj, {[styleParam]: formatValue(value)}));
+    debugger;
+    return styleParams;
+  } catch (e) {
+    return {};
+  }
+}
+
+export const setStyleParamsInUrl = (styleParams) => {
+  //window.location.search = '?' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')
+  window.location.hash = '#' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => styleParam && arr.concat(`${styleParam}=${value}`), []).join('&')
+}
+
 const defaultStyleParams = {
-  useRefactoredGalleryContainer: false,
-  gotStyleParams: true,
   isVertical: 0,
   gallerySize: 30,
   minItemSize: 120,
