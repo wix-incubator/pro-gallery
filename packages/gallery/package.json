@@ -13,7 +13,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "npm run build-svg && PORT=9837 yoshi start",
+    "start": "PORT=9837 yoshi start",
     "build": "npm run build-svg && yoshi build",
     "build-svg": "svg2react-icon src/assets/images/svg-src src/assets/images/react-svg",
     "precommit": " ",

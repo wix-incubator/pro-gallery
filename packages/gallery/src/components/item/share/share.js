@@ -3,6 +3,11 @@ import utils from '../../../utils/index.js';
 import { GalleryComponent } from '../../galleryComponent';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
 import EVENTS from '../../../constants/events';
+import Facebook from '../../../assets/images/react-svg/components/facebook';
+import Pinterest from '../../../assets/images/react-svg/components/pinterest';
+import Twitter from '../../../assets/images/react-svg/components/twitter';
+import Email from '../../../assets/images/react-svg/components/email';
+import Tumblr from '../../../assets/images/react-svg/components/tumblr';
 
 export default class Share extends GalleryComponent {
   constructor(props) {
