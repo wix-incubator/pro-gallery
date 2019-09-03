@@ -45,7 +45,7 @@ export default class ScrollIndicator extends GalleryComponent {
     }
 
     this.scrollEventListenerSet = true;
-
+    const { oneRow } = this.props;
     const scrollingElement = this.props.scrollingElement;
     //Horizontal Scroll
     this.onHorizontalScroll = e => {
@@ -53,10 +53,12 @@ export default class ScrollIndicator extends GalleryComponent {
       const top = target && (target.scrollY || target.scrollTop || target.y);
       const left = target && (target.scrollX || target.scrollLeft || target.x);
       if (left >= 0) {
-        this.setState({
-          scrollTop: left, //todo use both scrollTop and scrollLeft
-          scrollLeft: left,
-        });
+        if (oneRow) {
+          this.setState({
+            scrollTop: left, //todo use both scrollTop and scrollLeft
+            scrollLeft: left,
+          });
+        }
         this.props.getMoreItemsIfNeeded(left);
         this.props.enableScrollPreload();
         this.debouncedOnScroll({ top, left });
@@ -75,9 +77,11 @@ export default class ScrollIndicator extends GalleryComponent {
       const top = target && (target.scrollY || target.scrollTop || target.y);
       const left = target && (target.scrollX || target.scrollLeft || target.x);
       if (top >= 0) {
-        this.setState({
-          scrollTop: top,
-        });
+        if (!oneRow) {
+          this.setState({
+            scrollTop: top,
+          });
+        }
         this.props.getMoreItemsIfNeeded(top);
         this.props.enableScrollPreload();
         this.debouncedOnScroll({ top, left });

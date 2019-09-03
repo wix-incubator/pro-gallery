@@ -105,3 +105,12 @@
  -  lineHeightFixer - use default values when css is not found
  -  fixed dynamic imports influence on the component (state vise).
 
+---
+## v1.2.12 (03/09/2019)
+ 
+#### GALLERY
+ -  merge both constants folders
+ -  remove lodash dependency
+ -  remove utils isStoreGallery
+ -  fix download url
+
