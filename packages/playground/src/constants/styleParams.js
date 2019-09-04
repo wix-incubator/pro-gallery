@@ -28,7 +28,6 @@ const getStyleParamsFromUrl = () => {
       .replace('#', '').split('&')
       .map(styleParam => styleParam.split('='))
       .reduce((obj, [styleParam, value]) => Object.assign(obj, {[styleParam]: formatValue(value)}));
-    debugger;
     return styleParams;
   } catch (e) {
     return {};

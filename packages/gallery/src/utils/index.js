@@ -467,7 +467,10 @@ class Utils {
       return String(v);
     };
 
-    const getInnerDiff = (_obj1, _obj2, _prefix) => {
+    const getInnerDiff = (_obj1, _obj2, _prefix, depth = 1) => {
+      if (depth > 10) {
+        return {};
+      }
       const innerDiff = Object.entries(_obj1).reduce(
         (res, [k, v]) => {
           if (!this.isEqual(v, _obj2[k])) {
@@ -478,12 +481,12 @@ class Utils {
               }
               res = Object.assign(
                 res,
-                getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k),
+                getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k, depth + 1),
               );
             } else if (typeof _obj2[k] === 'object') {
               res = Object.assign(
                 res,
-                getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k),
+                getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k, depth + 1),
               );
             } else {
               res[(_prefix ? _prefix + '.' : '') + k] =
@@ -497,7 +500,7 @@ class Utils {
       return innerDiff;
     };
 
-    return getInnerDiff(obj1, obj2, prefix);
+    return getInnerDiff(obj1, obj2, prefix, 1);
   }
 
   getScreenWidth() {
