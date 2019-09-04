@@ -80,7 +80,7 @@ describe('Slideshow View', () => {
         .returns(true);
       expect(driver.get.state('currentIdx')).to.equal(0);
       //nextItem - forward
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: 39,
         charCode: null,
         preventDefault() {},
@@ -89,7 +89,7 @@ describe('Slideshow View', () => {
       expect(driver.get.state('currentIdx')).to.equal(1);
       stubFirst.returns(false);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: 40,
         charCode: null,
         preventDefault() {},
@@ -97,7 +97,7 @@ describe('Slideshow View', () => {
       });
       expect(driver.get.state('currentIdx')).to.equal(2);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: null,
         charCode: 32,
         preventDefault() {},
@@ -105,7 +105,7 @@ describe('Slideshow View', () => {
       });
       expect(driver.get.state('currentIdx')).to.equal(3);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: null,
         charCode: 34,
         preventDefault() {},
@@ -114,7 +114,7 @@ describe('Slideshow View', () => {
       expect(driver.get.state('currentIdx')).to.equal(4);
       //nextItem - backward
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: 38,
         charCode: null,
         preventDefault() {},
@@ -122,7 +122,7 @@ describe('Slideshow View', () => {
       });
       expect(driver.get.state('currentIdx')).to.equal(3);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: 37,
         charCode: null,
         preventDefault() {},
@@ -130,7 +130,7 @@ describe('Slideshow View', () => {
       });
       expect(driver.get.state('currentIdx')).to.equal(2);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: null,
         charCode: 33,
         preventDefault() {},
@@ -138,7 +138,7 @@ describe('Slideshow View', () => {
       });
       expect(driver.get.state('currentIdx')).to.equal(1);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: null,
         charCode: 33,
         preventDefault() {},
@@ -147,7 +147,7 @@ describe('Slideshow View', () => {
       expect(driver.get.state('currentIdx')).to.equal(0);
       stubFirst.returns(true);
       clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleKeypress({
+      driver.get.instance().handleSlideshowKeyPress({
         keyCode: null,
         charCode: 33,
         preventDefault() {},
