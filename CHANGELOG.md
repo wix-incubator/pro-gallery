@@ -127,3 +127,13 @@
  
 #### GALLERY
  -  remove comments from svg-fonts scss file (created errors in css dist file)
+
+---
+## v1.2.15 (04/09/2019)
+ 
+#### GALLERY
+ -  fixed A11y issue and auto slideshow play button and counter.
+
+#### PLAYGROUND
+ -  save styleParams in the url
+

@@ -57,7 +57,7 @@ function getLatestCommit() {
 }
 
 function editChangelogAndUpdateVersion(bump) {
-    var editor = process.env.EDITOR || 'code';
+    var editor = 'code';
     var child = spawn(editor, [CHANGELOG], {
         stdio: 'inherit'
     });
