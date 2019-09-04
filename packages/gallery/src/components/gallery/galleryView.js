@@ -314,6 +314,8 @@ class GalleryView extends GalleryComponent {
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
         // style={this.getStyles()}
+        role="region"
+        aria-label="Gallery. you can navigate the gallery with keyboard arrow keys."
       >
         {screenLogs}
         {gallery}

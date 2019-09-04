@@ -71,8 +71,8 @@ export default class ImageItem extends GalleryComponent {
             : '') + 'image'
         }
         className={'gallery-item-visible gallery-item gallery-item-preloaded'}
-        aria-label={alt}
-        alt={alt}
+        aria-label={alt ? alt : 'untitled image'}
+        alt={alt ? alt : 'untitled image'}
         src={createUrl(URL_SIZES.RESIZED, URL_TYPES.SEO)}
         loading="lazy"
         style={restOfDimensions}
@@ -90,7 +90,8 @@ export default class ImageItem extends GalleryComponent {
           'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'
         }
         role="img"
-        aria-label={alt}
+        aria-label={alt ? alt : 'untitled image'}
+        alt={alt ? alt : 'untitled image'}
         data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
         style={restOfDimensions}
         {...imageProps}

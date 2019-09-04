@@ -532,7 +532,7 @@ class ItemView extends GalleryComponent {
           loaded: this.state.loaded,
         }}
         actions={{
-          ...this.props.actions, 
+          ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
           setItemError: this.setItemError,
           handleItemMouseDown: this.handleItemMouseDown,
@@ -976,6 +976,18 @@ class ItemView extends GalleryComponent {
     }
   }
 
+  getItemAriaRole() {
+    switch (this.props.styleParams.itemClick) {
+      case 'expand':
+      case 'fullscreen':
+        return 'button';
+      case 'link':
+        return 'link';
+      default:
+        return ''
+    }
+  }
+
   composeItem() {
     const { photoId, id, hash, idx } = this.props;
     const { directLink } = this.props;
@@ -1011,8 +1023,8 @@ class ItemView extends GalleryComponent {
           data-hash={hash}
           data-id={photoId}
           data-idx={idx}
-          aria-label={this.getItemAriaLabel()}
-          role="link" //left for accessibility
+          //aria-label={this.getItemAriaLabel()}
+          role={this.getItemAriaRole()}
           data-hook="item-container"
           key={'item-container-' + id}
           style={this.getItemContainerStyles()}

@@ -85,6 +85,7 @@ export default class TextItem extends GalleryComponent {
           onTouchEnd={actions.handleItemMouseUp}
           data-hook="text-item"
           {...attributes}
+          aria-label="text item"
         />
       </div>
     );

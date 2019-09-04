@@ -101,6 +101,8 @@ class VideoItem extends GalleryComponent {
         width="100%"
         height="100%"
         url={url}
+        aria-label={this.props.alt ? this.props.alt : 'untitled video'}
+        alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.styleParams.videoLoop}
         ref={player => (this.video = player)}
         volume={this.props.styleParams.videoSound ? 0.8 : 0}
@@ -171,7 +173,7 @@ class VideoItem extends GalleryComponent {
         }}
         onError={this.props.actions.setItemError}
         key={'image-' + this.props.id}
-        alt={this.props.title}
+        alt={this.props.alt ? this.props.alt : 'untitled video'}
         className={
           'gallery-item-hidden gallery-item-visible gallery-item ' +
           (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
