@@ -137,3 +137,11 @@
 #### PLAYGROUND
  -  save styleParams in the url
 
+
+---
+## v1.2.16 (05/09/2019)
+ 
+#### GALLERY
+ -  some more A11y fixes
+ -  set maximum logging depth (for verbose logging)
+  -  seoLink to return a string and not a function
