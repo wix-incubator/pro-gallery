@@ -430,6 +430,8 @@ export default class Layouter {
       this.galleryHeight -
       (this.styleParams.imageMargin - this.styleParams.galleryMargin) * 2;
 
+    this.width = this.lastGroup.left + this.lastGroup.width;
+
     if (!this.skipVisibilitiesCalc) {
       this.calcVisibilities(this.bounds);
     }
@@ -586,6 +588,7 @@ export default class Layouter {
       strips: this.strips.map(strip => strip.scheme),
       columns: this.columns.map(column => column.scheme),
       height: this.height,
+      width: this.width,
     };
   }
 }
