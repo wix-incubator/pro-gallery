@@ -468,7 +468,7 @@ class Utils {
     };
 
     const getInnerDiff = (_obj1, _obj2, _prefix, depth = 1) => {
-      if (depth > 10) {
+      if (depth > 3) {
         return {};
       }
       const innerDiff = Object.entries(_obj1).reduce(
