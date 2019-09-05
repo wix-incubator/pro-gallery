@@ -61,13 +61,25 @@ function SideBar() {
 
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  // const dataSource = Object.entries(settingsManager).map(([styleParam, props]) => ([
-  //   <AutoComplete.Option key={styleParam}>{styleParam}</AutoComplete.Option>,
-  //   <AutoComplete.Option key={`_${styleParam}`}>{props.title}</AutoComplete.Option>
-  // ])).reduce((res, arr) => [...res, ...arr], []);
+  const dataSource = Object.entries(settingsManager)
+    .filter(([styleParam]) => styleParam.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0)
+    .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
+    .map(([styleParam, props]) => (
+      <AutoComplete.Option key={styleParam}>
+        <Card size="small" title={props.title} type="inner" style={{
+          whiteSpace: 'pre-wrap'
+        }}>
+          <p><b>Key: </b>{styleParam}</p>
+          <p><b>Section: </b>{props.section}</p>
+          {props.description && <p><b>Description: </b>{props.description}</p>}
+          <p><b>Relevant in current configuration: </b>{props.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>
+        </Card>
+      </AutoComplete.Option>
+    ));
+
   // console.log({dataSource, searchResult, styleParams});
 
-  const dataSource = Object.keys(settingsManager).filter(styleParam => styleParam.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0);
+  // const dataSource = Object.keys(settingsManager).filter(styleParam => styleParam.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0);
 
   const resetSearch = () => {
     setSearchResult('');
@@ -76,17 +88,15 @@ function SideBar() {
 
   return (
     <>
-    <h3 className={s.title}>Search</h3>
     <div className="global-search-wrapper" style={{ width: 'calc(100% - 16px)', margin: '0 8px' }}>
       <AutoComplete
-        className="global-search"
         size="large"
-        style={{ width: '100%' }}
+        style={{ width: '100%', margin: '10px 1px' }}
+        dropdownStyle={{ height: 'calc(100vh - 150px)', background: 'white', overflow: 'scroll' }}
         dataSource={dataSource}
         onSelect={(val) => ( setSearchResult(val.replace(/_/g, '')) )}
         onSearch={(val) => setSearchTerm(val)}
         placeholder="Search Style Params"
-        optionLabelProp="text"
       >
         <Input
           suffix={
@@ -106,7 +116,7 @@ function SideBar() {
           padding: 0,
           margin: '2px -17px',
           background: 'transparent',
-          border: 'none'
+          border: 'none',
         }}>
           <JsonEditor 
             onChange={setStyleParams} 

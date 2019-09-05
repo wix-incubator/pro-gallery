@@ -8,3 +8,9 @@
 .controls {
   padding: 2px 8px 5px;
 }
+
+:global {
+  .ant-select-dropdown-menu {
+    max-height: 100% !important;
+  }
+}
