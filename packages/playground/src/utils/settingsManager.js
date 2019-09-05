@@ -424,6 +424,13 @@ export const settingsManager = {
     isRelevant: sp => [Consts.layout.MAGIC].indexOf(sp.galleryLayout) > -1
   },
   //----------| SETTINGS SECTION |---------//
+  scrollSnap: {
+    section: SECTIONS.SETTINGS,
+    title: 'Auto Scroll to Image Center',
+    description: "",
+    type: INPUT_TYPES.BOOLEAN,
+    isRelevant: sp => isHorizontalLayout(sp)
+  },
   itemClick: {
     section: SECTIONS.OPTIONS,
     options: [

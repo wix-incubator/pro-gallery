@@ -90,6 +90,7 @@ const defaultStyleParams = {
   galleryHorizontalAlign: Consts.horizontalAlign.CENTER,
   galleryTextAlign: 'center',
   galleryVerticalAlign: Consts.verticalAlign.CENTER,
+  scrollSnap: false,
   itemClick: Consts.itemClick.EXPAND,
   fullscreen: true,
   allowSocial: true,
