@@ -172,7 +172,12 @@ class GalleryItem {
     let imgUrl = this.url;
 
     if (this.isText) {
-      return {};
+      return Object.assign(
+        {},
+        ...Object.values(URL_TYPES).map(value => ({
+          [value]: () => '',
+        })),
+      );
     } else if (this.isVideo) {
       imgUrl = this.poster;
 
