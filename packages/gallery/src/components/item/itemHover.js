@@ -55,6 +55,7 @@ export default class ItemHover extends GalleryComponent {
         className={hoverClass}
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
+        aria-hidden={true}
       >
         <div
           style={{

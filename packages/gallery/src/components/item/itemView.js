@@ -725,6 +725,7 @@ class ItemView extends GalleryComponent {
                 this.props.idx,
               );
             }}
+            aria-hidden={true}
             onMouseOut={() => {
               !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
@@ -807,25 +808,23 @@ class ItemView extends GalleryComponent {
   }
 
   getItemAriaLabel() {
-    const { type, title, styleParams } = this.props;
-    let typeName;
+    const { type, alt, styleParams } = this.props;
+    let label;
     switch (type) {
       case 'dummy':
-        typeName = '';
+        label = '';
         break;
       case 'text':
-        typeName = 'Text Box';
+        label = 'Text item';
         break;
       case 'video':
-        typeName = 'Video';
+        label = alt || 'Untitled video';
         break;
       default:
-        typeName = 'Graphic';
+        label = alt || 'Untitled image';
         break;
     }
-    const label =
-      typeName + ', ' + title + (styleParams.isStoreGallery ? ', Buy Now' : '');
-    return label;
+    return label + (styleParams.isStoreGallery ? ', Buy Now' : '');
   }
 
   getItemContainerClass() {
@@ -1020,6 +1019,7 @@ class ItemView extends GalleryComponent {
           onClick={this.onItemClick}
           onKeyDown={this.onKeyPress}
           tabIndex={this.getItemContainerTabIndex()}
+          aria-label={this.getItemAriaLabel()}
           data-hash={hash}
           data-id={photoId}
           data-idx={idx}

@@ -169,9 +169,6 @@ export default class Share extends GalleryComponent {
         data-hook={network + '-share-button'}
         ref={button => (this.buttons[idx] = button)}
         title={`Share on ${network}`}
-        aria-label={`Share on ${network}, ${idx + 1} of ${
-          this.shareArr.length
-        }`}
         aria-live="assertive"
         tabIndex={-1}
         key={network + '-share-icon'}

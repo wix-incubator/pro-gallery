@@ -814,7 +814,6 @@ class SlideshowView extends GalleryComponent {
         onKeyDown={this.onAutoSlideshowAutoPlayKeyPress}
         data-hook="auto-slideshow-button"
         title={'slideshow auto play'}
-        aria-label={'slideshow auto play'}
         aria-pressed={this.state.shouldStopAutoSlideShow}
         tabIndex={0}
         style={{

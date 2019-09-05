@@ -101,7 +101,6 @@ class VideoItem extends GalleryComponent {
         width="100%"
         height="100%"
         url={url}
-        aria-label={this.props.alt ? this.props.alt : 'untitled video'}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.styleParams.videoLoop}
         ref={player => (this.video = player)}
