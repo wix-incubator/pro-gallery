@@ -124,7 +124,7 @@ class JsonEditor extends React.Component {
 
 
   render() {
-    const {section, subSection, styleParams} = this.props;
+    const {section, subSection, styleParams, styleParam, expandIcon} = this.props;
     const context = {
       isMobile: false,
     }
@@ -138,9 +138,14 @@ class JsonEditor extends React.Component {
     //   styleParams;
 
     // json = removeFieldsNotNeeded(json, selectedLayout);
+    const filterFunction = styleParam ? 
+    ([key]) => key === styleParam : 
+    ([key, settings]) => settings.section === section && settings.subSection === subSection && settings.isRelevant(styleParams, context)
+
+    const activeKey = styleParam ? {activeKey: 'collapse' + styleParam} : {defaultActiveKey: []};
 
     const json = Object.entries(settingsManager)
-      .filter(([key, settings]) => settings.section === section && settings.subSection === subSection && settings.isRelevant(styleParams, context))
+      .filter(filterFunction)
       .reduce((acc, [key]) => {
         acc[key] = settingsManager[key];
         acc[key].value = styleParams[key];
@@ -149,7 +154,7 @@ class JsonEditor extends React.Component {
   
     return (
       // <Form layout="vertical">
-      <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={'left'}>
+      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
           <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} >
               {/* <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'} style={{display: 'block', width: '100%'}}> */}
@@ -159,8 +164,8 @@ class JsonEditor extends React.Component {
                     <Divider/>
                     <p><b>key: </b><code>{styleParam}</code></p>
                     <p><b>value: </b><code>{settings.value}</code></p>
-                    {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
-                    {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
+                    {!!settings.description && (<><Divider/><p><b>description: </b>{settings.description}</p></>)}
+                    {!!settings.alert && (<><Divider/><p><b>comments: </b>{settings.alert}</p></>)}
                   </div>
                   // <Alert message={settings.alert} type="warning"/> : null
                 }
