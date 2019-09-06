@@ -5,7 +5,7 @@ import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
-import { SUB_SECTIONS, SECTIONS, settingsManager } from '../../utils/settingsManager';
+import { SUB_SECTIONS, SECTIONS, INPUT_TYPES, settingsManager } from '../../utils/settingsManager';
 import { Alert } from 'antd';
 import s from './SideBar.module.scss';
 
@@ -61,8 +61,19 @@ function SideBar() {
 
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const createSearchString = (styleParam, searchTerm) => {
+    let res = [styleParam];
+    const props = settingsManager[styleParam];
+    res.push(props.title || '');
+    res.push(props.description || '');
+    if (props.type === INPUT_TYPES.OPTIONS) {
+      res = res.concat(props.options.map(option => option.title));
+    };
+    res = res.join('|').toLowerCase();
+    return res;
+  };
   const dataSource = Object.entries(settingsManager)
-    .filter(([styleParam]) => styleParam.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0)
+    .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase()) >= 0)
     .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
     .map(([styleParam, props]) => (
       <AutoComplete.Option key={styleParam}>
@@ -92,7 +103,7 @@ function SideBar() {
       <AutoComplete
         size="large"
         style={{ width: '100%', margin: '10px 1px' }}
-        dropdownStyle={{ height: 'calc(100vh - 150px)', background: 'white', overflow: 'scroll' }}
+        dropdownStyle={{ height: 'calc(100vh - 150px)', background: '#fff', overflow: 'scroll', border: '1px solid #ccc' }}
         dataSource={dataSource}
         onSelect={(val) => ( setSearchResult(val.replace(/_/g, '')) )}
         onSearch={(val) => setSearchTerm(val)}
