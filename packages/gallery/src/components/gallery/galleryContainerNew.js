@@ -794,11 +794,13 @@ export class GalleryContainer extends React.Component {
     const scrollingElement = this._scrollingElement;
     const horizontalElement = scrollingElement.horizontal();
     scrollToItemImp({
+      isRTL: this.state.styles.isRTL,
       oneRow: this.state.styles.oneRow,
       galleryWidth: this.state.container.galleryWidth,
       galleryHeight: this.state.container.galleryHeight,
       top: 0,
       items: this.galleryStructure.items,
+      totalWidth: this.galleryStructure.width,
       itemIdx,
       fixedScroll,
       isManual,
@@ -958,12 +960,13 @@ export class GalleryContainer extends React.Component {
       //TODO - add support for horizontal galleries
       const { oneRow } = this.state.styles;
 
-      const [lastItem] = this.galleryStructure.galleryItems.slice(-1);
-      const gallerySize = lastItem.offset[oneRow ? 'right' : 'bottom'];
-      const screenSize = oneRow ? window.screen.width : window.screen.height;
+      const gallerySize = this.galleryStructure[oneRow ? 'width' : 'height'];
+      const screenSize = window.screen[oneRow ? 'width' : 'height'];
       const scrollEnd =
         scrollPos + screenSize + (oneRow ? 0 : this.state.container.scrollBase);
       const getItemsDistance = 3 * screenSize;
+
+      // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
 
       if (gallerySize - scrollEnd < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
@@ -1030,6 +1033,8 @@ export class GalleryContainer extends React.Component {
           <ScrollIndicator
             galleryDomId={this.props.domId}
             oneRow={this.state.styles.oneRow}
+            isRTL={this.state.styles.isRTL}
+            totalWidth={this.galleryStructure.width}
             scrollBase={this.state.container.scrollBase}
             scrollingElement={this._scrollingElement}
             getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}

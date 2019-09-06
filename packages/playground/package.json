@@ -7,7 +7,8 @@
     "antd": "^3.20.7",
     "css-animation": "1.5.0",
     "image-client-api": "^1.3130.0",
-    "pro-gallery": "^1.2.16",
+    "lodash.clonedeep": "^4.5.0",
+    "pro-gallery": "^1.2.15",
     "pro-layouts": "^1.1.2",
     "react": "^16.8.6",
     "react-color": "^2.17.3",
@@ -58,7 +59,7 @@
     "css-animation": "1.5.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "sleep 10 && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": " ",
     "deploy": "node scripts/build.js && gh-pages-with-token -d build"

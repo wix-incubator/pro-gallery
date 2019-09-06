@@ -141,7 +141,8 @@ class GalleryView extends GalleryComponent {
           (this.props.styleParams.oneRow
             ? ' one-row slider hide-scrollbars '
             : '') +
-          (this.props.styleParams.isAccessible ? ' accessible ' : '')
+          (this.props.styleParams.isAccessible ? ' accessible ' : '') +
+          (this.props.styleParams.isRTL ? ' rtl ' : '')
         }
         style={{
           height: galleryHeight,

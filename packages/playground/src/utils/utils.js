@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash.clonedeep';
+
 export function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,
@@ -23,8 +25,12 @@ export function mixAndSlice(array, length) {
   if (array.length > 0) {
     const rndIdx = () => Math.floor(Math.random() * array.length)
     while (result.length < length) {
-      const item = {...array[rndIdx()]};
-      item.itemId = item.itemId + '_' + String(result.length);
+      const idx = rndIdx();
+      let item = cloneDeep(array[idx]);
+      // Object.assign(item, array[idx]);
+      item.itemId = array[idx].itemId + '_' + String(result.length);
+      item.metadata.title = `Item #${result.length + 1}`;
+      console.log('ITEM CREATED', item, array[idx]);
       result.push(item);
     }
   }

@@ -39,6 +39,7 @@ class galleryDriver {
       gotStyleParams: true,
       selectedLayout: 0,
       isVertical: false,
+      isRTL: false,
       gallerySize: 320,
       minItemSize: 120,
       groupSize: 3,

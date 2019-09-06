@@ -17,6 +17,18 @@ class JsonEditor extends React.Component {
     this.props.onChange(key, value);
   }
 
+  formatValue(val) {
+    if (Number(val) === parseInt(val)) {
+      return Number(val);
+     } else if (val === 'true') {
+       return true;
+     } else if (val === 'false') {
+       return false;
+     } else {
+       return String(val);
+     }
+  }
+
   renderEntryEditor(key, settings) {
 
     const theValue = settings.value;
@@ -39,7 +51,7 @@ class JsonEditor extends React.Component {
       case INPUT_TYPES.OPTIONS:
         return (
           <Menu
-            onClick={val => {this.onFieldChanged(key, (Number(val.key) === parseInt(val.key) ? Number(val.key) : val.key))}}
+            onClick={val => {this.onFieldChanged(key, this.formatValue(val.key))}}
             style={{ width: 367, borderRight: 'none' }}
             defaultSelectedKeys={[String(theValue)]}
             mode="vertical"
@@ -163,9 +175,9 @@ class JsonEditor extends React.Component {
                   <div>
                     <Divider/>
                     <p><b>key: </b><code>{styleParam}</code></p>
-                    <p><b>value: </b><code>{settings.value}</code></p>
-                    {!!settings.description && (<><Divider/><p><b>description: </b>{settings.description}</p></>)}
-                    {!!settings.alert && (<><Divider/><p><b>comments: </b>{settings.alert}</p></>)}
+                    <p><b>value: </b><code>{String(settings.value)}</code></p>
+                    {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
+                    {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
                   </div>
                   // <Alert message={settings.alert} type="warning"/> : null
                 }

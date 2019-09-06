@@ -69,6 +69,10 @@ export default class Texts extends GalleryComponent {
       elementStyle.marginTop = style.height / 15;
     }
 
+    if (styleParams.isRTL) {
+      elementStyle.direction = 'rtl';
+    }
+
     return elementStyle;
   }
 

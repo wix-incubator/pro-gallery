@@ -677,32 +677,6 @@ class Utils {
     animateScroll();
   }
 
-  horizontalCssScrollTo(scroller, to, duration, callback = () => {}) {
-    const start = scroller.scrollLeft;
-    const change = to - start;
-
-    const scrollerInner = scroller.firstChild;
-
-    scroller.setAttribute('data-scrolling', 'true');
-
-    Object.assign(scrollerInner.style, {
-      transition: `margin ${duration}ms linear`,
-      '-webkit-transition': `margin ${duration}ms linear`,
-      marginLeft: `-${change}px`,
-    });
-
-    setTimeout(() => {
-      Object.assign(scrollerInner.style, {
-        transition: `none`,
-        '-webkit-transition': `none`,
-        marginLeft: 0,
-      });
-      scroller.scrollLeft = to;
-      scroller.setAttribute('data-scrolling', '');
-      typeof callback === 'function' && callback();
-    }, duration);
-  }
-
   // isVerbose() {
   //   return window.isMock || (!this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true'));
   // }

@@ -198,6 +198,14 @@ export const settingsManager = {
     options: [{ value: false, title: "Rows" }, { value: true, title: "Columns" }],
     isRelevant: sp => [Consts.layout.COLLAGE, Consts.layout.MASONRY].indexOf(sp.galleryLayout) > -1
   },
+  isRTL: {
+    section: SECTIONS.LAYOUT,
+    title: "Layout Orientation",
+    description: "",
+    type: INPUT_TYPES.OPTIONS,
+    options: [{ value: false, title: "Left to Right" }, { value: true, title: "Right to Left" }],
+    isRelevant: sp => [Consts.layout.PANORAMA].indexOf(sp.galleryLayout) === -1
+  },
   allowTitle: {
     section: SECTIONS.LAYOUT,
     title: "Allow Title",

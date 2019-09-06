@@ -13,12 +13,14 @@ const getImageStyle = (item, styleParams) => ({
 });
 
 const createExactCssForItems = (galleryItems, styleParams) => {
+  const {isRTL} = styleParams;
+
   let cssStr = '';
   galleryItems.forEach((item, i) => {
     const id = cssScrollHelper.getDomId(item);
     const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px;`;
-    const L = `left:${style.left}px;`;
+    const L = isRTL ? `right:${style.left}px;left:auto;` : `left:${style.left}px;`;
     const W = `width:${style.width}px;`;
     const H = `height:${style.height}px;`;
     cssStr += `#${id} {${T}${L}${W}${H}}`;

@@ -1392,10 +1392,11 @@
             scroll-snap-type: x mandatory;
           }
 
-          > .gallery-horizontal-scroll-inner {
-            position: relative;
-          }
         }
+      }
+      
+      .gallery-horizontal-scroll-inner {
+        position: relative;
       }
     }
 
