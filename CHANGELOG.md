@@ -145,3 +145,18 @@
  -  some more A11y fixes
  -  set maximum logging depth (for verbose logging)
   -  seoLink to return a string and not a function
+
+---
+## v1.3.0 (08/09/2019)
+ 
+#### GALLERY
+ -  *add support for RTL galleries*
+ -  return empty string functions as links for text items
+
+#### PLAYGROUND
+ -  add RTL and scrollSnap to settingsManager
+ -  add search for style params
+
+#### LAYOUTS
+ -  add total width to scheme
+
