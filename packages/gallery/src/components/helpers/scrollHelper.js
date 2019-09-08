@@ -42,7 +42,7 @@ export function scrollToItemImp(scrollParams) {
     const item = items.find(itm => itm.idx === itemIdx);
     to = oneRow ? utils.get(item, 'offset.left') : utils.get(item, 'offset.top');
 
-    if (isRTL) {
+    if (item && isRTL) {
       to += item.width;
     };
 
