@@ -5,7 +5,8 @@ import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
-import { SUB_SECTIONS, SECTIONS, INPUT_TYPES, settingsManager } from 'pro-gallery/dist/src/components/settings/settingsManager';
+import { settingsManager } from 'pro-gallery/dist/src/components/settings/settingsManager';
+import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from 'pro-gallery/dist/src/components/settings/consts';
 import { Alert } from 'antd';
 import s from './SideBar.module.scss';
 

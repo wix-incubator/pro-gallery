@@ -705,7 +705,7 @@ class SlideshowView extends GalleryComponent {
         <div
           data-hook="gallery-column"
           id="gallery-horizontal-scroll"
-          className={`gallery-horizontal-scroll gallery-column hide-scrollbars ${(this.props.styleParams.isRTL ? ' rtl ' : '')}`}
+          className={`gallery-horizontal-scroll gallery-column hide-scrollbars ${(this.props.styleParams.isRTL ? ' rtl ' : '')} ${(this.props.styleParams.scrollSnap ? ' scroll-snap ' : '')} `}
           key={'column' + c}
           style={columnStyle}
         >
@@ -759,16 +759,15 @@ class SlideshowView extends GalleryComponent {
           'pro-gallery inline-styles one-row hide-scrollbars ' +
           (this.props.styleParams.enableScroll ? ' slider ' : '') +
           (this.props.styleParams.isAccessible ? ' accessible ' : '') +
-          (this.props.styleParams.isRTL ? ' rtl ' : '') +
-          (this.props.styleParams.scrollSnap ? ' scroll-snap ' : '')
+          (this.props.styleParams.isRTL ? ' rtl ' : '')
         }
         style={galleryStyle}
       >
         {this.createDebugMsg()}
         {this.createNavArrows()}
+        {this.createLayout()}
         {this.createAutoSlideShowPlayButton()}
         {this.createSlideShowNumbers()}
-        {this.createLayout()}
       </div>
     );
   }
