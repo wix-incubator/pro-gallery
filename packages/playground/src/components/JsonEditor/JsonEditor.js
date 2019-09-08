@@ -163,6 +163,8 @@ class JsonEditor extends React.Component {
         acc[key].value = styleParams[key];
         return acc;
       }, {});
+
+    const isSingleItem = !!styleParam;
   
     return (
       // <Form layout="vertical">
@@ -174,10 +176,12 @@ class JsonEditor extends React.Component {
                 {
                   <div>
                     <Divider/>
-                    <p><b>key: </b><code>{styleParam}</code></p>
-                    <p><b>value: </b><code>{String(settings.value)}</code></p>
+                    <p><b>Key: </b><code>{styleParam}</code></p>
+                    <p><b>Value: </b><code>{String(settings.value)}</code></p>
                     {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
                     {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
+                    {isSingleItem && <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>}
+                    {isSingleItem && <p><b>Relevant in current configuration: </b>{settings.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>}
                   </div>
                   // <Alert message={settings.alert} type="warning"/> : null
                 }

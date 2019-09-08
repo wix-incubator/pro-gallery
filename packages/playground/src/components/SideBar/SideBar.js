@@ -72,25 +72,30 @@ function SideBar() {
     res = res.join('|').toLowerCase();
     return res;
   };
-  const dataSource = Object.entries(settingsManager)
-    .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase()) >= 0)
-    .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
-    .map(([styleParam, props]) => (
-      <AutoComplete.Option key={styleParam}>
-        <Card size="small" title={props.title} type="inner" style={{
-          whiteSpace: 'pre-wrap'
-        }}>
-          <p><b>Key: </b>{styleParam}</p>
-          <p><b>Section: </b>{props.section}</p>
-          {props.description && <p><b>Description: </b>{props.description}</p>}
-          <p><b>Relevant in current configuration: </b>{props.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>
-        </Card>
-      </AutoComplete.Option>
-    ));
+  // const dataSource = Object.entries(settingsManager)
+  //   .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase()) >= 0)
+  //   .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
+  //   .map(([styleParam, props]) => (
+  //     <AutoComplete.Option key={styleParam}>
+  //       <Card size="small" title={props.title} type="inner" style={{
+  //         whiteSpace: 'pre-wrap'
+  //       }}>
+  //         <p><b>Key: </b>{styleParam}</p>
+  //         {props.description && <p><b>Description: </b>{props.description}</p>}
+  //         <p><b>Section: </b>{props.section}</p>
+  //         <p><b>Relevant in current configuration: </b>{props.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>
+  //       </Card>
+  //     </AutoComplete.Option>
+  //   ));
 
   // console.log({dataSource, searchResult, styleParams});
 
-  // const dataSource = Object.keys(settingsManager).filter(styleParam => styleParam.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0);
+  const dataSource = Object.entries(settingsManager)
+  .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase()) >= 0)
+  .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
+  .map(([styleParam, props]) => (
+      <AutoComplete.Option key={styleParam}>{props.title}</AutoComplete.Option>
+  )); //`(${styleParam}) ${props.title}`);
 
   const resetSearch = () => {
     setSearchResult('');
@@ -103,11 +108,11 @@ function SideBar() {
       <AutoComplete
         size="large"
         style={{ width: '100%', margin: '10px 1px' }}
-        dropdownStyle={{ height: 'calc(100vh - 150px)', background: '#fff', overflow: 'scroll', border: '1px solid #ccc' }}
         dataSource={dataSource}
         onSelect={(val) => ( setSearchResult(val.replace(/_/g, '')) )}
         onSearch={(val) => setSearchTerm(val)}
         placeholder="Search Style Params"
+        value={searchTerm}
       >
         <Input
           suffix={

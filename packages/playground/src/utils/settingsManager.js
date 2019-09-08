@@ -200,7 +200,7 @@ export const settingsManager = {
   },
   isRTL: {
     section: SECTIONS.LAYOUT,
-    title: "Layout Orientation",
+    title: "Layout Direction",
     description: "",
     type: INPUT_TYPES.OPTIONS,
     options: [{ value: false, title: "Left to Right" }, { value: true, title: "Right to Left" }],
