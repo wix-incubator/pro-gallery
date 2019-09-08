@@ -160,3 +160,10 @@
 #### LAYOUTS
  -  add total width to scheme
 
+
+---
+## v1.3.1 (08/09/2019)
+ 
+#### GALLERY
+ -  add rtl class to gallery scss
+
