@@ -142,7 +142,7 @@ function formatForChangelog(version, commits) {
         if (!obj[project]) {
             obj[project] = '';
         }
-        const textStartPos = Math.max(commit.indexOf(':'), commit.indexOf(']')) + 1;
+        const textStartPos = commit.indexOf(']') + 1;
         obj[project] += ' - ' + commit.substr(textStartPos) + `\n`;
         return obj;
     }, {});

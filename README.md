@@ -23,6 +23,8 @@ import 'pro-gallery/dist/statics/main.css';
   items={images}
   styles={styleParams}
   container={container}
+  scrollingElement={window}
+  eventsListener={(eName, eData) => console.log({eName, eData})}
 />
 ```
 
@@ -55,8 +57,9 @@ const items = [
 ]
 ```
 
-### container
-An object containing the width and height properties for the gallery
+### Container
+An object containing the width and height (in pixels) of the gallery.
+This values should change when the container resizes, to allow the gallery to be responsive.
 ```js
 const container = {
   width: 1000,
@@ -64,35 +67,22 @@ const container = {
 }
 ```
 
-### styles
+### Styles
 A list of the styles and behaviour parameters for the gallery.
-To create you list of styles, use the [playground](https://wix-incubator.github.io/pro-gallery/) and copy the generated code.
+The gallery has many many options that can be modified. To create you list of styles, use the [playground](https://wix-incubator.github.io/pro-gallery/) to create your prefered gallery and copy the generated code.
 
-## Contribute
+### Scrolling Element
+The DOM element inside which the gallery is scrolled (defaults to `window`). If the gallery is scrolled inside a different element, pass its dom reference in this property.
+*notice:* this is relevant to vertical galleries only. Horizontal galleries (e.g. slideshow) are handling the scroll themselves.
 
-To run the environment locally:
+### Events Listener
+A callback function that get called whenever something happens in the gallery. This allows you to react to specific events.
+The most important events are:
 
-1. Clone the repo
-```
-  cd <YOUR_CODE_DIRECTORY>
-  git clone git@github.com:wix-incubator/pro-gallery.git
-```
+| Event Name        |  Description  |
+| --------------- | ----------- |
+| `GALLERY_CHANGE`  | Fired whenever the gallery finished rendering, usually after the props were changed. This event contains the structure data of the gallery. |
+| `ITEM_ACTION_TRIGGERED`  | Fired whenever one of the items is clicked or tapped and the gallery cannot handle the action itself (e.g. open an expanded view) |
+| `NEED_MORE_ITEMS`  | Fired whenever the gallery is scrolled near its last item. If you are using a pagination server, this is the event that should trigger the next page and re-render the gallery with the new items |
 
-2. Install `lerna`
-```
-npm i -g lerna
-```
-
-3. Install Dependencies:
-```
-lerna bootstrap --hoist
-```
-
-4. Run the packages:
-```
-lerna run --parallel start
-```
-
-The playground will open in `localhost:3000`, linked to a local instance of the gallery and layout.
-
-## License
+The full list gallery events is [here](https://github.com/wix-incubator/pro-gallery/blob/master/packages/gallery/src/constants/events.js)
