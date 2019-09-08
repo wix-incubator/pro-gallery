@@ -1,6 +1,6 @@
 import React from 'react';
 import {Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
-import {INPUT_TYPES, settingsManager} from '../../utils/settingsManager';
+import {INPUT_TYPES, settingsManager} from 'pro-gallery/dist/src/components/settings/settingsManager';
 import ColorPicker from '../ColorPicker/ColorPicker';
 
 class JsonEditor extends React.Component {
