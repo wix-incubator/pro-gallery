@@ -23,7 +23,7 @@ export function App() {
 
   const {setDimentions, styleParams, setItems, items} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
-  const [fullscreenIdx, setFullscreenIdx] = useState(-1);
+  // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
 
   setStyleParamsInUrl(styleParams);
 
@@ -58,7 +58,7 @@ export function App() {
         setItems(getItems().concat(mixAndSlice(testItems, ITEMS_BATCH_SIZE)));
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED: 
-        setFullscreenIdx(eventData.idx);
+        // setFullscreenIdx(eventData.idx);
         break;
       default: 
         // console.log({eventName, eventData});
