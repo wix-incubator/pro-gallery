@@ -27,7 +27,7 @@ export function scrollToItemImp(scrollParams) {
     } else {
       to = from + (itemIdx * galleryWidth) / 2;
     }
-    console.log('[RTL SCROLL] scrollToItemImp: ', from, to);
+    // console.log('[RTL SCROLL] scrollToItemImp: ', from, to);
   } else {
     from = top;
     to = top + (itemIdx * galleryHeight) / 2;

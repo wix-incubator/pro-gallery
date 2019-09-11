@@ -12,19 +12,22 @@ const getImageStyle = (item, styleParams) => ({
   height: item.height + (styleParams.externalInfoHeight || 0),
 });
 
+const createItemId = (galleryDomId, item) => {
+  return `#pro-gallery-${galleryDomId} #${cssScrollHelper.getDomId(item)}`;
+}
 const createExactCssForItems = (galleryDomId = '', galleryItems, styleParams) => {
   const {isRTL} = styleParams;
 
   let cssStr = '';
   galleryItems.forEach((item, i) => {
-    const id = galleryDomId + cssScrollHelper.getDomId(item);
+    const id = createItemId(galleryDomId, item);
     const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px;`;
     const L = isRTL ? `right:${style.left}px;left:auto;` : `left:${style.left}px;`;
     const W = `width:${style.width}px;`;
     const H = `height:${style.height}px;`;
-    cssStr += `#${id} {${T}${L}${W}${H}}`;
-    // cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
+    cssStr += `${id} {${T}${L}${W}${H}}`;
+    // cssStr += `${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
   });
   return cssStr;
 };
@@ -35,7 +38,7 @@ const createCssFromLayout = (galleryDomId = '', layout, styleParams, width) => {
   const getRelativeDimension = val =>
     Math.round(10000 * (val / layoutWidth)) / 100;
   layout.items.forEach((item, i) => {
-    const id = galleryDomId + cssScrollHelper.getDomId(item);
+    const id = createItemId(galleryDomId, item);
     if (i < 50) {
       const style = getImageStyle(item, styleParams);
       const Tvw = `top:${getRelativeDimension(style.top)}vw;`;
