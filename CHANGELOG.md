@@ -167,3 +167,14 @@
 #### GALLERY
  -  add rtl class to gallery scss
 
+
+---
+## v1.3.2 (11/09/2019)
+ 
+#### PLAYGROUND
+ -  improve: better search list
+
+#### GALLERY
+ -  fix arrow navigation in RTL mode
+ -  do not populate title with filename
+ -  fix css layouts for multiple galleries
