@@ -75,9 +75,9 @@ function editChangelogAndUpdateVersion(bump) {
 
         if (result.yesno === 'yes' || result.yesno === 'y') {
             // child.on('exit', function (e, code) {
-            execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
-                stdio: 'pipe'
-            });
+            // execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
+            //     stdio: 'pipe'
+            // });
             log(`Saved ${CHANGELOG}, releasing new version`);
             const bumpCommand = `lerna version ${bump} --yes`;
             execSync(`${bumpCommand}`, {
