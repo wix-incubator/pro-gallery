@@ -95,8 +95,8 @@ export function App() {
           resizeMediaUrl={resizeMediaUrl}
         />
       </section>
-      <section className={['pro-fullscreen-wrapper', s.fullscreen].join(' ')} style={{...container, opacity: (fullscreenIdx >= 0 ? 1 : 0), pointerEvents: (fullscreenIdx >= 0 ? 'initial' : 'none')}}>
-      {/* fullscreenIdx >= 0 && (
+      {/* <section className={['pro-fullscreen-wrapper', s.fullscreen].join(' ')} style={{...container, opacity: (fullscreenIdx >= 0 ? 1 : 0), pointerEvents: (fullscreenIdx >= 0 ? 'initial' : 'none')}}>
+      fullscreenIdx >= 0 && (
           <ProFullscreen
             items={images}
             initialIdx={fullscreenIdx}
@@ -110,8 +110,8 @@ export function App() {
             deviceType={'desktop'}
             styles={styleParams}
           />
-        ) */}
-        </section>
+        )
+        </section> */}
     </main>
   );
 }

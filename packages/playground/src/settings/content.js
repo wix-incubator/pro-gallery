@@ -133,6 +133,26 @@ export default {
     title: "Images Per Column",
     description: "",
   },
+  groupSize: {
+    section: SECTIONS.LAYOUT,
+    title: "Max Group Size",
+    description: "",
+  },
+  groupsPerStrip: {
+    section: SECTIONS.LAYOUT,
+    title: "Groups per Strip",
+    description: "",
+  },
+  groupTypes: {
+    section: SECTIONS.LAYOUT,
+    title: "Allowed Group Types",
+    description: "",
+  },
+  rotatingGroupTypes: {
+    section: SECTIONS.LAYOUT,
+    title: "Repeating Group Types",
+    description: "",
+  },
   thumbnailSpacings: {
     section: SECTIONS.LAYOUT,
     title: "Spacing between Thumbnails",

@@ -17,6 +17,7 @@ import expandAnimations from './expandAnimations';
 import horizontalAlign from './horizontalAlign';
 import verticalAlign from './verticalAlign';
 import videoPlay from './videoPlay';
+import groupTypes from './groupTypes';
 
 export default {
   placements,
@@ -37,6 +38,7 @@ export default {
   imageHoverAnimations,
   horizontalAlign,
   verticalAlign,
-  videoPlay
+  videoPlay,
+  groupTypes,
 };
   

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
+import {Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
 import {settingsManager} from 'pro-gallery/dist/src/components/settings/settingsManager';
 import {INPUT_TYPES} from 'pro-gallery/dist/src/components/settings/consts';
 import ColorPicker from '../ColorPicker/ColorPicker';
@@ -14,6 +14,7 @@ class JsonEditor extends React.Component {
   }
 
   onFieldChanged(key, value) {
+    debugger;
     console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${value}`);
     this.props.onChange(key, value);
   }
@@ -61,15 +62,22 @@ class JsonEditor extends React.Component {
               <Menu.Item key={String(value)}>{title}</Menu.Item>
             ))}
           </Menu>
-          // <Radio.Group
-          //   onChange={val => this.onFieldChanged(key, val.target.value)}
-          //   size="medium"
-          //   value={theValue}
-          // >
-          //   {settings.options.map(({value, title}) => (
-          //     <Radio value={value}>{title}</Radio>
-          //   ))}
-          // </Radio.Group>
+        );
+      case INPUT_TYPES.MULTISELECT:
+        const modKey = key => String(key) + (settings.repeat === true ? `|${Math.random()}` : '|');
+        const createOptions = ({value, title}) => (
+          <Select.Option key={modKey(value)}>{title}</Select.Option>
+        );
+        return (
+          <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Please select"
+            defaultValue={unescape(theValue || '').split(',').filter(Boolean) || []}
+            onChange={val => this.onFieldChanged(key, val.map(v => v.substr(0, v.indexOf('|'))).join(','))}
+          >
+            {settings.options.map(createOptions)}
+          </Select>
         );
       case INPUT_TYPES.NUMBER:
         if (settings.min >= 0 && settings.max > 0) {
