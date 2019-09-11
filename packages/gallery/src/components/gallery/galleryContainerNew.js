@@ -586,26 +586,13 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams, isApproximation = false, isNew = {}) {
-    if (isApproximation) {
-      this.layoutCss = createCssLayouts({
-        isApproximation,
-        layoutParams,
-        isMobile: utils.isMobile(),
-      });
-    } else {
-      //if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
-      this.layoutCss = createCssLayouts({
-        galleryItems: this.galleryStructure.galleryItems,
-        layoutParams,
-        isMobile: utils.isMobile(),
-      });
-    } /* else {
-      this.layoutCss = this.layoutCss.concat(createCssLayouts({
-        galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
-        layoutParams,
-        isMobile: utils.isMobile(),
-      }));
-    } */
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximation,
+      isMobile: utils.isMobile(),
+      galleryDomId: this.props.domId,
+      galleryItems: isApproximation? null : this.galleryStructure.galleryItems,
+    });
   }
 
   reCreateGalleryExpensively(
