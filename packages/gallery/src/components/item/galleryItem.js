@@ -429,10 +429,6 @@ class GalleryItem {
     return ret;
   }
 
-  get name() {
-    return this.metadata.fileName || '';
-  }
-
   get url() {
     //todo :change from mediaUrl
     return (

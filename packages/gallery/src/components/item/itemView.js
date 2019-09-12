@@ -377,7 +377,6 @@ class ItemView extends GalleryComponent {
     const props = utils.pick(this.props, [
       'title',
       'description',
-      'fileName',
       'id',
       'styleParams',
       'style',
