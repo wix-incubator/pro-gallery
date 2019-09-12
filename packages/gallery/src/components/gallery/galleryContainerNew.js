@@ -585,7 +585,7 @@ export class GalleryContainer extends React.Component {
     this.createCssLayoutsIfNeeded(layoutParams);
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximation = false, isNew = {}) {
+  createCssLayoutsIfNeeded(layoutParams, isApproximation = false) {
     this.layoutCss = createCssLayouts({
       layoutParams,
       isApproximation,

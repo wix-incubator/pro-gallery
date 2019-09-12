@@ -755,7 +755,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { styleParams, style, transform, offset } = this.props;
+    const { styleParams, transform } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const itemStyles = {
@@ -766,31 +766,7 @@ class ItemView extends GalleryComponent {
     };
 
     return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
-    // if (utils.isSSR()) {  //FAKE SSR
-    //   return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
-    // };
 
-    // const positionStyles = {
-    //   top: offset.top,
-    //   width: style.width,
-    //   height: style.height + (styleParams.externalInfoHeight || 0),
-    // };
-    
-    // const isRTL = true;
-    // const rtlStyles = {
-    //   left: isRTL ? 'auto' : offset.left,
-    //   right: !isRTL ? 'auto' : offset.left,
-    // };
-
-    // const styles = {
-    //   // ...positionStyles,
-    //   // ...rtlStyles,
-    //   ...itemStyles,
-    //   ...transform,
-    //   ...containerStyleByStyleParams,
-    // };
-
-    return styles;
   }
 
   getItemWrapperStyles() {
