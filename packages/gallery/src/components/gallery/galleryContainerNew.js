@@ -260,7 +260,7 @@ export class GalleryContainer extends React.Component {
           this.handleNewGalleryStructure();
         });
       }
-    }, 2500);
+    }, 500);
 
     itemsWithoutDimensions.forEach((item, idx) => {
       item.isPreloaded = true;
