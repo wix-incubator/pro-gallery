@@ -244,7 +244,7 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    const debouncedReCreateGallery = utils.debounce(() => {
+    const throttledReCreateGallery = utils.throttle(() => {
       const { items, styles, container, watermarkData } = this.props;
       const params = {
         items,
@@ -286,7 +286,7 @@ export class GalleryContainer extends React.Component {
 
             //rebuild the gallery after every dimension update
             // if (Object.keys(this.itemsDimensions).length > 0) {
-            debouncedReCreateGallery();
+            throttledReCreateGallery();
             // }
           }
         } catch (_e) {
