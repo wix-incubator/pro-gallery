@@ -178,3 +178,9 @@
  -  fix arrow navigation in RTL mode
  -  do not populate title with filename
  -  fix css layouts for multiple galleries
+
+---
+## v1.3.4 (12/09/2019)
+ 
+#### GALLERY
+ -  fix ssr layout css
