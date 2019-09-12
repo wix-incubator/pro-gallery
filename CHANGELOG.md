@@ -184,3 +184,10 @@
  
 #### GALLERY
  -  fix ssr layout css
+
+---
+## v1.3.5 (12/09/2019)
+ 
+#### GALLERY
+ -  fix: remove double # from id
+
