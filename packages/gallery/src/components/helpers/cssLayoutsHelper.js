@@ -46,8 +46,8 @@ const createCssFromLayout = (galleryDomId = '', layout, styleParams, width) => {
       const Hvw = `height:${getRelativeDimension(style.height)}vw;`;
       const Lpc = `left:${getRelativeDimension(style.left)}%;`;
       const Wpc = `width:${getRelativeDimension(style.width)}%;`;
-      cssStr += `#${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
-      cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
+      cssStr += `${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
+      cssStr += `${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
     } else {
       cssStr += `#${id}{display:none;}`;
     }
