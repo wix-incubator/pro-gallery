@@ -192,7 +192,6 @@ function SideBar() {
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
         <Collapse.Panel header="SSR" key="13">
-          <Benchmarks />
         </Collapse.Panel>
         <Collapse.Panel header="Benchmarks" key="13">
           <Benchmarks />

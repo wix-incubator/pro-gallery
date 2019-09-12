@@ -21,13 +21,13 @@ var galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, setIsSSR, isSSR} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, isSSR} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
 
   setStyleParamsInUrl(styleParams);
 
-  !isSSR && setIsSSR(true);
+  // !isSSR && setIsSSR(true);
 
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
