@@ -295,7 +295,7 @@ class Utils {
   }
 
   isSSR() {
-    return !!window.isMock;
+    return true;//!!window.isMock;
   }
 
   isOOI() {
