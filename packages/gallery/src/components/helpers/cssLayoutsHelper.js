@@ -27,7 +27,7 @@ const createExactCssForItems = (galleryDomId = '', galleryItems, styleParams) =>
     const W = `width:${style.width}px;`;
     const H = `height:${style.height}px;`;
     cssStr += `${id} {${T}${L}${W}${H}}`;
-    // cssStr += `${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
+    // cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${Hvw}}`;
   });
   return cssStr;
 };
@@ -47,9 +47,9 @@ const createCssFromLayout = (galleryDomId = '', layout, styleParams, width) => {
       const Lpc = `left:${getRelativeDimension(style.left)}%;`;
       const Wpc = `width:${getRelativeDimension(style.width)}%;`;
       cssStr += `${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
-      cssStr += `${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
+      cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${Hvw}}`;
     } else {
-      cssStr += `#${id}{display:none;}`;
+      cssStr += `${id}{display:none;}`;
     }
   });
   return cssStr;
