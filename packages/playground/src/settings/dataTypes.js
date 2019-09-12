@@ -95,7 +95,7 @@ export default {
   },
   imageResize: {
     type: INPUT_TYPES.OPTIONS,
-    options: [{ value: GALLERY_CONSTS.imageResize.crop, title: "Crop" }, { value: GALLERY_CONSTS.imageResize.fit, title: "Fit" }],
+    options: [{ value: GALLERY_CONSTS.imageResize.CROP, title: "Crop" }, { value: GALLERY_CONSTS.imageResize.FIT, title: "Fit" }],
     alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
   },
   galleryImageRatioFromWix: {
