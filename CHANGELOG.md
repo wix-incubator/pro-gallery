@@ -191,3 +191,11 @@
 #### GALLERY
  -  fix: remove double # from id
 
+
+---
+## v1.3.6 (12/09/2019)
+ 
+#### GALLERY
+ -  improve: use debounce instead of throttle after image measurement
+ -  fix: do not set imageDimensions on SSR
+ -  fix: remove implicit usage of filename
