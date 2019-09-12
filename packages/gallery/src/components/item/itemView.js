@@ -343,7 +343,7 @@ class ItemView extends GalleryComponent {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    if (utils.isSSR()) {
+    if (utils.isSSR()) {  //FAKE SSR
       return {};  
     }
     const { styleParams, cubeRatio, style } = this.props;
@@ -765,29 +765,30 @@ class ItemView extends GalleryComponent {
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
 
-    if (utils.isSSR()) {
-      return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
-    };
+    return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
+    // if (utils.isSSR()) {  //FAKE SSR
+    //   return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
+    // };
 
-    const positionStyles = {
-      top: offset.top,
-      width: style.width,
-      height: style.height + (styleParams.externalInfoHeight || 0),
-    };
+    // const positionStyles = {
+    //   top: offset.top,
+    //   width: style.width,
+    //   height: style.height + (styleParams.externalInfoHeight || 0),
+    // };
     
-    const isRTL = true;
-    const rtlStyles = {
-      left: isRTL ? 'auto' : offset.left,
-      right: !isRTL ? 'auto' : offset.left,
-    };
+    // const isRTL = true;
+    // const rtlStyles = {
+    //   left: isRTL ? 'auto' : offset.left,
+    //   right: !isRTL ? 'auto' : offset.left,
+    // };
 
-    const styles = {
-      // ...positionStyles,
-      // ...rtlStyles,
-      ...itemStyles,
-      ...transform,
-      ...containerStyleByStyleParams,
-    };
+    // const styles = {
+    //   // ...positionStyles,
+    //   // ...rtlStyles,
+    //   ...itemStyles,
+    //   ...transform,
+    //   ...containerStyleByStyleParams,
+    // };
 
     return styles;
   }

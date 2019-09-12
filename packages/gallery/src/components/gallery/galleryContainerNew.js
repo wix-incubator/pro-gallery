@@ -732,7 +732,7 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      const isApproximation = utils.isSSR() && isFullwidth && !_styles.oneRow;
+      const isApproximation = utils.isSSR() && isFullwidth && !_styles.oneRow; //FAKE SSR
       this.createCssLayoutsIfNeeded(layoutParams, isApproximation, isNew);
 
       const allowPreloading =

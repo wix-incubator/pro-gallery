@@ -36,10 +36,6 @@ export function useGalleryContext() {
     setContext({galleryReady});
   };
 
-  const setIsSSR = isSSR => {
-    setContext({isSSR});
-  }
-
   const res = {
     showSide: context.showSide,
     setShowSide,
@@ -51,8 +47,6 @@ export function useGalleryContext() {
     setItems,
     galleryReady: context.galleryReady,
     setGalleryReady,
-    isSSR: context.isSSR,
-    setIsSSR,
     dimensions: {
       width: context.galleryWidth,
       height: context.galleryHeight,

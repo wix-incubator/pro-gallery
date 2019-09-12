@@ -178,7 +178,7 @@ class CssScrollHelper {
 
     if (type !== 'video' && type !== 'text') {
       //load hi-res image + loading transition
-      if (!window.isSSR && !item.isDimensionless) {
+      if (!window.isSSR && !item.isDimensionless) { //FAKE SSR
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.image-item>canvas`) +
           `{opacity: 1; background-image: url(${createUrl(
@@ -191,7 +191,7 @@ class CssScrollHelper {
       if (
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode !== LOADING_MODE.COLOR &&
-        (!item.isTransparent || window.isSSR) &&
+        (!item.isTransparent || window.isSSR) && //FAKE SSR
         !item.isDimensionless
       ) {
         scrollCss +=
