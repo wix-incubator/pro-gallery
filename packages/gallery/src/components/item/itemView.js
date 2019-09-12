@@ -343,7 +343,7 @@ class ItemView extends GalleryComponent {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    if (utils.isSSR()) {  //FAKE SSR
+    if (this.context.isFullWidth) {  //FAKE SSR
       return {};  
     }
     const { styleParams, cubeRatio, style } = this.props;

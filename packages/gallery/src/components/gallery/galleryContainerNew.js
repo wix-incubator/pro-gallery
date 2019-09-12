@@ -546,7 +546,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
-    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
+    this.isFullWidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
@@ -605,7 +605,7 @@ export class GalleryContainer extends React.Component {
     }
 
     const state = curState || this.state || {};
-    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
+    this.isFullWidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     let _styles, _container;
 
@@ -732,7 +732,7 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      const isApproximation = utils.isSSR() && isFullwidth && !_styles.oneRow; //FAKE SSR
+      const isApproximation = this.isFullWidth && !_styles.oneRow; //FAKE SSR
       this.createCssLayoutsIfNeeded(layoutParams, isApproximation, isNew);
 
       const allowPreloading =
@@ -837,9 +837,10 @@ export class GalleryContainer extends React.Component {
 
     if (shouldUseScrollCss) {
       return cssScrollHelper.calcScrollCss({
-        galleryDomId,
         items,
+        isFullWidth: this.isFullWidth,
         styleParams,
+        galleryDomId,
         allowPreloading,
       });
     } else {
@@ -1011,7 +1012,7 @@ export class GalleryContainer extends React.Component {
 
     return (
       <GalleryProvider
-        {...extractContextFields({ ...this.state, ...this.props })}
+        {...extractContextFields({isFullWidth: this.isFullWidth})}
       >
         <div
           data-key="pro-gallery-inner-container"

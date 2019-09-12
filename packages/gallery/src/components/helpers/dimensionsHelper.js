@@ -38,7 +38,7 @@ class DimensionsHelper {
     return this.getOrPutInCache('isFullWidth', () => {
       //if the container width is not a number, it is fullwidth (e.g.: "", "100%", "calc(100% + -160px)")
       return (
-        container &&
+        !!container &&
         String(parseInt(container.width)) !== String(container.width)
       );
     });

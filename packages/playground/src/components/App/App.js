@@ -21,13 +21,11 @@ var galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, isSSR} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, isFullWidth} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
 
   setStyleParamsInUrl(styleParams);
-
-  // !isSSR && setIsSSR(true);
 
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
@@ -70,7 +68,7 @@ export function App() {
 
   const container = {
     height: window.innerHeight,
-    width: window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0)
+    width: isFullWidth ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0)
   }
 
   const getItems = () => {
@@ -88,6 +86,7 @@ export function App() {
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ProGallery
+          key={`pro-gallery-${isFullWidth}-${getItems()[0].itemId}`}
           scrollingElement={window}
           container={container}
           items={getItems()}
