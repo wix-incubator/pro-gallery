@@ -14,7 +14,6 @@ class JsonEditor extends React.Component {
   }
 
   onFieldChanged(key, value) {
-    debugger;
     console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${value}`);
     this.props.onChange(key, value);
   }

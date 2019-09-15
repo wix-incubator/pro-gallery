@@ -7,7 +7,7 @@ import calculationOptions from './calculationOptions';
 import overlayAnimations from './overlayAnimations';
 import imageHoverAnimations from './imageHoverAnimations';
 import layout from './layout';
-import imageResize from './imageResize';
+import cubeType from './cubeType';
 import itemClick from './itemClick';
 import scrollDirection from './scrollDirection';
 import thumbnailsAlignment from './thumbnailsAlignment';
@@ -29,7 +29,7 @@ export default {
   itemClick,
   calculationOptions,
   scrollDirection,
-  imageResize,
+  cubeType,
   thumbnailsAlignment,
   watermarkDock,
   loadMoreAmount,

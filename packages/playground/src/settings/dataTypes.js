@@ -93,9 +93,9 @@ export default {
       { value: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE, title: "no change" },
     ],
   },
-  imageResize: {
+  cubeType: {
     type: INPUT_TYPES.OPTIONS,
-    options: [{ value: GALLERY_CONSTS.imageResize.CROP, title: "Crop" }, { value: GALLERY_CONSTS.imageResize.FIT, title: "Fit" }],
+    options: [{ value: GALLERY_CONSTS.cubeType.CROP, title: "Crop" }, { value: GALLERY_CONSTS.cubeType.FIT, title: "Fit" }],
     alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
   },
   galleryImageRatioFromWix: {
@@ -758,8 +758,8 @@ export default {
 //   stateStyles.cubeRatio = Number(eval(wixStyles.cubeRatio));
 // }
 
-// if (canSet('imageResize', 'cubeType')) {
-//   stateStyles.cubeType = ((String(wixStyles.imageResize) === '1') ? 'fit' : 'fill');
+// if (canSet('cubeType', 'cubeType')) {
+//   stateStyles.cubeType = ((String(wixStyles.cubeType) === '1') ? 'fit' : 'fill');
 //   if (stateStyles.cubeType === 'fit') {
 //     if (stateStyles.cropOnlyFill === true) {
 //       stateStyles.cubeImages = false;

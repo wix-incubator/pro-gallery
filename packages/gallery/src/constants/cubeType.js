@@ -1,6 +1,6 @@
 const IMAGE_RESIZE = {
-  CROP: 0,
-  FIT: 1
+  CROP: 'fill',
+  FIT: 'fit'
 };
 
 export default IMAGE_RESIZE;

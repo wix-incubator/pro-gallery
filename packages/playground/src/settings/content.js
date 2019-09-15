@@ -87,7 +87,7 @@ export default {
     title: "What happens to the info on hover?",
     description: "",
   },
-  imageResize: {
+  cubeType: {
     section: SECTIONS.LAYOUT,
     title: "Thumbnail Resize",
     description: "",
