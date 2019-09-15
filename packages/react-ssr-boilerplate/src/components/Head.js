@@ -21,6 +21,17 @@ const Head = () => {
         rel="shortcut icon"
         href={`${process.env.PUBLIC_URL}/favicon.ico?v1`}
       />
+
+      <link 
+      rel="stylesheet"
+      href="https://static.parastorage.com/services/pro-gallery-santa-wrapper/1.507.0/viewer.css"
+      />
+
+      <link 
+      rel="stylesheet"
+      href="https://localhost:3200/viewer.css"
+      />
+
     </Helmet>
   );
 };
