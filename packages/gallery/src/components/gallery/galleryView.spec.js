@@ -1,6 +1,6 @@
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import GalleryView from './galleryView';
-import utils from '../../utils/index';
+import utils from '../../common/utils/index';
 import { expect } from 'chai';
 import sinon from 'sinon';
 

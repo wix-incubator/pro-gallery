@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../utils/index';
+import utils from '../../common/utils/index';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
 

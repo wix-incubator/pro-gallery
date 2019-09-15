@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import { testImages } from '../../../__testsDrivers__/images-mock';
 import ItemHover from './itemHover';
-import utils from '../../utils/index.js';
+import utils from '../../common/utils/index.js';
 
 use(spies);
 

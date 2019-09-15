@@ -1,12 +1,12 @@
 import React from 'react';
-import utils from '../../../utils/index.js';
+import utils from '../../../common/utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
 import { GalleryComponent } from '../../galleryComponent';
-import window from '../../../utils/window/windowWrapper';
-import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
-import EVENTS from '../../../constants/events';
-import PLACEMENTS from '../../../constants/placements';
-import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
+import window from '../../../common/window/windowWrapper';
+import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
+import EVENTS from '../../../common/constants/events';
+import PLACEMENTS from '../../../common/constants/placements';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 
 export default class Social extends GalleryComponent {
   constructor(props) {

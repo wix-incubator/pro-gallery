@@ -4,10 +4,10 @@ import { testImages } from '../images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew.js'; //import GalleryContainer before the connect (without redux)
 import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
-import PLACEMENTS from '../../src/constants/placements';
+import PLACEMENTS from '../../src/common/constants/placements';
 import React from 'react';
-import utils from '../../src/utils';
-import window from '../../src/utils/window/windowWrapper';
+import utils from '../../src/common/utils';
+import window from '../../src/common/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });

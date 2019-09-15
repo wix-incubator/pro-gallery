@@ -8,8 +8,8 @@ import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
 import classNames from 'classnames';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';
@@ -17,11 +17,11 @@ import {
   isEditMode,
   isSiteMode,
   isSEOMode,
-} from '../../utils/window/viewModeWrapper';
-import EVENTS from '../../constants/events';
-import PLACEMENTS from '../../constants/placements';
-import OVERLAY_ANIMATIONS from '../../constants/overlayAnimations';
-import IMAGE_HOVER_ANIMATIONS from '../../constants/imageHoverAnimations';
+} from '../../common/window/viewModeWrapper';
+import EVENTS from '../../common/constants/events';
+import PLACEMENTS from '../../common/constants/placements';
+import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
+import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,
@@ -360,20 +360,20 @@ class ItemView extends GalleryComponent {
         width: style.width,
         height: style.height,
       };
-    } else if (isGridFit && isLandscape) { 
+    } else if (isGridFit && isLandscape) {
       dimensions = {
         //landscape
         height: style.height - 2 * imageMarginTop,
         width: style.width,
         marginTop: imageMarginTop,
       }
-    } else if (isGridFit && !isLandscape) { 
+    } else if (isGridFit && !isLandscape) {
       dimensions = {
         //portrait
         width: style.width - 2 * imageMarginLeft,
         height: style.height,
         marginLeft: imageMarginLeft,
-      }      
+      }
     }
 
     return dimensions;
@@ -777,7 +777,7 @@ class ItemView extends GalleryComponent {
       width: style.width,
       height: style.height + (styleParams.externalInfoHeight || 0),
     };
-    
+
     const isRTL = true;
     const rtlStyles = {
       left: isRTL ? 'auto' : offset.left,

@@ -4,7 +4,7 @@ import { use, expect } from 'chai';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
 import spies from 'chai-spies';
 import sinon from 'sinon';
-import EVENTS from '../../../constants/events';
+import EVENTS from '../../../common/constants/events';
 
 use(spies);
 

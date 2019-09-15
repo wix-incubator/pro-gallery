@@ -1,5 +1,5 @@
-import utils from '../../utils';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils';
+import window from '../../common/window/windowWrapper';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;

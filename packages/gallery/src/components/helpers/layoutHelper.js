@@ -1,14 +1,14 @@
-import utils from '../../utils';
-import PLACEMENTS from '../../constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../constants/infoBehaviourOnHover';
-import SCROLL_ANIMATIONS from '../../constants/scrollAnimations';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils';
+import PLACEMENTS from '../../common/constants/placements';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
+import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
-import designConsts from '../../constants/designConsts';
-import INFO_TYPE from '../../constants/infoType';
-import CALCULATION_OPTIONS from '../../constants/calculationOptions';
+import designConsts from '../../common/constants/designConsts';
+import INFO_TYPE from '../../common/constants/infoType';
+import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -473,7 +473,7 @@ function getStyleByLayout(styles) {
   }
 
   return {
-    ...layouts[layoutName](), 
+    ...layouts[layoutName](),
     galleryLayout
   };
 }

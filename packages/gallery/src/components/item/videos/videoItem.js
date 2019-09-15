@@ -1,9 +1,9 @@
 import React from 'react';
-import utils from '../../../utils';
-import window from '../../../utils/window/windowWrapper';
+import utils from '../../../common/utils';
+import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
-import EVENTS from '../../../constants/events';
-import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
+import EVENTS from '../../../common/constants/events';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {

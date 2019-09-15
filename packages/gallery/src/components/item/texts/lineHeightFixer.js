@@ -1,8 +1,8 @@
-import utils from '../../../utils/index.js';
-import PLACEMENTS from '../../../constants/placements';
-import INFO_TYPE from '../../../constants/infoType';
-import window from '../../../utils/window/windowWrapper';
-import designConsts from '../../../constants/designConsts.js';
+import utils from '../../../common/utils/index.js';
+import PLACEMENTS from '../../../common/constants/placements';
+import INFO_TYPE from '../../../common/constants/infoType';
+import window from '../../../common/window/windowWrapper';
+import designConsts from '../../../common/constants/designConsts.js';
 
 const minWidthToShowContent = 135;
 const minWithForNormalSizedItem = 190;
