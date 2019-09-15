@@ -199,3 +199,10 @@
  -  improve: use debounce instead of throttle after image measurement
  -  fix: do not set imageDimensions on SSR
  -  fix: remove implicit usage of filename
+
+---
+## v1.3.7 (15/09/2019)
+ 
+#### GALLERY
+ -  fix grid fit with ssr
+ -  decrease debounce time when measuring items
