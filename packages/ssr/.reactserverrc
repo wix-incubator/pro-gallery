@@ -1,0 +1,19 @@
+{
+  "routesFile": "./routes.json",
+  "host": "0.0.0.0",
+  "port": 3000,
+  "jsPort": 3001,
+  "hot": true,
+  "minify": false,
+  "longTermCaching": false,
+  "https": false,
+  "logLevel": "debug",
+  "env": {
+    "staging": {
+      "port": "4000"
+    },
+    "production": {
+       "port": "80"
+    }
+  }
+}
