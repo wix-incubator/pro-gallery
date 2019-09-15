@@ -206,3 +206,10 @@
 #### GALLERY
  -  fix grid fit with ssr
  -  decrease debounce time when measuring items
+
+---
+## v1.3.8 (15/09/2019)
+ 
+#### GALLERY
+ - removed local love logic.
+
