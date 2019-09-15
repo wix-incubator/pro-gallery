@@ -5,7 +5,7 @@ import {App} from './components/App/App';
 import {GalleryProvider} from './hooks/GalleryContext';
 import 'antd/dist/antd.css';
 
-const Root = () => (
+export const Root = () => (
   <GalleryProvider>
     <App />
   </GalleryProvider>
