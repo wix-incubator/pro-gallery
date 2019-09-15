@@ -1,6 +1,6 @@
 {
-  "name": "react-ssr-boilerplate",
-  "version": "5.1.0",
+  "name": "ssr-playground",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "node": ">=10.15"
@@ -79,7 +79,7 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
-    "pro-gallery": "^1.3.8",
+    "pro-gallery": "1.3.6",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dev-utils": "^9.0.3",

@@ -1,9 +1,0 @@
-{
-  "middleware": [],
-  "routes": {
-    "Homepage": {
-      "path": "/",
-      "page": "pages/gallery.js"
-    }
-  }
-}
