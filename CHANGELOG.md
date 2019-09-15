@@ -209,7 +209,9 @@
 
 ---
 ## v1.3.8 (15/09/2019)
+
+#### PLAYGROUND
+ -  fix: rename imageResize to cubeType (fix grid fit layout)
  
 #### GALLERY
  - removed local love logic.
-
