@@ -22,11 +22,11 @@ const hasHoverOnMobile = sp => {
 };
 
 const isSlideshowLayout = sp => {
-  return [GALLERY_CONSTS.layout.SLIDESHOW].indexOf(sp.galleryLayout) > -1;
+  return [GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE].indexOf(sp.galleryLayout) > -1;
 }
 
 const isHorizontalLayout = sp => {
-  return [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1 ||
+  return [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1 ||
   ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp)); 
   }
 
@@ -41,12 +41,12 @@ const presentOuterInformation = sp => layoutPresentOuterInformation(sp) && sp.ti
 const isTitlePlacementAlwaysShown = sp => layoutPresentOuterInformation(sp) || isSlideshowLayout(sp) || sp.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 const showInfiniteScroll = sp => [GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.PANORAMA].indexOf(sp.galleryLayout) > -1 && oneRow(sp);
 const showItemBorderAndShadowConfig = sp => !(sp.cubeType === 'fit' && showThumbnailResize(sp)) // check cubeType exists 
-const showThumbnailResize = sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW].indexOf(sp.galleryLayout) > -1 ;
+const showThumbnailResize = sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE].indexOf(sp.galleryLayout) > -1 ;
 const showShadow = sp => showItemBorderAndShadowConfig(sp) && !isHorizontalLayout(sp)  && (sp.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND || sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER);
 const oneRow = sp => sp.scrollDirection === GALLERY_CONSTS.scrollDirection.horizontal;
-const showSlideshowSettings = sp => [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1;
-const showAutoSlideshow = sp => [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW].indexOf(sp.galleryLayout) > -1;
-const showImagesDisplaySection = sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1;
+const showSlideshowSettings = sp => [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1;
+const showAutoSlideshow = sp => [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE].indexOf(sp.galleryLayout) > -1;
+const showImagesDisplaySection = sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1;
 const showHoveringBehaviour = sp => showImagesDisplaySection(sp) && !isSlideshowLayout(sp) && showTexts(sp) && ((presentOuterInformation(sp) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER) || !presentOuterInformation(sp));
 const showTextSubSection = sp => showTexts(sp);
 const showButtonSection = sp => showInfiniteScroll(sp) && !sp.enableInfiniteScroll && isStore(sp);

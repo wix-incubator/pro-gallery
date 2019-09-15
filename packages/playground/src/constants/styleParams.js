@@ -392,7 +392,7 @@ const styleParamsByLayout = () => ({
     isSlider: false,
     isColumns: false,
     isMasonry: false,
-    isSlideshow: false,
+    isSlideshow: true,
     cropOnlyFill: false,
     floatingImages: 0,
     galleryMargin: 0,
