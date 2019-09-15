@@ -8,18 +8,17 @@ export default class Gallery extends React.Component {
 
 	render() {
 
-		// console.log({window});
-
-  // Add your images here...
+		// Add your images here...
 		const items = testItems;
 
-  // The styles of the gallery (from the playground current state)
+  		// The styles of the gallery
 		const styles = {
 			galleryLayout: 2,
 			allowTitle: true,
 			titlePlacement: 'SHOW_ON_HOVER',
 			hoveringBehaviour: 'APPEARS',
 			cubeImages: true,
+			cubeRatio: 1,
 			cubeType: 'fit',
 			gallerySize: 30,
 			imageMargin: 10,

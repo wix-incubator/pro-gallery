@@ -11,14 +11,16 @@ import './styles/index.scss';
 const serverData = window.__SERVER_DATA__;
 
 export const main = () => {
-  Loadable.preloadReady().then(() => {
-    ReactDOM.hydrate(
-      <ServerDataProvider value={serverData}>
+  setTimeout(() => {
+    Loadable.preloadReady().then(() => {
+      ReactDOM.hydrate(
+        <ServerDataProvider value={serverData}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </ServerDataProvider>,
       document.getElementById('root')
-    );
-  });
+      );
+    });
+  }, 1000);
 };
