@@ -215,3 +215,12 @@
  
 #### GALLERY
  - removed local love logic.
+---
+## v1.3.9 (15/09/2019)
+ 
+#### PLAYGROUND
+ -  fixed path to imports of constants from pro-gallery.
+
+#### GALLERY
+ -  refactor: moved constants, utils, window to 'common' folder. Added utils functions and constants for pro-fullscreen-renderer usage.
+
