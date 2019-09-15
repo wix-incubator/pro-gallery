@@ -7,6 +7,9 @@ import { resizeMediaUrl } from './itemResizer';
 export default class Gallery extends React.Component {
 
 	render() {
+
+		// console.log({window});
+
   // Add your images here...
 		const items = testItems;
 
@@ -16,6 +19,7 @@ export default class Gallery extends React.Component {
 			allowTitle: true,
 			titlePlacement: 'SHOW_ON_HOVER',
 			hoveringBehaviour: 'APPEARS',
+			cubeImages: true,
 			cubeType: 'fit',
 			gallerySize: 30,
 			imageMargin: 10,
@@ -52,7 +56,7 @@ export default class Gallery extends React.Component {
 		};
 
   // The eventsListener will notify you anytime something has happened in the gallery.
-		const eventsListener = ({eventName, eventData}) => console.log({eventName, eventData});
+		const eventsListener = (eventName, eventData) => console.log({eventName, eventData});
 
 		return (
             <div>
@@ -61,7 +65,8 @@ export default class Gallery extends React.Component {
             <ProGallery
                 items={items}
                 styles={styles}
-                container={container}
+				allowSSR={false}
+				container={container}
 				eventsListener={eventsListener}
 				resizeMediaUrl={resizeMediaUrl}
             />

@@ -86,7 +86,7 @@ ${styles}
     };
 
     // The eventsListener will notify you anytime something has happened in the gallery.
-    const eventsListener = ({eventName, eventData}) => console.log({eventName, eventData}); 
+    const eventsListener = (eventName, eventData) => console.log({eventName, eventData}); 
 
     return (
       <ProGallery
