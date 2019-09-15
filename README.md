@@ -20,15 +20,19 @@ import { ProGallery } from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
 
 <ProGallery
+  domId={domId}
   items={images}
   styles={styleParams}
   container={container}
-  scrollingElement={window}
+  scrollingElement={document.getElementById('gallery') || window}
   eventsListener={(eName, eData) => console.log({eName, eData})}
 />
 ```
 
 To see more options and a real usage example, use the [playground code](https://github.com/wix-incubator/pro-gallery/blob/master/packages/playground/src/components/App/App.js) as reference
+
+### domId
+A unique Id for the gallery. Use for multiple galleries in the same page, or when using SSR - to make sure the gallery does not flickr in the hydrate phase.
 
 ### Items
 A list of objects each containing at least an id, dto, and metadata.

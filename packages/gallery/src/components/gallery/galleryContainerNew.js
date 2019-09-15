@@ -244,7 +244,7 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    const throttledReCreateGallery = utils.throttle(() => {
+    const debouncedReCreateGallery = utils.debounce(() => {
       const { items, styles, container, watermarkData } = this.props;
       const params = {
         items,
@@ -260,7 +260,7 @@ export class GalleryContainer extends React.Component {
           this.handleNewGalleryStructure();
         });
       }
-    }, 2500);
+    }, 500);
 
     itemsWithoutDimensions.forEach((item, idx) => {
       item.isPreloaded = true;
@@ -286,7 +286,7 @@ export class GalleryContainer extends React.Component {
 
             //rebuild the gallery after every dimension update
             // if (Object.keys(this.itemsDimensions).length > 0) {
-            throttledReCreateGallery();
+            debouncedReCreateGallery();
             // }
           }
         } catch (_e) {
@@ -586,26 +586,13 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams, isApproximation = false, isNew = {}) {
-    if (isApproximation) {
-      this.layoutCss = createCssLayouts({
-        isApproximation,
-        layoutParams,
-        isMobile: utils.isMobile(),
-      });
-    } else {
-      //if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
-      this.layoutCss = createCssLayouts({
-        galleryItems: this.galleryStructure.galleryItems,
-        layoutParams,
-        isMobile: utils.isMobile(),
-      });
-    } /* else {
-      this.layoutCss = this.layoutCss.concat(createCssLayouts({
-        galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
-        layoutParams,
-        isMobile: utils.isMobile(),
-      }));
-    } */
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximation,
+      isMobile: utils.isMobile(),
+      galleryDomId: this.props.domId,
+      galleryItems: isApproximation? null : this.galleryStructure.galleryItems,
+    });
   }
 
   reCreateGalleryExpensively(

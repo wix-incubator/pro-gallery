@@ -167,3 +167,42 @@
 #### GALLERY
  -  add rtl class to gallery scss
 
+
+---
+## v1.3.2 (11/09/2019)
+ 
+#### PLAYGROUND
+ -  improve: better search list
+
+#### GALLERY
+ -  fix arrow navigation in RTL mode
+ -  do not populate title with filename
+ -  fix css layouts for multiple galleries
+
+---
+## v1.3.4 (12/09/2019)
+ 
+#### GALLERY
+ -  fix ssr layout css
+
+---
+## v1.3.5 (12/09/2019)
+ 
+#### GALLERY
+ -  fix: remove double # from id
+
+
+---
+## v1.3.6 (12/09/2019)
+ 
+#### GALLERY
+ -  improve: use debounce instead of throttle after image measurement
+ -  fix: do not set imageDimensions on SSR
+ -  fix: remove implicit usage of filename
+
+---
+## v1.3.7 (15/09/2019)
+ 
+#### GALLERY
+ -  fix grid fit with ssr
+ -  decrease debounce time when measuring items

@@ -43,13 +43,13 @@ class GalleryView extends GalleryComponent {
           newIdx = findNeighborItem(idx, 'up');
           break;
         case 37: //left
-          newIdx = findNeighborItem(idx, 'left');
+          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'right' : 'left');
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
           break;
         case 39: //right
-          newIdx = findNeighborItem(idx, 'right');
+          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'left' : 'right');
           break;
       }
 

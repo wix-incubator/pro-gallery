@@ -5,8 +5,8 @@ import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
-import { settingsManager } from 'pro-gallery/dist/src/components/settings/settingsManager';
-import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from 'pro-gallery/dist/src/components/settings/consts';
+import { settingsManager } from '../../settings/settingsManager';
+import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from '../../settings/consts';
 import { Alert } from 'antd';
 import s from './SideBar.module.scss';
 
@@ -191,6 +191,8 @@ function SideBar() {
     <h3 className={s.title}>Playground Gizmos</h3>
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
+        <Collapse.Panel header="SSR" key="13">
+        </Collapse.Panel>
         <Collapse.Panel header="Benchmarks" key="13">
           <Benchmarks />
         </Collapse.Panel>

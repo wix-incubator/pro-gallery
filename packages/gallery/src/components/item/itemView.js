@@ -344,40 +344,45 @@ class ItemView extends GalleryComponent {
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
     const { styleParams, cubeRatio, style } = this.props;
-    const imageIsWider = style.ratio >= cubeRatio;
+    const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
       (style.height * style.ratio - style.width) / -2,
     );
     const imageMarginTop = Math.round(
       (style.width / style.ratio - style.height) / -2,
     );
-    return !(styleParams.cubeImages && styleParams.cubeType === 'fit')
-      ? {
-          //not grid fit
-          width: style.width,
-          height: style.height,
-        }
-      : //grid fit images
-      !imageIsWider
-      ? {
-          //portrait
-          width: style.width - 2 * imageMarginLeft,
-          height: style.height,
-          marginLeft: imageMarginLeft,
-        }
-      : {
-          //landscape
-          height: style.height - 2 * imageMarginTop,
-          width: style.width,
-          marginTop: imageMarginTop,
-        };
+    const isGridFit = (styleParams.cubeImages && styleParams.cubeType === 'fit');
+
+    let dimensions = {};
+
+    if (!isGridFit) {
+      dimensions = {
+        width: style.width,
+        height: style.height,
+      };
+    } else if (isGridFit && isLandscape) { 
+      dimensions = {
+        //landscape
+        height: style.height - 2 * imageMarginTop,
+        width: style.width,
+        marginTop: imageMarginTop,
+      }
+    } else if (isGridFit && !isLandscape) { 
+      dimensions = {
+        //portrait
+        width: style.width - 2 * imageMarginLeft,
+        height: style.height,
+        marginLeft: imageMarginLeft,
+      }      
+    }
+
+    return dimensions;
   }
 
   getItemTextsDetails() {
     const props = utils.pick(this.props, [
       'title',
       'description',
-      'fileName',
       'id',
       'styleParams',
       'style',
@@ -805,10 +810,15 @@ class ItemView extends GalleryComponent {
     styles.height = height + 'px';
     styles.margin = -styleParams.itemBorderWidth + 'px';
 
-    return {
+    const imageDimensions = this.getImageDimensions();
+
+    const itemWrapperStyles = {
       ...styles,
-      ...this.getImageDimensions(),
+      ...imageDimensions,
     };
+
+    return itemWrapperStyles;
+
   }
 
   getItemAriaLabel() {

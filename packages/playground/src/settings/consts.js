@@ -1,3 +1,4 @@
+export {default as GALLERY_CONSTS} from 'pro-gallery/dist/src/constants/index';
 
 export const INPUT_TYPES = {
     NUMBER: "NUMBER",
@@ -7,6 +8,7 @@ export const INPUT_TYPES = {
     COLOR_PICKER: "COLOR_PICKER",
     FONT_PICKER: "FONT_PICKER",
     BUTTON: "BUTTON",
+    MULTISELECT: "MULTISELECT",
   };
   
   export const SECTIONS = {

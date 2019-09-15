@@ -429,10 +429,6 @@ class GalleryItem {
     return ret;
   }
 
-  get name() {
-    return this.metadata.fileName || '';
-  }
-
   get url() {
     //todo :change from mediaUrl
     return (
@@ -521,18 +517,7 @@ class GalleryItem {
   }
 
   get title() {
-    const title = this.metadata.title;
-    if (typeof title === 'string') {
-      return title;
-    } else {
-      const filename = this.metadata.fileName;
-      if (filename) return filename;
-    }
-    return '';
-    // if (!this.metadata.isDemo) {
-    //   return this.metadata.title || '';
-    // }
-    // return this.getTranslatedValue(this.metadata.title);
+    return this.metadata.title || '';
   }
 
   set title(value) {
