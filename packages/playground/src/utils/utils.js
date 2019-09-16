@@ -30,7 +30,7 @@ export function mixAndSlice(array, length) {
       // Object.assign(item, array[idx]);
       item.itemId = array[idx].itemId + '_' + String(result.length);
       item.metadata.title = `Item #${result.length + 1}`;
-      console.log('ITEM CREATED', item, array[idx]);
+      // console.log('ITEM CREATED', item, array[idx]);
       result.push(item);
     }
   }

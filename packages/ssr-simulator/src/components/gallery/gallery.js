@@ -30,6 +30,8 @@ export default class Gallery extends React.Component {
 			// console.log({eventName, eventData});
 		}
 
+		(typeof window !== 'undefined') && console.log('[SSR SIMULATOR] Rendering Gallery with params', {items, styles, container});
+
 		return (
 			<ProGallery
 				domId="ssr-simulator"

@@ -1,4 +1,5 @@
 import Consts from "pro-gallery/dist/src/constants";
+import cloneDeep from 'lodash.clonedeep';
 
 export const defaultStyleParams = {
     isRTL: false,
@@ -192,10 +193,10 @@ export function mixAndSlice(array, length) {
         const rndIdx = () => Math.floor(Math.random() * array.length)
         while (result.length < length) {
             const idx = rndIdx();
-            let item = { ...array[idx] };
+            let item = cloneDeep(array[idx]);
             item.itemId = array[idx].itemId + '_' + String(result.length);
             item.metadata.title = `Item #${result.length + 1}`;
-            console.log('ITEM CREATED', item, array[idx]);
+            // console.log('ITEM CREATED', item, array[idx]);
             result.push(item);
         }
     }
