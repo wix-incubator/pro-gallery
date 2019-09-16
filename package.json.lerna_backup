@@ -1,0 +1,36 @@
+{
+  "name": "pro-gallery-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "lerna bootstrap --hoist",
+    "lint": "lerna run lint",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "publish": "node scripts/publishPackages",
+    "deploy": "npm run deploy --prefix packages/playground",
+    "patch": "node scripts/releaseVersion --patch",
+    "minor": "node scripts/releaseVersion --minor",
+    "major": "node scripts/releaseVersion --major"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix-incubator/pro-gallery.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wix-incubator/pro-gallery/issues"
+  },
+  "homepage": "https://github.com/wix-incubator/pro-gallery#readme",
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "gh-pages": "2.0.1",
+    "lerna": "^3.13.3",
+    "lerna-packages": "0.0.1",
+    "lodash": "^4.17.4",
+    "prompt": "^1.0.0",
+    "semver": "^6.3.0"
+  }
+}

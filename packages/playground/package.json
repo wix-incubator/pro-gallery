@@ -48,7 +48,7 @@
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
+    "style-loader": "^1.0.0",
     "url-loader": "^2.1.0",
     "webpack": "^4.38.0",
     "webpack-dev-server": "^3.7.2",
