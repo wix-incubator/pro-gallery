@@ -1,5 +1,4 @@
 import Consts from "pro-gallery/dist/src/constants";
-import cloneDeep from 'lodash.clonedeep';
 
 export const defaultStyleParams = {
     isRTL: false,
@@ -175,10 +174,12 @@ export function formatValue(val) {
     }
 }
 
-export function getStyleParamsFromUrl() {
+export function getStyleParamsFromUrl(searchString) {
     try {
-        const styleParams = window.location.search
-            .replace('#', '').split('&')
+        const styleParams = searchString
+            .replace('/', '')
+            .replace('?', '')
+            .split('&')
             .map(styleParam => styleParam.split('='))
             .reduce((obj, [styleParam, value]) => Object.assign(obj, { [styleParam]: formatValue(value) }));
         return styleParams;
@@ -187,19 +188,14 @@ export function getStyleParamsFromUrl() {
     }
 }
 
-export function mixAndSlice(array, length) {
-    let result = [];
-    if (array.length > 0) {
-        const rndIdx = () => Math.floor(Math.random() * array.length)
-        while (result.length < length) {
-            const idx = rndIdx();
-            let item = cloneDeep(array[idx]);
-            item.itemId = array[idx].itemId + '_' + String(result.length);
-            item.metadata.title = `Item #${result.length + 1}`;
-            // console.log('ITEM CREATED', item, array[idx]);
-            result.push(item);
-        }
-    }
-    return result;
+export function mixAndSlice(array, length, seed) {
+    const numFromId = id => Number(id.replace(/\D/g, '')) % Number(seed || 1);
+
+    return array
+        .sort((itm1, itm2) => {
+            debugger;
+            return numFromId(itm1.itemId) - numFromId(itm2.itemId)
+        })
+        .slice(0, length)
 }
 

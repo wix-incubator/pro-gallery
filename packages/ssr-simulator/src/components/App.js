@@ -2,10 +2,10 @@ import React from 'react';
 import Head from './Head';
 import Gallery from './gallery';
 
-const App = () => (
+const App = ({ location }) => (
   <div className="app">
     <Head />
-    <Gallery/>
+    <Gallery  location={location}/>
   </div>
 );
 

@@ -192,7 +192,7 @@ function SideBar() {
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
         <Collapse.Panel header="Simulate SSR" key="12">
-          {(window.location.hostname.indexOf('localhost') >= 0) && <Button icon="code" shape="" size="large" target="_blank" href={`http://localhost:3001/${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`}>
+          {(window.location.hostname.indexOf('localhost') >= 0) && <Button icon="code" shape="" size="large" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`}>
             Simulate Local SSR 
           </Button>}
         </Collapse.Panel>

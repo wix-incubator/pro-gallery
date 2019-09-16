@@ -9,12 +9,12 @@ export default class Gallery extends React.Component {
 
 	render() {
 
-		const items = utils.mixAndSlice(testItems, 50);
-
-		const urlStyles = utils.getStyleParamsFromUrl();
-		const hasUrlStyles = Object.keys(urlStyles) > 0;
-
+		const searchString = this.props.location || window.location.search;
+		const urlStyles = utils.getStyleParamsFromUrl(searchString);
+		const hasUrlStyles = Object.keys(urlStyles).length > 0;
 		const styles = hasUrlStyles ? urlStyles : utils.defaultStyleParams;
+		
+		const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
 
 		// The size of the gallery container. The images will fit themselves in it
 		const container = (typeof window === 'undefined') ? {
@@ -30,18 +30,21 @@ export default class Gallery extends React.Component {
 			// console.log({eventName, eventData});
 		}
 
-		(typeof window !== 'undefined') && console.log('[SSR SIMULATOR] Rendering Gallery with params', {items, styles, container});
+		(typeof window !== 'undefined') && console.log('[SSR SIMULATOR] Rendering Gallery with params', { items, styles, container });
 
 		return (
-			<ProGallery
-				domId="ssr-simulator"
-				items={items}
-				styles={styles}
-				allowSSR={true}
-				container={container}
-				eventsListener={eventsListener}
-				resizeMediaUrl={resizeMediaUrl}
-			/>
+			<div>
+				<ProGallery
+					domId="ssr-simulator"
+					items={items}
+					styles={styles}
+					allowSSR={true}
+					container={container}
+					eventsListener={eventsListener}
+					resizeMediaUrl={resizeMediaUrl}
+				/>
+				<ol style={{display: 'none'}}>{Object.entries(styles).map(([key, val]) => <li>{key}: {val}</li>)}</ol>
+			</div>
 		);
 	}
 }

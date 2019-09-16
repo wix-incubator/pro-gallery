@@ -15,7 +15,7 @@ const ServerApp = ({ context, data, location }) => {
   return (
     <ServerDataProvider value={data}>
       <StaticRouter location={location} context={context}>
-        <App />
+        <App location={location} />
       </StaticRouter>
     </ServerDataProvider>
   );
