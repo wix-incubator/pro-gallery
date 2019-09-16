@@ -22,7 +22,7 @@ const formatValue = (val) => {
 }
 
 
-const getStyleParamsFromUrl = () => {
+export const getStyleParamsFromUrl = () => {
   try {
     const styleParams = window.location.search
       .replace('#', '').split('&')

@@ -12,6 +12,7 @@
     "dist"
   ],
   "scripts": {
+    "watch": "PORT=8293 yoshi start",
     "start": "PORT=8293 yoshi start",
     "build": "yoshi build",
     "precommit": "yoshi lint",

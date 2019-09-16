@@ -44,6 +44,7 @@ function CodePanel() {
         onOk={onCopy}
         okText={hasCopied ? 'Copy Successful' : 'Copy to clipboard'}
         okButtonProps={{disabled: hasCopied}}
+        cancelText={'Close'}
         onCancel={() => set_modalVisible(false)}
       >
         <SyntaxHighlighter
@@ -68,24 +69,25 @@ function getCode(styles) {
   return `
   import { ProGallery } from 'pro-gallery';
 
-  // Add your images here...
-  const items = [];
+  export function Gallery() {
 
-  // The styles of the gallery (from the playground current state)
-  const styles = {
+    // Add your images here...
+    const items = [];
+
+    // The styles of the gallery (from the playground current state)
+    const styles = {
 ${styles}
-  };
+    };
 
-  // The size of the gallery container. The images will fit themselves in it
-  const container = {
-    width: window.innerWidth,
-    height: window.innerHeight
-  };
+    // The size of the gallery container. The images will fit themselves in it
+    const container = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
 
-  // The eventsListener will notify you anytime something has happened in the gallery.
-  const eventsListener = ({eventName, eventData}) => console.log({eventName, eventData}); 
+    // The eventsListener will notify you anytime something has happened in the gallery.
+    const eventsListener = (eventName, eventData) => console.log({eventName, eventData}); 
 
-  export function MyComponent({ images, eventsListener }) {
     return (
       <ProGallery
         items={items}
