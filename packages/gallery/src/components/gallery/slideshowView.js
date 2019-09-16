@@ -611,10 +611,11 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
+    const hideBackArrow = (!isRTL && this.isFirstItem()) || (isRTL && this.isLastItem())
+    const hideNextArrow = (isRTL && this.isFirstItem()) || (!isRTL && this.isLastItem())
+
     return [
-      this.isFirstItem() ? (
-        ''
-      ) : (
+      hideBackArrow ? null : (
         <button
           className={
             'nav-arrows-container prev ' +
@@ -629,8 +630,6 @@ class SlideshowView extends GalleryComponent {
         >
           <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
             <path
-              id="_250_middle_right_copy_3"
-              data-name="250 middle right  copy 3"
               className="slideshow-arrow"
               style={svgStyle}
               d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
@@ -639,9 +638,7 @@ class SlideshowView extends GalleryComponent {
           </svg>
         </button>
       ),
-      this.isLastItem() ? (
-        ''
-      ) : (
+      hideNextArrow ? null : (
         <button
           className={'nav-arrows-container next'}
           onClick={() => this._nextItem(1)}
@@ -653,8 +650,6 @@ class SlideshowView extends GalleryComponent {
         >
           <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
             <path
-              id="_250_middle_right_copy_2"
-              data-name="250 middle right  copy 2"
               className="slideshow-arrow"
               style={svgStyle}
               d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
