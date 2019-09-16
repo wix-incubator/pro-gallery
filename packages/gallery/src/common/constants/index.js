@@ -18,6 +18,9 @@ import horizontalAlign from './horizontalAlign';
 import verticalAlign from './verticalAlign';
 import videoPlay from './videoPlay';
 import groupTypes from './groupTypes';
+import mobileSwipeAnimations from './mobileSwipeAnimations';
+import expandInfoPositions from './expandInfoPositions';
+import dimensions from './dimensions';
 
 export default {
   placements,
@@ -40,5 +43,7 @@ export default {
   verticalAlign,
   videoPlay,
   groupTypes,
+  mobileSwipeAnimations,
+  expandInfoPositions,
+  dimensions
 };
-  

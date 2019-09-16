@@ -1,8 +1,8 @@
 ////// <reference path="../../reference.ts" />
-import utils from '../../utils/index';
+import utils from '../../common/utils/index';
 import { Item } from 'pro-layouts';
-import RESIZE_METHODS from '../../constants/resizeMethods';
-import { URL_TYPES } from '../../constants/urlTypes';
+import RESIZE_METHODS from '../../common/constants/resizeMethods';
+import { URL_TYPES } from '../../common/constants/urlTypes';
 
 class GalleryItem {
   constructor(config) {

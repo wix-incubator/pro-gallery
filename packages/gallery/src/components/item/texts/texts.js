@@ -3,9 +3,9 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import PLACEMENTS from '../../../constants/placements';
-import utils from '../../../utils';
-import designConsts from '../../../constants/designConsts.js';
+import PLACEMENTS from '../../../common/constants/placements';
+import utils from '../../../common/utils';
+import designConsts from '../../../common/constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';
 import { GalleryComponent } from '../../galleryComponent';
 

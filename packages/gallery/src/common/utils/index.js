@@ -1,11 +1,11 @@
 import * as lodash from './lodash';
-import window from './window/windowWrapper';
+import window from '../window/windowWrapper';
 import {
   isSiteMode,
   isEditMode,
   isPreviewMode,
   isSEOMode,
-} from './window/viewModeWrapper';
+} from '../window/viewModeWrapper';
 
 class Utils {
   constructor() {
@@ -680,6 +680,105 @@ class Utils {
   // isVerbose() {
   //   return window.isMock || (!this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true'));
   // }
+
+  getTitleOrFilename(title, filename) {
+    const shouldShowTitle = typeof title === typeof '';
+    return shouldShowTitle ? title : filename;
+  }
+
+  isSmallScreen() {
+    try {
+      return ((window.innerWidth || window.outerWidth) < 640) || this.isMobile();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  isTouch() {
+    return this.getOrPutFromCache('isTouch', () => {
+      try {
+        return this.isMobile() || ('ontouchstart' in window.document.documentElement);
+      } catch (e) {
+        return false;
+      }
+    });
+  }
+
+  browserIs(browserName) {
+
+    const _browsers = this.getOrPutFromCache('browsers', () => {
+      const browsers = {
+        chrome: false,
+        chromeIos: false,
+        explorer: false,
+        firefox: false,
+        safari: false,
+        opera: false,
+      };
+      try {
+        browsers.chrome = navigator.userAgent.indexOf('Chrome') > -1;
+        browsers.chromeIos = navigator.userAgent.indexOf('CriOS') > -1;
+        browsers.explorer = navigator.userAgent.indexOf('MSIE') > -1 || !!navigator.userAgent.match(/Trident.*rv\:11\./); // support for edge
+        browsers.firefox = navigator.userAgent.indexOf('Firefox') > -1;
+        browsers.safari = navigator.userAgent.indexOf('Safari') > -1;
+        browsers.opera = navigator.userAgent.toLowerCase().indexOf('op') > -1;
+
+        if ((browsers.chrome) && (browsers.safari)) {
+          browsers.safari = false;
+        }
+
+        if ((browsers.chrome) && (browsers.opera)) {
+          browsers.chrome = false;
+        }
+
+        return browsers;
+      } catch (e) {
+        return browsers;
+      }
+    });
+    return _browsers[browserName];
+  }
+
+  colorStringToObject(colorString) {
+    // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+    try {
+      let returnValue = null;
+      if (typeof colorString === 'string') {
+        if (colorString.trim().indexOf('rgb') === 0) {
+          // rgb(1,2,3) | rgba(4,5,6,0.7)
+          const values = colorString.match(/\d+/g);
+          if (values && Array.isArray(values) && values.length >= 3) {
+            returnValue = {
+              r: values[0],
+              g: values[1],
+              b: values[2],
+            };
+          }
+        } else {
+          // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+          const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+          colorString = colorString.replace(shorthandRegex, (m, r, g, b) => {
+            return r + r + g + g + b + b;
+          });
+
+          const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+            colorString,
+          );
+          returnValue = result
+            ? {
+              r: parseInt(result[1], 16),
+              g: parseInt(result[2], 16),
+              b: parseInt(result[3], 16),
+            }
+            : null;
+        }
+      }
+
+      return returnValue;
+    } catch (error) {
+      console.error('Error converting color string to object', error);
+    }
+  }
 }
 
 export default new Utils();

@@ -5,20 +5,20 @@ import { addLayoutStyles } from '../helpers/layoutHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import { scrollToItemImp } from '../helpers/scrollHelper';
-import window from '../../utils/window/windowWrapper';
+import window from '../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import utils from '../../utils';
-import { isEditMode, isSEOMode } from '../../utils/window/viewModeWrapper';
-import EVENTS from '../../constants/events';
+import utils from '../../common/utils';
+import { isEditMode, isSEOMode } from '../../common/window/viewModeWrapper';
+import EVENTS from '../../common/constants/events';
 import {
   extractContextFields,
   GalleryProvider,
 } from '../../context/GalleryContext';
 import VideoScrollHelper from '../helpers/videoScrollHelper.js';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -1053,7 +1053,7 @@ export class GalleryContainer extends React.Component {
             nextVideoIdx={this.state.nextVideoIdx}
             noFollowForSEO={this.props.noFollowForSEO}
             actions={{
-              ...this.props.actions, 
+              ...this.props.actions,
               findNeighborItem,
               toggleLoadMoreItems: this.toggleLoadMoreItems,
               eventsListener: this.eventsListener,

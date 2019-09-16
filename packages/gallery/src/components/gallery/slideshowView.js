@@ -1,15 +1,15 @@
-import utils from '../../utils';
+import utils from '../../common/utils';
 import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import window from '../../utils/window/windowWrapper';
-import { isEditMode, isPreviewMode } from '../../utils/window/viewModeWrapper';
+import window from '../../common/window/windowWrapper';
+import { isEditMode, isPreviewMode } from '../../common/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../assets/images/react-svg/components/play';
 import PauseIcon from '../../assets/images/react-svg/components/pause';
-import EVENTS from '../../constants/events';
+import EVENTS from '../../common/constants/events';
 import { GalleryComponent } from '../galleryComponent';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 utils.fixViewport('Gallery');
 
@@ -503,7 +503,7 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
     let scrollLeft = (this.container && this.container.scrollLeft) || 0;
     if (this.props.styleParams.isRTL) {
-      scrollLeft = this.props.galleryStructure.width - scrollLeft; 
+      scrollLeft = this.props.galleryStructure.width - scrollLeft;
     }
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const items = this.props.galleryStructure.galleryItems;

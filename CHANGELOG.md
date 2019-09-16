@@ -206,3 +206,21 @@
 #### GALLERY
  -  fix grid fit with ssr
  -  decrease debounce time when measuring items
+
+---
+## v1.3.8 (15/09/2019)
+
+#### PLAYGROUND
+ -  fix: rename imageResize to cubeType (fix grid fit layout)
+ 
+#### GALLERY
+ - removed local love logic.
+---
+## v1.3.9 (15/09/2019)
+ 
+#### PLAYGROUND
+ -  fixed path to imports of constants from pro-gallery.
+
+#### GALLERY
+ -  refactor: moved constants, utils, window to 'common' folder. Added utils functions and constants for pro-fullscreen-renderer usage.
+

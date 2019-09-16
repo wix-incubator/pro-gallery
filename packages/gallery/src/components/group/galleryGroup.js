@@ -1,5 +1,5 @@
 ////// <reference path="../../reference.ts" />
-import utils from '../../utils/index';
+import utils from '../../common/utils/index';
 import { Group } from 'pro-layouts';
 
 class GalleryGroup {

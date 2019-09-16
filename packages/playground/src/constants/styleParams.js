@@ -1,4 +1,4 @@
-import Consts from "pro-gallery/dist/src/constants";
+import Consts from 'pro-gallery/dist/src/common/constants';
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
   const savedStyleParams = getStyleParamsFromUrl();

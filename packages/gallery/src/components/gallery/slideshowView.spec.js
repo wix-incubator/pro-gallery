@@ -1,9 +1,9 @@
-import { viewModeWrapper } from '../../utils/window/viewModeWrapper';
+import { viewModeWrapper } from '../../common/window/viewModeWrapper';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import SlideshowView from './slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import VIEW_MODE from '../../constants/viewMode';
+import VIEW_MODE from '../../common/constants/viewMode';
 
 describe('Slideshow View', () => {
   let driver;

@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../utils/index.js';
+import utils from '../../common/utils/index.js';
 import { GalleryComponent } from '../galleryComponent';
 import { getHoverStyle } from './itemHoverStyleProvider';
 

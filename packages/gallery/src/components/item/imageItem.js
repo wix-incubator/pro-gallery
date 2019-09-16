@@ -1,8 +1,8 @@
 import React from 'react';
-import LOADING_MODE from '../../constants/loadingMode';
+import LOADING_MODE from '../../common/constants/loadingMode';
 import { GalleryComponent } from '../galleryComponent';
-import { isSEOMode } from '../../utils/window/viewModeWrapper';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import { isSEOMode } from '../../common/window/viewModeWrapper';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 export default class ImageItem extends GalleryComponent {
   componentDidMount() {

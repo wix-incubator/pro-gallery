@@ -1,5 +1,5 @@
-import INFO_TYPE from '../../constants/infoType';
-import PLACEMENTS from '../../constants/placements';
+import INFO_TYPE from '../../common/constants/infoType';
+import PLACEMENTS from '../../common/constants/placements';
 
 export function getContainerStyle(styleParams) {
   return {
