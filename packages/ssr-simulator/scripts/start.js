@@ -68,7 +68,7 @@ choosePort(HOST, DEFAULT_PORT).then(port => {
 
     console.log(chalk.white('\n\tStarting dev server...'));
 
-    openBrowser(urls.localUrlForBrowser);
+    // openBrowser(urls.localUrlForBrowser);
 
     purgeCacheOnChange(path.resolve(__dirname, '../'));
 

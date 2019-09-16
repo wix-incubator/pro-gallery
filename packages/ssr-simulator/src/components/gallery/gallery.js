@@ -3,36 +3,27 @@ import React from 'react';
 import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
-import { mixAndSlice }  from '../../../../playground/src/utils/utils';
-import { getStyleParamsFromUrl }  from '../../../../playground/src/constants/styleParams';
+import * as utils from './utils';
 
 export default class Gallery extends React.Component {
 
 	render() {
 
-		const items = mixAndSlice(testItems, 50);
+		const items = utils.mixAndSlice(testItems, 50);
 
-		const urlStyles = getStyleParamsFromUrl();
+		const urlStyles = utils.getStyleParamsFromUrl();
 		const hasUrlStyles = Object.keys(urlStyles) > 0;
 
-		const styles = hasUrlStyles ? urlStyles : {
-			galleryLayout: 2,
-			cubeImages: true,
-			cubeRatio: 1,
-			cubeType: 'fit',
-			gallerySize: 30,
-			imageMargin: 10,
-			galleryMargin: 0,
-		};
+		const styles = hasUrlStyles ? urlStyles : utils.defaultStyleParams;
 
 		// The size of the gallery container. The images will fit themselves in it
 		const container = (typeof window === 'undefined') ? {
 			width: '',
 			height: 500,
 		} : {
-			width: window.innerWidth,
-			height: window.innerHeight,
-		};
+				width: window.innerWidth,
+				height: window.innerHeight,
+			};
 
 		// The eventsListener will notify you anytime something has happened in the gallery.
 		const eventsListener = (eventName, eventData) => {
@@ -40,7 +31,7 @@ export default class Gallery extends React.Component {
 		}
 
 		return (
-            <ProGallery
+			<ProGallery
 				domId="ssr-simulator"
 				items={items}
 				styles={styles}
