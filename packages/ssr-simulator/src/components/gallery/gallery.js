@@ -17,9 +17,6 @@ export default class Gallery extends React.Component {
 
 		const styles = hasUrlStyles ? urlStyles : {
 			galleryLayout: 2,
-			allowTitle: true,
-			titlePlacement: 'SHOW_ON_HOVER',
-			hoveringBehaviour: 'APPEARS',
 			cubeImages: true,
 			cubeRatio: 1,
 			cubeType: 'fit',

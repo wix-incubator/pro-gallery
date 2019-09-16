@@ -6,6 +6,7 @@
     "node": ">=10.15"
   },
   "scripts": {
+    "watch": "sleep 10 && node scripts/start.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
