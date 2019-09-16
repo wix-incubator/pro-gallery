@@ -181,7 +181,7 @@ export function getStyleParamsFromUrl(searchString) {
             .replace('?', '')
             .split('&')
             .map(styleParam => styleParam.split('='))
-            .reduce((obj, [styleParam, value]) => Object.assign(obj, { [styleParam]: formatValue(value) }));
+            .reduce((obj, [styleParam, value]) => Object.assign(obj, { [styleParam]: formatValue(value) }), {});
         return styleParams;
     } catch (e) {
         return {};
