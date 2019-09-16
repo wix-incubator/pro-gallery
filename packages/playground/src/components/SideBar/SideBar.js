@@ -9,6 +9,7 @@ import { settingsManager } from '../../settings/settingsManager';
 import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from '../../settings/consts';
 import { Alert } from 'antd';
 import s from './SideBar.module.scss';
+import utils from "../../../../gallery/src/utils";
 
 function SideBar() {
   const {
@@ -191,7 +192,10 @@ function SideBar() {
     <h3 className={s.title}>Playground Gizmos</h3>
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
-        <Collapse.Panel header="SSR" key="13">
+        <Collapse.Panel header="Simulate SSR" key="12">
+          {utils.isLocal() && <Button icon="code" shape="" size="large" target="_blank" href={`https://localhost:3001/${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`}>
+            Simulate Local SSR 
+          </Button>}
         </Collapse.Panel>
         <Collapse.Panel header="Benchmarks" key="13">
           <Benchmarks />
