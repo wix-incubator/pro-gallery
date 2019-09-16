@@ -192,10 +192,7 @@ export function mixAndSlice(array, length, seed) {
     const numFromId = id => Number(id.replace(/\D/g, '')) % Number(seed || 1);
 
     return array
-        .sort((itm1, itm2) => {
-            debugger;
-            return numFromId(itm1.itemId) - numFromId(itm2.itemId)
-        })
+        .sort((itm1, itm2) => numFromId(itm1.itemId) - numFromId(itm2.itemId))
         .slice(0, length)
 }
 

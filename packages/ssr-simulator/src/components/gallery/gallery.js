@@ -43,7 +43,7 @@ export default class Gallery extends React.Component {
 					eventsListener={eventsListener}
 					resizeMediaUrl={resizeMediaUrl}
 				/>
-				<ol style={{display: 'none'}}>{Object.entries(styles).map(([key, val]) => <li>{key}: {val}</li>)}</ol>
+				{/* <ol style={{display: 'none'}}>{Object.entries(styles).map(([key, val]) => <li>{key}: {val}</li>)}</ol> */}
 			</div>
 		);
 	}
