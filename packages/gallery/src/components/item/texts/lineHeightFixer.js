@@ -52,7 +52,7 @@ class LineHeightFixer {
       const display = this.getSavedDisplay(element);
       this.setCss(element, { visibility: 'visible', display });
     } else {
-      this.setCss(element, { visibility: 'visible', display: '-webkit-box' });
+      this.setCss(element, { visibility: 'visible' });
     }
   }
 
