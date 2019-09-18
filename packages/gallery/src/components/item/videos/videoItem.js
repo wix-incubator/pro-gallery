@@ -17,24 +17,25 @@ class VideoItem extends GalleryComponent {
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
     };
-    if (!utils.isSSR()) {
-      if (!(window && window.ReactPlayer)) {
-        import('react-player').then(ReactPlayer => {
-          window.ReactPlayer = ReactPlayer.default;
-          this.setState({ reactPlayerLoaded: true });
-        });
-      }
-      if (
-        //Vimeo player must be loaded by us, problem with requireJS
-        !(window && window.Vimeo) &&
-        props.videoUrl &&
-        props.videoUrl.includes('vimeo.com')
-      ) {
-        import('@vimeo/player').then(Player => {
-          window.Vimeo = { Player: Player.default };
-          this.setState({ vimeoPlayerLoaded: true });
-        });
-      }
+  }
+
+  componentDidMount() {
+    if (!(window && window.ReactPlayer)) {
+      import('react-player').then(ReactPlayer => {
+        window.ReactPlayer = ReactPlayer.default;
+        this.setState({ reactPlayerLoaded: true });
+      });
+    }
+    if (
+      //Vimeo player must be loaded by us, problem with requireJS
+      !(window && window.Vimeo) &&
+      this.props.videoUrl &&
+      this.props.videoUrl.includes('vimeo.com')
+    ) {
+      import('@vimeo/player').then(Player => {
+        window.Vimeo = { Player: Player.default };
+        this.setState({ vimeoPlayerLoaded: true });
+      });
     }
   }
 
