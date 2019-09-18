@@ -224,3 +224,14 @@
 #### GALLERY
  -  refactor: moved constants, utils, window to 'common' folder. Added utils functions and constants for pro-fullscreen-renderer usage.
 
+
+---
+## v1.3.10 (18/09/2019)
+ 
+#### GALLERY
+ -  move Videos dynamic loading to componentDidMount
+ -  fix slideshow arrows appearance in rtl
+
+#### PLAYGROUND
+ -  feature: add local SSR simulator
+
