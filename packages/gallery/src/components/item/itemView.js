@@ -122,7 +122,9 @@ class ItemView extends GalleryComponent {
   }
 
   onMouseOver() {
-    this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    if (!utils.isMobile()) {
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    }
     this.onMouseOverEvent.itemIdx = this.props.idx; //VIDEOREWORK why do we need this?
     window.dispatchEvent(this.onMouseOverEvent);
   }
