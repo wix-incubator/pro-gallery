@@ -242,3 +242,10 @@
 #### GALLERY
  -  fix first-tap on mobile.
 
+
+---
+## v1.3.12 (18/09/2019)
+ 
+#### GALLERY
+ -  fix (lineHeightFixer): fixed customButton display css attribute when textPlacement is above or below.
+
