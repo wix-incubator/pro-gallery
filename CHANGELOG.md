@@ -235,3 +235,10 @@
 #### PLAYGROUND
  -  feature: add local SSR simulator
 
+
+---
+## v1.3.11 (18/09/2019)
+ 
+#### GALLERY
+ -  fix first-tap on mobile.
+
