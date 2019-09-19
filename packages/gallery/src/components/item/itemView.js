@@ -7,7 +7,6 @@ import ItemHover from './itemHover.js';
 import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
-import classNames from 'classnames';
 import utils from '../../common/utils/index.js';
 import window from '../../common/window/windowWrapper';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
@@ -848,7 +847,9 @@ class ItemView extends GalleryComponent {
     const isNOTslideshow = !styleParams.isSlideshow;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
-    const className = classNames('gallery-item-container', 'visible', {
+    const classNames = {
+      'gallery-item-container': true, 
+      'visible': true,
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',
       'simulate-hover': this.simulateHover(),
@@ -887,8 +888,13 @@ class ItemView extends GalleryComponent {
         imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
-    });
-    return className;
+    };
+    const strClass = Object.entries(classNames)
+      .map(([classname, isNeeded]) => isNeeded ? classname : false)
+      .filter(Boolean)
+      .join(' ');
+
+    return strClass;
   }
 
   getItemWrapperClass() {

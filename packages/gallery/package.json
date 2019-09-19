@@ -27,11 +27,8 @@
     "start-with-test": "PORT=9837 yoshi start --with-test"
   },
   "dependencies": {
-    "@vimeo/player": "2.8.2",
-    "classnames": "^2.2.5",
-    "dotenv": "^6.0.0",
-    "prepend-http-extra": "^1.0.0",
     "pro-layouts": "^1.3.10",
+    "@vimeo/player": "2.8.2",
     "react-player": "1.10.0"
   },
   "peerDependencies": {
