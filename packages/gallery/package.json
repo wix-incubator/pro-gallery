@@ -9,7 +9,7 @@
     "email": "guysopher@gmail.com",
     "url": ""
   },
-  "main": "dist/src/index.js",
+  "module": "dist/src/index.js",
   "files": [
     "dist"
   ],
@@ -81,9 +81,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "yoshi": {
-    "entry": {
-      "main": "./index"
-    },
     "servers": {
       "cdn": {
         "port": 9999
