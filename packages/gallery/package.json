@@ -82,6 +82,14 @@
     "registry": "https://registry.npmjs.org/"
   },
   "yoshi": {
+    "entry": {	
+      "main": "./index"	
+    },
+    "servers": {	
+      "cdn": {	
+        "port": 9999	
+      }	
+    },
     "externals": {
       "babel-runtime": "babel-runtime",
       "react": "React",
