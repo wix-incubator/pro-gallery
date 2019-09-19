@@ -249,3 +249,10 @@
 #### GALLERY
  -  fix (lineHeightFixer): fixed customButton display css attribute when textPlacement is above or below.
 
+
+---
+## v1.3.13 (19/09/2019)
+ 
+#### GALLERY
+ -  remove unnecessary dependencies
+
