@@ -9,6 +9,7 @@
     "url": ""
   },
   "main": "dist/src/index.js",
+  "module": "dist/src/index.js",
   "files": [
     "dist"
   ],
