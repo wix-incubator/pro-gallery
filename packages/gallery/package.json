@@ -3,13 +3,14 @@
   "private": false,
   "name": "pro-gallery",
   "version": "1.3.13",
-  "sideEffects": false,
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com",
     "url": ""
   },
   "module": "dist/src/index.js",
+  "main": "dist/src/index.js",
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -81,11 +82,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "yoshi": {
-    "servers": {
-      "cdn": {
-        "port": 9999
-      }
-    },
     "externals": {
       "babel-runtime": "babel-runtime",
       "react": "React",

@@ -10,8 +10,8 @@ import {setStyleParamsInUrl} from '../../constants/styleParams'
 // import { ProFullscreen } from '@wix/pro-fullscreen-renderer';
 // import '@wix/pro-fullscreen-renderer/dist/statics/main.css';
 // import '@wix/pro-fullscreen-renderer/dist/src/assets/styles/fullscreen.global.scss';
-
-import { ProGallery } from 'pro-gallery/dist/es/src/index';
+       
+import { ProGallery } from 'pro-gallery';
 import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
