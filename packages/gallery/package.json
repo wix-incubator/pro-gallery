@@ -8,9 +8,7 @@
     "email": "guysopher@gmail.com",
     "url": ""
   },
-  "module": "dist/src/index.js",
   "main": "dist/src/index.js",
-  "sideEffects": false,
   "files": [
     "dist"
   ],

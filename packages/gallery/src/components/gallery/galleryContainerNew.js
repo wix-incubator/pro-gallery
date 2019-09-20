@@ -634,10 +634,8 @@ export class GalleryContainer extends React.Component {
       {
         const metaData = Object.assign(
           {},
-          item.metaData,
-          {title: items[index].metaData.title,
-            description: items[index].metaData.description,
-          });
+          items[index].metaData,
+          );
         return Object.assign(item, {metaData}, { ...this.itemsDimensions[item.itemId] })
       }
       );
