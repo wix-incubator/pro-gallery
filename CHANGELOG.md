@@ -256,3 +256,11 @@
 #### GALLERY
  -  remove unnecessary dependencies
 
+
+---
+## v1.3.14 (20/09/2019)
+ 
+#### GALLERY
+ -  fix - change metaData on items when it changes
+
+
