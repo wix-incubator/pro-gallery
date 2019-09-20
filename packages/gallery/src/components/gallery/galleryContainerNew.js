@@ -630,8 +630,16 @@ export class GalleryContainer extends React.Component {
       !isNew.addedItems
     ) {
       //if only the items metadata has changed - use the modified items (probably with the measured width and height)
-      this.items = this.items.map(item =>
-        Object.assign(item, { ...this.itemsDimensions[item.itemId] }),
+      this.items = this.items.map((item,index) =>
+      {
+        const metaData = Object.assign(
+          {},
+          item.metaData,
+          {title: items[index].metaData.title,
+            description: items[index].metaData.description,
+          });
+        return Object.assign(item, {metaData}, { ...this.itemsDimensions[item.itemId] })
+      }
       );
       newState.items = this.items.map(item => item.itemId);
     } else if (isNew.items && !isNew.addedItems) {
