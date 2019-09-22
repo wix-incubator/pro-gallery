@@ -264,3 +264,14 @@
  -  fix - change metaData on items when it changes
 
 
+
+---
+## v1.3.15 (22/09/2019)
+ 
+#### GALLERY
+ -  fix (react-svg): save svgs to components
+ -  improve (package.json): create a module instead of bundle
+
+#### PLAYGROUND
+ - (styleParams): fix url params read
+
