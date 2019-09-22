@@ -27,7 +27,7 @@ export const getStyleParamsFromUrl = () => {
     const styleParams = window.location.search
       .replace('#', '').split('&')
       .map(styleParam => styleParam.split('='))
-      .reduce((obj, [styleParam, value]) => (typeof value !== 'undefined') && (styleParam) && Object.assign(obj, {[styleParam]: formatValue(value)}), {});
+      .reduce((obj, [styleParam, value]) => (typeof value !== 'undefined' && styleParam) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
     return styleParams;
   } catch (e) {
     return {};
@@ -37,7 +37,7 @@ export const getStyleParamsFromUrl = () => {
 export const setStyleParamsInUrl = (styleParams) => {
   const urlParams = Object
     .entries(styleParams)
-    .reduce((arr, [styleParam, value]) => (typeof value !== 'undefined') && (styleParam) && arr.concat(`${styleParam}=${value}`), [])
+    .reduce((arr, [styleParam, value]) => (typeof value !== 'undefined' && styleParam) ? arr.concat(`${styleParam}=${value}`) : arr, [])
     .join('&')
   //window.location.search = '?' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')
   // window.location.hash = '#' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => styleParam && arr.concat(`${styleParam}=${value}`), []).join('&')
