@@ -5,8 +5,8 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import window from '../../common/window/windowWrapper';
 import { isEditMode, isPreviewMode } from '../../common/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
-import PlayIcon from '../../assets/images/react-svg/components/play';
-import PauseIcon from '../../assets/images/react-svg/components/pause';
+//import PlayIcon from '../../assets/images/react-svg/components/play';
+//import PauseIcon from '../../assets/images/react-svg/components/pause';
 import EVENTS from '../../common/constants/events';
 import { GalleryComponent } from '../galleryComponent';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
@@ -840,11 +840,11 @@ class SlideshowView extends GalleryComponent {
           ...side,
         }}
       >
-        {this.state.shouldStopAutoSlideShow ? (
+        {/* {this.state.shouldStopAutoSlideShow ? (
           <PlayIcon width="10px" height="100%" />
         ) : (
           <PauseIcon width="10px" height="100%" />
-        )}
+        )} */}
       </button>
     );
   }
