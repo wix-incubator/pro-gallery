@@ -8,15 +8,16 @@
     "email": "guysopher@gmail.com",
     "url": ""
   },
+  "main": "dist/src/index.js",
   "module": "dist/src/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "watch": "PORT=9837 yoshi start",
-    "start": "npm run build-svg && PORT=9837 yoshi start",
-    "build": "npm run build-svg && yoshi build",
-    "build-svg": "svg2react-icon src/assets/images/svg-src src/assets/images/react-svg",
+    "start": "PORT=9837 yoshi start",
+    "build": "yoshi build",
+    "build-svg": "svg2react-icon src/assets/images/svg-src src/components/svgs",
     "precommit": " ",
     "pretest": "yoshi build",
     "test": "yoshi test",
