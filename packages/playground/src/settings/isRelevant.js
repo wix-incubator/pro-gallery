@@ -79,7 +79,7 @@ export default {
   titlePlacement: (sp) => layoutPresentOuterInformation(sp) && showTexts(sp),
   hoveringBehaviour: showHoveringBehaviour,
   cubeType: showThumbnailResize,
-  galleryImageRatioFromWix: sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.SLIDER].indexOf(sp.galleryLayout) > -1 && sp.cubeType === GALLERY_CONSTS.cubeType.crop,
+  cubeRatio: sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.SLIDER].indexOf(sp.galleryLayout) > -1 && sp.cubeType === GALLERY_CONSTS.cubeType.crop,
   gallerySliderImageRatio: sp => sp.galleryLayout === GALLERY_CONSTS.layout.SLIDER && sp.cubeType === GALLERY_CONSTS.cubeType.crop,
   galleryThumbnailsAlignment: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,
   thumbnailSize: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,

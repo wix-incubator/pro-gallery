@@ -61,7 +61,6 @@ const defaultStyleParams = {
   smartCrop: false,
   rotatingCubeRatio: '',
   gallerySliderImageRatio: 16 / 9,
-  galleryImageRatioFromWix: 1, //galleryImageRatio translates to galleryImageRatioFromWix 
   fixedColumns: 0,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 1,

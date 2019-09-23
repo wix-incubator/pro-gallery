@@ -260,7 +260,7 @@ export const settingsManager = {
     alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
     isRelevant: showThumbnailResize
   },
-  galleryImageRatioFromWix: {
+  cubeRatio: {
     section: SECTIONS.LAYOUT,
     title: "Image Ratio",
     description: "",

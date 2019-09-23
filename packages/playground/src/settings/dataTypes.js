@@ -98,7 +98,7 @@ export default {
     options: [{ value: GALLERY_CONSTS.cubeType.CROP, title: "Crop" }, { value: GALLERY_CONSTS.cubeType.FIT, title: "Fit" }],
     alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
   },
-  galleryImageRatioFromWix: {
+  cubeRatio: {
     type: INPUT_TYPES.OPTIONS,
     options: [
       { value: 16 / 9, title: "16:9" },

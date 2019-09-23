@@ -92,7 +92,7 @@ export default {
     title: "Thumbnail Resize",
     description: "",
   },
-  galleryImageRatioFromWix: {
+  cubeRatio: {
     section: SECTIONS.LAYOUT,
     title: "Image Ratio",
     description: "",
