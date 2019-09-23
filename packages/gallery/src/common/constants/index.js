@@ -21,6 +21,7 @@ import groupTypes from './groupTypes';
 import mobileSwipeAnimations from './mobileSwipeAnimations';
 import expandInfoPositions from './expandInfoPositions';
 import dimensions from './dimensions';
+import gallerySizeType from './gallerySizeType';
 
 export default {
   placements,
@@ -45,5 +46,6 @@ export default {
   groupTypes,
   mobileSwipeAnimations,
   expandInfoPositions,
-  dimensions
+  dimensions,
+  gallerySizeType
 };

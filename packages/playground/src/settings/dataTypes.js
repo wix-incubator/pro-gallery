@@ -93,6 +93,9 @@ export default {
       { value: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE, title: "no change" },
     ],
   },
+  cubeImages: {
+    type: INPUT_TYPES.BOOLEAN,
+  },
   cubeType: {
     type: INPUT_TYPES.OPTIONS,
     options: [{ value: GALLERY_CONSTS.cubeType.CROP, title: "Crop" }, { value: GALLERY_CONSTS.cubeType.FIT, title: "Fit" }],
@@ -141,10 +144,28 @@ export default {
       { value: 1, title: "Set Items Per Row" }
     ],
   },
+  gallerySizeType: {
+    type: INPUT_TYPES.OPTIONS,
+    options: [
+      { value: 'smart', title: "Adjust to Layout" },
+      { value: 'ratio', title: "Adjust to Container Width" },
+      { value: 'px', title: "Fixed size (in pixels)" },
+    ],
+  },
   gallerySize: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
-    max: 800,
+    max: 100,
+  },
+  gallerySizeRatio: {
+    type: INPUT_TYPES.NUMBER,
+    min: 0,
+    max: 100,
+  },
+  gallerySizePx: {
+    type: INPUT_TYPES.NUMBER,
+    min: 0,
+    max: 1000,
   },
   numberOfImagesPerRow: {
     type: INPUT_TYPES.NUMBER,
@@ -153,17 +174,17 @@ export default {
   },
   numberOfImagesPerCol: {
     type: INPUT_TYPES.NUMBER,
-    min: 1,
+    min: 0,
     max: 3,
   },
   groupSize: {
     type: INPUT_TYPES.NUMBER,
-    min: 1,
+    min: 0,
     max: 3,
   },
   groupsPerStrip: {
     type: INPUT_TYPES.NUMBER,
-    min: 1,
+    min: 0,
     max: 10,
   },
   groupTypes: {

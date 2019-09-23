@@ -52,6 +52,7 @@ const showTextSubSection = sp => showTexts(sp);
 const showButtonSection = sp => showInfiniteScroll(sp) && !sp.enableInfiniteScroll && isStore(sp);
 const showExpendSection = sp => sp.itemClick === GALLERY_CONSTS.itemClick.EXPAND || isStore(sp);
 const showScrollAnimations = sp => [GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.BRICKS, GALLERY_CONSTS.layout.ALTERNATE, GALLERY_CONSTS.layout.MIX].indexOf(sp.galleryLayout) > -1 || ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp));
+const showGallerySize = sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp)) ? sp.gridStyle ===  0 : [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY].indexOf(sp.galleryLayout) >= 0;
 
 // implement
 const isStore = (sp) => sp.isStore;
@@ -78,13 +79,17 @@ export default {
   allowSlideshowCounter: (sp) => isSlideshowLayout(sp) && sp.isAutoSlideshow,
   titlePlacement: (sp) => layoutPresentOuterInformation(sp) && showTexts(sp),
   hoveringBehaviour: showHoveringBehaviour,
+  cubeImages: showThumbnailResize,
   cubeType: showThumbnailResize,
   cubeRatio: sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.SLIDER].indexOf(sp.galleryLayout) > -1 && sp.cubeType === GALLERY_CONSTS.cubeType.crop,
   gallerySliderImageRatio: sp => sp.galleryLayout === GALLERY_CONSTS.layout.SLIDER && sp.cubeType === GALLERY_CONSTS.cubeType.crop,
   galleryThumbnailsAlignment: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,
   thumbnailSize: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,
   gridStyle: sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp)),
-  gallerySize: sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp)) ? sp.gridStyle ===  0 : [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY].indexOf(sp.galleryLayout) >= 0 ,
+  gallerySizeType: showGallerySize,
+  gallerySize: sp => showGallerySize(sp) && [GALLERY_CONSTS.gallerySizeType.PIXELS, GALLERY_CONSTS.gallerySizeType.RATIO].indexOf(sp.gallerySizeType) < 0,
+  gallerySizePx: sp => showGallerySize(sp) && GALLERY_CONSTS.gallerySizeType.PIXELS === sp.gallerySizeType,
+  gallerySizeRatio: sp => showGallerySize(sp) && GALLERY_CONSTS.gallerySizeType.RATIO === sp.gallerySizeType,
   numberOfImagesPerRow: sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp)) && sp.gridStyle === 1,
   numberOfImagesPerCol: sp => [GALLERY_CONSTS.layout.GRID].indexOf(sp.galleryLayout) >= 0  && (sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE && !oneRow(sp)),
   groupSize: sp => sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE,
