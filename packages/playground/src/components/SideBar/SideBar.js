@@ -196,16 +196,22 @@ function SideBar() {
             Simulate Local SSR 
           </Button>}
         </Collapse.Panel>
-        <Collapse.Panel header="Benchmarks" key="13">
+        <Collapse.Panel header="Reset Gallery" key="13">
+          <Button icon="delete" shape="round" size="large" onClick={() => window.location.search = ''}>
+            Reset to Default Gallery
+          </Button>
+        </Collapse.Panel>
+        <Collapse.Panel header="Benchmarks" key="14">
           <Benchmarks />
         </Collapse.Panel>
-        <Collapse.Panel header="Code Generator" key="14">
+        <Collapse.Panel header="Code Generator" key="15">
           <CodePanel />
         </Collapse.Panel>
-        <Collapse.Panel header="ToDos" key="15">
+        <Collapse.Panel header="ToDos" key="16">
           {conclusions.map((conclusion, idx) => <Alert key={idx} message={conclusion} type="info"/>)}
         </Collapse.Panel>
       </Collapse>
+
     </div>
     </>
   );

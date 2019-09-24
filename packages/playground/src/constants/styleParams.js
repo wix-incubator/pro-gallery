@@ -1,4 +1,6 @@
 import Consts from 'pro-gallery/dist/src/common/constants';
+import isRelevant from '../settings/isRelevant';
+
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
   const savedStyleParams = getStyleParamsFromUrl();
@@ -21,13 +23,25 @@ const formatValue = (val) => {
    }
 }
 
+const isValidStyleParam = (styleParam, value, styleParams) => {
+  if (typeof value === 'undefined' || !styleParam) {
+    return false;
+  }
+  if (value === defaultStyleParams[styleParam]) {
+    return false;
+  }
+  if (styleParams && (!isRelevant[styleParam] || !isRelevant[styleParam](styleParams))) {
+    return false;
+  }
+  return true;
+}
 
 export const getStyleParamsFromUrl = () => {
   try {
     const styleParams = window.location.search
       .replace('#', '').split('&')
       .map(styleParam => styleParam.split('='))
-      .reduce((obj, [styleParam, value]) => (typeof value !== 'undefined' && styleParam) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
+      .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
     return styleParams;
   } catch (e) {
     return {};
@@ -37,7 +51,7 @@ export const getStyleParamsFromUrl = () => {
 export const setStyleParamsInUrl = (styleParams) => {
   const urlParams = Object
     .entries(styleParams)
-    .reduce((arr, [styleParam, value]) => (typeof value !== 'undefined' && styleParam) ? arr.concat(`${styleParam}=${value}`) : arr, [])
+    .reduce((arr, [styleParam, value]) => isValidStyleParam(styleParam, value, styleParams) ? arr.concat(`${styleParam}=${value}`) : arr, [])
     .join('&')
   //window.location.search = '?' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')
   // window.location.hash = '#' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => styleParam && arr.concat(`${styleParam}=${value}`), []).join('&')
