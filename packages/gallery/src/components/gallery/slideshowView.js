@@ -508,23 +508,31 @@ class SlideshowView extends GalleryComponent {
       return;
     }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
-    let scrollLeft = (this.container && this.container.scrollLeft) || 0;
-    if (this.props.styleParams.isRTL) {
-      scrollLeft = this.props.galleryStructure.width - scrollLeft;
-    }
+    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const items = this.props.galleryStructure.galleryItems;
 
     let currentIdx;
 
-    for (let item, i = 0; (item = items[i]); i++) {
-      if (
-        item.offset.left >
-        scrollLeft + this.props.container.galleryWidth / 2
-      ) {
-        currentIdx = i - (this.props.styleParams.isRTL ? 2 : 1);
-        break;
+    const scrollPos = this.props.styleParams.isRTL ? 
+    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
+    scrollLeft + this.props.container.galleryWidth / 2
+
+    if (scrollPos === 0){
+      currentIdx = 0;
+    } else {
+      for (let item, i = 0; (item = items[i]); i++) {
+        if (
+          item.offset.left >
+          scrollPos
+        ) {
+          currentIdx = i - 1;
+          break;
+        }
       }
+    }
+    if (!(currentIdx >= 0)) {
+      currentIdx = items.length - 1;
     }
 
     if (!utils.isUndefined(currentIdx)) {
