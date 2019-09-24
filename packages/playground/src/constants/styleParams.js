@@ -39,7 +39,7 @@ const isValidStyleParam = (styleParam, value, styleParams) => {
 export const getStyleParamsFromUrl = () => {
   try {
     const styleParams = window.location.search
-      .replace('#', '').split('&')
+      .replace('?', '').split('&')
       .map(styleParam => styleParam.split('='))
       .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
     return styleParams;

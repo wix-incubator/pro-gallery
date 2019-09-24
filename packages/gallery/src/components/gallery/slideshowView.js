@@ -41,33 +41,36 @@ class SlideshowView extends GalleryComponent {
   }
 
   isFirstItem() {
-    let pos;
-    if (this.container) {
-      pos = this.props.styleParams.oneRow
-        ? this.container.scrollLeft
-        : this.container.scrollTop;
-    } else {
-      pos = 0;
-    }
-    const firstItem = () => this.state.currentIdx === 0 || pos === 0;
-    return firstItem();
+    return this.state.currentIdx === 0
+    // let pos;
+    // if (this.container) {
+    //   pos = this.props.styleParams.oneRow
+    //     ? this.container.scrollLeft
+    //     : this.container.scrollTop;
+    // } else {
+    //   pos = 0;
+    // }
+    // const firstItem = () => this.state.currentIdx === 0 || pos === 0;
+    // return firstItem();
   }
 
   isLastItem() {
-    let pos;
-    if (this.container) {
-      pos = this.props.styleParams.oneRow
-        ? this.container.scrollLeft
-        : this.container.scrollTop;
-    } else {
-      pos = 0;
-    }
-    const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
-    const lastItem = () =>
-      this.state.currentIdx >= this.props.totalItemsCount - 1 ||
-      !lastItemInGallery ||
-      this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right;
-    return lastItem() && !this.props.styleParams.slideshowLoop;
+    return !this.props.styleParams.slideshowLoop && this.state.currentIdx >= this.props.galleryStructure.items.length - 1;
+
+    // let pos;
+    // if (this.container) {
+    //   pos = this.props.styleParams.oneRow
+    //     ? this.container.scrollLeft
+    //     : this.container.scrollTop;
+    // } else {
+    //   pos = 0;
+    // }
+    // const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
+    // const lastItem = () =>
+    //   this.state.currentIdx >= this.props.totalItemsCount - 1 ||
+    //   !lastItemInGallery ||
+    //   this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right;
+    // return lastItem() && !this.props.styleParams.slideshowLoop;
   }
   //__________________________________Slide show loop functions_____________________________________________
 
@@ -104,9 +107,13 @@ class SlideshowView extends GalleryComponent {
 
   //__________________________________end of slide show loop functions__________________________
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
+    
+    direction *= (this.props.styleParams.isRTL ? -1 : 1);
+
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
+    let nextItem = currentIdx + direction;
+
     const { scrollToItem } = this.props.actions;
-    let nextItem = currentIdx + (direction * (this.props.styleParams.isRTL ? -1 : 1));
     this.isAutoScrolling = true;
 
     if (isAutoTrigger) {
@@ -611,18 +618,18 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
-    const hideBackArrow = (!isRTL && this.isFirstItem()) || (isRTL && this.isLastItem())
-    const hideNextArrow = (isRTL && this.isFirstItem()) || (!isRTL && this.isLastItem())
+    const hideLeftArrow = (!isRTL && this.isFirstItem()) || (isRTL && this.isLastItem())
+    const hideRightArrow = (isRTL && this.isFirstItem()) || (!isRTL && this.isLastItem())
 
     return [
-      hideBackArrow ? null : (
+      hideLeftArrow ? null : (
         <button
           className={
             'nav-arrows-container prev ' +
             (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
           }
           onClick={() => this._nextItem(-1)}
-          aria-label="Previous Item"
+          aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowPrev')}
           key="nav-arrow-back"
           data-hook="nav-arrow-back"
@@ -638,11 +645,11 @@ class SlideshowView extends GalleryComponent {
           </svg>
         </button>
       ),
-      hideNextArrow ? null : (
+      hideRightArrow ? null : (
         <button
           className={'nav-arrows-container next'}
           onClick={() => this._nextItem(1)}
-          aria-label="Next Item"
+          aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
           key="nav-arrow-next"
           data-hook="nav-arrow-next"
@@ -673,7 +680,6 @@ class SlideshowView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
-      currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
@@ -682,6 +688,7 @@ class SlideshowView extends GalleryComponent {
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
       actions: {
+        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };

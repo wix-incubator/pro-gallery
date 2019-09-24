@@ -186,7 +186,7 @@ class ItemView extends GalleryComponent {
   };
 
   isClickOnCurrentHoveredItem = () =>
-    this.props.currentHover === this.props.idx;
+    this.props.actions.isCurrentHover(this.props.idx);
 
   handleHoverClickOnMobile() {
     if (this.isClickOnCurrentHoveredItem()) {
@@ -745,7 +745,7 @@ class ItemView extends GalleryComponent {
 
   simulateHover() {
     return (
-      this.props.currentHover === this.props.idx ||
+      this.props.actions.isCurrentHover(this.props.idx) ||
       this.props.styleParams.alwaysShowHover === true ||
       (isEditMode() && this.props.styleParams.previewHover === true)
     );

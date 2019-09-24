@@ -35,13 +35,13 @@ export class GalleryContainer extends React.Component {
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
+    this.isCurrentHover = this.isCurrentHover.bind(this);
 
     const initialState = {
       pgScroll: 0,
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      currentHover: -1,
       gotFirstScrollEvent: false,
       playingVideoIdx: -1,
       nextVideoIdx: -1,
@@ -932,12 +932,17 @@ export class GalleryContainer extends React.Component {
       eventData,
     });
     if (eventName === EVENTS.HOVER_SET) {
-      this.setState({ currentHover: eventData });
+      this.currentHover = eventData;
     }
     if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData);
     }
   }
+
+  isCurrentHover(idx) {
+    return this.currentHover === idx;
+  }
+  
 
   getMoreItemsIfNeeded(scrollPos) {
     if (
@@ -991,6 +996,7 @@ export class GalleryContainer extends React.Component {
     }
     return can;
   }
+
   render() {
     if (!this.canRender()) {
       return null;
@@ -999,7 +1005,7 @@ export class GalleryContainer extends React.Component {
     const { styles } = this.state;
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
     if (utils.isVerbose()) {
-      console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
+      console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
         'PROGALLERY [RENDER] - GalleryContainer',
         this.state.container.scrollBase,
@@ -1052,7 +1058,6 @@ export class GalleryContainer extends React.Component {
             scroll={{}} //todo: remove after refactor is 100%
             displayShowMore={displayShowMore}
             domId={this.props.domId}
-            currentHover={this.state.currentHover}
             customHoverRenderer={this.props.customHoverRenderer}
             customInfoRenderer={this.props.customInfoRenderer}
             playingVideoIdx={this.state.playingVideoIdx}
@@ -1061,6 +1066,7 @@ export class GalleryContainer extends React.Component {
             actions={{
               ...this.props.actions,
               findNeighborItem,
+              isCurrentHover: this.isCurrentHover,
               toggleLoadMoreItems: this.toggleLoadMoreItems,
               eventsListener: this.eventsListener,
               setWixHeight: (() => {}),

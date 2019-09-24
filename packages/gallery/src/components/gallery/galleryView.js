@@ -177,7 +177,6 @@ class GalleryView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
-      currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
@@ -186,6 +185,7 @@ class GalleryView extends GalleryComponent {
       nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       actions: {
+        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };
