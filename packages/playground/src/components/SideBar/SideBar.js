@@ -4,7 +4,7 @@ import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
-import { Checkbox, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
+import { Form, Switch, Checkbox, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { settingsManager } from '../../settings/settingsManager';
 import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from '../../settings/consts';
 import { Alert } from 'antd';
@@ -153,10 +153,14 @@ function SideBar() {
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
         <Collapse.Panel header="Simulators" key="12">
-          <Checkbox checked={isFullWidth} onChange={e => setIsFullWidth(e.target.checked)}>Simulate Full Width (SSR)</Checkbox>
-          {(window.location.hostname.indexOf('localhost') >= 0) && <Button icon="code" shape="" size="large" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`}>
-            Simulate Local SSR 
-          </Button>}
+          <Form labelCol={{span: 17}} wrapperCol={{span: 3}}>
+            <Form.Item label="Simulate Unknown Width" labelAlign="left">
+              <Switch checked={isFullWidth} onChange={e => setIsFullWidth(e)} />
+            </Form.Item>
+            {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
+              <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+            </Form.Item>}
+          </Form>
         </Collapse.Panel>
         <Collapse.Panel header="Reset Gallery" key="13">
           <Button icon="delete" shape="round" size="large" onClick={() => window.location.search = ''}>
