@@ -286,3 +286,11 @@
  -  add less styles to the url
  -  add gallerySizeType and cubeRatio to settings
 
+
+---
+## v1.3.17 (25/09/2019)
+ 
+#### GALLERY
+ -  handle rage clicks on gallery arrows
+ -  fix videos in Safari
+
