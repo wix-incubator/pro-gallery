@@ -15,6 +15,7 @@
     "watch": "PORT=8293 yoshi start",
     "start": "PORT=8293 yoshi start",
     "build": "yoshi build",
+    "lint": "yoshi lint",
     "precommit": "yoshi lint",
     "pretest": "yoshi build",
     "test": "yoshi test",
