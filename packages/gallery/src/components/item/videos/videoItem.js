@@ -132,6 +132,7 @@ class VideoItem extends GalleryComponent {
                 URL_TYPES.HIGH_RES,
               ),
               style: videoDimensionsCss,
+              type: 'video/mp4',
             },
           },
         }}
