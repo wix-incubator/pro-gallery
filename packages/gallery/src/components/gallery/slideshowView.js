@@ -108,6 +108,12 @@ class SlideshowView extends GalleryComponent {
   //__________________________________end of slide show loop functions__________________________
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
     
+    if (this.isSliding) {
+      return;
+    }
+
+    this.isSliding = true;
+
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
 
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
@@ -129,6 +135,7 @@ class SlideshowView extends GalleryComponent {
         (direction === 1 && this.isLastItem()) ||
         (direction === -1 && this.isFirstItem());
       if (isScrollingPastEdge) {
+        this.isSliding = false;
         return;
       }
     }
@@ -148,6 +155,7 @@ class SlideshowView extends GalleryComponent {
       },
       () => {
         this.onCurrentItemChanged();
+        this.isSliding = false;
       },
     );
   }
