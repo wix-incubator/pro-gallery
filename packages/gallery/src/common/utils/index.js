@@ -718,7 +718,7 @@ class Utils {
       try {
         browsers.chrome = navigator.userAgent.indexOf('Chrome') > -1;
         browsers.chromeIos = navigator.userAgent.indexOf('CriOS') > -1;
-        browsers.explorer = navigator.userAgent.indexOf('MSIE') > -1 || !!navigator.userAgent.match(/Trident.*rv\:11\./); // support for edge
+        browsers.explorer = navigator.userAgent.indexOf('MSIE') > -1 || !!navigator.userAgent.match(/Trident.*rv:11\./); // support for edge
         browsers.firefox = navigator.userAgent.indexOf('Firefox') > -1;
         browsers.safari = navigator.userAgent.indexOf('Safari') > -1;
         browsers.opera = navigator.userAgent.toLowerCase().indexOf('op') > -1;

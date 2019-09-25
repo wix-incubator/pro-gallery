@@ -546,7 +546,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
-    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
+    // const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
@@ -585,7 +585,7 @@ export class GalleryContainer extends React.Component {
     this.createCssLayoutsIfNeeded(layoutParams);
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximation = false, isNew = {}) {
+  createCssLayoutsIfNeeded(layoutParams, isApproximation = false) {
     this.layoutCss = createCssLayouts({
       layoutParams,
       isApproximation,

@@ -165,10 +165,9 @@ describe('Slideshow View', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.get.state('currentIdx')).to.equal(0);
+      clock.tick(450); // does not navigate more than once every 400 ms
       driver.find.hook('nav-arrow-next').simulate('click');
       expect(driver.get.state('currentIdx')).to.equal(1); //navigates
-      driver.find.hook('nav-arrow-next').simulate('click');
-      expect(driver.get.state('currentIdx')).to.equal(1);
       clock.tick(450); // does not navigate more than once every 400 ms
       driver.find.hook('nav-arrow-next').simulate('click');
       expect(driver.get.state('currentIdx')).to.equal(2);

@@ -769,31 +769,7 @@ class ItemView extends GalleryComponent {
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
 
-    if (utils.isSSR()) {
-      return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
-    };
-
-    const positionStyles = {
-      top: offset.top,
-      width: style.width,
-      height: style.height + (styleParams.externalInfoHeight || 0),
-    };
-
-    const isRTL = true;
-    const rtlStyles = {
-      left: isRTL ? 'auto' : offset.left,
-      right: !isRTL ? 'auto' : offset.left,
-    };
-
-    const styles = {
-      // ...positionStyles,
-      // ...rtlStyles,
-      ...itemStyles,
-      ...transform,
-      ...containerStyleByStyleParams,
-    };
-
-    return styles;
+    return { ...itemStyles, ...transform, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {
