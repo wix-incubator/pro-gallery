@@ -556,7 +556,7 @@ class SlideshowView extends GalleryComponent {
 
   createNavArrows() {
 
-    const { oneRow, arrowsColor, isSlideshow, slideshowInfoSize, imageMargin, arrowsSize, arrowsPosition } = this.props.styleParams;
+    const { isRTL, oneRow, arrowsColor, isSlideshow, slideshowInfoSize, imageMargin, arrowsSize, arrowsPosition } = this.props.styleParams;
 
     const shouldNotRenderNavArrows = this.props.galleryStructure.columns.some(
       column => {
