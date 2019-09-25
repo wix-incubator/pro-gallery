@@ -83,7 +83,7 @@ export default class ScrollIndicator extends GalleryComponent {
       if (this.props.isRTL) {
         left = this.props.totalWidth - left;
       };
-      console.log('[RTL SCROLL] onVerticalScroll: ', left);
+      // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
         if (!oneRow) {
           this.setState({
