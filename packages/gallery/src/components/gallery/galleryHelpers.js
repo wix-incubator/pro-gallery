@@ -1,4 +1,4 @@
-import window from '../../utils/window/windowWrapper';
+import window from '../../common/window/windowWrapper';
 
 export function isGalleryInViewport(container) {
   const haveAllVariablesForViewPortCalc = !!(

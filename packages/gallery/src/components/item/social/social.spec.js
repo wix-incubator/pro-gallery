@@ -6,12 +6,12 @@ import Social from './social.js';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
-import utils from '../../../utils/index';
-import window from '../../../utils/window/windowWrapper';
+import utils from '../../../common/utils/index';
+import window from '../../../common/window/windowWrapper';
 import LoveButton from '../loveButton/loveButton.js';
-import EVENTS from '../../../constants/events';
-import { viewModeWrapper } from '../../../utils/window/viewModeWrapper';
-import VIEW_MODE from '../../../constants/viewMode';
+import EVENTS from '../../../common/constants/events';
+import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
+import VIEW_MODE from '../../../common/constants/viewMode';
 
 describe('Social:', () => {
   let driver;

@@ -1,15 +1,15 @@
-import utils from '../../utils';
+import utils from '../../common/utils';
 import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import window from '../../utils/window/windowWrapper';
-import { isEditMode, isPreviewMode } from '../../utils/window/viewModeWrapper';
+import window from '../../common/window/windowWrapper';
+import { isEditMode, isPreviewMode } from '../../common/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
-import PlayIcon from '../../assets/images/react-svg/components/play';
-import PauseIcon from '../../assets/images/react-svg/components/pause';
-import EVENTS from '../../constants/events';
+import PlayIcon from '../svgs/components/play';
+import PauseIcon from '../svgs/components/pause';
+import EVENTS from '../../common/constants/events';
 import { GalleryComponent } from '../galleryComponent';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 utils.fixViewport('Gallery');
 
@@ -41,33 +41,36 @@ class SlideshowView extends GalleryComponent {
   }
 
   isFirstItem() {
-    let pos;
-    if (this.container) {
-      pos = this.props.styleParams.oneRow
-        ? this.container.scrollLeft
-        : this.container.scrollTop;
-    } else {
-      pos = 0;
-    }
-    const firstItem = () => this.state.currentIdx === 0 || pos === 0;
-    return firstItem();
+    return this.state.currentIdx === 0
+    // let pos;
+    // if (this.container) {
+    //   pos = this.props.styleParams.oneRow
+    //     ? this.container.scrollLeft
+    //     : this.container.scrollTop;
+    // } else {
+    //   pos = 0;
+    // }
+    // const firstItem = () => this.state.currentIdx === 0 || pos === 0;
+    // return firstItem();
   }
 
   isLastItem() {
-    let pos;
-    if (this.container) {
-      pos = this.props.styleParams.oneRow
-        ? this.container.scrollLeft
-        : this.container.scrollTop;
-    } else {
-      pos = 0;
-    }
-    const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
-    const lastItem = () =>
-      this.state.currentIdx >= this.props.totalItemsCount - 1 ||
-      !lastItemInGallery ||
-      this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right;
-    return lastItem() && !this.props.styleParams.slideshowLoop;
+    return !this.props.styleParams.slideshowLoop && this.state.currentIdx >= this.props.galleryStructure.items.length - 1;
+
+    // let pos;
+    // if (this.container) {
+    //   pos = this.props.styleParams.oneRow
+    //     ? this.container.scrollLeft
+    //     : this.container.scrollTop;
+    // } else {
+    //   pos = 0;
+    // }
+    // const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
+    // const lastItem = () =>
+    //   this.state.currentIdx >= this.props.totalItemsCount - 1 ||
+    //   !lastItemInGallery ||
+    //   this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right;
+    // return lastItem() && !this.props.styleParams.slideshowLoop;
   }
   //__________________________________Slide show loop functions_____________________________________________
 
@@ -104,9 +107,13 @@ class SlideshowView extends GalleryComponent {
 
   //__________________________________end of slide show loop functions__________________________
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
+    
+    direction *= (this.props.styleParams.isRTL ? -1 : 1);
+
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
+    let nextItem = currentIdx + direction;
+
     const { scrollToItem } = this.props.actions;
-    let nextItem = currentIdx + (direction * (this.props.styleParams.isRTL ? -1 : 1));
     this.isAutoScrolling = true;
 
     if (isAutoTrigger) {
@@ -501,23 +508,31 @@ class SlideshowView extends GalleryComponent {
       return;
     }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
-    let scrollLeft = (this.container && this.container.scrollLeft) || 0;
-    if (this.props.styleParams.isRTL) {
-      scrollLeft = this.props.galleryStructure.width - scrollLeft; 
-    }
+    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const items = this.props.galleryStructure.galleryItems;
 
     let currentIdx;
 
-    for (let item, i = 0; (item = items[i]); i++) {
-      if (
-        item.offset.left >
-        scrollLeft + this.props.container.galleryWidth / 2
-      ) {
-        currentIdx = i - (this.props.styleParams.isRTL ? 2 : 1);
-        break;
+    const scrollPos = this.props.styleParams.isRTL ? 
+    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
+    scrollLeft + this.props.container.galleryWidth / 2
+
+    if (scrollPos === 0){
+      currentIdx = 0;
+    } else {
+      for (let item, i = 0; (item = items[i]); i++) {
+        if (
+          item.offset.left >
+          scrollPos
+        ) {
+          currentIdx = i - 1;
+          break;
+        }
       }
+    }
+    if (!(currentIdx >= 0)) {
+      currentIdx = items.length - 1;
     }
 
     if (!utils.isUndefined(currentIdx)) {
@@ -601,17 +616,18 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
+    const hideLeftArrow = (!isRTL && this.isFirstItem()) || (isRTL && this.isLastItem())
+    const hideRightArrow = (isRTL && this.isFirstItem()) || (!isRTL && this.isLastItem())
+
     return [
-      this.isFirstItem() ? (
-        ''
-      ) : (
+      hideLeftArrow ? null : (
         <button
           className={
             'nav-arrows-container prev ' +
             (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
           }
           onClick={() => this._nextItem(-1)}
-          aria-label="Previous Item"
+          aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowPrev')}
           key="nav-arrow-back"
           data-hook="nav-arrow-back"
@@ -619,8 +635,6 @@ class SlideshowView extends GalleryComponent {
         >
           <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
             <path
-              id="_250_middle_right_copy_3"
-              data-name="250 middle right  copy 3"
               className="slideshow-arrow"
               style={svgStyle}
               d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
@@ -629,13 +643,11 @@ class SlideshowView extends GalleryComponent {
           </svg>
         </button>
       ),
-      this.isLastItem() ? (
-        ''
-      ) : (
+      hideRightArrow ? null : (
         <button
           className={'nav-arrows-container next'}
           onClick={() => this._nextItem(1)}
-          aria-label="Next Item"
+          aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
           key="nav-arrow-next"
           data-hook="nav-arrow-next"
@@ -643,8 +655,6 @@ class SlideshowView extends GalleryComponent {
         >
           <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
             <path
-              id="_250_middle_right_copy_2"
-              data-name="250 middle right  copy 2"
               className="slideshow-arrow"
               style={svgStyle}
               d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
@@ -668,7 +678,6 @@ class SlideshowView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
-      currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
@@ -677,6 +686,7 @@ class SlideshowView extends GalleryComponent {
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
       actions: {
+        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };

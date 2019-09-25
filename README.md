@@ -90,3 +90,15 @@ The most important events are:
 | `NEED_MORE_ITEMS`  | Fired whenever the gallery is scrolled near its last item. If you are using a pagination server, this is the event that should trigger the next page and re-render the gallery with the new items |
 
 The full list gallery events is [here](https://github.com/wix-incubator/pro-gallery/blob/master/packages/gallery/src/constants/events.js)
+
+### Custom Renderers
+The Gallery supports custom renderers both for the Hover Element (appears when hoveing over an item) and the Info Element (appears below / above the item).
+To replace the default rendering of these element, pass a function that will receive the item's props and should return a JSX element.
+for example:
+```
+<ProGallery
+  {...otherProps}
+  customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
+  customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+/>
+```

@@ -10,13 +10,18 @@ export const pick = (obj, keys) => {
 
 export const throttle = (callback, limit) => {
   let wait = false;
+  let callAfterWait = false;
   return (...args) => {
     if (!wait) {
+      callAfterWait = false;
       callback.apply(this, args);
       wait = true;
       setTimeout(() => {
+        callAfterWait && callback.apply(this, args);
         wait = false;
       }, limit);
+    } else {
+      callAfterWait = true;
     }
   }
 }

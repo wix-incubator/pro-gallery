@@ -1,7 +1,7 @@
 import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -177,7 +177,6 @@ class GalleryView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
-      currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
@@ -186,6 +185,7 @@ class GalleryView extends GalleryComponent {
       nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       actions: {
+        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };

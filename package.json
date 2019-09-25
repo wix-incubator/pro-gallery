@@ -8,6 +8,8 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
+    "watch": "lerna run --parallel watch",
+    "bootstrap": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
     "deploy": "npm run deploy --prefix packages/playground",
     "patch": "node scripts/releaseVersion --patch",

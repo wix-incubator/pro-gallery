@@ -93,12 +93,15 @@ export default {
       { value: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE, title: "no change" },
     ],
   },
-  imageResize: {
+  cubeImages: {
+    type: INPUT_TYPES.BOOLEAN,
+  },
+  cubeType: {
     type: INPUT_TYPES.OPTIONS,
-    options: [{ value: GALLERY_CONSTS.imageResize.CROP, title: "Crop" }, { value: GALLERY_CONSTS.imageResize.FIT, title: "Fit" }],
+    options: [{ value: GALLERY_CONSTS.cubeType.CROP, title: "Crop" }, { value: GALLERY_CONSTS.cubeType.FIT, title: "Fit" }],
     alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
   },
-  galleryImageRatioFromWix: {
+  cubeRatio: {
     type: INPUT_TYPES.OPTIONS,
     options: [
       { value: 16 / 9, title: "16:9" },
@@ -141,10 +144,28 @@ export default {
       { value: 1, title: "Set Items Per Row" }
     ],
   },
+  gallerySizeType: {
+    type: INPUT_TYPES.OPTIONS,
+    options: [
+      { value: 'smart', title: "Adjust to Layout" },
+      { value: 'ratio', title: "Adjust to Container Width" },
+      { value: 'px', title: "Fixed size (in pixels)" },
+    ],
+  },
   gallerySize: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
-    max: 800,
+    max: 100,
+  },
+  gallerySizeRatio: {
+    type: INPUT_TYPES.NUMBER,
+    min: 0,
+    max: 100,
+  },
+  gallerySizePx: {
+    type: INPUT_TYPES.NUMBER,
+    min: 0,
+    max: 1000,
   },
   numberOfImagesPerRow: {
     type: INPUT_TYPES.NUMBER,
@@ -153,17 +174,17 @@ export default {
   },
   numberOfImagesPerCol: {
     type: INPUT_TYPES.NUMBER,
-    min: 1,
+    min: 0,
     max: 3,
   },
   groupSize: {
     type: INPUT_TYPES.NUMBER,
-    min: 1,
+    min: 0,
     max: 3,
   },
   groupsPerStrip: {
     type: INPUT_TYPES.NUMBER,
-    min: 1,
+    min: 0,
     max: 10,
   },
   groupTypes: {
@@ -758,8 +779,8 @@ export default {
 //   stateStyles.cubeRatio = Number(eval(wixStyles.cubeRatio));
 // }
 
-// if (canSet('imageResize', 'cubeType')) {
-//   stateStyles.cubeType = ((String(wixStyles.imageResize) === '1') ? 'fit' : 'fill');
+// if (canSet('cubeType', 'cubeType')) {
+//   stateStyles.cubeType = ((String(wixStyles.cubeType) === '1') ? 'fit' : 'fill');
 //   if (stateStyles.cubeType === 'fit') {
 //     if (stateStyles.cropOnlyFill === true) {
 //       stateStyles.cubeImages = false;

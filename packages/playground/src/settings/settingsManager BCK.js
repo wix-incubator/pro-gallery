@@ -221,16 +221,16 @@ export const settingsManager = {
     ],
     isRelevant: showHoveringBehaviour
   },
-  imageResize: {
+  cubeType: {
     section: SECTIONS.LAYOUT,
     title: "Thumbnail Resize",
     description: "",
     type: INPUT_TYPES.OPTIONS,
-    options: [{ value: Consts.imageResize.crop, title: "Crop" }, { value: Consts.imageResize.fit, title: "Fit" }],
+    options: [{ value: Consts.cubeType.crop, title: "Crop" }, { value: Consts.cubeType.fit, title: "Fit" }],
     alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
     isRelevant: showThumbnailResize
   },
-  galleryImageRatioFromWix: {
+  cubeRatio: {
     section: SECTIONS.LAYOUT,
     title: "Image Ratio",
     description: "",
@@ -243,7 +243,7 @@ export const settingsManager = {
       { value: 9 / 16, title: "9:16" }
     ],
 
-    isRelevant: sp => [Consts.layout.EMPTY, Consts.layout.GRID, Consts.layout.SLIDER].indexOf(sp.galleryLayout) > -1 && sp.imageResize === Consts.imageResize.crop
+    isRelevant: sp => [Consts.layout.EMPTY, Consts.layout.GRID, Consts.layout.SLIDER].indexOf(sp.galleryLayout) > -1 && sp.cubeType === Consts.cubeType.crop
   },
   gallerySliderImageRatio: {
     section: SECTIONS.LAYOUT,
@@ -258,7 +258,7 @@ export const settingsManager = {
       { value: 9 / 16, title: "9:16" }
     ],
     alert: 'is "cubeRatio" is undefined (a value that is only in wixers) that this is set to a default value of 16/9',
-    isRelevant: sp => sp.galleryLayout === Consts.layout.SLIDER && sp.imageResize === Consts.imageResize.crop
+    isRelevant: sp => sp.galleryLayout === Consts.layout.SLIDER && sp.cubeType === Consts.cubeType.crop
   },
   galleryThumbnailsAlignment: {
     section: SECTIONS.LAYOUT,
@@ -1387,8 +1387,8 @@ export const settingsManager = {
 //   stateStyles.cubeRatio = Number(eval(wixStyles.cubeRatio));
 // }
 
-// if (canSet('imageResize', 'cubeType')) {
-//   stateStyles.cubeType = ((String(wixStyles.imageResize) === '1') ? 'fit' : 'fill');
+// if (canSet('cubeType', 'cubeType')) {
+//   stateStyles.cubeType = ((String(wixStyles.cubeType) === '1') ? 'fit' : 'fill');
 //   if (stateStyles.cubeType === 'fit') {
 //     if (stateStyles.cropOnlyFill === true) {
 //       stateStyles.cubeImages = false;

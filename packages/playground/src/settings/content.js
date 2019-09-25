@@ -87,16 +87,20 @@ export default {
     title: "What happens to the info on hover?",
     description: "",
   },
-  imageResize: {
+  cubeImages: {
+    section: SECTIONS.LAYOUT,
+    title: "Allow Crop",
+    description: "",
+  },
+  cubeType: {
     section: SECTIONS.LAYOUT,
     title: "Thumbnail Resize",
     description: "",
   },
-  galleryImageRatioFromWix: {
+  cubeRatio: {
     section: SECTIONS.LAYOUT,
     title: "Image Ratio",
     description: "",
-
   },
   gallerySliderImageRatio: {
     section: SECTIONS.LAYOUT,
@@ -118,9 +122,24 @@ export default {
     title: "Grid Style",
     description: "",
   },
+  gallerySizeType: {
+    section: SECTIONS.LAYOUT,
+    title: "Thumbnail Size Units",
+    description: "",
+  },
   gallerySize: {
     section: SECTIONS.LAYOUT,
-    title: "Thumbnail Size",
+    title: "Thumbnail Size (smart)",
+    description: "",
+  },
+  gallerySizePx: {
+    section: SECTIONS.LAYOUT,
+    title: "Thumbnail Size (in pixels)",
+    description: "",
+  },
+  gallerySizeRatio: {
+    section: SECTIONS.LAYOUT,
+    title: "Thumbnail Size (relative to width)",
     description: "",
   },
   numberOfImagesPerRow: {

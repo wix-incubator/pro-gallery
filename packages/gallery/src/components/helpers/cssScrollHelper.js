@@ -1,8 +1,8 @@
-import LOADING_MODE from '../../constants/loadingMode';
-import SCROLL_ANIMATIONS from '../../constants/scrollAnimations';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import LOADING_MODE from '../../common/constants/loadingMode';
+import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 class CssScrollHelper {
   constructor() {

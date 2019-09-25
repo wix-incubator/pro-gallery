@@ -35,7 +35,7 @@ const VALUES = {
   },
   numberOfImagesPerRow: {value: 3, title: 'Images Per Row', min: 1, max: 5},
   numberOfImagesPerCol: {value: 2, title: 'Images Per Col', min: 1, max: 3},
-  imageResize: {
+  cubeType: {
     value: 0,
     binaryOptions: ['Crop', 'Fit'],
     title: 'Thumbnail Resize',
@@ -103,7 +103,7 @@ export const layoutProps = {
   grid: prepareProps([
     'scrollDirection',
     'titlePlacement',
-    'imageResize',
+    'cubeType',
     'cubeRatio',
     'gridStyle',
     'numberOfImagesPerRow',
@@ -115,7 +115,7 @@ export const layoutProps = {
   thumbnails: prepareProps([
     'slideshowLoop',
     'isAutoSlideshow',
-    'imageResize',
+    'cubeType',
     'galleryThumbnailsAlignment',
     'thumbnailSpacings',
     'thumbnailSize',

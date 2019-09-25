@@ -7,9 +7,8 @@ import ItemHover from './itemHover.js';
 import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
-import classNames from 'classnames';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';
@@ -17,11 +16,11 @@ import {
   isEditMode,
   isSiteMode,
   isSEOMode,
-} from '../../utils/window/viewModeWrapper';
-import EVENTS from '../../constants/events';
-import PLACEMENTS from '../../constants/placements';
-import OVERLAY_ANIMATIONS from '../../constants/overlayAnimations';
-import IMAGE_HOVER_ANIMATIONS from '../../constants/imageHoverAnimations';
+} from '../../common/window/viewModeWrapper';
+import EVENTS from '../../common/constants/events';
+import PLACEMENTS from '../../common/constants/placements';
+import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
+import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,
@@ -122,7 +121,9 @@ class ItemView extends GalleryComponent {
   }
 
   onMouseOver() {
-    this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    if (!utils.isMobile()) {
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    }
     this.onMouseOverEvent.itemIdx = this.props.idx; //VIDEOREWORK why do we need this?
     window.dispatchEvent(this.onMouseOverEvent);
   }
@@ -185,7 +186,7 @@ class ItemView extends GalleryComponent {
   };
 
   isClickOnCurrentHoveredItem = () =>
-    this.props.currentHover === this.props.idx;
+    this.props.actions.isCurrentHover(this.props.idx);
 
   handleHoverClickOnMobile() {
     if (this.isClickOnCurrentHoveredItem()) {
@@ -347,33 +348,39 @@ class ItemView extends GalleryComponent {
       return {};  
     }
     const { styleParams, cubeRatio, style } = this.props;
-    const imageIsWider = style.ratio >= cubeRatio;
+    const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
       (style.height * style.ratio - style.width) / -2,
     );
     const imageMarginTop = Math.round(
       (style.width / style.ratio - style.height) / -2,
     );
-    return !(styleParams.cubeImages && styleParams.cubeType === 'fit')
-      ? {
-          //not grid fit
-          width: style.width,
-          height: style.height,
-        }
-      : //grid fit images
-      !imageIsWider
-      ? {
-          //portrait
-          width: style.width - 2 * imageMarginLeft,
-          height: style.height,
-          marginLeft: imageMarginLeft,
-        }
-      : {
-          //landscape
-          height: style.height - 2 * imageMarginTop,
-          width: style.width,
-          marginTop: imageMarginTop,
-        };
+    const isGridFit = (styleParams.cubeImages && styleParams.cubeType === 'fit');
+
+    let dimensions = {};
+
+    if (!isGridFit) {
+      dimensions = {
+        width: style.width,
+        height: style.height,
+      };
+    } else if (isGridFit && isLandscape) {
+      dimensions = {
+        //landscape
+        height: style.height - 2 * imageMarginTop,
+        width: style.width,
+        marginTop: imageMarginTop,
+      }
+    } else if (isGridFit && !isLandscape) {
+      dimensions = {
+        //portrait
+        width: style.width - 2 * imageMarginLeft,
+        height: style.height,
+        marginLeft: imageMarginLeft,
+      }
+    }
+
+    return dimensions;
   }
 
   getItemTextsDetails() {
@@ -741,7 +748,7 @@ class ItemView extends GalleryComponent {
 
   simulateHover() {
     return (
-      this.props.currentHover === this.props.idx ||
+      this.props.actions.isCurrentHover(this.props.idx) ||
       this.props.styleParams.alwaysShowHover === true ||
       (isEditMode() && this.props.styleParams.previewHover === true)
     );
@@ -765,8 +772,7 @@ class ItemView extends GalleryComponent {
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
 
-    return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
-
+    return { ...itemStyles, ...transform, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {
@@ -784,10 +790,15 @@ class ItemView extends GalleryComponent {
     styles.height = height + 'px';
     styles.margin = -styleParams.itemBorderWidth + 'px';
 
-    return {
+    const imageDimensions = this.getImageDimensions();
+
+    const itemWrapperStyles = {
       ...styles,
-      ...this.getImageDimensions(),
+      ...imageDimensions,
     };
+
+    return itemWrapperStyles;
+
   }
 
   getItemAriaLabel() {
@@ -815,7 +826,9 @@ class ItemView extends GalleryComponent {
     const isNOTslideshow = !styleParams.isSlideshow;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
-    const className = classNames('gallery-item-container', 'visible', {
+    const classNames = {
+      'gallery-item-container': true, 
+      'visible': true,
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',
       'simulate-hover': this.simulateHover(),
@@ -854,8 +867,13 @@ class ItemView extends GalleryComponent {
         imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
-    });
-    return className;
+    };
+    const strClass = Object.entries(classNames)
+      .map(([classname, isNeeded]) => isNeeded ? classname : false)
+      .filter(Boolean)
+      .join(' ');
+
+    return strClass;
   }
 
   getItemWrapperClass() {

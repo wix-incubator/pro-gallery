@@ -152,19 +152,28 @@ function SideBar() {
     <h3 className={s.title}>Playground Gizmos</h3>
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
-        <Collapse.Panel header="Simulate Full Width" key="12">
+        <Collapse.Panel header="Simulators" key="12">
           <Checkbox checked={isFullWidth} onChange={e => setIsFullWidth(e.target.checked)}>Simulate Full Width (SSR)</Checkbox>
+          {(window.location.hostname.indexOf('localhost') >= 0) && <Button icon="code" shape="" size="large" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`}>
+            Simulate Local SSR 
+          </Button>}
         </Collapse.Panel>
-        <Collapse.Panel header="Benchmarks" key="13">
+        <Collapse.Panel header="Reset Gallery" key="13">
+          <Button icon="delete" shape="round" size="large" onClick={() => window.location.search = ''}>
+            Reset to Default Gallery
+          </Button>
+        </Collapse.Panel>
+        <Collapse.Panel header="Benchmarks" key="14">
           <Benchmarks />
         </Collapse.Panel>
-        <Collapse.Panel header="Code Generator" key="14">
+        <Collapse.Panel header="Code Generator" key="15">
           <CodePanel />
         </Collapse.Panel>
-        <Collapse.Panel header="ToDos" key="15">
+        <Collapse.Panel header="ToDos" key="16">
           {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info"/>)}
         </Collapse.Panel>
       </Collapse>
+
     </div>
     </>
   );

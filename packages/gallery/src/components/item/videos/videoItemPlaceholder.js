@@ -1,6 +1,6 @@
 import React from 'react';
 import { GalleryComponent } from '../../galleryComponent';
-import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 
 class VideoItemPlaceholder extends GalleryComponent {
   createImageElement() {

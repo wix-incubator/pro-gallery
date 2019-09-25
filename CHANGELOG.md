@@ -191,3 +191,98 @@
 #### GALLERY
  -  fix: remove double # from id
 
+
+---
+## v1.3.6 (12/09/2019)
+ 
+#### GALLERY
+ -  improve: use debounce instead of throttle after image measurement
+ -  fix: do not set imageDimensions on SSR
+ -  fix: remove implicit usage of filename
+
+---
+## v1.3.7 (15/09/2019)
+ 
+#### GALLERY
+ -  fix grid fit with ssr
+ -  decrease debounce time when measuring items
+
+---
+## v1.3.8 (15/09/2019)
+
+#### PLAYGROUND
+ -  fix: rename imageResize to cubeType (fix grid fit layout)
+ 
+#### GALLERY
+ - removed local love logic.
+---
+## v1.3.9 (15/09/2019)
+ 
+#### PLAYGROUND
+ -  fixed path to imports of constants from pro-gallery.
+
+#### GALLERY
+ -  refactor: moved constants, utils, window to 'common' folder. Added utils functions and constants for pro-fullscreen-renderer usage.
+
+
+---
+## v1.3.10 (18/09/2019)
+ 
+#### GALLERY
+ -  move Videos dynamic loading to componentDidMount
+ -  fix slideshow arrows appearance in rtl
+
+#### PLAYGROUND
+ -  feature: add local SSR simulator
+
+
+---
+## v1.3.11 (18/09/2019)
+ 
+#### GALLERY
+ -  fix first-tap on mobile.
+
+
+---
+## v1.3.12 (18/09/2019)
+ 
+#### GALLERY
+ -  fix (lineHeightFixer): fixed customButton display css attribute when textPlacement is above or below.
+
+
+---
+## v1.3.13 (19/09/2019)
+ 
+#### GALLERY
+ -  remove unnecessary dependencies
+
+
+---
+## v1.3.14 (20/09/2019)
+ 
+#### GALLERY
+ -  fix - change metaData on items when it changes
+
+
+
+---
+## v1.3.15 (22/09/2019)
+ 
+#### GALLERY
+ -  fix (react-svg): save svgs to components
+ -  improve (package.json): create a module instead of bundle
+
+#### PLAYGROUND
+ - (styleParams): fix url params read
+
+
+---
+## v1.3.16 (25/09/2019)
+ 
+#### GALLERY
+ -  fix arrows position in RTL galleries
+ 
+#### PLAYGROUND
+ -  add less styles to the url
+ -  add gallerySizeType and cubeRatio to settings
+

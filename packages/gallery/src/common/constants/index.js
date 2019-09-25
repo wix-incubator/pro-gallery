@@ -7,7 +7,7 @@ import calculationOptions from './calculationOptions';
 import overlayAnimations from './overlayAnimations';
 import imageHoverAnimations from './imageHoverAnimations';
 import layout from './layout';
-import imageResize from './imageResize';
+import cubeType from './cubeType';
 import itemClick from './itemClick';
 import scrollDirection from './scrollDirection';
 import thumbnailsAlignment from './thumbnailsAlignment';
@@ -18,6 +18,10 @@ import horizontalAlign from './horizontalAlign';
 import verticalAlign from './verticalAlign';
 import videoPlay from './videoPlay';
 import groupTypes from './groupTypes';
+import mobileSwipeAnimations from './mobileSwipeAnimations';
+import expandInfoPositions from './expandInfoPositions';
+import dimensions from './dimensions';
+import gallerySizeType from './gallerySizeType';
 
 export default {
   placements,
@@ -29,7 +33,7 @@ export default {
   itemClick,
   calculationOptions,
   scrollDirection,
-  imageResize,
+  cubeType,
   thumbnailsAlignment,
   watermarkDock,
   loadMoreAmount,
@@ -40,5 +44,8 @@ export default {
   verticalAlign,
   videoPlay,
   groupTypes,
+  mobileSwipeAnimations,
+  expandInfoPositions,
+  dimensions,
+  gallerySizeType
 };
-  

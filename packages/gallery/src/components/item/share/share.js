@@ -1,8 +1,8 @@
 import React from 'react';
-import utils from '../../../utils/index.js';
+import utils from '../../../common/utils/index.js';
 import { GalleryComponent } from '../../galleryComponent';
-import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
-import EVENTS from '../../../constants/events';
+import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
+import EVENTS from '../../../common/constants/events';
 
 export default class Share extends GalleryComponent {
   constructor(props) {
