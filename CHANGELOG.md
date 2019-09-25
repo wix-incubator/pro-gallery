@@ -275,3 +275,14 @@
 #### PLAYGROUND
  - (styleParams): fix url params read
 
+
+---
+## v1.3.16 (25/09/2019)
+ 
+#### GALLERY
+ -  fix arrows position in RTL galleries
+ 
+#### PLAYGROUND
+ -  add less styles to the url
+ -  add gallerySizeType and cubeRatio to settings
+
