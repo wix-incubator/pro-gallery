@@ -4,7 +4,7 @@ import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
-import { Form, Switch, Checkbox, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
+import { Form, Switch, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { settingsManager } from '../../settings/settingsManager';
 import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from '../../settings/consts';
 import { Alert } from 'antd';
