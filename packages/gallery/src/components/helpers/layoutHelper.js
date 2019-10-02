@@ -9,6 +9,7 @@ import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
 import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
+import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -315,7 +316,8 @@ function getStyleByLayout(styles) {
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: true,
-      enableScroll: false,
+      enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: false,
       isMasonry: false,
@@ -338,6 +340,7 @@ function getStyleByLayout(styles) {
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: true,
       isColumns: false,
@@ -359,6 +362,7 @@ function getStyleByLayout(styles) {
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isColumns: false,
       isMasonry: false,
@@ -424,7 +428,8 @@ function getStyleByLayout(styles) {
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: false,
-      enableScroll: false,
+      enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: false,
       isColumns: false,
@@ -530,6 +535,7 @@ function addLayoutStyles(styles) {
 function processLayouts(styles) {
   const processedStyles = styles;
   processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
+  processedStyles.oneRow = processedStyles.oneRow || processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {

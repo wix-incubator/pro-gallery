@@ -79,7 +79,7 @@ export function scrollToItemImp(scrollParams) {
   }
 
   if (oneRow) {
-    horizontalCssScrollTo(
+    return horizontalCssScrollTo(
       horizontalElement,
       Math.round(from * utils.getViewportScaleRatio()),
       Math.round(to * utils.getViewportScaleRatio()),
@@ -88,9 +88,11 @@ export function scrollToItemImp(scrollParams) {
       true,
     );
   } else {
-    scrollingElement.vertical().scrollTo(0, to);
+    return (new Promise(resolve => {
+      scrollingElement.vertical().scrollTo(0, to);
+      resolve(to);
+    }));
   }
-  return true;
 }
 
 // ----- rendererd / visible ----- //
@@ -235,7 +237,7 @@ function setInitialVisibility({ props, screenSize, padding, callback }) {
   });
 }
 
-function horizontalCssScrollTo(scroller, from, to, duration, isRTL, callback = () => {}) {
+function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = to - from;
 
   const scrollerInner = scroller.firstChild;
@@ -251,19 +253,21 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL, callback = (
     marginLeft: `${-1 * change}px`,
   });
 
-  setTimeout(() => {
-    Object.assign(scrollerInner.style, {
-      transition: `none`,
-      '-webkit-transition': `none`,
-    }, isRTL ? {
-      marginRight: 0,
-    } : {
-      marginLeft: 0,
-    });
-    scroller.scrollLeft = to;
-    scroller.setAttribute('data-scrolling', '');
-    typeof callback === 'function' && callback();
-  }, duration + 100);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      Object.assign(scrollerInner.style, {
+        transition: `none`,
+        '-webkit-transition': `none`,
+      }, isRTL ? {
+        marginRight: 0,
+      } : {
+        marginLeft: 0,
+      });
+      scroller.scrollLeft = to;
+      scroller.setAttribute('data-scrolling', '');
+      resolve(to);
+    }, duration);
+  });
 }
 
 export {

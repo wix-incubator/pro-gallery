@@ -20,6 +20,13 @@ export function shuffle(array) {
   return array;
 }
 
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.floor(Math.random() * 16) || 0;
+    return c === 'x' ? r.toString(16) : c;
+  });
+}
+
 export function mixAndSlice(array, length) {
   let result = [];
   if (array.length > 0) {
@@ -28,7 +35,7 @@ export function mixAndSlice(array, length) {
       const idx = rndIdx();
       let item = cloneDeep(array[idx]);
       // Object.assign(item, array[idx]);
-      item.itemId = array[idx].itemId + '_' + String(result.length);
+      item.itemId = generateUUID() + '_' + String(result.length);
       item.metadata.title = `Item #${result.length + 1}`;
       // console.log('ITEM CREATED', item, array[idx]);
       result.push(item);

@@ -653,20 +653,16 @@ class ItemView extends GalleryComponent {
       itemInner = (
         <div>
           {itemInner}
-          {this.props.currentIdx === this.props.idx ? (
-            <div
-              className="gallery-item-info gallery-item-bottom-info"
-              data-hook="gallery-item-info-buttons"
-              style={style}
-            >
-              <div>
-                {social}
-                {itemTexts}
-              </div>
+          <div
+            className="gallery-item-info gallery-item-bottom-info"
+            data-hook="gallery-item-info-buttons"
+            style={style}
+          >
+            <div>
+              {social}
+              {itemTexts}
             </div>
-          ) : (
-            false
-          )}
+          </div>
         </div>
       );
     }
