@@ -27,7 +27,6 @@
     }
 
 
-    /* Bootstrap Overrides */
     [class^="progallery-svg-font-icons-"]:before,
     [class*=" progallery-svg-font-icons-"]:before {
         font-family:"progallery-svg-font-icons";
@@ -43,11 +42,6 @@
         -webkit-font-smoothing:antialiased;
         -moz-osx-font-smoothing:grayscale;
     }
-
-
-
-    /* Icons */
-
 
     .progallery-svg-font-icons-arrow-left-slider:before {
         content:"\f101";

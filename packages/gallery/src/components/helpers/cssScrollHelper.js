@@ -1,8 +1,8 @@
-import LOADING_MODE from '../../constants/loadingMode';
-import SCROLL_ANIMATIONS from '../../constants/scrollAnimations';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import LOADING_MODE from '../../common/constants/loadingMode';
+import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 class CssScrollHelper {
   constructor() {
@@ -131,11 +131,11 @@ class CssScrollHelper {
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
-      if (utils.isVerbose()) {
-        console.log(
-          `CSS SCROLL - item #${item.idx} display range is: (${from} - ${to})`,
-        );
-      }
+      // if (utils.isVerbose()) {
+      //   console.log(
+      //     `CSS SCROLL - item #${item.idx} display range is: (${from} - ${to})`,
+      //   );
+      // }
       const scrollClasses = [];
       while (from < to) {
         const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
@@ -211,13 +211,13 @@ class CssScrollHelper {
       createScrollSelectors,
     });
 
-    if (utils.isVerbose()) {
-      console.log(
-        'CSS SCROLL - css calc for item #' + idx,
-        item,
-        this.scrollCss[idx],
-      );
-    }
+    // if (utils.isVerbose()) {
+    //   console.log(
+    //     'CSS SCROLL - css calc for item #' + idx,
+    //     item,
+    //     this.scrollCss[idx],
+    //   );
+    // }
 
     this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
 

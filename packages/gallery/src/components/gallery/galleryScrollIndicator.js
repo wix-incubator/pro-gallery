@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../utils/index';
+import utils from '../../common/utils/index';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -51,7 +51,11 @@ export default class ScrollIndicator extends GalleryComponent {
     this.onHorizontalScroll = e => {
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
-      const left = target && (target.scrollX || target.scrollLeft || target.x);
+      let left = target && (target.scrollX || target.scrollLeft || target.x);
+      if (this.props.isRTL) {
+        left = this.props.totalWidth - left;
+      };
+      // console.log('[RTL SCROLL] onHorizontalScroll: ', left);
       if (left >= 0) {
         if (oneRow) {
           this.setState({
@@ -75,7 +79,11 @@ export default class ScrollIndicator extends GalleryComponent {
     this.onVerticalScroll = e => {
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
-      const left = target && (target.scrollX || target.scrollLeft || target.x);
+      let left = target && (target.scrollX || target.scrollLeft || target.x);
+      if (this.props.isRTL) {
+        left = this.props.totalWidth - left;
+      };
+      // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
         if (!oneRow) {
           this.setState({

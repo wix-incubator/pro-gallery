@@ -1,8 +1,8 @@
 import React from 'react';
 import GalleryContainerNew from './galleryContainerNew.js';
-import utils from '../../utils';
-import { viewModeWrapper } from '../../utils/window/viewModeWrapper';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils';
+import { viewModeWrapper } from '../../common/window/viewModeWrapper';
+import window from '../../common/window/windowWrapper';
 import { GalleryComponent } from '../galleryComponent';
 
 export default class ProGallery extends GalleryComponent {

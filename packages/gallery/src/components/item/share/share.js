@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../../utils/index.js';
+import utils from '../../../common/utils/index.js';
 import { GalleryComponent } from '../../galleryComponent';
 import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
 import EVENTS from '../../../constants/events';
@@ -174,9 +174,6 @@ export default class Share extends GalleryComponent {
         data-hook={network + '-share-button'}
         ref={button => (this.buttons[idx] = button)}
         title={`Share on ${network}`}
-        aria-label={`Share on ${network}, ${idx + 1} of ${
-          this.shareArr.length
-        }`}
         aria-live="assertive"
         tabIndex={-1}
         key={network + '-share-icon'}

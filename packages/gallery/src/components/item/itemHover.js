@@ -1,5 +1,5 @@
 import React from 'react';
-import utils from '../../utils/index.js';
+import utils from '../../common/utils/index.js';
 import { GalleryComponent } from '../galleryComponent';
 import { getHoverStyle } from './itemHoverStyleProvider';
 
@@ -55,6 +55,7 @@ export default class ItemHover extends GalleryComponent {
         className={hoverClass}
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
+        aria-hidden={true}
       >
         <div
           style={{

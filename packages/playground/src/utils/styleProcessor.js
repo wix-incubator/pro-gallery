@@ -15,8 +15,7 @@ export const processNewStyle = (styles, key) => {
     case 'thumbnailSpacings':
       styles.thumbnailSpacings /= 2;
       break;
-    case 'imageResize' || 'cubeType':
-      styles.cubeType = ((String(styles.imageResize) === '1') ? 'fit' : 'fill');
+    case 'cubeType':
       if (styles.cubeType === 'fit') {
         if (styles.cropOnlyFill === true) {
           styles.cubeImages = false;
@@ -55,7 +54,7 @@ export const removeFieldsNotNeeded = (json, selectedLayout) => {
           delete json.titlePlacement;
         }
       }
-      if (json.imageResize.value) {
+      if (json.cubeType.value) {
         delete json.galleryImageRatio;
       }
       break;
@@ -74,7 +73,7 @@ export const removeFieldsNotNeeded = (json, selectedLayout) => {
       }
       break;
     case 'thumbnails':
-      if (json.imageResize.value) {
+      if (json.cubeType.value) {
         delete json.galleryImageRatio;
       }
       break;

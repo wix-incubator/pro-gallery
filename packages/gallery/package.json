@@ -2,20 +2,22 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.2.12",
+  "version": "1.3.17",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com",
     "url": ""
   },
   "main": "dist/src/index.js",
+  "module": "dist/src/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
+    "watch": "PORT=9837 yoshi start",
     "start": "PORT=9837 yoshi start",
-    "build": "npm run build-svg && yoshi build",
-    "build-svg": "svg2react-icon src/assets/images/svg-src src/assets/images/react-svg",
+    "build": "yoshi build",
+    "build-svg": "svg2react-icon src/assets/images/svg-src src/components/svgs",
     "precommit": " ",
     "pretest": "yoshi build",
     "test": "yoshi test",
@@ -27,10 +29,7 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "classnames": "^2.2.5",
-    "dotenv": "^6.0.0",
-    "prepend-http-extra": "^1.0.0",
-    "pro-layouts": "^1.1.2",
+    "pro-layouts": "^1.3.16",
     "react-player": "1.10.0"
   },
   "peerDependencies": {

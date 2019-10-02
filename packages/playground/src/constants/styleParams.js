@@ -1,14 +1,65 @@
-import Consts from "../utils/consts";
+import Consts from 'pro-gallery/dist/src/common/constants';
+import isRelevant from '../settings/isRelevant';
+
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
+  const savedStyleParams = getStyleParamsFromUrl();
   return {
     ...defaultStyleParams,
-    ...styleParams[gallery]
+    ...styleParams[gallery],
+    ...savedStyleParams,
   };
 }
+
+const formatValue = (val) => {
+  if (Number(val) === parseInt(val)) {
+    return Number(val);
+   } else if (val === 'true') {
+     return true;
+   } else if (val === 'false') {
+     return false;
+   } else {
+     return String(val);
+   }
+}
+
+const isValidStyleParam = (styleParam, value, styleParams) => {
+  if (typeof value === 'undefined' || !styleParam) {
+    return false;
+  }
+  if (value === defaultStyleParams[styleParam]) {
+    return false;
+  }
+  if (styleParams && (!isRelevant[styleParam] || !isRelevant[styleParam](styleParams))) {
+    return false;
+  }
+  return true;
+}
+
+export const getStyleParamsFromUrl = () => {
+  try {
+    const styleParams = window.location.search
+      .replace('?', '').split('&')
+      .map(styleParam => styleParam.split('='))
+      .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
+    return styleParams;
+  } catch (e) {
+    return {};
+  }
+}
+
+export const setStyleParamsInUrl = (styleParams) => {
+  const urlParams = Object
+    .entries(styleParams)
+    .reduce((arr, [styleParam, value]) => isValidStyleParam(styleParam, value, styleParams) ? arr.concat(`${styleParam}=${value}`) : arr, [])
+    .join('&')
+  //window.location.search = '?' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')
+  // window.location.hash = '#' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => styleParam && arr.concat(`${styleParam}=${value}`), []).join('&')
+  window.history.replaceState({}, 'Pro Gallery Playground', '?' + urlParams);
+}
+
 const defaultStyleParams = {
-  useRefactoredGalleryContainer: false,
-  gotStyleParams: true,
+  isRTL: false,
   isVertical: 0,
   gallerySize: 30,
   minItemSize: 120,
@@ -24,7 +75,6 @@ const defaultStyleParams = {
   smartCrop: false,
   rotatingCubeRatio: '',
   gallerySliderImageRatio: 16 / 9,
-  galleryImageRatioFromWix: 1, //galleryImageRatio translates to galleryImageRatioFromWix 
   fixedColumns: 0,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 1,
@@ -59,6 +109,7 @@ const defaultStyleParams = {
   galleryHorizontalAlign: Consts.horizontalAlign.CENTER,
   galleryTextAlign: 'center',
   galleryVerticalAlign: Consts.verticalAlign.CENTER,
+  scrollSnap: false,
   itemClick: Consts.itemClick.EXPAND,
   fullscreen: true,
   allowSocial: true,
@@ -71,7 +122,6 @@ const defaultStyleParams = {
   videoPlay: Consts.videoPlay.HOVER,
   scrollAnimation:  Consts.scrollAnimations.NO_EFFECT,
   scrollDirection: 0,
-  imageResize: 0,
   overlayAnimation: Consts.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
   arrowsSize: 23,
@@ -207,7 +257,7 @@ const styleParamsByLayout = () => ({
     showArrows: false,
     cubeImages: true,
     smartCrop: false,
-    imageResize: 0,
+    cubeType: 0,
     isVertical: 1,
     galleryType: 'Columns',
     groupSize: 1,
@@ -357,7 +407,7 @@ const styleParamsByLayout = () => ({
     isSlider: false,
     isColumns: false,
     isMasonry: false,
-    isSlideshow: false,
+    isSlideshow: true,
     cropOnlyFill: false,
     floatingImages: 0,
     galleryMargin: 0,

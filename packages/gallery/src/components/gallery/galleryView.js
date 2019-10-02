@@ -1,7 +1,7 @@
 import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
 import ItemContainer from '../item/itemContainer.js';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -43,13 +43,13 @@ class GalleryView extends GalleryComponent {
           newIdx = findNeighborItem(idx, 'up');
           break;
         case 37: //left
-          newIdx = findNeighborItem(idx, 'left');
+          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'right' : 'left');
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
           break;
         case 39: //right
-          newIdx = findNeighborItem(idx, 'right');
+          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'left' : 'right');
           break;
       }
 
@@ -141,7 +141,8 @@ class GalleryView extends GalleryComponent {
           (this.props.styleParams.oneRow
             ? ' one-row slider hide-scrollbars '
             : '') +
-          (this.props.styleParams.isAccessible ? ' accessible ' : '')
+          (this.props.styleParams.isAccessible ? ' accessible ' : '') +
+          (this.props.styleParams.isRTL ? ' rtl ' : '')
         }
         style={{
           height: galleryHeight,
@@ -176,7 +177,6 @@ class GalleryView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
-      currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
@@ -185,6 +185,7 @@ class GalleryView extends GalleryComponent {
       nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       actions: {
+        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };
@@ -314,6 +315,8 @@ class GalleryView extends GalleryComponent {
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
         // style={this.getStyles()}
+        role="region"
+        aria-label="Gallery. you can navigate the gallery with keyboard arrow keys."
       >
         {screenLogs}
         {gallery}

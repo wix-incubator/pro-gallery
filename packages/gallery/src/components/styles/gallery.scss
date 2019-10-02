@@ -76,16 +76,29 @@
   }
 
   .auto-slideshow-button {
+    margin-top: 19px; //24 $padding(consts.scss) - 5px padding top
+    padding: 5px;
+    height: 28px; //18px icon + 5px padding top + 5px padding bottom
+    width: 20px; //10px icon + 5px padding top + 5px padding bottom
     left: auto;
     z-index: 1;
     position: absolute;
-    height: 100px;
     display: flex;
     text-align: center;
     cursor: pointer;
     opacity: 0.9;
+  }
+
+  .auto-slideshow-counter {
+    margin-top: 24px; //24 $padding(consts.scss)
+    left: auto;
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    text-align: center;
+    opacity: 0.9;
     font-size: 15px;
-    align-items: top;
+    line-height: normal;
   }
 
   .nav-arrows-container {
@@ -1379,10 +1392,11 @@
             scroll-snap-type: x mandatory;
           }
 
-          > .gallery-horizontal-scroll-inner {
-            position: relative;
-          }
         }
+      }
+      
+      .gallery-horizontal-scroll-inner {
+        position: relative;
       }
     }
 
@@ -1494,6 +1508,11 @@
         height: 0 !important;
       }
     }
+
+    .rtl {
+      direction: rtl;
+    }
+    
   }
 
   .screen-logs {

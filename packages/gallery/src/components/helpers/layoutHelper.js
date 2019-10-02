@@ -1,14 +1,15 @@
-import utils from '../../utils';
-import PLACEMENTS from '../../constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../constants/infoBehaviourOnHover';
-import SCROLL_ANIMATIONS from '../../constants/scrollAnimations';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils';
+import PLACEMENTS from '../../common/constants/placements';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
+import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
-import designConsts from '../../constants/designConsts';
-import INFO_TYPE from '../../constants/infoType';
-import CALCULATION_OPTIONS from '../../constants/calculationOptions';
+import designConsts from '../../common/constants/designConsts';
+import INFO_TYPE from '../../common/constants/infoType';
+import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
+import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -286,7 +287,6 @@ function getStyleByLayout(styles) {
       showArrows: false,
       cubeImages: true,
       smartCrop: false,
-      imageResize: false,
       isVertical: true,
       galleryType: 'Columns',
       groupSize: 1,
@@ -316,7 +316,8 @@ function getStyleByLayout(styles) {
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: true,
-      enableScroll: false,
+      enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: false,
       isMasonry: false,
@@ -339,6 +340,7 @@ function getStyleByLayout(styles) {
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: true,
       isColumns: false,
@@ -360,6 +362,7 @@ function getStyleByLayout(styles) {
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isColumns: false,
       isMasonry: false,
@@ -425,7 +428,8 @@ function getStyleByLayout(styles) {
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: false,
-      enableScroll: false,
+      enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: false,
       isColumns: false,
@@ -474,7 +478,7 @@ function getStyleByLayout(styles) {
   }
 
   return {
-    ...layouts[layoutName](), 
+    ...layouts[layoutName](),
     galleryLayout
   };
 }
@@ -492,7 +496,7 @@ function addLayoutStyles(styles) {
       'galleryType',
       'galleryThumbnailsAlignment',
       'magicLayoutSeed',
-      'imageResize',
+      'cubeType',
       'isVertical',
       'scrollDirection',
       'enableInfiniteScroll',
@@ -510,7 +514,7 @@ function addLayoutStyles(styles) {
       'galleryLayout',
       'galleryThumbnailsAlignment',
       'magicLayoutSeed',
-      'imageResize',
+      'cubeType',
       'isVertical',
       'scrollDirection',
       'enableInfiniteScroll',
@@ -531,6 +535,7 @@ function addLayoutStyles(styles) {
 function processLayouts(styles) {
   const processedStyles = styles;
   processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
+  processedStyles.oneRow = processedStyles.oneRow || processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {

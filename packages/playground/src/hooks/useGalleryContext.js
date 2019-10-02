@@ -1,7 +1,6 @@
 import {useContext} from 'react';
 import {GalleryContext} from './GalleryContext';
 import {getInitialStyleParams} from '../constants/styleParams';
-import {processNewStyle} from '../utils/styleProcessor';
 
 
 export function useGalleryContext() {
@@ -26,7 +25,7 @@ export function useGalleryContext() {
   };
 
   const setStyleParams = (newProp, value) => {
-    setContext({styleParams: processNewStyle({...context.styleParams, [newProp]: value}, newProp)});
+    setContext({styleParams: {...context.styleParams, [newProp]: value}});
   };
 
   const setItems = items => {
@@ -36,6 +35,10 @@ export function useGalleryContext() {
   const setGalleryReady = galleryReady => {
     setContext({galleryReady});
   };
+
+  const setIsSSR = isSSR => {
+    setContext({isSSR});
+  }
 
   const res = {
     showSide: context.showSide,
@@ -48,6 +51,8 @@ export function useGalleryContext() {
     setItems,
     galleryReady: context.galleryReady,
     setGalleryReady,
+    isSSR: context.isSSR,
+    setIsSSR,
     dimensions: {
       width: context.galleryWidth,
       height: context.galleryHeight,

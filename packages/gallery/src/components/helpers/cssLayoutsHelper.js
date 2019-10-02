@@ -12,28 +12,33 @@ const getImageStyle = (item, styleParams) => ({
   height: item.height + (styleParams.externalInfoHeight || 0),
 });
 
-const createExactCssForItems = (galleryItems, styleParams) => {
+const createItemId = (galleryDomId, item) => {
+  return `#pro-gallery-${galleryDomId} #${cssScrollHelper.getDomId(item)}`;
+}
+const createExactCssForItems = (galleryDomId = '', galleryItems, styleParams) => {
+  const {isRTL} = styleParams;
+
   let cssStr = '';
-  galleryItems.forEach((item, i) => {
-    const id = cssScrollHelper.getDomId(item);
+  galleryItems.forEach((item) => {
+    const id = createItemId(galleryDomId, item);
     const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px;`;
-    const L = `left:${style.left}px;`;
+    const L = isRTL ? `right:${style.left}px;left:auto;` : `left:${style.left}px;`;
     const W = `width:${style.width}px;`;
     const H = `height:${style.height}px;`;
-    cssStr += `#${id} {${T}${L}${W}${H}}`;
-    // cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
+    cssStr += `${id} {${T}${L}${W}${H}}`;
+    // cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${Hvw}}`;
   });
   return cssStr;
 };
 
-const createCssFromLayout = (layout, styleParams, width) => {
+const createCssFromLayout = (galleryDomId = '', layout, styleParams, width) => {
   let cssStr = '';
   const layoutWidth = width - styleParams.imageMargin * 2;
   const getRelativeDimension = val =>
     Math.round(10000 * (val / layoutWidth)) / 100;
   layout.items.forEach((item, i) => {
-    const id = cssScrollHelper.getDomId(item);
+    const id = createItemId(galleryDomId, item);
     if (i < 50) {
       const style = getImageStyle(item, styleParams);
       const Tvw = `top:${getRelativeDimension(style.top)}vw;`;
@@ -41,16 +46,16 @@ const createCssFromLayout = (layout, styleParams, width) => {
       const Hvw = `height:${getRelativeDimension(style.height)}vw;`;
       const Lpc = `left:${getRelativeDimension(style.left)}%;`;
       const Wpc = `width:${getRelativeDimension(style.width)}%;`;
-      cssStr += `#${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
-      cssStr += `#${id} .gallery-item-wrapper, #${id} .gallery-item-hover, #${id} .gallery-item {${Wvw}${Hvw}}`;
+      cssStr += `${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
+      cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${Hvw}}`;
     } else {
-      cssStr += `#${id}{display:none;}`;
+      cssStr += `${id}{display:none;}`;
     }
   });
   return cssStr;
 };
 
-const createCssFromLayouts = (layouts, styleParams, widths) => {
+const createCssFromLayouts = (galleryDomId, layouts, styleParams, widths) => {
   const cssStrs = [];
   layouts.forEach((layout, idx) => {
     let cssStr = '';
@@ -62,7 +67,7 @@ const createCssFromLayouts = (layouts, styleParams, widths) => {
         ? ''
         : `@media only screen and (min-width: ${(lastWidth * 2 + width) /
             3}px) {`;
-      cssStr += createCssFromLayout(layout, styleParams, width);
+      cssStr += createCssFromLayout(galleryDomId, layout, styleParams, width);
       cssStr += isFirstMediaQuery ? '' : `}`;
       cssStrs.push(cssStr);
     }
@@ -76,6 +81,7 @@ export const createCssLayouts = ({
   galleryItems,
   layoutParams,
   isMobile,
+  galleryDomId
 }) => {
   if (isApproximation) {
     const widths = isMobile ? mobileWidths : desktopWidths;
@@ -88,7 +94,7 @@ export const createCssLayouts = ({
       };
       return createLayout(_layoutParams);
     });
-    return createCssFromLayouts(cssLayouts, layoutParams.styleParams, widths);
+    return createCssFromLayouts(galleryDomId, cssLayouts, layoutParams.styleParams, widths);
   } else {
     // const chunkSize = 10;
     // const itemsBatchs = [];
@@ -99,7 +105,7 @@ export const createCssLayouts = ({
     //   createExactCssForItems(items, layoutParams.styleParams)
     // );
     const exactCss = [];
-    exactCss.push(createExactCssForItems(galleryItems, layoutParams.styleParams));
+    exactCss.push(createExactCssForItems(galleryDomId, galleryItems, layoutParams.styleParams));
     return exactCss;
 
   }

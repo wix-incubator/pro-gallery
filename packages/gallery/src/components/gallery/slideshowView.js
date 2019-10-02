@@ -1,15 +1,15 @@
-import utils from '../../utils';
+import utils from '../../common/utils';
 import React from 'react';
 import GroupView from '../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import window from '../../utils/window/windowWrapper';
-import { isEditMode, isPreviewMode } from '../../utils/window/viewModeWrapper';
+import window from '../../common/window/windowWrapper';
+import { isEditMode, isPreviewMode } from '../../common/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
-import PlayIcon from '../../assets/images/react-svg/components/play';
-import PauseIcon from '../../assets/images/react-svg/components/pause';
-import EVENTS from '../../constants/events';
+import PlayIcon from '../svgs/components/play';
+import PauseIcon from '../svgs/components/pause';
+import EVENTS from '../../common/constants/events';
 import { GalleryComponent } from '../galleryComponent';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 utils.fixViewport('Gallery');
 
@@ -25,7 +25,8 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded = this.startAutoSlideshowIfNeeded.bind(
       this,
     );
-    this.handleKeypress = this.handleKeypress.bind(this);
+    this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
+    this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(this);
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
     this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
     this._nextItem = utils.throttle(this.nextItem.bind(this), 400).bind(this);
@@ -40,34 +41,38 @@ class SlideshowView extends GalleryComponent {
   }
 
   isFirstItem() {
-    let pos;
+    return this.state.currentIdx === 0
+  }
+
+  isScrollStart(isRTL = this.props.styleParams.isRTL) {
+
     if (this.container) {
-      pos = this.props.styleParams.oneRow
-        ? this.container.scrollLeft
-        : this.container.scrollTop;
+      const {scrollLeft, scrollWidth, clientWidth} = this.container;
+      if (isRTL) {
+        return scrollLeft + clientWidth >= scrollWidth - 5;
+      } else {
+        return scrollLeft <= 5
+      }
     } else {
-      pos = 0;
+      return false;
     }
-    const firstItem = () => this.state.currentIdx === 0 || pos === 0;
-    return firstItem();
+
   }
 
   isLastItem() {
-    let pos;
-    if (this.container) {
-      pos = this.props.styleParams.oneRow
-        ? this.container.scrollLeft
-        : this.container.scrollTop;
-    } else {
-      pos = 0;
-    }
-    const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
-    const lastItem = () =>
-      this.state.currentIdx >= this.props.totalItemsCount - 1 ||
-      !lastItemInGallery ||
-      this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right;
-    return lastItem() && !this.props.styleParams.slideshowLoop;
+    return !this.props.styleParams.slideshowLoop && this.state.currentIdx >= this.props.galleryStructure.items.length - 1;
   }
+
+  isScrollEnd() {
+    const {isRTL, slideshowLoop} = this.props.styleParams;
+
+    if (slideshowLoop) {
+      return false;
+    }
+
+    return this.isScrollStart(!isRTL); //start and end are reversed by RTL
+  }
+
   //__________________________________Slide show loop functions_____________________________________________
 
   createNewItemsForSlideshowLoopThumbnails() {
@@ -103,9 +108,19 @@ class SlideshowView extends GalleryComponent {
 
   //__________________________________end of slide show loop functions__________________________
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
+    
+    if (this.isSliding) {
+      return;
+    }
+
+    this.isSliding = true;
+
+    direction *= (this.props.styleParams.isRTL ? -1 : 1);
+
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
-    const { scrollToItem } = this.props.actions;
     let nextItem = currentIdx + direction;
+
+    const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
 
     if (isAutoTrigger) {
@@ -121,27 +136,30 @@ class SlideshowView extends GalleryComponent {
         (direction === 1 && this.isLastItem()) ||
         (direction === -1 && this.isFirstItem());
       if (isScrollingPastEdge) {
+        this.isSliding = false;
         return;
       }
     }
     // ---- navigate ---- //
     try {
-      scrollToItem(nextItem, false, true, scrollDuration);
+      scrollToItem(nextItem, false, true, scrollDuration).then(() => {
+        utils.setStateAndLog(
+          this,
+          'Next Item',
+          {
+            currentIdx: nextItem,
+          },
+          () => {
+            this.onCurrentItemChanged();
+            this.isSliding = false;
+          },
+        );
+      });
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
       this.stopAutoSlideshow();
       return;
     }
-    utils.setStateAndLog(
-      this,
-      'Next Item',
-      {
-        currentIdx: nextItem,
-      },
-      () => {
-        this.onCurrentItemChanged();
-      },
-    );
   }
   onCurrentItemChanged() {
     if (this.lastCurrentItem !== this.state.currentIdx) {
@@ -208,7 +226,7 @@ class SlideshowView extends GalleryComponent {
     this.props.actions.scrollToItem(itemIdx, false, true, scrollDuration);
   }
 
-  handleKeypress(e) {
+  handleSlideshowKeyPress(e) {
     switch (e.charCode || e.keyCode) {
       case 38: //up
       case 37: //left
@@ -370,6 +388,11 @@ class SlideshowView extends GalleryComponent {
       }
     }
 
+    if (this.props.styleParams.isRTL) {
+      thumbnailsStyle.right = thumbnailsStyle.left;
+      delete thumbnailsStyle.left;
+    }
+
     let thumbnailsMargin;
     const thumbnailSpacings = this.props.styleParams.thumbnailSpacings;
     switch (this.props.styleParams.galleryThumbnailsAlignment) {
@@ -404,6 +427,7 @@ class SlideshowView extends GalleryComponent {
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
           (oneRow ? ' one-row hide-scrollbars ' : '') +
+          (this.props.styleParams.isRTL ? ' rtl ' : '') +
           (this.props.styleParams.isAccessible ? ' accessible ' : '')
         }
         style={{
@@ -436,7 +460,7 @@ class SlideshowView extends GalleryComponent {
               )})`,
             };
             const thumbnailOffset = oneRow
-              ? { left: thumbnailSize * idx + 2 * idx * thumbnailSpacings }
+              ? { [this.props.styleParams.isRTL ? 'right' : 'left']: thumbnailSize * idx + 2 * idx * thumbnailSpacings }
               : { top: thumbnailSize * idx + 2 * idx * thumbnailSpacings };
             Object.assign(itemStyle, thumbnailOffset);
             return (
@@ -471,7 +495,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  
+
   setCurrentItemByScroll() {
     if (utils.isVerbose()) {
       console.log('Setting current Idx by scroll', this.isAutoScrolling);
@@ -495,19 +519,30 @@ class SlideshowView extends GalleryComponent {
     }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
     const scrollLeft = (this.container && this.container.scrollLeft) || 0;
-
+    // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const items = this.props.galleryStructure.galleryItems;
 
     let currentIdx;
 
-    for (let item, i = 0; (item = items[i]); i++) {
-      if (
-        item.offset.left >
-        scrollLeft + this.props.container.galleryWidth / 2
-      ) {
-        currentIdx = i - 1;
-        break;
+    const scrollPos = this.props.styleParams.isRTL ? 
+    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
+    scrollLeft + this.props.container.galleryWidth / 2
+
+    if (scrollPos === 0){
+      currentIdx = 0;
+    } else {
+      for (let item, i = 0; (item = items[i]); i++) {
+        if (
+          item.offset.left >
+          scrollPos
+        ) {
+          currentIdx = i - 1;
+          break;
+        }
       }
+    }
+    if (!(currentIdx >= 0)) {
+      currentIdx = items.length - 1;
     }
 
     if (!utils.isUndefined(currentIdx)) {
@@ -530,6 +565,9 @@ class SlideshowView extends GalleryComponent {
   }
 
   createNavArrows() {
+
+    const { isRTL, oneRow, arrowsColor, isSlideshow, slideshowInfoSize, imageMargin, arrowsSize, arrowsPosition } = this.props.styleParams;
+
     const shouldNotRenderNavArrows = this.props.galleryStructure.columns.some(
       column => {
         const allRenderedGroups =
@@ -539,7 +577,7 @@ class SlideshowView extends GalleryComponent {
           0,
         );
         const isAllItemsFitsGalleryWidth =
-          this.props.styleParams.oneRow &&
+          oneRow &&
           this.props.container.galleryWidth >= allGroupsWidth;
         return isAllItemsFitsGalleryWidth;
       },
@@ -558,28 +596,39 @@ class SlideshowView extends GalleryComponent {
 
     const svgStyle = {};
     if (utils.isMobile()) {
-      if (typeof this.props.styleParams.arrowsColor !== 'undefined') {
-        svgStyle.fill = this.props.styleParams.arrowsColor.value;
+      if (typeof arrowsColor !== 'undefined') {
+        svgStyle.fill = arrowsColor.value;
       }
     }
 
     // nav-arrows-container width is 100. arrowWidth + padding on each side should be 100
     const containerPadding = (100 - arrowWidth) / 2;
-    const slideshowSpace = this.props.styleParams.isSlideshow
-      ? this.props.styleParams.slideshowInfoSize
+    const slideshowSpace = isSlideshow
+      ? slideshowInfoSize
       : 0;
-    // top: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly. 50% is the middle, 50px is half of nav-arrows-container height
+    // top: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly. 50% is the middle, 50px is half of nav-arrows-container height
     const containerStyle = {
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
-      top: `calc(50% - 50px + ${this.props.styleParams.imageMargin /
+      top: `calc(50% - 50px + ${imageMargin /
         2}px - ${slideshowSpace / 2}px)`,
     };
+    // if (isRTL) {
+    //   containerStyle.transform = 'scaleX(-1)';
+    // };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
-      this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition
-        ? `-${this.props.styleParams.arrowsSize + 50 + 10}px`
-        : `${this.props.styleParams.imageMargin}px`;
-    // left & right: this.props.styleParams.imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+      oneRow && arrowsPosition
+        ? `-${arrowsSize + 50 + 10}px`
+        : `${imageMargin}px`;
+    // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+    // const prevContainerStyle = {
+    //   left: isRTL ? 'auto' : arrowsPos,
+    //   right: !isRTL ? 'auto' : arrowsPos,
+    // };
+    // const nextContainerStyle = {
+    //   right: isRTL ? 'auto' : arrowsPos,
+    //   left: !isRTL ? 'auto' : arrowsPos,
+    // };
     const prevContainerStyle = {
       left: arrowsPos,
     };
@@ -587,17 +636,18 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
+    const hideLeftArrow = (!isRTL && this.isScrollStart()) || (isRTL && this.isScrollEnd())
+    const hideRightArrow = (isRTL && this.isScrollStart()) || (!isRTL && this.isScrollEnd())
+
     return [
-      this.isFirstItem() ? (
-        ''
-      ) : (
+      hideLeftArrow ? null : (
         <button
           className={
             'nav-arrows-container prev ' +
             (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
           }
           onClick={() => this._nextItem(-1)}
-          aria-label="Previous Item"
+          aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowPrev')}
           key="nav-arrow-back"
           data-hook="nav-arrow-back"
@@ -605,8 +655,6 @@ class SlideshowView extends GalleryComponent {
         >
           <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
             <path
-              id="_250_middle_right_copy_3"
-              data-name="250 middle right  copy 3"
               className="slideshow-arrow"
               style={svgStyle}
               d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
@@ -615,13 +663,11 @@ class SlideshowView extends GalleryComponent {
           </svg>
         </button>
       ),
-      this.isLastItem() ? (
-        ''
-      ) : (
+      hideRightArrow ? null : (
         <button
           className={'nav-arrows-container next'}
           onClick={() => this._nextItem(1)}
-          aria-label="Next Item"
+          aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
           key="nav-arrow-next"
           data-hook="nav-arrow-next"
@@ -629,8 +675,6 @@ class SlideshowView extends GalleryComponent {
         >
           <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
             <path
-              id="_250_middle_right_copy_2"
-              data-name="250 middle right  copy 2"
               className="slideshow-arrow"
               style={svgStyle}
               d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
@@ -654,7 +698,6 @@ class SlideshowView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
-      currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
@@ -663,6 +706,7 @@ class SlideshowView extends GalleryComponent {
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
       actions: {
+        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };
@@ -681,7 +725,7 @@ class SlideshowView extends GalleryComponent {
         <div
           data-hook="gallery-column"
           id="gallery-horizontal-scroll"
-          className="gallery-horizontal-scroll gallery-column hide-scrollbars"
+          className={`gallery-horizontal-scroll gallery-column hide-scrollbars ${(this.props.styleParams.isRTL ? ' rtl ' : '')} ${(this.props.styleParams.scrollSnap ? ' scroll-snap ' : '')} `}
           key={'column' + c}
           style={columnStyle}
         >
@@ -734,7 +778,8 @@ class SlideshowView extends GalleryComponent {
         className={
           'pro-gallery inline-styles one-row hide-scrollbars ' +
           (this.props.styleParams.enableScroll ? ' slider ' : '') +
-          (this.props.styleParams.isAccessible ? ' accessible ' : '')
+          (this.props.styleParams.isAccessible ? ' accessible ' : '') +
+          (this.props.styleParams.isRTL ? ' rtl ' : '')
         }
         style={galleryStyle}
       >
@@ -761,6 +806,32 @@ class SlideshowView extends GalleryComponent {
     return this.props.container.galleryWidth >= utils.getWindowWidth() - 10;
   }
 
+  onAutoSlideshowAutoPlayKeyPress(e) {
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.preventDefault();
+        e.stopPropagation();
+        this.onAutoSlideShowButtonClick();
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  calcSlideshowCounterWidth () {
+    const { totalItemsCount} = this.props;
+    if (totalItemsCount < 10) { // x/x
+      return 26;
+    } else if (totalItemsCount < 100) { // xx/xx
+      return 43;
+    } else if (totalItemsCount < 1000) { // xxx/xxx
+      return 60
+    } else { // xxxx/xxxx or more
+      return 76
+    }
+  }
+
   createAutoSlideShowPlayButton() {
     if (!this.shouldCreateSlideShowPlayButton) {
       return false;
@@ -771,12 +842,12 @@ class SlideshowView extends GalleryComponent {
 
     const imageMargin =
       this.props.styleParams.imageMargin + (this.isFullWidthGallery() ? 50 : 0);
+
     const side =
       galleryTextAlign === 'right'
         ? { left: `${imageMargin}px` }
         : {
-            right: `${imageMargin}px`,
-            width: this.shouldCreateSlideShowNumbers ? '60px' : '25px',
+            right: `${(imageMargin + (this.shouldCreateSlideShowNumbers ? this.calcSlideshowCounterWidth() : 0))}px`,
           };
     return (
       <button
@@ -784,12 +855,13 @@ class SlideshowView extends GalleryComponent {
         onClick={() => {
           this.onAutoSlideShowButtonClick();
         }}
+        onKeyDown={this.onAutoSlideshowAutoPlayKeyPress}
         data-hook="auto-slideshow-button"
+        title={'slideshow auto play'}
+        aria-pressed={this.state.shouldStopAutoSlideShow}
+        tabIndex={0}
         style={{
-          paddingTop: '23px',
-          background: 'white',
           top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
-          height: '42px',
           ...side,
         }}
       >
@@ -825,17 +897,14 @@ class SlideshowView extends GalleryComponent {
 
     return (
       <div
-        className={'auto-slideshow-button'}
-        data-hook="auto-slideshow-button"
+        className={'auto-slideshow-counter'}
+        data-hook="auto-slideshow-counter"
         style={{
-          paddingTop: '23px',
-          background: 'white',
-          height: '42px',
           top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
           ...side,
         }}
       >
-        <div style={{ fontSize: '15px', lineHeight: 'normal' }}>
+        <div>
           {this.state.currentIdx + 1 + '/' + totalItemsCount}
         </div>
       </div>
@@ -984,7 +1053,9 @@ class SlideshowView extends GalleryComponent {
       <div
         className={this.getClassNames()}
         style={this.getStyles()}
-        onKeyDown={this.handleKeypress}
+        onKeyDown={this.handleSlideshowKeyPress}
+        role="region"
+        aria-label="Gallery. you can navigate the gallery with keyboard arrow keys."
       >
         {thumbnails[0]}
         {gallery}

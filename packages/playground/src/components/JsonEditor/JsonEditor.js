@@ -1,6 +1,7 @@
 import React from 'react';
-import {Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
-import {INPUT_TYPES, settingsManager} from '../../utils/settingsManager';
+import {Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
+import {settingsManager} from '../../settings/settingsManager';
+import {INPUT_TYPES} from '../../settings/consts';
 import ColorPicker from '../ColorPicker/ColorPicker';
 
 class JsonEditor extends React.Component {
@@ -15,6 +16,18 @@ class JsonEditor extends React.Component {
   onFieldChanged(key, value) {
     console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${value}`);
     this.props.onChange(key, value);
+  }
+
+  formatValue(val) {
+    if (Number(val) === parseInt(val)) {
+      return Number(val);
+     } else if (val === 'true') {
+       return true;
+     } else if (val === 'false') {
+       return false;
+     } else {
+       return String(val);
+     }
   }
 
   renderEntryEditor(key, settings) {
@@ -39,7 +52,7 @@ class JsonEditor extends React.Component {
       case INPUT_TYPES.OPTIONS:
         return (
           <Menu
-            onClick={val => {this.onFieldChanged(key, (Number(val.key) === parseInt(val.key) ? Number(val.key) : val.key))}}
+            onClick={val => {this.onFieldChanged(key, this.formatValue(val.key))}}
             style={{ width: 367, borderRight: 'none' }}
             defaultSelectedKeys={[String(theValue)]}
             mode="vertical"
@@ -48,15 +61,22 @@ class JsonEditor extends React.Component {
               <Menu.Item key={String(value)}>{title}</Menu.Item>
             ))}
           </Menu>
-          // <Radio.Group
-          //   onChange={val => this.onFieldChanged(key, val.target.value)}
-          //   size="medium"
-          //   value={theValue}
-          // >
-          //   {settings.options.map(({value, title}) => (
-          //     <Radio value={value}>{title}</Radio>
-          //   ))}
-          // </Radio.Group>
+        );
+      case INPUT_TYPES.MULTISELECT:
+        const modKey = key => String(key) + (settings.repeat === true ? `|${Math.random()}` : '|');
+        const createOptions = ({value, title}) => (
+          <Select.Option key={modKey(value)}>{title}</Select.Option>
+        );
+        return (
+          <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Please select"
+            defaultValue={unescape(theValue || '').split(',').filter(Boolean) || []}
+            onChange={val => this.onFieldChanged(key, val.map(v => v.substr(0, v.indexOf('|'))).join(','))}
+          >
+            {settings.options.map(createOptions)}
+          </Select>
         );
       case INPUT_TYPES.NUMBER:
         if (settings.min >= 0 && settings.max > 0) {
@@ -124,7 +144,7 @@ class JsonEditor extends React.Component {
 
 
   render() {
-    const {section, subSection, styleParams} = this.props;
+    const {section, subSection, styleParams, styleParam, expandIcon} = this.props;
     const context = {
       isMobile: false,
     }
@@ -138,18 +158,25 @@ class JsonEditor extends React.Component {
     //   styleParams;
 
     // json = removeFieldsNotNeeded(json, selectedLayout);
+    const filterFunction = styleParam ? 
+    ([key]) => key === styleParam : 
+    ([key, settings]) => settings.section === section && settings.subSection === subSection && settings.isRelevant(styleParams, context)
+
+    const activeKey = styleParam ? {activeKey: 'collapse' + styleParam} : {defaultActiveKey: []};
 
     const json = Object.entries(settingsManager)
-      .filter(([key, settings]) => settings.section === section && settings.subSection === subSection && settings.isRelevant(styleParams, context))
+      .filter(filterFunction)
       .reduce((acc, [key]) => {
         acc[key] = settingsManager[key];
         acc[key].value = styleParams[key];
         return acc;
       }, {});
+
+    const isSingleItem = !!styleParam;
   
     return (
       // <Form layout="vertical">
-      <Collapse bordered={false} defaultActiveKey={[]} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={'left'}>
+      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
           <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} >
               {/* <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'} style={{display: 'block', width: '100%'}}> */}
@@ -157,10 +184,12 @@ class JsonEditor extends React.Component {
                 {
                   <div>
                     <Divider/>
-                    <p><b>key: </b><code>{styleParam}</code></p>
-                    <p><b>value: </b><code>{settings.value}</code></p>
+                    <p><b>Key: </b><code>{styleParam}</code></p>
+                    <p><b>Value: </b><code>{String(settings.value)}</code></p>
                     {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
                     {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
+                    {isSingleItem && <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>}
+                    {isSingleItem && <p><b>Relevant in current configuration: </b>{settings.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>}
                   </div>
                   // <Alert message={settings.alert} type="warning"/> : null
                 }
