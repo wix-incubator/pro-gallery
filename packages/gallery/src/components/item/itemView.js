@@ -755,7 +755,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { styleParams, transform } = this.props;
+    const { styleParams } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const itemStyles = {
@@ -765,7 +765,11 @@ class ItemView extends GalleryComponent {
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
 
-    return { ...itemStyles, ...transform, ...containerStyleByStyleParams };
+    // const loopStyles = {...(styleParams.oneRow && styleParams.slideshowLoop && this.props.currentIdx > this.props.idx && {
+    //   transform: `translateX(${this.props.totalWidth}px)`
+    // })}
+
+    return { ...itemStyles, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {

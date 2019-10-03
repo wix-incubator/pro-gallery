@@ -263,7 +263,6 @@ function getStyleByLayout(styles) {
       isColumns: false,
       isSlideshow: false,
       cropOnlyFill: false,
-      slideshowLoop: false,
     }),
     masonry: () => ({
       showArrows: false,
@@ -281,7 +280,6 @@ function getStyleByLayout(styles) {
       isSlideshow: false,
       cropOnlyFill: false,
       oneRow: false,
-      slideshowLoop: false,
     }),
     grid: () => ({
       showArrows: false,
@@ -302,7 +300,6 @@ function getStyleByLayout(styles) {
       isMasonry: false,
       isSlideshow: false,
       minItemSize: 50,
-      slideshowLoop: false,
     }),
     thumbnails: () => ({
       showArrows: true,
@@ -439,7 +436,6 @@ function getStyleByLayout(styles) {
       floatingImages: 0,
       galleryMargin: 0,
       imageMargin: 0,
-      slideshowLoop: false,
     }),
     empty: () => ({
       gallerySize: Math.round(gallerySize * 9 + 100),

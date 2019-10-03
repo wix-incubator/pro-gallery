@@ -705,6 +705,7 @@ class SlideshowView extends GalleryComponent {
       galleryId: this.props.galleryId,
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
+      totalWidth: this.props.galleryStructure.width,
       actions: {
         isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
