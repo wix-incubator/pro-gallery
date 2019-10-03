@@ -302,3 +302,13 @@
  -  remove svg-font-icons and add native SVG support
  -  better handling of arrows and horizontal swipe navigation
 
+
+---
+## v1.3.19 (03/10/2019)
+ 
+#### PLAYGROUND
+ -  improve: allow changing media type and number of items
+
+#### GALLERY
+ -  fix broken slideshowLoop
+
