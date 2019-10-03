@@ -196,7 +196,7 @@ export default class Share extends GalleryComponent {
         aria-live="assertive"
         tabIndex={-1}
         key={network + '-share-icon'}
-      ><ShareIcon size={18}/></button>
+      ><ShareIcon size="18"/></button>
     );
   }
 

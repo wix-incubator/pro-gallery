@@ -2,7 +2,7 @@ import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
 import utils from '../../common/utils/index.js';
 import window from '../../common/window/windowWrapper';
-import ItemContainer from '../item/itemContainer.js';
+import itemView from '../item/itemView.js';
 import { GalleryComponent } from '../galleryComponent';
 
 utils.fixViewport('Gallery');
@@ -123,12 +123,12 @@ class GalleryView extends GalleryComponent {
     }
     const layout = this.props.galleryStructure.galleryItems.map((item, index) =>
       React.createElement(
-        ItemContainer,
+        itemView,
         item.renderProps({
           ...galleryConfig,
           ...itemsLoveData[item.id],
           visible: item.isVisible,
-          key: `ItemContainer-${item.id}-${index}`,
+          key: `itemView-${item.id}-${index}`,
         }),
       ),
     );

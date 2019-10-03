@@ -102,7 +102,7 @@ export default class Social extends GalleryComponent {
             'block-fullscreen ' +
             (isDemo ? ' inactive' : '')
           }
-        ><DownloadIcon size={20}/></i>
+        ><DownloadIcon size="20"/></i>
       );
 
       const genralProps = {

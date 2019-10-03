@@ -1,5 +1,4 @@
 import utils from '../../common/utils';
-import window from '../../common/window/windowWrapper';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -16,7 +15,6 @@ export function scrollToItemImp(scrollParams) {
     items,
     itemIdx,
     fixedScroll,
-    isManual,
   } = scrollParams;
 
   //default = scroll by half the container size
@@ -52,17 +50,10 @@ export function scrollToItemImp(scrollParams) {
 
     if (!(to >= 0)) {
       console.warn('Position not found, not scrolling');
-      return false;
+      return new Promise(res => res());
     }
 
     if (oneRow) {
-      if (
-        isManual &&
-        utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemChanged'))
-      ) {
-        window.galleryWixCodeApi.onItemChanged(item);
-      }
-
       //set scroll to place the item in the middle of the component
       const diff = (galleryWidth - item.width) / 2;
       if (diff > 0) {
