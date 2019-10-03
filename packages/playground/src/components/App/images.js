@@ -2580,8 +2580,7 @@ const testVideos = [{
   }
 }];
 
-// const testItems = [...testImages, ...testVideos];
-const testItems = testVideos;
+const testItems = [...testImages, ...testVideos];
 
 export {
   testImages, 
