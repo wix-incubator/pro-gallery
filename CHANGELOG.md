@@ -319,3 +319,10 @@
 #### GALLERY
  -  remove leftovers font icons
 
+
+---
+## v1.3.21 (03/10/2019)
+ 
+#### GALLERY
+ -  fix minor position diff in share icon
+
