@@ -312,3 +312,10 @@
 #### GALLERY
  -  fix broken slideshowLoop
 
+
+---
+## v1.3.20 (03/10/2019)
+ 
+#### GALLERY
+ -  remove leftovers font icons
+
