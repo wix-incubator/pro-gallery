@@ -732,12 +732,12 @@
               border-radius: 50px;
               opacity: 0.7;
 
-              &.progallery-svg-font-icons-play-triangle {
+              &.play-triangle {
                 opacity: 1;
               }
 
-              &.progallery-svg-font-icons-play-triangle,
-              &.progallery-svg-font-icons-play-background {
+              &.play-triangle,
+              &.play-background {
                 //padding-left: 6px;
                 //width: 54px;
                 //line-height: 58px;
@@ -1186,7 +1186,7 @@
               }
 
               &.gallery-item-social-download {
-                bottom: 31px;
+                bottom: 25px;
                 left: auto;
                 right: 68px;
 
@@ -1277,6 +1277,8 @@
               width: 22px;
               text-align: center;
               transform: translateY(-50%);
+              background: transparent;
+              border: none;
 
               &:hover {
                 opacity: 0.7;

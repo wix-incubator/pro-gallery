@@ -131,7 +131,7 @@ class LoveButton extends GalleryComponent {
           aria-checked={this.props.isLoved}
           style={loveColor}
           tabIndex={-1}
-        >{this.isLoved() ? <LoveFull/> : <LoveEmpty/>}</button>
+        >{this.props.isLoved ? <LoveFull size={21}/> : <LoveEmpty size={21}/>}</button>
         {loveCounter}
       </span>
     );
