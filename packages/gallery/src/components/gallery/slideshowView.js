@@ -179,10 +179,10 @@ class SlideshowView extends GalleryComponent {
     const {
       isAutoSlideshow,
       autoSlideshowInterval,
-      galleryLayout,
+      oneRow,
     } = styleParams;
     this.stopAutoSlideshow();
-    if (!(galleryLayout === 5 || galleryLayout === 4 || galleryLayout === 3))
+    if (!oneRow)
       return;
     if (
       !(
@@ -691,7 +691,7 @@ class SlideshowView extends GalleryComponent {
 
     const galleryConfig = {
       scrollingElement: this.props.scrollingElement,
-      renderedItemsCount: this.props.renderedItemsCount,
+      totalItemsCount: this.props.totalItemsCount,
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,

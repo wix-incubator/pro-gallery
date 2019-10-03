@@ -30,6 +30,7 @@ export function App() {
   const {setDimentions, styleParams, setItems, items, isSSR, gallerySettings} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
+  const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {}; 
 
   setStyleParamsInUrl(styleParams);
 
@@ -80,26 +81,25 @@ export function App() {
   }
 
   const addItems = () => {
-    const {numberOfItems} = gallerySettings || {};
-    if (!numberOfItems) { //zero items means infinite
-      setItems(getItems().concat(createItems()));
+    const items = getItems();
+    if (!numberOfItems && items.length < numberOfItems) { //zero items means infinite
+      setItems(items.concat(createItems()));
     }
 
   }
   const createItems = () => {
-    const {numberOfItems, mediaType} = gallerySettings || {};
     return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : testItems), numberOfItems || ITEMS_BATCH_SIZE);
   }
 
   const getItems = () => {
     
+    // return initialItems.mixed.slice(0, 3);
+
     if (items && items.length > 0) {
       return items;
     }
     
-    const {numberOfItems, mediaType} = gallerySettings || {};
-    
-    const theItems = items || initialItems[mediaType || 'mixed'];
+    const theItems = items || initialItems[mediaType];
     if (numberOfItems > 0) {
       return theItems.slice(0, numberOfItems);
     } else {
@@ -123,7 +123,7 @@ export function App() {
           items={getItems()}
           styles={styleParams}
           eventsListener={eventListener}
-          totalItemsCount={Infinity}
+          totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}
         />
       </section>
