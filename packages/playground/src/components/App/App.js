@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testItems} from './images';
+import {testItems, testImages, testVideos} from './images';
 import {mixAndSlice} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
@@ -16,12 +16,18 @@ import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
-const initialItems = mixAndSlice(testItems, ITEMS_BATCH_SIZE);
+
+const initialItems = {
+  mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
+  videos: mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
+  images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
+};
+
 var galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, isSSR} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, isSSR, gallerySettings} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
 
@@ -57,7 +63,7 @@ export function App() {
         setGalleryReady();
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS: 
-        setItems(getItems().concat(mixAndSlice(testItems, ITEMS_BATCH_SIZE)));
+        addItems();
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED: 
         // setFullscreenIdx(eventData.idx);
@@ -73,8 +79,32 @@ export function App() {
     width: isSSR ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0)
   }
 
+  const addItems = () => {
+    const {numberOfItems} = gallerySettings || {};
+    if (!numberOfItems) { //zero items means infinite
+      setItems(getItems().concat(createItems()));
+    }
+
+  }
+  const createItems = () => {
+    const {numberOfItems, mediaType} = gallerySettings || {};
+    return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : testItems), numberOfItems || ITEMS_BATCH_SIZE);
+  }
+
   const getItems = () => {
-    return items || initialItems;
+    
+    if (items && items.length > 0) {
+      return items;
+    }
+    
+    const {numberOfItems, mediaType} = gallerySettings || {};
+    
+    const theItems = items || initialItems[mediaType || 'mixed'];
+    if (numberOfItems > 0) {
+      return theItems.slice(0, numberOfItems);
+    } else {
+      return theItems;
+    }
   }
 
   return (
