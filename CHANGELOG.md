@@ -294,3 +294,11 @@
  -  handle rage clicks on gallery arrows
  -  fix videos in Safari
 
+
+---
+## v1.3.18 (03/10/2019)
+ 
+#### GALLERY
+ -  remove svg-font-icons and add native SVG support
+ -  better handling of arrows and horizontal swipe navigation
+
