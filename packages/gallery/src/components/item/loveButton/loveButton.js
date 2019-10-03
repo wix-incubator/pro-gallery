@@ -3,8 +3,8 @@ import utils from '../../../common/utils';
 import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
 import { GalleryComponent } from '../../galleryComponent';
-import LoveFull from '../../../assets/images/react-svg/components/love_full';
-import LoveEmpty from '../../../assets/images/react-svg/components/love_empty';
+import LoveFull from '../../svgs/components/love_full';
+import LoveEmpty from '../../svgs/components/love_empty';
 
 class LoveButton extends GalleryComponent {
   constructor(props) {
