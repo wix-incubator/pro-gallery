@@ -7,6 +7,7 @@ import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
 import PLACEMENTS from '../../../common/constants/placements';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
+import DownloadIcon from '../../svgs/components/download';
 
 export default class Social extends GalleryComponent {
   constructor(props) {
@@ -98,10 +99,10 @@ export default class Social extends GalleryComponent {
       const downloadIcon = (
         <i
           className={
-            'block-fullscreen progallery-svg-font-icons-download' +
+            'block-fullscreen ' +
             (isDemo ? ' inactive' : '')
           }
-        />
+        ><DownloadIcon size={20}/></i>
       );
 
       const genralProps = {

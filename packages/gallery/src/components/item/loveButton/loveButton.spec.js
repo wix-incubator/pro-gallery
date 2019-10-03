@@ -39,9 +39,9 @@ describe('Love Button', () => {
     driver.mount(LoveButton, sampleItemViewProps);
     expect(driver.find.hook('love-counter').length).to.equal(1);
     expect(driver.find.hook('love-counter').text()).to.equal('1');
-    expect(driver.find.class('progallery-svg-font-icons-love_full').length).to.equal(1);
+    expect(driver.find.class('love_full').length).to.equal(1);
     expect(driver.find.class('pro-gallery-loved').length).to.equal(1);
-    expect(driver.find.class('progallery-svg-font-icons-love_empty').length).to.equal(0);
+    expect(driver.find.class('love_empty').length).to.equal(0);
   });
 
   it('should show not loved when not isLoved', () => {
@@ -49,8 +49,8 @@ describe('Love Button', () => {
       isLoved: false,
     });
     driver.mount(LoveButton, sampleItemViewProps);
-    expect(driver.find.class('progallery-svg-font-icons-love_empty').length).to.equal(1);
-    expect(driver.find.class('progallery-svg-font-icons-love_full').length).to.equal(0);
+    expect(driver.find.class('love_empty').length).to.equal(1);
+    expect(driver.find.class('love_full').length).to.equal(0);
     expect(driver.find.class('pro-gallery-loved').length).to.equal(0);
   });
 

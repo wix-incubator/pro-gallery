@@ -3,6 +3,8 @@ import utils from '../../../common/utils';
 import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
 import { GalleryComponent } from '../../galleryComponent';
+import LoveFull from '../../../assets/images/react-svg/components/love_full';
+import LoveEmpty from '../../../assets/images/react-svg/components/love_empty';
 
 class LoveButton extends GalleryComponent {
   constructor(props) {
@@ -58,9 +60,9 @@ class LoveButton extends GalleryComponent {
     }
     className.push(this.viewClassName());
     if (this.props.isLoved) {
-      className.push('progallery-svg-font-icons-love_full pro-gallery-loved');
+      className.push('love_full pro-gallery-loved');
     } else {
-      className.push('progallery-svg-font-icons-love_empty');
+      className.push('love_empty');
     }
     if (this.state.animate) {
       className.push('love-animation');
@@ -129,7 +131,7 @@ class LoveButton extends GalleryComponent {
           aria-checked={this.props.isLoved}
           style={loveColor}
           tabIndex={-1}
-        />
+        >{this.props.isLoved ? <LoveFull size={21}/> : <LoveEmpty size={21}/>}</button>
         {loveCounter}
       </span>
     );
