@@ -8,6 +8,7 @@ import EVENTS from '../../../common/constants/events';
 import PLACEMENTS from '../../../common/constants/placements';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import DownloadIcon from '../../svgs/components/download';
+import ShareStoreIcon from '../../svgs/components/share_store';
 
 export default class Social extends GalleryComponent {
   constructor(props) {
@@ -21,8 +22,8 @@ export default class Social extends GalleryComponent {
     if (styleParams.allowSocial) {
       const slideshowShareButton = (
         <i
-          className={'block-fullscreen progallery-svg-font-icons-share-store'}
-        />
+          className={'block-fullscreen share-store'}
+        ><ShareStoreIcon size="20"/></i>
       );
       if (isSiteMode() || isSEOMode()) {
         const slideshowShare = styleParams.isSlideshow
