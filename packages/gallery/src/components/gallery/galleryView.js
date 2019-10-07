@@ -129,6 +129,7 @@ class GalleryView extends GalleryComponent {
           ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
+          isFullWidth: this.props.isFullWidth,
         }),
       ),
     );
@@ -156,7 +157,7 @@ class GalleryView extends GalleryComponent {
           style={{
             margin: this.props.styleParams.galleryMargin + 'px',
             height: galleryHeight,
-            width: this.context.isFullWidth ? '100%' : this.props.container.galleryWidth, //FAKE SSR
+            width: this.props.isFullWidth ? '100%' : this.props.container.galleryWidth, //FAKE SSR
             overflow: 'visible',
             position: 'relative',
           }}

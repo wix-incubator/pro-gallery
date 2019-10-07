@@ -13,10 +13,6 @@ import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import utils from '../../common/utils';
 import { isEditMode, isSEOMode } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
-import {
-  extractContextFields,
-  GalleryProvider,
-} from '../../context/GalleryContext';
 import VideoScrollHelper from '../helpers/videoScrollHelper.js';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 import checkNewGalleryProps from './helpers/isNew';
@@ -832,75 +828,72 @@ export class GalleryContainer extends React.Component {
       'div.pro-gallery-parent-container * { transition: none !important }';
 
     return (
-      <GalleryProvider
-        {...extractContextFields({isFullWidth: this.isFullWidth})}
+      <div
+        data-key="pro-gallery-inner-container"
+        key="pro-gallery-inner-container"
       >
-        <div
-          data-key="pro-gallery-inner-container"
-          key="pro-gallery-inner-container"
-        >
-          <ScrollIndicator
-            galleryDomId={this.props.domId}
-            oneRow={this.state.styles.oneRow}
-            isRTL={this.state.styles.isRTL}
-            totalWidth={this.galleryStructure.width}
-            scrollBase={this.state.container.scrollBase}
-            scrollingElement={this._scrollingElement}
-            getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
-            enableScrollPreload={this.enableScrollPreload}
-            onScroll={this.onGalleryScroll}
-          />
-          <ViewComponent
-            galleryDomId={this.props.domId}
-            galleryId={this.props.galleryId}
-            isInDisplay={this.props.isInDisplay}
-            scrollingElement={this._scrollingElement}
-            totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
-            renderedItemsCount={this.props.renderedItemsCount}
-            items={this.items}
-            itemsLoveData={this.props.itemsLoveData}
-            galleryStructure={this.galleryStructure}
-            styleParams={styles}
-            container={this.state.container}
-            watermark={this.props.watermarkData}
-            settings={this.props.settings}
-            gotScrollEvent={true}
-            scroll={{}} //todo: remove after refactor is 100%
-            displayShowMore={displayShowMore}
-            domId={this.props.domId}
-            customHoverRenderer={this.props.customHoverRenderer}
-            customInfoRenderer={this.props.customInfoRenderer}
-            playingVideoIdx={this.state.playingVideoIdx}
-            nextVideoIdx={this.state.nextVideoIdx}
-            noFollowForSEO={this.props.noFollowForSEO}
-            actions={{
-              ...this.props.actions,
-              findNeighborItem,
-              isCurrentHover: this.isCurrentHover,
-              toggleLoadMoreItems: this.toggleLoadMoreItems,
-              eventsListener: this.eventsListener,
-              setWixHeight: (() => {}),
-              scrollToItem: this.scrollToItem,
-              duplicateGalleryItems: this.duplicateGalleryItems,
-            }}
-            {...this.props.gallery}
-          />
-          {this.galleryInitialStateJson && (
-            <div id="ssr-state-to-hydrate" style={{ display: 'none' }}>
-              {this.galleryInitialStateJson}
-            </div>
-          )}
-          <style data-key="scrollCss" key="scrollCss">
-            {this.scrollCss}
+        <ScrollIndicator
+          galleryDomId={this.props.domId}
+          oneRow={this.state.styles.oneRow}
+          isRTL={this.state.styles.isRTL}
+          totalWidth={this.galleryStructure.width}
+          scrollBase={this.state.container.scrollBase}
+          scrollingElement={this._scrollingElement}
+          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+          enableScrollPreload={this.enableScrollPreload}
+          onScroll={this.onGalleryScroll}
+        />
+        <ViewComponent
+          galleryDomId={this.props.domId}
+          galleryId={this.props.galleryId}
+          isInDisplay={this.props.isInDisplay}
+          isFullWidth={this.isFullWidth}
+          scrollingElement={this._scrollingElement}
+          totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
+          renderedItemsCount={this.props.renderedItemsCount}
+          items={this.items}
+          itemsLoveData={this.props.itemsLoveData}
+          galleryStructure={this.galleryStructure}
+          styleParams={styles}
+          container={this.state.container}
+          watermark={this.props.watermarkData}
+          settings={this.props.settings}
+          gotScrollEvent={true}
+          scroll={{}} //todo: remove after refactor is 100%
+          displayShowMore={displayShowMore}
+          domId={this.props.domId}
+          customHoverRenderer={this.props.customHoverRenderer}
+          customInfoRenderer={this.props.customInfoRenderer}
+          playingVideoIdx={this.state.playingVideoIdx}
+          nextVideoIdx={this.state.nextVideoIdx}
+          noFollowForSEO={this.props.noFollowForSEO}
+          actions={{
+            ...this.props.actions,
+            findNeighborItem,
+            isCurrentHover: this.isCurrentHover,
+            toggleLoadMoreItems: this.toggleLoadMoreItems,
+            eventsListener: this.eventsListener,
+            setWixHeight: (() => {}),
+            scrollToItem: this.scrollToItem,
+            duplicateGalleryItems: this.duplicateGalleryItems,
+          }}
+          {...this.props.gallery}
+        />
+        {this.galleryInitialStateJson && (
+          <div id="ssr-state-to-hydrate" style={{ display: 'none' }}>
+            {this.galleryInitialStateJson}
+          </div>
+        )}
+        <style data-key="scrollCss" key="scrollCss">
+          {this.scrollCss}
+        </style>
+        {this.layoutCss.map((css, idx) => (
+          <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`}>
+            {css}
           </style>
-          {this.layoutCss.map((css, idx) => (
-            <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`}>
-              {css}
-            </style>
-          ))}
-          {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
-        </div>
-      </GalleryProvider>
+        ))}
+        {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
+      </div>
     );
   }
 }
