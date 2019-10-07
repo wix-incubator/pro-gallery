@@ -334,3 +334,10 @@
  -  better handling of unknown width in SSR 
     width can be either empty string or a number - the gallery will not measure itself
 
+
+---
+## v1.4.1 (07/10/2019)
+ 
+#### GALLERY
+ -  add video preview image to css scroll (like regular images)
+
