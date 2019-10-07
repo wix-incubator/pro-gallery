@@ -53,6 +53,15 @@
     color: #333;
     background: #fff;
     font-variant-caps: all-petite-caps;
+
+    .version {
+      font-variant-caps: initial;
+      color: #666;
+      font-size: 12px;
+      float: right;
+      padding-right: 16px;
+    }
+
   }
 
   .codePanel {

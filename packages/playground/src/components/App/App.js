@@ -9,13 +9,14 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 // import { ProFullscreen } from '@wix/pro-fullscreen-renderer';
 // import '@wix/pro-fullscreen-renderer/dist/statics/main.css';
-// import '@wix/pro-fullscreen-renderer/dist/src/assets/styles/fullscreen.global.scss';
+// import '@wix/pro-fullscreen-renderer/dist/src/assets/styles/fullscreen.global.scss';0
        
 import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery';
 import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
+const pJson = require('../../../package.json');
 
 const initialItems = {
   mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
@@ -110,7 +111,7 @@ export function App() {
       <Button className={s.toggleButton} onClick={switchState} icon={showSide ? "close" : "menu"} shape="circle" size="default" type="primary" />
       <aside className={s.sideBar} style={{width: showSide ? SIDEBAR_WIDTH : 0}}>
         <div className={s.heading}>
-          Pro Gallery Playground
+          Pro Gallery Playground <span className={s.version}>v{pJson.version}</span>
         </div>
         <SideBar />
       </aside>
