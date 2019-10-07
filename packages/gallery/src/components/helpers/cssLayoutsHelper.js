@@ -19,7 +19,7 @@ const createExactCssForItems = (galleryDomId = '', galleryItems, styleParams) =>
   const {isRTL} = styleParams;
 
   let cssStr = '';
-  galleryItems.forEach((item) => {
+  galleryItems.forEach(item => {
     const id = createItemId(galleryDomId, item);
     const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px;`;

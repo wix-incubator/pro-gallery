@@ -344,6 +344,9 @@ class ItemView extends GalleryComponent {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
+    if (this.context.isFullWidth) {  //FAKE SSR
+      return {};  
+    }
     const { styleParams, cubeRatio, style } = this.props;
     const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
@@ -764,10 +767,6 @@ class ItemView extends GalleryComponent {
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
-
-    // const loopStyles = {...(styleParams.oneRow && styleParams.slideshowLoop && this.props.currentIdx > this.props.idx && {
-    //   transform: `translateX(${this.props.totalWidth}px)`
-    // })}
 
     return { ...itemStyles, ...containerStyleByStyleParams };
   }

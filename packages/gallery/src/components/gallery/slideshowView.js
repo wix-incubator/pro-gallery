@@ -612,23 +612,13 @@ class SlideshowView extends GalleryComponent {
       top: `calc(50% - 50px + ${imageMargin /
         2}px - ${slideshowSpace / 2}px)`,
     };
-    // if (isRTL) {
-    //   containerStyle.transform = 'scaleX(-1)';
-    // };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
       oneRow && arrowsPosition
         ? `-${arrowsSize + 50 + 10}px`
         : `${imageMargin}px`;
     // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
-    // const prevContainerStyle = {
-    //   left: isRTL ? 'auto' : arrowsPos,
-    //   right: !isRTL ? 'auto' : arrowsPos,
-    // };
-    // const nextContainerStyle = {
-    //   right: isRTL ? 'auto' : arrowsPos,
-    //   left: !isRTL ? 'auto' : arrowsPos,
-    // };
+
     const prevContainerStyle = {
       left: arrowsPos,
     };

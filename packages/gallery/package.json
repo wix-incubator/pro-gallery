@@ -10,6 +10,7 @@
   },
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
+  "sideEffects": false,
   "files": [
     "dist"
   ],

@@ -75,7 +75,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ galleryDomId, items, styleParams, allowPreloading }) {
+  calcScrollCss({ galleryDomId, items, styleParams, allowPreloading, isFullWidth }) {
     if (!(items && items.length)) {
       return '';
     }
@@ -99,7 +99,7 @@ class CssScrollHelper {
       maxStep;
     return items
       .map(item =>
-        this.calcScrollCssForItem({ galleryDomId, item, styleParams }),
+        this.calcScrollCssForItem({ galleryDomId, item, styleParams, isFullWidth }),
       )
       .join(`\n`);
   }
@@ -166,7 +166,7 @@ class CssScrollHelper {
     };
   }
 
-  calcScrollCssForItem({ galleryDomId, item, styleParams }) {
+  calcScrollCssForItem({ galleryDomId, item, styleParams, isFullWidth }) {
     const { type, createUrl, idx } = item;
 
     let scrollCss = '';
@@ -178,7 +178,7 @@ class CssScrollHelper {
 
     if (type !== 'video' && type !== 'text') {
       //load hi-res image + loading transition
-      if (!window.isSSR && !item.isDimensionless) {
+      if (!isFullWidth && !item.isDimensionless) { //FAKE SSR
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.image-item>canvas`) +
           `{opacity: 1; background-image: url(${createUrl(
@@ -191,7 +191,7 @@ class CssScrollHelper {
       if (
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode !== LOADING_MODE.COLOR &&
-        (!item.isTransparent || window.isSSR) &&
+        (!item.isTransparent || isFullWidth) && //FAKE SSR
         !item.isDimensionless
       ) {
         scrollCss +=
