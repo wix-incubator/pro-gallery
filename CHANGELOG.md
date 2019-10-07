@@ -341,3 +341,10 @@
 #### GALLERY
  -  add video preview image to css scroll (like regular images)
 
+
+---
+## v1.4.2 (07/10/2019)
+ 
+#### GALLERY
+ -  fix: do not cache isFullWidth
+
