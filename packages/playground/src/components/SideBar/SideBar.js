@@ -158,11 +158,11 @@ function SideBar() {
             <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
               <InputNumber min={0} max={100} defaultValue={0} onChange={val => setGallerySettings({numberOfItems: val})} />
             </Form.Item>
-            <Form.Item label="Media Type" help="Set to 0 for Infinite items">
+            <Form.Item label="Media Type">
               <Select defaultValue="mixed" onChange={val => setGallerySettings({mediaType: val})}>
-                <Select.Option value="mixed">Mixed</Select.Option>
-                <Select.Option value="images">Images</Select.Option>
-                <Select.Option value="videos">Videos</Select.Option>
+                <Select.Option value="mixed">Images & Videos</Select.Option>
+                <Select.Option value="images">Images Only</Select.Option>
+                <Select.Option value="videos">Videos Only</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item label="Reset Gallery">
