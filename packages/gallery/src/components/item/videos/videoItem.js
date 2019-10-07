@@ -1,9 +1,11 @@
 import React from 'react';
-import utils from '../../../utils';
-import window from '../../../utils/window/windowWrapper';
+import utils from '../../../common/utils';
+import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
-import EVENTS from '../../../utils/constants/events';
-import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
+import EVENTS from '../../../common/constants/events';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
+import PlayBackground from '../../svgs/components/play_background';
+import PlayTriangle from '../../svgs/components/play_triangle';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -17,24 +19,25 @@ class VideoItem extends GalleryComponent {
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
     };
-    if (!utils.isSSR()) {
-      if (!(window && window.ReactPlayer)) {
-        import('react-player').then(ReactPlayer => {
-          window.ReactPlayer = ReactPlayer.default;
-          this.setState({ reactPlayerLoaded: true });
-        });
-      }
-      if (
-        //Vimeo player must be loaded by us, problem with requireJS
-        !(window && window.Vimeo) &&
-        props.videoUrl &&
-        props.videoUrl.includes('vimeo.com')
-      ) {
-        import('@vimeo/player').then(Player => {
-          window.Vimeo = { Player: Player.default };
-          this.setState({ vimeoPlayerLoaded: true });
-        });
-      }
+  }
+
+  componentDidMount() {
+    if (!(window && window.ReactPlayer)) {
+      import('react-player').then(ReactPlayer => {
+        window.ReactPlayer = ReactPlayer.default;
+        this.setState({ reactPlayerLoaded: true });
+      });
+    }
+    if (
+      //Vimeo player must be loaded by us, problem with requireJS
+      !(window && window.Vimeo) &&
+      this.props.videoUrl &&
+      this.props.videoUrl.includes('vimeo.com')
+    ) {
+      import('@vimeo/player').then(Player => {
+        window.Vimeo = { Player: Player.default };
+        this.setState({ vimeoPlayerLoaded: true });
+      });
     }
   }
 
@@ -101,6 +104,7 @@ class VideoItem extends GalleryComponent {
         width="100%"
         height="100%"
         url={url}
+        alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.styleParams.videoLoop}
         ref={player => (this.video = player)}
         volume={this.props.styleParams.videoSound ? 0.8 : 0}
@@ -130,6 +134,7 @@ class VideoItem extends GalleryComponent {
                 URL_TYPES.HIGH_RES,
               ),
               style: videoDimensionsCss,
+              type: 'video/mp4',
             },
           },
         }}
@@ -160,7 +165,7 @@ class VideoItem extends GalleryComponent {
     return (
       <canvas
         key={'image-' + this.props.id}
-        alt={this.props.title}
+        alt={this.props.alt ? this.props.alt : 'untitled video'}
         className={
           'gallery-item-hidden gallery-item-visible gallery-item ' +
           (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
@@ -213,16 +218,16 @@ class VideoItem extends GalleryComponent {
             key="play-triangle"
             data-hook="play-triangle"
             className={
-              'gallery-item-video-play-triangle progallery-svg-font-icons-play-triangle '
+              'gallery-item-video-play-triangle play-triangle '
             }
-          />,
+          ><PlayTriangle/></i>,
           <i
             key="play-bg"
             data-hook="play-background"
             className={
-              'gallery-item-video-play-background progallery-svg-font-icons-play-background '
+              'gallery-item-video-play-background play-background '
             }
-          />,
+          ><PlayBackground/></i>,
         ];
 
     const videoPreloader = (

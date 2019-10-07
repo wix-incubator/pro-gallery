@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash.clonedeep';
+
 export function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,
@@ -18,13 +20,24 @@ export function shuffle(array) {
   return array;
 }
 
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.floor(Math.random() * 16) || 0;
+    return c === 'x' ? r.toString(16) : c;
+  });
+}
+
 export function mixAndSlice(array, length) {
   let result = [];
   if (array.length > 0) {
     const rndIdx = () => Math.floor(Math.random() * array.length)
     while (result.length < length) {
-      const item = {...array[rndIdx()]};
-      item.itemId = item.itemId + '_' + String(result.length);
+      const idx = rndIdx();
+      let item = cloneDeep(array[idx]);
+      // Object.assign(item, array[idx]);
+      item.itemId = generateUUID() + '_' + String(result.length);
+      item.metadata.title = `Item #${result.length + 1}`;
+      // console.log('ITEM CREATED', item, array[idx]);
       result.push(item);
     }
   }

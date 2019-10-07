@@ -7,10 +7,8 @@ import ItemHover from './itemHover.js';
 import Texts from './texts/texts.js';
 import Social from './social/social.js';
 import Share from './share/share.js';
-import classNames from 'classnames';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
-import _ from 'lodash';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';
@@ -18,11 +16,11 @@ import {
   isEditMode,
   isSiteMode,
   isSEOMode,
-} from '../../utils/window/viewModeWrapper';
-import EVENTS from '../../utils/constants/events';
-import PLACEMENTS from '../../utils/constants/placements';
-import OVERLAY_ANIMATIONS from '../../utils/constants/overlayAnimations';
-import IMAGE_HOVER_ANIMATIONS from '../../utils/constants/imageHoverAnimations';
+} from '../../common/window/viewModeWrapper';
+import EVENTS from '../../common/constants/events';
+import PLACEMENTS from '../../common/constants/placements';
+import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
+import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,
@@ -117,12 +115,15 @@ class ItemView extends GalleryComponent {
       return;
     }
     this.setState({
-      showShare: _.isUndefined(forceVal) ? !this.state.showShare : !!forceVal,
+      showShare:
+        typeof forceVal === 'undefined' ? !this.state.showShare : !!forceVal,
     });
   }
 
   onMouseOver() {
-    this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    if (!utils.isMobile()) {
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    }
     this.onMouseOverEvent.itemIdx = this.props.idx; //VIDEOREWORK why do we need this?
     window.dispatchEvent(this.onMouseOverEvent);
   }
@@ -141,7 +142,7 @@ class ItemView extends GalleryComponent {
   }
 
   handleGalleryItemClick() {
-    _.isFunction(_.get(window, 'galleryWixCodeApi.onItemClicked')) &&
+    utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked')) &&
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
   }
@@ -149,7 +150,7 @@ class ItemView extends GalleryComponent {
   onItemClick(e) {
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
-      return _.noop;
+      return (() => {});
     }
 
     e.preventDefault();
@@ -185,7 +186,7 @@ class ItemView extends GalleryComponent {
   };
 
   isClickOnCurrentHoveredItem = () =>
-    this.props.currentHover === this.props.idx;
+    this.props.actions.isCurrentHover(this.props.idx);
 
   handleHoverClickOnMobile() {
     if (this.isClickOnCurrentHoveredItem()) {
@@ -197,13 +198,13 @@ class ItemView extends GalleryComponent {
   }
 
   toggleFullscreenIfNeeded(e) {
-    let targetClass = _.get(e, 'target.className');
-    if (_.isObject(targetClass)) {
-      targetClass = _.valuesIn(targetClass);
+    let targetClass = utils.get(e, 'target.className');
+    if (typeof targetClass === 'object') {
+      targetClass = Object.values(targetClass);
     }
 
     if (
-      _.isFunction(targetClass.indexOf) &&
+      utils.isFunction(targetClass.indexOf) &&
       targetClass.indexOf('block-fullscreen') >= 0
     ) {
       console.warn('Blocked fullscreen!', e);
@@ -343,41 +344,49 @@ class ItemView extends GalleryComponent {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
+    if (this.context.isFullWidth) {  //FAKE SSR
+      return {};  
+    }
     const { styleParams, cubeRatio, style } = this.props;
-    const imageIsWider = style.ratio >= cubeRatio;
+    const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
       (style.height * style.ratio - style.width) / -2,
     );
     const imageMarginTop = Math.round(
       (style.width / style.ratio - style.height) / -2,
     );
-    return !(styleParams.cubeImages && styleParams.cubeType === 'fit')
-      ? {
-          //not grid fit
-          width: style.width,
-          height: style.height,
-        }
-      : //grid fit images
-      !imageIsWider
-      ? {
-          //portrait
-          width: style.width - 2 * imageMarginLeft,
-          height: style.height,
-          marginLeft: imageMarginLeft,
-        }
-      : {
-          //landscape
-          height: style.height - 2 * imageMarginTop,
-          width: style.width,
-          marginTop: imageMarginTop,
-        };
+    const isGridFit = (styleParams.cubeImages && styleParams.cubeType === 'fit');
+
+    let dimensions = {};
+
+    if (!isGridFit) {
+      dimensions = {
+        width: style.width,
+        height: style.height,
+      };
+    } else if (isGridFit && isLandscape) {
+      dimensions = {
+        //landscape
+        height: style.height - 2 * imageMarginTop,
+        width: style.width,
+        marginTop: imageMarginTop,
+      }
+    } else if (isGridFit && !isLandscape) {
+      dimensions = {
+        //portrait
+        width: style.width - 2 * imageMarginLeft,
+        height: style.height,
+        marginLeft: imageMarginLeft,
+      }
+    }
+
+    return dimensions;
   }
 
   getItemTextsDetails() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'title',
       'description',
-      'fileName',
       'id',
       'styleParams',
       'style',
@@ -388,7 +397,7 @@ class ItemView extends GalleryComponent {
       this.props.type === 'image' || this.props.type === 'picture';
     const useCustomButton = this.props.styleParams.useCustomButton === true;
     const shouldShowButton =
-      (isImage || !utils.isStoreGallery()) && useCustomButton;
+      (isImage || !this.props.styleParams.isStoreGallery) && useCustomButton;
 
     return (
       <Texts
@@ -398,7 +407,6 @@ class ItemView extends GalleryComponent {
         showShare={this.state.showShare}
         isSmallItem={this.isSmallItem()}
         isNarrow={this.isNarrow()}
-        titlePlacement={this.props.styleParams.titlePlacement}
         shouldShowButton={shouldShowButton}
         actions={{
           eventsListener: this.props.actions.eventsListener,
@@ -408,7 +416,7 @@ class ItemView extends GalleryComponent {
   }
 
   getSocial() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'html',
       'hashtag',
       'photoId',
@@ -445,7 +453,7 @@ class ItemView extends GalleryComponent {
   }
 
   getShare() {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'styleParams',
       'id',
       'type',
@@ -470,7 +478,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemHover(children, imageDimensions) {
-    // const props = _.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
+    // const props = utils.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     const { customHoverRenderer, ...props } = this.props;
     return (
       <ItemHover
@@ -491,7 +499,7 @@ class ItemView extends GalleryComponent {
   }
 
   getImageItem(imageDimensions) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'alt',
       'title',
       'description',
@@ -531,17 +539,18 @@ class ItemView extends GalleryComponent {
           failed: this.state.failed,
           loaded: this.state.loaded,
         }}
-        actions={_.merge({}, this.props.actions, {
+        actions={{
+          ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
           setItemError: this.setItemError,
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
-        })}
+        }}
       />
     );
   }
   getVideoItemPlaceholder(imageDimensions, itemHover) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'alt',
       'title',
       'description',
@@ -576,7 +585,7 @@ class ItemView extends GalleryComponent {
   }
 
   getTextItem(imageDimensions) {
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'id',
       'styleParams',
       'style',
@@ -647,20 +656,16 @@ class ItemView extends GalleryComponent {
       itemInner = (
         <div>
           {itemInner}
-          {this.props.currentIdx === this.props.idx ? (
-            <div
-              className="gallery-item-info gallery-item-bottom-info"
-              data-hook="gallery-item-info-buttons"
-              style={style}
-            >
-              <div>
-                {social}
-                {itemTexts}
-              </div>
+          <div
+            className="gallery-item-info gallery-item-bottom-info"
+            data-hook="gallery-item-info-buttons"
+            style={style}
+          >
+            <div>
+              {social}
+              {itemTexts}
             </div>
-          ) : (
-            false
-          )}
+          </div>
         </div>
       );
     }
@@ -719,17 +724,14 @@ class ItemView extends GalleryComponent {
             style={getInnerInfoStyle(styleParams)}
             className={elementName}
             onMouseOver={() => {
-              utils.isMobile()
-                ? _.noop()
-                : this.props.actions.eventsListener(
-                    EVENTS.HOVER_SET,
-                    this.props.idx,
-                  );
+              !utils.isMobile() && this.props.actions.eventsListener(
+                EVENTS.HOVER_SET,
+                this.props.idx,
+              );
             }}
+            aria-hidden={true}
             onMouseOut={() => {
-              utils.isMobile()
-                ? _.noop()
-                : this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+              !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
           >
             {itemTexts}
@@ -742,7 +744,7 @@ class ItemView extends GalleryComponent {
 
   simulateHover() {
     return (
-      this.props.currentHover === this.props.idx ||
+      this.props.actions.isCurrentHover(this.props.idx) ||
       this.props.styleParams.alwaysShowHover === true ||
       (isEditMode() && this.props.styleParams.previewHover === true)
     );
@@ -756,36 +758,17 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { styleParams, style, transform, offset } = this.props;
+    const { styleParams } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
-      right: 'auto',
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
 
-    if (utils.isSSR()) {
-      return { ...itemStyles, ...transform, ...containerStyleByStyleParams }; //in SSR, item styles arrive from css. htydrate phase should change these
-    };
-
-    const positionStyles = {
-      top: offset.top,
-      left: offset.left,
-      width: style.width,
-      height: style.height + (styleParams.externalInfoHeight || 0),
-    };
-
-    const styles = {
-      ...positionStyles,
-      ...itemStyles,
-      ...transform,
-      ...containerStyleByStyleParams,
-    };
-
-    return styles;
+    return { ...itemStyles, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {
@@ -803,32 +786,35 @@ class ItemView extends GalleryComponent {
     styles.height = height + 'px';
     styles.margin = -styleParams.itemBorderWidth + 'px';
 
-    return {
+    const imageDimensions = this.getImageDimensions();
+
+    const itemWrapperStyles = {
       ...styles,
-      ...this.getImageDimensions(),
+      ...imageDimensions,
     };
+
+    return itemWrapperStyles;
+
   }
 
   getItemAriaLabel() {
-    const { type, title } = this.props;
-    let typeName;
+    const { type, alt, styleParams } = this.props;
+    let label;
     switch (type) {
       case 'dummy':
-        typeName = '';
+        label = '';
         break;
       case 'text':
-        typeName = 'Text Box';
+        label = 'Text item';
         break;
       case 'video':
-        typeName = 'Video';
+        label = alt || 'Untitled video';
         break;
       default:
-        typeName = 'Graphic';
+        label = alt || 'Untitled image';
         break;
     }
-    const label =
-      typeName + ', ' + title + (utils.isStoreGallery() ? ', Buy Now' : '');
-    return label;
+    return label + (styleParams.isStoreGallery ? ', Buy Now' : '');
   }
 
   getItemContainerClass() {
@@ -836,7 +822,9 @@ class ItemView extends GalleryComponent {
     const isNOTslideshow = !styleParams.isSlideshow;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
-    const className = classNames('gallery-item-container', 'visible', {
+    const classNames = {
+      'gallery-item-container': true, 
+      'visible': true,
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',
       'simulate-hover': this.simulateHover(),
@@ -875,8 +863,13 @@ class ItemView extends GalleryComponent {
         imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
-    });
-    return className;
+    };
+    const strClass = Object.entries(classNames)
+      .map(([classname, isNeeded]) => isNeeded ? classname : false)
+      .filter(Boolean)
+      .join(' ');
+
+    return strClass;
   }
 
   getItemWrapperClass() {
@@ -979,6 +972,18 @@ class ItemView extends GalleryComponent {
     }
   }
 
+  getItemAriaRole() {
+    switch (this.props.styleParams.itemClick) {
+      case 'expand':
+      case 'fullscreen':
+        return 'button';
+      case 'link':
+        return 'link';
+      default:
+        return ''
+    }
+  }
+
   composeItem() {
     const { photoId, id, hash, idx } = this.props;
     const { directLink } = this.props;
@@ -1011,11 +1016,12 @@ class ItemView extends GalleryComponent {
           onClick={this.onItemClick}
           onKeyDown={this.onKeyPress}
           tabIndex={this.getItemContainerTabIndex()}
+          aria-label={this.getItemAriaLabel()}
           data-hash={hash}
           data-id={photoId}
           data-idx={idx}
-          aria-label={this.getItemAriaLabel()}
-          role="link" //left for accessibility
+          //aria-label={this.getItemAriaLabel()}
+          role={this.getItemAriaRole()}
           data-hook="item-container"
           key={'item-container-' + id}
           style={this.getItemContainerStyles()}

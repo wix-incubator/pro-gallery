@@ -2,28 +2,37 @@ import React, {useEffect, useState} from 'react';
 import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testItems} from './images';
+import {testItems, testImages, testVideos} from './images';
 import {mixAndSlice} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
-
+import {setStyleParamsInUrl} from '../../constants/styleParams'
 // import { ProFullscreen } from '@wix/pro-fullscreen-renderer';
 // import '@wix/pro-fullscreen-renderer/dist/statics/main.css';
 // import '@wix/pro-fullscreen-renderer/dist/src/assets/styles/fullscreen.global.scss';
-
-import { ProGallery } from 'pro-gallery';
-import GALLERY_EVENTS from 'pro-gallery/dist/src/utils/constants/events';
+       
+import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery';
+import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
-const initialItems = mixAndSlice(testItems, ITEMS_BATCH_SIZE);
+
+const initialItems = {
+  mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
+  videos: mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
+  images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
+};
+
 var galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, isFullWidth, gallerySettings} = useGalleryContext();
   const [showSide, setShowSide] = useState(true);
-  const [fullscreenIdx, setFullscreenIdx] = useState(-1);
+  // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
+  const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {}; 
+
+  setStyleParamsInUrl(styleParams);
 
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
@@ -53,10 +62,10 @@ export function App() {
         setGalleryReady();
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS: 
-        setItems(getItems().concat(mixAndSlice(testItems, ITEMS_BATCH_SIZE)));
+        addItems();
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED: 
-        setFullscreenIdx(eventData.idx);
+        // setFullscreenIdx(eventData.idx);
         break;
       default: 
         // console.log({eventName, eventData});
@@ -66,11 +75,34 @@ export function App() {
 
   const container = {
     height: window.innerHeight,
-    width: window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0)
+    width: isFullWidth ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0)
+  }
+
+  const addItems = () => {
+    const items = getItems();
+    if (!numberOfItems && items.length < numberOfItems) { //zero items means infinite
+      setItems(items.concat(createItems()));
+    }
+
+  }
+  const createItems = () => {
+    return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : testItems), numberOfItems || ITEMS_BATCH_SIZE);
   }
 
   const getItems = () => {
-    return items || initialItems;
+    
+    // return initialItems.mixed.slice(0, 3);
+
+    if (items && items.length > 0) {
+      return items;
+    }
+    
+    const theItems = items || initialItems[mediaType];
+    if (numberOfItems > 0) {
+      return theItems.slice(0, numberOfItems);
+    } else {
+      return theItems;
+    }
   }
 
   return (
@@ -84,17 +116,18 @@ export function App() {
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ProGallery
+          key={`pro-gallery-${isFullWidth}-${getItems()[0].itemId}`}
           scrollingElement={window}
           container={container}
           items={getItems()}
           styles={styleParams}
           eventsListener={eventListener}
-          totalItemsCount={Infinity}
+          totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}
         />
       </section>
-      <section className={['pro-fullscreen-wrapper', s.fullscreen].join(' ')} style={{...container, opacity: (fullscreenIdx >= 0 ? 1 : 0), pointerEvents: (fullscreenIdx >= 0 ? 'initial' : 'none')}}>
-      {/* fullscreenIdx >= 0 && (
+      {/* <section className={['pro-fullscreen-wrapper', s.fullscreen].join(' ')} style={{...container, opacity: (fullscreenIdx >= 0 ? 1 : 0), pointerEvents: (fullscreenIdx >= 0 ? 'initial' : 'none')}}>
+      fullscreenIdx >= 0 && (
           <ProFullscreen
             items={images}
             initialIdx={fullscreenIdx}
@@ -108,8 +141,8 @@ export function App() {
             deviceType={'desktop'}
             styles={styleParams}
           />
-        ) */}
-        </section>
+        )
+        </section> */}
     </main>
   );
 }

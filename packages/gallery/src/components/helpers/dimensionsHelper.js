@@ -1,5 +1,5 @@
-import utils from '../../utils';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils';
+import window from '../../common/window/windowWrapper';
 
 class DimensionsHelper {
   constructor() {
@@ -20,10 +20,7 @@ class DimensionsHelper {
     this.dumpCache();
     this.domId = domId || this.domId;
     this.styles = styles || this.styles;
-    if (container) {
-      container = this.fixContainerIfNeeded(container);
-      this.container = container || this.container;
-    }
+    this.container = container || this.container;
   }
 
   getDimensionFix() {
@@ -38,87 +35,9 @@ class DimensionsHelper {
     return this.getOrPutInCache('isFullWidth', () => {
       //if the container width is not a number, it is fullwidth (e.g.: "", "100%", "calc(100% + -160px)")
       return (
-        container &&
+        !!container &&
         String(parseInt(container.width)) !== String(container.width)
       );
-    });
-  }
-
-  fixContainerIfNeeded(container) {
-    const isFullWidth = this.isFullWidth(container);
-    if (isFullWidth) {
-      const _container = { ...container };
-      const calcWidth = this.getBoundingRect().width;
-      _container.width = calcWidth;
-      return _container;
-    } else {
-      return container;
-    }
-  }
-
-  calcBoundingRect() {
-    if (utils.isVerbose()) {
-      console.count('calcBoundingRect');
-    }
-    try {
-      return window.document
-        .getElementById(`pro-gallery-${this.domId}`)
-        .getBoundingClientRect();
-    } catch (e) {
-      return false;
-    }
-  }
-
-  getBoundingRect() {
-    return this.getOrPutInCache('boundingRect', () => {
-      return (
-        this.calcBoundingRect() || {
-          x: 0,
-          y: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }
-      );
-    });
-  }
-  calcBodyBoundingRect() {
-    if (utils.isVerbose()) {
-      console.count('calcBodyBoundingRect');
-    }
-    try {
-      return window.document.body.getBoundingClientRect();
-    } catch (e) {
-      return false;
-    }
-  }
-
-  getBodyBoundingRect() {
-    return this.getOrPutInCache('bodyBoundingRect', () => {
-      return (
-        this.calcBodyBoundingRect() || {
-          x: 0,
-          y: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }
-      );
-    });
-  }
-  calcScrollBase() {
-    return this.getOrPutInCache('scrollBase', () => {
-      let { scrollBase } = this.container;
-      try {
-        if (!(scrollBase >= 0)) {
-          scrollBase = 0;
-        }
-        const offset = this.getBoundingRect().y - this.getBodyBoundingRect().y; //clientRect are relative to the viewport, thus affected by scroll and need to be normalized to the body
-        if (offset >= 0) {
-          scrollBase += offset;
-        }
-      } catch (e) {
-        //
-      }
-      return scrollBase;
     });
   }
 
@@ -128,11 +47,9 @@ class DimensionsHelper {
       const res = {
         galleryWidth: this.getGalleryWidth(),
         galleryHeight: this.getGalleryHeight(),
-        scrollBase: this.calcScrollBase(),
+        scrollBase: container.scrollBase,
         height: container.height,
         width: container.width,
-        documentHeight: window.document.body.scrollHeight,
-        windowWidth: window.innerWidth,
       };
       if (this.styles.hasThumbnails) {
         const fixedThumbnailSize =

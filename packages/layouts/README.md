@@ -33,7 +33,6 @@ Rendering HTML from `layout` can be done in several ways. See [examples](#exampl
 - [createLayout](#createlayout)
 - [Layouter](#layouter)
   - [constructor](#constructor)
-  - [calcVisibilities](#calcvisibilities)
   - [findNeighborItem](#findneighboritem)
   - [lastVisibleItemIdx](#lastvisibleitemidx)
   - [createLayout](#createlayout-1)

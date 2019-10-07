@@ -1,13 +1,19 @@
 import React from 'react';
-import _ from 'lodash';
-import utils from '../../../utils/index.js';
+import utils from '../../../common/utils/index.js';
 import { GalleryComponent } from '../../galleryComponent';
-import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
-import EVENTS from '../../../utils/constants/events';
+import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
+import EVENTS from '../../../common/constants/events';
+import SOCIAL_NETWORKS from '../../../common/constants/socialNetworks';
+import FacebookIcon from '../../svgs/components/facebook';
+import PinterestIcon from '../../svgs/components/pinterest';
+import TwitterIcon from '../../svgs/components/twitter';
+import EmailIcon from '../../svgs/components/email';
+import TumblrIcon from '../../svgs/components/tumblr';
 
 export default class Share extends GalleryComponent {
   constructor(props) {
     super(props);
+
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.getShareArr = this.getShareArr.bind(this);
@@ -132,15 +138,32 @@ export default class Share extends GalleryComponent {
     }
   }
 
+  getShareSvg(network) {
+    switch (network.toLowerCase()) {
+      case SOCIAL_NETWORKS.FACEBOOK:
+        return FacebookIcon;
+      case SOCIAL_NETWORKS.TWITTER:
+        return PinterestIcon;
+      case SOCIAL_NETWORKS.PINTEREST:
+        return TwitterIcon;
+      case SOCIAL_NETWORKS.EMAIL:
+        return EmailIcon;
+      default:
+      case SOCIAL_NETWORKS.TUMBLR:
+        return TumblrIcon;
+    }
+  }
+
   getShareItem(network, idx) {
     const { allProps } = this.props;
     const shareIconsNumber = this.shareArr.length;
+    const ShareIcon = this.getShareSvg(network);
+    
     return (
       <button
         className={
           `block-fullscreen has-custom-focus network-${idx +
-            1} progallery-svg-font-icons-` +
-          network +
+            1}` +
           (isSiteMode() || isSEOMode() ? '' : ' inactive ')
         }
         style={{
@@ -170,13 +193,10 @@ export default class Share extends GalleryComponent {
         data-hook={network + '-share-button'}
         ref={button => (this.buttons[idx] = button)}
         title={`Share on ${network}`}
-        aria-label={`Share on ${network}, ${idx + 1} of ${
-          this.shareArr.length
-        }`}
         aria-live="assertive"
         tabIndex={-1}
         key={network + '-share-icon'}
-      />
+      ><ShareIcon size="18"/></button>
     );
   }
 
@@ -225,7 +245,7 @@ export default class Share extends GalleryComponent {
           role="button"
           key={'item-social-share-container-' + id}
         >
-          {_.map(this.shareArr, (network, i) => {
+          {this.shareArr.map((network, i) => {
             return this.getShareItem(network, i);
           })}
         </div>

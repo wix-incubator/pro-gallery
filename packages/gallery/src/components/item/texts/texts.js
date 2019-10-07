@@ -3,17 +3,16 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import PLACEMENTS from '../../../utils/constants/placements';
-import utils from '../../../utils';
-import designConsts from '../../../constants/designConsts.js';
+import PLACEMENTS from '../../../common/constants/placements';
+import utils from '../../../common/utils';
+import designConsts from '../../../common/constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';
-import _ from 'lodash';
 import { GalleryComponent } from '../../galleryComponent';
 
 export default class Texts extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.debouncedTryFixLineHeight = _.debounce(this.tryFixLineHeight, 500);
+    this.debouncedTryFixLineHeight = utils.debounce(this.tryFixLineHeight.bind(this), 500).bind(this);
   }
 
   getElementClassNames() {
@@ -68,6 +67,10 @@ export default class Texts extends GalleryComponent {
 
     if (isCentered) {
       elementStyle.marginTop = style.height / 15;
+    }
+
+    if (styleParams.isRTL) {
+      elementStyle.direction = 'rtl';
     }
 
     return elementStyle;

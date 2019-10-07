@@ -3,8 +3,8 @@ import { testVideos } from '../../../../__testsDrivers__/images-mock';
 import sinon from 'sinon';
 import VideoItem from './videoItem';
 import { expect } from 'chai';
-import utils from '../../../utils';
-import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
+import utils from '../../../common/utils';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 
 describe('Video Item ', () => {
   let driver;

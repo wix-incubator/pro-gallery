@@ -2,8 +2,8 @@ import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
 } from './scrollHelper';
-import EVENTS from '../../utils/constants/events';
-import window from '../../utils/window/windowWrapper';
+import EVENTS from '../../common/constants/events';
+import window from '../../common/window/windowWrapper';
 
 const VIDEO_EVENTS = {
   SCROLL: 'SCROLL',

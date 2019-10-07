@@ -76,16 +76,29 @@
   }
 
   .auto-slideshow-button {
+    margin-top: 19px; //24 $padding(consts.scss) - 5px padding top
+    padding: 5px;
+    height: 28px; //18px icon + 5px padding top + 5px padding bottom
+    width: 20px; //10px icon + 5px padding top + 5px padding bottom
     left: auto;
     z-index: 1;
     position: absolute;
-    height: 100px;
     display: flex;
     text-align: center;
     cursor: pointer;
     opacity: 0.9;
+  }
+
+  .auto-slideshow-counter {
+    margin-top: 24px; //24 $padding(consts.scss)
+    left: auto;
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    text-align: center;
+    opacity: 0.9;
     font-size: 15px;
-    align-items: top;
+    line-height: normal;
   }
 
   .nav-arrows-container {
@@ -719,12 +732,12 @@
               border-radius: 50px;
               opacity: 0.7;
 
-              &.progallery-svg-font-icons-play-triangle {
+              &.play-triangle {
                 opacity: 1;
               }
 
-              &.progallery-svg-font-icons-play-triangle,
-              &.progallery-svg-font-icons-play-background {
+              &.play-triangle,
+              &.play-background {
                 //padding-left: 6px;
                 //width: 54px;
                 //line-height: 58px;
@@ -899,6 +912,8 @@
                 margin: 0 6px;
                 float: left;
                 text-decoration: none;
+                background: transparent;
+                border: none;
 
                 &:hover {
                   opacity: 0.7;
@@ -1167,13 +1182,13 @@
               }
 
               &.gallery-item-social-share {
-                bottom: 31px;
+                bottom: 26px;
                 left: auto;
                 right: 30px;
               }
 
               &.gallery-item-social-download {
-                bottom: 31px;
+                bottom: 25px;
                 left: auto;
                 right: 68px;
 
@@ -1264,6 +1279,8 @@
               width: 22px;
               text-align: center;
               transform: translateY(-50%);
+              background: transparent;
+              border: none;
 
               &:hover {
                 opacity: 0.7;
@@ -1379,10 +1396,11 @@
             scroll-snap-type: x mandatory;
           }
 
-          > .gallery-horizontal-scroll-inner {
-            position: relative;
-          }
         }
+      }
+      
+      .gallery-horizontal-scroll-inner {
+        position: relative;
       }
     }
 
@@ -1494,6 +1512,11 @@
         height: 0 !important;
       }
     }
+
+    .rtl {
+      direction: rtl;
+    }
+    
   }
 
   .screen-logs {

@@ -7,11 +7,14 @@ try {
   GalleryContext = null;
 }
 
-const GALLERY_CONTEXT_FIELDS = ['watermark'];
+const GALLERY_CONTEXT_FIELDS = ['isFullWidth'];
 
 const extractContextFields = fields =>
   GALLERY_CONTEXT_FIELDS.reduce(
-    (obj, field) => (obj[field] = fields[field]),
+    (obj, field) => {
+      obj[field] = fields[field];
+      return obj;
+    },
     {},
   );
 
@@ -19,19 +22,6 @@ class GalleryProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = extractContextFields(props);
-    // this.value = {
-    //   get: GALLERY_CONTEXT_FIELDS.reduce(
-    //     (obj, field) => ({ ...obj, [field]: () => this.state[field] }),
-    //     {},
-    //   ),
-    //   set: GALLERY_CONTEXT_FIELDS.reduce(
-    //     (obj, field) => ({
-    //       ...obj,
-    //       [field]: data => this.setState({ [field]: data }),
-    //     }),
-    //     {},
-    //   ),
-    // };
   }
 
   render() {

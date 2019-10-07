@@ -8,7 +8,7 @@ import sinon from 'sinon';
 import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
 import { testImages } from '../../../__testsDrivers__/images-mock';
 import ItemView from './itemView';
-import EVENTS from '../../utils/constants/events';
+import EVENTS from '../../common/constants/events';
 
 describe('Item View', () => {
   let driver;

@@ -1,15 +1,15 @@
-import _ from 'lodash';
-import utils from '../../utils';
-import PLACEMENTS from '../../utils/constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../utils/constants/infoBehaviourOnHover';
-import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils';
+import PLACEMENTS from '../../common/constants/placements';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
+import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import { getFixedLayouts } from './fixedLayoutsHelper';
-import designConsts from '../../constants/designConsts';
-import INFO_TYPE from '../../utils/constants/infoType';
-import CALCULATION_OPTIONS from '../../utils/constants/calculationOptions';
+import designConsts from '../../common/constants/designConsts';
+import INFO_TYPE from '../../common/constants/infoType';
+import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
+import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -80,7 +80,7 @@ function getStyleBySeed(seed) {
         ? numFromSeed(1, 100, 'collageDensity')
         : numFromSeed(5, 10, 'collageDensity')) / 100,
     groupTypes: ['1'].concat(
-      _.filter('2h,2v,3t,3b,3l,3r,3h,3v'.split(','), (type, i) =>
+      ('2h,2v,3t,3b,3l,3r,3h,3v').split(',').filter((type, i) =>
         boolFromSeed('groupTypes' + i),
       ),
     ),
@@ -116,7 +116,7 @@ function getStyleBySeed(seed) {
     style.isVertical = false;
   }
   style.galleryType = style.isVertical ? 'Columns' : 'Strips';
-  style.groupSize = parseInt(_.last(style.groupTypes));
+  style.groupSize = parseInt(style.groupTypes.slice(-1)[0]);
   style.groupTypes = style.groupTypes.join(',');
   style.minItemSize = style.gallerySize / style.groupSize / 2;
 
@@ -263,7 +263,6 @@ function getStyleByLayout(styles) {
       isColumns: false,
       isSlideshow: false,
       cropOnlyFill: false,
-      slideshowLoop: false,
     }),
     masonry: () => ({
       showArrows: false,
@@ -281,13 +280,11 @@ function getStyleByLayout(styles) {
       isSlideshow: false,
       cropOnlyFill: false,
       oneRow: false,
-      slideshowLoop: false,
     }),
     grid: () => ({
       showArrows: false,
       cubeImages: true,
       smartCrop: false,
-      imageResize: false,
       isVertical: true,
       galleryType: 'Columns',
       groupSize: 1,
@@ -303,7 +300,6 @@ function getStyleByLayout(styles) {
       isMasonry: false,
       isSlideshow: false,
       minItemSize: 50,
-      slideshowLoop: false,
     }),
     thumbnails: () => ({
       showArrows: true,
@@ -317,7 +313,8 @@ function getStyleByLayout(styles) {
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: true,
-      enableScroll: false,
+      enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: false,
       isMasonry: false,
@@ -340,6 +337,7 @@ function getStyleByLayout(styles) {
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: true,
       isColumns: false,
@@ -361,6 +359,7 @@ function getStyleByLayout(styles) {
       oneRow: true,
       hasThumbnails: false,
       enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isColumns: false,
       isMasonry: false,
@@ -426,7 +425,8 @@ function getStyleByLayout(styles) {
       groupTypes: '1',
       oneRow: true,
       hasThumbnails: false,
-      enableScroll: false,
+      enableScroll: true,
+      scrollSnap: true,
       isGrid: false,
       isSlider: false,
       isColumns: false,
@@ -436,7 +436,6 @@ function getStyleByLayout(styles) {
       floatingImages: 0,
       galleryMargin: 0,
       imageMargin: 0,
-      slideshowLoop: false,
     }),
     empty: () => ({
       gallerySize: Math.round(gallerySize * 9 + 100),
@@ -465,37 +464,26 @@ function getStyleByLayout(styles) {
   ];
 
   let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
-  if (_.isUndefined(layoutName)) {
-    if (utils.isStoreGallery()) {
-      galleryLayout = 2;
-      layoutName = 'grid';
-    } else {
-      galleryLayout = 0;
-      layoutName = 'collage';
-    }
-  }
-
-  const specialMobileStoreConfig = {};
-  if (utils.isStoreGallery() && utils.isMobile()) {
-    galleryLayout = 2;
-    layoutName = 'grid';
-    specialMobileStoreConfig.forceMobileCustomButton = true;
+  if (utils.isUndefined(layoutName)) {
+    galleryLayout = 0;
+    layoutName = 'collage';
   }
 
   if (utils.isVerbose()) {
     console.log('chosen layout is', layoutName);
   }
 
-  return _.merge(layouts[layoutName](), specialMobileStoreConfig, {
-    galleryLayout,
-  });
+  return {
+    ...layouts[layoutName](),
+    galleryLayout
+  };
 }
 
 function addLayoutStyles(styles) {
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
-  if (!_.isUndefined(galleryLayoutV1) && _.isUndefined(galleryLayoutV2)) {
+  if (!utils.isUndefined(galleryLayoutV1) && utils.isUndefined(galleryLayoutV2)) {
     //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
     styles = Object.assign(styles, getStyleByGalleryType(styles)); //legacy layouts
@@ -504,7 +492,7 @@ function addLayoutStyles(styles) {
       'galleryType',
       'galleryThumbnailsAlignment',
       'magicLayoutSeed',
-      'imageResize',
+      'cubeType',
       'isVertical',
       'scrollDirection',
       'enableInfiniteScroll',
@@ -522,7 +510,7 @@ function addLayoutStyles(styles) {
       'galleryLayout',
       'galleryThumbnailsAlignment',
       'magicLayoutSeed',
-      'imageResize',
+      'cubeType',
       'isVertical',
       'scrollDirection',
       'enableInfiniteScroll',
@@ -543,10 +531,11 @@ function addLayoutStyles(styles) {
 function processLayouts(styles) {
   const processedStyles = styles;
   processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
+  processedStyles.oneRow = processedStyles.oneRow || processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {
-      if (!_.isUndefined(processedStyles.itemFontSlideshow)) {
+      if (!utils.isUndefined(processedStyles.itemFontSlideshow)) {
         processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
           /^font\s*:\s*/,
           '',
@@ -565,7 +554,7 @@ function processLayouts(styles) {
           processedStyles.textDecorationTitle = 'none';
         }
       }
-      if (!_.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
+      if (!utils.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
         processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
           /^font\s*:\s*/,
           '',
@@ -589,7 +578,7 @@ function processLayouts(styles) {
         }
       }
     } else {
-      if (!_.isUndefined(processedStyles.itemFont)) {
+      if (!utils.isUndefined(processedStyles.itemFont)) {
         processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
           /^font\s*:\s*/,
           '',
@@ -608,7 +597,7 @@ function processLayouts(styles) {
           processedStyles.textDecorationTitle = 'none';
         }
       }
-      if (!_.isUndefined(processedStyles.itemDescriptionFont)) {
+      if (!utils.isUndefined(processedStyles.itemDescriptionFont)) {
         processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
           /^font\s*:\s*/,
           '',
@@ -724,14 +713,14 @@ function processLayouts(styles) {
     processedStyles.cubeRatio = processedStyles.gallerySliderImageRatio;
   } else if (
     processedStyles.isGrid &&
-    !_.isUndefined(processedStyles.galleryImageRatioFromWix)
+    !utils.isUndefined(processedStyles.galleryImageRatioFromWix)
   ) {
     processedStyles.cubeRatio = processedStyles.galleryImageRatioFromWix;
   }
   //Used to look like that before the split :
   // if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
-  // } else if (stateStyles.isSlider && _.isUndefined(stateStyles.cubeRatio)) {
+  // } else if (stateStyles.isSlider && utils.isUndefined(stateStyles.cubeRatio)) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
   // } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
@@ -760,7 +749,7 @@ function processLayouts(styles) {
 
   //TODO this needs to split, need to leave the wixStyles assign in the statics section
   if (
-    !_.isUndefined(processedStyles.numberOfImagesPerCol) &&
+    !utils.isUndefined(processedStyles.numberOfImagesPerCol) &&
     processedStyles.isGrid &&
     processedStyles.oneRow
   ) {

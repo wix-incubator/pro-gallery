@@ -4,11 +4,10 @@ import { testImages } from '../images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew.js'; //import GalleryContainer before the connect (without redux)
 import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
-import _ from 'lodash';
-import PLACEMENTS from '../../src/utils/constants/placements';
+import PLACEMENTS from '../../src/common/constants/placements';
 import React from 'react';
-import utils from '../../src/utils';
-import window from '../../src/utils/window/windowWrapper';
+import utils from '../../src/common/utils';
+import window from '../../src/common/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
@@ -40,6 +39,7 @@ class galleryDriver {
       gotStyleParams: true,
       selectedLayout: 0,
       isVertical: false,
+      isRTL: false,
       gallerySize: 320,
       minItemSize: 120,
       groupSize: 3,
@@ -95,16 +95,17 @@ class galleryDriver {
       isInfinite: true,
     };
 
-    this.items = _.cloneDeep(testImages);
+    this.items = [...testImages];
 
     this.actions = {
-      toggleLoadMoreItems: _.noop,
-      eventsListener: _.noop,
-      onItemClick: _.noop,
-      pauseAllVideos: _.noop,
-      setWixHeight: _.noop,
-      scrollToItem: _.noop,
-      toggleShare: _.noop,
+      toggleLoadMoreItems: (() => {}),
+      eventsListener: (() => {}),
+      onItemClick: (() => {}),
+      pauseAllVideos: (() => {}),
+      setWixHeight: (() => {}),
+      scrollToItem: (() => new Promise(res => res())),
+      toggleShare: (() => {}),
+      isCurrentHover: (() => {}),
     };
 
     this.layoutParams = {
@@ -150,7 +151,7 @@ class galleryDriver {
     };
     res.galleryContainer = props => {
       const defaultProps = this.props.galleryContainer();
-      props = _.merge(defaultProps, props || {});
+      props = Object.assign(defaultProps, props || {});
       this.wrapper = mount(<GalleryContainer actions={{}} {...props} />);
       return this;
     };
@@ -260,7 +261,7 @@ class galleryDriver {
 
       groupView: () => {
         const galleryViewProps = this.props.galleryView();
-        return _.merge(galleryViewProps, {
+        return Object.assign(galleryViewProps, {
           rendered: true,
           visible: true,
           items: galleryViewProps.items.map(
@@ -273,7 +274,7 @@ class galleryDriver {
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
 
         const galleryItem = new GalleryItem({ dto: itemDto });
-        return _.merge(galleryItem.renderProps(newGalleryConfig), {
+        return Object.assign(galleryItem.renderProps(newGalleryConfig), {
           scrollingElement: {
             vertical: () => window,
             horizontal: () => window,
@@ -281,6 +282,7 @@ class galleryDriver {
           config: newGalleryConfig,
           visible: true,
           actions: {
+            ...this.actions,
             eventsListener: () => {},
           },
           isLoved: false,
@@ -291,11 +293,11 @@ class galleryDriver {
       textView: (itemDto, galleryConfig) => {
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
         const galleryItem = new GalleryItem({ dto: itemDto });
-        const itemViewPropsObj = _.merge(
+        const itemViewPropsObj = Object.assign(
           galleryItem.renderProps(newGalleryConfig),
           { config: newGalleryConfig, visible: true },
         );
-        return _.merge(itemViewPropsObj, {
+        return Object.assign(itemViewPropsObj, {
           actions: {
             handleItemMouseDown: () => {},
             handleItemMouseUp: () => {},

@@ -5,21 +5,21 @@ import { addLayoutStyles } from '../helpers/layoutHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import { scrollToItemImp } from '../helpers/scrollHelper';
-import window from '../../utils/window/windowWrapper';
+import window from '../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import _ from 'lodash';
-import utils from '../../utils';
-import { isEditMode, isSEOMode } from '../../utils/window/viewModeWrapper';
-import EVENTS from '../../utils/constants/events';
+import utils from '../../common/utils';
+import { isEditMode, isSEOMode } from '../../common/window/viewModeWrapper';
+import EVENTS from '../../common/constants/events';
 import {
   extractContextFields,
   GalleryProvider,
 } from '../../context/GalleryContext';
 import VideoScrollHelper from '../helpers/videoScrollHelper.js';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
+import checkNewGalleryProps from './helpers/isNew';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -36,13 +36,13 @@ export class GalleryContainer extends React.Component {
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
+    this.isCurrentHover = this.isCurrentHover.bind(this);
 
     const initialState = {
       pgScroll: 0,
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      currentHover: -1,
       gotFirstScrollEvent: false,
       playingVideoIdx: -1,
       nextVideoIdx: -1,
@@ -88,9 +88,8 @@ export class GalleryContainer extends React.Component {
           this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
         }
       } catch (e) {
-        //todo - report to sentry
-        this.initialGalleryState = {};
         //hydrate phase did not happen - do it all over again
+        this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
           if (Object.keys(galleryState).length > 0) {
@@ -175,7 +174,7 @@ export class GalleryContainer extends React.Component {
       }
     } else {
       //this is a hack, because in fullwidth, new props arrive without any changes
-      this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
+      // this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
     }
   }
 
@@ -246,7 +245,7 @@ export class GalleryContainer extends React.Component {
       }
     };
 
-    const throttledReCreateGallery = _.throttle(() => {
+    const debouncedReCreateGallery = utils.debounce(() => {
       const { items, styles, container, watermarkData } = this.props;
       const params = {
         items,
@@ -262,7 +261,7 @@ export class GalleryContainer extends React.Component {
           this.handleNewGalleryStructure();
         });
       }
-    }, 2500);
+    }, 500);
 
     itemsWithoutDimensions.forEach((item, idx) => {
       item.isPreloaded = true;
@@ -288,7 +287,7 @@ export class GalleryContainer extends React.Component {
 
             //rebuild the gallery after every dimension update
             // if (Object.keys(this.itemsDimensions).length > 0) {
-            throttledReCreateGallery();
+            debouncedReCreateGallery();
             // }
           }
         } catch (_e) {
@@ -313,7 +312,7 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick,
       initialGalleryHeight,
     } = this.state;
-    const partialStyleParams = _.pick(this.state.styles, [
+    const partialStyleParams = utils.pick(this.state.styles, [
       'isSlideshow',
       'slideshowInfoSize',
       'galleryThumbnailsAlignment',
@@ -355,200 +354,8 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  isNew({ items, styles, container, watermarkData, itemsDimensions }, state) {
-    const reason = {
-      items: '',
-      itemsMetadata: '',
-      itemsAdded: '',
-      styles: '',
-      container: '',
-    };
-
-    const containerHadChanged = _container => {
-      if (!state.styles || !state.container) {
-        reason.container = 'no old container or styles. ';
-        return true; //no old container or styles (style may change container)
-      }
-      if (!_container) {
-        reason.container = 'no new container.';
-        return false; // no new continainer
-      }
-      const containerHasChanged = {
-        height:
-          !state.styles.oneRow && state.styles.enableInfiniteScroll
-            ? false
-            : !!_container.height &&
-              _container.height !== this.props.container.height,
-        width:
-          !state.container ||
-          (dimensionsHelper.isFullWidth(_container) &&
-            window.innerWidth !== state.container.windowWidth) ||
-          (!!_container.width &&
-            _container.width !== this.props.container.width),
-        scrollBase:
-          !!_container.scrollBase &&
-          _container.scrollBase !== this.props.container.scrollBase,
-        documentHeight:
-          !state.container ||
-          window.document.body.scrollHeight !== state.container.documentHeight,
-      };
-      return Object.keys(containerHasChanged).reduce((is, key) => {
-        if (containerHasChanged[key]) {
-          reason.container += `container.${key} has changed. `;
-        }
-        return is || containerHasChanged[key];
-      }, false);
-    };
-
-    const stylesHaveChanged = _styles => {
-      if (!_styles) {
-        reason.styles = 'no new styles.';
-        return false; //no new styles - use old styles
-      }
-      if (!state.styles) {
-        reason.styles = 'no old styles.';
-        return true; //no old styles
-      }
-      try {
-        const wasChanged =
-          JSON.stringify(_styles) !== JSON.stringify(this.props.styles);
-        if (wasChanged) {
-          reason.styles = 'styles were changed.';
-        }
-        return wasChanged;
-      } catch (e) {
-        console.error('Could not compare styles', e);
-        return false;
-      }
-    };
-
-    const itemsWereAdded = _items => {
-      const existingItems = this.items;
-      if (_items === this.items) {
-        reason.itemsAdded = 'items are the same object.';
-        return false; //it is the exact same object
-      }
-      if (!_items) {
-        reason.itemsAdded = 'new items do not exist.';
-        return false; // new items do not exist (use old items)
-      }
-      if (!state.items || !existingItems) {
-        reason.itemsAdded = 'old items do not exist.';
-        return false; // old items do not exist (it is not items addition)
-      }
-      if (existingItems.length >= _items.length) {
-        reason.itemsAdded = 'more old items than new items.';
-        return false; // more old items than new items
-      }
-      const idsNotChanged = existingItems.reduce((is, _item, idx) => {
-        //check that all the existing items exist in the new array
-        return is && _item.id === _items[idx].itemId;
-      }, true);
-
-      if (!idsNotChanged) {
-        reason.itemsAdded = 'items ids were changed. ';
-      }
-      return idsNotChanged;
-    };
-
-    const itemsHaveChanged = newItems => {
-      const existingItems = this.items;
-      if (newItems === this.items) {
-        reason.items = 'items are the same object.';
-        return false; //it is the exact same object
-      }
-      if (!newItems) {
-        reason.items = 'new items do not exist.';
-        return false; // new items do not exist (use old items)
-      }
-      if (!state.items || !existingItems) {
-        reason.items = 'old items do not exist.';
-        return true; // old items do not exist
-      }
-      if (existingItems.length !== newItems.length) {
-        reason.items = 'more new items than old items (or vice versa).';
-        return true; // more new items than old items (or vice versa)
-      }
-      return newItems.reduce((is, newItem, idx) => {
-        //check that all the items are identical
-        const existingItem = existingItems[idx];
-        try {
-          const itemsChanged =
-            is ||
-            !newItem ||
-            !existingItem ||
-            newItem.itemId !== existingItem.itemId ||
-            newItem.mediaUrl !== existingItem.mediaUrl;
-          if (itemsChanged) {
-            reason.items = `items #${idx} id was changed.`;
-          }
-          return itemsChanged;
-        } catch (e) {
-          reason.items = 'an error occured';
-          return true;
-        }
-      }, false);
-    };
-
-    const itemsMetadataWasChanged = newItems => {
-      const existingItems = this.items;
-
-      if (!newItems) {
-        reason.itemsMetadata = 'new items do not exist.';
-        return false; // new items do not exist (use old items)
-      }
-      if (!state.items || !existingItems) {
-        reason.itemsMetadata = 'old items do not exist.';
-        return true; // old items do not exist
-      }
-
-      return newItems.reduce((is, newItem, idx) => {
-        //check that all the items are identical
-        const existingItem = existingItems[idx];
-        try {
-          const itemsChanged =
-            is ||
-            JSON.stringify(newItem.metaData) !==
-              JSON.stringify(existingItem.metaData);
-          if (itemsChanged) {
-            reason.itemsMetadata = `item #${idx} data was changed.`;
-          }
-          return itemsChanged;
-        } catch (e) {
-          reason.itemsMetadata = 'an error occured.';
-          return true;
-        }
-      }, false);
-    };
-
-    const isNew = {
-      items: itemsHaveChanged(items),
-      addedItems: itemsWereAdded(items),
-      itemsMetadata: itemsMetadataWasChanged(items),
-      styles: stylesHaveChanged(styles),
-      container: containerHadChanged(container),
-      itemsDimensions: !!itemsDimensions,
-      watermark: !!watermarkData && watermarkData !== this.props.watermarkData,
-    };
-
-    isNew.str = Object.entries(isNew)
-      .map(([key, is]) => (is ? key : ''))
-      .filter(str => !!str)
-      .join('|');
-    isNew.any = isNew.str.length > 0;
-    isNew.reason = reason;
-
-    // if (!isNew.any) {
-    //   console.count('Tried recreating gallery with no new params');
-    // } else {
-    //   console.count('Recreating gallery with new params');
-    // }
-
-    return isNew;
-  }
-
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
-    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
+    this.isFullWidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
@@ -587,27 +394,14 @@ export class GalleryContainer extends React.Component {
     this.createCssLayoutsIfNeeded(layoutParams);
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximation = false, isNew = {}) {
-    if (isApproximation) {
-      this.layoutCss = createCssLayouts({
-        isApproximation,
-        layoutParams,
-        isMobile: utils.isMobile(),
-      });
-    } else {
-      //if (this.layoutCss.length === 0 || (isNew.itemsDimensions || isNew.items || isNew.styles || isNew.container)) {
-      this.layoutCss = createCssLayouts({
-        galleryItems: this.galleryStructure.galleryItems,
-        layoutParams,
-        isMobile: utils.isMobile(),
-      });
-    } /* else {
-      this.layoutCss = this.layoutCss.concat(createCssLayouts({
-        galleryItems: this.galleryStructure.galleryItems.slice(this.layoutCss.length),
-        layoutParams,
-        isMobile: utils.isMobile(),
-      }));
-    } */
+  createCssLayoutsIfNeeded(layoutParams, isApproximation = false) {
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximation,
+      isMobile: utils.isMobile(),
+      galleryDomId: this.props.domId,
+      galleryItems: isApproximation? null : this.galleryStructure.galleryItems,
+    });
   }
 
   reCreateGalleryExpensively(
@@ -620,13 +414,13 @@ export class GalleryContainer extends React.Component {
     }
 
     const state = curState || this.state || {};
-    const isFullwidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
+    this.isFullWidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     let _styles, _container;
 
-    const isNew = this.isNew(
+    const isNew = checkNewGalleryProps(
       { items, styles, container, watermarkData, itemsDimensions },
-      state,
+      {...state, items: this.items},
     );
     const newState = {};
 
@@ -645,8 +439,14 @@ export class GalleryContainer extends React.Component {
       !isNew.addedItems
     ) {
       //if only the items metadata has changed - use the modified items (probably with the measured width and height)
-      this.items = this.items.map(item =>
-        Object.assign(item, { ...this.itemsDimensions[item.itemId] }),
+      this.items = this.items.map((item,index) =>
+      {
+        const metaData = Object.assign(
+          {},
+          items[index].metaData,
+          );
+        return Object.assign(item, {metaData}, { ...this.itemsDimensions[item.itemId] })
+      }
       );
       newState.items = this.items.map(item => item.itemId);
     } else if (isNew.items && !isNew.addedItems) {
@@ -747,7 +547,7 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      const isApproximation = utils.isSSR() && isFullwidth && !_styles.oneRow;
+      const isApproximation = this.isFullWidth && !_styles.oneRow; //FAKE SSR
       this.createCssLayoutsIfNeeded(layoutParams, isApproximation, isNew);
 
       const allowPreloading =
@@ -795,12 +595,14 @@ export class GalleryContainer extends React.Component {
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0) {
     const scrollingElement = this._scrollingElement;
     const horizontalElement = scrollingElement.horizontal();
-    scrollToItemImp({
+    return scrollToItemImp({
+      isRTL: this.state.styles.isRTL,
       oneRow: this.state.styles.oneRow,
       galleryWidth: this.state.container.galleryWidth,
       galleryHeight: this.state.container.galleryHeight,
       top: 0,
       items: this.galleryStructure.items,
+      totalWidth: this.galleryStructure.width,
       itemIdx,
       fixedScroll,
       isManual,
@@ -850,9 +652,10 @@ export class GalleryContainer extends React.Component {
 
     if (shouldUseScrollCss) {
       return cssScrollHelper.calcScrollCss({
-        galleryDomId,
         items,
+        isFullWidth: this.isFullWidth,
         styleParams,
+        galleryDomId,
         allowPreloading,
       });
     } else {
@@ -939,12 +742,17 @@ export class GalleryContainer extends React.Component {
       eventData,
     });
     if (eventName === EVENTS.HOVER_SET) {
-      this.setState({ currentHover: eventData });
+      this.currentHover = eventData;
     }
     if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData);
     }
   }
+
+  isCurrentHover(idx) {
+    return this.currentHover === idx;
+  }
+  
 
   getMoreItemsIfNeeded(scrollPos) {
     if (
@@ -960,12 +768,13 @@ export class GalleryContainer extends React.Component {
       //TODO - add support for horizontal galleries
       const { oneRow } = this.state.styles;
 
-      const [lastItem] = this.galleryStructure.galleryItems.slice(-1);
-      const gallerySize = lastItem.offset[oneRow ? 'right' : 'bottom'];
-      const screenSize = oneRow ? window.screen.width : window.screen.height;
+      const gallerySize = this.galleryStructure[oneRow ? 'width' : 'height'];
+      const screenSize = window.screen[oneRow ? 'width' : 'height'];
       const scrollEnd =
         scrollPos + screenSize + (oneRow ? 0 : this.state.container.scrollBase);
       const getItemsDistance = 3 * screenSize;
+
+      // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
 
       if (gallerySize - scrollEnd < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
@@ -997,6 +806,7 @@ export class GalleryContainer extends React.Component {
     }
     return can;
   }
+
   render() {
     if (!this.canRender()) {
       return null;
@@ -1005,7 +815,7 @@ export class GalleryContainer extends React.Component {
     const { styles } = this.state;
     const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
     if (utils.isVerbose()) {
-      console.time('PROGALLERY [COUNTS] - GalleryContainer (render)');
+      console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
         'PROGALLERY [RENDER] - GalleryContainer',
         this.state.container.scrollBase,
@@ -1016,14 +826,14 @@ export class GalleryContainer extends React.Component {
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
-      : _.noop;
+      : (() => {});
     const ssrDisableTransition =
       !!utils.isSSR() &&
       'div.pro-gallery-parent-container * { transition: none !important }';
 
     return (
       <GalleryProvider
-        {...extractContextFields({ ...this.state, ...this.props })}
+        {...extractContextFields({isFullWidth: this.isFullWidth})}
       >
         <div
           data-key="pro-gallery-inner-container"
@@ -1032,6 +842,8 @@ export class GalleryContainer extends React.Component {
           <ScrollIndicator
             galleryDomId={this.props.domId}
             oneRow={this.state.styles.oneRow}
+            isRTL={this.state.styles.isRTL}
+            totalWidth={this.galleryStructure.width}
             scrollBase={this.state.container.scrollBase}
             scrollingElement={this._scrollingElement}
             getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
@@ -1056,20 +868,21 @@ export class GalleryContainer extends React.Component {
             scroll={{}} //todo: remove after refactor is 100%
             displayShowMore={displayShowMore}
             domId={this.props.domId}
-            currentHover={this.state.currentHover}
             customHoverRenderer={this.props.customHoverRenderer}
             customInfoRenderer={this.props.customInfoRenderer}
             playingVideoIdx={this.state.playingVideoIdx}
             nextVideoIdx={this.state.nextVideoIdx}
             noFollowForSEO={this.props.noFollowForSEO}
-            actions={_.merge(this.props.actions, {
+            actions={{
+              ...this.props.actions,
               findNeighborItem,
+              isCurrentHover: this.isCurrentHover,
               toggleLoadMoreItems: this.toggleLoadMoreItems,
               eventsListener: this.eventsListener,
-              setWixHeight: _.noop,
+              setWixHeight: (() => {}),
               scrollToItem: this.scrollToItem,
               duplicateGalleryItems: this.duplicateGalleryItems,
-            })}
+            }}
             {...this.props.gallery}
           />
           {this.galleryInitialStateJson && (

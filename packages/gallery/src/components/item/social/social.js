@@ -1,13 +1,14 @@
 import React from 'react';
-import utils from '../../../utils/index.js';
+import utils from '../../../common/utils/index.js';
 import LoveButton from '../loveButton/loveButton.js';
-import _ from 'lodash';
 import { GalleryComponent } from '../../galleryComponent';
-import window from '../../../utils/window/windowWrapper';
-import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
-import EVENTS from '../../../utils/constants/events';
-import PLACEMENTS from '../../../utils/constants/placements';
-import { URL_TYPES, URL_SIZES } from '../../../constants/urlTypes';
+import window from '../../../common/window/windowWrapper';
+import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
+import EVENTS from '../../../common/constants/events';
+import PLACEMENTS from '../../../common/constants/placements';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
+import DownloadIcon from '../../svgs/components/download';
+import ShareStoreIcon from '../../svgs/components/share_store';
 
 export default class Social extends GalleryComponent {
   constructor(props) {
@@ -21,8 +22,8 @@ export default class Social extends GalleryComponent {
     if (styleParams.allowSocial) {
       const slideshowShareButton = (
         <i
-          className={'block-fullscreen progallery-svg-font-icons-share-store'}
-        />
+          className={'block-fullscreen share-store'}
+        ><ShareStoreIcon size="20"/></i>
       );
       if (isSiteMode() || isSEOMode()) {
         const slideshowShare = styleParams.isSlideshow
@@ -61,7 +62,7 @@ export default class Social extends GalleryComponent {
 
   getLoveButton() {
     const { styleParams, isNarrow, isSmallItem } = this.props;
-    const props = _.pick(this.props, [
+    const props = utils.pick(this.props, [
       'id',
       'item',
       'idx',
@@ -99,10 +100,10 @@ export default class Social extends GalleryComponent {
       const downloadIcon = (
         <i
           className={
-            'block-fullscreen progallery-svg-font-icons-download' +
+            'block-fullscreen ' +
             (isDemo ? ' inactive' : '')
           }
-        />
+        ><DownloadIcon size="20"/></i>
       );
 
       const genralProps = {
@@ -115,9 +116,12 @@ export default class Social extends GalleryComponent {
             ? 0
             : -1,
       };
+      const downloadUrl = styleParams.isStoreGallery
+        ? URL_SIZES.DOWNLOAD_SAMPLE
+        : URL_SIZES.DOWNLOAD;
       const downloadLink =
-        createUrl(URL_SIZES.DOWNLOAD, URL_TYPES.VIDEO) ||
-        createUrl(URL_SIZES.DOWNLOAD, URL_TYPES.HIGH_RES);
+        createUrl(downloadUrl, URL_TYPES.VIDEO) ||
+        createUrl(downloadUrl, URL_TYPES.HIGH_RES);
 
       const itemProps = {
         target: '_blank',

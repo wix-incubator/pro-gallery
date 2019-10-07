@@ -1,6 +1,5 @@
 import React from 'react';
-import ItemContainer from '../item/itemContainer.js';
-import _ from 'lodash';
+import itemView from '../item/itemView.js';
 import { GalleryComponent } from '../galleryComponent';
 
 class GroupView extends GalleryComponent {
@@ -14,21 +13,39 @@ class GroupView extends GalleryComponent {
   createDom(visible) {
     return this.props.items.map(item =>
       React.createElement(
-        ItemContainer,
-        _.merge(
-          item.renderProps(_.merge(this.props.galleryConfig, { visible })),
-          { ...this.props.itemsLoveData[item.id] },
-        ),
+        itemView,
+        {
+          ...item.renderProps(Object.assign(this.props.galleryConfig, { visible })),
+          ...this.props.itemsLoveData[item.id]
+        },
       ),
     );
   }
 
+  shouldRender() {
+    const {items, galleryConfig} = this.props;
+    if (!items || !items.length) {
+      return false;
+    }
+    if (galleryConfig.styleParams.slideshowLoop) {
+      const {idx} = items[items.length - 1];
+      const {currentIdx, totalItemsCount} = galleryConfig;
+      
+      const distance = currentIdx - idx;
+      const padding = Math.floor(totalItemsCount / 2);
+      
+      return (Math.abs(distance) <= padding);
+    }
+    
+    return true;
+  }
+
   render() {
-    return (
-      <div key={`group_${this.props.idx}`} data-hook={'group-view'}>
+    return this.shouldRender() ? (
+      <div key={`group_${this.props.idx}_${this.props.items[0].id}`} data-hook={'group-view'}>
         {this.createDom(true)}
       </div>
-    );
+    ) : null;
   }
 }
 

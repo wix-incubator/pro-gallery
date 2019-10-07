@@ -1,8 +1,10 @@
 import React from 'react';
-import utils from '../../../utils';
-import { isSiteMode, isSEOMode } from '../../../utils/window/viewModeWrapper';
-import EVENTS from '../../../utils/constants/events';
+import utils from '../../../common/utils';
+import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
+import EVENTS from '../../../common/constants/events';
 import { GalleryComponent } from '../../galleryComponent';
+import LoveFull from '../../svgs/components/love_full';
+import LoveEmpty from '../../svgs/components/love_empty';
 
 class LoveButton extends GalleryComponent {
   constructor(props) {
@@ -11,7 +13,6 @@ class LoveButton extends GalleryComponent {
     this.onKeyPress = this.onKeyPress.bind(this);
 
     this.state = {
-      loveButtonToggledToLove: undefined,
       animate: false,
     };
   }
@@ -32,8 +33,7 @@ class LoveButton extends GalleryComponent {
     e.preventDefault();
     this.props.actions.eventsListener(EVENTS.LOVE_BUTTON_CLICKED, this.props);
     this.setState({
-      animate: !this.isLoved(),
-      loveButtonToggledToLove: !this.isLoved(),
+      animate: !this.props.isLoved,
     });
   }
 
@@ -54,15 +54,15 @@ class LoveButton extends GalleryComponent {
         break;
       default:
         className.push('gallery-item-social-love');
-        if (!utils.isStoreGallery()) {
+        if (!this.props.styleParams.isStoreGallery) {
           className.push('block-fullscreen');
         }
     }
     className.push(this.viewClassName());
-    if (this.isLoved()) {
-      className.push('progallery-svg-font-icons-love_full pro-gallery-loved');
+    if (this.props.isLoved) {
+      className.push('love_full pro-gallery-loved');
     } else {
-      className.push('progallery-svg-font-icons-love_empty');
+      className.push('love_empty');
     }
     if (this.state.animate) {
       className.push('love-animation');
@@ -94,30 +94,8 @@ class LoveButton extends GalleryComponent {
     }
   }
 
-  isLoved() {
-    return typeof this.state.loveButtonToggledToLove === 'undefined'
-      ? this.props.isLoved
-      : this.state.loveButtonToggledToLove;
-  }
-
-  localLoveCount() {
-    if (
-      this.props.isLoved === true &&
-      this.state.loveButtonToggledToLove === false
-    ) {
-      return -1;
-    } else if (
-      !this.props.isLoved &&
-      this.state.loveButtonToggledToLove === true
-    ) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
   createLoveCounter() {
-    const count = (this.props.loveCount || 0) + this.localLoveCount();
+    const count = (this.props.loveCount || 0);
     return !!this.props.showCounter && count > 0 ? (
       <i data-hook="love-counter" className={this.counterClassName()}>
         {count}
@@ -131,7 +109,7 @@ class LoveButton extends GalleryComponent {
       isSiteMode() || isSEOMode()
         ? utils.getMobileEnabledClick(this.toggleLove)
         : { onClick: e => e.stopPropagation() };
-    const loveColor = this.isLoved() ? { color: 'red' } : {};
+    const loveColor = this.props.isLoved ? { color: 'red' } : {};
 
     return (
       <span
@@ -150,10 +128,10 @@ class LoveButton extends GalleryComponent {
           data-hook="love-icon"
           className={this.buttonClasssName()}
           role="checkbox"
-          aria-checked={this.isLoved()}
+          aria-checked={this.props.isLoved}
           style={loveColor}
           tabIndex={-1}
-        />
+        >{this.props.isLoved ? <LoveFull size="21"/> : <LoveEmpty size="21"/>}</button>
         {loveCounter}
       </span>
     );

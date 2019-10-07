@@ -1,80 +1,89 @@
-import _ from 'lodash';
-import utils from '../../utils';
-import window from '../../utils/window/windowWrapper';
+import utils from '../../common/utils';
 
 export function scrollToItemImp(scrollParams) {
-  let pos;
+  let to, from;
   const {
     durationInMS,
     horizontalElement,
     scrollingElement,
+    isRTL,
     oneRow,
     galleryWidth,
     galleryHeight,
+    totalWidth,
     top,
     items,
     itemIdx,
     fixedScroll,
-    isManual,
   } = scrollParams;
 
-  if (fixedScroll === true) {
-    //scroll by half the container size
-
-    if (oneRow) {
-      pos = horizontalElement.scrollLeft + (itemIdx * galleryWidth) / 2;
+  //default = scroll by half the container size
+  if (oneRow) {
+    from = horizontalElement.scrollLeft;
+    if (isRTL) {
+      to = from - (itemIdx * galleryWidth) / 2;
     } else {
-      pos = top + (itemIdx * galleryHeight) / 2;
+      to = from + (itemIdx * galleryWidth) / 2;
     }
+    // console.log('[RTL SCROLL] scrollToItemImp: ', from, to);
   } else {
-    //scroll to specific item
+    from = top;
+    to = top + (itemIdx * galleryHeight) / 2;
+  }
+
+  if (fixedScroll !== true) {
+      //scroll to specific item
     if (utils.isVerbose()) {
       console.log('Scrolling to items #' + itemIdx);
     }
 
-    const item = _.find(items, itm => itm.idx === itemIdx);
-    pos = oneRow ? _.get(item, 'offset.left') : _.get(item, 'offset.top');
+    const item = items.find(itm => itm.idx === itemIdx);
+    to = oneRow ? utils.get(item, 'offset.left') : utils.get(item, 'offset.top');
+
+    if (item && isRTL) {
+      to += item.width;
+    };
 
     if (utils.isVerbose()) {
-      console.log('Scrolling to position ' + pos, item);
+      console.log('Scrolling to position ' + to, item);
     }
 
-    if (!(pos >= 0)) {
+    if (!(to >= 0)) {
       console.warn('Position not found, not scrolling');
-      return false;
+      return new Promise(res => res());
     }
 
     if (oneRow) {
-      if (
-        isManual &&
-        _.isFunction(_.get(window, 'galleryWixCodeApi.onItemChanged'))
-      ) {
-        window.galleryWixCodeApi.onItemChanged(item);
-      }
-
       //set scroll to place the item in the middle of the component
       const diff = (galleryWidth - item.width) / 2;
       if (diff > 0) {
-        pos -= diff;
+        to -= diff;
       }
-      pos = Math.max(0, pos) / utils.getViewportScaleRatio();
+      if (isRTL) {
+        to = totalWidth - to;
+      }
+      to = Math.max(0, to) / utils.getViewportScaleRatio();
       if (utils.isVerbose()) {
-        console.log('Scrolling to new position ' + pos, this);
+        console.log('Scrolling to new position ' + to, this);
       }
     }
   }
 
   if (oneRow) {
-    utils.horizontalCssScrollTo(
+    return horizontalCssScrollTo(
       horizontalElement,
-      Math.round(pos * utils.getViewportScaleRatio()),
+      Math.round(from * utils.getViewportScaleRatio()),
+      Math.round(to * utils.getViewportScaleRatio()),
       durationInMS,
+      isRTL,
       true,
     );
   } else {
-    scrollingElement.vertical().scrollTo(0, pos);
+    return (new Promise(resolve => {
+      scrollingElement.vertical().scrollTo(0, to);
+      resolve(to);
+    }));
   }
-  return true;
 }
 
 // ----- rendererd / visible ----- //
@@ -218,6 +227,40 @@ function setInitialVisibility({ props, screenSize, padding, callback }) {
     callback,
   });
 }
+
+function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
+  const change = to - from;
+
+  const scrollerInner = scroller.firstChild;
+
+  scroller.setAttribute('data-scrolling', 'true');
+
+  Object.assign(scrollerInner.style, {
+    transition: `margin ${duration}ms linear`,
+    '-webkit-transition': `margin ${duration}ms linear`,
+  }, isRTL ? {
+    marginRight: `${change}px`,
+  } : {
+    marginLeft: `${-1 * change}px`,
+  });
+
+  return new Promise(resolve => {
+    setTimeout(() => {
+      Object.assign(scrollerInner.style, {
+        transition: `none`,
+        '-webkit-transition': `none`,
+      }, isRTL ? {
+        marginRight: 0,
+      } : {
+        marginLeft: 0,
+      });
+      scroller.scrollLeft = to;
+      scroller.setAttribute('data-scrolling', '');
+      resolve(to);
+    }, duration);
+  });
+}
+
 export {
   isWithinPaddingHorizontally,
   isWithinPaddingVertically,

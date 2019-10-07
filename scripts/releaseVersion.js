@@ -57,7 +57,7 @@ function getLatestCommit() {
 }
 
 function editChangelogAndUpdateVersion(bump) {
-    var editor = process.env.EDITOR || 'code';
+    var editor = 'code';
     var child = spawn(editor, [CHANGELOG], {
         stdio: 'inherit'
     });
@@ -112,7 +112,7 @@ function getBumpedVersion(version, bump) {
 }
 
 function writeToChangelog(str) {
-    const writeCommand = `echo "${str}" >> ${CHANGELOG}`;
+    const writeCommand = `echo "${str.replace(/\"/g, '')}" >> ${CHANGELOG}`;
     execSync(writeCommand);
 }
 
@@ -142,7 +142,7 @@ function formatForChangelog(version, commits) {
         if (!obj[project]) {
             obj[project] = '';
         }
-        const textStartPos = Math.max(commit.indexOf(':'), commit.indexOf(']')) + 1;
+        const textStartPos = commit.indexOf(']') + 1;
         obj[project] += ' - ' + commit.substr(textStartPos) + `\n`;
         return obj;
     }, {});

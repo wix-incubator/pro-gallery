@@ -1,9 +1,8 @@
-import _ from 'lodash';
-import utils from '../../../utils/index.js';
-import PLACEMENTS from '../../../utils/constants/placements';
-import INFO_TYPE from '../../../utils/constants/infoType';
-import window from '../../../utils/window/windowWrapper';
-import designConsts from '../../../constants/designConsts.js';
+import utils from '../../../common/utils/index.js';
+import PLACEMENTS from '../../../common/constants/placements';
+import INFO_TYPE from '../../../common/constants/infoType';
+import window from '../../../common/window/windowWrapper';
+import designConsts from '../../../common/constants/designConsts.js';
 
 const minWidthToShowContent = 135;
 const minWithForNormalSizedItem = 190;
@@ -53,7 +52,7 @@ class LineHeightFixer {
       const display = this.getSavedDisplay(element);
       this.setCss(element, { visibility: 'visible', display });
     } else {
-      this.setCss(element, { visibility: 'visible', display: '-webkit-box' });
+      this.setCss(element, { visibility: 'visible' });
     }
   }
 
@@ -230,7 +229,7 @@ class LineHeightFixer {
         });
       }
 
-      const isButtonHeightAvailable = !_.isNaN(buttonHeight);
+      const isButtonHeightAvailable = !Number.isNaN(buttonHeight);
       if (isButtonHeightAvailable && customButtonExists) {
         availableHeight -= buttonHeight;
         availableHeight -= designConsts.spaceBetweenElements;

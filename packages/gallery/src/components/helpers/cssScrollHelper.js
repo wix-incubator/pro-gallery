@@ -1,8 +1,8 @@
-import LOADING_MODE from '../../utils/constants/loadingMode';
-import SCROLL_ANIMATIONS from '../../utils/constants/scrollAnimations';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
-import { URL_TYPES, URL_SIZES } from '../../constants/urlTypes';
+import LOADING_MODE from '../../common/constants/loadingMode';
+import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
+import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 class CssScrollHelper {
   constructor() {
@@ -75,7 +75,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ galleryDomId, items, styleParams, allowPreloading }) {
+  calcScrollCss({ galleryDomId, items, styleParams, allowPreloading, isFullWidth }) {
     if (!(items && items.length)) {
       return '';
     }
@@ -99,7 +99,7 @@ class CssScrollHelper {
       maxStep;
     return items
       .map(item =>
-        this.calcScrollCssForItem({ galleryDomId, item, styleParams }),
+        this.calcScrollCssForItem({ galleryDomId, item, styleParams, isFullWidth }),
       )
       .join(`\n`);
   }
@@ -131,11 +131,11 @@ class CssScrollHelper {
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
-      if (utils.isVerbose()) {
-        console.log(
-          `CSS SCROLL - item #${item.idx} display range is: (${from} - ${to})`,
-        );
-      }
+      // if (utils.isVerbose()) {
+      //   console.log(
+      //     `CSS SCROLL - item #${item.idx} display range is: (${from} - ${to})`,
+      //   );
+      // }
       const scrollClasses = [];
       while (from < to) {
         const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
@@ -166,7 +166,7 @@ class CssScrollHelper {
     };
   }
 
-  calcScrollCssForItem({ galleryDomId, item, styleParams }) {
+  calcScrollCssForItem({ galleryDomId, item, styleParams, isFullWidth }) {
     const { type, createUrl, idx } = item;
 
     let scrollCss = '';
@@ -178,7 +178,7 @@ class CssScrollHelper {
 
     if (type !== 'text') {
       //load hi-res image + loading transition
-      if (!window.isSSR && !item.isDimensionless) {
+      if (!isFullWidth && !item.isDimensionless) { //FAKE SSR
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.${type}-item>canvas`) +
           `{opacity: 1; background-image: url(${createUrl(
@@ -191,7 +191,7 @@ class CssScrollHelper {
       if (
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode !== LOADING_MODE.COLOR &&
-        (!item.isTransparent || window.isSSR) &&
+        (!item.isTransparent || isFullWidth) && //FAKE SSR
         !item.isDimensionless
       ) {
         scrollCss +=
@@ -211,13 +211,13 @@ class CssScrollHelper {
       createScrollSelectors,
     });
 
-    if (utils.isVerbose()) {
-      console.log(
-        'CSS SCROLL - css calc for item #' + idx,
-        item,
-        this.scrollCss[idx],
-      );
-    }
+    // if (utils.isVerbose()) {
+    //   console.log(
+    //     'CSS SCROLL - css calc for item #' + idx,
+    //     item,
+    //     this.scrollCss[idx],
+    //   );
+    // }
 
     this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
 

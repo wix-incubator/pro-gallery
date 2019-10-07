@@ -6,10 +6,10 @@ import Share from './share.js';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { testImages } from '../../../../__testsDrivers__/images-mock.js';
-import utils from '../../../utils/index';
-import EVENTS from '../../../utils/constants/events';
-import { viewModeWrapper } from '../../../utils/window/viewModeWrapper';
-import VIEW_MODE from '../../../utils/constants/viewMode';
+import utils from '../../../common/utils/index';
+import EVENTS from '../../../common/constants/events';
+import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
+import VIEW_MODE from '../../../common/constants/viewMode';
 
 describe('Share:', () => {
   let driver;

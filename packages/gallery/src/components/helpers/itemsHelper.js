@@ -1,7 +1,6 @@
 import GalleryItem from '../item/galleryItem';
 import GalleryGroup from '../group/galleryGroup';
-import utils from '../../utils';
-import _ from 'lodash';
+import utils from '../../common/utils';
 
 export class ItemsHelper {
   static convertDtoToLayoutItem(dto) {
@@ -10,7 +9,7 @@ export class ItemsHelper {
       return dto;
     } else {
       const dtoMetadata = dto.metadata || dto.metaData;
-      const metadata = _.isObject(dtoMetadata)
+      const metadata = (typeof dtoMetadata === 'object')
         ? dtoMetadata
         : utils.parseStringObject(dtoMetadata) || {};
       return {

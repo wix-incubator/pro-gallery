@@ -1,9 +1,8 @@
 import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
-import _ from 'lodash';
-import utils from '../../utils/index.js';
-import window from '../../utils/window/windowWrapper';
-import ItemContainer from '../item/itemContainer.js';
+import utils from '../../common/utils/index.js';
+import window from '../../common/window/windowWrapper';
+import itemView from '../item/itemView.js';
 import { GalleryComponent } from '../galleryComponent';
 
 utils.fixViewport('Gallery');
@@ -44,13 +43,13 @@ class GalleryView extends GalleryComponent {
           newIdx = findNeighborItem(idx, 'up');
           break;
         case 37: //left
-          newIdx = findNeighborItem(idx, 'left');
+          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'right' : 'left');
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
           break;
         case 39: //right
-          newIdx = findNeighborItem(idx, 'right');
+          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'left' : 'right');
           break;
       }
 
@@ -124,12 +123,12 @@ class GalleryView extends GalleryComponent {
     }
     const layout = this.props.galleryStructure.galleryItems.map((item, index) =>
       React.createElement(
-        ItemContainer,
+        itemView,
         item.renderProps({
           ...galleryConfig,
           ...itemsLoveData[item.id],
           visible: item.isVisible,
-          key: `ItemContainer-${item.id}-${index}`,
+          key: `itemView-${item.id}-${index}`,
         }),
       ),
     );
@@ -142,7 +141,8 @@ class GalleryView extends GalleryComponent {
           (this.props.styleParams.oneRow
             ? ' one-row slider hide-scrollbars '
             : '') +
-          (this.props.styleParams.isAccessible ? ' accessible ' : '')
+          (this.props.styleParams.isAccessible ? ' accessible ' : '') +
+          (this.props.styleParams.isRTL ? ' rtl ' : '')
         }
         style={{
           height: galleryHeight,
@@ -156,7 +156,7 @@ class GalleryView extends GalleryComponent {
           style={{
             margin: this.props.styleParams.galleryMargin + 'px',
             height: galleryHeight,
-            width: utils.isSSR() ? '100%' : this.props.container.galleryWidth,
+            width: this.context.isFullWidth ? '100%' : this.props.container.galleryWidth, //FAKE SSR
             overflow: 'visible',
             position: 'relative',
           }}
@@ -177,7 +177,6 @@ class GalleryView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
-      currentHover: this.props.currentHover,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       galleryDomId: this.props.domId,
@@ -186,6 +185,7 @@ class GalleryView extends GalleryComponent {
       nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       actions: {
+        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };
@@ -293,12 +293,12 @@ class GalleryView extends GalleryComponent {
         '[DEBUG_RENDER] GalleryView props changed',
         utils.printableObjectsDiff(this.lastProps || {}, this.props),
       );
-      this.lastProps = _.cloneDeep(this.props);
+      this.lastProps = {...this.props};
       console.log(
         '[DEBUG_RENDER] GalleryView state changed',
         utils.printableObjectsDiff(this.lastState || {}, this.state),
       );
-      this.lastState = _.cloneDeep(this.state);
+      this.lastState = {...this.state};
       this.renderCount = (this.renderCount || 0) + 1;
     }
 
@@ -315,6 +315,8 @@ class GalleryView extends GalleryComponent {
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
         // style={this.getStyles()}
+        role="region"
+        aria-label="Gallery. you can navigate the gallery with keyboard arrow keys."
       >
         {screenLogs}
         {gallery}
