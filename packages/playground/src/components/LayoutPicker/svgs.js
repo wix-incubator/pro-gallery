@@ -27,49 +27,61 @@ export const svgs = {
   collage: {
     reg: Collage,
     sel: CollageSel,
+    key: 0,
   },
   masonry: {
     reg: Masonry,
     sel: MasonrySel,
+    key: 1,
   },
   grid: {
     reg: Grid,
     sel: GridSel,
+    key: 2,
   },
   thumbnails: {
     reg: Thumbnails,
     sel: ThumbnailsSel,
+    key: 3,
   },
   slider: {
     reg: Slider,
     sel: SliderSel,
+    key: 4,
   },
   slideshow: {
     reg: Slideshow,
     sel: SlideshowSel,
+    key: 5,
   },
   panorama: {
     reg: Panorama,
     sel: PanoramaSel,
+    key: 6,
   },
   column: {
     reg: Column,
     sel: ColumnSel,
+    key: 7,
   },
   magic: {
     reg: Magic,
     sel: MagicSel,
+    key: 8,
   },
   bricks: {
     reg: Bricks,
     sel: BricksSel,
+    key: 10,
   },
   alternate: {
     reg: Alternate,
     sel: AlternateSel,
+    key: 11,
   },
   pro: { //--mix
     reg: Pro,
     sel: ProSel,
+    key: 12,
   },
 };

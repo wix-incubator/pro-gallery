@@ -6,8 +6,8 @@ const GalleryContext = React.createContext([{}, () => {}]);
 
 const GalleryProvider = props => {
   const [viewport, setViewport] = useState({
-    preset: 'collage',
-    styleParams: getInitialStyleParams('collage', window.innerWidth - SIDEBAR_WIDTH, window.innerHeight),
+    preset: 'empty',
+    styleParams: getInitialStyleParams('empty', window.innerWidth - SIDEBAR_WIDTH, window.innerHeight),
     galleryWidth: window.innerWidth - SIDEBAR_WIDTH,
     galleryHeight: window.innerHeight
   });

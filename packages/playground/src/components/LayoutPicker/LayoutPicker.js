@@ -7,10 +7,10 @@ function LayoutPicker({selectedLayout, onSelectLayout}) {
     return (
       <div
         className={`${style.layoutItem} ${
-          selectedLayout === layout ? style.selected : ''
+          selectedLayout === svgs[layout].key ? style.selected : ''
         }`}
         key={layout}
-        onClick={() => onSelectLayout(layout)}
+        onClick={() => onSelectLayout(svgs[layout].key)}
       >
         <div className={style.iconButton}>
           <div className={`${style.icon} ${style.reg}`}>

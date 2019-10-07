@@ -1,13 +1,13 @@
 import React, {useState} from "react";
-// import { LayoutPicker } from "../LayoutPicker";
+import { LayoutPicker } from "../LayoutPicker";
 import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
-import { settingsManager } from '../../settings/settingsManager';
-import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from '../../settings/consts';
-import { Alert } from 'antd';
+import { SECTIONS, settingsManager } from '../../settings/settingsManager';
+import { INPUT_TYPES } from '../../settings/consts';
+import { Divider, Alert } from 'antd';
 import comments from './comments';
 import s from './SideBar.module.scss';
 
@@ -94,45 +94,29 @@ function SideBar() {
     </div>
     <h3 className={s.title}>Gallery Settings</h3>
     <div className={s.controls}>
-      <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}} expandIconPosition={'right'}>
-        <Collapse.Panel header="Layout" key="1">
-          {/* <LayoutPicker selectedLayout={preset} onSelectLayout={setPreset} />
-          <Divider /> */}
+      <Collapse accordion={true} bordered={true} defaultActiveKey={[1]} onChange={() => {}} expandIconPosition={'right'}>
+        <Collapse.Panel header={SECTIONS.PRESET} key="1">
+          <LayoutPicker selectedLayout={styleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
+          <Divider />
           <JsonEditor 
             onChange={setStyleParams} 
             styleParams={styleParams}
-            section={SECTIONS.LAYOUT}
+            section={SECTIONS.PRESET}
             showAllStyles={showAllStyles}
           />
         </Collapse.Panel>
         {Object.values(SECTIONS).map((section, idx) => {
-          if (section !== SECTIONS.LAYOUT) {
-            if (!SUB_SECTIONS[section.toUpperCase()]) {
-              return (
-                <Collapse.Panel header={section} key={idx + 1}>
-                  <JsonEditor
-                    section={section}
-                    onChange={setStyleParams}
-                    styleParams={styleParams}
-                    showAllStyles={showAllStyles}
-                    />
-                </Collapse.Panel>
-              )
-            } else {
-              return Object.values(SUB_SECTIONS[section.toUpperCase()]).map((subSection, subIdx) => {
-                return (
-                  <Collapse.Panel header={`${section} > ${subSection}`} key={subIdx * 100 + idx + 1}>
-                    <JsonEditor
-                      section={section}
-                      subSection={subSection}
-                      onChange={setStyleParams}
-                      styleParams={styleParams}
-                      showAllStyles={showAllStyles}
-                      />
-                  </Collapse.Panel>                
-                );
-              });
-            }
+          if (section !== SECTIONS.PRESET) {
+            return (
+              <Collapse.Panel header={section} key={idx + 1}>
+                <JsonEditor
+                  section={section}
+                  onChange={setStyleParams}
+                  styleParams={styleParams}
+                  showAllStyles={showAllStyles}
+                  />
+              </Collapse.Panel>
+            )
           }
           return null;
         })}
