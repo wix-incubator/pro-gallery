@@ -80,7 +80,7 @@ export function App() {
 
   const addItems = () => {
     const items = getItems();
-    if (!numberOfItems && items.length < numberOfItems) { //zero items means infinite
+    if (!numberOfItems || items.length < numberOfItems) { //zero items means infinite
       setItems(items.concat(createItems()));
     }
 
