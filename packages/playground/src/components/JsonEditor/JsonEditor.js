@@ -1,5 +1,5 @@
 import React from 'react';
-import {Badge, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
+import {Tooltip, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
 import {settingsManager} from '../../settings/settingsManager';
 import {INPUT_TYPES} from '../../settings/consts';
 import ColorPicker from '../ColorPicker/ColorPicker';
@@ -175,28 +175,21 @@ class JsonEditor extends React.Component {
     const isSingleItem = !!styleParam;
   
     return (
-      // <Form layout="vertical">
       <Collapse accordion={true} bordered={false} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
-          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={settings.isRelevant(styleParams) ? null : <Badge status="warning" text="Not Relevant" />}>
-              {/* <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'} style={{display: 'block', width: '100%'}}> */}
-                {this.renderEntryEditor(styleParam, settings)}
-                {
-                  <div>
-                    <Divider/>
-                    <p><b>Key: </b><code>{styleParam}</code></p>
-                    <p><b>Value: </b><code>{String(settings.value)}</code></p>
-                    {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
-                    {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
-                    {isSingleItem && <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>}
-                    {isSingleItem && <p><b>Relevant in current configuration: </b>{settings.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>}
-                  </div>
-                  // <Alert message={settings.alert} type="warning"/> : null
-                }
-              {/* </Form.Item> */}
+          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={settings.isRelevant(styleParams) ? null : <Tooltip placement="right" title="This param is not relevant in current scope"><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Tooltip>}>
+            {this.renderEntryEditor(styleParam, settings)}
+            {<div>
+              <Divider/>
+              <p><b>Key: </b><code>{styleParam}</code></p>
+              <p><b>Value: </b><code>{String(settings.value)}</code></p>
+              {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
+              {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
+              {isSingleItem && <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>}
+              {isSingleItem && <p><b>Relevant in current configuration: </b>{settings.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>}
+            </div>}
           </Collapse.Panel>
         ))}
-      {/* </Form> */}
       </Collapse>
     );
   }
