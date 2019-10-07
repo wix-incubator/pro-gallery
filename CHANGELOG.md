@@ -348,3 +348,9 @@
 #### GALLERY
  -  fix: do not cache isFullWidth
 
+
+---
+## v1.4.3 (07/10/2019)
+ 
+#### GALLERY
+ -  fix: remove react context
