@@ -40,6 +40,10 @@ export function useGalleryContext() {
     setContext({isFullWidth});
   };
 
+  const setGallerySettings = gallerySettings => {
+    setContext({gallerySettings: {...context.gallerySettings, ...gallerySettings}});
+  }
+
   const res = {
     showSide: context.showSide,
     setShowSide,
@@ -53,6 +57,8 @@ export function useGalleryContext() {
     setGalleryReady,
     isFullWidth: context.isFullWidth,
     setIsFullWidth,
+    gallerySettings: context.gallerySettings,
+    setGallerySettings,
     dimensions: {
       width: context.galleryWidth,
       height: context.galleryHeight,

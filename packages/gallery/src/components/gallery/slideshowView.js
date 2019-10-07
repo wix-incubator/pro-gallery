@@ -42,36 +42,37 @@ class SlideshowView extends GalleryComponent {
 
   isFirstItem() {
     return this.state.currentIdx === 0
-    // let pos;
-    // if (this.container) {
-    //   pos = this.props.styleParams.oneRow
-    //     ? this.container.scrollLeft
-    //     : this.container.scrollTop;
-    // } else {
-    //   pos = 0;
-    // }
-    // const firstItem = () => this.state.currentIdx === 0 || pos === 0;
-    // return firstItem();
+  }
+
+  isScrollStart(isRTL = this.props.styleParams.isRTL) {
+
+    if (this.container) {
+      const {scrollLeft, scrollWidth, clientWidth} = this.container;
+      if (isRTL) {
+        return scrollLeft + clientWidth >= scrollWidth - 5;
+      } else {
+        return scrollLeft <= 5
+      }
+    } else {
+      return false;
+    }
+
   }
 
   isLastItem() {
     return !this.props.styleParams.slideshowLoop && this.state.currentIdx >= this.props.galleryStructure.items.length - 1;
-
-    // let pos;
-    // if (this.container) {
-    //   pos = this.props.styleParams.oneRow
-    //     ? this.container.scrollLeft
-    //     : this.container.scrollTop;
-    // } else {
-    //   pos = 0;
-    // }
-    // const [lastItemInGallery] = this.props.galleryStructure.items.slice(-1);
-    // const lastItem = () =>
-    //   this.state.currentIdx >= this.props.totalItemsCount - 1 ||
-    //   !lastItemInGallery ||
-    //   this.props.container.galleryWidth + pos >= lastItemInGallery.offset.right;
-    // return lastItem() && !this.props.styleParams.slideshowLoop;
   }
+
+  isScrollEnd() {
+    const {isRTL, slideshowLoop} = this.props.styleParams;
+
+    if (slideshowLoop) {
+      return false;
+    }
+
+    return this.isScrollStart(!isRTL); //start and end are reversed by RTL
+  }
+
   //__________________________________Slide show loop functions_____________________________________________
 
   createNewItemsForSlideshowLoopThumbnails() {
@@ -108,6 +109,12 @@ class SlideshowView extends GalleryComponent {
   //__________________________________end of slide show loop functions__________________________
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
     
+    if (this.isSliding) {
+      return;
+    }
+
+    this.isSliding = true;
+
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
 
     const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
@@ -129,27 +136,30 @@ class SlideshowView extends GalleryComponent {
         (direction === 1 && this.isLastItem()) ||
         (direction === -1 && this.isFirstItem());
       if (isScrollingPastEdge) {
+        this.isSliding = false;
         return;
       }
     }
     // ---- navigate ---- //
     try {
-      scrollToItem(nextItem, false, true, scrollDuration);
+      scrollToItem(nextItem, false, true, scrollDuration).then(() => {
+        utils.setStateAndLog(
+          this,
+          'Next Item',
+          {
+            currentIdx: nextItem,
+          },
+          () => {
+            this.onCurrentItemChanged();
+            this.isSliding = false;
+          },
+        );
+      });
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
       this.stopAutoSlideshow();
       return;
     }
-    utils.setStateAndLog(
-      this,
-      'Next Item',
-      {
-        currentIdx: nextItem,
-      },
-      () => {
-        this.onCurrentItemChanged();
-      },
-    );
   }
   onCurrentItemChanged() {
     if (this.lastCurrentItem !== this.state.currentIdx) {
@@ -169,10 +179,10 @@ class SlideshowView extends GalleryComponent {
     const {
       isAutoSlideshow,
       autoSlideshowInterval,
-      galleryLayout,
+      oneRow,
     } = styleParams;
     this.stopAutoSlideshow();
-    if (!(galleryLayout === 5 || galleryLayout === 4 || galleryLayout === 3))
+    if (!oneRow)
       return;
     if (
       !(
@@ -616,8 +626,8 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
-    const hideLeftArrow = (!isRTL && this.isFirstItem()) || (isRTL && this.isLastItem())
-    const hideRightArrow = (isRTL && this.isFirstItem()) || (!isRTL && this.isLastItem())
+    const hideLeftArrow = (!isRTL && this.isScrollStart()) || (isRTL && this.isScrollEnd())
+    const hideRightArrow = (isRTL && this.isScrollStart()) || (!isRTL && this.isScrollEnd())
 
     return [
       hideLeftArrow ? null : (
@@ -671,7 +681,7 @@ class SlideshowView extends GalleryComponent {
 
     const galleryConfig = {
       scrollingElement: this.props.scrollingElement,
-      renderedItemsCount: this.props.renderedItemsCount,
+      totalItemsCount: this.props.totalItemsCount,
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,
@@ -685,6 +695,7 @@ class SlideshowView extends GalleryComponent {
       galleryId: this.props.galleryId,
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
+      totalWidth: this.props.galleryStructure.width,
       actions: {
         isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,

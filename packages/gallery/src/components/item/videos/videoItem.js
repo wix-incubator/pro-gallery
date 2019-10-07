@@ -4,6 +4,8 @@ import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
 import EVENTS from '../../../common/constants/events';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
+import PlayBackground from '../../svgs/components/play_background';
+import PlayTriangle from '../../svgs/components/play_triangle';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -227,16 +229,16 @@ class VideoItem extends GalleryComponent {
             key="play-triangle"
             data-hook="play-triangle"
             className={
-              'gallery-item-video-play-triangle progallery-svg-font-icons-play-triangle '
+              'gallery-item-video-play-triangle play-triangle '
             }
-          />,
+          ><PlayTriangle/></i>,
           <i
             key="play-bg"
             data-hook="play-background"
             className={
-              'gallery-item-video-play-background progallery-svg-font-icons-play-background '
+              'gallery-item-video-play-background play-background '
             }
-          />,
+          ><PlayBackground/></i>,
         ];
 
     const videoPreloader = (

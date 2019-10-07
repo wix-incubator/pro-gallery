@@ -286,3 +286,43 @@
  -  add less styles to the url
  -  add gallerySizeType and cubeRatio to settings
 
+
+---
+## v1.3.17 (25/09/2019)
+ 
+#### GALLERY
+ -  handle rage clicks on gallery arrows
+ -  fix videos in Safari
+
+
+---
+## v1.3.18 (03/10/2019)
+ 
+#### GALLERY
+ -  remove svg-font-icons and add native SVG support
+ -  better handling of arrows and horizontal swipe navigation
+
+
+---
+## v1.3.19 (03/10/2019)
+ 
+#### PLAYGROUND
+ -  improve: allow changing media type and number of items
+
+#### GALLERY
+ -  fix broken slideshowLoop
+
+
+---
+## v1.3.20 (03/10/2019)
+ 
+#### GALLERY
+ -  remove leftovers font icons
+
+
+---
+## v1.3.21 (03/10/2019)
+ 
+#### GALLERY
+ -  fix minor position diff in share icon
+

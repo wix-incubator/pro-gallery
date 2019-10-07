@@ -103,7 +103,7 @@ class galleryDriver {
       onItemClick: (() => {}),
       pauseAllVideos: (() => {}),
       setWixHeight: (() => {}),
-      scrollToItem: (() => {}),
+      scrollToItem: (() => new Promise(res => res())),
       toggleShare: (() => {}),
       isCurrentHover: (() => {}),
     };

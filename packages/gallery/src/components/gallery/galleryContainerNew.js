@@ -595,7 +595,7 @@ export class GalleryContainer extends React.Component {
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0) {
     const scrollingElement = this._scrollingElement;
     const horizontalElement = scrollingElement.horizontal();
-    scrollToItemImp({
+    return scrollToItemImp({
       isRTL: this.state.styles.isRTL,
       oneRow: this.state.styles.oneRow,
       galleryWidth: this.state.container.galleryWidth,

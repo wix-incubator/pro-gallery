@@ -656,20 +656,16 @@ class ItemView extends GalleryComponent {
       itemInner = (
         <div>
           {itemInner}
-          {this.props.currentIdx === this.props.idx ? (
-            <div
-              className="gallery-item-info gallery-item-bottom-info"
-              data-hook="gallery-item-info-buttons"
-              style={style}
-            >
-              <div>
-                {social}
-                {itemTexts}
-              </div>
+          <div
+            className="gallery-item-info gallery-item-bottom-info"
+            data-hook="gallery-item-info-buttons"
+            style={style}
+          >
+            <div>
+              {social}
+              {itemTexts}
             </div>
-          ) : (
-            false
-          )}
+          </div>
         </div>
       );
     }
@@ -762,7 +758,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { styleParams, transform } = this.props;
+    const { styleParams } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const itemStyles = {
@@ -772,7 +768,7 @@ class ItemView extends GalleryComponent {
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
     };
 
-    return { ...itemStyles, ...transform, ...containerStyleByStyleParams };
+    return { ...itemStyles, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {

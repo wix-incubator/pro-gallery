@@ -1,5 +1,4 @@
 import utils from '../../common/utils';
-import window from '../../common/window/windowWrapper';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -16,7 +15,6 @@ export function scrollToItemImp(scrollParams) {
     items,
     itemIdx,
     fixedScroll,
-    isManual,
   } = scrollParams;
 
   //default = scroll by half the container size
@@ -52,17 +50,10 @@ export function scrollToItemImp(scrollParams) {
 
     if (!(to >= 0)) {
       console.warn('Position not found, not scrolling');
-      return false;
+      return new Promise(res => res());
     }
 
     if (oneRow) {
-      if (
-        isManual &&
-        utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemChanged'))
-      ) {
-        window.galleryWixCodeApi.onItemChanged(item);
-      }
-
       //set scroll to place the item in the middle of the component
       const diff = (galleryWidth - item.width) / 2;
       if (diff > 0) {
@@ -79,7 +70,7 @@ export function scrollToItemImp(scrollParams) {
   }
 
   if (oneRow) {
-    horizontalCssScrollTo(
+    return horizontalCssScrollTo(
       horizontalElement,
       Math.round(from * utils.getViewportScaleRatio()),
       Math.round(to * utils.getViewportScaleRatio()),
@@ -88,9 +79,11 @@ export function scrollToItemImp(scrollParams) {
       true,
     );
   } else {
-    scrollingElement.vertical().scrollTo(0, to);
+    return (new Promise(resolve => {
+      scrollingElement.vertical().scrollTo(0, to);
+      resolve(to);
+    }));
   }
-  return true;
 }
 
 // ----- rendererd / visible ----- //
@@ -235,7 +228,7 @@ function setInitialVisibility({ props, screenSize, padding, callback }) {
   });
 }
 
-function horizontalCssScrollTo(scroller, from, to, duration, isRTL, callback = () => {}) {
+function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = to - from;
 
   const scrollerInner = scroller.firstChild;
@@ -251,19 +244,21 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL, callback = (
     marginLeft: `${-1 * change}px`,
   });
 
-  setTimeout(() => {
-    Object.assign(scrollerInner.style, {
-      transition: `none`,
-      '-webkit-transition': `none`,
-    }, isRTL ? {
-      marginRight: 0,
-    } : {
-      marginLeft: 0,
-    });
-    scroller.scrollLeft = to;
-    scroller.setAttribute('data-scrolling', '');
-    typeof callback === 'function' && callback();
-  }, duration + 100);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      Object.assign(scrollerInner.style, {
+        transition: `none`,
+        '-webkit-transition': `none`,
+      }, isRTL ? {
+        marginRight: 0,
+      } : {
+        marginLeft: 0,
+      });
+      scroller.scrollLeft = to;
+      scroller.setAttribute('data-scrolling', '');
+      resolve(to);
+    }, duration);
+  });
 }
 
 export {

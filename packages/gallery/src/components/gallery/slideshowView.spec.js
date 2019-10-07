@@ -55,16 +55,20 @@ describe('Slideshow View', () => {
       //=> more than 1 item
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
-      expect(driver.find.hook('nav-arrow-next').length).to.equal(1);
-      expect(driver.find.hook('nav-arrow-back').length).to.equal(0);
+      setTimeout(() => {
+        expect(driver.find.hook('nav-arrow-next').length).to.equal(1);
+        expect(driver.find.hook('nav-arrow-back').length).to.equal(0);
+      }, 450);
       //one item
       Object.assign(initialGalleryViewProps, {
         items: [initialGalleryViewProps.items[0]],
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
-      expect(driver.find.hook('nav-arrow-next').length).to.equal(0);
-      expect(driver.find.hook('nav-arrow-back').length).to.equal(0);
+      setTimeout(() => {
+        expect(driver.find.hook('nav-arrow-next').length).to.equal(0);
+        expect(driver.find.hook('nav-arrow-back').length).to.equal(0);
+      }, 450);
     });
   });
 
@@ -86,91 +90,103 @@ describe('Slideshow View', () => {
         preventDefault() {},
         stopPropagation() {},
       });
-      expect(driver.get.state('currentIdx')).to.equal(1);
-      stubFirst.returns(false);
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: 40,
-        charCode: null,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(2);
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: null,
-        charCode: 32,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(3);
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: null,
-        charCode: 34,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(4);
-      //nextItem - backward
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: 38,
-        charCode: null,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(3);
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: 37,
-        charCode: null,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(2);
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: null,
-        charCode: 33,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(1);
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: null,
-        charCode: 33,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(0);
-      stubFirst.returns(true);
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.get.instance().handleSlideshowKeyPress({
-        keyCode: null,
-        charCode: 33,
-        preventDefault() {},
-        stopPropagation() {},
-      });
-      expect(driver.get.state('currentIdx')).to.equal(0);
-      stubLast.restore();
-      stubFirst.restore();
+      setTimeout(() => {
+        expect(driver.get.state('currentIdx')).to.equal(1);
+        stubFirst.returns(false);
+        driver.get.instance().handleSlideshowKeyPress({
+          keyCode: 40,
+          charCode: null,
+          preventDefault() {},
+          stopPropagation() {},
+        });
+        setTimeout(() => {
+          expect(driver.get.state('currentIdx')).to.equal(2);
+          driver.get.instance().handleSlideshowKeyPress({
+            keyCode: null,
+            charCode: 32,
+            preventDefault() {},
+            stopPropagation() {},
+          });
+          setTimeout(() => {
+            expect(driver.get.state('currentIdx')).to.equal(3);
+            driver.get.instance().handleSlideshowKeyPress({
+              keyCode: null,
+              charCode: 34,
+              preventDefault() {},
+              stopPropagation() {},
+            });
+            setTimeout(() => {
+              expect(driver.get.state('currentIdx')).to.equal(4);
+              driver.get.instance().handleSlideshowKeyPress({
+                keyCode: 38,
+                charCode: null,
+                preventDefault() {},
+                stopPropagation() {},
+              });
+              setTimeout(() => {
+                expect(driver.get.state('currentIdx')).to.equal(3);
+                driver.get.instance().handleSlideshowKeyPress({
+                  keyCode: 37,
+                  charCode: null,
+                  preventDefault() {},
+                  stopPropagation() {},
+                });
+                setTimeout(() => {
+                  expect(driver.get.state('currentIdx')).to.equal(2);
+                  driver.get.instance().handleSlideshowKeyPress({
+                    keyCode: null,
+                    charCode: 33,
+                    preventDefault() {},
+                    stopPropagation() {},
+                  });
+                  setTimeout(() => {
+                    expect(driver.get.state('currentIdx')).to.equal(1);
+                    driver.get.instance().handleSlideshowKeyPress({
+                      keyCode: null,
+                      charCode: 33,
+                      preventDefault() {},
+                      stopPropagation() {},
+                    });
+                    setTimeout(() => {
+                      expect(driver.get.state('currentIdx')).to.equal(0);
+                      stubFirst.returns(true);
+                      driver.get.instance().handleSlideshowKeyPress({
+                        keyCode: null,
+                        charCode: 33,
+                        preventDefault() {},
+                        stopPropagation() {},
+                      });
+                      setTimeout(() => {
+                        expect(driver.get.state('currentIdx')).to.equal(0);
+                        stubLast.restore();
+                        stubFirst.restore();
+                      }, 450);
+                    }, 450);
+                  }, 450);
+                }, 450);
+              }, 450);
+            }, 450);
+          }, 450);
+        }, 450);
+      }, 450);
     });
 
     it('Handle nav arrows click correctly (next/prev image)', () => {
       Object.assign(initialGalleryViewProps.scroll, {
         top: 1,
+        left: 1,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.get.state('currentIdx')).to.equal(0);
-      clock.tick(450); // does not navigate more than once every 400 ms
       driver.find.hook('nav-arrow-next').simulate('click');
-      expect(driver.get.state('currentIdx')).to.equal(1); //navigates
-      clock.tick(450); // does not navigate more than once every 400 ms
-      driver.find.hook('nav-arrow-next').simulate('click');
-      expect(driver.get.state('currentIdx')).to.equal(2);
+      setTimeout(() => {
+        expect(driver.get.state('currentIdx')).to.equal(1); //navigates
+        driver.find.hook('nav-arrow-next').simulate('click');
+        setTimeout(() => {
+          expect(driver.get.state('currentIdx')).to.equal(2);
+        }, 450);
+      }, 450);
     });
   });
 
@@ -213,24 +229,5 @@ describe('Slideshow View', () => {
       viewModeWrapper.setViewMode(VIEW_MODE.SITE);
     });
 
-    it('nextItem works with normal or last items', () => {
-      Object.assign(initialGalleryViewProps.styleParams, {
-        isAutoSlideshow: true,
-        autoSlideshowInterval: 10,
-      });
-      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
-      const stubLast = sinon
-        .stub(SlideshowView.prototype, 'isLastItem')
-        .returns(false);
-      viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
-      driver.mount(SlideshowView, galleryViewProps);
-      driver.get.instance().nextItem(1, true);
-      expect(driver.get.state('currentIdx')).to.equal(1);
-      stubLast.returns(true);
-      driver.get.instance().nextItem(1, true);
-      expect(driver.get.state('currentIdx')).to.equal(0);
-      viewModeWrapper.setViewMode(VIEW_MODE.SITE);
-      stubLast.restore();
-    });
   });
 });

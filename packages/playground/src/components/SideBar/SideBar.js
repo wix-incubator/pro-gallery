@@ -4,7 +4,7 @@ import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
-import { Form, Switch, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
+import { Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { settingsManager } from '../../settings/settingsManager';
 import { SUB_SECTIONS, SECTIONS, INPUT_TYPES } from '../../settings/consts';
 import { Alert } from 'antd';
@@ -15,6 +15,7 @@ function SideBar() {
   const {
     // preset,
     // setPreset,
+    setGallerySettings,
     setStyleParams,
     styleParams,
     setIsFullWidth,
@@ -152,6 +153,25 @@ function SideBar() {
     <h3 className={s.title}>Playground Gizmos</h3>
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
+        <Collapse.Panel header="Playground Gallery Settings" key="13">
+          <Form layout="vertical">
+            <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
+              <InputNumber min={0} max={100} defaultValue={0} onChange={val => setGallerySettings({numberOfItems: val})} />
+            </Form.Item>
+            <Form.Item label="Media Type" help="Set to 0 for Infinite items">
+              <Select defaultValue="mixed" onChange={val => setGallerySettings({mediaType: val})}>
+                <Select.Option value="mixed">Mixed</Select.Option>
+                <Select.Option value="images">Images</Select.Option>
+                <Select.Option value="videos">Videos</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Reset Gallery">
+              <Button icon="delete" shape="round" size="small" onClick={() => window.location.search = ''}>
+                Reset to Default Gallery
+              </Button>
+            </Form.Item>
+          </Form>
+        </Collapse.Panel>
         <Collapse.Panel header="Simulators" key="12">
           <Form labelCol={{span: 17}} wrapperCol={{span: 3}}>
             <Form.Item label="Simulate Unknown Width" labelAlign="left">
@@ -161,11 +181,6 @@ function SideBar() {
               <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
             </Form.Item>}
           </Form>
-        </Collapse.Panel>
-        <Collapse.Panel header="Reset Gallery" key="13">
-          <Button icon="delete" shape="round" size="large" onClick={() => window.location.search = ''}>
-            Reset to Default Gallery
-          </Button>
         </Collapse.Panel>
         <Collapse.Panel header="Benchmarks" key="14">
           <Benchmarks />
