@@ -36,9 +36,9 @@ export function useGalleryContext() {
     setContext({galleryReady});
   };
 
-  const setIsSSR = isSSR => {
-    setContext({isSSR});
-  }
+  const setIsFullWidth = isFullWidth => {
+    setContext({isFullWidth});
+  };
 
   const setGallerySettings = gallerySettings => {
     setContext({gallerySettings: {...context.gallerySettings, ...gallerySettings}});
@@ -55,8 +55,8 @@ export function useGalleryContext() {
     setItems,
     galleryReady: context.galleryReady,
     setGalleryReady,
-    isSSR: context.isSSR,
-    setIsSSR,
+    isFullWidth: context.isFullWidth,
+    setIsFullWidth,
     gallerySettings: context.gallerySettings,
     setGallerySettings,
     dimensions: {
