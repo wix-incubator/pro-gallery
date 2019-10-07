@@ -1,5 +1,5 @@
 import React from 'react';
-import {Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
+import {Badge, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
 import {settingsManager} from '../../settings/settingsManager';
 import {INPUT_TYPES} from '../../settings/consts';
 import ColorPicker from '../ColorPicker/ColorPicker';
@@ -160,7 +160,7 @@ class JsonEditor extends React.Component {
     // json = removeFieldsNotNeeded(json, selectedLayout);
     const filterFunction = styleParam ? 
     ([key]) => key === styleParam : 
-    ([key, settings]) => settings.section === section && settings.subSection === subSection && settings.isRelevant(styleParams, context)
+    ([key, settings]) => settings.section === section && settings.subSection === subSection && (this.props.showAllStyles || settings.isRelevant(styleParams, context))
 
     const activeKey = styleParam ? {activeKey: 'collapse' + styleParam} : {defaultActiveKey: []};
 
@@ -178,7 +178,7 @@ class JsonEditor extends React.Component {
       // <Form layout="vertical">
       <Collapse accordion={true} bordered={false} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
-          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} >
+          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={settings.isRelevant(styleParams) ? null : <Badge status="warning" text="Not Relevant" />}>
               {/* <Form.Item key={styleParam} label={settings.title || styleParam} labelPlacement={'top'} style={{display: 'block', width: '100%'}}> */}
                 {this.renderEntryEditor(styleParam, settings)}
                 {

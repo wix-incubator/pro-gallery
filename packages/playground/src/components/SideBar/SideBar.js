@@ -19,7 +19,9 @@ function SideBar() {
     setStyleParams,
     styleParams,
     setIsFullWidth,
-    isFullWidth
+    isFullWidth,
+    setShowAllStyles,
+    showAllStyles
   } = useGalleryContext();
 
   const [searchResult, setSearchResult] = useState('');
@@ -35,23 +37,6 @@ function SideBar() {
     res = res.join('|').toLowerCase();
     return res;
   };
-  // const dataSource = Object.entries(settingsManager)
-  //   .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase()) >= 0)
-  //   .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
-  //   .map(([styleParam, props]) => (
-  //     <AutoComplete.Option key={styleParam}>
-  //       <Card size="small" title={props.title} type="inner" style={{
-  //         whiteSpace: 'pre-wrap'
-  //       }}>
-  //         <p><b>Key: </b>{styleParam}</p>
-  //         {props.description && <p><b>Description: </b>{props.description}</p>}
-  //         <p><b>Section: </b>{props.section}</p>
-  //         <p><b>Relevant in current configuration: </b>{props.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>
-  //       </Card>
-  //     </AutoComplete.Option>
-  //   ));
-
-  // console.log({dataSource, searchResult, styleParams});
 
   const dataSource = Object.entries(settingsManager)
   .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase()) >= 0)
@@ -117,6 +102,7 @@ function SideBar() {
             onChange={setStyleParams} 
             styleParams={styleParams}
             section={SECTIONS.LAYOUT}
+            showAllStyles={showAllStyles}
           />
         </Collapse.Panel>
         {Object.values(SECTIONS).map((section, idx) => {
@@ -128,7 +114,8 @@ function SideBar() {
                     section={section}
                     onChange={setStyleParams}
                     styleParams={styleParams}
-                  />
+                    showAllStyles={showAllStyles}
+                    />
                 </Collapse.Panel>
               )
             } else {
@@ -140,7 +127,8 @@ function SideBar() {
                       subSection={subSection}
                       onChange={setStyleParams}
                       styleParams={styleParams}
-                    />
+                      showAllStyles={showAllStyles}
+                      />
                   </Collapse.Panel>                
                 );
               });
@@ -153,7 +141,10 @@ function SideBar() {
     <h3 className={s.title}>Playground Gizmos</h3>
     <div className={s.controls}>
       <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => {}}>
-        <Collapse.Panel header="Playground Gallery Settings" key="13">
+        <Collapse.Panel header="Code Generator" key="code">
+          <CodePanel />
+        </Collapse.Panel>
+        <Collapse.Panel header="Media Types" key="media">
           <Form layout="vertical">
             <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
               <InputNumber min={0} max={100} defaultValue={0} onChange={val => setGallerySettings({numberOfItems: val})} />
@@ -165,14 +156,19 @@ function SideBar() {
                 <Select.Option value="videos">Videos Only</Select.Option>
               </Select>
             </Form.Item>
-            <Form.Item label="Reset Gallery">
-              <Button icon="delete" shape="round" size="small" onClick={() => window.location.search = ''}>
-                Reset to Default Gallery
-              </Button>
+          </Form>
+        </Collapse.Panel>
+        <Collapse.Panel header="Gallery Styles" key="styles">
+          <Form labelCol={{span: 17}} wrapperCol={{span: 3}}>
+            <Form.Item label="Show all Styles" labelAlign="left">
+              <Switch checked={showAllStyles} onChange={e => setShowAllStyles(e)} />
+            </Form.Item>
+            <Form.Item label="Reset to Default Gallery" labelAlign="left">
+              <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''}/>
             </Form.Item>
           </Form>
         </Collapse.Panel>
-        <Collapse.Panel header="Simulators" key="12">
+        <Collapse.Panel header="Simulators" key="simulators">
           <Form labelCol={{span: 17}} wrapperCol={{span: 3}}>
             <Form.Item label="Simulate Unknown Width" labelAlign="left">
               <Switch checked={isFullWidth} onChange={e => setIsFullWidth(e)} />
@@ -182,13 +178,10 @@ function SideBar() {
             </Form.Item>}
           </Form>
         </Collapse.Panel>
-        <Collapse.Panel header="Benchmarks" key="14">
+        <Collapse.Panel header="Benchmarks" key="1benchmarks4">
           <Benchmarks />
         </Collapse.Panel>
-        <Collapse.Panel header="Code Generator" key="15">
-          <CodePanel />
-        </Collapse.Panel>
-        <Collapse.Panel header="ToDos" key="16">
+        <Collapse.Panel header="ToDos" key="todos">
           {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info"/>)}
         </Collapse.Panel>
       </Collapse>
