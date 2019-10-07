@@ -194,5 +194,12 @@ export function mixAndSlice(array, length, seed) {
     return array
         .sort((itm1, itm2) => numFromId(itm1.itemId) - numFromId(itm2.itemId))
         .slice(0, length)
+        .map((item, idx) => ({
+            ...item,
+            metadata: {
+                ...item.metadata,
+                title: `Item #${idx}`
+            }
+        }))
 }
 

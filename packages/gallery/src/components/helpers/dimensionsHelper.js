@@ -45,7 +45,7 @@ class DimensionsHelper {
       const res = {
         galleryWidth: this.getGalleryWidth(),
         galleryHeight: this.getGalleryHeight(),
-        scrollBase: container.scrollBase,
+        scrollBase: container.scrollBase || 0,
         height: container.height,
         width: container.width,
       };
