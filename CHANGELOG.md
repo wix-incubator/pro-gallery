@@ -326,3 +326,11 @@
 #### GALLERY
  -  fix minor position diff in share icon
 
+
+---
+## v1.4.0 (07/10/2019)
+ 
+#### GALLERY
+ -  better handling of unknown width in SSR 
+    width can be either empty string or a number - the gallery will not measure itself
+
