@@ -176,11 +176,11 @@ class CssScrollHelper {
       styleParams,
     });
 
-    if (type !== 'video' && type !== 'text') {
+    if (type !== 'text') {
       //load hi-res image + loading transition
       if (!isFullWidth && !item.isDimensionless) { //FAKE SSR
         scrollCss +=
-          createScrollSelectors(this.highResPadding(), `.image-item>canvas`) +
+          createScrollSelectors(this.highResPadding(), `.${type}-item>canvas`) +
           `{opacity: 1; background-image: url(${createUrl(
             URL_SIZES.RESIZED,
             URL_TYPES.HIGH_RES,
