@@ -354,3 +354,10 @@
  
 #### GALLERY
  -  fix: remove react context
+
+---
+## v1.4.4 (07/10/2019)
+ 
+#### GALLERY
+ -  set default scrollBase to 0
+
