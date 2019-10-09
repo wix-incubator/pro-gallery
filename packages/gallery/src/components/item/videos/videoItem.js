@@ -23,7 +23,7 @@ class VideoItem extends GalleryComponent {
 
   componentDidMount() {
     if (!(window && window.ReactPlayer)) {
-      import('react-player').then(ReactPlayer => {
+      import(/* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
       });
@@ -34,7 +34,7 @@ class VideoItem extends GalleryComponent {
       this.props.videoUrl &&
       this.props.videoUrl.includes('vimeo.com')
     ) {
-      import('@vimeo/player').then(Player => {
+      import(/* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
       });

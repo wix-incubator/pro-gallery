@@ -42,13 +42,15 @@ export class GalleryContainer extends React.Component {
       gotFirstScrollEvent: false,
       playingVideoIdx: -1,
       nextVideoIdx: -1,
+      viewComponent: null
     };
+
+    this.state = initialState;
 
     this.items = [];
     this.itemsDimensions = {};
     this.preloadedItems = {};
     this.layoutCss = [];
-    this.state = initialState;
     const videoScrollHelperConfig = {
       setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
     };
@@ -80,6 +82,7 @@ export class GalleryContainer extends React.Component {
             gotFirstScrollEvent: initialState.gotFirstScrollEvent,
           });
           this.initialGalleryState = state;
+          this.loadViewComponentIfNeeded(state);
         } else {
           this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
         }
@@ -88,6 +91,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
+          this.loadViewComponentIfNeeded(galleryState);
           if (Object.keys(galleryState).length > 0) {
             this.initialGalleryState = galleryState;
           }
@@ -111,6 +115,7 @@ export class GalleryContainer extends React.Component {
       this.eventsListener(EVENTS.APP_LOADED, {});
     };
     const galleryState = this.reCreateGalleryExpensively(this.props);
+    this.loadViewComponentIfNeeded(galleryState);
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
         onGalleryCreated();
@@ -125,6 +130,7 @@ export class GalleryContainer extends React.Component {
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
+        this.loadViewComponentIfNeeded(galleryState);
         this.setState(galleryState, () => {
           this.handleNewGalleryStructure();
         });
@@ -788,8 +794,31 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  loadViewComponentIfNeeded(state) {
+    if (!state || !state.styles) {
+      return;
+    }
+    const { oneRow } = state.styles;
+    const viewComponent = oneRow ? 'slideshowView' : 'galleryView';
+    if (this.state.viewComponent !== viewComponent) {
+      this.ViewComponent = null;
+      this.lastOneRow = oneRow;
+      if (oneRow) {
+        import(/* webpackChunkName: "slideshowView" */ `./slideshowView`).then(comp => {
+          this.ViewComponent = comp.default;
+          this.setState({viewComponent})
+        });
+      } else {
+        import(/* webpackChunkName: "galleryView" */ `./galleryView`).then(comp => {
+          this.ViewComponent = comp.default;
+          this.setState({viewComponent})
+        });
+      }
+    }
+  }
+
   canRender() {
-    const can = this.state.container && this.state.styles && this.state.items;
+    const can = this.state.container && this.state.styles && this.state.items && this.ViewComponent;
     if (!can && utils.isVerbose()) {
       console.log(
         'PROGALLERY [CAN_RENDER] GalleryContainer',
@@ -808,8 +837,7 @@ export class GalleryContainer extends React.Component {
       return null;
     }
 
-    const { styles } = this.state;
-    const ViewComponent = styles.oneRow ? SlideshowView : GalleryView;
+    const {ViewComponent} = this;//styles.oneRow ? SlideshowView : GalleryView;
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
@@ -854,7 +882,7 @@ export class GalleryContainer extends React.Component {
           items={this.items}
           itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
-          styleParams={styles}
+          styleParams={this.state.styles}
           container={this.state.container}
           watermark={this.props.watermarkData}
           settings={this.props.settings}
