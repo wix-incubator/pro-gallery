@@ -92,7 +92,7 @@ const defaultStyleParams = {
   showArrows: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
-  galleryThumbnailsAlignment: Consts.thumbnailsAlignment.bottom,
+  galleryThumbnailsAlignment: Consts.thumbnailsAlignment.BOTTOM,
   enableScroll: true,
   hasThumbnails: false,
   isGrid: false,

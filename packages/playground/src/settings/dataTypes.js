@@ -126,10 +126,10 @@ export default {
   galleryThumbnailsAlignment: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: GALLERY_CONSTS.thumbnailsAlignment.bottom, title: "Bottom" },
-      { value: GALLERY_CONSTS.thumbnailsAlignment.left, title: "Left" },
-      { value: GALLERY_CONSTS.thumbnailsAlignment.top, title: "Top" },
-      { value: GALLERY_CONSTS.thumbnailsAlignment.right, title: "Right" }
+      { value: GALLERY_CONSTS.thumbnailsAlignment.BOTTOM, title: "Bottom" },
+      { value: GALLERY_CONSTS.thumbnailsAlignment.LEFT, title: "Left" },
+      { value: GALLERY_CONSTS.thumbnailsAlignment.TOP, title: "Top" },
+      { value: GALLERY_CONSTS.thumbnailsAlignment.RIGHT, title: "Right" }
     ],
   },
   thumbnailSize: {

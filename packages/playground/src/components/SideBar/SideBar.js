@@ -9,6 +9,7 @@ import { SECTIONS, settingsManager } from '../../settings/settingsManager';
 import { INPUT_TYPES } from '../../settings/consts';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
+import { throttle } from "../../utils/utils";
 import s from './SideBar.module.scss';
 
 function SideBar() {
@@ -26,6 +27,8 @@ function SideBar() {
 
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+
+  const _setStyleParams = throttle(setStyleParams, 1000);
   const createSearchString = (styleParam, searchTerm) => {
     let res = [styleParam];
     const props = settingsManager[styleParam];
@@ -83,7 +86,7 @@ function SideBar() {
           border: 'none',
         }}>
           <JsonEditor 
-            onChange={setStyleParams} 
+            onChange={_setStyleParams} 
             styleParams={{[searchResult]: styleParams[searchResult]}}
             section={settingsManager[searchResult].section}
             styleParam={searchResult}
@@ -99,7 +102,7 @@ function SideBar() {
           <LayoutPicker selectedLayout={styleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
           <Divider />
           <JsonEditor 
-            onChange={setStyleParams} 
+            onChange={_setStyleParams} 
             styleParams={styleParams}
             section={SECTIONS.PRESET}
             showAllStyles={showAllStyles}
@@ -111,7 +114,7 @@ function SideBar() {
               <Collapse.Panel header={section} key={idx + 1}>
                 <JsonEditor
                   section={section}
-                  onChange={setStyleParams}
+                  onChange={_setStyleParams}
                   styleParams={styleParams}
                   showAllStyles={showAllStyles}
                   />
