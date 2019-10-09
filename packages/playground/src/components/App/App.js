@@ -29,7 +29,7 @@ var galleryReadyEvent = new Event('galleryReady');
 export function App() {
 
   const {setDimentions, styleParams, setItems, items, isFullWidth, gallerySettings} = useGalleryContext();
-  const [showSide, setShowSide] = useState(true);
+  const [showSide, setShowSide] = useState(false);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {}; 
 
@@ -109,7 +109,7 @@ export function App() {
   return (
     <main className={s.main}>
       <Button className={s.toggleButton} onClick={switchState} icon={showSide ? "close" : "menu"} shape="circle" size="default" type="primary" />
-      <aside className={s.sideBar} style={{width: showSide ? SIDEBAR_WIDTH : 0}}>
+      <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0}}>
         <div className={s.heading}>
           Pro Gallery Playground <span className={s.version}>v{pJson.version}</span>
         </div>
