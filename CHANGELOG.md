@@ -361,3 +361,9 @@
 #### GALLERY
  -  set default scrollBase to 0
 
+
+---
+## v1.5.0 (09/10/2019)
+ 
+#### GALLERY
+ -  dynamic load of ViewComponent
