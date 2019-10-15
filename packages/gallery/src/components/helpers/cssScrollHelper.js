@@ -181,7 +181,7 @@ class CssScrollHelper {
       if (!isFullWidth && !item.isDimensionless) { //FAKE SSR
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.${type}-item>canvas`) +
-          `{opacity: 1; background-image: url(${createUrl(
+          `{opacity: 1; transition: opacity 1s linear 1s; background-image: url(${createUrl(
             URL_SIZES.RESIZED,
             URL_TYPES.HIGH_RES,
           )})}`;
