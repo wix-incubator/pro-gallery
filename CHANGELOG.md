@@ -367,3 +367,11 @@
  
 #### GALLERY
  -  dynamic load of ViewComponent
+
+---
+## v1.5.1 (15/10/2019)
+ 
+#### GALLERY
+ -  remove sideEffects from package.json (caused css to disappear)
+ -  set default view component is null function
+
