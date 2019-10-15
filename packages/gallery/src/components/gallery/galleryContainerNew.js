@@ -1,6 +1,4 @@
 import React from 'react';
-import GalleryView from './galleryView.js';
-import SlideshowView from './slideshowView.js';
 import { addLayoutStyles } from '../helpers/layoutHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import dimensionsHelper from '../helpers/dimensionsHelper';
