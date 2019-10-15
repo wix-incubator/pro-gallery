@@ -11,7 +11,7 @@
     "watch": "lerna run --parallel watch",
     "bootstrap": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
-    "deploy": "npm run deploy --prefix packages/playground",
+    "deploy": "npm run deploy --prefix packages/playground && node scripts/deployToSurge",
     "patch": "node scripts/releaseVersion --patch",
     "minor": "node scripts/releaseVersion --minor",
     "major": "node scripts/releaseVersion --major"

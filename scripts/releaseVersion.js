@@ -134,7 +134,7 @@ function getDate() {
 
 function formatForChangelog(version, commits) {
 
-    const versionStr = `\n---\n## v${version} (${getDate()})`;
+    const versionStr = `\n---\n## [v${version}](https://pro-gallery-${version.replace(/\./g, '-')}.surge.sh) (${getDate()})`;
     commits = String(commits).split(`\n`).filter(msg => msg.trim().length > 0);
     const commitsByProject = commits.reduce((obj, commit) => {
         const matchedProject = (commit.match(/\[.*\]/) || [''])[0].toLowerCase().replace(']', '').replace('[', '');
