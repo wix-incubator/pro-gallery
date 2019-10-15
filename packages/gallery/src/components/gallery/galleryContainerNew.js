@@ -801,12 +801,12 @@ export class GalleryContainer extends React.Component {
     const { oneRow } = state.styles;
     const viewComponent = oneRow ? 'slideshowView' : 'galleryView';
     if (this.state.viewComponent !== viewComponent) {
-      this.ViewComponent = null;
+      this.ViewComponent = () => null;
       this.lastOneRow = oneRow;
       if (oneRow) {
         import(/* webpackChunkName: "slideshowView" */ `./slideshowView`).then(comp => {
           this.ViewComponent = comp.default;
-          this.setState({viewComponent})
+          this.setState({viewComponent}); //trigger another render
         });
       } else {
         import(/* webpackChunkName: "galleryView" */ `./galleryView`).then(comp => {
