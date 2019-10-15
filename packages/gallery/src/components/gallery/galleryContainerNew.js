@@ -312,18 +312,8 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick,
       initialGalleryHeight,
     } = this.state;
-    const partialStyleParams = utils.pick(this.state.styles, [
-      'isSlideshow',
-      'slideshowInfoSize',
-      'galleryThumbnailsAlignment',
-      'thumbnailSize',
-      'isSlider',
-      'galleryWidth',
-      'isInAdi',
-      'oneRow',
-      'enableInfiniteScroll',
-    ]);
-    const numOfItems = this.state.items.length;
+    const styleParams = this.state.styles;
+    const numOfItems = this.items.length;
     const layoutHeight = this.layout.height;
     const layoutItems = this.layout.items;
     const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
@@ -341,7 +331,7 @@ export class GalleryContainer extends React.Component {
     const onGalleryChangeData = {
       numOfItems,
       container,
-      partialStyleParams,
+      styleParams,
       layoutHeight,
       layoutItems,
       isInfinite,
