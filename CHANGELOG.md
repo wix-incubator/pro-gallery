@@ -392,3 +392,10 @@
 #### GALLERY
  -  remove unsed dependencies
 
+
+---
+## [v1.5.4](https://pro-gallery-1-5-4.surge.sh) (15/10/2019)
+ 
+#### GALLERY
+ - re-add css from main index.js
+
