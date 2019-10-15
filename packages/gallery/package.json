@@ -5,12 +5,10 @@
   "version": "1.5.0",
   "author": {
     "name": "Guy Sopher",
-    "email": "guysopher@gmail.com",
-    "url": ""
+    "email": "guysopher@gmail.com"
   },
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
-  "sideEffects": false,
   "files": [
     "dist"
   ],
