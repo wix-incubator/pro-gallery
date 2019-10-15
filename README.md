@@ -1,5 +1,5 @@
 # Pro Gallery
-Blazing fast & beautiful galleries built for the web. [try it out](https://wix-incubator.github.io/pro-gallery/)
+Blazing fast & beautiful galleries built for the web. [try it out](https://pro-gallery.surge.sh)
 
 [![NPM Version](https://img.shields.io/npm/v/pro-gallery.svg?style=flat)](https://www.npmjs.com/package/pro-gallery)
 [![Build Status](https://travis-ci.com/wix-incubator/pro-gallery.svg?branch=master)](https://travis-ci.com/wix-incubator/pro-gallery)
@@ -73,7 +73,7 @@ const container = {
 
 ### Styles
 A list of the styles and behaviour parameters for the gallery.
-The gallery has many many options that can be modified. To create you list of styles, use the [playground](https://wix-incubator.github.io/pro-gallery/) to create your prefered gallery and copy the generated code.
+The gallery has many many options that can be modified. To create you list of styles, use the [playground](https://pro-gallery.surge.sh) to create your prefered gallery and copy the generated code.
 
 ### Scrolling Element
 The DOM element inside which the gallery is scrolled (defaults to `window`). If the gallery is scrolled inside a different element, pass its dom reference in this property.
