@@ -385,3 +385,10 @@
 #### PLAYGROUND
  -  move playground to surge
 
+
+---
+## [v1.5.3](https://pro-gallery-1-5-3.surge.sh) (15/10/2019)
+ 
+#### GALLERY
+ -  remove unsed dependencies
+
