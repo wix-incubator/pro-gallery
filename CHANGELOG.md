@@ -399,3 +399,10 @@
 #### GALLERY
  - re-add css from main index.js
 
+
+---
+## [v1.5.5](https://pro-gallery-1-5-5.surge.sh) (15/10/2019)
+ 
+#### GALLERY
+ - use real styles and items as event data
+
