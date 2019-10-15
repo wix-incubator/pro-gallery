@@ -37,7 +37,7 @@ function deploy(name) {
   console.log(chalk.cyan(`Deploying ${name} example to surge...`));
   const subdomain = generateSubdomain(name);
   const domain = fqdn(subdomain);
-  const deployCommand = `npx surge build ${domain}`;
+  const deployCommand = `npx surge build ${domain} && npx surge build ${fqdn(name)}`;
   try {
     console.log(chalk.magenta(`Running "${deployCommand}`));
     exec(deployCommand);
