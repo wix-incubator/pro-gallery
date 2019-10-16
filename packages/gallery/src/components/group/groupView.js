@@ -27,7 +27,7 @@ class GroupView extends GalleryComponent {
     if (!items || !items.length) {
       return false;
     }
-    if (galleryConfig.styleParams.slideshowLoop) {
+    if (this.props.allowLoop) {
       const {idx} = items[items.length - 1];
       const {currentIdx, totalItemsCount} = galleryConfig;
       

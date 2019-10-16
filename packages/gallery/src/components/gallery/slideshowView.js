@@ -49,9 +49,9 @@ class SlideshowView extends GalleryComponent {
     if (this.container) {
       const {scrollLeft, scrollWidth, clientWidth} = this.container;
       if (isRTL) {
-        return scrollLeft + clientWidth >= scrollWidth - 5;
+        return scrollLeft + clientWidth >= scrollWidth - 1;
       } else {
-        return scrollLeft <= 5
+        return scrollLeft <= 1
       }
     } else {
       return false;
@@ -727,6 +727,7 @@ class SlideshowView extends GalleryComponent {
                   ? React.createElement(
                       GroupView,
                       {
+                        allowLoop: this.props.styleParams.slideshowLoop && (this.props.galleryStructure.width > this.props.container.width),
                         itemsLoveData,
                         ...group.renderProps(galleryConfig)
                       },
