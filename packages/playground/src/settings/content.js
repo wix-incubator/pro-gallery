@@ -1,5 +1,3 @@
-import {SECTIONS, SUB_SECTIONS} from './consts';
-
 export default {
   isStore: {
     title: 'Is store',
