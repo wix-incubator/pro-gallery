@@ -42,6 +42,7 @@ function getLatestCommit() {
 
 function shouldPublishVersionSpecific() {
     const commit = getLatestCommit();
+    console.log({commit});
     const regex = /^v\d.\d{1,2}.\d{1,3}$/gm;
     return !!(regex.exec(commit)) 
 }
@@ -51,9 +52,11 @@ function deploy(name) {
   const subdomain = generateSubdomain(name);
   const domain = fqdn(subdomain);
   let deployCommand = `npx surge build ${fqdn(name)}`;
+  console.log({deployCommand});
   if (shouldPublishVersionSpecific()) {
       deployCommand += `&& npx surge build ${domain}`;
   }
+  console.log({deployCommand});
   try {
     console.log(chalk.magenta(`Running "${deployCommand}`));
     exec(deployCommand);
@@ -68,7 +71,7 @@ function run() {
   if (TRAVIS_BRANCH !== 'master' && TRAVIS_PULL_REQUEST === 'false') {
     skip = 'Not master or PR';
   } else if (!CI) {
-    skip = 'Not in CI';
+    //skip = 'Not in CI';
   } else if (!SURGE_LOGIN) {
     skip = 'PR from fork';
   }
@@ -81,7 +84,7 @@ function run() {
     process.chdir(path.resolve(process.cwd(), example.path));
 
     console.log(chalk.blue(`\nDeploying ${example.name} example...`));
-    build();
+    //build();
     deploy(example.name);
 
     process.chdir(path.resolve('../..'));
