@@ -49,13 +49,6 @@ function getCommitsUntilVersion(version) {
     });
 }
 
-function getLatestCommit() {
-    const gitCommand = `git log --pretty=format:%B HEAD~1..HEAD`;
-    return execSync(gitCommand, {
-        stdio: 'pipe'
-    });
-}
-
 function editChangelogAndUpdateVersion(bump) {
     var editor = 'code';
     var child = spawn(editor, [CHANGELOG], {

@@ -33,11 +33,27 @@ function build() {
   exec(buildCommand);
 }
 
+function getLatestCommit() {
+    const gitCommand = `git log --pretty=format:%B HEAD~1..HEAD`;
+    return execSync(gitCommand, {
+        stdio: 'pipe'
+    });
+}
+
+function shouldPublishVersionSpecific() {
+    const commit = getLatestCommit();
+    const regex = /^v\d.\d{1,2}.\d{1,3}$/gm;
+    return !!(regex.exec(commit)) 
+}
+
 function deploy(name) {
   console.log(chalk.cyan(`Deploying ${name} example to surge...`));
   const subdomain = generateSubdomain(name);
   const domain = fqdn(subdomain);
-  const deployCommand = `npx surge build ${domain} && npx surge build ${fqdn(name)}`;
+  let deployCommand = `npx surge build ${fqdn(name)}`;
+  if (shouldPublishVersionSpecific()) {
+      deployCommand += `&& npx surge build ${domain}`;
+  }
   try {
     console.log(chalk.magenta(`Running "${deployCommand}`));
     exec(deployCommand);
@@ -52,7 +68,7 @@ function run() {
   if (TRAVIS_BRANCH !== 'master' && TRAVIS_PULL_REQUEST === 'false') {
     skip = 'Not master or PR';
   } else if (!CI) {
-    // skip = 'Not in CI';
+    skip = 'Not in CI';
   } else if (!SURGE_LOGIN) {
     skip = 'PR from fork';
   }
@@ -65,7 +81,7 @@ function run() {
     process.chdir(path.resolve(process.cwd(), example.path));
 
     console.log(chalk.blue(`\nDeploying ${example.name} example...`));
-    // build();
+    build();
     deploy(example.name);
 
     process.chdir(path.resolve('../..'));
