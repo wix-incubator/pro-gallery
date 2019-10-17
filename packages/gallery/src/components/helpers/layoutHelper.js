@@ -681,7 +681,10 @@ function processLayouts(styles) {
     //if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
     processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
+  } else {
+    processedStyles.slideshowLoop = false; //allow slideshowLoop only for horizontal layouts
   }
+
   if (processedStyles.imageMargin > 0) {
     if (utils.isMobile()) {
       processedStyles.imageMargin = Math.min(processedStyles.imageMargin, 50); //limit mobile spacing to 50px (25 on each side)
