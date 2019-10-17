@@ -406,3 +406,11 @@
 #### GALLERY
  - use real styles and items as event data
 
+
+---
+## [v1.5.6](https://pro-gallery-1-5-6.surge.sh) (17/10/2019)
+ 
+#### GALLERY
+ -  fix className of videoItemPlaceholder
+ -  fix images loop for very few items
+ -  add fade loading transition
