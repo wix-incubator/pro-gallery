@@ -608,7 +608,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemInner() {
-    const { styleParams, type } = this.props;
+    const { styleParams, type, visible } = this.props;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
     let itemTexts =
@@ -624,27 +624,31 @@ class ItemView extends GalleryComponent {
       imageDimensions,
     );
 
-    switch (type) {
-      case 'dummy':
-        itemInner = <div />;
-        break;
-      case 'video':
-        if (
-          this.props.idx === this.props.playingVideoIdx ||
-          this.props.idx === this.props.nextVideoIdx
-        ) {
-          itemInner = this.getVideoItem(imageDimensions, itemHover);
-        } else {
-          itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
-        }
-        break;
-      case 'text':
-        itemInner = [this.getTextItem(imageDimensions), itemHover];
-        break;
-      case 'image':
-      case 'picture':
-      default:
-        itemInner = [this.getImageItem(imageDimensions), itemHover];
+    if (visible) {
+      switch (type) {
+        case 'dummy':
+          itemInner = <div />;
+          break;
+        case 'video':
+          if (
+            this.props.idx === this.props.playingVideoIdx ||
+            this.props.idx === this.props.nextVideoIdx
+          ) {
+            itemInner = this.getVideoItem(imageDimensions, itemHover);
+          } else {
+            itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
+          }
+          break;
+        case 'text':
+          itemInner = [this.getTextItem(imageDimensions), itemHover];
+          break;
+        case 'image':
+        case 'picture':
+        default:
+          itemInner = [this.getImageItem(imageDimensions), itemHover];
+      }
+    } else {
+      itemInner = <div/>
     }
 
     if (styleParams.isSlideshow) {

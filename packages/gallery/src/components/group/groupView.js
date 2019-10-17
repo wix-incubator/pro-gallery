@@ -15,7 +15,7 @@ class GroupView extends GalleryComponent {
       React.createElement(
         itemView,
         {
-          ...item.renderProps(Object.assign(this.props.galleryConfig, { visible })),
+          ...item.renderProps({...this.props.galleryConfig, visible }),
           ...this.props.itemsLoveData[item.id]
         },
       ),
@@ -23,10 +23,17 @@ class GroupView extends GalleryComponent {
   }
 
   shouldRender() {
-    const {items, galleryConfig} = this.props;
+    const {items} = this.props;
     if (!items || !items.length) {
       return false;
     }
+    
+    return true;
+  }
+
+  isVisible() {
+    const {items, galleryConfig} = this.props;
+
     if (this.props.allowLoop) {
       const {idx} = items[items.length - 1];
       const {currentIdx, totalItemsCount} = galleryConfig;
@@ -36,14 +43,14 @@ class GroupView extends GalleryComponent {
       
       return (Math.abs(distance) <= padding);
     }
-    
+
     return true;
   }
 
   render() {
     return this.shouldRender() ? (
       <div key={`group_${this.props.idx}_${this.props.items[0].id}`} data-hook={'group-view'}>
-        {this.createDom(true)}
+        {this.createDom(this.isVisible())}
       </div>
     ) : null;
   }
