@@ -431,3 +431,10 @@
 #### LAYOUTS
  -  fix (layouter): fix infiniteScroll for horizontal grid galleries
 
+
+---
+## [v1.5.9](https://pro-gallery-1-5-9.surge.sh) (17/10/2019)
+
+#### LAYOUTS
+ -  fix (layouter): fix horizontal infiniteScroll reset
+
