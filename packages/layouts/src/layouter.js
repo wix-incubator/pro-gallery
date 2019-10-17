@@ -146,6 +146,7 @@ export default class Layouter {
               });
               this.groupIdx--;
             });
+            this.galleryHeight = 0;
           } else {
             //remove items from the last 2 strips;
             const lastStrips = this.strips.slice(-2);
