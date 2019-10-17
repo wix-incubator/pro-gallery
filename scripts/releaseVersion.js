@@ -105,7 +105,7 @@ function getBumpedVersion(version, bump) {
 }
 
 function writeToChangelog(str) {
-    const writeCommand = `echo "${str.replace(/\"/g, '')}" >> ${CHANGELOG}`;
+    const writeCommand = `echo "${str.replace(/\"/g, '')}" | cat - ${CHANGELOG} > temp && mv temp ${CHANGELOG}`
     execSync(writeCommand);
 }
 
@@ -127,7 +127,7 @@ function getDate() {
 
 function formatForChangelog(version, commits) {
 
-    const versionStr = `\n---\n## [v${version}](https://pro-gallery-${version.replace(/\./g, '-')}.surge.sh) (${getDate()})`;
+    const versionStr = `## [v${version}](https://pro-gallery-${version.replace(/\./g, '-')}.surge.sh) (${getDate()})`;
     commits = String(commits).split(`\n`).filter(msg => msg.trim().length > 0);
     const commitsByProject = commits.reduce((obj, commit) => {
         const matchedProject = (commit.match(/\[.*\]/) || [''])[0].toLowerCase().replace(']', '').replace('[', '');
@@ -142,7 +142,7 @@ function formatForChangelog(version, commits) {
     let commitsStr = Object.entries(commitsByProject).map(([project, itsCommits]) => `\n#### ${project.toUpperCase()}\n${itsCommits}`).join(``);
 
     // let commitsStr = String(commits).split(`\n`).filter(msg => msg.trim().length > 0).map(msg => ' - ' + msg).join(`\n`);
-    return `${versionStr}\n ${commitsStr}`;
+    return `${versionStr}\n ${commitsStr}\n---`;
 }
 
 function getFlags() {
