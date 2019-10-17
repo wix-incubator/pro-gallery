@@ -128,12 +128,16 @@ export default class Layouter {
         } else {
           //---------------------| STRIPS GALLERY |----------------------//
           if (this.styleParams.oneRow) {
-            //remove items from the last 2 groups;
-            const lastGroups = this.groups.slice(-2);
+            //remove items from the last group:
+            const lastGroups = this.groups.slice(-1);
             lastGroups.forEach(group => {
               const column = this.columns[group.columnIdx];
               if (column) {
                 column.groups.splice(-1, 1);
+              }
+              const strip = this.strips[group.stripIdx];
+              if (strip) {
+                strip.groups.splice(-1, 1);
               }
               this.groups.splice(-1, 1);
               group.items.forEach(() => {
