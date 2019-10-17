@@ -1,3 +1,9 @@
+## [v1.5.10](https://pro-gallery-1-5-10.surge.sh) (17/10/2019)
+ 
+#### GALLERY
+ -  fix (slideshowLoop): place dummy items for duplicated items
+
+---
 ## [v1.5.9](https://pro-gallery-1-5-9.surge.sh) (17/10/2019)
 
 #### LAYOUTS
