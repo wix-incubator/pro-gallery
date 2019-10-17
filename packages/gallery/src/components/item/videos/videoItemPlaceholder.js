@@ -11,7 +11,7 @@ class VideoItemPlaceholder extends GalleryComponent {
         key={'image-' + this.props.id}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
         className={
-          'gallery-item-hidden gallery-item-visible gallery-item ' +
+          'gallery-item-hidden gallery-item-visible gallery-item gallery-item-preloaded ' +
           (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
           (this.props.loadingStatus.failed ? ' failed ' : '')
         }
