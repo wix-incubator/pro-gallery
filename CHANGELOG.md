@@ -421,3 +421,13 @@
 #### GALLERY
  - disable slideshowLoop for vertical layouts
 
+
+---
+## [v1.5.8](https://pro-gallery-1-5-8.surge.sh) (17/10/2019)
+ 
+#### GALLERY
+ -  improve (animations): add blur and main color animations
+
+#### LAYOUTS
+ -  fix (layouter): fix infiniteScroll for horizontal grid galleries
+
