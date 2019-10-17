@@ -1,3 +1,9 @@
+## [v1.5.11](https://pro-gallery-1-5-11.surge.sh) (17/10/2019)
+ 
+#### LAYOUTS
+ -  fix: reset layoutHeight when adding new items
+
+---
 ## [v1.5.10](https://pro-gallery-1-5-10.surge.sh) (17/10/2019)
  
 #### GALLERY
