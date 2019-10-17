@@ -127,42 +127,60 @@ export default class Layouter {
           });
         } else {
           //---------------------| STRIPS GALLERY |----------------------//
-          //remove items from the last 2 strips;
-          const lastStrips = this.strips.slice(-2);
-          if (lastStrips) {
-            lastStrips.forEach(lastStrip => {
-              if (lastStrip) {
-                this.strips.splice(-1, 1);
-                const groups = lastStrip.groups;
-                groups.forEach(group => {
-                  this.groups.splice(-1, 1);
-                  group.items.forEach(() => {
-                    this.layoutItems.splice(-1, 1);
-                    this.pointer--;
-                  });
-                  this.groupIdx--;
-                });
+          if (this.styleParams.oneRow) {
+            //remove items from the last 2 groups;
+            const lastGroups = this.groups.slice(-2);
+            lastGroups.forEach(group => {
+              const column = this.columns[group.columnIdx];
+              if (column) {
+                column.groups.splice(-1, 1);
               }
+              this.groups.splice(-1, 1);
+              group.items.forEach(() => {
+                this.layoutItems.splice(-1, 1);
+                this.pointer--;
+              });
+              this.groupIdx--;
             });
-            this.galleryHeight = this.strips.reduce(
-              (totalHeight, strip) => (totalHeight += strip.height),
-              0,
-            );
-            // this.strip = this.strips[this.strips.length - 1];
-            this.strip = new Strip({
-              idx: this.strips.length,
-              container: this.container,
-              groupsPerStrip: this.styleParams.groupsPerStrip,
-              oneRow: this.styleParams.oneRow,
-              gallerySize: this.gallerySize,
-            });
+          } else {
+            //remove items from the last 2 strips;
+            const lastStrips = this.strips.slice(-2);
+            if (lastStrips) {
+              lastStrips.forEach(lastStrip => {
+                if (lastStrip) {
+                  this.strips.splice(-1, 1);
+                  const groups = lastStrip.groups;
+                  groups.forEach(group => {
+                    this.groups.splice(-1, 1);
+                    group.items.forEach(() => {
+                      this.layoutItems.splice(-1, 1);
+                      this.pointer--;
+                    });
+                    this.groupIdx--;
+                  });
+                }
+              });
+              this.galleryHeight = this.strips.reduce(
+                (totalHeight, strip) => (totalHeight += strip.height),
+                0,
+              );
+              // this.strip = this.strips[this.strips.length - 1];
+              this.strip = new Strip({
+                idx: this.strips.length,
+                container: this.container,
+                groupsPerStrip: this.styleParams.groupsPerStrip,
+                oneRow: this.styleParams.oneRow,
+                gallerySize: this.gallerySize,
+              });
+            }
           }
-        }
 
-        this.groupItems = [];
+          this.groupItems = [];
+        }
       }
 
       this.item = {};
+      this.pointer = Math.max(0, this.pointer);
       this.maxLoops = this.srcItems.length * 10;
     } else {
       this.pointer = 0;
