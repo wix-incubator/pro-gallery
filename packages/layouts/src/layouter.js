@@ -138,6 +138,8 @@ export default class Layouter {
               const strip = this.strips[group.stripIdx];
               if (strip) {
                 strip.groups.splice(-1, 1);
+                strip.setWidth(strip.width - group.width);
+                strip.ratio = strip.width / strip.height;
               }
               this.groups.splice(-1, 1);
               group.items.forEach(() => {
