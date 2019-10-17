@@ -414,3 +414,10 @@
  -  fix className of videoItemPlaceholder
  -  fix images loop for very few items
  -  add fade loading transition
+
+---
+## [v1.5.7](https://pro-gallery-1-5-7.surge.sh) (17/10/2019)
+ 
+#### GALLERY
+ - disable slideshowLoop for vertical layouts
+
