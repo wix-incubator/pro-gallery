@@ -131,16 +131,19 @@ export default class Layouter {
             //remove items from the last group:
             const lastGroups = this.groups.slice(-1);
             lastGroups.forEach(group => {
-              const column = this.columns[group.columnIdx];
+              const column = this.columns[0];
               if (column) {
                 column.groups.splice(-1, 1);
               }
-              const strip = this.strips[group.stripIdx];
+              const strip = this.strips[0];
               if (strip) {
-                strip.groups.splice(-1, 1);
                 strip.setWidth(strip.width - group.width);
                 strip.ratio = strip.width / strip.height;
+                strip.groups.splice(-1, 1);
+                this.strip = strip;
               }
+              this.strips = [];
+
               this.groups.splice(-1, 1);
               group.items.forEach(() => {
                 this.layoutItems.splice(-1, 1);
