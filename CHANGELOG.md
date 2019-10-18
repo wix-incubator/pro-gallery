@@ -1,3 +1,9 @@
+## [v1.5.13](https://pro-gallery-1-5-13.surge.sh) (18/10/2019)
+ 
+#### LAYOUTS
+ -  fix: fine tune infiniteScroll one horizontal layout
+
+---
 ## [v1.5.12](https://pro-gallery-1-5-12.surge.sh) (17/10/2019)
  
 #### LAYOUTS
