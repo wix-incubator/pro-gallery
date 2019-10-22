@@ -1,3 +1,9 @@
+## [v1.5.15](https://pro-gallery-1-5-15.surge.sh) (22/10/2019)
+ 
+#### GALLERY
+ -  fix (dimensionsHelper): improve fullWidth check
+
+---
 ## [v1.5.14](https://pro-gallery-1-5-14.surge.sh) (22/10/2019)
  
 #### GALLERY
