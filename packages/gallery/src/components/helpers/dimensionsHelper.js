@@ -34,8 +34,7 @@ class DimensionsHelper {
   isFullWidth(container = this.container) {
       //if the container width is not a number, it is fullwidth (e.g.: "", "100%", "calc(100% + -160px)")
       return (
-        !!container &&
-        String(parseInt(container.width)) !== String(container.width)
+        !!container && container.width > 0
       );
   }
 
@@ -109,11 +108,11 @@ class DimensionsHelper {
     return this.getOrPutInCache('galleryDimensions', () => {
       const container = this.container;
       const res = {
-        galleryWidth: this.getGalleryWidth(),
-        galleryHeight: this.getGalleryHeight(),
-        scrollBase: container.scrollBase || this.calcScrollBase() || 0,
-        height: container.height,
-        width: container.width,
+        galleryWidth: Math.ceil(this.getGalleryWidth()),
+        galleryHeight: Math.ceil(this.getGalleryHeight()),
+        scrollBase: Math.ceil(container.scrollBase || this.calcScrollBase() || 0),
+        height: Math.ceil(container.height),
+        width: Math.ceil(container.width),
       };
       if (this.styles.hasThumbnails) {
         const fixedThumbnailSize =
