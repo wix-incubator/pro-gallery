@@ -39,13 +39,79 @@ class DimensionsHelper {
       );
   }
 
+  calcBoundingRect() {
+    if (utils.isVerbose()) {
+      console.count('calcBoundingRect');
+    }
+    try {
+      return window.document
+        .getElementById(`pro-gallery-${this.domId}`)
+        .getBoundingClientRect();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  getBoundingRect() {
+    return this.getOrPutInCache('boundingRect', () => {
+      return (
+        this.calcBoundingRect() || {
+          x: 0,
+          y: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }
+      );
+    });
+  }
+  calcBodyBoundingRect() {
+    if (utils.isVerbose()) {
+      console.count('calcBodyBoundingRect');
+    }
+    try {
+      return window.document.body.getBoundingClientRect();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  getBodyBoundingRect() {
+    return this.getOrPutInCache('bodyBoundingRect', () => {
+      return (
+        this.calcBodyBoundingRect() || {
+          x: 0,
+          y: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }
+      );
+    });
+  }
+  calcScrollBase() {
+    return this.getOrPutInCache('scrollBase', () => {
+      let { scrollBase } = this.container;
+      try {
+        if (!(scrollBase >= 0)) {
+          scrollBase = 0;
+        }
+        const offset = this.getBoundingRect().y - this.getBodyBoundingRect().y; //clientRect are relative to the viewport, thus affected by scroll and need to be normalized to the body
+        if (offset >= 0) {
+          scrollBase += offset;
+        }
+      } catch (e) {
+        //
+      }
+      return scrollBase;
+    });
+  }
+
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
       const container = this.container;
       const res = {
         galleryWidth: this.getGalleryWidth(),
         galleryHeight: this.getGalleryHeight(),
-        scrollBase: container.scrollBase || 0,
+        scrollBase: this.calcScrollBase(),
         height: container.height,
         width: container.width,
       };
