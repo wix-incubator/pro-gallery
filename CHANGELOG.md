@@ -1,3 +1,9 @@
+## [v1.5.14](https://pro-gallery-1-5-14.surge.sh) (22/10/2019)
+ 
+#### GALLERY
+ -  improve (dimensionsHelper): calc scrollBase if needed
+
+---
 ## [v1.5.13](https://pro-gallery-1-5-13.surge.sh) (18/10/2019)
  
 #### LAYOUTS
