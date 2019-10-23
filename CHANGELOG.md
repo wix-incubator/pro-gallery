@@ -1,3 +1,9 @@
+## [v1.5.18](https://pro-gallery-1-5-18.surge.sh) (23/10/2019)
+ 
+#### GALLERY
+ -  fix: do not render without a loaded viewComponent
+
+---
 ## [v1.5.17](https://pro-gallery-1-5-17.surge.sh) (23/10/2019)
  
 #### GALLERY
