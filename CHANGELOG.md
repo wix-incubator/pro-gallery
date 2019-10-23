@@ -1,3 +1,9 @@
+## [v1.5.16](https://pro-gallery-1-5-16.surge.sh) (23/10/2019)
+ 
+#### GALLERY
+ -  fix (dimensionHelper): fix isFullWidth condition
+
+---
 ## [v1.5.15](https://pro-gallery-1-5-15.surge.sh) (22/10/2019)
  
 #### GALLERY
