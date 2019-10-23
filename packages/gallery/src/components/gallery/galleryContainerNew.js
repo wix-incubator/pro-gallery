@@ -1,4 +1,6 @@
 import React from 'react';
+import GalleryView from './galleryView';
+import SlideshowView from './slideshowView';
 import { addLayoutStyles } from '../helpers/layoutHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import dimensionsHelper from '../helpers/dimensionsHelper';
@@ -59,7 +61,6 @@ export class GalleryContainer extends React.Component {
         props,
         initialState,
       );
-      this.loadViewComponentIfNeeded(this.initialGalleryState, newState => Object.assign(this.initialGalleryState, newState));
       try {
         this.galleryInitialStateJson = JSON.stringify(this.initialGalleryState);
       } catch (e) {
@@ -81,7 +82,6 @@ export class GalleryContainer extends React.Component {
             gotFirstScrollEvent: initialState.gotFirstScrollEvent,
           });
           this.initialGalleryState = state;
-          this.loadViewComponentIfNeeded(state, newState => Object.assign(this.initialGalleryState, newState));
         } else {
           this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
         }
@@ -90,7 +90,6 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
-          this.loadViewComponentIfNeeded(galleryState, newState => Object.assign(this.initialGalleryState, newState));
           if (Object.keys(galleryState).length > 0) {
             this.initialGalleryState = galleryState;
           }
@@ -114,7 +113,6 @@ export class GalleryContainer extends React.Component {
       this.eventsListener(EVENTS.APP_LOADED, {});
     };
     const galleryState = this.reCreateGalleryExpensively(this.props);
-    this.loadViewComponentIfNeeded(galleryState, this.setState.bind(this));
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
         onGalleryCreated();
@@ -129,7 +127,6 @@ export class GalleryContainer extends React.Component {
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
-        this.loadViewComponentIfNeeded(galleryState, this.setState.bind(this));
         this.setState(galleryState, () => {
           this.handleNewGalleryStructure();
         });
@@ -783,31 +780,8 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  loadViewComponentIfNeeded(state, setState) {
-    if (!state || !state.styles) {
-      return;
-    }
-    const { oneRow } = state.styles;
-    const viewComponent = oneRow ? 'slideshowView' : 'galleryView';
-    if (this.state.viewComponent !== viewComponent) {
-      this.ViewComponent = () => null;
-      this.lastOneRow = oneRow;
-      if (oneRow) {
-        import(/* webpackChunkName: "slideshowView" */ `./slideshowView`).then(comp => {
-          this.ViewComponent = comp.default;
-          setState({viewComponent}); //trigger another render
-        });
-      } else {
-        import(/* webpackChunkName: "galleryView" */ `./galleryView`).then(comp => {
-          this.ViewComponent = comp.default;
-          setState({viewComponent})
-        });
-      }
-    }
-  }
-
   canRender() {
-    const can = this.state.container && this.state.styles && this.state.items && this.state.viewComponent;
+    const can = this.state.container && this.state.styles && this.state.items;
     if (!can && utils.isVerbose()) {
       console.log(
         'PROGALLERY [CAN_RENDER] GalleryContainer',
@@ -826,7 +800,8 @@ export class GalleryContainer extends React.Component {
       return null;
     }
 
-    const {ViewComponent} = this;//styles.oneRow ? SlideshowView : GalleryView;
+    const ViewComponent = this.state.styles.oneRow ? SlideshowView : GalleryView;
+
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
