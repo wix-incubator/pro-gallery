@@ -1,3 +1,9 @@
+## [v1.5.17](https://pro-gallery-1-5-17.surge.sh) (23/10/2019)
+ 
+#### GALLERY
+ -  fix: trigger dynamic imports on SSR
+
+---
 ## [v1.5.16](https://pro-gallery-1-5-16.surge.sh) (23/10/2019)
  
 #### GALLERY
