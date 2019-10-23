@@ -1,5 +1,8 @@
 import {INPUT_TYPES, GALLERY_CONSTS} from './consts';
 
+const formatTitle = title => title.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.substr(1).toLowerCase()).join(' ');
+const createOptions = constName => Object.entries(GALLERY_CONSTS[constName]).map(([title, value]) => ({ value, title: formatTitle(title) }));
+
 export default {
   isStore: {
     type: INPUT_TYPES.BOOLEAN,
@@ -16,22 +19,7 @@ export default {
 
   galleryLayout: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.layout.EMPTY, title: "EMPTY" },
-      { value: GALLERY_CONSTS.layout.COLLAGE, title: "COLLAGE" },
-      { value: GALLERY_CONSTS.layout.MASONRY, title: "MASONRY" },
-      { value: GALLERY_CONSTS.layout.GRID, title: "GRID" },
-      { value: GALLERY_CONSTS.layout.THUMBNAIL, title: "THUMBNAIL" },
-      { value: GALLERY_CONSTS.layout.SLIDER, title: "SLIDER" },
-      { value: GALLERY_CONSTS.layout.SLIDESHOW, title: "SLIDESHOW" },
-      { value: GALLERY_CONSTS.layout.PANORAMA, title: "PANORAMA" },
-      { value: GALLERY_CONSTS.layout.COLUMN, title: "COLUMN" },
-      { value: GALLERY_CONSTS.layout.MAGIC, title: "MAGIC" },
-      { value: GALLERY_CONSTS.layout.FULLSIZE, title: "FULLSIZE" },
-      { value: GALLERY_CONSTS.layout.BRICKS, title: "BRICKS" },
-      { value: GALLERY_CONSTS.layout.MIX, title: "MIX" },
-      { value: GALLERY_CONSTS.layout.ALTERNATE, title: "ALTERNATE" },
-    ],
+    options: createOptions('layout')
   },
   slideshowLoop: {
     type: INPUT_TYPES.BOOLEAN,
@@ -79,19 +67,11 @@ export default {
   },
   titlePlacement: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.placements.SHOW_ON_HOVER, title: "On Hover" },
-      { value: GALLERY_CONSTS.placements.SHOW_BELOW, title: "Below" },
-      { value: GALLERY_CONSTS.placements.SHOW_ABOVE, title: "Above" },
-    ],
+    options: createOptions('placements')
   },
   hoveringBehaviour: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS, title: "appears" },
-      { value: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS, title: "disappears" },
-      { value: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE, title: "no change" },
-    ],
+    options: createOptions('infoBehaviourOnHover')
   },
   cubeImages: {
     type: INPUT_TYPES.BOOLEAN,
@@ -125,12 +105,7 @@ export default {
   },
   galleryThumbnailsAlignment: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.thumbnailsAlignment.BOTTOM, title: "Bottom" },
-      { value: GALLERY_CONSTS.thumbnailsAlignment.LEFT, title: "Left" },
-      { value: GALLERY_CONSTS.thumbnailsAlignment.TOP, title: "Top" },
-      { value: GALLERY_CONSTS.thumbnailsAlignment.RIGHT, title: "Right" }
-    ],
+    options: createOptions('thumbnailsAlignment')
   },
   thumbnailSize: {
     type: INPUT_TYPES.NUMBER,
@@ -190,12 +165,12 @@ export default {
   groupTypes: {
     type: INPUT_TYPES.MULTISELECT,
     repeat: false,
-    options: Object.keys(GALLERY_CONSTS.groupTypes).map(type => ({ value: type, title: type }))
+    options: createOptions('groupTypes')
   },
   rotatingGroupTypes: {
     type: INPUT_TYPES.MULTISELECT,
     repeat: true,
-    options: Object.keys(GALLERY_CONSTS.groupTypes).map(type => ({ value: type, title: type }))
+    options: createOptions('groupTypes')
   },
   thumbnailSpacings: {
     type: INPUT_TYPES.NUMBER,
@@ -236,10 +211,7 @@ export default {
   },
   loadMoreAmount: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.loadMoreAmount.ALL, title: "all images" },
-      { value: GALLERY_CONSTS.loadMoreAmount.PARTIAL, title: "one more section" }
-    ],
+    options: createOptions('loadMoreAmount')
   }, 
   magicLayoutSeed: {
     text: "Generate Magic Layout",
@@ -251,12 +223,7 @@ export default {
     type: INPUT_TYPES.BOOLEAN,
   },
   itemClick: {
-    options: [
-      { value: GALLERY_CONSTS.itemClick.EXPAND, title: 'Open in Expand' },
-      { value: GALLERY_CONSTS.itemClick.LINK, title: 'A link opens' }, // When choosing a ling then a button of "Manage Media" link should appear
-      { value: GALLERY_CONSTS.itemClick.NOTHING, title: 'Nothing happens' },
-      { value: GALLERY_CONSTS.itemClick.FULLSCREEN, title: 'Open in Full Screen' },
-    ],
+    options: createOptions('itemClick')
   },
   useWatermark: {
     type: INPUT_TYPES.BOOLEAN,
@@ -278,17 +245,7 @@ export default {
   },
   watermarkDock: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.watermarkDock.LEFT_TOP, title: 'LEFT_TOP' },
-      { value: GALLERY_CONSTS.watermarkDock.MIDDLE_TOP, title: 'MIDDLE_TOP' },
-      { value: GALLERY_CONSTS.watermarkDock.RIGHT_TOP, title: 'RIGHT_TOP' },
-      { value: GALLERY_CONSTS.watermarkDock.LEFT_MIDDLE, title: 'LEFT_MIDDLE' },
-      { value: GALLERY_CONSTS.watermarkDock.MIDDLE, title: 'MIDDLE' },
-      { value: GALLERY_CONSTS.watermarkDock.RIGHT_MIDDLE, title: 'RIGHT_MIDDLE' },
-      { value: GALLERY_CONSTS.watermarkDock.LEFT_DOWN, title: 'LEFT_DOWN' },
-      { value: GALLERY_CONSTS.watermarkDock.MIDDLE_DOWN, title: 'MIDDLE_DOWN' },
-      { value: GALLERY_CONSTS.watermarkDock.RIGHT_DOWN, title: 'RIGHT_DOWN' },
-    ],
+    options: createOptions('watermarkDock'),
     alert: 'now is being saved in "appSettings"',
   },
   allowDownload: {
@@ -334,26 +291,11 @@ export default {
   },
   overlayAnimation:  {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.overlayAnimations.NO_EFFECT, title: "No effect" },
-      { value: GALLERY_CONSTS.overlayAnimations.FADE_IN, title: "Fade in" },
-      { value: GALLERY_CONSTS.overlayAnimations.EXPAND, title: "Expand" },
-      { value: GALLERY_CONSTS.overlayAnimations.SLIDE_UP, title: "Slide up" },
-      { value: GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT, title: "Slide right" },
-    ],
+    options: createOptions('overlayAnimations')
   },
   imageHoverAnimation: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT, title: "no effect" },
-      { value: GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN, title: "zoom in" },
-      { value: GALLERY_CONSTS.imageHoverAnimations.BLUR, title: "blur" },
-      { value: GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE, title: "grayscale" },
-      { value: GALLERY_CONSTS.imageHoverAnimations.SHRINK, title: "shrink" },
-      { value: GALLERY_CONSTS.imageHoverAnimations.INVERT, title: "invert" },
-      { value: GALLERY_CONSTS.imageHoverAnimations.COLOR_IN, title: "color in" },
-      { value: GALLERY_CONSTS.imageHoverAnimations.DARKENED, title: "darkened" }
-    ],
+    options: createOptions('imageHoverAnimations')
   },
   itemFont: {
     type: INPUT_TYPES.FONT_PICKER,
@@ -388,20 +330,12 @@ export default {
   },
   galleryHorizontalAlign: { // ALSO sets galleryTextAlign --- 
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.horizontalAlign.LEFT, title: "left" },
-      { value: GALLERY_CONSTS.horizontalAlign.CENTER, title: "center" },
-      { value: GALLERY_CONSTS.horizontalAlign.RIGHT, title: "right" },
-    ],
+    options: createOptions('horizontalAlign'),
     alert: '"galleryTextAlign" should be set accordingly',
   },
   galleryVerticalAlign: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.verticalAlign.TOP, title: "top" },
-      { value: GALLERY_CONSTS.verticalAlign.CENTER, title: "middle" },
-      { value: GALLERY_CONSTS.verticalAlign.BOTTOM, title: "bottom" },
-    ],
+    options: createOptions('verticalAlign')
   },
   textBoxFillColor: {
     type: INPUT_TYPES.COLOR_PICKER,
@@ -409,10 +343,7 @@ export default {
   },
   calculateTextBoxHeightMode: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.calculationOptions.AUTOMATIC, title: "Automatic" },
-      { value: GALLERY_CONSTS.calculationOptions.MANUAL, title: "Manual" },
-    ],
+    options: createOptions('calculationOptions')
   },
   textBoxHeight: {
     type: INPUT_TYPES.NUMBER,
@@ -533,11 +464,7 @@ export default {
   },
   imageInfoType: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.infoType.NO_BACKGROUND, title: "Clean" },
-      { value: GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND, title: "Attached" },
-      { value: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND, title: "Separated" },
-    ],
+    options: createOptions('infoType')
   },
   itemBorderWidth: {
     type: INPUT_TYPES.NUMBER,
@@ -582,10 +509,7 @@ export default {
   },
   imageLoadingMode: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.loadingMode.BLUR, title: "Blurred Image" },
-      { value: GALLERY_CONSTS.loadingMode.COLOR, title: "Color Background Placeholder" }
-    ],
+    options: createOptions('loadingMode')
   },
   imageLoadingColor: {
     type: INPUT_TYPES.COLOR_PICKER,
@@ -593,24 +517,11 @@ export default {
   },
   expandAnimation: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.expandAnimations.NO_EFFECT, title: "No effect" },
-      { value: GALLERY_CONSTS.expandAnimations.EXPAND, title: "Expand" },
-      { value: GALLERY_CONSTS.expandAnimations.FADE_IN, title: "fade in" },
-    ],
+    options: createOptions('expandAnimations')
   },
   scrollAnimation: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.scrollAnimations.NO_EFFECT, title: "no effect" },
-      { value: GALLERY_CONSTS.scrollAnimations.FADE_IN, title: "fade in" },
-      { value: GALLERY_CONSTS.scrollAnimations.GRAYSCALE, title: "grayscale" },
-      { value: GALLERY_CONSTS.scrollAnimations.SLIDE_UP, title: "slide up" },
-      { value: GALLERY_CONSTS.scrollAnimations.EXPAND, title: "expand" },
-      { value: GALLERY_CONSTS.scrollAnimations.SHRINK, title: "shrink" },
-      { value: GALLERY_CONSTS.scrollAnimations.ZOOM_OUT, title: "zoom out" },
-      { value: GALLERY_CONSTS.scrollAnimations.ONE_COLOR, title: "one color" }
-    ],
+    options: createOptions('scrollAnimations')
   },
   oneColorAnimationColor: {
     type: INPUT_TYPES.COLOR_PICKER,
@@ -738,11 +649,7 @@ export default {
   },
   videoPlay: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: GALLERY_CONSTS.videoPlay.HOVER, title: "On hover" },
-      { value: GALLERY_CONSTS.videoPlay.AUTO, title: "Autoplay" },
-      { value: GALLERY_CONSTS.videoPlay.ON_CLICK, title: "On click" },
-    ],
+    options: createOptions('videoPlay')
   },
   videoSound: {
     type: INPUT_TYPES.BOOLEAN,
