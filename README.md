@@ -67,16 +67,19 @@ This values should change when the container resizes, to allow the gallery to be
 ```js
 const container = {
   width: 1000,
-  height: 500
+  height: 500,
+  scrollBase: 0
 }
 ```
+The `width` and `height` values represent the size in which the gallery should be. The gallery will size the items to fit exactly in that box. Notice that when infiniteScroll is enabled, vertical galleries will ignore the `height` parameter and horizontal galleries will ignore the `width` parameter.
+The `scrollBase` value is important for *vertical* galleries that do not start at the top of the page. It should be the distance of the gallery from the top of the `scrollingElement`. This value can be left empty for the gallery to measure it itself (for better performance, this value should be supplied)
 
 ### Styles
 A list of the styles and behaviour parameters for the gallery.
 The gallery has many many options that can be modified. To create you list of styles, use the [playground](https://pro-gallery.surge.sh) to create your prefered gallery and copy the generated code.
 
 ### Scrolling Element
-The DOM element inside which the gallery is scrolled (defaults to `window`). If the gallery is scrolled inside a different element, pass its dom reference in this property.
+The DOM element inside which the gallery is scrolled (defaults to `window`). If the gallery is scrolled inside a different element, pass its dom reference in this property. You can also pass a function that returns that dom element.
 *notice:* this is relevant to vertical galleries only. Horizontal galleries (e.g. slideshow) are handling the scroll themselves.
 
 ### Events Listener
