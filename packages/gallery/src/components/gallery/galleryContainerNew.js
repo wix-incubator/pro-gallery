@@ -59,6 +59,7 @@ export class GalleryContainer extends React.Component {
         props,
         initialState,
       );
+      this.loadViewComponentIfNeeded(this.initialGalleryState, newState => Object.assign(this.initialGalleryState, newState));
       try {
         this.galleryInitialStateJson = JSON.stringify(this.initialGalleryState);
       } catch (e) {
@@ -80,7 +81,7 @@ export class GalleryContainer extends React.Component {
             gotFirstScrollEvent: initialState.gotFirstScrollEvent,
           });
           this.initialGalleryState = state;
-          this.loadViewComponentIfNeeded(state);
+          this.loadViewComponentIfNeeded(state, newState => Object.assign(this.initialGalleryState, newState));
         } else {
           this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
         }
@@ -89,7 +90,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
-          this.loadViewComponentIfNeeded(galleryState);
+          this.loadViewComponentIfNeeded(galleryState, newState => Object.assign(this.initialGalleryState, newState));
           if (Object.keys(galleryState).length > 0) {
             this.initialGalleryState = galleryState;
           }
@@ -113,7 +114,7 @@ export class GalleryContainer extends React.Component {
       this.eventsListener(EVENTS.APP_LOADED, {});
     };
     const galleryState = this.reCreateGalleryExpensively(this.props);
-    this.loadViewComponentIfNeeded(galleryState);
+    this.loadViewComponentIfNeeded(galleryState, this.setState.bind(this));
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
         onGalleryCreated();
@@ -128,7 +129,7 @@ export class GalleryContainer extends React.Component {
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
-        this.loadViewComponentIfNeeded(galleryState);
+        this.loadViewComponentIfNeeded(galleryState, this.setState.bind(this));
         this.setState(galleryState, () => {
           this.handleNewGalleryStructure();
         });
@@ -782,7 +783,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  loadViewComponentIfNeeded(state) {
+  loadViewComponentIfNeeded(state, setState) {
     if (!state || !state.styles) {
       return;
     }
@@ -794,12 +795,12 @@ export class GalleryContainer extends React.Component {
       if (oneRow) {
         import(/* webpackChunkName: "slideshowView" */ `./slideshowView`).then(comp => {
           this.ViewComponent = comp.default;
-          this.setState({viewComponent}); //trigger another render
+          setState({viewComponent}); //trigger another render
         });
       } else {
         import(/* webpackChunkName: "galleryView" */ `./galleryView`).then(comp => {
           this.ViewComponent = comp.default;
-          this.setState({viewComponent})
+          setState({viewComponent})
         });
       }
     }
