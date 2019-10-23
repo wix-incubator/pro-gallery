@@ -33,9 +33,7 @@ class DimensionsHelper {
 
   isFullWidth(container = this.container) {
       //if the container width is not a number, it is fullwidth (e.g.: "", "100%", "calc(100% + -160px)")
-      return (
-        !!container && container.width > 0
-      );
+      return !(container.width > 0);
   }
 
   calcBoundingRect() {
@@ -110,7 +108,7 @@ class DimensionsHelper {
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
         galleryHeight: Math.ceil(this.getGalleryHeight()),
-        scrollBase: Math.ceil(container.scrollBase || this.calcScrollBase() || 0),
+        scrollBase: Math.ceil(container.scrollBase >= 0 ? container.scrollBase : (this.calcScrollBase() || 0)),
         height: Math.ceil(container.height),
         width: Math.ceil(container.width),
       };
