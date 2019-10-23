@@ -24,7 +24,7 @@ import 'pro-gallery/dist/statics/main.css';
   items={images}
   styles={styleParams}
   container={container}
-  scrollingElement={document.getElementById('gallery') || window}
+  scrollingElement={() => document.getElementById('gallery') || window}
   eventsListener={(eName, eData) => console.log({eName, eData})}
 />
 ```
@@ -92,7 +92,7 @@ The most important events are:
 | `ITEM_ACTION_TRIGGERED`  | Fired whenever one of the items is clicked or tapped and the gallery cannot handle the action itself (e.g. open an expanded view) |
 | `NEED_MORE_ITEMS`  | Fired whenever the gallery is scrolled near its last item. If you are using a pagination server, this is the event that should trigger the next page and re-render the gallery with the new items |
 
-The full list gallery events is [here](https://github.com/wix-incubator/pro-gallery/blob/master/packages/gallery/src/constants/events.js)
+The full list gallery events is [here](https://github.com/wix-incubator/pro-gallery/blob/master/packages/gallery/src/common/constants/events.js)
 
 ### Custom Renderers
 The Gallery supports custom renderers both for the Hover Element (appears when hoveing over an item) and the Info Element (appears below / above the item).
