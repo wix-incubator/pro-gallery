@@ -807,7 +807,7 @@ export class GalleryContainer extends React.Component {
   }
 
   canRender() {
-    const can = this.state.container && this.state.styles && this.state.items && this.ViewComponent;
+    const can = this.state.container && this.state.styles && this.state.items && this.state.viewComponent;
     if (!can && utils.isVerbose()) {
       console.log(
         'PROGALLERY [CAN_RENDER] GalleryContainer',
