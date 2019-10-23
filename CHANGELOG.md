@@ -1,6 +1,12 @@
 ## [v1.5.18](https://pro-gallery-1-5-18.surge.sh) (23/10/2019)
  
 #### GALLERY
+ -  fix: remove dynamic loading of ViewComponent (SSR did not render)
+
+---
+## [v1.5.18](https://pro-gallery-1-5-18.surge.sh) (23/10/2019)
+ 
+#### GALLERY
  -  fix: do not render without a loaded viewComponent
 
 ---
