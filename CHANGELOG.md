@@ -1,3 +1,10 @@
+## [v1.5.20](https://pro-gallery-1-5-20.surge.sh) (24/10/2019)
+ 
+#### GALLERY
+ -  fix: fixed a bug when hover did not disappear on mouse out
+ -  improve: remove position animations from items
+
+---
 ## [v1.5.18](https://pro-gallery-1-5-18.surge.sh) (23/10/2019)
  
 #### GALLERY
