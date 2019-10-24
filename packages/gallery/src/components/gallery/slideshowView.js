@@ -108,7 +108,7 @@ class SlideshowView extends GalleryComponent {
 
   //__________________________________end of slide show loop functions__________________________
   nextItem(direction, isAutoTrigger, scrollDuration = 400) {
-    
+
     if (this.isSliding) {
       return;
     }
@@ -524,7 +524,7 @@ class SlideshowView extends GalleryComponent {
 
     let currentIdx;
 
-    const scrollPos = this.props.styleParams.isRTL ? 
+    const scrollPos = this.props.styleParams.isRTL ?
     this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
     scrollLeft + this.props.container.galleryWidth / 2
 
@@ -697,7 +697,6 @@ class SlideshowView extends GalleryComponent {
       nextVideoIdx: this.props.nextVideoIdx,
       totalWidth: this.props.galleryStructure.width,
       actions: {
-        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };

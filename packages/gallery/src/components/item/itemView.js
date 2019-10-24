@@ -41,6 +41,7 @@ class ItemView extends GalleryComponent {
       displayed: false,
       retries: 0,
       showShare: false,
+      isCurrentHover: false,
     };
 
     this.activeElement = '';
@@ -77,6 +78,18 @@ class ItemView extends GalleryComponent {
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this,
     );
+
+    window.addEventListener('current_hover_change', (a) => {
+      if (!this.state.isCurrentHover && a.currentHoverIdx === this.props.idx) {
+        this.setState({
+          isCurrentHover: true
+        })
+      } else if (this.state.isCurrentHover && a.currentHoverIdx !== this.props.idx) {
+        this.setState({
+          isCurrentHover: false
+        })
+      }
+    });
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -186,7 +199,7 @@ class ItemView extends GalleryComponent {
   };
 
   isClickOnCurrentHoveredItem = () =>
-    this.props.actions.isCurrentHover(this.props.idx);
+    this.state.isCurrentHover;
 
   handleHoverClickOnMobile() {
     if (this.isClickOnCurrentHoveredItem()) {
@@ -344,8 +357,8 @@ class ItemView extends GalleryComponent {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    if (this.props.isFullWidth) {  
-      return {};  
+    if (this.props.isFullWidth) {
+      return {};
     }
     const { styleParams, cubeRatio, style } = this.props;
     const isLandscape = style.ratio >= cubeRatio; //relative to container size
@@ -748,7 +761,7 @@ class ItemView extends GalleryComponent {
 
   simulateHover() {
     return (
-      this.props.actions.isCurrentHover(this.props.idx) ||
+      this.state.isCurrentHover ||
       this.props.styleParams.alwaysShowHover === true ||
       (isEditMode() && this.props.styleParams.previewHover === true)
     );
@@ -827,7 +840,7 @@ class ItemView extends GalleryComponent {
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
     const classNames = {
-      'gallery-item-container': true, 
+      'gallery-item-container': true,
       'visible': true,
       highlight: this.isHighlight(),
       clickable: styleParams.itemClick !== 'nothing',

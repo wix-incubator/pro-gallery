@@ -32,7 +32,6 @@ export class GalleryContainer extends React.Component {
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
-    this.isCurrentHover = this.isCurrentHover.bind(this);
 
     const initialState = {
       pgScroll: 0,
@@ -121,6 +120,9 @@ export class GalleryContainer extends React.Component {
       onGalleryCreated();
     }
     this.videoScrollHelper.initializePlayState();
+
+    this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+    this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -730,17 +732,13 @@ export class GalleryContainer extends React.Component {
       eventData,
     });
     if (eventName === EVENTS.HOVER_SET) {
-      this.currentHover = eventData;
+      this.currentHoverChangeEvent.currentHoverIdx = eventData;
+      window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData);
     }
   }
-
-  isCurrentHover(idx) {
-    return this.currentHover === idx;
-  }
-  
 
   getMoreItemsIfNeeded(scrollPos) {
     if (
@@ -862,7 +860,6 @@ export class GalleryContainer extends React.Component {
           actions={{
             ...this.props.actions,
             findNeighborItem,
-            isCurrentHover: this.isCurrentHover,
             toggleLoadMoreItems: this.toggleLoadMoreItems,
             eventsListener: this.eventsListener,
             setWixHeight: (() => {}),

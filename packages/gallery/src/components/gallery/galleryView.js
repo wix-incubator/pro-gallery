@@ -186,7 +186,6 @@ class GalleryView extends GalleryComponent {
       nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       actions: {
-        isCurrentHover: this.props.actions.isCurrentHover,
         eventsListener: this.props.actions.eventsListener,
       },
     };

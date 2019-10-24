@@ -105,7 +105,6 @@ class galleryDriver {
       setWixHeight: (() => {}),
       scrollToItem: (() => new Promise(res => res())),
       toggleShare: (() => {}),
-      isCurrentHover: (() => {}),
     };
 
     this.layoutParams = {
