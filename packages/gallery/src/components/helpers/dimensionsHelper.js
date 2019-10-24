@@ -17,10 +17,9 @@ class DimensionsHelper {
     this._cache = {};
   }
   updateParams({ styles, container, domId }) {
-    this.dumpCache();
     this.domId = domId || this.domId;
     this.styles = styles || this.styles;
-    this.container = container || this.container;
+    this.container = {...this.container, ...container};
   }
 
   getDimensionFix() {
@@ -31,28 +30,28 @@ class DimensionsHelper {
     });
   }
 
-  isFullWidth(container = this.container) {
+  isFullWidth() {
       //if the container width is not a number, it is fullwidth (e.g.: "", "100%", "calc(100% + -160px)")
-      return !(container.width > 0);
+      return !(this.getGalleryWidth() > 0);
   }
 
-  calcBoundingRect() {
+  calcBoundingRect(selector) {
     if (utils.isVerbose()) {
-      console.count('calcBoundingRect');
+      console.count('calcBoundingRect: ', selector);
     }
     try {
       return window.document
-        .getElementById(`pro-gallery-${this.domId}`)
+        .querySelector(selector)
         .getBoundingClientRect();
     } catch (e) {
       return false;
     }
   }
 
-  getBoundingRect() {
-    return this.getOrPutInCache('boundingRect', () => {
+  getBoundingRect(selector = `#pro-gallery-${this.domId}`) {
+    return this.getOrPutInCache(selector + '|BoundingRect', () => {
       return (
-        this.calcBoundingRect() || {
+        this.calcBoundingRect(selector) || {
           x: 0,
           y: 0,
           width: window.innerWidth,
@@ -60,40 +59,14 @@ class DimensionsHelper {
         }
       );
     });
-  }
-  calcBodyBoundingRect() {
-    if (utils.isVerbose()) {
-      console.count('calcBodyBoundingRect');
-    }
-    try {
-      return window.document.body.getBoundingClientRect();
-    } catch (e) {
-      return false;
-    }
   }
 
-  getBodyBoundingRect() {
-    return this.getOrPutInCache('bodyBoundingRect', () => {
-      return (
-        this.calcBodyBoundingRect() || {
-          x: 0,
-          y: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }
-      );
-    });
-  }
   calcScrollBase() {
     return this.getOrPutInCache('scrollBase', () => {
       let { scrollBase } = this.container;
       try {
         if (!(scrollBase >= 0)) {
-          scrollBase = 0;
-        }
-        const offset = this.getBoundingRect().y - this.getBodyBoundingRect().y; //clientRect are relative to the viewport, thus affected by scroll and need to be normalized to the body
-        if (offset >= 0) {
-          scrollBase += offset;
+          scrollBase = this.getBoundingRect().y - this.getBoundingRect('body').y; //clientRect are relative to the viewport, thus affected by scroll and need to be normalized to the body
         }
       } catch (e) {
         //
@@ -108,7 +81,7 @@ class DimensionsHelper {
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
         galleryHeight: Math.ceil(this.getGalleryHeight()),
-        scrollBase: Math.ceil(container.scrollBase >= 0 ? container.scrollBase : (this.calcScrollBase() || 0)),
+        scrollBase: Math.ceil(this.calcScrollBase() || 0),
         height: Math.ceil(container.height),
         width: Math.ceil(container.width),
       };
@@ -138,16 +111,27 @@ class DimensionsHelper {
 
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
-      const domWidth = () =>
-        window.isMock ? utils.getScreenWidth() : window.innerWidth;
-      let width = Math.floor(
-        (this.container.width > 0 ? this.container.width : domWidth()) +
-          this.getDimensionFix() * 2,
-      ); //add margins to width and then remove them in css negative margins
-
-      if (this.styles.arrowsPosition && this.styles.oneRow) {
-        width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
+      const domWidth = () => {
+        try {
+          if (window.isMock) {
+            return 0
+          } else {
+            const {width} = this.getBoundingRect();
+            return width;
+          }
+        } catch (e) {
+          console.error('Could not measure gallery width', e)
+        }
       }
+      let width = (this.container.width >= 0 ? this.container.width : domWidth());
+      if (width > 0) {
+        width += (width + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
+        if (this.styles.arrowsPosition && this.styles.oneRow) {
+          width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
+        }
+        width = Math.ceil(width);
+      }
+
       return width;
     });
   }
@@ -157,8 +141,18 @@ class DimensionsHelper {
       //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
       const dimensionFix = () =>
         this.styles.oneRow ? this.getDimensionFix() : 0;
-      const domHeight = () =>
-        window.isMock ? utils.getScreenHeight() : window.innerHeight; //() => protectGalleryHeight(this.container.windowHeight, offsetTop);
+      const domHeight = () => {
+        try {
+          if (window.isMock) {
+            return 500
+          } else {
+            const {height} = this.getBoundingRect();
+            return height;
+          }
+        } catch (e) {
+          console.error('Could not measure gallery height', e)
+        }
+      }
       return Math.floor(
         (this.container.height > 0 ? this.container.height : domHeight()) +
           dimensionFix(),
