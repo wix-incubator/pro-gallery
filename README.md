@@ -1,10 +1,25 @@
 # Pro Gallery
 Blazing fast & beautiful galleries built for the web. [try it out](https://pro-gallery.surge.sh)
+ - Responsive
+ - Lazy loading 
+ - Infinite Scroll
+ - Fully Customizable
+ - Displays Images, Videos and Html
 
 [![NPM Version](https://img.shields.io/npm/v/pro-gallery.svg?style=flat)](https://www.npmjs.com/package/pro-gallery)
 [![Build Status](https://travis-ci.com/wix-incubator/pro-gallery.svg?branch=master)](https://travis-ci.com/wix-incubator/pro-gallery)
 
-## Installation
+
+## Gettings Started
+***
+We really suggest that you start with the playground, create the layout you want and generate the code
+Create a GIF that explians how to use the playground
+Make sure they understand that the playground is the place to start
+Add video item and text items
+Point out that react is a dependency
+make the generate gallery code as a seperate button (not in Carusel)
+***
+### Installation
 Install with `npm`
 ```sh
 npm i -S pro-gallery
@@ -14,15 +29,15 @@ or `yarn`
 yarn add pro-gallery
 ```
 
-## Basic Usage
+### Basic Code
 ```jsx
 import { ProGallery } from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
 
 <ProGallery
   domId={domId}
-  items={images}
-  styles={styleParams}
+  items={items}
+  options={options}
   container={container}
   scrollingElement={() => document.getElementById('gallery') || window}
   eventsListener={(eName, eData) => console.log({eName, eData})}
@@ -31,22 +46,21 @@ import 'pro-gallery/dist/statics/main.css';
 
 To see more options and a real usage example, use the [playground code](https://github.com/wix-incubator/pro-gallery/blob/master/packages/playground/src/components/App/App.js) as reference
 
-### domId
-A unique Id for the gallery. Use for multiple galleries in the same page, or when using SSR - to make sure the gallery does not flickr in the hydrate phase.
+### Options
+The best way to get started is using the [Playground](https://pro-gallery.surge.sh). Use the sidebar to configure the gallery layout you need for your site and click on `Generate Gallery Code` to get the code for your gallery.
+After that you will need to add your 
 
 ### Items
 A list of objects each containing at least an id, dto, and metadata.
 ```jsx
 const items = [
-  {
+  { // Image Item:
     itemId: 'sample-id',
-    mediaUrl: 'sample-url',
-    orderIndex: 0,
+    mediaUrl: 'sample-image-url',
     metaData: {
       type: 'image',
       height: 200,
       width: 100,
-      name: 'sample-filename',
       title: 'sample-title',
       description: 'sample-description',
       focalPoint: [0, 0],
@@ -55,6 +69,36 @@ const items = [
         target: '_blank'
       },
     }
+  },
+  { // Video Item:
+    itemId: 'sample-id',
+    mediaUrl: 'sample-video-url',
+    metaData: {
+      type: 'video',
+      height: 200,
+      width: 100,
+  		poster: 'sample-image-url',
+      title: 'sample-title',
+      description: 'sample-description',
+      focalPoint: [0, 0],
+      link: {
+        url: 'http://example.com',
+        target: '_blank'
+      },
+    }
+  },
+  { // HTML Item:
+    itemId: 'sample-id',
+    html: "<div style='width: 300px; height: 200px; background:pink;'>I am a text block</div>",
+    metadata: {
+      type: "text",
+      height: 200,
+      width: 300,
+      title: 'sample-title',
+      description: 'sample-description',
+      backgroundColor: 'pink'
+    },
+
   },
   {...},
   {...}
@@ -72,11 +116,9 @@ const container = {
 }
 ```
 The `width` and `height` values represent the size in which the gallery should be. The gallery will size the items to fit exactly in that box. Notice that when infiniteScroll is enabled, vertical galleries will ignore the `height` parameter and horizontal galleries will ignore the `width` parameter.
-The `scrollBase` value is important for *vertical* galleries that do not start at the top of the page. It should be the distance of the gallery from the top of the `scrollingElement`. This value can be left empty for the gallery to measure it itself (for better performance, this value should be supplied)
 
-### Styles
-A list of the styles and behaviour parameters for the gallery.
-The gallery has many many options that can be modified. To create you list of styles, use the [playground](https://pro-gallery.surge.sh) to create your prefered gallery and copy the generated code.
+### domId
+A unique Id for the gallery. Use for multiple galleries in the same page, or when using SSR - to make sure the gallery does not flickr in the hydrate phase.
 
 ### Scrolling Element
 The DOM element inside which the gallery is scrolled (defaults to `window`). If the gallery is scrolled inside a different element, pass its dom reference in this property. You can also pass a function that returns that dom element.

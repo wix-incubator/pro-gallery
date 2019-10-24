@@ -65,7 +65,7 @@ function CodePanel() {
   );
 }
 
-function getCode(styles) {
+function getCode(options) {
   return `
   import { ProGallery } from 'pro-gallery';
 
@@ -74,9 +74,9 @@ function getCode(styles) {
     // Add your images here...
     const items = [];
 
-    // The styles of the gallery (from the playground current state)
-    const styles = {
-${styles}
+    // The options of the gallery (from the playground current state)
+    const options = {
+${options}
     };
 
     // The size of the gallery container. The images will fit themselves in it
@@ -88,12 +88,16 @@ ${styles}
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => console.log({eventName, eventData}); 
 
+    // The scrollingElement is usually the window, if you are scrolling inside another element, suplly it here
+    const scrollingElement = window;
+
     return (
       <ProGallery
         items={items}
-        styles={styles}
+        options={options}
         container={container}
         eventsListener={eventsListener}
+        scrollingElement={scrollingElement}
       />
     );
   }

@@ -13,7 +13,7 @@ export default {
   },
 
   galleryLayout: {
-    title: 'Gallery Layout',
+    title: 'Presets',
     description: "",
   },
   slideshowLoop: {
