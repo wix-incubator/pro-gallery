@@ -1,12 +1,14 @@
+## [v1.5.22](https://pro-gallery-1-5-22.surge.sh) (27/10/2019)
+
+ -  fixed changelog
+
+---
 ## [v1.5.21](https://pro-gallery-1-5-21.surge.sh) (27/10/2019)
  
 #### GALLERY
- -  fix: Fixed again isCurrentHover logic (will work with custom window.eventListener)
+ -  fix: fixed a bug when hover effects all galleries
  -  fix: fix galleryWidth calculation
  -  improve: measure galleryDimensions and scrollBase if not supplied
-
-#### PLAYGROUND
- -  improve: improve docs and code generator
 
 ---
 ## [v1.5.20](https://pro-gallery-1-5-20.surge.sh) (24/10/2019)
