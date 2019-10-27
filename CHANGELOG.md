@@ -1,8 +1,3 @@
-## [v1.5.22](https://pro-gallery-1-5-22.surge.sh) (27/10/2019)
-
- -  fixed changelog
-
----
 ## [v1.5.21](https://pro-gallery-1-5-21.surge.sh) (27/10/2019)
  
 #### GALLERY
