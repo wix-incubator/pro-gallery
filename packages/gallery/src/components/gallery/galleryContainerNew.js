@@ -123,6 +123,7 @@ export class GalleryContainer extends React.Component {
 
     this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
     this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
+    this.currentHoverChangeEvent.galleryId = this.props.galleryId;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -345,9 +346,9 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
-    
+
     dimensionsHelper.dumpCache();
-    
+
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
     const layoutParams = {

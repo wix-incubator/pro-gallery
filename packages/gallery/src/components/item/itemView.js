@@ -80,14 +80,16 @@ class ItemView extends GalleryComponent {
     );
 
     window.addEventListener('current_hover_change', (a) => {
-      if (!this.state.isCurrentHover && a.currentHoverIdx === this.props.idx) {
-        this.setState({
-          isCurrentHover: true
-        })
-      } else if (this.state.isCurrentHover && a.currentHoverIdx !== this.props.idx) {
-        this.setState({
-          isCurrentHover: false
-        })
+      if (a.galleryId === this.props.galleryId) {
+        if (!this.state.isCurrentHover && a.currentHoverIdx === this.props.idx) {
+          this.setState({
+            isCurrentHover: true
+          })
+        } else if (this.state.isCurrentHover && a.currentHoverIdx !== this.props.idx) {
+          this.setState({
+            isCurrentHover: false
+          })
+        }
       }
     });
   }
