@@ -11,14 +11,7 @@ Blazing fast & beautiful galleries built for the web. [try it out](https://pro-g
 
 
 ## Gettings Started
-***
-We really suggest that you start with the playground, create the layout you want and generate the code
-Create a GIF that explians how to use the playground
-Make sure they understand that the playground is the place to start
-Add video item and text items
-Point out that react is a dependency
-make the generate gallery code as a seperate button (not in Carusel)
-***
+
 ### Installation
 Install with `npm`
 ```sh
@@ -31,6 +24,7 @@ yarn add pro-gallery
 
 ### Basic Code
 ```jsx
+import React from 'react';
 import { ProGallery } from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
 
@@ -49,6 +43,18 @@ To see more options and a real usage example, use the [playground code](https://
 ### Options
 The best way to get started is using the [Playground](https://pro-gallery.surge.sh). Use the sidebar to configure the gallery layout you need for your site and click on `Generate Gallery Code` to get the code for your gallery.
 After that you will need to add your 
+
+### Container
+An object containing the width and height (in pixels) of the gallery.
+This values should change when the container resizes, to allow the gallery to be responsive.
+```js
+const container = {
+  width: 1000,
+  height: 500,
+  scrollBase: 0
+}
+```
+The `width` and `height` values represent the size in which the gallery should be. The gallery will size the items to fit exactly in that box. Notice that when infiniteScroll is enabled, vertical galleries will ignore the `height` parameter and horizontal galleries will ignore the `width` parameter.
 
 ### Items
 A list of objects each containing at least an id, dto, and metadata.
@@ -104,18 +110,6 @@ const items = [
   {...}
 ]
 ```
-
-### Container
-An object containing the width and height (in pixels) of the gallery.
-This values should change when the container resizes, to allow the gallery to be responsive.
-```js
-const container = {
-  width: 1000,
-  height: 500,
-  scrollBase: 0
-}
-```
-The `width` and `height` values represent the size in which the gallery should be. The gallery will size the items to fit exactly in that box. Notice that when infiniteScroll is enabled, vertical galleries will ignore the `height` parameter and horizontal galleries will ignore the `width` parameter.
 
 ### domId
 A unique Id for the gallery. Use for multiple galleries in the same page, or when using SSR - to make sure the gallery does not flickr in the hydrate phase.

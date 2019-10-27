@@ -157,8 +157,8 @@ export default {
     description: "",
   },
   enableInfiniteScroll: {
-    title: "Load More Button",
-    description: "",
+    title: "Infinite Scroll",
+    description: "Automatically enlarges the gallery as the user scrolls. When all items are displayed, an event will fire to load more items for the server. If set to false, a 'Load More' button will appear, once it's clicked, the gallery will start growing",
   },
   loadMoreAmount: {
     title: "Load More Amount",
