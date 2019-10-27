@@ -1,3 +1,9 @@
+## [v1.5.22](https://pro-gallery-1-5-22.surge.sh) (27/10/2019)
+ 
+#### GALLERY
+ -  fix: recalc gallery width until it is > 0
+
+---
 ## [v1.5.21](https://pro-gallery-1-5-21.surge.sh) (27/10/2019)
  
 #### GALLERY
