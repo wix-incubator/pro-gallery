@@ -1,3 +1,12 @@
+## [v1.5.23](https://pro-gallery-1-5-23.surge.sh) (28/10/2019)
+
+#### OTHER
+ - Reverted v1.5.21 and v1.5.22 
+
+#### GALLERY
+ -  fix: fixed a bug when hover effects all galleries
+
+---
 ## [v1.5.22](https://pro-gallery-1-5-22.surge.sh) (27/10/2019)
  
 #### GALLERY
