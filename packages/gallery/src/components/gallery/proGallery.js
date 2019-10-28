@@ -38,16 +38,19 @@ export default class ProGallery extends GalleryComponent {
   }
 
   render() {
-    const {options, styles = {}, items = [], itemsLoveData = {}, ...props} = this.props;
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
           <GalleryContainerNew
-            {...props}
+            {...this.props}
             domId={this.domId}
-            styles={options || styles}
-            items={items || []}
-            itemsLoveData={itemsLoveData || {}}
+            items={this.props.items || []}
+            watermarkData={this.props.watermarkData}
+            settings={this.props.settings || {}}
+            offsetTop={this.props.offsetTop}
+            itemsLoveData={
+              this.props.itemsLoveData ? this.props.itemsLoveData : {}
+            }
           />
         </div>
       )
