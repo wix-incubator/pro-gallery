@@ -125,7 +125,7 @@ class DimensionsHelper {
       }
       let width = (this.container.width >= 0 ? this.container.width : domWidth());
       if (width > 0) {
-        width += this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
+        width += (width + this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
         if (this.styles.arrowsPosition && this.styles.oneRow) {
           width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
         }
