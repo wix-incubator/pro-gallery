@@ -2580,10 +2580,25 @@ const testVideos = [{
   }
 }];
 
-const testItems = [...testImages, ...testVideos];
+const testTexts = ['pink', 'lightgreen', 'lightsalmon', 'lavender', 'beige', 'lightyellow', 'lightblue', 'lightgray'].map(bgColor => ({
+  itemId: '96858c1s-1f77-4d88-a622-6a24442259df',
+  html: `<div style='width: 300px; height: 200px; background:${bgColor}; line-height:200px; text-align: center;'>I am an HTML block</div>`,
+  metadata: {
+    type: "text",
+    height: 200,
+    width: 300,
+    title: `I am an HTML Block`,
+    description: '',
+    backgroundColor: bgColor
+  },
+
+}));
+
+const testItems = [...testImages, ...testVideos, ...testTexts];
 
 export {
-  testImages, 
+  testImages,
   testVideos,
+  testTexts,
   testItems
 };

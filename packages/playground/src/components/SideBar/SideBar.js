@@ -135,9 +135,10 @@ function SideBar() {
               </Form.Item>
               <Form.Item label="Media Type">
                 <Select defaultValue="mixed" onChange={val => setGallerySettings({ mediaType: val })}>
-                  <Select.Option value="mixed">Images & Videos</Select.Option>
+                  <Select.Option value="mixed">Images, Videos and Texts</Select.Option>
                   <Select.Option value="images">Images Only</Select.Option>
                   <Select.Option value="videos">Videos Only</Select.Option>
+                  <Select.Option value="texts">Texts Only</Select.Option>
                 </Select>
               </Form.Item>
             </Form>

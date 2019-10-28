@@ -377,8 +377,9 @@ class GalleryItem {
     if (this.isText) {
       bg =
         this.metadata &&
-        this.metadata.textStyle &&
-        this.metadata.textStyle.backgroundColor;
+        (this.metadata.textStyle &&
+        this.metadata.textStyle.backgroundColor 
+        || this.metadata.backgroundColor);
     } else {
       bg = 'none';
     }

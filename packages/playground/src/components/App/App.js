@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testItems, testImages, testVideos} from './images';
+import {testItems, testImages, testVideos, testTexts} from './images';
 import {mixAndSlice} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
@@ -20,6 +20,7 @@ const pJson = require('../../../package.json');
 
 const initialItems = {
   mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
+  texts: mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
   videos: mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
   images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
 };
@@ -87,7 +88,7 @@ export function App() {
 
   }
   const createItems = () => {
-    return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : testItems), numberOfItems || ITEMS_BATCH_SIZE);
+    return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : mediaType === 'texts' ? testTexts : testItems), numberOfItems || ITEMS_BATCH_SIZE);
   }
 
   const getItems = () => {
