@@ -1,3 +1,18 @@
+## [v1.5.25](https://pro-gallery-1-5-25.surge.sh) (03/11/2019)
+ 
+#### GALLERY
+ -  fix: removed calls to fixViewport and to getViewportScaleRatio as it's always 1.
+
+---
+## [v1.5.24](https://pro-gallery-1-5-24.surge.sh) (30/10/2019)
+ 
+#### GALLERY
+ -  fix hover share icons after svg changes
+
+#### PLAYGROUND
+ -  improve: add text items
+
+---
 ## [v1.5.23](https://pro-gallery-1-5-23.surge.sh) (28/10/2019)
 
 #### OTHER

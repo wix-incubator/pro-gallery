@@ -32,7 +32,7 @@ class GalleryDebugMessage extends GalleryComponent {
       <div className="version-header ">
         {utils.isLandscape() ? 'land' : 'port'} sw{window.screen.width}
         sh{window.screen.height} iw{window.innerWidth} bw
-        {window.document.body.clientWidth} sr{utils.getViewportScaleRatio()}
+        {window.document.body.clientWidth} sr{'1'}
         rc{this.props.resizeCount} oc{this.props.orientationCount} nh
         {this.props.newHeight} lh{this.props.lastHeight}
         {parentSize}

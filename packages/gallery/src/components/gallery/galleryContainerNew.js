@@ -326,7 +326,7 @@ export class GalleryContainer extends React.Component {
       updatedHeight =
         container.height +
         (initialGalleryHeight -
-          showMoreContainerHeight * utils.getViewportScaleRatio());
+          showMoreContainerHeight);
     }
 
     const onGalleryChangeData = {

@@ -115,7 +115,7 @@ class ItemView extends GalleryComponent {
   }
 
   isIconTag(tagName) {
-    return ['button', 'i', 'a'].indexOf(tagName.toLowerCase()) >= 0;
+    return ['button', 'i', 'a', 'svg', 'path'].indexOf(tagName.toLowerCase()) >= 0;
   }
 
   toggleShare(event, forceVal) {

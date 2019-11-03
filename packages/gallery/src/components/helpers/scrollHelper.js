@@ -42,7 +42,7 @@ export function scrollToItemImp(scrollParams) {
 
     if (item && isRTL) {
       to += item.width;
-    };
+    }
 
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, item);
@@ -62,7 +62,7 @@ export function scrollToItemImp(scrollParams) {
       if (isRTL) {
         to = totalWidth - to;
       }
-      to = Math.max(0, to) / utils.getViewportScaleRatio();
+      to = Math.max(0, to);
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
@@ -72,8 +72,8 @@ export function scrollToItemImp(scrollParams) {
   if (oneRow) {
     return horizontalCssScrollTo(
       horizontalElement,
-      Math.round(from * utils.getViewportScaleRatio()),
-      Math.round(to * utils.getViewportScaleRatio()),
+      Math.round(from),
+      Math.round(to),
       durationInMS,
       isRTL,
       true,
