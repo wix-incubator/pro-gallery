@@ -77,8 +77,8 @@ export default {
     description: "",
   },
   cubeRatio: {
-    title: "Image Ratio",
-    description: "",
+    title: "Item Crop Ratio",
+    description: "The Ratio between the width and height of the cropped, this is a string that will be evaluated on runtime. Use 'X%/Y%' to indicate that the ratio is responsive. e.g. '1' is a square, '16/9' is a wide screen rectangle and '100%/50%' is full width and half the height of the container.",
   },
   gallerySliderImageRatio: {
     title: "Image Ratio - Slider",

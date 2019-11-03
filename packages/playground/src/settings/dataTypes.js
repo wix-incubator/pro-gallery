@@ -82,15 +82,7 @@ export default {
     alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
   },
   cubeRatio: {
-    type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: 16 / 9, title: "16:9" },
-      { value: 4 / 3, title: "4:3" },
-      { value: 1, title: "1:1" },
-      { value: 3 / 4, title: "3:4" },
-      { value: 9 / 16, title: "9:16" }
-    ],
-
+    type: INPUT_TYPES.TEXT,
   },
   gallerySliderImageRatio: {
     type: INPUT_TYPES.OPTIONS,
