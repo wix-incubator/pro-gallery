@@ -5,8 +5,6 @@ import window from '../../common/window/windowWrapper';
 import itemView from '../item/itemView.js';
 import { GalleryComponent } from '../galleryComponent';
 
-utils.fixViewport('Gallery');
-
 class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
@@ -116,8 +114,7 @@ class GalleryView extends GalleryComponent {
     let galleryHeight;
     if (showMore) {
       galleryHeight =
-        this.props.container.galleryHeight -
-        showMoreContainerHeight * utils.getViewportScaleRatio();
+        this.props.container.galleryHeight - showMoreContainerHeight;
     } else {
       galleryHeight = this.props.galleryStructure.height + 'px';
     }

@@ -11,8 +11,6 @@ import EVENTS from '../../common/constants/events';
 import { GalleryComponent } from '../galleryComponent';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
-utils.fixViewport('Gallery');
-
 class SlideshowView extends GalleryComponent {
   constructor(props) {
     super(props);
@@ -526,7 +524,7 @@ class SlideshowView extends GalleryComponent {
 
     const scrollPos = this.props.styleParams.isRTL ?
     this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    scrollLeft + this.props.container.galleryWidth / 2
+    scrollLeft + this.props.container.galleryWidth / 2;
 
     if (scrollPos === 0){
       currentIdx = 0;
@@ -626,8 +624,8 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
-    const hideLeftArrow = (!isRTL && this.isScrollStart()) || (isRTL && this.isScrollEnd())
-    const hideRightArrow = (isRTL && this.isScrollStart()) || (!isRTL && this.isScrollEnd())
+    const hideLeftArrow = (!isRTL && this.isScrollStart()) || (isRTL && this.isScrollEnd());
+    const hideRightArrow = (isRTL && this.isScrollStart()) || (!isRTL && this.isScrollEnd());
 
     return [
       hideLeftArrow ? null : (
