@@ -1,3 +1,9 @@
+## [v1.5.25](https://pro-gallery-1-5-25.surge.sh) (03/11/2019)
+ 
+#### GALLERY
+ -  fix: removed calls to fixViewport and to getViewportScaleRatio as it's always 1.
+
+---
 ## [v1.5.24](https://pro-gallery-1-5-24.surge.sh) (30/10/2019)
  
 #### GALLERY
