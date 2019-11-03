@@ -1030,7 +1030,7 @@ class ItemView extends GalleryComponent {
           ref={e => (this.itemContainer = e)}
           onMouseOver={this.onMouseOver}
           onMouseOut={() => {
-            this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+            !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
           }}
           onClick={this.onItemClick}
           onKeyDown={this.onKeyPress}

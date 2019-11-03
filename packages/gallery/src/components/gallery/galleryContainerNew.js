@@ -123,10 +123,15 @@ export class GalleryContainer extends React.Component {
 
     this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
     this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
-    this.currentHoverChangeEvent.galleryId = this.props.galleryId;
+    if (this.props.galleryId) {
+      this.currentHoverChangeEvent.galleryId = this.props.galleryId;
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!this.currentHoverChangeEvent.galleryId && nextProps.galleryId) {
+      this.currentHoverChangeEvent.galleryId = nextProps.galleryId;
+    }
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
