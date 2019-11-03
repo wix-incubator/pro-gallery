@@ -1,5 +1,5 @@
 # Pro Gallery
-Blazing fast & beautiful galleries built for the web. [try it out](https://pro-gallery.surge.sh)
+Blazing fast & beautiful galleries built with React. [try it out](https://pro-gallery.surge.sh)
  - Responsive
  - Lazy loading 
  - Infinite Scroll
@@ -11,14 +11,9 @@ Blazing fast & beautiful galleries built for the web. [try it out](https://pro-g
 
 
 ## Gettings Started
-***
-We really suggest that you start with the playground, create the layout you want and generate the code
-Create a GIF that explians how to use the playground
-Make sure they understand that the playground is the place to start
-Add video item and text items
-Point out that react is a dependency
-make the generate gallery code as a seperate button (not in Carusel)
-***
+The best way to get started is using the [Playground](https://pro-gallery.surge.sh). Use the sidebar to configure the gallery layout you need for your site and click on `Generate Gallery Code` to get the code for your gallery.
+After that you will only need to add your items list and your gallery is ready!
+
 ### Installation
 Install with `npm`
 ```sh
@@ -47,8 +42,8 @@ import 'pro-gallery/dist/statics/main.css';
 To see more options and a real usage example, use the [playground code](https://github.com/wix-incubator/pro-gallery/blob/master/packages/playground/src/components/App/App.js) as reference
 
 ### Options
-The best way to get started is using the [Playground](https://pro-gallery.surge.sh). Use the sidebar to configure the gallery layout you need for your site and click on `Generate Gallery Code` to get the code for your gallery.
-After that you will need to add your 
+The gallery has A LOT of options, to make it easier to see and use the gallery, we created the [Playground](https://pro-gallery.surge.sh). Each option is expandable in the sidebar, and has all the info you need about its usage. 
+Notice that you can click on `Generate Gallery Code` anytime to get the code for the gallery you created.
 
 ### Items
 A list of objects each containing at least an id, dto, and metadata.
