@@ -107,7 +107,6 @@ This values should change when the container resizes, to allow the gallery to be
 const container = {
   width: 1000,
   height: 500,
-  scrollBase: 0
 }
 ```
 The `width` and `height` values represent the size in which the gallery should be. The gallery will size the items to fit exactly in that box. Notice that when infiniteScroll is enabled, vertical galleries will ignore the `height` parameter and horizontal galleries will ignore the `width` parameter.
