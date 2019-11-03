@@ -537,30 +537,6 @@ class Utils {
     }
   }
 
-  fixViewport() {
-    if (this.isOOI()) {
-      return;
-    }
-    try {
-      this._cache.isLandscape = undefined;
-      if (
-        (isSiteMode() || isSEOMode()) &&
-        this.isMobile() &&
-        !this.isMobileViewer()
-      ) {
-        //using isUserAgentMobile creates a bug in mobile view when configured to show desktop on mobile (so isWixMobile is false)
-        const viewportAspectRatio = this.getViewportScaleRatio();
-        window.document.body.style.transform =
-          'scale(' + viewportAspectRatio + ')';
-        window.document.body.style.transformOrigin = '0 0';
-        window.document.body.style.width = 100 / viewportAspectRatio + '%';
-        window.document.body.style.height = 100 / viewportAspectRatio + '%';
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
   getDevicePixelRatio() {
     try {
       return (

@@ -5,8 +5,6 @@ import window from '../../common/window/windowWrapper';
 import itemView from '../item/itemView.js';
 import { GalleryComponent } from '../galleryComponent';
 
-utils.fixViewport('Gallery');
-
 class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
