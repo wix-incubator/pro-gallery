@@ -1,3 +1,9 @@
+## [v1.5.26](https://pro-gallery-1-5-26.surge.sh) (03/11/2019)
+ 
+#### GALLERY
+ -  fixed mobile hover bug for galleries under the view.
+
+---
 ## [v1.5.25](https://pro-gallery-1-5-25.surge.sh) (03/11/2019)
  
 #### GALLERY
