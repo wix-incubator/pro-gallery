@@ -25,7 +25,7 @@ const initialItems = {
   images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
 };
 
-var galleryReadyEvent = new Event('galleryReady');
+const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 

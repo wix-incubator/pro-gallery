@@ -1,7 +1,7 @@
 
 import { GALLERY_CONSTS } from './consts';
 
-export const showColorOverlay = (sp, context) => {
+export const showColorOverlay = (sp, context = {}) => {
   const hasHoverOnMobile = sp => {
     const firstTapSimulatesHover = sp.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
       (showTexts(sp) &&

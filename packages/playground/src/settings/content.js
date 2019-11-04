@@ -60,6 +60,10 @@ export default {
     title: "Slideshow counter",
     description: "",
   },
+  allowHover: {
+    title: "Show Overlay on Hover",
+    description: ""
+  },
   titlePlacement: {
     title: "Title Placement",
     description: "",

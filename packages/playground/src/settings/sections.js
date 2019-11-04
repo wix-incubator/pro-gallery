@@ -69,6 +69,7 @@ export const stylesBySection = {
         'floatingImages',
     ],
     [SECTIONS.INFO]: [
+        'allowHover',
         'titlePlacement',
         'itemOpacity',
         'allowTitle',

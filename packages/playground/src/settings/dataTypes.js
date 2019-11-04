@@ -56,6 +56,9 @@ export default {
     type: INPUT_TYPES.OPTIONS,
     options: [{ value: false, title: "Left to Right" }, { value: true, title: "Right to Left" }],
   },
+  allowHover: {
+    type: INPUT_TYPES.BOOLEAN,
+  },
   allowTitle: {
     type: INPUT_TYPES.BOOLEAN,
   },

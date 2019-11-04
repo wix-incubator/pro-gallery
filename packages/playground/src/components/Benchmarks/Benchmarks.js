@@ -88,25 +88,24 @@ function Benchmarks() {
 
       const endRun = () => {
         endTime = Date.now();
+        window.removeEventListener('galleryReady', endRun);
         durations[runNumber] = endTime - startTime;
         runNumber++;
         if (runNumber > numberOfRuns) {
-          window.removeEventListener('galleryReady', endRun);
           const totalDuration = durations.reduce((sum, duration) => duration + sum, 0);
           resolve(totalDuration);
         } else {
-          setStatus(`Created ${runNumber} Galleries`)
-          window.setTimeout(startRun, 50);
+          setStatus(`Rendered ${runNumber} Galleries`)
+          window.setTimeout(startRun, 1000);
         }
       }
 
       const startRun = () => {
+        window.addEventListener('galleryReady', endRun)
         items = mixAndSlice(images, numberOfImages)
         startTime = Date.now();
         setItems(items);
       }
-
-      window.addEventListener('galleryReady', endRun)
     
       startRun();
     });
@@ -174,9 +173,9 @@ function Benchmarks() {
     return (
       <Row>
       <Col span={24}>
-        <Radio.Group block value={selected} onChange={onChange} style={{width: '100%'}}>
+        <Radio.Group block value={selected} onChange={e => onChange(e.target.value)} style={{width: '100%'}}>
           {options.map(option => (
-            <Radio.Button value={option}>{option}</Radio.Button>
+            <Radio.Button key={option} value={option}>{option}</Radio.Button>
           ))}
         </Radio.Group>
       </Col>

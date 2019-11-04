@@ -495,11 +495,12 @@ class ItemView extends GalleryComponent {
   getItemHover(children, imageDimensions) {
     // const props = utils.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
     const { customHoverRenderer, ...props } = this.props;
-    return (
+    const shouldHover = this.shouldHover() || null;
+    return shouldHover && (
       <ItemHover
         {...props}
         forceShowHover={this.simulateOverlayHover()}
-        shouldHover={this.shouldHover()}
+        shouldHover={shouldHover}
         imageDimensions={imageDimensions}
         key="hover"
         actions={{
