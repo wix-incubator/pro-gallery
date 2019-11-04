@@ -77,7 +77,8 @@ export function App() {
 
   const container = {
     height: window.innerHeight,
-    width: isFullWidth ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0)
+    width: isFullWidth ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
+    scrollBase: 0
   }
 
   const addItems = () => {
