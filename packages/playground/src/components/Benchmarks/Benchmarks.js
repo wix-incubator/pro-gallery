@@ -84,8 +84,6 @@ function Benchmarks() {
       const durations = [];
       let endTime, startTime;
       let runNumber = 0;
-      let items;
-
       const endRun = () => {
         endTime = Date.now();
         window.removeEventListener('galleryReady', endRun);
@@ -93,6 +91,7 @@ function Benchmarks() {
         runNumber++;
         if (runNumber > numberOfRuns) {
           const totalDuration = durations.reduce((sum, duration) => duration + sum, 0);
+          window.benchmarking = false;
           resolve(totalDuration);
         } else {
           setStatus(`Rendered ${runNumber} Galleries`)
@@ -102,12 +101,13 @@ function Benchmarks() {
 
       const startRun = () => {
         window.addEventListener('galleryReady', endRun)
-        items = mixAndSlice(images, numberOfImages)
+        window.benchmarking = true;
+        const items = mixAndSlice(images, numberOfImages)
         startTime = Date.now();
         setItems(items);
       }
     
-      startRun();
+      setTimeout(startRun, 1000);
     });
   }
 

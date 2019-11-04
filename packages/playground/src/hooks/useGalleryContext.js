@@ -61,7 +61,7 @@ export function useGalleryContext() {
     setGalleryReady,
     isFullWidth: context.isFullWidth,
     setIsFullWidth,
-    gallerySettings: context.gallerySettings,
+    gallerySettings: context.gallerySettings || {},
     setGallerySettings,
     showAllStyles: context.showAllStyles,
     setShowAllStyles,

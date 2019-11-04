@@ -83,7 +83,7 @@ export function App() {
 
   const addItems = () => {
     const items = getItems();
-    if (!numberOfItems || items.length < numberOfItems) { //zero items means infinite
+    if (!window.benchmarking && (!numberOfItems || items.length < numberOfItems)) { //zero items means infinite
       setItems(items.concat(createItems()));
     }
 
@@ -96,10 +96,6 @@ export function App() {
     
     // return initialItems.mixed.slice(0, 3);
 
-    if (items && items.length > 0) {
-      return items;
-    }
-    
     const theItems = items || initialItems[mediaType];
     if (numberOfItems > 0) {
       return theItems.slice(0, numberOfItems);
