@@ -1,4 +1,6 @@
-import ItemTitle from './itemTitle.js';
+// import ItemTitle from '../../../../src/components/item/texts/itemTitle.js';
+import ItemTitle from '../../../../src/components/item/texts/itemTitle';
+
 import { configure, mount } from 'enzyme';
 import React from 'react';
 import { expect } from 'chai';

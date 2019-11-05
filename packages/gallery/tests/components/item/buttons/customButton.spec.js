@@ -1,8 +1,8 @@
-import CustomButton from './customButton.js';
+import CustomButton from '../../../../src/components/item/buttons/customButton.js';
 import { use, expect } from 'chai';
 import spies from 'chai-spies';
-import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver';
-import { testImages } from '../../../../__testsDrivers__/images-mock.js';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
+import { testImages } from '../../../__testsDrivers__/images-mock.js';
 
 use(spies);
 

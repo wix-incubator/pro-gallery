@@ -1,17 +1,18 @@
 //Yonatan Hattav 19 Jun 2018
 
-import ItemView from '../itemView.js';
-import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
-import Social from './social.js';
+import ItemView from '../../../../src/components/item/itemView.js';
+// import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
+import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
+import Social from '../../../../src/components/item/social/social.js';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { testImages } from '../../../../__testsDrivers__/images-mock.js';
-import utils from '../../../common/utils/index';
-import window from '../../../common/window/windowWrapper';
-import LoveButton from '../loveButton/loveButton.js';
-import EVENTS from '../../../common/constants/events';
-import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
-import VIEW_MODE from '../../../common/constants/viewMode';
+import { testImages } from '../../../__testsDrivers__/images-mock.js';
+import utils from '../../../../src/common/utils/index';
+import window from '../../../../src/common/window/windowWrapper';
+import LoveButton from '../../../../src/components/item/loveButton/loveButton.js';
+import EVENTS from '../../../../src/common/constants/events';
+import { viewModeWrapper } from '../../../../src/common/window/viewModeWrapper';
+import VIEW_MODE from '../../../../src/common/constants/viewMode';
 
 describe('Social:', () => {
   let driver;

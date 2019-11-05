@@ -1,5 +1,5 @@
-import { testImages } from '../../../__testsDrivers__/images-mock';
-import GalleryItem from './galleryItem';
+import { testImages } from '../../__testsDrivers__/images-mock';
+import GalleryItem from '../../../src/components/item/galleryItem';
 import { expect } from 'chai';
 
 describe('GalleryItem ', () => {

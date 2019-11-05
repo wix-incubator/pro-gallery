@@ -1,14 +1,15 @@
 //Yonatan Hattav Jun21
 
-import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
-import CustomButton from './buttons/customButton.js';
-import ItemTitle from './texts/itemTitle.js';
+import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder.js';
+import CustomButton from '../../../src/components/item/buttons/customButton.js';
+import ItemTitle from '../../../src/components/item/texts/itemTitle.js';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
-import { testImages } from '../../../__testsDrivers__/images-mock';
-import ItemView from './itemView';
-import EVENTS from '../../common/constants/events';
+// import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
+import GalleryDriver from '../../__testsDrivers__/drivers/reactDriver';
+import { testImages } from '../../__testsDrivers__/images-mock';
+import ItemView from '../../../src/components/item/itemView';
+import EVENTS from '../../../src/common/constants/events';
 
 describe('Item View', () => {
   let driver;

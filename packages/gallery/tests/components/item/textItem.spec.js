@@ -1,8 +1,8 @@
-import TextItem from './textItem.js';
+import TextItem from '../../../src/components/item/textItem.js';
 import { use, expect } from 'chai';
 import spies from 'chai-spies';
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver.js';
-import { testImages } from '../../../__testsDrivers__/images-mock';
+import GalleryDriver from '../../__testsDrivers__/drivers/reactDriver.js';
+import { testImages } from '../../__testsDrivers__/images-mock';
 import sinon from 'sinon';
 
 use(spies);
