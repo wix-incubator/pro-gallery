@@ -1,3 +1,9 @@
+## [v1.5.27](https://pro-gallery-1-5-27.surge.sh) (05/11/2019)
+ 
+#### GALLERY
+ -  fix (share.js): Fixed share icons mismatch (Pinteres<->Twitter).
+
+---
 ## [v1.5.26](https://pro-gallery-1-5-26.surge.sh) (03/11/2019)
  
 #### GALLERY
