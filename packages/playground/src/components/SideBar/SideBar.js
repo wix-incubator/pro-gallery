@@ -151,6 +151,9 @@ function SideBar() {
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
               </Form.Item>
+              <Form.Item label="Lean Gallery" labelAlign="left">
+                <Button icon="interaction" shape="circle" size="large" onClick={() => window.location.search = 'gridStyle=1&allowHover=false&galleryLayout=2'} />
+              </Form.Item>
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
@@ -163,7 +166,7 @@ function SideBar() {
               </Form.Item>}
             </Form>
           </Collapse.Panel>
-          <Collapse.Panel header="Benchmarks" key="1benchmarks4">
+          <Collapse.Panel header="Benchmarks" key="benchmarks">
             <Benchmarks />
           </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">
