@@ -60,8 +60,10 @@ export function App() {
   const eventListener = (eventName, eventData) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED: 
-      case GALLERY_EVENTS.GALLERY_CHANGE: 
         setGalleryReady();
+        break;
+      case GALLERY_EVENTS.GALLERY_CHANGE: 
+        // setGalleryReady();
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS: 
         addItems();

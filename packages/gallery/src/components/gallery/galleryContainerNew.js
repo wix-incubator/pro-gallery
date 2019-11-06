@@ -113,6 +113,7 @@ export class GalleryContainer extends React.Component {
     };
     const galleryState = this.reCreateGalleryExpensively(this.props);
     if (Object.keys(galleryState).length > 0) {
+      console.warn('Pro Gallery changed after mount', galleryState);
       this.setState(galleryState, () => {
         onGalleryCreated();
       });
