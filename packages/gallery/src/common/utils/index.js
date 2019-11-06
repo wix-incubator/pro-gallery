@@ -275,9 +275,22 @@ class Utils {
     });
   }
 
+  isPlayground() {
+    return this.getOrPutFromCache('isPlayground', () => {
+      try {
+        return (
+          this.isLocal() ||
+          window.location.origin.indexOf('pro-gallery.surge.sh') > -1
+        );
+      } catch (e) {
+        return false;
+      }
+    });
+  }
+
   isVerbose() {
     return (
-      !this.isTest() && (this.safeLocalStorage() || {}).forceDevMode === 'true'
+      !this.isTest() && (this.isPlayground() || (this.safeLocalStorage() || {}).forceDevMode === 'true')
     );
   }
 
