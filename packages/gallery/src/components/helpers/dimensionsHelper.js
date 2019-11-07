@@ -31,8 +31,8 @@ class DimensionsHelper {
     });
   }
 
-  isFullWidth(container = this.container) {
-      //if the container width is not a number, it is fullwidth (e.g.: "", "100%", "calc(100% + -160px)")
+  isUnknownWidth(container = this.container) {
+      //if the container width is not a number, it is unknownWidth (e.g.: "", "100%", "calc(100% + -160px)")
       return !(container.width > 0);
   }
 
@@ -84,6 +84,7 @@ class DimensionsHelper {
       );
     });
   }
+
   calcScrollBase() {
     return this.getOrPutInCache('scrollBase', () => {
       let { scrollBase } = this.container;
@@ -104,6 +105,9 @@ class DimensionsHelper {
 
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
+      if (this.isUnknownWidth() && !utils.isSSR() && !this.container.avoidMeasuring) {
+        this.tryCalcAndSetContainerWidth();
+      }
       const container = this.container;
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
@@ -135,6 +139,17 @@ class DimensionsHelper {
       return res;
     });
   }
+
+  tryCalcAndSetContainerWidth() {
+  const boundingRect = this.calcBoundingRect();
+  const calcWidth = boundingRect && boundingRect.width;
+  if (calcWidth) {
+    this.container.width = calcWidth;
+    if (utils.isVerbose()) {
+      console.log('Pro-Gallery calculated width');
+    }
+  }
+}
 
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {

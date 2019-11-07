@@ -7,7 +7,7 @@ try {
   GalleryContext = null;
 }
 
-const GALLERY_CONTEXT_FIELDS = ['isFullWidth'];
+const GALLERY_CONTEXT_FIELDS = ['isUnknownWidth'];
 
 const extractContextFields = fields =>
   GALLERY_CONTEXT_FIELDS.reduce(
