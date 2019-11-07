@@ -1,3 +1,12 @@
+## [v1.5.28](https://pro-gallery-1-5-28.surge.sh) (07/11/2019)
+ 
+#### GALLERY
+ -  improve (dimensions->width): pro-gallery will self calculate width if was not provided from a wrapper.
+ -  improve (utils): playground is always verbose
+ -  fix (galleryContainer): warn about new state only if verbose
+ -  improve (readme): add readme to gallery package
+
+---
 ## [v1.5.27](https://pro-gallery-1-5-27.surge.sh) (05/11/2019)
  
 #### GALLERY
