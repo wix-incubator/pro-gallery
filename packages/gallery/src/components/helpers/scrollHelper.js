@@ -49,7 +49,7 @@ export function scrollToItemImp(scrollParams) {
     }
 
     if (!(to >= 0)) {
-      console.warn('Position not found, not scrolling');
+      utils.isVerbose() && console.warn('Position not found, not scrolling');
       return new Promise(res => res());
     }
 
