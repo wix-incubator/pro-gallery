@@ -10,7 +10,7 @@ import {setStyleParamsInUrl} from '../../constants/styleParams'
 // import { ProFullscreen } from '@wix/pro-fullscreen-renderer';
 // import '@wix/pro-fullscreen-renderer/dist/statics/main.css';
 // import '@wix/pro-fullscreen-renderer/dist/src/assets/styles/fullscreen.global.scss';0
-       
+
 import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery';
 import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
 import 'pro-gallery/dist/statics/main.css';
@@ -29,10 +29,10 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, isFullWidth, gallerySettings} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, isAvoidWidthMeasuring, gallerySettings} = useGalleryContext();
   const [showSide, setShowSide] = useState(false);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
-  const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {}; 
+  const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
 
   setStyleParamsInUrl(styleParams);
 
@@ -59,17 +59,19 @@ export function App() {
 
   const eventListener = (eventName, eventData) => {
     switch (eventName) {
-      case GALLERY_EVENTS.APP_LOADED: 
-      case GALLERY_EVENTS.GALLERY_CHANGE: 
+      case GALLERY_EVENTS.APP_LOADED:
         setGalleryReady();
         break;
-      case GALLERY_EVENTS.NEED_MORE_ITEMS: 
+      case GALLERY_EVENTS.GALLERY_CHANGE:
+        // setGalleryReady();
+        break;
+      case GALLERY_EVENTS.NEED_MORE_ITEMS:
         addItems();
         break;
-      case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED: 
+      case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
         // setFullscreenIdx(eventData.idx);
         break;
-      default: 
+      default:
         // console.log({eventName, eventData});
         break;
     }
@@ -77,9 +79,10 @@ export function App() {
 
   const container = {
     height: window.innerHeight,
-    width: isFullWidth ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
-    scrollBase: 0
-  }
+    width: isAvoidWidthMeasuring ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0), //if isAvoidWidthMeasuring we want to simulate also 'isUnknownWidth'
+    scrollBase: 0,
+    avoidMeasuring: isAvoidWidthMeasuring
+  };
 
   const addItems = () => {
     const items = getItems();
@@ -93,7 +96,7 @@ export function App() {
   }
 
   const getItems = () => {
-    
+
     // return initialItems.mixed.slice(0, 3);
 
     const theItems = items || initialItems[mediaType];
@@ -115,7 +118,7 @@ export function App() {
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ProGallery
-          key={`pro-gallery-${isFullWidth}-${getItems()[0].itemId}`}
+          key={`pro-gallery-${isAvoidWidthMeasuring}-${getItems()[0].itemId}`}
           scrollingElement={window}
           container={container}
           items={getItems()}

@@ -113,6 +113,7 @@ export class GalleryContainer extends React.Component {
     };
     const galleryState = this.reCreateGalleryExpensively(this.props);
     if (Object.keys(galleryState).length > 0) {
+      utils.isVerbose() && console.warn('Pro Gallery changed after mount', utils.printableObjectsDiff(this.state, galleryState));
       this.setState(galleryState, () => {
         onGalleryCreated();
       });
@@ -352,7 +353,6 @@ export class GalleryContainer extends React.Component {
 
   reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
 
-   this.isFullWidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
     const layoutParams = {
@@ -390,13 +390,13 @@ export class GalleryContainer extends React.Component {
     this.createCssLayoutsIfNeeded(layoutParams);
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximation = false) {
+  createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
     this.layoutCss = createCssLayouts({
       layoutParams,
-      isApproximation,
+      isApproximateWidth,
       isMobile: utils.isMobile(),
       galleryDomId: this.props.domId,
-      galleryItems: isApproximation? null : this.galleryStructure.galleryItems,
+      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
     });
   }
 
@@ -410,7 +410,6 @@ export class GalleryContainer extends React.Component {
     }
 
     const state = curState || this.state || {};
-    this.isFullWidth = dimensionsHelper.isFullWidth(container); //keep this on top, before the container is recalculated
 
     let _styles, _container;
 
@@ -477,7 +476,7 @@ export class GalleryContainer extends React.Component {
       _container = Object.assign(
         {},
         container,
-        dimensionsHelper.getGalleryDimensions(container),
+        dimensionsHelper.getGalleryDimensions(),
       );
       dimensionsHelper.updateParams({ container: _container });
       newState.styles = _styles;
@@ -543,8 +542,8 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      const isApproximation = this.isFullWidth && !_styles.oneRow; //FAKE SSR
-      this.createCssLayoutsIfNeeded(layoutParams, isApproximation, isNew);
+      const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !_styles.oneRow; //FAKE SSR
+      this.createCssLayoutsIfNeeded(layoutParams, isApproximateWidth, isNew);
 
       const allowPreloading =
         isEditMode() ||
@@ -649,7 +648,7 @@ export class GalleryContainer extends React.Component {
     if (shouldUseScrollCss) {
       return cssScrollHelper.calcScrollCss({
         items,
-        isFullWidth: this.isFullWidth,
+        isUnknownWidth: dimensionsHelper.isUnknownWidth(),
         styleParams,
         galleryDomId,
         allowPreloading,
@@ -843,7 +842,7 @@ export class GalleryContainer extends React.Component {
           galleryDomId={this.props.domId}
           galleryId={this.props.galleryId}
           isInDisplay={this.props.isInDisplay}
-          isFullWidth={this.isFullWidth}
+          isUnknownWidth={dimensionsHelper.isUnknownWidth()}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}

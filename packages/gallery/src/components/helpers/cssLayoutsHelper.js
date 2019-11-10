@@ -77,13 +77,13 @@ const createCssFromLayouts = (galleryDomId, layouts, styleParams, widths) => {
 };
 
 export const createCssLayouts = ({
-  isApproximation,
+  isApproximateWidth,
   galleryItems,
   layoutParams,
   isMobile,
   galleryDomId
 }) => {
-  if (isApproximation) {
+  if (isApproximateWidth) {
     const widths = isMobile ? mobileWidths : desktopWidths;
     const cssLayouts = widths.map(width => {
       const _layoutParams = {

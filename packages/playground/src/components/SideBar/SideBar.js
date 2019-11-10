@@ -19,8 +19,8 @@ function SideBar() {
     setGallerySettings,
     setStyleParams,
     styleParams,
-    setIsFullWidth,
-    isFullWidth,
+    setIsAvoidWidthMeasuring,
+    isAvoidWidthMeasuring,
     setShowAllStyles,
     showAllStyles
   } = useGalleryContext();
@@ -151,19 +151,22 @@ function SideBar() {
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
               </Form.Item>
+              <Form.Item label="Lean Gallery" labelAlign="left">
+                <Button icon="interaction" shape="circle" size="large" onClick={() => window.location.search = 'gridStyle=1&allowHover=false&galleryLayout=2'} />
+              </Form.Item>
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
-              <Form.Item label="Simulate Unknown Width" labelAlign="left">
-                <Switch checked={isFullWidth} onChange={e => setIsFullWidth(e)} />
+              <Form.Item label="isUnknownWidth && Avoid Pro-Gallery self width measure" labelAlign="left">
+                <Switch checked={isAvoidWidthMeasuring} onChange={e => setIsAvoidWidthMeasuring(e)} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
-          <Collapse.Panel header="Benchmarks" key="1benchmarks4">
+          <Collapse.Panel header="Benchmarks" key="benchmarks">
             <Benchmarks />
           </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">

@@ -94,8 +94,8 @@ function Benchmarks() {
           window.benchmarking = false;
           resolve(totalDuration);
         } else {
-          setStatus(`Rendered ${runNumber} Galleries`)
-          window.setTimeout(startRun, 1000);
+          setStatus(`Rendered ${runNumber} Galleries (${durations[runNumber - 1]}ms)`)
+          window.setTimeout(startRun, 500);
         }
       }
 

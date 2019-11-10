@@ -36,17 +36,17 @@ export function useGalleryContext() {
     setContext({galleryReady});
   };
 
-  const setIsFullWidth = isFullWidth => {
-    setContext({isFullWidth});
+  const setIsAvoidWidthMeasuring = isAvoidWidthMeasuring => {
+    setContext({isAvoidWidthMeasuring});
   };
 
   const setGallerySettings = gallerySettings => {
     setContext({gallerySettings: {...context.gallerySettings, ...gallerySettings}});
-  }
+  };
 
   const setShowAllStyles = showAllStyles => {
     setContext({showAllStyles});
-  }
+  };
 
   const res = {
     showSide: context.showSide,
@@ -59,8 +59,8 @@ export function useGalleryContext() {
     setItems,
     galleryReady: context.galleryReady,
     setGalleryReady,
-    isFullWidth: context.isFullWidth,
-    setIsFullWidth,
+    isAvoidWidthMeasuring: context.isAvoidWidthMeasuring,
+    setIsAvoidWidthMeasuring,
     gallerySettings: context.gallerySettings || {},
     setGallerySettings,
     showAllStyles: context.showAllStyles,

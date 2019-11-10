@@ -143,9 +143,9 @@ export default class Share extends GalleryComponent {
       case SOCIAL_NETWORKS.FACEBOOK:
         return FacebookIcon;
       case SOCIAL_NETWORKS.TWITTER:
-        return PinterestIcon;
-      case SOCIAL_NETWORKS.PINTEREST:
         return TwitterIcon;
+      case SOCIAL_NETWORKS.PINTEREST:
+        return PinterestIcon;
       case SOCIAL_NETWORKS.EMAIL:
         return EmailIcon;
       default:
@@ -158,7 +158,7 @@ export default class Share extends GalleryComponent {
     const { allProps } = this.props;
     const shareIconsNumber = this.shareArr.length;
     const ShareIcon = this.getShareSvg(network);
-    
+
     return (
       <button
         className={
