@@ -36,6 +36,11 @@ class DimensionsHelper {
       return !(container.width > 0);
   }
 
+  isUnknownHeight(container = this.container) {
+    //if the container height is not a number, it is unknownHeight (e.g.: "", "100%", "calc(100% + -160px)")
+    return !(container.height > 0);
+  }
+
   calcBoundingRect() {
     if (utils.isVerbose()) {
       console.count('calcBoundingRect');
@@ -105,8 +110,11 @@ class DimensionsHelper {
 
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
-      if (this.isUnknownWidth() && !utils.isSSR() && !this.container.avoidMeasuring) {
+      if (this.isUnknownWidth() && !utils.isSSR() && !this.container.avoidMeasuringWidth) {
         this.tryCalcAndSetContainerWidth();
+      }
+      if (this.isUnknownHeight() && !utils.isSSR() && !this.container.avoidMeasuringHeight) {
+        this.tryCalcAndSetContainerHeight();
       }
       const container = this.container;
       const res = {
@@ -141,15 +149,31 @@ class DimensionsHelper {
   }
 
   tryCalcAndSetContainerWidth() {
-  const boundingRect = this.calcBoundingRect();
-  const calcWidth = boundingRect && boundingRect.width;
-  if (calcWidth) {
-    this.container.width = calcWidth;
-    if (utils.isVerbose()) {
-      console.log('Pro-Gallery calculated width');
+    const boundingRect = this.calcBoundingRect();
+    const calcWidth = boundingRect && boundingRect.width;
+    if (calcWidth) {
+      this.container.width = calcWidth;
+      if (utils.isVerbose()) {
+        console.log('Pro-Gallery calculated width');
+      }
     }
   }
-}
+
+  tryCalcAndSetContainerHeight() {
+    const boundingRect = this.calcBoundingRect();
+    const calcHeight = boundingRect && boundingRect.height;
+    if (calcHeight > 0) {
+      this.container.height = calcHeight;
+      if (utils.isVerbose()) {
+        console.log('Pro-Gallery calculated height');
+      }
+    } else if (calcHeight === 0) {
+      this.container.height = 200; //default height, just to not be 0
+      if (utils.isVerbose()) {
+        console.log('Pro-Gallery calculated height of 0, will set manually to 200');
+      }
+    }
+  }
 
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {

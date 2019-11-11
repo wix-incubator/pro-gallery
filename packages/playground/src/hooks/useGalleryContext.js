@@ -40,6 +40,10 @@ export function useGalleryContext() {
     setContext({isAvoidWidthMeasuring});
   };
 
+  const setIsAvoidHeightMeasuring = isAvoidHeightMeasuring => {
+    setContext({isAvoidHeightMeasuring});
+  };
+
   const setGallerySettings = gallerySettings => {
     setContext({gallerySettings: {...context.gallerySettings, ...gallerySettings}});
   };
@@ -60,7 +64,9 @@ export function useGalleryContext() {
     galleryReady: context.galleryReady,
     setGalleryReady,
     isAvoidWidthMeasuring: context.isAvoidWidthMeasuring,
+    isAvoidHeightMeasuring: context.isAvoidHeightMeasuring,
     setIsAvoidWidthMeasuring,
+    setIsAvoidHeightMeasuring,
     gallerySettings: context.gallerySettings || {},
     setGallerySettings,
     showAllStyles: context.showAllStyles,
