@@ -654,7 +654,7 @@ export class GalleryContainer extends React.Component {
         allowPreloading,
       });
     } else {
-      return '';
+      return [];
     }
   }
 
@@ -878,15 +878,18 @@ export class GalleryContainer extends React.Component {
             {this.galleryInitialStateJson}
           </div>
         )}
-        <style data-key="scrollCss" key="scrollCss">
-          {this.scrollCss}
-        </style>
-        {this.layoutCss.map((css, idx) => (
-          <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`}>
-            {css}
-          </style>
-        ))}
-        {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
+        {/* {console.log('scrollCss', this.scrollCss)} */}
+        <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
+          {this.layoutCss.map((css, idx) => (
+            <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`}>
+              {css}
+            </style>
+          ))}
+          {(this.scrollCss || []).map((scrollCss, idx) => (
+            <style data-key={`scrollCss_${idx}`} key={`scrollCss_${idx}`}>{scrollCss}</style>
+          ))}
+          {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
+        </div>
       </div>
     );
   }
