@@ -1,3 +1,13 @@
+## [v1.5.29](https://pro-gallery-1-5-29.surge.sh) (11/11/2019)
+ 
+#### MAIN
+ -  improve: add a version debug log script
+
+#### GALLERY
+ - improve (dimensions->height): pro-gallery will self calculate height if was not provided from a wrapper.
+ -  fix: remove annoying console.warn
+
+---
 ## [v1.5.28](https://pro-gallery-1-5-28.surge.sh) (07/11/2019)
  
 #### GALLERY
