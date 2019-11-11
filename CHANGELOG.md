@@ -1,3 +1,9 @@
+## [v1.5.30](https://pro-gallery-1-5-30.surge.sh) (11/11/2019)
+ 
+#### GALLERY
+ -  improve (scrollCss): seperate scrollCss into style tags
+
+---
 ## [v1.5.29](https://pro-gallery-1-5-29.surge.sh) (11/11/2019)
  
 #### MAIN
