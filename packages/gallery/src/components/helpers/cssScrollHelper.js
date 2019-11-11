@@ -128,7 +128,7 @@ class CssScrollHelper {
     return (padding, suffix) => {
       const [before, after] = padding;
       if (before === Infinity && after === Infinity) {
-        return `#${domId} ${suffix}`;
+        return `#pro-gallery-${galleryDomId} #${domId} ${suffix}`;
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
