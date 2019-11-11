@@ -1,3 +1,9 @@
+## [v1.5.31](https://pro-gallery-1-5-31.surge.sh) (11/11/2019)
+ 
+#### GALLERY
+ -  fix (scrollCss): use domId for the general class
+
+---
 ## [v1.5.30](https://pro-gallery-1-5-30.surge.sh) (11/11/2019)
  
 #### GALLERY
