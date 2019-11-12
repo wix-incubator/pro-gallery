@@ -54,7 +54,13 @@ class SlideshowView extends GalleryComponent {
     } else {
       return false;
     }
-
+    
+  }
+  isFirstItemFullyVisible(){   
+    return !this.props.styleParams.slideshowLoop && this.isScrollStart();
+  }
+  isLastItemFullyVisible(){
+    return !this.props.styleParams.slideshowLoop && this.isScrollEnd();
   }
 
   isLastItem() {
@@ -105,17 +111,18 @@ class SlideshowView extends GalleryComponent {
   }
 
   //__________________________________end of slide show loop functions__________________________
-  nextItem(direction, isAutoTrigger, scrollDuration = 400) {
-
+  nextItem({direction, isAutoTrigger, scrollDuration = 400, isKeyboardNavigation = false}) {
+    if((!isKeyboardNavigation || !this.props.styleParams.isAccessible) && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerRow) {
+      direction*=this.props.styleParams.numberOfImagesPerCol;
+    }
     if (this.isSliding) {
       return;
     }
-
     this.isSliding = true;
 
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
 
-    const currentIdx = this.setCurrentItemByScroll() || this.state.currentIdx;
+    const currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
     let nextItem = currentIdx + direction;
 
     const { scrollToItem } = this.props.actions;
@@ -123,36 +130,38 @@ class SlideshowView extends GalleryComponent {
 
     if (isAutoTrigger) {
       // ---- Called by the Auto Slideshow ---- //
-      if (this.isLastItem()) {
+      if (this.isLastItem()) { // maybe this should be isLastItemFullyVisible now that we have both. product- do we allow autoSlideshow in other layouts ( those that could have more than one item displayed in the galleryWidth)
         nextItem = 0;
         scrollDuration = 0;
       }
     } else {
       // ---- Called by the user (arrows, keys etc.) ---- //
       this.startAutoSlideshowIfNeeded(this.props.styleParams);
-      const isScrollingPastEdge =
-        (direction === 1 && this.isLastItem()) ||
-        (direction === -1 && this.isFirstItem());
-      if (isScrollingPastEdge) {
+      const scrollingPastLastItem =
+      (direction >= 1 && this.isLastItem()) ||
+      (direction <= -1 && this.isFirstItem());
+      if (scrollingPastLastItem) {
         this.isSliding = false;
         return;
       }
     }
     // ---- navigate ---- //
     try {
-      scrollToItem(nextItem, false, true, scrollDuration).then(() => {
-        utils.setStateAndLog(
-          this,
-          'Next Item',
-          {
-            currentIdx: nextItem,
-          },
-          () => {
-            this.onCurrentItemChanged();
-            this.isSliding = false;
-          },
-        );
-      });
+      const isScrollingPastEdge = !isAutoTrigger &&
+      ((direction >= 1 && this.isLastItemFullyVisible()) ||
+      (direction <= -1 && this.isFirstItemFullyVisible()));
+      !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration);
+      utils.setStateAndLog(
+        this,
+        'Next Item',
+        {
+          currentIdx: nextItem,
+        },
+        () => {
+          this.onCurrentItemChanged();
+          this.isSliding = false;
+        },
+      );
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
       this.stopAutoSlideshow();
@@ -199,7 +208,7 @@ class SlideshowView extends GalleryComponent {
 
   autoScrollToNextItem = () => {
     if (isGalleryInViewport(this.props.container)) {
-      this._nextItem(1, true, 800);
+      this._nextItem({direction: 1 , isAutoTrigger: true , scrollDuration: 800});
     }
   };
 
@@ -230,14 +239,14 @@ class SlideshowView extends GalleryComponent {
       case 37: //left
       case 33: //page up
         e.preventDefault();
-        this._nextItem(-1);
+        this._nextItem({direction: -1, isKeyboardNavigation: true});
         return false;
       case 39: //right
       case 40: //down
       case 32: //space
       case 34: //page down
         e.preventDefault();
-        this._nextItem(1);
+        this._nextItem({direction: 1, isKeyboardNavigation: true});
         return false;
     }
     return true; //continue handling the original keyboard event
@@ -634,7 +643,7 @@ class SlideshowView extends GalleryComponent {
             'nav-arrows-container prev ' +
             (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
           }
-          onClick={() => this._nextItem(-1)}
+          onClick={() => this._nextItem({direction:-1})}
           aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowPrev')}
           key="nav-arrow-back"
@@ -654,7 +663,7 @@ class SlideshowView extends GalleryComponent {
       hideRightArrow ? null : (
         <button
           className={'nav-arrows-container next'}
-          onClick={() => this._nextItem(1)}
+          onClick={() => this._nextItem({direction:1})}
           aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
           key="nav-arrow-next"
