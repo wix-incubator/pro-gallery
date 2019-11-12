@@ -20,7 +20,9 @@ function SideBar() {
     setStyleParams,
     styleParams,
     setIsAvoidWidthMeasuring,
+    setIsAvoidHeightMeasuring,
     isAvoidWidthMeasuring,
+    isAvoidHeightMeasuring,
     setShowAllStyles,
     showAllStyles
   } = useGalleryContext();
@@ -157,11 +159,16 @@ function SideBar() {
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
-            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
-              <Form.Item label="isUnknownWidth && Avoid Pro-Gallery self width measure" labelAlign="left">
+            <Form>
+              <Form.Item labelAlign="left">
+                <p>isUnknownWidth && Avoid Pro-Gallery self width measure</p>
                 <Switch checked={isAvoidWidthMeasuring} onChange={e => setIsAvoidWidthMeasuring(e)} />
               </Form.Item>
-              {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
+              <Form.Item labelAlign="left">
+                <p>isUnknownHeight && Avoid Pro-Gallery self height measure</p>
+                <Switch checked={isAvoidHeightMeasuring} onChange={e => setIsAvoidHeightMeasuring(e)} />
+              </Form.Item>
+              {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelCol={{ span: 17 }} wrapperCol={{ span: 3 }} labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>

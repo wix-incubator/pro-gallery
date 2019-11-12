@@ -24,6 +24,7 @@ const PROJECTS = {
     PLAYGROUND: 'playground',
 };
 const CHANGELOG = 'changelog.md';
+const VERSION_LOGGER = 'packages/gallery/src/versionLogger.js';
 
 const getPackageDetails = memoize(() => {
     try {
@@ -109,6 +110,11 @@ function writeToChangelog(str) {
     execSync(writeCommand);
 }
 
+function writeVersion(version) {
+    const writeCommand = `> ${VERSION_LOGGER} && echo "try {console.debug('Pro Gallery Version: ${version}'); } catch (e) {}" >> ${VERSION_LOGGER}`;
+    execSync(writeCommand);
+}
+
 function getDate() {
     var today = new Date();
     var dd = today.getDate();
@@ -188,6 +194,8 @@ function run() {
         log(`New version is ${newVersion}`);
     }
     writeToChangelog(formatForChangelog(newVersion, latestCommits));
+    writeVersion(newVersion);
+    
     log(`Wrote changes to ${CHANGELOG}`);
 
     editChangelogAndUpdateVersion(bump);

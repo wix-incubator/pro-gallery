@@ -7,6 +7,8 @@ import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 class CssScrollHelper {
   constructor() {
     this.pgScrollSteps = [
+      40960,
+      20480,
       10240,
       5120,
       2560,
@@ -77,7 +79,7 @@ class CssScrollHelper {
 
   calcScrollCss({ galleryDomId, items, styleParams, allowPreloading, isUnknownWidth }) {
     if (!(items && items.length)) {
-      return '';
+      return [];
     }
     this.screenSize = styleParams.oneRow
       ? Math.min(window.outerWidth, window.screen.width)
@@ -101,7 +103,6 @@ class CssScrollHelper {
       .map(item =>
         this.calcScrollCssForItem({ galleryDomId, item, styleParams, isUnknownWidth }),
       )
-      .join(`\n`);
   }
 
   shouldCalcScrollCss({ type }) {
@@ -127,7 +128,7 @@ class CssScrollHelper {
     return (padding, suffix) => {
       const [before, after] = padding;
       if (before === Infinity && after === Infinity) {
-        return `#${domId} ${suffix}`;
+        return `#pro-gallery-${galleryDomId} #${domId} ${suffix}`;
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
@@ -181,7 +182,7 @@ class CssScrollHelper {
       if (!isUnknownWidth && !item.isDimensionless) { //FAKE SSR
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.${type}-item>canvas`) +
-          `{opacity: 1; transition: opacity 1s linear 1s; background-image: url(${createUrl(
+          `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
             URL_SIZES.RESIZED,
             URL_TYPES.HIGH_RES,
           )})}`;

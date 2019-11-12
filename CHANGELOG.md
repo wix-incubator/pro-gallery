@@ -1,3 +1,25 @@
+## [v1.5.31](https://pro-gallery-1-5-31.surge.sh) (11/11/2019)
+ 
+#### GALLERY
+ -  fix (scrollCss): use domId for the general class
+
+---
+## [v1.5.30](https://pro-gallery-1-5-30.surge.sh) (11/11/2019)
+ 
+#### GALLERY
+ -  improve (scrollCss): seperate scrollCss into style tags
+
+---
+## [v1.5.29](https://pro-gallery-1-5-29.surge.sh) (11/11/2019)
+ 
+#### MAIN
+ -  improve: add a version debug log script
+
+#### GALLERY
+ - improve (dimensions->height): pro-gallery will self calculate height if was not provided from a wrapper.
+ -  fix: remove annoying console.warn
+
+---
 ## [v1.5.28](https://pro-gallery-1-5-28.surge.sh) (07/11/2019)
  
 #### GALLERY

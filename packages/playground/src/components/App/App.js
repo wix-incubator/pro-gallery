@@ -29,7 +29,7 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, isAvoidWidthMeasuring, gallerySettings} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, isAvoidWidthMeasuring, isAvoidHeightMeasuring, gallerySettings} = useGalleryContext();
   const [showSide, setShowSide] = useState(false);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
@@ -78,10 +78,11 @@ export function App() {
   }
 
   const container = {
-    height: window.innerHeight,
+    height: isAvoidHeightMeasuring ? '' : window.innerHeight, //if isAvoidWidthMeasuring we want to simulate also 'isUnknownHeight'
     width: isAvoidWidthMeasuring ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0), //if isAvoidWidthMeasuring we want to simulate also 'isUnknownWidth'
     scrollBase: 0,
-    avoidMeasuring: isAvoidWidthMeasuring
+    avoidMeasuringWidth: isAvoidWidthMeasuring,
+    avoidHeightMeasuring: isAvoidHeightMeasuring
   };
 
   const addItems = () => {
@@ -118,7 +119,7 @@ export function App() {
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ProGallery
-          key={`pro-gallery-${isAvoidWidthMeasuring}-${getItems()[0].itemId}`}
+          key={`pro-gallery-${isAvoidWidthMeasuring}-${isAvoidHeightMeasuring}-${getItems()[0].itemId}`}
           scrollingElement={window}
           container={container}
           items={getItems()}
