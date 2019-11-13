@@ -1,9 +1,12 @@
+import '../../common/utils/polyfills';
+
 import React from 'react';
 import GalleryContainerNew from './galleryContainerNew.js';
 import utils from '../../common/utils';
 import { viewModeWrapper } from '../../common/window/viewModeWrapper';
 import window from '../../common/window/windowWrapper';
 import { GalleryComponent } from '../galleryComponent';
+
 import '../../versionLogger';
 
 export default class ProGallery extends GalleryComponent {
