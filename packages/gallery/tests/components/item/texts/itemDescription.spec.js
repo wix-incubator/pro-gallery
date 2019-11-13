@@ -1,4 +1,4 @@
-import ItemDescription from './itemDescription';
+import ItemDescription from '../../../../src/components/item/texts/itemDescription';
 import { configure, mount } from 'enzyme';
 import React from 'react';
 import { expect } from 'chai';

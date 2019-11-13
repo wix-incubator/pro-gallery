@@ -1,9 +1,9 @@
-import { viewModeWrapper } from '../../common/window/viewModeWrapper';
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
-import SlideshowView from './slideshowView';
+import { viewModeWrapper } from '../../../src/common/window/viewModeWrapper';
+import GalleryDriver from '../../__testsDrivers__/drivers/reactDriver'
+import SlideshowView from '../../../src/components/gallery/slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import VIEW_MODE from '../../common/constants/viewMode';
+import VIEW_MODE from '../../../src/common/constants/viewMode';
 
 describe('Slideshow View', () => {
   let driver;
@@ -13,7 +13,7 @@ describe('Slideshow View', () => {
   let helpers;
 
   beforeEach(() => {
-    helpers = require('./galleryHelpers.js');
+    helpers = require('../../../src/components/gallery/galleryHelpers.js');
     sinon.stub(helpers, 'isGalleryInViewport').callsFake(() => {
       return true;
     });

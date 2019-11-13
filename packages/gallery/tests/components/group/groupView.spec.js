@@ -1,6 +1,6 @@
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
+import GalleryDriver from '../../__testsDrivers__/drivers/reactDriver';
 import { expect } from 'chai';
-import GroupView from './groupView';
+import GroupView from '../../../src/components/group/groupView';
 
 describe('Group View ', () => {
   let galleryDriver;
