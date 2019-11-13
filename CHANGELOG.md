@@ -1,3 +1,9 @@
+## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (13/11/2019)
+ 
+#### GALLERY
+ -  improve: remove all animations from items
+
+---
 ## [v1.5.31](https://pro-gallery-1-5-31.surge.sh) (13/11/2019)
  
 #### GALLERY
