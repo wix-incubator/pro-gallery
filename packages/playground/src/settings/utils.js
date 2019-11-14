@@ -62,4 +62,4 @@ export const canUseWatermark = (sp) => isStore(sp) && sp.canUseWatermark; // med
 
 export const always = () => true;
 
-export const isLayout = (sp, [...layouts]) => sp.galleryLayout === -1 || [...layouts].indexOf(sp.galleryLayout) >= 0;
+export const isLayout = (sp, layouts) => sp.galleryLayout === -1 || layouts.indexOf(sp.galleryLayout) >= 0;
