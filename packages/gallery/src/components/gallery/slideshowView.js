@@ -43,7 +43,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   isScrollStart(isRTL = this.props.styleParams.isRTL) {
-
+    
     if (this.container) {
       const {scrollLeft, scrollWidth, clientWidth} = this.container;
       if (isRTL) {
@@ -54,8 +54,16 @@ class SlideshowView extends GalleryComponent {
     } else {
       return false;
     }
-    
   }
+  isScrollEnd() {
+    const {isRTL, slideshowLoop} = this.props.styleParams;
+
+    if (slideshowLoop) {
+      return false;
+    }
+    return this.isScrollStart(!isRTL); //start and end are reversed by RTL
+  }
+
   isFirstItemFullyVisible(){   
     return !this.props.styleParams.slideshowLoop && this.isScrollStart();
   }
@@ -67,15 +75,6 @@ class SlideshowView extends GalleryComponent {
     return !this.props.styleParams.slideshowLoop && this.state.currentIdx >= this.props.galleryStructure.items.length - 1;
   }
 
-  isScrollEnd() {
-    const {isRTL, slideshowLoop} = this.props.styleParams;
-
-    if (slideshowLoop) {
-      return false;
-    }
-
-    return this.isScrollStart(!isRTL); //start and end are reversed by RTL
-  }
 
   //__________________________________Slide show loop functions_____________________________________________
 
@@ -112,7 +111,11 @@ class SlideshowView extends GalleryComponent {
 
   //__________________________________end of slide show loop functions__________________________
   nextItem({direction, isAutoTrigger, scrollDuration = 400, isKeyboardNavigation = false}) {
-    if((!isKeyboardNavigation || !this.props.styleParams.isAccessible) && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerRow) {
+    
+    const activeElement = document.activeElement;
+    const galleryItemIsFocused = activeElement.className && activeElement.className.includes('gallery-item-container');
+    const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
+    if(avoidIndividualNavigation && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerRow) {
       direction*=this.props.styleParams.numberOfImagesPerCol;
     }
     if (this.isSliding) {
@@ -121,10 +124,16 @@ class SlideshowView extends GalleryComponent {
     this.isSliding = true;
 
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
-
-    const currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
+    let currentIdx
+    if(avoidIndividualNavigation) {
+      currentIdx = this.getCenteredItemIdxByScroll();
+    } else {
+      currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
+    }
     let nextItem = currentIdx + direction;
-
+    if (!this.props.styleParams.slideshowLoop){
+      nextItem = Math.min(this.props.galleryStructure.items.length - 1, nextItem);
+    }
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
 
@@ -150,7 +159,8 @@ class SlideshowView extends GalleryComponent {
       const isScrollingPastEdge = !isAutoTrigger &&
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
-      !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration);
+      const scrollMarginCorrection = this.getStyles().margin;
+      !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
       utils.setStateAndLog(
         this,
         'Next Item',
@@ -502,7 +512,35 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
+  getCenteredItemIdxByScroll() {
+    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
+    // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
+    const items = this.props.galleryStructure.galleryItems;
 
+    let centeredIdx;
+
+    const scrollPos = this.props.styleParams.isRTL ?
+    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
+    scrollLeft + this.props.container.galleryWidth / 2;
+
+    if (scrollPos === 0){
+      centeredIdx = 0;
+    } else {
+      for (let item, i = 0; (item = items[i]); i++) {
+        if (
+          item.offset.left >
+          scrollPos
+        ) {
+          centeredIdx = i - 1;
+          break;
+        }
+      }
+    }
+    if (!(centeredIdx >= 0)) {
+      centeredIdx = items.length - 1;
+    }
+    return centeredIdx
+  }
   setCurrentItemByScroll() {
     if (utils.isVerbose()) {
       console.log('Setting current Idx by scroll', this.isAutoScrolling);
@@ -525,33 +563,9 @@ class SlideshowView extends GalleryComponent {
       return;
     }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
-    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
-    // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
-    const items = this.props.galleryStructure.galleryItems;
 
-    let currentIdx;
-
-    const scrollPos = this.props.styleParams.isRTL ?
-    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    scrollLeft + this.props.container.galleryWidth / 2;
-
-    if (scrollPos === 0){
-      currentIdx = 0;
-    } else {
-      for (let item, i = 0; (item = items[i]); i++) {
-        if (
-          item.offset.left >
-          scrollPos
-        ) {
-          currentIdx = i - 1;
-          break;
-        }
-      }
-    }
-    if (!(currentIdx >= 0)) {
-      currentIdx = items.length - 1;
-    }
-
+    const currentIdx = this.getCenteredItemIdxByScroll();
+  
     if (!utils.isUndefined(currentIdx)) {
       utils.setStateAndLog(
         this,
@@ -643,7 +657,7 @@ class SlideshowView extends GalleryComponent {
             'nav-arrows-container prev ' +
             (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
           }
-          onClick={() => this._nextItem({direction:-1})}
+          onClick={() =>this._nextItem({direction:-1})}
           aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowPrev')}
           key="nav-arrow-back"
