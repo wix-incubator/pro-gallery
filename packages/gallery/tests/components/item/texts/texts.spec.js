@@ -1,10 +1,10 @@
 import { use, expect } from 'chai';
 import spies from 'chai-spies';
-import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
-import { testImages } from '../../../../__testsDrivers__/images-mock';
+import GalleryDriver from '../../../drivers/reactDriver.js';
+import { testImages } from '../../../drivers/mocks/images-mock';
 import sinon from 'sinon';
-import Texts from './texts.js';
-import lineHeightFixer from './lineHeightFixer.js';
+import Texts from '../../../../src/components/item/texts/texts.js';
+import lineHeightFixer from '../../../../src/components/item/texts/lineHeightFixer';
 
 use(spies);
 

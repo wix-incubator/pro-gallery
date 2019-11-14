@@ -1,10 +1,10 @@
 import { use, expect } from 'chai';
 import spies from 'chai-spies';
 import sinon from 'sinon';
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
-import { testImages } from '../../../__testsDrivers__/images-mock';
-import ItemHover from './itemHover';
-import utils from '../../common/utils/index.js';
+import GalleryDriver from '../../drivers/reactDriver';
+import { testImages } from '../../drivers/mocks/images-mock';
+import ItemHover from '../../../src/components/item/itemHover';
+import utils from '../../../src/common/utils/index';
 
 use(spies);
 

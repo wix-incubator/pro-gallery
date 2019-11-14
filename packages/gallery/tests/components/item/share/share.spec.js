@@ -1,15 +1,15 @@
 //Yonatan Hattav 12 Jun 2018
 
-import ItemView from '../itemView.js';
-import GalleryDriver from '../../../../__testsDrivers__/drivers/reactDriver.js';
-import Share from './share.js';
+import ItemView from '../../../../src/components/item/itemView.js';
+import GalleryDriver from '../../../drivers/reactDriver.js';
+import Share from '../../../../src/components/item/share/share.js';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { testImages } from '../../../../__testsDrivers__/images-mock.js';
-import utils from '../../../common/utils/index';
-import EVENTS from '../../../common/constants/events';
-import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
-import VIEW_MODE from '../../../common/constants/viewMode';
+import { testImages } from '../../../drivers/mocks/images-mock';
+import utils from '../../../../src/common/utils/index';
+import EVENTS from '../../../../src/common/constants/events';
+import { viewModeWrapper } from '../../../../src/common/window/viewModeWrapper';
+import VIEW_MODE from '../../../../src/common/constants/viewMode';
 
 describe('Share:', () => {
   let driver;
