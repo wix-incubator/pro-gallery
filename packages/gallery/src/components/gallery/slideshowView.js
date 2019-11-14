@@ -133,6 +133,8 @@ class SlideshowView extends GalleryComponent {
     let nextItem = currentIdx + direction;
     if (!this.props.styleParams.slideshowLoop){
       nextItem = Math.min(this.props.galleryStructure.items.length - 1, nextItem);
+      nextItem = Math.max(0, nextItem);
+
     }
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
