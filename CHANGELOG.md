@@ -1,3 +1,9 @@
+## [v1.5.34](https://pro-gallery-1-5-34.surge.sh) (14/11/2019)
+ 
+#### GALLERY
+ - fix clunky navigation and RTL scroll, especially in grid horizontal galleries
+
+---
 ## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (13/11/2019)
  
 #### GALLERY
