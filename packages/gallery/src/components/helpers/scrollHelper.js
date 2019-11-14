@@ -3,6 +3,7 @@ import utils from '../../common/utils';
 export function scrollToItemImp(scrollParams) {
   let to, from;
   const {
+    scrollMarginCorrection,
     durationInMS,
     horizontalElement,
     scrollingElement,
@@ -57,19 +58,24 @@ export function scrollToItemImp(scrollParams) {
       //set scroll to place the item in the middle of the component
       const diff = (galleryWidth - item.width) / 2;
       if (diff > 0) {
-        to -= diff;
+        if (isRTL) {
+          to += diff;
+        } else {
+          to -= diff;
+        }
       }
       if (isRTL) {
         to = totalWidth - to;
       }
       to = Math.max(0, to);
+      to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
     }
   }
-
   if (oneRow) {
+
     return horizontalCssScrollTo(
       horizontalElement,
       Math.round(from),
