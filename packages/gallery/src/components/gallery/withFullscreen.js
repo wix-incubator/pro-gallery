@@ -14,6 +14,7 @@ const styles = {
         width: '100vw', 
         height: '100vh',
         zIndex: 9,
+        background: 'white'
     }, 
     close: {
         boxSizing: 'content-box',
@@ -50,7 +51,7 @@ export default class ProGalleryWithFullscreen extends React.Component {
                 break;
         }
         if (typeof this.props.eventsListener === 'function') {
-            this.props.eventsListener();
+            this.props.eventsListener(eventName, eventData);
         }
     }
 
@@ -68,15 +69,15 @@ export default class ProGalleryWithFullscreen extends React.Component {
                     <CloseButton style={styles.close} onClick={() => this.setState({fullscreenIdx: -1})} />
                     <ProGallery
                         {...this.props}
-                        initialIdx={this.state.fullscreenIdx}
+                        currentIdx={this.state.fullscreenIdx}
                         container= {{
                             width: window.innerWidth,
-                            height: window.innerHeight
+                            height: window.innerHeight - 100
                         }}
                         styles={{
                             ...(this.props.options || this.props.styles),
                             galleryLayout: 5,
-                            slideshowInfoSize: window.innerHeight / 4,
+                            slideshowInfoSize: 100,
                             cubeType:'fit',
                             scrollSnap: true
                         }}

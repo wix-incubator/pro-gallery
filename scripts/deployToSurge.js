@@ -68,7 +68,7 @@ function deploy(name) {
 function run() {
   let skip;
   const { SURGE_LOGIN, TRAVIS_BRANCH, TRAVIS_PULL_REQUEST, CI } = process.env;
-  if (TRAVIS_BRANCH !== 'master' && TRAVIS_PULL_REQUEST === 'false') {
+  if (TRAVIS_BRANCH !== 'master') {//} && TRAVIS_PULL_REQUEST === 'false') {
     skip = 'Not master or PR';
   } else if (!CI) {
     //skip = 'Not in CI';
