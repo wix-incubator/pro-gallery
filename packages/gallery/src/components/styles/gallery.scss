@@ -539,9 +539,6 @@
       outline: none;
       text-decoration: none;
       color: inherit;
-      transition-duration: .4s;
-      transition-timing-function: linear;
-      transition-property: transform, width, height;
       will-change: transform, top, left, width, height;
       box-sizing: border-box;
       font-family: $font-light;

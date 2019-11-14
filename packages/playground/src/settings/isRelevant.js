@@ -50,7 +50,7 @@ export default {
   hoveringBehaviour: showHoveringBehaviour,
   cubeImages: showThumbnailResize,
   cubeType: showThumbnailResize,
-  cubeRatio: sp => isLayout(sp, [GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.SLIDER]) && sp.cubeType === GALLERY_CONSTS.cubeType.CROP,
+  cubeRatio: sp => sp.cubeType === GALLERY_CONSTS.cubeType.CROP,
   gallerySliderImageRatio: sp => sp.galleryLayout === GALLERY_CONSTS.layout.SLIDER && sp.cubeType === GALLERY_CONSTS.cubeType.CROP,
   galleryThumbnailsAlignment: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,
   thumbnailSize: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,

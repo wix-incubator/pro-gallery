@@ -1,6 +1,13 @@
-## [v1.5.31](https://pro-gallery-1-5-31.surge.sh) (11/11/2019)
+## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (13/11/2019)
  
 #### GALLERY
+ -  improve: remove all animations from items
+
+---
+## [v1.5.31](https://pro-gallery-1-5-31.surge.sh) (13/11/2019)
+ 
+#### GALLERY
+ -  fix: add Object.entries polyfill
  -  fix (scrollCss): use domId for the general class
 
 ---
