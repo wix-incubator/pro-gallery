@@ -1,4 +1,4 @@
-import { testImages } from '../../__testsDrivers__/images-mock';
+import { testImages } from '../../drivers/mocks/images-mock';
 import GalleryItem from '../../../src/components/item/galleryItem';
 import { expect } from 'chai';
 

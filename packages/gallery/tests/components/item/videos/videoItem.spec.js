@@ -1,5 +1,5 @@
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver';
-import { testVideos } from '../../../__testsDrivers__/images-mock';
+import GalleryDriver from '../../../drivers/reactDriver';
+import { testVideos } from '../../../drivers/mocks/images-mock';
 import sinon from 'sinon';
 import VideoItem from '../../../../src/components/item/videos/videoItem';
 import { expect } from 'chai';

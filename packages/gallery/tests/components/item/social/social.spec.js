@@ -1,11 +1,11 @@
 //Yonatan Hattav 19 Jun 2018
 
 import ItemView from '../../../../src/components/item/itemView.js';
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver.js';
+import GalleryDriver from '../../../drivers/reactDriver.js';
 import Social from '../../../../src/components/item/social/social.js';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { testImages } from '../../../__testsDrivers__/images-mock.js';
+import { testImages } from '../../../drivers/mocks/images-mock';
 import utils from '../../../../src/common/utils/index';
 import window from '../../../../src/common/window/windowWrapper';
 import LoveButton from '../../../../src/components/item/loveButton/loveButton.js';

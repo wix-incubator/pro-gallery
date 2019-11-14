@@ -1,7 +1,7 @@
 import ImageItem from '../../../src/components/item/imageItem';
 import { expect } from 'chai';
-import GalleryDriver from '../../__testsDrivers__/drivers/reactDriver.js';
-import { testImages } from '../../__testsDrivers__/images-mock';
+import GalleryDriver from '../../drivers/reactDriver.js';
+import { testImages } from '../../drivers/mocks/images-mock';
 
 describe('Image Item', () => {
   let galleryDriver, sampleItem, imageItemsProps;

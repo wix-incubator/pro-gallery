@@ -5,8 +5,8 @@ import CustomButton from '../../../src/components/item/buttons/customButton';
 import ItemTitle from '../../../src/components/item/texts/itemTitle';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import GalleryDriver from '../../__testsDrivers__/drivers/reactDriver';
-import { testImages } from '../../__testsDrivers__/images-mock';
+import GalleryDriver from '../../drivers/reactDriver';
+import { testImages } from '../../drivers/mocks/images-mock';
 import ItemView from '../../../src/components/item/itemView';
 import EVENTS from '../../../src/common/constants/events';
 

@@ -1,14 +1,15 @@
 import { Layouter } from 'pro-layouts';
-import GalleryItem from '../../../src/components/item/galleryItem';
-import { testImages } from '../images-mock.js';
+import GalleryItem from '../../src/components/item/galleryItem';
+import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
-import { GalleryContainer } from '../../../src/components/gallery/galleryContainerNew'; //import GalleryContainer before the connect (without redux)
-import { ItemsHelper } from '../../../src/components/helpers/itemsHelper';
-import PLACEMENTS from '../../../src/common/constants/placements';
+import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew'; //import GalleryContainer before the connect (without redux)
+import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
+import PLACEMENTS from '../../src/common/constants/placements';
 import React from 'react';
-import utils from '../../../src/common/utils';
-import window from '../../../src/common/window/windowWrapper';
+import utils from '../../src/common/utils';
+import window from '../../src/common/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
+import ProGallery from '../../src/components/gallery/proGallery';
 
 configure({ adapter: new Adapter() });
 
@@ -154,7 +155,24 @@ class galleryDriver {
       this.wrapper = mount(<GalleryContainer actions={{}} {...props} />);
       return this;
     };
+    res.proGallery = props => {
+      const div = document.createElement('div');
+      div.setAttribute('id', 'testing-container');
+      document.body.appendChild(div);
+      this.wrapper = mount(<ProGallery {...props} />, { attachTo: document.getElementById('testing-container') });
+    }
     return res;
+  }
+  get detach(){
+    return {
+      proGallery: () => {
+        this.wrapper.detach();
+        const div = document.getElementById('testing-container');
+        if (div) {
+            document.body.removeChild(div);
+        }
+      }
+    }
   }
 
   get shallow() {
@@ -309,3 +327,4 @@ class galleryDriver {
 }
 
 export default galleryDriver;
+

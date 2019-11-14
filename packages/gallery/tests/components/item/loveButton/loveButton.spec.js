@@ -1,7 +1,7 @@
 import LoveButton from '../../../../src/components/item/loveButton/loveButton.js';
-import GalleryDriver from '../../../__testsDrivers__/drivers/reactDriver.js';
+import GalleryDriver from '../../../drivers/reactDriver.js';
 import { use, expect } from 'chai';
-import { testImages } from '../../../__testsDrivers__/images-mock.js';
+import { testImages } from '../../../drivers/mocks/images-mock';
 import spies from 'chai-spies';
 import sinon from 'sinon';
 import EVENTS from '../../../../src/common/constants/events';

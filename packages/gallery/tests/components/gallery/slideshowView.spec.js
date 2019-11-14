@@ -1,5 +1,5 @@
 import { viewModeWrapper } from '../../../src/common/window/viewModeWrapper';
-import GalleryDriver from '../../__testsDrivers__/drivers/reactDriver'
+import GalleryDriver from '../../drivers/reactDriver'
 import SlideshowView from '../../../src/components/gallery/slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
