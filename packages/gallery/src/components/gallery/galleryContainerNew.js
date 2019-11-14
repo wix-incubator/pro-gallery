@@ -106,6 +106,7 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
+    this.scrollToItem(this.props.currentIdx, false, true, 0);
     const onGalleryCreated = () => {
       this.getMoreItemsIfNeeded(0);
       this.handleNewGalleryStructure();
@@ -588,26 +589,28 @@ export class GalleryContainer extends React.Component {
   }
 
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0, scrollMarginCorrection) {
-    const scrollingElement = this._scrollingElement;
-    const horizontalElement = scrollingElement.horizontal();
-    return scrollToItemImp({
-      scrollMarginCorrection,
-      isRTL: this.state.styles.isRTL,
-      oneRow: this.state.styles.oneRow,
-      galleryWidth: this.state.container.galleryWidth,
-      galleryHeight: this.state.container.galleryHeight,
-      top: 0,
-      items: this.galleryStructure.items,
-      totalWidth: this.galleryStructure.width,
-      itemIdx,
-      fixedScroll,
-      isManual,
-      scrollingElement,
-      horizontalElement,
-      durationInMS,
-    });
+    if (itemIdx >= 0) {
+      const scrollingElement = this._scrollingElement;
+      const horizontalElement = scrollingElement.horizontal();
+      return scrollToItemImp({
+        scrollMarginCorrection,
+        isRTL: this.state.styles.isRTL,
+        oneRow: this.state.styles.oneRow,
+        galleryWidth: this.state.container.galleryWidth,
+        galleryHeight: this.state.container.galleryHeight,
+        top: 0,
+        items: this.galleryStructure.items,
+        totalWidth: this.galleryStructure.width,
+        itemIdx,
+        fixedScroll,
+        isManual,
+        scrollingElement,
+        horizontalElement,
+        durationInMS,
+      });
+    }
   }
-
+  
   containerInfiniteGrowthDirection(styles = false) {
     const _styles = styles || this.state.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
@@ -858,6 +861,7 @@ export class GalleryContainer extends React.Component {
           scroll={{}} //todo: remove after refactor is 100%
           displayShowMore={displayShowMore}
           domId={this.props.domId}
+          currentIdx={this.props.currentIdx || 0}
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
           playingVideoIdx={this.state.playingVideoIdx}

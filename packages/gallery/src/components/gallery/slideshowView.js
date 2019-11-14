@@ -29,7 +29,7 @@ class SlideshowView extends GalleryComponent {
     this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
     this._nextItem = utils.throttle(this.nextItem.bind(this), 400).bind(this);
     this.state = {
-      currentIdx: 0,
+      currentIdx: props.currentIdx || 0,
       isInView: true,
       shouldStopAutoSlideShow: false,
     };
