@@ -7,11 +7,7 @@ import {mixAndSlice} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-// import { ProFullscreen } from '@wix/pro-fullscreen-renderer';
-// import '@wix/pro-fullscreen-renderer/dist/statics/main.css';
-// import '@wix/pro-fullscreen-renderer/dist/src/assets/styles/fullscreen.global.scss';0
-
-import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery';
+import ProGalleryWithFullscreen from 'pro-gallery/dist/src/components/gallery/withFullscreen';
 import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
@@ -118,7 +114,7 @@ export function App() {
         <SideBar />
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
-        <ProGallery
+        <ProGalleryWithFullscreen
           key={`pro-gallery-${isAvoidWidthMeasuring}-${isAvoidHeightMeasuring}-${getItems()[0].itemId}`}
           scrollingElement={window}
           container={container}
@@ -129,23 +125,6 @@ export function App() {
           resizeMediaUrl={resizeMediaUrl}
         />
       </section>
-      {/* <section className={['pro-fullscreen-wrapper', s.fullscreen].join(' ')} style={{...container, opacity: (fullscreenIdx >= 0 ? 1 : 0), pointerEvents: (fullscreenIdx >= 0 ? 'initial' : 'none')}}>
-      fullscreenIdx >= 0 && (
-          <ProFullscreen
-            items={images}
-            initialIdx={fullscreenIdx}
-            totalItemsCount={Infinity}
-            container={container}
-            actions={{
-              getMoreItems: () => setImages(images.concat(mixAndSlice(testItems, ITEMS_BATCH_SIZE))),
-              close: () => setFullscreenIdx(-1),
-            }}
-            locale={'en'}
-            deviceType={'desktop'}
-            styles={styleParams}
-          />
-        )
-        </section> */}
     </main>
   );
 }

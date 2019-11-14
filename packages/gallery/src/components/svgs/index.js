@@ -13,5 +13,6 @@ export {default as play} from './components/play';
 export {default as share_store} from './components/share_store';
 export {default as tumblr} from './components/tumblr';
 export {default as twitter} from './components/twitter';
+export {default as x} from './components/x';
 /* tslint:enable */
 /* eslint-enable */
