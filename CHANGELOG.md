@@ -1,10 +1,15 @@
-## [v1.5.34](https://pro-gallery-1-5-34.surge.sh) (14/11/2019)
+## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (15/11/2019)
  
 #### GALLERY
- - fix clunky navigation and RTL scroll, especially in grid horizontal galleries
-
+ -  improve (tests): reorganize tests folders
+ -  improve: scroll to currentIdx on gallery load if defined
+ -  fix: add polyfill for Object.values
+ -  improve: add ProGalleryWithFullscreen component
+ -  fix (slideshowView): add restriction to nextItem > 0
+ -  fix (slideshowView): fix cluncky navigation and RTL scrollToItem
+ 
 ---
-## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (13/11/2019)
+## [v1.5.32](https://pro-gallery-1-5-32.surge.sh) (13/11/2019)
  
 #### GALLERY
  -  improve: remove all animations from items
