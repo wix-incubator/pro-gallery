@@ -44,7 +44,7 @@ class DimensionsHelper {
         height: Math.ceil(this.container.height),
         width: Math.ceil(this.container.width),
       };
-      if (this.container.externalScrollBase) {
+      if (this.container.externalScrollBase) { //if was provided from the wrapper
         res.scrollBase += this.container.externalScrollBase;
       }
       if (this.styles.hasThumbnails) {
