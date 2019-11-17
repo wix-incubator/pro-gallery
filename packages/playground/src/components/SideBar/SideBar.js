@@ -19,10 +19,10 @@ function SideBar() {
     setGallerySettings,
     setStyleParams,
     styleParams,
-    setIsAvoidWidthMeasuring,
-    setIsAvoidHeightMeasuring,
-    isAvoidWidthMeasuring,
-    isAvoidHeightMeasuring,
+    isUnknownDimensions,
+    isAvoidGallerySelfMeasure,
+    setIsUnknownDimensions,
+    setIsAvoidGallerySelfMeasure,
     setShowAllStyles,
     showAllStyles
   } = useGalleryContext();
@@ -159,16 +159,14 @@ function SideBar() {
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
-            <Form>
-              <Form.Item labelAlign="left">
-                <p>isUnknownWidth && Avoid Pro-Gallery self width measure</p>
-                <Switch checked={isAvoidWidthMeasuring} onChange={e => setIsAvoidWidthMeasuring(e)} />
+            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form.Item label="Unknown dimension" labelAlign="left">
+                <Switch checked={isUnknownDimensions} onChange={e => setIsUnknownDimensions(e)} />
               </Form.Item>
-              <Form.Item labelAlign="left">
-                <p>isUnknownHeight && Avoid Pro-Gallery self height measure</p>
-                <Switch checked={isAvoidHeightMeasuring} onChange={e => setIsAvoidHeightMeasuring(e)} />
+              <Form.Item label="Avoid Pro-Gallery self measure" labelAlign="left">
+                <Switch checked={isAvoidGallerySelfMeasure} onChange={e => setIsAvoidGallerySelfMeasure(e)} />
               </Form.Item>
-              {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelCol={{ span: 17 }} wrapperCol={{ span: 3 }} labelAlign="left">
+              {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>

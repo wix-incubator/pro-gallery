@@ -88,6 +88,7 @@ export default class ImageItem extends GalleryComponent {
         className={
           'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'
         }
+        data-hook='gallery-item-image-canvas'
         role="img"
         alt={alt ? alt : 'untitled image'}
         data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
