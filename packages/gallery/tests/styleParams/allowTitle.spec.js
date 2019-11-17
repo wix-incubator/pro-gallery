@@ -22,8 +22,8 @@ describe('styleParam - allowTitle', () => {
             allowTitle: true,
         })
         driver.mount.proGallery(initialProps)
-        const item = driver.find.hook('item-title').at(0);
         // first item has a title
+        const item = driver.find.hook('item-title').at(0);
         expect(item).to.have.lengthOf(1);
     });
 
@@ -32,8 +32,8 @@ describe('styleParam - allowTitle', () => {
             allowTitle: true,
         })
         driver.mount.proGallery(initialProps)
-        const item = driver.find.hook('item-title').at(3);
         // last item does not have a title
+        const item = driver.find.hook('item-title').at(3);
         expect(item).to.have.lengthOf(0);
         
     });
