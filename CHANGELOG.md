@@ -1,3 +1,9 @@
+## [v1.5.37](https://pro-gallery-1-5-37.surge.sh) (17/11/2019)
+ 
+#### GALLERY
+ - improve (dimensions->scrollBase): pro-gallery will self calculate scrollBase if was not provided from a wrapper and NOT 'avoidGallerySelfMeasure'. 'externalScrollBase' can be provided to pro-gallery.
+
+---
 ## [v1.5.36](https://pro-gallery-1-5-36.surge.sh) (17/11/2019)
  
 #### MAIN
