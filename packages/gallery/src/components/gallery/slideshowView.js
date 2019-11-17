@@ -115,7 +115,7 @@ class SlideshowView extends GalleryComponent {
     const activeElement = document.activeElement;
     const galleryItemIsFocused = activeElement.className && activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
-    if(avoidIndividualNavigation && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerRow) {
+    if(avoidIndividualNavigation && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerCol) {
       direction*=this.props.styleParams.numberOfImagesPerCol;
     }
     if (this.isSliding) {
@@ -125,7 +125,7 @@ class SlideshowView extends GalleryComponent {
 
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
     let currentIdx
-    if(avoidIndividualNavigation) {
+    if(avoidIndividualNavigation && !(this.props.styleParams.galleryLayout === 0)) {
       currentIdx = this.getCenteredItemIdxByScroll();
     } else {
       currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
