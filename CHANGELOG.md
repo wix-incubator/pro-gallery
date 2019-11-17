@@ -1,3 +1,9 @@
+## [v1.5.36](https://pro-gallery-1-5-36.surge.sh) (17/11/2019)
+ 
+#### MAIN
+ -  fix: error messages on scripts
+
+---
 ## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (15/11/2019)
  
 #### GALLERY
