@@ -161,7 +161,7 @@ class SlideshowView extends GalleryComponent {
       const isScrollingPastEdge = !isAutoTrigger &&
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
-      const scrollMarginCorrection = this.getStyles().margin;
+      const scrollMarginCorrection = this.getStyles().margin || 0;
       !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
       utils.setStateAndLog(
         this,
@@ -242,7 +242,7 @@ class SlideshowView extends GalleryComponent {
       },
     );
 
-    this.props.actions.scrollToItem(itemIdx, false, true, scrollDuration);
+    this.props.actions.scrollToItem(itemIdx, false, true, scrollDuration, 0);
   }
 
   handleSlideshowKeyPress(e) {
