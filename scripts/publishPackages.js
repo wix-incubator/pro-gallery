@@ -102,7 +102,7 @@ function run() {
   let skip;
   const { FORCE_PUBLISH, TRAVIS_BRANCH, CI } = process.env;
   if (TRAVIS_BRANCH !== 'master' && !FORCE_PUBLISH) {
-    skip = 'Not on master branch';
+    skip = `Not publishing on ${TRAVIS_BRANCH} branch (should be master)`;
   } else if (!CI) {
     skip = 'Not in CI';
   }

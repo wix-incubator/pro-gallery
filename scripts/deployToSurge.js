@@ -68,15 +68,15 @@ function deploy(name) {
 function run() {
   let skip;
   const { SURGE_LOGIN, TRAVIS_BRANCH, TRAVIS_PULL_REQUEST, CI } = process.env;
-  if (TRAVIS_BRANCH !== 'master' && TRAVIS_PULL_REQUEST === 'false') {
-    skip = 'Not master or PR';
+  if (TRAVIS_BRANCH !== 'master') {//} && TRAVIS_PULL_REQUEST === 'false') {
+    skip = `Not deploying to surge on branch ${TRAVIS_BRANCH} or PR`;
   } else if (!CI) {
-    //skip = 'Not in CI';
+    skip = 'Not in CI';
   } else if (!SURGE_LOGIN) {
     skip = 'PR from fork';
   }
   if (skip) {
-    console.log(chalk.yellow(`${skip} - skipping deploy`));
+    console.log(chalk.yellow(`${skip} - skipping deploy to surge`));
     return false;
   }
 

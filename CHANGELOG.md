@@ -1,10 +1,32 @@
-## [v1.5.34](https://pro-gallery-1-5-34.surge.sh) (14/11/2019)
+## [v1.5.38](https://pro-gallery-1-5-38.surge.sh) (17/11/2019)
+ 
+ no changes.
+ 
+---
+## [v1.5.37](https://pro-gallery-1-5-37.surge.sh) (17/11/2019)
  
 #### GALLERY
- - fix clunky navigation and RTL scroll, especially in grid horizontal galleries
+ - improve (dimensions->scrollBase): pro-gallery will self calculate scrollBase if was not provided from a wrapper and NOT 'avoidGallerySelfMeasure'. 'externalScrollBase' can be provided to pro-gallery.
 
 ---
-## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (13/11/2019)
+## [v1.5.36](https://pro-gallery-1-5-36.surge.sh) (17/11/2019)
+ 
+#### MAIN
+ -  fix: error messages on scripts
+
+---
+## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (15/11/2019)
+ 
+#### GALLERY
+ -  improve (tests): reorganize tests folders
+ -  improve: scroll to currentIdx on gallery load if defined
+ -  fix: add polyfill for Object.values
+ -  improve: add ProGalleryWithFullscreen component
+ -  fix (slideshowView): add restriction to nextItem > 0
+ -  fix (slideshowView): fix cluncky navigation and RTL scrollToItem
+ 
+---
+## [v1.5.32](https://pro-gallery-1-5-32.surge.sh) (13/11/2019)
  
 #### GALLERY
  -  improve: remove all animations from items
