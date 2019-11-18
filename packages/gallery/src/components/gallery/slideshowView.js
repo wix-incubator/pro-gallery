@@ -1034,7 +1034,11 @@ class SlideshowView extends GalleryComponent {
     if (this.container) {
       this.container.addEventListener('scroll', this._setCurrentItemByScroll);
     }
-    this.setCurrentItemByScroll();
+    if (this.state.currentIdx > 0) {
+      this.props.actions.scrollToItem(this.state.currentIdx);
+    } else {
+      this.setCurrentItemByScroll();
+    }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
   }
 

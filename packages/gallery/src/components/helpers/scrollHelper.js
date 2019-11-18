@@ -3,7 +3,7 @@ import utils from '../../common/utils';
 export function scrollToItemImp(scrollParams) {
   let to, from;
   const {
-    scrollMarginCorrection,
+    scrollMarginCorrection = 0,
     durationInMS,
     horizontalElement,
     scrollingElement,
