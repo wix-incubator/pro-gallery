@@ -49,6 +49,8 @@ class GalleryItem {
     if (!this.sharpParams.usm) {
       this.sharpParams.usm = {};
     }
+    this.thumbnailSize = config.thumbnailSize || 120;
+
     this.resetUrls();
     this.updateSharpParams();
   }
@@ -226,8 +228,6 @@ class GalleryItem {
     const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
     const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
 
-    this.thumbnailWidth = Math.min(maxWidth, this.width, maxDimension);
-    this.thumbnailHeight = Math.min(maxHeight, this.height, maxDimension);
     this.resizeWidth = Math.min(maxWidth, Math.ceil(this.width));
     this.resizeHeight = Math.min(maxHeight, Math.ceil(this.height));
 
@@ -267,10 +267,10 @@ class GalleryItem {
   get thumbnail_url() {
     if (!this.urls.thumbnail_url) {
       this.urls.thumbnail_url = this.resizedUrl(
-        RESIZE_METHODS.FIT,
-        this.thumbnailWidth,
-        this.thumbnailHeight,
-        { quality: 30 },
+        RESIZE_METHODS.FILL,
+        this.thumbnailSize,
+        this.thumbnailSize,
+        { quality: 70 },
       );
     }
     return this.urls.thumbnail_url;

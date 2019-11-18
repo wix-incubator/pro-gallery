@@ -372,6 +372,7 @@ export class GalleryContainer extends React.Component {
     this.layouter = new Layouter(layoutParams);
     this.layout = this.layouter.createLayout(layoutParams);
     this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
+      thumbnailSize: styles.thumbnailSize,
       sharpParams: styles.sharpParams,
       resizeMediaUrl: this.props.resizeMediaUrl,
     });
@@ -515,8 +516,9 @@ export class GalleryContainer extends React.Component {
       const itemConfig = {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,
-        lastVisibleItemIdx: this.lastVisibleItemIdx,
+        thumbnailSize: styles.thumbnailSize,
         resizeMediaUrl: this.props.resizeMediaUrl,
+        lastVisibleItemIdx: this.lastVisibleItemIdx,
       };
       const existingLayout = this.galleryStructure || this.layout;
       if (isNew.addedItems) {
