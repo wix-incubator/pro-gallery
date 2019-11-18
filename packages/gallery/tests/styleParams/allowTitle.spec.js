@@ -38,7 +38,7 @@ describe('styleParam - allowTitle', () => {
         
     });
 
-    it('should not render "item-title when "allowTitle is "false"', () => {
+    it('should not render "item-title when "allowTitle" is "false"', () => {
         Object.assign(initialProps.styles, {
             allowTitle: false,
         })
