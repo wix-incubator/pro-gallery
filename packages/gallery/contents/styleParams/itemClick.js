@@ -1,5 +1,5 @@
-import { GALLERY_CONSTS, INPUT_TYPES } from './constants';
-import { createOptions, always } from './utils';
+import { GALLERY_CONSTS, INPUT_TYPES } from './utils/constants';
+import { createOptions, always } from './utils/utils';
 
 export default {
   title: 'Click Action',
