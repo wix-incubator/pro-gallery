@@ -5,7 +5,7 @@ export default {
   title: 'Click Action',
   description: 'Specifies what happens when an item is clicked',
   isRelevant: always,
-  type: INPUT_TYPES.BOOLEAN,
+  type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.itemClick.EXPAND,
   options: createOptions('itemClick')
 }

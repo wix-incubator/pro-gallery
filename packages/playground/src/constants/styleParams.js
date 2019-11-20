@@ -1,5 +1,6 @@
 import Consts from 'pro-gallery/dist/src/common/constants';
 import isRelevant from '../settings/isRelevant';
+import {gallerySettings} from 'pro-gallery';
 
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
@@ -217,6 +218,8 @@ const defaultStyleParams = {
   videoSpeed: '1',
   videoLoop: true,
 };
+
+Object.entries(gallerySettings).forEach(([styleParam, settings]) => defaultStyleParams[styleParam] = settings.default);
 
 const styleParamsByLayout = () => ({
   collage: {

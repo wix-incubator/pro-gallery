@@ -173,11 +173,22 @@ class JsonEditor extends React.Component {
       }, {});
 
     const isSingleItem = !!styleParam;
-  
+
+    const Extra = settings => {
+      if (settings.isRelevant(styleParams)) {
+        if (settings.isOld) {
+          return null;
+        } else {
+          return <Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
+        }
+      } else {
+        return <Tooltip placement="right" title="This param is not relevant in current scope"><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Tooltip>
+      }
+    }
     return (
       <Collapse accordion={true} bordered={false} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
-          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={settings.isRelevant(styleParams) ? null : <Tooltip placement="right" title="This param is not relevant in current scope"><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Tooltip>}>
+          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={Extra(settings)}>
             {this.renderEntryEditor(styleParam, settings)}
             {<div>
               <Divider/>
