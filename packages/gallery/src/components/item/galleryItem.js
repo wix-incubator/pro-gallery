@@ -224,7 +224,6 @@ class GalleryItem {
     return urls;
   }
   resetUrls() {
-    const maxDimension = 500;
     const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
     const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
 

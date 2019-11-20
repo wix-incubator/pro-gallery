@@ -175,10 +175,8 @@ class DimensionsHelper {
     }
     try {
       const proGalleryElement = window.document.getElementById(`pro-gallery-${this.domId}`);
-      console.log('pro gallery element =', proGalleryElement);
-      return window.document
-        .getElementById(`pro-gallery-${this.domId}`)
-        .getBoundingClientRect();
+      utils.isVerbose() && console.log('pro gallery element =', proGalleryElement);
+      return proGalleryElement.getBoundingClientRect();
     } catch (e) {
       return false;
     }
