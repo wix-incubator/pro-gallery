@@ -25,6 +25,7 @@ describe('styleParam - allowDescription', () => {
         // first item has a description
         const item = driver.find.hook('item-description').at(0);
         expect(item).to.have.lengthOf(1);
+        driver.detach.proGallery();
     });
 
     it('should not render "item-description" when "allowDescription" is "true" and item does not have a description', () => {
@@ -35,7 +36,7 @@ describe('styleParam - allowDescription', () => {
         // last item does not have a description
         const item = driver.find.hook('item-description').at(3);
         expect(item).to.have.lengthOf(0);
-        
+        driver.detach.proGallery();
     });
 
     it('should not render "item-description" when "allowDescription" is "false"', () => {
@@ -45,6 +46,17 @@ describe('styleParam - allowDescription', () => {
         driver.mount.proGallery(initialProps);
         const items = driver.find.hook('item-description');
         expect(items).to.have.lengthOf(0);
+        driver.detach.proGallery();
     });
 
+    it('should render wrapping "texts" element when only a description is available', () => {
+      Object.assign(initialProps.styles, {
+          allowDescription: true,
+          allowTitle: false
+      })
+      driver.mount.proGallery(initialProps);
+      const items = driver.find.selector('.gallery-item-text').at(0);
+      expect(items).to.have.lengthOf(1);
+      driver.detach.proGallery();
+  });
 })
