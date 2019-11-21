@@ -31,7 +31,7 @@ const styles = {
     }
 } 
 
-export default class ProGalleryWithFullscreen extends React.Component {
+export default class ExpandableProGallery extends React.Component {
 
     constructor(props) {
         super(props)

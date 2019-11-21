@@ -21,7 +21,7 @@
  -  improve (tests): reorganize tests folders
  -  improve: scroll to currentIdx on gallery load if defined
  -  fix: add polyfill for Object.values
- -  improve: add ProGalleryWithFullscreen component
+ -  improve: add ExpandableProGallery component
  -  fix (slideshowView): add restriction to nextItem > 0
  -  fix (slideshowView): fix cluncky navigation and RTL scrollToItem
  

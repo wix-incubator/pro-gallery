@@ -7,8 +7,7 @@ import {mixAndSlice} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import ProGalleryWithFullscreen from 'pro-gallery/dist/src/components/gallery/withFullscreen';
-import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
+import {GALLERY_EVENTS, ExpandableProGallery} from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
@@ -113,7 +112,7 @@ export function App() {
         <SideBar />
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
-        <ProGalleryWithFullscreen
+        <ExpandableProGallery
           key={`pro-gallery-${isUnknownDimensions}-${isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
           scrollingElement={window}
           container={container}
