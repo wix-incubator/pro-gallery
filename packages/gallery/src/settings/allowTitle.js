@@ -2,7 +2,7 @@ import { INPUT_TYPES } from './utils/constants';
 import { always } from './utils/utils';
 
 export default {
-  title: 'Allow title',
+  title: 'Allow Title',
   description: 'Choose whether you want to show title or not',
   isRelevant: always,
   type: INPUT_TYPES.BOOLEAN,
