@@ -1,6 +1,6 @@
 import React from 'react';
-import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery';
-import GALLERY_EVENTS from 'pro-gallery/dist/src/common/constants/events';
+import ProGallery from './proGallery';
+import GALLERY_EVENTS from '../../common/constants';
 import CloseButton from '../svgs/components/x';
 
 const styles = {
