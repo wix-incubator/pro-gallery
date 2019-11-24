@@ -170,11 +170,11 @@
 
        &.hover-animation-fade-in {
          .gallery-item-hover {
-           transition: filter .4s ease, opacity .4s ease !important;
+           transition: opacity .4s ease !important;
 
            &:before {
-             transition: filter .4s ease, opacity .4s ease !important;
-             filter: opacity(0);
+             transition: opacity .4s ease !important;
+             opacity: 0;
            }
 
            .gallery-item-hover-inner,
@@ -191,19 +191,19 @@
          &:hover .gallery-item-hover:not(.hide-hover) {
 
            &:before {
-             filter: opacity(1);
+             opacity: 1;
            }
          }
        }
 
        &.hover-animation-expand {
          .gallery-item-hover {
-           transition: transform .4s ease, filter .2s ease, opacity .4s ease !important;
+           transition: transform .4s ease, opacity .2s ease !important;
 
            &:before {
-             transition: transform .4s ease, filter .2s ease, opacity .4s ease !important;
+             transition: transform .4s ease, opacity .2s ease !important;
              transform: scale(0.9);
-             filter: opacity(0);
+             opacity: 0;
            }
 
            .gallery-item-hover-inner,
@@ -221,7 +221,7 @@
 
            &:before {
              transform: scale(1);
-             filter: opacity(1);
+             opacity: 1;
            }
          }
        }
@@ -229,12 +229,12 @@
        &.hover-animation-slide-up {
 
          .gallery-item-hover {
-           transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+           transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
 
            &:before {
-             transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+             transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
              transform: translateY(100%);
-             filter: opacity(0);
+             opacity: 0;
            }
 
            .gallery-item-hover-inner,
@@ -252,19 +252,19 @@
 
            &:before {
              transform: translateY(0);
-             filter: opacity(1);
+             opacity: 1;
            }
          }
        }
 
        &.hover-animation-slide-right {
          .gallery-item-hover {
-           transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+           transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
 
            &:before {
-             transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+             transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
              transform: translateX(-100%);
-             filter: opacity(0);
+             opacity: 0;
            }
 
            .gallery-item-hover-inner,
@@ -282,7 +282,7 @@
 
            &:before {
              transform: translateX(0);
-             filter: opacity(1);
+             opacity: 1;
            }
          }
        }
@@ -344,7 +344,6 @@
 
         &:before {
           opacity: 0;
-          //background: $bg-dark-opacity;
         }
 
         .gallery-item-hover-inner,
@@ -362,11 +361,11 @@
 
       &.hover-animation-fade-in {
         .gallery-item-hover {
-          transition: filter .4s ease, opacity .4s ease !important;
+          transition: opacity .4s ease !important;
 
           &:before {
-            transition: filter .4s ease, opacity .4s ease !important;
-            filter: opacity(1);
+            transition: opacity .4s ease !important;
+            opacity: 1;
           }
 
           .gallery-item-hover-inner,
@@ -383,19 +382,19 @@
         &:hover .gallery-item-hover:not(.hide-hover) {
 
           &:before {
-            filter: opacity(0);
+            opacity: 0;
           }
         }
       }
 
       &.hover-animation-expand {
         .gallery-item-hover {
-          transition: transform .4s ease, filter .2s ease, opacity .4s ease !important;
+          transition: transform 0.4s ease, opacity .2s ease !important;
 
           &:before {
-            transition: transform .4s ease, filter .2s ease, opacity .4s ease !important;
+            transition: transform 0.4s ease, opacity .2s ease !important;
             transform: scale(1);
-            filter: opacity(1);
+            opacity: 1;
           }
 
           .gallery-item-hover-inner,
@@ -413,7 +412,7 @@
 
           &:before {
             transform: scale(0.9);
-            filter: opacity(0);
+            opacity: 0;
           }
         }
       }
@@ -421,12 +420,12 @@
       &.hover-animation-slide-up {
 
         .gallery-item-hover {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
 
           &:before {
-            transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+            transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
             transform: translateY(0);
-            filter: opacity(1);
+            opacity: 1;
           }
 
           .gallery-item-hover-inner,
@@ -444,19 +443,19 @@
 
           &:before {
             transform: translateY(100%);
-            filter: opacity(0);
+            opacity: 0;
           }
         }
       }
 
       &.hover-animation-slide-right {
         .gallery-item-hover {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
 
           &:before {
-            transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+            transition: transform .4s cubic-bezier(.3, .13, .12, 1), opacity .5s ease !important;
             transform: translateX(0);
-            filter: opacity(1);
+            opacity: 1;
           }
 
           .gallery-item-hover-inner,
@@ -474,7 +473,7 @@
 
           &:before {
             transform: translateX(-100%);
-            filter: opacity(0);
+            opacity: 0;
           }
         }
       }
