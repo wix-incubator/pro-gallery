@@ -1,3 +1,17 @@
+## [v1.5.39](https://pro-gallery-1-5-39.surge.sh) (24/11/2019)
+ 
+#### GALLERY
+ -  fix (withFullscreen): fix imports paths
+ -  improve: export ExpandableProGallery from index
+ -  improve: move settings to gallery/src
+ -  improve: allow openning fullscreen with currentIdx
+ -  use real thumbnailSize for thumbnails
+ -  enable collage horizontal navigation - fix for last version regression
+
+#### PLAYGROUND
+ -  improve: add new settings configuration from gallery
+
+---
 ## [v1.5.38](https://pro-gallery-1-5-38.surge.sh) (17/11/2019)
  
  no changes.
