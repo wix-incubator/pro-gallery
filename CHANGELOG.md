@@ -1,3 +1,9 @@
+## [v1.5.40](https://pro-gallery-1-5-40.surge.sh) (24/11/2019)
+ 
+#### GALLERY
+ -  fixed overlay animations on hover (issue when border-radius is not 0px)
+
+---
 ## [v1.5.39](https://pro-gallery-1-5-39.surge.sh) (24/11/2019)
  
 #### GALLERY
