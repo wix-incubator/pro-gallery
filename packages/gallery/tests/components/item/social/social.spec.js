@@ -36,6 +36,21 @@ describe('Social:', () => {
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.hook('item-social').length).to.equal(1);
     });
+    it('should have class ".populated-item" when there is at least one social item', () => {
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.set.props({
+        styleParams: { allowDownload: true, allowSocial: false, loveButton: false}
+      })
+      expect(driver.find.hook('item-social').hasClass('populated-item')).to.be.true;
+    });
+    it('should not have class ".populated-item" when there is no social items', () => {
+      driver.mount(ItemView, sampleItemViewProps);
+      driver.set.props({
+        styleParams: { allowDownload: false, allowSocial: false, loveButton: false }
+      })
+      expect(driver.find.hook('item-social').hasClass('populated-item')).to.be.false;
+    });
+
     it('has classes based on props', () => {
       driver.mount(Social, sampleItemViewProps);
       driver.set.props({
