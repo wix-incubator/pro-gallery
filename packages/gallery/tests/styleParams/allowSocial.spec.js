@@ -70,7 +70,7 @@ describe('styleParam - allowSocial', () => {
     driver.detach.proGallery();
   });
 
-  it('should set class ".populated-item" to "item-social" when only "allowDownload" is enabled', () => {
+  it('should set class ".populated-item" to "item-social" when only "allowSocial" is enabled', () => {
     Object.assign(initialProps.styles, {
       allowDownload: false,
       allowSocial: true,
