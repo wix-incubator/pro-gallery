@@ -13,6 +13,8 @@ class VideoItem extends GalleryComponent {
 
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
+    this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
+    
     this.state = {
       playedOnce: false,
       playing: false,
@@ -26,6 +28,7 @@ class VideoItem extends GalleryComponent {
       import(/* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
+        this.playVideoIfNeeded();
       });
     }
     if (
@@ -37,6 +40,7 @@ class VideoItem extends GalleryComponent {
       import(/* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
+        this.playVideoIfNeeded();
       });
     }
   }
@@ -45,12 +49,16 @@ class VideoItem extends GalleryComponent {
     if (nextProps.playing) {
       this.setState({ playedOnce: true });
     }
+
+    this.playVideoIfNeeded(nextProps);
+
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentIdx !== this.props.currentIdx) {
       this.fixIFrameTabIndexIfNeeded();
     }
+    this.playVideoIfNeeded();
   }
 
   play() {
@@ -61,6 +69,21 @@ class VideoItem extends GalleryComponent {
     this.props.pauseVideo();
   }
 
+  playVideoIfNeeded(props = this.props) {
+    try {
+      const {playingVideoIdx} = props;
+      if (playingVideoIdx === this.props.idx && !this.isPlaying) {
+        this.videoElement = this.videoElement || window.document.querySelector(`#video-${this.props.id} video`);
+        if (this.videoElement) {
+          this.isPlaying = true;
+          this.videoElement.play();
+          utils.isVerbose() && console.log('[VIDEO] Playing video #' + this.props.idx, this.videoElement)
+        }
+      }
+    } catch (e) {
+      console.error('[VIDEO] Could not play video #' + this.props.idx, this.videoElement, e);
+    }
+  }
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
@@ -121,6 +144,7 @@ class VideoItem extends GalleryComponent {
           this.setState({ playing: true });
         }}
         onReady={() => {
+          this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
         }}
