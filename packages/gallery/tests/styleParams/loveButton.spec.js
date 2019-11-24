@@ -38,27 +38,4 @@ describe('styleParam - loveButton', () => {
     driver.detach.proGallery();
   });
 
-  it('should set class ".populated-item" to "item-social" when only "loveButton" is enabled', () => {
-    Object.assign(initialProps.styles, {
-      allowDownload: false,
-      allowSocial: false,
-      loveButton: true
-    })
-    driver.mount.proGallery(initialProps)
-    const item = driver.find.hook('item-social').at(0);
-    expect(item.hasClass('populated-item')).to.be.true;
-    driver.detach.proGallery();
-  });
-
-  it('should set "padding-bottom:70" to texts element', () => {
-    Object.assign(initialProps.styles, {
-      loveButton: true,
-      allowTitle: true //added title to render "gallery-item-text" for the test
-    })
-    driver.mount.proGallery(initialProps)
-    const item = driver.find.selector('.gallery-item-text').at(0);
-    expect(item.prop('style').paddingBottom).to.eq(70);
-    driver.detach.proGallery();
-  });
-
 })

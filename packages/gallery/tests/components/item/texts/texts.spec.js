@@ -61,4 +61,13 @@ describe('Text elements', () => {
       galleryDriver.find.hook('item-title').get(0).props.style.marginBottom,
     ).to.equal(0);
   });
+
+  it('should set paddingBottom=70 when there are any social buttons(download,social,love)', () => {
+    itemViewProps.description = 'Description';
+    itemViewProps.shouldShowButton = false;
+    itemViewProps.styleParams.loveButton = true;
+    galleryDriver.mount(Texts, itemViewProps);
+    const socialContainer = galleryDriver.find.selector('.gallery-item-text')
+    expect(socialContainer.prop('style').paddingBottom).to.eq(70);
+  });
 });
