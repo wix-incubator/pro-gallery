@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles'
 
-describe('styleParam - allowSocial', () => {
+describe('styleParam - loveButton', () => {
 
   let driver;
   const initialProps = {
@@ -38,7 +38,7 @@ describe('styleParam - allowSocial', () => {
     driver.detach.proGallery();
   });
 
-  it('should set class ".populated-item" to "item-social" when only "allowSocial" is enabled', () => {
+  it('should set class ".populated-item" to "item-social" when only "loveButton" is enabled', () => {
     Object.assign(initialProps.styles, {
       allowDownload: false,
       allowSocial: false,
