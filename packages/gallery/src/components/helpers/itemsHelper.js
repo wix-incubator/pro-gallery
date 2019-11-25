@@ -59,9 +59,6 @@ export class ItemsHelper {
         });
       }
     }
-    if (utils.isVerbose()) {
-      console.log({ galleryStructure });
-    }
 
     return galleryStructure;
   }

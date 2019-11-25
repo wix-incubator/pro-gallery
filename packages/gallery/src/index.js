@@ -7,4 +7,11 @@ import gallerySettings from './settings';
 import ExpandableProGallery from './components/gallery/withFullscreen';
 import GALLERY_CONSTS from './common/constants';
 
-export { ProGallery, ExpandableProGallery, GALLERY_CONSTS, LoveButton, GalleryItem, gallerySettings };
+export { 
+    ProGallery, 
+    ExpandableProGallery, 
+    GALLERY_CONSTS, 
+    LoveButton, 
+    GalleryItem, 
+    gallerySettings 
+};
