@@ -78,6 +78,7 @@ class ItemView extends GalleryComponent {
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this,
     );
+    this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -966,30 +967,32 @@ class ItemView extends GalleryComponent {
         React.initializeTouchEvents(true);
       } catch (e) {}
     }
-    
-    window.addEventListener('current_hover_change', (a) => {
-      if (a.galleryId === this.props.galleryId) {
-        if (!this.state.isCurrentHover && a.currentHoverIdx === this.props.idx) {
-          this.setState({
-            isCurrentHover: true
-          })
-        } else if (this.state.isCurrentHover && a.currentHoverIdx !== this.props.idx) {
-          this.setState({
-            isCurrentHover: false
-          })
-        }
-      }
-    });
+
+    window.addEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('current_hover_change');
+    window.removeEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
   }
 
 
     componentDidUpdate(prevProps) {
     this.changeActiveElementIfNeeded(prevProps);
   }
+
+  checkIfCurrentHoverChanged(e) {
+    if (e.galleryId === this.props.galleryId) {
+      if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
+        this.setState({
+          isCurrentHover: true
+        })
+      } else if (this.state.isCurrentHover && e.currentHoverIdx !== this.props.idx) {
+        this.setState({
+          isCurrentHover: false
+        })
+      }
+    }
+  };
 
   onContextMenu(e) {
     if (!utils.isDev()) {
