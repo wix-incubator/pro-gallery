@@ -78,20 +78,6 @@ class ItemView extends GalleryComponent {
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this,
     );
-
-    window.addEventListener('current_hover_change', (a) => {
-      if (a.galleryId === this.props.galleryId) {
-        if (!this.state.isCurrentHover && a.currentHoverIdx === this.props.idx) {
-          this.setState({
-            isCurrentHover: true
-          })
-        } else if (this.state.isCurrentHover && a.currentHoverIdx !== this.props.idx) {
-          this.setState({
-            isCurrentHover: false
-          })
-        }
-      }
-    });
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -980,9 +966,28 @@ class ItemView extends GalleryComponent {
         React.initializeTouchEvents(true);
       } catch (e) {}
     }
+    
+    window.addEventListener('current_hover_change', (a) => {
+      if (a.galleryId === this.props.galleryId) {
+        if (!this.state.isCurrentHover && a.currentHoverIdx === this.props.idx) {
+          this.setState({
+            isCurrentHover: true
+          })
+        } else if (this.state.isCurrentHover && a.currentHoverIdx !== this.props.idx) {
+          this.setState({
+            isCurrentHover: false
+          })
+        }
+      }
+    });
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillUnmount() {
+    window.removeEventListener('current_hover_change');
+  }
+
+
+    componentDidUpdate(prevProps) {
     this.changeActiveElementIfNeeded(prevProps);
   }
 
