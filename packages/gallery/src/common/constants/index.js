@@ -1,3 +1,4 @@
+import events from './events';
 import placements from './placements';
 import infoBehaviourOnHover from './infoBehaviourOnHover';
 import scrollAnimations from './scrollAnimations';
@@ -24,6 +25,7 @@ import dimensions from './dimensions';
 import gallerySizeType from './gallerySizeType';
 
 export default {
+  events,
   placements,
   infoBehaviourOnHover,
   scrollAnimations,

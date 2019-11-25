@@ -1,6 +1,6 @@
 import React from 'react';
 import ProGallery from './proGallery';
-import GALLERY_EVENTS from '../../common/constants';
+import GALLERY_EVENTS from '../../common/constants/events';
 import CloseButton from '../svgs/components/x';
 
 const styles = {
@@ -21,13 +21,14 @@ const styles = {
         zIndex: 10,
         padding: 10,
         position: 'fixed',
-        right: 10,
-        top: 10,
+        right: 20,
+        top: 20,
         background: 'rgba(255,255,255,0.8)',
         borderRadius: 4,
         width: 25,
         height: 25,
         fill: 'black',
+        cursor: 'pointer'
     }
 } 
 

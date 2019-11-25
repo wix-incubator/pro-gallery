@@ -7,11 +7,13 @@ import {mixAndSlice} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import {GALLERY_EVENTS, ExpandableProGallery} from 'pro-gallery';
+import {GALLERY_CONSTS, ExpandableProGallery} from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
 const pJson = require('../../../package.json');
+
+const GALLERY_EVENTS = GALLERY_CONSTS.events;
 
 const initialItems = {
   mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
