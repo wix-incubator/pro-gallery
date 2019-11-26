@@ -1,3 +1,12 @@
+## [v1.5.41](https://pro-gallery-1-5-41.surge.sh) (26/11/2019)
+ 
+#### GALLERY
+ -  fixed animations when itemBorderRadius is not 0: itemBorderRadius will be passed to item component (image/video/text) and to hover component
+ -  fixed gallery consts export
+ -  remove 'current_hover_change' eventListener on unmount.
+ -  manually play videos when needed (required for safari)
+
+---
 ## [v1.5.40](https://pro-gallery-1-5-40.surge.sh) (24/11/2019)
  
 #### GALLERY
@@ -13,10 +22,7 @@
  -  improve: allow openning fullscreen with currentIdx
  -  use real thumbnailSize for thumbnails
  -  enable collage horizontal navigation - fix for last version regression
-
-#### PLAYGROUND
- -  improve: add new settings configuration from gallery
-
+ 
 ---
 ## [v1.5.38](https://pro-gallery-1-5-38.surge.sh) (17/11/2019)
  
