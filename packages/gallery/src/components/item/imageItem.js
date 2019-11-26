@@ -57,7 +57,9 @@ export default class ImageItem extends GalleryComponent {
           onTouchEnd={actions.handleItemMouseUp}
           key={'image_container-' + id}
           data-hook={'image-item'}
-          style={displayed ? {} : { ...backgroundStyle, ...restOfDimensions }}
+          style={displayed ?
+            (imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {})
+            : { ...backgroundStyle, ...restOfDimensions }}
         >
           {image}
         </div>

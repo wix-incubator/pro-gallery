@@ -382,6 +382,8 @@ class ItemView extends GalleryComponent {
       }
     }
 
+    dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
+
     return dimensions;
   }
 

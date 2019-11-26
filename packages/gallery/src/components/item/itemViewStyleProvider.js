@@ -4,7 +4,9 @@ import PLACEMENTS from '../../common/constants/placements';
 export function getContainerStyle(styleParams) {
   return {
     ...((styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) && {
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS) && {
       ...getBorderStyle(
         styleParams.itemBorderRadius,
         styleParams.itemBorderWidth,

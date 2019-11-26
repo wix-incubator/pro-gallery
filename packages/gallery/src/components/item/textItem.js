@@ -74,6 +74,10 @@ export default class TextItem extends GalleryComponent {
         styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit',
     };
 
+    if (imageDimensions && imageDimensions.borderRadius) {
+      itemContentStyle.borderRadius = imageDimensions.borderRadius;
+    }
+
     return (
       <div className={'gallery-item-content'} style={itemContentStyle}>
         <div
