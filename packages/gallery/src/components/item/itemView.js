@@ -381,8 +381,9 @@ class ItemView extends GalleryComponent {
         marginLeft: imageMarginLeft,
       }
     }
-
-    dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
+    if (styleParams.itemBorderRadius) {
+      dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
+    }
 
     return dimensions;
   }
