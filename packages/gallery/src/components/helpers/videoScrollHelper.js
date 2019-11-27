@@ -244,7 +244,7 @@ class VideoScrollHelper {
       scrollBase: this.scrollBase,
       top: item.offset.top,
       bottom: item.offset.top + item.style.height,
-      screenHeight: window && window.screen && window.screen.height,
+      screenHeight: window && window.innerHeight,
       padding: videoPlayVerticalTolerance,
     });
     let visibleHorizontally;
@@ -255,7 +255,7 @@ class VideoScrollHelper {
         target,
         left: item.offset.left,
         right: item.offset.left + item.style.width,
-        screenWidth: window && window.screen && window.screen.width,
+        screenWidth: window && window.innerWidth,
         padding: videoPlayHorizontalTolerance,
       });
     }

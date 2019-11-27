@@ -202,9 +202,10 @@ class VideoItem extends GalleryComponent {
 
   canVideoPlayInGallery(itemClick, videoPlay) {
     if (
-      utils.isMobile() &&
-      itemClick !== 'expand' &&
-      itemClick !== 'fullscreen'
+      utils.isMobile() && 
+      (videoPlay === 'auto' ||
+      (itemClick !== 'expand' &&
+      itemClick !== 'fullscreen'))
     )
       return true;
     else if (
@@ -215,15 +216,6 @@ class VideoItem extends GalleryComponent {
       return true;
     else if (!utils.isMobile() && videoPlay !== 'onClick') return true;
     else return false;
-  }
-  shouldRenderVideo() {
-    if (
-      !this.state.playedOnce &&
-      (this.props.isExternalVideo || utils.isMobile())
-    ) {
-      return false;
-    }
-    return true;
   }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
@@ -264,8 +256,7 @@ class VideoItem extends GalleryComponent {
       this.props.imageDimensions || {};
     const { videoPlay, itemClick } = this.props.styleParams;
     const video =
-      this.canVideoPlayInGallery(itemClick, videoPlay) &&
-      this.shouldRenderVideo() ? (
+      this.canVideoPlayInGallery(itemClick, videoPlay) ? (
         <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"
