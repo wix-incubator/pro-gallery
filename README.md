@@ -1,4 +1,8 @@
-# Pro Gallery
+<h1 align="center">
+  <img src="logo.png"/><br/>
+  Pro Gallery
+</h1>
+
 Blazing fast & beautiful galleries built with React. [Try it out now.](https://pro-gallery.surge.sh)
  - Responsive
  - Lazy loading
