@@ -4,7 +4,7 @@ export const SECTIONS = {
     ADVANCED: 'Advanced Layout Settings',
     BEHAVIOR: 'Behavior Settings',
     INFO: 'Item info',
-    DESIGN: 'Design Settings',
+    // DESIGN: 'Design Settings',
     ANIMATION: 'Animations',
     IMAGE: 'Image',
     VIDEO: 'Videos',

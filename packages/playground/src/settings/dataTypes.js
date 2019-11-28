@@ -189,17 +189,14 @@ export default {
   floatingImages: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
-    max: 100,
-    units: "%",
-    alert: 'percentage - Should be set as / 100',
+    max: 1,
+    step: 0.1,
   },
   collageDensity: {
     type: INPUT_TYPES.NUMBER,
-    min: 1,
-    max: 100,
-    step: 10,
-    units: "%",
-    alert: 'percentage - Should be set as / 100',
+    min: 0,
+    max: 1,
+    step: 0.1,
   },
   enableInfiniteScroll: {
     type: INPUT_TYPES.BOOLEAN,
