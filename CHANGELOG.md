@@ -1,3 +1,10 @@
+## [v1.5.42](https://pro-gallery-1-5-42.surge.sh) (28/11/2019)
+
+#### GALLERY
+ -  improve: remove comments from events constants
+ -  fix (videos): allow for autoplay in mobile
+
+---
 ## [v1.5.41](https://pro-gallery-1-5-41.surge.sh) (26/11/2019)
  
 #### GALLERY
