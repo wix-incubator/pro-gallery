@@ -1,6 +1,7 @@
 import React from 'react';
 import ProGallery from './proGallery';
 import GALLERY_EVENTS from '../../common/constants/events';
+import CLICK_ACTIONS from '../../common/constants/itemClick';
 import CloseButton from '../svgs/components/x';
 
 const styles = {
@@ -45,10 +46,11 @@ export default class ExpandableProGallery extends React.Component {
     eventListener(eventName, eventData) {
         switch (eventName) {
             case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
-                this.setState({ fullscreenIdx: eventData.idx });
+                const fullscreenInfoHeight = eventData.styleParams.itemClick === CLICK_ACTIONS.EXPAND ? 200 : 0;
+                this.setState({ fullscreenInfoHeight, fullscreenIdx: eventData.idx });
                 break;
             default:
-                // console.log({eventName, eventData});
+                console.log({eventName, eventData});
                 break;
         }
         if (typeof this.props.eventsListener === 'function') {
@@ -73,12 +75,12 @@ export default class ExpandableProGallery extends React.Component {
                         currentIdx={this.state.fullscreenIdx}
                         container= {{
                             width: window.innerWidth,
-                            height: window.innerHeight - 100
+                            height: window.innerHeight - this.state.fullscreenInfoHeight
                         }}
                         styles={{
                             ...(this.props.options || this.props.styles),
                             galleryLayout: 5,
-                            slideshowInfoSize: 100,
+                            slideshowInfoSize: this.state.fullscreenInfoHeight,
                             cubeType:'fit',
                             scrollSnap: true
                         }}

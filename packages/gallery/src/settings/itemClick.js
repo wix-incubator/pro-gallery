@@ -3,9 +3,9 @@ import { createOptions, always } from './utils/utils';
 
 export default {
   title: 'Click Action',
-  description: 'Specifies what happens when an item is clicked',
   isRelevant: always,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.itemClick.EXPAND,
-  options: createOptions('itemClick')
+  options: createOptions('itemClick'),
+  description: `Specifies what happens when an item is clicked. to enable the 'expand' or 'fullscreen' options, make sure you're using the ExpandableProGallery component`,
 }

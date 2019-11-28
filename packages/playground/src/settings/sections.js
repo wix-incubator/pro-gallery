@@ -54,7 +54,6 @@ export const stylesBySection = {
         'thumbnailSize',
         'thumbnailSpacings',
 
-        'magicLayoutSeed',
     ],
     [SECTIONS.ADVANCED]: [
         'gallerySizeType',
@@ -87,14 +86,6 @@ export const stylesBySection = {
         'hoveringBehaviour',
         'itemClick',
         'scrollSnap',
-    ],
-    [SECTIONS.STORE]: [
-        'isStore',
-        'canUseWatermark',
-        'useWatermark',
-        'watermarkOpacity',
-        'watermarkSize',
-        'watermarkDock',
     ],
     [SECTIONS.DESIGN]: [
         'arrowsSize',

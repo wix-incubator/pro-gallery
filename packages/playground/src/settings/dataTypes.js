@@ -208,21 +208,12 @@ export default {
     type: INPUT_TYPES.OPTIONS,
     options: createOptions('loadMoreAmount')
   }, 
-  magicLayoutSeed: {
-    text: "Generate Magic Layout",
-    type: INPUT_TYPES.BUTTON,
-    action: () => Math.random() * 100000,
-  },
   //----------| SETTINGS SECTION |---------//
   scrollSnap: {
     type: INPUT_TYPES.BOOLEAN,
   },
   itemClick: {
     options: createOptions('itemClick')
-  },
-  useWatermark: {
-    type: INPUT_TYPES.BOOLEAN,
-    alert: 'now is being saved in "appSettings"',
   },
   watermarkOpacity: {
     type: INPUT_TYPES.NUMBER,

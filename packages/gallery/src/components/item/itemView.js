@@ -19,6 +19,7 @@ import {
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 import PLACEMENTS from '../../common/constants/placements';
+import CLICK_ACTIONS from '../../common/constants/itemClick';
 import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
 import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
 import {
@@ -144,9 +145,13 @@ class ItemView extends GalleryComponent {
   }
 
   handleGalleryItemClick() {
-    utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked')) &&
+    if (utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))) {
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
-    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
+    }
+
+    if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.props.styleParams.itemClick)) {
+      this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
+    }
   }
 
   onItemClick(e) {
@@ -211,11 +216,11 @@ class ItemView extends GalleryComponent {
     ) {
       console.warn('Blocked fullscreen!', e);
       return;
-    } else if (this.props.styleParams.fullscreen) {
+    } else if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.props.styleParams.itemClick)) {
       this.props.actions.eventsListener(
-        EVENTS.ITEM_ACTION_TRIGGERED,
-        this.props,
-      );
+          EVENTS.ITEM_ACTION_TRIGGERED,
+          this.props,
+        );
     }
   }
 
@@ -767,7 +772,7 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  getItemContainerStyles() {
+  getItemContainerStyles(shouldUseDirectLink) {
     const { styleParams } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
@@ -776,6 +781,7 @@ class ItemView extends GalleryComponent {
       position: 'absolute',
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
+      cursor: (styleParams.itemClick !== CLICK_ACTIONS.NOTHING && !shouldUseDirectLink) ? 'pointer' : 'none'
     };
 
     return { ...itemStyles, ...containerStyleByStyleParams };
@@ -1055,7 +1061,7 @@ class ItemView extends GalleryComponent {
           role={this.getItemAriaRole()}
           data-hook="item-container"
           key={'item-container-' + id}
-          style={this.getItemContainerStyles()}
+          style={this.getItemContainerStyles(shouldUseDirectLink)}
         >
           {this.getTopInfoElementIfNeeded()}
           <div
