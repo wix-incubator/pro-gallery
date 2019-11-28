@@ -24,7 +24,6 @@ import {
   showGallerySize,
   isStore,
   showAddToCartSection,
-  canUseWatermark,
   always,
   isLayout
 } from './utils';
