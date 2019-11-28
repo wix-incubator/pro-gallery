@@ -149,9 +149,7 @@ class ItemView extends GalleryComponent {
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
     }
 
-    if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.props.styleParams.itemClick)) {
-      this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
-    }
+    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
   }
 
   onItemClick(e) {
