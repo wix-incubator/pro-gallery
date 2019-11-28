@@ -14,7 +14,9 @@
     "deploy": "node scripts/deployToSurge",
     "patch": "node scripts/releaseVersion --patch",
     "minor": "node scripts/releaseVersion --minor",
-    "major": "node scripts/releaseVersion --major"
+    "major": "node scripts/releaseVersion --major",
+    "start-playground": "lerna run start-playground",
+    "e2etest": "start-server-and-test start-playground http-get://localhost:3000 'lerna run gallery-e2e'"
   },
   "repository": {
     "type": "git",
@@ -34,5 +36,8 @@
     "lodash": "^4.17.4",
     "prompt": "^1.0.0",
     "semver": "^6.3.0"
+  },
+  "dependencies": {
+    "start-server-and-test": "^1.10.6"
   }
 }
