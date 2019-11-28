@@ -142,5 +142,6 @@ To replace the default rendering of these elements, pass a function that will re
   {...otherProps}
   customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
   customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+  customLoadMoreRenderer={galleryProps => <button>Load More</button>}
 />
 ```
