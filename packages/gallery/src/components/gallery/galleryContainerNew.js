@@ -135,6 +135,10 @@ export class GalleryContainer extends React.Component {
     if (!this.currentHoverChangeEvent.galleryId && nextProps.galleryId) {
       this.currentHoverChangeEvent.galleryId = nextProps.galleryId;
     }
+    if (this.props.currentIdx !== nextProps.currentIdx) {
+      this.scrollToItem(nextProps.currentIdx, false, true, 0);
+    }
+
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {

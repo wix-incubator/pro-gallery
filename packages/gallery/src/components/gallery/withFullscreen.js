@@ -15,8 +15,15 @@ const styles = {
         width: '100vw', 
         height: '100vh',
         zIndex: 9,
-        background: 'white'
+        background: 'white',
+        opacity: 0,
+        transition: 'opacity 2s ease',
+        visibility: 'hidden'
     }, 
+    shown: {
+        visibility: 'visible',
+        opacity: 1
+    },
     close: {
         boxSizing: 'content-box',
         zIndex: 10,
@@ -46,8 +53,7 @@ export default class ExpandableProGallery extends React.Component {
     eventListener(eventName, eventData) {
         switch (eventName) {
             case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
-                const fullscreenInfoHeight = eventData.styleParams.itemClick === CLICK_ACTIONS.EXPAND ? 200 : 0;
-                this.setState({ fullscreenInfoHeight, fullscreenIdx: eventData.idx });
+                this.setState({ fullscreenIdx: eventData.idx });
                 break;
             default:
                 console.log({eventName, eventData});
@@ -63,30 +69,32 @@ export default class ExpandableProGallery extends React.Component {
             <>
                 <section style={{...styles.gallery, display: (this.state.fullscreenIdx < 0 ? 'block' : 'none')}}>
                     <ProGallery
-                        key={`pro-gallery-${this.props.domId}`}
                         {...this.props}
+                        key={`pro-gallery-${this.props.domId}`}
+                        domId={`pro-gallery-${this.props.domId}`}
                         eventsListener={this.eventListener}
                     />
                 </section>
-                {this.state.fullscreenIdx >= 0 && <section style={{ ...styles.fullscreen, display: (this.state.fullscreenIdx >= 0 ? 'block' : 'none') }}>
+                <section style={{ ...styles.fullscreen, ...(this.state.fullscreenIdx >= 0 && styles.shown) }}>
                     <CloseButton style={styles.close} onClick={() => this.setState({fullscreenIdx: -1})} />
                     <ProGallery
                         {...this.props}
+                        key={`pro-fullscreen-${this.props.domId}`}
+                        domId={`pro-fullscreen-${this.props.domId}`}
                         currentIdx={this.state.fullscreenIdx}
                         container= {{
                             width: window.innerWidth,
-                            height: window.innerHeight - this.state.fullscreenInfoHeight
+                            height: window.innerHeight
                         }}
                         styles={{
                             ...(this.props.options || this.props.styles),
                             galleryLayout: 5,
-                            slideshowInfoSize: this.state.fullscreenInfoHeight,
+                            slideshowInfoSize: 0,
                             cubeType:'fit',
                             scrollSnap: true
                         }}
                     />
                 </section>
-                }
             </>
         );
     }

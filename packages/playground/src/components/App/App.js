@@ -116,6 +116,7 @@ export function App() {
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ExpandableProGallery
           key={`pro-gallery-${isUnknownDimensions}-${isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
+          domId={'pro-gallery-playground'}
           scrollingElement={window}
           container={container}
           items={getItems()}
