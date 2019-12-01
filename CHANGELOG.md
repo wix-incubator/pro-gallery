@@ -1,3 +1,9 @@
+## [v1.5.43](https://pro-gallery-1-5-43.surge.sh) (01/12/2019)
+ 
+#### GALLERY
+ -  improve: add customLoadMoreRenderer
+
+---
 ## [v1.5.42](https://pro-gallery-1-5-42.surge.sh) (28/11/2019)
 
 #### GALLERY
