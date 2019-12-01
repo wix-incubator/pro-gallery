@@ -39,7 +39,7 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
-    await page.goto(this.getPageUrl(styleParams));
+    await page.goto(this.getPageUrl(styleParams),{waitUntil: 'networkidle0'});
     this.page = page;
     return this.page;
   }
@@ -68,9 +68,8 @@ export default class galleryDriver {
   }
   getPageUrl(styleParams){
     let urlParam = ''
-    //Object.keys(styleParams).map(sp => urlParam += `${sp}=${styleParams[sp]}`);
-    //return `http://localhost:3000/?${urlParam}`;
-    return `http://localhost:3000/?galleryLayout=2`;
+    Object.keys(styleParams).map(sp => urlParam += `${sp}=${styleParams[sp]}&`);
+    return `http://localhost:3000/?${urlParam}isTestEnvironment=true`;
   }
   get grab(){
     return {

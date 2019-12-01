@@ -30,20 +30,27 @@ describe('allowTitle - e2e', () => {
     console.log(items.length);
     expect(items.length).to.eq(20)
   });
-  
-  // it('Grid layout - Desktop', async () => {
-  //   await driver.openPage({});
-  //   const page = await driver.grab.screenshot();
-  //   console.log(page);
-  //   await expect(page).toMatchScreenshot({
-  //     key: 'Grid layout - Desktop',
-  //     version: 'v1.0.1',
-  //   })
-  // }, 30000);
 
   it('Grid layout - image-snapshot', async () => {
-    await driver.openPage({});
+    await driver.openPage({
+      galleryLayout: 2
+    });
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
-  }, 30000);
+  });
+
+  it('Slideshow layout - image-snapshot', async () => {
+    await driver.openPage({
+      galleryLayout: 3
+    });
+    const page = await driver.grab.screenshot();
+    expect(page).toMatchImageSnapshot();
+  });
+  it('Collage layout - image-snapshot', async () => {
+    await driver.openPage({
+      galleryLayout: 1
+    });
+    const page = await driver.grab.screenshot();
+    expect(page).toMatchImageSnapshot();
+  });
 })
