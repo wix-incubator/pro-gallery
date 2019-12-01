@@ -75,7 +75,7 @@ export default class galleryDriver {
   get grab(){
     return {
       screenshot: async (path) =>{
-        return await this.page.screenshot({ path: 'screenshot.png'})
+        return await this.page.screenshot()
       }
     }
   }
