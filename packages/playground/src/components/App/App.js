@@ -3,7 +3,7 @@ import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testItems, testImages, testVideos, testTexts} from './images';
-import {mixAndSlice} from "../../utils/utils";
+import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
@@ -31,7 +31,9 @@ export function App() {
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
 
-  setStyleParamsInUrl(styleParams);
+  if (!isTestingEnvironment(window.location.search)) {
+    setStyleParamsInUrl(styleParams);
+  }
 
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
@@ -95,6 +97,9 @@ export function App() {
   const getItems = () => {
 
     // return initialItems.mixed.slice(0, 3);
+    if (isTestingEnvironment(window.location.search)) {
+      return testItems
+    }
 
     const theItems = items || initialItems[mediaType];
     if (numberOfItems > 0) {
