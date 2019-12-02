@@ -40,13 +40,9 @@ export default class galleryDriver {
         await page.setViewport(this.windowSize);
     }
     await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle2' });
-    await page.evaluate(() => { // scroll the gallery down and back up to make the items load
-      window.scrollBy(0, 200);
-      window.scrollBy(0, 0);
-    });
     this.page = page;
-    this.scrollInteraction();
-    await this.page.waitFor(2000);
+    await this.scrollInteraction();
+    await this.page.waitFor(1000); //waiting for the images to fully load
     return this.page;
   }
 
@@ -67,6 +63,7 @@ export default class galleryDriver {
 
   get find() {
     return {
+      selector: async str => await this.page.$$(str),
       hook: async str => await this.page.$$(`[data-hook="${str}"]`),
       items: async () => await this.page.$$('.gallery-item-container'),
     };
@@ -90,6 +87,10 @@ export default class galleryDriver {
     return {
       screenshot: async () => {
         return await this.page.screenshot()
+      },
+      elemScreenshot: async (selector) => {
+        const elem = await this.page.$(selector);
+        return await elem.screenshot()
       }
     }
   }

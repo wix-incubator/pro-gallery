@@ -23,8 +23,8 @@ describe('allowTitle - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0]
-    await driver.waitFor.timer(2000);
-    const page = await driver.grab.screenshot();
+    await driver.waitFor.timer(200);
+    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
   it('should not render when "allowTitle" is "false"', async () => {
@@ -34,8 +34,8 @@ describe('allowTitle - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0]
-    await driver.waitFor.timer(2000);
-    const page = await driver.grab.screenshot();
+    await driver.waitFor.timer(200);
+    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
 
