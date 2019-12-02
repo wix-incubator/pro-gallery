@@ -24,7 +24,7 @@ class GroupView extends GalleryComponent {
 
   shouldRender() {
     const {items} = this.props;
-    if (!items || !items.length) {
+    if (!items || !items.length || !items[0]) {
       return false;
     }
     
