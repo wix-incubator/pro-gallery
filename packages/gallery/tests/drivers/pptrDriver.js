@@ -45,8 +45,8 @@ export default class galleryDriver {
       window.scrollBy(0, 0);
     });
     this.page = page;
-    this.scrollInteract();
-    await this.page.waitFor(1000);
+    this.scrollInteraction();
+    await this.page.waitFor(2000);
     return this.page;
   }
 

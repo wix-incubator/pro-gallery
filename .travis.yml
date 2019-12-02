@@ -3,7 +3,11 @@ dist: trusty
 sudo: required
 node_js:
 - "10.15.3"
-
+addons:
+  apt:
+    packages:
+      # This is required to run new chrome on old trusty
+      - libnss3
 install:
 - npm install
 script:
