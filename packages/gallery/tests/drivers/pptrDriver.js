@@ -42,7 +42,7 @@ export default class galleryDriver {
     await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle2' });
     this.page = page;
     await this.scrollInteraction();
-    await this.page.waitFor(1000); //waiting for the images to fully load
+    await this.page.waitFor(2000); //waiting for the images to fully load
     return this.page;
   }
 
