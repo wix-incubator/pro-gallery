@@ -11,6 +11,8 @@ addons:
 before_install:
   # Enable user namespace cloning
   - "sysctl kernel.unprivileged_userns_clone=1"
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 install:
 - npm install
 script:
@@ -23,3 +25,6 @@ notifications:
   email:
     recipients:
     - guyso@wix.com
+cache:
+  directories:
+    - node_modules
