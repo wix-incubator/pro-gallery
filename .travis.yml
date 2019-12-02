@@ -1,6 +1,9 @@
 language: node_js
 dist: trusty
 sudo: required
+node_js:
+- "10.15.3"
+
 install:
 - npm install
 script:
