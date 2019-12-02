@@ -12,7 +12,7 @@ export default class galleryDriver {
     };
   }
 
-  async launchPuppeteer() {
+  async launchBrowser() {
     const args = [
       '--no-sandbox',
       `--window-size=${this.windowSize.width},${this.windowSize.height}`,
@@ -45,9 +45,17 @@ export default class galleryDriver {
     });
     await page.waitFor(2000); //waiting for the images to fully load
     this.page = page;
+    this.scrollInteract();
+    await this.page.waitFor(1000);
     return this.page;
   }
 
+  async scrollInteract(){
+    await this.page.evaluate(() => { // scroll the gallery down and back up to make the items load
+      window.scrollBy(0, 200);
+      window.scrollBy(0, 0);
+    });
+  }
 
   async closeBrowser() {
     try {

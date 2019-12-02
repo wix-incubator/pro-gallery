@@ -7,7 +7,7 @@
     "postinstall": "lerna bootstrap --hoist",
     "lint": "lerna run lint",
     "build": "lerna run build",
-    "test": "lerna run test",
+    "test": "start-server-and-test start-playground http-get://localhost:3000 'lerna run --parallel test'",
     "watch": "lerna run --parallel watch",
     "bootstrap": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
