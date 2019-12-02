@@ -8,6 +8,9 @@ addons:
     packages:
       # This is required to run new chrome on old trusty
       - libnss3
+before_install:
+  # Enable user namespace cloning
+  - "sysctl kernel.unprivileged_userns_clone=1"
 install:
 - npm install
 script:
