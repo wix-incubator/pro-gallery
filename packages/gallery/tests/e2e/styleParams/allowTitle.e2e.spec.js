@@ -1,6 +1,8 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot} from 'jest-image-snapshot';
 
+jest.setTimeout(10000)
+
 expect.extend({ toMatchImageSnapshot });
 
 describe('allowTitle - e2e', () => {
@@ -22,7 +24,7 @@ describe('allowTitle - e2e', () => {
     await driver.actions.hover('item-container')[0]
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
-  },30000);
+  });
   it('should not render when "allowTitle" is "false"', async () => {
     await driver.openPage({
       galleryLayout: 2,
@@ -31,6 +33,6 @@ describe('allowTitle - e2e', () => {
     await driver.actions.hover('item-container')[0]
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
-  },30000);
+  });
 
 })

@@ -28,7 +28,6 @@ export default class galleryDriver {
       await this.launchPuppeteer();
     }
     const page = await this.browser.newPage();
-
     switch (device) {
       case 'Android':
         await page.emulate(devices['Galaxy S5']);
@@ -39,11 +38,12 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
-    await page.goto(this.getPageUrl(styleParams),{ waitUntil: 'networkidle2' });
-    await page.waitFor(2500);
-    await page.evaluate( () => {
+    await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle2' });
+    await page.evaluate(() => { // scroll the gallery down and back up to make the items load
       window.scrollBy(0, 200);
-  });
+      window.scrollBy(0, 0);
+    });
+    await page.waitFor(2000); //waiting for the images to fully load
     this.page = page;
     return this.page;
   }
@@ -68,19 +68,19 @@ export default class galleryDriver {
     return {
       hover: async str => await this.page.hover(`[data-hook="${str}"]`),
       click: async str => await this.page.click(`[data-hook="${str}"]`),
-      scroll: async (x,y) => await this.page.evaluate(() => {
+      scroll: async (x, y) => await this.page.evaluate(() => {
         window.scrollBy(x, y);
       })
     };
   }
-  getPageUrl(styleParams){
+  getPageUrl(styleParams) {
     let urlParam = ''
     Object.keys(styleParams).map(sp => urlParam += `${sp}=${styleParams[sp]}&`);
     return `http://localhost:3000/?${urlParam}isTestEnvironment=true`;
   }
-  get grab(){
+  get grab() {
     return {
-      screenshot: async (path) =>{
+      screenshot: async () => {
         return await this.page.screenshot()
       }
     }
