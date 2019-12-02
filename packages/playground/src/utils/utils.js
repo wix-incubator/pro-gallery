@@ -72,3 +72,6 @@ export const throttle = (callback, limit) => {
     }
   }
 }
+export const isTestingEnvironment = (url) => {
+  return url.indexOf('isTestEnvironment=true') > -1;
+}

@@ -63,7 +63,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": " ",
-    "deploy": "node scripts/build.js && gh-pages-with-token -d build"
+    "deploy": "node scripts/build.js && gh-pages-with-token -d build",
+    "start-playground": "node scripts/start.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -20,14 +20,17 @@
     "precommit": " ",
     "pretest": "yoshi build",
     "test": "yoshi test",
+    "unit-tests": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js'",
     "posttest": "yoshi lint",
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
-    "start-with-test": "PORT=9837 yoshi start --with-test"
+    "start-with-test": "PORT=9837 yoshi start --with-test",
+    "gallery-e2e": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
+    "jest-image-snapshot": "^2.11.1",
     "pro-layouts": "^1.5.35",
     "react-player": "1.10.0"
   },
