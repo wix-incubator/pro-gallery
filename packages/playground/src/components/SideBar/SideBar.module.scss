@@ -9,6 +9,15 @@
   padding: 2px 8px 5px;
 }
 
+.code {
+  width: 419px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #eee;
+  border-top: 1px solid #ccc;
+}
+
 // :global {
 //   .ant-select-dropdown-menu {
 //     max-height: 100% !important;

@@ -13,6 +13,7 @@ import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import utils from '../../common/utils';
 import { isEditMode, isSEOMode } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
+import CLICK_ACTIONS from '../../common/constants/itemClick';
 import VideoScrollHelper from '../helpers/videoScrollHelper.js';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 import checkNewGalleryProps from './helpers/isNew';
@@ -134,6 +135,10 @@ export class GalleryContainer extends React.Component {
     if (!this.currentHoverChangeEvent.galleryId && nextProps.galleryId) {
       this.currentHoverChangeEvent.galleryId = nextProps.galleryId;
     }
+    if (this.props.currentIdx !== nextProps.currentIdx) {
+      this.scrollToItem(nextProps.currentIdx, false, true, 0);
+    }
+
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
       if (Object.keys(galleryState).length > 0) {
@@ -747,7 +752,9 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (typeof this.props.eventsListener === 'function') {
-      this.props.eventsListener(eventName, eventData);
+      if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.state.styles.itemClick)) {
+        this.props.eventsListener(eventName, eventData);
+      }
     }
   }
 
@@ -866,6 +873,7 @@ export class GalleryContainer extends React.Component {
           currentIdx={this.props.currentIdx || 0}
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
+          customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           nextVideoIdx={this.state.nextVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}

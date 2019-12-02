@@ -112,7 +112,7 @@ export function App() {
   return (
     <main className={s.main}>
       <Button className={s.toggleButton} onClick={switchState} icon={showSide ? "close" : "menu"} shape="circle" size="default" type="primary" />
-      <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0}}>
+      <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0, display: showSide ? 'block' : 'none'}}>
         <div className={s.heading}>
           Pro Gallery Playground <span className={s.version}>v{pJson.version}</span>
         </div>
@@ -121,6 +121,7 @@ export function App() {
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ExpandableProGallery
           key={`pro-gallery-${isUnknownDimensions}-${isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
+          domId={'pro-gallery-playground'}
           scrollingElement={window}
           container={container}
           items={getItems()}

@@ -180,13 +180,4 @@ export default {
     units: "%",
     isRelevant: sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE].indexOf(sp.galleryLayout) >= 0,
   },
-  magicLayoutSeed: {
-    title: "Random Layout",
-    description: "",
-    type: INPUT_TYPES.BUTTON,
-    text: "Generate random layout",
-    action: () => Math.random() * 100000,
-    isRelevant: sp => [GALLERY_CONSTS.layout.MAGIC].indexOf(sp.galleryLayout) > -1,
-  },
-
 }

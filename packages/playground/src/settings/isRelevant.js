@@ -24,7 +24,6 @@ import {
   showGallerySize,
   isStore,
   showAddToCartSection,
-  canUseWatermark,
   always,
   isLayout
 } from './utils';
@@ -75,10 +74,6 @@ export default {
   magicLayoutSeed: sp => [GALLERY_CONSTS.layout.MAGIC].indexOf(sp.galleryLayout) > -1,
   scrollSnap: sp => isHorizontalLayout(sp),
   itemClick: sp => !isStore(sp),
-  useWatermark: sp => canUseWatermark(sp),
-  watermarkOpacity: sp => canUseWatermark(sp) && sp.useWatermark,
-  watermarkSize: sp => canUseWatermark(sp) && sp.useWatermark,
-  watermarkDock: sp => canUseWatermark(sp) && sp.useWatermark,
   allowDownload: always,
   allowSocial: always,
   loveButton: always,

@@ -1,4 +1,4 @@
-# Pro Gallery
+# Pro Gallery 
 Blazing fast & beautiful galleries built with React. [try it out](https://pro-gallery.surge.sh)
  - Responsive
  - Lazy loading 

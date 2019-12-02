@@ -179,8 +179,11 @@ function SideBar() {
           </Collapse.Panel>
         </Collapse>
 
-        <br />
-        <CodePanel style={{width: '100%'}}/>
+        <div style={{height:100}} />
+
+        <div className={s.code}>
+          <CodePanel />
+        </div>
 
       </div>
     </>

@@ -19,6 +19,7 @@ export default class galleryDriver {
     ];
     this.browser = await puppeteer.launch({
       args,
+      // headless: false
     })
     return this.browser;
   }
@@ -43,14 +44,13 @@ export default class galleryDriver {
       window.scrollBy(0, 200);
       window.scrollBy(0, 0);
     });
-    await page.waitFor(2000); //waiting for the images to fully load
     this.page = page;
     this.scrollInteract();
     await this.page.waitFor(1000);
     return this.page;
   }
 
-  async scrollInteract(){
+  async scrollInteraction(){
     await this.page.evaluate(() => { // scroll the gallery down and back up to make the items load
       window.scrollBy(0, 200);
       window.scrollBy(0, 0);

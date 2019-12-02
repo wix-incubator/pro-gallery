@@ -18,35 +18,35 @@ export default {
   },
   slideshowLoop: {
     title: 'Loop Images',
-    description: "",
+    description: "When set to true, the gallery will loop through the images seemlessly i.e. after scrolling past the last image, the gallery will show the first image again.",
   },
   isAutoSlideshow: {
     title: 'Auto Slide',
-    description: "",
+    description: "Then set to true, the gallery will change the current item automatically after a specified interval",
   },
   autoSlideshowInterval: {
     title: 'Time Between Images',
-    description: "",
+    description: "When using auto slide, use this to set the time between current item change",
   },
   slideshowInfoSize: {
     title: 'Info bar size',
-    description: "",
+    description: "In slideshow, this parameter sets the space below the image to display the title description etc. Enlarging this size will reduce the size of the image so that both of them will take the full container.",
   },
   playButtonForAutoSlideShow: {
     title: 'Play button',
-    description: "",
+    description: "When true, auto slide will show a play/pause button to toggle the transitions",
   },
   scrollDirection: {
     title: "Scroll Direction",
-    description: "",
+    description: "This parameter will toggle between two types of galleries. Vertical and Horizontal. Notice that many options are available only for a specific scroll direction.",
   },
   isVertical: {
-    title: "Image Orientation",
-    description: "",
+    title: "Layout Orientation",
+    description: "Organize images in Rows or Columns the number of columns or row size will be determined by the container size",
   },
   isRTL: {
     title: "Layout Direction",
-    description: "",
+    description: "Order images Right to Left or Left to Right, this will also have an effect on slide direction and text direction",
   },
   allowTitle: {
     title: "Allow Title",
@@ -58,146 +58,123 @@ export default {
   },
   allowSlideshowCounter: {
     title: "Slideshow counter",
-    description: "",
+    description: "Display an index of the current slide",
   },
   allowHover: {
     title: "Show Overlay on Hover",
-    description: ""
+    description: "Show a colored overlay over items when hovering with the mouse / tapping on mobile"
   },
   titlePlacement: {
-    title: "Title Placement",
-    description: "",
+    title: "Texts Placement",
+    description: "Determines the position of the title, description and buttons relative to the image",
   },
   hoveringBehaviour: {
-    title: "What happens to the info on hover?",
-    description: "",
+    title: "Hover Effect",
+    description: "Determines whether the texts appear or disappear when hovering over items",
   },
   cubeImages: {
-    title: "Allow Crop",
-    description: "",
+    title: "Crop Images",
+    description: "When true, items will be cropped to fit the container. When false, the container wil resize to fit each image.",
   },
   cubeType: {
-    title: "Thumbnail Resize",
-    description: "",
+    title: "Items Resize",
+    description: "When using a fixed sized container, you can crop the images, or resize them to fit inside the container. Notice that choosing the Fit option will leave some empty margin around each image.",
   },
   cubeRatio: {
     title: "Item Crop Ratio",
     description: "The Ratio between the width and height of the cropped, this is a string that will be evaluated on runtime. Use 'X%/Y%' to indicate that the ratio is responsive. e.g. '1' is a square, '16/9' is a wide screen rectangle and '100%/50%' is full width and half the height of the container.",
   },
   gallerySliderImageRatio: {
-    title: "Image Ratio - Slider",
-    description: "",
+    title: "Item Crop Ratio - Slider",
+    description: "The Ratio between the width and height of the cropped, this is a string that will be evaluated on runtime. Use 'X%/Y%' to indicate that the ratio is responsive. e.g. '1' is a square, '16/9' is a wide screen rectangle and '100%/50%' is full width and half the height of the container.",
   },
   galleryThumbnailsAlignment: {
-    title: "Thumbnail Placement",
-    description: "",
+    title: "Thumbnail Position",
+    description: "The position of the thumbnails relative to the gallery. Notice that this will change the ratio of the images so that both the thumbnails and the images will fit inside the container",
   },
   thumbnailSize: {
     title: "Thumbnail Size",
-    description: "",
+    description: "width and height of each thumbnail aside the gallery",
   },
   gridStyle: {
-    title: "Grid Style",
-    description: "",
+    title: "Responsive Type",
+    description: "Choose whether to adjust the number of columns according to the container size or keep it fixed",
   },
   gallerySizeType: {
-    title: "Thumbnail Size Units",
-    description: "",
+    title: "Item Size Units",
+    description: "Choose which units to use when setting the target size of each item: by layout, relative to width or in pixels (recommended)",
   },
   gallerySize: {
-    title: "Thumbnail Size (smart)",
-    description: "",
+    title: "Item Size (smart)",
+    description: "Set the item size between 1 to 100 units. The real size will be determined by the layout.",
   },
   gallerySizePx: {
-    title: "Thumbnail Size (in pixels)",
-    description: "",
+    title: "Item Size (in pixels)",
+    description: "Set the target size of each item in pixels. Notice that the actual size will change to fit the container size",
   },
   gallerySizeRatio: {
-    title: "Thumbnail Size (relative to width)",
-    description: "",
+    title: "Item Size (relative to width)",
+    description: "Set the items size relative to the width of the container",
   },
   numberOfImagesPerRow: {
     title: "Images Per Row",
-    description: "",
+    description: "Set a fixed number of images per row. This will not change the layout when resizing the container (i.e. not responsive).",
   },
   numberOfImagesPerCol: {
     title: "Images Per Column",
-    description: "",
+    description: "Set the number of images per column.",
   },
   groupSize: {
     title: "Max Group Size",
-    description: "",
+    description: "Set the max number of images to group together when creating a collage. Choose 1 if you want to avoid collaging altogether or 3 if you want to group up to 3 images together",
   },
   groupsPerStrip: {
-    title: "Groups per Strip",
-    description: "",
+    title: "Groups per Row",
+    description: "This will set the number of groups in a row. Notice, this will ignore the size of the container (i.e. not responsive)",
   },
   groupTypes: {
     title: "Allowed Group Types",
-    description: "",
+    description: "The allowed groups types to use in collage (advanced). To learn more about group types, go to the Wiki in the github repo.",
   },
   rotatingGroupTypes: {
     title: "Repeating Group Types",
-    description: "",
+    description: "Determine a specific order of groups types to use in collage (advanced). To learn more about group types, go to the Wiki in the github repo.",
   },
   thumbnailSpacings: {
     title: "Spacing between Thumbnails",
-    description: "",
+    description: "The space (in pixels) between thumbnails",
   },
   imageMargin: {
     title: "Spacing between Items",
-    description: "Set the spacing between the items in your gallery.",
+    description: "The space (in pixels) between the items. Notice, this will reduce the size of each item, but will not change the displayed ratio of the items.",
   },
   galleryMargin: {
     title: "Gallery Spacing",
-    description: "",
+    description: "The space from the container to the gallery",
   },
   floatingImages: {
     title: "floating Images",
-    description: "",
+    description: "Set a random offset to each image, in the boundaries of the margin.",
   },
   collageDensity: {
     title: "Collage Density",
-    description: "",
+    description: "Detemine how much 'collaging' to create. When set to minimum, all groups will be of 1 item. When set to maximum, all groups will be set to 3 items.",
   },
   enableInfiniteScroll: {
-    title: "Load More Button",
-    description: "",
+    title: "Use Infinite Scroll",
+    description: "When true, new items will load automatically when scrolling the page. When false, a 'load more' button will be shown to load more items. Notice, adding more items is done by the consumer when the gallery emits the NEED_MORE_ITEMS event.",
   },
   loadMoreAmount: {
-    title: "Load More Amount",
-    description: "",
+    title: "Load More Behaviour",
+    description: "Choose whether clicking the 'load more' button toggle an infinite scroll behaviour or adds a few more items and keep the button at the bottom.",
   }, 
-  magicLayoutSeed: {
-    title: "To freshen up your gallery with an all-new look click Create Magic Layout.",
-    text: "Generate Magic Layout",
-    description: "",
-  },
   //----------| SETTINGS SECTION |---------//
   scrollSnap: {
-    title: 'Auto Scroll to Image Center',
-    description: "",
+    title: 'Snap Scroll',
+    description: "When true, scrolling will snap to the center of the closest item. When false, scrolling will not snap",
   },
   itemClick: {
     title: 'When clicking on an item:',
-    description: "",
-  },
-  useWatermark: {
-    title: 'Watermark',
-    description: "",
-  },
-  watermarkOpacity: {
-    title: 'Watermark Opacity',
-    description: "",
-    unit: '%',
-  },
-  watermarkSize: {
-    title: 'Watermark Size',
-    description: "",
-    unit: '%',
-  },
-  watermarkDock: {
-    title: 'Watermark Dock',
     description: "",
   },
   allowDownload: {
@@ -210,11 +187,11 @@ export default {
   },
   loveButton: {
     title: 'Show Love Button',
-    description: "",
+    description: "Shows a Love button on the overlay of each item. Notice, the consumer needs to handle saving and fetching the data",
   },
   loveCounter: {
     title: 'Show Love Counter',
-    description: "",
+    description: "Shows a counter next to the Love button. Notice, the consumer should handle the saving and fetching the data.",
   },
   //------------------------ Design ----------------------//
   itemOpacity: {
@@ -230,24 +207,24 @@ export default {
     description: "",
   },
   arrowsSize: {
-    title: 'Arrows Size',
-    description: "",
+    title: 'Navigation Arrows Size',
+    description: "The size of the right and left navigation arrows in pixels",
   },
   arrowsColor: {
-    title: 'Arrows Color',
+    title: 'Navigation Arrows Color',
     description: "",
   },
   arrowsPosition: {
-    title: 'Navigation arrows position',
-    description: "",
+    title: 'Navigation Arrows Position',
+    description: "Choose whther to display the navigation inside or outside the gallery. Notice, setting the arrows position on the outside will reduce the size of the gallery.",
   },
   overlayAnimation:  {
-    title: 'Choose an effect when hovering over an image',
-    description: "",
+    title: 'Overlay Hover Animation',
+    description: "Choose an effect to show the overlay when hovering over an image",
   },
   imageHoverAnimation: {
-    title: 'Choose an effect when hovering over an image',
-    description: "",
+    title: 'Image Hover Animation',
+    description: "Choose an effect that happens to the image when hovering over it",
   },
   itemFont: {
     title: 'Title Font',
@@ -282,12 +259,12 @@ export default {
     description: "",
   },
   galleryHorizontalAlign: { // ALSO sets galleryTextAlign --- 
-    title: 'Text Alignment',
-    description: "",
+    title: 'Horizontal Text Alignment',
+    description: "The horizontal alignment of the texts in the gallery",
   },
   galleryVerticalAlign: {
     title: 'Vertical Text Alignment',
-    description: "",
+    description: "The vertical alignment of the texts in the gallery",
   },
   textBoxFillColor: {
     title: 'Fill Color & Opacity',
@@ -376,11 +353,11 @@ export default {
     description: "",
   },
   loadMoreButtonFont: {
-    title: 'load more Button Font',
+    title: 'Load More Button Font',
     description: "",
   },
   loadMoreButtonFontColor: {
-    title: 'load more Button Font Color',
+    title: 'Load More Button Font Color',
     description: "",
   },
   loadMoreButtonColor: {
@@ -388,15 +365,15 @@ export default {
     description: "",
   },
   loadMoreButtonBorderWidth: {
-    title: 'load more Border Width',
+    title: 'Load More Border Width',
     description: "",
   },
   loadMoreButtonBorderColor: {
-    title: 'load more Border Color',
+    title: 'Load More Border Color',
     description: "",
   }, 
   loadMoreButtonBorderRadius: {
-    title: 'load More Border Radius',
+    title: 'Load More Border Radius',
     description: "",
   },
   imageInfoType: {
@@ -416,8 +393,8 @@ export default {
     description: "",
   },
   itemEnableShadow: {
-    title: 'Shadow',
-    description: "",
+    title: 'Show Box Shadow',
+    description: "Show a shadow around each image",
   },
   itemShadowOpacityAndColor: {
     title: 'Shadow Opacity & Color',
@@ -436,8 +413,8 @@ export default {
     description: "",
   },
   imageLoadingMode: {
-    title: 'What shows while image is loading?',
-    description: "",
+    title: 'Loading Placeholder',
+    description: "Determines what is shown until the image is loaded",
   },
   imageLoadingColor: {
     title: 'Color Background Placeholder',
@@ -448,12 +425,12 @@ export default {
     description: "",
   },
   scrollAnimation: {
-    title: 'Choose how images appear when scrolling down the page',
-    description: "",
+    title: 'Scroll Animation',
+    description: "Choose how images appear when scrolling down the page",
   },
   oneColorAnimationColor: {
-    title: 'Pick a color',
-    description: "",
+    title: 'Color Animation',
+    description: "Choose a color to show until the images are loaded",
   },
   allowTitleExpand: {
     title: 'Title',

@@ -231,6 +231,9 @@ class GalleryView extends GalleryComponent {
   }
 
   createShowMoreButton() {
+    if (typeof this.props.customLoadMoreRenderer === 'function') {
+      return (<div onClick={this.showMoreItems}>{this.props.customLoadMoreRenderer(this.props)}</div>)
+    }
     const { styleParams } = this.props;
     let showMoreButton = false;
     const buttonState = this.props.displayShowMore;
