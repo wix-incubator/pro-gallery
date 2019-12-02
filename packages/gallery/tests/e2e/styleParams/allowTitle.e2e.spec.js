@@ -1,14 +1,7 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-// import { expect } from 'chai';
-
-const { toMatchImageSnapshot } = require('jest-image-snapshot');
+import { toMatchImageSnapshot} from 'jest-image-snapshot';
 
 expect.extend({ toMatchImageSnapshot });
-
-// const { Assertion } = require('chai')
-// const toMatchScreenshot = require('match-screenshot/chai');
-
-// Assertion.addMethod('toMatchScreenshot', toMatchScreenshot);
 
 describe('allowTitle - e2e', () => {
   let driver;
@@ -25,32 +18,19 @@ describe('allowTitle - e2e', () => {
     await driver.openPage({
       galleryLayout: 2,
       allowTitle: true
-    })
-    const items = await driver.find.items('item-container');
-    console.log(items.length);
-    expect(items.length).to.eq(20)
-  });
+    });
+    await driver.actions.hover('item-container')[0]
+    const page = await driver.grab.screenshot();
+    expect(page).toMatchImageSnapshot();
+  },30000);
+  it('should not render when "allowTitle" is "false"', async () => {
+    await driver.openPage({
+      galleryLayout: 2,
+      allowTitle: false
+    });
+    await driver.actions.hover('item-container')[0]
+    const page = await driver.grab.screenshot();
+    expect(page).toMatchImageSnapshot();
+  },30000);
 
-  it('Grid layout - image-snapshot', async () => {
-    await driver.openPage({
-      galleryLayout: 2
-    });
-    const page = await driver.grab.screenshot();
-    expect(page).toMatchImageSnapshot();
-  });
-
-  it('Slideshow layout - image-snapshot', async () => {
-    await driver.openPage({
-      galleryLayout: 3
-    });
-    const page = await driver.grab.screenshot();
-    expect(page).toMatchImageSnapshot();
-  });
-  it('Collage layout - image-snapshot', async () => {
-    await driver.openPage({
-      galleryLayout: 1
-    });
-    const page = await driver.grab.screenshot();
-    expect(page).toMatchImageSnapshot();
-  });
 })

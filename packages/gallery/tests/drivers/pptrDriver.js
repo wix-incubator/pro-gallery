@@ -39,7 +39,11 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
-    await page.goto(this.getPageUrl(styleParams),{waitUntil: 'networkidle0'});
+    await page.goto(this.getPageUrl(styleParams),{ waitUntil: 'networkidle2' });
+    await page.waitFor(2500);
+    await page.evaluate( () => {
+      window.scrollBy(0, 200);
+  });
     this.page = page;
     return this.page;
   }
@@ -64,6 +68,9 @@ export default class galleryDriver {
     return {
       hover: async str => await this.page.hover(`[data-hook="${str}"]`),
       click: async str => await this.page.click(`[data-hook="${str}"]`),
+      scroll: async (x,y) => await this.page.evaluate(() => {
+        window.scrollBy(x, y);
+      })
     };
   }
   getPageUrl(styleParams){

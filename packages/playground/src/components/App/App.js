@@ -30,8 +30,8 @@ export function App() {
   const [showSide, setShowSide] = useState(false);
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
-
-  if (!isTestingEnvironment(window.location.search)) {
+  const isTestingEnv = isTestingEnvironment(window.location.search);
+  if (!isTestingEnv) { // isTestingEnvironment is not a valid style param and would be removed from the url if we use setStyleParamsInUrl. this removed this protection for testing environment as well
     setStyleParamsInUrl(styleParams);
   }
 
