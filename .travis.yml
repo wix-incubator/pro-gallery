@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- "10"
+- '8'
 dist: trusty
 sudo: required
 addons:
@@ -8,8 +8,6 @@ addons:
   hostname: localhost
 before_install:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-before_script:
-  - npm run watch &
 install:
 - npm install
 script:
@@ -22,6 +20,4 @@ notifications:
   email:
     recipients:
     - guyso@wix.com
-cache:
-  directories:
-    - node_modules
+
