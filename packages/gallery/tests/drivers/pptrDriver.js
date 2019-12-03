@@ -19,8 +19,8 @@ export default class galleryDriver {
     ];
     this.browser = await puppeteer.launch({
       args,
-      // headless: false
     })
+    console.log('>>>>>>>>>>>>>>>>> this.browser', this.browser);
     return this.browser;
   }
 
@@ -28,7 +28,9 @@ export default class galleryDriver {
     if (!this.browser) {
       await this.launchBrowser();
     }
+    console.log('>>>>>>>>>>>>>>>>> styleParams', styleParams )
     const page = await this.browser.newPage();
+    console.log('>>>>>>>>>>>>>>>>> a new page', page)
     switch (device) {
       case 'Android':
         await page.emulate(devices['Galaxy S5']);
@@ -39,11 +41,17 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
+    console.log('>>>>>>>>>>>>>>>>> page adjusted to devices', page)
+
     await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle2' });
+    console.log('>>>>>>>>>>>>>>>>> page adjusted to devices', page)
+
     this.page = page;
     await this.scrollInteraction();
-    await this.page.waitFor(2000); //waiting for the images to fully load
-    return this.page;
+    await page.waitFor(2000);
+    console.log('>>>>>>>>>>>>>>>>> before finishing with openPage', page)
+
+    return page;
   }
 
   async scrollInteraction(){
@@ -54,6 +62,8 @@ export default class galleryDriver {
   }
 
   async closeBrowser() {
+    console.log('>>>>>>>>>>>>>>>>> trying to close browser', page)
+
     try {
       await this.browser.close();
     } catch (e) {
@@ -63,7 +73,6 @@ export default class galleryDriver {
 
   get find() {
     return {
-      selector: async str => await this.page.$$(str),
       hook: async str => await this.page.$$(`[data-hook="${str}"]`),
       items: async () => await this.page.$$('.gallery-item-container'),
     };
@@ -87,10 +96,6 @@ export default class galleryDriver {
     return {
       screenshot: async () => {
         return await this.page.screenshot()
-      },
-      elemScreenshot: async (selector) => {
-        const elem = await this.page.$(selector);
-        return await elem.screenshot()
       }
     }
   }
