@@ -26,7 +26,7 @@ export default class galleryDriver {
 
   async openPage(styleParams, device) {
     if (!this.browser) {
-      await this.launchPuppeteer();
+      await this.launchBrowser();
     }
     const page = await this.browser.newPage();
     switch (device) {
