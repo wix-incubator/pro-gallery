@@ -47,5 +47,6 @@ describe('allowTitle - e2e', () => {
   //   const page = await driver.grab.elemScreenshot('#pro-gallery-container');
   //   expect(page).toMatchImageSnapshot();
   // });
+  
 
 })
