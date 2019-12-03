@@ -33,7 +33,7 @@ describe('allowTitle - e2e', () => {
     await driver.waitFor.timer(200);
     console.log('>>>>>>>>>>>>>>>>> trying to make a screenshot');
 
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
   // it('should not render when "allowTitle" is "false"', async () => {
