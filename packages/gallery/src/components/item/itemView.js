@@ -137,7 +137,11 @@ class ItemView extends GalleryComponent {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
-        this.onItemClick(e); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        if (this.shouldUseDirectLink()) {
+          this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
+        } else {
+          this.onItemClick(e) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        }
         return false;
       default:
         return true;
@@ -334,7 +338,7 @@ class ItemView extends GalleryComponent {
       return false;
     } else if (styleParams.alwaysShowHover === true) {
       return true;
-    } else if (isEditMode() && styleParams.previewHover === true) {
+    } else if (isEditMode() && styleParams.previewHover) {
       return true;
     } else if (styleParams.allowHover === false) {
       return false;
@@ -759,7 +763,7 @@ class ItemView extends GalleryComponent {
     return (
       this.state.isCurrentHover ||
       this.props.styleParams.alwaysShowHover === true ||
-      (isEditMode() && this.props.styleParams.previewHover === true)
+      (isEditMode() && this.props.styleParams.previewHover)
     );
   }
 
@@ -1034,10 +1038,12 @@ class ItemView extends GalleryComponent {
       : {};
     const innerDiv = (
       <a
+        ref={e => (this.itemAnchor = e)}
         data-id={photoId}
         data-idx={idx}
         key={'item-container-link-' + id}
         {...linkParams}
+        tabIndex={-1}
       >
         <div
           className={this.getItemContainerClass()}
