@@ -11,7 +11,7 @@ import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import utils from '../../common/utils';
-import { isEditMode, isSEOMode } from '../../common/window/viewModeWrapper';
+import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 import CLICK_ACTIONS from '../../common/constants/itemClick';
 import VideoScrollHelper from '../helpers/videoScrollHelper.js';
@@ -599,25 +599,37 @@ export class GalleryContainer extends React.Component {
     if (itemIdx >= 0) {
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
-      return scrollToItemImp({
-        scrollMarginCorrection,
-        isRTL: this.state.styles.isRTL,
-        oneRow: this.state.styles.oneRow,
-        galleryWidth: this.state.container.galleryWidth,
-        galleryHeight: this.state.container.galleryHeight,
-        top: 0,
-        items: this.galleryStructure.items,
-        totalWidth: this.galleryStructure.width,
-        itemIdx,
-        fixedScroll,
-        isManual,
-        scrollingElement,
-        horizontalElement,
-        durationInMS,
-      });
+      try {
+        const scrollParams = {
+          scrollMarginCorrection,
+          isRTL: this.state.styles.isRTL,
+          oneRow: this.state.styles.oneRow,
+          galleryWidth: this.state.container.galleryWidth,
+          galleryHeight: this.state.container.galleryHeight,
+          top: 0,
+          items: this.galleryStructure.items,
+          totalWidth: this.galleryStructure.width,
+          itemIdx,
+          fixedScroll,
+          isManual,
+          scrollingElement,
+          horizontalElement,
+          durationInMS,
+        };
+        return scrollToItemImp(scrollParams);
+      } catch {
+        //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
+        console.error('pro-gallery, scrollToItem, cannot get scrollParams, ',
+          'isEditMode =', isEditMode,
+          ' isPreviewMode =', isPreviewMode,
+          ' isSiteMode =', isSiteMode,
+          ' this.state.styles =', this.state.styles
+          );
+      }
+
     }
   }
-  
+
   containerInfiniteGrowthDirection(styles = false) {
     const _styles = styles || this.state.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
