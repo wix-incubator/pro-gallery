@@ -20,6 +20,9 @@ export default class galleryDriver {
     this.browser = await puppeteer.launch({
       args,
     })
+    if (process.env.TRAVIS) {
+      console.log('>>>>>>>>>>>>>>>>> TRAVIS ENVIRONMENT HERE!#$!#@$!@#$>>>>>>>>>>>>>>>')
+    }
     console.log('>>>>>>>>>>>>>>>>> this.browser', this.browser);
     return this.browser;
   }
