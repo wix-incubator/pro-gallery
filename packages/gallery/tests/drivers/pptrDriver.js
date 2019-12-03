@@ -32,6 +32,8 @@ export default class galleryDriver {
       await this.launchBrowser();
     }
     console.log('>>>>>>>>>>>>>>>>> styleParams', styleParams )
+    console.log('>>>>>>>>>>>>>>>>> this.browser', this.browser )
+
     const page = await this.browser.newPage();
     console.log('>>>>>>>>>>>>>>>>> a new page', page)
     switch (device) {

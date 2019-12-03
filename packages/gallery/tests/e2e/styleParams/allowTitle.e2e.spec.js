@@ -10,6 +10,7 @@ describe('allowTitle - e2e', () => {
   
   beforeEach(async () => {
     driver = new GalleryDriver();
+    console.log('>>>>>>>>>>>>>>>>> launching new browser.... with this driver:', driver);
     await driver.launchBrowser();
   });
 
