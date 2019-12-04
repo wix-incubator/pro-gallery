@@ -21,22 +21,17 @@ export default class galleryDriver {
       args,
     })
     if (process.env.TRAVIS) {
-      console.log('>>>>>>>>>>>>>>>>> TRAVIS ENVIRONMENT HERE!#$!#@$!@#$>>>>>>>>>>>>>>>')
-    }
-    console.log('>>>>>>>>>>>>>>>>> this.browser', this.browser);
-    return this.browser;
+          }
+        return this.browser;
   }
 
   async openPage(styleParams, device) {
     if (!this.browser) {
       await this.launchBrowser();
     }
-    console.log('>>>>>>>>>>>>>>>>> styleParams', styleParams )
-    console.log('>>>>>>>>>>>>>>>>> this.browser', this.browser )
-
+        
     const page = await this.browser.newPage();
-    console.log('>>>>>>>>>>>>>>>>> a new page', page)
-    switch (device) {
+        switch (device) {
       case 'Android':
         await page.emulate(devices['Galaxy S5']);
         break;
@@ -46,16 +41,13 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
-    console.log('>>>>>>>>>>>>>>>>> page adjusted to devices', page)
-
+    
     await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle2' });
-    console.log('>>>>>>>>>>>>>>>>> page adjusted to devices', page)
-
+    
     this.page = page;
     await this.scrollInteraction();
     await page.waitFor(2000);
-    console.log('>>>>>>>>>>>>>>>>> before finishing with openPage', page)
-
+    
     return page;
   }
 
@@ -67,8 +59,7 @@ export default class galleryDriver {
   }
 
   async closeBrowser() {
-    console.log('>>>>>>>>>>>>>>>>> trying to close browser', page)
-
+    
     try {
       await this.browser.close();
     } catch (e) {
@@ -101,6 +92,10 @@ export default class galleryDriver {
     return {
       screenshot: async () => {
         return await this.page.screenshot()
+      },
+      elemScreenshot: async str => {
+        const rootEl = await this.page.$(str);
+        return rootEl.screenshot();
       }
     }
   }
