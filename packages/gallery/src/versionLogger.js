@@ -1,1 +1,1 @@
-try {console.debug('Pro Gallery Version: 1.5.46'); } catch (e) {}
+try {console.debug('Pro Gallery Version: 1.5.47'); } catch (e) {}
