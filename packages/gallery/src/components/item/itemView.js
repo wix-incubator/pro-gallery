@@ -777,7 +777,6 @@ class ItemView extends GalleryComponent {
   getItemContainerStyles() {
     const { styleParams, linkData } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
-
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -788,7 +787,6 @@ class ItemView extends GalleryComponent {
         ? 'default'
         : 'pointer'
     };
-
     return { ...itemStyles, ...containerStyleByStyleParams };
   }
 
