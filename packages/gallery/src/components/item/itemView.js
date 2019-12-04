@@ -137,7 +137,11 @@ class ItemView extends GalleryComponent {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
-        this.onItemClick(e); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        if (this.shouldUseDirectLink()) {
+          this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
+        } else {
+          this.onItemClick(e) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        }
         return false;
       default:
         return true;
@@ -334,7 +338,7 @@ class ItemView extends GalleryComponent {
       return false;
     } else if (styleParams.alwaysShowHover === true) {
       return true;
-    } else if (isEditMode() && styleParams.previewHover === true) {
+    } else if (isEditMode() && styleParams.previewHover) {
       return true;
     } else if (styleParams.allowHover === false) {
       return false;
@@ -759,7 +763,7 @@ class ItemView extends GalleryComponent {
     return (
       this.state.isCurrentHover ||
       this.props.styleParams.alwaysShowHover === true ||
-      (isEditMode() && this.props.styleParams.previewHover === true)
+      (isEditMode() && this.props.styleParams.previewHover)
     );
   }
 
@@ -770,8 +774,8 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  getItemContainerStyles(shouldUseDirectLink) {
-    const { styleParams } = this.props;
+  getItemContainerStyles() {
+    const { styleParams, linkData } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const itemStyles = {
@@ -779,7 +783,10 @@ class ItemView extends GalleryComponent {
       position: 'absolute',
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
-      cursor: (styleParams.itemClick !== CLICK_ACTIONS.NOTHING && !shouldUseDirectLink) ? 'pointer' : 'none'
+      cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
+      (styleParams.itemClick === CLICK_ACTIONS.LINK && linkData.type === undefined) //when itemClick is 'link' but no link was added to this specific item
+        ? 'default'
+        : 'pointer'
     };
 
     return { ...itemStyles, ...containerStyleByStyleParams };
@@ -1034,10 +1041,12 @@ class ItemView extends GalleryComponent {
       : {};
     const innerDiv = (
       <a
+        ref={e => (this.itemAnchor = e)}
         data-id={photoId}
         data-idx={idx}
         key={'item-container-link-' + id}
         {...linkParams}
+        tabIndex={-1}
       >
         <div
           className={this.getItemContainerClass()}
@@ -1059,7 +1068,7 @@ class ItemView extends GalleryComponent {
           role={this.getItemAriaRole()}
           data-hook="item-container"
           key={'item-container-' + id}
-          style={this.getItemContainerStyles(shouldUseDirectLink)}
+          style={this.getItemContainerStyles()}
         >
           {this.getTopInfoElementIfNeeded()}
           <div
