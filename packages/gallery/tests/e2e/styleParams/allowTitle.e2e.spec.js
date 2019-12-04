@@ -38,7 +38,7 @@ describe('allowTitle - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0]
-    await driver.waitFor.timer(2000);
+    await driver.waitFor.timer(5000);
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');	
     expect(page).toMatchImageSnapshot();
   });
