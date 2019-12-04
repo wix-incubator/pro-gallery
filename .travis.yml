@@ -15,12 +15,12 @@ node_js:
 #   global:
 #     - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 # allow headful tests
-before_install:
-  # Enable user namespace cloning
-  - "sysctl kernel.unprivileged_userns_clone=1"
-  # Launch XVFB
-  # - "export DISPLAY=:99.0"
-  # - "sh -e /etc/init.d/xvfb start"
+# before_install:
+#   # Enable user namespace cloning
+#   - "sysctl kernel.unprivileged_userns_clone=1"
+#   # Launch XVFB
+#   # - "export DISPLAY=:99.0"
+#   # - "sh -e /etc/init.d/xvfb start"
 install:
 - npm install
 script:
