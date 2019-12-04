@@ -4,8 +4,6 @@ node_js:
 # This addon ensure we run the latest stable chrome which support headless mode
 addons:
   chrome: stable
-script:
-  - make test
 cache:
   directories:
     - node_modules
