@@ -12,9 +12,9 @@ cache:
 sudo: required
 node_js:
   - "10.15.3"
-# env:
-#   global:
-#     - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+env:
+  global:
+    - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 # allow headful tests
 before_install:
   # Enable user namespace cloning
