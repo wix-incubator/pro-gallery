@@ -1,20 +1,16 @@
 language: node_js
-dist: trusty
+dist: xenial
 addons:
   chrome: stable
-  apt:
-  packages:
-    # This is required to run new chrome on old trusty
-    - libnss3
 cache:
   directories:
     - node_modules
 sudo: required
 node_js:
   - "10.15.3"
-env:
-  global:
-    - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+# env:
+#   global:
+#     - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 # allow headful tests
 before_install:
   # Enable user namespace cloning
