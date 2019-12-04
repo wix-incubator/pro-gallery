@@ -84,7 +84,7 @@ function release(pkg) {
 }
 
 function createNpmRc() {
-  execSync(`rm -f package-lock.json`);
+  execSync(`rm -f **/package-lock.json`);
   const { NPM_EMAIL, NPM_TOKEN } = process.env;
   const EOL = require('os').EOL;
   const content = `email=${NPM_EMAIL}${EOL}//registry.npmjs.org/:_authToken=${NPM_TOKEN}${EOL}`;
