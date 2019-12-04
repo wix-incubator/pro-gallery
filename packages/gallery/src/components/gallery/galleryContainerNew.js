@@ -764,7 +764,7 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (typeof this.props.eventsListener === 'function') {
-      if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.state.styles.itemClick)) {
+      if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN, CLICK_ACTIONS.LINK].includes(this.state.styles.itemClick)) {
         this.props.eventsListener(eventName, eventData);
       }
     }

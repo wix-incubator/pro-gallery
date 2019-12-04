@@ -774,8 +774,8 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  getItemContainerStyles(shouldUseDirectLink) {
-    const { styleParams } = this.props;
+  getItemContainerStyles() {
+    const { styleParams, linkData } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
 
     const itemStyles = {
@@ -783,7 +783,10 @@ class ItemView extends GalleryComponent {
       position: 'absolute',
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
-      cursor: (styleParams.itemClick !== CLICK_ACTIONS.NOTHING && !shouldUseDirectLink) ? 'pointer' : 'none'
+      cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
+      (styleParams.itemClick === CLICK_ACTIONS.LINK && linkData.type === undefined) //when itemClick is 'link' but no link was added to this specific item
+        ? 'default'
+        : 'pointer'
     };
 
     return { ...itemStyles, ...containerStyleByStyleParams };
@@ -1065,7 +1068,7 @@ class ItemView extends GalleryComponent {
           role={this.getItemAriaRole()}
           data-hook="item-container"
           key={'item-container-' + id}
-          style={this.getItemContainerStyles(shouldUseDirectLink)}
+          style={this.getItemContainerStyles()}
         >
           {this.getTopInfoElementIfNeeded()}
           <div
