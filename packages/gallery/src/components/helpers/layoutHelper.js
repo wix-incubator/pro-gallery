@@ -469,8 +469,6 @@ const getLayoutName = (galleryLayout) => {
   return galleyLayoutList[galleryLayout]
 }
 function getStyleByLayout(styles) {
-  const testRes = isInPreset(styles,'showArrows');
-  debugger
   //new layouts
   let { galleryLayout } = styles;
   let layoutName = getLayoutName(galleryLayout + 1); //the empty layout is -1, collage is 0 etc.
