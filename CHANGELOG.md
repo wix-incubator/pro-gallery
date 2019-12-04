@@ -1,3 +1,9 @@
+## [v1.5.46](https://pro-gallery-1-5-46.surge.sh) (04/12/2019)
+ 
+#### GALLERY
+ -  fixed clicking on item behaviour when itemClick is LINK.
+
+---
 ## [v1.5.44](https://pro-gallery-1-5-44.surge.sh) (03/12/2019)
  
 #### GALLERY
