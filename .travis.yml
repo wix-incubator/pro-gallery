@@ -1,7 +1,8 @@
 language: node_js
-dist: xenial
-services:
-  - xvfb
+os: osx
+# dist: xenial
+# services:
+#   - xvfb
 addons:
   chrome: stable
 cache:
