@@ -98,7 +98,7 @@ export function App() {
 
     // return initialItems.mixed.slice(0, 3);
     if (isTestingEnvironment(window.location.search)) {
-      return testItems
+      return testItems.slice(0,20);
     }
 
     const theItems = items || initialItems[mediaType];

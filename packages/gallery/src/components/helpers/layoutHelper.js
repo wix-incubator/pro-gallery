@@ -443,6 +443,8 @@ export const getPreset = (styles) => {
     mix: () => getFixedLayouts(2),
   };
 }
+
+//returns true if the given param is in the current layout preset
 export const isInPreset = (styleParams, paramToCheck) => {
   const layoutName = getLayoutName(styleParams.galleryLayout + 1);
   const layouts = getPreset(styleParams);
