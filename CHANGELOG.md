@@ -1,3 +1,9 @@
+## [v1.5.48](https://pro-gallery-1-5-48.surge.sh) (05/12/2019)
+ 
+#### GALLERY
+ -  fix (galleryContainer): always emit events
+
+---
 ## [v1.5.47](https://pro-gallery-1-5-47.surge.sh) (04/12/2019)
  
 #### OTHER
