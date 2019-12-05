@@ -13,8 +13,8 @@
     "publish": "node scripts/publishPackages",
     "deploy": "node scripts/deployToSurge",
     "patch": "npm run test && node scripts/releaseVersion --patch",
-    "minor": "node scripts/releaseVersion --minor",
-    "major": "node scripts/releaseVersion --major",
+    "minor": "npm run test && node scripts/releaseVersion --minor",
+    "major": "npm run test && node scripts/releaseVersion --major",
     "start-playground": "lerna run start-playground",
     "e2etest": "start-server-and-test start-playground http-get://localhost:3000 'lerna run gallery-e2e'"
   },
