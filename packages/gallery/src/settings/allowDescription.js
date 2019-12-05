@@ -3,8 +3,8 @@ import { always } from './utils/utils';
 
 export default {
   title: 'Show Description',
-  description: `Show the description in the info section. This Style Param can be set in all layouts.
-  Notice that the placement of the texts(title and description) can be set too(see Style Param: "titlePlacement").` ,
+  description: `Allow a description to appear with each item. This option can be set in all layouts.
+  Note that the placement of the texts (title and description) can also be changed in some layouts that have the option - "titlePlacement".` ,
   isRelevant: always,
   type: INPUT_TYPES.BOOLEAN,
   default: false,
