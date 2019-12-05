@@ -4,9 +4,7 @@ import { imageMargin } from './utils/utils';
 export default {
   title: 'Spacing Between Items',
   description: `Set the margin between items and control the spacing between them.
-    This parameter does not necessarily use the CSS property "margin" in all layout cases(vertical layouts for example) to set the spacing, 
-    some layout cases set the spacing by positioning the items absolutly in the gallery while taking into account
-    the "imageMargin" value to create the spacing.`,
+    This Style Param is not relevant to some layouts and will not affect them(Slideshow, Thumbnails).`,
   isRelevant: imageMargin,
   type: INPUT_TYPES.NUMBER,
   default: 10,
