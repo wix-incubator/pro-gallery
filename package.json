@@ -12,7 +12,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
     "deploy": "node scripts/deployToSurge",
-    "patch": "node scripts/releaseVersion --patch",
+    "patch": "npm run test && node scripts/releaseVersion --patch",
     "minor": "node scripts/releaseVersion --minor",
     "major": "node scripts/releaseVersion --major",
     "start-playground": "lerna run start-playground",
