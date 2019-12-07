@@ -2,6 +2,8 @@ import '../../common/utils/polyfills';
 
 import React from 'react';
 import GalleryContainerNew from './galleryContainerNew.js';
+import LeanGallery from '../svelte/leanGallery';
+import isEligibleToLeanGallery from '../svelte/isEligible';
 import utils from '../../common/utils';
 import { viewModeWrapper } from '../../common/window/viewModeWrapper';
 import window from '../../common/window/windowWrapper';
@@ -36,10 +38,11 @@ export default class ProGallery extends GalleryComponent {
   }
 
   render() {
+    const GalleryContainer = isEligibleToLeanGallery(this.props) ? LeanGallery : GalleryContainerNew;
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
-          <GalleryContainerNew
+          <GalleryContainer
             {...this.props}
             domId={this.domId}
             items={this.props.items || []}

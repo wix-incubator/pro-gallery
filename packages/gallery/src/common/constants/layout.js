@@ -12,7 +12,8 @@ const LAYOUTS = {
   FULLSIZE: 9, 
   BRICKS: 10, 
   MIX: 11,
-  ALTERNATE: 12 
+  ALTERNATE: 12, 
+  LEAN: 13   
 };
 
 export default LAYOUTS;
