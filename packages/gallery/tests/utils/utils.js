@@ -1,17 +1,18 @@
 export const getBoundingClientRect = (elem) => {
   const { width, top, left, height } = getComputedStyle(elem.getDOMNode())
   return {
-    bottom: getPropNumber(top) + getPropNumber(height),
-    right: getPropNumber(left) + getPropNumber(width)
+    bottom: removePx(top) + removePx(height),
+    right: removePx(left) + removePx(width)
   }
 }
-export const getPropNumber = (propValue) => Number(propValue.substring(0, propValue.indexOf('px')))
-export const getCSSNumberValues = (elem) => {
+export const removePx = (value) => Number(value.substring(0, value.indexOf('px')))
+
+export const getElementDimensions = (elem) => {
   const { width, top, left, height } = getComputedStyle(elem.getDOMNode());
   return {
-    width: getPropNumber(width),
-    top: getPropNumber(top),
-    left: getPropNumber(left),
-    height: getPropNumber(height)
+    width: removePx(width),
+    top: removePx(top),
+    left: removePx(left),
+    height: removePx(height)
   }
 }

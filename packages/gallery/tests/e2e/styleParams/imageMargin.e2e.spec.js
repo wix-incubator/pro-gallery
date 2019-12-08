@@ -5,7 +5,7 @@ jest.setTimeout(30000)
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('allowTitle - e2e', () => {
+describe('imageMargin - e2e', () => {
   let driver;
   
   beforeEach(async () => {
