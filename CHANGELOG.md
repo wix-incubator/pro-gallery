@@ -1,3 +1,29 @@
+## [v1.5.48](https://pro-gallery-1-5-48.surge.sh) (05/12/2019)
+ 
+#### GALLERY
+ -  fix (galleryContainer): always emit events
+
+---
+## [v1.5.47](https://pro-gallery-1-5-47.surge.sh) (04/12/2019)
+ 
+#### OTHER
+ - dummy commit.
+
+---
+## [v1.5.46](https://pro-gallery-1-5-46.surge.sh) (04/12/2019)
+ 
+#### GALLERY
+ -  fixed clicking on item behaviour when itemClick is LINK.
+
+---
+## [v1.5.44](https://pro-gallery-1-5-44.surge.sh) (03/12/2019)
+ 
+#### GALLERY
+ -  added try-catch with console.error to scrollToItem.
+ -  fixed gallery-items keyboard navigation when onItemClick===link, fixed enter press on gallery-item with direct link.
+ -  fix groupView for dummyItems
+
+---
 ## [v1.5.43](https://pro-gallery-1-5-43.surge.sh) (01/12/2019)
  
 #### GALLERY
