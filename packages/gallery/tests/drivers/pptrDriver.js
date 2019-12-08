@@ -39,10 +39,10 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
-    await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle2' });
+    await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle0' });
     this.page = page;
     await this.scrollInteraction();
-    await page.waitFor(2000);
+    await page.waitFor(2500);
     return page;
   }
 
@@ -86,6 +86,10 @@ export default class galleryDriver {
     return {
       screenshot: async () => {
         return await this.page.screenshot()
+      },
+      elemScreenshot: async str => {
+        const rootEl = await this.page.$(str);
+        return rootEl.screenshot();
       }
     }
   }
