@@ -446,7 +446,7 @@ export const getPreset = (styles) => {
 
 //returns true if the given param is in the current layout preset
 export const isInPreset = (styleParams, paramToCheck) => {
-  const layoutName = getLayoutName(styleParams.galleryLayout + 1);
+  const layoutName = getLayoutName(styleParams.galleryLayout + 1) || 'empty';
   const layouts = getPreset(styleParams);
   return Object.keys(layouts[layoutName]()).includes(paramToCheck);
 }
