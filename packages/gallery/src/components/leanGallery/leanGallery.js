@@ -1,82 +1,86 @@
 import React from 'react';
 
-// function resizedUrl({url, resizeMethod, requiredWidth, requiredHeight, resizeMediaUrl}) {
+export default class LeanGallery extends React.Component {
 
-//     const resizeUrl = ({item, method, width, height, focalPoint}) => {
-//       let _resizedUrl;
-//       if (typeof resizeMediaUrl === 'function') {
-//         try {
-//           _resizedUrl = resizeMediaUrl(item, url, method, width, height, false, false, focalPoint) || '';
-//         } catch (e) {
-//           _resizedUrl = String(url);
-//         }
-//       } else {
-//         _resizedUrl = String(url);
-//       }
-//       return _resizedUrl;
-//     };
+  constructor() {
+    super();
+    this.state = {
+      itemStyle: {
+      }
+    };
+  }
 
-//     requiredWidth = Math.ceil(requiredWidth);
-//     requiredHeight = Math.ceil(requiredHeight);
-//     const thumbSize = 250;
+  resizeUrl({ item }) {
 
-//     const focalPoint =
-//       resizeMethod === 'fill' && options.focalPoint;
+    const { options, resizeMediaUrl } = this.props;
 
-//     const urls = {};
-
-//     urls['HIGH_RES'] = () =>
-//       resizeUrl(
-//         this,
-//         url,
-//         resizeMethod,
-//         requiredWidth,
-//         requiredHeight,
-//         sharpParams,
-//         focalPoint,
-//       );
-
-//     urls['LOW_RES'] = () =>
-//       resizeUrl(
-//         this,
-//         url,
-//         resizeMethod,
-//         thumbSize,
-//         (thumbSize * requiredHeight) / requiredWidth,
-//         { ...sharpParams, quality: 30, blur: 30 },
-//         focalPoint,
-//       );
-// }
-
-const resizeUrl = ({ item, options, resizeMediaUrl }) => {
     const { url } = item;
     const method = options.cubeType;
-    const width = 400;
-    const height = 300;
+    const width = this.state.itemStyle.width;
+    const height = this.state.itemStyle.height;
     const focalPoint = false;
 
     if (typeof resizeMediaUrl === 'function') {
-        try {
-            return resizeMediaUrl(item, url, method, width, height, false, false, focalPoint) || '';
-        } catch (e) {
-            return String(url);
-        }
-    } else {
+      try {
+        return resizeMediaUrl({
+          maxWidth: (item.metadata || item.metaData).width,
+          maxHeight: (item.metadata || item.metaData).height,
+        }, url, method, width, height, false, false, focalPoint) || '';
+      } catch (e) {
         return String(url);
+      }
+    } else {
+      return String(url);
     }
-};
+  };
 
-export default ({ items, options, resizeMediaUrl }) => {
+  createCssGrid() {
+    const { options } = this.props;
+    const { imageMargin, gallerySizePx } = options;
+    return {
+      display: 'grid',
+      gridTemplateColumns: `repeat(auto-fit, minmax(${gallerySizePx}px, 1fr))`,
+      gridGap: `${imageMargin}px`
+    };
+
+  }
+
+  getSize() {
+    const { items, options, resizeMediaUrl } = this.props;
+
+  }
+
+  render() {
+
+    const { items, options } = this.props;
+
     return (
-        <div className="gallery-root">
-            asd
+      <div style={this.createCssGrid()}>
         {items.map(item => {
-                const src = resizeUrl({ item, options, resizeMediaUrl })
-                return (
-                    <img src={src} />
-                )
-            })}
-
-        </div>
+          const src = this.resizeUrl({ item })
+          return (
+            <div
+              style={{
+                overflow: 'hidden',
+                height: this.state.itemStyle.height
+              }}
+              ref={node => {
+                node && !this.state.itemStyle.width &&
+                  this.setState({ itemStyle: {
+                    width: node.clientWidth,
+                    height: Math.round(node.clientWidth / options.cubeRatio),
+                    objectFit: options.cubeType === 'fit' ? 'contain' : 'over'
+                  }});
+              }}
+            >
+              <img src={src} style={this.state.itemStyle} alt={item.title} />
+            </div>
+          )
+        })
+        }
+      </div >
     )
+  }
 }
+
+//http://localhost:3000/?cubeRatio=1.2&imageMargin=50&galleryLayout=13&gallerySizePx=55
