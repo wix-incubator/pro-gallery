@@ -16,8 +16,12 @@ export default class LeanGallery extends React.Component {
 
     const { url } = item;
     const method = options.cubeType;
-    const width = this.state.itemStyle.width;
-    const height = this.state.itemStyle.height;
+    const isPreload = !(this.state.itemStyle.width > 0)
+    if (isPreload) {
+      
+    }
+    const width = this.state.itemStyle.width || 250;
+    const height = this.state.itemStyle.height || 250;
     const focalPoint = false;
 
     if (typeof resizeMediaUrl === 'function') {
@@ -36,18 +40,25 @@ export default class LeanGallery extends React.Component {
 
   createCssGrid() {
     const { options } = this.props;
-    const { imageMargin, gallerySizePx } = options;
+    const { gridStyle, numberOfImagesPerRow, imageMargin, gallerySizePx } = options;
+    const gridTemplateColumns = gridStyle === 1 ? `repeat(${numberOfImagesPerRow}, 1fr)` : `repeat(auto-fit, minmax(${gallerySizePx}px, 1fr))`;
+
     return {
       display: 'grid',
-      gridTemplateColumns: `repeat(auto-fit, minmax(${gallerySizePx}px, 1fr))`,
+      gridTemplateColumns,
       gridGap: `${imageMargin}px`
     };
 
   }
 
-  getSize() {
-    const { items, options, resizeMediaUrl } = this.props;
-
+  measure(node) {
+    const { options } = this.props;
+    node && !this.state.itemStyle.width &&
+      this.setState({ itemStyle: {
+        width: node.clientWidth,
+        height: Math.round(node.clientWidth / options.cubeRatio),
+        objectFit: options.cubeType === 'fit' ? 'contain' : 'cover'
+      }});
   }
 
   render() {
@@ -64,14 +75,7 @@ export default class LeanGallery extends React.Component {
                 overflow: 'hidden',
                 height: this.state.itemStyle.height
               }}
-              ref={node => {
-                node && !this.state.itemStyle.width &&
-                  this.setState({ itemStyle: {
-                    width: node.clientWidth,
-                    height: Math.round(node.clientWidth / options.cubeRatio),
-                    objectFit: options.cubeType === 'fit' ? 'contain' : 'over'
-                  }});
-              }}
+              ref={this.measure.bind(this)}
             >
               <img src={src} style={this.state.itemStyle} alt={item.title} />
             </div>
