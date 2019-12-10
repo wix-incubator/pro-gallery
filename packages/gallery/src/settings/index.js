@@ -5,6 +5,7 @@ import allowDescription from './allowDescription';
 import allowDownload from './allowDownload';
 import loveButton from './loveButton';
 import imageMargin from './imageMargin';
+import hoveringBehaviour from './hoveringBehaviour'
 
 export default {
     itemClick,
@@ -13,5 +14,6 @@ export default {
     loveButton,
     allowSocial,
     allowDownload,
-    imageMargin
+    imageMargin,
+    hoveringBehaviour
 }
