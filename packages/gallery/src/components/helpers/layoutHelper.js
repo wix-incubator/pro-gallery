@@ -242,12 +242,9 @@ function getStyleByGalleryType(styles) {
 
   return styleState;
 }
-function getStyleByLayout(styles) {
-  //new layouts
-  let { galleryLayout } = styles;
+export const getPreset = (styles) => {
   const { gallerySize, magicLayoutSeed } = styles;
-
-  const layouts = {
+  return {
     collage: () => ({
       showArrows: false,
       cubeImages: false,
@@ -445,7 +442,16 @@ function getStyleByLayout(styles) {
     alternate: () => getFixedLayouts(1),
     mix: () => getFixedLayouts(2),
   };
+}
 
+//returns true if the given param is in the current layout preset
+export const isInPreset = (styleParams, paramToCheck) => {
+  const layoutName = getLayoutName(styleParams.galleryLayout + 1) || 'empty';// empty for when there is no layout given
+  const layouts = getPreset(styleParams);
+  return Object.keys(layouts[layoutName]()).includes(paramToCheck);
+}
+
+const getLayoutName = (galleryLayout) => {
   const galleyLayoutList = [
     'empty', // -1
     'collage', // 0
@@ -462,8 +468,13 @@ function getStyleByLayout(styles) {
     'alternate', // 11
     'mix', // 12
   ];
-
-  let layoutName = galleyLayoutList[galleryLayout + 1]; //the empty layout is -1, collage is 0 etc.
+  return galleyLayoutList[galleryLayout]
+}
+function getStyleByLayout(styles) {
+  //new layouts
+  let { galleryLayout } = styles;
+  let layoutName = getLayoutName(galleryLayout + 1); //the empty layout is -1, collage is 0 etc.
+  
   if (utils.isUndefined(layoutName)) {
     galleryLayout = 0;
     layoutName = 'collage';
@@ -472,7 +483,7 @@ function getStyleByLayout(styles) {
   if (utils.isVerbose()) {
     console.log('chosen layout is', layoutName);
   }
-
+  const layouts = getPreset(styles)
   return {
     ...layouts[layoutName](),
     galleryLayout
@@ -672,7 +683,7 @@ function processLayouts(styles) {
       processedStyles.galleryMargin = Math.max(
         processedStyles.galleryMargin,
         (processedStyles.itemShadowSize || 0) +
-          (processedStyles.itemShadowBlur || 0),
+        (processedStyles.itemShadowBlur || 0),
       );
     }
   }
