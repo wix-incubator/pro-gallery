@@ -2583,8 +2583,7 @@ const testVideos = [{
 const testTexts = ['pink', 'lightgreen', 'lightsalmon', 'lavender', 'beige', 'lightyellow', 'lightblue', 'lightgray'].map(bgColor => ({
   itemId: '96858c1s-1f77-4d88-a622-6a24442259df',
   html: `<div style='width: 300px; height: 200px; background:${bgColor}; text-align: center; padding: 20px;'>
-          <p style="line-height:40px; padding:30px; font-size: 21px;">I am an HTML block</p>
-          <button onclick="alert('hooray!')">Click me!</button>
+          <p style="line-height:40px; padding:50px; font-size: 21px;">I am an HTML block</p>
         </div>`,
   metadata: {
     type: "text",
