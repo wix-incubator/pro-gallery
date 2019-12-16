@@ -98,7 +98,7 @@ export function App() {
 
     // return initialItems.mixed.slice(0, 3);
     if (isTestingEnvironment(window.location.search)) {
-      return testItems
+      return testItems.slice(0,20);
     }
 
     const theItems = items || initialItems[mediaType];
@@ -114,7 +114,7 @@ export function App() {
       <Button className={s.toggleButton} onClick={switchState} icon={showSide ? "close" : "menu"} shape="circle" size="default" type="primary" />
       <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0, display: showSide ? 'block' : 'none'}}>
         <div className={s.heading}>
-          Pro Gallery Playground <span className={s.version}>v{pJson.version}</span>
+          Pro Gallery Playground <a className={s.version} href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md" target="blank" title="View Changelog on Github">v{pJson.version}</a>
         </div>
         <SideBar />
       </aside>

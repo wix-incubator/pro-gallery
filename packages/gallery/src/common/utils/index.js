@@ -290,7 +290,7 @@ class Utils {
 
   isVerbose() {
     return (
-      !this.isTest() && (this.isPlayground() || (this.safeLocalStorage() || {}).forceDevMode === 'true')
+      !this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true')
     );
   }
 
