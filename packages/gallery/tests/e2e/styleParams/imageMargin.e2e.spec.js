@@ -22,6 +22,7 @@ describe('imageMargin - e2e', () => {
       imageMargin: 20
     });
     await driver.waitFor.hookToBeVisible('item-container');
+    await driver.waitFor.timer(2000);
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
@@ -31,6 +32,7 @@ describe('imageMargin - e2e', () => {
       imageMargin: 0
     });
     await driver.waitFor.hookToBeVisible('item-container');
+    await driver.waitFor.timer(2000);
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
