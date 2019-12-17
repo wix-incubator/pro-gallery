@@ -1,16 +1,17 @@
 import consts from '../../common/constants/index';
 
 export default ({items, styles}) => {
-    return items.length <= 100 &&
+    return items.length <= 25 &&
     items.every(item => isImage(item)) &&
     Object.entries(styles).every(([styleParams, value]) => isValidStyleParam(styleParams, value)) 
 }
 
 const isImage = item => {
   const meta = item.metadata || item.metaData;
-  if (!meta.type || meta.type === 'image') return true;
-  if (item.type === 'image') return true;
-  if (!item.type === 'image') return true;
+  return (
+    (!meta.type || meta.type === 'image') &&
+    (item.url || item.mediaUrl || item.src)
+  )
 }
 
 const isValidStyleParam = (styleParam, value) => {
