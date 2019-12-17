@@ -533,6 +533,10 @@ export default {
     title: 'Threshold (Levels)',
     description: '',
   },
+  hidePlay: {
+    title: 'Hide Video Play Button',
+    description: 'Show videos without a play button. Notice that using this option will display videos without any indication that they are playable',
+  },
   videoPlay: {
     title: 'Playing Options',
     description: 'You control how your videos play: On hover, autoplay, or on click.',

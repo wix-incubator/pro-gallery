@@ -162,6 +162,7 @@ export default {
   usm_a: sp => sp.usmToggle,
   usm_r: sp => sp.usmToggle,
   usm_t: sp => sp.usmToggle,
+  hidePlay: always,
   videoPlay: always,
   videoSound: sp => sp.videoPlay !== GALLERY_CONSTS.videoPlay.ON_CLICK,
   videoSpeed: always,

@@ -156,6 +156,7 @@ export const stylesBySection = {
         'usm_t',
     ],
     [SECTIONS.VIDEO]: [
+        'hidePlay',
         'videoPlay',
         'videoSound',
         'videoSpeed',
