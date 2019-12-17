@@ -633,6 +633,9 @@ export default {
     units: 'lv',
     alert: 'inside "sharpParams" object as "usm_t" property + percentage - should be divided by 255',
   },
+  hidePlay: {
+    type: INPUT_TYPES.BOOLEAN,
+  },
   videoPlay: {
     type: INPUT_TYPES.OPTIONS,
     options: createOptions('videoPlay')
