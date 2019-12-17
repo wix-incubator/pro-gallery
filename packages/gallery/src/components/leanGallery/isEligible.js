@@ -1,7 +1,10 @@
 import consts from '../../common/constants/index';
 import { addLayoutStyles } from '../helpers/layoutHelper';
 
-export default ({items, styles}) => {
+export default ({items, styles, options}) => {
+
+    styles = {...styles, ...options};
+    
     const allowLeanGallery = !!styles.allowLeanGallery;
     
     if (!allowLeanGallery) {
