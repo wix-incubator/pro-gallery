@@ -1,5 +1,7 @@
 import React from 'react';
-import GalleryItem from '../item/galleryItem';
+// import GalleryItem from '../item/galleryItem';
+
+import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 
 const get = (item, attr) => {
   if (typeof item[attr] !== 'undefined') {
@@ -23,23 +25,24 @@ export default class LeanGallery extends React.Component {
   constructor() {
     super();
     this.state = {
-      itemStyle: {
-      }
+      itemStyle: {}
     };
   }
 
   resizeUrl({ item }) {
 
-    const { options, resizeMediaUrl } = this.props;
-
-    const { url } = item;
-    const method = options.cubeType;
-    const isPreload = !(this.state.itemStyle.width > 0)
+    const { styles, resizeMediaUrl } = this.props;
+    const { cubeType, imageQuality } = styles;
+    const { itemStyle } = this.state;
+    const isPreload = !(itemStyle.width > 0)
     if (isPreload) {
-
+      return '';
     }
-    const width = this.state.itemStyle.width || 250;
-    const height = this.state.itemStyle.height || 250;
+    const { url, mediaUrl, src } = item;
+    const itemUrl = url || mediaUrl || src;
+
+    const width = itemStyle.width || 250;
+    const height = itemStyle.height || 250;
     const focalPoint = false;
 
     if (typeof resizeMediaUrl === 'function') {
@@ -47,20 +50,36 @@ export default class LeanGallery extends React.Component {
         return resizeMediaUrl({
           maxWidth: get(item, 'width'),
           maxHeight: get(item, 'height'),
-        }, url, method, width, height, false, false, focalPoint) || '';
+        }, itemUrl, cubeType, width, height, {quality: imageQuality}, false, focalPoint) || '';
       } catch (e) {
-        return String(url);
+        return String(itemUrl);
       }
     } else {
-      return String(url);
+      return String(itemUrl);
     }
   };
 
+  calcItemSize() {
+    const { styles, container } = this.props;
+    const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio } = styles;
+    
+    let itemSize;
+
+    if (gallerySizeType === GALLERY_SIZE_TYPE.PIXELS && gallerySizePx > 0) {
+      itemSize = gallerySizePx;
+    } else if (gallerySizeType === GALLERY_SIZE_TYPE.RATIO && gallerySizeRatio > 0) {
+      itemSize = container.width * (gallerySizeRatio / 100);
+    } else {
+      itemSize = Math.round(gallerySize * 8.5 + 150)
+    }
+
+    return Math.min(itemSize, container.width);
+  }
+
   createGalleryStyle() {
-    const { options } = this.props;
-    const { gridStyle, numberOfImagesPerRow, imageMargin, gallerySizePx } = options;
-    const itemSize = Math.min(gallerySizePx, window.innerWidth);
-    const gridTemplateColumns = gridStyle === 1 ? `repeat(${numberOfImagesPerRow}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
+    const { styles } = this.props;
+    const { gridStyle, numberOfImagesPerRow, imageMargin } = styles;
+    const gridTemplateColumns = gridStyle === 1 ? `repeat(${numberOfImagesPerRow}, 1fr)` : `repeat(auto-fit, minmax(${this.calcItemSize()}px, 1fr))`;
 
     return {
       display: 'grid',
@@ -71,13 +90,13 @@ export default class LeanGallery extends React.Component {
   }
 
   createItemStyle() {
-    const { options } = this.props;
+    const { styles } = this.props;
     const { 
       cubeType,
       itemBorderWidth: borderWidth,
       itemBorderColor: borderColor,
       itemBorderRadius: borderRadius
-    } = options;
+    } = styles;
 
     return {
       ...this.state.itemStyle,
@@ -89,12 +108,12 @@ export default class LeanGallery extends React.Component {
   }
 
   measure(node) {
-    const { options } = this.props;
+    const { styles } = this.props;
     node && !this.state.itemStyle.width &&
       this.setState({
         itemStyle: {
           width: node.clientWidth,
-          height: Math.round(node.clientWidth / options.cubeRatio),
+          height: Math.round(node.clientWidth / styles.cubeRatio),
         }
       });
   }
@@ -119,8 +138,8 @@ export default class LeanGallery extends React.Component {
                 src={src} 
                 loading="lazy" 
                 alt={get(item, 'title')} 
-                style={this.state.itemStyle}
-                onClick={() => this.props.eventsListener('ITEM_ACTION_TRIGGERED', new GalleryItem(item))}
+                style={this.createItemStyle()}
+                // onClick={() => this.props.eventsListener('ITEM_ACTION_TRIGGERED', new GalleryItem(item))}
               />
             </div>
           )
@@ -130,8 +149,6 @@ export default class LeanGallery extends React.Component {
     )
   }
 }
-
-//http://localhost:3000/?cubeRatio=1.2&imageMargin=50&galleryLayout=13&gallerySizePx=55
 
 /* 
 todo: 

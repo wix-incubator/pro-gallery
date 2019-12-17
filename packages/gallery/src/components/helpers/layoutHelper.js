@@ -2,6 +2,7 @@ import utils from '../../common/utils';
 import PLACEMENTS from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
@@ -828,12 +829,12 @@ function processLayouts(styles) {
 
   //in case a special gallery size was specified, use it
   if (
-    processedStyles.gallerySizeType === 'px' &&
+    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
     processedStyles.gallerySizePx > 0
   ) {
     processedStyles.gallerySize = processedStyles.gallerySizePx;
   } else if (
-    processedStyles.gallerySizeType === 'ratio' &&
+    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
     processedStyles.gallerySizeRatio > 0
   ) {
     processedStyles.gallerySize =

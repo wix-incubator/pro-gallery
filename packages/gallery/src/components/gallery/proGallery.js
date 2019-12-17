@@ -44,6 +44,7 @@ export default class ProGallery extends GalleryComponent {
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
           <GalleryContainer
             {...this.props}
+            styles={this.props.styles || this.props.options}
             domId={this.domId}
             items={this.props.items || []}
             watermarkData={this.props.watermarkData}
