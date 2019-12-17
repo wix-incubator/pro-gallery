@@ -38,13 +38,14 @@ export default class ProGallery extends GalleryComponent {
   }
 
   render() {
-    const GalleryContainer = isEligibleToLeanGallery(this.props) ? LeanGallery : GalleryContainerNew;
+    const styles = this.props.styles || this.props.options;
+    const GalleryContainer = isEligibleToLeanGallery({...this.props, styles}) ? LeanGallery : GalleryContainerNew;
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
           <GalleryContainer
             {...this.props}
-            styles={this.props.styles || this.props.options}
+            styles={styles}
             domId={this.domId}
             items={this.props.items || []}
             watermarkData={this.props.watermarkData}

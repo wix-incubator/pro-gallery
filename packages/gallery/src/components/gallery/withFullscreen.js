@@ -75,7 +75,7 @@ export default class ExpandableProGallery extends React.Component {
                         eventsListener={this.eventListener}
                     />
                 </section>
-                <section style={{ ...styles.fullscreen, ...(this.state.fullscreenIdx >= 0 && styles.shown) }}>
+                {this.state.fullscreenIdx < 0 ? null : <section style={{ ...styles.fullscreen, ...(this.state.fullscreenIdx >= 0 && styles.shown) }}>
                     <CloseButton style={styles.close} onClick={() => this.setState({fullscreenIdx: -1})} />
                     <ProGallery
                         {...this.props}
@@ -94,7 +94,7 @@ export default class ExpandableProGallery extends React.Component {
                             scrollSnap: true
                         }}
                     />
-                </section>
+                </section>}
             </>
         );
     }

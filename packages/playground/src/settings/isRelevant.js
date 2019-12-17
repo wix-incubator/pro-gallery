@@ -30,6 +30,7 @@ import {
 
 export default {
   isStore: always,
+  allowLeanGallery: always,
   showAddToCartSection: sp => isStore(sp),
   canUseWatermark: sp => isStore(sp),
   galleryLayout: always,
