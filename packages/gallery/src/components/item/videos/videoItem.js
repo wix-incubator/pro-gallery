@@ -227,7 +227,7 @@ class VideoItem extends GalleryComponent {
     if (this.state.playing) {
       baseClassName += ' playing';
     }
-    const videoControls = this.props.hidePlay
+    const videoControls = this.props.hidePlay || this.props.styleParams.hidePlay
       ? false
       : [
           <i
