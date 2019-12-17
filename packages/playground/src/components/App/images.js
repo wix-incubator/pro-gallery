@@ -2595,7 +2595,7 @@ const testTexts = ['pink', 'lightgreen', 'lightsalmon', 'lavender', 'beige', 'li
   },
 }));
 
-const testItems = testImages;//[...testImages, ...testVideos, ...testTexts];
+const testItems = [...testImages, ...testVideos, ...testTexts];
 
 export {
   testImages,
