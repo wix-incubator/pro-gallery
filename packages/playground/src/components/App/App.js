@@ -125,7 +125,7 @@ export function App() {
           scrollingElement={window}
           container={container}
           items={getItems()}
-          styles={styleParams}
+          options={styleParams}
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}

@@ -30,6 +30,7 @@ import {
 
 export default {
   isStore: always,
+  allowLeanGallery: sp => isLayout(sp, [GALLERY_CONSTS.layout.GRID]),
   showAddToCartSection: sp => isStore(sp),
   canUseWatermark: sp => isStore(sp),
   galleryLayout: always,
@@ -53,12 +54,12 @@ export default {
   gallerySliderImageRatio: sp => sp.galleryLayout === GALLERY_CONSTS.layout.SLIDER && sp.cubeType === GALLERY_CONSTS.cubeType.CROP,
   galleryThumbnailsAlignment: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,
   thumbnailSize: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,
-  gridStyle: sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE])) && !oneRow(sp)),
+  gridStyle: sp => ((isLayout(sp, [GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.COLLAGE])) && !oneRow(sp)),
   gallerySizeType: showGallerySize,
   gallerySize: sp => showGallerySize(sp) && [GALLERY_CONSTS.gallerySizeType.PIXELS, GALLERY_CONSTS.gallerySizeType.RATIO].indexOf(sp.gallerySizeType) < 0,
   gallerySizePx: sp => showGallerySize(sp) && GALLERY_CONSTS.gallerySizeType.PIXELS === sp.gallerySizeType,
   gallerySizeRatio: sp => showGallerySize(sp) && GALLERY_CONSTS.gallerySizeType.RATIO === sp.gallerySizeType,
-  numberOfImagesPerRow: sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE])) && !oneRow(sp)) && sp.gridStyle === 1,
+  numberOfImagesPerRow: sp => ((isLayout(sp, [GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.COLLAGE])) && !oneRow(sp)) && sp.gridStyle === 1,
   numberOfImagesPerCol: sp => [GALLERY_CONSTS.layout.GRID].indexOf(sp.galleryLayout) >= 0 && (isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE]) && !oneRow(sp)),
   groupSize: sp => isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE]),
   groupTypes: sp => isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE]),

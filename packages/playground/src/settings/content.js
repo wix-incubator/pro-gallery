@@ -1,4 +1,8 @@
 export default {
+  allowLeanGallery: {
+    title: 'Allow Lean Gallery',
+    description: "render a css grid gallery if the options allow it. This will run much less code and render faster.",
+  },
   isStore: {
     title: 'Is store',
     description: "",

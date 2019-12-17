@@ -28,6 +28,7 @@ export const stylesBySection = {
         'galleryLayout',
     ],
     [SECTIONS.LAYOUT]: [
+        'allowLeanGallery',
         'scrollDirection',
         'isVertical',
         'isRTL',
