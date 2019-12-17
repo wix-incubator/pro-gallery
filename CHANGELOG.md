@@ -1,3 +1,10 @@
+## [v1.6.0](https://pro-gallery-1-6-0.surge.sh) (17/12/2019)
+ 
+#### GALLERY
+ -  improve (hidePlay): fetch hidePlay prop from styleParams
+ -  feature (leanGallery): render a css grid lean gallery when possible
+
+---
 ## [v1.5.50](https://pro-gallery-1-5-50.surge.sh) (17/12/2019)
 
 #### MAIN
