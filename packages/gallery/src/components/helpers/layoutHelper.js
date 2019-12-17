@@ -10,6 +10,8 @@ import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
 import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
+import LOADING_MODE from '../../common/constants/loadingMode';
+import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -655,6 +657,10 @@ function processLayouts(styles) {
       //processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.APPEARS
       processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
     }
+  }
+
+  if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {
+    processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
   }
 
   processedStyles.textBoxHeight = getTextBoxHeight(processedStyles);
