@@ -188,10 +188,10 @@ class CssScrollHelper {
           )})}`;
       }
 
-      //add the blurry image
+      //add the blurry image/color
       if (
         !utils.deviceHasMemoryIssues() &&
-        styleParams.imageLoadingMode !== LOADING_MODE.COLOR &&
+        styleParams.imageLoadingMode === LOADING_MODE.BLUR &&
         (!item.isTransparent || isUnknownWidth) && //FAKE SSR
         !item.isDimensionless
       ) {
@@ -200,6 +200,18 @@ class CssScrollHelper {
           `{background-image: url(${createUrl(
             URL_SIZES.RESIZED,
             URL_TYPES.LOW_RES,
+          )})}`;
+      }
+      if (
+        !utils.deviceHasMemoryIssues() &&
+        styleParams.imageLoadingMode === LOADING_MODE.MAIN_COLOR &&
+        (!item.isTransparent || isUnknownWidth) && //FAKE SSR
+        !item.isDimensionless
+      ) {
+        scrollCss +=
+          createScrollSelectors(this.lowResPadding(), ' .image-item') + `{background-size: 0.3px; background-repeat: repeat; background-image: url(${createUrl(
+            URL_SIZES.PIXEL,
+            URL_TYPES.HIGH_RES,
           )})}`;
       }
     }
