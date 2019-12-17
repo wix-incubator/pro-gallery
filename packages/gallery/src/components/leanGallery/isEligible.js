@@ -2,30 +2,30 @@ import consts from '../../common/constants/index';
 import { addLayoutStyles } from '../helpers/layoutHelper';
 
 export default ({items, styles}) => {
-    const allowLeanGallery = styles.allowLeanGallery;
+    const allowLeanGallery = !!styles.allowLeanGallery;
     
     if (!allowLeanGallery) {
       return false;
     }
     if (items.length > 25) {
-      console.log(`[LEAN GALLERY] NOT ALOWED - more than 25 items`, items.length);
+      console.log(`[LEAN GALLERY] NOT ALLOWED - more than 25 items`, items.length);
       return false;
     }
     for (const item of items) {
       if (!isImage(item)) {
-        console.log(`[LEAN GALLERY] NOT ALOWED - an item that is not an image`, item);
+        console.log(`[LEAN GALLERY] NOT ALLOWED - an item that is not an image`, item);
         return false;
       }
     }
     const fullStyles = addLayoutStyles(styles);
     for (const [styleParam, value] of Object.entries(fullStyles)) {
       if (!isValidStyleParam(styleParam, value)) {
-        console.log(`[LEAN GALLERY] NOT ALOWED - invalid styleParam`, styleParam, value);
+        console.log(`[LEAN GALLERY] NOT ALLOWED - invalid styleParam`, styleParam, value);
         return false;
       }
     }
     
-    console.log(`[LEAN GALLERY] ALOWED!`, fullStyles);
+    console.log(`[LEAN GALLERY] ALLOWED!`, fullStyles);
 }
 
 const isImage = item => {
