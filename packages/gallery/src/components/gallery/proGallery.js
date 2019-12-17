@@ -3,7 +3,7 @@ import '../../common/utils/polyfills';
 import React from 'react';
 import GalleryContainerNew from './galleryContainerNew.js';
 import LeanGallery from '../leanGallery/leanGallery';
-import isEligibleToLeanGallery from '../leanGallery/isEligible';
+import isEligibleForLeanGallery from '../leanGallery/isEligible';
 import utils from '../../common/utils';
 import { viewModeWrapper } from '../../common/window/viewModeWrapper';
 import window from '../../common/window/windowWrapper';
@@ -39,7 +39,7 @@ export default class ProGallery extends GalleryComponent {
 
   render() {
     const styles = this.props.styles || this.props.options;
-    const GalleryContainer = isEligibleToLeanGallery(this.props) ? LeanGallery : GalleryContainerNew;
+    const GalleryContainer = isEligibleForLeanGallery(this.props) ? LeanGallery : GalleryContainerNew;
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
