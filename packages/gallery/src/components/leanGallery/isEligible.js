@@ -192,16 +192,3 @@ const fixedStyleParams = {
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
   titlePlacement: consts.placements.DONT_SHOW,
 };
-
-/*
-
-gridStyle, 
-numberOfImagesPerRow, 
-imageMargin, 
-gallerySizePx
-cubeType,
-itemBorderWidth: borderWidth,
-itemBorderColor: borderColor,
-itemBorderRadius: borderRadius
-cubeRatio
-*/

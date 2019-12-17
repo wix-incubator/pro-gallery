@@ -42,7 +42,7 @@ export const presentOuterInformation = sp => layoutPresentOuterInformation(sp) &
 export const isTitlePlacementAlwaysShown = sp => layoutPresentOuterInformation(sp) || isSlideshowLayout(sp) || sp.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 export const showInfiniteScroll = sp => !oneRow(sp);
 export const showItemBorderAndShadowConfig = sp => !(sp.cubeType === 'fit' && showThumbnailResize(sp)) // check cubeType exists 
-export const showThumbnailResize = sp => [GALLERY_CONSTS.layout.LEAN, GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE].indexOf(sp.galleryLayout) > -1;
+export const showThumbnailResize = sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE].indexOf(sp.galleryLayout) > -1;
 export const showShadow = sp => showItemBorderAndShadowConfig(sp) && !isHorizontalLayout(sp) && (sp.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND || sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER);
 export const oneRow = sp => sp.oneRow || sp.scrollDirection === GALLERY_CONSTS.scrollDirection.horizontal;
 export const showSlideshowSettings = sp => [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1;
@@ -53,7 +53,7 @@ export const showTextSubSection = sp => showTexts(sp);
 export const showButtonSection = sp => showInfiniteScroll(sp) && !sp.enableInfiniteScroll && isStore(sp);
 export const showExpendSection = sp => sp.itemClick === GALLERY_CONSTS.itemClick.EXPAND || isStore(sp);
 export const showScrollAnimations = sp => !oneRow(sp);
-export const showGallerySize = sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp)) ? sp.gridStyle === 0 : [GALLERY_CONSTS.layout.LEAN, GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY].indexOf(sp.galleryLayout) >= 0;
+export const showGallerySize = sp => ((sp.galleryLayout === GALLERY_CONSTS.layout.GRID || sp.galleryLayout === GALLERY_CONSTS.layout.COLLAGE) && !oneRow(sp)) ? sp.gridStyle === 0 : [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY].indexOf(sp.galleryLayout) >= 0;
 
 // implement
 export const isStore = (sp) => sp.isStore;
