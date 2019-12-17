@@ -1,3 +1,9 @@
+## [v1.5.50](https://pro-gallery-1-5-50.surge.sh) (17/12/2019)
+
+#### MAIN
+ -  fix (tests): use image compare with larger threshold
+
+---
 ## [v1.5.49](https://pro-gallery-1-5-49.surge.sh) (17/12/2019)
  
 #### GALLERY
