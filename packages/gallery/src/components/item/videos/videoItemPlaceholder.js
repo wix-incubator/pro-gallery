@@ -22,7 +22,7 @@ class VideoItemPlaceholder extends GalleryComponent {
   render() {
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
-    const videoControls = this.props.hidePlay || this.props.styleParams.hidePlay
+    const videoControls = (this.props.hidePlay || !this.props.styleParams.showVideoPlayButton)
       ? false
       : [
           <i
