@@ -617,14 +617,16 @@ export class GalleryContainer extends React.Component {
           durationInMS,
         };
         return scrollToItemImp(scrollParams);
-      } catch {
+      } catch(e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
-        console.error('pro-gallery, scrollToItem, cannot get scrollParams, ',
-          'isEditMode =', isEditMode,
-          ' isPreviewMode =', isPreviewMode,
-          ' isSiteMode =', isSiteMode,
-          ' this.state.styles =', this.state.styles
-          );
+        console.error('error:', e, ' pro-gallery, scrollToItem, cannot get scrollParams, ',
+          'isEditMode =', isEditMode(),
+          ' isPreviewMode =', isPreviewMode(),
+          ' isSiteMode =', isSiteMode(),
+          ' this.state.styles =', this.state.styles,
+          ' this.state.container =', this.state.container,
+          ' this.galleryStructure =', this.galleryStructure
+        );
       }
 
     }
