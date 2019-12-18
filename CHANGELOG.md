@@ -1,3 +1,9 @@
+## [v1.6.1](https://pro-gallery-1-6-1.surge.sh) (18/12/2019)
+ 
+#### GALLERY
+ -  added showVideoPlayButton styleParam
+
+---
 ## [v1.6.0](https://pro-gallery-1-6-0.surge.sh) (17/12/2019)
  
 #### GALLERY
