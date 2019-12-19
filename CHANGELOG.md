@@ -1,3 +1,9 @@
+## [v1.6.2](https://pro-gallery-1-6-2.surge.sh) (19/12/2019)
+ 
+#### GALLERY
+ -  fix (leanGallery): fix isEligible and responsive
+
+---
 ## [v1.6.1](https://pro-gallery-1-6-1.surge.sh) (18/12/2019)
  
 #### GALLERY

@@ -79,7 +79,6 @@ export default class LeanGallery extends React.Component {
       itemSize = container.width * (gallerySizeRatio / 100);
     } else {
       itemSize = Math.round(gallerySize * 8.5 + 150);
-      console.log('[LEAN GALLERY] ', {gallerySize, itemSize});
     }
 
     const minmaxFix = 0.75; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
@@ -125,7 +124,6 @@ export default class LeanGallery extends React.Component {
       this.node = node;
     }
     if (this.node && (this.node.clientWidth !== this.clientWidth)) {
-      console.log('[LEAN GALLERY] measured!')
       this.clientWidth = this.node.clientWidth;
       this.setState({
         itemStyle: {
