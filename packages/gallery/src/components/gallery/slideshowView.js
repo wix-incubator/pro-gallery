@@ -219,7 +219,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   autoScrollToNextItem = () => {
-    if (isGalleryInViewport(this.props.container)) {
+    if (!isEditMode && (isGalleryInViewport(this.props.container) || isPreviewMode)) {
       this._nextItem({direction: 1 , isAutoTrigger: true , scrollDuration: 800});
     }
   };
