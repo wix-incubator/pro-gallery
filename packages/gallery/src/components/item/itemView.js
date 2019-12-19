@@ -624,18 +624,28 @@ class ItemView extends GalleryComponent {
     const { styleParams, type, visible } = this.props;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
-    let itemTexts =
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
-        ? this.getItemTextsDetails()
-        : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
-    const social = this.getSocial();
-    const share = this.getShare();
-    const itemHover = this.getItemHover(
-      [itemTexts, social, share],
-      imageDimensions,
-    );
+    let itemTexts;
+    let social;
+    let share;
+    
+    let itemHover = null;
+
+    if ((visible && this.shouldHover()) || styleParams.isSlideshow) {
+      itemTexts =
+        styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
+        styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
+        styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
+          ? this.getItemTextsDetails()
+          : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
+      social = this.getSocial();
+      share = this.getShare();
+
+      itemHover = this.getItemHover(
+        [itemTexts, social, share],
+        imageDimensions,
+      );
+    }
+    
 
     if (visible) {
       switch (type) {
