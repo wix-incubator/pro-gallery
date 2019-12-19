@@ -29,8 +29,10 @@ export default ({items, styles, options}) => {
         return false;
       }
     }
-    
+
     console.log(`[LEAN GALLERY] ALLOWED!`, fullStyles);
+    return true;
+    
 }
 
 const isImage = item => {
