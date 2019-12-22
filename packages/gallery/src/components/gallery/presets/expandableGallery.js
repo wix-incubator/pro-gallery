@@ -1,8 +1,8 @@
 import React from 'react';
-import ProGallery from './proGallery';
-import GALLERY_EVENTS from '../../common/constants/events';
-import CLICK_ACTIONS from '../../common/constants/itemClick';
-import CloseButton from '../svgs/components/x';
+import ProGallery from '../proGallery/proGallery';
+import GALLERY_EVENTS from '../../../common/constants/events';
+import CLICK_ACTIONS from '../../../common/constants/itemClick';
+import CloseButton from '../../svgs/components/x';
 
 const styles = {
     gallery: {
@@ -75,7 +75,7 @@ export default class ExpandableProGallery extends React.Component {
                         eventsListener={this.eventListener}
                     />
                 </section>
-                <section style={{ ...styles.fullscreen, ...(this.state.fullscreenIdx >= 0 && styles.shown) }}>
+                {this.state.fullscreenIdx < 0 ? null : <section style={{ ...styles.fullscreen, ...(this.state.fullscreenIdx >= 0 && styles.shown) }}>
                     <CloseButton style={styles.close} onClick={() => this.setState({fullscreenIdx: -1})} />
                     <ProGallery
                         {...this.props}
@@ -94,7 +94,7 @@ export default class ExpandableProGallery extends React.Component {
                             scrollSnap: true
                         }}
                     />
-                </section>
+                </section>}
             </>
         );
     }

@@ -1,13 +1,13 @@
-import '../../common/utils/polyfills';
+import '../../../common/utils/polyfills';
 
 import React from 'react';
 import GalleryContainerNew from './galleryContainerNew.js';
-import utils from '../../common/utils';
-import { viewModeWrapper } from '../../common/window/viewModeWrapper';
-import window from '../../common/window/windowWrapper';
-import { GalleryComponent } from '../galleryComponent';
+import utils from '../../../common/utils';
+import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
+import window from '../../../common/window/windowWrapper';
+import { GalleryComponent } from '../../galleryComponent';
 
-import '../../versionLogger';
+import '../../../versionLogger';
 
 export default class ProGallery extends GalleryComponent {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class ProGallery extends GalleryComponent {
     if (this.canRender) {
       this.init(props);
     }
-    if (utils.isLocal()) {
+    if (utils.isLocal() && !utils.isTest()) {
       console.warn('PRO GALLERY DEV');
     }
   }
@@ -36,11 +36,13 @@ export default class ProGallery extends GalleryComponent {
   }
 
   render() {
+    const styles = this.props.styles || this.props.options;
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
           <GalleryContainerNew
             {...this.props}
+            styles={styles}
             domId={this.domId}
             items={this.props.items || []}
             watermarkData={this.props.watermarkData}

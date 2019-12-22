@@ -28,6 +28,7 @@ export const stylesBySection = {
         'galleryLayout',
     ],
     [SECTIONS.LAYOUT]: [
+        'allowLeanGallery',
         'scrollDirection',
         'isVertical',
         'isRTL',
@@ -156,6 +157,7 @@ export const stylesBySection = {
         'usm_t',
     ],
     [SECTIONS.VIDEO]: [
+        'hidePlay',
         'videoPlay',
         'videoSound',
         'videoSpeed',

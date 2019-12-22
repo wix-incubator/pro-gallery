@@ -1,3 +1,34 @@
+## [v1.6.2](https://pro-gallery-1-6-2.surge.sh) (19/12/2019)
+ 
+#### GALLERY
+ -  fix (leanGallery): fix isEligible and responsive
+
+---
+## [v1.6.1](https://pro-gallery-1-6-1.surge.sh) (18/12/2019)
+ 
+#### GALLERY
+ -  added showVideoPlayButton styleParam
+
+---
+## [v1.6.0](https://pro-gallery-1-6-0.surge.sh) (17/12/2019)
+ 
+#### GALLERY
+ -  improve (hidePlay): fetch hidePlay prop from styleParams
+ -  feature (leanGallery): render a css grid lean gallery when possible
+
+---
+## [v1.5.50](https://pro-gallery-1-5-50.surge.sh) (17/12/2019)
+
+#### MAIN
+ -  fix (tests): use image compare with larger threshold
+
+---
+## [v1.5.49](https://pro-gallery-1-5-49.surge.sh) (17/12/2019)
+ 
+#### GALLERY
+Added MAIN_COLOR to imageLoading options (SP imageLoadingMode and imageLoaindWithColorMode)
+
+---
 ## [v1.5.48](https://pro-gallery-1-5-48.surge.sh) (05/12/2019)
  
 #### GALLERY
@@ -5,7 +36,7 @@
 
 ---
 ## [v1.5.47](https://pro-gallery-1-5-47.surge.sh) (04/12/2019)
- 
+ `
 #### OTHER
  - dummy commit.
 

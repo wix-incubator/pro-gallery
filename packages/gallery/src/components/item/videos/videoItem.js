@@ -14,7 +14,7 @@ class VideoItem extends GalleryComponent {
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
-    
+
     this.state = {
       playedOnce: false,
       playing: false,
@@ -202,7 +202,7 @@ class VideoItem extends GalleryComponent {
 
   canVideoPlayInGallery(itemClick, videoPlay) {
     if (
-      utils.isMobile() && 
+      utils.isMobile() &&
       (videoPlay === 'auto' ||
       (itemClick !== 'expand' &&
       itemClick !== 'fullscreen'))
@@ -227,7 +227,8 @@ class VideoItem extends GalleryComponent {
     if (this.state.playing) {
       baseClassName += ' playing';
     }
-    const videoControls = this.props.hidePlay
+    const showVideoControls = this.props.hidePlay ? false : this.props.styleParams.showVideoPlayButton;
+    const videoControls = !showVideoControls
       ? false
       : [
           <i

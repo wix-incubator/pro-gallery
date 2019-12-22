@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/reactDriver';
-import GalleryView from '../../../src/components/gallery/galleryView';
+import GalleryView from '../../../src/components/gallery/proGallery/galleryView';
 import utils from '../../../src/common/utils/index';
 import { expect } from 'chai';
 import sinon from 'sinon';

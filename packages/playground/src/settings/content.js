@@ -1,4 +1,8 @@
 export default {
+  allowLeanGallery: {
+    title: 'Allow Lean Gallery',
+    description: "render a css grid gallery if the options allow it. This will run much less code and render faster.",
+  },
   isStore: {
     title: 'Is store',
     description: "",
@@ -532,6 +536,10 @@ export default {
   usm_t: {
     title: 'Threshold (Levels)',
     description: '',
+  },
+  hidePlay: {
+    title: 'Hide Video Play Button',
+    description: 'Show videos without a play button. Notice that using this option will display videos without any indication that they are playable',
   },
   videoPlay: {
     title: 'Playing Options',

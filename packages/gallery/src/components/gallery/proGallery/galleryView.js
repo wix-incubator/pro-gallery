@@ -1,9 +1,9 @@
 import React from 'react';
 import GalleryDebugMessage from './galleryDebugMessage';
-import utils from '../../common/utils/index.js';
-import window from '../../common/window/windowWrapper';
-import itemView from '../item/itemView.js';
-import { GalleryComponent } from '../galleryComponent';
+import utils from '../../../common/utils/index.js';
+import window from '../../../common/window/windowWrapper';
+import itemView from '../../item/itemView.js';
+import { GalleryComponent } from '../../galleryComponent';
 
 class GalleryView extends GalleryComponent {
   constructor(props) {

@@ -2,6 +2,7 @@ import utils from '../../common/utils';
 import PLACEMENTS from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
@@ -10,6 +11,8 @@ import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
 import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
+import LOADING_MODE from '../../common/constants/loadingMode';
+import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -657,6 +660,10 @@ function processLayouts(styles) {
     }
   }
 
+  if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {
+    processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
+  }
+
   processedStyles.textBoxHeight = getTextBoxHeight(processedStyles);
   processedStyles.externalInfoHeight = getHeightFromStyleParams(
     processedStyles,
@@ -828,12 +835,12 @@ function processLayouts(styles) {
 
   //in case a special gallery size was specified, use it
   if (
-    processedStyles.gallerySizeType === 'px' &&
+    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
     processedStyles.gallerySizePx > 0
   ) {
     processedStyles.gallerySize = processedStyles.gallerySizePx;
   } else if (
-    processedStyles.gallerySizeType === 'ratio' &&
+    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
     processedStyles.gallerySizeRatio > 0
   ) {
     processedStyles.gallerySize =

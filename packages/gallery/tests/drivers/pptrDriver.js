@@ -19,7 +19,7 @@ export default class galleryDriver {
     ];
     this.browser = await puppeteer.launch({
       args,
-      // headless: false
+      headless: true,
     })
     return this.browser;
   }
