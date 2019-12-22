@@ -331,7 +331,7 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  shouldHover() {
+  shouldHover() { //see if this could be decided in the preset
     const { styleParams } = this.props;
 
     if (styleParams.isSlideshow) {
