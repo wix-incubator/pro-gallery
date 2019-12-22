@@ -218,7 +218,7 @@ describe('Slideshow View', () => {
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       const stub = sinon.stub(SlideshowView.prototype, 'nextItem');
-      viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
+      viewModeWrapper.setViewMode(VIEW_MODE.PREVIEW);
       driver.mount(SlideshowView, galleryViewProps);
       expect(stub.called).to.equal(false);
       clock.tick(900);
