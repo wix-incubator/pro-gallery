@@ -1,22 +1,22 @@
 import React from 'react';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import { addLayoutStyles } from '../helpers/layoutHelper';
-import { ItemsHelper } from '../helpers/itemsHelper';
-import dimensionsHelper from '../helpers/dimensionsHelper';
-import { scrollToItemImp } from '../helpers/scrollHelper';
-import window from '../../common/window/windowWrapper';
+import { addLayoutStyles } from '../../helpers/layoutHelper';
+import { ItemsHelper } from '../../helpers/itemsHelper';
+import dimensionsHelper from '../../helpers/dimensionsHelper';
+import { scrollToItemImp } from '../../helpers/scrollHelper';
+import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { Layouter } from 'pro-layouts';
-import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
-import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import utils from '../../common/utils';
-import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../common/window/viewModeWrapper';
-import EVENTS from '../../common/constants/events';
-import CLICK_ACTIONS from '../../common/constants/itemClick';
-import VideoScrollHelper from '../helpers/videoScrollHelper.js';
-import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
-import checkNewGalleryProps from './helpers/isNew';
+import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
+import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
+import utils from '../../../common/utils';
+import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
+import EVENTS from '../../../common/constants/events';
+import CLICK_ACTIONS from '../../../common/constants/itemClick';
+import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
+import checkNewGalleryProps from '../../helpers/isNew';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {

@@ -1,15 +1,15 @@
-import utils from '../../common/utils';
 import React from 'react';
-import GroupView from '../group/groupView.js';
+import utils from '../../../common/utils';
+import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import window from '../../common/window/windowWrapper';
-import { isEditMode, isPreviewMode } from '../../common/window/viewModeWrapper';
+import window from '../../../common/window/windowWrapper';
+import { isEditMode, isPreviewMode } from '../../../common/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
-import PlayIcon from '../svgs/components/play';
-import PauseIcon from '../svgs/components/pause';
-import EVENTS from '../../common/constants/events';
-import { GalleryComponent } from '../galleryComponent';
-import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
+import PlayIcon from '../../svgs/components/play';
+import PauseIcon from '../../svgs/components/pause';
+import EVENTS from '../../../common/constants/events';
+import { GalleryComponent } from '../../galleryComponent';
+import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 
 class SlideshowView extends GalleryComponent {
   constructor(props) {

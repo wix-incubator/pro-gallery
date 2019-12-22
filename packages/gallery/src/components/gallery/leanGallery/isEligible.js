@@ -1,5 +1,5 @@
-import consts from '../../common/constants/index';
-import { addLayoutStyles } from '../helpers/layoutHelper';
+import consts from '../../../common/constants/index';
+import { addLayoutStyles } from '../../helpers/layoutHelper';
 
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 

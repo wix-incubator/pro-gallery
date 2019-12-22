@@ -1,8 +1,8 @@
 import React from 'react';
 // import GalleryItem from '../item/galleryItem';
 
-import GALLERY_EVENTS from '../../common/constants/events';
-import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
+import GALLERY_EVENTS from '../../../common/constants/events';
+import GALLERY_SIZE_TYPE from '../../../common/constants/gallerySizeType';
 
 const get = (item, attr) => {
   if (typeof item[attr] !== 'undefined') {
