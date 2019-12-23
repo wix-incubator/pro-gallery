@@ -89,7 +89,7 @@ function SideBar() {
           }}>
             <JsonEditor
               onChange={_setStyleParams}
-              styleParams={{ [searchResult]: styleParams[searchResult] }}
+              styleParams={ styleParams }
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
