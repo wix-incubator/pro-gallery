@@ -1,4 +1,4 @@
-export {default as GALLERY_CONSTS} from 'pro-gallery/dist/src/common/constants/index';
+export {default as GALLERY_CONSTS} from '../../common/constants/index';
 
 export const INPUT_TYPES = {
     NUMBER: "NUMBER",
