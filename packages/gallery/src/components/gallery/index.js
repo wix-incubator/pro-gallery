@@ -21,9 +21,10 @@ export default props => {
 
     const styleParams = {...props.options, ...props.styles, ...props.styleParams};
     const {styles, ...otherProps} = props;
+    const galleryProps = {...otherProps, styles: styleParams};
 
     let GalleryComponent = ProGallery;
-    if (isEligibleForLeanGallery(props)) {
+    if (isEligibleForLeanGallery(galleryProps)) {
         GalleryComponent = LeanGallery;
     } else {
         switch (styleParams.galleryLayout) {
@@ -68,5 +69,5 @@ export default props => {
             break;
             }
     }
-    return <GalleryComponent {...otherProps} styles={styleParams}/>
+    return <GalleryComponent {...galleryProps} />
 }
