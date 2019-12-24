@@ -9,6 +9,7 @@ export default class FullsizeGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.FULLSIZE,
+            imageMargin: 0
         }
 
         return (

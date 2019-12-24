@@ -9,6 +9,7 @@ export default class alternateGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.ALTERNATE,
+            allowHover: false
         }
 
         return (
