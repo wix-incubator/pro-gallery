@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import { toMatchImageSnapshot} from 'jest-image-snapshot';
+import {toMatchImageSnapshot} from '../../drivers/matchers';
 import { GALLERY_CONSTS } from '../../../src/settings/utils/constants';
 
 jest.setTimeout(30000)
