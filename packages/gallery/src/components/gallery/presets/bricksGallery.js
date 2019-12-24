@@ -9,6 +9,7 @@ export default class BricksGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.BRICKS,
+            allowHover:false
         }
 
         return (
