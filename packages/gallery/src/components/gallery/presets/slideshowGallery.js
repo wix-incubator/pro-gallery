@@ -8,6 +8,8 @@ export default class SlideshowGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.SLIDESHOW,
+            imageMargin: 0,
+            allowHover: false
         }
 
         return (
