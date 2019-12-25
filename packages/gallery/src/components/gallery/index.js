@@ -19,15 +19,18 @@ import LAYOUTS from '../../common/constants/layout';
 
 export default props => {
 
-    const styleParams = {...props.options, ...props.styles, ...props.styleParams};
-    const {styles, ...otherProps} = props;
-    const galleryProps = {...otherProps, styles: styleParams};
+    debugger;
 
+    const {styles, options, styleParams, ...otherProps} = props;
+    const _styles = {...options, ...styles, ...styleParams};
+    const galleryProps = {...otherProps, styles: _styles};
+    
     let GalleryComponent = ProGallery;
     if (isEligibleForLeanGallery(galleryProps)) {
         GalleryComponent = LeanGallery;
     } else {
-        switch (styleParams.galleryLayout) {
+        const {galleryLayout}  = _styles;
+        switch (galleryLayout) {
           case LAYOUTS.COLLAGE:
             GalleryComponent = CollageGallery;
             break;
