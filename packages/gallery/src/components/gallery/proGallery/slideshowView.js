@@ -15,6 +15,8 @@ class SlideshowView extends GalleryComponent {
   constructor(props) {
     super(props);
 
+    this.navigationOutHandler = this.navigationOutHandler.bind(this);
+    this.navigationInHandler = this.navigationInHandler.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
     this.onAutoSlideShowButtonClick = this.onAutoSlideShowButtonClick.bind(
@@ -1012,21 +1014,25 @@ class SlideshowView extends GalleryComponent {
       isAutoSlideShow && props.styleParams.allowSlideshowCounter;
   }
 
+  navigationOutHandler() {
+    //TODO remove after full refactor release
+    utils.setStateAndLog(this, 'Next Item', {
+      isInView: false,
+    });
+    this.stopAutoSlideshow();
+  };
+
+  navigationInHandler() {
+    //TODO remove after full refactor release
+    utils.setStateAndLog(this, 'Next Item', {
+      isInView: true,
+    });
+    this.startAutoSlideshowIfNeeded(this.props.styleParams);
+  };
+
   componentDidMount() {
-    window.addEventListener('gallery_navigation_out', () => {
-      //TODO remove after full refactor release
-      utils.setStateAndLog(this, 'Next Item', {
-        isInView: false,
-      });
-      this.stopAutoSlideshow();
-    });
-    window.addEventListener('gallery_navigation_in', () => {
-      //TODO remove after full refactor release
-      utils.setStateAndLog(this, 'Next Item', {
-        isInView: true,
-      });
-      this.startAutoSlideshowIfNeeded(this.props.styleParams);
-    });
+    window.addEventListener('gallery_navigation_out', this.navigationOutHandler);
+    window.addEventListener('gallery_navigation_in', this.navigationInHandler);
 
     this.container = window.document.querySelector(
       `#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`,
@@ -1043,6 +1049,9 @@ class SlideshowView extends GalleryComponent {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('gallery_navigation_out', this.navigationOutHandler);
+    window.removeEventListener('gallery_navigation_in', this.navigationInHandler);
+
     if (this.container) {
       this.container.removeEventListener(
         'scroll',
