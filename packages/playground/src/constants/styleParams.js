@@ -1,4 +1,3 @@
-import Consts from 'pro-gallery/dist/src/common/constants';
 import isRelevant from '../settings/isRelevant';
 import {gallerySettings} from 'pro-gallery';
 
