@@ -17,12 +17,12 @@ import MixGallery from './presets/mixGallery';
 import AlternateGallery from './presets/alternateGallery';
 import LAYOUTS from '../../common/constants/layout';
 
+import defaultStyles from '../../common/defaultStyles';
+
 export default props => {
 
-    debugger;
-
     const {styles, options, styleParams, ...otherProps} = props;
-    const _styles = {...options, ...styles, ...styleParams};
+    const _styles = {...defaultStyles, ...options, ...styles, ...styleParams};
     const galleryProps = {...otherProps, styles: _styles};
     
     let GalleryComponent = ProGallery;

@@ -1,5 +1,5 @@
-import { GALLERY_CONSTS, INPUT_TYPES } from './utils/constants';
-import { createOptions, hoveringBehaviour } from './utils/utils';
+import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
+import { createOptions, hoveringBehaviour } from '../utils/utils';
 
 export default {
   title: 'Hover Effect',
