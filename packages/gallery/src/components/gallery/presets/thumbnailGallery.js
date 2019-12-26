@@ -9,7 +9,6 @@ export default class ThumbnailGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.THUMBNAIL,
-            imageMargin: 0,
             enableInfiniteScroll: true
         }
 
