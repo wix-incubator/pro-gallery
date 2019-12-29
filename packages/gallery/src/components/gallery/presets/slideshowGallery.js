@@ -2,15 +2,12 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 
+export const fixedStyles = {
+  galleryLayout: LAYOUTS.SLIDESHOW,
+  allowHover: false
+}
 export default class SlideshowGallery extends React.Component {
-
     render() {
-
-        const fixedStyles = {
-            galleryLayout: LAYOUTS.SLIDESHOW,
-            allowHover: false
-        }
-
         return (
             <ProGallery
                 {...this.props}
