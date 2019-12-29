@@ -1,12 +1,12 @@
-import itemClick from './itemClick';
-import allowTitle from './allowTitle';
-import allowSocial from './allowSocial';
-import allowDescription from './allowDescription';
-import allowDownload from './allowDownload';
-import loveButton from './loveButton';
-import imageMargin from './imageMargin';
-import hoveringBehaviour from './hoveringBehaviour';
-import allowHover from './allowHover'
+import itemClick from './options/itemClick';
+import allowTitle from './options/allowTitle';
+import allowSocial from './options/allowSocial';
+import allowDescription from './options/allowDescription';
+import allowDownload from './options/allowDownload';
+import loveButton from './options/loveButton';
+import imageMargin from './options/imageMargin';
+import hoveringBehaviour from './options/hoveringBehaviour';
+import allowHover from './options/allowHover'
 
 export default {
     itemClick,

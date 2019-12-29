@@ -1,5 +1,5 @@
-import { INPUT_TYPES } from './utils/constants';
-import { imageMargin } from './utils/utils';
+import { INPUT_TYPES } from '../utils/constants';
+import { imageMargin } from '../utils/utils';
 
 export default {
   title: 'Spacing Between Items',

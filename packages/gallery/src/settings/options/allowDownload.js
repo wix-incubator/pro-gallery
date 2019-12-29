@@ -1,5 +1,5 @@
-import { INPUT_TYPES } from './utils/constants';
-import { always } from './utils/utils';
+import { INPUT_TYPES } from '../utils/constants';
+import { always } from '../utils/utils';
 
 export default {
   title: 'Allow Download Button',

@@ -1,5 +1,5 @@
-import { INPUT_TYPES } from './utils/constants';
-import { allowHover } from './utils/utils';
+import { INPUT_TYPES } from '../utils/constants';
+import { allowHover } from '../utils/utils';
 
 export default {
   title: 'Allow Hover',
