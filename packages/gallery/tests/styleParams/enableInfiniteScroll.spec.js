@@ -63,43 +63,4 @@ describe('styleParam - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0)
     driver.detach.proGallery();
   });
-
-  it('should grow verticaly if "enableInfiniteScroll" is "false" only after clicking "Load More" (vertical gallery)', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      oneRow:false,
-      scrollDirection:0,
-      enableInfiniteScroll:false,
-      loadMoreAmount:'all'
-    })
-    driver.mount.proGallery(initialProps);
-    let gallery = driver.find.selector('#pro-gallery-container');
-    // get initial gallery height before load more click
-    const initialGalleryHeight = getElementDimensions(gallery).height
-    
-    // simulate click to see if gallery height is updated
-    const showMoreBtn = driver.find.hook('show-more');
-    showMoreBtn.simulate('click');
-    gallery = driver.find.selector('#pro-gallery-container');
-    const finalHeight = getElementDimensions(gallery).height;
-    // expect the gallery to update the hight after Load More click
-    expect(finalHeight).to.be.greaterThan(initialGalleryHeight)
-    driver.detach.proGallery();
-  });
-
-  it('should grow verticaly initialy when "enableInfiniteScroll" is "true"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      oneRow:false,
-      scrollDirection:0,
-      enableInfiniteScroll:true,
-      loadMoreAmount:'all'
-    })
-    driver.mount.proGallery(initialProps);
-    const showMoreBtn = driver.find.hook('show-more');
-    // expect to not find a "Show More" button (indicates that the gallery is displaying all items)
-    expect(showMoreBtn).to.have.lengthOf(0)
-    driver.detach.proGallery();
-  });
-
 })
