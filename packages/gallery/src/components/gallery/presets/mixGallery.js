@@ -9,7 +9,6 @@ export default class  MixGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.MIX,
-            allowHover:false
         }
 
         return (
