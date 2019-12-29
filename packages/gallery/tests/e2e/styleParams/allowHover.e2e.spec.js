@@ -16,7 +16,7 @@ describe('allowHover - e2e', () => {
   afterEach(() => {
     driver.closeBrowser();
   });
-  it('should not have any hover effect when "allowHover" is "false"', async () => {
+  it('should not have hover when "allowHover" is "false"', async () => {
     await driver.openPage({
       galleryLayout: 2,
       allowHover: false
@@ -27,7 +27,7 @@ describe('allowHover - e2e', () => {
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-  it('should have a hover effect when "allowHover" is "true"', async () => {
+  it('should have hover when "allowHover" is "true"', async () => {
     await driver.openPage({
       galleryLayout: 2,
       allowHover: true
