@@ -17,7 +17,7 @@ const toSurgeUrl = subdomain => `${subdomain}.surge.sh/`;
 
 const generateSubdomains = subdomain => {
   const { version } = require('../lerna.json');
-  const { TRAVIS_PULL_REQUEST } = process.env;
+  const { TRAVIS_BRANCH, TRAVIS_PULL_REQUEST } = process.env;
   const isPullRequest = (TRAVIS_PULL_REQUEST && TRAVIS_PULL_REQUEST !== 'false');
   const isVersionSpecific = shouldPublishVersionSpecific();
 
@@ -26,7 +26,7 @@ const generateSubdomains = subdomain => {
   if (isPullRequest) {
     //push with -PR suffix
     subdomains.push(subdomain + `-pr-${TRAVIS_PULL_REQUEST}`);
-  } else {
+  } else  if (TRAVIS_BRANCH === 'master') {
     if (isVersionSpecific) {
       //push with -v suffix
       subdomains.push(subdomain);
