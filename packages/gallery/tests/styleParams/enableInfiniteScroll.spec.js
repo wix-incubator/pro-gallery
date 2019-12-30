@@ -63,4 +63,36 @@ describe('styleParam - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0)
     driver.detach.proGallery();
   });
+  it('should set the gallery height (container.height - show-more-container" height) when "enableInfiniteScroll" "false"', () => {
+    // make sure to give the right params to make a vertical gallery for the test
+    Object.assign(initialProps.styles, {
+      galleryLayout: 2,
+      oneRow:false,
+      scrollDirection:0,
+      enableInfiniteScroll:false
+    })
+    driver.mount.proGallery(initialProps);
+    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryHeight = getElementDimensions(galleryContainer).height;
+     
+    //expect the height to be container.height - show-more-container" height(138)
+    expect(galleryHeight).to.eq(initialProps.container.height - 138); //138 is the height given to "show-more-container"
+    driver.detach.proGallery();
+  });
+  it('should set the gallery height as given in container.height (ProGallery props)', () => {
+    // make sure to give the right params to make a vertical gallery for the test
+    Object.assign(initialProps.styles, {
+      galleryLayout: 2,
+      oneRow:false,
+      scrollDirection:0,
+      enableInfiniteScroll:true
+    })
+    driver.mount.proGallery(initialProps);
+    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryHeight = getElementDimensions(galleryContainer).height;
+     
+    //expect the height to be more than the height given in container.height
+    expect(galleryHeight).to.be.greaterThan(600)
+    driver.detach.proGallery();
+  });
 })
