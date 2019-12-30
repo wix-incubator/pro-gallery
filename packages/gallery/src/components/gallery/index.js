@@ -1,76 +1,73 @@
 import React from 'react';
-import LeanGallery from './leanGallery/leanGallery';
-import ProGallery from './proGallery/proGallery';
+
 import isEligibleForLeanGallery from './leanGallery/isEligible';
-import CollageGallery from './presets/collageGallery';
-import MasonryGallery from './presets/masonryGallery';
-import GridGallery from './presets/gridGallery';
-import ThumbnailGallery from './presets/thumbnailGallery';
-import SliderGallery from './presets/sliderGallery';
-import SlideshowGallery from './presets/slideshowGallery';
-import PanoramaGallery from './presets/panoramaGallery';
-import ColumnGallery from './presets/columnGallery';
-import MagicGallery from './presets/magicGallery';
-import FullsizeGallery from './presets/fullsizeGallery';
-import BricksGallery from './presets/bricksGallery';
-import MixGallery from './presets/mixGallery';
-import AlternateGallery from './presets/alternateGallery';
+import LeanGallery from './leanGallery/leanGallery';
+
+import ProGallery from './proGallery/proGallery';
+
+import {PRESETS, basePropTypes} from './presets';
 import LAYOUTS from '../../common/constants/layout';
 
 import defaultStyles from '../../common/defaultStyles';
 
-export default props => {
+export default class BaseGallery extends React.Component {
 
-    const {styles, options, styleParams, ...otherProps} = props;
-    const _styles = {...defaultStyles, ...options, ...styles, ...styleParams};
-    const galleryProps = {...otherProps, styles: _styles};
-    
-    let GalleryComponent = ProGallery;
-    if (isEligibleForLeanGallery(galleryProps)) {
-        GalleryComponent = LeanGallery;
-    } else {
-        const {galleryLayout}  = _styles;
-        switch (galleryLayout) {
-          case LAYOUTS.COLLAGE:
-            GalleryComponent = CollageGallery;
-            break;
-          case LAYOUTS.MASONRY:
-            GalleryComponent = MasonryGallery;
-            break;
-          case LAYOUTS.GRID:
-            GalleryComponent = GridGallery;
-            break;
-          case LAYOUTS.THUMBNAIL:
-            GalleryComponent = ThumbnailGallery;
-            break;
-          case LAYOUTS.SLIDER:
-            GalleryComponent = SliderGallery;
-            break;
-          case LAYOUTS.SLIDESHOW:
-            GalleryComponent = SlideshowGallery;
-            break;
-          case LAYOUTS.PANORAMA:
-            GalleryComponent = PanoramaGallery;
-            break;
-          case LAYOUTS.COLUMN:
-            GalleryComponent = ColumnGallery;
-            break;
-          case LAYOUTS.MAGIC:
-              GalleryComponent = MagicGallery;
-              break;
-          case LAYOUTS.FULLSIZE:
-            GalleryComponent = FullsizeGallery;
-            break;
-          case LAYOUTS.BRICKS:
-            GalleryComponent = BricksGallery;
-            break;
-          case LAYOUTS.MIX:
-            GalleryComponent = MixGallery;
-            break;
-          case LAYOUTS.ALTERNATE:
-            GalleryComponent = AlternateGallery;
-            break;
+    static propTypes = basePropTypes;
+
+    render() {
+        const {styles, options, styleParams, ...otherProps} = this.props;
+        const _styles = {...defaultStyles, ...options, ...styles, ...styleParams};
+        const galleryProps = {...otherProps, styles: _styles};
+        
+        let GalleryComponent = ProGallery;
+        if (isEligibleForLeanGallery(galleryProps)) {
+            GalleryComponent = LeanGallery;
+        } else {
+            const {galleryLayout}  = _styles;
+            switch (galleryLayout) {
+            case LAYOUTS.COLLAGE:
+                GalleryComponent = PRESETS.CollageGallery;
+                break;
+            case LAYOUTS.MASONRY:
+                GalleryComponent = PRESETS.MasonryGallery;
+                break;
+            case LAYOUTS.GRID:
+                GalleryComponent = PRESETS.GridGallery;
+                break;
+            case LAYOUTS.THUMBNAIL:
+                GalleryComponent = PRESETS.ThumbnailGallery;
+                break;
+            case LAYOUTS.SLIDER:
+                GalleryComponent = PRESETS.SliderGallery;
+                break;
+            case LAYOUTS.SLIDESHOW:
+                GalleryComponent = PRESETS.SlideshowGallery;
+                break;
+            case LAYOUTS.PANORAMA:
+                GalleryComponent = PRESETS.PanoramaGallery;
+                break;
+            case LAYOUTS.COLUMN:
+                GalleryComponent = PRESETS.ColumnGallery;
+                break;
+            case LAYOUTS.MAGIC:
+                GalleryComponent = PRESETS.MagicGallery;
+                break;
+            case LAYOUTS.FULLSIZE:
+                GalleryComponent = PRESETS.FullsizeGallery;
+                break;
+            case LAYOUTS.BRICKS:
+                GalleryComponent = PRESETS.BricksGallery;
+                break;
+            case LAYOUTS.MIX:
+                GalleryComponent = PRESETS.MixGallery;
+                break;
+            case LAYOUTS.ALTERNATE:
+                GalleryComponent = PRESETS.AlternateGallery;
+                break;
+                }
             }
-    }
-    return <GalleryComponent {...galleryProps} />
+
+            return <GalleryComponent {...galleryProps} />
+        }
 }
+
