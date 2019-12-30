@@ -1,9 +1,10 @@
 import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
-import { createOptions, hoveringBehaviour } from '../utils/utils';
+import { createOptions } from '../utils/utils';
+import { isInPreset } from '../../components/helpers/layoutHelper';
 
 export default {
   title: 'Hover Effect',
-  isRelevant: hoveringBehaviour,
+  isRelevant: (styleParams)  => !isInPreset(styleParams,'hoveringBehaviour'),
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
   options: createOptions('infoBehaviourOnHover'),
