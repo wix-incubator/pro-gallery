@@ -13,6 +13,7 @@ import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
+import NEW_PRESETS from '../gallery/presets/presets';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -450,8 +451,9 @@ export const getPreset = (styles) => {
 //returns true if the given param is in the current layout preset
 export const isInPreset = (styleParams, paramToCheck) => {
   const layoutName = getLayoutName(styleParams.galleryLayout + 1) || 'empty';// empty for when there is no layout given
-  const layouts = getPreset(styleParams);
-  return Object.keys(layouts[layoutName]()).includes(paramToCheck);
+  const oldPresets = getPreset(styleParams);
+  return Object.keys(oldPresets[layoutName]()).includes(paramToCheck) ||
+  Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 }
 
 const getLayoutName = (galleryLayout) => {
