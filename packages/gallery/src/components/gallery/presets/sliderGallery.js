@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDER,
+  enableInfiniteScroll: true
 }
 export default class SliderGallery extends React.Component {
     render() {

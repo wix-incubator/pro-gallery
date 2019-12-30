@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.THUMBNAIL,
+  enableInfiniteScroll: true
 }
 export default class ThumbnailGallery extends React.Component {
     render() {
