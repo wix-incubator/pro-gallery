@@ -9,6 +9,7 @@ export default class SliderGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.SLIDER,
+            enableInfiniteScroll: true
         }
 
         return (

@@ -6,4 +6,5 @@ export const createOptions = constName => Object.entries(GALLERY_CONSTS[constNam
 export const always = () => true;
 export const imageMargin = (styleParams) => !isInPreset(styleParams,'imageMargin');
 export const hoveringBehaviour = (styleParams)  => !isInPreset(styleParams,'hoveringBehaviour')
+export const enableInfiniteScroll = (styleParams) => !isInPreset(styleParams,'enableInfiniteScroll') && !styleParams.scrollDirection === 0;
 export const allowHover = (styleParams) => !isInPreset(styleParams,'allowHover');
