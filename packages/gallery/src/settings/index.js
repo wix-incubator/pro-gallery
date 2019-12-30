@@ -6,7 +6,8 @@ import allowDownload from './allowDownload';
 import loveButton from './loveButton';
 import imageMargin from './imageMargin';
 import hoveringBehaviour from './hoveringBehaviour'
-import enableInfiniteScroll from './enableInfiniteScroll'
+import enableInfiniteScroll from './enableInfiniteScroll';
+import allowHover from './options/allowHover';
 
 export default {
     itemClick,
@@ -17,5 +18,6 @@ export default {
     allowDownload,
     imageMargin,
     hoveringBehaviour,
-    enableInfiniteScroll
+    enableInfiniteScroll,
+    allowHover
 }

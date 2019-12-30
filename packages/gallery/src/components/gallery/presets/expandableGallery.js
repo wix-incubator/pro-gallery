@@ -1,7 +1,7 @@
 import React from 'react';
 import ProGallery from '../index';
 import GALLERY_EVENTS from '../../../common/constants/events';
-import CLICK_ACTIONS from '../../../common/constants/itemClick';
+// import CLICK_ACTIONS from '../../../common/constants/itemClick';
 import CloseButton from '../../svgs/components/x';
 
 const styles = {

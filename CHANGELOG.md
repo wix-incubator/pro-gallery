@@ -1,3 +1,20 @@
+## [v1.6.4](https://pro-gallery-1-6-4.surge.sh) (25/12/2019)
+ 
+#### GALLERY
+ -  fix (defaultStyles): add one place for default styles and pass it to the gallery
+ -  fix (slideshowView): remove event listeners on unmount
+
+---
+## [v1.6.3](https://pro-gallery-1-6-3.surge.sh) (24/12/2019)
+ 
+#### GALLERY
+ -  New merged settings endpoint with the old settings
+ -  Use different componenets for different presets
+ -  Added leanGallery for eligable galleries
+ -  AutoSlideshow always play in preview mode, never in editor mode
+ -  Do not create Hover element unless needed
+
+---
 ## [v1.6.2](https://pro-gallery-1-6-2.surge.sh) (19/12/2019)
  
 #### GALLERY

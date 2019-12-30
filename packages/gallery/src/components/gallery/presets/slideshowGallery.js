@@ -8,7 +8,8 @@ export default class SlideshowGallery extends React.Component {
 
         const fixedStyles = {
             galleryLayout: LAYOUTS.SLIDESHOW,
-            enableInfiniteScroll: true
+            enableInfiniteScroll: true,
+            allowHover: false
         }
 
         return (
