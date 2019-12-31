@@ -78,7 +78,7 @@ function run() {
   if (!CI) {
     skip = 'Not in CI';
   } else if (!SURGE_LOGIN) {
-    skip = 'PR from fork';
+    skip = 'Invalid surge credentials';
   }
   if (skip) {
     console.log(chalk.yellow(`${skip} - skipping deploy to surge`));
