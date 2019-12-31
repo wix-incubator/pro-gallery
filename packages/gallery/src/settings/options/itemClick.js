@@ -1,9 +1,9 @@
 import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
-import { createOptions, always } from '../utils/utils';
+import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Click Action',
-  isRelevant: always,
+  isRelevant: () => true,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.itemClick.EXPAND,
   options: createOptions('itemClick'),

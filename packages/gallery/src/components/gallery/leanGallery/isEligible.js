@@ -45,18 +45,18 @@ const isImage = item => {
 }
 
 const isValidStyleParam = (styleParam, value) => {
-  let isValid = false;
-  if (typeof handledStyleParams[styleParam] !== 'undefined') isValid = true;
-  if (typeof ignoredStyleParams[styleParam] !== 'undefined') isValid = true;
+  if (typeof handledStyleParams[styleParam] !== 'undefined') return true;
+  if (typeof ignoredStyleParams[styleParam] !== 'undefined') return true;
   if (typeof fixedStyleParams[styleParam] !== 'undefined') {
     const sp = fixedStyleParams[styleParam];
     if (sp && sp.length > 0) {
-      isValid = sp.includes(value);
+      return sp.includes(value);
     } else {
-      isValid = (sp === value);
+      return sp === value;
     }
   }
-  return isValid;
+  if (value === undefined || value === null) return true;
+  return false;
 }
 
 //these styles can get any value, the lean gallery will handle them

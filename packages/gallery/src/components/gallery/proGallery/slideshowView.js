@@ -953,7 +953,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   getClassNames() {
-    let classNames = '';
+    let classNames = 'pro-gallery-parent-container';
     if (this.props.styleParams.isSlideshow) {
       classNames = ' gallery-slideshow';
     } else if (this.props.styleParams.isSlider) {
