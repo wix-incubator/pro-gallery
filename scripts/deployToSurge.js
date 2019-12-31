@@ -28,14 +28,18 @@ const generateSubdomains = subdomain => {
   if (isPullRequest) {
     //push with -PR suffix
     subdomains.push(subdomain + `-pr-${TRAVIS_PULL_REQUEST}`);
+    console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   } else  if (TRAVIS_BRANCH === 'master') {
     if (isVersionSpecific) {
       //push with -v suffix
       subdomains.push(subdomain);
+      console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
       subdomains.push(subdomain + `-${version.replace(/\./g, '-')}`);
+      console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
     }
     //push with -master suffix
     subdomains.push(subdomain + `-master`);
+    console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   }
 
   return subdomains;
