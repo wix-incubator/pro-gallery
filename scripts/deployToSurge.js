@@ -21,6 +21,8 @@ const generateSubdomains = subdomain => {
   const isPullRequest = (TRAVIS_PULL_REQUEST && TRAVIS_PULL_REQUEST !== 'false');
   const isVersionSpecific = shouldPublishVersionSpecific();
 
+  console.log(chalk.magenta(`Generating Surge subdomains from branch: ${TRAVIS_BRANCH}, PR: ${TRAVIS_PULL_REQUEST}, version: ${version}, commit: ${getLatestCommit()}`));
+  
   let subdomains = [];
   
   if (isPullRequest) {
@@ -72,7 +74,7 @@ function deploy(name) {
 
 function run() {
   let skip;
-  const { SURGE_LOGIN, TRAVIS_BRANCH, TRAVIS_PULL_REQUEST, CI } = process.env;
+  const { SURGE_LOGIN, CI } = process.env;
   if (!CI) {
     skip = 'Not in CI';
   } else if (!SURGE_LOGIN) {
