@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.ALTERNATE,
+  cubeImages: true
 }
 export default class alternateGallery extends React.Component {
 
