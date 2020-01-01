@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.MASONRY,
+  cubeImages: false
 }
 export default class MasonryGallery extends React.Component {
 

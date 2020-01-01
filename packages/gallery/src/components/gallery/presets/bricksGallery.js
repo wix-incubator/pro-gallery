@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.BRICKS,
+  cubeImages: true
 }
 export default class BricksGallery extends React.Component {
 

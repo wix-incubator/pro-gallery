@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
+  cubeImages: true
 }
 export default class FullsizeGallery extends React.Component {
 

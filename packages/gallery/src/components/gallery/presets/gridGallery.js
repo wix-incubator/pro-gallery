@@ -4,6 +4,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.GRID,
+  cubeImages: true
 }
 export default class GridGallery extends React.Component {
 

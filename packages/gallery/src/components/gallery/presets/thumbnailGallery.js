@@ -5,7 +5,8 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.THUMBNAIL,
-  enableInfiniteScroll: true
+  enableInfiniteScroll: true,
+  cubeImages:true
 }
 export default class ThumbnailGallery extends React.Component {
     render() {

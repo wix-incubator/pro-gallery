@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
+  cubeImages: false
 }
 export default class CollageGallery extends React.Component {
 

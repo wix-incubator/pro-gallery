@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.PANORAMA,
+  cubeImages: false
 }
 export default class PanoramaGallery extends React.Component {
     render() {
