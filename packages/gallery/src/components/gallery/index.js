@@ -16,61 +16,67 @@ import BricksGallery from './presets/bricksGallery';
 import MixGallery from './presets/mixGallery';
 import AlternateGallery from './presets/alternateGallery';
 import LAYOUTS from '../../common/constants/layout';
+import EmptyGallery from './presets/emptyGallery'
 
 import defaultStyles from '../../common/defaultStyles';
 
 export default props => {
 
-    const {styles, options, styleParams, ...otherProps} = props;
-    const _styles = {...defaultStyles, ...options, ...styles, ...styleParams};
-    const galleryProps = {...otherProps, styles: _styles};
-    
-    let GalleryComponent = ProGallery;
-    if (isEligibleForLeanGallery(galleryProps)) {
-        GalleryComponent = LeanGallery;
-    } else {
-        const {galleryLayout}  = _styles;
-        switch (galleryLayout) {
-          case LAYOUTS.COLLAGE:
-            GalleryComponent = CollageGallery;
-            break;
-          case LAYOUTS.MASONRY:
-            GalleryComponent = MasonryGallery;
-            break;
-          case LAYOUTS.GRID:
-            GalleryComponent = GridGallery;
-            break;
-          case LAYOUTS.THUMBNAIL:
-            GalleryComponent = ThumbnailGallery;
-            break;
-          case LAYOUTS.SLIDER:
-            GalleryComponent = SliderGallery;
-            break;
-          case LAYOUTS.SLIDESHOW:
-            GalleryComponent = SlideshowGallery;
-            break;
-          case LAYOUTS.PANORAMA:
-            GalleryComponent = PanoramaGallery;
-            break;
-          case LAYOUTS.COLUMN:
-            GalleryComponent = ColumnGallery;
-            break;
-          case LAYOUTS.MAGIC:
-              GalleryComponent = MagicGallery;
-              break;
-          case LAYOUTS.FULLSIZE:
-            GalleryComponent = FullsizeGallery;
-            break;
-          case LAYOUTS.BRICKS:
-            GalleryComponent = BricksGallery;
-            break;
-          case LAYOUTS.MIX:
-            GalleryComponent = MixGallery;
-            break;
-          case LAYOUTS.ALTERNATE:
-            GalleryComponent = AlternateGallery;
-            break;
-            }
+  const { styles, options, styleParams, ...otherProps } = props;
+  const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
+  const galleryProps = { ...otherProps, styles: _styles };
+
+  let GalleryComponent = ProGallery;
+  if (isEligibleForLeanGallery(galleryProps)) {
+    GalleryComponent = LeanGallery;
+  } else {
+    const { galleryLayout } = _styles;
+    switch (galleryLayout) {
+      case LAYOUTS.COLLAGE:
+        GalleryComponent = CollageGallery;
+        break;
+      case LAYOUTS.MASONRY:
+        GalleryComponent = MasonryGallery;
+        break;
+      case LAYOUTS.GRID:
+        GalleryComponent = GridGallery;
+        break;
+      case LAYOUTS.THUMBNAIL:
+        GalleryComponent = ThumbnailGallery;
+        break;
+      case LAYOUTS.SLIDER:
+        GalleryComponent = SliderGallery;
+        break;
+      case LAYOUTS.SLIDESHOW:
+        GalleryComponent = SlideshowGallery;
+        break;
+      case LAYOUTS.PANORAMA:
+        GalleryComponent = PanoramaGallery;
+        break;
+      case LAYOUTS.COLUMN:
+        GalleryComponent = ColumnGallery;
+        break;
+      case LAYOUTS.MAGIC:
+        GalleryComponent = MagicGallery;
+        break;
+      case LAYOUTS.FULLSIZE:
+        GalleryComponent = FullsizeGallery;
+        break;
+      case LAYOUTS.BRICKS:
+        GalleryComponent = BricksGallery;
+        break;
+      case LAYOUTS.MIX:
+        GalleryComponent = MixGallery;
+        break;
+      case LAYOUTS.ALTERNATE:
+        GalleryComponent = AlternateGallery;
+        break;
+      case LAYOUTS.EMPTY:
+        GalleryComponent = EmptyGallery;
+        break;
+      default:
+        GalleryComponent = CollageGallery;
     }
-    return <GalleryComponent {...galleryProps} />
+  }
+  return <GalleryComponent {...galleryProps} />
 }

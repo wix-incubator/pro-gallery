@@ -44,88 +44,6 @@ const emptyLayout = {
   enableInfiniteScroll: undefined,
 };
 
-function getStyleBySeed(seed) {
-  if (!seed > 0) {
-    seed = 999999;
-  }
-  seed = Math.floor(seed);
-
-  const strToSeed = str => {
-    str = String(str);
-    let total = 0;
-    for (let s = 0; s < str.length; s++) {
-      total += str.charCodeAt(s);
-    }
-    return total;
-  };
-
-  const mergeSeeds = (s1, s2) => {
-    return Math.floor((s1 / s2 - Math.floor(s1 / s2)) * 10000000);
-  };
-
-  const numFromSeed = (min, max, strSeed) => {
-    const seed2 = strToSeed(strSeed);
-    const range = max - min + 1;
-    return (mergeSeeds(seed, seed2) % range) + min;
-  };
-
-  const boolFromSeed = strSeed => {
-    return !!numFromSeed(0, 1, strSeed);
-  };
-
-  const style = {
-    cubeImages: boolFromSeed('cubeImages'),
-    cubeRatio: numFromSeed(1, 25, 'cubeRatio') / 5,
-    isVertical: boolFromSeed('isVertical'),
-    gallerySize: numFromSeed(300, 800, 'gallerySize'),
-    collageAmount: numFromSeed(5, 10, 'collageAmount') / 10,
-    collageDensity:
-      (featureManager.supports.spacingCalculation
-        ? numFromSeed(1, 100, 'collageDensity')
-        : numFromSeed(5, 10, 'collageDensity')) / 100,
-    groupTypes: ['1'].concat(
-      ('2h,2v,3t,3b,3l,3r,3h,3v').split(',').filter((type, i) =>
-        boolFromSeed('groupTypes' + i),
-      ),
-    ),
-    oneRow: boolFromSeed('oneRow'),
-    imageMargin: numFromSeed(
-      0,
-      featureManager.supports.spacingCalculation
-        ? numFromSeed(300, 800, 'gallerySize') / 5
-        : 5,
-      'imageMargin',
-    ),
-    galleryMargin: featureManager.supports.spacingCalculation
-      ? 0
-      : numFromSeed(0, 5, 'imageMargin'),
-    floatingImages: 0,
-    chooseBestGroup: boolFromSeed('chooseBestGroup'),
-    smartCrop: boolFromSeed('smartCrop'),
-    showArrows: false,
-    cubeType: 'fill',
-    hasThumbnails: false,
-    enableScroll: true,
-    isGrid: false,
-    isSlideshow: false,
-    isSlider: false,
-    isColumns: false,
-    cropOnlyFill: false,
-    fixedColumns: 0,
-    enableInfiniteScroll: 1,
-  };
-
-  //force adjustments
-  if (style.oneRow) {
-    style.isVertical = false;
-  }
-  style.galleryType = style.isVertical ? 'Columns' : 'Strips';
-  style.groupSize = parseInt(style.groupTypes.slice(-1)[0]);
-  style.groupTypes = style.groupTypes.join(',');
-  style.minItemSize = style.gallerySize / style.groupSize / 2;
-
-  return style;
-}
 
 function getStyleByGalleryType(styles) {
   //legacy layouts
@@ -246,220 +164,11 @@ function getStyleByGalleryType(styles) {
 
   return styleState;
 }
-export const getPreset = (styles) => {
-  const { gallerySize, magicLayoutSeed } = styles;
-  console.log(dimensionsHelper.getGalleryHeight());
-  
-  return {
-    collage: () => ({
-      showArrows: false,
-      cubeImages: false,
-      groupSize: 3,
-      groupTypes: '1,2h,2v,3t,3b,3l,3r',
-      gallerySize: Math.round(gallerySize * 5 + 500),
-      fixedColumns: 0,
-      hasThumbnails: false,
-      enableScroll: true,
-      isGrid: false,
-      isSlider: false,
-      isMasonry: false,
-      isColumns: false,
-      isSlideshow: false,
-      cropOnlyFill: false,
-    }),
-    masonry: () => ({
-      showArrows: false,
-      cubeImages: false,
-      groupSize: 1,
-      groupTypes: '1',
-      gallerySize,
-      fixedColumns: 0,
-      hasThumbnails: false,
-      enableScroll: true,
-      isGrid: false,
-      isSlider: false,
-      isMasonry: true,
-      isColumns: false,
-      isSlideshow: false,
-      cropOnlyFill: false,
-      oneRow: false,
-    }),
-    grid: () => ({
-      showArrows: false,
-      cubeImages: true,
-      smartCrop: false,
-      isVertical: true,
-      galleryType: 'Columns',
-      groupSize: 1,
-      groupTypes: '1',
-      fixedColumns: undefined,
-      gallerySize: Math.round(gallerySize * 8.5 + 150),
-      hasThumbnails: false,
-      enableScroll: true,
-      cropOnlyFill: false,
-      isSlider: false,
-      isColumns: false,
-      isGrid: true,
-      isMasonry: false,
-      isSlideshow: false,
-      minItemSize: 50,
-    }),
-    thumbnails: () => ({
-      showArrows: true,
-      cubeImages: true,
-      smartCrop: false,
-      cubeRatio: '100%/100%',
-      isVertical: false,
-      galleryType: 'Strips',
-      groupSize: 1,
-      gallerySize: () => dimensionsHelper.getGalleryWidth(),
-      groupTypes: '1',
-      oneRow: true,
-      hasThumbnails: true,
-      enableScroll: true,
-      scrollSnap: true,
-      isGrid: false,
-      isSlider: false,
-      isMasonry: false,
-      isColumns: false,
-      isSlideshow: false,
-      cropOnlyFill: false,
-      floatingImages: 0,
-      galleryMargin: 0,
-      imageMargin: 0,
-    }),
-    slider: () => {
-      // console.log(dimensionsHelper.getGalleryHeight());
-      return {
-        // gallerySize: () => dimensionsHelper.getGalleryHeight(),
-      }
-      // showArrows: true,
-      // cubeImages: true,
-      // smartCrop: false,
-      // isVertical: false,
-      // galleryType: 'Strips',
-      // groupSize: 1,
-      // groupTypes: '1',
-      // gallerySize: () => dimensionsHelper.getGalleryHeight(),
-      // oneRow: true,
-      // hasThumbnails: false,
-      // enableScroll: true,
-      // scrollSnap: true,
-      // isGrid: false,
-      // isSlider: true,
-      // isColumns: false,
-      // isMasonry: false,
-      // isSlideshow: false,
-      // cropOnlyFill: true,
-    },
-    slideshow: () => ({
-      showArrows: true,
-      cubeImages: true,
-      smartCrop: false,
-      cubeRatio: '100%/100%',
-      isVertical: false,
-      gallerySize: 550,
-      galleryType: 'Strips',
-      groupSize: 1,
-      groupTypes: '1',
-      fixedColumns: 1,
-      oneRow: true,
-      hasThumbnails: false,
-      enableScroll: true,
-      scrollSnap: true,
-      isGrid: false,
-      isColumns: false,
-      isMasonry: false,
-      isSlider: false,
-      isSlideshow: true,
-      cropOnlyFill: false,
-      floatingImages: 0,
-      galleryMargin: 0,
-      imageMargin: 0,
-    }),
-    panorama: () => ({
-      showArrows: false,
-      cubeImages: false,
-      isVertical: true,
-      galleryType: 'Columns',
-      groupSize: 1,
-      groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryWidth(),
-      oneRow: false,
-      fixedColumns: 1,
-      hasThumbnails: false,
-      enableScroll: true,
-      isGrid: false,
-      isColumns: false,
-      isMasonry: false,
-      isSlider: false,
-      isSlideshow: false,
-      cropOnlyFill: false,
-      slideshowLoop: false,
-    }),
-    column: () => ({
-      showArrows: true,
-      cubeImages: true,
-      smartCrop: false,
-      cubeType: 'fill',
-      cubeRatio: 0.35,
-      isVertical: false,
-      galleryType: 'Strips',
-      groupSize: 1,
-      groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryHeight(),
-      fixedColumns: 0,
-      hasThumbnails: false,
-      oneRow: true,
-      enableScroll: true,
-      isGrid: false,
-      isColumns: true,
-      isMasonry: false,
-      isSlider: false,
-      isSlideshow: false,
-      cropOnlyFill: false,
-    }),
-    fullsize: () => ({
-      showArrows: true,
-      cubeImages: true,
-      smartCrop: false,
-      cubeType: 'fill',
-      cubeRatio: '100%/100%',
-      isVertical: false,
-      galleryType: 'Strips',
-      groupSize: 1,
-      gallerySize: () => dimensionsHelper.getGalleryWidth(),
-      groupTypes: '1',
-      oneRow: true,
-      hasThumbnails: false,
-      enableScroll: true,
-      scrollSnap: true,
-      isGrid: false,
-      isSlider: false,
-      isColumns: false,
-      isMasonry: false,
-      isSlideshow: false,
-      cropOnlyFill: false,
-      floatingImages: 0,
-      galleryMargin: 0,
-      imageMargin: 0,
-    }),
-    empty: () => ({
-      gallerySize: Math.round(gallerySize * 9 + 100),
-    }),
-    magic: () => getStyleBySeed(magicLayoutSeed),
-    bricks: () => getFixedLayouts(0),
-    alternate: () => getFixedLayouts(1),
-    mix: () => getFixedLayouts(2),
-  };
-}
 
 //returns true if the given param is in the current layout preset
 export const isInPreset = (styleParams, paramToCheck) => {
-  const layoutName = getLayoutName(styleParams.galleryLayout + 1) || 'empty';// empty for when there is no layout given
-  const oldPresets = getPreset(styleParams);
-  return Object.keys(oldPresets[layoutName]()).includes(paramToCheck) ||
-  Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
+  const layoutName = getLayoutName(styleParams.galleryLayout) || 'empty';// empty for when there is no layout given
+  return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 }
 
 const getLayoutName = (galleryLayout) => {
@@ -479,26 +188,7 @@ const getLayoutName = (galleryLayout) => {
     'alternate', // 11
     'mix', // 12
   ];
-  return galleyLayoutList[galleryLayout]
-}
-function getStyleByLayout(styles) {
-  //new layouts
-  let { galleryLayout } = styles;
-  let layoutName = getLayoutName(galleryLayout + 1); //the empty layout is -1, collage is 0 etc.
-  
-  if (utils.isUndefined(layoutName)) {
-    galleryLayout = 0;
-    layoutName = 'collage';
-  }
-
-  if (utils.isVerbose()) {
-    console.log('chosen layout is', layoutName);
-  }
-  const layouts = getPreset(styles)
-  return {
-    ...layouts[layoutName](),
-    galleryLayout
-  };
+  return galleyLayoutList[galleryLayout + 1]
 }
 
 function addLayoutStyles(styles) {
@@ -527,7 +217,7 @@ function addLayoutStyles(styles) {
     if (utils.isVerbose()) {
       console.log('Using galleryLayout for defaults', styles);
     }
-    styles = Object.assign({}, emptyLayout, styles, getStyleByLayout(styles)); //legacy layouts
+    styles = Object.assign({}, emptyLayout, styles); //legacy layouts
     const selectedLayoutVars = [
       'galleryLayout',
       'galleryThumbnailsAlignment',

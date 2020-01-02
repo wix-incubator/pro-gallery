@@ -31,7 +31,6 @@ export const fixedStyles = {
 }
 export default class SliderGallery extends React.Component {
   render() {
-    // console.log(dimensionsHelper.getGalleryHeight(),this.props);
     
     return (
       <ProGallery
