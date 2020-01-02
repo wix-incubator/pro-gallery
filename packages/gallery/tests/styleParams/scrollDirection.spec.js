@@ -2,6 +2,7 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
+import GALLERY_CONST from '../../src/common/constants';
 
 describe('styleParam - loveButton', () => {
 
@@ -22,7 +23,7 @@ describe('styleParam - loveButton', () => {
 
   it('should render element "#gallery-horizontal-scroll" when "scrollDirection" is "1"', () => {
     Object.assign(initialProps.styles, {
-      scrollDirection:1,
+      scrollDirection: GALLERY_CONST.scrollDirection.HORIZONTAL,
       galleryLayout:2
     });
     driver.mount.proGallery(initialProps);
@@ -32,7 +33,7 @@ describe('styleParam - loveButton', () => {
   });
   it('should not render element "#gallery-horizontal-scroll" when "scrollDirection" is "0"', () => {
     Object.assign(initialProps.styles, {
-      scrollDirection:0,
+      scrollDirection: GALLERY_CONST.scrollDirection.VERTICAL,
       galleryLayout:2
     });
     driver.mount.proGallery(initialProps);
@@ -40,20 +41,4 @@ describe('styleParam - loveButton', () => {
     expect(elem).to.have.lengthOf(0)
     driver.detach.proGallery();
   });
-  it('should render navigation arrows when "scrollDirection" is "1"', () => {
-    Object.assign(initialProps.styles, {
-      scrollDirection:1,
-      galleryLayout:2,
-    });
-    driver.mount.proGallery(initialProps);
-    const arrows = driver.find.selector('.nav-arrows-container');
-    const elem = driver.find.selector('#pro-gallery-container');
-    const width = getComputedStyle(elem.getDOMNode()).width;
-    console.log(elem.html());
-    
-    console.log(arrows.length, window.innerWidth, width);
-    
-    expect()
-    driver.detach.proGallery();
-  })
 })
