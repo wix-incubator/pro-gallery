@@ -5,7 +5,8 @@ import LeanGallery from './leanGallery/leanGallery';
 
 import ProGallery from './proGallery/proGallery';
 
-import {PRESETS, basePropTypes} from './presets';
+import {PRESETS} from './presets';
+import basePropTypes from './proGallery/propTypes';
 import LAYOUTS from '../../common/constants/layout';
 
 import defaultStyles from '../../common/defaultStyles';

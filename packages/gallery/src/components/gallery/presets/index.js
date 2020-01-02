@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import CollageGallery from './collageGallery';
 import MasonryGallery from './masonryGallery';
 import GridGallery from './gridGallery';
@@ -13,18 +11,6 @@ import FullsizeGallery from './fullsizeGallery';
 import BricksGallery from './bricksGallery';
 import MixGallery from './mixGallery';
 import AlternateGallery from './alternateGallery';
-
-export const basePropTypes = {
-    items: PropTypes.array.isRequired,
-    container: PropTypes.object.isRequired,
-
-    domId: PropTypes.string,
-    scrollingElement: PropTypes.any,
-    options: PropTypes.object,
-    eventsListener: PropTypes.function,
-    totalItemsCount: PropTypes.number,
-    resizeMediaUrl: PropTypes.function,
-};
 
 export const PRESETS = {
     CollageGallery,

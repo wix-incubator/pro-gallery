@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
-import {basePropTypes} from '../index';
+import basePropTypes from '../proGallery/propTypes';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
