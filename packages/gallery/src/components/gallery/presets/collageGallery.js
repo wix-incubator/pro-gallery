@@ -20,13 +20,15 @@ export default class CollageGallery extends React.Component {
     }
 
     render() {
+        const {isVertical, isRTL, imageMargin, styles, ...otherProps} = this.props;
 
         return (
             <ProGallery
-                {...this.props}
+                {...otherProps}
                 styles={{
-                    ...this.props.styles,
-                    ...fixedStyles
+                    ...styles,
+                    ...fixedStyles,
+                    isVertical, isRTL, imageMargin,
                 }}
             />
         );
