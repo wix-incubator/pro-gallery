@@ -15,17 +15,18 @@ const exec = cmd => execSync(cmd, { stdio: 'inherit' });
 
 const toSurgeUrl = subdomain => `${subdomain}.surge.sh/`;
 
+const formatBranchName = branch => {
+  return branch.replace(/_/g, '-').toLowerCase();
+}
+
 const generateSubdomains = subdomain => {
   const { version } = require('../lerna.json');
-  const { TRAVIS_BRANCH, TRAVIS_PULL_REQUEST } = process.env;
-  const isPullRequest = (TRAVIS_PULL_REQUEST && TRAVIS_PULL_REQUEST !== 'false');
+  const { TRAVIS_BRANCH } = process.env;
   const isVersionSpecific = shouldPublishVersionSpecific();
 
   console.log(chalk.magenta(`Generating Surge subdomains from branch: ${TRAVIS_BRANCH}, PR: ${TRAVIS_PULL_REQUEST}, version: ${version}, commit: ${getLatestCommit()}`));
-  console.log(chalk.cyan(JSON.stringify(process.env)));
+
   let subdomains = [];
-  
-  
   if (TRAVIS_BRANCH === 'master' && isVersionSpecific) {
       //push with -v suffix
       subdomains.push(subdomain);
@@ -34,8 +35,8 @@ const generateSubdomains = subdomain => {
       console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   }
 
-  //push with -master suffix
-  subdomains.push(subdomain + `-${TRAVIS_BRANCH}`);
+  //push with branch suffix
+  subdomains.push(subdomain + `-${formatBranchName(TRAVIS_BRANCH)}`);
   console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   
 
