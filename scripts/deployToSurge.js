@@ -22,7 +22,7 @@ const generateSubdomains = subdomain => {
   const isVersionSpecific = shouldPublishVersionSpecific();
 
   console.log(chalk.magenta(`Generating Surge subdomains from branch: ${TRAVIS_BRANCH}, PR: ${TRAVIS_PULL_REQUEST}, version: ${version}, commit: ${getLatestCommit()}`));
-  
+  console.log(chalk.cyan(JSON.stringify(process.env)));
   let subdomains = [];
   
   if (TRAVIS_BRANCH === 'master' && isVersionSpecific) {
