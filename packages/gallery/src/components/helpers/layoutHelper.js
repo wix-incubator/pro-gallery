@@ -248,6 +248,8 @@ function getStyleByGalleryType(styles) {
 }
 export const getPreset = (styles) => {
   const { gallerySize, magicLayoutSeed } = styles;
+  console.log(dimensionsHelper.getGalleryHeight());
+  
   return {
     collage: () => ({
       showArrows: false,
@@ -326,26 +328,30 @@ export const getPreset = (styles) => {
       galleryMargin: 0,
       imageMargin: 0,
     }),
-    slider: () => ({
-      showArrows: true,
-      cubeImages: true,
-      smartCrop: false,
-      isVertical: false,
-      galleryType: 'Strips',
-      groupSize: 1,
-      groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryHeight(),
-      oneRow: true,
-      hasThumbnails: false,
-      enableScroll: true,
-      scrollSnap: true,
-      isGrid: false,
-      isSlider: true,
-      isColumns: false,
-      isMasonry: false,
-      isSlideshow: false,
-      cropOnlyFill: true,
-    }),
+    slider: () => {
+      // console.log(dimensionsHelper.getGalleryHeight());
+      return {
+        // gallerySize: () => dimensionsHelper.getGalleryHeight(),
+      }
+      // showArrows: true,
+      // cubeImages: true,
+      // smartCrop: false,
+      // isVertical: false,
+      // galleryType: 'Strips',
+      // groupSize: 1,
+      // groupTypes: '1',
+      // gallerySize: () => dimensionsHelper.getGalleryHeight(),
+      // oneRow: true,
+      // hasThumbnails: false,
+      // enableScroll: true,
+      // scrollSnap: true,
+      // isGrid: false,
+      // isSlider: true,
+      // isColumns: false,
+      // isMasonry: false,
+      // isSlideshow: false,
+      // cropOnlyFill: true,
+    },
     slideshow: () => ({
       showArrows: true,
       cubeImages: true,
