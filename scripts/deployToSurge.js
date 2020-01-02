@@ -25,6 +25,7 @@ const generateSubdomains = subdomain => {
   console.log(chalk.cyan(JSON.stringify(process.env)));
   let subdomains = [];
   
+  
   if (TRAVIS_BRANCH === 'master' && isVersionSpecific) {
       //push with -v suffix
       subdomains.push(subdomain);
