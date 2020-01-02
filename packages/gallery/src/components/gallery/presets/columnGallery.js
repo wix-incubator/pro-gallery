@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.COLUMN,
+  cubeType: 'fill',
 }
 export default class ColumnGallery extends React.Component {
 

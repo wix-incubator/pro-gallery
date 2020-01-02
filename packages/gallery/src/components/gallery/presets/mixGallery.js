@@ -5,6 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.MIX,
+  cubeType: 'fill',
 }
 export default class  MixGallery extends React.Component {
 
