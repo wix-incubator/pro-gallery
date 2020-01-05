@@ -8,6 +8,7 @@ import imageMargin from './options/imageMargin';
 import hoveringBehaviour from './options/hoveringBehaviour'
 import enableInfiniteScroll from './options/enableInfiniteScroll';
 import allowHover from './options/allowHover';
+import cubeImages from './options/cubeImages';
 
 export default {
     itemClick,
@@ -19,5 +20,6 @@ export default {
     imageMargin,
     hoveringBehaviour,
     enableInfiniteScroll,
-    allowHover
+    allowHover,
+    cubeImages
 }
