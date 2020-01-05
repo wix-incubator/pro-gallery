@@ -5,7 +5,8 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.ALTERNATE,
-  //params from layoutHelper
+
+  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   sampleSize: 100,
   isVertical: true,
   gallerySize: 86,

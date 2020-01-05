@@ -6,7 +6,8 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
-  //params from layoutHelper
+  
+  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   cubeImages: true,
   smartCrop: false,

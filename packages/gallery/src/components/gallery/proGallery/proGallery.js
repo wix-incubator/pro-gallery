@@ -26,7 +26,7 @@ export default class ProGallery extends GalleryComponent {
     if (typeof props.viewMode !== 'undefined') {
       viewModeWrapper.setViewMode(props.viewMode);
     }
-    this.domId = props.domId || Math.floor(Math.random() * 10000);
+    // this.domId = props.domId || Math.floor(Math.random() * 10000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -38,10 +38,10 @@ export default class ProGallery extends GalleryComponent {
   render() {
     return (
       this.canRender && (
-        <div id={`pro-gallery-${this.domId}`} className="pro-gallery">
+        <div id={`pro-gallery-${this.props.domId}`} className="pro-gallery">
           <GalleryContainer
             {...this.props}
-            domId={this.domId}
+            domId={this.props.domId}
             items={this.props.items || []}
             watermarkData={this.props.watermarkData}
             settings={this.props.settings || {}}

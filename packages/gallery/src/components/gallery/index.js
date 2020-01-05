@@ -16,15 +16,22 @@ import BricksGallery from './presets/bricksGallery';
 import MixGallery from './presets/mixGallery';
 import AlternateGallery from './presets/alternateGallery';
 import LAYOUTS from '../../common/constants/layout';
-import EmptyGallery from './presets/emptyGallery'
+import EmptyGallery from './presets/emptyGallery';
+import dimensionsHelper from '../helpers/dimensionsHelper';
 
 import defaultStyles from '../../common/defaultStyles';
 
 export default props => {
 
+  const domId = props.domId || Math.floor(Math.random() * 10000);
   const { styles, options, styleParams, ...otherProps } = props;
   const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
-  const galleryProps = { ...otherProps, styles: _styles };
+  const galleryProps = { ...otherProps, styles: _styles, domId };
+  dimensionsHelper.updateParams({
+    domId: galleryProps.domId,
+    container: galleryProps.container,
+    styles: galleryProps.styles
+  });
 
   let GalleryComponent = ProGallery;
   if (isEligibleForLeanGallery(galleryProps)) {

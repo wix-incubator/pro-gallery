@@ -6,7 +6,8 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDESHOW,
   enableInfiniteScroll: true,
   allowHover: false,
-  //params from layoutHelper
+  
+  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   cubeImages: true,
   smartCrop: false,
