@@ -16,7 +16,7 @@ describe('styleParam - loveButton', () => {
     driver = new GalleryDriver();
   });
 
-  it('should be able to set "cubeType" when "cubeImages" is "true"', () => {
+  it('should be able to set "cubeType"(fill) when "cubeImages" is "true"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
@@ -29,7 +29,20 @@ describe('styleParam - loveButton', () => {
     expect(itemWrappers.length).to.be.greaterThan(0)
     driver.detach.proGallery();
   });
-  it('should not be able to set "cubeType" when "cubeImages" is "false"', () => {
+  it('should be able to set "cubeType"(fit) when "cubeImages" is "true"', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: -1,
+      cubeImages: true,
+      cubeType: 'fit',
+    })
+    driver.mount.proGallery(initialProps);
+    const itemWrappers = driver.find.selector('.cube-type-fit');
+    console.log(itemWrappers.length);
+    //expect to find items that have "cube-type-fit" class
+    expect(itemWrappers.length).to.be.greaterThan(0)
+    driver.detach.proGallery();
+  });
+  it('should not be able to set "cubeType"(fill) when "cubeImages" is "false"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
@@ -38,7 +51,20 @@ describe('styleParam - loveButton', () => {
     driver.mount.proGallery(initialProps);
     const itemWrappers = driver.find.selector('.cube-type-fill');
     console.log(itemWrappers.length);
-    //expect to find no items with "cube-type-fill" class
+    //expect to not find items with "cube-type-fill" class
+    expect(itemWrappers.length).to.eq(0);
+    driver.detach.proGallery();
+  });
+  it('should not be able to set "cubeType"(fit) when "cubeImages" is "false"', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: -1,
+      cubeImages: false,
+      cubeType: 'fit',
+    })
+    driver.mount.proGallery(initialProps);
+    const itemWrappers = driver.find.selector('.cube-type-fit');
+    console.log(itemWrappers.length);
+    //expect to not find items with "cube-type-fit" class
     expect(itemWrappers.length).to.eq(0);
     driver.detach.proGallery();
   });
