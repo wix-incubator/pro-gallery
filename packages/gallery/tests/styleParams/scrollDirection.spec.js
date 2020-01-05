@@ -27,18 +27,19 @@ describe('styleParam - loveButton', () => {
       galleryLayout:2
     });
     driver.mount.proGallery(initialProps);
-    const elem = driver.find.selector('.gallery-horizontal-scroll');
+    const elem = driver.find.selector('#gallery-horizontal-scroll');
     expect(elem).to.have.lengthOf(1)
     driver.detach.proGallery();
   });
-  it('should not render element "#gallery-horizontal-scroll" when "scrollDirection" is "0"', () => {
+  it('should render element "#pro-gallery-margin-container" when "scrollDirection" is "0"', () => {
     Object.assign(initialProps.styles, {
       scrollDirection: GALLERY_CONST.scrollDirection.VERTICAL,
       galleryLayout:2
     });
     driver.mount.proGallery(initialProps);
-    const elem = driver.find.selector('.gallery-horizontal-scroll');
-    expect(elem).to.have.lengthOf(0)
+    const elem = driver.find.selector('#pro-gallery-margin-container');
+    expect(elem).to.have.lengthOf(1)
     driver.detach.proGallery();
   });
+  
 })
