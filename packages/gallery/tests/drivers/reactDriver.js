@@ -9,7 +9,8 @@ import React from 'react';
 import utils from '../../src/common/utils';
 import window from '../../src/common/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
-import ProGallery from '../../src/components/gallery/proGallery/proGallery';
+import ProGallery from '../../src/components/gallery/index.js';
+
 
 configure({ adapter: new Adapter() });
 
