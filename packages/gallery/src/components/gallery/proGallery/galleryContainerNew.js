@@ -93,7 +93,7 @@ export class GalleryContainer extends React.Component {
             this.initialGalleryState = galleryState;
           }
         } catch (_e) {
-          //
+          console.warn(_e);
         }
       }
     }
