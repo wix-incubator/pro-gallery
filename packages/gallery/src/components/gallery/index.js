@@ -21,9 +21,10 @@ import defaultStyles from '../../common/defaultStyles';
 
 export default props => {
 
-    const {styles, options, styleParams, ...otherProps} = props;
+    const {styles, options, styleParams, eventsListener, ...otherProps} = props;
     const _styles = {...defaultStyles, ...options, ...styles, ...styleParams};
-    const galleryProps = {...otherProps, styles: _styles};
+    const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
+    const galleryProps = {...otherProps, styles: _styles, eventsListener: _eventsListener};
     
     let GalleryComponent = ProGallery;
     if (isEligibleForLeanGallery(galleryProps)) {
