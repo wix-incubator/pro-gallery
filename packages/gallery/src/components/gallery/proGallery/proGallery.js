@@ -26,7 +26,6 @@ export default class ProGallery extends GalleryComponent {
     if (typeof props.viewMode !== 'undefined') {
       viewModeWrapper.setViewMode(props.viewMode);
     }
-    // this.domId = props.domId || Math.floor(Math.random() * 10000);
   }
 
   componentWillReceiveProps(nextProps) {
