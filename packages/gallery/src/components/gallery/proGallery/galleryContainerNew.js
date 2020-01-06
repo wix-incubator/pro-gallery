@@ -13,7 +13,6 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
-import CLICK_ACTIONS from '../../../common/constants/itemClick';
 import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import checkNewGalleryProps from '../../helpers/isNew';
@@ -690,8 +689,9 @@ export class GalleryContainer extends React.Component {
     );
     const showMoreClickedAtLeastOnce = true;
     const needToHandleShowMoreClick = true;
-    if (!this.state.gotFirstScrollEvent) {
+    if (!this.allowedPreloading) {
       //we already called to calcScrollCss with allowPreloading = true
+      this.allowedPreloading = true;
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
         items: this.galleryStructure.galleryItems,
@@ -726,16 +726,17 @@ export class GalleryContainer extends React.Component {
   }
 
   enableScrollPreload() {
-    if (!this.state.gotFirstScrollEvent) {
-      if (!this.state.showMoreClickedAtLeastOnce) {
+    if (!this.allowedPreloading) {
+      this.allowedPreloading = true;
         //we already called to calcScrollCss with allowPreloading = true
-        this.scrollCss = this.getScrollCssIfNeeded({
-          galleryDomId: this.props.domId,
-          items: this.galleryStructure.galleryItems,
-          styleParams: this.state.styles,
-          allowPreloading: true,
-        });
-      }
+      this.scrollCss = this.getScrollCssIfNeeded({
+        galleryDomId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: this.state.styles,
+        allowPreloading: true,
+      });
+    }
+    if (!this.state.gotFirstScrollEvent) {
       this.setState({
         gotFirstScrollEvent: true,
       });
@@ -905,17 +906,10 @@ export class GalleryContainer extends React.Component {
             {this.galleryInitialStateJson}
           </div>
         )}
-        {/* {console.log('scrollCss', this.scrollCss)} */}
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
-          {this.layoutCss.map((css, idx) => (
-            <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`}>
-              {css}
-            </style>
-          ))}
-          {(this.scrollCss || []).map((scrollCss, idx) => (
-            <style data-key={`scrollCss_${idx}`} key={`scrollCss_${idx}`}>{scrollCss}</style>
-          ))}
-          {ssrDisableTransition && <style>{ssrDisableTransition}</style>}
+          {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
+          {(this.scrollCss || []).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
+          {ssrDisableTransition && <style dangerouslySetInnerHTML={{__html: ssrDisableTransition}}/>}
         </div>
       </div>
     );
