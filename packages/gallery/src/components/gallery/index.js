@@ -24,9 +24,10 @@ import defaultStyles from '../../common/defaultStyles';
 export default props => {
 
   const domId = props.domId || Math.floor(Math.random() * 10000);
-  const { styles, options, styleParams, ...otherProps } = props;
+  const { styles, options, styleParams, eventsListener, ...otherProps } = props;
   const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
-  const galleryProps = { ...otherProps, styles: _styles, domId };
+  const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
+  const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId };
   dimensionsHelper.updateParams({
     domId: galleryProps.domId,
     container: galleryProps.container,
@@ -78,11 +79,11 @@ export default props => {
       case LAYOUTS.ALTERNATE:
         GalleryComponent = AlternateGallery;
         break;
-      case LAYOUTS.EMPTY:
+      case LAYOUTS.EmptyGallery:
         GalleryComponent = EmptyGallery;
         break;
-      default:
     }
   }
-  return <GalleryComponent {...galleryProps} />
+
+return <GalleryComponent {...galleryProps} />
 }

@@ -1,0 +1,28 @@
+div.gallery {
+  display: grid;
+  
+  div.cell {
+    overflow: hidden;
+    position: relative;
+    display: block;
+    
+    div.imageWrapper {
+      position: relative;
+      overflow: hidden;
+
+      &:hover::before {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: red;
+      }
+
+      img.image {
+        object-fit: cover;
+      }
+    }
+  }
+}

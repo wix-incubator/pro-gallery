@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -61,7 +61,7 @@
     "svg-react-loader": "^0.4.6",
     "svg2react-icon": "^3.0.91",
     "wallaby-webpack": "^3.9.9",
-    "yoshi": "^4.10.1",
+    "yoshi": "~4.25.0",
     "yoshi-style-dependencies": "^4.0.0"
   },
   "babel": {

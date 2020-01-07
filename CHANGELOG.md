@@ -1,3 +1,10 @@
+## [v1.6.5](https://pro-gallery-1-6-5.surge.sh) (30/12/2019)
+ 
+#### GALLERY
+ -  slideshowView className will always contain 'pro-gallery-parent-container' and more if needed 
+ -  remove unnecessary import
+
+---
 ## [v1.6.4](https://pro-gallery-1-6-4.surge.sh) (25/12/2019)
  
 #### GALLERY
