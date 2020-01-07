@@ -5,20 +5,43 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.MASONRY,
-  cubeImages: false
+  cubeImages: false,
+  
+  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  showArrows: false,
+  groupSize: 1,
+  groupTypes: '1',
+  gallerySize: 0,
+  fixedColumns: 0,
+  hasThumbnails: false,
+  enableScroll: true,
+  isGrid: false,
+  isSlider: false,
+  isMasonry: true,
+  isColumns: false,
+  isSlideshow: false,
+  cropOnlyFill: false,
+  oneRow: false,
 }
 export default class MasonryGallery extends React.Component {
 
-    render() {
-
-        return (
-            <ProGallery
-                {...this.props}
-                styles={{
-                    ...this.props.styles,
-                    ...fixedStyles
-                }}
-            />
-        );
+  createStyles = () => {
+    return {
+      ...this.props.styles,
+      ...fixedStyles,
+      gallerySize: this.props.styles.gallerySize,
     }
+  }
+
+  render() {
+
+    return (
+      <ProGallery
+        {...this.props}
+        styles={
+          this.createStyles()
+        }
+      />
+    );
+  }
 }

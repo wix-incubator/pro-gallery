@@ -70,7 +70,7 @@ export default ({ items, styles, container, itemsDimensions }, state) => {
       reason.itemsAdded = 'new items do not exist.';
       return false; // new items do not exist (use old items)
     }
-    if (!state.items || !existingItems) {
+    if (!existingItems || (existingItems && existingItems.length === 0)) {
       reason.itemsAdded = 'old items do not exist.';
       return false; // old items do not exist (it is not items addition)
     }
@@ -99,7 +99,7 @@ export default ({ items, styles, container, itemsDimensions }, state) => {
       reason.items = 'new items do not exist.';
       return false; // new items do not exist (use old items)
     }
-    if (!state.items || !existingItems) {
+    if (!existingItems || (existingItems && existingItems.length === 0)) {
       reason.items = 'old items do not exist.';
       return true; // old items do not exist
     }

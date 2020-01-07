@@ -95,10 +95,8 @@ class ItemView extends GalleryComponent {
       failed: false,
       loaded: true,
     });
-    setTimeout(() => {
-      this.setState({
-        displayed: true,
-      });
+    this.itemLoadedTimeout = setTimeout(() => {
+      this.setState(() => ({ displayed: true }));
     }, 1500);
   }
 
@@ -994,6 +992,7 @@ class ItemView extends GalleryComponent {
   }
 
   componentWillUnmount() {
+    clearTimeout(this.itemLoadedTimeout);
     window.removeEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
   }
 
