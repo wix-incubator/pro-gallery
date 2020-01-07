@@ -37,9 +37,9 @@ export default class CollageGallery extends React.Component {
     return (
       <ProGallery
         {...this.props}
-        styles={{
-          ...this.createStyles(),
-        }}
+        styles={
+          this.createStyles()
+        }
       />
     );
   }

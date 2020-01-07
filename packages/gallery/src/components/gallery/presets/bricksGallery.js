@@ -7,7 +7,6 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.BRICKS,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  sampleSize: 100,
   isVertical: true,
   gallerySize: 400,
   minItemSize: 50,
@@ -26,7 +25,6 @@ export const fixedStyles = {
   groupsPerStrip: 0,
   oneRow: false,
   placeGroupsLtr: false,
-  at: 1538487882356,
   rotatingCropRatios: '0.707,1.414,1.414,0.707',
 }
 export default class BricksGallery extends React.Component {
@@ -42,9 +40,9 @@ export default class BricksGallery extends React.Component {
     return (
       <ProGallery
         {...this.props}
-        styles={{
-          ...this.createStyles(),
-        }}
+        styles={
+          this.createStyles()
+        }
       />
     );
   }

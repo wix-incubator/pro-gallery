@@ -6,7 +6,7 @@ import LAYOUTS from '../../../common/constants/layout';
 export const fixedStyles = {
   galleryLayout: LAYOUTS.EMPTY,
 }
-export default class ColumnGallery extends React.Component {
+export default class EmptyGallery extends React.Component {
   
   createStyles = () => {
     return {
@@ -20,9 +20,9 @@ export default class ColumnGallery extends React.Component {
     return (
       <ProGallery
         {...this.props}
-        styles={{
-          ...this.createStyles(),
-        }}
+        styles={
+          this.createStyles()
+        }
       />
     );
   }

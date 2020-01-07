@@ -7,7 +7,6 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.ALTERNATE,
 
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  sampleSize: 100,
   isVertical: true,
   gallerySize: 86,
   minItemSize: 50,
@@ -26,7 +25,6 @@ export const fixedStyles = {
   groupsPerStrip: 0,
   oneRow: false,
   placeGroupsLtr: false,
-  at: 1538490828979,
   rotatingCropRatios: '',
 }
 export default class alternateGallery extends React.Component {
@@ -42,9 +40,9 @@ export default class alternateGallery extends React.Component {
     return (
       <ProGallery
         {...this.props}
-        styles={{
-          ...this.createStyles(),
-        }}
+        styles={
+          this.createStyles()
+        }
       />
     );
   }

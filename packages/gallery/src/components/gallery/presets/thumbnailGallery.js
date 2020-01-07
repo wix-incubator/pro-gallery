@@ -44,9 +44,9 @@ export default class ThumbnailGallery extends React.Component {
     return (
       <ProGallery
         {...this.props}
-        styles={{
-          ...this.createStyles(),
-        }}
+        styles={
+          this.createStyles()
+        }
       />
     );
   }

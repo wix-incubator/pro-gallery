@@ -117,15 +117,21 @@ export default class MagicGallery extends React.Component {
     return style;
   }
 
+  createStyles = () => {
+    return {
+      ...this.props.styles,
+      ...fixedStyles,
+      ...this.getStyleBySeed(this.props.styles.magicLayoutSeed)
+    }
+  }
+
   render() {
     return (
       <ProGallery
         {...this.props}
-        styles={{
-          ...this.props.styles,
-          ...fixedStyles,
-          ...this.getStyleBySeed(this.props.styles.magicLayoutSeed)
-        }}
+        styles={
+          this.createStyles()
+        }
       />
     );
   }

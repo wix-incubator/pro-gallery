@@ -13,7 +13,7 @@ export const fixedStyles = {
   galleryType: 'Columns',
   groupSize: 1,
   groupTypes: '1',
-  fixedColumns: undefined,
+  fixedColumns: 0,
   gallerySize: 0,
   hasThumbnails: false,
   enableScroll: true,
@@ -39,10 +39,9 @@ export default class GridGallery extends React.Component {
     return (
       <ProGallery
         {...this.props}
-        styles={{
-          ...this.createStyles(),
-          
-        }}
+        styles={
+          this.createStyles()
+        }
       />
     );
   }
