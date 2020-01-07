@@ -82,7 +82,6 @@ export default props => {
         GalleryComponent = EmptyGallery;
         break;
       default:
-        GalleryComponent = CollageGallery;
     }
   }
   return <GalleryComponent {...galleryProps} />
