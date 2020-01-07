@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
@@ -26,8 +26,8 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, isUnknownDimensions, isAvoidGallerySelfMeasure, gallerySettings} = useGalleryContext();
-  const [showSide, setShowSide] = useState(false);
+  const {setDimentions, styleParams, setItems, items, isUnknownDimensions, isAvoidGallerySelfMeasure, gallerySettings, setGallerySettings} = useGalleryContext();
+  const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
@@ -38,7 +38,7 @@ export function App() {
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
     setDimentions(width, window.innerHeight);
-    setShowSide(!showSide);
+    setGallerySettings({showSide: !showSide});
   };
 
   useEffect(() => {

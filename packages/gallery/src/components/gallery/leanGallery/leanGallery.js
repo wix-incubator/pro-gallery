@@ -1,8 +1,10 @@
 import React from 'react';
 // import GalleryItem from '../item/galleryItem';
 
-import GALLERY_EVENTS from '../../../common/constants/events';
+import EVENTS from '../../../common/constants/events';
 import GALLERY_SIZE_TYPE from '../../../common/constants/gallerySizeType';
+import CROP_TYPES from '../../../common/constants/resizeMethods'
+import s from './leanGallery.module.scss';
 
 const get = (item, attr) => {
   if (typeof item[attr] !== 'undefined') {
@@ -34,7 +36,7 @@ export default class LeanGallery extends React.Component {
   }
 
   componentDidMount() {
-    this.props.eventsListener(GALLERY_EVENTS.APP_LOADED, {});
+    this.props.eventsListener(EVENTS.APP_LOADED, {});
   }
 
   resizeUrl({ item }) {
@@ -93,7 +95,6 @@ export default class LeanGallery extends React.Component {
     const gridTemplateColumns = gridStyle === 1 ? `repeat(${numberOfImagesPerRow}, 1fr)` : `repeat(auto-fit, minmax(${this.calcItemSize()}px, 1fr))`;
 
     return {
-      display: 'grid',
       gridTemplateColumns,
       gridGap: `${imageMargin}px`
     };
@@ -103,18 +104,45 @@ export default class LeanGallery extends React.Component {
   createItemStyle() {
     const { styles } = this.props;
     const { 
-      cubeType,
       itemBorderWidth: borderWidth,
       itemBorderColor: borderColor,
       itemBorderRadius: borderRadius
     } = styles;
 
     return {
-      ...this.state.itemStyle,
-      objectFit: cubeType === 'fit' ? 'contain' : 'cover',
       borderWidth,
       borderColor,
       borderRadius
+    }
+  }
+
+  getImageSize(image) {
+    const { styles } = this.props;
+    if (styles.cubeType !== CROP_TYPES.FIT) {
+      return this.state.itemStyle
+    }
+
+    const {width, height} = this.state.itemStyle;
+    const imageWidth = get(image, 'width');
+    const imageHeight = get(image, 'height');
+    const imageRatio = imageWidth / imageHeight;
+    const containerRatio = width / height
+    if (imageRatio > containerRatio) {
+      //image is wider than container
+      const _height = width / imageRatio;
+      return {
+        width,
+        height: _height ,
+        marginTop: (height - _height) / 2
+      }
+    } else {
+      const _width = height * imageRatio;
+      return {
+        height,
+        width: _width,
+        marginLeft: (width - _width) / 2
+
+      }
     }
   }
 
@@ -143,23 +171,30 @@ export default class LeanGallery extends React.Component {
     const { items } = this.props;
 
     return (
-      <div style={this.createGalleryStyle()}>
+      <div 
+        className={['pro-gallery', 'inline-styles', s.gallery].join(' ')}
+        style={this.createGalleryStyle()}
+      >
         {items.map(item => {
           return (
             <div
+              className={['gallery-item-container', s.cell].join(' ')}
               style={{
-                overflow: 'hidden',
                 height: this.state.itemStyle.height
               }}
               ref={this.measureIfNeeded}
-            >
-              <img 
+              >
+              <div
+                style={{...this.getImageSize(item)}}
+                className={['gallery-item-hover', s.imageWrapper].join(' ')}
+              ><img 
                 src={this.resizeUrl({ item })} 
                 loading="lazy" 
+                className={['gallery-item-content', s.image].join(' ')}
                 alt={get(item, 'title')} 
                 style={this.createItemStyle()}
-                // onClick={() => this.props.eventsListener(GALLERY_EVENTS.ITEM_ACTION_TRIGGERED, new GalleryItem({dto: item}))}
-              />
+                // onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, new GalleryItem({dto: item}))}
+              /></div>
             </div>
           )
         })
@@ -174,6 +209,6 @@ todo:
   itemClick
   links
   Events
+
   Texts
-  auto render by styleParams
- */
+*/
