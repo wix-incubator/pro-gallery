@@ -56,7 +56,7 @@ class VideoScrollHelper {
         newItemCount,
       );
       newItems.forEach(item => {
-        if (item.type === 'video' || (item.id.includes('_placeholder') && item.metaData.videoUrl.includes('wix:video://'))) { // either video or a placeholder for wixCode wix:video:// (both need to be included in the list)
+        if (item.type === 'video' || (item.id.includes('_placeholder') && item.metaData && item.metaData.videoUrl && item.metaData.videoUrl.includes('wix:video://'))) { // either video or a placeholder for wixCode wix:video:// (both need to be included in the list)
           this.videoItems.push({ ...item, videoPlayRating: item.idx });
         }
       });
