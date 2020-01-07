@@ -8,7 +8,8 @@ export const fixedStyles = {
   //tested params
   galleryLayout: LAYOUTS.SLIDER,
   enableInfiniteScroll: true,
-  
+  //cubeRatio?
+
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   cubeImages: true,

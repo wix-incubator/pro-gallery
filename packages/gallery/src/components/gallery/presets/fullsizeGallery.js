@@ -6,13 +6,13 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
+  cubeRatio: '100%/100%',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   cubeImages: true,
   smartCrop: false,
   cubeType: 'fill',
-  cubeRatio: '100%/100%',
   isVertical: false,
   galleryType: 'Strips',
   groupSize: 1,
