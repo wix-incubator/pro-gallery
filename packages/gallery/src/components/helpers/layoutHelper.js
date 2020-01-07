@@ -228,7 +228,7 @@ function addLayoutStyles(styles) {
         });
     }
 
-    styles = Object.assign({}, emptyLayout, styles); //legacy layouts
+    styles = Object.assign({}, emptyLayout, styles);
     const selectedLayoutVars = [
       'galleryLayout',
       'galleryThumbnailsAlignment',
