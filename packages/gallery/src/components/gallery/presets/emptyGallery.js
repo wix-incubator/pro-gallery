@@ -7,15 +7,21 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.EMPTY,
 }
 export default class ColumnGallery extends React.Component {
+  
+  createStyles = () => {
+    return {
+      ...this.props.styles,
+      ...fixedStyles,
+      gallerySize: Math.round(this.props.styles.gallerySize * 9 + 100)
+    }
+  }
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={{
-          ...this.props.styles,
-          ...fixedStyles,
-          gallerySize: Math.round(this.props.styles.gallerySize * 9 + 100)
+          ...this.createStyles(),
         }}
       />
     );

@@ -33,13 +33,20 @@ export const fixedStyles = {
   imageMargin: 0,
 }
 export default class SlideshowGallery extends React.Component {
+
+  createStyles = () => {
+    return {
+      ...this.props.styles,
+      ...fixedStyles,
+    }
+  }
+
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={{
-          ...this.props.styles,
-          ...fixedStyles
+          ...this.createStyles(),
         }}
       />
     );

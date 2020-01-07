@@ -24,17 +24,21 @@ export const fixedStyles = {
 }
 export default class CollageGallery extends React.Component {
 
+  createStyles = () => {
+    return {
+      ...this.props.styles,
+      ...fixedStyles,
+      gallerySize: Math.round(this.props.styles.gallerySize * 5 + 500),
+    }
+  }
+
   render() {
-
-
 
     return (
       <ProGallery
         {...this.props}
         styles={{
-          ...this.props.styles,
-          ...fixedStyles,
-          gallerySize: Math.round(this.props.styles.gallerySize * 5 + 500) // ask guy about this solution
+          ...this.createStyles(),
         }}
       />
     );

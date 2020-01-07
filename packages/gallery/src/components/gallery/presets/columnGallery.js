@@ -30,14 +30,20 @@ export const fixedStyles = {
   cropOnlyFill: false,
 }
 export default class ColumnGallery extends React.Component {
+  
+  createStyles = () =>{
+    return {
+      ...this.props.styles,
+      ...fixedStyles,
+    }
+  }
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={{
-          ...this.props.styles,
-          ...fixedStyles
+          ...this.createStyles()
         }}
       />
     );

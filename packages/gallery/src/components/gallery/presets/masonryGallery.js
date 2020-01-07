@@ -25,15 +25,21 @@ export const fixedStyles = {
 }
 export default class MasonryGallery extends React.Component {
 
+  createStyles = () => {
+    return {
+      ...this.props.styles,
+      ...fixedStyles,
+      gallerySize: this.props.styles.gallerySize,
+    }
+  }
+
   render() {
 
     return (
       <ProGallery
         {...this.props}
         styles={{
-          ...this.props.styles,
-          ...fixedStyles,
-          gallerySize: this.props.styles.gallerySize
+          ...this.createStyles(),
         }}
       />
     );
