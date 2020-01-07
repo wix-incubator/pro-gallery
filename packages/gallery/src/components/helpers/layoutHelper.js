@@ -6,7 +6,6 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
-import { getFixedLayouts } from './fixedLayoutsHelper';
 import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
 import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
