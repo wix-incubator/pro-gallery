@@ -79,7 +79,7 @@ export default props => {
       case LAYOUTS.ALTERNATE:
         GalleryComponent = AlternateGallery;
         break;
-      case LAYOUTS.EmptyGallery:
+      case LAYOUTS.EMPTY:
         GalleryComponent = EmptyGallery;
         break;
     }
