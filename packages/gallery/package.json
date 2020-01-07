@@ -99,7 +99,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^-!svg-react-loader.*$": "<rootDir>/__testsDrivers__/svgImportMock.js"
+      "^-!svg-react-loader.*$": "<rootDir>/__testsDrivers__/svgImportMock.js",
+      "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
     "testPathIgnorePatterns": [
       "/node_modules/",
