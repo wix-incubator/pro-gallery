@@ -40,9 +40,6 @@ export default props => {
     GalleryComponent = LeanGallery;
   } else if (galleryType === undefined || galleryLayout !== undefined) {
     switch (galleryLayout) {
-      case LAYOUTS.COLLAGE:
-        GalleryComponent = CollageGallery;
-        break;
       case LAYOUTS.MASONRY:
         GalleryComponent = MasonryGallery;
         break;
