@@ -793,7 +793,8 @@ export class GalleryContainer extends React.Component {
 
       // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
 
-      if (gallerySize - scrollEnd < getItemsDistance) {
+      const curDistance = gallerySize - scrollEnd;
+      if (curDistance > 0 && curDistance < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
         if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
