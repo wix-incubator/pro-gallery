@@ -1,7 +1,8 @@
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles'
+import { styleParams, container } from '../drivers/mocks/styles';
+import CUBE_TYPE from '../../src/common/constants/cubeType';
 
 describe('styleParam - loveButton', () => {
 
@@ -20,7 +21,7 @@ describe('styleParam - loveButton', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
-      cubeType: 'fill',
+      cubeType: CUBE_TYPE.CROP,
     })
     driver.mount.proGallery(initialProps);
     const itemWrappers = driver.find.selector('.cube-type-fill');
@@ -33,7 +34,7 @@ describe('styleParam - loveButton', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
-      cubeType: 'fit',
+      cubeType: CUBE_TYPE.FIT,
     })
     driver.mount.proGallery(initialProps);
     const itemWrappers = driver.find.selector('.cube-type-fit');
@@ -46,7 +47,7 @@ describe('styleParam - loveButton', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
-      cubeType: 'fill',
+      cubeType: CUBE_TYPE.CROP,
     })
     driver.mount.proGallery(initialProps);
     const itemWrappers = driver.find.selector('.cube-type-fill');
@@ -59,7 +60,7 @@ describe('styleParam - loveButton', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
-      cubeType: 'fit',
+      cubeType: CUBE_TYPE.FIT,
     })
     driver.mount.proGallery(initialProps);
     const itemWrappers = driver.find.selector('.cube-type-fit');
