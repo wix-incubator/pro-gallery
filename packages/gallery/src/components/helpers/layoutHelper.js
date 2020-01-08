@@ -170,7 +170,7 @@ export const isInPreset = (styleParams, paramToCheck) => {
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 }
 
-const getLayoutName = (galleryLayout) => {
+export const getLayoutName = (galleryLayout) => {
   const galleyLayoutList = [
     'empty', // -1
     'collage', // 0
@@ -215,16 +215,6 @@ function addLayoutStyles(styles) {
     //new layouts
     if (utils.isVerbose()) {
       console.log('Using galleryLayout for defaults', styles);
-    }
-
-    // in case of galleryLayoutv2 is defind but layout does not exist, default to collage .
-    const layoutName = getLayoutName(Number(styles.galleryLayout));
-    if (utils.isUndefined(layoutName) || styles.galleryLayout === '') {
-      styles = Object.assign({}, emptyLayout, styles,
-        {
-          ...NEW_PRESETS.collage,
-          gallerySize: Math.round(30 * 5 + 500)
-        });
     }
 
     styles = Object.assign({}, emptyLayout, styles);
