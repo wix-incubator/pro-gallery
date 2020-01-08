@@ -4,7 +4,7 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import CUBE_TYPE from '../../src/common/constants/cubeType';
 
-describe('styleParam - loveButton', () => {
+describe('styleParam - cubeImages', () => {
 
   let driver;
   const initialProps = {
