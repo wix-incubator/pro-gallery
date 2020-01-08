@@ -1,3 +1,13 @@
+## [v1.6.6](https://pro-gallery-1-6-6.surge.sh) (08/01/2020)
+ 
+#### GALLERY
+ -  improve: moved layoutHelper.js layout styles to presets
+ -  fix (itemView): clearTimeout on unmount to prevent state update
+ -  fix (videoScrollHelper): protect access to item.metaData.videoUrl
+ -  improve (cssScroll): use react dangerouslySetHTML for styles
+ -  improve (isEligible): allow undefined values in leanGallery params
+
+---
 ## [v1.6.5](https://pro-gallery-1-6-5.surge.sh) (30/12/2019)
  
 #### GALLERY
