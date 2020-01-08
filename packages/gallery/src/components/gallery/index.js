@@ -35,7 +35,6 @@ export default props => {
 
   const { galleryType, galleryLayout } = galleryProps.styles;
   let GalleryComponent = ProGallery;
-
   if (isEligibleForLeanGallery(galleryProps)) {
     GalleryComponent = LeanGallery;
   } else if (galleryType === undefined || galleryLayout !== undefined) {
