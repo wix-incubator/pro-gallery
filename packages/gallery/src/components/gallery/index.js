@@ -18,7 +18,6 @@ import AlternateGallery from './presets/alternateGallery';
 import LAYOUTS from '../../common/constants/layout';
 import EmptyGallery from './presets/emptyGallery';
 import dimensionsHelper from '../helpers/dimensionsHelper';
-import utils from '../../common/utils'
 import defaultStyles from '../../common/defaultStyles';
 
 export default props => {
@@ -39,7 +38,7 @@ export default props => {
 
   if (isEligibleForLeanGallery(galleryProps)) {
     GalleryComponent = LeanGallery;
-  }else if(utils.isUndefined(galleryType)){
+  }else if(!galleryType){
     GalleryComponent = CollageGallery;
   } else {
     switch (galleryLayout) {
