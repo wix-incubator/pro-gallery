@@ -18,7 +18,6 @@ import AlternateGallery from './presets/alternateGallery';
 import LAYOUTS from '../../common/constants/layout';
 import EmptyGallery from './presets/emptyGallery';
 import dimensionsHelper from '../helpers/dimensionsHelper';
-
 import defaultStyles from '../../common/defaultStyles';
 
 export default props => {
@@ -34,15 +33,12 @@ export default props => {
     styles: galleryProps.styles
   });
 
+  const { galleryType, galleryLayout } = galleryProps.styles;
   let GalleryComponent = ProGallery;
   if (isEligibleForLeanGallery(galleryProps)) {
     GalleryComponent = LeanGallery;
-  } else {
-    const { galleryLayout } = _styles;
+  } else if (galleryType === undefined || galleryLayout !== undefined) {
     switch (galleryLayout) {
-      case LAYOUTS.COLLAGE:
-        GalleryComponent = CollageGallery;
-        break;
       case LAYOUTS.MASONRY:
         GalleryComponent = MasonryGallery;
         break;
@@ -82,6 +78,9 @@ export default props => {
       case LAYOUTS.EMPTY:
         GalleryComponent = EmptyGallery;
         break;
+      case LAYOUTS.COLLAGE:
+      default:
+        GalleryComponent = CollageGallery;
     }
   }
 

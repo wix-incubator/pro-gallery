@@ -217,16 +217,6 @@ function addLayoutStyles(styles) {
       console.log('Using galleryLayout for defaults', styles);
     }
 
-    // in case of galleryLayoutv2 is defind but layout does not exist, default to collage .
-    const layoutName = getLayoutName(Number(styles.galleryLayout));
-    if (utils.isUndefined(layoutName) || styles.galleryLayout === '') {
-      styles = Object.assign({}, emptyLayout, styles,
-        {
-          ...NEW_PRESETS.collage,
-          gallerySize: Math.round(30 * 5 + 500)
-        });
-    }
-
     styles = Object.assign({}, emptyLayout, styles);
     const selectedLayoutVars = [
       'galleryLayout',
