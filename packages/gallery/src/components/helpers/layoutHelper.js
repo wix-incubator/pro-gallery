@@ -170,7 +170,7 @@ export const isInPreset = (styleParams, paramToCheck) => {
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 }
 
-export const getLayoutName = (galleryLayout) => {
+const getLayoutName = (galleryLayout) => {
   const galleyLayoutList = [
     'empty', // -1
     'collage', // 0

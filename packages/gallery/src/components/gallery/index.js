@@ -33,14 +33,12 @@ export default props => {
     styles: galleryProps.styles
   });
 
-  const {galleryType, galleryLayout} = galleryProps.styles;
+  const { galleryType, galleryLayout } = galleryProps.styles;
   let GalleryComponent = ProGallery;
 
   if (isEligibleForLeanGallery(galleryProps)) {
     GalleryComponent = LeanGallery;
-  }else if(!galleryType){
-    GalleryComponent = CollageGallery;
-  } else {
+  } else if (galleryType === undefined || galleryLayout !== undefined) {
     switch (galleryLayout) {
       case LAYOUTS.COLLAGE:
         GalleryComponent = CollageGallery;
@@ -84,8 +82,10 @@ export default props => {
       case LAYOUTS.EMPTY:
         GalleryComponent = EmptyGallery;
         break;
+      default:
+        GalleryComponent = CollageGallery;
     }
   }
 
-return <GalleryComponent {...galleryProps} />
+  return <GalleryComponent {...galleryProps} />
 }
