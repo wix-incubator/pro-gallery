@@ -8,13 +8,9 @@ describe('styleParam - loveButton', () => {
 
   let driver;
   const initialProps = {
-    container: {
-      height: 600,
-      width:600,
-      scrollBase: 0
-    },
+    container,
     items: [...images2, ...images2],
-    styles: styleParams
+    styles: styleParams,
   }
 
   beforeEach(() => {
@@ -41,5 +37,4 @@ describe('styleParam - loveButton', () => {
     expect(elem).to.have.lengthOf(1)
     driver.detach.proGallery();
   });
-  
 })
