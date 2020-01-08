@@ -19,8 +19,6 @@ import LAYOUTS from '../../common/constants/layout';
 import EmptyGallery from './presets/emptyGallery';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import utils from '../../common/utils'
-import { getLayoutName } from '../helpers/layoutHelper';
-
 import defaultStyles from '../../common/defaultStyles';
 
 export default props => {
@@ -37,12 +35,11 @@ export default props => {
   });
 
   const {galleryType, galleryLayout} = galleryProps.styles;
-  const layoutName = getLayoutName(galleryLayout);
   let GalleryComponent = ProGallery;
 
   if (isEligibleForLeanGallery(galleryProps)) {
     GalleryComponent = LeanGallery;
-  }else if(utils.isUndefined(galleryType) && (utils.isUndefined(layoutName) || galleryLayout === '' )){
+  }else if(utils.isUndefined(galleryType)){
     GalleryComponent = CollageGallery;
   } else {
     switch (galleryLayout) {
