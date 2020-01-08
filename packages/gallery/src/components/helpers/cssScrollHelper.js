@@ -192,7 +192,7 @@ class CssScrollHelper {
       if (
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode === LOADING_MODE.BLUR &&
-        (!item.isTransparent || isUnknownWidth) && //FAKE SSR
+        (!item.isTransparent || isUnknownWidth) &&
         !item.isDimensionless
       ) {
         scrollCss +=
