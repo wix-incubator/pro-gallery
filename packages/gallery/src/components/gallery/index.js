@@ -78,10 +78,13 @@ export default props => {
       case LAYOUTS.EMPTY:
         GalleryComponent = EmptyGallery;
         break;
+      case LAYOUTS.COLLAGE:
+        GalleryComponent = CollageGallery;
+        break;
       default:
         GalleryComponent = CollageGallery;
     }
   }
 
-return <GalleryComponent {...galleryProps} />
+  return <GalleryComponent {...galleryProps} />
 }
