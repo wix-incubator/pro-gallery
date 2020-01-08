@@ -79,8 +79,6 @@ export default props => {
         GalleryComponent = EmptyGallery;
         break;
       case LAYOUTS.COLLAGE:
-        GalleryComponent = CollageGallery;
-        break;
       default:
         GalleryComponent = CollageGallery;
     }
