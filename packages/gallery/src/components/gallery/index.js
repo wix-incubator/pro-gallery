@@ -84,5 +84,5 @@ export default props => {
     }
   }
 
-  return <GalleryComponent {...galleryProps} />
+return <GalleryComponent {...galleryProps} />
 }
