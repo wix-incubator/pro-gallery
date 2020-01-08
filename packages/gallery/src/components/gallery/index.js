@@ -42,7 +42,7 @@ export default props => {
 
   if (isEligibleForLeanGallery(galleryProps)) {
     GalleryComponent = LeanGallery;
-  }else if(utils.isUndefined(galleryType) && (utils.isUndefined(layoutName) || layoutName === '' )){
+  }else if(utils.isUndefined(galleryType) && (utils.isUndefined(layoutName) || galleryLayout === '' )){
     GalleryComponent = CollageGallery;
   } else {
     switch (galleryLayout) {
