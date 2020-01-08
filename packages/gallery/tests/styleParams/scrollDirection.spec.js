@@ -37,4 +37,16 @@ describe('styleParam - loveButton', () => {
     expect(elem).to.have.lengthOf(1)
     driver.detach.proGallery();
   });
+  it('should set margin on items to "0px" when scrollDirection is 0(vertical)', () => {
+    Object.assign(initialProps.styles, {
+      scrollDirection: GALLERY_CONST.scrollDirection.VERTICAL,
+      galleryLayout:2
+    });
+    driver.mount.proGallery(initialProps);
+    const item = driver.find.hook('item-container').at(0).getDOMNode();
+    const { margin } = getComputedStyle(item);
+    
+    expect(margin).to.eq('0px');
+    driver.detach.proGallery();
+  });
 })
