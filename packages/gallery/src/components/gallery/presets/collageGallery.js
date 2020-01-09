@@ -34,13 +34,13 @@ export default class CollageGallery extends React.Component {
     imageMargin: PropTypes.number
   }
   createStyles = () => {
-    const { isVertical, isRTL, imageMargin, styles } = this.props;
+    const { /* isVertical, isRTL, imageMargin, */ styles } = this.props;
     return {
       ...styles,
       ...fixedStyles,
-      isVertical,
-      isRTL,
-      imageMargin,
+      // isVertical,
+      // isRTL,
+      // imageMargin,
       gallerySize: Math.round(this.props.styles.gallerySize * 5 + 500),
     }
   }
