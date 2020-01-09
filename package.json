@@ -12,9 +12,9 @@
     "bootstrap": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
     "deploy": "node scripts/deployToSurge",
-    "patch": "npm run test-unit-and-e2e && node scripts/releaseVersion --patch",
-    "minor": "npm run test-unit-and-e2e && node scripts/releaseVersion --minor",
-    "major": "npm run test-unit-and-e2e && node scripts/releaseVersion --major",
+    "patch": "npm run lint && npm run test-unit-and-e2e && node scripts/releaseVersion --patch",
+    "minor": "npm run lint && npm run test-unit-and-e2e && node scripts/releaseVersion --minor",
+    "major": "npm run lint && npm run test-unit-and-e2e && node scripts/releaseVersion --major",
     "start-playground": "lerna run start-playground",
     "test-unit-and-e2e": "start-server-and-test start-playground http-get://localhost:3000 'lerna run --parallel e2e-test && lerna run --parallel test'"
   },
