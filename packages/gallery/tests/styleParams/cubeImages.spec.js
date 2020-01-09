@@ -17,7 +17,7 @@ describe('styleParam - cubeImages', () => {
     driver = new GalleryDriver();
   });
 
-  it('should be able to set "cubeType"(fill) when "cubeImages" is "true"', () => {
+  it('should allow to "cubeType" to set class to "itemWrapper"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
@@ -29,7 +29,7 @@ describe('styleParam - cubeImages', () => {
     expect(itemWrappers.length).to.be.greaterThan(0)
     driver.detach.proGallery();
   });
-  it('should not be able to set "cubeType"(fill) when "cubeImages" is "false"', () => {
+  it('should not allow to "cubeType" to set class to "itemWrapper"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
