@@ -15,26 +15,30 @@ const exec = cmd => execSync(cmd, { stdio: 'inherit' });
 
 const toSurgeUrl = subdomain => `${subdomain}.surge.sh/`;
 
+const formatBranchName = branch => {
+  return branch.replace(/_/g, '-').toLowerCase();
+}
+
 const generateSubdomains = subdomain => {
   const { version } = require('../lerna.json');
-  const { TRAVIS_BRANCH, TRAVIS_PULL_REQUEST } = process.env;
-  const isPullRequest = (TRAVIS_PULL_REQUEST && TRAVIS_PULL_REQUEST !== 'false');
+  const { TRAVIS_BRANCH } = process.env;
   const isVersionSpecific = shouldPublishVersionSpecific();
 
+  console.log(chalk.magenta(`Generating Surge subdomains from branch: ${TRAVIS_BRANCH}, PR: ${TRAVIS_PULL_REQUEST}, version: ${version}, commit: ${getLatestCommit()}`));
+
   let subdomains = [];
-  
-  if (isPullRequest) {
-    //push with -PR suffix
-    subdomains.push(subdomain + `-pr-${TRAVIS_PULL_REQUEST}`);
-  } else  if (TRAVIS_BRANCH === 'master') {
-    if (isVersionSpecific) {
+  if (TRAVIS_BRANCH === 'master' && isVersionSpecific) {
       //push with -v suffix
       subdomains.push(subdomain);
+      console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
       subdomains.push(subdomain + `-${version.replace(/\./g, '-')}`);
-    }
-    //push with -master suffix
-    subdomains.push(subdomain + `-master`);
+      console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   }
+
+  //push with branch suffix
+  subdomains.push(subdomain + `-${formatBranchName(TRAVIS_BRANCH)}`);
+  console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
+  
 
   return subdomains;
 };
@@ -72,11 +76,11 @@ function deploy(name) {
 
 function run() {
   let skip;
-  const { SURGE_LOGIN, TRAVIS_BRANCH, TRAVIS_PULL_REQUEST, CI } = process.env;
+  const { SURGE_LOGIN, CI } = process.env;
   if (!CI) {
     skip = 'Not in CI';
   } else if (!SURGE_LOGIN) {
-    skip = 'PR from fork';
+    skip = 'Invalid surge credentials';
   }
   if (skip) {
     console.log(chalk.yellow(`${skip} - skipping deploy to surge`));
