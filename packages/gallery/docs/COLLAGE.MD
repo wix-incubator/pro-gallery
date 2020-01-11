@@ -4,6 +4,13 @@
 
 | PROP | TYPE | OPTIONS | DEFAULT | DESCRIPTION
 |--|--|--|--|--|
+| domId | string | | '' | A unique identifier for the gallery
+| items | [objects] | | [] | The list of items to render
+| container | object | | parent dimensions | The width and height of the gallery
+| scrollingElement | Element | | window | The element that scrolls throught the gallery
+| eventsListener | function | | noop | A function that receives the gallery events
+
+|--|--|--|--|--|
 | orientaion | string | ROWS <br/> COLS | ROWS | align items in rows or columns
 | rtl | bool | | false | align items and texts right to left
 | spacing | number | | 10 | the spacing between items in pixels
