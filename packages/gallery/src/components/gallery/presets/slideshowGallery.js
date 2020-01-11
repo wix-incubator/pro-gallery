@@ -2,7 +2,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 
-export const fixedStyles = {
+export const layoutStyles = {
   galleryLayout: LAYOUTS.SLIDESHOW,
   enableInfiniteScroll: true,
   allowHover: false,
@@ -37,7 +37,7 @@ export default class SlideshowGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
     }
   }
 

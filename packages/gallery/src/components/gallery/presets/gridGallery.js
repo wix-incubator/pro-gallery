@@ -2,7 +2,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 
-export const fixedStyles = {
+export const layoutStyles = {
   galleryLayout: LAYOUTS.GRID,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -30,7 +30,7 @@ export default class GridGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
       gallerySize: Math.round(this.props.styles.gallerySize * 8.5 + 150),
     }
   }

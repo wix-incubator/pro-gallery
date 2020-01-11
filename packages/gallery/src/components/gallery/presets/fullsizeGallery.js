@@ -4,7 +4,7 @@ import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
 
-export const fixedStyles = {
+export const layoutStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -37,7 +37,7 @@ export default class FullsizeGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
     }
   }
 

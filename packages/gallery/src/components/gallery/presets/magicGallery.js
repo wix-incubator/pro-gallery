@@ -5,7 +5,7 @@ import LAYOUTS from '../../../common/constants/layout';
 import { featureManager } from '../../helpers/versionsHelper';
 
 
-export const fixedStyles = {
+export const layoutStyles = {
   galleryLayout: LAYOUTS.MAGIC,
   cubeImages: undefined,
   cubeRatio: undefined,
@@ -120,7 +120,7 @@ export default class MagicGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
       ...this.getStyleBySeed(this.props.styles.magicLayoutSeed)
     }
   }

@@ -3,7 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 
-export const fixedStyles = {
+export const layoutStyles = {
   galleryLayout: LAYOUTS.EMPTY,
 }
 export default class EmptyGallery extends React.Component {
@@ -11,7 +11,7 @@ export default class EmptyGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
       gallerySize: Math.round(this.props.styles.gallerySize * 9 + 100)
     }
   }

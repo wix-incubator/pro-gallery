@@ -3,7 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 
-export const fixedStyles = {
+export const layoutStyles = {
   galleryLayout: LAYOUTS.MASONRY,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -28,7 +28,7 @@ export default class MasonryGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
       gallerySize: this.props.styles.gallerySize,
     }
   }

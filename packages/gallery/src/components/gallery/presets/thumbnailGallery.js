@@ -4,7 +4,7 @@ import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
 
-export const fixedStyles = {
+export const layoutStyles = {
   galleryLayout: LAYOUTS.THUMBNAIL,
   enableInfiniteScroll: true,
   
@@ -37,7 +37,7 @@ export default class ThumbnailGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
     }
   }
   render() {

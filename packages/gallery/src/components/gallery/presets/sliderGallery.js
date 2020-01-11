@@ -4,7 +4,7 @@ import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
 
-export const fixedStyles = {
+export const layoutStyles = {
   //tested params
   galleryLayout: LAYOUTS.SLIDER,
   enableInfiniteScroll: true,
@@ -35,7 +35,7 @@ export default class SliderGallery extends React.Component {
   createStyles = () => {
     return {
       ...this.props.styles,
-      ...fixedStyles,
+      ...layoutStyles,
     }
   }
   render() {
