@@ -2,23 +2,23 @@
 
 ##  Props
 
-| PROP | TYPE | DEFAULT | DESCRIPTION
-|--|--|--|--|
-| orientaion | rows / cols | rows | align items in rows or columns
-| rtl | bool | false | align items and texts right to left
-| spacing | number | 10 | the spacing between items in pixels
-| scrollDirection | vertical / horizontal | vertical | the direction of the gallery
-| itemSize | number | 300 | the target size of each row / column (in pixels)
-| info | above / below / hover / none | hover | the placement of the info section for each item
-| play | auto / hover / onClick | hover | the playing event of videos
-| hoveringBehaviour | APPEARS / DISAPPEARS / NO_CHANGE | APPEARS | show or hide the hover element on hover
-| overlayAnimation | NO_EFFECT / FADE_IN / EXPAND / SLIDE_UP / SLIDE_RIGHT | NO_EFFECT | the animation of the overlay of each item
-| imageHoverAnimation | NO_EFFECT / ZOOM_IN / BLUR / GRAYSCALE / SHRINK / INVERT / COLOR_IN / DARKENED | NO_EFFECT | the hover animation of the image 
-| scrollAnimation | NO_EFFECT / FADE_IN / GRAYSCALE / SLIDE_UP / EXPAND / SHRINK / ZOOM_OUT / ONE_COLOR / MAIN_COLOR / BLUR | NO_EFFECT | the animation of new items that scorll into view
+| PROP | TYPE | OPTIONS | DEFAULT | DESCRIPTION
+|--|--|--|--|--|
+| orientaion | string | ROWS <br/> COLS | ROWS | align items in rows or columns
+| rtl | bool | | false | align items and texts right to left
+| spacing | number | | 10 | the spacing between items in pixels
+| scrollDirection | string | VERTICAL <br/> HORIZONTAL | VERTICAL | the direction of the gallery
+| itemSize | number | | 300 | the target size of each row <br/> column (in pixels)
+| info | string | ABOVE <br/> BELOW <br/> HOVER <br/> NONE | hover | the placement of the info section for each item
+| play | string | AUTO <br/> HOVER <br/> ON_CLICK | HOVER | the playing event of videos
+| hoveringBehaviour | string | APPEARS <br/> DISAPPEARS <br/> NO_CHANGE | APPEARS | show or hide the hover element on hover
+| overlayAnimation | string | NO_EFFECT <br/> FADE_IN <br/> EXPAND <br/> SLIDE_UP <br/> SLIDE_RIGHT | NO_EFFECT | the animation of the overlay of each item
+| imageHoverAnimation | string | NO_EFFECT <br/> ZOOM_IN <br/> BLUR <br/> GRAYSCALE <br/> SHRINK <br/> INVERT <br/> COLOR_IN <br/> DARKENED | NO_EFFECT | the hover animation of the image 
+| scrollAnimation | string | NO_EFFECT <br/> FADE_IN <br/> GRAYSCALE <br/> SLIDE_UP <br/> EXPAND <br/> SHRINK <br/> ZOOM_OUT <br/> ONE_COLOR <br/> MAIN_COLOR <br/> BLUR | NO_EFFECT | the animation of new items that scorll into view
 
 ## Code Sample
 
-```
+```jsx
   import { CollageGallery } from 'pro-gallery';
 
   export function Gallery() {
