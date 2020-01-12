@@ -163,17 +163,17 @@ export class GalleryContainer extends React.Component {
       hasPropsChanged =
         JSON.stringify(currentSignificatProps) !==
         JSON.stringify(nextSignificatProps);
+        if (utils.isVerbose() && hasPropsChanged) {
+          console.log(
+            'New props arrived',
+            utils.printableObjectsDiff(currentSignificatProps, nextSignificatProps),
+          );
+          }
     } catch (e) {
       console.error('Cannot compare props', e);
     }
 
     if (hasPropsChanged) {
-      if (utils.isVerbose()) {
-        console.log(
-          'New props arrived',
-          utils.printableObjectsDiff(this.props, nextProps),
-        );
-      }
 
       reCreateGallery();
 
@@ -668,18 +668,17 @@ export class GalleryContainer extends React.Component {
   getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
     const isSEO = isSEOMode();
     const shouldUseScrollCss = !isSEO;
-
+    let scrollCss = [];
     if (shouldUseScrollCss) {
-      return cssScrollHelper.calcScrollCss({
+      scrollCss = cssScrollHelper.calcScrollCss({
         items,
         isUnknownWidth: dimensionsHelper.isUnknownWidth(),
         styleParams,
         galleryDomId,
         allowPreloading,
       });
-    } else {
-      return [];
     }
+    return (scrollCss && scrollCss.length > 0) ? scrollCss : this.scrollCss;
   }
 
   toggleLoadMoreItems() {
