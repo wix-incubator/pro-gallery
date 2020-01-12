@@ -1,3 +1,15 @@
+##  Base Props
+
+| PROP | TYPE | DEFAULT | DESCRIPTION
+|--|--|--|--|--|
+| domId | string | '' | A unique identifier for the gallery [read more](###domId)
+| items | [objects] | [] | The list of items to render [read more](###items)
+| container | object | parent dimensions | The width and height of the gallery [read more](###container)
+| scrollingElement | Element | window | The element that scrolls throught the gallery [read more](###Scrolling-Element)
+| eventsListener | function | noop | A function that receives the gallery events [read more](###Events-Listener)
+
+## More info
+
 ### Items
 For the code you generated to work you need to do just one more thing - provide it with a list of objects, each containing at least an id, dto, and metadata:
 ```jsx
