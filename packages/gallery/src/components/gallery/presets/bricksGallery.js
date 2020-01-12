@@ -7,6 +7,7 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.BRICKS,
   cubeType: 'fill',
   cubeImages: true,
+  cubeRatio: 1,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   isVertical: true,
@@ -20,7 +21,6 @@ export const fixedStyles = {
   collageDensity: 0.8,
   galleryMargin: 0,
   floatingImages: 0,
-  cubeRatio: 1,
   fixedColumns: 1,
   groupsPerStrip: 0,
   oneRow: false,

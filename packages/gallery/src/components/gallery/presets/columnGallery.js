@@ -8,11 +8,11 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.COLUMN,
   cubeType: 'fill',
   cubeImages: true,
+  cubeRatio: 0.35,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
-  cubeRatio: 0.35,
   isVertical: false,
   galleryType: 'Strips',
   groupSize: 1,

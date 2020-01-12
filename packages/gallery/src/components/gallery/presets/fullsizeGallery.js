@@ -7,12 +7,12 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 export const fixedStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
   cubeImages: true,
+  cubeRatio: '100%/100%',
+  cubeType: 'fill',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
-  cubeType: 'fill',
-  cubeRatio: '100%/100%',
   isVertical: false,
   galleryType: 'Strips',
   groupSize: 1,

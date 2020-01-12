@@ -10,6 +10,7 @@ import enableInfiniteScroll from './options/enableInfiniteScroll';
 import allowHover from './options/allowHover';
 import cubeType from './options/cubeType';
 import cubeImages from './options/cubeImages';
+import cubeRatio from './options/cubeRatio';
 
 export default {
     itemClick,
@@ -24,4 +25,5 @@ export default {
     allowHover,
     cubeType,
     cubeImages,
+    cubeRatio,
 }
