@@ -1,3 +1,15 @@
+## [v1.6.8](https://pro-gallery-1-6-8.surge.sh) (12/01/2020)
+ 
+#### GALLERY
+ - send scroll events only on relevant scroll
+
+---
+## [v1.6.7](https://pro-gallery-1-6-7.surge.sh) (12/01/2020)
+ 
+#### GALLERY
+ -  fixed an issue where alternate and mix presets mixed up and alternated
+
+---
 ## [v1.6.6](https://pro-gallery-1-6-6.surge.sh) (08/01/2020)
  
 #### GALLERY

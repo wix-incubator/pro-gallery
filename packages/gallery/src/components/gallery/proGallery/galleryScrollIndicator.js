@@ -62,10 +62,10 @@ export default class ScrollIndicator extends GalleryComponent {
             scrollTop: left, //todo use both scrollTop and scrollLeft
             scrollLeft: left,
           });
+          this.props.getMoreItemsIfNeeded(left);
+          this.props.enableScrollPreload();
+          this.debouncedOnScroll({ top, left });
         }
-        this.props.getMoreItemsIfNeeded(left);
-        this.props.enableScrollPreload();
-        this.debouncedOnScroll({ top, left });
       }
     };
     try {
@@ -89,10 +89,10 @@ export default class ScrollIndicator extends GalleryComponent {
           this.setState({
             scrollTop: top,
           });
+          this.props.getMoreItemsIfNeeded(top);
+          this.props.enableScrollPreload();
+          this.debouncedOnScroll({ top, left });
         }
-        this.props.getMoreItemsIfNeeded(top);
-        this.props.enableScrollPreload();
-        this.debouncedOnScroll({ top, left });
       }
     };
     try {
@@ -112,8 +112,19 @@ export default class ScrollIndicator extends GalleryComponent {
     this.initScrollListener();
   }
 
-  componentWillReceiveProps() {
-    this.initScrollListener();
+  componentWillReceiveProps(nextProps) {
+    let didChange = false;
+    for (const prop of ['galleryDomId','oneRow','isRTL','totalWidth','scrollBase']) {
+      if (nextProps[prop] !== this.props[prop]) {
+        didChange = true;
+        break;
+      }
+    }
+
+    if (didChange) {
+      this.initScrollListener();
+    }
+
   }
 
   render() {
