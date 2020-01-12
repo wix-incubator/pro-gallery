@@ -1,3 +1,9 @@
+## [v1.6.8](https://pro-gallery-1-6-8.surge.sh) (12/01/2020)
+ 
+#### GALLERY
+ - send scroll events only on relevant scroll
+
+---
 ## [v1.6.7](https://pro-gallery-1-6-7.surge.sh) (12/01/2020)
  
 #### GALLERY
