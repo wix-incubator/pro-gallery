@@ -6,12 +6,12 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.COLUMN,
+  cubeType: 'fill',
   cubeImages: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
-  cubeType: 'fill',
   cubeRatio: 0.35,
   isVertical: false,
   galleryType: 'Strips',
