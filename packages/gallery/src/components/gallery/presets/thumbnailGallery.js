@@ -7,10 +7,10 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 export const fixedStyles = {
   galleryLayout: LAYOUTS.THUMBNAIL,
   enableInfiniteScroll: true,
+  cubeImages:true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
-  cubeImages: true,
   smartCrop: false,
   cubeRatio: '100%/100%',
   isVertical: false,

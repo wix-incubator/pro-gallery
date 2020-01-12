@@ -9,6 +9,7 @@ import hoveringBehaviour from './options/hoveringBehaviour'
 import enableInfiniteScroll from './options/enableInfiniteScroll';
 import allowHover from './options/allowHover';
 import cubeType from './options/cubeType';
+import cubeImages from './options/cubeImages';
 
 export default {
     itemClick,
@@ -21,5 +22,6 @@ export default {
     hoveringBehaviour,
     enableInfiniteScroll,
     allowHover,
-    cubeType
+    cubeType,
+    cubeImages,
 }
