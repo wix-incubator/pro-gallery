@@ -2,14 +2,15 @@ import { Layouter } from 'pro-layouts';
 import GalleryItem from '../../src/components/item/galleryItem';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
-import { GalleryContainer } from '../../src/components/gallery/galleryContainerNew'; //import GalleryContainer before the connect (without redux)
+import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainerNew'; //import GalleryContainer before the connect (without redux)
 import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
 import PLACEMENTS from '../../src/common/constants/placements';
 import React from 'react';
 import utils from '../../src/common/utils';
 import window from '../../src/common/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
-import ProGallery from '../../src/components/gallery/proGallery';
+import ProGallery from '../../src/components/gallery';
+
 
 configure({ adapter: new Adapter() });
 

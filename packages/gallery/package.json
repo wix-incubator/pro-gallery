@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.6.0",
+  "version": "1.6.6",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -30,7 +30,7 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "jest-image-snapshot": "^2.11.1",
-    "pro-layouts": "^1.5.35",
+    "pro-layouts": "^1.6.6",
     "react-player": "1.10.0"
   },
   "peerDependencies": {
@@ -61,7 +61,7 @@
     "svg-react-loader": "^0.4.6",
     "svg2react-icon": "^3.0.91",
     "wallaby-webpack": "^3.9.9",
-    "yoshi": "^4.10.1",
+    "yoshi": "~4.25.0",
     "yoshi-style-dependencies": "^4.0.0"
   },
   "babel": {
@@ -99,7 +99,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^-!svg-react-loader.*$": "<rootDir>/__testsDrivers__/svgImportMock.js"
+      "^-!svg-react-loader.*$": "<rootDir>/__testsDrivers__/svgImportMock.js",
+      "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
     "testPathIgnorePatterns": [
       "/node_modules/",

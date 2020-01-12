@@ -1,3 +1,49 @@
+## [v1.6.6](https://pro-gallery-1-6-6.surge.sh) (08/01/2020)
+ 
+#### GALLERY
+ -  improve: moved layoutHelper.js layout styles to presets
+ -  fix (itemView): clearTimeout on unmount to prevent state update
+ -  fix (videoScrollHelper): protect access to item.metaData.videoUrl
+ -  improve (cssScroll): use react dangerouslySetHTML for styles
+ -  improve (isEligible): allow undefined values in leanGallery params
+
+---
+## [v1.6.5](https://pro-gallery-1-6-5.surge.sh) (30/12/2019)
+ 
+#### GALLERY
+ -  slideshowView className will always contain 'pro-gallery-parent-container' and more if needed 
+ -  remove unnecessary import
+
+---
+## [v1.6.4](https://pro-gallery-1-6-4.surge.sh) (25/12/2019)
+ 
+#### GALLERY
+ -  fix (defaultStyles): add one place for default styles and pass it to the gallery
+ -  fix (slideshowView): remove event listeners on unmount
+
+---
+## [v1.6.3](https://pro-gallery-1-6-3.surge.sh) (24/12/2019)
+ 
+#### GALLERY
+ -  New merged settings endpoint with the old settings
+ -  Use different componenets for different presets
+ -  Added leanGallery for eligable galleries
+ -  AutoSlideshow always play in preview mode, never in editor mode
+ -  Do not create Hover element unless needed
+
+---
+## [v1.6.2](https://pro-gallery-1-6-2.surge.sh) (19/12/2019)
+ 
+#### GALLERY
+ -  fix (leanGallery): fix isEligible and responsive
+
+---
+## [v1.6.1](https://pro-gallery-1-6-1.surge.sh) (18/12/2019)
+ 
+#### GALLERY
+ -  added showVideoPlayButton styleParam
+
+---
 ## [v1.6.0](https://pro-gallery-1-6-0.surge.sh) (17/12/2019)
  
 #### GALLERY

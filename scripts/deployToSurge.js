@@ -4,7 +4,7 @@ const path = require('path');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
 
-const EXAMPLES_TO_DEPLOY = [
+const ARTIFACTS_TO_DEPLOY = [
   {
     name: 'pro-gallery',
     path: 'packages/playground',
@@ -13,18 +13,34 @@ const EXAMPLES_TO_DEPLOY = [
 
 const exec = cmd => execSync(cmd, { stdio: 'inherit' });
 
-const fqdn = subdomain => `${subdomain}.surge.sh/`;
+const toSurgeUrl = subdomain => `${subdomain}.surge.sh/`;
 
-const generateSubdomain = exampleName => {
+const formatBranchName = branch => {
+  return branch.replace(/_/g, '-').toLowerCase();
+}
+
+const generateSubdomains = subdomain => {
   const { version } = require('../lerna.json');
-  let subdomain = exampleName;
-  const { TRAVIS_PULL_REQUEST } = process.env;
-  if (TRAVIS_PULL_REQUEST && TRAVIS_PULL_REQUEST !== 'false') {
-    subdomain += `-pr-${TRAVIS_PULL_REQUEST}`;
-  } else {
-    subdomain += `-${version.replace(/\./g, '-')}`;
+  const { TRAVIS_BRANCH, TRAVIS_PULL_REQUEST } = process.env;
+  const isVersionSpecific = shouldPublishVersionSpecific();
+
+  console.log(chalk.magenta(`Generating Surge subdomains from branch: ${TRAVIS_BRANCH}, PR: ${TRAVIS_PULL_REQUEST}, version: ${version}, commit: ${getLatestCommit()}`));
+
+  let subdomains = [];
+  if (TRAVIS_BRANCH === 'master' && isVersionSpecific) {
+      //push with -v suffix
+      subdomains.push(subdomain);
+      console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
+      subdomains.push(subdomain + `-${version.replace(/\./g, '-')}`);
+      console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   }
-  return subdomain;
+
+  //push with branch suffix
+  subdomains.push(subdomain + `-${formatBranchName(TRAVIS_BRANCH)}`);
+  console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
+  
+
+  return subdomains;
 };
 
 function build() {
@@ -42,21 +58,14 @@ function getLatestCommit() {
 
 function shouldPublishVersionSpecific() {
     const commit = getLatestCommit();
-    console.log({commit});
     const regex = /^v\d.\d{1,2}.\d{1,3}$/gm;
     return !!(regex.exec(commit)) 
 }
 
 function deploy(name) {
-  console.log(chalk.cyan(`Deploying ${name} example to surge...`));
-  const subdomain = generateSubdomain(name);
-  const domain = fqdn(subdomain);
-  let deployCommand = `npx surge build ${fqdn(name)}`;
-  console.log({deployCommand});
-  if (shouldPublishVersionSpecific()) {
-      deployCommand += `&& npx surge build ${domain}`;
-  }
-  console.log({deployCommand});
+  console.log(chalk.cyan(`Deploying ${name} to surge...`));
+  const subdomains = generateSubdomains(name);
+  let deployCommand = subdomains.map(subdomain => `npx surge build ${toSurgeUrl(subdomain)}`).join(' && ');
   try {
     console.log(chalk.magenta(`Running "${deployCommand}`));
     exec(deployCommand);
@@ -67,25 +76,23 @@ function deploy(name) {
 
 function run() {
   let skip;
-  const { SURGE_LOGIN, TRAVIS_BRANCH, TRAVIS_PULL_REQUEST, CI } = process.env;
-  if (TRAVIS_BRANCH !== 'master') {//} && TRAVIS_PULL_REQUEST === 'false') {
-    skip = `Not deploying to surge on branch ${TRAVIS_BRANCH} or PR`;
-  } else if (!CI) {
+  const { SURGE_LOGIN, CI } = process.env;
+  if (!CI) {
     skip = 'Not in CI';
   } else if (!SURGE_LOGIN) {
-    skip = 'PR from fork';
+    skip = 'Invalid surge credentials';
   }
   if (skip) {
     console.log(chalk.yellow(`${skip} - skipping deploy to surge`));
     return false;
   }
 
-  for (const example of EXAMPLES_TO_DEPLOY) {
-    process.chdir(path.resolve(process.cwd(), example.path));
+  for (const artifact of ARTIFACTS_TO_DEPLOY) {
+    process.chdir(path.resolve(process.cwd(), artifact.path));
 
-    console.log(chalk.blue(`\nDeploying ${example.name} example...`));
+    console.log(chalk.blue(`\nDeploying ${artifact.name} artifact...`));
     //build();
-    deploy(example.name);
+    deploy(artifact.name);
 
     process.chdir(path.resolve('../..'));
   }

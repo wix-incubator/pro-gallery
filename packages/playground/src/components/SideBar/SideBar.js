@@ -16,15 +16,10 @@ function SideBar() {
   const {
     // preset,
     // setPreset,
+    gallerySettings,
     setGallerySettings,
     setStyleParams,
     styleParams,
-    isUnknownDimensions,
-    isAvoidGallerySelfMeasure,
-    setIsUnknownDimensions,
-    setIsAvoidGallerySelfMeasure,
-    setShowAllStyles,
-    showAllStyles
   } = useGalleryContext();
 
   const [searchResult, setSearchResult] = useState('');
@@ -89,7 +84,7 @@ function SideBar() {
           }}>
             <JsonEditor
               onChange={_setStyleParams}
-              styleParams={{ [searchResult]: styleParams[searchResult] }}
+              styleParams={ styleParams }
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
@@ -107,7 +102,7 @@ function SideBar() {
               onChange={_setStyleParams}
               styleParams={styleParams}
               section={SECTIONS.PRESET}
-              showAllStyles={showAllStyles}
+              showAllStyles={gallerySettings.showAllStyles}
             />
           </Collapse.Panel>
           {Object.values(SECTIONS).map((section, idx) => {
@@ -118,7 +113,7 @@ function SideBar() {
                     section={section}
                     onChange={_setStyleParams}
                     styleParams={styleParams}
-                    showAllStyles={showAllStyles}
+                    showAllStyles={gallerySettings.showAllStyles}
                   />
                 </Collapse.Panel>
               )
@@ -133,10 +128,10 @@ function SideBar() {
           <Collapse.Panel header="Media Types" key="media">
             <Form layout="vertical">
               <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
-                <InputNumber min={0} max={100} defaultValue={0} onChange={val => setGallerySettings({ numberOfItems: val })} />
+                <InputNumber min={0} max={100} defaultValue={gallerySettings.numberOfItems || 0} onChange={val => setGallerySettings({ numberOfItems: val })} />
               </Form.Item>
               <Form.Item label="Media Type">
-                <Select defaultValue="mixed" onChange={val => setGallerySettings({ mediaType: val })}>
+                <Select defaultValue={gallerySettings.mediaType || 'mixed'} onChange={val => setGallerySettings({ mediaType: val })}>
                   <Select.Option value="mixed">Images, Videos and Texts</Select.Option>
                   <Select.Option value="images">Images Only</Select.Option>
                   <Select.Option value="videos">Videos Only</Select.Option>
@@ -148,7 +143,7 @@ function SideBar() {
           <Collapse.Panel header="Gallery Styles" key="styles">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Show all Styles" labelAlign="left">
-                <Switch checked={showAllStyles} onChange={e => setShowAllStyles(e)} />
+                <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({showAllStyles: e})} />
               </Form.Item>
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
@@ -161,10 +156,10 @@ function SideBar() {
           <Collapse.Panel header="Simulators" key="simulators">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Unknown dimension" labelAlign="left">
-                <Switch checked={isUnknownDimensions} onChange={e => setIsUnknownDimensions(e)} />
+                <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({isUnknownDimensions: e})} />
               </Form.Item>
               <Form.Item label="Avoid Pro-Gallery self measure" labelAlign="left">
-                <Switch checked={isAvoidGallerySelfMeasure} onChange={e => setIsAvoidGallerySelfMeasure(e)} />
+                <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({isAvoidGallerySelfMeasure: e})} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
