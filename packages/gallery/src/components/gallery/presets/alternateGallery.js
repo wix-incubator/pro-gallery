@@ -5,6 +5,8 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.ALTERNATE,
+  cubeType: 'fill',
+  cubeImages: true,
   cubeRatio: 1,
 
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -15,8 +17,6 @@ export const fixedStyles = {
   chooseBestGroup: true,
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
   rotatingGroupTypes: '1,3l,1,3r',
-  cubeImages: true,
-  cubeType: 'fill',
   smartCrop: false,
   collageDensity: 0.48,
   galleryMargin: 0,

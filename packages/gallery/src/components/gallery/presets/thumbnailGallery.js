@@ -8,10 +8,10 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.THUMBNAIL,
   enableInfiniteScroll: true,
   cubeRatio: '100%/100%',
+  cubeImages:true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
-  cubeImages: true,
   smartCrop: false,
   isVertical: false,
   galleryType: 'Strips',

@@ -5,10 +5,10 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.MASONRY,
+  cubeImages: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
-  cubeImages: false,
   groupSize: 1,
   groupTypes: '1',
   gallerySize: 0,
