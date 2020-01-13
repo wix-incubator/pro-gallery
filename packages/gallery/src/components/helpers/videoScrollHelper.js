@@ -30,6 +30,7 @@ class VideoScrollHelper {
     this.top = 0;
     this.left = 0;
     this.videoPlay = undefined;
+    this.itemClick = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
 
     this.trigger = Object.assign(
@@ -41,9 +42,10 @@ class VideoScrollHelper {
   }
 
   //--------------------------updates----------------------------------//
-  updateGalleryStructure({ galleryStructure, scrollBase, videoPlay, oneRow }) {
+  updateGalleryStructure({ galleryStructure, scrollBase, videoPlay, itemClick, oneRow }) {
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
+    this.itemClick = itemClick;
     this.oneRow = oneRow;
     const lastItemCount = this.lastItemCount;
     const newItemCount = galleryStructure.galleryItems.length;
@@ -100,6 +102,7 @@ class VideoScrollHelper {
 
   itemClicked(idx) {
     if (this.videoPlay !== 'onClick') return;
+    if (this.itemClick !== 'nothing') return;
     if (this.IdxExistsInVideoItems(idx)) {
       if (this.currentPlayingIdx === idx) {
         this.stop();
