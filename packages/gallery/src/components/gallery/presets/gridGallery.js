@@ -4,10 +4,10 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.GRID,
+  cubeImages: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
-  cubeImages: true,
   smartCrop: false,
   isVertical: true,
   galleryType: 'Columns',

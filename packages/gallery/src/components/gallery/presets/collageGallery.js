@@ -8,10 +8,9 @@ import consts from '../../../common/constants';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
-
+  cubeImages: false,
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
-  cubeImages: false,
   groupSize: 3,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
   gallerySize: 0,
