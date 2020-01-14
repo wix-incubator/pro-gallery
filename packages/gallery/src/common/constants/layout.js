@@ -11,8 +11,8 @@ const LAYOUTS = {
   MAGIC: 8,
   FULLSIZE: 9, 
   BRICKS: 10, 
-  ALTERNATE: 11,
-  MIX: 12,
+  MIX: 11,
+  ALTERNATE: 12,
 
 };
 
