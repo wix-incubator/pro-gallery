@@ -26,7 +26,7 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, isUnknownDimensions, isAvoidGallerySelfMeasure, gallerySettings, setGallerySettings} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings} = useGalleryContext();
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
@@ -77,10 +77,10 @@ export function App() {
   }
 
   const container = {
-    height: isUnknownDimensions ? '' : window.innerHeight,
-    width: isUnknownDimensions ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
-    scrollBase: isUnknownDimensions ? '' : 0,
-    avoidGallerySelfMeasure: isAvoidGallerySelfMeasure,
+    height: gallerySettings.isUnknownDimensions ? '' : window.innerHeight,
+    width: gallerySettings.isUnknownDimensions ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
+    scrollBase: gallerySettings.isUnknownDimensions ? '' : 0,
+    avoidGallerySelfMeasure: gallerySettings.isAvoidGallerySelfMeasure,
   };
 
   const addItems = () => {
@@ -120,7 +120,7 @@ export function App() {
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ExpandableProGallery
-          key={`pro-gallery-${isUnknownDimensions}-${isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
+          key={`pro-gallery-${gallerySettings.isUnknownDimensions}-${gallerySettings.isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
           container={container}
