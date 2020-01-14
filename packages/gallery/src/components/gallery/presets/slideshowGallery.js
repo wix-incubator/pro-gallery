@@ -1,6 +1,7 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
+import PLACEMENTS from '../../../common/constants/placements';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDESHOW,
@@ -8,6 +9,7 @@ export const fixedStyles = {
   allowHover: false,
   cubeRatio: '100%/100%',
   cubeImages: true,
+  titlePlacement: PLACEMENTS.SHOW_BELOW,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
