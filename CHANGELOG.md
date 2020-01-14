@@ -1,3 +1,10 @@
+## [v1.6.9](https://pro-gallery-1-6-9.surge.sh) (14/01/2020)
+ 
+#### GALLERY
+ -  fixed mix/alternate layouts mixup
+ -  a click on a video item will be processed only if itemClick === 'nothing'.
+
+---
 ## [v1.6.8](https://pro-gallery-1-6-8.surge.sh) (12/01/2020)
  
 #### GALLERY
