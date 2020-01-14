@@ -384,6 +384,7 @@ export class GalleryContainer extends React.Component {
       galleryStructure: this.galleryStructure,
       scrollBase: container.scrollBase,
       videoPlay: styles.videoPlay,
+      itemClick: styles.itemClick,
       oneRow: styles.oneRow,
     });
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
@@ -542,6 +543,7 @@ export class GalleryContainer extends React.Component {
         galleryStructure: this.galleryStructure,
         scrollBase: _container.scrollBase,
         videoPlay: _styles.videoPlay,
+        itemClick: _styles.itemClick,
         oneRow: _styles.oneRow,
         cb: this.setPlayingIdxState,
       });

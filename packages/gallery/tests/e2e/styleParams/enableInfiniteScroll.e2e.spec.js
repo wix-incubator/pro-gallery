@@ -22,7 +22,7 @@ describe('enableInfiniteScroll - e2e', () => {
       enableInfiniteScroll: false
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery'); //took snapshot the of entire page because "Load More" button is not part of "#pro-gallery-container"
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should not have "Load More" button when "enableInfiniteScroll" is "true"', async () => {
