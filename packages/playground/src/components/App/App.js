@@ -8,6 +8,8 @@ import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import {GALLERY_CONSTS, ExpandableProGallery} from 'pro-gallery';
+// import Loader from './loader';
+
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
@@ -111,6 +113,7 @@ export function App() {
 
   return (
     <main className={s.main}>
+      {/* <Loader/> */}
       <Button className={s.toggleButton} onClick={switchState} icon={showSide ? "close" : "menu"} shape="circle" size="default" type="primary" />
       <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0, display: showSide ? 'block' : 'none'}}>
         <div className={s.heading}>
