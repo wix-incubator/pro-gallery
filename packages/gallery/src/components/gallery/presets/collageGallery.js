@@ -2,12 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProGallery from '../proGallery/proGallery';
-import LAYOUTS from '../../../common/constants/layout';
+import LAYOUTS from '../../../common/constants';
 import basePropTypes from '../proGallery/propTypes';
+import PLACEMENTS from '../../../common/constants/placements';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
   cubeImages: false,
+  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
+  
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   groupSize: 3,
