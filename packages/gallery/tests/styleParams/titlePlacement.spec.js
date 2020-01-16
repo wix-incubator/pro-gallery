@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import PLACEMENTS from '../../src/common/constants/placements';
-import HOVERING_BEHAVIOUR from '../../src/common/constants/infoBehaviourOnHover';
 
 describe('styleParam - titlePlacement', () => {
 
@@ -50,7 +49,8 @@ describe('styleParam - titlePlacement', () => {
       onRow:false,
       scrollDirection:0,
       allowTitle:true,
-      titlePlacement: PLACEMENTS.SHOW_NOT_ON_HOVER
+      // titlePlacement: PLACEMENTS.SHOW_NOT_ON_HOVER // removed from consts
+      titlePlacement: 'SHOW_NOT_ON_HOVER'
     })
     driver.mount.proGallery(initialProps);
     // search for texts inside "hover-container"
@@ -64,7 +64,8 @@ describe('styleParam - titlePlacement', () => {
       onRow:false,
       scrollDirection:0,
       allowTitle:true,
-      titlePlacement: PLACEMENTS.SHOW_NOT_ON_HOVER
+      // titlePlacement: PLACEMENTS.SHOW_NOT_ON_HOVER // removed from consts
+      titlePlacement: 'SHOW_NOT_ON_HOVER'
     })
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.invert-hover');
@@ -77,7 +78,8 @@ describe('styleParam - titlePlacement', () => {
       onRow:false,
       scrollDirection:0,
       allowTitle:true,
-      titlePlacement: PLACEMENTS.SHOW_ALWAYS
+      // titlePlacement: PLACEMENTS.SHOW_ALWAYS // removed from consts
+      titlePlacement: 'SHOW_ALWAYS'
     })
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.force-hover');
@@ -94,36 +96,6 @@ describe('styleParam - titlePlacement', () => {
     })
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.gallery-item-text');
-    expect(items.length).to.eq(0);
-    driver.detach.proGallery();
-  });
-  it('should let "hoveringBehaviour" handle hover effects when "titlePlacement" is "SHOW_ON_HOVER"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      onRow:false,
-      scrollDirection:0,
-      allowTitle:true,
-      titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
-      hoveringBehaviour: HOVERING_BEHAVIOUR.DISAPPEARS
-    })
-    driver.mount.proGallery(initialProps);
-    const items = driver.find.selector('.invert-hover');
-    //expect items to be affected by hoveringBehaviour(to have class "invert-hover" in this case)
-    expect(items.length).to.be.greaterThan(0)
-    driver.detach.proGallery();
-  });
-  it('should not let "hoveringBehaviour" handle hover effects when "titlePlacement" is not "SHOW_ON_HOVER"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      onRow:false,
-      scrollDirection:0,
-      allowTitle:true,
-      titlePlacement: PLACEMENTS.SHOW_BELOW,
-      hoveringBehaviour: HOVERING_BEHAVIOUR.DISAPPEARS
-    })
-    driver.mount.proGallery(initialProps);
-    const items = driver.find.selector('.invert-hover');
-    //expect items to not be affected by hoveringBehaviour(to have class "invert-hover" in this case)
     expect(items.length).to.eq(0);
     driver.detach.proGallery();
   });
