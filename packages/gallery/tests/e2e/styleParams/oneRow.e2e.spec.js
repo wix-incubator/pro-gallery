@@ -19,7 +19,7 @@ describe('oneRow - e2e', () => {
   it('should render horizontal gallery with navigation arrows when "onRow" is "true"', async () => {
     await driver.openPage({
       galleryLayout: -1,
-      onRow: true
+      oneRow: true
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
@@ -28,8 +28,8 @@ describe('oneRow - e2e', () => {
   });
   it('should render vertical gallery when "onRow" is "false"', async () => {
     await driver.openPage({
-      galleryLayout: 2,
-      onRow: false,
+      galleryLayout: -1,
+      oneRow: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
