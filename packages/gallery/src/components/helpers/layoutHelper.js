@@ -1,6 +1,6 @@
 import utils from '../../common/utils';
 import PLACEMENTS from '../../common/constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
+import HOVER_INFO from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import window from '../../common/window/windowWrapper';
@@ -343,19 +343,13 @@ function processLayouts(styles) {
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
-  if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) {
-    if (
-      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS
-    ) {
-      processedStyles.titlePlacement = PLACEMENTS.SHOW_NOT_ON_HOVER;
-    } else if (
-      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE
-    ) {
-      processedStyles.titlePlacement = PLACEMENTS.SHOW_ALWAYS;
-    } else {
-      //processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.APPEARS
-      processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
-    }
+  if (processedStyles.titlePlacement === 'SHOW_NOT_ON_HOVER') {
+    processedStyles.hoveringBehaviour = HOVER_INFO.DISAPPEARS;
+    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+  }
+  else if (processedStyles.titlePlacement === 'SHOW_ALWAYS'){
+    processedStyles.hoveringBehaviour = HOVER_INFO.NO_CHANGE;
+    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER
   }
 
   if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {

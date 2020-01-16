@@ -19,6 +19,7 @@ import {
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 import PLACEMENTS from '../../common/constants/placements';
+import HOVER_INFO from '../../common/constants/infoBehaviourOnHover';
 import CLICK_ACTIONS from '../../common/constants/itemClick';
 import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
 import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
@@ -291,7 +292,7 @@ class ItemView extends GalleryComponent {
       const {
         allowDescription,
         allowTitle,
-        titlePlacement,
+        hoveringBehaviour,
         itemClick,
         isSlideshow,
         alwaysShowHover,
@@ -305,9 +306,7 @@ class ItemView extends GalleryComponent {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        (titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
-          titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
-          titlePlacement === PLACEMENTS.SHOW_ALWAYS) &&
+        (hoveringBehaviour !== HOVER_INFO.NO_HOVER) &&
         isNewMobileSettings
       ) {
         return true;
@@ -338,7 +337,7 @@ class ItemView extends GalleryComponent {
       return true;
     } else if (isEditMode() && styleParams.previewHover) {
       return true;
-    } else if (styleParams.allowHover === false) {
+    } else if (styleParams.hoveringBehaviour === HOVER_INFO.NO_HOVER) {
       return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
@@ -630,9 +629,9 @@ class ItemView extends GalleryComponent {
 
     if ((visible && this.shouldHover()) || styleParams.isSlideshow) {
       itemTexts =
-        styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
-        styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
-        styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
+        styleParams.titlePlacement !== PLACEMENTS.SHOW_BELOW &&
+        styleParams.titlePlacement !== PLACEMENTS.SHOW_ABOVE &&
+        styleParams.titlePlacement !== PLACEMENTS.DONT_SHOW
           ? this.getItemTextsDetails()
           : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
       social = this.getSocial();
@@ -778,7 +777,7 @@ class ItemView extends GalleryComponent {
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
+      this.props.styleParams.hoveringBehaviour === HOVER_INFO.NO_CHANGE
     );
   }
 
@@ -857,7 +856,7 @@ class ItemView extends GalleryComponent {
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
-        styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER,
+        styleParams.hoveringBehaviour === HOVER_INFO.DISAPPEARS,
 
       //overlay animations
       'hover-animation-fade-in':

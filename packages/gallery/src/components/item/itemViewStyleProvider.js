@@ -1,12 +1,11 @@
 import INFO_TYPE from '../../common/constants/infoType';
 import PLACEMENTS from '../../common/constants/placements';
+import HOVER_INFO from '../../common/constants/infoBehaviourOnHover';
 
 export function getContainerStyle(styleParams) {
   return {
     ...((styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS) && {
+      styleParams.hoveringBehaviour !== HOVER_INFO.NO_HOVER) && {
       ...getBorderStyle(
         styleParams.itemBorderRadius,
         styleParams.itemBorderWidth,
