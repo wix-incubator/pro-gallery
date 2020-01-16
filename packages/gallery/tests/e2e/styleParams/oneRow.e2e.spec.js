@@ -16,7 +16,7 @@ describe('oneRow - e2e', () => {
   afterEach(() => {
     driver.closeBrowser();
   });
-  it('should render horizontal gallery with navigation arrows when "onRow" is "true"', async () => {
+  it('should render horizontal gallery with navigation arrows when "oneRow" is "true"', async () => {
     await driver.openPage({
       galleryLayout: -1,
       oneRow: true
@@ -26,7 +26,7 @@ describe('oneRow - e2e', () => {
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-  it('should render vertical gallery when "onRow" is "false"', async () => {
+  it('should render vertical gallery when "oneRow" is "false"', async () => {
     await driver.openPage({
       galleryLayout: -1,
       oneRow: false,
