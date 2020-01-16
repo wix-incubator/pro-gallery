@@ -1,3 +1,28 @@
+## [v1.6.10](https://pro-gallery-1-6-10.surge.sh) (16/01/2020)
+ 
+#### GALLERY
+ -  fixed EVENTS.NEED_MORE_ITEMS not beeing dispatched for some galleries.
+
+---
+## [v1.6.9](https://pro-gallery-1-6-9.surge.sh) (14/01/2020)
+
+#### GALLERY
+ -  fixed mix/alternate layouts mixup
+ -  a click on a video item will be processed only if itemClick === 'nothing'.
+
+---
+## [v1.6.8](https://pro-gallery-1-6-8.surge.sh) (12/01/2020)
+ 
+#### GALLERY
+ - send scroll events only on relevant scroll
+
+---
+## [v1.6.7](https://pro-gallery-1-6-7.surge.sh) (12/01/2020)
+ 
+#### GALLERY
+ -  fixed an issue where alternate and mix presets mixed up and alternated
+
+---
 ## [v1.6.6](https://pro-gallery-1-6-6.surge.sh) (08/01/2020)
  
 #### GALLERY

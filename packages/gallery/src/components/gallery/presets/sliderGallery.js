@@ -9,11 +9,11 @@ export const fixedStyles = {
   //tested params
   galleryLayout: LAYOUTS.SLIDER,
   enableInfiniteScroll: true,
+  cubeImages: true,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
-  cubeImages: true,
   smartCrop: false,
   isVertical: false,
   galleryType: 'Strips',
