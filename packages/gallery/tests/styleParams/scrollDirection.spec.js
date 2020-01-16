@@ -17,9 +17,10 @@ describe('styleParam - loveButton', () => {
     driver = new GalleryDriver();
   });
 
-  it('should render element "#gallery-horizontal-scroll" when "scrollDirection" is "1"', () => {
+  it('should render element "#gallery-horizontal-scroll" when "oneRow" is "true"', () => {
     Object.assign(initialProps.styles, {
-      scrollDirection: GALLERY_CONST.scrollDirection.HORIZONTAL,
+      oneRow: true,
+      scrollDirection: null, // make sure scroll direction doesnt change oneRow
       galleryLayout:2
     });
     driver.mount.proGallery(initialProps);
@@ -27,9 +28,10 @@ describe('styleParam - loveButton', () => {
     expect(elem).to.have.lengthOf(1)
     driver.detach.proGallery();
   });
-  it('should render element "#pro-gallery-margin-container" when "scrollDirection" is "0"', () => {
+  it('should render element "#pro-gallery-margin-container" when "oneRow" is "false"', () => {
     Object.assign(initialProps.styles, {
-      scrollDirection: GALLERY_CONST.scrollDirection.VERTICAL,
+      oneRow: false,
+      scrollDirection: null, // make sure scroll direction doesnt change oneRow
       galleryLayout:2
     });
     driver.mount.proGallery(initialProps);
@@ -37,9 +39,10 @@ describe('styleParam - loveButton', () => {
     expect(elem).to.have.lengthOf(1)
     driver.detach.proGallery();
   });
-  it('should set margin on items to "0px" when scrollDirection is 0(vertical)', () => {
+  it('should set margin on items to "0px" when oneRow is false(vertical)', () => {
     Object.assign(initialProps.styles, {
-      scrollDirection: GALLERY_CONST.scrollDirection.VERTICAL,
+      oneRow: false,
+      scrollDirection: null, // make sure scroll direction doesnt change oneRow
       galleryLayout:2
     });
     driver.mount.proGallery(initialProps);

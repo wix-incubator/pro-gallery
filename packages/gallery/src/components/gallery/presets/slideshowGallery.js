@@ -1,7 +1,6 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
-import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDESHOW,
@@ -9,7 +8,7 @@ export const fixedStyles = {
   allowHover: false,
   cubeRatio: '100%/100%',
   cubeImages: true,
-  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
+  oneRow: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
@@ -20,7 +19,6 @@ export const fixedStyles = {
   groupSize: 1,
   groupTypes: '1',
   fixedColumns: 1,
-  oneRow: true,
   hasThumbnails: false,
   enableScroll: true,
   scrollSnap: true,

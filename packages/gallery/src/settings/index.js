@@ -11,7 +11,7 @@ import allowHover from './options/allowHover';
 import cubeType from './options/cubeType';
 import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
-import scrollDirection from './options/scrollDirection';
+import oneRow from './options/oneRow';
 
 export default {
     itemClick,
@@ -27,5 +27,5 @@ export default {
     cubeType,
     cubeImages,
     cubeRatio,
-    scrollDirection
+    oneRow
 }

@@ -17,19 +17,20 @@ describe('scrollDirection - e2e', () => {
   afterEach(() => {
     driver.closeBrowser();
   });
-  it('should render horizontal gallery with navigation arrows when "scrollDirection" is "1"', async () => {
+  it('should render horizontal gallery with navigation arrows when "onRow" is "true"', async () => {
     await driver.openPage({
       galleryLayout: -1,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL
+      onRow: true
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-  it('should render vertical gallery when "scrollDirection" is "0"', async () => {
+  it('should render vertical gallery when "onRow" is "false"', async () => {
     await driver.openPage({
       galleryLayout: 2,
+      onRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL
     });
     await driver.waitFor.hookToBeVisible('item-container');
