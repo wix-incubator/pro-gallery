@@ -2,9 +2,8 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
-import GALLERY_CONST from '../../src/common/constants';
 
-describe('styleParam - loveButton', () => {
+describe('styleParam - oneRow', () => {
 
   let driver;
   const initialProps = {
