@@ -8,6 +8,7 @@ export const fixedStyles = {
   cubeType: 'fill',
   cubeImages: true,
   cubeRatio: 1,
+  galleryMargin: 0,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   isVertical: true,
@@ -19,7 +20,6 @@ export const fixedStyles = {
   rotatingGroupTypes: '2h',
   smartCrop: false,
   collageDensity: 0.8,
-  galleryMargin: 0,
   floatingImages: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,

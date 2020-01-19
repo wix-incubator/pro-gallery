@@ -10,6 +10,7 @@ export const fixedStyles = {
   cubeRatio: '100%/100%',
   cubeType: 'fill',
   oneRow: true,
+  galleryMargin: 0,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
@@ -29,7 +30,6 @@ export const fixedStyles = {
   isSlideshow: false,
   cropOnlyFill: false,
   floatingImages: 0,
-  galleryMargin: 0,
   imageMargin: 0,
 }
 export default class FullsizeGallery extends React.Component {
