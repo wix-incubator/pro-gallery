@@ -8,6 +8,7 @@ export const fixedStyles = {
   allowHover: false,
   cubeRatio: '100%/100%',
   cubeImages: true,
+  oneRow: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
@@ -18,7 +19,6 @@ export const fixedStyles = {
   groupSize: 1,
   groupTypes: '1',
   fixedColumns: 1,
-  oneRow: true,
   hasThumbnails: false,
   enableScroll: true,
   scrollSnap: true,
