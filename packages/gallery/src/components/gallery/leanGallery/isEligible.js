@@ -1,6 +1,6 @@
 import consts from '../../../common/constants/index';
 import { addLayoutStyles } from '../../helpers/layoutHelper';
-
+// TODO: DONT_SHOW and allowHover are not supported anymore, ask guy
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export default ({items, styles, options}) => {
@@ -106,7 +106,6 @@ const ignoredStyleParams = {
   allowDownload: false,
   allowTitle: true,
   allowDescription: false,
-  allowHover: true,
   loveButton: true,
   loveCounter: false,
   arrowsPosition: 0,
@@ -179,7 +178,7 @@ const fixedStyleParams = {
   isRTL: false,
   scrollDirection: [0, undefined],
   groupSize: 1,
-  allowHover: false,
+  hoveringBehaviour: consts.infoBehaviourOnHover.NEVER_SHOW,
   rotatingGroupTypes: '',
   cubeImages: true,
   smartCrop: false,
@@ -197,5 +196,5 @@ const fixedStyleParams = {
   usmToggle: false,
   itemClick: consts.itemClick.NOTHING,
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: consts.placements.DONT_SHOW,
+  titlePlacement: consts.placements.SHOW_ON_HOVER,
 };

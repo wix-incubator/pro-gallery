@@ -1,6 +1,6 @@
 import utils from '../../common/utils';
 import PLACEMENTS from '../../common/constants/placements';
-import HOVER_INFO from '../../common/constants/infoBehaviourOnHover';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import window from '../../common/window/windowWrapper';
@@ -340,13 +340,14 @@ function processLayouts(styles) {
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
+    // all horizontal layouts that are not slider or columns
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
   if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
     processedStyles.titlePlacement === PLACEMENTS.SHOW_BELOW
     ) {
-    processedStyles.hoveringBehaviour = HOVER_INFO.APPEARS;
+    processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
   
   if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {
@@ -658,7 +659,7 @@ function getFontLineHeight(font) {
 
 function isSlideshowFont(styles) {
   const galleryLayout = styles.galleryLayout;
-  if (galleryLayout === 5) {
+  if (galleryLayout === 5) { // slideshow layout
     return true;
   }
   if (

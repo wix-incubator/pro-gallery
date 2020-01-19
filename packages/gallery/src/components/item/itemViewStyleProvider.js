@@ -1,20 +1,20 @@
 import INFO_TYPE from '../../common/constants/infoType';
 import PLACEMENTS from '../../common/constants/placements';
-import HOVER_INFO from '../../common/constants/infoBehaviourOnHover';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 
 export function getContainerStyle(styleParams) {
   return {
     ...((styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND ||
-      styleParams.hoveringBehaviour === HOVER_INFO.APPEARS ||
-      styleParams.hoveringBehaviour === HOVER_INFO.DISAPPEARS ||
-      styleParams.hoveringBehaviour === HOVER_INFO.NO_CHANGE) && {
-      ...getBorderStyle(
-        styleParams.itemBorderRadius,
-        styleParams.itemBorderWidth,
-        styleParams.itemBorderColor,
-      ),
-      ...boxShadow(styleParams),
-    }),
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER &&
+      styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) &&
+      {
+        ...getBorderStyle(
+          styleParams.itemBorderRadius,
+          styleParams.itemBorderWidth,
+          styleParams.itemBorderColor,
+        ),
+        ...boxShadow(styleParams),
+      }),
   };
 }
 
@@ -100,9 +100,9 @@ export function getInnerInfoStyle(styleParams) {
     textAlign: styleParams.galleryTextAlign,
     ...((styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
       styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE) && {
-      paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
-      paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
-    }),
+        paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
+        paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
+      }),
     paddingRight: getInfoHorizontalPadding(styleParams) + 'px',
     paddingLeft: getInfoHorizontalPadding(styleParams) + 'px',
     overflow: 'hidden',

@@ -19,7 +19,7 @@ import {
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 import PLACEMENTS from '../../common/constants/placements';
-import HOVER_INFO from '../../common/constants/infoBehaviourOnHover';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import CLICK_ACTIONS from '../../common/constants/itemClick';
 import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
 import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
@@ -158,7 +158,7 @@ class ItemView extends GalleryComponent {
   onItemClick(e) {
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
-      return (() => {});
+      return (() => { });
     }
 
     e.preventDefault();
@@ -219,9 +219,9 @@ class ItemView extends GalleryComponent {
       return;
     } else if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.props.styleParams.itemClick)) {
       this.props.actions.eventsListener(
-          EVENTS.ITEM_ACTION_TRIGGERED,
-          this.props,
-        );
+        EVENTS.ITEM_ACTION_TRIGGERED,
+        this.props,
+      );
     }
   }
 
@@ -292,23 +292,21 @@ class ItemView extends GalleryComponent {
       const {
         allowDescription,
         allowTitle,
+        titlePlacement,
         hoveringBehaviour,
         itemClick,
-        isSlideshow,
         alwaysShowHover,
         previewHover,
       } = this.props.styleParams;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
-      if (isSlideshow) {
+      if (hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
         return false;
       }
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        (hoveringBehaviour === HOVER_INFO.APPEARS ||
-          hoveringBehaviour === HOVER_INFO.DISAPPEARS ||
-          hoveringBehaviour === HOVER_INFO.NO_CHANGE) &&
+        titlePlacement === PLACEMENTS.SHOW_ON_HOVER && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
         isNewMobileSettings
       ) {
         return true;
@@ -333,14 +331,12 @@ class ItemView extends GalleryComponent {
   shouldHover() { //see if this could be decided in the preset
     const { styleParams } = this.props;
 
-    if (styleParams.isSlideshow) {
+    if (styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
       return false;
     } else if (styleParams.alwaysShowHover === true) {
       return true;
     } else if (isEditMode() && styleParams.previewHover) {
       return true;
-    } else if (styleParams.allowHover === false) {
-      return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
     } else {
@@ -626,14 +622,12 @@ class ItemView extends GalleryComponent {
     let itemTexts;
     let social;
     let share;
-    
+
     let itemHover = null;
 
     if ((visible && this.shouldHover()) || styleParams.isSlideshow) {
       itemTexts =
-        styleParams.titlePlacement !== PLACEMENTS.SHOW_BELOW &&
-        styleParams.titlePlacement !== PLACEMENTS.SHOW_ABOVE &&
-        styleParams.titlePlacement !== PLACEMENTS.DONT_SHOW
+        styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
           ? this.getItemTextsDetails()
           : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
       social = this.getSocial();
@@ -644,7 +638,7 @@ class ItemView extends GalleryComponent {
         imageDimensions,
       );
     }
-    
+
 
     if (visible) {
       switch (type) {
@@ -670,7 +664,7 @@ class ItemView extends GalleryComponent {
           itemInner = [this.getImageItem(imageDimensions), itemHover];
       }
     } else {
-      itemInner = <div/>
+      itemInner = <div />
     }
 
     if (styleParams.isSlideshow) {
@@ -779,7 +773,7 @@ class ItemView extends GalleryComponent {
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.styleParams.hoveringBehaviour === HOVER_INFO.NO_CHANGE
+      this.props.styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE
     );
   }
 
@@ -792,7 +786,7 @@ class ItemView extends GalleryComponent {
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
       cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
-      (styleParams.itemClick === CLICK_ACTIONS.LINK && linkData.type === undefined) //when itemClick is 'link' but no link was added to this specific item
+        (styleParams.itemClick === CLICK_ACTIONS.LINK && linkData.type === undefined) //when itemClick is 'link' but no link was added to this specific item
         ? 'default'
         : 'pointer'
     };
@@ -858,7 +852,7 @@ class ItemView extends GalleryComponent {
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
-        styleParams.hoveringBehaviour === HOVER_INFO.DISAPPEARS,
+        styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS,
 
       //overlay animations
       'hover-animation-fade-in':
@@ -917,8 +911,8 @@ class ItemView extends GalleryComponent {
     const tabIndex = this.isHighlight()
       ? utils.getTabIndex('currentThumbnail')
       : this.props.currentIdx === this.props.idx
-      ? utils.getTabIndex('currentGalleryItem')
-      : -1;
+        ? utils.getTabIndex('currentGalleryItem')
+        : -1;
     return tabIndex;
   }
 
@@ -959,7 +953,7 @@ class ItemView extends GalleryComponent {
         ) {
           if (
             this.props.thumbnailHighlightId !==
-              prevProps.thumbnailHighlightId &&
+            prevProps.thumbnailHighlightId &&
             this.props.thumbnailHighlightId === this.props.id
           ) {
             // if the highlighted thumbnail changed and it is the same as this itemview's
@@ -986,7 +980,7 @@ class ItemView extends GalleryComponent {
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);
-      } catch (e) {}
+      } catch (e) { }
     }
 
     window.addEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
@@ -998,7 +992,7 @@ class ItemView extends GalleryComponent {
   }
 
 
-    componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     this.changeActiveElementIfNeeded(prevProps);
   }
 

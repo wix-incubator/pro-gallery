@@ -54,7 +54,6 @@ const styleParams = {
     allowDownload: false,
     allowTitle: true,
     allowDescription: false,
-    allowHover: true,
     loveButton: true,
     loveCounter: false,
     arrowsPosition: 0,

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProGallery from '../proGallery/proGallery';
-import LAYOUTS from '../../../common/constants';
+import LAYOUTS from '../../../common/constants/layout';
 import basePropTypes from '../proGallery/propTypes';
 import PLACEMENTS from '../../../common/constants/placements';
 

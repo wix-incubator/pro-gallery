@@ -8,7 +8,7 @@ import utils from '../../../common/utils';
 import designConsts from '../../../common/constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';
 import { GalleryComponent } from '../../galleryComponent';
-import HOVER_INFO from '../../../common/constants/infoBehaviourOnHover';
+import INFO_BEHAVIOUR_ON_HOVER from '../../../common/constants/infoBehaviourOnHover';
 
 export default class Texts extends GalleryComponent {
   constructor(props) {
@@ -44,10 +44,7 @@ export default class Texts extends GalleryComponent {
   getElementStyle() {
     const { styleParams, style } = this.props;
     const textsDisplayOnHover =
-      !styleParams.isSlideshow &&
-      !styleParams.isSlider &&
-      !styleParams.hasThumbnails &&
-      (styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER)
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
     const isCentered = style.justifyContent === 'center';
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,
