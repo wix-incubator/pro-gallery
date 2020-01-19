@@ -29,4 +29,18 @@ describe('styleParam - galleryMargin', () => {
     expect(margin).to.eq('20px');
     driver.detach.proGallery();
   });
+  it('should set the gallery with a margin of (galleryMargin - (imageMargin / 2)) in a oneRow gallery', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: 2,
+      imageMargin: 10,
+      galleryMargin: 20,
+      oneRow:true,
+    })
+    driver.mount.proGallery(initialProps);
+    const galleryContainer = driver.find.selector('.pro-gallery-parent-container').getDOMNode();
+    const margin = getComputedStyle(galleryContainer).margin;
+    // expect the margin to be (galleryMargin - (imageMargin / 2)
+    expect(margin).to.eq('15px');
+    driver.detach.proGallery();
+  });
 })
