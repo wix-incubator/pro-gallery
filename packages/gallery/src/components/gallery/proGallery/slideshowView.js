@@ -651,8 +651,11 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
-    const hideLeftArrow = (!isRTL && this.isScrollStart()) || (isRTL && this.isScrollEnd());
-    const hideRightArrow = (isRTL && this.isScrollStart()) || (!isRTL && this.isScrollEnd());
+    const atStart = this.isScrollStart() || this.isFirstItem();
+    const atEnd = this.isScrollEnd() || this.isLastItem()
+
+    const hideLeftArrow = (!isRTL && atStart) || (isRTL && atEnd);
+    const hideRightArrow = (isRTL && atStart) || (!isRTL && atEnd);
 
     return [
       hideLeftArrow ? null : (
