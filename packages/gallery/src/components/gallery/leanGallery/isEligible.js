@@ -1,11 +1,8 @@
 import consts from '../../../common/constants/index';
-import { addLayoutStyles } from '../../helpers/layoutHelper';
 
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
-export default ({items, styles, options}) => {
-
-    styles = {...styles, ...options};
+export default ({items, styles}) => {
 
     const allowLeanGallery = !!styles.allowLeanGallery;
     
@@ -22,15 +19,14 @@ export default ({items, styles, options}) => {
         return false;
       }
     }
-    const fullStyles = addLayoutStyles(styles);
-    for (const [styleParam, value] of Object.entries(fullStyles)) {
+    for (const [styleParam, value] of Object.entries(styles)) {
       if (!isValidStyleParam(styleParam, value)) {
         console.log(`[LEAN GALLERY] NOT ALLOWED - invalid styleParam`, styleParam, value);
         return false;
       }
     }
 
-    console.log(`[LEAN GALLERY] ALLOWED!`, fullStyles);
+    console.log(`[LEAN GALLERY] ALLOWED!`, styles);
     return true;
     
 }
@@ -72,6 +68,7 @@ const handledStyleParams = {
   itemBorderWidth: 0,
   itemBorderRadius: 0,
   imageQuality: 90,
+  textBoxHeight: 200,
 };
 
 //these params are not relevant when a lean gallery is rendered - the fixed styles will override them
@@ -125,7 +122,6 @@ const ignoredStyleParams = {
   galleryThumbnailsAlignment: 'bottom',
   thumbnailSize: 250,
   magicLayoutSeed: 1,
-  textBoxHeight: 200,
   textImageSpace: 10,
   textBoxBorderRadius: 0,
   textBoxBorderWidth: 0,
@@ -191,11 +187,12 @@ const fixedStyleParams = {
   mobilePanorama: false,
   enableInfiniteScroll: true,
   useCustomButton: false,
-  externalInfoHeight: 0,
   bottomInfoHeight: 0,
+  externalInfoHeight: 0,
   itemEnableShadow: false,
   usmToggle: false,
   itemClick: consts.itemClick.NOTHING,
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: consts.placements.DONT_SHOW,
+  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW, consts.placements.DONT_SHOW]
+
 };

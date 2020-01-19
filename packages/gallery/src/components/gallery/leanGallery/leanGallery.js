@@ -4,6 +4,10 @@ import React from 'react';
 import EVENTS from '../../../common/constants/events';
 import GALLERY_SIZE_TYPE from '../../../common/constants/gallerySizeType';
 import CROP_TYPES from '../../../common/constants/resizeMethods'
+import INFO_PLACEMENT from '../../../common/constants/placements'
+
+import Texts from '../../item/texts/texts';
+import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 import s from './leanGallery.module.scss';
 
 const get = (item, attr) => {
@@ -80,7 +84,7 @@ export default class LeanGallery extends React.Component {
     } else if (gallerySizeType === GALLERY_SIZE_TYPE.RATIO && gallerySizeRatio > 0) {
       itemSize = container.width * (gallerySizeRatio / 100);
     } else {
-      itemSize = Math.round(gallerySize * 8.5 + 150);
+      itemSize = gallerySize;
     }
 
     const minmaxFix = 0.75; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
@@ -116,7 +120,7 @@ export default class LeanGallery extends React.Component {
     }
   }
 
-  getImageSize(image) {
+  calcImageSize(image) {
     const { styles } = this.props;
     if (styles.cubeType !== CROP_TYPES.FIT) {
       return this.state.itemStyle
@@ -143,6 +147,17 @@ export default class LeanGallery extends React.Component {
         marginLeft: (width - _width) / 2
 
       }
+    }
+  }
+
+  calcContainerHeight() {
+    const { height = 0 } = this.state.itemStyle
+    const { textBoxHeight = 0, titlePlacement } = this.props.styles;
+
+    if ([INFO_PLACEMENT.SHOW_ABOVE, INFO_PLACEMENT.SHOW_BELOW].includes(titlePlacement)) {
+      return height + textBoxHeight;
+    } else {
+      return height;
     }
   }
 
@@ -179,13 +194,11 @@ export default class LeanGallery extends React.Component {
           return (
             <div
               className={['gallery-item-container', s.cell].join(' ')}
-              style={{
-                height: this.state.itemStyle.height
-              }}
+              style={{height: this.calcContainerHeight()}}
               ref={this.measureIfNeeded}
               >
               <div
-                style={{...this.getImageSize(item)}}
+                style={{...this.calcImageSize(item)}}
                 className={['gallery-item-hover', s.imageWrapper].join(' ')}
               ><img 
                 src={this.resizeUrl({ item })} 
@@ -195,6 +208,23 @@ export default class LeanGallery extends React.Component {
                 style={this.createItemStyle()}
                 // onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, new GalleryItem({dto: item}))}
               /></div>
+              <div className="texts" style={getInnerInfoStyle(this.props.styles)}>
+              <Texts
+                key={`item-texts-${this.props.id}`}
+                itemContainer={this.node}
+                title={get(item, 'title')}
+                description={get(item, 'description')}
+                style={this.state.itemStyle}
+                styleParams={this.props.styles}
+                showShare={false}
+                isSmallItem={false}
+                isNarrow={false}
+                shouldShowButton={false}
+                actions={{
+                  eventsListener: this.eventsListener,
+                }}
+              />
+              </div>
             </div>
           )
         })
