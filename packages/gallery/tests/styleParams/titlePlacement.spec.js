@@ -17,7 +17,7 @@ describe('styleParam - titlePlacement', () => {
     driver = new GalleryDriver();
   });
 
-  it('should place texts below images', () => {
+  it('should place texts below images when "titlePlacement" is "SHOW_BELOW"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow:false,
@@ -30,7 +30,7 @@ describe('styleParam - titlePlacement', () => {
     expect(items).to.have.lengthOf(6)
     driver.detach.proGallery();
   });
-  it('should place texts above images', () => {
+  it('should place texts above images when "titlePlacement" is "SHOW_ABOVE"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow:false,
@@ -41,49 +41,6 @@ describe('styleParam - titlePlacement', () => {
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.gallery-item-top-info');
     expect(items).to.have.lengthOf(6)
-    driver.detach.proGallery();
-  });
-  it('should place texts over images when "titlePlacement" is "SHOW_NOT_ON_HOVER"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      onRow:false,
-      scrollDirection:0,
-      allowTitle:true,
-      // titlePlacement: PLACEMENTS.SHOW_NOT_ON_HOVER // removed from consts
-      titlePlacement: 'SHOW_NOT_ON_HOVER'
-    })
-    driver.mount.proGallery(initialProps);
-    // search for texts inside "hover-container"
-    const items = driver.find.selector('.gallery-item-hover .gallery-item-text');
-    expect(items.length).to.be.greaterThan(0);
-    driver.detach.proGallery();
-  });
-  it('should set class "invert-hover" to items when "titlePlacement" is "SHOW_NOT_ON_HOVER"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      onRow:false,
-      scrollDirection:0,
-      allowTitle:true,
-      // titlePlacement: PLACEMENTS.SHOW_NOT_ON_HOVER // removed from consts
-      titlePlacement: 'SHOW_NOT_ON_HOVER'
-    })
-    driver.mount.proGallery(initialProps);
-    const items = driver.find.selector('.invert-hover');
-    expect(items.length).to.be.greaterThan(0);
-    driver.detach.proGallery();
-  });
-  it('should set class "force-hover" to items when "titlePlacement" is "SHOW_ALLWAYS"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      onRow:false,
-      scrollDirection:0,
-      allowTitle:true,
-      // titlePlacement: PLACEMENTS.SHOW_ALWAYS // removed from consts
-      titlePlacement: 'SHOW_ALWAYS'
-    })
-    driver.mount.proGallery(initialProps);
-    const items = driver.find.selector('.force-hover');
-    expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should not render texts when "titlePlacement" is "DONT_SHOW"', () => {
