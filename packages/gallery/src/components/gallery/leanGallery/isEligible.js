@@ -20,7 +20,7 @@ export default ({items, styles}) => {
       }
     }
     for (const [styleParam, value] of Object.entries(styles)) {
-      if (!isValidStyleParam(styleParam, value)) {
+      if (!isValidStyleParam(styleParam, value, styles)) {
         console.log(`[LEAN GALLERY] NOT ALLOWED - invalid styleParam`, styleParam, value);
         return false;
       }
@@ -40,12 +40,14 @@ const isImage = item => {
   return isImageItem;
 }
 
-const isValidStyleParam = (styleParam, value) => {
+const isValidStyleParam = (styleParam, value, allStyles) => {
   if (typeof handledStyleParams[styleParam] !== 'undefined') return true;
   if (typeof ignoredStyleParams[styleParam] !== 'undefined') return true;
   if (typeof fixedStyleParams[styleParam] !== 'undefined') {
     const sp = fixedStyleParams[styleParam];
-    if (sp && sp.length > 0) {
+    if (sp && typeof sp === 'function') {
+      return sp(allStyles);
+    } else if (sp && sp.length > 0) {
       return sp.includes(value);
     } else {
       return sp === value;
@@ -58,6 +60,9 @@ const isValidStyleParam = (styleParam, value) => {
 //these styles can get any value, the lean gallery will handle them
 const handledStyleParams = { 
   numberOfImagesPerRow: 3,
+  gallerySizeType: 'smart',
+  gallerySizeRatio: 1,
+  gallerySizePx: 300,
   gallerySize: 30,
   cubeType: 'fill',
   cubeRatio: 1,
@@ -154,7 +159,6 @@ const ignoredStyleParams = {
   loadMoreAmount: 'all',
   addToCartBorderWidth: 1,
   imageLoadingMode: consts.loadingMode.BLUR,
-  calculateTextBoxHeightMode: consts.calculationOptions.AUTOMATIC,
   hoveringBehaviour: consts.infoBehaviourOnHover.APPEARS,
   expandAnimation: consts.expandAnimations.NO_EFFECT,
   imageHoverAnimation: consts.imageHoverAnimations.NO_EFFECT,
@@ -191,8 +195,8 @@ const fixedStyleParams = {
   externalInfoHeight: 0,
   itemEnableShadow: false,
   usmToggle: false,
-  itemClick: consts.itemClick.NOTHING,
+  itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW, consts.placements.DONT_SHOW]
-
+  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW, consts.placements.DONT_SHOW],
+  calculateTextBoxHeightMode: sp => sp.titlePlacement === consts.placements.DONT_SHOW || sp.calculateTextBoxHeightMode ===consts.calculationOptions.MANUAL,
 };
