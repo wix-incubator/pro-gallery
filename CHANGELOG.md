@@ -1,3 +1,9 @@
+## [v1.6.11](https://pro-gallery-1-6-11.surge.sh) (19/01/2020)
+ 
+#### GALLERY
+ -  fix: items will be clickable when itemClick is link and there is a dynamic link on those items.
+
+---
 ## [v1.6.10](https://pro-gallery-1-6-10.surge.sh) (16/01/2020)
  
 #### GALLERY
