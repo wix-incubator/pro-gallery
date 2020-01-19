@@ -343,15 +343,12 @@ function processLayouts(styles) {
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
-  if (processedStyles.titlePlacement === 'SHOW_NOT_ON_HOVER') {
-    processedStyles.hoveringBehaviour = HOVER_INFO.DISAPPEARS;
-    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+  if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
+    processedStyles.titlePlacement === PLACEMENTS.SHOW_BELOW
+    ) {
+    processedStyles.hoveringBehaviour = HOVER_INFO.APPEARS;
   }
-  else if (processedStyles.titlePlacement === 'SHOW_ALWAYS'){
-    processedStyles.hoveringBehaviour = HOVER_INFO.NO_CHANGE;
-    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER
-  }
-
+  
   if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {
     processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
   }

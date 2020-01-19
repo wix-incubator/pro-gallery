@@ -306,7 +306,9 @@ class ItemView extends GalleryComponent {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        (hoveringBehaviour !== HOVER_INFO.NO_HOVER) &&
+        (hoveringBehaviour === HOVER_INFO.APPEARS ||
+          hoveringBehaviour === HOVER_INFO.DISAPPEARS ||
+          hoveringBehaviour === HOVER_INFO.NO_CHANGE) &&
         isNewMobileSettings
       ) {
         return true;
@@ -337,7 +339,7 @@ class ItemView extends GalleryComponent {
       return true;
     } else if (isEditMode() && styleParams.previewHover) {
       return true;
-    } else if (styleParams.hoveringBehaviour === HOVER_INFO.NO_HOVER) {
+    } else if (styleParams.allowHover === false) {
       return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
