@@ -1,3 +1,9 @@
+## [v1.6.12](https://pro-gallery-1-6-12.surge.sh) (19/01/2020)
+ 
+#### GALLERY
+ -  remove arrows from first and last items
+
+---
 ## [v1.6.11](https://pro-gallery-1-6-11.surge.sh) (19/01/2020)
  
 #### GALLERY
