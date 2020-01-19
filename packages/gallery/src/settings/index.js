@@ -12,6 +12,7 @@ import cubeType from './options/cubeType';
 import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
 import oneRow from './options/oneRow';
+import galleryMargin from './options/galleryMargin'
 
 export default {
     itemClick,
@@ -27,5 +28,6 @@ export default {
     cubeType,
     cubeImages,
     cubeRatio,
-    oneRow
+    oneRow,
+    galleryMargin
 }
