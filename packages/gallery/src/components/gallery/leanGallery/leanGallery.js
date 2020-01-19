@@ -107,8 +107,9 @@ export default class LeanGallery extends React.Component {
 
   }
 
-  createItemStyle() {
+  createItemStyle(imageSize) {
     const { styles } = this.props;
+    const {width, height} = imageSize;
     const { 
       itemBorderWidth: borderWidth,
       itemBorderColor: borderColor,
@@ -116,6 +117,8 @@ export default class LeanGallery extends React.Component {
     } = styles;
 
     return {
+      width,
+      height,
       borderWidth,
       borderColor,
       borderRadius
@@ -203,7 +206,7 @@ export default class LeanGallery extends React.Component {
 
     const { items } = this.props;
     const { itemClick } = this.props.styles;
-      
+    
     return (
       <div 
         className={['pro-gallery', 'inline-styles', s.gallery].join(' ')}
@@ -213,24 +216,30 @@ export default class LeanGallery extends React.Component {
           const linkParams = this.createLinkParams(item);
           const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick));
           const imageSize = this.calcImageSize(item);
+          const itemData = {...item, id: item.itemId, idx: itemIdx};
+
           return (
             <a
               className={['gallery-item-container', s.cell].join(' ')}
               style={{height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
-              ref={this.measureIfNeeded}
+              ref={node => {
+                this.measureIfNeeded(node);
+                this.props.eventsListener(EVENTS.ITEM_CREATED, itemData);
+              }}
               key={'item-container-' + itemIdx}
               {...linkParams}
               >
               <div
                 style={imageSize}
                 className={['gallery-item-hover', s.imageWrapper].join(' ')}
-                onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, {...item, id: item.itemId, idx: itemIdx})}
+                onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, itemData)}
               ><img 
                 src={this.resizeUrl({ item })} 
                 loading="lazy" 
                 className={['gallery-item-content', s.image].join(' ')}
                 alt={get(item, 'title')} 
-                style={{...this.createItemStyle(), width: imageSize.width, height: imageSize.height}}
+                style={this.createItemStyle(imageSize)}
+                onLoad={() => this.props.eventsListener(EVENTS.ITEM_LOADED, itemData)}
               /></div>
               <div className="texts" style={getInnerInfoStyle(this.props.styles)}>
               <Texts
