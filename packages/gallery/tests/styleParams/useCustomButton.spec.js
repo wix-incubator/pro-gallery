@@ -22,7 +22,7 @@ describe('styleParam - useCustomButton', () => {
       useCustomButton: true,
     });
     driver.mount.proGallery(initialProps);
-    const buttons = driver.find.hook('custom-button-button');
+    const buttons = driver.find.selector('.custom-button-wrapper');
     expect(buttons.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
@@ -32,7 +32,7 @@ describe('styleParam - useCustomButton', () => {
       useCustomButton: false,
     });
     driver.mount.proGallery(initialProps);
-    const buttons = driver.find.hook('custom-button-button');
+    const buttons = driver.find.selector('.custom-button-wrapper');
     expect(buttons.length).to.eq(0);
     driver.detach.proGallery();
   });
