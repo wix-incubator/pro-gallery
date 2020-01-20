@@ -168,6 +168,10 @@ const ignoredStyleParams = {
   imageInfoType: consts.infoType.NO_BACKGROUND
 };
 
+const hasTextElement = sp => {
+  return sp.allowTitle || sp.allowDescription || sp.useCustomButton;
+}
+
 //these params must be set to these exact values in order for the lean gallery to render well
 const fixedStyleParams = { 
   allowLeanGallery: true,
@@ -196,5 +200,5 @@ const fixedStyleParams = {
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
   titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW],
-  calculateTextBoxHeightMode: sp => sp.titlePlacement === consts.placements.DONT_SHOW || sp.calculateTextBoxHeightMode ===consts.calculationOptions.MANUAL,
+  calculateTextBoxHeightMode: sp => hasTextElement(sp) || sp.calculateTextBoxHeightMode ===consts.calculationOptions.MANUAL,
 };
