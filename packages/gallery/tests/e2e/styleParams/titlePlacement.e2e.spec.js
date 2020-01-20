@@ -41,17 +41,4 @@ describe('titlePlacement - e2e', () => {
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not show texts at all', async () => {
-    await driver.openPage({
-      galleryLayout: 2,
-      allowTitle: true,
-      allowDescription: true,
-      titlePlacement: PLACEMENTS.DONT_SHOW
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0]
-    await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
-    expect(page).toMatchImageSnapshot();
-  });
 })
