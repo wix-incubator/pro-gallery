@@ -200,5 +200,5 @@ const fixedStyleParams = {
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
   titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW],
-  calculateTextBoxHeightMode: sp => hasTextElement(sp) || sp.calculateTextBoxHeightMode ===consts.calculationOptions.MANUAL,
+  calculateTextBoxHeightMode: sp => !hasTextElement(sp) || sp.calculateTextBoxHeightMode ===consts.calculationOptions.MANUAL,
 };
