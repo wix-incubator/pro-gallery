@@ -195,6 +195,6 @@ const fixedStyleParams = {
   usmToggle: false,
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW, consts.placements.DONT_SHOW],
+  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW],
   calculateTextBoxHeightMode: sp => sp.titlePlacement === consts.placements.DONT_SHOW || sp.calculateTextBoxHeightMode ===consts.calculationOptions.MANUAL,
 };
