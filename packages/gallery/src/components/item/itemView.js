@@ -625,7 +625,7 @@ class ItemView extends GalleryComponent {
     let itemTexts;
     let social;
     let share;
-    
+
     let itemHover = null;
 
     if ((visible && this.shouldHover()) || styleParams.isSlideshow) {
@@ -643,7 +643,7 @@ class ItemView extends GalleryComponent {
         imageDimensions,
       );
     }
-    
+
 
     if (visible) {
       switch (type) {
@@ -783,15 +783,16 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { styleParams, linkData } = this.props;
+    const { styleParams, linkData, linkUrl } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
+    const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
       cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
-      (styleParams.itemClick === CLICK_ACTIONS.LINK && linkData.type === undefined) //when itemClick is 'link' but no link was added to this specific item
+      (styleParams.itemClick === CLICK_ACTIONS.LINK && itemDoesntHaveLink)
         ? 'default'
         : 'pointer'
     };

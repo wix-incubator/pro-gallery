@@ -9,6 +9,7 @@ export const fixedStyles = {
   cubeType: 'fill',
   cubeImages: true,
   cubeRatio: 0.35,
+  oneRow: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
@@ -20,7 +21,6 @@ export const fixedStyles = {
   gallerySize: () => dimensionsHelper.getGalleryHeight(),
   fixedColumns: 0,
   hasThumbnails: false,
-  oneRow: true,
   enableScroll: true,
   isGrid: false,
   isColumns: true,

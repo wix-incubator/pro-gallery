@@ -16,7 +16,7 @@ export const fixedStyles = {
   groupSize: 3,
   chooseBestGroup: true,
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
-  rotatingGroupTypes: '1,3l,1,3r',
+  rotatingGroupTypes: '1,2h,1,2h',
   smartCrop: false,
   collageDensity: 0.48,
   galleryMargin: 0,
