@@ -9,6 +9,7 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDER,
   enableInfiniteScroll: true,
   cubeImages: true,
+  oneRow: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
@@ -18,7 +19,6 @@ export const fixedStyles = {
   groupSize: 1,
   groupTypes: '1',
   gallerySize: () => dimensionsHelper.getGalleryHeight(),
-  oneRow: true,
   hasThumbnails: false,
   enableScroll: true,
   scrollSnap: true,

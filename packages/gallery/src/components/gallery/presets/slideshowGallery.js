@@ -8,6 +8,7 @@ export const fixedStyles = {
   enableInfiniteScroll: true,
   cubeRatio: '100%/100%',
   cubeImages: true,
+  oneRow: true,
   hoveringBehaviour: INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -19,7 +20,6 @@ export const fixedStyles = {
   groupSize: 1,
   groupTypes: '1',
   fixedColumns: 1,
-  oneRow: true,
   hasThumbnails: false,
   enableScroll: true,
   scrollSnap: true,

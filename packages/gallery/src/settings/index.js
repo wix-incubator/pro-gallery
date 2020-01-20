@@ -10,6 +10,7 @@ import enableInfiniteScroll from './options/enableInfiniteScroll';
 import cubeType from './options/cubeType';
 import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
+import oneRow from './options/oneRow';
 import titlePlacement from './options/titlePlacement';
 
 export default {
@@ -25,5 +26,6 @@ export default {
     cubeType,
     cubeImages,
     cubeRatio,
-    titlePlacement
+    oneRow,
+    titlePlacement,
 }

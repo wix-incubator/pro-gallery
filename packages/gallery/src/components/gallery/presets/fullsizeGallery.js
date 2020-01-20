@@ -10,6 +10,7 @@ export const fixedStyles = {
   cubeImages: true,
   cubeRatio: '100%/100%',
   cubeType: 'fill',
+  oneRow: true,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -20,7 +21,6 @@ export const fixedStyles = {
   groupSize: 1,
   gallerySize: () => dimensionsHelper.getGalleryWidth(),
   groupTypes: '1',
-  oneRow: true,
   hasThumbnails: false,
   enableScroll: true,
   scrollSnap: true,
