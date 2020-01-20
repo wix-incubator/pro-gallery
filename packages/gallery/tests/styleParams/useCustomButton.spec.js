@@ -8,7 +8,7 @@ describe('styleParam - useCustomButton', () => {
   let driver;
   const initialProps = {
     container,
-    items: [...images2, ...images2],
+    items: [...images2],
     styles: styleParams,
   }
 
@@ -18,12 +18,34 @@ describe('styleParam - useCustomButton', () => {
 
   it('should render custom button when "customButton" is "true"', () => {
     Object.assign(initialProps.styles, {
-      
-      galleryLayout:2
+      galleryLayout:2,
+      useCustomButton: true,
     });
     driver.mount.proGallery(initialProps);
-    const elem = driver.find.selector('#gallery-horizontal-scroll');
-    expect(elem).to.have.lengthOf(1)
+    const buttons = driver.find.hook('custom-button-button');
+    expect(buttons.length).to.be.greaterThan(0);
+    driver.detach.proGallery();
+  });
+  it('should not render custom button when "customButton" is "false"', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout:2,
+      useCustomButton: false,
+    });
+    driver.mount.proGallery(initialProps);
+    const buttons = driver.find.hook('custom-button-button');
+    expect(buttons.length).to.eq(0);
+    driver.detach.proGallery();
+  });
+  it('should render Texts element when "customButton" is "true"', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout:2,
+      useCustomButton: true,
+      allowTitle: false, // test that customButton is enough to render Texts element
+      allowDescription: false,
+    });
+    driver.mount.proGallery(initialProps);
+    const buttons = driver.find.selector('.gallery-item-text');
+    expect(buttons.length).to.be.greaterThan(0)
     driver.detach.proGallery();
   });
 })
