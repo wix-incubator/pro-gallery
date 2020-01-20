@@ -18,7 +18,7 @@ describe('galleryMargin - e2e', () => {
   });
   it('should set the gallery with a margin of 100px ', async () => {
     await driver.openPage({
-      galleryLayout: 2,
+      galleryLayout: -1,
       galleryMargin: 100
     });
     await driver.waitFor.hookToBeVisible('item-container');
