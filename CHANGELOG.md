@@ -1,3 +1,12 @@
+## [v1.7.0](https://pro-gallery-1-7-0.surge.sh) (21/01/2020)
+ 
+#### GALLERY
+ -  titlePlacement/hoveringBehaviour options: separated info/hover behaviours:
+      * titlePlacement no longer supports 'SHOW_NOT_ON_HOVER': use option - hoveringBehaviour = 'DISAPPEAR'
+      * titlePlacement no longer supports 'SHOW_ALWAYS': use option - hoveringBehaviour = 'NO_CHANGE'
+      * titlePlacement no longer supports 'DONT_SHOW': use option - hoveringBehaviour = 'NEVER_SHOW'
+
+---
 ## [v1.6.12](https://pro-gallery-1-6-12.surge.sh) (19/01/2020)
  
 #### GALLERY
