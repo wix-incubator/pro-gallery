@@ -1,5 +1,4 @@
 import consts from '../../../common/constants/index';
-import PLACEMENTS from '../../../common/constants/placements';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export default ({items, styles}) => {
@@ -197,5 +196,5 @@ const fixedStyleParams = {
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
   titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW],
-  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.calculationOptions.MANUAL || (sp.titlePlacement !== PLACEMENTS.SHOW_ABOVE && sp.titlePlacement !== PLACEMENTS.SHOW_BELOW),
+  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.calculationOptions.MANUAL || (sp.titlePlacement !== consts.placements.SHOW_ABOVE && sp.titlePlacement !== consts.placements.SHOW_BELOW),
 };
