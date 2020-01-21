@@ -1,3 +1,9 @@
+## [v1.7.1](https://pro-gallery-1-7-1.surge.sh) (21/01/2020)
+ 
+#### GALLERY
+ -  improve (leanGallery): expand leanGallery coverage
+
+---
 ## [v1.7.0](https://pro-gallery-1-7-0.surge.sh) (21/01/2020)
  
 #### GALLERY
