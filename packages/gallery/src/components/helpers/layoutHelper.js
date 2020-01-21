@@ -344,6 +344,8 @@ function processLayouts(styles) {
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
+  // the gallery can support the customing of hoveringBehaviour  
+  // in any titlePlacement option. this overide is forced due to product decisions.
   if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
     processedStyles.titlePlacement === PLACEMENTS.SHOW_BELOW
     ) {
