@@ -1,5 +1,4 @@
 import consts from '../../../common/constants/index';
-
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export default ({items, styles}) => {
@@ -108,7 +107,6 @@ const ignoredStyleParams = {
   allowDownload: false,
   allowTitle: true,
   allowDescription: false,
-  allowHover: true,
   loveButton: true,
   loveCounter: false,
   arrowsPosition: 0,
@@ -179,7 +177,7 @@ const fixedStyleParams = {
   isRTL: false,
   scrollDirection: [0, undefined],
   groupSize: 1,
-  allowHover: false,
+  hoveringBehaviour: consts.infoBehaviourOnHover.NEVER_SHOW,
   rotatingGroupTypes: '',
   cubeImages: true,
   smartCrop: false,
@@ -197,6 +195,6 @@ const fixedStyleParams = {
   usmToggle: false,
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW, consts.placements.DONT_SHOW],
-  calculateTextBoxHeightMode: sp => sp.titlePlacement === consts.placements.DONT_SHOW || sp.calculateTextBoxHeightMode ===consts.calculationOptions.MANUAL,
+  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW],
+  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.calculationOptions.MANUAL || (sp.titlePlacement !== consts.placements.SHOW_ABOVE && sp.titlePlacement !== consts.placements.SHOW_BELOW),
 };
