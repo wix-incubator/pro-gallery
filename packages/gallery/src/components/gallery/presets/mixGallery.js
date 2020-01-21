@@ -8,9 +8,9 @@ export const fixedStyles = {
   cubeType: 'fill',
   cubeImages: true,
   cubeRatio: 1,
+  isVertical: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  isVertical: true,
   gallerySize: 86,
   minItemSize: 50,
   groupSize: 3,

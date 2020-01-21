@@ -10,11 +10,11 @@ export const fixedStyles = {
   cubeRatio: '100%/100%',
   cubeImages:true,
   oneRow: true,
+  isVertical: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
-  isVertical: false,
   galleryType: 'Strips',
   groupSize: 1,
   gallerySize: () => dimensionsHelper.getGalleryWidth(),

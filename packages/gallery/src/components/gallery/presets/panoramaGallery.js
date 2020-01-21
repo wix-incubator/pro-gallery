@@ -7,10 +7,10 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 export const fixedStyles = {
   galleryLayout: LAYOUTS.PANORAMA,
   cubeImages: false,
+  isVertical: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
-  isVertical: true,
   galleryType: 'Columns',
   groupSize: 1,
   groupTypes: '1',
