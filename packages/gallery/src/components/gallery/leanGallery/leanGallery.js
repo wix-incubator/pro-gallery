@@ -217,7 +217,23 @@ export default class LeanGallery extends React.Component {
           const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick));
           const imageSize = this.calcImageSize(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
-
+          const texts = (position) => this.props.styles.titlePlacement === position && <div className="texts" style={getInnerInfoStyle(this.props.styles)}>
+          <Texts
+            key={`item-texts-${this.props.id}`}
+            itemContainer={this.node}
+            title={get(item, 'title')}
+            description={get(item, 'description')}
+            style={this.state.itemStyle}
+            styleParams={this.props.styles}
+            showShare={false}
+            isSmallItem={false}
+            isNarrow={false}
+            shouldShowButton={false}
+            actions={{
+              eventsListener: this.eventsListener,
+            }}
+          />
+        </div>
           return (
             <a
               className={['gallery-item-container', s.cell].join(' ')}
@@ -228,7 +244,7 @@ export default class LeanGallery extends React.Component {
               }}
               key={'item-container-' + itemIdx}
               {...linkParams}
-              >
+              >{texts(INFO_PLACEMENT.SHOW_ABOVE)}
               <div
                 style={imageSize}
                 className={['gallery-item-hover', s.imageWrapper].join(' ')}
@@ -241,23 +257,7 @@ export default class LeanGallery extends React.Component {
                 style={this.createItemStyle(imageSize)}
                 onLoad={() => this.props.eventsListener(EVENTS.ITEM_LOADED, itemData)}
               /></div>
-              <div className="texts" style={getInnerInfoStyle(this.props.styles)}>
-              <Texts
-                key={`item-texts-${this.props.id}`}
-                itemContainer={this.node}
-                title={get(item, 'title')}
-                description={get(item, 'description')}
-                style={this.state.itemStyle}
-                styleParams={this.props.styles}
-                showShare={false}
-                isSmallItem={false}
-                isNarrow={false}
-                shouldShowButton={false}
-                actions={{
-                  eventsListener: this.eventsListener,
-                }}
-              />
-              </div>
+              {texts(INFO_PLACEMENT.SHOW_BELOW)}
             </a>
           )
         })
