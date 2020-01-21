@@ -13,6 +13,7 @@ import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 import NEW_PRESETS from '../gallery/presets/presets';
+import { GALLERY_CONSTS } from '../../settings/utils/constants';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -344,8 +345,7 @@ function processLayouts(styles) {
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
-  // the gallery can support the customing of hoveringBehaviour  
-  // in any titlePlacement option. this overide is forced due to product decisions.
+  // to_wrapper
   if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
     processedStyles.titlePlacement === PLACEMENTS.SHOW_BELOW
     ) {
@@ -661,7 +661,7 @@ function getFontLineHeight(font) {
 
 function isSlideshowFont(styles) {
   const galleryLayout = styles.galleryLayout;
-  if (galleryLayout === 5) { // slideshow layout
+  if (galleryLayout === GALLERY_CONSTS.layout.SLIDESHOW) {
     return true;
   }
   if (
