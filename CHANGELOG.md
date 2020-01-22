@@ -1,3 +1,13 @@
+## [v1.7.3](https://pro-gallery-1-7-3.surge.sh) (22/01/2020)
+ 
+#### GALLERY
+ -  Accessibility fix loveButton label, role, and checked/unchecked
+ -  Added formFactor prop ("mobile"/"desktop"/"tablet"). Will be used as one of the ways to know if the gallery is displayed on mobile.
+
+#### MAIN
+ -  fix (deployToSurge): fix version specifc deploy
+
+---
 ## [v1.7.2](https://pro-gallery-1-7-2.surge.sh) (22/01/2020)
  
 #### GALLERY
