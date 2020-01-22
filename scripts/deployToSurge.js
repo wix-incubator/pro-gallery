@@ -22,22 +22,25 @@ const formatBranchName = branch => {
 const generateSubdomains = subdomain => {
   const { version } = require('../lerna.json');
   const { TRAVIS_BRANCH, TRAVIS_PULL_REQUEST } = process.env;
-  const isVersionSpecific = shouldPublishVersionSpecific();
+  const isVersionSpecific = shouldPublishVersionSpecific(TRAVIS_BRANCH);
 
   console.log(chalk.magenta(`Generating Surge subdomains from branch: ${TRAVIS_BRANCH}, PR: ${TRAVIS_PULL_REQUEST}, version: ${version}, commit: ${getLatestCommit()}`));
 
   let subdomains = [];
-  if (TRAVIS_BRANCH === 'master' && isVersionSpecific) {
+  if (isVersionSpecific) {
       //push with -v suffix
       subdomains.push(subdomain);
       console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
       subdomains.push(subdomain + `-${version.replace(/\./g, '-')}`);
       console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
+      subdomains.push(subdomain + `-master`);
+      console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
+  } else {
+    //push with branch suffix
+    subdomains.push(subdomain + `-${formatBranchName(TRAVIS_BRANCH)}`);
+    console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   }
 
-  //push with branch suffix
-  subdomains.push(subdomain + `-${formatBranchName(TRAVIS_BRANCH)}`);
-  console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   
 
   return subdomains;
@@ -56,8 +59,8 @@ function getLatestCommit() {
     });
 }
 
-function shouldPublishVersionSpecific() {
-    const commit = getLatestCommit();
+function shouldPublishVersionSpecific(commit) {
+    // const commit = getLatestCommit();
     const regex = /^v\d.\d{1,2}.\d{1,3}$/gm;
     return !!(regex.exec(commit)) 
 }
