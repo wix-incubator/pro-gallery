@@ -806,8 +806,11 @@ class ItemView extends GalleryComponent {
         (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
         'transparent';
     }
-    styles.height = height + 'px';
     styles.margin = -styleParams.itemBorderWidth + 'px';
+    
+    if (!this.props.isUnknownWidth) {
+      styles.height = height + 'px';
+    }
 
     const imageDimensions = this.getImageDimensions();
 

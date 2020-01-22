@@ -10,6 +10,7 @@ const getImageStyle = (item, styleParams) => ({
   left: item.offset.left,
   width: item.width,
   height: item.height + (styleParams.externalInfoHeight || 0),
+  innerHeight: item.height,
 });
 
 const createItemId = (galleryDomId, item) => {
@@ -44,10 +45,12 @@ const createCssFromLayout = (galleryDomId = '', layout, styleParams, width) => {
       const Tvw = `top:${getRelativeDimension(style.top)}vw;`;
       const Wvw = `width:${getRelativeDimension(style.width)}vw;`;
       const Hvw = `height:${getRelativeDimension(style.height)}vw;`;
+      const iHvw = `height:${getRelativeDimension(style.innerHeight)}vw;`;
       const Lpc = `left:${getRelativeDimension(style.left)}%;`;
       const Wpc = `width:${getRelativeDimension(style.width)}%;`;
       cssStr += `${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
-      cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${Hvw}}`;
+      cssStr += `${id} .gallery-item-wrapper {${Wvw}${Hvw}}`;
+      cssStr += `${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${iHvw}}`;
     } else {
       cssStr += `${id}{display:none;}`;
     }
