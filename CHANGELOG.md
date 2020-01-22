@@ -1,3 +1,10 @@
+## [v1.7.2](https://pro-gallery-1-7-2.surge.sh) (22/01/2020)
+ 
+#### GALLERY
+ -  fix padding issue: fixed padding bottom in texts when not needed (thumbnails, slider and slideshow layouts)
+ -  fix Accessibility issue for vertical galleries: keyboard arrows navigation: if load more button is on, cannot navigate to items that are hidden below it
+
+---
 ## [v1.7.1](https://pro-gallery-1-7-1.surge.sh) (21/01/2020)
  
 #### GALLERY
