@@ -44,7 +44,10 @@ export default class Texts extends GalleryComponent {
   getElementStyle() {
     const { styleParams, style } = this.props;
     const textsDisplayOnHover =
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
+    !styleParams.isSlideshow &&
+    !styleParams.isSlider &&
+    !styleParams.hasThumbnails &&
+      (styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW)
     const isCentered = style.justifyContent === 'center';
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,
