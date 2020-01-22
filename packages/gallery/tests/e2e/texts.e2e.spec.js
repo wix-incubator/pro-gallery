@@ -21,7 +21,8 @@ describe('texts - e2e', () => {
     await driver.openPage({
       galleryLayout: 3,
       loveButton: true,
-      // allowTitle: true,
+      allowTitle: true,
+      allowDescription: true,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
       galleryVerticalAlign: GALLERY_CONSTS.verticalAlign.CENTER,
     });
@@ -34,7 +35,8 @@ describe('texts - e2e', () => {
     await driver.openPage({
       galleryLayout: 4,
       loveButton: true,
-      // allowTitle: true,
+      allowDescription: true,
+      allowTitle: true,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
       galleryVerticalAlign: GALLERY_CONSTS.verticalAlign.CENTER,
     });
