@@ -123,12 +123,13 @@ class LoveButton extends GalleryComponent {
             ? 0
             : -1
         }
+        role="checkbox"
+        aria-checked={this.props.isLoved}
+        aria-label={'Love'}
       >
         <button
           data-hook="love-icon"
           className={this.buttonClasssName()}
-          role="checkbox"
-          aria-checked={this.props.isLoved}
           style={loveColor}
           tabIndex={-1}
         >{this.props.isLoved ? <LoveFull size="21"/> : <LoveEmpty size="21"/>}</button>
