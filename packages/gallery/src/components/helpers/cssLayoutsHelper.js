@@ -49,7 +49,7 @@ const createCssFromLayout = (galleryDomId = '', layout, styleParams, width) => {
       const Lpc = `left:${getRelativeDimension(style.left)}%;`;
       const Wpc = `width:${getRelativeDimension(style.width)}%;`;
       cssStr += `${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
-      cssStr += cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${iHvw}}`;
+      cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${iHvw}}`;
     } else {
       cssStr += `${id}{display:none;}`;
     }
