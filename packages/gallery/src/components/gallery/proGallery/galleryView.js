@@ -51,6 +51,11 @@ class GalleryView extends GalleryComponent {
           break;
       }
 
+      //if nextIdx is below the lastVisibleItemIdx (higher idx), we will ignore the findNeighborItem answer and stay on the same item
+      if (newIdx > this.lastVisibleItemIdx()) {
+        newIdx = idx;
+      }
+
       if (newIdx >= 0) {
         e.preventDefault();
         e.stopPropagation();
@@ -76,7 +81,7 @@ class GalleryView extends GalleryComponent {
   }
 
   lastVisibleItemIdx() {
-    //the item must be visible and about the show more button
+    //the item must be visible and above the show more button
     return this.lastVisibleItemIdxInHeight(
       this.props.container.galleryHeight - 100,
     );

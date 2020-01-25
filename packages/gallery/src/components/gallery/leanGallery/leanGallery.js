@@ -5,7 +5,9 @@ import EVENTS from '../../../common/constants/events';
 import GALLERY_SIZE_TYPE from '../../../common/constants/gallerySizeType';
 import CROP_TYPES from '../../../common/constants/resizeMethods'
 import INFO_PLACEMENT from '../../../common/constants/placements'
+import CLICK_ACTIONS from '../../../common/constants/itemClick'
 
+import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import Texts from '../../item/texts/texts';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 import s from './leanGallery.module.scss';
@@ -105,8 +107,9 @@ export default class LeanGallery extends React.Component {
 
   }
 
-  createItemStyle() {
+  createItemStyle(imageSize) {
     const { styles } = this.props;
+    const {width, height} = imageSize;
     const { 
       itemBorderWidth: borderWidth,
       itemBorderColor: borderColor,
@@ -114,6 +117,8 @@ export default class LeanGallery extends React.Component {
     } = styles;
 
     return {
+      width,
+      height,
       borderWidth,
       borderColor,
       borderRadius
@@ -161,6 +166,22 @@ export default class LeanGallery extends React.Component {
     }
   }
 
+  createLinkParams(item) {
+    const { noFollowForSEO } = this.props;
+    const { itemClick } = this.props.styles;
+
+    const { directLink } = item;
+    const { url, target } = directLink || {};
+    const isSEO = isSEOMode();
+    const shouldUseNofollow = isSEO && noFollowForSEO;
+    const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
+    const shouldUseDirectLink = !!(url && target && itemClick === CLICK_ACTIONS.LINK);
+    const linkParams = shouldUseDirectLink
+      ? { href: url, target, ...seoLinkParams }
+      : false;
+    return linkParams;
+  }
+
   measureIfNeeded(node) {
     const { styles } = this.props;
     if (!this.node && node) {
@@ -184,48 +205,60 @@ export default class LeanGallery extends React.Component {
   render() {
 
     const { items } = this.props;
-
+    const { itemClick } = this.props.styles;
+    
     return (
       <div 
         className={['pro-gallery', 'inline-styles', s.gallery].join(' ')}
         style={this.createGalleryStyle()}
       >
-        {items.map(item => {
+        {items.map((item, itemIdx) => {
+          const linkParams = this.createLinkParams(item);
+          const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick));
+          const imageSize = this.calcImageSize(item);
+          const itemData = {...item, id: item.itemId, idx: itemIdx};
+          const texts = (position) => this.props.styles.titlePlacement === position && <div className="texts" style={getInnerInfoStyle(this.props.styles)}>
+          <Texts
+            key={`item-texts-${this.props.id}`}
+            itemContainer={this.node}
+            title={get(item, 'title')}
+            description={get(item, 'description')}
+            style={this.state.itemStyle}
+            styleParams={this.props.styles}
+            showShare={false}
+            isSmallItem={false}
+            isNarrow={false}
+            shouldShowButton={false}
+            actions={{
+              eventsListener: this.eventsListener,
+            }}
+          />
+        </div>
           return (
-            <div
+            <a
               className={['gallery-item-container', s.cell].join(' ')}
-              style={{height: this.calcContainerHeight()}}
-              ref={this.measureIfNeeded}
-              >
+              style={{height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
+              ref={node => {
+                this.measureIfNeeded(node);
+                this.props.eventsListener(EVENTS.ITEM_CREATED, itemData);
+              }}
+              key={'item-container-' + itemIdx}
+              {...linkParams}
+              >{texts(INFO_PLACEMENT.SHOW_ABOVE)}
               <div
-                style={{...this.calcImageSize(item)}}
+                style={imageSize}
                 className={['gallery-item-hover', s.imageWrapper].join(' ')}
+                onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, itemData)}
               ><img 
                 src={this.resizeUrl({ item })} 
                 loading="lazy" 
                 className={['gallery-item-content', s.image].join(' ')}
                 alt={get(item, 'title')} 
-                style={this.createItemStyle()}
-                // onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, new GalleryItem({dto: item}))}
+                style={this.createItemStyle(imageSize)}
+                onLoad={() => this.props.eventsListener(EVENTS.ITEM_LOADED, itemData)}
               /></div>
-              <div className="texts" style={getInnerInfoStyle(this.props.styles)}>
-              <Texts
-                key={`item-texts-${this.props.id}`}
-                itemContainer={this.node}
-                title={get(item, 'title')}
-                description={get(item, 'description')}
-                style={this.state.itemStyle}
-                styleParams={this.props.styles}
-                showShare={false}
-                isSmallItem={false}
-                isNarrow={false}
-                shouldShowButton={false}
-                actions={{
-                  eventsListener: this.eventsListener,
-                }}
-              />
-              </div>
-            </div>
+              {texts(INFO_PLACEMENT.SHOW_BELOW)}
+            </a>
           )
         })
         }
