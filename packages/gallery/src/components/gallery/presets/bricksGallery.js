@@ -2,12 +2,14 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
+import PLACEMENTS from '../../../common/constants/placements';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.BRICKS,
   cubeType: 'fill',
   cubeImages: true,
   cubeRatio: 1,
+  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   isVertical: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.

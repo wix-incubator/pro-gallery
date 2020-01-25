@@ -1,14 +1,15 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
+import INFO_BEHAVIOUR_ON_HOVER from '../../../common/constants/infoBehaviourOnHover';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDESHOW,
   enableInfiniteScroll: true,
-  allowHover: false,
   cubeRatio: '100%/100%',
   cubeImages: true,
   oneRow: true,
+  hoveringBehaviour: INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW,
   isVertical: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.

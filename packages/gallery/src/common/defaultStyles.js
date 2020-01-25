@@ -60,7 +60,6 @@ export default {
     allowDownload: false,
     allowTitle: true,
     allowDescription: false,
-    allowHover: true,
     loveButton: true,
     loveCounter: false,
     videoPlay: Consts.videoPlay.HOVER,
