@@ -18,7 +18,7 @@ describe('isVertical - e2e', () => {
   });
   it('should render a gallery with vertical orientation when "isVertical" is "true"', async () => {
     await driver.openPage({
-      galleryLayout: -1,
+      galleryLayout: 1,
       isVertical: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -27,7 +27,7 @@ describe('isVertical - e2e', () => {
   });
   it('should render a gallery with horizontal orientation when "isVertical" is "false"', async () => {
     await driver.openPage({
-      galleryLayout: -1,
+      galleryLayout: 1,
       isVertical: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
