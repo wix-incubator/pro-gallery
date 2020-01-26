@@ -64,10 +64,6 @@ export default {
     title: "Slideshow counter",
     description: "Display an index of the current slide",
   },
-  allowHover: {
-    title: "Show Overlay on Hover",
-    description: "Show a colored overlay over items when hovering with the mouse / tapping on mobile"
-  },
   titlePlacement: {
     title: "Texts Placement",
     description: "Determines the position of the title, description and buttons relative to the image",

@@ -1,6 +1,6 @@
 {
   "name": "ssr-simulator",
-  "version": "1.4.4",
+  "version": "1.7.0",
   "private": true,
   "engines": {
     "node": ">=10.15"

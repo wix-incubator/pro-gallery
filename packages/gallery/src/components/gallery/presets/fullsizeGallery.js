@@ -3,6 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
+import PLACEMENTS from '../../../common/constants/placements';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
@@ -10,6 +11,7 @@ export const fixedStyles = {
   cubeRatio: '100%/100%',
   cubeType: 'fill',
   oneRow: true,
+  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,

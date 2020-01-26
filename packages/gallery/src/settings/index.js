@@ -7,11 +7,11 @@ import loveButton from './options/loveButton';
 import imageMargin from './options/imageMargin';
 import hoveringBehaviour from './options/hoveringBehaviour'
 import enableInfiniteScroll from './options/enableInfiniteScroll';
-import allowHover from './options/allowHover';
 import cubeType from './options/cubeType';
 import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
 import oneRow from './options/oneRow';
+import titlePlacement from './options/titlePlacement';
 
 export default {
     itemClick,
@@ -23,9 +23,9 @@ export default {
     imageMargin,
     hoveringBehaviour,
     enableInfiniteScroll,
-    allowHover,
     cubeType,
     cubeImages,
     cubeRatio,
-    oneRow
+    oneRow,
+    titlePlacement,
 }

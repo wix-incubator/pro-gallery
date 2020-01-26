@@ -39,7 +39,7 @@ describe('Social:', () => {
     it('should have class ".populated-item" when there is at least one social item', () => {
       driver.mount(ItemView, sampleItemViewProps);
       driver.set.props({
-        styleParams: { allowDownload: true, allowSocial: false, loveButton: false}
+        styleParams: { allowDownload: true, allowSocial: false, loveButton: false }
       })
       expect(driver.find.hook('item-social').hasClass('populated-item')).to.be.true;
     });
@@ -133,7 +133,8 @@ describe('Social:', () => {
     });
     it('should get a Share component if its a slideshow', () => {
       Object.assign(sampleItemViewProps, {
-        styleParams: { allowSocial: true, isSlideshow: true },
+        //slideshow must get hoveringBehaviour = NEVER_SHOW so there won't be 2 "item-social"
+        styleParams: { allowSocial: true, isSlideshow: true, hoveringBehaviour: 'NEVER_SHOW' }
       });
       driver.mount(ItemView, sampleItemViewProps);
       expect(
@@ -165,7 +166,8 @@ describe('Social:', () => {
     });
     it('should toggle slideshow or gallery layout based on props', () => {
       Object.assign(sampleItemViewProps, {
-        styleParams: { allowSocial: true, isSlideshow: true, loveButton: true },
+        //slideshow must get hoveringBehaviour = NEVER_SHOW so there won't be 2 "item-social" ,
+        styleParams: { allowSocial: true, isSlideshow: true, loveButton: true, hoveringBehaviour: 'NEVER_SHOW' },
       });
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.selector(LoveButton).props().layout).to.equal(
