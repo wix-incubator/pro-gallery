@@ -34,6 +34,8 @@ class SlideshowView extends GalleryComponent {
       currentIdx: props.currentIdx || 0,
       isInView: true,
       shouldStopAutoSlideShow: false,
+      hideLeftArrow: !props.isRTL,
+      hideRightArrow: props.isRTL
     };
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
@@ -125,6 +127,7 @@ class SlideshowView extends GalleryComponent {
       }
       this.nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation});
     }
+    this.removeArrowsIfNeeded();
   }
 
   nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation}) {
@@ -235,7 +238,7 @@ class SlideshowView extends GalleryComponent {
         this,
         'Next Item',
         {
-          currentIdx: this.getCenteredItemIdxByScroll(),
+          currentIdx: this.getCenteredItemIdxByScroll() + direction,
         },
         () => {
           this.onCurrentItemChanged();
@@ -259,6 +262,7 @@ class SlideshowView extends GalleryComponent {
         this.props.items[this.state.currentIdx],
       );
     }
+    this.removeArrowsIfNeeded();
   }
   stopAutoSlideshow() {
     clearInterval(this.autoSlideshowInterval);
@@ -613,7 +617,7 @@ class SlideshowView extends GalleryComponent {
     }
     return centeredIdx
   }
-  
+
   getCenteredGroupIdxByScroll() {
     const scrollLeft = (this.container && this.container.scrollLeft) || 0;
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
@@ -749,12 +753,9 @@ class SlideshowView extends GalleryComponent {
     const nextContainerStyle = {
       right: arrowsPos,
     };
+    
 
-    const atStart = this.isScrollStart() || this.isFirstItem();
-    const atEnd = this.isScrollEnd() || this.isLastItem()
-
-    const hideLeftArrow = (!isRTL && atStart) || (isRTL && atEnd);
-    const hideRightArrow = (isRTL && atStart) || (!isRTL && atEnd);
+    const {hideLeftArrow, hideRightArrow} = this.state;
 
     return [
       hideLeftArrow ? null : (
@@ -1116,6 +1117,24 @@ class SlideshowView extends GalleryComponent {
       isAutoSlideShow && props.styleParams.allowSlideshowCounter;
   }
 
+  removeArrowsIfNeeded(){
+    setTimeout(()=>{
+      const atStart = this.isScrollStart() || this.isFirstItem();
+      const atEnd = this.isScrollEnd() || this.isLastItem();
+      const {isRTL} = this.props.styleParams;
+      const { hideLeftArrow, hideRightArrow } = this.state;
+      const nextHideLeft = (!isRTL && atStart) || (isRTL && atEnd);
+      const nextHideRight = (isRTL && atStart) || (!isRTL && atEnd);
+      const isNew = nextHideLeft !== hideLeftArrow || nextHideRight !== hideRightArrow;
+
+      if (isNew) {
+        this.setState({
+          hideLeftArrow: nextHideLeft,
+          hideRightArrow: nextHideRight
+        })
+      }
+    },500)
+  }
   navigationOutHandler() {
     //TODO remove after full refactor release
     utils.setStateAndLog(this, 'Next Item', {
@@ -1148,6 +1167,7 @@ class SlideshowView extends GalleryComponent {
       this.setCurrentItemByScroll();
     }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
+    this.removeArrowsIfNeeded();
   }
 
   componentWillUnmount() {
