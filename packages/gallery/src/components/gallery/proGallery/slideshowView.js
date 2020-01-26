@@ -29,7 +29,7 @@ class SlideshowView extends GalleryComponent {
     this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(this);
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
     this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
-    this._nextItem = utils.throttle(this.nextItem.bind(this), 400).bind(this);
+    this._next = utils.throttle(this.next.bind(this), 400).bind(this);
     this.state = {
       currentIdx: props.currentIdx || 0,
       isInView: true,
@@ -112,14 +112,23 @@ class SlideshowView extends GalleryComponent {
   }
 
   //__________________________________end of slide show loop functions__________________________
-  nextItem({direction, isAutoTrigger, scrollDuration = 400, isKeyboardNavigation = false}) {
-    
+  next({direction, isAutoTrigger, scrollDuration = 400, isKeyboardNavigation = false}) {
     const activeElement = document.activeElement;
     const galleryItemIsFocused = activeElement.className && activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
-    if(avoidIndividualNavigation && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerCol) {
-      direction*=this.props.styleParams.numberOfImagesPerCol;
+    
+    if (avoidIndividualNavigation && this.props.styleParams.galleryLayout === 0) {
+      this.nextGroup({direction, isAutoTrigger, scrollDuration}); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+    } else {
+      if(avoidIndividualNavigation && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerCol) {
+        direction*=this.props.styleParams.numberOfImagesPerCol;
+      }
+      this.nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation});
     }
+  }
+
+  nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation}) {
+
     if (this.isSliding) {
       return;
     }
@@ -182,6 +191,65 @@ class SlideshowView extends GalleryComponent {
       return;
     }
   }
+
+  nextGroup({direction, isAutoTrigger, scrollDuration = 400}) {
+
+    if (this.isSliding) {
+      return;
+    }
+    this.isSliding = true;
+    direction *= (this.props.styleParams.isRTL ? -1 : 1);
+    const currentIdx = this.getCenteredGroupIdxByScroll();
+    let currentGroup = currentIdx + direction;
+    const  scrollToGroup  = this.props.actions.scrollToGroup;
+
+    this.isAutoScrolling = true;
+
+    if (isAutoTrigger) {
+      // ---- Called by the Auto Slideshow ---- //
+      if (this.isLastItem()) { // maybe this should be isLastItemFullyVisible now that we have both. product- do we allow autoSlideshow in other layouts ( those that could have more than one item displayed in the galleryWidth)
+        currentGroup = 0;
+        scrollDuration = 0;
+      }
+    } else {
+      // ---- Called by the user (arrows, keys etc.) ---- //
+      // this.startAutoSlideshowIfNeeded(this.props.styleParams);
+      const scrollingPastLastItem =
+      (direction >= 1 && this.isLastItem()) ||
+      (direction <= -1 && this.isFirstItem());
+      if (scrollingPastLastItem) {
+        this.isSliding = false;
+        return;
+      }
+    }
+    // ---- navigate ---- //
+    try {
+      const isScrollingPastEdge = !isAutoTrigger &&
+      ((direction >= 1 && this.isLastItemFullyVisible()) ||
+      (direction <= -1 && this.isFirstItemFullyVisible()));
+      const scrollMarginCorrection = this.getStyles().margin || 0;
+      console.log(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
+      !isScrollingPastEdge && scrollToGroup(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
+      console.log('setting next item: ', this.getCenteredItemIdxByScroll())
+      utils.setStateAndLog(
+        this,
+        'Next Item',
+        {
+          currentIdx: this.getCenteredItemIdxByScroll(),
+        },
+        () => {
+          this.onCurrentItemChanged();
+          this.isSliding = false;
+        },
+      );
+    } catch (e) {
+      console.error('Cannot proceed to the next Group', e);
+      this.stopAutoSlideshow();
+      return;
+    }
+  }
+
+
   onCurrentItemChanged() {
     if (this.lastCurrentItem !== this.state.currentIdx) {
       this.lastCurrentItem = this.state.currentIdx;
@@ -222,7 +290,7 @@ class SlideshowView extends GalleryComponent {
 
   autoScrollToNextItem = () => {
     if (!isEditMode() && (isGalleryInViewport(this.props.container) || isPreviewMode())) {
-      this._nextItem({direction: 1 , isAutoTrigger: true , scrollDuration: 800});
+      this._next({direction: 1 , isAutoTrigger: true , scrollDuration: 800});
     }
   };
 
@@ -253,14 +321,14 @@ class SlideshowView extends GalleryComponent {
       case 37: //left
       case 33: //page up
         e.preventDefault();
-        this._nextItem({direction: -1, isKeyboardNavigation: true});
+        this._next({direction: -1, isKeyboardNavigation: true});
         return false;
       case 39: //right
       case 40: //down
       case 32: //space
       case 34: //page down
         e.preventDefault();
-        this._nextItem({direction: 1, isKeyboardNavigation: true});
+        this._next({direction: 1, isKeyboardNavigation: true});
         return false;
     }
     return true; //continue handling the original keyboard event
@@ -545,6 +613,37 @@ class SlideshowView extends GalleryComponent {
     }
     return centeredIdx
   }
+  
+  getCenteredGroupIdxByScroll() {
+    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
+    // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
+    const groups = this.props.galleryStructure.groups;
+
+    let centeredGroupIdx;
+
+    const scrollPos = this.props.styleParams.isRTL ?
+    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
+    scrollLeft + this.props.container.galleryWidth / 2;
+
+    if (scrollPos === 0){
+      centeredGroupIdx = 0;
+    } else {
+      for (let group, i = 0; (group = groups[i]); i++) {
+        if (
+          group.left >
+          scrollPos
+        ) {
+          centeredGroupIdx = i - 1;
+          break;
+        }
+      }
+    }
+    if (!(centeredGroupIdx >= 0)) {
+      centeredGroupIdx = groups.length - 1;
+    }
+    return centeredGroupIdx
+  }
+
   setCurrentItemByScroll() {
     if (utils.isVerbose()) {
       console.log('Setting current Idx by scroll', this.isAutoScrolling);
@@ -664,7 +763,7 @@ class SlideshowView extends GalleryComponent {
             'nav-arrows-container prev ' +
             (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
           }
-          onClick={() =>this._nextItem({direction:-1})}
+          onClick={() =>this._next({direction:-1})}
           aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowPrev')}
           key="nav-arrow-back"
@@ -684,7 +783,7 @@ class SlideshowView extends GalleryComponent {
       hideRightArrow ? null : (
         <button
           className={'nav-arrows-container next'}
-          onClick={() => this._nextItem({direction:1})}
+          onClick={() => this._next({direction:1})}
           aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
           key="nav-arrow-next"
