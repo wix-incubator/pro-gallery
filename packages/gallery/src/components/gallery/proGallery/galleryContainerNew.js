@@ -4,7 +4,7 @@ import SlideshowView from './slideshowView';
 import { addLayoutStyles } from '../../helpers/layoutHelper';
 import { ItemsHelper } from '../../helpers/itemsHelper';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
-import { scrollToItemImp } from '../../helpers/scrollHelper';
+import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
 import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { Layouter } from 'pro-layouts';
@@ -27,6 +27,7 @@ export class GalleryContainer extends React.Component {
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
+    this.scrollToGroup = this.scrollToGroup.bind(this);
     this._scrollingElement = this.getScrollingElement();
     this.duplicateGalleryItems = this.duplicateGalleryItems.bind(this);
     this.eventsListener = this.eventsListener.bind(this);
@@ -632,6 +633,42 @@ export class GalleryContainer extends React.Component {
 
     }
   }
+  scrollToGroup(groupIdx, fixedScroll, isManual, durationInMS = 0, scrollMarginCorrection) {
+    if (groupIdx >= 0) {
+      const scrollingElement = this._scrollingElement;
+      const horizontalElement = scrollingElement.horizontal();
+      try {
+        const scrollParams = {
+          scrollMarginCorrection,
+          isRTL: this.state.styles.isRTL,
+          oneRow: this.state.styles.oneRow,
+          galleryWidth: this.state.container.galleryWidth,
+          galleryHeight: this.state.container.galleryHeight,
+          top: 0,
+          groups: this.galleryStructure.groups,
+          totalWidth: this.galleryStructure.width,
+          groupIdx,
+          fixedScroll,
+          isManual,
+          scrollingElement,
+          horizontalElement,
+          durationInMS,
+        };
+        return scrollToGroupImp(scrollParams);
+      } catch(e) {
+        //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
+        console.error('error:', e, ' pro-gallery, scrollToGroup, cannot get scrollParams, ',
+          'isEditMode =', isEditMode(),
+          ' isPreviewMode =', isPreviewMode(),
+          ' isSiteMode =', isSiteMode(),
+          ' this.state.styles =', this.state.styles,
+          ' this.state.container =', this.state.container,
+          ' this.galleryStructure =', this.galleryStructure
+        );
+      }
+
+    }
+  }
 
   containerInfiniteGrowthDirection(styles = false) {
     const _styles = styles || this.state.styles;
@@ -900,6 +937,7 @@ export class GalleryContainer extends React.Component {
             eventsListener: this.eventsListener,
             setWixHeight: (() => {}),
             scrollToItem: this.scrollToItem,
+            scrollToGroup: this.scrollToGroup,
             duplicateGalleryItems: this.duplicateGalleryItems,
           }}
           {...this.props.gallery}
