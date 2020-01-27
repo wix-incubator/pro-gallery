@@ -1,3 +1,15 @@
+## [v1.7.5](https://pro-gallery-1-7-5.surge.sh) (27/01/2020)
+ 
+#### GALLERY
+ -  change download elements to div
+
+---
+## [v1.7.4](https://pro-gallery-1-7-4.surge.sh) (26/01/2020)
+ 
+#### GALLERY
+ -  Fixes totitlePlacement/hoveringBehaviour.
+
+---
 ## [v1.7.3](https://pro-gallery-1-7-3.surge.sh) (22/01/2020)
  
 #### GALLERY
