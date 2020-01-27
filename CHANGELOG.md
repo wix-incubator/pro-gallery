@@ -1,3 +1,10 @@
+## [v1.7.6](https://pro-gallery-1-7-6.surge.sh) (27/01/2020)
+ 
+#### GALLERY
+ -  In slideshow, only the itemInner will be wrapped with <a>, and not the whole item-container.
+ -  Group navigation for collage horizontal and improvements to arrows.
+
+---
 ## [v1.7.5](https://pro-gallery-1-7-5.surge.sh) (27/01/2020)
  
 #### GALLERY
