@@ -2,10 +2,10 @@ import consts from '../../../common/constants/index';
 import { fixedStyles } from '../presets/gridGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
-export const wouldHaveBeenEligible = ({items, styles}) => {
+export const notEligibleReasons = ({items, styles}) => {
   const s = {...styles, ...fixedStyles, allowLeanGallery: true};
   const res = [];
-  if (String(s.galleryLayout) !== '2') {
+  if (String(styles.galleryLayout) !== '2') {
     res.push('not a Grid layout');
   } 
   if (items.length > MAX_ITEMS_COUNT) {
@@ -22,7 +22,7 @@ export const wouldHaveBeenEligible = ({items, styles}) => {
     }
   }
 
-  return res.length > 0 ? res.join(', ') : null;
+  return res.length > 0 ? res : null;
 }
 
 export default ({items, styles}) => {
@@ -223,6 +223,6 @@ const fixedStyleParams = {
   loveCounter: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.loveCounter,
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW],
+  titlePlacement: sp => [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW].includes(sp.titlePlacement) || sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
   calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.calculationOptions.MANUAL || (sp.titlePlacement !== consts.placements.SHOW_ABOVE && sp.titlePlacement !== consts.placements.SHOW_BELOW),
 };

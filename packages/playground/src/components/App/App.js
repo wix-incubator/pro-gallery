@@ -119,7 +119,9 @@ export function App() {
         <div className={s.heading}>
           Pro Gallery Playground <a className={s.version} href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md" target="blank" title="View Changelog on Github">v{pJson.version}</a>
         </div>
-        <SideBar />
+        <SideBar
+          items={getItems()}
+        />
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ExpandableProGallery
