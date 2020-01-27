@@ -3,25 +3,26 @@ import { fixedStyles } from '../presets/gridGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export const wouldHaveBeenEligible = ({items, styles}) => {
-  const s = {...styles, ...fixedStyles, allowLeanGallery: true}
+  const s = {...styles, ...fixedStyles, allowLeanGallery: true};
+  const res = [];
   if (String(s.galleryLayout) !== '2') {
-    return 'not a Grid layout';
+    res.push('not a Grid layout');
   } 
   if (items.length > MAX_ITEMS_COUNT) {
-    return `more than ${MAX_ITEMS_COUNT} items`
+    res.push(`more than ${MAX_ITEMS_COUNT} items`);
   }
   for (const item of items) {
     if (!isImage(item)) {
-      return `at least one item is not an image`;
+      res.push(`at least one item is not an image`);
     }
   }
   for (const [styleParam, value] of Object.entries(s)) {
     if (!isValidStyleParam(styleParam, value, s)) {
-      return `invalid style: ${styleParam} => ${value}`;
+      res.push(`invalid style: ${styleParam} => ${value}`);
     }
   }
 
-  return true;
+  return res.length > 0 ? res.join(', ') : null;
 }
 
 export default ({items, styles}) => {
