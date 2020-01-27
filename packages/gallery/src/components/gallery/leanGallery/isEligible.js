@@ -1,5 +1,28 @@
 import consts from '../../../common/constants/index';
+import { fixedStyles } from '../presets/gridGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
+
+export const wouldHaveBeenEligible = ({items, styles}) => {
+  const s = {...styles, ...fixedStyles, allowLeanGallery: true}
+  if (String(s.galleryLayout) !== '2') {
+    return 'not a Grid layout';
+  } 
+  if (items.length > MAX_ITEMS_COUNT) {
+    return `more than ${MAX_ITEMS_COUNT} items`
+  }
+  for (const item of items) {
+    if (!isImage(item)) {
+      return `at least one item is not an image`;
+    }
+  }
+  for (const [styleParam, value] of Object.entries(s)) {
+    if (!isValidStyleParam(styleParam, value, s)) {
+      return `invalid style: ${styleParam} => ${value}`;
+    }
+  }
+
+  return true;
+}
 
 export default ({items, styles}) => {
 
@@ -8,8 +31,8 @@ export default ({items, styles}) => {
     if (!allowLeanGallery) {
       return false;
     }
-    if (items.length > 25) {
-      console.log(`[LEAN GALLERY] NOT ALLOWED - more than 25 items`, items.length);
+    if (items.length > MAX_ITEMS_COUNT) {
+      console.log(`[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`, items.length);
       return false;
     }
     for (const item of items) {
@@ -29,6 +52,8 @@ export default ({items, styles}) => {
     return true;
     
 }
+
+const MAX_ITEMS_COUNT = 25;
 
 const isImage = item => {
   const meta = item.metadata || item.metaData;
