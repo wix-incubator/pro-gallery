@@ -1,3 +1,11 @@
+## [v1.7.7](https://pro-gallery-1-7-7.surge.sh) (28/01/2020)
+ 
+#### GALLERY
+ -  Fixed images alignment bug in grid layout.
+ -  Fix (leanGallery): fix liveHeightFixer in leanGallery
+ -  Improve (leanGallery): fix isEligible for no title and no description
+
+---
 ## [v1.7.6](https://pro-gallery-1-7-6.surge.sh) (27/01/2020)
  
 #### GALLERY
