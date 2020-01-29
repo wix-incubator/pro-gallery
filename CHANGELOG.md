@@ -1,3 +1,10 @@
+## [v1.7.8](https://pro-gallery-1-7-8.surge.sh) (29/01/2020)
+ 
+#### GALLERY
+ -  Fix (dimensionHelper): set scrollBase to container in calcScrollBase
+ -  Change height calc for titles in SSR
+
+---
 ## [v1.7.7](https://pro-gallery-1-7-7.surge.sh) (28/01/2020)
  
 #### GALLERY
