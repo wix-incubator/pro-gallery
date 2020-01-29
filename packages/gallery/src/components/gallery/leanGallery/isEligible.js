@@ -22,7 +22,7 @@ export const notEligibleReasons = ({items, styles}) => {
     }
   }
 
-  return res.length > 0 ? res : null;
+  return res;
 }
 
 export default ({items, styles}) => {
