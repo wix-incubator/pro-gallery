@@ -41,18 +41,18 @@ class LineHeightFixer {
   hideElement(element, shouldOverrideDisplay = true) {
     if (shouldOverrideDisplay) {
       const display = this.getSavedDisplay(element);
-      this.setCss(element, { visibility: 'hidden', display });
+      this.setCss(element, { opacity: 0, display });
     } else {
-      this.setCss(element, { visibility: 'hidden' });
+      this.setCss(element, { opacity: 0 });
     }
   }
 
   showElement(element, shouldOverrideDisplay = true) {
     if (shouldOverrideDisplay) {
       const display = this.getSavedDisplay(element);
-      this.setCss(element, { visibility: 'visible', display });
+      this.setCss(element, { opacity: 1, display });
     } else {
-      this.setCss(element, { visibility: 'visible' });
+      this.setCss(element, { opacity: 1 });
     }
   }
 
