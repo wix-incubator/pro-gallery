@@ -1,3 +1,9 @@
+## [v1.7.9](https://pro-gallery-1-7-9.surge.sh) (30/01/2020)
+ 
+#### GALLERY
+ -  fix masonry to always vertical scrollDirection
+
+---
 ## [v1.7.8](https://pro-gallery-1-7-8.surge.sh) (29/01/2020)
  
 #### GALLERY
