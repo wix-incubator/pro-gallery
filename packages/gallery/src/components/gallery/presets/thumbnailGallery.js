@@ -36,20 +36,21 @@ export const fixedStyles = {
   galleryMargin: 0,
   imageMargin: 0,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+  }
+}
 export default class ThumbnailGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
-  }
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

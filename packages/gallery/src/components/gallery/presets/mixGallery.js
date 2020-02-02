@@ -12,7 +12,7 @@ export const fixedStyles = {
   cubeRatio: 1,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
-  
+
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   isVertical: true,
   gallerySize: 86,
@@ -31,21 +31,21 @@ export const fixedStyles = {
   placeGroupsLtr: false,
   rotatingCropRatios: '',
 }
-export default class MixGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
   }
+}
+export default class MixGallery extends React.Component {
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

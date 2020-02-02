@@ -14,7 +14,7 @@ export const fixedStyles = {
   oneRow: true,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
-  
+
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
@@ -36,21 +36,22 @@ export const fixedStyles = {
   galleryMargin: 0,
   imageMargin: 0,
 }
-export default class FullsizeGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
   }
+}
+
+export default class FullsizeGallery extends React.Component {
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles()
         }
       />
     );

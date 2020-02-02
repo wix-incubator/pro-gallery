@@ -31,21 +31,22 @@ export const fixedStyles = {
   isSlideshow: false,
   cropOnlyFill: false,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+  }
+}
+
 export default class ColumnGallery extends React.Component {
   
-  createStyles = () =>{
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
-  }
-
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

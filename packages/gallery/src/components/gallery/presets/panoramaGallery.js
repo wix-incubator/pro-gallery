@@ -29,21 +29,22 @@ export const fixedStyles = {
   cropOnlyFill: false,
   slideshowLoop: false,
 }
-export default class PanoramaGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
   }
+}
+
+export default class PanoramaGallery extends React.Component {
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

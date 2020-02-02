@@ -31,21 +31,22 @@ export const fixedStyles = {
   placeGroupsLtr: false,
   rotatingCropRatios: '0.707,1.414,1.414,0.707',
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+  }
+}
 export default class BricksGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
-  }
   render() {
 
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

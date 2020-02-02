@@ -26,6 +26,15 @@ export const fixedStyles = {
   isSlideshow: false,
   cropOnlyFill: false,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+    gallerySize: Math.round(styles.gallerySize * 5 + 500),
+  }
+}
+
 export default class CollageGallery extends React.Component {
 
   static propTypes = {
@@ -35,17 +44,6 @@ export default class CollageGallery extends React.Component {
     isRTL: PropTypes.bool,
     imageMargin: PropTypes.number
   }
-  createStyles = () => {
-    const { /* isVertical, isRTL, imageMargin, */ styles } = this.props;
-    return {
-      ...styles,
-      ...fixedStyles,
-      // isVertical,
-      // isRTL,
-      // imageMargin,
-      gallerySize: Math.round(this.props.styles.gallerySize * 5 + 500),
-    }
-  }
 
   render() {
 
@@ -53,7 +51,7 @@ export default class CollageGallery extends React.Component {
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );
