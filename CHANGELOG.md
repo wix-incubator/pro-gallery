@@ -1,3 +1,43 @@
+## [v1.7.9](https://pro-gallery-1-7-9.surge.sh) (30/01/2020)
+ 
+#### GALLERY
+ -  fix masonry to always vertical scrollDirection
+
+---
+## [v1.7.8](https://pro-gallery-1-7-8.surge.sh) (29/01/2020)
+ 
+#### GALLERY
+ -  Fix (dimensionHelper): set scrollBase to container in calcScrollBase
+ -  Change height calc for titles in SSR
+
+---
+## [v1.7.7](https://pro-gallery-1-7-7.surge.sh) (28/01/2020)
+ 
+#### GALLERY
+ -  Fixed images alignment bug in grid layout.
+ -  Fix (leanGallery): fix liveHeightFixer in leanGallery
+ -  Improve (leanGallery): fix isEligible for no title and no description
+
+---
+## [v1.7.6](https://pro-gallery-1-7-6.surge.sh) (27/01/2020)
+ 
+#### GALLERY
+ -  In slideshow, only the itemInner will be wrapped with <a>, and not the whole item-container.
+ -  Group navigation for collage horizontal and improvements to arrows.
+
+---
+## [v1.7.5](https://pro-gallery-1-7-5.surge.sh) (27/01/2020)
+ 
+#### GALLERY
+ -  change download elements to div
+
+---
+## [v1.7.4](https://pro-gallery-1-7-4.surge.sh) (26/01/2020)
+ 
+#### GALLERY
+ -  Fixes totitlePlacement/hoveringBehaviour.
+
+---
 ## [v1.7.3](https://pro-gallery-1-7-3.surge.sh) (22/01/2020)
  
 #### GALLERY

@@ -673,9 +673,19 @@ class ItemView extends GalleryComponent {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
       };
+      const { photoId, id, idx } = this.props;
       itemInner = (
         <div>
-          {itemInner}
+          <a
+            ref={e => (this.itemAnchor = e)}
+            data-id={photoId}
+            data-idx={idx}
+            key={'item-container-link-' + id}
+            {...this.getLinkParams()}
+            tabIndex={-1}
+          >
+            {itemInner}
+          </a>
           <div
             className="gallery-item-info gallery-item-bottom-info"
             data-hook="gallery-item-info-buttons"
@@ -806,8 +816,11 @@ class ItemView extends GalleryComponent {
         (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
         'transparent';
     }
-    styles.height = height + 'px';
     styles.margin = -styleParams.itemBorderWidth + 'px';
+    
+    if (!this.props.isUnknownWidth) {
+      styles.height = height + 'px';
+    }
 
     const imageDimensions = this.getImageDimensions();
 
@@ -1029,72 +1042,82 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  composeItem() {
-    const { photoId, id, hash, idx } = this.props;
-    const { directLink } = this.props;
-    const { itemClick } = this.props.styleParams;
+  getLinkParams() {
+    const { directLink, styleParams } = this.props;
     const { url, target } = directLink || {};
     const isSEO = isSEOMode();
     const noFollowForSEO = this.props.noFollowForSEO;
     const shouldUseNofollow = isSEO && noFollowForSEO;
-    const shouldUseDirectLink = !!(url && target && itemClick === 'link');
+    const shouldUseDirectLink = !!(url && target && styleParams.itemClick === 'link');
     const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
     const linkParams = shouldUseDirectLink
       ? { href: url, target, ...seoLinkParams }
       : {};
+    return linkParams;
+  }
+
+  composeItem() {
+    const { photoId, id, hash, idx, styleParams } = this.props;
+
     const innerDiv = (
-      <a
-        ref={e => (this.itemAnchor = e)}
+      <div
+        className={this.getItemContainerClass()}
+        onContextMenu={e => this.onContextMenu(e)}
+        id={cssScrollHelper.getDomId(this.props)}
+        ref={e => (this.itemContainer = e)}
+        onMouseOver={this.onMouseOver}
+        onMouseOut={() => {
+          !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+        }}
+        onClick={this.onItemClick}
+        onKeyDown={this.onKeyPress}
+        tabIndex={this.getItemContainerTabIndex()}
+        aria-label={this.getItemAriaLabel()}
+        data-hash={hash}
         data-id={photoId}
         data-idx={idx}
-        key={'item-container-link-' + id}
-        {...linkParams}
-        tabIndex={-1}
+        role={this.getItemAriaRole()}
+        data-hook="item-container"
+        key={'item-container-' + id}
+        style={this.getItemContainerStyles()}
       >
+        {this.getTopInfoElementIfNeeded()}
         <div
-          className={this.getItemContainerClass()}
-          onContextMenu={e => this.onContextMenu(e)}
-          id={cssScrollHelper.getDomId(this.props)}
-          ref={e => (this.itemContainer = e)}
-          onMouseOver={this.onMouseOver}
-          onMouseOut={() => {
-            !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
-          }}
-          onClick={this.onItemClick}
-          onKeyDown={this.onKeyPress}
-          tabIndex={this.getItemContainerTabIndex()}
-          aria-label={this.getItemAriaLabel()}
-          data-hash={hash}
+          style={
+            this.props.styleParams.isSlideshow
+              ? {}
+              : getImageStyle(this.props.styleParams)
+          }
+        >
+          <div
+            data-hook="item-wrapper"
+            className={this.getItemWrapperClass()}
+            key={'item-wrapper-' + id}
+            style={this.getItemWrapperStyles()}
+          >
+            {this.getItemInner()}
+          </div>
+        </div>
+        {this.getBottomInfoElementIfNeeded()}
+      </div>
+    );
+
+    if (styleParams.isSlideshow) {
+      return innerDiv
+    } else {
+      return (
+        <a
+          ref={e => (this.itemAnchor = e)}
           data-id={photoId}
           data-idx={idx}
-          //aria-label={this.getItemAriaLabel()}
-          role={this.getItemAriaRole()}
-          data-hook="item-container"
-          key={'item-container-' + id}
-          style={this.getItemContainerStyles()}
+          key={'item-container-link-' + id}
+          {...this.getLinkParams()}
+          tabIndex={-1}
         >
-          {this.getTopInfoElementIfNeeded()}
-          <div
-            style={
-              this.props.styleParams.isSlideshow
-                ? {}
-                : getImageStyle(this.props.styleParams)
-            }
-          >
-            <div
-              data-hook="item-wrapper"
-              className={this.getItemWrapperClass()}
-              key={'item-wrapper-' + id}
-              style={this.getItemWrapperStyles()}
-            >
-              {this.getItemInner()}
-            </div>
-          </div>
-          {this.getBottomInfoElementIfNeeded()}
-        </div>
-      </a>
-    );
-    return innerDiv;
+          {innerDiv}
+        </a>
+      )
+    }
   }
   //-----------------------------------------| RENDER |--------------------------------------------//
 

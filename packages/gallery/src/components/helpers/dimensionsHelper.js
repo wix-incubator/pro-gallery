@@ -152,6 +152,7 @@ class DimensionsHelper {
       } catch (e) {
         //
       }
+      this.container.scrollBase = scrollBase;
       return scrollBase;
     });
   }
