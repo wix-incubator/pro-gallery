@@ -51,7 +51,7 @@ export default class FullsizeGallery extends React.Component {
       <ProGallery
         {...this.props}
         styles={
-          createStyles()
+          createStyles(this.props.styles)
         }
       />
     );
