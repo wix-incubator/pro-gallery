@@ -50,9 +50,9 @@ class LineHeightFixer {
   showElement(element, shouldOverrideDisplay = true) {
     if (shouldOverrideDisplay) {
       const display = this.getSavedDisplay(element);
-      this.setCss(element, { visibility: 'visible', display });
+      this.setCss(element, { visibility: 'inherit', display });
     } else {
-      this.setCss(element, { visibility: 'visible' });
+      this.setCss(element, { visibility: 'inherit' });
     }
   }
 
