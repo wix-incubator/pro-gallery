@@ -3,6 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.COLUMN,
@@ -10,6 +11,7 @@ export const fixedStyles = {
   cubeImages: true,
   cubeRatio: 0.35,
   oneRow: true,
+  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
