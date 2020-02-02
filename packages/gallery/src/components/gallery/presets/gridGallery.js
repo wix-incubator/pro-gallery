@@ -32,7 +32,8 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    gallerySize: Math.round(styles.gallerySize * 8.5 + 150),
+    gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 8.5 + 150),
+    modifiedGallerySize: true
   }
 }
 
@@ -40,7 +41,7 @@ export default class GridGallery extends React.Component {
 
   render() {
 
-    const props = {...this.props, styles: createStyles()};
+    const props = {...this.props, styles: createStyles(this.props.styles)};
 
     let GalleryComponent = ProGallery;
     if (isEligibleForLeanGallery(props)) {
