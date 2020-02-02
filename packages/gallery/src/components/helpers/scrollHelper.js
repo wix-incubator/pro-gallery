@@ -91,6 +91,97 @@ export function scrollToItemImp(scrollParams) {
     }));
   }
 }
+export function scrollToGroupImp(scrollParams) {
+  let to, from;
+  const {
+    scrollMarginCorrection = 0,
+    durationInMS,
+    horizontalElement,
+    scrollingElement,
+    isRTL,
+    oneRow,
+    galleryWidth,
+    galleryHeight,
+    totalWidth,
+    top,
+    groups,
+    groupIdx,
+    fixedScroll,
+  } = scrollParams;
+
+  //default = scroll by half the container size
+  if (oneRow) {
+    from = horizontalElement.scrollLeft;
+    if (isRTL) {
+      to = from - (groupIdx * galleryWidth) / 2;
+    } else {
+      to = from + (groupIdx * galleryWidth) / 2;
+    }
+    // console.log('[RTL SCROLL] scrollTogroupImp: ', from, to);
+  } else {
+    from = top;
+    to = top + (groupIdx * galleryHeight) / 2;
+  }
+
+  if (fixedScroll !== true) {
+      //scroll to specific group
+    if (utils.isVerbose()) {
+      console.log('Scrolling to groups #' + groupIdx);
+    }
+
+    const group = groups.find(grp => grp.idx === groupIdx);
+    to = oneRow ? utils.get(group, 'left') : utils.get(group, 'top');
+
+    if (group && isRTL) {
+      to += group.width;
+    }
+
+    if (utils.isVerbose()) {
+      console.log('Scrolling to position ' + to, group);
+    }
+
+    if (!(to >= 0)) {
+      utils.isVerbose() && console.warn('Position not found, not scrolling');
+      return new Promise(res => res());
+    }
+
+    if (oneRow) {
+      //set scroll to place the group in the middle of the component
+      const diff = (galleryWidth - group.width) / 2;
+      if (diff > 0) {
+        if (isRTL) {
+          to += diff;
+        } else {
+          to -= diff;
+        }
+      }
+      if (isRTL) {
+        to = totalWidth - to;
+      }
+      to = Math.max(0, to);
+      to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
+      if (utils.isVerbose()) {
+        console.log('Scrolling to new position ' + to, this);
+      }
+    }
+  }
+  if (oneRow) {
+
+    return horizontalCssScrollTo(
+      horizontalElement,
+      Math.round(from),
+      Math.round(to),
+      durationInMS,
+      isRTL,
+      true,
+    );
+  } else {
+    return (new Promise(resolve => {
+      scrollingElement.vertical().scrollTo(0, to);
+      resolve(to);
+    }));
+  }
+}
 
 // ----- rendererd / visible ----- //
 function getDistanceFromScreen({

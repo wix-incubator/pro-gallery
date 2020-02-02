@@ -11,8 +11,9 @@ import { Divider, Alert } from 'antd';
 import comments from './comments';
 import { throttle } from "../../utils/utils";
 import s from './SideBar.module.scss';
+import { notEligibleReasons } from 'pro-gallery/dist/src/components/gallery/leanGallery/isEligible'
 
-function SideBar() {
+function SideBar({items}) {
   const {
     // preset,
     // setPreset,
@@ -169,6 +170,9 @@ function SideBar() {
           <Collapse.Panel header="Benchmarks" key="benchmarks">
             <Benchmarks />
           </Collapse.Panel>
+          <Collapse.Panel header="Lean Gallery" key="lean">
+            {(notEligibleReasons({items, styles: styleParams}) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
+            </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
           </Collapse.Panel>

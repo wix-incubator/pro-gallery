@@ -194,6 +194,7 @@ export default class Share extends GalleryComponent {
         ref={button => (this.buttons[idx] = button)}
         title={`Share on ${network}`}
         aria-live="assertive"
+        role="menuitem"
         tabIndex={-1}
         key={network + '-share-icon'}
       ><ShareIcon size="18"/></button>
@@ -242,7 +243,7 @@ export default class Share extends GalleryComponent {
           }
           onKeyDown={e => this.handleKeyDown(e, type)}
           aria-label={'Share'}
-          role="button"
+          role="menu"
           key={'item-social-share-container-' + id}
         >
           {this.shareArr.map((network, i) => {
