@@ -139,7 +139,7 @@ export default class Social extends GalleryComponent {
       };
       if (type === 'text') {
         return (
-          <a
+          <div
             {...genralProps}
             onClick={e => {
               e.stopPropagation();
@@ -151,20 +151,20 @@ export default class Social extends GalleryComponent {
             onKeyDown={e => this.onDownloadTextKeyPress(e)}
           >
             {downloadIcon}
-          </a>
+          </div>
         );
       } else {
         if (!isDemo) {
           return (
-            <a {...genralProps} download="download" {...itemProps}>
+            <div {...genralProps} download="download" {...itemProps}>
               {downloadIcon}
-            </a>
+            </div>
           );
         } else {
           return (
-            <a {...genralProps} download="download">
+            <div {...genralProps} download="download">
               {downloadIcon}
-            </a>
+            </div>
           );
         }
       }

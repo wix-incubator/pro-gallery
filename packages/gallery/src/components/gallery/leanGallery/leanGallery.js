@@ -167,8 +167,8 @@ export default class LeanGallery extends React.Component {
   }
 
   createLinkParams(item) {
-    const { noFollowForSEO } = this.props;
-    const { itemClick } = this.props.styles;
+    const { noFollowForSEO, styles } = this.props;
+    const { itemClick } = styles;
 
     const { directLink } = item;
     const { url, target } = directLink || {};
@@ -198,6 +198,13 @@ export default class LeanGallery extends React.Component {
     }
   }
 
+  fixStylesIfNeeded(styles) {
+    return {
+      ...styles,
+      externalInfoHeight: styles.textBoxHeight
+    }
+  }
+
   componentDidUpdate() {
     this.measureIfNeeded();
   }
@@ -205,7 +212,10 @@ export default class LeanGallery extends React.Component {
   render() {
 
     const { items } = this.props;
-    const { itemClick } = this.props.styles;
+
+    const styles = this.fixStylesIfNeeded(this.props.styles);
+
+    const { itemClick } = styles;
     
     return (
       <div 
@@ -217,23 +227,25 @@ export default class LeanGallery extends React.Component {
           const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick));
           const imageSize = this.calcImageSize(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
-          const texts = (position) => this.props.styles.titlePlacement === position && <div className="texts" style={getInnerInfoStyle(this.props.styles)}>
-          <Texts
-            key={`item-texts-${this.props.id}`}
-            itemContainer={this.node}
-            title={get(item, 'title')}
-            description={get(item, 'description')}
-            style={this.state.itemStyle}
-            styleParams={this.props.styles}
-            showShare={false}
-            isSmallItem={false}
-            isNarrow={false}
-            shouldShowButton={false}
-            actions={{
-              eventsListener: this.eventsListener,
-            }}
-          />
-        </div>
+          const texts = position => styles.titlePlacement === position && (
+            <div className={position === INFO_PLACEMENT.SHOW_ABOVE ? `gallery-item-top-info` : `gallery-item-bottom-info`} style={getInnerInfoStyle(styles)}>
+              <Texts
+                key={`item-texts-${                                                                                                                                        this.props.id}`}
+                itemContainer={this.node}
+                title={get(item, 'title')}
+                description={get(item, 'description')}
+                style={this.state.itemStyle}
+                styleParams={styles}
+                showShare={false}
+                isSmallItem={false}
+                isNarrow={false}
+                shouldShowButton={false}
+                actions={{
+                  eventsListener: this.eventsListener,
+                }}
+              />
+            </div>
+          )
           return (
             <a
               className={['gallery-item-container', s.cell].join(' ')}
