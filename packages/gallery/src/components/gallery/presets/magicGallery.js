@@ -3,6 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import { featureManager } from '../../helpers/versionsHelper';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 
 export const fixedStyles = {
@@ -12,7 +13,7 @@ export const fixedStyles = {
   isVertical: undefined,
   gallerySize: undefined,
   collageAmount: undefined,
-  collageDensity:undefined,
+  collageDensity: undefined,
   groupTypes: undefined,
   oneRow: undefined,// later on in layoutHelper this can be changed if it is false, so not exactly fixed.
   imageMargin: undefined,
@@ -103,6 +104,18 @@ const getStyleBySeed = (seed) => {
     fixedColumns: 0,
     enableInfiniteScroll: 1,
   };
+
+  //force adjustments
+  if (style.oneRow) {
+    style.isVertical = false;
+    style.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  } else {
+    style.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  }
+  style.galleryType = style.isVertical ? 'Columns' : 'Strips';
+  style.groupSize = parseInt(style.groupTypes.slice(-1)[0]);
+  style.groupTypes = style.groupTypes.join(',');
+  style.minItemSize = style.gallerySize / style.groupSize / 2;
 
   //force adjustments
   if (style.oneRow) {
