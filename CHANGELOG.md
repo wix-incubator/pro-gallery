@@ -1,3 +1,12 @@
+## [v1.7.10](https://pro-gallery-1-7-10.surge.sh) (02/02/2020)
+ 
+#### GALLERY
+ -  Fix: use inherit instead of visible (allows setting visibility from parent)
+ -  Fix: use constant default domId to prevent change between renders (might effect on several galleries in the same page)
+ -  Improve: make domId required in propTypes
+ -  Force scroll direction on all solid direction layouts
+
+---
 ## [v1.7.9](https://pro-gallery-1-7-9.surge.sh) (30/01/2020)
  
 #### GALLERY
