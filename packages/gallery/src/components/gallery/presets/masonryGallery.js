@@ -30,6 +30,7 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
+    gallerySize: styles.gallerySize,
   }
 }
 export default class MasonryGallery extends React.Component {
