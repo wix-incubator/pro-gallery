@@ -1,3 +1,9 @@
+## [v1.7.12](https://pro-gallery-1-7-12.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  do not use dom height when avoidSelfMeasure
+
+---
 ## [v1.7.11](https://pro-gallery-1-7-11.surge.sh) (03/02/2020)
  
 #### GALLERY
