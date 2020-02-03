@@ -31,21 +31,22 @@ export const fixedStyles = {
   placeGroupsLtr: false,
   rotatingCropRatios: '',
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+  }
+}
 export default class alternateGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
-  }
   render() {
 
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );
