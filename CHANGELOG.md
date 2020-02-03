@@ -1,3 +1,9 @@
+## [v1.7.11](https://pro-gallery-1-7-11.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  Improve (presets): create exported addPresetStyles method
+
+---
 ## [v1.7.10](https://pro-gallery-1-7-10.surge.sh) (02/02/2020)
  
 #### GALLERY
