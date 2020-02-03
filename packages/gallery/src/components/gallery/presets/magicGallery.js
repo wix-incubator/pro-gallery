@@ -117,15 +117,6 @@ const getStyleBySeed = (seed) => {
   style.groupTypes = style.groupTypes.join(',');
   style.minItemSize = style.gallerySize / style.groupSize / 2;
 
-  //force adjustments
-  if (style.oneRow) {
-    style.isVertical = false;
-  }
-  style.galleryType = style.isVertical ? 'Columns' : 'Strips';
-  style.groupSize = parseInt(style.groupTypes.slice(-1)[0]);
-  style.groupTypes = style.groupTypes.join(',');
-  style.minItemSize = style.gallerySize / style.groupSize / 2;
-
   return style;
 }
 
