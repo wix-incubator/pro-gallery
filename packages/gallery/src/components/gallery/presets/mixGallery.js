@@ -3,6 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import PLACEMENTS from '../../../common/constants/placements';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.MIX,
@@ -10,8 +11,8 @@ export const fixedStyles = {
   cubeImages: true,
   cubeRatio: 1,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
+  scrollDirection: SCROLL_DIRECTION.VERTICAL,
   isVertical: true,
-  
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   gallerySize: 86,
   minItemSize: 50,
@@ -29,21 +30,21 @@ export const fixedStyles = {
   placeGroupsLtr: false,
   rotatingCropRatios: '',
 }
-export default class MixGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
   }
+}
+export default class MixGallery extends React.Component {
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

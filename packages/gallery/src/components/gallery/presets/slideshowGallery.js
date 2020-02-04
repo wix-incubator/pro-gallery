@@ -2,6 +2,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../../common/constants/infoBehaviourOnHover';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDESHOW,
@@ -10,6 +11,7 @@ export const fixedStyles = {
   cubeImages: true,
   oneRow: true,
   hoveringBehaviour: INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW,
+  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   isVertical: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -33,21 +35,22 @@ export const fixedStyles = {
   galleryMargin: 0,
   imageMargin: 0,
 }
-export default class SlideshowGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
   }
+}
+
+export default class SlideshowGallery extends React.Component {
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

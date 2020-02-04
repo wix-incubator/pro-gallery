@@ -3,6 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   //tested params
@@ -10,6 +11,7 @@ export const fixedStyles = {
   enableInfiniteScroll: true,
   cubeImages: true,
   oneRow: true,
+  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   isVertical: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -30,21 +32,23 @@ export const fixedStyles = {
   cropOnlyFill: true,
 
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+  }
+}
+
 export default class SliderGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
-  }
   render() {
     
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

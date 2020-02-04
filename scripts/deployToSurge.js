@@ -67,8 +67,10 @@ function shouldPublishVersionSpecific(commit) {
 
 function deploy(name) {
   console.log(chalk.cyan(`Deploying ${name} to surge...`));
-  const subdomains = generateSubdomains(name);
-  let deployCommand = subdomains.map(subdomain => `npx surge build ${toSurgeUrl(subdomain)}`).join(' && ');
+  const subdomains = generateSubdomains(name).map(subdomain => toSurgeUrl(subdomain));
+  let deployCommand = subdomains.map(subdomain => `npx surge build ${subdomain}`).join(' && ');
+  console.log(chalk.magenta(`Deployed URLs: \n${subdomains.map(sd => 'https://' + sd).join('\n')}`));
+
   try {
     console.log(chalk.magenta(`Running "${deployCommand}`));
     exec(deployCommand);
