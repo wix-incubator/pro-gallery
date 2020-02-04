@@ -3,6 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import PLACEMENTS from '../../../common/constants/placements';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.ALTERNATE,
@@ -10,6 +11,7 @@ export const fixedStyles = {
   cubeImages: true,
   cubeRatio: 1,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
+  scrollDirection: SCROLL_DIRECTION.VERTICAL,
   galleryMargin: 0,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -29,21 +31,22 @@ export const fixedStyles = {
   placeGroupsLtr: false,
   rotatingCropRatios: '',
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+  }
+}
 export default class alternateGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
-  }
   render() {
 
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

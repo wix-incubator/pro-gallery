@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testItems, testImages, testVideos, testTexts} from './images';
+import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
@@ -100,7 +100,7 @@ export function App() {
 
     // return initialItems.mixed.slice(0, 3);
     if (isTestingEnvironment(window.location.search)) {
-      return testItems.slice(0,20);
+      return monochromeImages.slice(0,20);
     }
 
     const theItems = items || initialItems[mediaType];

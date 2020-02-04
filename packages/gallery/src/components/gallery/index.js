@@ -10,7 +10,7 @@ export default class BaseGallery extends React.Component {
 
   static propTypes = basePropTypes;
   render() {
-    const domId = this.props.domId || Math.floor(Math.random() * 10000);
+    const domId = this.props.domId || 'default-dom-id';
     const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
