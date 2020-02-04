@@ -4,6 +4,7 @@ import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
 import PLACEMENTS from '../../../common/constants/placements';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
@@ -12,7 +13,8 @@ export const fixedStyles = {
   cubeType: 'fill',
   oneRow: true,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
-  
+  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
+
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
@@ -34,21 +36,22 @@ export const fixedStyles = {
   galleryMargin: 0,
   imageMargin: 0,
 }
-export default class FullsizeGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
   }
+}
+
+export default class FullsizeGallery extends React.Component {
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );
