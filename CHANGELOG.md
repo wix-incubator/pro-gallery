@@ -1,3 +1,9 @@
+## [v1.7.14](https://pro-gallery-1-7-14.surge.sh) (04/02/2020)
+ 
+#### GALLERY
+ -  Fix: fix mixup between columns and fullsize presets
+
+---
 ## [v1.7.13](https://pro-gallery-1-7-13.surge.sh) (03/02/2020)
  
 #### GALLERY
