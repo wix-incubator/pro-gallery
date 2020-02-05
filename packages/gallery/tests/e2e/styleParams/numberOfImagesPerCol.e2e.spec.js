@@ -17,11 +17,10 @@ describe('numberOfImagesPerCol - e2e', () => {
   afterEach(() => {
     driver.closeBrowser();
   });
-  it('should set 1 image per a column', async () => {
+  it('should set 1 images per a column', async () => {
     await driver.openPage({
       galleryLayout: 2,
       numberOfImagesPerCol:1,
-      isGrid: true,
       oneRow: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
@@ -30,11 +29,10 @@ describe('numberOfImagesPerCol - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should set 2 image per a column', async () => {
+  it('should set 2 images per a column', async () => {
     await driver.openPage({
       galleryLayout: 2,
       numberOfImagesPerCol:2,
-      isGrid: true,
       oneRow: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
@@ -43,11 +41,10 @@ describe('numberOfImagesPerCol - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should set 3 image per a column', async () => {
+  it('should set 3 images per a column', async () => {
     await driver.openPage({
       galleryLayout: 2,
       numberOfImagesPerCol:3,
-      isGrid: true,
       oneRow: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
