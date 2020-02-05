@@ -12,6 +12,7 @@ import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
 import oneRow from './options/oneRow';
 import titlePlacement from './options/titlePlacement';
+import galleryHorizontalAlign from './options/galleryHorizontalAlign';
 
 export default {
     itemClick,
@@ -28,4 +29,5 @@ export default {
     cubeRatio,
     oneRow,
     titlePlacement,
+    galleryHorizontalAlign
 }
