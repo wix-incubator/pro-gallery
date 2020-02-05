@@ -3,7 +3,7 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Horizontal Text Alignment',
-  isRelevant: (styleParams)  => true,
+  isRelevant: (styleParams)  => styleParams.allowTitle || styleParams.allowDescription,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.horizontalAlign.CENTER,
   options: createOptions('horizontalAlign'),
