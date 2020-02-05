@@ -25,15 +25,16 @@ export const fixedStyles = {
   cropOnlyFill: false,
   oneRow: false,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+    gallerySize: styles.gallerySize,
+  }
+}
 export default class MasonryGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-      gallerySize: this.props.styles.gallerySize,
-    }
-  }
 
   render() {
 
@@ -41,7 +42,7 @@ export default class MasonryGallery extends React.Component {
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

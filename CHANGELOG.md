@@ -1,3 +1,36 @@
+## [v1.7.14](https://pro-gallery-1-7-14.surge.sh) (04/02/2020)
+ 
+#### GALLERY
+ -  Fix: fix mixup between columns and fullsize presets
+
+---
+## [v1.7.13](https://pro-gallery-1-7-13.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  Fix: fixed wrong gallerySize in masonry layout
+
+---
+## [v1.7.12](https://pro-gallery-1-7-12.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  do not use dom height when avoidSelfMeasure
+
+---
+## [v1.7.11](https://pro-gallery-1-7-11.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  improve (presets): create exported addPresetStyles method
+
+---
+## [v1.7.10](https://pro-gallery-1-7-10.surge.sh) (02/02/2020)
+ 
+#### GALLERY
+ -  Fix: use inherit instead of visible (allows setting visibility from parent)
+ -  Fix: use constant default domId to prevent change between renders (might effect on several galleries in the same page)
+ -  Improve: make domId required in propTypes
+ -  Force scroll direction on all solid direction layouts
+
+---
 ## [v1.7.9](https://pro-gallery-1-7-9.surge.sh) (30/01/2020)
  
 #### GALLERY

@@ -4,6 +4,7 @@ import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
 import PLACEMENTS from '../../../common/constants/placements';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.THUMBNAIL,
@@ -12,6 +13,7 @@ export const fixedStyles = {
   cubeImages:true,
   oneRow: true,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
+  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
@@ -34,20 +36,21 @@ export const fixedStyles = {
   galleryMargin: 0,
   imageMargin: 0,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+  }
+}
 export default class ThumbnailGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-    }
-  }
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

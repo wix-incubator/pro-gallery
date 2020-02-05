@@ -27,19 +27,21 @@ export const fixedStyles = {
   isSlideshow: false,
   minItemSize: 50,
 }
-export default class GridGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...fixedStyles,
-      gallerySize: Math.round(this.props.styles.gallerySize * 8.5 + 150),
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...fixedStyles,
+    gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 8.5 + 150),
+    modifiedGallerySize: true
   }
+}
+
+export default class GridGallery extends React.Component {
 
   render() {
 
-    const props = {...this.props, styles: this.createStyles()};
+    const props = {...this.props, styles: createStyles(this.props.styles)};
 
     let GalleryComponent = ProGallery;
     if (isEligibleForLeanGallery(props)) {
