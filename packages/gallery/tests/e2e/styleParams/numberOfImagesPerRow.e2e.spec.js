@@ -21,9 +21,9 @@ describe('numberOfImagesPerRow - e2e', () => {
     await driver.openPage({
       galleryLayout: 2,
       numberOfImagesPerRow:1,
-      gridStyle: true,
-      oneRow: true,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      gridStyle: 1,
+      oneRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -34,9 +34,9 @@ describe('numberOfImagesPerRow - e2e', () => {
     await driver.openPage({
       galleryLayout: 2,
       numberOfImagesPerRow:2,
-      gridStyle: true,
-      oneRow: true,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      gridStyle: 1,
+      oneRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -47,9 +47,9 @@ describe('numberOfImagesPerRow - e2e', () => {
     await driver.openPage({
       galleryLayout: 2,
       numberOfImagesPerRow:3,
-      gridStyle: true,
-      oneRow: true,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      gridStyle: 1,
+      oneRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
