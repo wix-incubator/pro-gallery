@@ -16,3 +16,7 @@ export const getElementDimensions = (elem) => {
     height: removePx(height)
   }
 }
+
+export const getElementStyles = elem => {
+  return getComputedStyle(elem.getDOMNode());
+}
