@@ -12,6 +12,7 @@ import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
 import oneRow from './options/oneRow';
 import titlePlacement from './options/titlePlacement';
+import useCustomButton from './options/useCustomButton';
 import galleryVerticalAlign from './options/galleryVerticalAlign';
 
 export default {
@@ -29,5 +30,6 @@ export default {
     cubeRatio,
     oneRow,
     titlePlacement,
+    useCustomButton,
     galleryVerticalAlign
 }
