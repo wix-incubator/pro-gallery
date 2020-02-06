@@ -15,10 +15,10 @@ export const fixedStyles = {
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   galleryMargin: 0,
+  isVertical: false,
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
-  isVertical: false,
   galleryType: 'Strips',
   groupSize: 1,
   gallerySize: () => dimensionsHelper.getGalleryWidth(),

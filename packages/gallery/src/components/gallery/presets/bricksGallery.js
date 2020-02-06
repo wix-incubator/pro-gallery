@@ -13,9 +13,9 @@ export const fixedStyles = {
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
   galleryMargin: 0,
+  isVertical: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  isVertical: true,
   gallerySize: 400,
   minItemSize: 50,
   groupSize: 3,

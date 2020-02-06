@@ -7,11 +7,11 @@ import LeanGallery from '../leanGallery/leanGallery';
 export const fixedStyles = {
   galleryLayout: LAYOUTS.GRID,
   cubeImages: true,
+  isVertical: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   smartCrop: false,
-  isVertical: true,
   galleryType: 'Columns',
   groupSize: 1,
   groupTypes: '1',

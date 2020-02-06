@@ -12,11 +12,11 @@ export const fixedStyles = {
   cubeRatio: 0.35,
   oneRow: true,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
+  isVertical: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
-  isVertical: false,
   galleryType: 'Strips',
   groupSize: 1,
   groupTypes: '1',

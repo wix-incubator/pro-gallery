@@ -16,6 +16,7 @@ import useCustomButton from './options/useCustomButton';
 import galleryVerticalAlign from './options/galleryVerticalAlign';
 import galleryHorizontalAlign from './options/galleryHorizontalAlign';
 import galleryMargin from './options/galleryMargin';
+import isVertical from './options/isVertical';
 
 export default {
     itemClick,
@@ -36,4 +37,5 @@ export default {
     galleryVerticalAlign,
     galleryHorizontalAlign,
     galleryMargin,
+    isVertical,
 }
