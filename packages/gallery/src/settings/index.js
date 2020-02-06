@@ -15,6 +15,7 @@ import titlePlacement from './options/titlePlacement';
 import useCustomButton from './options/useCustomButton';
 import galleryVerticalAlign from './options/galleryVerticalAlign';
 import galleryHorizontalAlign from './options/galleryHorizontalAlign';
+import galleryMargin from './options/galleryMargin';
 
 export default {
     itemClick,
@@ -34,4 +35,5 @@ export default {
     useCustomButton,
     galleryVerticalAlign,
     galleryHorizontalAlign,
+    galleryMargin,
 }

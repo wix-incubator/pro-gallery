@@ -12,7 +12,7 @@ export const fixedStyles = {
   cubeRatio: 1,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
-
+  galleryMargin: 0,
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   isVertical: true,
   gallerySize: 86,
@@ -23,7 +23,6 @@ export const fixedStyles = {
   rotatingGroupTypes: '1,3l,1,3r',
   smartCrop: false,
   collageDensity: 0.48,
-  galleryMargin: 0,
   floatingImages: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,
