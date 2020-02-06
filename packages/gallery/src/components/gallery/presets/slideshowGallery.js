@@ -12,6 +12,7 @@ export const fixedStyles = {
   oneRow: true,
   hoveringBehaviour: INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
+  galleryMargin: 0,
   isVertical: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
@@ -32,7 +33,6 @@ export const fixedStyles = {
   isSlideshow: true,
   cropOnlyFill: false,
   floatingImages: 0,
-  galleryMargin: 0,
   imageMargin: 0,
 }
 

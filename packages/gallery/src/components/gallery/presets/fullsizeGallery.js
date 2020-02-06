@@ -14,6 +14,7 @@ export const fixedStyles = {
   oneRow: true,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
+  galleryMargin: 0,
   isVertical: false,
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
@@ -32,7 +33,6 @@ export const fixedStyles = {
   isSlideshow: false,
   cropOnlyFill: false,
   floatingImages: 0,
-  galleryMargin: 0,
   imageMargin: 0,
 }
 
