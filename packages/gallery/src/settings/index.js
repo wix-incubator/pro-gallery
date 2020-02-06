@@ -14,6 +14,7 @@ import oneRow from './options/oneRow';
 import titlePlacement from './options/titlePlacement';
 import useCustomButton from './options/useCustomButton';
 import galleryVerticalAlign from './options/galleryVerticalAlign';
+import galleryHorizontalAlign from './options/galleryHorizontalAlign';
 
 export default {
     itemClick,
@@ -31,5 +32,6 @@ export default {
     oneRow,
     titlePlacement,
     useCustomButton,
-    galleryVerticalAlign
+    galleryVerticalAlign,
+    galleryHorizontalAlign,
 }
