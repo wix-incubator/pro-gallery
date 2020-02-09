@@ -258,7 +258,6 @@ class Utils {
   isDev() {
     return this.getOrPutFromCache('isDev', () => {
       return (
-        this.isLocal() ||
         this.shouldDebug('ph_local') ||
         (this.isOOI() && process.env.NODE_ENV === 'development') ||
         (this.safeLocalStorage() || {}).forceDevMode === 'true'
