@@ -2,12 +2,14 @@ import React, {useEffect} from 'react';
 import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testItems, testImages, testVideos, testTexts} from './images';
+import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import {GALLERY_CONSTS, ExpandableProGallery} from 'pro-gallery';
+// import Loader from './loader';
+
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
@@ -26,7 +28,7 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, isUnknownDimensions, isAvoidGallerySelfMeasure, gallerySettings, setGallerySettings} = useGalleryContext();
+  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings} = useGalleryContext();
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
@@ -77,10 +79,10 @@ export function App() {
   }
 
   const container = {
-    height: isUnknownDimensions ? '' : window.innerHeight,
-    width: isUnknownDimensions ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
-    scrollBase: isUnknownDimensions ? '' : 0,
-    avoidGallerySelfMeasure: isAvoidGallerySelfMeasure,
+    height: gallerySettings.isUnknownDimensions ? '' : window.innerHeight,
+    width: gallerySettings.isUnknownDimensions ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
+    scrollBase: gallerySettings.isUnknownDimensions ? '' : 0,
+    avoidGallerySelfMeasure: gallerySettings.isAvoidGallerySelfMeasure,
   };
 
   const addItems = () => {
@@ -98,7 +100,7 @@ export function App() {
 
     // return initialItems.mixed.slice(0, 3);
     if (isTestingEnvironment(window.location.search)) {
-      return testItems.slice(0,20);
+      return monochromeImages.slice(0,20);
     }
 
     const theItems = items || initialItems[mediaType];
@@ -111,16 +113,19 @@ export function App() {
 
   return (
     <main className={s.main}>
+      {/* <Loader/> */}
       <Button className={s.toggleButton} onClick={switchState} icon={showSide ? "close" : "menu"} shape="circle" size="default" type="primary" />
       <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0, display: showSide ? 'block' : 'none'}}>
         <div className={s.heading}>
           Pro Gallery Playground <a className={s.version} href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md" target="blank" title="View Changelog on Github">v{pJson.version}</a>
         </div>
-        <SideBar />
+        <SideBar
+          items={getItems()}
+        />
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ExpandableProGallery
-          key={`pro-gallery-${isUnknownDimensions}-${isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
+          key={`pro-gallery-${gallerySettings.isUnknownDimensions}-${gallerySettings.isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
           container={container}

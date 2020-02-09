@@ -13,6 +13,7 @@ import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 import NEW_PRESETS from '../gallery/presets/presets';
+import { GALLERY_CONSTS } from '../../settings/utils/constants';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -340,24 +341,17 @@ function processLayouts(styles) {
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
+    // all horizontal layouts that are not slider or columns
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
-  if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) {
-    if (
-      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS
+  // to_wrapper
+  if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
+    processedStyles.titlePlacement === PLACEMENTS.SHOW_BELOW
     ) {
-      processedStyles.titlePlacement = PLACEMENTS.SHOW_NOT_ON_HOVER;
-    } else if (
-      processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE
-    ) {
-      processedStyles.titlePlacement = PLACEMENTS.SHOW_ALWAYS;
-    } else {
-      //processedStyles.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.APPEARS
-      processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
-    }
+    processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
-
+  
   if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {
     processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
   }
@@ -667,7 +661,7 @@ function getFontLineHeight(font) {
 
 function isSlideshowFont(styles) {
   const galleryLayout = styles.galleryLayout;
-  if (galleryLayout === 5) {
+  if (galleryLayout === GALLERY_CONSTS.layout.SLIDESHOW) {
     return true;
   }
   if (

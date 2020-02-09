@@ -3,24 +3,26 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.COLUMN,
   cubeType: 'fill',
   cubeImages: true,
   cubeRatio: 0.35,
+  oneRow: true,
+  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
+  isVertical: false,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
-  isVertical: false,
   galleryType: 'Strips',
   groupSize: 1,
   groupTypes: '1',
   gallerySize: () => dimensionsHelper.getGalleryHeight(),
   fixedColumns: 0,
   hasThumbnails: false,
-  oneRow: true,
   enableScroll: true,
   isGrid: false,
   isColumns: true,
@@ -29,21 +31,22 @@ export const layoutStyles = {
   isSlideshow: false,
   cropOnlyFill: false,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...layoutStyles,
+  }
+}
+
 export default class ColumnGallery extends React.Component {
   
-  createStyles = () =>{
-    return {
-      ...this.props.styles,
-      ...layoutStyles,
-    }
-  }
-
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

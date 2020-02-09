@@ -7,10 +7,16 @@ import loveButton from './options/loveButton';
 import imageMargin from './options/imageMargin';
 import hoveringBehaviour from './options/hoveringBehaviour'
 import enableInfiniteScroll from './options/enableInfiniteScroll';
-import allowHover from './options/allowHover';
 import cubeType from './options/cubeType';
 import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
+import oneRow from './options/oneRow';
+import titlePlacement from './options/titlePlacement';
+import useCustomButton from './options/useCustomButton';
+import galleryVerticalAlign from './options/galleryVerticalAlign';
+import galleryHorizontalAlign from './options/galleryHorizontalAlign';
+import galleryMargin from './options/galleryMargin';
+import isVertical from './options/isVertical';
 
 export default {
     itemClick,
@@ -22,8 +28,14 @@ export default {
     imageMargin,
     hoveringBehaviour,
     enableInfiniteScroll,
-    allowHover,
     cubeType,
     cubeImages,
     cubeRatio,
+    oneRow,
+    titlePlacement,
+    useCustomButton,
+    galleryVerticalAlign,
+    galleryHorizontalAlign,
+    galleryMargin,
+    isVertical,
 }

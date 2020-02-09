@@ -130,11 +130,12 @@ class DimensionsHelper {
       const dimensionFix = () =>
         this.styles.oneRow ? this.getDimensionFix() : 0;
       const domHeight = () =>
-        window.isMock ? utils.getScreenHeight() : window.innerHeight; //() => protectGalleryHeight(this.container.windowHeight, offsetTop);
-      return Math.floor(
-        (this.container.height > 0 ? this.container.height : domHeight()) +
-        dimensionFix(),
-      );
+      this.container.avoidGallerySelfMeasure ? 0 : (window.isMock ? utils.getScreenHeight() : window.innerHeight); //() => protectGalleryHeight(this.container.windowHeight, offsetTop);
+      const res = Math.floor(
+          (this.container.height > 0 ? this.container.height : domHeight()) +
+          dimensionFix(),
+      )
+      return res;
     });
   }
 
@@ -152,6 +153,7 @@ class DimensionsHelper {
       } catch (e) {
         //
       }
+      this.container.scrollBase = scrollBase;
       return scrollBase;
     });
   }
@@ -162,8 +164,8 @@ class DimensionsHelper {
         this.calcBoundingRect() || {
           x: 0,
           y: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
+          width: this.avoidGallerySelfMeasure ? 0 : window.innerWidth,
+          height: this.avoidGallerySelfMeasure ? 0 : window.innerHeight,
         }
       );
     });

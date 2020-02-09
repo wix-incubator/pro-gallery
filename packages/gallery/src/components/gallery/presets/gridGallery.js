@@ -1,15 +1,17 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
+import isEligibleForLeanGallery from '../leanGallery/isEligible';
+import LeanGallery from '../leanGallery/leanGallery';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.GRID,
   cubeImages: true,
+  isVertical: true,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   smartCrop: false,
-  isVertical: true,
   galleryType: 'Columns',
   groupSize: 1,
   groupTypes: '1',
@@ -25,23 +27,30 @@ export const layoutStyles = {
   isSlideshow: false,
   minItemSize: 50,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...layoutStyles,
+    gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 8.5 + 150),
+    modifiedGallerySize: true
+  }
+}
+
 export default class GridGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...layoutStyles,
-      gallerySize: Math.round(this.props.styles.gallerySize * 8.5 + 150),
-    }
-  }
-
   render() {
+
+    const props = {...this.props, styles: createStyles(this.props.styles)};
+
+    let GalleryComponent = ProGallery;
+    if (isEligibleForLeanGallery(props)) {
+      GalleryComponent = LeanGallery;
+    }
+
     return (
-      <ProGallery
-        {...this.props}
-        styles={
-          this.createStyles()
-        }
+      <GalleryComponent
+        {...props}
       />
     );
   }

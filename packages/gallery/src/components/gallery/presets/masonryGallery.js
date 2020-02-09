@@ -2,10 +2,12 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.MASONRY,
   cubeImages: false,
+  scrollDirection: SCROLL_DIRECTION.VERTICAL,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
@@ -23,15 +25,16 @@ export const layoutStyles = {
   cropOnlyFill: false,
   oneRow: false,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...layoutStyles,
+    gallerySize: styles.gallerySize,
+  }
+}
 export default class MasonryGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...layoutStyles,
-      gallerySize: this.props.styles.gallerySize,
-    }
-  }
 
   render() {
 
@@ -39,7 +42,7 @@ export default class MasonryGallery extends React.Component {
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

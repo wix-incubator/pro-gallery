@@ -1,6 +1,4 @@
 import React from 'react';
-import isEligibleForLeanGallery from './leanGallery/isEligible';
-import LeanGallery from './leanGallery/leanGallery';
 import ProGallery from './proGallery/proGallery';
 import { PRESETS } from './presets';
 import basePropTypes from './proGallery/propTypes';
@@ -12,7 +10,7 @@ export default class BaseGallery extends React.Component {
 
   static propTypes = basePropTypes;
   render() {
-    const domId = this.props.domId || Math.floor(Math.random() * 10000);
+    const domId = this.props.domId || 'default-dom-id';
     const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
@@ -25,9 +23,7 @@ export default class BaseGallery extends React.Component {
 
     const { galleryType, galleryLayout } = galleryProps.styles;
     let GalleryComponent = ProGallery;
-    if (isEligibleForLeanGallery(galleryProps)) {
-      GalleryComponent = LeanGallery;
-    } else if (galleryType === undefined || galleryLayout !== undefined) {
+    if (galleryType === undefined || galleryLayout !== undefined) {
       switch (galleryLayout) {
         case LAYOUTS.MASONRY:
           GalleryComponent = PRESETS.MasonryGallery;

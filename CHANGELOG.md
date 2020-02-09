@@ -1,3 +1,133 @@
+## [v1.7.14](https://pro-gallery-1-7-14.surge.sh) (04/02/2020)
+ 
+#### GALLERY
+ -  Fix: fix mixup between columns and fullsize presets
+
+---
+## [v1.7.13](https://pro-gallery-1-7-13.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  Fix: fixed wrong gallerySize in masonry layout
+
+---
+## [v1.7.12](https://pro-gallery-1-7-12.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  do not use dom height when avoidSelfMeasure
+
+---
+## [v1.7.11](https://pro-gallery-1-7-11.surge.sh) (03/02/2020)
+ 
+#### GALLERY
+ -  improve (presets): create exported addPresetStyles method
+
+---
+## [v1.7.10](https://pro-gallery-1-7-10.surge.sh) (02/02/2020)
+ 
+#### GALLERY
+ -  Fix: use inherit instead of visible (allows setting visibility from parent)
+ -  Fix: use constant default domId to prevent change between renders (might effect on several galleries in the same page)
+ -  Improve: make domId required in propTypes
+ -  Force scroll direction on all solid direction layouts
+
+---
+## [v1.7.9](https://pro-gallery-1-7-9.surge.sh) (30/01/2020)
+ 
+#### GALLERY
+ -  fix masonry to always vertical scrollDirection
+
+---
+## [v1.7.8](https://pro-gallery-1-7-8.surge.sh) (29/01/2020)
+ 
+#### GALLERY
+ -  Fix (dimensionHelper): set scrollBase to container in calcScrollBase
+ -  Change height calc for titles in SSR
+
+---
+## [v1.7.7](https://pro-gallery-1-7-7.surge.sh) (28/01/2020)
+ 
+#### GALLERY
+ -  Fixed images alignment bug in grid layout.
+ -  Fix (leanGallery): fix liveHeightFixer in leanGallery
+ -  Improve (leanGallery): fix isEligible for no title and no description
+
+---
+## [v1.7.6](https://pro-gallery-1-7-6.surge.sh) (27/01/2020)
+ 
+#### GALLERY
+ -  In slideshow, only the itemInner will be wrapped with <a>, and not the whole item-container.
+ -  Group navigation for collage horizontal and improvements to arrows.
+
+---
+## [v1.7.5](https://pro-gallery-1-7-5.surge.sh) (27/01/2020)
+ 
+#### GALLERY
+ -  change download elements to div
+
+---
+## [v1.7.4](https://pro-gallery-1-7-4.surge.sh) (26/01/2020)
+ 
+#### GALLERY
+ -  Fixes totitlePlacement/hoveringBehaviour.
+
+---
+## [v1.7.3](https://pro-gallery-1-7-3.surge.sh) (22/01/2020)
+ 
+#### GALLERY
+ -  Accessibility fix loveButton label, role, and checked/unchecked
+ -  Added formFactor prop ("mobile"/"desktop"/"tablet"). Will be used as one of the ways to know if the gallery is displayed on mobile.
+
+#### MAIN
+ -  fix (deployToSurge): fix version specifc deploy
+
+---
+## [v1.7.2](https://pro-gallery-1-7-2.surge.sh) (22/01/2020)
+ 
+#### GALLERY
+ -  fix padding issue: fixed padding bottom in texts when not needed (thumbnails, slider and slideshow layouts)
+ -  fix Accessibility issue for vertical galleries: keyboard arrows navigation: if load more button is on, cannot navigate to items that are hidden below it
+
+---
+## [v1.7.1](https://pro-gallery-1-7-1.surge.sh) (21/01/2020)
+ 
+#### GALLERY
+ -  improve (leanGallery): expand leanGallery coverage
+
+---
+## [v1.7.0](https://pro-gallery-1-7-0.surge.sh) (21/01/2020)
+ 
+#### GALLERY
+ -  titlePlacement/hoveringBehaviour options: separated info/hover behaviours:
+      * titlePlacement no longer supports 'SHOW_NOT_ON_HOVER': use option - hoveringBehaviour = 'DISAPPEAR'
+      * titlePlacement no longer supports 'SHOW_ALWAYS': use option - hoveringBehaviour = 'NO_CHANGE'
+      * titlePlacement no longer supports 'DONT_SHOW': use option - hoveringBehaviour = 'NEVER_SHOW'
+
+---
+## [v1.6.12](https://pro-gallery-1-6-12.surge.sh) (19/01/2020)
+ 
+#### GALLERY
+ -  remove arrows from first and last items
+
+---
+## [v1.6.11](https://pro-gallery-1-6-11.surge.sh) (19/01/2020)
+ 
+#### GALLERY
+ -  fix: items will be clickable when itemClick is link and there is a dynamic link on those items.
+
+---
+## [v1.6.10](https://pro-gallery-1-6-10.surge.sh) (16/01/2020)
+ 
+#### GALLERY
+ -  fixed EVENTS.NEED_MORE_ITEMS not beeing dispatched for some galleries.
+
+---
+## [v1.6.9](https://pro-gallery-1-6-9.surge.sh) (14/01/2020)
+
+#### GALLERY
+ -  fixed mix/alternate layouts mixup
+ -  a click on a video item will be processed only if itemClick === 'nothing'.
+
+---
 ## [v1.6.8](https://pro-gallery-1-6-8.surge.sh) (12/01/2020)
  
 #### GALLERY

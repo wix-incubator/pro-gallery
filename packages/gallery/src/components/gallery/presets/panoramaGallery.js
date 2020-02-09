@@ -3,14 +3,15 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.PANORAMA,
   cubeImages: false,
-  
+  scrollDirection: SCROLL_DIRECTION.VERTICAL,
+  isVertical: true,
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
-  isVertical: true,
   galleryType: 'Columns',
   groupSize: 1,
   groupTypes: '1',
@@ -27,21 +28,22 @@ export const layoutStyles = {
   cropOnlyFill: false,
   slideshowLoop: false,
 }
-export default class PanoramaGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...layoutStyles,
-    }
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...layoutStyles,
   }
+}
+
+export default class PanoramaGallery extends React.Component {
 
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

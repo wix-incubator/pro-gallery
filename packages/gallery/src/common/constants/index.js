@@ -23,6 +23,7 @@ import mobileSwipeAnimations from './mobileSwipeAnimations';
 import expandInfoPositions from './expandInfoPositions';
 import dimensions from './dimensions';
 import gallerySizeType from './gallerySizeType';
+import isVertical from './isVertical';
 
 export default {
   events,
@@ -49,5 +50,6 @@ export default {
   mobileSwipeAnimations,
   expandInfoPositions,
   dimensions,
-  gallerySizeType
+  gallerySizeType,
+  isVertical
 };

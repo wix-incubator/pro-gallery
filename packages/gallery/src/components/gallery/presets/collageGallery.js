@@ -5,10 +5,13 @@ import ProGallery from '../proGallery/proGallery';
 import basePropTypes from '../proGallery/propTypes';
 import LAYOUTS from '../../../common/constants/layout';
 import consts from '../../../common/constants';
+import PLACEMENTS from '../../../common/constants/placements';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
   cubeImages: false,
+  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
+  
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   groupSize: 3,
@@ -53,7 +56,15 @@ export const propsToStyles = props => {
     imageHoverAnimation: props.imageHoverAnimation,
     scrollAnimation: props.scrollAnimation,
     hoveringBehaviour: props.hoveringBehaviour,
+  }
+}
 
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...layoutStyles,
+    gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 5 + 500),
+    modifiedGallerySize: true
   }
 }
 
@@ -65,30 +76,13 @@ export default class CollageGallery extends React.Component {
     ...layoutPropTypes
   }
 
-  createStyles = () => {
-    const { styles } = this.props;
-    const layoutProps = Object.keys(layoutPropTypes).reduce((props, propType) => {
-      if (typeof styles[propType] !== 'undefined') { 
-        props[propType] = styles[propType];
-      }
-    }, {});
-    const gallerySize = Math.round(styles.gallerySize * 5 + 500);
-
-    return {
-      ...styles,
-      ...layoutProps,
-      ...layoutStyles,
-      gallerySize
-    }
-  }
-
   render() {
 
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

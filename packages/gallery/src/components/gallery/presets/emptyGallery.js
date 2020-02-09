@@ -6,22 +6,24 @@ import LAYOUTS from '../../../common/constants/layout';
 export const layoutStyles = {
   galleryLayout: LAYOUTS.EMPTY,
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...layoutStyles,
+    gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 9 + 100),
+    modifiedGallerySize: true
+  }
+}
+
 export default class EmptyGallery extends React.Component {
   
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...layoutStyles,
-      gallerySize: Math.round(this.props.styles.gallerySize * 9 + 100)
-    }
-  }
-
   render() {
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

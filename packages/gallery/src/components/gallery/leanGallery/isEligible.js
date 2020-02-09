@@ -1,19 +1,39 @@
 import consts from '../../../common/constants/index';
-import { addLayoutStyles } from '../../helpers/layoutHelper';
-
+import { fixedStyles } from '../presets/gridGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
-export default ({items, styles, options}) => {
+export const notEligibleReasons = ({items, styles}) => {
+  const s = {...styles, ...fixedStyles, allowLeanGallery: true};
+  const res = [];
+  if (String(styles.galleryLayout) !== '2') {
+    res.push('not a Grid layout');
+  } 
+  if (items.length > MAX_ITEMS_COUNT) {
+    res.push(`more than ${MAX_ITEMS_COUNT} items`);
+  }
+  for (const item of items) {
+    if (!isImage(item)) {
+      res.push(`at least one item is not an image`);
+    }
+  }
+  for (const [styleParam, value] of Object.entries(s)) {
+    if (!isValidStyleParam(styleParam, value, s)) {
+      res.push(`invalid style: ${styleParam} => ${value}`);
+    }
+  }
 
-    styles = {...styles, ...options};
+  return res;
+}
+
+export default ({items, styles}) => {
 
     const allowLeanGallery = !!styles.allowLeanGallery;
     
     if (!allowLeanGallery) {
       return false;
     }
-    if (items.length > 25) {
-      console.log(`[LEAN GALLERY] NOT ALLOWED - more than 25 items`, items.length);
+    if (items.length > MAX_ITEMS_COUNT) {
+      console.log(`[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`, items.length);
       return false;
     }
     for (const item of items) {
@@ -22,18 +42,19 @@ export default ({items, styles, options}) => {
         return false;
       }
     }
-    const fullStyles = addLayoutStyles(styles);
-    for (const [styleParam, value] of Object.entries(fullStyles)) {
-      if (!isValidStyleParam(styleParam, value)) {
+    for (const [styleParam, value] of Object.entries(styles)) {
+      if (!isValidStyleParam(styleParam, value, styles)) {
         console.log(`[LEAN GALLERY] NOT ALLOWED - invalid styleParam`, styleParam, value);
         return false;
       }
     }
 
-    console.log(`[LEAN GALLERY] ALLOWED!`, fullStyles);
+    console.log(`[LEAN GALLERY] ALLOWED!`, styles);
     return true;
     
 }
+
+const MAX_ITEMS_COUNT = 25;
 
 const isImage = item => {
   const meta = item.metadata || item.metaData;
@@ -44,24 +65,28 @@ const isImage = item => {
   return isImageItem;
 }
 
-const isValidStyleParam = (styleParam, value) => {
+const isValidStyleParam = (styleParam, value, allStyles) => {
   if (typeof handledStyleParams[styleParam] !== 'undefined') return true;
-  if (typeof ignoredStyleParams[styleParam] !== 'undefined') return true;
+  // if (typeof ignoredStyleParams[styleParam] !== 'undefined') return true;
   if (typeof fixedStyleParams[styleParam] !== 'undefined') {
     const sp = fixedStyleParams[styleParam];
-    if (sp && sp.length > 0) {
+    if (sp && typeof sp === 'function') {
+      return sp(allStyles);
+    } else if (sp && sp.length > 0) {
       return sp.includes(value);
     } else {
       return sp === value;
     }
   }
-  if (value === undefined || value === null) return true;
-  return false;
+  return true;
 }
 
 //these styles can get any value, the lean gallery will handle them
 const handledStyleParams = { 
   numberOfImagesPerRow: 3,
+  gallerySizeType: 'smart',
+  gallerySizeRatio: 1,
+  gallerySizePx: 300,
   gallerySize: 30,
   cubeType: 'fill',
   cubeRatio: 1,
@@ -72,10 +97,15 @@ const handledStyleParams = {
   itemBorderWidth: 0,
   itemBorderRadius: 0,
   imageQuality: 90,
+  textBoxHeight: 200,
+  allowTitle: false,
+  allowDescription: false,
 };
 
 //these params are not relevant when a lean gallery is rendered - the fixed styles will override them
+/* 
 const ignoredStyleParams = { 
+  gotStyleParams: true,
   galleryType: null,
   collageAmount: 0,
   numberOfImagesPerCol: 2,
@@ -102,13 +132,6 @@ const ignoredStyleParams = {
   galleryTextAlign: 'center',
   scrollSnap: false,
   fullscreen: true,
-  allowSocial: true,
-  allowDownload: false,
-  allowTitle: true,
-  allowDescription: false,
-  allowHover: true,
-  loveButton: true,
-  loveCounter: false,
   arrowsPosition: 0,
   arrowsSize: 23,
   defaultShowInfoExpand: 1,
@@ -125,7 +148,6 @@ const ignoredStyleParams = {
   galleryThumbnailsAlignment: 'bottom',
   thumbnailSize: 250,
   magicLayoutSeed: 1,
-  textBoxHeight: 200,
   textImageSpace: 10,
   textBoxBorderRadius: 0,
   textBoxBorderWidth: 0,
@@ -158,7 +180,6 @@ const ignoredStyleParams = {
   loadMoreAmount: 'all',
   addToCartBorderWidth: 1,
   imageLoadingMode: consts.loadingMode.BLUR,
-  calculateTextBoxHeightMode: consts.calculationOptions.AUTOMATIC,
   hoveringBehaviour: consts.infoBehaviourOnHover.APPEARS,
   expandAnimation: consts.expandAnimations.NO_EFFECT,
   imageHoverAnimation: consts.imageHoverAnimations.NO_EFFECT,
@@ -167,8 +188,12 @@ const ignoredStyleParams = {
   selectedLayoutV2: 2,
   isSlideshowFont: false,
   addToCartButtonText: '',
-  imageInfoType: consts.infoType.NO_BACKGROUND
+  imageInfoType: consts.infoType.NO_BACKGROUND,
+  galleryImageRatio: 2,
+  sharpParams: {},
+  itemBorderColor: {},
 };
+*/
 
 //these params must be set to these exact values in order for the lean gallery to render well
 const fixedStyleParams = { 
@@ -179,7 +204,7 @@ const fixedStyleParams = {
   isRTL: false,
   scrollDirection: [0, undefined],
   groupSize: 1,
-  allowHover: false,
+  hoveringBehaviour: [consts.infoBehaviourOnHover.NEVER_SHOW, consts.infoBehaviourOnHover.APPEARS],
   rotatingGroupTypes: '',
   cubeImages: true,
   smartCrop: false,
@@ -189,13 +214,15 @@ const fixedStyleParams = {
   floatingImages: 0,
   placeGroupsLtr: false,
   mobilePanorama: false,
-  enableInfiniteScroll: true,
+  enableInfiniteScroll: [true, 1],
   useCustomButton: false,
-  externalInfoHeight: 0,
-  bottomInfoHeight: 0,
   itemEnableShadow: false,
-  usmToggle: false,
-  itemClick: consts.itemClick.NOTHING,
+  allowSocial: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.allowSocial,
+  allowDownload: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.allowDownload,
+  loveButton: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.loveButton,
+  loveCounter: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.loveCounter,
+  itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: consts.placements.DONT_SHOW,
+  titlePlacement: sp => [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW].includes(sp.titlePlacement) || sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
+  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.calculationOptions.MANUAL || (sp.titlePlacement !== consts.placements.SHOW_ABOVE && sp.titlePlacement !== consts.placements.SHOW_BELOW),
 };

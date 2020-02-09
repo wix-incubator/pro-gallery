@@ -2,24 +2,28 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
+import PLACEMENTS from '../../../common/constants/placements';
+import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.ALTERNATE,
   cubeType: 'fill',
   cubeImages: true,
   cubeRatio: 1,
-
-  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
+  scrollDirection: SCROLL_DIRECTION.VERTICAL,
+  galleryMargin: 0,
   isVertical: true,
+  
+  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   gallerySize: 86,
   minItemSize: 50,
   groupSize: 3,
   chooseBestGroup: true,
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
-  rotatingGroupTypes: '1,3l,1,3r',
+  rotatingGroupTypes: '1,2h,1,2h',
   smartCrop: false,
   collageDensity: 0.48,
-  galleryMargin: 0,
   floatingImages: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,
@@ -27,21 +31,22 @@ export const layoutStyles = {
   placeGroupsLtr: false,
   rotatingCropRatios: '',
 }
+
+export const createStyles = styles => {
+  return {
+    ...styles,
+    ...layoutStyles,
+  }
+}
 export default class alternateGallery extends React.Component {
 
-  createStyles = () => {
-    return {
-      ...this.props.styles,
-      ...layoutStyles,
-    }
-  }
   render() {
 
     return (
       <ProGallery
         {...this.props}
         styles={
-          this.createStyles()
+          createStyles(this.props.styles)
         }
       />
     );

@@ -5,6 +5,10 @@ import {
   isEditMode,
   isPreviewMode,
   isSEOMode,
+  isFormFactorMobile,
+  isFormFactorTablet,
+  isFormFactorDesktop,
+  isFormFactorTouch,
 } from '../window/viewModeWrapper';
 
 class Utils {
@@ -13,7 +17,6 @@ class Utils {
     this._hash2int = {};
     this._params = {};
     this._useCache = !isEditMode() && !isPreviewMode();
-    this.setIsWixMobile = this.setIsWixMobile.bind(this);
 
     Object.assign(this, lodash);
   }
@@ -162,10 +165,11 @@ class Utils {
     return hash;
   }
 
-  isWixMobile() {
-    const _isWixMobile = () => {
+  isMobileByProps() {
+    const _isMobileByProps = () => {
       const deviceType = this.parseGetParam('deviceType') || window.deviceType;
       const isMobileViewer = this.parseGetParam('showMobileView') === 'true';
+      const formFactorMobile = isFormFactorMobile();
       if (isMobileViewer) {
         return true;
       } else if (deviceType) {
@@ -174,16 +178,14 @@ class Utils {
             .toLowerCase()
             .indexOf('mobile') >= 0
         );
+      } else if (formFactorMobile){
+        return formFactorMobile;
       } else {
         return undefined;
       }
     };
 
-    if (isEditMode() || isPreviewMode()) {
-      return _isWixMobile();
-    } else {
-      return this.getOrPutFromCache('isWixMobile', _isWixMobile);
-    }
+      return this.getOrPutFromCache('isMobileByProps', _isMobileByProps);
   }
 
   isUserAgentMobile() {
@@ -205,34 +207,23 @@ class Utils {
         return check;
       };
 
-      if (isEditMode() || isPreviewMode()) {
-        return _isUserAgentMobile();
-      } else {
-        return this.getOrPutFromCache('isUserAgentMobile', _isUserAgentMobile);
-      }
+      return this.getOrPutFromCache('isUserAgentMobile', _isUserAgentMobile);
     } catch (e) {
       return false;
     }
   }
 
-  setIsWixMobile(val) {
-    window.deviceType = val ? 'mobile' : 'desktop';
-    this._cache.isWixMobile = val;
-    this._cache.isMobile = val;
-  }
 
   isMobile() {
     const _isMobile = () => {
-      const isWixMobile = this.isWixMobile();
+      const isMobileByProps = this.isMobileByProps();
       const isUserAgentMobile = this.isUserAgentMobile();
 
-      return this.isUndefined(isWixMobile) ? isUserAgentMobile : isWixMobile;
+      return this.isUndefined(isMobileByProps) ? isUserAgentMobile : isMobileByProps;
     };
 
     if (this.isTest()) {
       return false;
-    } else if (isEditMode() || isPreviewMode()) {
-      return _isMobile();
     } else {
       return this.getOrPutFromCache('isMobile', _isMobile);
     }
@@ -267,7 +258,6 @@ class Utils {
   isDev() {
     return this.getOrPutFromCache('isDev', () => {
       return (
-        this.isLocal() ||
         this.shouldDebug('ph_local') ||
         (this.isOOI() && process.env.NODE_ENV === 'development') ||
         (this.safeLocalStorage() || {}).forceDevMode === 'true'
@@ -331,13 +321,6 @@ class Utils {
     return /(^https?)|(^data)|(^blob)/.test(url);
   }
 
-  isMobileViewer() {
-    return this.getOrPutFromCache('isMobileViewer', () => {
-      const isWixMobile = this.isWixMobile();
-      const isUserAgentMobile = this.isUserAgentMobile();
-      return isWixMobile && !isUserAgentMobile;
-    });
-  }
 
   isiOS() {
     return this.getOrPutFromCache('isiOS', () => {

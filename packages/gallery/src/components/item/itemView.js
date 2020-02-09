@@ -19,6 +19,7 @@ import {
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 import PLACEMENTS from '../../common/constants/placements';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import CLICK_ACTIONS from '../../common/constants/itemClick';
 import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
 import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
@@ -157,7 +158,7 @@ class ItemView extends GalleryComponent {
   onItemClick(e) {
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
-      return (() => {});
+      return (() => { });
     }
 
     e.preventDefault();
@@ -218,9 +219,9 @@ class ItemView extends GalleryComponent {
       return;
     } else if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.props.styleParams.itemClick)) {
       this.props.actions.eventsListener(
-          EVENTS.ITEM_ACTION_TRIGGERED,
-          this.props,
-        );
+        EVENTS.ITEM_ACTION_TRIGGERED,
+        this.props,
+      );
     }
   }
 
@@ -292,22 +293,20 @@ class ItemView extends GalleryComponent {
         allowDescription,
         allowTitle,
         titlePlacement,
+        hoveringBehaviour,
         itemClick,
-        isSlideshow,
         alwaysShowHover,
         previewHover,
       } = this.props.styleParams;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
-      if (isSlideshow) {
+      if (hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
         return false;
       }
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        (titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
-          titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
-          titlePlacement === PLACEMENTS.SHOW_ALWAYS) &&
+        titlePlacement === PLACEMENTS.SHOW_ON_HOVER && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
         isNewMobileSettings
       ) {
         return true;
@@ -332,14 +331,12 @@ class ItemView extends GalleryComponent {
   shouldHover() { //see if this could be decided in the preset
     const { styleParams } = this.props;
 
-    if (styleParams.isSlideshow) {
+    if (styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
       return false;
     } else if (styleParams.alwaysShowHover === true) {
       return true;
     } else if (isEditMode() && styleParams.previewHover) {
       return true;
-    } else if (styleParams.allowHover === false) {
-      return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
     } else {
@@ -625,14 +622,12 @@ class ItemView extends GalleryComponent {
     let itemTexts;
     let social;
     let share;
-    
+
     let itemHover = null;
 
     if ((visible && this.shouldHover()) || styleParams.isSlideshow) {
       itemTexts =
-        styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER ||
-        styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER ||
-        styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
+        styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
           ? this.getItemTextsDetails()
           : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
       social = this.getSocial();
@@ -643,7 +638,7 @@ class ItemView extends GalleryComponent {
         imageDimensions,
       );
     }
-    
+
 
     if (visible) {
       switch (type) {
@@ -669,7 +664,7 @@ class ItemView extends GalleryComponent {
           itemInner = [this.getImageItem(imageDimensions), itemHover];
       }
     } else {
-      itemInner = <div/>
+      itemInner = <div />
     }
 
     if (styleParams.isSlideshow) {
@@ -678,9 +673,19 @@ class ItemView extends GalleryComponent {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
       };
+      const { photoId, id, idx } = this.props;
       itemInner = (
         <div>
-          {itemInner}
+          <a
+            ref={e => (this.itemAnchor = e)}
+            data-id={photoId}
+            data-idx={idx}
+            key={'item-container-link-' + id}
+            {...this.getLinkParams()}
+            tabIndex={-1}
+          >
+            {itemInner}
+          </a>
           <div
             className="gallery-item-info gallery-item-bottom-info"
             data-hook="gallery-item-info-buttons"
@@ -778,20 +783,21 @@ class ItemView extends GalleryComponent {
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ALWAYS
+      this.props.styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE
     );
   }
 
   getItemContainerStyles() {
-    const { styleParams, linkData } = this.props;
+    const { styleParams, linkData, linkUrl } = this.props;
     const containerStyleByStyleParams = getContainerStyle(styleParams);
+    const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
       cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
-      (styleParams.itemClick === CLICK_ACTIONS.LINK && linkData.type === undefined) //when itemClick is 'link' but no link was added to this specific item
+      (styleParams.itemClick === CLICK_ACTIONS.LINK && itemDoesntHaveLink)
         ? 'default'
         : 'pointer'
     };
@@ -810,8 +816,11 @@ class ItemView extends GalleryComponent {
         (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
         'transparent';
     }
-    styles.height = height + 'px';
     styles.margin = -styleParams.itemBorderWidth + 'px';
+    
+    if (!this.props.isUnknownWidth) {
+      styles.height = height + 'px';
+    }
 
     const imageDimensions = this.getImageDimensions();
 
@@ -857,7 +866,7 @@ class ItemView extends GalleryComponent {
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
-        styleParams.titlePlacement === PLACEMENTS.SHOW_NOT_ON_HOVER,
+        styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS,
 
       //overlay animations
       'hover-animation-fade-in':
@@ -916,8 +925,8 @@ class ItemView extends GalleryComponent {
     const tabIndex = this.isHighlight()
       ? utils.getTabIndex('currentThumbnail')
       : this.props.currentIdx === this.props.idx
-      ? utils.getTabIndex('currentGalleryItem')
-      : -1;
+        ? utils.getTabIndex('currentGalleryItem')
+        : -1;
     return tabIndex;
   }
 
@@ -958,7 +967,7 @@ class ItemView extends GalleryComponent {
         ) {
           if (
             this.props.thumbnailHighlightId !==
-              prevProps.thumbnailHighlightId &&
+            prevProps.thumbnailHighlightId &&
             this.props.thumbnailHighlightId === this.props.id
           ) {
             // if the highlighted thumbnail changed and it is the same as this itemview's
@@ -985,7 +994,7 @@ class ItemView extends GalleryComponent {
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);
-      } catch (e) {}
+      } catch (e) { }
     }
 
     window.addEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
@@ -997,7 +1006,7 @@ class ItemView extends GalleryComponent {
   }
 
 
-    componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     this.changeActiveElementIfNeeded(prevProps);
   }
 
@@ -1033,72 +1042,82 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  composeItem() {
-    const { photoId, id, hash, idx } = this.props;
-    const { directLink } = this.props;
-    const { itemClick } = this.props.styleParams;
+  getLinkParams() {
+    const { directLink, styleParams } = this.props;
     const { url, target } = directLink || {};
     const isSEO = isSEOMode();
     const noFollowForSEO = this.props.noFollowForSEO;
     const shouldUseNofollow = isSEO && noFollowForSEO;
-    const shouldUseDirectLink = !!(url && target && itemClick === 'link');
+    const shouldUseDirectLink = !!(url && target && styleParams.itemClick === 'link');
     const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
     const linkParams = shouldUseDirectLink
       ? { href: url, target, ...seoLinkParams }
       : {};
+    return linkParams;
+  }
+
+  composeItem() {
+    const { photoId, id, hash, idx, styleParams } = this.props;
+
     const innerDiv = (
-      <a
-        ref={e => (this.itemAnchor = e)}
+      <div
+        className={this.getItemContainerClass()}
+        onContextMenu={e => this.onContextMenu(e)}
+        id={cssScrollHelper.getDomId(this.props)}
+        ref={e => (this.itemContainer = e)}
+        onMouseOver={this.onMouseOver}
+        onMouseOut={() => {
+          !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+        }}
+        onClick={this.onItemClick}
+        onKeyDown={this.onKeyPress}
+        tabIndex={this.getItemContainerTabIndex()}
+        aria-label={this.getItemAriaLabel()}
+        data-hash={hash}
         data-id={photoId}
         data-idx={idx}
-        key={'item-container-link-' + id}
-        {...linkParams}
-        tabIndex={-1}
+        role={this.getItemAriaRole()}
+        data-hook="item-container"
+        key={'item-container-' + id}
+        style={this.getItemContainerStyles()}
       >
+        {this.getTopInfoElementIfNeeded()}
         <div
-          className={this.getItemContainerClass()}
-          onContextMenu={e => this.onContextMenu(e)}
-          id={cssScrollHelper.getDomId(this.props)}
-          ref={e => (this.itemContainer = e)}
-          onMouseOver={this.onMouseOver}
-          onMouseOut={() => {
-            !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
-          }}
-          onClick={this.onItemClick}
-          onKeyDown={this.onKeyPress}
-          tabIndex={this.getItemContainerTabIndex()}
-          aria-label={this.getItemAriaLabel()}
-          data-hash={hash}
+          style={
+            this.props.styleParams.isSlideshow
+              ? {}
+              : getImageStyle(this.props.styleParams)
+          }
+        >
+          <div
+            data-hook="item-wrapper"
+            className={this.getItemWrapperClass()}
+            key={'item-wrapper-' + id}
+            style={this.getItemWrapperStyles()}
+          >
+            {this.getItemInner()}
+          </div>
+        </div>
+        {this.getBottomInfoElementIfNeeded()}
+      </div>
+    );
+
+    if (styleParams.isSlideshow) {
+      return innerDiv
+    } else {
+      return (
+        <a
+          ref={e => (this.itemAnchor = e)}
           data-id={photoId}
           data-idx={idx}
-          //aria-label={this.getItemAriaLabel()}
-          role={this.getItemAriaRole()}
-          data-hook="item-container"
-          key={'item-container-' + id}
-          style={this.getItemContainerStyles()}
+          key={'item-container-link-' + id}
+          {...this.getLinkParams()}
+          tabIndex={-1}
         >
-          {this.getTopInfoElementIfNeeded()}
-          <div
-            style={
-              this.props.styleParams.isSlideshow
-                ? {}
-                : getImageStyle(this.props.styleParams)
-            }
-          >
-            <div
-              data-hook="item-wrapper"
-              className={this.getItemWrapperClass()}
-              key={'item-wrapper-' + id}
-              style={this.getItemWrapperStyles()}
-            >
-              {this.getItemInner()}
-            </div>
-          </div>
-          {this.getBottomInfoElementIfNeeded()}
-        </div>
-      </a>
-    );
-    return innerDiv;
+          {innerDiv}
+        </a>
+      )
+    }
   }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
