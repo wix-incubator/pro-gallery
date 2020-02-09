@@ -1,10 +1,13 @@
 import consts from '../../../common/constants/index';
-import { fixedStyles } from '../presets/gridGallery';
+import { layoutStyles } from '../presets/gridGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export const notEligibleReasons = ({items, styles}) => {
-  const s = {...styles, ...fixedStyles, allowLeanGallery: true};
+  const s = {...styles, ...layoutStyles};
   const res = [];
+  if (styles.allowLeanGallery !== true) {
+    res.push('lean gallery experiment is off');
+  } 
   if (String(styles.galleryLayout) !== '2') {
     res.push('not a Grid layout');
   } 
