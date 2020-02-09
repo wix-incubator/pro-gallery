@@ -1,11 +1,9 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import ProGallery from '../proGallery/proGallery';
-import basePropTypes from '../proGallery/propTypes';
 import LAYOUTS from '../../../common/constants/layout';
-import consts from '../../../common/constants';
 import PLACEMENTS from '../../../common/constants/placements';
+import {propsToStyles, layoutPropTypes} from './utils';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
@@ -16,7 +14,6 @@ export const layoutStyles = {
   showArrows: false,
   groupSize: 3,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  gallerySize: 0,
   fixedColumns: 0,
   hasThumbnails: false,
   enableScroll: true,
@@ -28,36 +25,19 @@ export const layoutStyles = {
   cropOnlyFill: false,
 }
 
-export const layoutPropTypes = {
-  orientaion: PropTypes.oneOf(['rows', 'cols']),
-  rtl: PropTypes.bool,
-  spacing: PropTypes.number,
-  scrollDirection: PropTypes.oneOf(['vertical', 'horizontal']),
-  itemSize: PropTypes.number,
-  info: PropTypes.oneOf(['above', 'below', 'hover', 'none']),
-  play: PropTypes.oneOf(['auto', 'hover','onClick']),
-  overlayAnimation: PropTypes.oneOf(consts.overlayAnimations),
-  imageHoverAnimation: PropTypes.oneOf(consts.imageHoverAnimations),
-  scrollAnimation: PropTypes.oneOf(consts.scrollAnimations),
-  hoveringBehaviour: PropTypes.oneOf(consts.hoveringBehaviours),
-}
-
-export const propsToStyles = props => {
-  return {
-    imageMargin: props.spacing,
-    isRTL: props.rtl,
-    isVertical: props.orientation === 'cols',
-    oneRow: props.scrollDirection === 'horizontal',
-    gallerySizeType: props.itemSize > 0 ? 'px' : 'smart',
-    gallerySizePx: props.itemSize,
-    allowHover: props.info === 'hover',
-    videoPlay: props.play,
-    overlayAnimation: props.overlayAnimation,
-    imageHoverAnimation: props.imageHoverAnimation,
-    scrollAnimation: props.scrollAnimation,
-    hoveringBehaviour: props.hoveringBehaviour,
-  }
-}
+export const layoutProps = [
+  'orientaion',
+  'rtl',
+  'spacing',
+  'scrollDirection',
+  'itemSize',
+  'info',
+  'play',
+  'overlayAnimation',
+  'imageHoverAnimation',
+  'scrollAnimation',
+  'hoveringBehaviour',
+]
 
 export const createStyles = styles => {
   return {
@@ -70,11 +50,7 @@ export const createStyles = styles => {
 
 export default class CollageGallery extends React.Component {
 
-
-  static propTypes = {
-    ...basePropTypes,
-    ...layoutPropTypes
-  }
+  static propTypes = layoutPropTypes(layoutProps)
 
   render() {
 
@@ -82,7 +58,7 @@ export default class CollageGallery extends React.Component {
       <ProGallery
         {...this.props}
         styles={
-          createStyles(this.props.styles)
+          createStyles(propsToStyles(this.props))
         }
       />
     );

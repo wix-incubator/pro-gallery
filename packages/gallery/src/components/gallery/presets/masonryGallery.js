@@ -13,7 +13,6 @@ export const layoutStyles = {
   showArrows: false,
   groupSize: 1,
   groupTypes: '1',
-  gallerySize: 0,
   fixedColumns: 0,
   hasThumbnails: false,
   enableScroll: true,
@@ -30,7 +29,6 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...layoutStyles,
-    gallerySize: styles.gallerySize,
   }
 }
 export default class MasonryGallery extends React.Component {

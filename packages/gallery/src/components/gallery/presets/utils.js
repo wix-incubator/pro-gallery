@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import consts from '../../../common/constants';
+import basePropTypes from '../proGallery/propTypes';
 
 const basePropTypes = {
   orientaion: PropTypes.oneOf(['rows', 'cols']),
@@ -14,20 +15,24 @@ const basePropTypes = {
   imageHoverAnimation: PropTypes.oneOf(consts.imageHoverAnimations),
   scrollAnimation: PropTypes.oneOf(consts.scrollAnimations),
   hoveringBehaviour: PropTypes.oneOf(consts.hoveringBehaviours),
-  cropType,
-  cropRatio,
+  // cropType,
+  // cropRatio,
   loop: PropTypes.bool, //slideshowLoop
   autoSlide: PropTypes.number, //isAutoSlideshow && autoSlideshowInterval
-  itemsPerCol: numberOfImagesPerCol
+  itemsPerCol: PropTypes.number
 
 }
 
 export const layoutPropTypes = props => {
-  return props.reduce((resPropTypes, prop) => resPropTypes[prop] = basePropTypes[prop], {});
+  return {
+    ...basePropTypes,
+    ...props.reduce((resPropTypes, prop) => resPropTypes[prop] = basePropTypes[prop], {})
+  }
 }
 
 export const propsToStyles = props => {
   return {
+    ...props.styles,
     imageMargin: props.spacing,
     isRTL: props.rtl,
     isVertical: props.orientation === 'cols',
@@ -40,6 +45,5 @@ export const propsToStyles = props => {
     imageHoverAnimation: props.imageHoverAnimation,
     scrollAnimation: props.scrollAnimation,
     hoveringBehaviour: props.hoveringBehaviour,
-
   }
 }

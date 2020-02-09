@@ -16,7 +16,6 @@ export const layoutStyles = {
   groupSize: 1,
   groupTypes: '1',
   fixedColumns: 0,
-  gallerySize: 0,
   hasThumbnails: false,
   enableScroll: true,
   cropOnlyFill: false,
