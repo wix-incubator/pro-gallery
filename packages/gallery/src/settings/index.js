@@ -17,6 +17,7 @@ import galleryVerticalAlign from './options/galleryVerticalAlign';
 import galleryHorizontalAlign from './options/galleryHorizontalAlign';
 import galleryMargin from './options/galleryMargin';
 import isVertical from './options/isVertical';
+import imageHoverAnimation from './options/imageHoverAnimation';
 
 export default {
     itemClick,
@@ -38,4 +39,5 @@ export default {
     galleryHorizontalAlign,
     galleryMargin,
     isVertical,
+    imageHoverAnimation,
 }
