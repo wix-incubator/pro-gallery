@@ -4,7 +4,7 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import GALLERY_CONSTS from '../../src/common/constants';
 
-describe('galleryVerticalAlign - loveButton', () => {
+describe('styleParam - galleryVerticalAlign', () => {
 
   let driver;
   const initialProps = {
