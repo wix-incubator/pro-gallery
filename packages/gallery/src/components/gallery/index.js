@@ -1,7 +1,7 @@
 import React from 'react';
 import ProGallery from './proGallery/proGallery';
 import { PRESETS } from './presets';
-import basePropTypes from './proGallery/propTypes';
+import {basePropTypes} from './presets/propTypes';
 import LAYOUTS from '../../common/constants/layout';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';

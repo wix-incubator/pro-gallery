@@ -3,7 +3,7 @@ import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import PLACEMENTS from '../../../common/constants/placements';
-import {propsToStyles, layoutPropTypes} from './utils';
+import {propsToStyles, layoutPropTypes, LAYOUT_PROPS} from './propTypes';
 
 export const layoutStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
@@ -26,17 +26,17 @@ export const layoutStyles = {
 }
 
 export const layoutProps = [
-  'orientaion',
-  'rtl',
-  'spacing',
-  'scrollDirection',
-  'itemSize',
-  'info',
-  'play',
-  'overlayAnimation',
-  'imageHoverAnimation',
-  'scrollAnimation',
-  'hoveringBehaviour',
+  LAYOUT_PROPS.ORIENTATION,
+  LAYOUT_PROPS.RTL,
+  LAYOUT_PROPS.SPACING,
+  LAYOUT_PROPS.SCROLL_DIRECTION,
+  LAYOUT_PROPS.ITEM_SIZE,
+  LAYOUT_PROPS.INFO,
+  LAYOUT_PROPS.PLAY,
+  LAYOUT_PROPS.OVERLAY_ANIMATION,
+  LAYOUT_PROPS.IMAGE_OVER_ANIMATION,
+  LAYOUT_PROPS.SCROLL_ANIMATION,
+  LAYOUT_PROPS.HOVERING_BEHAVIOUR,
 ]
 
 export const createStyles = styles => {
@@ -53,7 +53,6 @@ export default class CollageGallery extends React.Component {
   static propTypes = layoutPropTypes(layoutProps)
 
   render() {
-
     return (
       <ProGallery
         {...this.props}
