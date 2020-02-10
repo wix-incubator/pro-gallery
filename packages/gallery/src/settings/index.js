@@ -19,7 +19,7 @@ import galleryMargin from './options/galleryMargin';
 import isVertical from './options/isVertical';
 import numberOfImagesPerRow from './options/numberOfImagesPerRow';
 import numberOfImagesPerCol from './options/numberOfImagesPerCol';
-import gallerytextAlign from './options/gallerytextAlign';
+import galleryTextAlign from './options/galleryTextAlign';
 
 export default {
     itemClick,
@@ -43,5 +43,5 @@ export default {
     isVertical,
     numberOfImagesPerRow,
     numberOfImagesPerCol,
-    gallerytextAlign,
+    galleryTextAlign,
 }
