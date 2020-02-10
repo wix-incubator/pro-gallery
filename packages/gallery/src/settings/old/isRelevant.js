@@ -70,7 +70,7 @@ export default {
   floatingImages: always,
   collageDensity: sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE].indexOf(sp.galleryLayout) >= 0,
   enableInfiniteScroll: sp => [GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.PANORAMA].indexOf(sp.galleryLayout) > -1 && !oneRow(sp),
-  loadMoreAmount: sp => [GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.PANORAMA].indexOf(sp.galleryLayout) > -1 && !oneRow(sp) && sp.enableInfiniteScroll,
+  loadMoreAmount: sp => [GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.PANORAMA].indexOf(sp.galleryLayout) > -1 && !oneRow(sp) && !sp.enableInfiniteScroll,
   magicLayoutSeed: sp => [GALLERY_CONSTS.layout.MAGIC].indexOf(sp.galleryLayout) > -1,
   scrollSnap: sp => isHorizontalLayout(sp),
   itemClick: sp => !isStore(sp),
