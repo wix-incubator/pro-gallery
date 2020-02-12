@@ -68,6 +68,7 @@ function CodePanel() {
 function getCode(options) {
   return `
   import { ProGallery } from 'pro-gallery';
+  import 'pro-gallery/dist/statics/main.css';
 
   export function Gallery() {
 
