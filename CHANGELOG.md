@@ -1,3 +1,16 @@
+## [v1.7.15](https://pro-gallery-1-7-15.surge.sh) (13/02/2020)
+ 
+#### GALLERY
+ -  Added dumpCache for utils when view mode or formFactor is set.
+ -  Fixed loadMoreAmount condition.
+
+#### PLAYGROUND
+ -  improve (codePanel): add css to generated code
+
+#### OTHER
+ -  removed isLocal from isDev. allow local testing with no dev log.
+
+---
 ## [v1.7.14](https://pro-gallery-1-7-14.surge.sh) (04/02/2020)
  
 #### GALLERY
