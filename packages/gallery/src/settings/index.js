@@ -21,6 +21,7 @@ import numberOfImagesPerRow from './options/numberOfImagesPerRow';
 import numberOfImagesPerCol from './options/numberOfImagesPerCol';
 import galleryTextAlign from './options/galleryTextAlign';
 import videoPlay from './options/videoPlay';
+import imageHoverAnimation from './options/imageHoverAnimation';
 
 export default {
     itemClick,
@@ -46,4 +47,5 @@ export default {
     numberOfImagesPerCol,
     galleryTextAlign,
     videoPlay,
+    imageHoverAnimation,
 }
