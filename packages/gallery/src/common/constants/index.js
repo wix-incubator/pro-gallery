@@ -24,6 +24,7 @@ import expandInfoPositions from './expandInfoPositions';
 import dimensions from './dimensions';
 import gallerySizeType from './gallerySizeType';
 import isVertical from './isVertical';
+import galleryTextAlign from './galleryTextAlign.js';
 
 export default {
   events,
@@ -51,5 +52,6 @@ export default {
   expandInfoPositions,
   dimensions,
   gallerySizeType,
-  isVertical
+  isVertical,
+  galleryTextAlign
 };
