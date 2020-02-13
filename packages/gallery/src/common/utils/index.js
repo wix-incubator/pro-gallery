@@ -25,6 +25,10 @@ class Utils {
     return typeof something === 'undefined';
   }
 
+  dumpCache() {
+    this._cache = {};
+  }
+
   getOrPutFromCache(fld, func) {
     //ignore cache in SSR (in ssr the module is kept alive between different renders) and in Editor and preview
     if (!this._useCache || this.isSSR()) {
@@ -222,11 +226,8 @@ class Utils {
       return this.isUndefined(isMobileByProps) ? isUserAgentMobile : isMobileByProps;
     };
 
-    if (this.isTest()) {
-      return false;
-    } else {
-      return this.getOrPutFromCache('isMobile', _isMobile);
-    }
+    return this.getOrPutFromCache('isMobile', _isMobile);
+
   }
 
   isTest() {
