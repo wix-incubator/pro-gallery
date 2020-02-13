@@ -20,6 +20,7 @@ import isVertical from './options/isVertical';
 import numberOfImagesPerRow from './options/numberOfImagesPerRow';
 import numberOfImagesPerCol from './options/numberOfImagesPerCol';
 import galleryTextAlign from './options/galleryTextAlign';
+import videoPlay from './options/videoPlay';
 
 export default {
     itemClick,
@@ -44,4 +45,5 @@ export default {
     numberOfImagesPerRow,
     numberOfImagesPerCol,
     galleryTextAlign,
+    videoPlay,
 }
