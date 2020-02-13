@@ -17,6 +17,9 @@ import galleryVerticalAlign from './options/galleryVerticalAlign';
 import galleryHorizontalAlign from './options/galleryHorizontalAlign';
 import galleryMargin from './options/galleryMargin';
 import isVertical from './options/isVertical';
+import numberOfImagesPerRow from './options/numberOfImagesPerRow';
+import numberOfImagesPerCol from './options/numberOfImagesPerCol';
+import galleryTextAlign from './options/galleryTextAlign';
 
 export default {
     itemClick,
@@ -38,4 +41,7 @@ export default {
     galleryHorizontalAlign,
     galleryMargin,
     isVertical,
+    numberOfImagesPerRow,
+    numberOfImagesPerCol,
+    galleryTextAlign,
 }
