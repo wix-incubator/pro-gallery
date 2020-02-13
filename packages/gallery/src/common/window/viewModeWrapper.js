@@ -19,11 +19,9 @@ class ViewModeWrapper {
   }
 
   setViewMode(viewMode) {
-    utils.dumpCache();
     this._viewMode = viewMode;
   }
   setFormFactor(forceVal) {
-    utils.dumpCache();
     this._formFactor = forceVal;
   }
 

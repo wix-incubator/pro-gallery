@@ -33,9 +33,11 @@ export default class ProGallery extends GalleryComponent {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.viewMode !== nextProps.viewMode) {
+      utils.dumpCache();
       viewModeWrapper.setViewMode(nextProps.viewMode);
     }
     if (this.props.formFactor !== nextProps.formFactor) {
+      utils.dumpCache();
       viewModeWrapper.setFormFactor(nextProps.formFactor);
     }
   }

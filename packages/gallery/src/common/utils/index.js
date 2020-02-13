@@ -16,9 +16,12 @@ class Utils {
     this._cache = {};
     this._hash2int = {};
     this._params = {};
-    this._useCache = !isEditMode() && !isPreviewMode();
 
     Object.assign(this, lodash);
+  }
+
+  shouldUseCache() {
+    return !isEditMode() && !isPreviewMode();
   }
 
   isUndefined(something) {
@@ -31,7 +34,7 @@ class Utils {
 
   getOrPutFromCache(fld, func) {
     //ignore cache in SSR (in ssr the module is kept alive between different renders) and in Editor and preview
-    if (!this._useCache || this.isSSR()) {
+    if (!this.shouldUseCache() || this.isSSR()) {
       return func();
     }
     if (this._cache[fld] !== undefined) {
