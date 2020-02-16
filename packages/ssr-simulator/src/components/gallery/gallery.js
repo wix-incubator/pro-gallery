@@ -50,4 +50,4 @@ export default class Gallery extends React.Component {
 }
 
   // Enjoy using your new gallery!
-  // For more options, visit https://github.com/wix-incubator/pro-gallery
+  // For more options, visit https://github.com/wix/pro-gallery
