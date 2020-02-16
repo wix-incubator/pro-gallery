@@ -3,6 +3,7 @@ import utils from '../../../common/utils';
 import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
 import EVENTS from '../../../common/constants/events';
+import LAZY_LOAD from '../../../common/constants/lazyLoad';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -186,16 +187,39 @@ class VideoItem extends GalleryComponent {
   }
 
   createImageElement() {
+    const {
+      alt,
+      loadingStatus,
+      imageDimensions,
+      createUrl,
+      id,
+      lazyLoad,
+      styleParams,
+    } = this.props;
+
     return (
+      lazyLoad === LAZY_LOAD.NATIVE ? <img
+        key={
+          (styleParams.cubeImages && styleParams.cubeType === 'fill'
+            ? 'cubed-'
+            : '') + 'image'
+        }
+        className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+        alt={alt ? alt : 'untitled image'}
+        src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
+        loading="lazy"
+        style={imageDimensions}
+      />
+      :
       <canvas
-        key={'image-' + this.props.id}
-        alt={this.props.alt ? this.props.alt : 'untitled video'}
+        key={'image-' + id}
+        alt={alt ? alt : 'untitled video'}
         className={
           'gallery-item-hidden gallery-item-visible gallery-item ' +
-          (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
-          (this.props.loadingStatus.failed ? ' failed ' : '')
+          (loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
+          (loadingStatus.failed ? ' failed ' : '')
         }
-        data-src={this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
+        data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
       />
     );
   }

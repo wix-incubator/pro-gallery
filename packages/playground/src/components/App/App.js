@@ -130,6 +130,7 @@ export function App() {
           scrollingElement={window}
           container={container}
           items={getItems()}
+          lazyLoad={gallerySettings.lazyLoad}
           options={styleParams}
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}

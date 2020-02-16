@@ -13,6 +13,7 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
+import LAZY_LOAD from '../../../common/constants/lazyLoad';
 import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import checkNewGalleryProps from '../../helpers/isNew';
@@ -391,6 +392,7 @@ export class GalleryContainer extends React.Component {
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
       galleryDomId: this.props.domId,
+      lazyLoad: this.props.lazyLoad,
       items: this.galleryStructure.galleryItems,
       styleParams: styles,
       allowPreloading,
@@ -562,6 +564,7 @@ export class GalleryContainer extends React.Component {
 
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
+        lazyLoad: this.props.lazyLoad,
         items: this.galleryStructure.galleryItems,
         styleParams: _styles,
         allowPreloading,
@@ -704,9 +707,8 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading }) {
-    const isSEO = isSEOMode();
-    const shouldUseScrollCss = !isSEO;
+  getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading, lazyLoad }) {
+    const shouldUseScrollCss = !(lazyLoad === LAZY_LOAD.NATIVE || isSEOMode());
     let scrollCss = [];
     if (shouldUseScrollCss) {
       scrollCss = cssScrollHelper.calcScrollCss({
@@ -732,6 +734,7 @@ export class GalleryContainer extends React.Component {
       this.allowedPreloading = true;
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
+        lazyLoad: this.props.lazyLoad,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
         allowPreloading: true,
@@ -769,6 +772,7 @@ export class GalleryContainer extends React.Component {
         //we already called to calcScrollCss with allowPreloading = true
       this.scrollCss = this.getScrollCssIfNeeded({
         galleryDomId: this.props.domId,
+        lazyLoad: this.props.lazyLoad,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
         allowPreloading: true,
@@ -921,6 +925,7 @@ export class GalleryContainer extends React.Component {
           settings={this.props.settings}
           gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
+          lazyLoad={this.props.lazyLoad}
           displayShowMore={displayShowMore}
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}

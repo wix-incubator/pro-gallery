@@ -516,6 +516,7 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'createUrl',
       'settings',
+      'lazyLoad',
     ]);
     return (
       <ImageItem
@@ -567,6 +568,7 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'createUrl',
       'settings',
+      'lazyLoad'
     ]);
     return (
       <VideoItemPlaceholder
