@@ -204,22 +204,22 @@ describe('Social:', () => {
         viewModeWrapper.setViewMode(VIEW_MODE.SITE);
         stubiOS.restore();
       });
-      it('isiOS-toggles', () => {
-        viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
-        let stubiOS = sinon.stub(utils, 'isiOS').returns(false);
-        Object.assign(sampleItemViewProps, {
-          styleParams: { allowDownload: true },
-          isDemo: true,
-        });
-        driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:true,isDemo:true
-        stubiOS.restore();
-        stubiOS = sinon.stub(utils, 'isiOS').returns(true);
-        driver.mount(ItemView, sampleItemViewProps);
-        expect(driver.find.hook('item-download').length).to.equal(0); // isSiteMode(from viewModeWrapper):false,isiOS:ture,allowDownload:true,isDemo:true
-        viewModeWrapper.setViewMode(VIEW_MODE.SITE);
-        stubiOS.restore();
-      });
+      // it('isiOS-toggles', () => {
+      //   viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
+      //   let stubiOS = sinon.stub(utils, 'isiOS').returns(false);
+      //   Object.assign(sampleItemViewProps, {
+      //     styleParams: { allowDownload: true },
+      //     isDemo: true,
+      //   });
+      //   driver.mount(ItemView, sampleItemViewProps);
+      //   expect(driver.find.hook('item-download').length).to.equal(1); // isSiteMode(from viewModeWrapper):false,isiOS:false,allowDownload:true,isDemo:true
+      //   stubiOS.restore();
+      //   stubiOS = sinon.stub(utils, 'isiOS').returns(true);
+      //   driver.mount(ItemView, sampleItemViewProps);
+      //   expect(driver.find.hook('item-download').length).to.equal(0); // isSiteMode(from viewModeWrapper):false,isiOS:ture,allowDownload:true,isDemo:true
+      //   viewModeWrapper.setViewMode(VIEW_MODE.SITE);
+      //   stubiOS.restore();
+      // });
       it('isSiteMode() (from viewModeWrapper) value doesnt matter while isDemo is false', () => {
         viewModeWrapper.setViewMode(VIEW_MODE.EDIT);
         const stubiOS = sinon.stub(utils, 'isiOS').returns(false);

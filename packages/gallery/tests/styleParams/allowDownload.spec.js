@@ -72,16 +72,4 @@ describe('styleParam - allowDownload', () => {
     expect(item.hasClass('pull-right')).to.be.false;
     driver.detach.proGallery();
   });
-
-  it('should not render "item-download" on iPhone/iPad/iPod', () => {
-    // stub utils.isiOS() to make it return "true"
-    const isiOSStub = sinon.stub(utils, 'isiOS').returns(true);
-    Object.assign(initialProps.styles, {
-      allowDownload: true,
-    })
-    driver.mount.proGallery(initialProps)
-    const items = driver.find.hook('item-download');
-    expect(items).to.have.lengthOf(0);
-    isiOSStub.restore();
-  });
 })
