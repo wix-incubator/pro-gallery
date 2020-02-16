@@ -329,7 +329,9 @@ class Utils {
   isiOS() {
     return this.getOrPutFromCache('isiOS', () => {
       try {
-        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        return (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+        && !window.MSStream;
       } catch (e) {
         return false;
       }
