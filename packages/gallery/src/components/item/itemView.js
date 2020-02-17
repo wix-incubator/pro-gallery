@@ -516,6 +516,7 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'createUrl',
       'settings',
+      'lazyLoad',
     ]);
     return (
       <ImageItem
@@ -567,6 +568,7 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'createUrl',
       'settings',
+      'lazyLoad'
     ]);
     return (
       <VideoItemPlaceholder
@@ -1043,17 +1045,27 @@ class ItemView extends GalleryComponent {
   }
 
   getLinkParams() {
-    const { directLink, styleParams } = this.props;
+    const { directLink, styleParams, directShareLink } = this.props;
+    if (styleParams.itemClick === CLICK_ACTIONS.LINK) {
     const { url, target } = directLink || {};
     const isSEO = isSEOMode();
     const noFollowForSEO = this.props.noFollowForSEO;
     const shouldUseNofollow = isSEO && noFollowForSEO;
-    const shouldUseDirectLink = !!(url && target && styleParams.itemClick === 'link');
+    const shouldUseDirectLink = !!(url && target);
     const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
     const linkParams = shouldUseDirectLink
       ? { href: url, target, ...seoLinkParams }
       : {};
     return linkParams;
+  } else if (styleParams.itemClick === CLICK_ACTIONS.FULLSCREEN || styleParams.itemClick === CLICK_ACTIONS.EXPAND){
+    // place share link as the navigation item
+    const url = directShareLink;
+    const shouldUseDirectShareLink = !!url;
+    const linkParams = shouldUseDirectShareLink
+    ? { href: url }
+    : {};
+    return linkParams;
+    }
   }
 
   composeItem() {

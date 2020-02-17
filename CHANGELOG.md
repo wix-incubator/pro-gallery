@@ -1,3 +1,11 @@
+## [v1.7.16](https://pro-gallery-1-7-16.surge.sh) (16/02/2020)
+ 
+#### GALLERY
+ -  Add sharing links on items
+ -  Removed iOS download block
+ -  Improve: add option for native image lazy load
+
+---
 ## [v1.7.15](https://pro-gallery-1-7-15.surge.sh) (13/02/2020)
  
 #### GALLERY
