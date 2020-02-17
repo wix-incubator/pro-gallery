@@ -23,6 +23,7 @@ import galleryTextAlign from './options/galleryTextAlign';
 import videoPlay from './options/videoPlay';
 import imageHoverAnimation from './options/imageHoverAnimation';
 import overlayAnimation from './options/overlayAnimation';
+import textImageSpace from './options/textImageSpace';
 
 export default {
     itemClick,
@@ -50,4 +51,5 @@ export default {
     videoPlay,
     imageHoverAnimation,
     overlayAnimation,
+    textImageSpace,
 }
