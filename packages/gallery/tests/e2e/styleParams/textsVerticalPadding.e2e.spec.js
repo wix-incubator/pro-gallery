@@ -20,7 +20,7 @@ describe('textsVerticalPadding - e2e', () => {
   it('should set vertical padding for texts (text below item)', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
-      textsVerticalPadding: 50,
+      textsVerticalPadding: 15,
       allowTitle: true,
       allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -35,7 +35,7 @@ describe('textsVerticalPadding - e2e', () => {
       textsVerticalPadding: 50,
       allowTitle: true,
       allowDescription: true,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
