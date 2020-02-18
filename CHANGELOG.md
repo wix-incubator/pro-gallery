@@ -1,3 +1,9 @@
+## [v1.7.17](https://pro-gallery-1-7-17.surge.sh) (18/02/2020)
+ 
+#### GALLERY
+ -  Deeplinks on items -  only in SEO
+
+---
 ## [v1.7.16](https://pro-gallery-1-7-16.surge.sh) (16/02/2020)
  
 #### GALLERY
