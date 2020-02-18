@@ -25,6 +25,7 @@ import imageHoverAnimation from './options/imageHoverAnimation';
 import overlayAnimation from './options/overlayAnimation';
 import textsHorizontalPadding from './options/textsHorizontalPadding';
 import textsVerticalPadding from './options/textsVerticalPadding';
+import textImageSpace from './options/textImageSpace';
 
 export default {
     itemClick,
@@ -54,4 +55,5 @@ export default {
     overlayAnimation,
     textsHorizontalPadding,
     textsVerticalPadding,
+    textImageSpace,
 }
