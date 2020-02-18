@@ -28,6 +28,7 @@ import textsVerticalPadding from './options/textsVerticalPadding';
 import textImageSpace from './options/textImageSpace';
 import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
+import textBoxBorderWidth from './options/textBoxBorderWidth';
 
 export default {
     itemClick,
@@ -60,4 +61,5 @@ export default {
     textImageSpace,
     textBoxBorderColor,
     textBoxBorderRadius,
+    textBoxBorderWidth,
 }
