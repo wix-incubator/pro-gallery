@@ -26,6 +26,7 @@ import overlayAnimation from './options/overlayAnimation';
 import textsHorizontalPadding from './options/textsHorizontalPadding';
 import textsVerticalPadding from './options/textsVerticalPadding';
 import textImageSpace from './options/textImageSpace';
+import textBoxBorderColor from './options/textBoxBorderColor';
 
 export default {
     itemClick,
@@ -56,4 +57,5 @@ export default {
     textsHorizontalPadding,
     textsVerticalPadding,
     textImageSpace,
+    textBoxBorderColor,
 }
