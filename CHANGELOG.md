@@ -1,3 +1,9 @@
+## [v1.7.18](https://pro-gallery-1-7-18.surge.sh) (18/02/2020)
+ 
+#### GALLERY
+ -  Deeplinks removed from items.
+
+---
 ## [v1.7.17](https://pro-gallery-1-7-17.surge.sh) (18/02/2020)
  
 #### GALLERY
