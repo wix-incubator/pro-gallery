@@ -1060,7 +1060,7 @@ class ItemView extends GalleryComponent {
   } else if (styleParams.itemClick === CLICK_ACTIONS.FULLSCREEN || styleParams.itemClick === CLICK_ACTIONS.EXPAND){
     // place share link as the navigation item
     const url = directShareLink;
-    const shouldUseDirectShareLink = isSEO && !!url;
+    const shouldUseDirectShareLink = false; //isSEO && !!url;
     const linkParams = shouldUseDirectShareLink
     ? { href: url }
     : {};
