@@ -1,6 +1,7 @@
 import {useContext} from 'react';
 import {GalleryContext} from './GalleryContext';
 import {getInitialStyleParams} from '../constants/styleParams';
+import { addPresetStyles } from 'pro-gallery/dist/src/components/gallery/presets/presets'
 
 
 export function useGalleryContext() {
@@ -66,7 +67,7 @@ export function useGalleryContext() {
     setShowSide,
     preset: context.preset,
     setPreset,
-    styleParams: context.styleParams,
+    styleParams: addPresetStyles(context.styleParams),
     setStyleParams,
     items: context.items,
     setItems,
