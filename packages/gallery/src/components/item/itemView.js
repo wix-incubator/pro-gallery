@@ -544,6 +544,7 @@ class ItemView extends GalleryComponent {
         key={'video' + this.props.idx}
         hover={itemHover}
         imageDimensions={imageDimensions}
+        hasLink={this.itemHasLink()}
         loadingStatus={{
           failed: this.state.failed,
           loaded: this.state.loaded,
@@ -789,10 +790,16 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  getItemContainerStyles() {
-    const { styleParams, linkData, linkUrl } = this.props;
-    const containerStyleByStyleParams = getContainerStyle(styleParams);
+  itemHasLink(){
+    const { linkData, linkUrl } = this.props;
     const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
+    return !itemDoesntHaveLink;
+  }
+
+  getItemContainerStyles() {
+    const { styleParams } = this.props;
+    const containerStyleByStyleParams = getContainerStyle(styleParams);
+    const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
