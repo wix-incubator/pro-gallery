@@ -23,6 +23,12 @@ import galleryTextAlign from './options/galleryTextAlign';
 import videoPlay from './options/videoPlay';
 import imageHoverAnimation from './options/imageHoverAnimation';
 import overlayAnimation from './options/overlayAnimation';
+import textsHorizontalPadding from './options/textsHorizontalPadding';
+import textsVerticalPadding from './options/textsVerticalPadding';
+import textImageSpace from './options/textImageSpace';
+import textBoxBorderColor from './options/textBoxBorderColor';
+import textBoxBorderRadius from './options/textBoxBorderRadius';
+import textBoxBorderWidth from './options/textBoxBorderWidth';
 
 export default {
     itemClick,
@@ -50,4 +56,10 @@ export default {
     videoPlay,
     imageHoverAnimation,
     overlayAnimation,
+    textsHorizontalPadding,
+    textsVerticalPadding,
+    textImageSpace,
+    textBoxBorderColor,
+    textBoxBorderRadius,
+    textBoxBorderWidth,
 }
