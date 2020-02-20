@@ -1,3 +1,17 @@
+## [v1.7.19](https://pro-gallery-1-7-19.surge.sh) (20/02/2020)
+ 
+#### GALLERY
+ -  Implemented titlePlacement SHOW_ON_THE_RIGHT, SHOW_ON_THE_LEFT
+ -  Improve: settings for titlePlacement and textBoxHeight
+
+
+#### PLAYGROUND
+ -  improve: addPresetStyles to all styles
+
+#### MAIN
+ -  fix: remove wix-incubator references
+
+---
 ## [v1.7.18](https://pro-gallery-1-7-18.surge.sh) (18/02/2020)
  
 #### GALLERY
