@@ -59,8 +59,15 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
 }
 
 export function getOuterInfoStyle(styleParams) {
+  const styles = {
+    ...(styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT && {
+      height: '100%',
+      float: 'left',
+    })
+  };
   if (styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) {
     return {
+      ...styles,
       ...getBorderStyle(
         styleParams.textBoxBorderRadius,
         styleParams.textBoxBorderWidth,
@@ -74,7 +81,7 @@ export function getOuterInfoStyle(styleParams) {
       }),
     };
   }
-  return {};
+  return styles;
 }
 
 function getInfoHorizontalPadding(styleParams) {
@@ -87,9 +94,26 @@ function getInfoHorizontalPadding(styleParams) {
   return styleParams.textsHorizontalPadding;
 }
 
-export function getInnerInfoStyle(styleParams) {
+function getInnerInfoStylesAboveOrBelow(styleParams) {
   return {
     height: styleParams.textBoxHeight,
+    paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
+    paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
+    paddingRight: getInfoHorizontalPadding(styleParams) + 'px',
+    paddingLeft: getInfoHorizontalPadding(styleParams) + 'px'
+  }
+}
+
+function getInnerInfoStylesRightOrLeft(styleParams) {
+  return {
+    width: styleParams.textBoxWidth,
+    height: '100%',
+    float: 'left', //maybe can be removed cause OuterInfoStyle (InnerInfoStyle parent) has this style.
+  }
+}
+
+export function getInnerInfoStyle(styleParams) {
+  const commonStyles = {
     ...((styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND ||
       styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND) &&
       styleParams.textBoxFillColor &&
@@ -97,14 +121,17 @@ export function getInnerInfoStyle(styleParams) {
         backgroundColor: styleParams.textBoxFillColor.value,
       }),
     textAlign: styleParams.galleryTextAlign,
-    ...((styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE) && {
-        paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
-        paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
-      }),
-    paddingRight: getInfoHorizontalPadding(styleParams) + 'px',
-    paddingLeft: getInfoHorizontalPadding(styleParams) + 'px',
     overflow: 'hidden',
     boxSizing: 'border-box',
+  };
+
+  const infoAboveOrBelow = styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
+    styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
+  const infoRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT;
+
+  return {
+    ...commonStyles,
+    ...(infoAboveOrBelow && getInnerInfoStylesAboveOrBelow(styleParams)),
+    ...(infoRightOrLeft && getInnerInfoStylesRightOrLeft(styleParams))
   };
 }

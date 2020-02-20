@@ -29,6 +29,7 @@ import textImageSpace from './options/textImageSpace';
 import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
 import textBoxBorderWidth from './options/textBoxBorderWidth';
+import textBoxWidth from './options/textBoxWidth';
 
 export default {
     itemClick,
@@ -62,4 +63,5 @@ export default {
     textBoxBorderColor,
     textBoxBorderRadius,
     textBoxBorderWidth,
+    textBoxWidth,
 }

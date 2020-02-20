@@ -710,14 +710,30 @@ class ItemView extends GalleryComponent {
     this.toggleFullscreenIfNeeded(e);
   }
 
+  getRightInfoElementIfNeeded() {
+    const { styleParams, customInfoRenderer } = this.props;
+
+    if (
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT &&
+      (styleParams.allowTitle ||
+        styleParams.allowDescription ||
+        styleParams.useCustomButton ||
+        customInfoRenderer)
+    ) {
+      return this.getInfoElement('gallery-item-right-info');
+    } else {
+      return null;
+    }
+  }
   getBottomInfoElementIfNeeded() {
-    const { styleParams } = this.props;
+    const { styleParams, customInfoRenderer } = this.props;
 
     if (
       styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW &&
       (styleParams.allowTitle ||
         styleParams.allowDescription ||
-        styleParams.useCustomButton)
+        styleParams.useCustomButton ||
+        customInfoRenderer)
     ) {
       return this.getInfoElement('gallery-item-bottom-info');
     } else {
@@ -726,13 +742,15 @@ class ItemView extends GalleryComponent {
   }
 
   getTopInfoElementIfNeeded() {
-    const { styleParams } = this.props;
+    const { styleParams, customInfoRenderer } = this.props;
 
     if (
       styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE &&
       (styleParams.allowTitle ||
         styleParams.allowDescription ||
-        styleParams.useCustomButton)
+        styleParams.useCustomButton ||
+        customInfoRenderer
+      )
     ) {
       return this.getInfoElement('gallery-item-top-info');
     } else {
@@ -807,7 +825,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemWrapperStyles() {
-    const { styleParams, style, type } = this.props;
+    const { styleParams, style, type ,isUnknownWidth } = this.props;
     const height = style.height;
     const styles = {};
     if (type === 'text') {
@@ -819,8 +837,8 @@ class ItemView extends GalleryComponent {
         'transparent';
     }
     styles.margin = -styleParams.itemBorderWidth + 'px';
-    
-    if (!this.props.isUnknownWidth) {
+
+    if (!isUnknownWidth) {
       styles.height = height + 'px';
     }
 
@@ -1095,11 +1113,9 @@ class ItemView extends GalleryComponent {
       >
         {this.getTopInfoElementIfNeeded()}
         <div
-          style={
-            this.props.styleParams.isSlideshow
-              ? {}
-              : getImageStyle(this.props.styleParams)
-          }
+          style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
+            ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT && {float: 'left'})
+          }}
         >
           <div
             data-hook="item-wrapper"
@@ -1110,6 +1126,7 @@ class ItemView extends GalleryComponent {
             {this.getItemInner()}
           </div>
         </div>
+        {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );

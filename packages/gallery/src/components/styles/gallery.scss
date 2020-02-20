@@ -448,7 +448,7 @@
         }
       }
 
-      .gallery-item-bottom-info, .gallery-item-top-info {
+      .gallery-item-bottom-info, .gallery-item-top-info, .gallery-item-right-info {
         .gallery-item-title {
           white-space: normal;
         }
@@ -547,7 +547,7 @@
       scroll-snap-align: center;
 
       &:hover {
-        .gallery-item-bottom-info, .gallery-item-top-info {
+        .gallery-item-bottom-info, .gallery-item-top-info, .gallery-item-right-info {
           cursor: pointer;
 
           button {
@@ -1333,7 +1333,7 @@
 
       }
 
-      .gallery-item-bottom-info, .gallery-item-top-info {
+      .gallery-item-bottom-info, .gallery-item-top-info, .gallery-item-right-info {
         box-sizing: border-box;
         cursor: pointer;
 
@@ -1395,7 +1395,7 @@
 
         }
       }
-      
+
       .gallery-horizontal-scroll-inner {
         position: relative;
       }
@@ -1513,7 +1513,7 @@
     .rtl {
       direction: rtl;
     }
-    
+
   }
 
   .screen-logs {

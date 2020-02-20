@@ -99,6 +99,7 @@ export default {
   textBoxFillColor: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && (sp.infoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND || sp.infoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND)),
   calculateTextBoxHeightMode: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp)),
   textBoxHeight: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.calculateTextBoxHeightMode === GALLERY_CONSTS.calculationOptions.MANUAL),
+  textBoxWidth: always,
   textImageSpace: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.infoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND),
   textBoxBorderRadius: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.infoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND),
   textBoxBorderWidth: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.infoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND),

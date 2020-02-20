@@ -8,7 +8,7 @@ const mobileWidths = [320]; //, 375, 414, 480, 600, 768, 900]; (mobile is curren
 const getImageStyle = (item, styleParams) => ({
   top: item.offset.top,
   left: item.offset.left,
-  width: item.width,
+  width: item.width + (styleParams.externalInfoWidth || 0),
   height: item.height + (styleParams.externalInfoHeight || 0),
   innerHeight: item.height,
 });

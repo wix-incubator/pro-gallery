@@ -36,12 +36,16 @@ export const layoutPresentOuterInformation = sp =>
   (sp.galleryLayout === GALLERY_CONSTS.layout.MASONRY && sp.isVertical) ||
   (sp.galleryLayout === GALLERY_CONSTS.layout.GRID && !oneRow(sp))
 
+export const layoutPresentSideOuterInformation = sp =>
+  !oneRow(sp) && sp.isVertical && sp.groupSize === 1;
+
 export const showTexts = sp => sp.allowTitle || sp.allowDescription;
 export const showAlignTextVertical = sp => [GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.COLUMN, GALLERY_CONSTS.layout.MAGIC].indexOf(sp.galleryLayout) > -1 && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 export const presentOuterInformation = sp => layoutPresentOuterInformation(sp) && sp.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER;
+export const presentSideOuterInformation = sp => layoutPresentSideOuterInformation(sp) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT;
 export const isTitlePlacementAlwaysShown = sp => layoutPresentOuterInformation(sp) || isSlideshowLayout(sp) || sp.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 export const showInfiniteScroll = sp => !oneRow(sp);
-export const showItemBorderAndShadowConfig = sp => !(sp.cubeType === 'fit' && showThumbnailResize(sp)) // check cubeType exists 
+export const showItemBorderAndShadowConfig = sp => !(sp.cubeType === 'fit' && showThumbnailResize(sp)) // check cubeType exists
 export const showThumbnailResize = sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE].indexOf(sp.galleryLayout) > -1;
 export const showShadow = sp => showItemBorderAndShadowConfig(sp) && !isHorizontalLayout(sp) && (sp.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND || sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER);
 export const oneRow = sp => sp.oneRow || sp.scrollDirection === GALLERY_CONSTS.scrollDirection.horizontal;
