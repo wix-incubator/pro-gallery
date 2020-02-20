@@ -581,7 +581,7 @@ function shouldShowTextRightOrLeftBelow(styleParams) {
   const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
 
   if (!allowedByLayoutConfig ||
-    titlePlacement !== 'SHOW_ON_THE_RIGHT' ||
+    (titlePlacement !== 'SHOW_ON_THE_RIGHT' && titlePlacement !== 'SHOW_ON_THE_LEFT') ||
     (!allowTitle && !allowDescription && !useCustomButton)) {
     return false;
   }

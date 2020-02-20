@@ -711,30 +711,23 @@ class ItemView extends GalleryComponent {
   }
 
   getRightInfoElementIfNeeded() {
-    const { styleParams, customInfoRenderer } = this.props;
-
-    if (
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT &&
-      (styleParams.allowTitle ||
-        styleParams.allowDescription ||
-        styleParams.useCustomButton ||
-        customInfoRenderer)
-    ) {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) {
       return this.getInfoElement('gallery-item-right-info');
     } else {
       return null;
     }
   }
-  getBottomInfoElementIfNeeded() {
-    const { styleParams, customInfoRenderer } = this.props;
 
-    if (
-      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW &&
-      (styleParams.allowTitle ||
-        styleParams.allowDescription ||
-        styleParams.useCustomButton ||
-        customInfoRenderer)
-    ) {
+  getLeftInfoElementIfNeeded() {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT) {
+      return this.getInfoElement('gallery-item-left-info');
+    } else {
+      return null;
+    }
+  }
+
+  getBottomInfoElementIfNeeded() {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW) {
       return this.getInfoElement('gallery-item-bottom-info');
     } else {
       return null;
@@ -742,16 +735,7 @@ class ItemView extends GalleryComponent {
   }
 
   getTopInfoElementIfNeeded() {
-    const { styleParams, customInfoRenderer } = this.props;
-
-    if (
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE &&
-      (styleParams.allowTitle ||
-        styleParams.allowDescription ||
-        styleParams.useCustomButton ||
-        customInfoRenderer
-      )
-    ) {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE) {
       return this.getInfoElement('gallery-item-top-info');
     } else {
       return null;
@@ -759,11 +743,15 @@ class ItemView extends GalleryComponent {
   }
 
   getInfoElement(elementName) {
-    const { styleParams } = this.props;
+    const { styleParams, customInfoRenderer } = this.props;
+    if (!styleParams.allowTitle &&
+      !styleParams.allowDescription &&
+      !styleParams.useCustomButton) {
+      return null;
+    }
     let info = null;
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
-    const { customInfoRenderer } = this.props;
     const itemTexts = customInfoRenderer
       ? customInfoRenderer(this.props)
       : this.getItemTextsDetails();
@@ -772,7 +760,7 @@ class ItemView extends GalleryComponent {
         <div style={getOuterInfoStyle(styleParams)}>
           <div
             style={getInnerInfoStyle(styleParams)}
-            className={elementName}
+            className={'gallery-item-common-info ' + elementName}
             onMouseOver={() => {
               !utils.isMobile() && this.props.actions.eventsListener(
                 EVENTS.HOVER_SET,
@@ -1112,9 +1100,11 @@ class ItemView extends GalleryComponent {
         style={this.getItemContainerStyles()}
       >
         {this.getTopInfoElementIfNeeded()}
+        {this.getLeftInfoElementIfNeeded()}
         <div
           style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
-            ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT && {float: 'left'})
+            ...((this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) && {float: 'left'}),
+            ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT && {float: 'right'})
           }}
         >
           <div

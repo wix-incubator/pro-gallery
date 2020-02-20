@@ -60,7 +60,7 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
 
 export function getOuterInfoStyle(styleParams) {
   const styles = {
-    ...(styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT && {
+    ...((styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT || styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT) && {
       height: '100%',
       float: 'left',
     })
@@ -108,7 +108,6 @@ function getInnerInfoStylesRightOrLeft(styleParams) {
   return {
     width: styleParams.textBoxWidth,
     height: '100%',
-    float: 'left', //maybe can be removed cause OuterInfoStyle (InnerInfoStyle parent) has this style.
   }
 }
 
@@ -127,7 +126,8 @@ export function getInnerInfoStyle(styleParams) {
 
   const infoAboveOrBelow = styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
     styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
-  const infoRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT;
+  const infoRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
+    styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
 
   return {
     ...commonStyles,

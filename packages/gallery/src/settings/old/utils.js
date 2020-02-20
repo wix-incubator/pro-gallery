@@ -42,7 +42,7 @@ export const layoutPresentSideOuterInformation = sp =>
 export const showTexts = sp => sp.allowTitle || sp.allowDescription;
 export const showAlignTextVertical = sp => [GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.COLUMN, GALLERY_CONSTS.layout.MAGIC].indexOf(sp.galleryLayout) > -1 && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 export const presentOuterInformation = sp => layoutPresentOuterInformation(sp) && sp.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER;
-export const presentSideOuterInformation = sp => layoutPresentSideOuterInformation(sp) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT;
+export const presentSideOuterInformation = sp => layoutPresentSideOuterInformation(sp) && (sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT || sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT);
 export const isTitlePlacementAlwaysShown = sp => layoutPresentOuterInformation(sp) || isSlideshowLayout(sp) || sp.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 export const showInfiniteScroll = sp => !oneRow(sp);
 export const showItemBorderAndShadowConfig = sp => !(sp.cubeType === 'fit' && showThumbnailResize(sp)) // check cubeType exists
