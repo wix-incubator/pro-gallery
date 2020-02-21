@@ -1,3 +1,9 @@
+## [v1.7.20](https://pro-gallery-1-7-20.surge.sh) (21/02/2020)
+ 
+#### GALLERY
+ - If there is no media url the infoElement (ifExists, not on hover) will grow to the whole item size.
+
+---
 ## [v1.7.19](https://pro-gallery-1-7-19.surge.sh) (20/02/2020)
  
 #### GALLERY
