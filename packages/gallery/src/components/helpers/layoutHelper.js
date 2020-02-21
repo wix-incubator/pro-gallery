@@ -356,15 +356,6 @@ function processLayouts(styles) {
     processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
   }
 
-  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles);
-  processedStyles.externalInfoHeight = getHeightFromStyleParams(
-    processedStyles,
-    processedStyles.textBoxHeight,
-  );
-
-  processedStyles.textBoxWidth = getTextBoxRightOrLeftWidth(processedStyles);
-  processedStyles.externalInfoWidth = processedStyles.textBoxWidth;
-
   if (
     processedStyles.cubeType === 'fit' &&
     (processedStyles.isGrid ||
@@ -543,6 +534,15 @@ function processLayouts(styles) {
       (processedStyles.gallerySizeRatio / 100);
   }
 
+  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles);
+  processedStyles.externalInfoHeight = getHeightFromStyleParams(
+    processedStyles,
+    processedStyles.textBoxHeight,
+  );
+
+  processedStyles.textBoxWidth = getTextBoxRightOrLeftWidth(processedStyles);
+  processedStyles.externalInfoWidth = processedStyles.textBoxWidth;
+
   return processedStyles;
 }
 
@@ -563,6 +563,10 @@ function getHeightFromStyleParams(styleParams, textBoxHeight) {
 function getTextBoxRightOrLeftWidth(styleParams) {
   if (!shouldShowTextRightOrLeftBelow(styleParams)) {
     return 0;
+  }
+  if (styleParams.gallerySize < styleParams.textBoxWidth) {
+    //textBox is part of the item, so cannot be wider than the item itself.
+    return styleParams.gallerySize;
   }
   return styleParams.textBoxWidth;
 }

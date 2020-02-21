@@ -94,9 +94,9 @@ function getInfoHorizontalPadding(styleParams) {
   return styleParams.textsHorizontalPadding;
 }
 
-function getInnerInfoStylesAboveOrBelow(styleParams) {
+function getInnerInfoStylesAboveOrBelow(styleParams, additionalHeight) {
   return {
-    height: styleParams.textBoxHeight,
+    height: styleParams.textBoxHeight + additionalHeight,
     paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
     paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
     paddingRight: getInfoHorizontalPadding(styleParams) + 'px',
@@ -104,14 +104,14 @@ function getInnerInfoStylesAboveOrBelow(styleParams) {
   }
 }
 
-function getInnerInfoStylesRightOrLeft(styleParams) {
+function getInnerInfoStylesRightOrLeft(styleParams, additionalWidth) {
   return {
-    width: styleParams.textBoxWidth,
+    width: styleParams.textBoxWidth + additionalWidth,
     height: '100%',
   }
 }
 
-export function getInnerInfoStyle(styleParams) {
+export function getInnerInfoStyle(styleParams, additionalHeight, additionalWidth) {
   const commonStyles = {
     ...((styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND ||
       styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND) &&
@@ -131,7 +131,7 @@ export function getInnerInfoStyle(styleParams) {
 
   return {
     ...commonStyles,
-    ...(infoAboveOrBelow && getInnerInfoStylesAboveOrBelow(styleParams)),
-    ...(infoRightOrLeft && getInnerInfoStylesRightOrLeft(styleParams))
+    ...(infoAboveOrBelow && getInnerInfoStylesAboveOrBelow(styleParams, additionalHeight)),
+    ...(infoRightOrLeft && getInnerInfoStylesRightOrLeft(styleParams, additionalWidth))
   };
 }

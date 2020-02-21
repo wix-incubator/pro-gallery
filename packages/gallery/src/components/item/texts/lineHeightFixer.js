@@ -69,11 +69,12 @@ class LineHeightFixer {
   }
 
   shouldFix(oldOptions, newOptions) {
-    const { styleParams, title, description, style } = oldOptions;
+    const { styleParams, title, description, style, additionalHeight } = oldOptions;
     const newStyleParams = newOptions.styleParams;
     const newTitle = newOptions.title;
     const newDescription = newOptions.description;
     const newStyle = newOptions.style;
+    const newAdditionalHeight = newOptions.additionalHeight;
     const newIsSocialPopulated =
       newStyleParams.allowSocial ||
       newStyleParams.loveButton ||
@@ -84,6 +85,7 @@ class LineHeightFixer {
       styleParams.allowDownload;
     return (
       style.height !== newStyle.height ||
+      additionalHeight !== newAdditionalHeight ||
       style.width !== newStyle.width ||
       styleParams.isSlideshow !== newStyleParams.isSlideshow ||
       styleParams.allowTitle !== newStyleParams.allowTitle ||
@@ -149,7 +151,7 @@ class LineHeightFixer {
           ? styleParams.textImageSpace
           : 0;
       availableHeight =
-        styleParams.externalInfoHeight - elementPadding - margin;
+        (styleParams.externalInfoHeight + options.additionalHeight) - elementPadding - margin;
     } else {
       availableHeight = textsContainerHeight;
     }

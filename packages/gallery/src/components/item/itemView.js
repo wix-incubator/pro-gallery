@@ -390,7 +390,7 @@ class ItemView extends GalleryComponent {
     return dimensions;
   }
 
-  getItemTextsDetails() {
+  getItemTextsDetails(additionalHeight = 0) {
     const props = utils.pick(this.props, [
       'title',
       'description',
@@ -415,6 +415,7 @@ class ItemView extends GalleryComponent {
         isSmallItem={this.isSmallItem()}
         isNarrow={this.isNarrow()}
         shouldShowButton={shouldShowButton}
+        additionalHeight={additionalHeight}
         actions={{
           eventsListener: this.props.actions.eventsListener,
         }}
@@ -743,7 +744,7 @@ class ItemView extends GalleryComponent {
   }
 
   getInfoElement(elementName) {
-    const { styleParams, customInfoRenderer } = this.props;
+    const { styleParams, customInfoRenderer, style } = this.props;
     if (!styleParams.allowTitle &&
       !styleParams.allowDescription &&
       !styleParams.useCustomButton) {
@@ -751,15 +752,22 @@ class ItemView extends GalleryComponent {
     }
     let info = null;
 
-    //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
+
+    //if there is no url for videos and images, we will not render the itemWrapper
+    //but will render the info element if exists, with the whole size of the item
+    const additionalHeight = this.hasRequiredMediaUrl ? 0 : style.height;
+    const additionalWidth = this.hasRequiredMediaUrl ? 0 : style.width;
+
     const itemTexts = customInfoRenderer
       ? customInfoRenderer(this.props)
-      : this.getItemTextsDetails();
+      : this.getItemTextsDetails(additionalHeight);
+
+    //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemTexts) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
-            style={getInnerInfoStyle(styleParams)}
+            style={getInnerInfoStyle(styleParams, additionalHeight, additionalWidth)}
             className={'gallery-item-common-info ' + elementName}
             onMouseOver={() => {
               !utils.isMobile() && this.props.actions.eventsListener(
@@ -1075,8 +1083,10 @@ class ItemView extends GalleryComponent {
   }
 
   composeItem() {
-    const { photoId, id, hash, idx, styleParams } = this.props;
+    const { photoId, id, hash, idx, styleParams, type, url } = this.props;
 
+    //if there is no url for videos and images, we will not render the itemWrapper (but will render the info element if exists, with the whole size of the item)
+    this.hasRequiredMediaUrl = !(!url && (type === 'image' || type === 'picture' || type === 'video'));
     const innerDiv = (
       <div
         className={this.getItemContainerClass()}
@@ -1107,14 +1117,14 @@ class ItemView extends GalleryComponent {
             ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT && {float: 'right'})
           }}
         >
-          <div
+          {this.hasRequiredMediaUrl && (<div
             data-hook="item-wrapper"
             className={this.getItemWrapperClass()}
             key={'item-wrapper-' + id}
             style={this.getItemWrapperStyles()}
           >
             {this.getItemInner()}
-          </div>
+          </div>)}
         </div>
         {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
