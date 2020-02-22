@@ -416,12 +416,7 @@ function processLayouts(styles) {
     }
   }
 
-  if (
-    processedStyles.isGrid &&
-    !utils.isUndefined(processedStyles.galleryImageRatioFromWix)
-  ) {
-    processedStyles.cubeRatio = processedStyles.galleryImageRatioFromWix;
-  }
+  
   //Used to look like that before the split :
   // if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
   // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
