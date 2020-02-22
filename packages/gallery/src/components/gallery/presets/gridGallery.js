@@ -29,9 +29,14 @@ export const fixedStyles = {
 }
 
 export const createStyles = styles => {
+  const processedStyles = {};
+  if (typeof styles.galleryImageRatioFromWix !== 'undefined') {
+    processedStyles.cubeRatio = styles.galleryImageRatioFromWix
+  }
   return {
     ...styles,
     ...fixedStyles,
+    ...processedStyles,
     gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 8.5 + 150),
     modifiedGallerySize: true
   }
