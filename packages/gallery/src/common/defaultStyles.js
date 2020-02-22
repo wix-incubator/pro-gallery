@@ -70,7 +70,7 @@ export default {
     arrowsSize: 23,
     watermarkOpacity: 40,
     watermarkSize: 40,
-    useWatermark: true, 
+    useWatermark: true,
     watermarkDock: Consts.watermarkDock.RIGHT_DOWN,
     loadMoreAmount: Consts.loadMoreAmount.ALL,
     defaultShowInfoExpand: 1,
@@ -94,7 +94,7 @@ export default {
     //addToCartBorderColor: color-5,
     addToCartButtonText: '',
     slideshowInfoSize: 200,
-    playButtonForAutoSlideShow: false, 
+    playButtonForAutoSlideShow: false,
     allowSlideshowCounter: false,
     hoveringBehaviour: Consts.infoBehaviourOnHover.APPEARS,
     thumbnailSize: 120,
@@ -115,6 +115,7 @@ export default {
     // textBoxFillColor: 'color-2', //startWithOpacity: 1,
     calculateTextBoxHeightMode: Consts.calculationOptions.AUTOMATIC,
     textBoxHeight: 200,
+    textBoxWidth: 200,
     textImageSpace: 10,
     textBoxBorderRadius: 0,
     textBoxBorderWidth: 0,
@@ -160,4 +161,3 @@ export default {
     videoSpeed: '1',
     videoLoop: true,
   };
-  

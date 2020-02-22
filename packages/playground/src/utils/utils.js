@@ -30,13 +30,14 @@ function generateUUID() {
 export function mixAndSlice(array, length) {
   let result = [];
   if (array.length > 0) {
-    const rndIdx = () => Math.floor(Math.random() * array.length)
+    const rnd = num => Math.floor(Math.random() * num)
     while (result.length < length) {
-      const idx = rndIdx();
+      const idx = rnd(array.length);
       let item = cloneDeep(array[idx]);
       // Object.assign(item, array[idx]);
       item.itemId = generateUUID() + '_' + String(result.length);
       item.metadata.title = `Item #${result.length + 1}`;
+      item.metadata.description = `Description #${result.length + 1}: ${createLoremIpsum(rnd(80) + 20)}`;
       // console.log('ITEM CREATED', item, array[idx]);
       result.push(item);
     }
@@ -74,4 +75,15 @@ export const throttle = (callback, limit) => {
 }
 export const isTestingEnvironment = (url) => {
   return url.indexOf('isTestEnvironment=true') > -1;
+}
+
+export const createLoremIpsum = (numOfWords) => {
+  const rnd = num => Math.floor(Math.random() * num)
+  const lorem = `Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Integer quis auctor elit sed vulputate In est ante in nibh Tortor pretium viverra suspendisse potenti nullam ac Elementum pulvinar etiam non quam lacus suspendisse faucibus interdum A iaculis at erat pellentesque adipiscing commodo elit at imperdiet Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit Integer eget aliquet nibh praesent tristique magna At tellus at urna condimentum mattis Sit amet nulla facilisi morbi tempus iaculis urna id volutpat Amet tellus cras adipiscing enim eu turpis egestas pretium Consectetur lorem donec massa sapien faucibus Egestas quis ipsum suspendisse ultrices gravida dictum Sed velit dignissim sodales ut eu sem integer vitae Quam lacus suspendisse faucibus interdum posuere Arcu vitae elementum curabitur vitae Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices Gravida quis blandit turpis cursus Nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque Arcu cursus vitae congue mauris Elementum eu facilisis sed odio morbi quis commodo odio Massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada Nunc id cursus metus aliquam eleifend mi in Commodo viverra maecenas accumsan lacus vel facilisis volutpat est velit Lectus urna duis convallis convallis tellus id interdum velit laoreet Purus viverra accumsan in nisl nisi scelerisque eu Morbi leo urna molestie at elementum eu facilisis sed odio Bibendum ut tristique et egestas quis Nam libero justo laoreet sit amet cursus sit Scelerisque in dictum non consectetur a erat nam at Blandit turpis cursus in hac habitasse platea dictumst quisque sagittis Tincidunt id aliquet risus feugiat in ante metus dictum at Leo vel fringilla est ullamcorper eget nulla Mauris augue neque gravida in fermentum et sollicitudin ac orci Integer quis auctor elit sed vulputate mi sit amet mauris Semper quis lectus nulla at volutpat Massa sed elementum tempus egestas sed sed Pharetra et ultrices neque ornare aenean euismod elementum nisi Quis varius quam quisque id diam vel quam elementum pulvinar Neque vitae tempus quam pellentesque nec nam aliquam sem At volutpat diam ut venenatis tellus in metus Nisl nisi scelerisque eu ultrices vitae auctor Nunc lobortis mattis aliquam faucibus Ultricies integer quis auctor elit sed vulputate mi sit amet Mattis rhoncus urna neque viverra justo nec ultrices dui sapien Vulputate ut pharetra sit amet aliquam id diam maecenas ultricies Nulla porttitor massa id neque aliquam vestibulum Vitae turpis massa sed elementum tempus Senectus et netus et malesuada Amet volutpat consequat mauris nunc congue nisi vitae suscipit Facilisis sed odio morbi quis commodo odio Sed blandit libero volutpat sed cras ornare arcu dui vivamus Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam Dui accumsan sit amet nulla Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing Velit scelerisque in dictum non Ornare aenean euismod elementum nisi quis eleifend quam adipiscing vitae Aliquet eget sit amet tellus cras adipiscing enim Euismod nisi porta lorem mollis aliquam ut Elit ullamcorper dignissim cras tincidunt lobortis feugiat Id cursus metus aliquam eleifend mi in nulla Faucibus vitae aliquet nec ullamcorper sit amet risus Cras semper auctor neque vitae tempus Vitae congue mauris rhoncus aenean vel elit scelerisque Est ante in nibh mauris cursus mattis molestie a Morbi leo urna molestie at elementum eu facilisis sed odio Turpis egestas sed tempus urna et pharetra pharetra massa massa Velit sed ullamcorper morbi tincidunt ornare massa eget Ac placerat vestibulum lectus mauris ultrices eros in cursus turpis Eu mi bibendum neque egestas congue quisque Egestas diam in arcu cursus euismod quis viverra Id aliquet risus feugiat in ante`;
+  const words = lorem.toLowerCase().split(' ');
+  const totalWords = words.length;
+
+  const start = rnd(totalWords - numOfWords - 1);
+  const end = start + numOfWords
+  return words.slice(start, end).join(' ');
 }
