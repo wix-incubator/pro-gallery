@@ -390,7 +390,7 @@ class ItemView extends GalleryComponent {
     return dimensions;
   }
 
-  getItemTextsDetails() {
+  getItemTextsDetails(additionalHeight = 0) {
     const props = utils.pick(this.props, [
       'title',
       'description',
@@ -415,6 +415,7 @@ class ItemView extends GalleryComponent {
         isSmallItem={this.isSmallItem()}
         isNarrow={this.isNarrow()}
         shouldShowButton={shouldShowButton}
+        additionalHeight={additionalHeight}
         actions={{
           eventsListener: this.props.actions.eventsListener,
         }}
@@ -710,15 +711,24 @@ class ItemView extends GalleryComponent {
     this.toggleFullscreenIfNeeded(e);
   }
 
-  getBottomInfoElementIfNeeded() {
-    const { styleParams } = this.props;
+  getRightInfoElementIfNeeded() {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) {
+      return this.getInfoElement('gallery-item-right-info');
+    } else {
+      return null;
+    }
+  }
 
-    if (
-      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW &&
-      (styleParams.allowTitle ||
-        styleParams.allowDescription ||
-        styleParams.useCustomButton)
-    ) {
+  getLeftInfoElementIfNeeded() {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT) {
+      return this.getInfoElement('gallery-item-left-info');
+    } else {
+      return null;
+    }
+  }
+
+  getBottomInfoElementIfNeeded() {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW) {
       return this.getInfoElement('gallery-item-bottom-info');
     } else {
       return null;
@@ -726,14 +736,7 @@ class ItemView extends GalleryComponent {
   }
 
   getTopInfoElementIfNeeded() {
-    const { styleParams } = this.props;
-
-    if (
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE &&
-      (styleParams.allowTitle ||
-        styleParams.allowDescription ||
-        styleParams.useCustomButton)
-    ) {
+    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE) {
       return this.getInfoElement('gallery-item-top-info');
     } else {
       return null;
@@ -741,20 +744,31 @@ class ItemView extends GalleryComponent {
   }
 
   getInfoElement(elementName) {
-    const { styleParams } = this.props;
+    const { styleParams, customInfoRenderer, style } = this.props;
+    if (!styleParams.allowTitle &&
+      !styleParams.allowDescription &&
+      !styleParams.useCustomButton) {
+      return null;
+    }
     let info = null;
 
-    //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
-    const { customInfoRenderer } = this.props;
+
+    //if there is no url for videos and images, we will not render the itemWrapper
+    //but will render the info element if exists, with the whole size of the item
+    const additionalHeight = this.hasRequiredMediaUrl ? 0 : style.height;
+    const additionalWidth = this.hasRequiredMediaUrl ? 0 : style.width;
+
     const itemTexts = customInfoRenderer
       ? customInfoRenderer(this.props)
-      : this.getItemTextsDetails();
+      : this.getItemTextsDetails(additionalHeight);
+
+    //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemTexts) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
-            style={getInnerInfoStyle(styleParams)}
-            className={elementName}
+            style={getInnerInfoStyle(styleParams, additionalHeight, additionalWidth)}
+            className={'gallery-item-common-info ' + elementName}
             onMouseOver={() => {
               !utils.isMobile() && this.props.actions.eventsListener(
                 EVENTS.HOVER_SET,
@@ -807,7 +821,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemWrapperStyles() {
-    const { styleParams, style, type } = this.props;
+    const { styleParams, style, type ,isUnknownWidth } = this.props;
     const height = style.height;
     const styles = {};
     if (type === 'text') {
@@ -819,8 +833,8 @@ class ItemView extends GalleryComponent {
         'transparent';
     }
     styles.margin = -styleParams.itemBorderWidth + 'px';
-    
-    if (!this.props.isUnknownWidth) {
+
+    if (!isUnknownWidth) {
       styles.height = height + 'px';
     }
 
@@ -1069,8 +1083,10 @@ class ItemView extends GalleryComponent {
   }
 
   composeItem() {
-    const { photoId, id, hash, idx, styleParams } = this.props;
+    const { photoId, id, hash, idx, styleParams, type, url } = this.props;
 
+    //if there is no url for videos and images, we will not render the itemWrapper (but will render the info element if exists, with the whole size of the item)
+    this.hasRequiredMediaUrl = !(!url && (type === 'image' || type === 'picture' || type === 'video'));
     const innerDiv = (
       <div
         className={this.getItemContainerClass()}
@@ -1094,22 +1110,23 @@ class ItemView extends GalleryComponent {
         style={this.getItemContainerStyles()}
       >
         {this.getTopInfoElementIfNeeded()}
+        {this.getLeftInfoElementIfNeeded()}
         <div
-          style={
-            this.props.styleParams.isSlideshow
-              ? {}
-              : getImageStyle(this.props.styleParams)
-          }
+          style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
+            ...((this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) && {float: 'left'}),
+            ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT && {float: 'right'})
+          }}
         >
-          <div
+          {this.hasRequiredMediaUrl && (<div
             data-hook="item-wrapper"
             className={this.getItemWrapperClass()}
             key={'item-wrapper-' + id}
             style={this.getItemWrapperStyles()}
           >
             {this.getItemInner()}
-          </div>
+          </div>)}
         </div>
+        {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );

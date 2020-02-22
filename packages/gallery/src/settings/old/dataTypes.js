@@ -331,7 +331,7 @@ export default {
   textBoxHeight: {
     type: INPUT_TYPES.NUMBER,
     min: 1,
-    max: 400,
+    max: 1500,
     units: 'px',
   },
   textImageSpace: {

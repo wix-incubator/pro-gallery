@@ -1,5 +1,4 @@
-# Pro Gallery Layouter ([DEMO](https://wix-incubator.github.io/pro-layouts/))
-[![Build Status](https://travis-ci.org/wix-incubator/pro-layouts.svg?branch=master)](https://travis-ci.org/wix-incubator/pro-layouts)
+# Pro Gallery Layouter ([DEMO](https://wix-incubator.github.io/pro-gallery-layouter/))
 
 This module creates a layout from a list of items, each containing an id, width and height. The layout is fitted to a specified container and is adjusted by a set of style params. It also handles viewport visibility to render only the items in the viewport.
 

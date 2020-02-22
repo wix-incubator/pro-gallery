@@ -55,6 +55,7 @@ export class Group {
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.layoutsVersion = styleParams.layoutsVersion;
       this.externalInfoHeight = styleParams.externalInfoHeight;
+      this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
     }
 
@@ -780,6 +781,10 @@ export class Group {
     return this.height + (this.externalInfoHeight || 0);
   }
 
+  get totalWidth() {
+    return this.width + (this.externalInfoWidth || 0);
+  }
+
   get bottom() {
     return this.top + this.height;
   }
@@ -826,6 +831,7 @@ export class Group {
       width: this.width,
       height: this.height,
       totalHeight: this.totalHeight,
+      totalWidth: this.totalWidth,
       ratio: this.ratio,
       top: this.top,
       left: this.left,
