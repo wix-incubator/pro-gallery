@@ -416,9 +416,7 @@ function processLayouts(styles) {
     }
   }
 
-  if (processedStyles.isSlider) {
-    processedStyles.cubeRatio = processedStyles.gallerySliderImageRatio;
-  } else if (
+  if (
     processedStyles.isGrid &&
     !utils.isUndefined(processedStyles.galleryImageRatioFromWix)
   ) {

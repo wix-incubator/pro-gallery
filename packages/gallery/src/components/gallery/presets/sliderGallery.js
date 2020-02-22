@@ -13,6 +13,7 @@ export const fixedStyles = {
   oneRow: true,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   isVertical: false,
+  cubeRatio: 16 / 9,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
