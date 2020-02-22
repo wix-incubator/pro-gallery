@@ -30,6 +30,7 @@ import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
 import textBoxBorderWidth from './options/textBoxBorderWidth';
 import textBoxWidth from './options/textBoxWidth';
+import thumbnailSize from './options/thumbnailSize';
 
 export default {
     itemClick,
@@ -64,4 +65,5 @@ export default {
     textBoxBorderRadius,
     textBoxBorderWidth,
     textBoxWidth,
+    thumbnailSize,
 }
