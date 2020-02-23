@@ -1,3 +1,10 @@
+## [v1.7.21](https://pro-gallery-1-7-21.surge.sh) (23/02/2020)
+
+#### GALLERY
+ -  Fixed lineHeightFixer for title placement SHOW_ON_THE_RIGHT and SHOW_ON_THE_LEFT
+ -  Feat: allow deepLinks on items for expand mode
+
+---
 ## [v1.7.20](https://pro-gallery-1-7-20.surge.sh) (21/02/2020)
  
 #### GALLERY
