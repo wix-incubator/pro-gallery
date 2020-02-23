@@ -10,11 +10,11 @@ export const fixedStyles = {
   cubeImages: false,
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
   isVertical: true,
+  groupTypes: '1',
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   galleryType: 'Columns',
   groupSize: 1,
-  groupTypes: '1',
   gallerySize: () => dimensionsHelper.getGalleryWidth(),
   oneRow: false,
   fixedColumns: 1,
