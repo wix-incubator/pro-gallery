@@ -252,26 +252,23 @@ export default class Layouter {
         columnWidths && columnWidths.length > 0
           ? columnWidths.split(',')
           : false;
-
-      let remainderWidth = this.galleryWidth;
       this.columns = Array(this.numOfCols)
         .fill(0)
-        .map((column, idx) => {
-          //round group widths to fit an even number of pixels
-          let colWidth = columnWidthsArr
-            ? columnWidthsArr[idx]
-            : Math.round(remainderWidth / (this.numOfCols - idx));
-          remainderWidth -= colWidth;
-          //fix cubeRatio of rounded columns
-          const infoWidth = this.styleParams.externalInfoWidth || 0;
-          colWidth -= infoWidth;
-          // const neededHeight = this.gallerySize / this.styleParams.cubeRatio
-          const fixedCubeRatio =
-            colWidth /
-            ((this.gallerySize - infoWidth) / this.styleParams.cubeRatio);
-          //add space for info on the side
-          return new Column(idx, colWidth, fixedCubeRatio);
-        });
+        .map(
+          (column, idx) =>
+            new Column(
+              idx,
+              columnWidthsArr ? columnWidthsArr[idx] : this.gallerySize,
+              this.styleParams.cubeRatio,
+            ),
+        );
+      this.columns[this.numOfCols - 1].width +=
+        this.galleryWidth -
+        this.columns.reduce((sum, col) => col.width + sum, 0); //the last group compensates for half pixels in other groups
+      this.columns[this.numOfCols - 1].cubeRatio =
+        cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
+      this.columns.forEach(column => (column.width -= (this.styleParams.externalInfoWidth || 0)));
+
       this.maxLoops = this.srcItems.length * 10;
     }
   }
