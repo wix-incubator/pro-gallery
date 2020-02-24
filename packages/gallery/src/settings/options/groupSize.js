@@ -2,7 +2,7 @@ import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Max Group Size',
-  isRelevant: (styleParams)  => styleParams.collageDensity > 0 && styleParams.groupsPerStrip > 1,
+  isRelevant: (styleParams)  => true,
   type: INPUT_TYPES.NUMBER,
   min: 0,
   max: 3,
