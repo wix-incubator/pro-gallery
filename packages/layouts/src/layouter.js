@@ -267,6 +267,7 @@ export default class Layouter {
         this.columns.reduce((sum, col) => col.width + sum, 0); //the last group compensates for half pixels in other groups
       this.columns[this.numOfCols - 1].cubeRatio =
         cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
+      this.columns.forEach(column => (column.width -= (this.styleParams.externalInfoWidth || 0)));
 
       this.maxLoops = this.srcItems.length * 10;
     }

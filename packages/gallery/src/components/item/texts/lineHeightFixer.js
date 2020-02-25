@@ -3,6 +3,7 @@ import PLACEMENTS from '../../../common/constants/placements';
 import INFO_TYPE from '../../../common/constants/infoType';
 import window from '../../../common/window/windowWrapper';
 import designConsts from '../../../common/constants/designConsts.js';
+import OVERLAY_ANIMATIONS from "../../../common/constants/overlayAnimations";
 
 const minWidthToShowContent = 135;
 const minWithForNormalSizedItem = 190;
@@ -39,11 +40,13 @@ class LineHeightFixer {
   }
 
   hideElement(element, shouldOverrideDisplay = true) {
-    if (shouldOverrideDisplay) {
-      const display = this.getSavedDisplay(element);
-      this.setCss(element, { visibility: 'hidden', display });
-    } else {
-      this.setCss(element, { visibility: 'hidden' });
+    if (element) {
+      if (shouldOverrideDisplay) {
+        const display = this.getSavedDisplay(element);
+        this.setCss(element, { visibility: 'hidden', display });
+      } else {
+        this.setCss(element, { visibility: 'hidden' });
+      }
     }
   }
 
@@ -69,11 +72,12 @@ class LineHeightFixer {
   }
 
   shouldFix(oldOptions, newOptions) {
-    const { styleParams, title, description, style } = oldOptions;
+    const { styleParams, title, description, style, additionalHeight } = oldOptions;
     const newStyleParams = newOptions.styleParams;
     const newTitle = newOptions.title;
     const newDescription = newOptions.description;
     const newStyle = newOptions.style;
+    const newAdditionalHeight = newOptions.additionalHeight;
     const newIsSocialPopulated =
       newStyleParams.allowSocial ||
       newStyleParams.loveButton ||
@@ -84,6 +88,7 @@ class LineHeightFixer {
       styleParams.allowDownload;
     return (
       style.height !== newStyle.height ||
+      additionalHeight !== newAdditionalHeight ||
       style.width !== newStyle.width ||
       styleParams.isSlideshow !== newStyleParams.isSlideshow ||
       styleParams.allowTitle !== newStyleParams.allowTitle ||
@@ -111,12 +116,14 @@ class LineHeightFixer {
   calcAvailableHeight(
     options,
     textPlacementAboveOrBelow,
+    textPlacementRightOrLeft,
     textsContainerHeight,
   ) {
     const { styleParams, itemContainer } = options;
     let availableHeight;
 
     if (styleParams.isSlideshow) {
+
       const socialElements = itemContainer.getElementsByClassName(
         'gallery-item-social',
       );
@@ -131,11 +138,15 @@ class LineHeightFixer {
         itemInfoChildDivPaddingTop -
         socialHeight -
         socialMarginBottom;
-    } else if (textPlacementAboveOrBelow) {
-      const className =
-        styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW
-          ? 'gallery-item-bottom-info'
-          : 'gallery-item-top-info';
+
+    } else if (textPlacementAboveOrBelow || textPlacementRightOrLeft) {
+
+      const className = {
+        [PLACEMENTS.SHOW_BELOW]: 'gallery-item-bottom-info',
+        [PLACEMENTS.SHOW_ABOVE]: 'gallery-item-top-info',
+        [PLACEMENTS.SHOW_ON_THE_RIGHT]: 'gallery-item-right-info',
+        [PLACEMENTS.SHOW_ON_THE_LEFT]: 'gallery-item-left-info',
+      }[styleParams.titlePlacement];
       const elements = itemContainer.getElementsByClassName(className);
       const element = elements.length > 0 && elements[0];
       const elementPadding =
@@ -143,14 +154,17 @@ class LineHeightFixer {
         parseInt(this.getCss(element, 'padding-bottom', 0));
       const margin =
         styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
-        styleParams.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER &&
         (styleParams.allowTitle || styleParams.allowDescription) &&
         styleParams.textImageSpace
           ? styleParams.textImageSpace
           : 0;
+
+      const availableHeightOfTheTextElement = textPlacementAboveOrBelow ? styleParams.externalInfoHeight : textsContainerHeight; //maybe can be textsContainerHeight for textPlacementAboveOrBelow as well
       availableHeight =
-        styleParams.externalInfoHeight - elementPadding - margin;
+        (availableHeightOfTheTextElement + options.additionalHeight) - elementPadding - margin;
+
     } else {
+
       availableHeight = textsContainerHeight;
     }
 
@@ -164,13 +178,11 @@ class LineHeightFixer {
 
     const { styleParams, title, description } = options;
 
-    let textPlacementAboveOrBelow = false;
-    if (
-      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE
-    ) {
-      textPlacementAboveOrBelow = true;
-    }
+    const textPlacementAboveOrBelow = styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
+    const textPlacementRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
+
 
     if (!container || !(options && options.itemContainer)) {
       return;
@@ -180,6 +192,7 @@ class LineHeightFixer {
     let availableHeight = this.calcAvailableHeight(
       options,
       textPlacementAboveOrBelow,
+      textPlacementRightOrLeft,
       dimensions.height,
     );
 
@@ -202,17 +215,17 @@ class LineHeightFixer {
     const isItemWidthToSmall = dimensions.width < minWidthToShowContent;
 
     this.hideElement(titleElement);
-    this.hideElement(descriptionElement, !textPlacementAboveOrBelow); //if textPlacementAboveOrBelow, descriptionElement should not get 'display: -webkit-box'
+    this.hideElement(descriptionElement, !(textPlacementAboveOrBelow || textPlacementRightOrLeft)); //if textPlacementAboveOrBelow or textPlacementRightOrLeft, descriptionElement should not get 'display: -webkit-box'
     this.hideElement(
       customButtonElement,
-      !(styleParams.isSlideshow || textPlacementAboveOrBelow),
-    ); //if Slideshow or if textPlacementAboveOrBelow, customButtonElement should not get 'display: -webkit-box'
+      !(styleParams.isSlideshow || textPlacementAboveOrBelow || textPlacementRightOrLeft),
+    ); //if Slideshow or if textPlacementAboveOrBelow or if textPlacementRightOrLeft, customButtonElement should not get 'display: -webkit-box'
 
     if (customButtonExists) {
       this.showElement(
         customButtonElement,
-        !(styleParams.isSlideshow || textPlacementAboveOrBelow),
-      ); //if Slideshow or if textPlacementAboveOrBelow, customButtonElement should not get 'display: -webkit-box'
+        !(styleParams.isSlideshow || textPlacementAboveOrBelow || textPlacementRightOrLeft),
+      ); //if Slideshow or if textPlacementAboveOrBelow or if textPlacementRightOrLeft, customButtonElement should not get 'display: -webkit-box'
       const buttonHeight = this.getDimensions(customButtonElement).height;
       if (availableHeight + 30 < buttonHeight) {
         this.removeElement(customButtonElement);
@@ -267,7 +280,7 @@ class LineHeightFixer {
           this.setCss(titleElement, { overflow: 'hidden' });
 
           const isTitleFitInAvailableHeight =
-            titleNumOfAvailableLines <= numOfTitleLines;
+            titleNumOfAvailableLines <= numOfTitleLines; //sound like this condition is not correct and should be >=, but then stuff will change!!
           if (isTitleFitInAvailableHeight) {
             this.setCss(titleElement, {
               '-webkit-line-clamp': titleNumOfAvailableLines + '',
@@ -296,7 +309,7 @@ class LineHeightFixer {
       ((shouldDisplayTitle && titleNumOfAvailableLines > 0) ||
         !shouldDisplayTitle); // when there s no place for title the description not suppose to be shown
     if (shouldDisplayDescription) {
-      this.showElement(descriptionElement, !textPlacementAboveOrBelow); //if textPlacementAboveOrBelw, descriptionElement should not get 'display: -webkit-box'
+      this.showElement(descriptionElement, !(textPlacementAboveOrBelow|| textPlacementRightOrLeft)); //if textPlacementAboveOrBelow or textPlacementRightOrLeft, descriptionElement should not get 'display: -webkit-box'
       if (shouldDisplayTitle) {
         availableHeight -= styleParams.titleDescriptionSpace;
       }

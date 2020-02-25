@@ -89,6 +89,7 @@ class GalleryItem {
       url: this.url,
       alt: this.alt,
       directLink: this.directLink,
+      directShareLink: this.directShareLink,
       linkUrl: this.linkUrl,
       linkType: this.linkType,
       linkOpenType: this.linkOpenType,
@@ -799,6 +800,9 @@ class GalleryItem {
 
   get directLink() {
     return this.dto.directLink || '';
+  }
+  get directShareLink() {
+    return this.dto.directShareLink || '';
   }
 }
 

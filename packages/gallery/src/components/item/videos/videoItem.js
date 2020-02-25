@@ -3,6 +3,7 @@ import utils from '../../../common/utils';
 import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
 import EVENTS from '../../../common/constants/events';
+import LAZY_LOAD from '../../../common/constants/lazyLoad';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -186,37 +187,55 @@ class VideoItem extends GalleryComponent {
   }
 
   createImageElement() {
+    const {
+      alt,
+      loadingStatus,
+      imageDimensions,
+      createUrl,
+      id,
+      lazyLoad,
+      styleParams,
+    } = this.props;
+
     return (
+      lazyLoad === LAZY_LOAD.NATIVE ? <img
+        key={
+          (styleParams.cubeImages && styleParams.cubeType === 'fill'
+            ? 'cubed-'
+            : '') + 'image'
+        }
+        className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+        alt={alt ? alt : 'untitled image'}
+        src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
+        loading="lazy"
+        style={imageDimensions}
+      />
+      :
       <canvas
-        key={'image-' + this.props.id}
-        alt={this.props.alt ? this.props.alt : 'untitled video'}
+        key={'image-' + id}
+        alt={alt ? alt : 'untitled video'}
         className={
           'gallery-item-hidden gallery-item-visible gallery-item ' +
-          (this.props.loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
-          (this.props.loadingStatus.failed ? ' failed ' : '')
+          (loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
+          (loadingStatus.failed ? ' failed ' : '')
         }
-        data-src={this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
+        data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
       />
     );
   }
 
-  canVideoPlayInGallery(itemClick, videoPlay) {
-    if (
-      utils.isMobile() &&
-      (videoPlay === 'auto' ||
-      (itemClick !== 'expand' &&
-      itemClick !== 'fullscreen'))
-    )
-      return true;
-    else if (
-      !utils.isMobile() &&
-      itemClick !== 'expand' &&
-      itemClick !== 'fullscreen'
-    )
-      return true;
-    else if (!utils.isMobile() && videoPlay !== 'onClick') return true;
-    else return false;
-  }
+  canVideoPlayInGallery(itemClick, videoPlay , hasLink) {
+      if (
+        videoPlay === 'hover' || videoPlay === 'auto'
+      ) {return true;}
+      else if (
+        itemClick === 'nothing'
+      ) {return true;}
+      else if (
+        itemClick === 'link' && !hasLink
+      ) {return true;}
+      return false;
+    }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -256,8 +275,9 @@ class VideoItem extends GalleryComponent {
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
     const { videoPlay, itemClick } = this.props.styleParams;
+    const {hasLink} = this.props;
     const video =
-      this.canVideoPlayInGallery(itemClick, videoPlay) ? (
+      this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
         <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"

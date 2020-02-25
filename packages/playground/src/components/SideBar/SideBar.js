@@ -11,7 +11,8 @@ import { Divider, Alert } from 'antd';
 import comments from './comments';
 import { throttle } from "../../utils/utils";
 import s from './SideBar.module.scss';
-import { notEligibleReasons } from 'pro-gallery/dist/src/components/gallery/leanGallery/isEligible'
+import { notEligibleReasons } from 'pro-gallery/dist/src/components/gallery/leanGallery/isEligible';
+import LAZY_LOAD from 'pro-gallery/dist/src/common/constants/lazyLoad';
 
 function SideBar({items}) {
   const {
@@ -161,6 +162,9 @@ function SideBar({items}) {
               </Form.Item>
               <Form.Item label="Avoid Pro-Gallery self measure" labelAlign="left">
                 <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({isAvoidGallerySelfMeasure: e})} />
+              </Form.Item>
+              <Form.Item label="Use Native Lazy Loading" labelAlign="left">
+                <Switch checked={!!gallerySettings.lazyLoad} onChange={e => setGallerySettings({lazyLoad: e ? LAZY_LOAD.NATIVE : LAZY_LOAD.CSS})} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />

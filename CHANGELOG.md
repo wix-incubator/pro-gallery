@@ -1,3 +1,65 @@
+## [v1.7.22](https://pro-gallery-1-7-22.surge.sh) (25/02/2020)
+ 
+#### GALLERY
+ -  Fixed support of no media url when titlePlacement === 'SHOW_ON_HOVER'
+ -  Items with link wont play videos on click 
+
+#### LAYOUTS
+ -  improve (layouter): improve calc of rounded column widths
+ -  improve (layouter): improve calc of rounded column widths
+
+#### OTHER
+ - This reverts commit 615893467c564026a29a95912e8aa7aba3372e22.
+ - Previous calc make the last columns compensate for all half pixels, now it is devided equally
+
+---
+## [v1.7.21](https://pro-gallery-1-7-21.surge.sh) (23/02/2020)
+
+#### GALLERY
+ -  Fixed lineHeightFixer for title placement SHOW_ON_THE_RIGHT and SHOW_ON_THE_LEFT
+ -  Feat: allow deepLinks on items for expand mode
+
+---
+## [v1.7.20](https://pro-gallery-1-7-20.surge.sh) (21/02/2020)
+ 
+#### GALLERY
+ - If there is no media url the infoElement (ifExists, not on hover) will grow to the whole item size.
+
+---
+## [v1.7.19](https://pro-gallery-1-7-19.surge.sh) (20/02/2020)
+ 
+#### GALLERY
+ -  Implemented titlePlacement SHOW_ON_THE_RIGHT, SHOW_ON_THE_LEFT
+ -  Improve: settings for titlePlacement and textBoxHeight
+
+
+#### PLAYGROUND
+ -  improve: addPresetStyles to all styles
+
+#### MAIN
+ -  fix: remove wix-incubator references
+
+---
+## [v1.7.18](https://pro-gallery-1-7-18.surge.sh) (18/02/2020)
+ 
+#### GALLERY
+ -  Deeplinks removed from items.
+
+---
+## [v1.7.17](https://pro-gallery-1-7-17.surge.sh) (18/02/2020)
+ 
+#### GALLERY
+ -  Deeplinks on items -  only in SEO
+
+---
+## [v1.7.16](https://pro-gallery-1-7-16.surge.sh) (16/02/2020)
+ 
+#### GALLERY
+ -  Add sharing links on items
+ -  Removed iOS download block
+ -  Improve: add option for native image lazy load
+
+---
 ## [v1.7.15](https://pro-gallery-1-7-15.surge.sh) (13/02/2020)
  
 #### GALLERY

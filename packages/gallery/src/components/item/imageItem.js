@@ -1,5 +1,6 @@
 import React from 'react';
 import LOADING_MODE from '../../common/constants/loadingMode';
+import LAZY_LOAD from '../../common/constants/lazyLoad';
 import { GalleryComponent } from '../galleryComponent';
 import { isSEOMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
@@ -24,6 +25,7 @@ export default class ImageItem extends GalleryComponent {
       id,
       actions,
       settings,
+      lazyLoad,
       styleParams,
     } = this.props;
     const imageProps =
@@ -35,7 +37,7 @@ export default class ImageItem extends GalleryComponent {
     const backgroundStyle = {}; //remove this inline style if rendered padding (using css) is used
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
-    const isSEO = isSEOMode();
+    const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
     const imageItemClassName = [
       'gallery-item-content',
       'image-item',
@@ -74,7 +76,7 @@ export default class ImageItem extends GalleryComponent {
         }
         className={'gallery-item-visible gallery-item gallery-item-preloaded'}
         alt={alt ? alt : 'untitled image'}
-        src={createUrl(URL_SIZES.RESIZED, URL_TYPES.SEO)}
+        src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
         loading="lazy"
         style={restOfDimensions}
         {...imageProps}
@@ -99,7 +101,7 @@ export default class ImageItem extends GalleryComponent {
       />
     );
 
-    const renderedItem = isSEO ? imageContainer(image) : imageContainer(canvas);
+    const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
     return renderedItem;
   }
 }

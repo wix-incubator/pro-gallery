@@ -20,14 +20,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wix-incubator/pro-gallery.git"
+    "url": "git+https://github.com/wix/pro-gallery.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wix-incubator/pro-gallery/issues"
+    "url": "https://github.com/wix/pro-gallery/issues"
   },
-  "homepage": "https://github.com/wix-incubator/pro-gallery#readme",
+  "homepage": "https://github.com/wix/pro-gallery#readme",
   "devDependencies": {
     "chalk": "^2.4.2",
     "gh-pages": "2.0.1",

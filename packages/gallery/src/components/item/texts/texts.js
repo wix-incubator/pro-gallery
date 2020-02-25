@@ -54,6 +54,8 @@ export default class Texts extends GalleryComponent {
       alignItems: styleParams.galleryHorizontalAlign,
       textAlign: styleParams.galleryTextAlign,
     };
+    const textPlacementRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
 
     //Set the texts fixed height considering the height of the love and share buttons which is about 100px;
     if (
@@ -70,6 +72,10 @@ export default class Texts extends GalleryComponent {
 
     if (styleParams.isRTL) {
       elementStyle.direction = 'rtl';
+    }
+
+    if (textPlacementRightOrLeft) {
+      elementStyle.height = '100%';
     }
 
     return elementStyle;

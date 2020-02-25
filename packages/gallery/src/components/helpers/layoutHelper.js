@@ -351,16 +351,10 @@ function processLayouts(styles) {
     ) {
     processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
-  
+
   if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {
     processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
   }
-
-  processedStyles.textBoxHeight = getTextBoxHeight(processedStyles);
-  processedStyles.externalInfoHeight = getHeightFromStyleParams(
-    processedStyles,
-    processedStyles.textBoxHeight,
-  );
 
   if (
     processedStyles.cubeType === 'fit' &&
@@ -540,6 +534,15 @@ function processLayouts(styles) {
       (processedStyles.gallerySizeRatio / 100);
   }
 
+  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles);
+  processedStyles.externalInfoHeight = getHeightFromStyleParams(
+    processedStyles,
+    processedStyles.textBoxHeight,
+  );
+
+  processedStyles.textBoxWidth = getTextBoxRightOrLeftWidth(processedStyles);
+  processedStyles.externalInfoWidth = processedStyles.textBoxWidth;
+
   return processedStyles;
 }
 
@@ -557,8 +560,40 @@ function getHeightFromStyleParams(styleParams, textBoxHeight) {
   return additionalHeight;
 }
 
-function getTextBoxHeight(styleParams) {
-  if (!shouldShowTextBox(styleParams)) {
+function getTextBoxRightOrLeftWidth(styleParams) {
+  if (!shouldShowTextRightOrLeftBelow(styleParams)) {
+    return 0;
+  }
+  if (styleParams.gallerySize < styleParams.textBoxWidth) {
+    //textBox is part of the item, so cannot be wider than the item itself.
+    return styleParams.gallerySize;
+  }
+  return styleParams.textBoxWidth;
+}
+
+function shouldShowTextRightOrLeftBelow(styleParams) {
+  const {
+    oneRow,
+    isVertical,
+    groupSize,
+    titlePlacement,
+    allowTitle,
+    allowDescription,
+    useCustomButton,
+  } = styleParams;
+
+  const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
+
+  if (!allowedByLayoutConfig ||
+    (titlePlacement !== 'SHOW_ON_THE_RIGHT' && titlePlacement !== 'SHOW_ON_THE_LEFT') ||
+    (!allowTitle && !allowDescription && !useCustomButton)) {
+    return false;
+  }
+  return true;
+}
+
+function getTextBoxAboveOrBelowHeight(styleParams) {
+  if (!shouldShowTextBoxAboveOrBelow(styleParams)) {
     return 0;
   }
 
@@ -571,7 +606,7 @@ function getTextBoxHeight(styleParams) {
   }
 }
 
-function shouldShowTextBox(styleParams) {
+function shouldShowTextBoxAboveOrBelow(styleParams) {
   const {
     titlePlacement,
     allowTitle,
@@ -597,7 +632,7 @@ function getHeightByContent(styleParams) {
     useCustomButton,
   } = styleParams;
 
-  if (!shouldShowTextBox(styleParams)) {
+  if (!shouldShowTextBoxAboveOrBelow(styleParams)) {
     return 0;
   }
 

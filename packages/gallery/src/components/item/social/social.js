@@ -90,7 +90,6 @@ export default class Social extends GalleryComponent {
     const { styleParams, isDemo, type, createUrl, actions } = this.props;
     if (
       styleParams.allowDownload &&
-      !utils.isiOS() &&
       !((isSiteMode() || isSEOMode()) && isDemo)
     ) {
       const className =

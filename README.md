@@ -43,7 +43,7 @@ import 'pro-gallery/dist/statics/main.css';
 />
 ```
 
-To see more options and a real usage example, use the [playground source code](https://github.com/wix-incubator/pro-gallery/blob/master/packages/playground/src/components/App/App.js) as reference.
+To see more options and a real usage example, use the [playground source code](https://github.com/wix/pro-gallery/blob/master/packages/playground/src/components/App/App.js) as reference.
 
 ### Options
 The gallery has A LOT of options, so to make it all easier, we created the [Playground](https://pro-gallery.surge.sh). Each option is expandable in the sidebar, and has all the info you need about using it.
@@ -132,7 +132,7 @@ The most important events are:
 | `ITEM_ACTION_TRIGGERED`  | Fired whenever one of the items is clicked or tapped and the gallery cannot handle the action itself (e.g. open an expanded view). |
 | `NEED_MORE_ITEMS`  | Fired whenever the gallery is scrolled near its last item. If you are using a pagination server, this is the event that should trigger the next page and re-render the gallery with new items. |
 
-The full list of the gallery events is [here](https://github.com/wix-incubator/pro-gallery/blob/master/packages/gallery/src/common/constants/events.js).
+The full list of the gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/gallery/src/common/constants/events.js).
 
 ### Custom Renderers
 The Gallery supports custom renderers both for the Hover Element (appears when hovering over an item) and the Info Element (appears below / above an item).
