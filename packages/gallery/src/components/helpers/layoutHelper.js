@@ -346,8 +346,8 @@ function processLayouts(styles) {
   }
 
   // to_wrapper
-  if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
-    processedStyles.titlePlacement === PLACEMENTS.SHOW_BELOW
+  if (processedStyles.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER &&
+    processedStyles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
     ) {
     processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
