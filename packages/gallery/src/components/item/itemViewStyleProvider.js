@@ -5,7 +5,7 @@ import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover
 export function getContainerStyle(styleParams) {
   return {
     ...((styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) &&
+      (styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW)) &&
       {
         ...getBorderStyle(
           styleParams.itemBorderRadius,
