@@ -1,16 +1,15 @@
+## [v1.7.23](https://pro-gallery-1-7-23.surge.sh) (25/02/2020)
+ 
+#### GALLERY
+ -  Fixed hoveringBehaviour logic
+ -  Let videos with no link lay on click when the gallery is a link opens
+
+---
 ## [v1.7.22](https://pro-gallery-1-7-22.surge.sh) (25/02/2020)
  
 #### GALLERY
  -  Fixed support of no media url when titlePlacement === 'SHOW_ON_HOVER'
  -  Items with link wont play videos on click 
-
-#### LAYOUTS
- -  improve (layouter): improve calc of rounded column widths
- -  improve (layouter): improve calc of rounded column widths
-
-#### OTHER
- - This reverts commit 615893467c564026a29a95912e8aa7aba3372e22.
- - Previous calc make the last columns compensate for all half pixels, now it is devided equally
 
 ---
 ## [v1.7.21](https://pro-gallery-1-7-21.surge.sh) (23/02/2020)
