@@ -41,16 +41,17 @@ describe('styleParam - itemBorderWidth', () => {
     expect(item.props().style.borderWidth).to.eq('40px')
     driver.detach.proGallery();
   });
-  it('should not set border-width to when hoveringBehaviour is "NEVER_SHOW"', () => {
+  it('should not set border-width to when "cubeType" is "fit"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
+      cubeType: GALLERY_CONSTS.cubeType.FIT,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemBorderWidth: 40,
       oneRow: false,
     })
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.borderWidth).to.eq(undefined);
+    expect(item.props().style.borderWidth).to.eq('0px');
     driver.detach.proGallery();
   });
 })
