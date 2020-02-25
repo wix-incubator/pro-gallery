@@ -40,11 +40,14 @@ describe('styleParam - imageMargin', () => {
     })
     driver.mount.proGallery(initialProps);
     //get the middle image in the second row to test
-    const item = driver.find.hook('item-container').at(4); 
+    const item = driver.find.hook('item-container').at(0); 
+    const item2 = driver.find.hook('item-container').at(1);
     // get CSS "width" and "left" values
     const { width,left } = getElementDimensions(item);
+    const right = width + left;
+    const left2  = getElementDimensions(item2).left;
     // expect the difference between the "left" and "width" of the middle item (in a row of 3) to equal the given imageMargin number
-    expect(initialProps.styles.imageMargin).to.eq(left - width);
+    expect(initialProps.styles.imageMargin).to.eq(left2 - right);
     driver.detach.proGallery();
   })
 })

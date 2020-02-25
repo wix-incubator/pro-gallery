@@ -224,23 +224,18 @@ class VideoItem extends GalleryComponent {
     );
   }
 
-  canVideoPlayInGallery(itemClick, videoPlay) {
-    if (
-      utils.isMobile() &&
-      (videoPlay === 'auto' ||
-      (itemClick !== 'expand' &&
-      itemClick !== 'fullscreen'))
-    )
-      return true;
-    else if (
-      !utils.isMobile() &&
-      itemClick !== 'expand' &&
-      itemClick !== 'fullscreen'
-    )
-      return true;
-    else if (!utils.isMobile() && videoPlay !== 'onClick') return true;
-    else return false;
-  }
+  canVideoPlayInGallery(itemClick, videoPlay , hasLink) {
+      if (
+        videoPlay === 'hover' || videoPlay === 'auto'
+      ) {return true;}
+      else if (
+        itemClick === 'nothing'
+      ) {return true;}
+      else if (
+        itemClick === 'link' && !hasLink
+      ) {return true;}
+      return false;
+    }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -280,8 +275,9 @@ class VideoItem extends GalleryComponent {
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
     const { videoPlay, itemClick } = this.props.styleParams;
+    const {hasLink} = this.props;
     const video =
-      this.canVideoPlayInGallery(itemClick, videoPlay) ? (
+      this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
         <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"
