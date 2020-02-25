@@ -31,6 +31,7 @@ import textBoxBorderRadius from './options/textBoxBorderRadius';
 import textBoxBorderWidth from './options/textBoxBorderWidth';
 import textBoxWidth from './options/textBoxWidth';
 import textBoxWidthPercent from './options/textBoxWidthPercent';
+import imageInfoType from './options/imageInfoType';
 
 export default {
     itemClick,
@@ -66,4 +67,5 @@ export default {
     textBoxBorderWidth,
     textBoxWidth,
     textBoxWidthPercent,
+    imageInfoType,
 }
