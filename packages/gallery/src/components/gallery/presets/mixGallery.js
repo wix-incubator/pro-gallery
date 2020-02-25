@@ -15,6 +15,7 @@ export const fixedStyles = {
   galleryMargin: 0,
   isVertical: true,
   groupSize: 3,
+  collageDensity: 0.48,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   gallerySize: 86,
@@ -23,7 +24,6 @@ export const fixedStyles = {
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
   rotatingGroupTypes: '1,3l,1,3r',
   smartCrop: false,
-  collageDensity: 0.48,
   floatingImages: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,
