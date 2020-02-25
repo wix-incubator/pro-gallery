@@ -102,7 +102,7 @@ class VideoScrollHelper {
 
   itemClicked(idx) {
     if (this.videoPlay !== 'onClick') return;
-    if (this.itemClick !== 'nothing') return;
+    // if (this.itemClick !== 'nothing') return;
     if (this.IdxExistsInVideoItems(idx)) {
       if (this.currentPlayingIdx === idx) {
         this.stop();
