@@ -16,12 +16,12 @@ export const fixedStyles = {
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   galleryMargin: 0,
   isVertical: false,
+  groupSize: 1,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
   galleryType: 'Strips',
-  groupSize: 1,
   gallerySize: () => dimensionsHelper.getGalleryWidth(),
   groupTypes: '1',
   hasThumbnails: true,
