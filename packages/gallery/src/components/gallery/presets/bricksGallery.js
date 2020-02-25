@@ -14,6 +14,7 @@ export const fixedStyles = {
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
   galleryMargin: 0,
   isVertical: true,
+  collageDensity: 0.8,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   gallerySize: 400,
@@ -23,7 +24,6 @@ export const fixedStyles = {
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
   rotatingGroupTypes: '2h',
   smartCrop: false,
-  collageDensity: 0.8,
   floatingImages: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,
