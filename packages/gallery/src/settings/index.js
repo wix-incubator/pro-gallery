@@ -32,6 +32,7 @@ import textBoxBorderWidth from './options/textBoxBorderWidth';
 import textBoxWidth from './options/textBoxWidth';
 import textBoxWidthPercent from './options/textBoxWidthPercent';
 import imageInfoType from './options/imageInfoType';
+import groupSize from './options/groupSize';
 
 export default {
     itemClick,
@@ -68,4 +69,5 @@ export default {
     textBoxWidth,
     textBoxWidthPercent,
     imageInfoType,
+    groupSize,
 }
