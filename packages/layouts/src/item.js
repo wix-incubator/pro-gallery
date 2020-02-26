@@ -225,6 +225,10 @@ export class Item {
     return this.width + 2 * this.margins;
   }
 
+  get totalWidth() {
+    return this.Group.Column ? this.Group.Column.width : this.Group.width;
+  }
+
   get orgWidth() {
     return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
@@ -241,6 +245,8 @@ export class Item {
 
   set width(w) {
     this.style.cubedWidth = this.style.width = Math.max(1, w);
+    // debugger;
+    this.style.columnWidth = this.group.columnWidth;
   }
 
   get outerHeight() {
@@ -379,6 +385,7 @@ export class Item {
   }
 
   get scheme() {
+    debugger;
     return {
       id: this.id,
       idx: this.idx,
@@ -389,14 +396,11 @@ export class Item {
       width: this.width,
       maxWidth: this.maxWidth,
       outerWidth: this.outerWidth,
+      totalWidth: this.totalWidth,
       height: this.height,
       maxHeight: this.maxHeight,
       outerHeight: this.outerHeight,
-      margins: this.margins,
       ratio: this.ratio,
-      cropRatio: this.cubeRatio,
-      isCropped: this.cubeImages,
-      cropType: this.cubeType,
       group: this.group,
       offset: this.offset,
       groupOffset: this._groupOffset,

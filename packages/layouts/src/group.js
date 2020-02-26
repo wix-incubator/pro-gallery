@@ -34,12 +34,16 @@ export class Group {
     this.idx = config.idx;
     this.stripIdx = config.stripIdx;
     this.inStripIdx = config.inStripIdx;
-    this.items = config.items;
     this.top = config.top;
     this.showAllItems = config.showAllItems;
     this.isLastItems = config.isLastItems;
     this.dummyItems = [];
     this.gallerySize = config.gallerySize;
+
+    this.items = config.items.map(item => {
+      item.Group = this;
+      return item;
+    });
 
     if (config.styleParams) {
       const { styleParams } = config;

@@ -265,10 +265,8 @@ export default class Layouter {
           //fix cubeRatio of rounded columns
           const infoWidth = this.styleParams.externalInfoWidth || 0;
           colWidth -= infoWidth;
-          // const neededHeight = this.gallerySize / this.styleParams.cubeRatio
           const fixedCubeRatio =
-            colWidth /
-            ((this.gallerySize - infoWidth) / this.styleParams.cubeRatio);
+            colWidth / ((this.gallerySize - infoWidth) / cubeRatio);
           //add space for info on the side
           return new Column(idx, colWidth, fixedCubeRatio);
         });
