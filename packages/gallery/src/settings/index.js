@@ -31,6 +31,8 @@ import textBoxBorderRadius from './options/textBoxBorderRadius';
 import textBoxBorderWidth from './options/textBoxBorderWidth';
 import textBoxWidth from './options/textBoxWidth';
 import imageInfoType from './options/imageInfoType';
+import groupSize from './options/groupSize';
+import collageDensity from './options/collageDensity';
 import itemBorderWidth from './options/itemBorderWidth';
 
 export default {
@@ -67,5 +69,7 @@ export default {
     textBoxBorderWidth,
     textBoxWidth,
     imageInfoType,
+    groupSize,
+    collageDensity,
     itemBorderWidth,
 }
