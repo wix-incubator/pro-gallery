@@ -8,13 +8,13 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.GRID,
   cubeImages: true,
   isVertical: true,
+  groupSize: 1,
   groupTypes: '1',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   smartCrop: false,
   galleryType: 'Columns',
-  groupSize: 1,
   fixedColumns: 0,
   gallerySize: 0,
   hasThumbnails: false,

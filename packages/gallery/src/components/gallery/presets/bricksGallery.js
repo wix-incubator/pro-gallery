@@ -14,16 +14,16 @@ export const fixedStyles = {
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
   galleryMargin: 0,
   isVertical: true,
+  groupSize: 3,
+  collageDensity: 0.8,
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   gallerySize: 400,
   minItemSize: 50,
-  groupSize: 3,
   chooseBestGroup: true,
   rotatingGroupTypes: '2h',
   smartCrop: false,
-  collageDensity: 0.8,
   floatingImages: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,

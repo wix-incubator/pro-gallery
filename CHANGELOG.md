@@ -1,3 +1,17 @@
+## [v1.7.23](https://pro-gallery-1-7-23.surge.sh) (25/02/2020)
+ 
+#### GALLERY
+ -  Fixed hoveringBehaviour logic
+ -  Let videos with no link lay on click when the gallery is a link opens
+
+---
+## [v1.7.22](https://pro-gallery-1-7-22.surge.sh) (25/02/2020)
+ 
+#### GALLERY
+ -  Fixed support of no media url when titlePlacement === 'SHOW_ON_HOVER'
+ -  Items with link wont play videos on click 
+
+---
 ## [v1.7.21](https://pro-gallery-1-7-21.surge.sh) (23/02/2020)
 
 #### GALLERY
