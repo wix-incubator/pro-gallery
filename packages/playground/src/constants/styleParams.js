@@ -23,7 +23,7 @@ const formatValue = (val) => {
    }
 }
 
-const isValidStyleParam = (styleParam, value, styleParams) => {
+export const isValidStyleParam = (styleParam, value, styleParams) => {
   if (typeof value === 'undefined' || !styleParam) {
     return false;
   }

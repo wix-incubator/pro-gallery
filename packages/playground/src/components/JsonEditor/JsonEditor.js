@@ -160,16 +160,23 @@ class JsonEditor extends React.Component {
     // json = removeFieldsNotNeeded(json, selectedLayout);
     const filterFunction = styleParam ? 
     ([key]) => key === styleParam : 
-    ([key, settings]) => settings.section === section && settings.subSection === subSection && (this.props.showAllStyles || settings.isRelevant(styleParams, context))
+    ([key, settings]) => 
+      (!section || settings.section === section) && 
+      (!subSection || settings.subSection === subSection) && 
+      (this.props.showAllStyles || settings.isRelevant(styleParams, context))
 
     const activeKey = styleParam ? {activeKey: 'collapse' + styleParam} : {defaultActiveKey: []};
 
     const json = Object.entries(settingsManager)
       .filter(filterFunction)
       .reduce((acc, [key]) => {
-        acc[key] = settingsManager[key];
-        acc[key].value = styleParams[key];
-        return acc;
+        if (typeof styleParams[key] === 'undefined') {
+          return acc
+        } else {
+          acc[key] = settingsManager[key];
+          acc[key].value = styleParams[key];
+          return acc;
+        }
       }, {});
 
     const isSingleItem = !!styleParam;
