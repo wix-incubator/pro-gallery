@@ -786,7 +786,9 @@ export class Group {
   }
 
   get totalWidth() {
-    return this.width + (this.externalInfoWidth || 0);
+    return this.Column
+      ? this.Column.totalWidth
+      : this.width + (this.externalInfoWidth || 0);
   }
 
   get bottom() {

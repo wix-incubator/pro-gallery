@@ -226,7 +226,7 @@ export class Item {
   }
 
   get totalWidth() {
-    return this.Group.Column ? this.Group.Column.width : this.Group.width;
+    return this.Group.totalWidth;
   }
 
   get orgWidth() {
@@ -245,7 +245,6 @@ export class Item {
 
   set width(w) {
     this.style.cubedWidth = this.style.width = Math.max(1, w);
-    // debugger;
     this.style.columnWidth = this.group.columnWidth;
   }
 
@@ -276,6 +275,9 @@ export class Item {
   }
   set maxHeight(h) {
     h = this.dto.height;
+  }
+  get totalHeight() {
+    return this.Group.totalHeight;
   }
 
   get margins() {
@@ -385,7 +387,6 @@ export class Item {
   }
 
   get scheme() {
-    debugger;
     return {
       id: this.id,
       idx: this.idx,
@@ -400,6 +401,7 @@ export class Item {
       height: this.height,
       maxHeight: this.maxHeight,
       outerHeight: this.outerHeight,
+      totalHeight: this.totalHeight,
       ratio: this.ratio,
       group: this.group,
       offset: this.offset,

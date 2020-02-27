@@ -60,7 +60,7 @@ export default class Layouter {
       } else if (this.styleParams.columnWidths) {
         numOfCols = this.styleParams.columnWidths.split(',').length;
       } else {
-        numOfCols = Math.ceil(galleryWidth / gallerySize) || 1;
+        numOfCols = Math.round(galleryWidth / gallerySize) || 1;
       }
     } else {
       numOfCols = 1;
@@ -246,7 +246,7 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.gallerySize;
 
-      const { columnWidths, cubeRatio } = this.styleParams;
+      const { columnWidths, cubeRatio, externalInfoWidth } = this.styleParams;
 
       const columnWidthsArr =
         columnWidths && columnWidths.length > 0
@@ -263,12 +263,15 @@ export default class Layouter {
             : Math.round(remainderWidth / (this.numOfCols - idx));
           remainderWidth -= colWidth;
           //fix cubeRatio of rounded columns
-          const infoWidth = this.styleParams.externalInfoWidth || 0;
+          const infoWidth =
+            (externalInfoWidth > 1 // integer represent size in pixels, floats size in percentage
+              ? externalInfoWidth
+              : externalInfoWidth * colWidth) || 0;
           colWidth -= infoWidth;
           const fixedCubeRatio =
             colWidth / ((this.gallerySize - infoWidth) / cubeRatio);
           //add space for info on the side
-          return new Column(idx, colWidth, fixedCubeRatio);
+          return new Column(idx, colWidth, fixedCubeRatio, infoWidth);
         });
       this.maxLoops = this.srcItems.length * 10;
     }
