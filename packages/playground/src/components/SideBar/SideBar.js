@@ -53,7 +53,7 @@ function SideBar({ items }) {
     setSearchTerm('');
   };
 
-  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({...obj, [styleParam]: value}), {});
+  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({...obj, [styleParam]: value}), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
   return (
@@ -102,7 +102,7 @@ function SideBar({ items }) {
       <div className={s.controls}>
         <Collapse accordion={true} bordered={true} defaultActiveKey={[1]} onChange={() => { }} expandIconPosition={'right'}>
           {didChangeStyleParams ?
-            <Collapse.Panel header={'Changed Settings'} key="-1">
+            <Collapse.Panel header={'* Changed Settings'} key="-1">
               <JsonEditor
                 onChange={_setStyleParams}
                 styleParams={changedStyleParams}

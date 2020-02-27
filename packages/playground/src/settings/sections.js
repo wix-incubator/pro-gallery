@@ -107,6 +107,8 @@ export const stylesBySection = {
         // 'textBoxFillColor',
         'calculateTextBoxHeightMode',
         'textBoxHeight',
+        'calculateTextBoxWidthMode',
+        'textBoxWidthPercent',
         'textBoxWidth',
         'textImageSpace',
         'textBoxBorderRadius',

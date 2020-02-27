@@ -8,7 +8,7 @@ import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
-import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
+import TEXT_BOX_HEIGHT_CALCULATION_OPTIONS from '../../common/constants/textBoxHeightCalculationOptions';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
@@ -540,7 +540,6 @@ function processLayouts(styles) {
     processedStyles.textBoxHeight,
   );
 
-  processedStyles.textBoxWidth = getTextBoxRightOrLeftWidth(processedStyles);
   processedStyles.externalInfoWidth = processedStyles.textBoxWidth;
 
   return processedStyles;
@@ -598,7 +597,7 @@ function getTextBoxAboveOrBelowHeight(styleParams) {
   }
 
   if (
-    styleParams.calculateTextBoxHeightMode === CALCULATION_OPTIONS.AUTOMATIC
+    styleParams.calculateTextBoxHeightMode === TEXT_BOX_HEIGHT_CALCULATION_OPTIONS.AUTOMATIC
   ) {
     return getHeightByContent(styleParams);
   } else {
