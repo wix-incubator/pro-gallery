@@ -17,7 +17,6 @@ export const fixedStyles = {
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
   gallerySize: 0,
   fixedColumns: 0,
-  hasThumbnails: false,
   enableScroll: true,
   isGrid: false,
   isSlider: false,
