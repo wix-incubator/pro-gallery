@@ -5,11 +5,11 @@ import { cssScrollHelper } from './cssScrollHelper.js';
 const desktopWidths = [480, 768, 1024, 1280, 1440, 1680, 1920, 2560];
 const mobileWidths = [320]; //, 375, 414, 480, 600, 768, 900]; (mobile is currently fixed to 320px)
 
-const getImageStyle = (item, styleParams) => ({
+const getImageStyle = (item) => ({
   top: item.offset.top,
   left: item.offset.left,
-  width: item.width + (styleParams.externalInfoWidth || 0),
-  height: item.height + (styleParams.externalInfoHeight || 0),
+  width: item.totalWidth,
+  height: item.totalHeight,
   innerHeight: item.height,
 });
 

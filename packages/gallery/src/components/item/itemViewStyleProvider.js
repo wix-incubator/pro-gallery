@@ -106,7 +106,7 @@ function getInnerInfoStylesAboveOrBelow(styleParams, additionalHeight) {
 
 function getInnerInfoStylesRightOrLeft(styleParams, additionalWidth) {
   return {
-    width: styleParams.textBoxWidth + additionalWidth,
+    width: additionalWidth,
     height: '100%',
   }
 }

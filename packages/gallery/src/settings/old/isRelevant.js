@@ -102,7 +102,7 @@ export default {
   calculateTextBoxWidthMode: sp => showTextSubSection(sp) && presentSideOuterInformation(sp),
   textBoxHeight: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL),
   textBoxWidth: sp => showTextSubSection(sp) && presentSideOuterInformation(sp) && sp.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,
-  textBoxWidthPrecent: sp => showTextSubSection(sp) && presentSideOuterInformation(sp) && sp.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxWidthCalculationOptions.PRECENT,
+  textBoxWidthPercent: sp => showTextSubSection(sp) && presentSideOuterInformation(sp) && sp.calculateTextBoxWidthMode === GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
   textImageSpace: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.infoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND),
   textBoxBorderRadius: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.infoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND),
   textBoxBorderWidth: sp => showTextSubSection(sp) && (!isSlideshowLayout(sp) && presentOuterInformation(sp) && sp.infoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND),
