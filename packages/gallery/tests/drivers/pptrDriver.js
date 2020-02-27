@@ -15,6 +15,7 @@ export default class galleryDriver {
   async launchBrowser() {
     const args = [
       '--no-sandbox',
+      '--font-render-hinting=none',
       '--force-color-profile=srgb|generic-rgb|color-spin-gamma24',
       `--window-size=${this.windowSize.width},${this.windowSize.height}`,
     ];
