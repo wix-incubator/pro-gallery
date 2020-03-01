@@ -226,7 +226,7 @@ export class Item {
   }
 
   get totalWidth() {
-    return this.Group.totalWidth;
+    return this.Group ? this.Group.totalWidth : this.width;
   }
 
   get orgWidth() {
@@ -245,7 +245,6 @@ export class Item {
 
   set width(w) {
     this.style.cubedWidth = this.style.width = Math.max(1, w);
-    this.style.columnWidth = this.group.columnWidth;
   }
 
   get outerHeight() {
@@ -277,7 +276,7 @@ export class Item {
     h = this.dto.height;
   }
   get totalHeight() {
-    return this.Group.totalHeight;
+    return this.Group ? this.Group.totalHeight : this.width;
   }
 
   get margins() {

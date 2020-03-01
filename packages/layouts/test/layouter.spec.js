@@ -663,18 +663,23 @@ describe('Layouter', () => {
     // rotatingCropRatios
     it('should crop items according to rotatingCropRatios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.rotatingCropRatios = '0.2,0.6,8,4.5';
+      styleParams.rotatingCropRatios = '2,6,8,4';
       styleParams.cropRatio = '1';
       styleParams.cropItems = true;
       styleParams.smartCrop = false;
+      styleParams.isVertical = true;
 
       const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
 
       gallery = getLayout({ items, container, styleParams });
       gallery.items.forEach((item, i) => {
-        expect(item.cropRatio).to.equal(
-          Number(rotatingCropRatiosArr[i % rotatingCropRatiosArr.length]),
+        const cropRatio = Number(
+          rotatingCropRatiosArr[i % rotatingCropRatiosArr.length],
         );
+        const itemRatio = item.width / item.height;
+        const diff = Math.abs(itemRatio - cropRatio);
+        console.log(item.width, item.height, itemRatio, cropRatio, diff);
+        expect(diff).to.be.below(cropRatio / 10);
       }, true);
     });
   });
