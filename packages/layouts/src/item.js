@@ -72,6 +72,10 @@ export class Item {
       }
     }
 
+    if (this.idx === 80) {
+      console.log('Setitnting Width', scaleOrDimensions);
+    }
+
     this.width *= scale;
     this.height *= scale;
 
@@ -244,6 +248,7 @@ export class Item {
   }
 
   set width(w) {
+    if (this.idx === 80) console.log('Setting Width', w);
     this.style.cubedWidth = this.style.width = Math.max(1, w);
   }
 
@@ -257,6 +262,19 @@ export class Item {
 
   get height() {
     let height;
+    if (this.idx === 80) {
+      console.log(
+        800,
+        this.cubeImages,
+        this.ratio,
+        this.cubeRatio,
+        this.style.cubedHeight,
+        this.orgWidth,
+        this.orgHeight,
+        this.ratio,
+      );
+    }
+
     if (this.cubeImages && this.ratio < this.cubeRatio) {
       height = this.style.cubedHeight || this.orgWidth / this.cubeRatio;
     } else {
@@ -288,9 +306,12 @@ export class Item {
 
   get cubeRatio() {
     let ratio;
-    if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
+    if (this.rotatingCropRatio) {
+      ratio = this.rotatingCropRatio;
+    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
       const cropRatiosArr = String(this.rotatingCropRatios).split(',');
-      ratio = cropRatiosArr[this.idx % cropRatiosArr.length];
+      ratio = this.rotatingCropRatio =
+        cropRatiosArr[this.idx % cropRatiosArr.length];
     }
     if (!ratio && typeof this._cubeRatio === 'function') {
       ratio = this._cubeRatio();
@@ -343,6 +364,10 @@ export class Item {
     }
 
     ratio = Number(ratio);
+
+    if (this.idx === 80) {
+      console.log(80, ratio, this.rotatingCropRatio, this.rotatingCropRatios);
+    }
 
     if (this.smartCrop === true) {
       if (this.isPortrait) {
@@ -397,11 +422,15 @@ export class Item {
       maxWidth: this.maxWidth,
       outerWidth: this.outerWidth,
       totalWidth: this.totalWidth,
+      margins: this.margins,
+      ratio: this.ratio,
+      cropRatio: this.cubeRatio,
+      isCropped: this.cubeImages,
+      cropType: this.cubeType,
       height: this.height,
       maxHeight: this.maxHeight,
       outerHeight: this.outerHeight,
       totalHeight: this.totalHeight,
-      ratio: this.ratio,
       group: this.group,
       offset: this.offset,
       groupOffset: this._groupOffset,
