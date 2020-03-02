@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import GALLERY_CONSTS from '../../src/common/constants';
-import sinon from 'sinon';
 
 describe('styleParam - isRTL', () => {
 
@@ -79,25 +78,25 @@ describe('styleParam - isRTL', () => {
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
-
-  it('should show right arrow at first in slideShowView', () => {
+  it('should not set direction "rtl" in texts element', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
     })
     driver.mount.proGallery(initialProps);
-    const arrow = driver.find.hook('nav-arrow-next');
-    console.log(arrow.props().style);
-    const mock = {
-      length: 1, //should be only 1 arrow at first
-      right: 5, // arrow distance from right side
-    }
-
-    expect({
-      length: arrow.length, 
-      right: arrow.props().style.left
-    });
+    const textsElement = driver.find.selector('.gallery-item-text').at(0);
+    expect(textsElement.props().style.direction).to.eq(undefined);
     driver.detach.proGallery();
   });
-
+  it('should set direction "rtl" in texts element', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
+    })
+    driver.mount.proGallery(initialProps);
+    const textsElement = driver.find.selector('.gallery-item-text').at(0);
+    expect(textsElement.props().style.direction).to.eq('rtl');
+    driver.detach.proGallery();
+  });
+  
 })
