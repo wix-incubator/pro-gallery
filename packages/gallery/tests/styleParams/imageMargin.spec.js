@@ -33,33 +33,45 @@ describe('styleParam - imageMargin', () => {
   it.only('should use "top" and "left" properties to create the spacing', () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
     Object.assign(initialProps.styles, {
-      galleryLayout: 2,
-      imageMargin: 0,
+      galleryLayout: 1,
+      imageMargin: 200,
       oneRow: false,
-      scrollDirection: 0,
       gallerySizeType: 'px',
-      gallerySizePx: 390
+      gallerySizePx: 390,
+      isVertical: false
     })
     driver.mount.proGallery(initialProps);
     //get the middle image in the second row to test
-    const item1 = driver.find.hook('item-container').at(3); 
-    const item2 = driver.find.hook('item-container').at(4); 
-    const item3 = driver.find.hook('item-container').at(5); 
-    // get CSS "width" and "left" values
-    const { width, left } = getElementDimensions(item1);
-    const left2 = getElementDimensions(item2).left;
-    const width2 = getElementDimensions(item2).width;
-    const left3 = getElementDimensions(item3).left;
-    const width3 = getElementDimensions(item3).width;
-    // expect the difference between the"left" and "width" of the middle item (in a row of 3) to equal the given imageMargin number
-    console.log({width, left, left2, width2, left3, width3}) 
-    expect(initialProps.styles.imageMargin).to.eq(left + width - left2);
-    expect(initialProps.styles.imageMargin).to.eq(left);
-    expect(initialProps.styles.imageMargin).to.eq(width);
-    expect(initialProps.styles.imageMargin).to.eq(left2);
-    expect(initialProps.styles.imageMargin).to.eq(width2);
-    expect(initialProps.styles.imageMargin).to.eq(left3);
-    expect(initialProps.styles.imageMargin).to.eq(width3);
+    let prevDims = {top: 0, left: 0, width: 0, height: 0};
+    for (let i = 0; i < 6; i++) {
+      const item = driver.find.hook('item-container').at(i);
+      driver
+      try {
+        const dims = getElementDimensions(item);
+        const spacing = dims.left - (prevDims.left + prevDims.width);
+        console.log({idx: i, spacing, ...dims});
+        prevDims = dims;
+      } catch (e) {
+        console.log('Cannot find item', i);
+      }
+    }
+    // const item2 = driver.find.hook('item-container').at(4); 
+    // const item3 = driver.find.hook('item-container').at(5); 
+    // // get CSS "width" and "left" values
+    // const { width, left } = getElementDimensions(item1);
+    // const left2 = getElementDimensions(item2).left;
+    // const width2 = getElementDimensions(item2).width;
+    // const left3 = getElementDimensions(item3).left;
+    // const width3 = getElementDimensions(item3).width;
+    // // expect the difference between the"left" and "width" of the middle item (in a row of 3) to equal the given imageMargin number
+    // console.log({left, width, left2, width2, left3, width3}) 
+    // expect(initialProps.styles.imageMargin).to.eq(left + width - left2);
+    // expect(initialProps.styles.imageMargin).to.eq(left);
+    // expect(initialProps.styles.imageMargin).to.eq(width);
+    // expect(initialProps.styles.imageMargin).to.eq(left2);
+    // expect(initialProps.styles.imageMargin).to.eq(width2);
+    // expect(initialProps.styles.imageMargin).to.eq(left3);
+    expect(initialProps.styles.imageMargin).to.eq(11);
     driver.detach.proGallery();
   })
 })
