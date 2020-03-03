@@ -15,6 +15,9 @@ export const fixedStyles = {
   galleryMargin: 0,
   isVertical: false,
   groupSize: 1,
+  itemBorderWidth: 0,
+  itemBorderRadius: 0,
+  itemBorderColor: undefined,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
