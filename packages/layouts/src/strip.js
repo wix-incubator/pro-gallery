@@ -30,6 +30,10 @@ export class Strip {
     this.lastGroup.isLastGroup = false;
   }
 
+  canRemainIncomplete() {
+    return this.gallerySize * 1.5 < this.height;
+  }
+
   setWidth(width) {
     this.width = width;
     if (this.hasGroups) {

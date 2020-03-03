@@ -380,7 +380,7 @@ export default class Layouter {
             this.strip.height =
               this.container.galleryHeight +
               (this.styleParams.imageMargin - this.styleParams.galleryMargin);
-          } else if (this.gallerySize * 1.5 < this.strip.height) {
+          } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
             this.strip.height = this.gallerySize;
             this.strip.markAsIncomplete();
