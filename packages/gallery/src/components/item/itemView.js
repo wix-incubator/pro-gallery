@@ -139,7 +139,6 @@ class ItemView extends GalleryComponent {
         e.preventDefault();
         e.stopPropagation();
         let clickTarget = 'item-container';
-        console.log({clickTarget});
         this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
@@ -164,14 +163,12 @@ class ItemView extends GalleryComponent {
 
   onItemWrapperClick(e) {
     let clickTarget = 'item-media';
-    console.log({clickTarget});
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
 
   onItemInfoClick(e) {
     let clickTarget = 'item-info';
-    console.log({clickTarget});
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
