@@ -264,9 +264,11 @@ export default class Layouter {
           remainderWidth -= colWidth;
           //fix cubeRatio of rounded columns
           const infoWidth =
-            (externalInfoWidth > 1 // integer represent size in pixels, floats size in percentage
-              ? externalInfoWidth
-              : externalInfoWidth * colWidth) || 0;
+            Math.round(
+              externalInfoWidth > 1 // integer represent size in pixels, floats size in percentage
+                ? externalInfoWidth
+                : externalInfoWidth * colWidth,
+            ) || 0;
           colWidth -= infoWidth;
           const fixedCubeRatio =
             colWidth / ((this.gallerySize - infoWidth) / cubeRatio);

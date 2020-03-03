@@ -781,21 +781,16 @@ export class Group {
     return w / h;
   }
 
-  get outerHeight() {
+  get totalHeight() {
+    return this.height + this.infoHeight;
+  }
+
+  get infoHeight() {
     return this.height + (this.externalInfoHeight || 0);
   }
 
-  get innerHeight() {
-    return this.outerHeight - this.imageMargin * 2;
-  }
-
-  get totalWidth() {
-    return (
-      (this.Column
-        ? this.Column.totalWidth
-        : this.width + (this.externalInfoWidth || 0)) -
-      this.imageMargin * 2
-    );
+  get infoWidth() {
+    return this.Column ? this.Column.infoWidth : this.externalInfoWidth || 0;
   }
 
   get bottom() {
@@ -843,8 +838,8 @@ export class Group {
       type: this.type,
       width: this.width,
       height: this.height,
-      totalHeight: this.innerHeight,
-      totalWidth: this.totalWidth,
+      infoHeight: this.infoHeight,
+      infoWidth: this.infoWidth,
       ratio: this.ratio,
       top: this.top,
       left: this.left,

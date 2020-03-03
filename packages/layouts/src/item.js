@@ -229,8 +229,13 @@ export class Item {
     return this.width + 2 * this.margins;
   }
 
-  get totalWidth() {
-    return this.Group ? this.Group.totalWidth : this.width;
+  get infoWidth() {
+    console.log(
+      'this.Column ? this.Column.infoWidth : this.externalInfoWidth || 0;',
+      this.Group ? this.Group.infoWidth : 0,
+    );
+
+    return this.Group ? this.Group.infoWidth : 0;
   }
 
   get orgWidth() {
@@ -293,8 +298,8 @@ export class Item {
   set maxHeight(h) {
     h = this.dto.height;
   }
-  get totalHeight() {
-    return this.Group ? this.Group.totalHeight : this.width;
+  get infoHeight() {
+    return this.Group ? this.Group.infoHeight : 0;
   }
 
   get margins() {
@@ -421,7 +426,7 @@ export class Item {
       width: this.width,
       maxWidth: this.maxWidth,
       outerWidth: this.outerWidth,
-      totalWidth: this.totalWidth,
+      infoWidth: this.infoWidth,
       margins: this.margins,
       ratio: this.ratio,
       cropRatio: this.cubeRatio,
@@ -430,7 +435,7 @@ export class Item {
       height: this.height,
       maxHeight: this.maxHeight,
       outerHeight: this.outerHeight,
-      totalHeight: this.totalHeight,
+      infoHeight: this.infoHeight,
       group: this.group,
       offset: this.offset,
       groupOffset: this._groupOffset,

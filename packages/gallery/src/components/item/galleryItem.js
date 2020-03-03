@@ -62,9 +62,11 @@ class GalleryItem {
     this.style = scheme.style;
     this.width = scheme.width;
     this.maxWidth = scheme.maxWidth;
+    this.infoWidth = scheme.infoWidth;
     this.totalWidth = scheme.totalWidth;
     this.height = scheme.height;
     this.maxHeight = scheme.maxHeight;
+    this.infoHeight = scheme.infoHeight;
     this.totalHeight = scheme.totalHeight;
     this.margins = scheme.margins;
     this.ratio = scheme.ratio;
