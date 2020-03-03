@@ -33,6 +33,7 @@ import textBoxWidth from './options/textBoxWidth';
 import imageInfoType from './options/imageInfoType';
 import groupSize from './options/groupSize';
 import collageDensity from './options/collageDensity';
+import arrowsSize from './options/arrowsSize';
 
 export default {
     itemClick,
@@ -70,4 +71,5 @@ export default {
     imageInfoType,
     groupSize,
     collageDensity,
+    arrowsSize,
 }
