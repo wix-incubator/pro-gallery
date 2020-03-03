@@ -53,6 +53,8 @@ class ItemView extends GalleryComponent {
 
   init() {
     this.onItemClick = this.onItemClick.bind(this);
+    this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
+    this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.toggleFullscreenIfNeeded = this.toggleFullscreenIfNeeded.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
@@ -136,6 +138,9 @@ class ItemView extends GalleryComponent {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
+        let clickTarget = 'item-container';
+        console.log({clickTarget});
+        this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
         } else {
@@ -155,8 +160,23 @@ class ItemView extends GalleryComponent {
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
   }
 
+
+
+  onItemWrapperClick(e) {
+    let clickTarget = 'item-media';
+    console.log({clickTarget});
+    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
+    this.onItemClick(e);
+  }
+
+  onItemInfoClick(e) {
+    let clickTarget = 'item-info';
+    console.log({clickTarget});
+    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
+    this.onItemClick(e);
+  }
+
   onItemClick(e) {
-    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
       return (() => { });
     }
@@ -780,6 +800,7 @@ class ItemView extends GalleryComponent {
             onMouseOut={() => {
               !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
+            onClick={this.onItemInfoClick}
           >
             {itemTexts}
           </div>
@@ -1131,6 +1152,7 @@ class ItemView extends GalleryComponent {
             className={this.getItemWrapperClass()}
             key={'item-wrapper-' + id}
             style={this.getItemWrapperStyles()}
+            onClick={this.onItemWrapperClick}
           >
             {this.getItemInner()}
           </div>)}
