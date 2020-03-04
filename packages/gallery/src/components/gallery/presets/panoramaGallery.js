@@ -18,7 +18,6 @@ export const fixedStyles = {
   gallerySize: () => dimensionsHelper.getGalleryWidth(),
   oneRow: false,
   fixedColumns: 1,
-  hasThumbnails: false,
   enableScroll: true,
   isGrid: false,
   isColumns: false,
