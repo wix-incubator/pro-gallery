@@ -39,6 +39,7 @@ import hasThumbnails from './options/hasThumbnails';
 import groupTypes from './options/groupTypes';
 import thumbnailSize from './options/thumbnailSize';
 import galleryThumbnailsAlignment from './options/galleryThumbnailsAlignment';
+import isRTL from './options/isRTL';
 
 export default {
     itemClick,
@@ -82,4 +83,5 @@ export default {
     groupTypes,
     thumbnailSize,
     galleryThumbnailsAlignment,
+    isRTL,
 }
