@@ -248,7 +248,6 @@ export class Item {
   }
 
   set width(w) {
-    if (this.idx === 80) console.log('Setting Width', w);
     this.style.cubedWidth = this.style.width = Math.max(1, w);
   }
 
@@ -351,10 +350,6 @@ export class Item {
     }
 
     ratio = Number(ratio);
-
-    if (this.idx === 80) {
-      console.log(80, ratio, this.rotatingCropRatio, this.rotatingCropRatios);
-    }
 
     if (this.smartCrop === true) {
       if (this.isPortrait) {

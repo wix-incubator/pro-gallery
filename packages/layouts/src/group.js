@@ -105,11 +105,8 @@ export class Group {
     }
   }
 
-  fixItemsRatio(ratio) {
-    for (const item of this.items) {
-      item.cubeRatio = ratio;
-      item.resize(1);
-    }
+  setCubedHeight(height) {
+    this.cubedHeight = this.cubeImages ? height : null;
   }
 
   round() {
@@ -837,7 +834,7 @@ export class Group {
       items: this.items.map(item => item.scheme),
       type: this.type,
       width: this.width,
-      height: this.height,
+      height: this.cubedHeight || this.height,
       infoHeight: this.infoHeight,
       infoWidth: this.infoWidth,
       ratio: this.ratio,

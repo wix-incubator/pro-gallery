@@ -270,10 +270,9 @@ export default class Layouter {
                 : externalInfoWidth * colWidth,
             ) || 0;
           colWidth -= infoWidth;
-          const fixedCubeRatio =
-            colWidth / ((this.gallerySize - infoWidth) / cubeRatio);
+          const fixedCubeHeight = (this.gallerySize - infoWidth) / cubeRatio;
           //add space for info on the side
-          return new Column(idx, colWidth, fixedCubeRatio, infoWidth);
+          return new Column(idx, colWidth, fixedCubeHeight, infoWidth);
         });
       this.maxLoops = this.srcItems.length * 10;
     }
@@ -403,7 +402,7 @@ export default class Layouter {
         );
 
         //resize the group and images
-        this.group.fixItemsRatio(minCol.cubeRatio); //fix last column's items ratio (caused by stretching it to fill the screen)
+        this.group.setCubedHeight(minCol.cubedHeight); //fix last column's items ratio (caused by stretching it to fill the screen)
         this.group.resizeToWidth(minCol.width);
         this.group.round();
 

@@ -162,7 +162,7 @@ describe('Layouter', () => {
             c &&
             column.groups.reduce((g, group) => {
               return Math.max(g, group.width);
-            }, true)
+            }, 0)
           );
         }, true);
 
