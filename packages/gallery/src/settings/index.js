@@ -38,6 +38,7 @@ import gridStyle from './options/gridStyle'
 import hasThumbnails from './options/hasThumbnails';
 import groupTypes from './options/groupTypes';
 import thumbnailSize from './options/thumbnailSize';
+import galleryThumbnailsAlignment from './options/galleryThumbnailsAlignment';
 
 export default {
     itemClick,
@@ -80,4 +81,5 @@ export default {
     hasThumbnails,
     groupTypes,
     thumbnailSize,
+    galleryThumbnailsAlignment,
 }
