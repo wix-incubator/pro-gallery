@@ -15,7 +15,7 @@ describe('styleParam - videoPlay', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
   });
-  
+
   it('should play videos automaticaly', () => {
     Object.assign(initialProps.styles, {
       videoPlay: GALLERY_CONSTS.videoPlay.AUTO,
@@ -78,7 +78,7 @@ describe('styleParam - videoPlay', () => {
         itemClick: GALLERY_CONSTS.itemClick.NOTHING,
       })
       driver.mount.proGallery(initialProps);
-      const itemContainer = driver.find.hook('item-container').at(0);
+      const itemContainer = driver.find.hook('item-wrapper').at(0);
       itemContainer.simulate('click');
       const videoItem = driver.find.hook('video_container-video-player-element');
       expect(videoItem).to.have.lengthOf(1)

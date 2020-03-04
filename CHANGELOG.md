@@ -1,3 +1,10 @@
+## [v1.7.24](https://pro-gallery-1-7-24.surge.sh) (03/03/2020)
+ 
+#### GALLERY
+ -  Fixed classNames in horizontal galleries.
+ -  Changed console.warn to console.log when local
+
+---
 ## [v1.7.23](https://pro-gallery-1-7-23.surge.sh) (25/02/2020)
  
 #### GALLERY
