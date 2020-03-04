@@ -1,3 +1,9 @@
+## [v1.7.25](https://pro-gallery-1-7-25.surge.sh) (04/03/2020)
+ 
+#### GALLERY
+ - Add clickTarget to EVENTS.ITEM_CLICKED eventData (options: 'item-media', 'item-info', 'item-container')
+
+---
 ## [v1.7.24](https://pro-gallery-1-7-24.surge.sh) (03/03/2020)
  
 #### GALLERY
