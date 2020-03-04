@@ -9,10 +9,10 @@ export const fixedStyles = {
   cubeImages: false,
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
   groupSize: 1,
+  groupTypes: '1',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
-  groupTypes: '1',
   gallerySize: 0,
   fixedColumns: 0,
   enableScroll: true,

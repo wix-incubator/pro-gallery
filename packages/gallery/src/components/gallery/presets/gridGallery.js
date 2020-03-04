@@ -10,11 +10,11 @@ export const fixedStyles = {
   isVertical: true,
   groupSize: 1,
   hasThumbnails: false,
+  groupTypes: '1',
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   smartCrop: false,
   galleryType: 'Columns',
-  groupTypes: '1',
   fixedColumns: 0,
   gallerySize: 0,
   enableScroll: true,
