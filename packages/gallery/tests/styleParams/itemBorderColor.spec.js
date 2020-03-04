@@ -43,17 +43,4 @@ describe('styleParam - itemBorderColor', () => {
     expect(item.props().style.borderColor).to.eq('rgba(23,110,23,1)')
     driver.detach.proGallery();
   });
-  it('should not set border-color when hoveringBehaviour is "NEVER_SHOW"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout:  GALLERY_CONSTS.layout.GRID,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
-      itemBorderColor: 40,
-    })
-    driver.mount.proGallery(initialProps);
-    const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.borderColor).to.eq(undefined);
-    driver.detach.proGallery();
-  });
 })
