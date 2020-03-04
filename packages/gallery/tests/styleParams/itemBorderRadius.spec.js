@@ -41,17 +41,17 @@ describe('styleParam - itemBorderRadius', () => {
     expect(item.props().style.borderRadius).to.eq(40)
     driver.detach.proGallery();
   });
-  it('should not set border-width to when "cubeType" is "fit"', () => {
+  it('should not set border-radius to when "cubeType" is "fit"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemBorderWidth: 40,
+      itemBorderRadius: 40,
       oneRow: false,
     })
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.borderWidth).to.eq('0px');
+    expect(item.props().style.borderRadius).to.eq(0);
     driver.detach.proGallery();
   });
 })
