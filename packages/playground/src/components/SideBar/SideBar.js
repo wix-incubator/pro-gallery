@@ -90,6 +90,7 @@ function SideBar({ items }) {
           }}>
             <JsonEditor
               onChange={_setStyleParams}
+              allStyleParams={styleParams}
               styleParams={styleParams}
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
@@ -105,6 +106,7 @@ function SideBar({ items }) {
             <Collapse.Panel header={'* Changed Settings'} key="-1">
               <JsonEditor
                 onChange={_setStyleParams}
+                allStyleParams={styleParams}
                 styleParams={changedStyleParams}
                 showAllStyles={true}
               />
@@ -114,6 +116,7 @@ function SideBar({ items }) {
             <Divider />
             <JsonEditor
               onChange={_setStyleParams}
+              allStyleParams={styleParams}
               styleParams={styleParams}
               section={SECTIONS.PRESET}
               showAllStyles={gallerySettings.showAllStyles}
@@ -126,6 +129,7 @@ function SideBar({ items }) {
                   <JsonEditor
                     section={section}
                     onChange={_setStyleParams}
+                    allStyleParams={styleParams}
                     styleParams={styleParams}
                     showAllStyles={gallerySettings.showAllStyles}
                   />
