@@ -34,6 +34,7 @@ import textBoxWidthPercent from './options/textBoxWidthPercent';
 import imageInfoType from './options/imageInfoType';
 import groupSize from './options/groupSize';
 import collageDensity from './options/collageDensity';
+import gridStyle from './options/gridStyle'
 
 export default {
     itemClick,
@@ -72,4 +73,5 @@ export default {
     imageInfoType,
     groupSize,
     collageDensity,
+    gridStyle,
 }
