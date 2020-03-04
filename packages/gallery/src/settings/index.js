@@ -42,6 +42,7 @@ import isRTL from './options/isRTL';
 import scrollSnap from './options/scrollSnap';
 import itemBorderWidth from './options/itemBorderWidth';
 import itemBorderRadius from './options/itemBorderRadius';
+import itemBorderColor from './options/itemBorderColor';
 
 export default {
     itemClick,
@@ -88,4 +89,5 @@ export default {
     scrollSnap,
     itemBorderWidth,
     itemBorderRadius,
+    itemBorderColor,
 }
