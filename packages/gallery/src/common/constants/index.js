@@ -25,6 +25,7 @@ import dimensions from './dimensions';
 import gallerySizeType from './gallerySizeType';
 import isVertical from './isVertical';
 import galleryTextAlign from './galleryTextAlign.js';
+import gridStyle from './gridStyle';
 import layoutDirection from './layoutDirection';
 
 export default {
@@ -55,5 +56,6 @@ export default {
   gallerySizeType,
   isVertical,
   galleryTextAlign,
+  gridStyle,
   layoutDirection,
 };
