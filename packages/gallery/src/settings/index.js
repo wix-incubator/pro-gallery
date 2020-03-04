@@ -34,6 +34,7 @@ import imageInfoType from './options/imageInfoType';
 import groupSize from './options/groupSize';
 import collageDensity from './options/collageDensity';
 import gridStyle from './options/gridStyle'
+import hasThumbnails from './options/hasThumbnails';
 
 export default {
     itemClick,
@@ -72,4 +73,5 @@ export default {
     groupSize,
     collageDensity,
     gridStyle,
+    hasThumbnails,
 }

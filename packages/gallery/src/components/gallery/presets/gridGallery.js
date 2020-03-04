@@ -9,7 +9,7 @@ export const fixedStyles = {
   cubeImages: true,
   isVertical: true,
   groupSize: 1,
-  
+  hasThumbnails: false,
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: false,
   smartCrop: false,
@@ -17,7 +17,6 @@ export const fixedStyles = {
   groupTypes: '1',
   fixedColumns: 0,
   gallerySize: 0,
-  hasThumbnails: false,
   enableScroll: true,
   cropOnlyFill: false,
   isSlider: false,
