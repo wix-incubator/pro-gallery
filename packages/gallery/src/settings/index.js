@@ -41,6 +41,7 @@ import thumbnailSize from './options/thumbnailSize';
 import galleryThumbnailsAlignment from './options/galleryThumbnailsAlignment';
 import isRTL from './options/isRTL';
 import scrollSnap from './options/scrollSnap';
+import itemBorderWidth from './options/itemBorderWidth';
 
 export default {
     itemClick,
@@ -86,4 +87,5 @@ export default {
     galleryThumbnailsAlignment,
     isRTL,
     scrollSnap,
+    itemBorderWidth,
 }
