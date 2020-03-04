@@ -20,7 +20,7 @@ describe('arrowsSize - e2e', () => {
   it('should set arrowsSize', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      arrowsSize: 120,
+      arrowsSize: 150,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
