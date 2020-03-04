@@ -22,7 +22,6 @@ export const fixedStyles = {
   galleryType: 'Strips',
   gallerySize: () => dimensionsHelper.getGalleryHeight(),
   fixedColumns: 0,
-  hasThumbnails: false,
   enableScroll: true,
   isGrid: false,
   isColumns: true,

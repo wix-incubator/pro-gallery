@@ -33,6 +33,8 @@ import textBoxWidth from './options/textBoxWidth';
 import imageInfoType from './options/imageInfoType';
 import groupSize from './options/groupSize';
 import collageDensity from './options/collageDensity';
+import gridStyle from './options/gridStyle'
+import hasThumbnails from './options/hasThumbnails';
 import groupTypes from './options/groupTypes';
 
 export default {
@@ -71,5 +73,7 @@ export default {
     imageInfoType,
     groupSize,
     collageDensity,
+    gridStyle,
+    hasThumbnails,
     groupTypes,
 }

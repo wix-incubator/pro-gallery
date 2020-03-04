@@ -6,7 +6,7 @@ jest.setTimeout(30000)
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('oneRow - e2e', () => {
+describe('hasThumbnails - e2e', () => {
   let driver;
   
   beforeEach(async () => {
@@ -17,20 +17,32 @@ describe('oneRow - e2e', () => {
   afterEach(() => {
     driver.closeBrowser();
   });
-  it('should render horizontal gallery when "oneRow" is "true"', async () => {
+  it('should not have thumbnails when "hasThumbnails" is "false" and gallery is horizontal scroll', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true
+      hasThumbnails: false,
+      oneRow:true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should render vertical gallery when "oneRow" is "false"', async () => {
+  it('should not have thumbnails when "hasThumbnails" is "true" and gallery is vertical scroll', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: false,
+      hasThumbnails: false,
+    });
+    await driver.waitFor.hookToBeVisible('item-container');
+    await driver.waitFor.timer(200);
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
+    expect(page).toMatchImageSnapshot();
+  });
+  it('should have thumbnails when "hasThumbnails" is "true" and gallery is horizontal scroll', async () => {
+    await driver.openPage({
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      hasThumbnails: true,
+      oneRow:true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
