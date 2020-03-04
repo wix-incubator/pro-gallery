@@ -184,7 +184,7 @@ describe('Item View', () => {
     //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'nothing', videoPlay: 'onClick'}});
     //   driver.mount(ItemView, sampleItemViewProps);
     //   const spy = sinon.spy(ItemView.prototype, 'props.actions.setCurrentHover');
-    //   driver.find.hook('item-container').simulate('click');
+    //   driver.find.hook('item-wrapper').simulate('click');
     //   expect(spy.called).to.be.true;
     //   spy.restore();
     //   mobileStub.restore();
