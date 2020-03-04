@@ -6,7 +6,7 @@ jest.setTimeout(30000)
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('allowTitle - e2e', () => {
+describe('gridStyle - e2e', () => {
   let driver;
   
   beforeEach(async () => {
@@ -17,26 +17,24 @@ describe('allowTitle - e2e', () => {
   afterEach(() => {
     driver.closeBrowser();
   });
-  it('should render when "allowTitle" is "true"', async () => {
+  it('should set number of columns according to container size (not numberOfImagesPerRow)', async () => {
     await driver.openPage({
-      galleryLayout: 2,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
-      allowTitle: true
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      gridStyle: GALLERY_CONSTS.gridStyle.FIT_TO_SCREEN,
+      numberOfImagesPerRow:2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not render when "allowTitle" is "false"', async () => {
+  it('should set fixed number of columns (numberOfImagesPerRow)', async () => {
     await driver.openPage({
-      galleryLayout: 2,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
-      allowTitle: false
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      gridStyle: GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW,
+      numberOfImagesPerRow:2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 })

@@ -18,7 +18,7 @@ export default class ProGallery extends GalleryComponent {
       this.init(props);
     }
     if (utils.isLocal() && !utils.isTest()) {
-      console.warn('PRO GALLERY DEV');
+      console.log('PRO GALLERY DEV');
     }
   }
 
