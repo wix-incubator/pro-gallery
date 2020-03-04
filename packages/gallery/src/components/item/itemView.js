@@ -756,8 +756,8 @@ class ItemView extends GalleryComponent {
 
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
-    const additionalHeight = this.hasRequiredMediaUrl ? 0 : style.height;
-    const additionalWidth = (style.totalWidth - style.width) + (this.hasRequiredMediaUrl ? 0 : style.width);
+    const additionalHeight = style.infoHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
+    const additionalWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemTexts = customInfoRenderer
       ? customInfoRenderer(this.props)

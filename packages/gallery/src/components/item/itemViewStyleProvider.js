@@ -96,7 +96,7 @@ function getInfoHorizontalPadding(styleParams) {
 
 function getInnerInfoStylesAboveOrBelow(styleParams, additionalHeight) {
   return {
-    height: styleParams.textBoxHeight + additionalHeight,
+    height: additionalHeight,
     paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
     paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
     paddingRight: getInfoHorizontalPadding(styleParams) + 'px',

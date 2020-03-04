@@ -230,11 +230,6 @@ export class Item {
   }
 
   get infoWidth() {
-    console.log(
-      'this.Column ? this.Column.infoWidth : this.externalInfoWidth || 0;',
-      this.Group ? this.Group.infoWidth : 0,
-    );
-
     return this.Group ? this.Group.infoWidth : 0;
   }
 
