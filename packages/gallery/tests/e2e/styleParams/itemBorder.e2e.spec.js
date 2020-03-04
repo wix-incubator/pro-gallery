@@ -42,10 +42,10 @@ describe('itemBorder - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('should not have any border style when hoveringBehaviour is "NEVER_SHOW"', async () => {
+  it('should not have any border style when "cubeType" is "FIT"', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
+      cubeType: GALLERY_CONSTS.cubeType.FIT,
       itemBorderWidth: 40,
       itemBorderRadius: 40,
     });
