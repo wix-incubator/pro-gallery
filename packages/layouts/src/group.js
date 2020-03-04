@@ -778,6 +778,14 @@ export class Group {
     return w / h;
   }
 
+  get height() {
+    return this.cubedHeight || this._height;
+  }
+
+  set height(h) {
+    this._height = h;
+  }
+
   get totalHeight() {
     return this.height + this.infoHeight;
   }
@@ -834,7 +842,7 @@ export class Group {
       items: this.items.map(item => item.scheme),
       type: this.type,
       width: this.width,
-      height: this.cubedHeight || this.height,
+      height: this.height,
       infoHeight: this.infoHeight,
       infoWidth: this.infoWidth,
       ratio: this.ratio,

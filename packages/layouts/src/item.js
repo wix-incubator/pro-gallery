@@ -72,10 +72,6 @@ export class Item {
       }
     }
 
-    if (this.idx === 80) {
-      console.log('Setitnting Width', scaleOrDimensions);
-    }
-
     this.width *= scale;
     this.height *= scale;
 

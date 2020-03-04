@@ -254,6 +254,7 @@ export default class Layouter {
           : false;
 
       let remainderWidth = this.galleryWidth;
+      let fixedCubeHeight;
       this.columns = Array(this.numOfCols)
         .fill(0)
         .map((column, idx) => {
@@ -270,7 +271,8 @@ export default class Layouter {
                 : externalInfoWidth * colWidth,
             ) || 0;
           colWidth -= infoWidth;
-          const fixedCubeHeight = (this.gallerySize - infoWidth) / cubeRatio;
+          fixedCubeHeight =
+            fixedCubeHeight || (this.gallerySize - infoWidth) / cubeRatio; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, fixedCubeHeight, infoWidth);
         });
