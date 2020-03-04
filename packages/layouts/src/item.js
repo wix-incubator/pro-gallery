@@ -267,19 +267,6 @@ export class Item {
 
   get height() {
     let height;
-    if (this.idx === 80) {
-      console.log(
-        800,
-        this.cubeImages,
-        this.ratio,
-        this.cubeRatio,
-        this.style.cubedHeight,
-        this.orgWidth,
-        this.orgHeight,
-        this.ratio,
-      );
-    }
-
     if (this.cubeImages && this.ratio < this.cubeRatio) {
       height = this.style.cubedHeight || this.orgWidth / this.cubeRatio;
     } else {

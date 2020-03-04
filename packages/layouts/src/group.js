@@ -786,7 +786,7 @@ export class Group {
   }
 
   get infoHeight() {
-    return this.height + (this.externalInfoHeight || 0);
+    return this.externalInfoHeight || 0;
   }
 
   get infoWidth() {
