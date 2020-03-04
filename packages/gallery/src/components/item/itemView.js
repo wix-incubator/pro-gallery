@@ -1124,7 +1124,7 @@ class ItemView extends GalleryComponent {
         onMouseOut={() => {
           !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
         }}
-        onClick={this.onItemClick}
+        //onClick={this.onItemClick} //onItemClick will be called by onItemWrapperClick and onItemInfoClick
         onKeyDown={this.onKeyPress}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
