@@ -160,7 +160,7 @@ describe('Item View', () => {
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
-      driver.find.hook('item-container').simulate('click');
+      driver.find.hook('item-wrapper').simulate('click');
       expect(stub.calledWith(EVENTS.ITEM_CLICKED)).to.be.true;
       stub.restore();
     });
@@ -173,7 +173,7 @@ describe('Item View', () => {
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
-      driver.find.hook('item-container').simulate('click');
+      driver.find.hook('item-wrapper').simulate('click');
       expect(stub.calledWith(EVENTS.ITEM_ACTION_TRIGGERED)).to.be.true;
       stub.restore();
     });
