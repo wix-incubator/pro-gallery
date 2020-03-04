@@ -53,6 +53,8 @@ class ItemView extends GalleryComponent {
 
   init() {
     this.onItemClick = this.onItemClick.bind(this);
+    this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
+    this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.toggleFullscreenIfNeeded = this.toggleFullscreenIfNeeded.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
@@ -136,6 +138,8 @@ class ItemView extends GalleryComponent {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
+        let clickTarget = 'item-container';
+        this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
         } else {
@@ -155,8 +159,21 @@ class ItemView extends GalleryComponent {
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
   }
 
+
+
+  onItemWrapperClick(e) {
+    let clickTarget = 'item-media';
+    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
+    this.onItemClick(e);
+  }
+
+  onItemInfoClick(e) {
+    let clickTarget = 'item-info';
+    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
+    this.onItemClick(e);
+  }
+
   onItemClick(e) {
-    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, this.props);
     if (this.shouldUseDirectLink()) {
       return (() => { });
     }
@@ -545,6 +562,7 @@ class ItemView extends GalleryComponent {
         key={'video' + this.props.idx}
         hover={itemHover}
         imageDimensions={imageDimensions}
+        hasLink={this.itemHasLink()}
         loadingStatus={{
           failed: this.state.failed,
           loaded: this.state.loaded,
@@ -779,6 +797,7 @@ class ItemView extends GalleryComponent {
             onMouseOut={() => {
               !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
             }}
+            onClick={this.onItemInfoClick}
           >
             {itemTexts}
           </div>
@@ -803,10 +822,16 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  getItemContainerStyles() {
-    const { styleParams, linkData, linkUrl } = this.props;
-    const containerStyleByStyleParams = getContainerStyle(styleParams);
+  itemHasLink(){
+    const { linkData, linkUrl } = this.props;
     const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
+    return !itemDoesntHaveLink;
+  }
+
+  getItemContainerStyles() {
+    const { styleParams } = this.props;
+    const containerStyleByStyleParams = getContainerStyle(styleParams);
+    const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -1074,7 +1099,7 @@ class ItemView extends GalleryComponent {
   } else if (styleParams.itemClick === CLICK_ACTIONS.FULLSCREEN || styleParams.itemClick === CLICK_ACTIONS.EXPAND){
     // place share link as the navigation item
     const url = directShareLink;
-    const shouldUseDirectShareLink = false; //isSEO && !!url;
+    const shouldUseDirectShareLink = !!url;
     const linkParams = shouldUseDirectShareLink
     ? { href: url }
     : {};
@@ -1085,8 +1110,10 @@ class ItemView extends GalleryComponent {
   composeItem() {
     const { photoId, id, hash, idx, styleParams, type, url } = this.props;
 
-    //if there is no url for videos and images, we will not render the itemWrapper (but will render the info element if exists, with the whole size of the item)
-    this.hasRequiredMediaUrl = !(!url && (type === 'image' || type === 'picture' || type === 'video'));
+    //if (there is an url for video items and image items) OR text item (text item do not use media url)
+    this.hasRequiredMediaUrl = url || type === 'text';
+    //if titlePlacement !== SHOW_ON_HOVER and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
+    const isItemWrapperEmpty = styleParams.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER && !this.hasRequiredMediaUrl;
     const innerDiv = (
       <div
         className={this.getItemContainerClass()}
@@ -1097,7 +1124,7 @@ class ItemView extends GalleryComponent {
         onMouseOut={() => {
           !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
         }}
-        onClick={this.onItemClick}
+        //onClick={this.onItemClick} //onItemClick will be called by onItemWrapperClick and onItemInfoClick
         onKeyDown={this.onKeyPress}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
@@ -1117,11 +1144,12 @@ class ItemView extends GalleryComponent {
             ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT && {float: 'right'})
           }}
         >
-          {this.hasRequiredMediaUrl && (<div
+          {!isItemWrapperEmpty && (<div
             data-hook="item-wrapper"
             className={this.getItemWrapperClass()}
             key={'item-wrapper-' + id}
             style={this.getItemWrapperStyles()}
+            onClick={this.onItemWrapperClick}
           >
             {this.getItemInner()}
           </div>)}

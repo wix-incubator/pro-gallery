@@ -13,16 +13,15 @@ export const fixedStyles = {
   oneRow: true,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   isVertical: false,
+  groupSize: 1,
+  groupTypes: '1',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
   galleryType: 'Strips',
-  groupSize: 1,
-  groupTypes: '1',
   gallerySize: () => dimensionsHelper.getGalleryHeight(),
   fixedColumns: 0,
-  hasThumbnails: false,
   enableScroll: true,
   isGrid: false,
   isColumns: true,

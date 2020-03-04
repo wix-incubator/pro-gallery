@@ -126,7 +126,7 @@ describe('styleParam - itemClick', () => {
                 videoPlay: 'onClick'
             });
             driver.mount.proGallery(initialProps);
-            const item = driver.find.hook('item-container').at(0);
+            const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(1);
             driver.detach.proGallery();
@@ -140,7 +140,7 @@ describe('styleParam - itemClick', () => {
                 videoPlay: 'onClick'
             });
             driver.mount.proGallery(initialProps);
-            const item = driver.find.hook('item-container').at(0);
+            const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(0);
             driver.detach.proGallery();
@@ -154,7 +154,7 @@ describe('styleParam - itemClick', () => {
                 videoPlay: 'onClick'
             });
             driver.mount.proGallery(initialProps);
-            const item = driver.find.hook('item-container').at(0);
+            const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(0);
 
@@ -169,7 +169,7 @@ describe('styleParam - itemClick', () => {
                 videoPlay: 'onClick'
             });
             driver.mount.proGallery(initialProps);
-            const item = driver.find.hook('item-container').at(0);
+            const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(0);
 
