@@ -94,7 +94,6 @@ const getStyleBySeed = (seed) => {
     smartCrop: boolFromSeed('smartCrop'),
     showArrows: false,
     cubeType: 'fill',
-    hasThumbnails: false,
     enableScroll: true,
     isGrid: false,
     isSlideshow: false,

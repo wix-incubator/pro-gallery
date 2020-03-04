@@ -1,5 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
+import GALLERY_CONSTS from '../../../src/common/constants';
 
 jest.setTimeout(30000)
 
@@ -19,10 +20,10 @@ describe('allowTitle - e2e', () => {
   it('should render when "allowTitle" is "true"', async () => {
     await driver.openPage({
       galleryLayout: 2,
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
       allowTitle: true
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0]
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
@@ -30,10 +31,10 @@ describe('allowTitle - e2e', () => {
   it('should not render when "allowTitle" is "false"', async () => {
     await driver.openPage({
       galleryLayout: 2,
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
       allowTitle: false
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0]
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();

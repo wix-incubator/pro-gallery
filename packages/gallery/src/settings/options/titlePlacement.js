@@ -5,8 +5,7 @@ export default {
   title: 'Texts Placement',
   isRelevant: (styleParams) => (styleParams.isVertical &&
     styleParams.groupSize === 1 && 
-    !styleParams.oneRow) && 
-    !styleParams.isSlider && !styleParams.isColumns,
+    !styleParams.oneRow),
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   options: createOptions('placements'),
