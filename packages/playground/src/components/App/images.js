@@ -2599,27 +2599,6 @@ const testItems = [...testImages, ...testVideos, ...testTexts];
 
 const monochromeImages = [
   {
-    "itemId": "55d1186c-699f-4bf0-bfdb-1913cbebfa5c",
-    "secure": false,
-    "orderIndex": 1553787514.715,
-    "metaData": {
-      "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      "title": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,",
-      "link": {
-        "type": "none",
-        "target": "_blank"
-      },
-      "sourceName": "private",
-      "tags": [],
-      "height": 87,
-      "width": 398,
-      "fileName": "yelow.jpg",
-      "name": "0d72ac_b2876964a8814acd970bd7f6de5dc4ac~mv2.jpg"
-    },
-    "mediaUrl": "https://static.wixstatic.com/media/0d72ac_b2876964a8814acd970bd7f6de5dc4ac~mv2.jpg",
-    "directLink": {}
-  },
-  {
     "itemId": "b1125adc-e169-41d1-95e6-898d314e5160",
     "secure": false,
     "orderIndex": 1553787514.716,
@@ -2742,26 +2721,6 @@ const monochromeImages = [
     "directLink": {}
   },
   {
-    "itemId": "8b576579-2f63-4373-9be1-038718b49092",
-    "secure": false,
-    "orderIndex": 1553787514.722,
-    "metaData": {
-      "title": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,",
-      "link": {
-        "type": "none",
-        "target": "_blank"
-      },
-      "sourceName": "private",
-      "tags": [],
-      "height": 87,
-      "width": 398,
-      "fileName": "yelow.jpg",
-      "name": "0d72ac_6bf2a16c9436431d96cb6992f9bbf402~mv2.jpg"
-    },
-    "mediaUrl": "https://static.wixstatic.com/media/0d72ac_6bf2a16c9436431d96cb6992f9bbf402~mv2.jpg",
-    "directLink": {}
-  },
-  {
     "itemId": "41310b3b-a8a2-45d3-a924-ddde1a22d34f",
     "secure": false,
     "orderIndex": 1553787514.723,
@@ -2839,26 +2798,6 @@ const monochromeImages = [
       "name": "0d72ac_13863fc21ef94b3c91137d29fde38c15~mv2.jpg"
     },
     "mediaUrl": "https://static.wixstatic.com/media/0d72ac_13863fc21ef94b3c91137d29fde38c15~mv2.jpg",
-    "directLink": {}
-  },
-  {
-    "itemId": "c7a636cf-26df-4c1e-b755-7a7fbb075991",
-    "secure": false,
-    "orderIndex": 1553787514.727,
-    "metaData": {
-      "title": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,",
-      "link": {
-        "type": "none",
-        "target": "_blank"
-      },
-      "sourceName": "private",
-      "tags": [],
-      "height": 87,
-      "width": 398,
-      "fileName": "yelow.jpg",
-      "name": "0d72ac_e55491ace8134600ba3ce8d8b22cc008~mv2.jpg"
-    },
-    "mediaUrl": "https://static.wixstatic.com/media/0d72ac_e55491ace8134600ba3ce8d8b22cc008~mv2.jpg",
     "directLink": {}
   },
   {
@@ -2982,26 +2921,6 @@ const monochromeImages = [
     "directLink": {}
   },
   {
-    "itemId": "c2966f35-d03d-4aa7-a04b-bc17d86771d8",
-    "secure": false,
-    "orderIndex": 1553787514.734,
-    "metaData": {
-      "title": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,",
-      "link": {
-        "type": "none",
-        "target": "_blank"
-      },
-      "sourceName": "private",
-      "tags": [],
-      "height": 87,
-      "width": 398,
-      "fileName": "yelow.jpg",
-      "name": "0d72ac_7923c691c11b4fd2a7bffa5e3fb705ce~mv2.jpg"
-    },
-    "mediaUrl": "https://static.wixstatic.com/media/0d72ac_7923c691c11b4fd2a7bffa5e3fb705ce~mv2.jpg",
-    "directLink": {}
-  },
-  {
     "itemId": "8323cbcb-b98b-4885-a9e3-54bd8f99837f",
     "secure": false,
     "orderIndex": 1553787514.735,
@@ -3099,26 +3018,6 @@ const monochromeImages = [
       "name": "0d72ac_523117db617741c9a581d4fea639d315~mv2.jpg"
     },
     "mediaUrl": "https://static.wixstatic.com/media/0d72ac_523117db617741c9a581d4fea639d315~mv2.jpg",
-    "directLink": {}
-  },
-  {
-    "itemId": "2b2ce7ba-cfa2-41e4-aed5-5dafb6f14116",
-    "secure": false,
-    "orderIndex": 1553787514.74,
-    "metaData": {
-      "title": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,",
-      "link": {
-        "type": "none",
-        "target": "_blank"
-      },
-      "sourceName": "private",
-      "tags": [],
-      "height": 87,
-      "width": 398,
-      "fileName": "yelow.jpg",
-      "name": "0d72ac_db54b7c0fe1045389beebe6383b41eab~mv2.jpg"
-    },
-    "mediaUrl": "https://static.wixstatic.com/media/0d72ac_db54b7c0fe1045389beebe6383b41eab~mv2.jpg",
     "directLink": {}
   },
   {
