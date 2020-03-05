@@ -6,10 +6,3 @@ export const toMatchImageSnapshot = configureToMatchImageSnapshot({
   failureThresholdType: 'percent',
   // blur: 1
 });
-
-export const toMatchIconsAndTexts = configureToMatchImageSnapshot({
-  noColors: true,
-  failureThreshold: 0.005,
-  failureThresholdType: 'percent',
-  // blur: 1
-});

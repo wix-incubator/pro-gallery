@@ -1,10 +1,10 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchIconsAndTexts} from '../../drivers/matchers';
+import {toMatchImageSnapshot} from '../../drivers/matchers';
 import GALLERY_CONSTS from '../../../src/common/constants';
 
 jest.setTimeout(30000)
 
-expect.extend({ toMatchIconsAndTexts });
+expect.extend({ toMatchImageSnapshot });
 
 describe('arrowsSize - e2e', () => {
   let driver;
@@ -24,6 +24,6 @@ describe('arrowsSize - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchIconsAndTexts();
+    expect(page).toMatchImageSnapshot({failureThreshold: 0.0005});
   });
 })
