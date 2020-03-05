@@ -19,8 +19,7 @@ describe('autoSlideshowInterval - e2e', () => {
   });
   it('should display first image', async () => {
     await driver.openPage({
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       autoSlideshowInterval: 4,
       isAutoSlideshow:true,
     });
@@ -30,8 +29,7 @@ describe('autoSlideshowInterval - e2e', () => {
   });
   it('should display second image', async () => {
     await driver.openPage({
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       autoSlideshowInterval: 4,
       isAutoSlideshow:true,
     });
