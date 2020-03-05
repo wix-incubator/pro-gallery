@@ -670,7 +670,7 @@ describe('Layouter', () => {
     });
 
     // rotatingCropRatios
-    it.only('should crop items according to rotatingCropRatios if defined', () => {
+    it('should crop items according to rotatingCropRatios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
       styleParams.cubeRatio = '1';
