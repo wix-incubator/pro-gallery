@@ -11,14 +11,14 @@ export const fixedStyles = {
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
   isVertical: true,
   groupSize: 1,
+  groupTypes: '1',
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  
   showArrows: false,
   galleryType: 'Columns',
-  groupTypes: '1',
   gallerySize: () => dimensionsHelper.getGalleryWidth(),
   oneRow: false,
   fixedColumns: 1,
-  hasThumbnails: false,
   enableScroll: true,
   isGrid: false,
   isColumns: false,

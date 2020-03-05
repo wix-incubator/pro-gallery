@@ -16,12 +16,12 @@ export const fixedStyles = {
   isVertical: true,
   groupSize: 3,
   collageDensity: 0.8,
+  groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   gallerySize: 400,
   minItemSize: 50,
   chooseBestGroup: true,
-  groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
   rotatingGroupTypes: '2h',
   smartCrop: false,
   floatingImages: 0,

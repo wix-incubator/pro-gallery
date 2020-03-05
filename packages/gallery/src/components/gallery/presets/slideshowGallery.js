@@ -15,13 +15,16 @@ export const fixedStyles = {
   galleryMargin: 0,
   isVertical: false,
   groupSize: 1,
+  groupTypes: '1',
+  itemBorderWidth: 0,
+  itemBorderRadius: 0,
+  itemBorderColor: undefined,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   showArrows: true,
   smartCrop: false,
   gallerySize: 550,
   galleryType: 'Strips',
-  groupTypes: '1',
   fixedColumns: 1,
   hasThumbnails: false,
   enableScroll: true,
