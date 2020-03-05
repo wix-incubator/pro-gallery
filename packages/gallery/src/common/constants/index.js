@@ -27,6 +27,7 @@ import isVertical from './isVertical';
 import galleryTextAlign from './galleryTextAlign.js';
 import gridStyle from './gridStyle';
 import layoutDirection from './layoutDirection';
+import arrowsPosition from './arrowsPosition';
 
 export default {
   events,
@@ -58,4 +59,5 @@ export default {
   galleryTextAlign,
   gridStyle,
   layoutDirection,
+  arrowsPosition,
 };
