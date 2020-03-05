@@ -390,7 +390,7 @@ class ItemView extends GalleryComponent {
     return dimensions;
   }
 
-  getItemTextsDetails(additionalHeight = 0) {
+  getItemTextsDetails(externalTotalInfoHeight = 0) {
     const props = utils.pick(this.props, [
       'title',
       'description',
@@ -415,7 +415,7 @@ class ItemView extends GalleryComponent {
         isSmallItem={this.isSmallItem()}
         isNarrow={this.isNarrow()}
         shouldShowButton={shouldShowButton}
-        additionalHeight={additionalHeight}
+        externalTotalInfoHeight={externalTotalInfoHeight}
         actions={{
           eventsListener: this.props.actions.eventsListener,
         }}
@@ -756,19 +756,19 @@ class ItemView extends GalleryComponent {
 
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
-    const additionalHeight = style.infoHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
-    const additionalWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
+    const infoHeight = style.infoHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
+    const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemTexts = customInfoRenderer
       ? customInfoRenderer(this.props)
-      : this.getItemTextsDetails(additionalHeight);
+      : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemTexts) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
-            style={getInnerInfoStyle(styleParams, additionalHeight, additionalWidth)}
+            style={getInnerInfoStyle(styleParams, infoHeight, infoWidth)}
             className={'gallery-item-common-info ' + elementName}
             onMouseOver={() => {
               !utils.isMobile() && this.props.actions.eventsListener(
