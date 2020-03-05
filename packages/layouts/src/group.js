@@ -56,11 +56,13 @@ export class Group {
       this.collageDensity = styleParams.collageDensity;
       this.groupTypes = styleParams.groupTypes;
       this.rotatingGroupTypes = styleParams.rotatingGroupTypes;
+      this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.layoutsVersion = styleParams.layoutsVersion;
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
+      this.groupSize = styleParams.groupSize;
     }
 
     this.visible = true;
@@ -106,7 +108,12 @@ export class Group {
   }
 
   setCubedHeight(height) {
-    this.cubedHeight = this.cubeImages ? height : null;
+    const shouldUseFixedHeight =
+      this.cubeImages &&
+      this.groupSize === 1 &&
+      this.rotatingGroupTypes.length === 0 &&
+      this.rotatingCropRatios.length === 0;
+    this.cubedHeight = shouldUseFixedHeight ? height : null;
   }
 
   round() {

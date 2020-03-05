@@ -4,8 +4,10 @@ import isRelevant from './old/isRelevant';
 import newGallerySettings from './index';
 import defaultStyles from '../common/defaultStyles';
 
-const mergedSettings = Object.keys(isRelevant).reduce((obj, styleParam) => {
+const styleList = [...new Set([...Object.keys(newGallerySettings), ...Object.keys(isRelevant), ...Object.keys(content)])];
+const mergedSettings = styleList.reduce((obj, styleParam) => {
     const settingsData = newGallerySettings[styleParam] || {
+      styleParam,
       isRelevant: isRelevant[styleParam],
       ...content[styleParam],
       ...dataTypes[styleParam],

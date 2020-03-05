@@ -678,18 +678,9 @@ describe('Layouter', () => {
       styleParams.smartCrop = false;
       styleParams.isVertical = true;
 
-      const rotatingCropRatiosArr = styleParams.rotatingCropRatios; //.split(',');
+      const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
 
-      console.log(
-        'http://localhost:3000/?galleryLayout=-1&' +
-          Object.entries(styleParams)
-            .map(sp => sp.join('='))
-            .join('&'),
-      );
       gallery = getLayout({ items, container, styleParams });
-      // console.log(
-      //   gallery.items.map(({ width, height }) => `[${width},${height}]`),
-      // );
       gallery.items.forEach((item, i) => {
         const ratio = Number(
           rotatingCropRatiosArr[i % rotatingCropRatiosArr.length],
@@ -697,8 +688,6 @@ describe('Layouter', () => {
         const { width, height } = item;
         const itemRatio = width / height;
         const diff = Math.abs(itemRatio - ratio);
-        console.log({ width, height, itemRatio, ratio });
-
         expect(diff).to.be.below(ratio / 10);
       }, true);
     });
