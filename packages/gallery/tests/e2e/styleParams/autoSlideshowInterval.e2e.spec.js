@@ -20,7 +20,7 @@ describe('autoSlideshowInterval - e2e', () => {
   it('should display first image', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      autoSlideshowInterval: 4,
+      autoSlideshowInterval: 2,
       isAutoSlideshow:true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -30,7 +30,7 @@ describe('autoSlideshowInterval - e2e', () => {
   it('should display second image', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      autoSlideshowInterval: 4,
+      autoSlideshowInterval: 2,
       isAutoSlideshow:true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
