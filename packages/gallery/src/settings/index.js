@@ -43,6 +43,7 @@ import scrollSnap from './options/scrollSnap';
 import itemBorderWidth from './options/itemBorderWidth';
 import itemBorderRadius from './options/itemBorderRadius';
 import itemBorderColor from './options/itemBorderColor';
+import smartCrop from './options/smartCrop';
 
 export default {
     itemClick,
@@ -90,4 +91,5 @@ export default {
     itemBorderWidth,
     itemBorderRadius,
     itemBorderColor,
+    smartCrop,
 }
