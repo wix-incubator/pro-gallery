@@ -40,6 +40,9 @@ import thumbnailSize from './options/thumbnailSize';
 import galleryThumbnailsAlignment from './options/galleryThumbnailsAlignment';
 import isRTL from './options/isRTL';
 import scrollSnap from './options/scrollSnap';
+import itemBorderWidth from './options/itemBorderWidth';
+import itemBorderRadius from './options/itemBorderRadius';
+import itemBorderColor from './options/itemBorderColor';
 
 export default {
     itemClick,
@@ -84,4 +87,7 @@ export default {
     galleryThumbnailsAlignment,
     isRTL,
     scrollSnap,
+    itemBorderWidth,
+    itemBorderRadius,
+    itemBorderColor,
 }
