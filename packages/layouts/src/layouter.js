@@ -62,11 +62,13 @@ export default class Layouter {
       } else {
         // find the number of columns that makes each column width the closet to the gallerySize
         const numOfColsFloat = galleryWidth / gallerySize;
-        const diffs = [Math.floor(numOfColsFloat), Math.ceil(numOfColsFloat)]
+        const roundFuncs = [Math.floor, Math.ceil];
+        const diffs = roundFuncs
+          .map(func => func(numOfColsFloat)) //round to top, round to bottom
           .map(n => Math.round(galleryWidth / n)) //width of each col
           .map(w => Math.abs(gallerySize - w)); //diff from gallerySize
-        const roundFunc = diffs[0] < diffs[1] ? Math.floor : Math.ceil;
-        numOfCols = roundFunc(numOfColsFloat);
+        const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the gallerySize
+        numOfCols = roundFunc(numOfColsFloat) || 1;
       }
     } else {
       numOfCols = 1;
