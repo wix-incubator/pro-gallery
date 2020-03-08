@@ -5,7 +5,6 @@ import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.EMPTY,
-  enableScroll:false,
 }
 
 export const createStyles = styles => {

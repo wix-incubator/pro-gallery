@@ -4,7 +4,7 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import GALLERY_CONSTS from '../../src/common/constants';
 
-describe('styleParam - galleryHorizontalAlign', () => {
+describe('styleParam - enableScroll', () => {
 
   let driver;
   const initialProps = {
@@ -19,7 +19,7 @@ describe('styleParam - galleryHorizontalAlign', () => {
 
   it('should set class "slider" when "enableScroll" is "true"', () => {
     Object.assign(initialProps.styles, {
-      gallerylayout: GALLERY_CONSTS.layout.EMPTY,
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: true,
       scrollDirection:1,
       enableScroll: true,
@@ -27,20 +27,21 @@ describe('styleParam - galleryHorizontalAlign', () => {
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     console.log(galleryContainer.props().className);
-    expect();
+    expect(galleryContainer.hasClass('slider')).to.be.true;
     driver.detach.proGallery();
   });
-  it('should set class "slider" when "enableScroll" is "true"', () => {
+  it('should not set class "slider" when "enableScroll" is "false"', () => {
     Object.assign(initialProps.styles, {
-      gallerylayout: GALLERY_CONSTS.layout.EMPTY,
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: true,
       scrollDirection:1,
       enableScroll: false,
     });
+    
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     console.log(galleryContainer.props().className);
-    expect();
+    expect(galleryContainer.hasClass('slider')).to.be.false;
     driver.detach.proGallery();
   });
 })
