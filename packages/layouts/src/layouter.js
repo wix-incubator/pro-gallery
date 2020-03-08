@@ -60,7 +60,12 @@ export default class Layouter {
       } else if (this.styleParams.columnWidths) {
         numOfCols = this.styleParams.columnWidths.split(',').length;
       } else {
-        numOfCols = Math.round(galleryWidth / gallerySize) || 1;
+        const numOfColsFloat = galleryWidth / gallerySize;
+        const diffs = [Math.floor(numOfColsFloat), Math.ceil(numOfColsFloat)]
+          .map(n => Math.round(galleryWidth / n)) //width of each col
+          .map(w => Math.abs(gallerySize - w)); //diff from gallerySize
+        const roundFunc = diffs[0] < diffs[1] ? Math.floor : Math.ceil;
+        numOfCols = roundFunc(numOfColsFloat);
       }
     } else {
       numOfCols = 1;
