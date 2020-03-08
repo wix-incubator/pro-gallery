@@ -166,7 +166,7 @@ describe('Layouter', () => {
           );
         }, true);
 
-        expect(maxGroupWidth).to.be.above(lastGroupWidth);
+        expect(maxGroupWidth).to.not.be.below(lastGroupWidth);
 
         lastGroupWidth = maxGroupWidth;
       }
