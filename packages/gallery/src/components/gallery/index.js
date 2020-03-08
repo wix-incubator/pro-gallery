@@ -21,8 +21,10 @@ export default class BaseGallery extends React.Component {
       styles: galleryProps.styles
     });
 
-    const { galleryType, galleryLayout } = galleryProps.styles;
+    let { galleryType, galleryLayout } = galleryProps.styles;
     let GalleryComponent = ProGallery;
+    galleryType= '6';
+    galleryLayout= undefined;
     if (galleryType === undefined || galleryLayout !== undefined) {
       switch (galleryLayout) {
         case LAYOUTS.MASONRY:

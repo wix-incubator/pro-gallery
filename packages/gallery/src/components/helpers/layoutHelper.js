@@ -46,6 +46,7 @@ const emptyLayout = {
 
 
 function getStyleByGalleryType(styles) {
+  debugger
   //legacy layouts
   const { galleryType, gallerySize } = styles;
 
@@ -192,6 +193,7 @@ const getLayoutName = (galleryLayout) => {
 }
 
 function addLayoutStyles(styles) {
+  debugger
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
