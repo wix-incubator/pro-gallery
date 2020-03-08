@@ -60,7 +60,15 @@ export default class Layouter {
       } else if (this.styleParams.columnWidths) {
         numOfCols = this.styleParams.columnWidths.split(',').length;
       } else {
-        numOfCols = Math.ceil(galleryWidth / gallerySize) || 1;
+        // find the number of columns that makes each column width the closet to the gallerySize
+        const numOfColsFloat = galleryWidth / gallerySize;
+        const roundFuncs = [Math.floor, Math.ceil];
+        const diffs = roundFuncs
+          .map(func => func(numOfColsFloat)) //round to top, round to bottom
+          .map(n => Math.round(galleryWidth / n)) //width of each col
+          .map(w => Math.abs(gallerySize - w)); //diff from gallerySize
+        const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the gallerySize
+        numOfCols = roundFunc(numOfColsFloat) || 1;
       }
     } else {
       numOfCols = 1;
@@ -246,29 +254,36 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.gallerySize;
 
-      const { columnWidths, cubeRatio } = this.styleParams;
+      const { columnWidths, cubeRatio, externalInfoWidth } = this.styleParams;
 
       const columnWidthsArr =
         columnWidths && columnWidths.length > 0
           ? columnWidths.split(',')
           : false;
+
+      let remainderWidth = this.galleryWidth;
+      let fixedCubeHeight;
       this.columns = Array(this.numOfCols)
         .fill(0)
-        .map(
-          (column, idx) =>
-            new Column(
-              idx,
-              columnWidthsArr ? columnWidthsArr[idx] : this.gallerySize,
-              this.styleParams.cubeRatio,
-            ),
-        );
-      this.columns[this.numOfCols - 1].width +=
-        this.galleryWidth -
-        this.columns.reduce((sum, col) => col.width + sum, 0); //the last group compensates for half pixels in other groups
-      this.columns[this.numOfCols - 1].cubeRatio =
-        cubeRatio * (this.columns[this.numOfCols - 1].width / this.gallerySize); //fix the last group's cube ratio
-      this.columns.forEach(column => (column.width -= (this.styleParams.externalInfoWidth || 0)));
-
+        .map((column, idx) => {
+          //round group widths to fit an even number of pixels
+          let colWidth = columnWidthsArr
+            ? columnWidthsArr[idx]
+            : Math.round(remainderWidth / (this.numOfCols - idx));
+          remainderWidth -= colWidth;
+          //fix cubeRatio of rounded columns
+          const infoWidth =
+            Math.round(
+              externalInfoWidth > 1 // integer represent size in pixels, floats size in percentage
+                ? externalInfoWidth
+                : externalInfoWidth * colWidth,
+            ) || 0;
+          colWidth -= infoWidth;
+          fixedCubeHeight =
+            fixedCubeHeight || (this.gallerySize - infoWidth) / cubeRatio; //calc the cube height only once
+          //add space for info on the side
+          return new Column(idx, colWidth, fixedCubeHeight, infoWidth);
+        });
       this.maxLoops = this.srcItems.length * 10;
     }
   }
@@ -376,7 +391,7 @@ export default class Layouter {
             this.strip.height =
               this.container.galleryHeight +
               (this.styleParams.imageMargin - this.styleParams.galleryMargin);
-          } else if (this.gallerySize * 1.5 < this.strip.height) {
+          } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
             this.strip.height = this.gallerySize;
             this.strip.markAsIncomplete();
@@ -397,7 +412,7 @@ export default class Layouter {
         );
 
         //resize the group and images
-        this.group.fixItemsRatio(minCol.cubeRatio); //fix last column's items ratio (caused by stretching it to fill the screen)
+        this.group.setCubedHeight(minCol.cubedHeight); //fix last column's items ratio (caused by stretching it to fill the screen)
         this.group.resizeToWidth(minCol.width);
         this.group.round();
 

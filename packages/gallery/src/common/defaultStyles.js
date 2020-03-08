@@ -113,9 +113,11 @@ export default {
     // itemDescriptionFontSlideshow: 'font_8' // startWithSize: 15
     // itemDescriptionFontColorSlideshow: 'color-5'
     // textBoxFillColor: 'color-2', //startWithOpacity: 1,
-    calculateTextBoxHeightMode: Consts.calculationOptions.AUTOMATIC,
+    calculateTextBoxHeightMode: Consts.textBoxHeightCalculationOptions.AUTOMATIC,
+    calculateTextBoxWidthMode: Consts.textBoxWidthCalculationOptions.PERCENT,
     textBoxHeight: 200,
     textBoxWidth: 200,
+    textBoxWidthPercent: 50,
     textImageSpace: 10,
     textBoxBorderRadius: 0,
     textBoxBorderWidth: 0,

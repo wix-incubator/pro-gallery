@@ -19,6 +19,7 @@ export class Strip {
     }
     this.groups.push(group);
     group.stripIdx = this.idx;
+    group.Strip = this;
     this.lastGroup.isLastGroup = true;
     this.lastGroup.stripWidth = this.height * this.ratio;
   }
@@ -27,6 +28,10 @@ export class Strip {
     //prevent from the last group to be streched
     this.isFullWidth = false;
     this.lastGroup.isLastGroup = false;
+  }
+
+  canRemainIncomplete() {
+    return this.gallerySize * 1.5 < this.height;
   }
 
   setWidth(width) {
