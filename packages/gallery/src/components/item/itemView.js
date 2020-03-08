@@ -138,7 +138,7 @@ class ItemView extends GalleryComponent {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
-        let clickTarget = 'item-container';
+        const clickTarget = 'item-container';
         this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
@@ -162,13 +162,13 @@ class ItemView extends GalleryComponent {
 
 
   onItemWrapperClick(e) {
-    let clickTarget = 'item-media';
+    const clickTarget = 'item-media';
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
 
   onItemInfoClick(e) {
-    let clickTarget = 'item-info';
+    const clickTarget = 'item-info';
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
@@ -773,7 +773,7 @@ class ItemView extends GalleryComponent {
 
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
-    const infoHeight = style.infoHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
+    const infoHeight = styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemTexts = customInfoRenderer
