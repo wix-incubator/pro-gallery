@@ -1,3 +1,15 @@
+## [v1.8.0](https://pro-gallery-1-8-0.surge.sh) (08/03/2020)
+ 
+#### GALLERY
+ -  feature: add support for textBoxWidthPercent:
+      calculateTextBoxWidthMode SP: PERCENT / MANUAL
+      textBoxWidth SP: when MANUAL
+      textBoxWidthPercent SP: when PERCENT
+
+#### LAYOUTS
+ - fixed columns width calculation (when columns don't devide equally)
+
+---
 ## [v1.7.25](https://pro-gallery-1-7-25.surge.sh) (04/03/2020)
  
 #### GALLERY
