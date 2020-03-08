@@ -261,6 +261,7 @@ export default class Layouter {
           ? columnWidths.split(',')
           : false;
 
+      let totalLeft = 0;
       let remainderWidth = this.galleryWidth;
       let fixedCubeHeight;
       this.columns = Array(this.numOfCols)
@@ -270,6 +271,7 @@ export default class Layouter {
           let colWidth = columnWidthsArr
             ? columnWidthsArr[idx]
             : Math.round(remainderWidth / (this.numOfCols - idx));
+          totalLeft += colWidth;
           remainderWidth -= colWidth;
           //fix cubeRatio of rounded columns
           const infoWidth =
@@ -282,7 +284,13 @@ export default class Layouter {
           fixedCubeHeight =
             fixedCubeHeight || (this.gallerySize - infoWidth) / cubeRatio; //calc the cube height only once
           //add space for info on the side
-          return new Column(idx, colWidth, fixedCubeHeight, infoWidth);
+          return new Column(
+            idx,
+            colWidth,
+            totalLeft - colWidth,
+            fixedCubeHeight,
+            infoWidth,
+          );
         });
       this.maxLoops = this.srcItems.length * 10;
     }
@@ -418,7 +426,7 @@ export default class Layouter {
 
         //update the group's position
         this.group.setTop(minCol.height);
-        this.group.setLeft(minCol.idx * this.gallerySize);
+        this.group.setLeft(minCol.left);
 
         //add the image to the column
         minCol.addGroup(this.group);

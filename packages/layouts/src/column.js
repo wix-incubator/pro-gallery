@@ -1,9 +1,10 @@
 export class Column {
-  constructor(idx, width, cubedHeight, infoWidth) {
+  constructor(idx, width, left, cubedHeight, infoWidth) {
     this.idx = idx;
     this.groups = [];
     this.height = 0;
     this.width = width;
+    this.left = left;
     this.cubedHeight = cubedHeight;
     this.infoWidth = infoWidth || 0;
   }
