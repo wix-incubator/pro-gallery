@@ -43,6 +43,7 @@ import scrollSnap from './options/scrollSnap';
 import itemBorderWidth from './options/itemBorderWidth';
 import itemBorderRadius from './options/itemBorderRadius';
 import itemBorderColor from './options/itemBorderColor';
+import scrollAnimation from './options/scrollAnimation';
 
 export default {
     itemClick,
@@ -90,4 +91,5 @@ export default {
     itemBorderWidth,
     itemBorderRadius,
     itemBorderColor,
+    scrollAnimation,
 }
