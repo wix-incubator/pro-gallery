@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.7.25",
+  "version": "1.8.0",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "pro-layouts": "^1.7.19",
+    "pro-layouts": "^1.8.0",
     "react-player": "1.10.0"
   },
   "peerDependencies": {
@@ -41,11 +41,11 @@
     "chai-enzyme": "^1.0.0-beta.1",
     "chai-spies": "^0.7.1",
     "enzyme": "^3.0.0",
-    "jest-image-snapshot": "^2.11.1",
     "enzyme-adapter-react-15.4": "^1.0.4",
     "enzyme-adapter-react-16": "^1.7.1",
     "file-loader": "^4.1.0",
     "husky": "^0.13.4",
+    "jest-image-snapshot": "^2.11.1",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "match-screenshot": "^1.0.14",
