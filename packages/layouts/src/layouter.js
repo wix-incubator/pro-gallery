@@ -60,6 +60,7 @@ export default class Layouter {
       } else if (this.styleParams.columnWidths) {
         numOfCols = this.styleParams.columnWidths.split(',').length;
       } else {
+        // find the number of columns that makes each column width the closet to the gallerySize
         const numOfColsFloat = galleryWidth / gallerySize;
         const diffs = [Math.floor(numOfColsFloat), Math.ceil(numOfColsFloat)]
           .map(n => Math.round(galleryWidth / n)) //width of each col
