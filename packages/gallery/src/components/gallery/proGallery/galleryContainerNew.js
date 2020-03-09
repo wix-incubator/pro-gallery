@@ -125,7 +125,17 @@ export class GalleryContainer extends React.Component {
     }
     this.videoScrollHelper.initializePlayState();
 
-    this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
+    try {
+      if (typeof window.CustomEvent === 'function') {
+        this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
+      } else { //IE (new CustomEvent is not supported in IE)
+        this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+        this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
+      }
+    } catch(e) {
+      console.error('could not create \'current_hover_change\' customEvent. Error =', e);
+    }
+
     if (this.props.galleryId) {
       this.currentHoverChangeEvent.galleryId = this.props.galleryId;
     }
