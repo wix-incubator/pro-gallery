@@ -30,6 +30,7 @@ import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
 import textBoxBorderWidth from './options/textBoxBorderWidth';
 import textBoxWidth from './options/textBoxWidth';
+import textBoxWidthPercent from './options/textBoxWidthPercent';
 import imageInfoType from './options/imageInfoType';
 import groupSize from './options/groupSize';
 import collageDensity from './options/collageDensity';
@@ -43,6 +44,7 @@ import scrollSnap from './options/scrollSnap';
 import itemBorderWidth from './options/itemBorderWidth';
 import itemBorderRadius from './options/itemBorderRadius';
 import itemBorderColor from './options/itemBorderColor';
+import rotatingCropRatios from './options/rotatingCropRatios';
 import arrowsPosition from './options/arrowsPosition';
 
 export default {
@@ -78,6 +80,7 @@ export default {
     textBoxBorderRadius,
     textBoxBorderWidth,
     textBoxWidth,
+    textBoxWidthPercent,
     imageInfoType,
     groupSize,
     collageDensity,
@@ -91,5 +94,6 @@ export default {
     itemBorderWidth,
     itemBorderRadius,
     itemBorderColor,
+    rotatingCropRatios,
     arrowsPosition,
 }

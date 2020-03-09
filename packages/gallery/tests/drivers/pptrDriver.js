@@ -41,7 +41,9 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
-    await page.goto(this.getPageUrl(styleParams), { waitUntil: 'networkidle0' });
+    const pageUrl = this.getPageUrl(styleParams);
+    console.log('Testing page at: ', pageUrl);
+    await page.goto(pageUrl, { waitUntil: 'networkidle0' });
     this.page = page;
     await this.scrollInteraction();
     await page.waitFor(2500);

@@ -231,7 +231,6 @@ _(arrayof [group](#group))_
 {
   id,
   idx,
-  stripIdx,
   inStripIdx,
   isLastGroup,
   items,

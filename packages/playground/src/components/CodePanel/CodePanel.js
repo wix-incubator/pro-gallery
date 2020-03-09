@@ -26,7 +26,9 @@ function CodePanel() {
 
   const getStyleParams = () => {
     return Object.entries(settingsManager)
-      .filter(([key, settings]) => Boolean(styleParams[key]) && settings.isRelevant(styleParams, {}))
+      .filter(([key, settings]) => {
+        return Boolean(styleParams[key]) && settings.isRelevant && settings.isRelevant(styleParams, {})
+      })
       .reduce((acc, [key]) => {
         const val = typeof styleParams[key] === 'string' ? `'${styleParams[key]}'` : styleParams[key];
         return acc.concat(`    ${key}: ${val},`);

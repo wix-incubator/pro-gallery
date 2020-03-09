@@ -1,5 +1,5 @@
 import React from 'react';
-import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery';
+import ProGallery from 'pro-gallery/dist/src/components/gallery/proGallery/proGallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';

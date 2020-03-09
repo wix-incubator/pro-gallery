@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.7.25",
+  "version": "1.8.0",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -29,8 +29,7 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "jest-image-snapshot": "^2.11.1",
-    "pro-layouts": "^1.7.19",
+    "pro-layouts": "^1.8.0",
     "react-player": "1.10.0"
   },
   "peerDependencies": {
@@ -46,11 +45,12 @@
     "enzyme-adapter-react-16": "^1.7.1",
     "file-loader": "^4.1.0",
     "husky": "^0.13.4",
+    "jest-image-snapshot": "^2.11.1",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "match-screenshot": "^1.0.14",
     "nock": "^9.3.3",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "puppeteer": "^1.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

@@ -1,4 +1,4 @@
-import Consts from 'pro-gallery/dist/src/constants';
+import Consts from 'pro-gallery/dist/src/common/constants';
 
 export const defaultStyleParams = {
   isRTL: false,
@@ -112,7 +112,7 @@ export const defaultStyleParams = {
   // itemDescriptionFontSlideshow: 'font_8' // startWithSize: 15
   // itemDescriptionFontColorSlideshow: 'color-5'
   // textBoxFillColor: 'color-2', //startWithOpacity: 1,
-  calculateTextBoxHeightMode: Consts.calculationOptions.AUTOMATIC,
+  calculateTextBoxHeightMode: Consts.textBoxHeightCalculationOptions.AUTOMATIC,
   textBoxHeight: 200,
   textImageSpace: 10,
   textBoxBorderRadius: 0,
