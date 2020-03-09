@@ -1,3 +1,9 @@
+## [v1.8.1](https://pro-gallery-1-8-1.surge.sh) (09/03/2020)
+ 
+#### GALLERY
+ -  removed 'on_mouse_over' customEvent as not in use. Fixed 'current_hover_change' customEvent to be created with new customEvent logic.
+
+---
 ## [v1.8.0](https://pro-gallery-1-8-0.surge.sh) (08/03/2020)
  
 #### GALLERY
