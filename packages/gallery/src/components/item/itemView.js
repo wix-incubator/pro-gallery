@@ -128,8 +128,6 @@ class ItemView extends GalleryComponent {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
     }
-    this.onMouseOverEvent.itemIdx = this.props.idx; //VIDEOREWORK why do we need this?
-    window.dispatchEvent(this.onMouseOverEvent);
   }
 
   onKeyPress(e) {
@@ -1029,9 +1027,6 @@ class ItemView extends GalleryComponent {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
-    this.onMouseOverEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
-    this.onMouseOverEvent.initCustomEvent('on_mouse_over', false, false, null);
-
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);

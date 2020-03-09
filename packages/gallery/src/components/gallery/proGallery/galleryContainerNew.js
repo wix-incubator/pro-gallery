@@ -125,8 +125,7 @@ export class GalleryContainer extends React.Component {
     }
     this.videoScrollHelper.initializePlayState();
 
-    this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
-    this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
+    this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
     if (this.props.galleryId) {
       this.currentHoverChangeEvent.galleryId = this.props.galleryId;
     }
