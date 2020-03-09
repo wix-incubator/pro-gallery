@@ -45,6 +45,8 @@ export const getStyleParamsFromUrl = () => {
 
     if (styleParams.gallerySize > 0) {
       styleParams.modifiedGallerySize = true;
+    } else {
+      delete styleParams.gallerySize;
     }
     
     return styleParams;
