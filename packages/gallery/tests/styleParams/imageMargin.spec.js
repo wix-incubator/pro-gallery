@@ -34,17 +34,24 @@ describe('styleParam - imageMargin', () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
-      imageMargin: 10,
+      imageMargin: 25,
       oneRow: false,
-      scrollDirection: 0
+      gallerySizeType: 'px',
+      gallerySizePx: 390,
+      isVertical: true
     })
     driver.mount.proGallery(initialProps);
     //get the middle image in the second row to test
-    const item = driver.find.hook('item-container').at(4); 
-    // get CSS "width" and "left" values
-    const { width,left } = getElementDimensions(item);
-    // expect the difference between the "left" and "width" of the middle item (in a row of 3) to equal the given imageMargin number
-    expect(initialProps.styles.imageMargin).to.eq(left - width);
+    let prevDims = {top: -1, left: 0, width: 0, height: 0};
+    for (let i = 0; i < initialProps.items.length; i++) {
+      const item = driver.find.hook('item-container').at(i);
+      const dims = getElementDimensions(item);
+      if (dims.top === prevDims.top) {
+        const spacing = dims.left - (prevDims.left + prevDims.width);
+        expect(spacing).to.eq(initialProps.styles.imageMargin);
+      }
+      prevDims = dims;
+    }
     driver.detach.proGallery();
   })
 })

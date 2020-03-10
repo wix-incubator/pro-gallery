@@ -225,6 +225,10 @@ export class Item {
     return this.width + 2 * this.margins;
   }
 
+  get infoWidth() {
+    return this.Group ? this.Group.infoWidth : 0;
+  }
+
   get orgWidth() {
     return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
@@ -271,6 +275,9 @@ export class Item {
   set maxHeight(h) {
     h = this.dto.height;
   }
+  get infoHeight() {
+    return this.Group ? this.Group.infoHeight : 0;
+  }
 
   get margins() {
     return this.imageMargin || 0;
@@ -281,9 +288,12 @@ export class Item {
 
   get cubeRatio() {
     let ratio;
-    if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
+    if (this.rotatingCropRatio) {
+      ratio = this.rotatingCropRatio;
+    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
       const cropRatiosArr = String(this.rotatingCropRatios).split(',');
-      ratio = cropRatiosArr[this.idx % cropRatiosArr.length];
+      ratio = this.rotatingCropRatio =
+        cropRatiosArr[this.idx % cropRatiosArr.length];
     }
     if (!ratio && typeof this._cubeRatio === 'function') {
       ratio = this._cubeRatio();
@@ -389,14 +399,16 @@ export class Item {
       width: this.width,
       maxWidth: this.maxWidth,
       outerWidth: this.outerWidth,
-      height: this.height,
-      maxHeight: this.maxHeight,
-      outerHeight: this.outerHeight,
+      infoWidth: this.infoWidth,
       margins: this.margins,
       ratio: this.ratio,
       cropRatio: this.cubeRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
+      height: this.height,
+      maxHeight: this.maxHeight,
+      outerHeight: this.outerHeight,
+      infoHeight: this.infoHeight,
       group: this.group,
       offset: this.offset,
       groupOffset: this._groupOffset,

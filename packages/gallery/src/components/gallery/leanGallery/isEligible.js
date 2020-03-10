@@ -224,5 +224,5 @@ const fixedStyleParams = {
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
   titlePlacement: sp => [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW].includes(sp.titlePlacement) || sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
-  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.calculationOptions.MANUAL || (sp.titlePlacement !== consts.placements.SHOW_ABOVE && sp.titlePlacement !== consts.placements.SHOW_BELOW),
+  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.textBoxHeightCalculationOptions.MANUAL || (sp.titlePlacement !== consts.placements.SHOW_ABOVE && sp.titlePlacement !== consts.placements.SHOW_BELOW),
 };

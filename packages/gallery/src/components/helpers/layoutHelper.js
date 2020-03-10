@@ -8,7 +8,8 @@ import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
 import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
-import CALCULATION_OPTIONS from '../../common/constants/calculationOptions';
+import TEXT_BOX_HEIGHT_CALCULATION_OPTIONS from '../../common/constants/textBoxHeightCalculationOptions';
+import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
@@ -346,8 +347,8 @@ function processLayouts(styles) {
   }
 
   // to_wrapper
-  if (processedStyles.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
-    processedStyles.titlePlacement === PLACEMENTS.SHOW_BELOW
+  if (processedStyles.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER &&
+    processedStyles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
     ) {
     processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
@@ -533,8 +534,7 @@ function processLayouts(styles) {
     processedStyles.textBoxHeight,
   );
 
-  processedStyles.textBoxWidth = getTextBoxRightOrLeftWidth(processedStyles);
-  processedStyles.externalInfoWidth = processedStyles.textBoxWidth;
+  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(processedStyles);
 
   return processedStyles;
 }
@@ -557,11 +557,14 @@ function getTextBoxRightOrLeftWidth(styleParams) {
   if (!shouldShowTextRightOrLeftBelow(styleParams)) {
     return 0;
   }
-  if (styleParams.gallerySize < styleParams.textBoxWidth) {
-    //textBox is part of the item, so cannot be wider than the item itself.
-    return styleParams.gallerySize;
+  const {gallerySize, calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent} = styleParams;
+  let width = 0;
+  if (calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT) {
+    width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
+  } else {
+    width = Math.min(gallerySize, textBoxWidth);
   }
-  return styleParams.textBoxWidth;
+  return width;
 }
 
 function shouldShowTextRightOrLeftBelow(styleParams) {
@@ -591,7 +594,7 @@ function getTextBoxAboveOrBelowHeight(styleParams) {
   }
 
   if (
-    styleParams.calculateTextBoxHeightMode === CALCULATION_OPTIONS.AUTOMATIC
+    styleParams.calculateTextBoxHeightMode === TEXT_BOX_HEIGHT_CALCULATION_OPTIONS.AUTOMATIC
   ) {
     return getHeightByContent(styleParams);
   } else {

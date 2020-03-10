@@ -30,6 +30,21 @@ import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
 import textBoxBorderWidth from './options/textBoxBorderWidth';
 import textBoxWidth from './options/textBoxWidth';
+import textBoxWidthPercent from './options/textBoxWidthPercent';
+import imageInfoType from './options/imageInfoType';
+import groupSize from './options/groupSize';
+import collageDensity from './options/collageDensity';
+import gridStyle from './options/gridStyle'
+import hasThumbnails from './options/hasThumbnails';
+import groupTypes from './options/groupTypes';
+import thumbnailSize from './options/thumbnailSize';
+import galleryThumbnailsAlignment from './options/galleryThumbnailsAlignment';
+import isRTL from './options/isRTL';
+import scrollSnap from './options/scrollSnap';
+import itemBorderWidth from './options/itemBorderWidth';
+import itemBorderRadius from './options/itemBorderRadius';
+import itemBorderColor from './options/itemBorderColor';
+import rotatingCropRatios from './options/rotatingCropRatios';
 
 export default {
     itemClick,
@@ -64,4 +79,19 @@ export default {
     textBoxBorderRadius,
     textBoxBorderWidth,
     textBoxWidth,
+    textBoxWidthPercent,
+    imageInfoType,
+    groupSize,
+    collageDensity,
+    gridStyle,
+    hasThumbnails,
+    groupTypes,
+    thumbnailSize,
+    galleryThumbnailsAlignment,
+    isRTL,
+    scrollSnap,
+    itemBorderWidth,
+    itemBorderRadius,
+    itemBorderColor,
+    rotatingCropRatios
 }

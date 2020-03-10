@@ -1,10 +1,12 @@
 export class Column {
-  constructor(idx, width, cubeRatio) {
+  constructor(idx, width, left, cubedHeight, infoWidth) {
     this.idx = idx;
     this.groups = [];
     this.height = 0;
     this.width = width;
-    this.cubeRatio = cubeRatio;
+    this.left = left;
+    this.cubedHeight = cubedHeight;
+    this.infoWidth = infoWidth || 0;
   }
 
   addGroup(group) {
@@ -13,7 +15,14 @@ export class Column {
 
   addGroups(groups) {
     this.groups = this.groups.concat(groups);
-    groups.forEach(group => (group.columnIdx = this.idx));
+    groups.forEach(group => {
+      group.columnIdx = this.idx;
+      group.Column = this;
+    });
+  }
+
+  get totalWidth() {
+    return this.width + this.infoWidth;
   }
 
   get scheme() {

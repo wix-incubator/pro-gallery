@@ -1,3 +1,62 @@
+## [v1.8.2](https://pro-gallery-1-8-2.surge.sh) (09/03/2020)
+ 
+#### GALLERY
+ -  Fixed creation of customEvent for IE.
+
+---
+## [v1.8.1](https://pro-gallery-1-8-1.surge.sh) (09/03/2020)
+ 
+#### GALLERY
+ -  Removed 'on_mouse_over' customEvent as not in use. Fixed 'current_hover_change' customEvent to be created with new customEvent logic.
+
+---
+## [v1.8.0](https://pro-gallery-1-8-0.surge.sh) (08/03/2020)
+ 
+#### GALLERY
+ -  feature: add support for textBoxWidthPercent:
+      calculateTextBoxWidthMode SP: PERCENT / MANUAL
+      textBoxWidth SP: when MANUAL
+      textBoxWidthPercent SP: when PERCENT
+
+#### LAYOUTS
+ - fixed columns width calculation (when columns don’t devide equally)
+ - fix groups left calc for dynamic columns
+
+---
+## [v1.7.25](https://pro-gallery-1-7-25.surge.sh) (04/03/2020)
+ 
+#### GALLERY
+ - Add clickTarget to EVENTS.ITEM_CLICKED eventData (options: 'item-media', 'item-info', 'item-container')
+
+---
+## [v1.7.24](https://pro-gallery-1-7-24.surge.sh) (03/03/2020)
+ 
+#### GALLERY
+ -  Fixed classNames in horizontal galleries.
+ -  Changed console.warn to console.log when local
+
+---
+## [v1.7.23](https://pro-gallery-1-7-23.surge.sh) (25/02/2020)
+ 
+#### GALLERY
+ -  Fixed hoveringBehaviour logic
+ -  Let videos with no link lay on click when the gallery is a link opens
+
+---
+## [v1.7.22](https://pro-gallery-1-7-22.surge.sh) (25/02/2020)
+ 
+#### GALLERY
+ -  Fixed support of no media url when titlePlacement === 'SHOW_ON_HOVER'
+ -  Items with link wont play videos on click 
+
+---
+## [v1.7.21](https://pro-gallery-1-7-21.surge.sh) (23/02/2020)
+
+#### GALLERY
+ -  Fixed lineHeightFixer for title placement SHOW_ON_THE_RIGHT and SHOW_ON_THE_LEFT
+ -  Feat: allow deepLinks on items for expand mode
+
+---
 ## [v1.7.20](https://pro-gallery-1-7-20.surge.sh) (21/02/2020)
  
 #### GALLERY

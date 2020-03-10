@@ -47,7 +47,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   isScrollStart(isRTL = this.props.styleParams.isRTL) {
-    
+
     if (this.container) {
       const {scrollLeft, scrollWidth, clientWidth} = this.container;
       if (isRTL) {
@@ -68,7 +68,7 @@ class SlideshowView extends GalleryComponent {
     return this.isScrollStart(!isRTL); //start and end are reversed by RTL
   }
 
-  isFirstItemFullyVisible(){   
+  isFirstItemFullyVisible(){
     return !this.props.styleParams.slideshowLoop && this.isScrollStart();
   }
   isLastItemFullyVisible(){
@@ -118,7 +118,7 @@ class SlideshowView extends GalleryComponent {
     const activeElement = document.activeElement;
     const galleryItemIsFocused = activeElement.className && activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
-    
+
     if (avoidIndividualNavigation && this.props.styleParams.galleryLayout === 0) {
       this.nextGroup({direction, isAutoTrigger, scrollDuration}); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
@@ -672,7 +672,7 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
 
     const currentIdx = this.getCenteredItemIdxByScroll();
-  
+
     if (!utils.isUndefined(currentIdx)) {
       utils.setStateAndLog(
         this,
@@ -753,7 +753,7 @@ class SlideshowView extends GalleryComponent {
     const nextContainerStyle = {
       right: arrowsPos,
     };
-    
+
 
     const {hideLeftArrow, hideRightArrow} = this.state;
 
@@ -1059,13 +1059,13 @@ class SlideshowView extends GalleryComponent {
   getClassNames() {
     let classNames = 'pro-gallery-parent-container';
     if (this.props.styleParams.isSlideshow) {
-      classNames = ' gallery-slideshow';
+      classNames += ' gallery-slideshow';
     } else if (this.props.styleParams.isSlider) {
-      classNames = ' gallery-slider';
+      classNames += ' gallery-slider';
     } else if (this.props.styleParams.hasThumbnails) {
-      classNames = ' gallery-thumbnails';
+      classNames += ' gallery-thumbnails';
     } else if (this.props.styleParams.isColumns) {
-      classNames = ' gallery-columns';
+      classNames += ' gallery-columns';
     }
 
     if (this.isFullWidthGallery()) {
