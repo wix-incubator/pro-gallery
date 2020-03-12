@@ -22,7 +22,6 @@ describe('gallerytextAlign - e2e', () => {
       galleryLayout: 2,
       galleryTextAlign: GALLERY_CONSTS.galleryTextAlign.LEFT,
       allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });
@@ -35,7 +34,6 @@ describe('gallerytextAlign - e2e', () => {
       galleryLayout: 2,
       galleryTextAlign: GALLERY_CONSTS.galleryTextAlign.RIGHT,
       allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });
@@ -48,7 +46,6 @@ describe('gallerytextAlign - e2e', () => {
       galleryLayout: 2,
       galleryTextAlign: GALLERY_CONSTS.galleryTextAlign.CENTER,
       allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });

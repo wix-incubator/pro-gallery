@@ -49,7 +49,16 @@ describe('Layouter', () => {
       },
     };
 
-    layouter = new Layouter({ items, container, styleParams });
+    const options = {
+      createLayoutOnInit: false,
+    };
+
+    layouter = new Layouter({
+      items,
+      container,
+      styleParams,
+      options,
+    });
   });
 
   describe('items', () => {
@@ -153,11 +162,11 @@ describe('Layouter', () => {
             c &&
             column.groups.reduce((g, group) => {
               return Math.max(g, group.width);
-            }, true)
+            }, 0)
           );
         }, true);
 
-        expect(maxGroupWidth).to.be.above(lastGroupWidth);
+        expect(maxGroupWidth).to.not.be.below(lastGroupWidth);
 
         lastGroupWidth = maxGroupWidth;
       }
@@ -663,18 +672,23 @@ describe('Layouter', () => {
     // rotatingCropRatios
     it('should crop items according to rotatingCropRatios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.rotatingCropRatios = '0.2,0.6,8,4.5';
-      styleParams.cropRatio = '1';
-      styleParams.cropItems = true;
+      styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
+      styleParams.cubeRatio = '1';
+      styleParams.cubeImages = true;
       styleParams.smartCrop = false;
+      styleParams.isVertical = true;
 
       const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
 
       gallery = getLayout({ items, container, styleParams });
       gallery.items.forEach((item, i) => {
-        expect(item.cropRatio).to.equal(
-          Number(rotatingCropRatiosArr[i % rotatingCropRatiosArr.length]),
+        const ratio = Number(
+          rotatingCropRatiosArr[i % rotatingCropRatiosArr.length],
         );
+        const { width, height } = item;
+        const itemRatio = width / height;
+        const diff = Math.abs(itemRatio - ratio);
+        expect(diff).to.be.below(ratio / 10);
       }, true);
     });
   });

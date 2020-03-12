@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-layouts",
-  "version": "1.7.19",
+  "version": "1.8.0",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com",
@@ -26,9 +26,6 @@
     "babel-runtime": "^6.22.0"
   },
   "devDependencies": {
-    "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-preset-env": "^1.5.2",
-    "babel-preset-stage-3": "^6.5.0",
     "chai": "^4.1.2",
     "deep-freeze": "0.0.1",
     "husky": "^0.13.4",
@@ -39,30 +36,8 @@
   },
   "babel": {
     "presets": [
-      "stage-3"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ],
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ]
-        ]
-      },
-      "development": {
-        "presets": [
-          "env"
-        ]
-      }
-    }
+      "yoshi"
+    ]
   },
   "yoshi": {
     "servers": {
