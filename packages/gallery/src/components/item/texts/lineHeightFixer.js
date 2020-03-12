@@ -72,12 +72,12 @@ class LineHeightFixer {
   }
 
   shouldFix(oldOptions, newOptions) {
-    const { styleParams, title, description, style, additionalHeight } = oldOptions;
+    const { styleParams, title, description, style, externalTotalInfoHeight } = oldOptions;
     const newStyleParams = newOptions.styleParams;
     const newTitle = newOptions.title;
     const newDescription = newOptions.description;
     const newStyle = newOptions.style;
-    const newAdditionalHeight = newOptions.additionalHeight;
+    const newExternalTotalInfoHeight = newOptions.externalTotalInfoHeight;
     const newIsSocialPopulated =
       newStyleParams.allowSocial ||
       newStyleParams.loveButton ||
@@ -88,13 +88,12 @@ class LineHeightFixer {
       styleParams.allowDownload;
     return (
       style.height !== newStyle.height ||
-      additionalHeight !== newAdditionalHeight ||
+      externalTotalInfoHeight !== newExternalTotalInfoHeight ||
       style.width !== newStyle.width ||
       styleParams.isSlideshow !== newStyleParams.isSlideshow ||
       styleParams.allowTitle !== newStyleParams.allowTitle ||
       styleParams.allowDescription !== newStyleParams.allowDescription ||
       styleParams.slideshowInfoSize !== newStyleParams.slideshowInfoSize ||
-      styleParams.externalInfoHeight !== newStyleParams.externalInfoHeight ||
       styleParams.textImageSpace !== newStyleParams.textImageSpace ||
       styleParams.textsVerticalPadding !==
         newStyleParams.textsVerticalPadding ||
@@ -159,9 +158,8 @@ class LineHeightFixer {
           ? styleParams.textImageSpace
           : 0;
 
-      const availableHeightOfTheTextElement = textPlacementAboveOrBelow ? styleParams.externalInfoHeight : textsContainerHeight; //maybe can be textsContainerHeight for textPlacementAboveOrBelow as well
-      availableHeight =
-        (availableHeightOfTheTextElement + options.additionalHeight) - elementPadding - margin;
+      const availableHeightOfTheTextElement = textPlacementAboveOrBelow ? options.externalTotalInfoHeight : textsContainerHeight; //maybe can be textsContainerHeight for textPlacementAboveOrBelow as well
+      availableHeight = availableHeightOfTheTextElement - elementPadding - margin;
 
     } else {
 
@@ -280,15 +278,15 @@ class LineHeightFixer {
           this.setCss(titleElement, { overflow: 'hidden' });
 
           const isTitleFitInAvailableHeight =
-            titleNumOfAvailableLines <= numOfTitleLines; //sound like this condition is not correct and should be >=, but then stuff will change!!
+            titleNumOfAvailableLines >= numOfTitleLines;
           if (isTitleFitInAvailableHeight) {
+            this.setCss(titleElement, { '-webkit-line-clamp': 'none' });
+            titleHeight = titleLineHeight * numOfTitleLines;
+          } else {
             this.setCss(titleElement, {
               '-webkit-line-clamp': titleNumOfAvailableLines + '',
             });
             titleHeight = titleLineHeight * titleNumOfAvailableLines;
-          } else {
-            this.setCss(titleElement, { '-webkit-line-clamp': 'none' });
-            titleHeight = titleLineHeight * numOfTitleLines;
           }
 
           const isThereAnyAvailableHeightLeft = availableHeight > titleHeight;
