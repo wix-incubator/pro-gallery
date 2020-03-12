@@ -15,11 +15,11 @@ export const main = () => {
     Loadable.preloadReady().then(() => {
       ReactDOM.hydrate(
         <ServerDataProvider value={serverData}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </ServerDataProvider>,
-        document.getElementById('root')
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ServerDataProvider>,
+      document.getElementById('root')
       );
     });
   }, 1000);
