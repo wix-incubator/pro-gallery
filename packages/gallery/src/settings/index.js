@@ -46,6 +46,8 @@ import itemBorderRadius from './options/itemBorderRadius';
 import itemBorderColor from './options/itemBorderColor';
 import rotatingCropRatios from './options/rotatingCropRatios';
 import autoSlideshowInterval from './options/autoSlideshowInterval';
+import smartCrop from './options/smartCrop';
+import minItemSize from './options/minItemSize';
 
 export default {
     itemClick,
@@ -96,4 +98,6 @@ export default {
     itemBorderColor,
     rotatingCropRatios,
     autoSlideshowInterval,
+    smartCrop,
+    minItemSize
 }
