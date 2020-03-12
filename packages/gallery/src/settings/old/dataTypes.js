@@ -326,7 +326,11 @@ export default {
   },
   calculateTextBoxHeightMode: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('calculationOptions')
+    options: createOptions('textBoxHeightCalculationOptions')
+  },
+  calculateTextBoxWidthMode: {
+    type: INPUT_TYPES.OPTIONS,
+    options: createOptions('textBoxWidthCalculationOptions')
   },
   textBoxHeight: {
     type: INPUT_TYPES.NUMBER,

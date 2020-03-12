@@ -128,8 +128,6 @@ class ItemView extends GalleryComponent {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
     }
-    this.onMouseOverEvent.itemIdx = this.props.idx; //VIDEOREWORK why do we need this?
-    window.dispatchEvent(this.onMouseOverEvent);
   }
 
   onKeyPress(e) {
@@ -138,7 +136,7 @@ class ItemView extends GalleryComponent {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
-        let clickTarget = 'item-container';
+        const clickTarget = 'item-container';
         this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
@@ -162,13 +160,13 @@ class ItemView extends GalleryComponent {
 
 
   onItemWrapperClick(e) {
-    let clickTarget = 'item-media';
+    const clickTarget = 'item-media';
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
 
   onItemInfoClick(e) {
-    let clickTarget = 'item-info';
+    const clickTarget = 'item-info';
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
@@ -407,7 +405,7 @@ class ItemView extends GalleryComponent {
     return dimensions;
   }
 
-  getItemTextsDetails(additionalHeight = 0) {
+  getItemTextsDetails(externalTotalInfoHeight = 0) {
     const props = utils.pick(this.props, [
       'title',
       'description',
@@ -432,7 +430,7 @@ class ItemView extends GalleryComponent {
         isSmallItem={this.isSmallItem()}
         isNarrow={this.isNarrow()}
         shouldShowButton={shouldShowButton}
-        additionalHeight={additionalHeight}
+        externalTotalInfoHeight={externalTotalInfoHeight}
         actions={{
           eventsListener: this.props.actions.eventsListener,
         }}
@@ -773,19 +771,19 @@ class ItemView extends GalleryComponent {
 
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
-    const additionalHeight = this.hasRequiredMediaUrl ? 0 : style.height;
-    const additionalWidth = this.hasRequiredMediaUrl ? 0 : style.width;
+    const infoHeight = styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
+    const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemTexts = customInfoRenderer
       ? customInfoRenderer(this.props)
-      : this.getItemTextsDetails(additionalHeight);
+      : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemTexts) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
-            style={getInnerInfoStyle(styleParams, additionalHeight, additionalWidth)}
+            style={getInnerInfoStyle(styleParams, infoHeight, infoWidth)}
             className={'gallery-item-common-info ' + elementName}
             onMouseOver={() => {
               !utils.isMobile() && this.props.actions.eventsListener(
@@ -1029,9 +1027,6 @@ class ItemView extends GalleryComponent {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
-    this.onMouseOverEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
-    this.onMouseOverEvent.initCustomEvent('on_mouse_over', false, false, null);
-
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);

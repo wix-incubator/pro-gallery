@@ -62,8 +62,10 @@ class GalleryItem {
     this.style = scheme.style;
     this.width = scheme.width;
     this.maxWidth = scheme.maxWidth;
+    this.infoWidth = scheme.infoWidth;
     this.height = scheme.height;
     this.maxHeight = scheme.maxHeight;
+    this.infoHeight = scheme.infoHeight;
     this.margins = scheme.margins;
     this.ratio = scheme.ratio;
     this.cubeRatio = scheme.cropRatio;
@@ -104,10 +106,12 @@ class GalleryItem {
       transform: this.transform,
       offset: this.offset,
       style: {
+        ratio: this.ratio,
         bgColor: this.bgColor,
         maxWidth: this.maxWidth,
         maxHeight: this.maxHeight,
-        ratio: this.ratio,
+        infoWidth: this.infoWidth,
+        infoHeight: this.infoHeight,
         orientation: this.orientation,
         ...this.style,
       },
