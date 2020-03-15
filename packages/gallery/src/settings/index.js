@@ -48,6 +48,8 @@ import rotatingCropRatios from './options/rotatingCropRatios';
 import autoSlideshowInterval from './options/autoSlideshowInterval';
 import smartCrop from './options/smartCrop';
 import minItemSize from './options/minItemSize';
+import scrollAnimation from './options/scrollAnimation';
+import floatingImages from './options/floatingImages';
 import thumbnailSpacings from './options/thumbnailSpacings';
 
 export default {
@@ -101,5 +103,7 @@ export default {
     autoSlideshowInterval,
     smartCrop,
     minItemSize,
-    thumbnailSpacings
+    scrollAnimation,
+    floatingImages,
+    thumbnailSpacings,
 }

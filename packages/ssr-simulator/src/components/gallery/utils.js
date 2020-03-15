@@ -1,4 +1,4 @@
-import Consts from 'pro-gallery/dist/src/common/constants';
+import Consts from 'pro-gallery/dist/src/constants';
 
 export const defaultStyleParams = {
   isRTL: false,
