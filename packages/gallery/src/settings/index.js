@@ -48,11 +48,12 @@ import rotatingCropRatios from './options/rotatingCropRatios';
 import autoSlideshowInterval from './options/autoSlideshowInterval';
 import smartCrop from './options/smartCrop';
 import minItemSize from './options/minItemSize';
+import scrollAnimation from './options/scrollAnimation';
+import floatingImages from './options/floatingImages';
 import itemShadowSize from './options/itemShadowSize';
 import itemShadowBlur from './options/itemShadowBlur';
 import itemShadowDirection from './options/itemShadowDirection';
 import itemShadowOpacityAndColor from './options/itemShadowOpacityAndColor';
-
 
 export default {
     itemClick,
@@ -105,6 +106,8 @@ export default {
     autoSlideshowInterval,
     smartCrop,
     minItemSize,
+    scrollAnimation,
+    floatingImages,
     itemShadowSize,
     itemShadowBlur,
     itemShadowDirection,
