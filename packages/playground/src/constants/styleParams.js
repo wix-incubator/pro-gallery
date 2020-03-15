@@ -1,5 +1,6 @@
 import isRelevant from '../settings/isRelevant';
 import {gallerySettings} from 'pro-gallery';
+import defaultStyles from 'pro-gallery/dist/src/common/defaultStyles';
 
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
@@ -23,7 +24,7 @@ const formatValue = (val) => {
    }
 }
 
-const isValidStyleParam = (styleParam, value, styleParams) => {
+export const isValidStyleParam = (styleParam, value, styleParams) => {
   if (typeof value === 'undefined' || !styleParam) {
     return false;
   }
@@ -42,6 +43,13 @@ export const getStyleParamsFromUrl = () => {
       .replace('?', '').split('&')
       .map(styleParam => styleParam.split('='))
       .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
+
+    if (styleParams.gallerySize > 0) {
+      styleParams.modifiedGallerySize = true;
+    } else {
+      styleParams.gallerySize = defaultStyleParams.gallerySize;
+    }
+    
     return styleParams;
   } catch (e) {
     return {};
@@ -58,8 +66,7 @@ export const setStyleParamsInUrl = (styleParams) => {
   window.history.replaceState({}, 'Pro Gallery Playground', '?' + urlParams);
 }
 
-const defaultStyleParams = {};
-
+const defaultStyleParams = defaultStyles;
 Object.entries(gallerySettings).forEach(([styleParam, settings]) => defaultStyleParams[styleParam] = settings.default);
 
 const styleParamsByLayout = () => ({
