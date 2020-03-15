@@ -49,6 +49,7 @@ import autoSlideshowInterval from './options/autoSlideshowInterval';
 import smartCrop from './options/smartCrop';
 import minItemSize from './options/minItemSize';
 import scrollAnimation from './options/scrollAnimation';
+import floatingImages from './options/floatingImages';
 
 export default {
     itemClick,
@@ -102,4 +103,5 @@ export default {
     smartCrop,
     minItemSize,
     scrollAnimation,
+    floatingImages,
 }
