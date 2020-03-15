@@ -17,17 +17,39 @@ describe('styleParam - textBoxWidth', () => {
     driver = new GalleryDriver();
   });
 
-  it('should ', () => {
+  it('should set "textBoxWidth" of "250"(manual)', () => {
     Object.assign(initialProps.styles, {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
       oneRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       allowTitle: true,
-      textBoxWidth: 10,
+      calculateTextBoxWidthMode: GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,
+      textBoxWidth: 250,
     })
     driver.mount.proGallery(initialProps);
-    const textsStyles = driver.find.selector('.gallery-item-bottom-info').at(0).parent();
-    expect(textsStyles.props().style.borderWidth).to.eq('10px')
+    const textBox = driver.find.selector('.gallery-item-common-info').at(0);
+    console.log(textBox.props().style.width);
+    const { width } = textBox.props().style;
+    expect(width).to.eq(250);
     driver.detach.proGallery();
   });
+  // it('should set "textBoxWidth" of "30%"(percent)', () => {
+  //   Object.assign(initialProps.styles, {
+  //     galleryLayout:  GALLERY_CONSTS.layout.GRID,
+  //     titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
+
+  //     oneRow: false,
+  //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+  //     allowTitle: true,
+  //     calculateTextBoxWidthMode: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
+  //     textBoxWidth: 30,
+  //   })
+  //   driver.mount.proGallery(initialProps);
+  //   const textBox = driver.find.selector('.gallery-item-common-info').at(0);
+  //   console.log(textBox.props().style.width);
+  //   const { width } = textBox.props().style;
+  //   expect(width).to.eq(250);
+  //   driver.detach.proGallery();
+  // });
 })
