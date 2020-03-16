@@ -1,4 +1,5 @@
-import {GALLERY_CONSTS, INPUT_TYPES} from '../utils/constants';
+import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
+import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Text Box Height Calculation Type',
@@ -7,6 +8,7 @@ export default {
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
     (styleParams.allowTitle || styleParams.allowDescription),
-  type: INPUT_TYPES.TEXT,
+  type: INPUT_TYPES.OPTIONS,
+  options: createOptions('calculateTextBoxHeightMode'),
   default: GALLERY_CONSTS.textBoxHeightCalculationOptions.AUTOMATIC,
 }
