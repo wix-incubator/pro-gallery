@@ -388,14 +388,14 @@ class ItemView extends GalleryComponent {
         //landscape
         height: style.height - 2 * imageMarginTop,
         width: style.width,
-        marginTop: imageMarginTop,
+        margin: `${imageMarginTop}px 0`,
       }
     } else if (isGridFit && !isLandscape) {
       dimensions = {
         //portrait
         width: style.width - 2 * imageMarginLeft,
         height: style.height,
-        marginLeft: imageMarginLeft,
+        margin: `0 ${imageMarginLeft}px`,
       }
     }
     if (styleParams.itemBorderRadius) {
@@ -637,7 +637,8 @@ class ItemView extends GalleryComponent {
   getItemInner() {
     const { styleParams, type, visible } = this.props;
     let itemInner;
-    const imageDimensions = this.getImageDimensions();
+    const {width, height} = this.getImageDimensions();
+    const imageDimensions = {width, height};
     let itemTexts;
     let social;
     let share;
