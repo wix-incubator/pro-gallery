@@ -492,7 +492,6 @@ class ItemView extends GalleryComponent {
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
-          eventsListener: this.props.actions.eventsListener,
         }}
         render={customHoverRenderer}
       >
