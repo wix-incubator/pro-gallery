@@ -413,7 +413,6 @@ describe('Item View', () => {
       expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(0);
     });
   });
-  //openItemShopInFullScreen not tested
   describe('getBottomInfoElement', () => {
     it('should create a CustomButton/ItemTitle if needed', () => {
       Object.assign(sampleItemViewProps, {
