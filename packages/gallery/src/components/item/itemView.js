@@ -388,14 +388,14 @@ class ItemView extends GalleryComponent {
         //landscape
         height: style.height - 2 * imageMarginTop,
         width: style.width,
-        marginTop: imageMarginTop,
+        margin: `${imageMarginTop}px 0`,
       }
     } else if (isGridFit && !isLandscape) {
       dimensions = {
         //portrait
         width: style.width - 2 * imageMarginLeft,
         height: style.height,
-        marginLeft: imageMarginLeft,
+        margin: `0 ${imageMarginLeft}px`,
       }
     }
     if (styleParams.itemBorderRadius) {
@@ -514,6 +514,7 @@ class ItemView extends GalleryComponent {
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
+          eventsListener: this.props.actions.eventsListener,
         }}
         render={customHoverRenderer}
       >
@@ -637,7 +638,8 @@ class ItemView extends GalleryComponent {
   getItemInner() {
     const { styleParams, type, visible } = this.props;
     let itemInner;
-    const imageDimensions = this.getImageDimensions();
+    const {width, height} = this.getImageDimensions();
+    const imageDimensions = {width, height};
     let itemTexts;
     let social;
     let share;
@@ -774,12 +776,12 @@ class ItemView extends GalleryComponent {
     const infoHeight = styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemTexts = customInfoRenderer
+    const itemExternalInfo = customInfoRenderer
       ? customInfoRenderer(this.props)
       : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
-    if (itemTexts) {
+    if (itemExternalInfo) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
@@ -797,7 +799,7 @@ class ItemView extends GalleryComponent {
             }}
             onClick={this.onItemInfoClick}
           >
-            {itemTexts}
+            {itemExternalInfo}
           </div>
         </div>
       );
