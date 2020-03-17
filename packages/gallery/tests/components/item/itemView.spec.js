@@ -309,7 +309,7 @@ describe('Item View', () => {
       let testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1920);
       expect(testObject.height).to.equal(1000);
-      expect(testObject.marginTop).to.equal(0);
+      expect(testObject.margin).to.equal('0px 0');
       driver.set.props({
         styleParams: {
           cubeImages: true,
@@ -330,7 +330,7 @@ describe('Item View', () => {
       testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1000);
       expect(testObject.height).to.equal(1000);
-      expect(testObject.marginLeft).to.equal(460);
+      expect(testObject.margin).to.equal('0 460px');
     });
   });
   // describe('isVisible', () => {
