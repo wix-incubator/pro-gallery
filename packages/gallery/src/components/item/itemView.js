@@ -967,7 +967,7 @@ class ItemView extends GalleryComponent {
         //check if focus is on 'gallery-item-container' in current gallery
         const isThisGalleryItemInFocus = () =>
           !!window.document.querySelector(
-            `#pro-gallery-${this.props.galleryDomId} #${String(
+            `#pro-gallery-${this.props.domId} #${String(
               activeElement.id,
             )}`,
           );
@@ -977,7 +977,7 @@ class ItemView extends GalleryComponent {
         //check if focus is on 'load-more' in current gallery
         const isThisGalleryShowMoreInFocus = () =>
           !!window.document.querySelector(
-            `#pro-gallery-${this.props.galleryDomId} #${String(
+            `#pro-gallery-${this.props.domId} #${String(
               activeElement.id,
             )}`,
           );
@@ -1034,7 +1034,7 @@ class ItemView extends GalleryComponent {
   }
 
   checkIfCurrentHoverChanged(e) {
-    if (e.galleryId === this.props.galleryId) {
+    if (e.domId === this.props.domId) {
       if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
         this.setState({
           isCurrentHover: true
