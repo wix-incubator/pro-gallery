@@ -6,7 +6,7 @@ jest.setTimeout(30000)
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('textsHorizontalPadding - e2e', () => {
+describe('textBoxWidth - e2e', () => {
   let driver;
   
   beforeEach(async () => {
