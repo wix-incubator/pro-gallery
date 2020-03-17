@@ -776,12 +776,12 @@ class ItemView extends GalleryComponent {
     const infoHeight = styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemTexts = customInfoRenderer
+    const itemExternalInfo = customInfoRenderer
       ? customInfoRenderer(this.props)
       : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
-    if (itemTexts) {
+    if (itemExternalInfo) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
@@ -799,7 +799,7 @@ class ItemView extends GalleryComponent {
             }}
             onClick={this.onItemInfoClick}
           >
-            {itemTexts}
+            {itemExternalInfo}
           </div>
         </div>
       );
