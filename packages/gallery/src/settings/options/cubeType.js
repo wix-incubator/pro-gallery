@@ -2,7 +2,7 @@ import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
 import { createOptions } from '../utils/utils';
 
 export default {
-  title: 'Cube Type',
+  title: 'Crop Type',
   isRelevant: (styleParams)  => styleParams.cubeImages,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.cubeType.CROP,
