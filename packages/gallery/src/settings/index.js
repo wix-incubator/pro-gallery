@@ -50,7 +50,7 @@ import smartCrop from './options/smartCrop';
 import minItemSize from './options/minItemSize';
 import scrollAnimation from './options/scrollAnimation';
 import floatingImages from './options/floatingImages';
-import textboxHeight from './options/textBoxHeight';
+import textBoxHeight from './options/textBoxHeight';
 import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
 
 export default {
@@ -106,6 +106,6 @@ export default {
     minItemSize,
     scrollAnimation,
     floatingImages,
-    textboxHeight,
+    textBoxHeight,
     calculateTextBoxHeightMode
 }

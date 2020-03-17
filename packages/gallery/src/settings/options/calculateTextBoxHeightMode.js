@@ -9,6 +9,6 @@ export default {
     !styleParams.oneRow) &&
     (styleParams.allowTitle || styleParams.allowDescription),
   type: INPUT_TYPES.OPTIONS,
-  options: createOptions('calculateTextBoxHeightMode'),
+  options: createOptions('textBoxHeightCalculationOptions'),
   default: GALLERY_CONSTS.textBoxHeightCalculationOptions.AUTOMATIC,
 }
