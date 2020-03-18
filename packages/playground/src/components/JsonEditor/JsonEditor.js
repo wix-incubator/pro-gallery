@@ -144,7 +144,7 @@ class JsonEditor extends React.Component {
 
 
   render() {
-    const {section, subSection, styleParams, styleParam, expandIcon} = this.props;
+    const {section, subSection, styleParams, allStyleParams, styleParam, expandIcon} = this.props;
     const context = {
       isMobile: false,
     }
@@ -160,22 +160,29 @@ class JsonEditor extends React.Component {
     // json = removeFieldsNotNeeded(json, selectedLayout);
     const filterFunction = styleParam ? 
     ([key]) => key === styleParam : 
-    ([key, settings]) => settings.section === section && settings.subSection === subSection && (this.props.showAllStyles || settings.isRelevant(styleParams, context))
+    ([key, settings]) => 
+      (!section || settings.section === section) && 
+      (!subSection || settings.subSection === subSection) && 
+      (this.props.showAllStyles || settings.isRelevant(allStyleParams, context))
 
     const activeKey = styleParam ? {activeKey: 'collapse' + styleParam} : {defaultActiveKey: []};
 
     const json = Object.entries(settingsManager)
       .filter(filterFunction)
       .reduce((acc, [key]) => {
-        acc[key] = settingsManager[key];
-        acc[key].value = styleParams[key];
-        return acc;
+        if (typeof styleParams[key] === 'undefined') {
+          return acc
+        } else {
+          acc[key] = settingsManager[key];
+          acc[key].value = styleParams[key];
+          return acc;
+        }
       }, {});
 
     const isSingleItem = !!styleParam;
 
     const Extra = settings => {
-      if (settings.isRelevant(styleParams)) {
+      if (settings.isRelevant(allStyleParams)) {
         if (settings.isOld) {
           return null;
         } else {
@@ -197,7 +204,7 @@ class JsonEditor extends React.Component {
               {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
               {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
               {isSingleItem && <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>}
-              {isSingleItem && <p><b>Relevant in current configuration: </b>{settings.isRelevant(styleParams, false) ? 'Yes' : 'No'}</p>}
+              {isSingleItem && <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>}
             </div>}
           </Collapse.Panel>
         ))}

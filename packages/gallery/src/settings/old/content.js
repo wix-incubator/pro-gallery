@@ -271,12 +271,24 @@ export default {
     description: "",
   },
   calculateTextBoxHeightMode: {
-    title: 'Calculate text box height:',
+    title: 'Text Box Height Calc Type',
+    description: "",
+  },
+  calculateTextBoxWidthMode: {
+    title: 'Text Box Width Units',
     description: "",
   },
   textBoxHeight: {
     title: 'Text Box Height',
     description: "",
+  },
+  textBoxWidth: {
+    title: 'Text Box Width (pixels)',
+    description: "The width of info element in pixels",
+  },
+  textBoxWidthPercent: {
+    title: 'Text Box Width (percent)',
+    description: "The partial width of the info element from the width of the item",
   },
   textImageSpace: {
     title: 'Text Space From Image',

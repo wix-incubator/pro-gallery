@@ -10,11 +10,12 @@ import { INPUT_TYPES } from '../../settings/consts';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
 import { throttle } from "../../utils/utils";
+import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
 import { notEligibleReasons } from 'pro-gallery/dist/src/components/gallery/leanGallery/isEligible';
 import LAZY_LOAD from 'pro-gallery/dist/src/common/constants/lazyLoad';
 
-function SideBar({items}) {
+function SideBar({ items }) {
   const {
     // preset,
     // setPreset,
@@ -36,12 +37,12 @@ function SideBar({items}) {
     if (props.type === INPUT_TYPES.OPTIONS) {
       res = res.concat(props.options.map(option => option.title));
     };
-    res = res.join('|').toLowerCase();
+    res = res.join('|').toLowerCase().replace(/ /g, '');
     return res;
   };
 
   const dataSource = Object.entries(settingsManager)
-    .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase()) >= 0)
+    .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase().replace(/ /g, '')) >= 0)
     .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
     .map(([styleParam, props]) => (
       <AutoComplete.Option key={styleParam}>{props.title}</AutoComplete.Option>
@@ -51,6 +52,9 @@ function SideBar({items}) {
     setSearchResult('');
     setSearchTerm('');
   };
+
+  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
   return (
     <>
@@ -86,7 +90,8 @@ function SideBar({items}) {
           }}>
             <JsonEditor
               onChange={_setStyleParams}
-              styleParams={ styleParams }
+              allStyleParams={styleParams}
+              styleParams={styleParams}
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
@@ -97,11 +102,21 @@ function SideBar({items}) {
       <h3 className={s.title}>Gallery Settings</h3>
       <div className={s.controls}>
         <Collapse accordion={true} bordered={true} defaultActiveKey={[1]} onChange={() => { }} expandIconPosition={'right'}>
+          {didChangeStyleParams ?
+            <Collapse.Panel header={'* Changed Settings'} key="-1">
+              <JsonEditor
+                onChange={_setStyleParams}
+                allStyleParams={styleParams}
+                styleParams={changedStyleParams}
+                showAllStyles={true}
+              />
+            </Collapse.Panel> : null}
           <Collapse.Panel header={SECTIONS.PRESET} key="1">
             <LayoutPicker selectedLayout={styleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
             <Divider />
             <JsonEditor
               onChange={_setStyleParams}
+              allStyleParams={styleParams}
               styleParams={styleParams}
               section={SECTIONS.PRESET}
               showAllStyles={gallerySettings.showAllStyles}
@@ -114,6 +129,7 @@ function SideBar({items}) {
                   <JsonEditor
                     section={section}
                     onChange={_setStyleParams}
+                    allStyleParams={styleParams}
                     styleParams={styleParams}
                     showAllStyles={gallerySettings.showAllStyles}
                   />
@@ -145,44 +161,54 @@ function SideBar({items}) {
           <Collapse.Panel header="Gallery Styles" key="styles">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Show all Styles" labelAlign="left">
-                <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({showAllStyles: e})} />
+                <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({ showAllStyles: e })} />
               </Form.Item>
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
               </Form.Item>
-              <Form.Item label="Lean Gallery" labelAlign="left">
-                <Button icon="interaction" shape="circle" size="large" onClick={() => window.location.search = 'gridStyle=1&allowHover=false&galleryLayout=2'} />
-              </Form.Item>
             </Form>
+          </Collapse.Panel>
+          <Collapse.Panel header="Benchmarks" key="benchmarks">
+            <Benchmarks />
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Unknown dimension" labelAlign="left">
-                <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({isUnknownDimensions: e})} />
+                <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({ isUnknownDimensions: e })} />
               </Form.Item>
               <Form.Item label="Avoid Pro-Gallery self measure" labelAlign="left">
-                <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({isAvoidGallerySelfMeasure: e})} />
+                <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({ isAvoidGallerySelfMeasure: e })} />
               </Form.Item>
               <Form.Item label="Use Native Lazy Loading" labelAlign="left">
-                <Switch checked={!!gallerySettings.lazyLoad} onChange={e => setGallerySettings({lazyLoad: e ? LAZY_LOAD.NATIVE : LAZY_LOAD.CSS})} />
+                <Switch checked={gallerySettings.lazyLoad === LAZY_LOAD.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? LAZY_LOAD.NATIVE : LAZY_LOAD.CSS })} />
+              </Form.Item>
+            </Form>
+          </Collapse.Panel>
+          <Collapse.Panel header="Develop" key="develop">
+            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form.Item label="Local Playground" labelAlign="left">
+                <Button shape="circle" icon="arrow-right" target="_self" href={`http://localhost:3000/${window.location.search}`} />
+              </Form.Item>
+              <Form.Item label="Master Playground" labelAlign="left">
+                <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery-master.surge.sh/${window.location.search}`} />
+              </Form.Item>
+              <Form.Item label="Live Playground" labelAlign="left">
+                <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
-          <Collapse.Panel header="Benchmarks" key="benchmarks">
-            <Benchmarks />
-          </Collapse.Panel>
           <Collapse.Panel header="Lean Gallery" key="lean">
-            {(notEligibleReasons({items, styles: styleParams}) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
-            </Collapse.Panel>
+            {(notEligibleReasons({ items, styles: styleParams }) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
+          </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
           </Collapse.Panel>
         </Collapse>
 
-        <div style={{height:100}} />
+        <div style={{ height: 100 }} />
 
         <div className={s.code}>
           <CodePanel />

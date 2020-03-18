@@ -34,12 +34,16 @@ export class Group {
     this.idx = config.idx;
     this.stripIdx = config.stripIdx;
     this.inStripIdx = config.inStripIdx;
-    this.items = config.items;
     this.top = config.top;
     this.showAllItems = config.showAllItems;
     this.isLastItems = config.isLastItems;
     this.dummyItems = [];
     this.gallerySize = config.gallerySize;
+
+    this.items = config.items.map(item => {
+      item.Group = this;
+      return item;
+    });
 
     if (config.styleParams) {
       const { styleParams } = config;
@@ -52,11 +56,13 @@ export class Group {
       this.collageDensity = styleParams.collageDensity;
       this.groupTypes = styleParams.groupTypes;
       this.rotatingGroupTypes = styleParams.rotatingGroupTypes;
+      this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.layoutsVersion = styleParams.layoutsVersion;
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
+      this.groupSize = styleParams.groupSize;
     }
 
     this.visible = true;
@@ -101,11 +107,13 @@ export class Group {
     }
   }
 
-  fixItemsRatio(ratio) {
-    for (const item of this.items) {
-      item.cubeRatio = ratio;
-      item.resize(1);
-    }
+  setCubedHeight(height) {
+    const shouldUseFixedHeight =
+      this.cubeImages &&
+      this.groupSize === 1 &&
+      this.rotatingGroupTypes.length === 0 &&
+      this.rotatingCropRatios.length === 0;
+    this.cubedHeight = shouldUseFixedHeight ? height : null;
   }
 
   round() {
@@ -777,12 +785,24 @@ export class Group {
     return w / h;
   }
 
-  get totalHeight() {
-    return this.height + (this.externalInfoHeight || 0);
+  get height() {
+    return this.cubedHeight || this._height;
   }
 
-  get totalWidth() {
-    return this.width + (this.externalInfoWidth || 0);
+  set height(h) {
+    this._height = h;
+  }
+
+  get totalHeight() {
+    return this.height + this.infoHeight;
+  }
+
+  get infoHeight() {
+    return this.externalInfoHeight || 0;
+  }
+
+  get infoWidth() {
+    return this.Column ? this.Column.infoWidth : this.externalInfoWidth || 0;
   }
 
   get bottom() {
@@ -830,8 +850,8 @@ export class Group {
       type: this.type,
       width: this.width,
       height: this.height,
-      totalHeight: this.totalHeight,
-      totalWidth: this.totalWidth,
+      infoHeight: this.infoHeight,
+      infoWidth: this.infoWidth,
       ratio: this.ratio,
       top: this.top,
       left: this.left,

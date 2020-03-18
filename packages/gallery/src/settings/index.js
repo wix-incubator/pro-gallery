@@ -30,6 +30,7 @@ import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
 import textBoxBorderWidth from './options/textBoxBorderWidth';
 import textBoxWidth from './options/textBoxWidth';
+import textBoxWidthPercent from './options/textBoxWidthPercent';
 import imageInfoType from './options/imageInfoType';
 import groupSize from './options/groupSize';
 import collageDensity from './options/collageDensity';
@@ -43,6 +44,12 @@ import scrollSnap from './options/scrollSnap';
 import itemBorderWidth from './options/itemBorderWidth';
 import itemBorderRadius from './options/itemBorderRadius';
 import itemBorderColor from './options/itemBorderColor';
+import rotatingCropRatios from './options/rotatingCropRatios';
+import autoSlideshowInterval from './options/autoSlideshowInterval';
+import smartCrop from './options/smartCrop';
+import minItemSize from './options/minItemSize';
+import scrollAnimation from './options/scrollAnimation';
+import floatingImages from './options/floatingImages';
 import arrowsSize from './options/arrowsSize';
 
 export default {
@@ -78,6 +85,7 @@ export default {
     textBoxBorderRadius,
     textBoxBorderWidth,
     textBoxWidth,
+    textBoxWidthPercent,
     imageInfoType,
     groupSize,
     collageDensity,
@@ -91,5 +99,11 @@ export default {
     itemBorderWidth,
     itemBorderRadius,
     itemBorderColor,
+    rotatingCropRatios,
+    autoSlideshowInterval,
+    smartCrop,
+    minItemSize,
+    scrollAnimation,
+    floatingImages,
     arrowsSize,
 }
