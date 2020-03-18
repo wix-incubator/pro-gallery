@@ -712,7 +712,9 @@ class SlideshowView extends GalleryComponent {
     );
 
     //remove navBars if no scroll is needed and is column layout
-    if (shouldNotRenderNavArrows || !showArrows) {
+    if (shouldNotRenderNavArrows) {
+      return null;
+    } else if (!showArrows){
       return null;
     }
 
