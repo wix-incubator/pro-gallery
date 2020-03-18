@@ -51,6 +51,7 @@ import minItemSize from './options/minItemSize';
 import scrollAnimation from './options/scrollAnimation';
 import floatingImages from './options/floatingImages';
 import thumbnailSpacings from './options/thumbnailSpacings';
+import slideshowLoop from './options/slideshowLoop';
 
 export default {
     itemClick,
@@ -106,4 +107,5 @@ export default {
     scrollAnimation,
     floatingImages,
     thumbnailSpacings,
+    slideshowLoop,
 }
