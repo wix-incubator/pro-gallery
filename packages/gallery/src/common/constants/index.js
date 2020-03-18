@@ -4,7 +4,8 @@ import infoBehaviourOnHover from './infoBehaviourOnHover';
 import scrollAnimations from './scrollAnimations';
 import infoType from './infoType';
 import loadingMode from './loadingMode';
-import calculationOptions from './calculationOptions';
+import textBoxHeightCalculationOptions from './textBoxHeightCalculationOptions';
+import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
 import overlayAnimations from './overlayAnimations';
 import imageHoverAnimations from './imageHoverAnimations';
 import layout from './layout';
@@ -25,6 +26,8 @@ import dimensions from './dimensions';
 import gallerySizeType from './gallerySizeType';
 import isVertical from './isVertical';
 import galleryTextAlign from './galleryTextAlign.js';
+import gridStyle from './gridStyle';
+import layoutDirection from './layoutDirection';
 
 export default {
   events,
@@ -35,7 +38,8 @@ export default {
   loadingMode,
   layout,
   itemClick,
-  calculationOptions,
+  textBoxHeightCalculationOptions,
+  textBoxWidthCalculationOptions,
   scrollDirection,
   cubeType,
   thumbnailsAlignment,
@@ -53,5 +57,7 @@ export default {
   dimensions,
   gallerySizeType,
   isVertical,
-  galleryTextAlign
+  galleryTextAlign,
+  gridStyle,
+  layoutDirection,
 };

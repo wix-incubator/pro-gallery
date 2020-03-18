@@ -160,7 +160,7 @@ describe('Item View', () => {
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
-      driver.find.hook('item-container').simulate('click');
+      driver.find.hook('item-wrapper').simulate('click');
       expect(stub.calledWith(EVENTS.ITEM_CLICKED)).to.be.true;
       stub.restore();
     });
@@ -173,7 +173,7 @@ describe('Item View', () => {
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
-      driver.find.hook('item-container').simulate('click');
+      driver.find.hook('item-wrapper').simulate('click');
       expect(stub.calledWith(EVENTS.ITEM_ACTION_TRIGGERED)).to.be.true;
       stub.restore();
     });
@@ -184,7 +184,7 @@ describe('Item View', () => {
     //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'nothing', videoPlay: 'onClick'}});
     //   driver.mount(ItemView, sampleItemViewProps);
     //   const spy = sinon.spy(ItemView.prototype, 'props.actions.setCurrentHover');
-    //   driver.find.hook('item-container').simulate('click');
+    //   driver.find.hook('item-wrapper').simulate('click');
     //   expect(spy.called).to.be.true;
     //   spy.restore();
     //   mobileStub.restore();
@@ -309,7 +309,7 @@ describe('Item View', () => {
       let testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1920);
       expect(testObject.height).to.equal(1000);
-      expect(testObject.marginTop).to.equal(0);
+      expect(testObject.margin).to.equal('0px 0');
       driver.set.props({
         styleParams: {
           cubeImages: true,
@@ -330,7 +330,7 @@ describe('Item View', () => {
       testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1000);
       expect(testObject.height).to.equal(1000);
-      expect(testObject.marginLeft).to.equal(460);
+      expect(testObject.margin).to.equal('0 460px');
     });
   });
   // describe('isVisible', () => {
@@ -413,7 +413,6 @@ describe('Item View', () => {
       expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(0);
     });
   });
-  //openItemShopInFullScreen not tested
   describe('getBottomInfoElement', () => {
     it('should create a CustomButton/ItemTitle if needed', () => {
       Object.assign(sampleItemViewProps, {
