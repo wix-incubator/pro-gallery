@@ -3,7 +3,7 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Navigation Arrows Position',
-  isRelevant: (styleParams)  => styleParams.oneRow,
+  isRelevant: (styleParams)  => styleParams.oneRow && styleParams.showArrows,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
   options: createOptions('arrowsPosition'),
