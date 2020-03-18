@@ -53,6 +53,7 @@ import floatingImages from './options/floatingImages';
 import thumbnailSpacings from './options/thumbnailSpacings';
 import slideshowLoop from './options/slideshowLoop';
 import arrowsSize from './options/arrowsSize';
+import titleDescriptionSpace from './options/titleDescriptionSpace';
 
 export default {
     itemClick,
@@ -110,4 +111,5 @@ export default {
     thumbnailSpacings,
     slideshowLoop,
     arrowsSize,
+    titleDescriptionSpace,
 }
