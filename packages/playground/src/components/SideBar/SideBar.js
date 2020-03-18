@@ -53,7 +53,7 @@ function SideBar({ items }) {
     setSearchTerm('');
   };
 
-  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({...obj, [styleParam]: value}), {});
+  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
   return (
@@ -166,10 +166,10 @@ function SideBar({ items }) {
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
               </Form.Item>
-              <Form.Item label="Lean Gallery" labelAlign="left">
-                <Button icon="interaction" shape="circle" size="large" onClick={() => window.location.search = 'gridStyle=1&allowHover=false&galleryLayout=2'} />
-              </Form.Item>
             </Form>
+          </Collapse.Panel>
+          <Collapse.Panel header="Benchmarks" key="benchmarks">
+            <Benchmarks />
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
@@ -180,15 +180,25 @@ function SideBar({ items }) {
                 <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({ isAvoidGallerySelfMeasure: e })} />
               </Form.Item>
               <Form.Item label="Use Native Lazy Loading" labelAlign="left">
-                <Switch checked={!!gallerySettings.lazyLoad} onChange={e => setGallerySettings({ lazyLoad: e ? LAZY_LOAD.NATIVE : LAZY_LOAD.CSS })} />
+                <Switch checked={gallerySettings.lazyLoad === LAZY_LOAD.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? LAZY_LOAD.NATIVE : LAZY_LOAD.CSS })} />
+              </Form.Item>
+            </Form>
+          </Collapse.Panel>
+          <Collapse.Panel header="Develop" key="develop">
+            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form.Item label="Local Playground" labelAlign="left">
+                <Button shape="circle" icon="arrow-right" target="_self" href={`http://localhost:3000/${window.location.search}`} />
+              </Form.Item>
+              <Form.Item label="Master Playground" labelAlign="left">
+                <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery-master.surge.sh/${window.location.search}`} />
+              </Form.Item>
+              <Form.Item label="Live Playground" labelAlign="left">
+                <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
-          </Collapse.Panel>
-          <Collapse.Panel header="Benchmarks" key="benchmarks">
-            <Benchmarks />
           </Collapse.Panel>
           <Collapse.Panel header="Lean Gallery" key="lean">
             {(notEligibleReasons({ items, styles: styleParams }) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
