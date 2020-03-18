@@ -54,6 +54,7 @@ import thumbnailSpacings from './options/thumbnailSpacings';
 import slideshowLoop from './options/slideshowLoop';
 import arrowsSize from './options/arrowsSize';
 import titleDescriptionSpace from './options/titleDescriptionSpace';
+import slideshowInfoSize from './options/slideshowInfoSize';
 
 export default {
     itemClick,
@@ -112,4 +113,5 @@ export default {
     slideshowLoop,
     arrowsSize,
     titleDescriptionSpace,
+    slideshowInfoSize,
 }
