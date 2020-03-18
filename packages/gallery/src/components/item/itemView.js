@@ -1087,7 +1087,7 @@ class ItemView extends GalleryComponent {
       <div
         className={this.getItemContainerClass()}
         onContextMenu={e => this.onContextMenu(e)}
-        id={cssScrollHelper.getDomId(this.props)}
+        id={cssScrollHelper.getSellectorDomId(this.props)}
         ref={e => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={() => {

@@ -48,7 +48,7 @@ class CssScrollHelper {
     this.lowResPadding = () => (allowPreloading ? [10240, Infinity] : [0, 0]);
   }
 
-  getsellectorDomId({ id, idx }) {
+  getSellectorDomId({ id, idx }) {
     const shortId = String(id).replace(/[\W]+/g, '');
     return `pgi${shortId}_${idx}`;
   }
@@ -124,7 +124,7 @@ class CssScrollHelper {
       Math.ceil(Math.min(this.maxHeight, num) / step) * step;
     const floor = (num, step) =>
       Math.floor(Math.max(this.minHeight, num) / step) * step;
-    const sellectorDomId = this.getsellectorDomId(item);
+    const sellectorDomId = this.getSellectorDomId(item);
     return (padding, suffix) => {
       const [before, after] = padding;
       if (before === Infinity && after === Infinity) {

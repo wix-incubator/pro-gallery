@@ -14,7 +14,7 @@ const getImageStyle = (item) => ({
 });
 
 const createItemId = (domId, item) => {
-  return `#pro-gallery-${domId} #${cssScrollHelper.getDomId(item)}`;
+  return `#pro-gallery-${domId} #${cssScrollHelper.getSellectorDomId(item)}`;
 }
 const createExactCssForItems = (domId = '', galleryItems, styleParams) => {
   const {isRTL} = styleParams;
