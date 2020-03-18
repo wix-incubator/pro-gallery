@@ -48,7 +48,7 @@ class CssScrollHelper {
     this.lowResPadding = () => (allowPreloading ? [10240, Infinity] : [0, 0]);
   }
 
-  getDomId({ id, idx }) {
+  getsellectorDomId({ id, idx }) {
     const shortId = String(id).replace(/[\W]+/g, '');
     return `pgi${shortId}_${idx}`;
   }
@@ -124,11 +124,11 @@ class CssScrollHelper {
       Math.ceil(Math.min(this.maxHeight, num) / step) * step;
     const floor = (num, step) =>
       Math.floor(Math.max(this.minHeight, num) / step) * step;
-    const domId = this.getDomId(item);
+    const sellectorDomId = this.getsellectorDomId(item);
     return (padding, suffix) => {
       const [before, after] = padding;
       if (before === Infinity && after === Infinity) {
-        return `#pro-gallery-${domId} #${domId} ${suffix}`;
+        return `#pro-gallery-${domId} #${sellectorDomId} ${suffix}`;
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
@@ -158,7 +158,7 @@ class CssScrollHelper {
             domId,
             largestDividerIdx,
             from,
-          )} ~ div #${domId} ${suffix}`,
+          )} ~ div #${sellectorDomId} ${suffix}`,
         );
         from += this.pgScrollSteps[largestDividerIdx];
         // console.count('pgScroll class created');
