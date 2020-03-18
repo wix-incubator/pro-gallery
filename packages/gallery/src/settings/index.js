@@ -50,6 +50,7 @@ import smartCrop from './options/smartCrop';
 import minItemSize from './options/minItemSize';
 import scrollAnimation from './options/scrollAnimation';
 import floatingImages from './options/floatingImages';
+import thumbnailSpacings from './options/thumbnailSpacings';
 import slideshowLoop from './options/slideshowLoop';
 
 export default {
@@ -105,5 +106,6 @@ export default {
     minItemSize,
     scrollAnimation,
     floatingImages,
+    thumbnailSpacings,
     slideshowLoop,
 }
