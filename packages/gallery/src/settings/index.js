@@ -45,6 +45,11 @@ import itemBorderWidth from './options/itemBorderWidth';
 import itemBorderRadius from './options/itemBorderRadius';
 import itemBorderColor from './options/itemBorderColor';
 import rotatingCropRatios from './options/rotatingCropRatios';
+import autoSlideshowInterval from './options/autoSlideshowInterval';
+import smartCrop from './options/smartCrop';
+import minItemSize from './options/minItemSize';
+import scrollAnimation from './options/scrollAnimation';
+import floatingImages from './options/floatingImages';
 import arrowsPosition from './options/arrowsPosition';
 
 export default {
@@ -95,5 +100,10 @@ export default {
     itemBorderRadius,
     itemBorderColor,
     rotatingCropRatios,
+    autoSlideshowInterval,
+    smartCrop,
+    minItemSize,
+    scrollAnimation,
+    floatingImages,
     arrowsPosition,
 }
