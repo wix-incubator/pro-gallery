@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import GALLERY_CONSTS from '../../src/common/constants';
+import sinon from 'sinon';
 
 describe('styleParam - enableScroll', () => {
 
@@ -26,7 +27,6 @@ describe('styleParam - enableScroll', () => {
     });
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
-    console.log(galleryContainer.props().className);
     expect(galleryContainer.hasClass('slider')).to.be.true;
     driver.detach.proGallery();
   });
@@ -40,8 +40,19 @@ describe('styleParam - enableScroll', () => {
     
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
-    console.log(galleryContainer.props().className);
     expect(galleryContainer.hasClass('slider')).to.be.false;
+    driver.detach.proGallery();
+  });
+  it('should have arrow for scrolling on click when "enableScroll" is "true"', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      oneRow: true,
+      scrollDirection:1,
+      enableScroll: false,
+    });
+    driver.mount.proGallery(initialProps);
+    const button = driver.find.hook('nav-arrow-next').simulate('click');
+    expect(button.length).to.eq(1);
     driver.detach.proGallery();
   });
 })
