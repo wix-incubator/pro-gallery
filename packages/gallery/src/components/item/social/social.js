@@ -218,9 +218,11 @@ export default class Social extends GalleryComponent {
       styleParams.allowSocial ||
       styleParams.loveButton ||
       styleParams.allowDownload;
-    const textPlacementAboveOrBelow =
+    const textPlacementAboveOrBelowOrRightOrLeft =
       styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
+      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
 
     const classes = [
       [showShare, 'hidden'],
@@ -230,7 +232,7 @@ export default class Social extends GalleryComponent {
       [isVerticalContainer, 'vertical-item'],
       [isShowArrows, 'with-arrows'],
       [isPopulated, 'populated-item'],
-      [textPlacementAboveOrBelow, 'text-external-item'],
+      [textPlacementAboveOrBelowOrRightOrLeft, 'text-external-item'],
     ]
       .filter(x => x[0])
       .map(x => x[1])
