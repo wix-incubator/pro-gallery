@@ -694,7 +694,7 @@ class SlideshowView extends GalleryComponent {
 
   createNavArrows() {
 
-    const { isRTL, oneRow, arrowsColor, isSlideshow, slideshowInfoSize, imageMargin, arrowsSize, arrowsPosition } = this.props.styleParams;
+    const { isRTL, oneRow, arrowsColor, isSlideshow, slideshowInfoSize, imageMargin, arrowsSize, arrowsPosition, showArrows } = this.props.styleParams;
 
     const shouldNotRenderNavArrows = this.props.galleryStructure.columns.some(
       column => {
@@ -712,7 +712,7 @@ class SlideshowView extends GalleryComponent {
     );
 
     //remove navBars if no scroll is needed and is column layout
-    if (shouldNotRenderNavArrows) {
+    if (shouldNotRenderNavArrows || !showArrows) {
       return null;
     }
 
