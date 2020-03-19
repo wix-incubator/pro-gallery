@@ -1204,7 +1204,7 @@ class SlideshowView extends GalleryComponent {
         style={this.getStyles()}
         onKeyDown={this.handleSlideshowKeyPress}
         role="region"
-        aria-label="Gallery. you can navigate the gallery with keyboard arrow keys."
+        aria-label={this.props.proGalleryRegionLabel}
       >
         {thumbnails[0]}
         {gallery}
