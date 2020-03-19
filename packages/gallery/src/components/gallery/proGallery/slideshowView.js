@@ -696,7 +696,7 @@ class SlideshowView extends GalleryComponent {
 
     const { isRTL, oneRow, arrowsColor, isSlideshow, slideshowInfoSize, imageMargin, arrowsSize, arrowsPosition, showArrows } = this.props.styleParams;
 
-    const shouldNotRenderNavArrows = this.props.galleryStructure.columns.some(
+    const shouldNotRenderNavArrows = !showArrows || this.props.galleryStructure.columns.some(
       column => {
         const allRenderedGroups =
           column.groups.filter(group => group.rendered) || [];
@@ -714,9 +714,7 @@ class SlideshowView extends GalleryComponent {
     //remove navBars if no scroll is needed and is column layout
     if (shouldNotRenderNavArrows) {
       return null;
-    } else if (!showArrows){
-      return null;
-    }
+    } 
 
     const arrowWidth = this.props.styleParams.arrowsSize;
 

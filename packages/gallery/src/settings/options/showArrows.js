@@ -5,5 +5,5 @@ export default {
   description: `Choose if you want to have navigation arrows in a sliding gallery`,
   isRelevant: (styleParams) => styleParams.oneRow,
   type: INPUT_TYPES.BOOLEAN,
-  default: false,
+  default: true,
 }
