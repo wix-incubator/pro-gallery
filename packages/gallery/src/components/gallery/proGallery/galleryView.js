@@ -183,8 +183,7 @@ class GalleryView extends GalleryComponent {
       currentIdx: this.state.currentIdx,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
-      galleryDomId: this.props.domId,
-      galleryId: this.props.galleryId,
+      domId: this.props.domId,
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
@@ -259,7 +258,7 @@ class GalleryView extends GalleryComponent {
         >
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
-            id={'show-more-' + this.props.galleryDomId}
+            id={'show-more-' + this.props.domId}
             className="show-more"
             onClick={this.showMoreItems}
             data-hook="show-more"
