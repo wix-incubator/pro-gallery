@@ -12,8 +12,9 @@ export function getContainerStyle(styleParams) {
           styleParams.itemBorderWidth,
           styleParams.itemBorderColor,
         ),
-        ...boxShadow(styleParams),
+        // ...boxShadow(styleParams),
       }),
+      ...boxShadow(styleParams),
   };
 }
 
