@@ -7,6 +7,8 @@ export default {
   isRelevant: (styleParams) => (styleParams.isVertical &&
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
+    (styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ABOVE ||
+      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ABOVE) &&
     (styleParams.allowTitle || styleParams.allowDescription),
   type: INPUT_TYPES.OPTIONS,
   options: createOptions('textBoxHeightCalculationOptions'),
