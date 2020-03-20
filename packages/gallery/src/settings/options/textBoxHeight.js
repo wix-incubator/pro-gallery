@@ -7,7 +7,7 @@ export default {
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
     (styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ABOVE ||
-      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ABOVE) &&
+      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_BELOW) &&
     styleParams.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL &&
     (styleParams.allowTitle || styleParams.allowDescription),
   type: INPUT_TYPES.NUMBER,
