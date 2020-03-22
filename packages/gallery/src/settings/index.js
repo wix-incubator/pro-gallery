@@ -45,6 +45,20 @@ import itemBorderWidth from './options/itemBorderWidth';
 import itemBorderRadius from './options/itemBorderRadius';
 import itemBorderColor from './options/itemBorderColor';
 import rotatingCropRatios from './options/rotatingCropRatios';
+import autoSlideshowInterval from './options/autoSlideshowInterval';
+import smartCrop from './options/smartCrop';
+import minItemSize from './options/minItemSize';
+import scrollAnimation from './options/scrollAnimation';
+import floatingImages from './options/floatingImages';
+import thumbnailSpacings from './options/thumbnailSpacings';
+import slideshowLoop from './options/slideshowLoop';
+import arrowsSize from './options/arrowsSize';
+import titleDescriptionSpace from './options/titleDescriptionSpace';
+import slideshowInfoSize from './options/slideshowInfoSize';
+import textBoxHeight from './options/textBoxHeight';
+import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
+import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
+import chooseBestGroup from './options/chooseBestGroup';
 
 export default {
     itemClick,
@@ -93,5 +107,19 @@ export default {
     itemBorderWidth,
     itemBorderRadius,
     itemBorderColor,
-    rotatingCropRatios
+    rotatingCropRatios,
+    autoSlideshowInterval,
+    smartCrop,
+    minItemSize,
+    scrollAnimation,
+    floatingImages,
+    thumbnailSpacings,
+    slideshowLoop,
+    arrowsSize,
+    titleDescriptionSpace,
+    slideshowInfoSize,
+    textBoxHeight,
+    calculateTextBoxHeightMode,
+    calculateTextBoxWidthMode,
+    chooseBestGroup,
 }

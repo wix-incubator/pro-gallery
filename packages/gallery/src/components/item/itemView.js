@@ -56,7 +56,6 @@ class ItemView extends GalleryComponent {
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
-    this.toggleFullscreenIfNeeded = this.toggleFullscreenIfNeeded.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
@@ -220,26 +219,6 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  toggleFullscreenIfNeeded(e) {
-    let targetClass = utils.get(e, 'target.className');
-    if (typeof targetClass === 'object') {
-      targetClass = Object.values(targetClass);
-    }
-
-    if (
-      utils.isFunction(targetClass.indexOf) &&
-      targetClass.indexOf('block-fullscreen') >= 0
-    ) {
-      console.warn('Blocked fullscreen!', e);
-      return;
-    } else if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.props.styleParams.itemClick)) {
-      this.props.actions.eventsListener(
-        EVENTS.ITEM_ACTION_TRIGGERED,
-        this.props,
-      );
-    }
-  }
-
   handleItemMouseDown() {
     //check for long press
     // if (utils.isMobile()) {
@@ -388,14 +367,14 @@ class ItemView extends GalleryComponent {
         //landscape
         height: style.height - 2 * imageMarginTop,
         width: style.width,
-        marginTop: imageMarginTop,
+        margin: `${imageMarginTop}px 0`,
       }
     } else if (isGridFit && !isLandscape) {
       dimensions = {
         //portrait
         width: style.width - 2 * imageMarginLeft,
         height: style.height,
-        marginLeft: imageMarginLeft,
+        margin: `0 ${imageMarginLeft}px`,
       }
     }
     if (styleParams.itemBorderRadius) {
@@ -466,7 +445,6 @@ class ItemView extends GalleryComponent {
         isVerticalContainer={this.isVerticalContainer()}
         key={`item-social-${props.id}`}
         actions={{
-          openItemShopInFullScreen: this.openItemShopInFullScreen,
           toggleShare: this.toggleShare,
           getShare: this.getShare,
           eventsListener: this.props.actions.eventsListener,
@@ -637,7 +615,8 @@ class ItemView extends GalleryComponent {
   getItemInner() {
     const { styleParams, type, visible } = this.props;
     let itemInner;
-    const imageDimensions = this.getImageDimensions();
+    const {width, height} = this.getImageDimensions();
+    const imageDimensions = {width, height};
     let itemTexts;
     let social;
     let share;
@@ -721,11 +700,6 @@ class ItemView extends GalleryComponent {
 
     return itemInner;
   }
-  openItemShopInFullScreen(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.toggleFullscreenIfNeeded(e);
-  }
 
   getRightInfoElementIfNeeded() {
     if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) {
@@ -774,12 +748,12 @@ class ItemView extends GalleryComponent {
     const infoHeight = styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemTexts = customInfoRenderer
+    const itemExternalInfo = customInfoRenderer
       ? customInfoRenderer(this.props)
       : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
-    if (itemTexts) {
+    if (itemExternalInfo) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
@@ -797,7 +771,7 @@ class ItemView extends GalleryComponent {
             }}
             onClick={this.onItemInfoClick}
           >
-            {itemTexts}
+            {itemExternalInfo}
           </div>
         </div>
       );
@@ -983,7 +957,7 @@ class ItemView extends GalleryComponent {
         //check if focus is on 'gallery-item-container' in current gallery
         const isThisGalleryItemInFocus = () =>
           !!window.document.querySelector(
-            `#pro-gallery-${this.props.galleryDomId} #${String(
+            `#pro-gallery-${this.props.domId} #${String(
               activeElement.id,
             )}`,
           );
@@ -993,7 +967,7 @@ class ItemView extends GalleryComponent {
         //check if focus is on 'load-more' in current gallery
         const isThisGalleryShowMoreInFocus = () =>
           !!window.document.querySelector(
-            `#pro-gallery-${this.props.galleryDomId} #${String(
+            `#pro-gallery-${this.props.domId} #${String(
               activeElement.id,
             )}`,
           );
@@ -1047,7 +1021,7 @@ class ItemView extends GalleryComponent {
   }
 
   checkIfCurrentHoverChanged(e) {
-    if (e.galleryId === this.props.galleryId) {
+    if (e.domId === this.props.domId) {
       if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
         this.setState({
           isCurrentHover: true
@@ -1113,7 +1087,7 @@ class ItemView extends GalleryComponent {
       <div
         className={this.getItemContainerClass()}
         onContextMenu={e => this.onContextMenu(e)}
-        id={cssScrollHelper.getDomId(this.props)}
+        id={cssScrollHelper.getSellectorDomId(this.props)}
         ref={e => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={() => {

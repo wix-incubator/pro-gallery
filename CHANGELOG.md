@@ -1,3 +1,12 @@
+## [v1.8.3](https://pro-gallery-1-8-3.surge.sh) (15/03/2020)
+ 
+#### GALLERY
+ -  SEO url -> we will replace webp with the original file type and not with jpg.
+
+#### PLAYGROUND
+ -  fix: fix issue with broken gallerySize
+
+---
 ## [v1.8.2](https://pro-gallery-1-8-2.surge.sh) (09/03/2020)
  
 #### GALLERY

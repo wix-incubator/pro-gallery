@@ -271,6 +271,7 @@ export default class Layouter {
           let colWidth = columnWidthsArr
             ? columnWidthsArr[idx]
             : Math.round(remainderWidth / (this.numOfCols - idx));
+          const curLeft = totalLeft;
           totalLeft += colWidth;
           remainderWidth -= colWidth;
           //fix cubeRatio of rounded columns
@@ -284,13 +285,7 @@ export default class Layouter {
           fixedCubeHeight =
             fixedCubeHeight || (this.gallerySize - infoWidth) / cubeRatio; //calc the cube height only once
           //add space for info on the side
-          return new Column(
-            idx,
-            colWidth,
-            totalLeft - colWidth,
-            fixedCubeHeight,
-            infoWidth,
-          );
+          return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
         });
       this.maxLoops = this.srcItems.length * 10;
     }
