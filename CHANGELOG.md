@@ -1,5 +1,27 @@
 ## [v1.8.4](https://pro-gallery-1-8-4.surge.sh) (22/03/2020)
  
+#### MAIN
+ -  update changelog.md
+
+#### GALLERY
+ -  Gallery region label can now be passed via 'proGalleryRegionLabel' prop to PG.
+ -  Feat: domId is now the only Id (no galleryId no galleryDomId)
+ -  itemView: pass additional prop to ItemHover
+ -  itemView: removed unused functions: openItemShopInFullScreen, toggleFullscreenIfNeeded -> Social is not using 'openItemShopInFullScreen' action.
+ -  itemView: pass additional prop to ItemHover
+ -  Fix: fix for gridFit and rtl
+ -  social: 'text-external-item' will be set also for titlePlacement===SHOW_ON_THE_RIGHT or titlePlacement===SHOW_ON_THE_LEFT
+
+
+#### PLAYGROUND
+ -  improve (sidebar): add localhost links
+
+#### LAYOUTS
+ -  fix (layouter): fix left for sidebyside layouts
+
+---
+## [v1.8.4](https://pro-gallery-1-8-4.surge.sh) (22/03/2020)
+ 
 #### GALLERY
  -  Gallery region label can now be passed via 'proGalleryRegionLabel' prop to PG.
  -  Feat: domId is now the only Id (no galleryId no galleryDomId)
