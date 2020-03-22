@@ -55,6 +55,9 @@ import slideshowLoop from './options/slideshowLoop';
 import arrowsSize from './options/arrowsSize';
 import titleDescriptionSpace from './options/titleDescriptionSpace';
 import slideshowInfoSize from './options/slideshowInfoSize';
+import textBoxHeight from './options/textBoxHeight';
+import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
+import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
 import showArrows from './options/showArrows';
 
 export default {
@@ -115,5 +118,8 @@ export default {
     arrowsSize,
     titleDescriptionSpace,
     slideshowInfoSize,
+    textBoxHeight,
+    calculateTextBoxHeightMode,
+    calculateTextBoxWidthMode,
     showArrows,
 }

@@ -942,6 +942,7 @@ export class GalleryContainer extends React.Component {
           playingVideoIdx={this.state.playingVideoIdx}
           nextVideoIdx={this.state.nextVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
+          proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           actions={{
             ...this.props.actions,
             findNeighborItem,

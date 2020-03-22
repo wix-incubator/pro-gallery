@@ -321,7 +321,7 @@ class GalleryView extends GalleryComponent {
         key={`pro-gallery-${this.id}`}
         // style={this.getStyles()}
         role="region"
-        aria-label="Gallery. you can navigate the gallery with keyboard arrow keys."
+        aria-label={this.props.proGalleryRegionLabel}
       >
         {screenLogs}
         {gallery}
