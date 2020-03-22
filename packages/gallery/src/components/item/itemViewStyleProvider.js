@@ -1,6 +1,5 @@
 import INFO_TYPE from '../../common/constants/infoType';
 import PLACEMENTS from '../../common/constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 
 export function getContainerStyle(styleParams) {
   return {
@@ -12,9 +11,8 @@ export function getContainerStyle(styleParams) {
           styleParams.itemBorderWidth,
           styleParams.itemBorderColor,
         ),
-        // ...boxShadow(styleParams),
+        ...boxShadow(styleParams),
       }),
-      ...boxShadow(styleParams),
   };
 }
 
