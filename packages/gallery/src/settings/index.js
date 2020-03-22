@@ -62,6 +62,7 @@ import itemShadowSize from './options/itemShadowSize';
 import itemShadowBlur from './options/itemShadowBlur';
 import itemShadowDirection from './options/itemShadowDirection';
 import itemShadowOpacityAndColor from './options/itemShadowOpacityAndColor';
+import itemEnableShadow from './options/itemEnableShadow';
 
 export default {
     itemClick,
@@ -128,4 +129,5 @@ export default {
     itemShadowBlur,
     itemShadowDirection,
     itemShadowOpacityAndColor,
+    itemEnableShadow,
 }
