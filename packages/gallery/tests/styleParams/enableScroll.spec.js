@@ -43,16 +43,4 @@ describe('styleParam - enableScroll', () => {
     expect(galleryContainer.hasClass('slider')).to.be.false;
     driver.detach.proGallery();
   });
-  it('should have arrow for scrolling on click when "enableScroll" is "true"', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true,
-      scrollDirection:1,
-      enableScroll: false,
-    });
-    driver.mount.proGallery(initialProps);
-    const button = driver.find.hook('nav-arrow-next').simulate('click');
-    expect(button.length).to.eq(1);
-    driver.detach.proGallery();
-  });
 })
