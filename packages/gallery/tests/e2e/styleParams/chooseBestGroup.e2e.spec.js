@@ -20,7 +20,7 @@ describe('chooseBestGroup - e2e', () => {
 
   it('should choose best group', async () => {
     await driver.openPage({
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       chooseBestGroup: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -30,7 +30,7 @@ describe('chooseBestGroup - e2e', () => {
   });
   it('should not choose best group', async () => {
     await driver.openPage({
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       chooseBestGroup: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
