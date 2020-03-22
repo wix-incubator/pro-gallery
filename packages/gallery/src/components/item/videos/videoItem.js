@@ -7,11 +7,12 @@ import LAZY_LOAD from '../../../common/constants/lazyLoad';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
+import {VideoPlaceholder} from './videoItemPlaceholder'
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
     super(props);
-
+    
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
@@ -288,7 +289,7 @@ class VideoItem extends GalleryComponent {
               : {
                   backgroundImage: `url(${this.props.createUrl(
                     URL_SIZES.RESIZED,
-                    URL_TYPES.LOW_RES,
+                    URL_TYPES.HIGH_RES,
                   )})`,
                   ...restOfDimensions,
                 }
@@ -299,22 +300,7 @@ class VideoItem extends GalleryComponent {
           {videoPreloader}
         </div>
       ) : (
-        <div
-          className={baseClassName}
-          data-hook="video_container-image-element"
-          key={'video_container-' + this.props.id}
-          style={{
-            backgroundImage: `url(${this.props.createUrl(
-              URL_SIZES.RESIZED,
-              URL_TYPES.HIGH_RES,
-            )})`,
-            ...restOfDimensions,
-          }}
-        >
-          {this.createImageElement()}
-          {videoControls}
-          {videoPreloader}
-        </div>
+        <VideoPlaceholder props={this.props}/>
       );
 
     const hover = this.props.hover;
