@@ -57,7 +57,8 @@ import titleDescriptionSpace from './options/titleDescriptionSpace';
 import slideshowInfoSize from './options/slideshowInfoSize';
 import textBoxHeight from './options/textBoxHeight';
 import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
-import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode'; 
+import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
+import chooseBestGroup from './options/chooseBestGroup';
 
 export default {
     itemClick,
@@ -120,4 +121,5 @@ export default {
     textBoxHeight,
     calculateTextBoxHeightMode,
     calculateTextBoxWidthMode,
+    chooseBestGroup,
 }
