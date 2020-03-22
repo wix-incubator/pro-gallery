@@ -12,7 +12,7 @@ describe('styleParam - imageLoadingMode', () => {
   let imageStub;
   const initialProps = {
     container,
-    items: images2,
+    items: images2.slice(0,1),
     styles: styleParams
   }
 
@@ -25,15 +25,37 @@ describe('styleParam - imageLoadingMode', () => {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       oneRow: false,
+      imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
+    })
+    imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
+    driver.mount.proGallery(initialProps);
+    expect(imageStub.withArgs('resized','thumb').called).to.be.true;
+    imageStub.restore();
+    driver.detach.proGallery();
+  });
+  it('should preload pixel image (MAIN_COLOR)', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout:  GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      oneRow: false,
       imageLoadingMode: GALLERY_CONSTS.loadingMode.MAIN_COLOR,
     })
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
     driver.mount.proGallery(initialProps);
+    expect(imageStub.withArgs('pixel','img').called).to.be.true;
+    imageStub.restore();
+    driver.detach.proGallery();
+  });
+  it('should preload color background (MAIN_COLOR)', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout:  GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      oneRow: false,
+      imageLoadingMode: GALLERY_CONSTS.loadingMode.COLOR,
+    })
+    driver.mount.proGallery(initialProps);
     const item = driver.find.hook('image-item').at(0);
-    console.log(imageStub.calledWith('resized','thumb'));
-    console.log(imageStub.called);
-    
-    expect();
+    expect(item.hasClass('load-with-color')).to.be.true;
     driver.detach.proGallery();
   });
 })
