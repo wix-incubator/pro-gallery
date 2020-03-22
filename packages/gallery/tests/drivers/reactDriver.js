@@ -76,7 +76,7 @@ class galleryDriver {
       cubeRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
       fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
       oneRow: false, //render the gallery as a single row with horizontal scroll
-      showArrows: false,
+      showArrows: true,
       isSlideshow: false,
       isSlider: false,
       hasThumbnails: false,
