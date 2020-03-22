@@ -20,7 +20,6 @@ export const fixedStyles = {
   groupTypes: '1',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  showArrows: true,
   smartCrop: false,
   galleryType: 'Strips',
   gallerySize: () => dimensionsHelper.getGalleryWidth(),
