@@ -59,6 +59,18 @@ import textBoxHeight from './options/textBoxHeight';
 import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
 import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
 import chooseBestGroup from './options/chooseBestGroup';
+import imageLoadingMode from './options/imageLoadingMode';
+import cropOnlyFill from './options/cropOnlyFill';
+import groupsPerStrip from './options/groupsPerStrip';
+import fixedColumns from './options/fixedColumns';
+import rotatingGroupTypes from './options/rotatingGroupTypes';
+import arrowsPosition from './options/arrowsPosition';
+import itemShadowSize from './options/itemShadowSize';
+import itemShadowBlur from './options/itemShadowBlur';
+import itemShadowDirection from './options/itemShadowDirection';
+import itemShadowOpacityAndColor from './options/itemShadowOpacityAndColor';
+import itemEnableShadow from './options/itemEnableShadow';
+import videoLoop from './options/videoLoop';
 import showArrows from './options/showArrows';
 
 export default {
@@ -123,5 +135,17 @@ export default {
     calculateTextBoxHeightMode,
     calculateTextBoxWidthMode,
     chooseBestGroup,
+    imageLoadingMode,
+    cropOnlyFill,
+    groupsPerStrip,
+    fixedColumns,
+    rotatingGroupTypes,
+    arrowsPosition,
+    itemShadowSize,
+    itemShadowBlur,
+    itemShadowDirection,
+    itemShadowOpacityAndColor,
+    itemEnableShadow,
+    videoLoop,
     showArrows,
 }
