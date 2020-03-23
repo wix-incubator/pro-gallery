@@ -56,7 +56,6 @@ class ItemView extends GalleryComponent {
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
-    this.toggleFullscreenIfNeeded = this.toggleFullscreenIfNeeded.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
@@ -128,8 +127,6 @@ class ItemView extends GalleryComponent {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
     }
-    this.onMouseOverEvent.itemIdx = this.props.idx; //VIDEOREWORK why do we need this?
-    window.dispatchEvent(this.onMouseOverEvent);
   }
 
   onKeyPress(e) {
@@ -138,7 +135,7 @@ class ItemView extends GalleryComponent {
       case 13: //enter
         e.preventDefault();
         e.stopPropagation();
-        let clickTarget = 'item-container';
+        const clickTarget = 'item-container';
         this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
@@ -162,13 +159,13 @@ class ItemView extends GalleryComponent {
 
 
   onItemWrapperClick(e) {
-    let clickTarget = 'item-media';
+    const clickTarget = 'item-media';
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
 
   onItemInfoClick(e) {
-    let clickTarget = 'item-info';
+    const clickTarget = 'item-info';
     this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
     this.onItemClick(e);
   }
@@ -219,26 +216,6 @@ class ItemView extends GalleryComponent {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
     } else {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
-    }
-  }
-
-  toggleFullscreenIfNeeded(e) {
-    let targetClass = utils.get(e, 'target.className');
-    if (typeof targetClass === 'object') {
-      targetClass = Object.values(targetClass);
-    }
-
-    if (
-      utils.isFunction(targetClass.indexOf) &&
-      targetClass.indexOf('block-fullscreen') >= 0
-    ) {
-      console.warn('Blocked fullscreen!', e);
-      return;
-    } else if ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(this.props.styleParams.itemClick)) {
-      this.props.actions.eventsListener(
-        EVENTS.ITEM_ACTION_TRIGGERED,
-        this.props,
-      );
     }
   }
 
@@ -390,14 +367,14 @@ class ItemView extends GalleryComponent {
         //landscape
         height: style.height - 2 * imageMarginTop,
         width: style.width,
-        marginTop: imageMarginTop,
+        margin: `${imageMarginTop}px 0`,
       }
     } else if (isGridFit && !isLandscape) {
       dimensions = {
         //portrait
         width: style.width - 2 * imageMarginLeft,
         height: style.height,
-        marginLeft: imageMarginLeft,
+        margin: `0 ${imageMarginLeft}px`,
       }
     }
     if (styleParams.itemBorderRadius) {
@@ -407,7 +384,7 @@ class ItemView extends GalleryComponent {
     return dimensions;
   }
 
-  getItemTextsDetails(additionalHeight = 0) {
+  getItemTextsDetails(externalTotalInfoHeight = 0) {
     const props = utils.pick(this.props, [
       'title',
       'description',
@@ -432,7 +409,7 @@ class ItemView extends GalleryComponent {
         isSmallItem={this.isSmallItem()}
         isNarrow={this.isNarrow()}
         shouldShowButton={shouldShowButton}
-        additionalHeight={additionalHeight}
+        externalTotalInfoHeight={externalTotalInfoHeight}
         actions={{
           eventsListener: this.props.actions.eventsListener,
         }}
@@ -468,7 +445,6 @@ class ItemView extends GalleryComponent {
         isVerticalContainer={this.isVerticalContainer()}
         key={`item-social-${props.id}`}
         actions={{
-          openItemShopInFullScreen: this.openItemShopInFullScreen,
           toggleShare: this.toggleShare,
           getShare: this.getShare,
           eventsListener: this.props.actions.eventsListener,
@@ -637,16 +613,17 @@ class ItemView extends GalleryComponent {
   }
 
   getItemInner() {
-    const { styleParams, type, visible } = this.props;
+    const { styleParams, type } = this.props;
     let itemInner;
-    const imageDimensions = this.getImageDimensions();
+    const {width, height} = this.getImageDimensions();
+    const imageDimensions = {width, height};
     let itemTexts;
     let social;
     let share;
 
     let itemHover = null;
 
-    if ((visible && this.shouldHover()) || styleParams.isSlideshow) {
+    if (this.shouldHover() || styleParams.isSlideshow) {
       itemTexts =
         styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
           ? this.getItemTextsDetails()
@@ -661,31 +638,27 @@ class ItemView extends GalleryComponent {
     }
 
 
-    if (visible) {
-      switch (type) {
-        case 'dummy':
+    switch (type) {
+      case 'dummy':
           itemInner = <div />;
-          break;
-        case 'video':
-          if (
-            this.props.idx === this.props.playingVideoIdx ||
-            this.props.idx === this.props.nextVideoIdx
-          ) {
-            itemInner = this.getVideoItem(imageDimensions, itemHover);
-          } else {
-            itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
-          }
-          break;
-        case 'text':
-          itemInner = [this.getTextItem(imageDimensions), itemHover];
-          break;
-        case 'image':
-        case 'picture':
-        default:
-          itemInner = [this.getImageItem(imageDimensions), itemHover];
-      }
-    } else {
-      itemInner = <div />
+        break;
+      case 'video':
+        if (
+          this.props.idx === this.props.playingVideoIdx ||
+          this.props.idx === this.props.nextVideoIdx
+        ) {
+          itemInner = this.getVideoItem(imageDimensions, itemHover);
+        } else {
+          itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
+        }
+        break;
+      case 'text':
+        itemInner = [this.getTextItem(imageDimensions), itemHover];
+        break;
+      case 'image':
+      case 'picture':
+      default:
+        itemInner = [this.getImageItem(imageDimensions), itemHover];
     }
 
     if (styleParams.isSlideshow) {
@@ -722,11 +695,6 @@ class ItemView extends GalleryComponent {
     }
 
     return itemInner;
-  }
-  openItemShopInFullScreen(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.toggleFullscreenIfNeeded(e);
   }
 
   getRightInfoElementIfNeeded() {
@@ -773,19 +741,19 @@ class ItemView extends GalleryComponent {
 
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
-    const additionalHeight = this.hasRequiredMediaUrl ? 0 : style.height;
-    const additionalWidth = this.hasRequiredMediaUrl ? 0 : style.width;
+    const infoHeight = styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
+    const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemTexts = customInfoRenderer
+    const itemExternalInfo = customInfoRenderer
       ? customInfoRenderer(this.props)
-      : this.getItemTextsDetails(additionalHeight);
+      : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
-    if (itemTexts) {
+    if (itemExternalInfo) {
       info = (
         <div style={getOuterInfoStyle(styleParams)}>
           <div
-            style={getInnerInfoStyle(styleParams, additionalHeight, additionalWidth)}
+            style={getInnerInfoStyle(styleParams, infoHeight, infoWidth)}
             className={'gallery-item-common-info ' + elementName}
             onMouseOver={() => {
               !utils.isMobile() && this.props.actions.eventsListener(
@@ -799,7 +767,7 @@ class ItemView extends GalleryComponent {
             }}
             onClick={this.onItemInfoClick}
           >
-            {itemTexts}
+            {itemExternalInfo}
           </div>
         </div>
       );
@@ -985,7 +953,7 @@ class ItemView extends GalleryComponent {
         //check if focus is on 'gallery-item-container' in current gallery
         const isThisGalleryItemInFocus = () =>
           !!window.document.querySelector(
-            `#pro-gallery-${this.props.galleryDomId} #${String(
+            `#pro-gallery-${this.props.domId} #${String(
               activeElement.id,
             )}`,
           );
@@ -995,7 +963,7 @@ class ItemView extends GalleryComponent {
         //check if focus is on 'load-more' in current gallery
         const isThisGalleryShowMoreInFocus = () =>
           !!window.document.querySelector(
-            `#pro-gallery-${this.props.galleryDomId} #${String(
+            `#pro-gallery-${this.props.domId} #${String(
               activeElement.id,
             )}`,
           );
@@ -1029,9 +997,6 @@ class ItemView extends GalleryComponent {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
-    this.onMouseOverEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
-    this.onMouseOverEvent.initCustomEvent('on_mouse_over', false, false, null);
-
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);
@@ -1052,7 +1017,7 @@ class ItemView extends GalleryComponent {
   }
 
   checkIfCurrentHoverChanged(e) {
-    if (e.galleryId === this.props.galleryId) {
+    if (e.domId === this.props.domId) {
       if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
         this.setState({
           isCurrentHover: true
@@ -1118,7 +1083,7 @@ class ItemView extends GalleryComponent {
       <div
         className={this.getItemContainerClass()}
         onContextMenu={e => this.onContextMenu(e)}
-        id={cssScrollHelper.getDomId(this.props)}
+        id={cssScrollHelper.getSellectorDomId(this.props)}
         ref={e => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={() => {

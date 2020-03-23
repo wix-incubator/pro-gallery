@@ -62,8 +62,10 @@ class GalleryItem {
     this.style = scheme.style;
     this.width = scheme.width;
     this.maxWidth = scheme.maxWidth;
+    this.infoWidth = scheme.infoWidth;
     this.height = scheme.height;
     this.maxHeight = scheme.maxHeight;
+    this.infoHeight = scheme.infoHeight;
     this.margins = scheme.margins;
     this.ratio = scheme.ratio;
     this.cubeRatio = scheme.cropRatio;
@@ -104,10 +106,12 @@ class GalleryItem {
       transform: this.transform,
       offset: this.offset,
       style: {
+        ratio: this.ratio,
         bgColor: this.bgColor,
         maxWidth: this.maxWidth,
         maxHeight: this.maxHeight,
-        ratio: this.ratio,
+        infoWidth: this.infoWidth,
+        infoHeight: this.infoHeight,
         orientation: this.orientation,
         ...this.style,
       },
@@ -220,7 +224,7 @@ class GalleryItem {
         focalPoint,
       );
 
-    urls[URL_TYPES.SEO] = () => urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, '.jpg'); //SEO needs .jpg instead of .webp, replace does not mutate
+    urls[URL_TYPES.SEO] = () => urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, `.${this.fileType}`); //SEO needs the original file type (jpg or png, etc..) instead of .webp, replace does not mutate
 
     return urls;
   }
@@ -378,7 +382,7 @@ class GalleryItem {
       bg =
         this.metadata &&
         (this.metadata.textStyle &&
-        this.metadata.textStyle.backgroundColor 
+        this.metadata.textStyle.backgroundColor
         || this.metadata.backgroundColor);
     } else {
       bg = 'none';
@@ -435,6 +439,10 @@ class GalleryItem {
     return (
       this.dto.file_url || this.dto.mediaUrl || this.dto.url || this.dto.src
     );
+  }
+
+  get fileType() {
+    return this.url.split('.').pop();
   }
 
   get mediaUrl() {

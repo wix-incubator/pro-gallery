@@ -820,8 +820,7 @@ class SlideshowView extends GalleryComponent {
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
-      galleryDomId: this.props.domId,
-      galleryId: this.props.galleryId,
+      domId: this.props.domId,
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
       totalWidth: this.props.galleryStructure.width,
@@ -1205,7 +1204,7 @@ class SlideshowView extends GalleryComponent {
         style={this.getStyles()}
         onKeyDown={this.handleSlideshowKeyPress}
         role="region"
-        aria-label="Gallery. you can navigate the gallery with keyboard arrow keys."
+        aria-label={this.props.proGalleryRegionLabel}
       >
         {thumbnails[0]}
         {gallery}
