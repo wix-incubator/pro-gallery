@@ -65,6 +65,11 @@ import groupsPerStrip from './options/groupsPerStrip';
 import fixedColumns from './options/fixedColumns';
 import rotatingGroupTypes from './options/rotatingGroupTypes';
 import arrowsPosition from './options/arrowsPosition';
+import itemShadowSize from './options/itemShadowSize';
+import itemShadowBlur from './options/itemShadowBlur';
+import itemShadowDirection from './options/itemShadowDirection';
+import itemShadowOpacityAndColor from './options/itemShadowOpacityAndColor';
+import itemEnableShadow from './options/itemEnableShadow';
 
 export default {
     itemClick,
@@ -134,4 +139,9 @@ export default {
     fixedColumns,
     rotatingGroupTypes,
     arrowsPosition,
+    itemShadowSize,
+    itemShadowBlur,
+    itemShadowDirection,
+    itemShadowOpacityAndColor,
+    itemEnableShadow,
 }
