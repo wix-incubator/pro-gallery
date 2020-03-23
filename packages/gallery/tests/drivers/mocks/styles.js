@@ -32,7 +32,7 @@ const styleParams = {
     mobilePanorama: false,
     placeGroupsLtr: false,
     viewMode: 'preview',
-    showArrows: false,
+    showArrows: true,
     enableInfiniteScroll: true,
     thumbnailSpacings: 4,
     enableScroll: true,

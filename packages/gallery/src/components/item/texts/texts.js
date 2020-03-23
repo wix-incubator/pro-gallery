@@ -17,14 +17,12 @@ export default class Texts extends GalleryComponent {
   }
 
   getElementClassNames() {
-    const { showShare, styleParams, isNarrow } = this.props;
+    const { showShare, isNarrow } = this.props;
     const classNames = ['gallery-item-text'];
     if (showShare) {
       classNames.push('hidden');
     }
-    if (styleParams.showArrows) {
-      classNames.push('padded-horizontal');
-    }
+    
     if (isNarrow) {
       classNames.push('narrow-item');
     }

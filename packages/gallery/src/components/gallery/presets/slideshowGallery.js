@@ -21,7 +21,6 @@ export const fixedStyles = {
   itemBorderColor: undefined,
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  showArrows: true,
   smartCrop: false,
   gallerySize: 550,
   galleryType: 'Strips',
