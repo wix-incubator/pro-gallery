@@ -64,6 +64,7 @@ import cropOnlyFill from './options/cropOnlyFill';
 import groupsPerStrip from './options/groupsPerStrip';
 import fixedColumns from './options/fixedColumns';
 import rotatingGroupTypes from './options/rotatingGroupTypes';
+import arrowsPosition from './options/arrowsPosition';
 
 export default {
     itemClick,
@@ -132,4 +133,5 @@ export default {
     groupsPerStrip,
     fixedColumns,
     rotatingGroupTypes,
+    arrowsPosition,
 }
