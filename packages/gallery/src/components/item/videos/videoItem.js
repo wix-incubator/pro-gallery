@@ -7,7 +7,7 @@ import LAZY_LOAD from '../../../common/constants/lazyLoad';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
-import {VideoItemPlaceholder} from './videoItemPlaceholder'
+import VideoItemPlaceholder from './videoItemPlaceholder.js';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
