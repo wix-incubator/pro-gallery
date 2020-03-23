@@ -7,7 +7,7 @@ import LAZY_LOAD from '../../../common/constants/lazyLoad';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
-import {VideoPlaceholder} from './videoItemPlaceholder'
+import {VideoItemPlaceholder} from './videoItemPlaceholder'
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -300,7 +300,7 @@ class VideoItem extends GalleryComponent {
           {videoPreloader}
         </div>
       ) : (
-        <VideoPlaceholder props={this.props}/>
+        <VideoItemPlaceholder props={this.props}/>
       );
 
     const hover = this.props.hover;
