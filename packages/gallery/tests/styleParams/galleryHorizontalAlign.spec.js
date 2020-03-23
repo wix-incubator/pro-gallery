@@ -19,7 +19,7 @@ describe('styleParam - galleryHorizontalAlign', () => {
 
   it('should align texts container to the left (galleryHorizontalAlign = "left")', () => {
     Object.assign(initialProps.styles, {
-      gallerylayout: 2,
+      galleryLayout: 2,
       galleryHorizontalAlign: GALLERY_CONSTS.horizontalAlign.LEFT
     });
     driver.mount.proGallery(initialProps);
@@ -30,7 +30,7 @@ describe('styleParam - galleryHorizontalAlign', () => {
   });
   it('should align texts container in th center (galleryHorizontalAlign = "center")', () => {
     Object.assign(initialProps.styles, {
-      gallerylayout: 2,
+      galleryLayout: 2,
       galleryHorizontalAlign: GALLERY_CONSTS.horizontalAlign.CENTER
     });
     driver.mount.proGallery(initialProps);
@@ -41,7 +41,7 @@ describe('styleParam - galleryHorizontalAlign', () => {
   });
   it('should align texts container to the right (galleryHorizontalAlign = "right")', () => {
     Object.assign(initialProps.styles, {
-      gallerylayout: 2,
+      galleryLayout: 2,
       galleryHorizontalAlign: GALLERY_CONSTS.horizontalAlign.RIGHT
     });
     driver.mount.proGallery(initialProps);

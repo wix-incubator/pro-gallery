@@ -125,16 +125,25 @@ export class GalleryContainer extends React.Component {
     }
     this.videoScrollHelper.initializePlayState();
 
-    this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
-    this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
-    if (this.props.galleryId) {
-      this.currentHoverChangeEvent.galleryId = this.props.galleryId;
+    try {
+      if (typeof window.CustomEvent === 'function') {
+        this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
+      } else { //IE (new CustomEvent is not supported in IE)
+        this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+        this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
+      }
+    } catch(e) {
+      console.error('could not create \'current_hover_change\' customEvent. Error =', e);
+    }
+
+    if (this.props.domId) {
+      this.currentHoverChangeEvent.domId = this.props.domId;
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.currentHoverChangeEvent.galleryId && nextProps.galleryId) {
-      this.currentHoverChangeEvent.galleryId = nextProps.galleryId;
+    if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
+      this.currentHoverChangeEvent.domId = nextProps.domId;
     }
     if (this.props.currentIdx !== nextProps.currentIdx) {
       this.scrollToItem(nextProps.currentIdx, false, true, 0);
@@ -391,7 +400,7 @@ export class GalleryContainer extends React.Component {
     });
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
-      galleryDomId: this.props.domId,
+      domId: this.props.domId,
       lazyLoad: this.props.lazyLoad,
       items: this.galleryStructure.galleryItems,
       styleParams: styles,
@@ -405,7 +414,7 @@ export class GalleryContainer extends React.Component {
       layoutParams,
       isApproximateWidth,
       isMobile: utils.isMobile(),
-      galleryDomId: this.props.domId,
+      domId: this.props.domId,
       galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
     });
   }
@@ -563,7 +572,7 @@ export class GalleryContainer extends React.Component {
         state.showMoreClickedAtLeastOnce;
 
       this.scrollCss = this.getScrollCssIfNeeded({
-        galleryDomId: this.props.domId,
+        domId: this.props.domId,
         lazyLoad: this.props.lazyLoad,
         items: this.galleryStructure.galleryItems,
         styleParams: _styles,
@@ -707,7 +716,7 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCssIfNeeded({ galleryDomId, items, styleParams, allowPreloading, lazyLoad }) {
+  getScrollCssIfNeeded({ domId, items, styleParams, allowPreloading, lazyLoad }) {
     const shouldUseScrollCss = !(lazyLoad === LAZY_LOAD.NATIVE || isSEOMode());
     let scrollCss = [];
     if (shouldUseScrollCss) {
@@ -715,7 +724,7 @@ export class GalleryContainer extends React.Component {
         items,
         isUnknownWidth: dimensionsHelper.isUnknownWidth(),
         styleParams,
-        galleryDomId,
+        domId,
         allowPreloading,
       });
     }
@@ -733,7 +742,7 @@ export class GalleryContainer extends React.Component {
       //we already called to calcScrollCss with allowPreloading = true
       this.allowedPreloading = true;
       this.scrollCss = this.getScrollCssIfNeeded({
-        galleryDomId: this.props.domId,
+        domId: this.props.domId,
         lazyLoad: this.props.lazyLoad,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
@@ -771,7 +780,7 @@ export class GalleryContainer extends React.Component {
       this.allowedPreloading = true;
         //we already called to calcScrollCss with allowPreloading = true
       this.scrollCss = this.getScrollCssIfNeeded({
-        galleryDomId: this.props.domId,
+        domId: this.props.domId,
         lazyLoad: this.props.lazyLoad,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
@@ -898,7 +907,7 @@ export class GalleryContainer extends React.Component {
         key="pro-gallery-inner-container"
       >
         <ScrollIndicator
-          galleryDomId={this.props.domId}
+          domId={this.props.domId}
           oneRow={this.state.styles.oneRow}
           isRTL={this.state.styles.isRTL}
           totalWidth={this.galleryStructure.width}
@@ -909,8 +918,6 @@ export class GalleryContainer extends React.Component {
           onScroll={this.onGalleryScroll}
         />
         <ViewComponent
-          galleryDomId={this.props.domId}
-          galleryId={this.props.galleryId}
           isInDisplay={this.props.isInDisplay}
           isUnknownWidth={dimensionsHelper.isUnknownWidth()}
           scrollingElement={this._scrollingElement}
@@ -935,6 +942,7 @@ export class GalleryContainer extends React.Component {
           playingVideoIdx={this.state.playingVideoIdx}
           nextVideoIdx={this.state.nextVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
+          proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           actions={{
             ...this.props.actions,
             findNeighborItem,

@@ -4,7 +4,8 @@ import infoBehaviourOnHover from './infoBehaviourOnHover';
 import scrollAnimations from './scrollAnimations';
 import infoType from './infoType';
 import loadingMode from './loadingMode';
-import calculationOptions from './calculationOptions';
+import textBoxHeightCalculationOptions from './textBoxHeightCalculationOptions';
+import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
 import overlayAnimations from './overlayAnimations';
 import imageHoverAnimations from './imageHoverAnimations';
 import layout from './layout';
@@ -37,7 +38,8 @@ export default {
   loadingMode,
   layout,
   itemClick,
-  calculationOptions,
+  textBoxHeightCalculationOptions,
+  textBoxWidthCalculationOptions,
   scrollDirection,
   cubeType,
   thumbnailsAlignment,

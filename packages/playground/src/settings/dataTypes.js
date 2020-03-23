@@ -326,7 +326,7 @@ export default {
   },
   calculateTextBoxHeightMode: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('calculationOptions')
+    options: createOptions('textBoxHeightCalculationOptions')
   },
   textBoxHeight: {
     type: INPUT_TYPES.NUMBER,
