@@ -58,6 +58,7 @@ import slideshowInfoSize from './options/slideshowInfoSize';
 import textBoxHeight from './options/textBoxHeight';
 import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
 import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
+import chooseBestGroup from './options/chooseBestGroup';
 import showArrows from './options/showArrows';
 
 export default {
@@ -121,5 +122,6 @@ export default {
     textBoxHeight,
     calculateTextBoxHeightMode,
     calculateTextBoxWidthMode,
+    chooseBestGroup,
     showArrows,
 }
