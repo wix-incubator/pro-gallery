@@ -278,7 +278,7 @@ class VideoItem extends GalleryComponent {
     const { videoPlay, itemClick } = this.props.styleParams;
     const {hasLink} = this.props;
     const video =
-      this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
+      (
         <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"
@@ -299,16 +299,16 @@ class VideoItem extends GalleryComponent {
           {videoControls}
           {videoPreloader}
         </div>
-      ) : (
-        <VideoItemPlaceholder props={this.props}/>
       );
 
     const hover = this.props.hover;
 
-    return (
+    return this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
       <div key={'video-and-hover-container' + this.props.idx}>
         {[video, hover]}
       </div>
+    ): (
+      <VideoItemPlaceholder {...this.props}/>
     );
   }
 }
