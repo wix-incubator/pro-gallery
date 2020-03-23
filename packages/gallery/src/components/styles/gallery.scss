@@ -317,9 +317,7 @@
             }
 
             .gallery-item-text {
-              &.padded-horizontal {
                 padding: 0 20px;
-              }
             }
 
             .gallery-item-social {
@@ -463,9 +461,8 @@
           .gallery-item-hover {
             padding: 30px;
 
-            .gallery-item-text.padded-horizontal {
-              padding-left: 0;
-              padding-right: 0;
+            .gallery-item-text {
+              padding: 30px 0 0
             }
           }
         }
@@ -1046,10 +1043,6 @@
             &.hidden {
               opacity: 0 !important;
               pointer-events: none;
-            }
-
-            &.padded-horizontal {
-              padding: 30px 120px 0;
             }
 
             >div {
