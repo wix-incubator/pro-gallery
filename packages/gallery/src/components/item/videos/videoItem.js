@@ -7,11 +7,12 @@ import LAZY_LOAD from '../../../common/constants/lazyLoad';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
+import VideoItemPlaceholder from './videoItemPlaceholder.js';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
     super(props);
-
+    
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
@@ -277,7 +278,7 @@ class VideoItem extends GalleryComponent {
     const { videoPlay, itemClick } = this.props.styleParams;
     const {hasLink} = this.props;
     const video =
-      this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
+      (
         <div
           className={baseClassName + ' animated fadeIn '}
           data-hook="video_container-video-player-element"
@@ -288,7 +289,7 @@ class VideoItem extends GalleryComponent {
               : {
                   backgroundImage: `url(${this.props.createUrl(
                     URL_SIZES.RESIZED,
-                    URL_TYPES.LOW_RES,
+                    URL_TYPES.HIGH_RES,
                   )})`,
                   ...restOfDimensions,
                 }
@@ -298,31 +299,16 @@ class VideoItem extends GalleryComponent {
           {videoControls}
           {videoPreloader}
         </div>
-      ) : (
-        <div
-          className={baseClassName}
-          data-hook="video_container-image-element"
-          key={'video_container-' + this.props.id}
-          style={{
-            backgroundImage: `url(${this.props.createUrl(
-              URL_SIZES.RESIZED,
-              URL_TYPES.HIGH_RES,
-            )})`,
-            ...restOfDimensions,
-          }}
-        >
-          {this.createImageElement()}
-          {videoControls}
-          {videoPreloader}
-        </div>
       );
 
     const hover = this.props.hover;
 
-    return (
+    return this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
       <div key={'video-and-hover-container' + this.props.idx}>
         {[video, hover]}
       </div>
+    ): (
+      <VideoItemPlaceholder {...this.props}/>
     );
   }
 }
