@@ -60,6 +60,7 @@ import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
 import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
 import chooseBestGroup from './options/chooseBestGroup';
 import imageLoadingMode from './options/imageLoadingMode';
+import cropOnlyFill from './options/cropOnlyFill';
 
 export default {
     itemClick,
@@ -124,4 +125,5 @@ export default {
     calculateTextBoxWidthMode,
     chooseBestGroup,
     imageLoadingMode,
+    cropOnlyFill,
 }
