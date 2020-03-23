@@ -70,6 +70,7 @@ import itemShadowBlur from './options/itemShadowBlur';
 import itemShadowDirection from './options/itemShadowDirection';
 import itemShadowOpacityAndColor from './options/itemShadowOpacityAndColor';
 import itemEnableShadow from './options/itemEnableShadow';
+import videoLoop from './options/videoLoop';
 
 export default {
     itemClick,
@@ -144,4 +145,5 @@ export default {
     itemShadowDirection,
     itemShadowOpacityAndColor,
     itemEnableShadow,
+    videoLoop,
 }
