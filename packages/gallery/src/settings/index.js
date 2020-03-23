@@ -62,6 +62,7 @@ import chooseBestGroup from './options/chooseBestGroup';
 import imageLoadingMode from './options/imageLoadingMode';
 import cropOnlyFill from './options/cropOnlyFill';
 import groupsPerStrip from './options/groupsPerStrip';
+import fixedColumns from './options/fixedColumns';
 
 export default {
     itemClick,
@@ -128,4 +129,5 @@ export default {
     imageLoadingMode,
     cropOnlyFill,
     groupsPerStrip,
+    fixedColumns,
 }
