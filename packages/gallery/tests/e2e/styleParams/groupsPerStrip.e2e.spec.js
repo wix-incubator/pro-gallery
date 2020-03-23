@@ -21,6 +21,7 @@ describe('groupsPerStrip - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 3,
+      groupSize:1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -30,6 +31,7 @@ describe('groupsPerStrip - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 7,
+      groupSize:1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
