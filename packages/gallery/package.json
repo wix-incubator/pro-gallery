@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.8.3",
+  "version": "1.8.5",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "pro-layouts": "^1.8.0",
+    "pro-layouts": "^1.8.4",
     "react-player": "1.10.0"
   },
   "peerDependencies": {

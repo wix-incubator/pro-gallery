@@ -50,6 +50,19 @@ import smartCrop from './options/smartCrop';
 import minItemSize from './options/minItemSize';
 import scrollAnimation from './options/scrollAnimation';
 import floatingImages from './options/floatingImages';
+import thumbnailSpacings from './options/thumbnailSpacings';
+import slideshowLoop from './options/slideshowLoop';
+import arrowsSize from './options/arrowsSize';
+import titleDescriptionSpace from './options/titleDescriptionSpace';
+import slideshowInfoSize from './options/slideshowInfoSize';
+import textBoxHeight from './options/textBoxHeight';
+import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
+import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
+import chooseBestGroup from './options/chooseBestGroup';
+import imageLoadingMode from './options/imageLoadingMode';
+import cropOnlyFill from './options/cropOnlyFill';
+import groupsPerStrip from './options/groupsPerStrip';
+import fixedColumns from './options/fixedColumns';
 import rotatingGroupTypes from './options/rotatingGroupTypes';
 
 export default {
@@ -105,5 +118,18 @@ export default {
     minItemSize,
     scrollAnimation,
     floatingImages,
+    thumbnailSpacings,
+    slideshowLoop,
+    arrowsSize,
+    titleDescriptionSpace,
+    slideshowInfoSize,
+    textBoxHeight,
+    calculateTextBoxHeightMode,
+    calculateTextBoxWidthMode,
+    chooseBestGroup,
+    imageLoadingMode,
+    cropOnlyFill,
+    groupsPerStrip,
+    fixedColumns,
     rotatingGroupTypes,
 }
