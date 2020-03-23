@@ -63,6 +63,7 @@ import imageLoadingMode from './options/imageLoadingMode';
 import cropOnlyFill from './options/cropOnlyFill';
 import groupsPerStrip from './options/groupsPerStrip';
 import fixedColumns from './options/fixedColumns';
+import rotatingGroupTypes from './options/rotatingGroupTypes';
 
 export default {
     itemClick,
@@ -130,4 +131,5 @@ export default {
     cropOnlyFill,
     groupsPerStrip,
     fixedColumns,
+    rotatingGroupTypes,
 }
