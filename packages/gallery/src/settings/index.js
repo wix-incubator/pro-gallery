@@ -59,6 +59,7 @@ import textBoxHeight from './options/textBoxHeight';
 import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
 import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
 import chooseBestGroup from './options/chooseBestGroup';
+import videoLoop from './options/videoLoop';
 
 export default {
     itemClick,
@@ -122,4 +123,5 @@ export default {
     calculateTextBoxHeightMode,
     calculateTextBoxWidthMode,
     chooseBestGroup,
+    videoLoop,
 }
