@@ -1,3 +1,9 @@
+## [v1.8.6](https://pro-gallery-1-8-6.surge.sh) (24/03/2020)
+ 
+#### GALLERY
+ -  Feat: remove legacy js visible prop(layouts groups) from item rendering logic
+
+---
 ## [v1.8.5](https://pro-gallery-1-8-5.surge.sh) (23/03/2020)
  
 #### GALLERY
