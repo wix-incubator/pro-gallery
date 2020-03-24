@@ -1,3 +1,9 @@
+## [v1.8.8](https://pro-gallery-1-8-8.surge.sh) (24/03/2020)
+ 
+#### GALLERY
+ -  Fix: use galleryWidth in video visibility calc
+
+---
 ## [v1.8.7](https://pro-gallery-1-8-7.surge.sh) (24/03/2020)
  
 #### GALLERY
