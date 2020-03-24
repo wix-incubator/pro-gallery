@@ -21,6 +21,7 @@ describe('arrowsSize - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       arrowsSize: 150,
+      cubeRatio: 16/9,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
