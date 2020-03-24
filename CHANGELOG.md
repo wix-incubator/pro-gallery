@@ -1,3 +1,9 @@
+## [v1.8.7](https://pro-gallery-1-8-7.surge.sh) (24/03/2020)
+ 
+#### GALLERY
+ -  Fix: no arrows in horizontal Magic layout
+
+---
 ## [v1.8.6](https://pro-gallery-1-8-6.surge.sh) (24/03/2020)
  
 #### GALLERY
