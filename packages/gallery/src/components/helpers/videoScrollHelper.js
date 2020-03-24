@@ -4,6 +4,7 @@ import {
 } from './scrollHelper';
 import EVENTS from '../../common/constants/events';
 import window from '../../common/window/windowWrapper';
+import dimensionsHelper from './dimensionsHelper';
 
 const VIDEO_EVENTS = {
   SCROLL: 'SCROLL',
@@ -43,6 +44,7 @@ class VideoScrollHelper {
 
   //--------------------------updates----------------------------------//
   updateGalleryStructure({ galleryStructure, scrollBase, videoPlay, itemClick, oneRow }) {
+    this.galleryWidth = dimensionsHelper.getGalleryDimensions().galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
     this.itemClick = itemClick;
@@ -258,7 +260,7 @@ class VideoScrollHelper {
         target,
         left: item.offset.left,
         right: item.offset.left + item.style.width,
-        screenWidth: window && window.innerWidth,
+        screenWidth: this.galleryWidth || window && window.innerWidth,
         padding: videoPlayHorizontalTolerance,
       });
     }
