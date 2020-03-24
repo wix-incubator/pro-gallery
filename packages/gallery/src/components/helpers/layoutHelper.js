@@ -415,25 +415,8 @@ function processLayouts(styles) {
     } else {
       processedStyles.textDecorationLoadMore = 'none';
     }
-  }
-
-  if (processedStyles.isSlider) {
-    processedStyles.cubeRatio = processedStyles.gallerySliderImageRatio;
-  } else if (
-    processedStyles.isGrid &&
-    !utils.isUndefined(processedStyles.galleryImageRatioFromWix)
-  ) {
-    processedStyles.cubeRatio = processedStyles.galleryImageRatioFromWix;
-  }
-  //Used to look like that before the split :
-  // if (stateStyles.isSlider && canSet('gallerySliderImageRatio', 'cubeRatio')) {
-  // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.gallerySliderImageRatio)]));
-  // } else if (stateStyles.isSlider && utils.isUndefined(stateStyles.cubeRatio)) {
-  // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(this.defaultStateStyles.gallerySliderImageRatio)]));
-  // } else if (stateStyles.isGrid && canSet('galleryImageRatio', 'cubeRatio')) {
-  // 	stateStyles.cubeRatio = Number(eval(['16/9', '4/3', '1', '3/4', '9/16'][Number(wixStyles.galleryImageRatio)]));
-  // }
-
+  } 
+  
   if (
     (processedStyles.isGrid && !processedStyles.oneRow) ||
     (featureManager.supports.fixedColumnsInMasonry &&

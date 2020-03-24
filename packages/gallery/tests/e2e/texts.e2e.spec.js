@@ -34,6 +34,7 @@ describe('texts - e2e', () => {
   it('should not use padding bottom in slider layout', async () => {
     await driver.openPage({
       galleryLayout: 4,
+      cubeRatio: 16/9,
       loveButton: true,
       allowDescription: true,
       allowTitle: true,
