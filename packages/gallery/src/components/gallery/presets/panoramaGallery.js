@@ -14,7 +14,6 @@ export const fixedStyles = {
   groupTypes: '1',
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   
-  showArrows: false,
   galleryType: 'Columns',
   gallerySize: () => dimensionsHelper.getGalleryWidth(),
   oneRow: false,

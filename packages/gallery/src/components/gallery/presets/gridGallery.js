@@ -12,7 +12,6 @@ export const fixedStyles = {
   hasThumbnails: false,
   groupTypes: '1',
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  showArrows: false,
   smartCrop: false,
   galleryType: 'Columns',
   fixedColumns: 0,
