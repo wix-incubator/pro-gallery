@@ -111,7 +111,7 @@ class GalleryView extends GalleryComponent {
   }
 
   createGallery(showMore) {
-    const { itemsLoveData } = this.props;
+    const { itemsLoveData, styleParams, container, galleryStructure, isUnknownWidth } = this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
@@ -119,11 +119,11 @@ class GalleryView extends GalleryComponent {
     let galleryHeight;
     if (showMore) {
       galleryHeight =
-        this.props.container.galleryHeight - showMoreContainerHeight;
+        container.galleryHeight - showMoreContainerHeight;
     } else {
-      galleryHeight = this.props.galleryStructure.height + 'px';
+      galleryHeight = galleryStructure.height + 'px';
     }
-    const layout = this.props.galleryStructure.galleryItems.map((item, index) =>
+    const layout = galleryStructure.galleryItems.map((item, index) =>
       React.createElement(
         itemView,
         item.renderProps({
@@ -131,7 +131,7 @@ class GalleryView extends GalleryComponent {
           ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
-          isUnknownWidth: this.props.isUnknownWidth,
+          isUnknownWidth,
         }),
       ),
     );
@@ -141,11 +141,11 @@ class GalleryView extends GalleryComponent {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles ' +
-          (this.props.styleParams.oneRow
+          (styleParams.oneRow
             ? ' one-row slider hide-scrollbars '
             : '') +
-          (this.props.styleParams.isAccessible ? ' accessible ' : '') +
-          (this.props.styleParams.isRTL ? ' rtl ' : '')
+          (styleParams.isAccessible ? ' accessible ' : '') +
+          (styleParams.isRTL ? ' rtl ' : '')
         }
         style={{
           height: galleryHeight,
@@ -157,9 +157,9 @@ class GalleryView extends GalleryComponent {
         <div
           id="pro-gallery-margin-container"
           style={{
-            margin: this.props.styleParams.galleryMargin + 'px',
+            margin: styleParams.galleryMargin + 'px',
             height: galleryHeight,
-            width: this.props.isUnknownWidth ? '100%' : this.props.container.galleryWidth, //FAKE SSR
+            width: this.props.isUnknownWidth ? '100%' : this.props.container.galleryWidth - styleParams.imageMargin * 2,
             overflow: 'visible',
             position: 'relative',
           }}
