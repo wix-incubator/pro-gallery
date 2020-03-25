@@ -9,8 +9,8 @@ const LAYOUTS = {
   PANORAMA: 6,
   COLUMN: 7,
   MAGIC: 8,
-  FULLSIZE: 9, 
-  BRICKS: 10, 
+  FULLSIZE: 9,
+  BRICKS: 10,
   MIX: 11,
   ALTERNATE: 12,
 

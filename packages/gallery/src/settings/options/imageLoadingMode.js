@@ -1,6 +1,5 @@
-import { INPUT_TYPES } from '../utils/constants';
+import { INPUT_TYPES, GALLERY_CONSTS } from '../utils/constants';
 import { createOptions } from '../utils/utils';
-import GALLERY_CONSTS from '../../common/constants';
 
 export default {
   title: 'Loading Placeholder',

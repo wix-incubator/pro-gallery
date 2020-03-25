@@ -2,13 +2,14 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
+  "sideEffects": false,
   "version": "1.8.8",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
   },
   "main": "dist/src/index.js",
-  "module": "dist/src/index.js",
+  "module": "dist/es/src/index.js",
   "files": [
     "dist"
   ],
@@ -83,7 +84,7 @@
   },
   "yoshi": {
     "entry": {
-      "main": "./index"
+      "main": "./index.js"
     },
     "servers": {
       "cdn": {
