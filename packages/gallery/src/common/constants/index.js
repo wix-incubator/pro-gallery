@@ -31,7 +31,7 @@ import socialNetworks from './socialNetworks';
 import textBoxHeightCalculationOptions from './textBoxHeightCalculationOptions';
 import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
 import thumbnailsAlignment from './thumbnailsAlignment';
-import { URL_SIZES, URL_TYPES } from './urlTypes';
+import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
 import verticalAlign from './verticalAlign';
 import videoPlay from './videoPlay';
 import viewMode from './viewMode';
@@ -71,8 +71,8 @@ export default {
   textBoxHeightCalculationOptions,
   textBoxWidthCalculationOptions,
   thumbnailsAlignment,
-  URL_SIZES,
-  URL_TYPES,
+  urlSizes,
+  urlTypes,
   verticalAlign,
   videoPlay,
   viewMode,
