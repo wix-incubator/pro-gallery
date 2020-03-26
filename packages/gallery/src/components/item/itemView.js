@@ -1066,7 +1066,7 @@ class ItemView extends GalleryComponent {
     const url = directShareLink;
     const shouldUseDirectShareLink = !!url;
     const linkParams = shouldUseDirectShareLink
-    ? { href: url }
+    ? { href: url , "data-cancel-link":true }
     : {};
     return linkParams;
     }
