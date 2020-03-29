@@ -1,3 +1,9 @@
+## [v1.8.9](https://pro-gallery-1-8-9.surge.sh) (25/03/2020)
+ 
+#### GALLERY
+ -  Fix: fix pro-gallery-margin-container width to accomodate for imageMargin
+
+---
 ## [v1.8.8](https://pro-gallery-1-8-8.surge.sh) (24/03/2020)
  
 #### GALLERY
