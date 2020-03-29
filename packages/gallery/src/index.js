@@ -1,5 +1,3 @@
-import './components/styles/gallery.scss';
-
 export { default as ProGallery } from './components/gallery/index';
 export { default as LoveButton } from './components/item/loveButton/loveButton';
 export { default as GalleryItem} from './components/item/galleryItem';
