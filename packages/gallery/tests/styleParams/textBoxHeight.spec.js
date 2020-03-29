@@ -29,7 +29,6 @@ describe('styleParam - textBoxHeight', () => {
     })
     driver.mount.proGallery(initialProps);
     const textBox = driver.find.selector('.gallery-item-common-info').at(0);
-    console.log(textBox.props().style.height);
     const { height } = textBox.props().style;
     expect(height).to.eq(250);
     driver.detach.proGallery();

@@ -29,7 +29,6 @@ describe('styleParam - textBoxWidth', () => {
     })
     driver.mount.proGallery(initialProps);
     const textBox = driver.find.selector('.gallery-item-common-info').at(0);
-    console.log(textBox.props().style.width);
     const { width } = textBox.props().style;
     expect(width).to.eq(250);
     driver.detach.proGallery();

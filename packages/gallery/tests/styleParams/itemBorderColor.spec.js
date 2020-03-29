@@ -26,7 +26,6 @@ describe('styleParam - itemBorderColor', () => {
     })
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
-    console.log(item.props().style.borderColor);
     
     expect(item.props().style.borderColor).to.eq('rgba(0,0,0,1)');
     driver.detach.proGallery();
