@@ -1,16 +1,14 @@
 import React from 'react';
 // import GalleryItem from '../item/galleryItem';
-
 import EVENTS from '../../../common/constants/events';
 import GALLERY_SIZE_TYPE from '../../../common/constants/gallerySizeType';
 import CROP_TYPES from '../../../common/constants/resizeMethods'
 import INFO_PLACEMENT from '../../../common/constants/placements'
 import CLICK_ACTIONS from '../../../common/constants/itemClick'
-
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import Texts from '../../item/texts/texts';
-import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
-//import s from './leanGallery.module.scss';
+import { getInnerInfoStyle } from '../../item/itemViewStyleProvider';
+import s from './leanGallery.module.scss';
 
 const get = (item, attr) => {
   if (typeof item[attr] !== 'undefined') {
@@ -21,21 +19,17 @@ const get = (item, attr) => {
       return item.metadata[attr]
     }
   }
-
   if (typeof item.metaData !== 'undefined') {
     if (typeof item.metaData[attr] !== 'undefined') {
       return item.metaData[attr]
     }
   }
+};
 
-}
 export default class LeanGallery extends React.Component {
-
   constructor() {
     super();
-
     this.measureIfNeeded = this.measureIfNeeded.bind(this);
-
     this.state = {
       itemStyle: {}
     };
@@ -46,7 +40,6 @@ export default class LeanGallery extends React.Component {
   }
 
   resizeUrl({ item }) {
-
     const { styles, resizeMediaUrl } = this.props;
     const { cubeType, imageQuality } = styles;
     const { itemStyle } = this.state;
@@ -210,16 +203,13 @@ export default class LeanGallery extends React.Component {
   }
 
   render() {
-
     const { items } = this.props;
-
     const styles = this.fixStylesIfNeeded(this.props.styles);
-
     const { itemClick } = styles;
 
     return (
       <div
-        className={['pro-gallery', 'inline-styles'].join(' ')}
+        className={['pro-gallery', 'inline-styles', s.gallery].join(' ')}
         style={this.createGalleryStyle()}
       >
         {items.map((item, itemIdx) => {
@@ -245,10 +235,10 @@ export default class LeanGallery extends React.Component {
                 }}
               />
             </div>
-          )
+          );
           return (
             <a
-              className={['gallery-item-container'].join(' ')}
+              className={['gallery-item-container', s.cell].join(' ')}
               style={{height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
               ref={node => {
                 this.measureIfNeeded(node);
@@ -259,12 +249,12 @@ export default class LeanGallery extends React.Component {
               >{texts(INFO_PLACEMENT.SHOW_ABOVE)}
               <div
                 style={imageSize}
-                className={['gallery-item-hover'].join(' ')}
+                className={['gallery-item-hover', s.imageWrapper].join(' ')}
                 onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, itemData)}
               ><img
                 src={this.resizeUrl({ item })}
                 loading="lazy"
-                className={['gallery-item-content'].join(' ')}
+                className={['gallery-item-content', s.image].join(' ')}
                 alt={get(item, 'title')}
                 style={this.createItemStyle(imageSize)}
                 onLoad={() => this.props.eventsListener(EVENTS.ITEM_LOADED, itemData)}
