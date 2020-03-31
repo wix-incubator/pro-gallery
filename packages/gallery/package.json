@@ -2,7 +2,9 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "sideEffects": false,
+  "sideEffects": [
+    "./src/components/styles/gallery.scss"
+  ],
   "version": "1.8.10",
   "author": {
     "name": "Guy Sopher",
