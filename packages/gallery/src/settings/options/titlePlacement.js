@@ -6,7 +6,7 @@ export default {
   isRelevant: (styleParams) => (styleParams.isVertical &&
     styleParams.groupSize === 1 && 
     !styleParams.oneRow),
-  type: INPUT_TYPES.OPTIONS,
+  type: INPUT_TYPES.MULTISELECT,
   default: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   options: createOptions('placements'),
   description: `Choose the the placement of the texts (title and description) relative to the items in the gallery. Note that
