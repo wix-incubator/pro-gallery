@@ -147,7 +147,7 @@ class LineHeightFixer {
         [PLACEMENTS.SHOW_ON_THE_LEFT]: 'gallery-item-left-info',
       }[styleParams.titlePlacement];
       const elements = itemContainer.getElementsByClassName(className);
-      if (element) {
+      if (typeof element !== 'undefined') {
         const element = elements.length > 0 && elements[0];
         const elementPadding =
           parseInt(this.getCss(element, 'padding-top', 0)) +
