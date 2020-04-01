@@ -1,5 +1,5 @@
 import utils from '../../../common/utils/index.js';
-import PLACEMENTS from '../../../common/constants/placements';
+import PLACEMENTS, {hasHorizontalPlacement, hasVerticalPlacement} from '../../../common/constants/placements';
 import INFO_TYPE from '../../../common/constants/infoType';
 import window from '../../../common/window/windowWrapper';
 import designConsts from '../../../common/constants/designConsts.js';
@@ -147,20 +147,21 @@ class LineHeightFixer {
         [PLACEMENTS.SHOW_ON_THE_LEFT]: 'gallery-item-left-info',
       }[styleParams.titlePlacement];
       const elements = itemContainer.getElementsByClassName(className);
-      const element = elements.length > 0 && elements[0];
-      const elementPadding =
-        parseInt(this.getCss(element, 'padding-top', 0)) +
-        parseInt(this.getCss(element, 'padding-bottom', 0));
-      const margin =
-        styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
-        (styleParams.allowTitle || styleParams.allowDescription) &&
-        styleParams.textImageSpace
-          ? styleParams.textImageSpace
-          : 0;
+      if (element) {
+        const element = elements.length > 0 && elements[0];
+        const elementPadding =
+          parseInt(this.getCss(element, 'padding-top', 0)) +
+          parseInt(this.getCss(element, 'padding-bottom', 0));
+        const margin =
+          styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
+          (styleParams.allowTitle || styleParams.allowDescription) &&
+          styleParams.textImageSpace
+            ? styleParams.textImageSpace
+            : 0;
 
-      const availableHeightOfTheTextElement = textPlacementAboveOrBelow ? options.externalTotalInfoHeight : textsContainerHeight; //maybe can be textsContainerHeight for textPlacementAboveOrBelow as well
-      availableHeight = availableHeightOfTheTextElement - elementPadding - margin;
-
+        const availableHeightOfTheTextElement = textPlacementAboveOrBelow ? options.externalTotalInfoHeight : textsContainerHeight; //maybe can be textsContainerHeight for textPlacementAboveOrBelow as well
+        availableHeight = availableHeightOfTheTextElement - elementPadding - margin;
+      }
     } else {
 
       availableHeight = textsContainerHeight;
@@ -176,11 +177,8 @@ class LineHeightFixer {
 
     const { styleParams, title, description } = options;
 
-    const textPlacementAboveOrBelow = styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
-    const textPlacementRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
-
+    const textPlacementRightOrLeft = hasHorizontalPlacement(styleParams.titlePlacement);
+    const textPlacementAboveOrBelow = hasVerticalPlacement(styleParams.titlePlacement);
 
     if (!container || !(options && options.itemContainer)) {
       return;

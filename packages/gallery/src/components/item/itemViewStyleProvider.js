@@ -1,10 +1,10 @@
 import INFO_TYPE from '../../common/constants/infoType';
-import PLACEMENTS from '../../common/constants/placements';
+import { hasVerticalPlacement, hasHorizontalPlacement, hasHoverPlacement, hasAbovePlacement, hasBelowPlacement} from '../../common/constants/placements';
 
 export function getContainerStyle(styleParams) {
   return {
     ...((styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) &&
+      hasHoverPlacement(styleParams.titlePlacement)) &&
       {
         ...getBorderStyle(
           styleParams.itemBorderRadius,
@@ -33,7 +33,7 @@ function boxShadow(styleParams) {
 
 export function getImageStyle(styleParams) {
   return {
-    ...(!(styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER) &&
+    ...(!(hasHoverPlacement(styleParams.titlePlacement)) &&
       (styleParams.imageInfoType === INFO_TYPE.NO_BACKGROUND ||
         styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) && {
         ...getBorderStyle(
@@ -59,7 +59,7 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
 
 export function getOuterInfoStyle(styleParams) {
   const styles = {
-    ...((styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT || styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT) && {
+    ...((hasHorizontalPlacement(styleParams.titlePlacement)) && {
       height: '100%',
       float: 'left',
     })
@@ -72,10 +72,10 @@ export function getOuterInfoStyle(styleParams) {
         styleParams.textBoxBorderWidth,
         styleParams.textBoxBorderColor,
       ),
-      ...(styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE && {
+      ...(hasAbovePlacement(styleParams.titlePlacement) && {
         marginBottom: styleParams.textImageSpace,
       }),
-      ...(styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW && {
+      ...(hasBelowPlacement(styleParams.titlePlacement) && {
         marginTop: styleParams.textImageSpace,
       }),
     };
@@ -123,10 +123,8 @@ export function getInnerInfoStyle(styleParams, infoHeight, infoWidth) {
     boxSizing: 'border-box',
   };
 
-  const infoAboveOrBelow = styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
-    styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
-  const infoRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
-    styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
+  const infoAboveOrBelow = hasVerticalPlacement(styleParams.titlePlacement);
+  const infoRightOrLeft = hasHorizontalPlacement(styleParams.titlePlacement);
 
   return {
     ...commonStyles,

@@ -1,4 +1,5 @@
 import consts from '../../../common/constants/index';
+import {isVerticalPlacement} from '../../../common/constants/placements';
 import { fixedStyles } from '../presets/gridGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
@@ -223,6 +224,6 @@ const fixedStyleParams = {
   loveCounter: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.loveCounter,
   itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
   scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: sp => [consts.placements.SHOW_ABOVE, consts.placements.SHOW_BELOW].includes(sp.titlePlacement) || sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
-  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.textBoxHeightCalculationOptions.MANUAL || (sp.titlePlacement !== consts.placements.SHOW_ABOVE && sp.titlePlacement !== consts.placements.SHOW_BELOW),
+  titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
+  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.textBoxHeightCalculationOptions.MANUAL || !isVerticalPlacement(sp.titlePlacement),
 };

@@ -18,7 +18,7 @@ import {
   isSEOMode,
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
-import PLACEMENTS from '../../common/constants/placements';
+import PLACEMENTS, { hasBelowPlacement, hasAbovePlacement, hasRightPlacement, hasLeftPlacement, isRightPlacement, isLeftPlacement, hasHoverPlacement } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import CLICK_ACTIONS from '../../common/constants/itemClick';
 import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
@@ -300,7 +300,7 @@ class ItemView extends GalleryComponent {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        titlePlacement === PLACEMENTS.SHOW_ON_HOVER && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
+        hasHoverPlacement(titlePlacement) && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
         isNewMobileSettings
       ) {
         return true;
@@ -625,7 +625,7 @@ class ItemView extends GalleryComponent {
 
     if (this.shouldHover() || styleParams.isSlideshow) {
       itemTexts =
-        styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
+        hasHoverPlacement(styleParams.titlePlacement) && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
           ? this.getItemTextsDetails()
           : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
       social = this.getSocial();
@@ -698,31 +698,31 @@ class ItemView extends GalleryComponent {
   }
 
   getRightInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) {
+    if (hasRightPlacement(this.props.styleParams.titlePlacement)) {
       return this.getInfoElement('gallery-item-right-info');
     } else {
       return null;
     }
   }
-
+  
   getLeftInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT) {
+    if (hasLeftPlacement(this.props.styleParams.titlePlacement)) {
       return this.getInfoElement('gallery-item-left-info');
     } else {
       return null;
     }
   }
-
+  
   getBottomInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW) {
+    if (hasBelowPlacement(this.props.styleParams.titlePlacement)) {
       return this.getInfoElement('gallery-item-bottom-info');
     } else {
       return null;
     }
   }
-
+  
   getTopInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE) {
+    if (hasAbovePlacement(this.props.styleParams.titlePlacement)) {
       return this.getInfoElement('gallery-item-top-info');
     } else {
       return null;
@@ -1105,8 +1105,8 @@ class ItemView extends GalleryComponent {
         {this.getLeftInfoElementIfNeeded()}
         <div
           style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
-            ...((this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) && {float: 'left'}),
-            ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT && {float: 'right'})
+            ...((isRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
+            ...((isLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
           }}
         >
           {!isItemWrapperEmpty && (<div

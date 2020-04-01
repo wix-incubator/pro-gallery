@@ -5,7 +5,7 @@ import { GalleryComponent } from '../../galleryComponent';
 import window from '../../../common/window/windowWrapper';
 import { isSiteMode, isSEOMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
-import PLACEMENTS from '../../../common/constants/placements';
+import {hasHorizontalPlacement, hasVerticalPlacement} from '../../../common/constants/placements';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import DownloadIcon from '../../svgs/components/download';
 import ShareStoreIcon from '../../svgs/components/share_store';
@@ -219,10 +219,8 @@ export default class Social extends GalleryComponent {
       styleParams.loveButton ||
       styleParams.allowDownload;
     const textPlacementAboveOrBelowOrRightOrLeft =
-      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
+      hasHorizontalPlacement(styleParams.titlePlacement) ||
+      hasVerticalPlacement(styleParams.titlePlacement);
 
     const classes = [
       [showShare, 'hidden'],
