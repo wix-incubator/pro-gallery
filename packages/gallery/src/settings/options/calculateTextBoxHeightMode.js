@@ -1,4 +1,5 @@
 import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
+import { hasVerticalPlacement } from '../../common/constants/placements';
 import { createOptions } from '../utils/utils';
 
 export default {
@@ -6,10 +7,9 @@ export default {
   description: `Set the calc type (manual or automatic) to use when calculating the textbox height`,
   isRelevant: (styleParams) => (styleParams.isVertical &&
     styleParams.groupSize === 1 &&
-    !styleParams.oneRow) &&
-    (styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ABOVE ||
-      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_BELOW) &&
-    (styleParams.allowTitle || styleParams.allowDescription),
+    !styleParams.oneRow &&
+    hasVerticalPlacement(styleParams.titlePlacement) &&
+    (styleParams.allowTitle || styleParams.allowDescription)),
   type: INPUT_TYPES.OPTIONS,
   options: createOptions('textBoxHeightCalculationOptions'),
   default: GALLERY_CONSTS.textBoxHeightCalculationOptions.AUTOMATIC,

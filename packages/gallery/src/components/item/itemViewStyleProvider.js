@@ -1,5 +1,5 @@
 import INFO_TYPE from '../../common/constants/infoType';
-import { hasVerticalPlacement, hasHorizontalPlacement, hasHoverPlacement, hasAbovePlacement, hasBelowPlacement} from '../../common/constants/placements';
+import { hasVerticalPlacement, hasHorizontalPlacement, hasHoverPlacement, hasAbovePlacement, hasBelowPlacement, isRightPlacement} from '../../common/constants/placements';
 
 export function getContainerStyle(styleParams) {
   return {
@@ -57,11 +57,15 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
   };
 }
 
-export function getOuterInfoStyle(styleParams) {
+export function getOuterInfoStyle(placement, styleParams, infoHeight) {
   const styles = {
-    ...((hasHorizontalPlacement(styleParams.titlePlacement)) && {
-      height: '100%',
-      float: 'left',
+    ...((hasHorizontalPlacement(placement)) && {
+      height: `calc(100% - ${infoHeight}px)`,
+      float: isRightPlacement(placement) ? 'right' : 'left',
+    }),
+    ...((hasVerticalPlacement(placement)) && {
+      width: '100%',
+      height: infoHeight
     })
   };
   if (styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) {
@@ -72,10 +76,10 @@ export function getOuterInfoStyle(styleParams) {
         styleParams.textBoxBorderWidth,
         styleParams.textBoxBorderColor,
       ),
-      ...(hasAbovePlacement(styleParams.titlePlacement) && {
+      ...(hasAbovePlacement(placement) && {
         marginBottom: styleParams.textImageSpace,
       }),
-      ...(hasBelowPlacement(styleParams.titlePlacement) && {
+      ...(hasBelowPlacement(placement) && {
         marginTop: styleParams.textImageSpace,
       }),
     };
@@ -95,6 +99,7 @@ function getInfoHorizontalPadding(styleParams) {
 
 function getInnerInfoStylesAboveOrBelow(styleParams, infoHeight) {
   return {
+    width: '100%',
     height: infoHeight,
     paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
     paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
@@ -105,12 +110,12 @@ function getInnerInfoStylesAboveOrBelow(styleParams, infoHeight) {
 
 function getInnerInfoStylesRightOrLeft(styleParams, infoWidth) {
   return {
-    width: infoWidth,
     height: '100%',
+    width: infoWidth,
   }
 }
 
-export function getInnerInfoStyle(styleParams, infoHeight, infoWidth) {
+export function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth) {
   const commonStyles = {
     ...((styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND ||
       styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND) &&
@@ -123,8 +128,8 @@ export function getInnerInfoStyle(styleParams, infoHeight, infoWidth) {
     boxSizing: 'border-box',
   };
 
-  const infoAboveOrBelow = hasVerticalPlacement(styleParams.titlePlacement);
-  const infoRightOrLeft = hasHorizontalPlacement(styleParams.titlePlacement);
+  const infoAboveOrBelow = hasVerticalPlacement(placement);
+  const infoRightOrLeft = hasHorizontalPlacement(placement);
 
   return {
     ...commonStyles,

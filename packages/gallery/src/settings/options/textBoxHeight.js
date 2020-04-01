@@ -1,4 +1,5 @@
 import {GALLERY_CONSTS, INPUT_TYPES} from '../utils/constants';
+import { hasVerticalPlacement } from '../../common/constants/placements';
 
 export default {
   title: 'Text Box Height (pixels)',
@@ -6,8 +7,7 @@ export default {
   isRelevant: (styleParams) => (styleParams.isVertical &&
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
-    (styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ABOVE ||
-      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_BELOW) &&
+    hasVerticalPlacement(styleParams.titlePlacement) &&
     styleParams.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL &&
     (styleParams.allowTitle || styleParams.allowDescription),
   type: INPUT_TYPES.NUMBER,
