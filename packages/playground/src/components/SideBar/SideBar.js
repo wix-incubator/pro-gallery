@@ -12,8 +12,7 @@ import comments from './comments';
 import { throttle } from "../../utils/utils";
 import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
-import { notEligibleReasons } from 'pro-gallery/dist/src/components/gallery/leanGallery/isEligible';
-import LAZY_LOAD from 'pro-gallery/dist/src/common/constants/lazyLoad';
+import { GALLERY_CONSTS, notEligibleReasons } from 'pro-gallery';
 
 function SideBar({ items }) {
   const {
@@ -180,7 +179,7 @@ function SideBar({ items }) {
                 <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({ isAvoidGallerySelfMeasure: e })} />
               </Form.Item>
               <Form.Item label="Use Native Lazy Loading" labelAlign="left">
-                <Switch checked={gallerySettings.lazyLoad === LAZY_LOAD.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? LAZY_LOAD.NATIVE : LAZY_LOAD.CSS })} />
+                <Switch checked={gallerySettings.lazyLoad === GALLERY_CONSTS.lazyLoad.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? GALLERY_CONSTS.lazyLoad.NATIVE : GALLERY_CONSTS.lazyLoad.CSS })} />
               </Form.Item>
             </Form>
           </Collapse.Panel>

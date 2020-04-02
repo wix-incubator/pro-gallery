@@ -7,7 +7,7 @@ import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import {GALLERY_CONSTS, ExpandableProGallery} from 'pro-gallery';
+import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
 // import Loader from './loader';
 
 import 'pro-gallery/dist/statics/main.css';
