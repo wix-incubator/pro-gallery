@@ -751,7 +751,7 @@ class ItemView extends GalleryComponent {
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemExternalInfo) {
       info = (
-        <div style={getOuterInfoStyle(placement, styleParams, infoHeight)}>
+        <div style={getOuterInfoStyle(placement, styleParams, style.height, styleParams.textBoxHeight)}>
           <div
             style={getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)}
             className={'gallery-item-common-info ' + elementName}

@@ -57,15 +57,15 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
   };
 }
 
-export function getOuterInfoStyle(placement, styleParams, infoHeight) {
+export function getOuterInfoStyle(placement, styleParams, mediaHeight, textBoxHeight) {
   const styles = {
     ...((hasHorizontalPlacement(placement)) && {
-      height: `calc(100% - ${infoHeight}px)`,
+      height: mediaHeight,
       float: isRightPlacement(placement) ? 'right' : 'left',
     }),
     ...((hasVerticalPlacement(placement)) && {
       width: '100%',
-      height: infoHeight
+      height: textBoxHeight
     })
   };
   if (styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) {
