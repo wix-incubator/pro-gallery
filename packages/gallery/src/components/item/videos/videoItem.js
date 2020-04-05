@@ -22,10 +22,15 @@ class VideoItem extends GalleryComponent {
       playing: false,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
+      hlsPlayerLoaded: false,
     };
   }
 
   componentDidMount() {
+    this.dynamiclyImportVideoPlayers();
+  }
+
+  dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
       import(/* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
         window.ReactPlayer = ReactPlayer.default;
@@ -45,6 +50,21 @@ class VideoItem extends GalleryComponent {
         this.playVideoIfNeeded();
       });
     }
+    if (
+      //Hls player must be loaded by us, problem with requireJS
+      !(window && window.Hls) &&
+      this.isHLSVideo()
+    ) {
+      import(/* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
+        window.Hls =  Player.default;
+        this.setState({ hlsPlayerLoaded: true });
+        this.playVideoIfNeeded();
+      });
+    }
+  }
+  
+  isHLSVideo(){
+    return  this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -162,6 +182,7 @@ class VideoItem extends GalleryComponent {
               style: videoDimensionsCss,
               type: 'video/mp4',
             },
+              forceHLS: this.isHLSVideo()
           },
         }}
         key={'video-' + this.props.id}

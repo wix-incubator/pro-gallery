@@ -29,8 +29,9 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
+    "hls.js": "^0.13.2",
     "pro-layouts": "^1.8.4",
-    "react-player": "1.10.0"
+    "react-player": "^1.15.3"
   },
   "peerDependencies": {
     "react": "^16.8.6",
