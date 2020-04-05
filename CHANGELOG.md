@@ -1,3 +1,9 @@
+## [v1.8.10](https://pro-gallery-1-8-10.surge.sh) (29/03/2020)
+ 
+#### GALLERY
+ -  Feat: add data-cancel-link on fake navigation expand mode share links
+
+---
 ## [v1.8.9](https://pro-gallery-1-8-9.surge.sh) (25/03/2020)
  
 #### GALLERY
