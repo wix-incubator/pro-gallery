@@ -99,7 +99,7 @@ export class Group {
       const item = new Item({ ...this.items[this.items.length - 1].config });
 
       // const item = {...(this.items[this.items.length - 1])};
-      // // item.id += 'dummy';
+      // item.id += 'dummy';
       item.idx = item.config.idx + idx - (this.items.length - 1);
       item.type = 'dummy';
       this.dummyItems[idx] = item;

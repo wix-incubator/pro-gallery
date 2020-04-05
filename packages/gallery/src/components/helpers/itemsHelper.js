@@ -76,13 +76,20 @@ export class ItemsHelper {
     if (!existingStructure.galleryItems) {
       existingStructure.galleryItems = [];
     }
+    const lastColumn = existingStructure.columns.slice(-1)[0];
+    const lastGroup = lastColumn.galleryGroups.slice(-1)[0];
+    existingStructure.galleryItems.splice(-lastGroup.items.length);
+    
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
       const existingColumn = existingStructure.columns[c] || column;
       if (!existingColumn.galleryGroups) {
         existingColumn.galleryGroups = [];
       }
-      const groups = column.groups || column;
+      // remove last group so it will be rebuilt
+      existingColumn.galleryGroups.splice(-1);
+
+      const groups = column.groups || column; 
       for (let g = 0; g < groups.length; g++) {
         const group = groups[g];
         const groupItems = [];
@@ -103,7 +110,7 @@ export class ItemsHelper {
           } else {
             existingStructure.galleryItems[item.idx].processScheme(item);
           }
-        }
+        } 
         if (!existingColumn.galleryGroups[g]) {
           // console.count(`convertToGalleryItems - group [${g}]`);
           existingColumn.galleryGroups[g] = new GalleryGroup({
@@ -121,6 +128,7 @@ export class ItemsHelper {
     if (utils.isVerbose()) {
       console.timeEnd('convertToGalleryItems');
     }
+    debugger
     return galleryStructure;
   }
 }
