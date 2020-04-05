@@ -128,7 +128,6 @@ export class ItemsHelper {
     if (utils.isVerbose()) {
       console.timeEnd('convertToGalleryItems');
     }
-    debugger
     return galleryStructure;
   }
 }
