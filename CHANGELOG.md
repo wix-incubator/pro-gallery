@@ -1,3 +1,15 @@
+## [v1.8.12](https://pro-gallery-1-8-12.surge.sh) (06/04/2020)
+ 
+#### GALLERY
+ -  Allow all videos to have _placeholder and register in the video list.
+
+---
+## [v1.8.11](https://pro-gallery-1-8-11.surge.sh) (05/04/2020)
+ 
+#### GALLERY
+ -  Add support for HLS redirect url (or plain .m3u8) videoUrl for video items 
+
+---
 ## [v1.8.10](https://pro-gallery-1-8-10.surge.sh) (29/03/2020)
  
 #### GALLERY
