@@ -87,7 +87,7 @@ export class ItemsHelper {
       if (!existingColumn.galleryGroups) {
         existingColumn.galleryGroups = [];
       }
-      const groups = column.groups || column; 
+      const groups = column.groups || column;
       for (let g = 0; g < groups.length; g++) {
         const group = groups[g];
         const groupItems = [];
@@ -108,7 +108,7 @@ export class ItemsHelper {
           } else {
             existingStructure.galleryItems[item.idx].processScheme(item);
           }
-        } 
+        }
         if (!existingColumn.galleryGroups[g]) {
           // console.count(`convertToGalleryItems - group [${g}]`);
           existingColumn.galleryGroups[g] = new GalleryGroup({
