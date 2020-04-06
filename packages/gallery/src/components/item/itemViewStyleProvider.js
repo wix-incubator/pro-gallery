@@ -64,8 +64,8 @@ export function getOuterInfoStyle(placement, styleParams, mediaHeight, textBoxHe
       float: isRightPlacement(placement) ? 'right' : 'left',
     }),
     ...((hasVerticalPlacement(placement)) && {
-      width: '100%',
-      height: textBoxHeight
+      height: textBoxHeight,
+      boxSizing: 'content-box'
     })
   };
   if (styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) {
