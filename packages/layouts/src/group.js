@@ -96,10 +96,16 @@ export class Group {
     } else if (this.dummyItems[idx]) {
       return this.dummyItems[idx];
     } else {
+      // dummy created from the last item config
       const item = new Item({ ...this.items[this.items.length - 1].config });
 
       // const item = {...(this.items[this.items.length - 1])};
       // item.id += 'dummy';
+
+      // item.idx given to dummy items starting from the last item
+      // item.config.idx = last item index (all gallery items, not group items)
+      // idx = in group item index
+      // this.items = the group's items
       item.idx = item.config.idx + idx - (this.items.length - 1);
       item.type = 'dummy';
       this.dummyItems[idx] = item;

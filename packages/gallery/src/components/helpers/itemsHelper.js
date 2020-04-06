@@ -76,19 +76,17 @@ export class ItemsHelper {
     if (!existingStructure.galleryItems) {
       existingStructure.galleryItems = [];
     }
+    // remove last group so it will be rebuilt in case of dummy item
     const lastColumn = existingStructure.columns.slice(-1)[0];
-    const lastGroup = lastColumn.galleryGroups.slice(-1)[0];
+    const lastGroup = lastColumn.galleryGroups.pop();
     existingStructure.galleryItems.splice(-lastGroup.items.length);
-    
+
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
       const existingColumn = existingStructure.columns[c] || column;
       if (!existingColumn.galleryGroups) {
         existingColumn.galleryGroups = [];
       }
-      // remove last group so it will be rebuilt
-      existingColumn.galleryGroups.splice(-1);
-
       const groups = column.groups || column; 
       for (let g = 0; g < groups.length; g++) {
         const group = groups[g];
