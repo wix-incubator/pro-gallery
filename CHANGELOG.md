@@ -1,3 +1,15 @@
+## [v1.8.13](https://pro-gallery-1-8-13.surge.sh) (06/04/2020)
+ 
+#### GALLERY
+ -  Fix: missing items in horizontal layouts (Grid and Masonry)
+
+---
+## [v1.8.12](https://pro-gallery-1-8-12.surge.sh) (06/04/2020)
+ 
+#### GALLERY
+ -  Allow all videos to have _placeholder and register in the video list.
+
+---
 ## [v1.8.11](https://pro-gallery-1-8-11.surge.sh) (05/04/2020)
  
 #### GALLERY
