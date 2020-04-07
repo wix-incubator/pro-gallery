@@ -1,3 +1,9 @@
+## [v1.9.0](https://pro-gallery-1-9-0.surge.sh) (07/04/2020)
+ 
+#### GALLERY
+ -  Feature: enable multiple title placements
+
+---
 ## [v1.8.13](https://pro-gallery-1-8-13.surge.sh) (06/04/2020)
  
 #### GALLERY

@@ -1,4 +1,5 @@
 import {GALLERY_CONSTS, INPUT_TYPES} from '../utils/constants';
+import { hasHorizontalPlacement } from '../../common/constants/placements';
 
 export default {
   title: 'Text Box Width (pixels)',
@@ -7,8 +8,7 @@ export default {
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
     styleParams.calculateTextBoxWidthMode === GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL &&
-    (styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT ||
-      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT) &&
+    hasHorizontalPlacement(styleParams.titlePlacement) &&
     (styleParams.allowTitle || styleParams.allowDescription),
   type: INPUT_TYPES.NUMBER,
   default: 200,

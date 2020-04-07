@@ -63,7 +63,21 @@ class JsonEditor extends React.Component {
           </Menu>
         );
       case INPUT_TYPES.MULTISELECT:
-        const modKey = key => String(key) + (settings.repeat === true ? `|${Math.random()}` : '|');
+        return (
+          <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Please select"
+            defaultValue={unescape(theValue || '').split(',').filter(Boolean) || []}
+            onChange={val => this.onFieldChanged(key, val.join(','))}
+          >
+            {settings.options.map(({value, title}) => (
+              <Select.Option key={String(value)}>{title}</Select.Option>
+            ))}
+          </Select>
+        );
+      case INPUT_TYPES.MULTIREPEAT:
+        const modKey = key => String(key) + `|${Math.random()}`;
         const createOptions = ({value, title}) => (
           <Select.Option key={modKey(value)}>{title}</Select.Option>
         );
@@ -73,7 +87,7 @@ class JsonEditor extends React.Component {
             style={{ width: '100%' }}
             placeholder="Please select"
             defaultValue={unescape(theValue || '').split(',').filter(Boolean) || []}
-            onChange={val => this.onFieldChanged(key, val.map(v => v.substr(0, v.indexOf('|'))).join(','))}
+            onChange={val => this.onFieldChanged(key, val.map(v => v.substr(0, v.indexOf('|') >= 0 ? v.indexOf('|') : v.length)).join(','))}
           >
             {settings.options.map(createOptions)}
           </Select>
@@ -193,7 +207,7 @@ class JsonEditor extends React.Component {
       }
     }
     return (
-      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
+      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{whiteSpace: 'pre-wrap', margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
           <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={Extra(settings)}>
             {this.renderEntryEditor(styleParam, settings)}
