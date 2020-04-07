@@ -18,7 +18,7 @@ import {
   isSEOMode,
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
-import PLACEMENTS from '../../common/constants/placements';
+import PLACEMENTS, { hasBelowPlacement, hasAbovePlacement, hasRightPlacement, hasLeftPlacement, hasHoverPlacement } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import CLICK_ACTIONS from '../../common/constants/itemClick';
 import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
@@ -300,7 +300,7 @@ class ItemView extends GalleryComponent {
         return true;
       } else if (
         (allowTitle || allowDescription) &&
-        titlePlacement === PLACEMENTS.SHOW_ON_HOVER && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
+        hasHoverPlacement(titlePlacement) && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
         isNewMobileSettings
       ) {
         return true;
@@ -625,7 +625,7 @@ class ItemView extends GalleryComponent {
 
     if (this.shouldHover() || styleParams.isSlideshow) {
       itemTexts =
-        styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
+        hasHoverPlacement(styleParams.titlePlacement) && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
           ? this.getItemTextsDetails()
           : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
       social = this.getSocial();
@@ -698,38 +698,38 @@ class ItemView extends GalleryComponent {
   }
 
   getRightInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) {
-      return this.getInfoElement('gallery-item-right-info');
+    if (hasRightPlacement(this.props.styleParams.titlePlacement)) {
+      return this.getInfoElement(PLACEMENTS.SHOW_ON_THE_RIGHT, 'gallery-item-right-info');
     } else {
       return null;
     }
   }
-
+  
   getLeftInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT) {
-      return this.getInfoElement('gallery-item-left-info');
+    if (hasLeftPlacement(this.props.styleParams.titlePlacement)) {
+      return this.getInfoElement(PLACEMENTS.SHOW_ON_THE_LEFT, 'gallery-item-left-info');
     } else {
       return null;
     }
   }
-
+  
   getBottomInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW) {
-      return this.getInfoElement('gallery-item-bottom-info');
+    if (hasBelowPlacement(this.props.styleParams.titlePlacement)) {
+      return this.getInfoElement(PLACEMENTS.SHOW_BELOW, 'gallery-item-bottom-info');
     } else {
       return null;
     }
   }
-
+  
   getTopInfoElementIfNeeded() {
-    if (this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE) {
-      return this.getInfoElement('gallery-item-top-info');
+    if (hasAbovePlacement(this.props.styleParams.titlePlacement)) {
+      return this.getInfoElement(PLACEMENTS.SHOW_ABOVE, 'gallery-item-top-info');
     } else {
       return null;
     }
   }
 
-  getInfoElement(elementName) {
+  getInfoElement(placement, elementName) {
     const { styleParams, customInfoRenderer, style } = this.props;
     if (!styleParams.allowTitle &&
       !styleParams.allowDescription &&
@@ -745,15 +745,15 @@ class ItemView extends GalleryComponent {
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemExternalInfo = customInfoRenderer
-      ? customInfoRenderer(this.props)
+      ? customInfoRenderer(this.props, placement)
       : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemExternalInfo) {
       info = (
-        <div style={getOuterInfoStyle(styleParams)}>
+        <div style={getOuterInfoStyle(placement, styleParams, style.height, styleParams.textBoxHeight)}>
           <div
-            style={getInnerInfoStyle(styleParams, infoHeight, infoWidth)}
+            style={getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)}
             className={'gallery-item-common-info ' + elementName}
             onMouseOver={() => {
               !utils.isMobile() && this.props.actions.eventsListener(
@@ -1103,10 +1103,11 @@ class ItemView extends GalleryComponent {
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
+        {this.getRightInfoElementIfNeeded()}
         <div
           style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
-            ...((this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT) && {float: 'left'}),
-            ...(this.props.styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT && {float: 'right'})
+            // ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
+            // ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
           }}
         >
           {!isItemWrapperEmpty && (<div
@@ -1119,7 +1120,6 @@ class ItemView extends GalleryComponent {
             {this.getItemInner()}
           </div>)}
         </div>
-        {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );

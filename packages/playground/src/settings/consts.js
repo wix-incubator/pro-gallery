@@ -9,6 +9,7 @@ export const INPUT_TYPES = {
     FONT_PICKER: "FONT_PICKER",
     BUTTON: "BUTTON",
     MULTISELECT: "MULTISELECT",
+    MULTIREPEAT: "MULTIREPEAT",
   };
   
   export const SECTIONS = {

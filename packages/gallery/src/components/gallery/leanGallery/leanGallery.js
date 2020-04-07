@@ -4,7 +4,8 @@ import React from 'react';
 import EVENTS from '../../../common/constants/events';
 import GALLERY_SIZE_TYPE from '../../../common/constants/gallerySizeType';
 import CROP_TYPES from '../../../common/constants/resizeMethods'
-import INFO_PLACEMENT from '../../../common/constants/placements'
+import {hasVerticalPlacement, default as INFO_PLACEMENT} from '../../../common/constants/placements'
+
 import CLICK_ACTIONS from '../../../common/constants/itemClick'
 
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
@@ -159,7 +160,7 @@ export default class LeanGallery extends React.Component {
     const { height = 0 } = this.state.itemStyle
     const { textBoxHeight = 0, titlePlacement } = this.props.styles;
 
-    if ([INFO_PLACEMENT.SHOW_ABOVE, INFO_PLACEMENT.SHOW_BELOW].includes(titlePlacement)) {
+    if (hasVerticalPlacement(titlePlacement)) {
       return height + textBoxHeight;
     } else {
       return height;

@@ -3,7 +3,7 @@ import CustomButton from '../buttons/customButton.js';
 import ItemTitle from './itemTitle.js';
 import ItemDescription from './itemDescription.js';
 import lineHeightFixer from './lineHeightFixer.js';
-import PLACEMENTS from '../../../common/constants/placements';
+import {hasHorizontalPlacement, hasHoverPlacement} from '../../../common/constants/placements';
 import utils from '../../../common/utils';
 import designConsts from '../../../common/constants/designConsts.js';
 import { featureManager } from '../../helpers/versionsHelper';
@@ -45,15 +45,15 @@ export default class Texts extends GalleryComponent {
     !styleParams.isSlideshow &&
     !styleParams.isSlider &&
     !styleParams.hasThumbnails &&
-      (styleParams.titlePlacement === PLACEMENTS.SHOW_ON_HOVER && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW)
+      (hasHoverPlacement(styleParams.titlePlacement) && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW)
     const isCentered = style.justifyContent === 'center';
     const elementStyle = {
       justifyContent: styleParams.galleryVerticalAlign,
       alignItems: styleParams.galleryHorizontalAlign,
       textAlign: styleParams.galleryTextAlign,
     };
-    const textPlacementRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
+
+    const textPlacementRightOrLeft = hasHorizontalPlacement(styleParams.titlePlacement);;
 
     //Set the texts fixed height considering the height of the love and share buttons which is about 100px;
     if (

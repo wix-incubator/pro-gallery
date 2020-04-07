@@ -1,5 +1,5 @@
 import utils from '../../common/utils';
-import PLACEMENTS from '../../common/constants/placements';
+import PLACEMENTS, {hasHorizontalPlacement, hasVerticalPlacement, hasHoverPlacement} from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
@@ -347,7 +347,7 @@ function processLayouts(styles) {
   }
 
   // to_wrapper
-  if (processedStyles.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER &&
+  if (!hasHoverPlacement(processedStyles.titlePlacement) &&
     processedStyles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
     ) {
     processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
@@ -531,9 +531,7 @@ function processLayouts(styles) {
 
 function getHeightFromStyleParams(styleParams, textBoxHeight) {
   let additionalHeight = textBoxHeight;
-  if (
-    (styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW) &&
+  if (hasVerticalPlacement(styleParams.titlePlacement) &&
     styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
     (styleParams.allowTitle || styleParams.allowDescription)
   ) {
@@ -570,12 +568,9 @@ function shouldShowTextRightOrLeftBelow(styleParams) {
 
   const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
 
-  if (!allowedByLayoutConfig ||
-    (titlePlacement !== 'SHOW_ON_THE_RIGHT' && titlePlacement !== 'SHOW_ON_THE_LEFT') ||
-    (!allowTitle && !allowDescription && !useCustomButton)) {
-    return false;
-  }
-  return true;
+  return (allowedByLayoutConfig && 
+    hasHorizontalPlacement(titlePlacement) &&
+    (allowTitle || allowDescription || useCustomButton))
 }
 
 function getTextBoxAboveOrBelowHeight(styleParams) {
@@ -600,13 +595,10 @@ function shouldShowTextBoxAboveOrBelow(styleParams) {
     useCustomButton,
   } = styleParams;
 
-  if (
-    (titlePlacement !== 'SHOW_ABOVE' && titlePlacement !== 'SHOW_BELOW') ||
-    (!allowTitle && !allowDescription && !useCustomButton)
-  ) {
-    return false;
-  }
-  return true;
+  return (
+    hasVerticalPlacement(titlePlacement) &&
+    (allowTitle || allowDescription || useCustomButton)
+  );
 }
 
 function getHeightByContent(styleParams) {
@@ -686,8 +678,7 @@ function isSlideshowFont(styles) {
     return true;
   }
   if (
-    styles.titlePlacement === 'SHOW_ABOVE' ||
-    styles.titlePlacement === 'SHOW_BELOW'
+    hasVerticalPlacement(styles.titlePlacement)
   ) {
     if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
       return true;
