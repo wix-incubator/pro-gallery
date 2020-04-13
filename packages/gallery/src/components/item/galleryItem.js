@@ -523,7 +523,7 @@ class GalleryItem {
   }
 
   get isVideoPlaceholder() {
-      return this.isVideoPlaceholder || this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder
+      return this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder
   }
 
   get alt() {
