@@ -1,3 +1,9 @@
+## [v1.9.1](https://pro-gallery-1-9-1.surge.sh) (13/04/2020)
+ 
+#### PLAYGROUND
+ -  Fix: missing rotatingCropRatios isRelevant
+
+---
 ## [v1.9.0](https://pro-gallery-1-9-0.surge.sh) (07/04/2020)
  
 #### GALLERY
