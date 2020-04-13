@@ -1,3 +1,9 @@
+## [v1.9.2](https://pro-gallery-1-9-2.surge.sh) (13/04/2020)
+ 
+#### GALLERY
+ -  Added video placeholder item option - metaData.isVideoPlaceholder
+
+---
 ## [v1.9.1](https://pro-gallery-1-9-1.surge.sh) (13/04/2020)
  
 #### PLAYGROUND
