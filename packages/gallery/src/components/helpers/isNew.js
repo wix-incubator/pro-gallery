@@ -116,7 +116,8 @@ export default ({ items, styles, container, itemsDimensions }, state) => {
           !newItem ||
           !existingItem ||
           newItem.itemId !== existingItem.itemId ||
-          newItem.mediaUrl !== existingItem.mediaUrl;
+          newItem.mediaUrl !== existingItem.mediaUrl || 
+          newItem.metaData && existingItem.metaData && newItem.metaData.type !== existingItem.metaData.type;
         if (itemsChanged) {
           reason.items = `items #${idx} id was changed.`;
         }
