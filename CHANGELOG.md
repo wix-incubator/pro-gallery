@@ -1,3 +1,9 @@
+## [v1.9.3](https://pro-gallery-1-9-3.surge.sh) (13/04/2020)
+ 
+#### GALLERY
+ -  New feature - items have changed if one of the item types have changed
+
+---
 ## [v1.9.2](https://pro-gallery-1-9-2.surge.sh) (13/04/2020)
  
 #### GALLERY
