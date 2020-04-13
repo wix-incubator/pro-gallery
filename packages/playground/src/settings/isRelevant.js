@@ -63,6 +63,7 @@ export default {
   groupSize: sp => isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE]),
   groupTypes: sp => isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE]),
   rotatingGroupTypes: sp => isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE]),
+  rotatingCropRatios: sp => sp.cubeImages,
   groupsPerStrip: sp => isLayout(sp, [GALLERY_CONSTS.layout.COLLAGE]),
   thumbnailSpacings: sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) > -1,
   imageMargin: sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.COLUMN, GALLERY_CONSTS.layout.BRICKS, GALLERY_CONSTS.layout.MIX, GALLERY_CONSTS.layout.ALTERNATE].indexOf(sp.galleryLayout) > -1,
