@@ -658,6 +658,7 @@ class ItemView extends GalleryComponent {
       case 'image':
       case 'picture':
       default:
+        if (this.props.dto.metaData.isVideoPlaceholder)
         itemInner = [this.getImageItem(imageDimensions), itemHover];
     }
 

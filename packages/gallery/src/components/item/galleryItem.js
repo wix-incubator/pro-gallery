@@ -88,6 +88,7 @@ class GalleryItem {
       hash: this.id,
       html: this.html,
       type: this.type,
+      isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
       directLink: this.directLink,
@@ -519,6 +520,10 @@ class GalleryItem {
       default:
         return 'image';
     }
+  }
+
+  get isVideoPlaceholder() {
+      return this.isVideoPlaceholder || this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder
   }
 
   get alt() {

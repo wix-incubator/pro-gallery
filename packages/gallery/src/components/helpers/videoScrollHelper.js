@@ -60,7 +60,8 @@ class VideoScrollHelper {
         newItemCount,
       );
       newItems.forEach(item => {
-        if (item.type === 'video' || (item.type === 'image' && item.id.includes('_placeholder'))) { // either video or a placeholder for video files (both need to be included in the list)
+        debugger;
+        if (item.type === 'video' || (item.type === 'image' && (item.id.includes('_placeholder') || item.dto.metaData.isVideoPlaceholder))) { // either video or a placeholder for video files (both need to be included in the list)
           this.videoItems.push({ ...item, videoPlayRating: item.idx });
         }
       });
