@@ -66,6 +66,13 @@ class VideoItem extends GalleryComponent {
   isHLSVideo(){
     return  this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
   }
+  shouldUseHlsPlayer(){
+    return  this.isHLSVideo && !utils.isiOS()
+  }
+
+  shouldForceVideoForHLS(){
+    return this.isHLSVideo && utils.isiOS();
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.playing) {
@@ -182,7 +189,8 @@ class VideoItem extends GalleryComponent {
               style: videoDimensionsCss,
               type: 'video/mp4',
             },
-              forceHLS: this.isHLSVideo()
+              forceHLS: this.shouldUseHlsPlayer(),
+              forceVideo: this.shouldForceVideoForHLS(),
           },
         }}
         key={'video-' + this.props.id}
