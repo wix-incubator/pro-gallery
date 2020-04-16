@@ -67,11 +67,11 @@ class VideoItem extends GalleryComponent {
     return  this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
   }
   shouldUseHlsPlayer(){
-    return  this.isHLSVideo && !utils.isiOS()
+    return  this.isHLSVideo() && !utils.isiOS()
   }
 
   shouldForceVideoForHLS(){
-    return this.isHLSVideo && utils.isiOS();
+    return this.isHLSVideo() && utils.isiOS();
   }
 
   componentWillReceiveProps(nextProps) {
