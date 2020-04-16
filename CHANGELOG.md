@@ -1,3 +1,21 @@
+## [v1.9.3](https://pro-gallery-1-9-3.surge.sh) (13/04/2020)
+ 
+#### GALLERY
+ -  New feature - items have changed if one of the item types have changed
+
+---
+## [v1.9.2](https://pro-gallery-1-9-2.surge.sh) (13/04/2020)
+ 
+#### GALLERY
+ -  Added video placeholder item option - metaData.isVideoPlaceholder
+
+---
+## [v1.9.1](https://pro-gallery-1-9-1.surge.sh) (13/04/2020)
+ 
+#### PLAYGROUND
+ -  Fix: missing rotatingCropRatios isRelevant
+
+---
 ## [v1.9.0](https://pro-gallery-1-9-0.surge.sh) (07/04/2020)
  
 #### GALLERY

@@ -4,44 +4,44 @@ import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import LAZY_LOAD from '../../../common/constants/lazyLoad';
+import { isSEOMode } from '../../../common/window/viewModeWrapper';
 
 class VideoItemPlaceholder extends GalleryComponent {
   createImageElement() {
     const {
       alt,
       loadingStatus,
-      imageDimensions,
       createUrl,
       id,
       lazyLoad,
       styleParams,
     } = this.props;
+    const url = createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)
+    const image = (<img
+    key={
+      (styleParams.cubeImages && styleParams.cubeType === 'fill'
+        ? 'cubed-'
+        : '') + 'image'
+    }
+    className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+    alt={alt ? alt : 'untitled image'}
+    src={url}
+    loading="lazy"
+  />)
 
-    return (
-      lazyLoad === LAZY_LOAD.NATIVE ? <img
-      key={
-        (styleParams.cubeImages && styleParams.cubeType === 'fill'
-          ? 'cubed-'
-          : '') + 'image'
-      }
-      className={'gallery-item-visible gallery-item gallery-item-preloaded'}
-      alt={alt ? alt : 'untitled image'}
-      src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
-      loading="lazy"
-      style={imageDimensions}
-    />
-    :
-    <canvas
-        key={'image-' + id}
-        alt={alt ? alt : 'untitled video'}
-        className={
-          'gallery-item-hidden gallery-item-visible gallery-item gallery-item-preloaded ' +
-          (loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
-          (loadingStatus.failed ? ' failed ' : '')
-        }
-        data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
-      />
-    );
+  const canvas = (<canvas
+    key={'image-' + id}
+    alt={alt ? alt : 'untitled video'}
+    className={
+      'gallery-item-hidden gallery-item-visible gallery-item gallery-item-preloaded ' +
+      (loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
+      (loadingStatus.failed ? ' failed ' : '')
+    }
+    data-src={url}
+  />)
+
+    const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
+    return useImageTag ? image : canvas;
   }
   render() {
     const { marginLeft, marginTop, ...restOfDimensions } =
