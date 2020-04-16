@@ -186,7 +186,7 @@ class GalleryItem {
           [value]: () => '',
         })),
       );
-    } else if (this.isVideo) {
+    } else if (this.isVideo || this.isVideoPlaceholder) {
       imgUrl = this.poster;
 
       if (utils.isExternalUrl(this.url)) {
@@ -523,7 +523,7 @@ class GalleryItem {
   }
 
   get isVideoPlaceholder() {
-      return this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder
+      return !!(this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder)
   }
 
   get alt() {
@@ -790,8 +790,10 @@ class GalleryItem {
   }
 
   get isVideo() {
+    console.log(this.type)
     return this.type === 'video';
   }
+
 
   get isVisible() {
     return this.visibility && this.visibility.visible;
