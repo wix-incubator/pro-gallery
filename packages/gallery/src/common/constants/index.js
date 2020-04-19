@@ -23,7 +23,23 @@ import loadingWithColorMode from './loadingWithColorMode';
 import loadMoreAmount from './loadMoreAmount';
 import mobileSwipeAnimations from './mobileSwipeAnimations';
 import overlayAnimations from './overlayAnimations';
-import placements from './placements';
+import {
+  default as placements,
+  hasAbovePlacement,
+  hasBelowPlacement,
+  hasHoverPlacement,
+  hasRightPlacement,
+  hasLeftPlacement,
+  hasVerticalPlacement,
+  hasHorizontalPlacement,
+  isAbovePlacement,
+  isBelowPlacement,
+  isHoverPlacement,
+  isRightPlacement,
+  isLeftPlacement,
+  isVerticalPlacement,
+  isHorizontalPlacement
+} from './placements';
 import resizeMethods from "./resizeMethods";
 import scrollAnimations from './scrollAnimations';
 import scrollDirection from './scrollDirection';
@@ -64,6 +80,20 @@ export default {
   mobileSwipeAnimations,
   overlayAnimations,
   placements,
+  hasAbovePlacement,
+  hasBelowPlacement,
+  hasHoverPlacement,
+  hasRightPlacement,
+  hasLeftPlacement,
+  hasVerticalPlacement,
+  hasHorizontalPlacement,
+  isAbovePlacement,
+  isBelowPlacement,
+  isHoverPlacement,
+  isRightPlacement,
+  isLeftPlacement,
+  isVerticalPlacement,
+  isHorizontalPlacement,
   resizeMethods,
   scrollAnimations,
   scrollDirection,
