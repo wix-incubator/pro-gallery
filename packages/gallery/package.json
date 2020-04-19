@@ -13,7 +13,8 @@
   "main": "dist/src/index.js",
   "module": "dist/es/src/index.js",
   "files": [
-    "dist"
+    "dist",
+    "lib.js"
   ],
   "scripts": {
     "watch": "PORT=9837 yoshi start",
