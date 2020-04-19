@@ -790,7 +790,6 @@ class GalleryItem {
   }
 
   get isVideo() {
-    console.log(this.type)
     return this.type === 'video';
   }
 
