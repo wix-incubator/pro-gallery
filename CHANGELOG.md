@@ -1,3 +1,9 @@
+## [v1.10.2](https://pro-gallery-1-10-2.surge.sh) (19/04/2020)
+ 
+#### GALLERY
+ -  Fix: use custom posters in videoPlaceholders
+
+---
 ## [v1.10.1](https://pro-gallery-1-10-1.surge.sh) (19/04/2020)
  
 #### GALLERY
