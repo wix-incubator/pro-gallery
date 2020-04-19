@@ -1,3 +1,9 @@
+## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)
+ 
+#### GALLERY
+ -  Remove console log
+
+---
 ## [v1.10.2](https://pro-gallery-1-10-2.surge.sh) (19/04/2020)
  
 #### GALLERY
