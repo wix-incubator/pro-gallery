@@ -1,3 +1,9 @@
+## [v1.10.1](https://pro-gallery-1-10-1.surge.sh) (19/04/2020)
+ 
+#### GALLERY
+ - Fix: package.json: updated published files.
+
+---
 ## [v1.10.0](https://pro-gallery-1-10-0.surge.sh) (19/04/2020)
  
 #### GALLERY
