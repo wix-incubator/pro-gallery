@@ -1,6 +1,6 @@
-export const NATIVE = 'NATIVE';
-export const CSS = 'CSS';
-export default {
-    CSS,
-    NATIVE
-}
+const LAZY_LOAD = {
+  NATIVE: 'NATIVE',
+  CSS: 'CSS',
+};
+
+export default LAZY_LOAD;

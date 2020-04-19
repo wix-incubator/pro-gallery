@@ -1,6 +1,5 @@
 import isRelevant from '../settings/isRelevant';
-import {gallerySettings} from 'pro-gallery';
-import defaultStyles from 'pro-gallery/dist/src/common/defaultStyles';
+import { gallerySettings, defaultStyles } from 'pro-gallery';
 
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);

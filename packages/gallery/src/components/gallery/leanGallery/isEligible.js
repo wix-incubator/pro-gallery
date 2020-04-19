@@ -1,4 +1,4 @@
-import consts from '../../../common/constants/index';
+import GALLERY_CONSTS from '../../../common/constants/index';
 import {isVerticalPlacement} from '../../../common/constants/placements';
 import { fixedStyles } from '../presets/gridGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
@@ -8,7 +8,7 @@ export const notEligibleReasons = ({items, styles}) => {
   const res = [];
   if (String(styles.galleryLayout) !== '2') {
     res.push('not a Grid layout');
-  } 
+  }
   if (items.length > MAX_ITEMS_COUNT) {
     res.push(`more than ${MAX_ITEMS_COUNT} items`);
   }
@@ -29,7 +29,7 @@ export const notEligibleReasons = ({items, styles}) => {
 export default ({items, styles}) => {
 
     const allowLeanGallery = !!styles.allowLeanGallery;
-    
+
     if (!allowLeanGallery) {
       return false;
     }
@@ -52,7 +52,7 @@ export default ({items, styles}) => {
 
     console.log(`[LEAN GALLERY] ALLOWED!`, styles);
     return true;
-    
+
 }
 
 const MAX_ITEMS_COUNT = 25;
@@ -83,7 +83,7 @@ const isValidStyleParam = (styleParam, value, allStyles) => {
 }
 
 //these styles can get any value, the lean gallery will handle them
-const handledStyleParams = { 
+const handledStyleParams = {
   numberOfImagesPerRow: 3,
   gallerySizeType: 'smart',
   gallerySizeRatio: 1,
@@ -104,8 +104,8 @@ const handledStyleParams = {
 };
 
 //these params are not relevant when a lean gallery is rendered - the fixed styles will override them
-/* 
-const ignoredStyleParams = { 
+/*
+const ignoredStyleParams = {
   gotStyleParams: true,
   galleryType: null,
   collageAmount: 0,
@@ -173,23 +173,23 @@ const ignoredStyleParams = {
   videoLoop: true,
   galleryHorizontalAlign: 'center',
   galleryVerticalAlign: 'center',
-  overlayAnimation: consts.overlayAnimations.NO_EFFECT,
+  overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   watermarkOpacity: 40,
   watermarkSize: 40,
   useWatermark: false,
   watermarkDock: null,
   loadMoreAmount: 'all',
   addToCartBorderWidth: 1,
-  imageLoadingMode: consts.loadingMode.BLUR,
-  hoveringBehaviour: consts.infoBehaviourOnHover.APPEARS,
-  expandAnimation: consts.expandAnimations.NO_EFFECT,
-  imageHoverAnimation: consts.imageHoverAnimations.NO_EFFECT,
+  imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
+  hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+  expandAnimation: GALLERY_CONSTS.expandAnimations.NO_EFFECT,
+  imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
   selectedLayout: '',
   layoutsVersion: 2,
   selectedLayoutV2: 2,
   isSlideshowFont: false,
   addToCartButtonText: '',
-  imageInfoType: consts.infoType.NO_BACKGROUND,
+  imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
   galleryImageRatio: 2,
   sharpParams: {},
   itemBorderColor: {},
@@ -197,7 +197,7 @@ const ignoredStyleParams = {
 */
 
 //these params must be set to these exact values in order for the lean gallery to render well
-const fixedStyleParams = { 
+const fixedStyleParams = {
   allowLeanGallery: true,
   galleryLayout: [-1, 2],
   isVertical: true,
@@ -205,7 +205,7 @@ const fixedStyleParams = {
   isRTL: false,
   scrollDirection: [0, undefined],
   groupSize: 1,
-  hoveringBehaviour: [consts.infoBehaviourOnHover.NEVER_SHOW, consts.infoBehaviourOnHover.APPEARS],
+  hoveringBehaviour: [GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW, GALLERY_CONSTS.infoBehaviourOnHover.APPEARS],
   rotatingGroupTypes: '',
   cubeImages: true,
   smartCrop: false,
@@ -218,12 +218,12 @@ const fixedStyleParams = {
   enableInfiniteScroll: [true, 1],
   useCustomButton: false,
   itemEnableShadow: false,
-  allowSocial: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.allowSocial,
-  allowDownload: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.allowDownload,
-  loveButton: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.loveButton,
-  loveCounter: sp => sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || !sp.loveCounter,
-  itemClick: [consts.itemClick.NOTHING, consts.itemClick.LINK, consts.itemClick.FULLSCREEN, consts.itemClick.EXPAND],
-  scrollAnimation: consts.scrollAnimations.NO_EFFECT,
-  titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === consts.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
-  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === consts.textBoxHeightCalculationOptions.MANUAL || !isVerticalPlacement(sp.titlePlacement),
+  allowSocial: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.allowSocial,
+  allowDownload: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.allowDownload,
+  loveButton: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.loveButton,
+  loveCounter: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.loveCounter,
+  itemClick: [GALLERY_CONSTS.itemClick.NOTHING, GALLERY_CONSTS.itemClick.LINK, GALLERY_CONSTS.itemClick.FULLSCREEN, GALLERY_CONSTS.itemClick.EXPAND],
+  scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+  titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
+  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL || !isVerticalPlacement(sp.titlePlacement),
 };

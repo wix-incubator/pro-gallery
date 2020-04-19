@@ -1,65 +1,80 @@
-import events from './events';
-import placements from './placements';
-import infoBehaviourOnHover from './infoBehaviourOnHover';
-import scrollAnimations from './scrollAnimations';
-import infoType from './infoType';
-import loadingMode from './loadingMode';
-import textBoxHeightCalculationOptions from './textBoxHeightCalculationOptions';
-import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
-import overlayAnimations from './overlayAnimations';
-import imageHoverAnimations from './imageHoverAnimations';
-import layout from './layout';
+import arrowsPosition from './arrowsPosition';
 import cubeType from './cubeType';
-import itemClick from './itemClick';
-import scrollDirection from './scrollDirection';
-import thumbnailsAlignment from './thumbnailsAlignment';
-import watermarkDock from './watermarkDock';
-import loadMoreAmount from './loadMoreAmount';
-import expandAnimations from './expandAnimations';
-import horizontalAlign from './horizontalAlign';
-import verticalAlign from './verticalAlign';
-import videoPlay from './videoPlay';
-import groupTypes from './groupTypes';
-import mobileSwipeAnimations from './mobileSwipeAnimations';
-import expandInfoPositions from './expandInfoPositions';
 import dimensions from './dimensions';
+import events from './events';
+import expandAnimations from './expandAnimations';
+import expandInfoPositions from './expandInfoPositions';
+import formFactor from './formFactor';
 import gallerySizeType from './gallerySizeType';
-import isVertical from './isVertical';
 import galleryTextAlign from './galleryTextAlign.js';
 import gridStyle from './gridStyle';
+import groupTypes from './groupTypes';
+import horizontalAlign from './horizontalAlign';
+import imageHoverAnimations from './imageHoverAnimations';
+import infoBehaviourOnHover from './infoBehaviourOnHover';
+import infoType from './infoType';
+import isVertical from './isVertical';
+import itemClick from './itemClick';
+import layout from './layout';
 import layoutDirection from './layoutDirection';
-import arrowsPosition from './arrowsPosition';
+import lazyLoad from './lazyLoad';
+import loadingMode from './loadingMode';
+import loadingWithColorMode from './loadingWithColorMode';
+import loadMoreAmount from './loadMoreAmount';
+import mobileSwipeAnimations from './mobileSwipeAnimations';
+import overlayAnimations from './overlayAnimations';
+import placements from './placements';
+import resizeMethods from "./resizeMethods";
+import scrollAnimations from './scrollAnimations';
+import scrollDirection from './scrollDirection';
+import socialNetworks from './socialNetworks';
+import textBoxHeightCalculationOptions from './textBoxHeightCalculationOptions';
+import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
+import thumbnailsAlignment from './thumbnailsAlignment';
+import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
+import verticalAlign from './verticalAlign';
+import videoPlay from './videoPlay';
+import viewMode from './viewMode';
+import watermarkDock from './watermarkDock';
 
 export default {
-  events,
-  placements,
-  infoBehaviourOnHover,
-  scrollAnimations,
-  infoType,
-  loadingMode,
-  layout,
-  itemClick,
-  textBoxHeightCalculationOptions,
-  textBoxWidthCalculationOptions,
-  scrollDirection,
+  arrowsPosition,
   cubeType,
-  thumbnailsAlignment,
-  watermarkDock,
-  loadMoreAmount,
-  expandAnimations,
-  overlayAnimations,
-  imageHoverAnimations,
-  horizontalAlign,
-  verticalAlign,
-  videoPlay,
-  groupTypes,
-  mobileSwipeAnimations,
-  expandInfoPositions,
   dimensions,
+  events,
+  expandAnimations,
+  expandInfoPositions,
+  formFactor,
   gallerySizeType,
-  isVertical,
   galleryTextAlign,
   gridStyle,
+  groupTypes,
+  horizontalAlign,
+  imageHoverAnimations,
+  infoBehaviourOnHover,
+  infoType,
+  isVertical,
+  itemClick,
+  layout,
   layoutDirection,
-  arrowsPosition,
+  lazyLoad,
+  loadingMode,
+  loadingWithColorMode,
+  loadMoreAmount,
+  mobileSwipeAnimations,
+  overlayAnimations,
+  placements,
+  resizeMethods,
+  scrollAnimations,
+  scrollDirection,
+  socialNetworks,
+  textBoxHeightCalculationOptions,
+  textBoxWidthCalculationOptions,
+  thumbnailsAlignment,
+  urlSizes,
+  urlTypes,
+  verticalAlign,
+  videoPlay,
+  viewMode,
+  watermarkDock,
 };

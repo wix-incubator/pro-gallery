@@ -3,12 +3,15 @@
   "private": false,
   "name": "pro-gallery",
   "version": "1.9.4",
+  "sideEffects": [
+    "./src/components/styles/gallery.scss"
+  ],
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
   },
   "main": "dist/src/index.js",
-  "module": "dist/src/index.js",
+  "module": "dist/es/src/index.js",
   "files": [
     "dist"
   ],

@@ -1,4 +1,4 @@
-import { INPUT_TYPES, GALLERY_CONSTS } from '../utils/constants';
+import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Use Infinite Scroll',

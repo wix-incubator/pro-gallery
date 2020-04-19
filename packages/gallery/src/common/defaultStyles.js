@@ -1,4 +1,4 @@
-import Consts from './constants';
+import GALLERY_CONSTS from './constants';
 
 //this is the one place for the default styles !!!
 
@@ -36,7 +36,7 @@ export default {
     showArrows: true,
     enableInfiniteScroll: true,
     thumbnailSpacings: 4,
-    galleryThumbnailsAlignment: Consts.thumbnailsAlignment.BOTTOM,
+    galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.BOTTOM,
     enableScroll: true,
     hasThumbnails: false,
     isGrid: false,
@@ -49,12 +49,12 @@ export default {
     autoSlideshowInterval: 4,
     useCustomButton: false,
     bottomInfoHeight: 0,
-    titlePlacement: Consts.placements.SHOW_ON_HOVER,
-    galleryHorizontalAlign: Consts.horizontalAlign.CENTER,
+    titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
+    galleryHorizontalAlign: GALLERY_CONSTS.horizontalAlign.CENTER,
     galleryTextAlign: 'center',
-    galleryVerticalAlign: Consts.verticalAlign.CENTER,
+    galleryVerticalAlign: GALLERY_CONSTS.verticalAlign.CENTER,
     scrollSnap: false,
-    itemClick: Consts.itemClick.EXPAND,
+    itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     fullscreen: true,
     allowSocial: true,
     allowDownload: false,
@@ -62,17 +62,17 @@ export default {
     allowDescription: false,
     loveButton: true,
     loveCounter: false,
-    videoPlay: Consts.videoPlay.HOVER,
-    scrollAnimation:  Consts.scrollAnimations.NO_EFFECT,
+    videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
+    scrollAnimation:  GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
     scrollDirection: 0,
-    overlayAnimation: Consts.overlayAnimations.NO_EFFECT,
+    overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
     arrowsPosition: 0,
     arrowsSize: 23,
     watermarkOpacity: 40,
     watermarkSize: 40,
     useWatermark: true,
-    watermarkDock: Consts.watermarkDock.RIGHT_DOWN,
-    loadMoreAmount: Consts.loadMoreAmount.ALL,
+    watermarkDock: GALLERY_CONSTS.watermarkDock.RIGHT_DOWN,
+    loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
     defaultShowInfoExpand: 1,
     allowTitleExpand: true,
     allowDescriptionExpand: true,
@@ -96,14 +96,14 @@ export default {
     slideshowInfoSize: 200,
     playButtonForAutoSlideShow: false,
     allowSlideshowCounter: false,
-    hoveringBehaviour: Consts.infoBehaviourOnHover.APPEARS,
+    hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
     thumbnailSize: 120,
     magicLayoutSeed: 1,
     //itemOpacity:'color-5', startWithOpacity: 0.60,
     //itemIconColorSlideshow: 'color-5'
     // itemIconColor: color-1
     // arrowsColor: 'color-1'
-    imageHoverAnimation: Consts.imageHoverAnimations.NO_EFFECT,
+    imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
     // itemFont: 'font_5'  // startWithSize: 22,
     // itemFontColor: 'color-1'
     // itemFontSlideshow:'font_5' // startWithSize: 22,
@@ -113,8 +113,8 @@ export default {
     // itemDescriptionFontSlideshow: 'font_8' // startWithSize: 15
     // itemDescriptionFontColorSlideshow: 'color-5'
     // textBoxFillColor: 'color-2', //startWithOpacity: 1,
-    calculateTextBoxHeightMode: Consts.textBoxHeightCalculationOptions.AUTOMATIC,
-    calculateTextBoxWidthMode: Consts.textBoxWidthCalculationOptions.PERCENT,
+    calculateTextBoxHeightMode: GALLERY_CONSTS.textBoxHeightCalculationOptions.AUTOMATIC,
+    calculateTextBoxWidthMode: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
     textBoxHeight: 200,
     textBoxWidth: 200,
     textBoxWidthPercent: 50,
@@ -141,7 +141,7 @@ export default {
     loadMoreButtonBorderWidth: 1,
     // loadMoreButtonBorderColor:  startWithColor: 'color-5'
     loadMoreButtonBorderRadius: 0,
-    imageInfoType: Consts.infoType.NO_BACKGROUND,
+    imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
     itemBorderWidth: 0,
     // itemBorderColor: 'color-5'
     itemBorderRadius: 0,
@@ -150,9 +150,9 @@ export default {
     itemShadowBlur: 20,
     itemShadowDirection: 135,
     itemShadowSize: 10,
-    imageLoadingMode: Consts.loadingMode.BLUR,
+    imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
     // imageLoadingColor: startWithColor: 'color-3'
-    expandAnimation: Consts.expandAnimations.NO_EFFECT,
+    expandAnimation: GALLERY_CONSTS.expandAnimations.NO_EFFECT,
     // oneColorAnimationColor: startWithColor: 'color-1',
     imageQuality: 90,
     usmToggle: false,
