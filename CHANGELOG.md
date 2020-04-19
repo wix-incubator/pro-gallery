@@ -1,3 +1,9 @@
+## [v1.10.0](https://pro-gallery-1-10-0.surge.sh) (19/04/2020)
+ 
+#### GALLERY
+ - Refactor: changed pro-gallery exports.
+
+---
 ## [v1.9.4](https://pro-gallery-1-9-4.surge.sh) (16/04/2020)
  
 #### GALLERY
