@@ -1,3 +1,10 @@
+## [v1.10.4](https://pro-gallery-1-10-4.surge.sh) (20/04/2020)
+ 
+#### GALLERY
+ - Added addLayoutStyles to pro-gallery exports.
+ - GALLERY_CONSTS: placements helper functions will be exported as well in GALLERY_CONSTS
+
+---
 ## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)
  
 #### GALLERY
