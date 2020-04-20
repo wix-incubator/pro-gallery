@@ -8,4 +8,5 @@ export { default as ExpandableProGallery } from './components/gallery/presets/ex
 export { cssScrollHelper } from './components/helpers/cssScrollHelper';
 export { notEligibleReasons } from './components/gallery/leanGallery/isEligible';
 export { addPresetStyles } from './components/gallery/presets/presets';
+export { addLayoutStyles } from './components/helpers/layoutHelper';
 export { default as GALLERY_CONSTS } from './common/constants';
