@@ -1,4 +1,4 @@
-## [v1.10.4](https://pro-gallery-1-10-4.surge.sh) (20/04/2020)
+## [v1.10.4](https://pro-gallery-1-10-4.surge.sh) (21/04/2020)
  
 #### GALLERY
  - Added addLayoutStyles to pro-gallery exports.
