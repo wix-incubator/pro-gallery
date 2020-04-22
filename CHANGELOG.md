@@ -1,3 +1,9 @@
+## [v1.10.5](https://pro-gallery-1-10-5.surge.sh) (22/04/2020)
+ 
+#### GALLERY
+ -  Fix - Revmoved scroll-snap for the scroll animation duration. (chrome 81 changes to scroll-snap)
+
+---
 ## [v1.10.4](https://pro-gallery-1-10-4.surge.sh) (21/04/2020)
  
 #### GALLERY
