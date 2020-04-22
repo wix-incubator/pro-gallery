@@ -327,11 +327,13 @@ function setInitialVisibility({ props, screenSize, padding, callback }) {
 
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = to - from;
-
+  
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');
-
+  Object.assign(scroller.style, {
+    'scroll-snap-type': 'none'
+  })
   Object.assign(scrollerInner.style, {
     transition: `margin ${duration}ms linear`,
     '-webkit-transition': `margin ${duration}ms linear`,
@@ -352,6 +354,7 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
         marginLeft: 0,
       });
       scroller.scrollLeft = to;
+      scroller.style.removeProperty('scroll-snap-type');
       scroller.setAttribute('data-scrolling', '');
       resolve(to);
     }, duration);
