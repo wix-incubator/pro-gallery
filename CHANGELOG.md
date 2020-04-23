@@ -1,3 +1,8 @@
+## [v1.10.6](https://pro-gallery-1-10-6.surge.sh) (23/04/2020)
+ 
+#### GALLERY
+ -  fix (scrollHelper):scroll after reaplying snap - safari
+---
 ## [v1.10.5](https://pro-gallery-1-10-5.surge.sh) (22/04/2020)
  
 #### GALLERY
