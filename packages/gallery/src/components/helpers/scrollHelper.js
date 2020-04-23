@@ -353,8 +353,8 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
       } : {
         marginLeft: 0,
       });
-      scroller.scrollLeft = to;
       scroller.style.removeProperty('scroll-snap-type');
+      scroller.scrollLeft = to;
       scroller.setAttribute('data-scrolling', '');
       resolve(to);
     }, duration);
