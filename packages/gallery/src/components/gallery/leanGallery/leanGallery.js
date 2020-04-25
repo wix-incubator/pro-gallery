@@ -211,10 +211,11 @@ export default class LeanGallery extends React.Component {
   }
 
   render() {
+    const { eventsListener, props } = this;
 
-    const { items } = this.props;
+    const { items, id } = props;
 
-    const styles = this.fixStylesIfNeeded(this.props.styles);
+    const styles = this.fixStylesIfNeeded(props.styles);
 
     const { itemClick } = styles;
     
@@ -231,7 +232,7 @@ export default class LeanGallery extends React.Component {
           const texts = placement => styles.titlePlacement === placement && (
             <div className={placement === INFO_PLACEMENT.SHOW_ABOVE ? `gallery-item-top-info` : `gallery-item-bottom-info`} style={getInnerInfoStyle(placement, styles)}>
               <Texts
-                key={`item-texts-${                                                                                                                                        this.props.id}`}
+                key={`item-texts-${id}`}
                 itemContainer={this.node}
                 title={get(item, 'title')}
                 description={get(item, 'description')}
@@ -241,9 +242,7 @@ export default class LeanGallery extends React.Component {
                 isSmallItem={false}
                 isNarrow={false}
                 shouldShowButton={false}
-                actions={{
-                  eventsListener: this.eventsListener,
-                }}
+                actions={{eventsListener}}
               />
             </div>
           )
@@ -253,7 +252,7 @@ export default class LeanGallery extends React.Component {
               style={{height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
               ref={node => {
                 this.measureIfNeeded(node);
-                this.props.eventsListener(EVENTS.ITEM_CREATED, itemData);
+                eventsListener(EVENTS.ITEM_CREATED, itemData);
               }}
               key={'item-container-' + itemIdx}
               {...linkParams}
@@ -261,14 +260,14 @@ export default class LeanGallery extends React.Component {
               <div
                 style={imageSize}
                 className={['gallery-item-hover', s.imageWrapper].join(' ')}
-                onClick={() => this.props.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, itemData)}
+                onClick={() => eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, itemData)}
               ><img 
                 src={this.resizeUrl({ item })} 
                 loading="lazy" 
                 className={['gallery-item-content', s.image].join(' ')}
                 alt={get(item, 'title')} 
                 style={this.createItemStyle(imageSize)}
-                onLoad={() => this.props.eventsListener(EVENTS.ITEM_LOADED, itemData)}
+                onLoad={() => eventsListener(EVENTS.ITEM_LOADED, itemData)}
               /></div>
               {texts(INFO_PLACEMENT.SHOW_BELOW)}
             </a>
@@ -279,12 +278,3 @@ export default class LeanGallery extends React.Component {
     )
   }
 }
-
-/* 
-todo: 
-  itemClick
-  links
-  Events
-
-  Texts
-*/
