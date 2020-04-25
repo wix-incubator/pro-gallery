@@ -228,8 +228,8 @@ export default class LeanGallery extends React.Component {
           const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick));
           const imageSize = this.calcImageSize(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
-          const texts = position => styles.titlePlacement === position && (
-            <div className={position === INFO_PLACEMENT.SHOW_ABOVE ? `gallery-item-top-info` : `gallery-item-bottom-info`} style={getInnerInfoStyle(styles)}>
+          const texts = placement => styles.titlePlacement === placement && (
+            <div className={placement === INFO_PLACEMENT.SHOW_ABOVE ? `gallery-item-top-info` : `gallery-item-bottom-info`} style={getInnerInfoStyle(placement, styles)}>
               <Texts
                 key={`item-texts-${                                                                                                                                        this.props.id}`}
                 itemContainer={this.node}
