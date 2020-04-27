@@ -1024,7 +1024,7 @@ class SlideshowView extends GalleryComponent {
         }}
       >
         <div>
-          {this.state.currentIdx + 1 + '/' + totalItemsCount}
+          {( this.state.currentIdx % totalItemsCount ) + 1 + '/' + totalItemsCount}
         </div>
       </div>
     );
