@@ -22,7 +22,7 @@ export default class Texts extends GalleryComponent {
     if (showShare) {
       classNames.push('hidden');
     }
-    
+
     if (isNarrow) {
       classNames.push('narrow-item');
     }
@@ -53,7 +53,7 @@ export default class Texts extends GalleryComponent {
       textAlign: styleParams.galleryTextAlign,
     };
 
-    const textPlacementRightOrLeft = hasHorizontalPlacement(styleParams.titlePlacement);;
+    const textPlacementRightOrLeft = hasHorizontalPlacement(styleParams.titlePlacement);
 
     //Set the texts fixed height considering the height of the love and share buttons which is about 100px;
     if (

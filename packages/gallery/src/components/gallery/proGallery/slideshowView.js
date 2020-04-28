@@ -714,7 +714,7 @@ class SlideshowView extends GalleryComponent {
     //remove navBars if no scroll is needed and is column layout
     if (shouldNotRenderNavArrows) {
       return null;
-    } 
+    }
 
     const arrowWidth = this.props.styleParams.arrowsSize;
 
@@ -819,6 +819,7 @@ class SlideshowView extends GalleryComponent {
       currentIdx: this.state.currentIdx,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
+      customSlideshowInfoRenderer: this.props.customSlideshowInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
       domId: this.props.domId,
       playingVideoIdx: this.props.playingVideoIdx,

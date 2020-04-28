@@ -493,6 +493,7 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
+        itemContainer={this.itemContainer}
         render={customHoverRenderer}
       >
         {children}
@@ -666,11 +667,24 @@ class ItemView extends GalleryComponent {
     }
 
     if (styleParams.isSlideshow) {
+      const { customSlideshowInfoRenderer } = this.props;
       itemTexts = this.getItemTextsDetails();
       const style = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
       };
+      const slideshowInfo = customSlideshowInfoRenderer
+        ? customSlideshowInfoRenderer({...this.props, ...{itemContainer: this.itemContainer}})
+        : (<div
+          className="gallery-item-info gallery-item-bottom-info"
+          data-hook="gallery-item-info-buttons"
+          style={style}
+        >
+          <div>
+            {social}
+            {itemTexts}
+          </div>
+        </div>);
       const { photoId, id, idx } = this.props;
       itemInner = (
         <div>
@@ -684,16 +698,7 @@ class ItemView extends GalleryComponent {
           >
             {itemInner}
           </a>
-          <div
-            className="gallery-item-info gallery-item-bottom-info"
-            data-hook="gallery-item-info-buttons"
-            style={style}
-          >
-            <div>
-              {social}
-              {itemTexts}
-            </div>
-          </div>
+          {slideshowInfo}
         </div>
       );
     }
@@ -708,7 +713,7 @@ class ItemView extends GalleryComponent {
       return null;
     }
   }
-  
+
   getLeftInfoElementIfNeeded() {
     if (hasLeftPlacement(this.props.styleParams.titlePlacement)) {
       return this.getInfoElement(PLACEMENTS.SHOW_ON_THE_LEFT, 'gallery-item-left-info');
@@ -716,7 +721,7 @@ class ItemView extends GalleryComponent {
       return null;
     }
   }
-  
+
   getBottomInfoElementIfNeeded() {
     if (hasBelowPlacement(this.props.styleParams.titlePlacement)) {
       return this.getInfoElement(PLACEMENTS.SHOW_BELOW, 'gallery-item-bottom-info');
@@ -724,7 +729,7 @@ class ItemView extends GalleryComponent {
       return null;
     }
   }
-  
+
   getTopInfoElementIfNeeded() {
     if (hasAbovePlacement(this.props.styleParams.titlePlacement)) {
       return this.getInfoElement(PLACEMENTS.SHOW_ABOVE, 'gallery-item-top-info');
@@ -749,7 +754,7 @@ class ItemView extends GalleryComponent {
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemExternalInfo = customInfoRenderer
-      ? customInfoRenderer(this.props, placement)
+      ? customInfoRenderer({...this.props, ...{itemContainer: this.itemContainer}}, placement)
       : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside

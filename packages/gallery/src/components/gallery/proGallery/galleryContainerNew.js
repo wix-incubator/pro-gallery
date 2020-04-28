@@ -938,6 +938,7 @@ export class GalleryContainer extends React.Component {
           currentIdx={this.props.currentIdx || 0}
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
+          customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           nextVideoIdx={this.state.nextVideoIdx}

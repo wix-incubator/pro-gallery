@@ -955,6 +955,10 @@
           z-index: 15;
           overflow: hidden;
 
+          .gallery-item-hover-inner {
+            height: 100%;
+          }
+
           .custom-button-wrapper {
             display: flex;
             justify-content: center;
