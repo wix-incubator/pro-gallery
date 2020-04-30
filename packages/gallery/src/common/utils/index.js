@@ -779,6 +779,10 @@ class Utils {
       console.error('Error converting color string to object', error);
     }
   }
+
+  hasNativeLazyLoadSupport(){
+    return 'loading' in HTMLImageElement.prototype;
+  }
 }
 
 export default new Utils();
