@@ -840,7 +840,7 @@ export class GalleryContainer extends React.Component {
       const screenSize = window.screen[oneRow ? 'width' : 'height'];
       const scrollEnd =
         scrollPos + screenSize + (oneRow ? 0 : this.state.container.scrollBase);
-      const getItemsDistance = 3 * screenSize;
+      const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
       // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
 
