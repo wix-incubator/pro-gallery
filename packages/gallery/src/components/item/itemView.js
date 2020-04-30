@@ -82,6 +82,7 @@ class ItemView extends GalleryComponent {
       this,
     );
     this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(this);
+    this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -493,13 +494,16 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
-        itemContainer={this.itemContainer}
-        render={customHoverRenderer}
+        render={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
       >
         {children}
       </ItemHover>
     );
   }
+
+  getCustomInfoRendererProps() {
+    return {...this.props, ...{itemContainer: this.itemContainer, isMobile: utils.isMobile()}}
+  };
 
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
@@ -674,7 +678,7 @@ class ItemView extends GalleryComponent {
         bottom: `-${styleParams.slideshowInfoSize}px`,
       };
       const slideshowInfo = customSlideshowInfoRenderer
-        ? customSlideshowInfoRenderer({...this.props, ...{itemContainer: this.itemContainer}})
+        ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps())
         : (<div
           className="gallery-item-info gallery-item-bottom-info"
           data-hook="gallery-item-info-buttons"
@@ -685,6 +689,7 @@ class ItemView extends GalleryComponent {
             {itemTexts}
           </div>
         </div>);
+
       const { photoId, id, idx } = this.props;
       itemInner = (
         <div>
@@ -754,7 +759,7 @@ class ItemView extends GalleryComponent {
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemExternalInfo = customInfoRenderer
-      ? customInfoRenderer({...this.props, ...{itemContainer: this.itemContainer}}, placement)
+      ? customInfoRenderer(this.getCustomInfoRendererProps(), placement)
       : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
