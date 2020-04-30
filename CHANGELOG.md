@@ -1,3 +1,13 @@
+## [v1.10.7](https://pro-gallery-1-10-7.surge.sh) (30/04/2020)
+ 
+#### GALLERY
+ - Feature: NEED_MORE_ITEMS padding only after initial scroll
+ - Feature: added support of customSlideshowInfoRenderer if provided, passing itemContainer to custom renderers
+ - Fix: fixed gallery-item-hover-inner height (css)
+ - Fix: fixed slideshow slide counter counted over the total with loop
+ - Fix: Lean Gallery: fix broken inner style function + minor fixes
+
+---
 ## [v1.10.6](https://pro-gallery-1-10-6.surge.sh) (23/04/2020)
  
 #### GALLERY
