@@ -808,7 +808,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  eventsListener(eventName, eventData) {
+  eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
       eventData,
@@ -818,7 +818,7 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (typeof this.props.eventsListener === 'function') {
-      this.props.eventsListener(eventName, eventData);
+      this.props.eventsListener(eventName, eventData, event);
     }
   }
 

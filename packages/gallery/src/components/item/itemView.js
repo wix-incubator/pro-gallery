@@ -137,11 +137,9 @@ class ItemView extends GalleryComponent {
         e.preventDefault();
         e.stopPropagation();
         const clickTarget = 'item-container';
-        this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
+        this.onItemClick(e, clickTarget) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
-        } else {
-          this.onItemClick(e) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         }
         return false;
       default:
@@ -149,39 +147,38 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  handleGalleryItemClick() {
-    if (utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))) {
-      window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
-    }
-
-    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
+  handleGalleryItemAction(e) {
+    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props, e);
   }
 
-
+  
 
   onItemWrapperClick(e) {
     const clickTarget = 'item-media';
-    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
-    this.onItemClick(e);
+    this.onItemClick(e,clickTarget);
   }
-
+  
   onItemInfoClick(e) {
     const clickTarget = 'item-info';
-    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
-    this.onItemClick(e);
+    this.onItemClick(e,clickTarget);
   }
+  
+  onItemClick(e,clickTarget) {
+    if (utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))) {
+      window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
+    }
+    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget}, e);
 
-  onItemClick(e) {
     if (this.shouldUseDirectLink()) {
-      return (() => { });
+      return;
     }
 
     e.preventDefault();
 
     if (this.shouldShowHoverOnMobile()) {
-      this.handleHoverClickOnMobile();
+      this.handleHoverClickOnMobile(e);
     } else {
-      this.handleGalleryItemClick();
+      this.handleGalleryItemAction(e);
     }
   }
 
@@ -211,9 +208,9 @@ class ItemView extends GalleryComponent {
   isClickOnCurrentHoveredItem = () =>
     this.state.isCurrentHover;
 
-  handleHoverClickOnMobile() {
+  handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
-      this.handleGalleryItemClick();
+      this.handleGalleryItemAction(e);
       this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
     } else {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
@@ -1103,7 +1100,6 @@ class ItemView extends GalleryComponent {
         onMouseOut={() => {
           !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
         }}
-        //onClick={this.onItemClick} //onItemClick will be called by onItemWrapperClick and onItemInfoClick
         onKeyDown={this.onKeyPress}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
