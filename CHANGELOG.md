@@ -1,3 +1,9 @@
+## [v1.10.9](https://pro-gallery-1-10-9.surge.sh) (03/05/2020)
+
+#### GALLERY
+ - Fixed: protect conversion to GalleryItems in cases there is no last group
+
+---
 ## [v1.10.8](https://pro-gallery-1-10-8.surge.sh) (03/05/2020)
  
 #### GALLERY
@@ -33,7 +39,7 @@
  - GALLERY_CONSTS: placements helper functions will be exported as well in GALLERY_CONSTS
 
 ---
-## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)
+## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)מ
  
 #### GALLERY
  -  Remove console log
