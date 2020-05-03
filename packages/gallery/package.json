@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.10.8",
+  "version": "1.10.9",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],

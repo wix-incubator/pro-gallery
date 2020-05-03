@@ -1,6 +1,6 @@
 {
   "name": "pro-playground",
-  "version": "1.10.8",
+  "version": "1.10.9",
   "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",
@@ -8,13 +8,13 @@
     "css-animation": "1.5.0",
     "image-client-api": "^1.3130.0",
     "lodash.clonedeep": "^4.5.0",
-    "pro-gallery": "^1.10.8",
+    "moment": "2.24.0",
+    "pro-gallery": "^1.10.9",
     "pro-layouts": "^1.10.0",
     "react": "^16.8.6",
     "react-color": "^2.17.3",
     "react-dom": "^16.8.6",
-    "react-syntax-highlighter": "^10.3.0",
-    "moment": "2.24.0"
+    "react-syntax-highlighter": "^10.3.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^4.3.2",
