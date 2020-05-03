@@ -13,7 +13,8 @@
     "react": "^16.8.6",
     "react-color": "^2.17.3",
     "react-dom": "^16.8.6",
-    "react-syntax-highlighter": "^10.3.0"
+    "react-syntax-highlighter": "^10.3.0",
+    "moment": "2.24.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^4.3.2",
