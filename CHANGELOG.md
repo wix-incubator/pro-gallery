@@ -1,10 +1,3 @@
-## [v1.10.8](https://pro-gallery-1-10-8.surge.sh) (03/05/2020)
- 
-#### GALLERY
- - Refactor: onItemClick not sends the event in the eventsListener
- - Refactor: small refactor to customRenderers + providing isMobile to customRenderers.
-
----
 ## [v1.10.7](https://pro-gallery-1-10-7.surge.sh) (30/04/2020)
  
 #### GALLERY
