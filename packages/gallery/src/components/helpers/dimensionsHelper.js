@@ -28,14 +28,16 @@ class DimensionsHelper {
 
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
-      if (this.isUnknownWidth() && !utils.isSSR() && !this.container.avoidGallerySelfMeasure) {
-        this.tryCalcAndSetContainerWidth(); //will try to set container.width
-      }
-      if (this.isUnknownHeight() && !utils.isSSR() && !this.container.avoidGallerySelfMeasure) {
-        this.tryCalcAndSetContainerHeight(); //will try to set container.height
-      }
-      if (typeof this.container.scrollBase === 'undefined' && !utils.isSSR() && !this.container.avoidGallerySelfMeasure) {
-        this.calcScrollBase(); //will set container.scrollBase
+      if (!utils.isSSR() && !this.container.avoidGallerySelfMeasure) {
+        if (this.isUnknownWidth()) {
+          this.tryCalcAndSetContainerWidth(); //will try to set container.width
+        }
+        if (this.isUnknownHeight()) {
+          this.tryCalcAndSetContainerHeight(); //will try to set container.height
+        }
+        if (typeof this.container.scrollBase === 'undefined') {
+          this.calcScrollBase(); //will set container.scrollBase
+        }
       }
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
