@@ -42,8 +42,14 @@ export default class LeanGallery extends React.Component {
     };
   }
 
+  eventsListener(eventName, eventData) {
+    if (typeof this.props.eventsListener === 'function') {
+      this.props.eventsListener(eventName, eventData);
+    }
+  }
+
   componentDidMount() {
-    this.props.eventsListener(EVENTS.APP_LOADED, {});
+    this.eventsListener(EVENTS.APP_LOADED, {});
   }
 
   resizeUrl({ item }) {
