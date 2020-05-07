@@ -176,6 +176,7 @@ class VideoItem extends GalleryComponent {
           this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
+          this.setState({ ready: true });
         }}
         config={{
           file: {
@@ -313,8 +314,8 @@ class VideoItem extends GalleryComponent {
           data-hook="video_container-video-player-element"
           key={'video_container-' + this.props.id}
           style={
-            utils.deviceHasMemoryIssues()
-              ? {}
+            utils.deviceHasMemoryIssues() || this.state.ready
+              ? {backgroundColor: 'black'}
               : {
                   backgroundImage: `url(${this.props.createUrl(
                     URL_SIZES.RESIZED,
