@@ -179,7 +179,7 @@ class CssScrollHelper {
 
     if (type !== 'text') {
       //load hi-res image + loading transition
-      if (!isUnknownWidth && !item.isDimensionless) { //FAKE SSR
+      if (!isUnknownWidth && !item.isDimensionless && !utils.hasNativeLazyLoadSupport()) { //FAKE SSR
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
           `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
