@@ -1,3 +1,14 @@
+## [v1.10.10](https://pro-gallery-1-10-10.surge.sh) (07/05/2020)
+ 
+#### GALLERY
+ -  Fix (leanGallery): use props eventsListener
+ -  Improve (index): export leanGallery and isEligible
+ -  Feat (videoItem): loaded videos will no longer have a poster background. background was visible when video AR was different from the item's
+
+#### OTHER
+ - Merge branch 'master' of github.com:wix/pro-gallery
+
+---
 ## [v1.10.9](https://pro-gallery-1-10-9.surge.sh) (03/05/2020)
 
 #### GALLERY
