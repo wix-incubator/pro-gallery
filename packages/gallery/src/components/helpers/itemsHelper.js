@@ -79,7 +79,7 @@ export class ItemsHelper {
     // remove last group so it will be rebuilt in case of dummy item
     const lastColumn = existingStructure.columns.slice(-1)[0];
     const lastGroup = lastColumn.galleryGroups.pop();
-    existingStructure.galleryItems.splice(-lastGroup.items.length);
+    lastGroup && existingStructure.galleryItems.splice(-lastGroup.items.length);
 
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];

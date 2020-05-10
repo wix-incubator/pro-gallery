@@ -803,7 +803,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  eventsListener(eventName, eventData) {
+  eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
       eventData,
@@ -813,7 +813,7 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (typeof this.props.eventsListener === 'function') {
-      this.props.eventsListener(eventName, eventData);
+      this.props.eventsListener(eventName, eventData, event);
     }
   }
 
@@ -835,7 +835,7 @@ export class GalleryContainer extends React.Component {
       const screenSize = window.screen[oneRow ? 'width' : 'height'];
       const scrollEnd =
         scrollPos + screenSize + (oneRow ? 0 : this.state.container.scrollBase);
-      const getItemsDistance = 3 * screenSize;
+      const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
       // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
 

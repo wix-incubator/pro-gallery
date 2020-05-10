@@ -1,3 +1,37 @@
+## [v1.10.10](https://pro-gallery-1-10-10.surge.sh) (07/05/2020)
+ 
+#### GALLERY
+ -  Fix (leanGallery): use props eventsListener
+ -  Improve (index): export leanGallery and isEligible
+ -  Feat (videoItem): loaded videos will no longer have a poster background. background was visible when video AR was different from the item's
+
+#### OTHER
+ - Merge branch 'master' of github.com:wix/pro-gallery
+
+---
+## [v1.10.9](https://pro-gallery-1-10-9.surge.sh) (03/05/2020)
+
+#### GALLERY
+ - Fixed: protect conversion to GalleryItems in cases there is no last group
+
+---
+## [v1.10.8](https://pro-gallery-1-10-8.surge.sh) (03/05/2020)
+ 
+#### GALLERY
+ - Refactor: onItemClick not sends the event in the eventsListener
+ - Refactor: small refactor to customRenderers + providing isMobile to customRenderers.
+
+---
+## [v1.10.7](https://pro-gallery-1-10-7.surge.sh) (30/04/2020)
+ 
+#### GALLERY
+ - Feature: NEED_MORE_ITEMS padding only after initial scroll
+ - Feature: added support of customSlideshowInfoRenderer if provided, passing itemContainer to custom renderers
+ - Fix: fixed gallery-item-hover-inner height (css)
+ - Fix: fixed slideshow slide counter counted over the total with loop
+ - Fix: Lean Gallery: fix broken inner style function + minor fixes
+
+---
 ## [v1.10.6](https://pro-gallery-1-10-6.surge.sh) (23/04/2020)
  
 #### GALLERY
@@ -16,7 +50,7 @@
  - GALLERY_CONSTS: placements helper functions will be exported as well in GALLERY_CONSTS
 
 ---
-## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)
+## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)מ
  
 #### GALLERY
  -  Remove console log

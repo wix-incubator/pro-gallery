@@ -82,6 +82,7 @@ class ItemView extends GalleryComponent {
       this,
     );
     this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(this);
+    this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -136,11 +137,9 @@ class ItemView extends GalleryComponent {
         e.preventDefault();
         e.stopPropagation();
         const clickTarget = 'item-container';
-        this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
+        this.onItemClick(e, clickTarget) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
-        } else {
-          this.onItemClick(e) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         }
         return false;
       default:
@@ -148,39 +147,38 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  handleGalleryItemClick() {
-    if (utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))) {
-      window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
-    }
-
-    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props);
+  handleGalleryItemAction(e) {
+    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props, e);
   }
 
 
 
   onItemWrapperClick(e) {
     const clickTarget = 'item-media';
-    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
-    this.onItemClick(e);
+    this.onItemClick(e,clickTarget);
   }
 
   onItemInfoClick(e) {
     const clickTarget = 'item-info';
-    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget});
-    this.onItemClick(e);
+    this.onItemClick(e,clickTarget);
   }
 
-  onItemClick(e) {
+  onItemClick(e,clickTarget) {
+    if (utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))) {
+      window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
+    }
+    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget}, e);
+
     if (this.shouldUseDirectLink()) {
-      return (() => { });
+      return;
     }
 
     e.preventDefault();
 
     if (this.shouldShowHoverOnMobile()) {
-      this.handleHoverClickOnMobile();
+      this.handleHoverClickOnMobile(e);
     } else {
-      this.handleGalleryItemClick();
+      this.handleGalleryItemAction(e);
     }
   }
 
@@ -210,9 +208,9 @@ class ItemView extends GalleryComponent {
   isClickOnCurrentHoveredItem = () =>
     this.state.isCurrentHover;
 
-  handleHoverClickOnMobile() {
+  handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
-      this.handleGalleryItemClick();
+      this.handleGalleryItemAction(e);
       this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
     } else {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
@@ -278,7 +276,7 @@ class ItemView extends GalleryComponent {
   }
 
   isVerticalContainer() {
-    return this.props.style.width < this.props.style.height + 1;
+    return this.props.style.width < this.props.style.height + 3; //at least in Grid, sometimes not all the columns are the same width (x), and a column can contain items that have height x and width x+1, so increased to 3.
   }
 
   shouldShowHoverOnMobile() {
@@ -493,13 +491,16 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
-        itemContainer={this.itemContainer}
-        render={customHoverRenderer}
+        render={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
       >
         {children}
       </ItemHover>
     );
   }
+
+  getCustomInfoRendererProps() {
+    return {...this.props, ...{itemContainer: this.itemContainer, isMobile: utils.isMobile()}}
+  };
 
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
@@ -674,7 +675,7 @@ class ItemView extends GalleryComponent {
         bottom: `-${styleParams.slideshowInfoSize}px`,
       };
       const slideshowInfo = customSlideshowInfoRenderer
-        ? customSlideshowInfoRenderer({...this.props, ...{itemContainer: this.itemContainer}})
+        ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps())
         : (<div
           className="gallery-item-info gallery-item-bottom-info"
           data-hook="gallery-item-info-buttons"
@@ -685,6 +686,7 @@ class ItemView extends GalleryComponent {
             {itemTexts}
           </div>
         </div>);
+
       const { photoId, id, idx } = this.props;
       itemInner = (
         <div>
@@ -754,7 +756,7 @@ class ItemView extends GalleryComponent {
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemExternalInfo = customInfoRenderer
-      ? customInfoRenderer({...this.props, ...{itemContainer: this.itemContainer}}, placement)
+      ? customInfoRenderer(this.getCustomInfoRendererProps(), placement)
       : this.getItemTextsDetails(infoHeight);
 
     //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
@@ -1098,7 +1100,6 @@ class ItemView extends GalleryComponent {
         onMouseOut={() => {
           !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
         }}
-        //onClick={this.onItemClick} //onItemClick will be called by onItemWrapperClick and onItemInfoClick
         onKeyDown={this.onKeyPress}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
