@@ -1,3 +1,10 @@
+## [v1.10.11](https://pro-gallery-1-10-11.surge.sh) (11/05/2020)
+ 
+#### GALLERY
+ - Small fix for square items (isVertical)
+ - Hover css prep for info-elements -> if an element inside the external info will have 'info-member' className, hover effects will affect it as well.
+
+---
 ## [v1.10.10](https://pro-gallery-1-10-10.surge.sh) (07/05/2020)
  
 #### GALLERY
