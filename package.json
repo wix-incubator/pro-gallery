@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm run watch",
     "postinstall": "lerna bootstrap --hoist",
     "lint": "lerna run lint",
     "build": "lerna run build",
