@@ -44,6 +44,7 @@ class ItemView extends GalleryComponent {
       retries: 0,
       showShare: false,
       isCurrentHover: false,
+      renderHover: this.props.styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.APPEARS 
     };
 
     this.activeElement = '';
@@ -329,6 +330,8 @@ class ItemView extends GalleryComponent {
       return true;
     } else if (isEditMode() && styleParams.previewHover) {
       return true;
+    } else if (!this.state.renderHover) {
+      return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
     } else {
