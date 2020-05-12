@@ -323,7 +323,9 @@ class ItemView extends GalleryComponent {
   shouldHover() { //see if this could be decided in the preset
     const { styleParams } = this.props;
 
-    if (styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
+    if (!this.state.renderHover) {
+      return false;
+    } else if (styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
       return false;
     } else if (styleParams.alwaysShowHover === true) {
       return true;
@@ -1031,7 +1033,8 @@ class ItemView extends GalleryComponent {
     if (e.domId === this.props.domId) {
       if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
         this.setState({
-          isCurrentHover: true
+          isCurrentHover: true,
+          renderHover: true
         })
       } else if (this.state.isCurrentHover && e.currentHoverIdx !== this.props.idx) {
         this.setState({
