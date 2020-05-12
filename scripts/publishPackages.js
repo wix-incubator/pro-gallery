@@ -100,8 +100,8 @@ function publishPackages() {
 
 function run() {
   let skip;
-  const { FORCE_PUBLISH, TRAVIS_BRANCH, CI } = process.env;
-  if (TRAVIS_BRANCH !== 'master' && !FORCE_PUBLISH) {
+  const { FORCE_PUBLISH, TRAVIS_BRANCH, TRAVIS_TAG, CI } = process.env;
+  if (TRAVIS_TAG !== TRAVIS_BRANCH && TRAVIS_BRANCH !== 'master' && !FORCE_PUBLISH) {
     skip = `Not publishing on ${TRAVIS_BRANCH} branch (should be master)`;
   } else if (!CI) {
     skip = 'Not in CI';

@@ -9,7 +9,6 @@ import {hasVerticalPlacement, default as INFO_PLACEMENT} from '../../../common/c
 import CLICK_ACTIONS from '../../../common/constants/itemClick'
 
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
-import Texts from '../../item/texts/texts';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 import s from './leanGallery.module.scss';
 
@@ -36,6 +35,7 @@ export default class LeanGallery extends React.Component {
     super();
     
     this.measureIfNeeded = this.measureIfNeeded.bind(this);
+    this.eventsListener = this.eventsListener.bind(this);
 
     this.state = {
       itemStyle: {}
@@ -219,7 +219,7 @@ export default class LeanGallery extends React.Component {
   render() {
     const { eventsListener, props } = this;
 
-    const { items, id } = props;
+    const { customInfoRenderer, items, id } = props;
 
     const styles = this.fixStylesIfNeeded(props.styles);
 
@@ -235,23 +235,10 @@ export default class LeanGallery extends React.Component {
           const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick));
           const imageSize = this.calcImageSize(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
-          const texts = placement => styles.titlePlacement === placement && (
-            <div className={placement === INFO_PLACEMENT.SHOW_ABOVE ? `gallery-item-top-info` : `gallery-item-bottom-info`} style={getInnerInfoStyle(placement, styles)}>
-              <Texts
-                key={`item-texts-${id}`}
-                itemContainer={this.node}
-                title={get(item, 'title')}
-                description={get(item, 'description')}
-                style={this.state.itemStyle}
-                styleParams={styles}
-                showShare={false}
-                isSmallItem={false}
-                isNarrow={false}
-                shouldShowButton={false}
-                actions={{eventsListener}}
-              />
-            </div>
-          )
+          const itemProps = {...itemData, ...item.metaData, style: this.state.itemStyle, styleParams: styles};
+          const texts = placement => (typeof customInfoRenderer === 'function') && (styles.titlePlacement === placement) && (
+            <div className={`gallery-item-common-info gallery-item-${placement === INFO_PLACEMENT.SHOW_ABOVE ? `top` : `bottom`}-info`} style={getInnerInfoStyle(placement, styles)} >{customInfoRenderer(itemProps, placement)}</div>
+          );
           return (
             <a
               className={['gallery-item-container', s.cell].join(' ')}
