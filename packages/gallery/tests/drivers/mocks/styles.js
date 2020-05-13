@@ -1,5 +1,6 @@
 const styleParams = {
     titlePlacement: 'SHOW_ON_HOVER',
+    hoveringBehaviour: 'NO_CHANGE',
     galleryLayout: 2,
     oneRow: false,
     scrollDirection: 1,
