@@ -142,6 +142,7 @@ export default class Social extends GalleryComponent {
             {...genralProps}
             onClick={e => {
               e.stopPropagation();
+              e.preventDefault();
               actions.eventsListener(
                 EVENTS.TEXT_DOWNLOAD_BUTTON_CLICKED,
                 this.props,
