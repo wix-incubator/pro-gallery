@@ -434,19 +434,6 @@ export default class Layouter {
         }
       }
 
-      //set the group visibility
-
-      if (
-        !this.skipVisibilitiesCalc &&
-        !this.gotScrollEvent &&
-        this.pointer < 10
-      ) {
-        //until the first scroll event, make sure the first 10 groups are displayed
-        this.group.calcVisibilities(true);
-      } else {
-        this.group.calcVisibilities(this.bounds);
-      }
-
       if (!this.firstGroup) {
         this.firstGroup = this.group;
       }
@@ -479,21 +466,8 @@ export default class Layouter {
 
     this.width = this.lastGroup.left + this.lastGroup.width;
 
-    if (!this.skipVisibilitiesCalc) {
-      this.calcVisibilities(this.bounds);
-    }
-
     this.ready = true;
 
-    return this.scheme;
-  }
-
-  calcVisibilities(bounds) {
-    for (const column of this.columns) {
-      for (const group of column.groups) {
-        group.calcVisibilities(bounds);
-      }
-    }
     return this.scheme;
   }
 
