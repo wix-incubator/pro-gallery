@@ -1,4 +1,3 @@
-import isRelevant from '../settings/isRelevant';
 import { gallerySettings, defaultStyles } from 'pro-gallery';
 
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
