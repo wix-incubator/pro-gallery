@@ -1,3 +1,34 @@
+## [v1.10.12](https://pro-gallery-1-10-12.surge.sh) (14/05/2020)
+ 
+#### GALLERY
+ -  Fix (rtl): explicitly set ltr direction when not rtl
+ -  Fix (social): stoppropagation off text download keypress not to trigger item navigation
+ -  Improve (itemView): render Hover element only when needed
+ -  Fix (social): stoppropagation off text download clicks not to trigger item navigation
+ -  Fix (galleryContainerNew): Scrollbase use in getMoreItems
+ -  Improve (itemView): render Hover element only when needed
+ -  Fix (itemView): fix unrendered hover when hoveringBehaviour is not APPEARS
+ -  Fix (itemView): fix unrendered hover when hoveringBehaviour is not APPEARS
+ -  Improve (itemView): render Hover element only when needed
+ -  Improve (leanGallery): use customInfoRenderer
+
+#### LAYOUTS
+ -  fix (calcVisibilities): remove test
+ -  fix (useExistingLayout): fix stripIdx initial number (used for random seed of group type)
+ -  improve (calcVisibilities): remove deprecated calcVisibilities
+
+#### PLAYGROUND
+ -  removed unused var
+
+#### OTHER
+ - This reverts commit 23d01b48d8da98745418d4044f0992b85e9b16f3.
+ - This reverts commit 0fa7be33c870cbd7d66c9d5a0c1046fb81dfd28f.
+ - Merge branch 'master' of github.com:wix/pro-gallery
+
+#### MAIN
+ -  fix (travis): publish when branch name is tagged
+
+---
 ## [v1.10.11](https://pro-gallery-1-10-11.surge.sh) (11/05/2020)
  
 #### GALLERY
