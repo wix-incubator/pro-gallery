@@ -1,3 +1,171 @@
+## [v1.10.12](https://pro-gallery-1-10-12.surge.sh) (14/05/2020)
+ 
+#### GALLERY
+ -  Fix (rtl): explicitly set ltr direction when not rtl
+ -  Fix (social): stoppropagation off text download keypress not to trigger item navigation
+ -  Improve (itemView): render Hover element only when needed
+ -  Fix (social): stoppropagation off text download clicks not to trigger item navigation
+ -  Fix (galleryContainerNew): Scrollbase use in getMoreItems
+ -  Improve (itemView): render Hover element only when needed
+ -  Fix (itemView): fix unrendered hover when hoveringBehaviour is not APPEARS
+ -  Fix (itemView): fix unrendered hover when hoveringBehaviour is not APPEARS
+ -  Improve (itemView): render Hover element only when needed
+ -  Improve (leanGallery): use customInfoRenderer
+
+#### LAYOUTS
+ -  fix (calcVisibilities): remove test
+ -  fix (useExistingLayout): fix stripIdx initial number (used for random seed of group type)
+ -  improve (calcVisibilities): remove deprecated calcVisibilities
+
+#### PLAYGROUND
+ -  removed unused var
+
+#### OTHER
+ - This reverts commit 23d01b48d8da98745418d4044f0992b85e9b16f3.
+ - This reverts commit 0fa7be33c870cbd7d66c9d5a0c1046fb81dfd28f.
+ - Merge branch 'master' of github.com:wix/pro-gallery
+
+#### MAIN
+ -  fix (travis): publish when branch name is tagged
+
+---
+## [v1.10.11](https://pro-gallery-1-10-11.surge.sh) (11/05/2020)
+ 
+#### GALLERY
+ - Small fix for square items (isVertical)
+ - Hover css prep for info-elements -> if an element inside the external info will have 'info-member' className, hover effects will affect it as well.
+
+---
+## [v1.10.10](https://pro-gallery-1-10-10.surge.sh) (07/05/2020)
+ 
+#### GALLERY
+ -  Fix (leanGallery): use props eventsListener
+ -  Improve (index): export leanGallery and isEligible
+ -  Feat (videoItem): loaded videos will no longer have a poster background. background was visible when video AR was different from the item's
+
+#### OTHER
+ - Merge branch 'master' of github.com:wix/pro-gallery
+
+---
+## [v1.10.9](https://pro-gallery-1-10-9.surge.sh) (03/05/2020)
+
+#### GALLERY
+ - Fixed: protect conversion to GalleryItems in cases there is no last group
+
+---
+## [v1.10.8](https://pro-gallery-1-10-8.surge.sh) (03/05/2020)
+ 
+#### GALLERY
+ - Refactor: onItemClick not sends the event in the eventsListener
+ - Refactor: small refactor to customRenderers + providing isMobile to customRenderers.
+
+---
+## [v1.10.7](https://pro-gallery-1-10-7.surge.sh) (30/04/2020)
+ 
+#### GALLERY
+ - Feature: NEED_MORE_ITEMS padding only after initial scroll
+ - Feature: added support of customSlideshowInfoRenderer if provided, passing itemContainer to custom renderers
+ - Fix: fixed gallery-item-hover-inner height (css)
+ - Fix: fixed slideshow slide counter counted over the total with loop
+ - Fix: Lean Gallery: fix broken inner style function + minor fixes
+
+---
+## [v1.10.6](https://pro-gallery-1-10-6.surge.sh) (23/04/2020)
+ 
+#### GALLERY
+ -  fix (scrollHelper):scroll after reaplying snap - safari
+---
+## [v1.10.5](https://pro-gallery-1-10-5.surge.sh) (22/04/2020)
+ 
+#### GALLERY
+ -  Fix - Revmoved scroll-snap for the scroll animation duration. (chrome 81 changes to scroll-snap)
+
+---
+## [v1.10.4](https://pro-gallery-1-10-4.surge.sh) (21/04/2020)
+ 
+#### GALLERY
+ - Added addLayoutStyles to pro-gallery exports.
+ - GALLERY_CONSTS: placements helper functions will be exported as well in GALLERY_CONSTS
+
+---
+## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)מ
+ 
+#### GALLERY
+ -  Remove console log
+
+---
+## [v1.10.2](https://pro-gallery-1-10-2.surge.sh) (19/04/2020)
+ 
+#### GALLERY
+ -  Fix: use custom posters in videoPlaceholders
+
+---
+## [v1.10.1](https://pro-gallery-1-10-1.surge.sh) (19/04/2020)
+ 
+#### GALLERY
+ - Fix: package.json: updated published files.
+
+---
+## [v1.10.0](https://pro-gallery-1-10-0.surge.sh) (19/04/2020)
+ 
+#### GALLERY
+ - Refactor: changed pro-gallery exports.
+
+---
+## [v1.9.4](https://pro-gallery-1-9-4.surge.sh) (16/04/2020)
+ 
+#### GALLERY
+ -  Fix: add protection for hls in iOS
+
+---
+## [v1.9.3](https://pro-gallery-1-9-3.surge.sh) (13/04/2020)
+ 
+#### GALLERY
+ -  New feature - items have changed if one of the item types have changed
+
+---
+## [v1.9.2](https://pro-gallery-1-9-2.surge.sh) (13/04/2020)
+ 
+#### GALLERY
+ -  Added video placeholder item option - metaData.isVideoPlaceholder
+
+---
+## [v1.9.1](https://pro-gallery-1-9-1.surge.sh) (13/04/2020)
+ 
+#### PLAYGROUND
+ -  Fix: missing rotatingCropRatios isRelevant
+
+---
+## [v1.9.0](https://pro-gallery-1-9-0.surge.sh) (07/04/2020)
+ 
+#### GALLERY
+ -  Feature: enable multiple title placements
+
+---
+## [v1.8.13](https://pro-gallery-1-8-13.surge.sh) (06/04/2020)
+ 
+#### GALLERY
+ -  Fix: missing items in horizontal layouts (Grid and Masonry)
+
+---
+## [v1.8.12](https://pro-gallery-1-8-12.surge.sh) (06/04/2020)
+ 
+#### GALLERY
+ -  Allow all videos to have _placeholder and register in the video list.
+
+---
+## [v1.8.11](https://pro-gallery-1-8-11.surge.sh) (05/04/2020)
+ 
+#### GALLERY
+ -  Add support for HLS redirect url (or plain .m3u8) videoUrl for video items 
+
+---
+## [v1.8.10](https://pro-gallery-1-8-10.surge.sh) (29/03/2020)
+ 
+#### GALLERY
+ -  Feat: add data-cancel-link on fake navigation expand mode share links
+
+---
 ## [v1.8.9](https://pro-gallery-1-8-9.surge.sh) (25/03/2020)
  
 #### GALLERY

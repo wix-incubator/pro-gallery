@@ -96,11 +96,17 @@ export class Group {
     } else if (this.dummyItems[idx]) {
       return this.dummyItems[idx];
     } else {
+      // dummy created from the last item config
       const item = new Item({ ...this.items[this.items.length - 1].config });
 
       // const item = {...(this.items[this.items.length - 1])};
       // item.id += 'dummy';
-      item.idx = this.idx * (idx + 1) + 1;
+
+      // item.idx given to dummy items starting from the last item
+      // item.config.idx = last item index (all gallery items, not group items)
+      // idx = in group item index
+      // this.items = the group's items
+      item.idx = item.config.idx + idx - (this.items.length - 1);
       item.type = 'dummy';
       this.dummyItems[idx] = item;
       return item;
@@ -739,38 +745,6 @@ export class Group {
       item.groupOffset = {
         left,
         right: left + this.width,
-      };
-    }
-  }
-
-  calcVisibilities(bounds) {
-    if (bounds === true || this.showAllItems === true) {
-      this.onscreen = this.visible = this.rendered = this.required = true;
-    } else if (this.oneRow) {
-      this.onscreen =
-        this.right >= bounds.onscreenTop && this.left <= bounds.onscreenBottom;
-      this.visible =
-        this.right >= bounds.visibleTop && this.left <= bounds.visibleBottom;
-      this.rendered =
-        this.right >= bounds.renderedTop && this.left <= bounds.renderedBottom;
-      this.required =
-        this.right >= bounds.requiredTop && this.left <= bounds.requiredBottom;
-    } else {
-      this.onscreen =
-        this.bottom >= bounds.onscreenTop && this.top <= bounds.onscreenBottom;
-      this.visible =
-        this.bottom >= bounds.visibleTop && this.top <= bounds.visibleBottom;
-      this.rendered =
-        this.bottom >= bounds.renderedTop && this.top <= bounds.renderedBottom;
-      this.required =
-        this.bottom >= bounds.requiredTop && this.top <= bounds.requiredBottom;
-    }
-    for (let i = 0; i < this.items.length; i++) {
-      this.items[i].visibility = {
-        onscreen: this.onscreen,
-        visible: this.visible,
-        rendered: this.rendered,
-        required: this.required,
       };
     }
   }

@@ -85,7 +85,7 @@ describe('styleParam - isRTL', () => {
     })
     driver.mount.proGallery(initialProps);
     const textsElement = driver.find.selector('.gallery-item-text').at(0);
-    expect(textsElement.props().style.direction).to.eq(undefined);
+    expect(textsElement.props().style.direction).to.eq('ltr');
     driver.detach.proGallery();
   });
   it('should set direction "rtl" in texts element', () => {

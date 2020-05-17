@@ -1,4 +1,4 @@
-export {default as GALLERY_CONSTS} from 'pro-gallery/dist/src/common/constants/index';
+export { GALLERY_CONSTS } from 'pro-gallery';
 
 export const INPUT_TYPES = {
     NUMBER: "NUMBER",
@@ -9,18 +9,19 @@ export const INPUT_TYPES = {
     FONT_PICKER: "FONT_PICKER",
     BUTTON: "BUTTON",
     MULTISELECT: "MULTISELECT",
-  };
-  
-  export const SECTIONS = {
+    MULTIREPEAT: "MULTIREPEAT",
+};
+
+export const SECTIONS = {
     LAYOUT: "Layout",
     SETTINGS: "Settings",
     DESIGN: "Design",
     ADVANCED: "Advanced",
     EXPAND_MODE: "Expand Mode",
     STORE: "Art Store",
-  };
-  
-  export const SUB_SECTIONS = {
+};
+
+export const SUB_SECTIONS = {
     DESIGN: {
       OVERLAY_AND_ICONS: "Overlay & Icons",
       TEXTS: "Texts",
@@ -30,4 +31,4 @@ export const INPUT_TYPES = {
       EXPAND_MODE: "Expand Mode",
       ADVANCED: "Advanced",
     },
-  };
+};

@@ -3,7 +3,7 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Hover Effect',
-  isRelevant: (styleParams)  => styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER,
+  isRelevant: () => true,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
   options: createOptions('infoBehaviourOnHover'),

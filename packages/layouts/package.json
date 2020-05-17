@@ -1,13 +1,15 @@
 {
   "private": false,
   "name": "pro-layouts",
-  "version": "1.8.4",
+  "sideEffects": false,
+  "version": "1.10.12",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com",
     "url": ""
   },
   "main": "dist/src/index.js",
+  "module": "dist/es/src/index.js",
   "files": [
     "dist"
   ],
@@ -40,6 +42,9 @@
     ]
   },
   "yoshi": {
+    "entry": {
+      "main": "./index.js"
+    },
     "servers": {
       "cdn": {
         "port": 4662

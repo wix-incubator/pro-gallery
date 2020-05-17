@@ -808,7 +808,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  eventsListener(eventName, eventData) {
+  eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
       eventData,
@@ -818,7 +818,7 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (typeof this.props.eventsListener === 'function') {
-      this.props.eventsListener(eventName, eventData);
+      this.props.eventsListener(eventName, eventData, event);
     }
   }
 
@@ -836,17 +836,16 @@ export class GalleryContainer extends React.Component {
       //TODO - add support for horizontal galleries
       const { oneRow } = this.state.styles;
 
-      const gallerySize = this.galleryStructure[oneRow ? 'width' : 'height'];
+      const galleryEnd = this.galleryStructure[oneRow ? 'width' : 'height'] + (oneRow ? 0 : this.state.container.scrollBase);
       const screenSize = window.screen[oneRow ? 'width' : 'height'];
-      const scrollEnd =
-        scrollPos + screenSize + (oneRow ? 0 : this.state.container.scrollBase);
-      const getItemsDistance = 3 * screenSize;
+      const scrollEnd = scrollPos + screenSize;
+      const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
       // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
 
-      //const curDistance = gallerySize - scrollEnd;
+      //const curDistance = galleryEnd - scrollEnd;
       //if (curDistance > 0 && curDistance < getItemsDistance) {
-      if (gallerySize - scrollEnd < getItemsDistance) {
+      if (galleryEnd - scrollEnd < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
         if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
@@ -938,6 +937,7 @@ export class GalleryContainer extends React.Component {
           currentIdx={this.props.currentIdx || 0}
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
+          customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           nextVideoIdx={this.state.nextVideoIdx}

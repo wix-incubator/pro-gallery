@@ -1,5 +1,5 @@
 import utils from '../../../common/utils/index.js';
-import PLACEMENTS from '../../../common/constants/placements';
+import PLACEMENTS, {hasHorizontalPlacement, hasVerticalPlacement} from '../../../common/constants/placements';
 import INFO_TYPE from '../../../common/constants/infoType';
 import window from '../../../common/window/windowWrapper';
 import designConsts from '../../../common/constants/designConsts.js';
@@ -117,6 +117,7 @@ class LineHeightFixer {
     textPlacementAboveOrBelow,
     textPlacementRightOrLeft,
     textsContainerHeight,
+    placement
   ) {
     const { styleParams, itemContainer } = options;
     let availableHeight;
@@ -145,22 +146,23 @@ class LineHeightFixer {
         [PLACEMENTS.SHOW_ABOVE]: 'gallery-item-top-info',
         [PLACEMENTS.SHOW_ON_THE_RIGHT]: 'gallery-item-right-info',
         [PLACEMENTS.SHOW_ON_THE_LEFT]: 'gallery-item-left-info',
-      }[styleParams.titlePlacement];
+      }[placement];
       const elements = itemContainer.getElementsByClassName(className);
       const element = elements.length > 0 && elements[0];
-      const elementPadding =
-        parseInt(this.getCss(element, 'padding-top', 0)) +
-        parseInt(this.getCss(element, 'padding-bottom', 0));
-      const margin =
-        styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
-        (styleParams.allowTitle || styleParams.allowDescription) &&
-        styleParams.textImageSpace
-          ? styleParams.textImageSpace
-          : 0;
+      if (typeof element !== 'undefined') {
+        const elementPadding =
+          parseInt(this.getCss(element, 'padding-top', 0)) +
+          parseInt(this.getCss(element, 'padding-bottom', 0));
+        const margin =
+          styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
+          (styleParams.allowTitle || styleParams.allowDescription) &&
+          styleParams.textImageSpace
+            ? styleParams.textImageSpace
+            : 0;
 
-      const availableHeightOfTheTextElement = textPlacementAboveOrBelow ? options.externalTotalInfoHeight : textsContainerHeight; //maybe can be textsContainerHeight for textPlacementAboveOrBelow as well
-      availableHeight = availableHeightOfTheTextElement - elementPadding - margin;
-
+        const availableHeightOfTheTextElement = textPlacementAboveOrBelow ? options.externalTotalInfoHeight : textsContainerHeight; //maybe can be textsContainerHeight for textPlacementAboveOrBelow as well
+        availableHeight = availableHeightOfTheTextElement - elementPadding - margin;
+      }
     } else {
 
       availableHeight = textsContainerHeight;
@@ -176,155 +178,155 @@ class LineHeightFixer {
 
     const { styleParams, title, description } = options;
 
-    const textPlacementAboveOrBelow = styleParams.titlePlacement === PLACEMENTS.SHOW_BELOW ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ABOVE;
-    const textPlacementRightOrLeft = styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_RIGHT ||
-      styleParams.titlePlacement === PLACEMENTS.SHOW_ON_THE_LEFT;
+    for (const placement of styleParams.titlePlacement.split(',')) {
+      const textPlacementRightOrLeft = hasHorizontalPlacement(placement);
+      const textPlacementAboveOrBelow = hasVerticalPlacement(placement);
 
+      if (!container || !(options && options.itemContainer)) {
+        return;
+      }
 
-    if (!container || !(options && options.itemContainer)) {
-      return;
-    }
+      const dimensions = this.getDimensions(container);
+      let availableHeight = this.calcAvailableHeight(
+        options,
+        textPlacementAboveOrBelow,
+        textPlacementRightOrLeft,
+        dimensions.height,
+        placement
+      );
 
-    const dimensions = this.getDimensions(container);
-    let availableHeight = this.calcAvailableHeight(
-      options,
-      textPlacementAboveOrBelow,
-      textPlacementRightOrLeft,
-      dimensions.height,
-    );
+      const customButtonElements = container.getElementsByClassName(
+        'custom-button-wrapper',
+      );
+      const titleElements = container.getElementsByClassName(
+        'gallery-item-title',
+      );
+      const descriptionElements = container.getElementsByClassName(
+        'gallery-item-description',
+      );
+      let customButtonExists = customButtonElements.length > 0;
 
-    const customButtonElements = container.getElementsByClassName(
-      'custom-button-wrapper',
-    );
-    const titleElements = container.getElementsByClassName(
-      'gallery-item-title',
-    );
-    const descriptionElements = container.getElementsByClassName(
-      'gallery-item-description',
-    );
-    let customButtonExists = customButtonElements.length > 0;
+      const customButtonElement = customButtonExists && customButtonElements[0];
+      const titleElement = titleElements.length > 0 && titleElements[0];
+      const descriptionElement =
+        descriptionElements.length > 0 && descriptionElements[0];
 
-    const customButtonElement = customButtonExists && customButtonElements[0];
-    const titleElement = titleElements.length > 0 && titleElements[0];
-    const descriptionElement =
-      descriptionElements.length > 0 && descriptionElements[0];
+      const isItemWidthToSmall = dimensions.width < minWidthToShowContent;
 
-    const isItemWidthToSmall = dimensions.width < minWidthToShowContent;
-
-    this.hideElement(titleElement);
-    this.hideElement(descriptionElement, !(textPlacementAboveOrBelow || textPlacementRightOrLeft)); //if textPlacementAboveOrBelow or textPlacementRightOrLeft, descriptionElement should not get 'display: -webkit-box'
-    this.hideElement(
-      customButtonElement,
-      !(styleParams.isSlideshow || textPlacementAboveOrBelow || textPlacementRightOrLeft),
-    ); //if Slideshow or if textPlacementAboveOrBelow or if textPlacementRightOrLeft, customButtonElement should not get 'display: -webkit-box'
-
-    if (customButtonExists) {
-      this.showElement(
+      this.hideElement(titleElement);
+      this.hideElement(descriptionElement, !(textPlacementAboveOrBelow || textPlacementRightOrLeft)); //if textPlacementAboveOrBelow or textPlacementRightOrLeft, descriptionElement should not get 'display: -webkit-box'
+      this.hideElement(
         customButtonElement,
         !(styleParams.isSlideshow || textPlacementAboveOrBelow || textPlacementRightOrLeft),
       ); //if Slideshow or if textPlacementAboveOrBelow or if textPlacementRightOrLeft, customButtonElement should not get 'display: -webkit-box'
-      const buttonHeight = this.getDimensions(customButtonElement).height;
-      if (availableHeight + 30 < buttonHeight) {
-        this.removeElement(customButtonElement);
-        customButtonExists = false;
-      } else if (isItemWidthToSmall) {
-        this.setCss(customButtonElement.querySelector('button'), {
-          'min-width': 0 + 'px',
-          'max-width': minWidthToShowContent + 'px',
-        });
-      } else if (dimensions.width < minWithForNormalSizedItem) {
-        this.setCss(customButtonElement.querySelector('button'), {
-          'min-width': minWidthToShowContent + 'px',
-          'max-width': dimensions.width + 'px',
-        });
-      }
 
-      const isButtonHeightAvailable = !Number.isNaN(buttonHeight);
-      if (isButtonHeightAvailable && customButtonExists) {
-        availableHeight -= buttonHeight;
-        availableHeight -= designConsts.spaceBetweenElements;
-        if (availableHeight < 0) {
-          availableHeight = 0;
+      if (customButtonExists) {
+        this.showElement(
+          customButtonElement,
+          !(styleParams.isSlideshow || textPlacementAboveOrBelow || textPlacementRightOrLeft),
+        ); //if Slideshow or if textPlacementAboveOrBelow or if textPlacementRightOrLeft, customButtonElement should not get 'display: -webkit-box'
+        const buttonHeight = this.getDimensions(customButtonElement).height;
+        if (availableHeight + 30 < buttonHeight) {
+          this.removeElement(customButtonElement);
+          customButtonExists = false;
+        } else if (isItemWidthToSmall) {
+          this.setCss(customButtonElement.querySelector('button'), {
+            'min-width': 0 + 'px',
+            'max-width': minWidthToShowContent + 'px',
+          });
+        } else if (dimensions.width < minWithForNormalSizedItem) {
+          this.setCss(customButtonElement.querySelector('button'), {
+            'min-width': minWidthToShowContent + 'px',
+            'max-width': dimensions.width + 'px',
+          });
         }
-      }
-    }
 
-    const shouldDisplayTitle = title && styleParams.allowTitle;
-    let titleNumOfAvailableLines = 0;
-    if (shouldDisplayTitle) {
-      this.showElement(titleElement);
-      this.setCss(titleElement, { overflow: 'visible' });
-      if (titleElements.length === 1) {
-        let titleHeight = // when padding is large and the we decrease padding the clientHeight stay small
-          parseInt(titleElement.children[0].offsetHeight) >
-          parseInt(titleElement.clientHeight)
-            ? parseInt(titleElement.children[0].offsetHeight)
-            : parseInt(titleElement.clientHeight);
-        const titleLineHeight = parseInt(
-          this.getCss(titleElement, 'line-height', 1),
-        );
-        let numOfTitleLines = 1;
-        if (titleHeight >= titleLineHeight) {
-          numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
-        }
-        titleNumOfAvailableLines = Math.floor(
-          availableHeight / titleLineHeight,
-        );
-
-        if (titleNumOfAvailableLines === 0) {
-          this.removeElement(titleElement);
-        } else {
-          this.setCss(titleElement, { overflow: 'hidden' });
-
-          const isTitleFitInAvailableHeight =
-            titleNumOfAvailableLines >= numOfTitleLines;
-          if (isTitleFitInAvailableHeight) {
-            this.setCss(titleElement, { '-webkit-line-clamp': 'none' });
-            titleHeight = titleLineHeight * numOfTitleLines;
-          } else {
-            this.setCss(titleElement, {
-              '-webkit-line-clamp': titleNumOfAvailableLines + '',
-            });
-            titleHeight = titleLineHeight * titleNumOfAvailableLines;
-          }
-
-          const isThereAnyAvailableHeightLeft = availableHeight > titleHeight;
-          if (isThereAnyAvailableHeightLeft) {
-            availableHeight -= titleHeight;
-          } else {
+        const isButtonHeightAvailable = !Number.isNaN(buttonHeight);
+        if (isButtonHeightAvailable && customButtonExists) {
+          availableHeight -= buttonHeight;
+          availableHeight -= designConsts.spaceBetweenElements;
+          if (availableHeight < 0) {
             availableHeight = 0;
           }
         }
       }
-    }
 
-    const shouldDisplayDescription =
-      descriptionElement &&
-      styleParams.allowDescription &&
-      description &&
-      availableHeight > 0 &&
-      ((shouldDisplayTitle && titleNumOfAvailableLines > 0) ||
-        !shouldDisplayTitle); // when there s no place for title the description not suppose to be shown
-    if (shouldDisplayDescription) {
-      this.showElement(descriptionElement, !(textPlacementAboveOrBelow|| textPlacementRightOrLeft)); //if textPlacementAboveOrBelow or textPlacementRightOrLeft, descriptionElement should not get 'display: -webkit-box'
+      const shouldDisplayTitle = title && styleParams.allowTitle;
+      let titleNumOfAvailableLines = 0;
       if (shouldDisplayTitle) {
-        availableHeight -= styleParams.titleDescriptionSpace;
+        this.showElement(titleElement);
+        this.setCss(titleElement, { overflow: 'visible' });
+        if (titleElements.length === 1) {
+          let titleHeight = // when padding is large and the we decrease padding the clientHeight stay small
+            parseInt(titleElement.children[0].offsetHeight) >
+            parseInt(titleElement.clientHeight)
+              ? parseInt(titleElement.children[0].offsetHeight)
+              : parseInt(titleElement.clientHeight);
+          const titleLineHeight = parseInt(
+            this.getCss(titleElement, 'line-height', 1),
+          );
+          let numOfTitleLines = 1;
+          if (titleHeight >= titleLineHeight) {
+            numOfTitleLines = Math.floor(titleHeight / titleLineHeight);
+          }
+          titleNumOfAvailableLines = Math.floor(
+            availableHeight / titleLineHeight,
+          );
+
+          if (titleNumOfAvailableLines === 0) {
+            this.removeElement(titleElement);
+          } else {
+            this.setCss(titleElement, { overflow: 'hidden' });
+
+            const isTitleFitInAvailableHeight =
+              titleNumOfAvailableLines >= numOfTitleLines;
+            if (isTitleFitInAvailableHeight) {
+              this.setCss(titleElement, { '-webkit-line-clamp': 'none' });
+              titleHeight = titleLineHeight * numOfTitleLines;
+            } else {
+              this.setCss(titleElement, {
+                '-webkit-line-clamp': titleNumOfAvailableLines + '',
+              });
+              titleHeight = titleLineHeight * titleNumOfAvailableLines;
+            }
+
+            const isThereAnyAvailableHeightLeft = availableHeight > titleHeight;
+            if (isThereAnyAvailableHeightLeft) {
+              availableHeight -= titleHeight;
+            } else {
+              availableHeight = 0;
+            }
+          }
+        }
       }
-      if (availableHeight < 0) {
-        availableHeight = 0;
-      }
-      const lineHeight = parseInt(
-        this.getCss(descriptionElement, 'line-height', 1),
-      );
-      const numOfLines = Math.floor(availableHeight / lineHeight);
-      if (numOfLines === 0) {
-        this.removeElement(descriptionElement);
-      } else {
-        this.setCss(descriptionElement, {
-          overflow: 'hidden',
-          '-webkit-line-clamp': numOfLines + '',
-        });
+
+      const shouldDisplayDescription =
+        descriptionElement &&
+        styleParams.allowDescription &&
+        description &&
+        availableHeight > 0 &&
+        ((shouldDisplayTitle && titleNumOfAvailableLines > 0) ||
+          !shouldDisplayTitle); // when there s no place for title the description not suppose to be shown
+      if (shouldDisplayDescription) {
+        this.showElement(descriptionElement, !(textPlacementAboveOrBelow|| textPlacementRightOrLeft)); //if textPlacementAboveOrBelow or textPlacementRightOrLeft, descriptionElement should not get 'display: -webkit-box'
+        if (shouldDisplayTitle) {
+          availableHeight -= styleParams.titleDescriptionSpace;
+        }
+        if (availableHeight < 0) {
+          availableHeight = 0;
+        }
+        const lineHeight = parseInt(
+          this.getCss(descriptionElement, 'line-height', 1),
+        );
+        const numOfLines = Math.floor(availableHeight / lineHeight);
+        if (numOfLines === 0) {
+          this.removeElement(descriptionElement);
+        } else {
+          this.setCss(descriptionElement, {
+            overflow: 'hidden',
+            '-webkit-line-clamp': numOfLines + '',
+          });
+        }
       }
     }
   }

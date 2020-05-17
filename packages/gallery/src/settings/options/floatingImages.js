@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
+import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Floating Images',

@@ -2,7 +2,7 @@ import content from './content';
 import dataTypes from './dataTypes';
 import isRelevant from './isRelevant';
 import {SECTIONS, stylesList, sectionByStyle} from './sections';
-import {gallerySettings} from 'pro-gallery'
+import { gallerySettings } from 'pro-gallery';
 
 const settingsManager = stylesList.reduce((obj, styleParam) => {
   const settingsData = gallerySettings[styleParam] || {

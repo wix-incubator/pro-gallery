@@ -1,7 +1,7 @@
-const VERICAL_ALIGN = {
+const VERTICAL_ALIGN = {
   TOP: 'flex-start',
   CENTER: 'center',
   BOTTOM: 'flex-end',
 };
 
-export default VERICAL_ALIGN;
+export default VERTICAL_ALIGN;

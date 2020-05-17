@@ -159,7 +159,6 @@ describe('styleParam - scrollAnimation', () => {
         filter: getComputedStyle(item).filter,
         transition: getComputedStyle(item).transition,
       }
-      console.log(animationProps);
 
       const animationMock = {
         filter: 'opacity(0)',
@@ -368,7 +367,6 @@ describe('styleParam - scrollAnimation', () => {
         filter: getComputedStyle(item).filter,
         transition: getComputedStyle(item).transition,
       }
-      console.log(animationProps);
 
       const animationMock = {
         filter: 'opacity(1)',

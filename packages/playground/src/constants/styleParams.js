@@ -1,6 +1,4 @@
-import isRelevant from '../settings/isRelevant';
-import {gallerySettings} from 'pro-gallery';
-import defaultStyles from 'pro-gallery/dist/src/common/defaultStyles';
+import { gallerySettings, defaultStyles } from 'pro-gallery';
 
 export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
   const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
@@ -31,7 +29,7 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
   if (value === defaultStyleParams[styleParam]) {
     return false;
   }
-  if (styleParams && (!isRelevant[styleParam] || !isRelevant[styleParam](styleParams))) {
+  if (styleParams && (!gallerySettings[styleParam] || !gallerySettings[styleParam].isRelevant(styleParams))) {
     return false;
   }
   return true;

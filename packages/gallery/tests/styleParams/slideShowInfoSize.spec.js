@@ -22,7 +22,6 @@ describe('styleParam - slideshowInfoSize', () => {
     })
     driver.mount.proGallery(initialProps);
     const infoContainer = driver.find.selector('.gallery-item-info').at(0);
-    console.log(infoContainer.props().style);
     const infoStyleMock = {
       height: '250px',
       bottom: '-250px'
@@ -38,7 +37,6 @@ describe('styleParam - slideshowInfoSize', () => {
     })
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
-    console.log(initialProps.container.height);
     const { height } = galleryContainer.props().style
     //expect height to be container.height - slideshowInfoSize
     expect(height).to.eq(initialProps.container.height - 250);

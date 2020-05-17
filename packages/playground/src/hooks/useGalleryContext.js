@@ -1,7 +1,7 @@
 import {useContext} from 'react';
 import {GalleryContext} from './GalleryContext';
 import {getInitialStyleParams} from '../constants/styleParams';
-import { addPresetStyles } from 'pro-gallery/dist/src/components/gallery/presets/presets'
+import { addPresetStyles } from 'pro-gallery';
 
 
 export function useGalleryContext() {

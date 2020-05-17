@@ -1,6 +1,6 @@
 import React from 'react';
 
-let GalleryContext;
+export let GalleryContext;
 try {
   GalleryContext = React.createContext({});
 } catch (e) {
@@ -9,7 +9,7 @@ try {
 
 const GALLERY_CONTEXT_FIELDS = ['isUnknownWidth'];
 
-const extractContextFields = fields =>
+export const extractContextFields = fields =>
   GALLERY_CONTEXT_FIELDS.reduce(
     (obj, field) => {
       obj[field] = fields[field];
@@ -18,7 +18,7 @@ const extractContextFields = fields =>
     {},
   );
 
-class GalleryProvider extends React.Component {
+export class GalleryProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = extractContextFields(props);
@@ -37,5 +37,3 @@ class GalleryProvider extends React.Component {
     }
   }
 }
-
-export { GalleryContext, GalleryProvider, extractContextFields };

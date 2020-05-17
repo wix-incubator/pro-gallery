@@ -22,10 +22,15 @@ class VideoItem extends GalleryComponent {
       playing: false,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
+      hlsPlayerLoaded: false,
     };
   }
 
   componentDidMount() {
+    this.dynamiclyImportVideoPlayers();
+  }
+
+  dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
       import(/* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
         window.ReactPlayer = ReactPlayer.default;
@@ -45,6 +50,28 @@ class VideoItem extends GalleryComponent {
         this.playVideoIfNeeded();
       });
     }
+    if (
+      //Hls player must be loaded by us, problem with requireJS
+      !(window && window.Hls) &&
+      this.isHLSVideo()
+    ) {
+      import(/* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
+        window.Hls =  Player.default;
+        this.setState({ hlsPlayerLoaded: true });
+        this.playVideoIfNeeded();
+      });
+    }
+  }
+  
+  isHLSVideo(){
+    return  this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
+  }
+  shouldUseHlsPlayer(){
+    return  this.isHLSVideo() && !utils.isiOS()
+  }
+
+  shouldForceVideoForHLS(){
+    return this.isHLSVideo() && utils.isiOS();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -149,6 +176,7 @@ class VideoItem extends GalleryComponent {
           this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
+          this.setState({ ready: true });
         }}
         config={{
           file: {
@@ -162,6 +190,8 @@ class VideoItem extends GalleryComponent {
               style: videoDimensionsCss,
               type: 'video/mp4',
             },
+              forceHLS: this.shouldUseHlsPlayer(),
+              forceVideo: this.shouldForceVideoForHLS(),
           },
         }}
         key={'video-' + this.props.id}
@@ -284,8 +314,8 @@ class VideoItem extends GalleryComponent {
           data-hook="video_container-video-player-element"
           key={'video_container-' + this.props.id}
           style={
-            utils.deviceHasMemoryIssues()
-              ? {}
+            utils.deviceHasMemoryIssues() || this.state.ready
+              ? {backgroundColor: 'black'}
               : {
                   backgroundImage: `url(${this.props.createUrl(
                     URL_SIZES.RESIZED,

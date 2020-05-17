@@ -88,6 +88,7 @@ class GalleryItem {
       hash: this.id,
       html: this.html,
       type: this.type,
+      isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
       directLink: this.directLink,
@@ -185,7 +186,7 @@ class GalleryItem {
           [value]: () => '',
         })),
       );
-    } else if (this.isVideo) {
+    } else if (this.isVideo || this.isVideoPlaceholder) {
       imgUrl = this.poster;
 
       if (utils.isExternalUrl(this.url)) {
@@ -521,6 +522,10 @@ class GalleryItem {
     }
   }
 
+  get isVideoPlaceholder() {
+      return !!(this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder)
+  }
+
   get alt() {
     return this.metadata.alt || this.title || this.description;
   }
@@ -787,6 +792,7 @@ class GalleryItem {
   get isVideo() {
     return this.type === 'video';
   }
+
 
   get isVisible() {
     return this.visibility && this.visibility.visible;

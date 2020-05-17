@@ -71,7 +71,7 @@ export default class ItemHover extends GalleryComponent {
         >
           {this.props.render ? (
             <div className="gallery-item-hover-inner">
-              {this.props.render(this.props)}
+              {this.props.render()}
             </div>
           ) : (
             this.props.children
