@@ -1,3 +1,9 @@
+## [v1.10.13](https://pro-gallery-1-10-13.surge.sh) (18/05/2020)
+ 
+#### LAYOUTS
+ -  Revert bad commit: improve (calcVisibilities): remove deprecated calcVisibilities
+
+---
 ## [v1.10.12](https://pro-gallery-1-10-12.surge.sh) (14/05/2020)
  
 #### GALLERY
