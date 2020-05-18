@@ -6,6 +6,10 @@
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/pro-gallery.git"
+  },
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
