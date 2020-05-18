@@ -1,3 +1,9 @@
+## [v1.10.14](https://pro-gallery-1-10-14.surge.sh) (18/05/2020)
+ 
+#### MAIN
+ -  improve: add a repository field in package.json
+
+---
 ## [v1.10.13](https://pro-gallery-1-10-13.surge.sh) (18/05/2020)
  
 #### LAYOUTS
