@@ -43,16 +43,15 @@ describe('styleParam - titlePlacement', () => {
     expect(items).to.have.lengthOf(6)
     driver.detach.proGallery();
   });
-  it('should render texts when "titlePlacement" is "SHOW_ON_HOVER"', () => {
+  it('should render hover when "titlePlacement" is "SHOW_ON_HOVER"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow:false,
       scrollDirection:0,
-      allowTitle:true,
       titlePlacement: PLACEMENTS.SHOW_ON_HOVER
     })
     driver.mount.proGallery(initialProps);
-    const items = driver.find.selector('.gallery-item-hover .gallery-item-text');
+    const items = driver.find.selector('.gallery-item-hover');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });

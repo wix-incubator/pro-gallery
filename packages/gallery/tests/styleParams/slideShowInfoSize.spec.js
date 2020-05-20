@@ -31,9 +31,10 @@ describe('styleParam - slideshowInfoSize', () => {
   });
   it('should set the right height for the gallery', () => {
     Object.assign(initialProps.styles, {
-      galleryLayout:  GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       allowTitle:true,
       slideshowInfoSize: 250,
+      isSlideshow: true,
     })
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');

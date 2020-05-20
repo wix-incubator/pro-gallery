@@ -69,13 +69,10 @@ export default class ItemHover extends GalleryComponent {
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
         >
-          {this.props.render ? (
+          {this.props.renderCustomInfo ? (
             <div className="gallery-item-hover-inner">
-              {this.props.render()}
-            </div>
-          ) : (
-            this.props.children
-          )}
+              {this.props.renderCustomInfo()}
+            </div>) : null}
         </div>
       </div>
     );

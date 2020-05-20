@@ -10,7 +10,7 @@ describe('styleParam - arrowsPosition', () => {
   const initialProps = {
     container,
     items: images2,
-    styles: styleParams
+    styles: styleParams,
   }
 
   beforeEach(() => {

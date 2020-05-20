@@ -144,14 +144,11 @@ const styleParams = {
     videoSpeed: '1',
     videoLoop: true,
   };
-  
-  const container = {
+
+const container = {
     width: 1150,
     height: 850,
     scrollBase: 0
-  };
-  
-  
-  
-  export { container, styleParams}
-  
+};
+
+export { container, styleParams }

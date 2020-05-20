@@ -106,7 +106,6 @@ class galleryDriver {
       pauseAllVideos: (() => {}),
       setWixHeight: (() => {}),
       scrollToItem: (() => new Promise(res => res())),
-      toggleShare: (() => {}),
     };
 
     this.layoutParams = {
