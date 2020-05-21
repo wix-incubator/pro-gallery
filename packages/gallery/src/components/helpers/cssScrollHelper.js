@@ -179,13 +179,19 @@ class CssScrollHelper {
 
     if (type !== 'text') {
       //load hi-res image + loading transition
-      if (!isUnknownWidth && !item.isDimensionless && !utils.hasNativeLazyLoadSupport()) { //FAKE SSR
+      if (!isUnknownWidth && !item.isDimensionless) { //FAKE SSR
+        if (!utils.hasNativeLazyLoadSupport()) {
+          scrollCss +=
+          createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
+          `{opacity: 1; transition: opacity 1s linear;}`
+        } else {
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
           `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
             URL_SIZES.RESIZED,
             URL_TYPES.HIGH_RES,
           )})}`;
+        }
       }
 
       //add the blurry image/color
