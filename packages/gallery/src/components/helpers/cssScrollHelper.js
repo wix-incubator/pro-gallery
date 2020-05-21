@@ -169,7 +169,7 @@ class CssScrollHelper {
 
   calcScrollCssForItem({ domId, item, styleParams, isUnknownWidth }) {
     const { type, createUrl, idx } = item;
-    const itemTag = utils.hasNativeLazyLoadSupport()? 'img' : 'canvas';
+    const itemTag = utils.hasNativeLazyLoadSupport() ? 'img' : 'canvas';
     let scrollCss = '';
     const createScrollSelectors = this.createScrollSelectorsFunction({
       domId,
@@ -180,17 +180,16 @@ class CssScrollHelper {
     if (type !== 'text') {
       //load hi-res image + loading transition
       if (!isUnknownWidth && !item.isDimensionless) { //FAKE SSR
-        if (!utils.hasNativeLazyLoadSupport()) {
-          scrollCss +=
-          createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
-          `{opacity: 1; transition: opacity 1s linear;}`
-        } else {
         scrollCss +=
           createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
-          `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
-            URL_SIZES.RESIZED,
-            URL_TYPES.HIGH_RES,
-          )})}`;
+          `{opacity: 1; transition: opacity 1s linear;}`
+        if (!utils.hasNativeLazyLoadSupport()) {
+          scrollCss +=
+            createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
+            `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
+              URL_SIZES.RESIZED,
+              URL_TYPES.HIGH_RES,
+            )})}`;
         }
       }
 
@@ -261,7 +260,7 @@ class CssScrollHelper {
     const animationActivePadding = this.aboveScreenPadding();
 
     let scrollAnimationCss = '';
-    const itemTag = utils.hasNativeLazyLoadSupport()? 'img' : 'canvas';
+    const itemTag = utils.hasNativeLazyLoadSupport() ? 'img' : 'canvas';
     // notice: these 2 animations must have the blurry image
     if (scrollAnimation === SCROLL_ANIMATIONS.MAIN_COLOR) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
@@ -295,7 +294,7 @@ class CssScrollHelper {
           ' .gallery-item-wrapper',
         ) +
         `{filter: grayscale(100%); transition: filter 1.${200 +
-          _randomTiming}s ease-in !important;}`;
+        _randomTiming}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
@@ -347,7 +346,7 @@ class CssScrollHelper {
     if (scrollAnimation === SCROLL_ANIMATIONS.ONE_COLOR) {
       const oneColorAnimationColor =
         styleParams.oneColorAnimationColor &&
-        styleParams.oneColorAnimationColor.value
+          styleParams.oneColorAnimationColor.value
           ? styleParams.oneColorAnimationColor.value
           : 'transparent';
 
@@ -360,7 +359,7 @@ class CssScrollHelper {
           ' .gallery-item-wrapper',
         ) +
         `{filter: opacity(0); transition: filter 0.${600 +
-          _randomTiming}s ease-in !important;}`;
+        _randomTiming}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
