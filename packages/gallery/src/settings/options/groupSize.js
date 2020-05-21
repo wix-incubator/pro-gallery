@@ -2,7 +2,7 @@ import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Max Group Size',
-  isRelevant: (styleParams)  => true,
+  isRelevant: ()  => true,
   type: INPUT_TYPES.NUMBER,
   min: 0,
   max: 3,
