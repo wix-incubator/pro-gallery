@@ -1,4 +1,3 @@
-import utils from '../utils';
 import VIEW_MODE from '../constants/viewMode';
 import FORM_FACTOR from '../constants/formFactor';
 
