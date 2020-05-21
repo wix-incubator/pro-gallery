@@ -257,9 +257,11 @@ class SlideshowView extends GalleryComponent {
     if (this.lastCurrentItem !== this.state.currentIdx) {
       this.lastCurrentItem = this.state.currentIdx;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
+      const item = this.props.items[this.state.currentIdx];
+      item.idx = this.state.currentIdx
       this.props.actions.eventsListener(
         EVENTS.CURRENT_ITEM_CHANGED,
-        this.props.items[this.state.currentIdx],
+        item,
       );
     }
     this.removeArrowsIfNeeded();
