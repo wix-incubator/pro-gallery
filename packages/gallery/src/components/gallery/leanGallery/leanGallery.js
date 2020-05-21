@@ -219,7 +219,7 @@ export default class LeanGallery extends React.Component {
   render() {
     const { eventsListener, props } = this;
 
-    const { customInfoRenderer, items, id } = props;
+    const { customInfoRenderer, items } = props;
 
     const styles = this.fixStylesIfNeeded(props.styles);
 

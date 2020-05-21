@@ -2,17 +2,17 @@
 import { GALLERY_CONSTS } from './consts';
 
 export const showColorOverlay = (sp, context = {}) => {
-  const hasHoverOnMobile = sp => {
+  const hasHoverOnMobile = styleParams => {
     const firstTapSimulatesHover = sp.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-      (showTexts(sp) &&
+      (showTexts(styleParams) &&
         (
-          (layoutPresentOuterInformation(sp) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER) ||
-          !layoutPresentOuterInformation(sp)
+          (layoutPresentOuterInformation(styleParams) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER) ||
+          !layoutPresentOuterInformation(styleParams)
         )
       )
       ;
 
-    return !isSlideshowLayout(sp) &&
+    return !isSlideshowLayout(styleParams) &&
       firstTapSimulatesHover;
   };
   if (context.isMobile) {
