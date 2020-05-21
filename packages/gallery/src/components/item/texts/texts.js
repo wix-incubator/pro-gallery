@@ -70,6 +70,8 @@ export default class Texts extends GalleryComponent {
 
     if (styleParams.isRTL) {
       elementStyle.direction = 'rtl';
+    } else {
+      elementStyle.direction = 'ltr';
     }
 
     if (textPlacementRightOrLeft) {

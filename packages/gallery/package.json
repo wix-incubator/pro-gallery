@@ -2,10 +2,14 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "1.10.11",
+  "version": "1.10.14",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/pro-gallery.git"
+  },
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -20,7 +24,6 @@
     "watch": "PORT=9837 yoshi start",
     "start": "PORT=9837 yoshi start",
     "build": "yoshi build",
-    "build-svg": "svg2react-icon src/assets/images/svg-src src/components/svgs",
     "precommit": " ",
     "pretest": "yoshi build",
     "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
@@ -34,7 +37,7 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.13.2",
-    "pro-layouts": "^1.10.0",
+    "pro-layouts": "^1.10.14",
     "react-player": "^1.15.3"
   },
   "peerDependencies": {
@@ -62,9 +65,6 @@
     "react-test-renderer": "^16.4.1",
     "sass-loader": "^7.1.0",
     "sinon": "^6.0.0",
-    "svg-inline-loader": "^0.8.0",
-    "svg-react-loader": "^0.4.6",
-    "svg2react-icon": "^3.0.91",
     "wallaby-webpack": "^3.9.9",
     "yoshi": "~4.25.0",
     "yoshi-style-dependencies": "^4.0.0"
@@ -104,7 +104,6 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^-!svg-react-loader.*$": "<rootDir>/__testsDrivers__/svgImportMock.js",
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
     "testPathIgnorePatterns": [

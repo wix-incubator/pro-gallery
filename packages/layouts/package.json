@@ -2,7 +2,7 @@
   "private": false,
   "name": "pro-layouts",
   "sideEffects": false,
-  "version": "1.10.0",
+  "version": "1.10.14",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com",
@@ -10,6 +10,10 @@
   },
   "main": "dist/src/index.js",
   "module": "dist/es/src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/pro-gallery.git"
+  },
   "files": [
     "dist"
   ],

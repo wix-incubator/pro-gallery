@@ -184,7 +184,7 @@ export default class Layouter {
               );
               // this.strip = this.strips[this.strips.length - 1];
               this.strip = new Strip({
-                idx: this.strips.length,
+                idx: this.strips.length + 1,
                 container: this.container,
                 groupsPerStrip: this.styleParams.groupsPerStrip,
                 oneRow: this.styleParams.oneRow,

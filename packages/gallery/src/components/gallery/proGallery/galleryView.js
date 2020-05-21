@@ -145,7 +145,7 @@ class GalleryView extends GalleryComponent {
             ? ' one-row slider hide-scrollbars '
             : '') +
           (styleParams.isAccessible ? ' accessible ' : '') +
-          (styleParams.isRTL ? ' rtl ' : '')
+          (styleParams.isRTL ? ' rtl ' : ' ltr ')
         }
         style={{
           height: galleryHeight,

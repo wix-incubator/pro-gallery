@@ -142,6 +142,7 @@ export default class Social extends GalleryComponent {
             {...genralProps}
             onClick={e => {
               e.stopPropagation();
+              e.preventDefault();
               actions.eventsListener(
                 EVENTS.TEXT_DOWNLOAD_BUTTON_CLICKED,
                 this.props,
@@ -190,7 +191,8 @@ export default class Social extends GalleryComponent {
     switch (e.keyCode || e.charCode) {
       case 32: //space
       case 13: //enter
-        e.stopPropagation();
+      e.stopPropagation();
+      e.preventDefault();
         this.props.actions.eventsListener(
           EVENTS.TEXT_DOWNLOAD_BUTTON_CLICKED,
           this.props,
