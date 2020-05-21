@@ -3,7 +3,6 @@ import PLACEMENTS, {hasHorizontalPlacement, hasVerticalPlacement} from '../../..
 import INFO_TYPE from '../../../common/constants/infoType';
 import window from '../../../common/window/windowWrapper';
 import designConsts from '../../../common/constants/designConsts.js';
-import OVERLAY_ANIMATIONS from "../../../common/constants/overlayAnimations";
 
 const minWidthToShowContent = 135;
 const minWithForNormalSizedItem = 190;

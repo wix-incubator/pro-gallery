@@ -6,9 +6,6 @@ import {
   isPreviewMode,
   isSEOMode,
   isFormFactorMobile,
-  isFormFactorTablet,
-  isFormFactorDesktop,
-  isFormFactorTouch,
 } from '../window/viewModeWrapper';
 
 class Utils {

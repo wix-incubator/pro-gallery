@@ -1,4 +1,3 @@
-import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Item Size Ratio',
