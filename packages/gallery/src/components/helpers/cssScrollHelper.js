@@ -180,12 +180,14 @@ class CssScrollHelper {
     if (type !== 'text') {
       //load hi-res image + loading transition
       if (!isUnknownWidth && !item.isDimensionless) { //FAKE SSR
-        scrollCss +=
-          createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
-          `{opacity: 1; transition: opacity 1s linear;}`
-        if (!utils.hasNativeLazyLoadSupport()) {
+        const selector = createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`)
+        if (utils.hasNativeLazyLoadSupport()) {
           scrollCss +=
-            createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`) +
+          selector +
+          `{opacity: 1; transition: opacity 1s linear;}`
+        } else {
+          scrollCss +=
+          selector +
             `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
               URL_SIZES.RESIZED,
               URL_TYPES.HIGH_RES,
