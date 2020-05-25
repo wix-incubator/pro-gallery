@@ -1,3 +1,13 @@
+## [v1.10.16](https://pro-gallery-1-10-16.surge.sh) (25/05/2020)
+ 
+#### GALLERY
+ -  fix: hover padding in slider.
+ -  improve: use native lazyLoad when supported
+
+#### MAIN
+ -  improve (package.json): release exact dependencies version
+
+---
 ## [v1.10.14](https://pro-gallery-1-10-14.surge.sh) (18/05/2020)
  
 #### MAIN
