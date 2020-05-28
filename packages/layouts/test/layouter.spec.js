@@ -681,7 +681,7 @@ describe('Layouter', () => {
       const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
 
       gallery = getLayout({ items, container, styleParams });
-      gallery.items.forEach((item, i) => {
+      gallery.items.forEach(item => {
         const ratio = Number(
           rotatingCropRatiosArr[i % rotatingCropRatiosArr.length],
         );
@@ -703,7 +703,7 @@ describe('Layouter', () => {
     styleParams.isVertical = true;
 
     gallery = getLayout({ items, container, styleParams });
-    gallery.items.forEach((item, i) => {
+    gallery.items.forEach(item => {
       const { width, height } = item;
       const itemRatio = width / height;
       expect(ratio - itemRatio).to.be.below(0.1);
