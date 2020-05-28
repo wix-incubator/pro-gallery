@@ -693,6 +693,40 @@ describe('Layouter', () => {
     });
   });
 
+  it('should not find ratios under 1 when "cubeType" is "max"', () => {
+    const items = getItems(100); //todo - something breaks when using exactly 100 images
+    const ratio = 1;
+    styleParams.cubeRatio = ratio;
+    styleParams.cubeType = 'max';
+    styleParams.cubeImages = true;
+    styleParams.smartCrop = false;
+    styleParams.isVertical = true;
+
+    gallery = getLayout({ items, container, styleParams });
+    gallery.items.forEach((item, i) => {
+      const { width, height } = item;
+      const itemRatio = width / height;
+      expect(ratio - itemRatio).to.be.below(0.1);
+    }, true);
+  });
+
+  it('should not find ratios above 1 when "cubeType" is "min"', () => {
+    const items = getItems(100); //todo - something breaks when using exactly 100 images
+    const ratio = 1;
+    styleParams.cubeRatio = ratio;
+    styleParams.cubeType = 'min';
+    styleParams.cubeImages = true;
+    styleParams.smartCrop = false;
+    styleParams.isVertical = true;
+
+    gallery = getLayout({ items, container, styleParams });
+    gallery.items.forEach((item, i) => {
+      const { width, height } = item;
+      const itemRatio = width / height;
+      expect(itemRatio - ratio).to.be.below(0.1);
+    }, true);
+  });
+
   describe('public methods', () => {
     it('findLastVisibleItemIdx should work', () => {
       const items = getItems(100);
