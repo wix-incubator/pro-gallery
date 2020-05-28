@@ -1,3 +1,15 @@
+## [v1.10.17](https://pro-gallery-1-10-17.surge.sh) (28/05/2020)
+ 
+#### LAYOUTS
+ -  Improve (cubeType): add min/max cubeTypes to limit images height
+
+#### GALLERY
+ -  fix (imageItem.js): added data-hook for img tags
+
+#### MAIN
+ -  improve (playground): add meta tags
+
+---
 ## [v1.10.16](https://pro-gallery-1-10-16.surge.sh) (25/05/2020)
  
 #### GALLERY
