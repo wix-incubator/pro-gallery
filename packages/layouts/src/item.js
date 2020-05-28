@@ -349,13 +349,19 @@ export class Item {
 
     if (this.smartCrop === true) {
       if (this.isPortrait) {
-        return Math.min(ratio, 1 / ratio);
+        ratio = Math.min(ratio, 1 / ratio);
       } else {
-        return Math.max(ratio, 1 / ratio);
+        ratio = Math.max(ratio, 1 / ratio);
       }
-    } else {
-      return ratio;
     }
+
+    if (this.cubeType === 'min') {
+      ratio = Math.min(ratio, this.orgRatio);
+    } else if (this.cubeType === 'max') {
+      ratio = Math.max(ratio, this.orgRatio);
+    }
+
+    return ratio;
   }
 
   set cubeRatio(ratio) {
