@@ -4,6 +4,7 @@ import LAZY_LOAD from '../../common/constants/lazyLoad';
 import { GalleryComponent } from '../galleryComponent';
 import { isSEOMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
+import utils from '../../common/utils';
 
 export default class ImageItem extends GalleryComponent {
   componentDidMount() {
@@ -51,7 +52,7 @@ export default class ImageItem extends GalleryComponent {
         ? 'load-with-color'
         : '',
     ].join(' ');
-    const imageContainer = image => {
+    const imageContainer = renderer => {
       return (
         <div
           className={imageItemClassName}
@@ -63,11 +64,52 @@ export default class ImageItem extends GalleryComponent {
             (imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {})
             : { ...backgroundStyle, ...restOfDimensions }}
         >
-          {image}
+          {renderer()}
         </div>
       );
     };
-    const image = (
+    const image = () => {
+      const usePreload = ((!this.isTransparent || utils.isSSR()) && !this.isDimensionless);
+      let preload = null;
+      if (usePreload) {
+      switch (styleParams.imageLoadingMode) {
+        case LOADING_MODE.BLUR: 
+          preload = <img
+            alt=''
+            key={
+              (styleParams.cubeImages && styleParams.cubeType === 'fill'
+                ? 'cubed-'
+                : '') + 'image'
+            }
+            className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+            data-hook='gallery-item-image-img-preload'
+            src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+            loading="lazy"
+            style={{...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat'}}
+            {...imageProps}
+          />
+        break;
+        case LOADING_MODE.MAIN_COLOR: 
+          preload = <img
+          alt=''
+          key={
+              (styleParams.cubeImages && styleParams.cubeType === 'fill'
+                ? 'cubed-'
+                : '') + 'image'
+            }
+            className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+            data-hook='gallery-item-image-img-preload'
+            src={createUrl(URL_SIZES.PIXEL, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+            loading="lazy"
+            style={restOfDimensions}
+            {...imageProps}
+          />
+    break;
+      }
+    }
+
+    return [preload,
+
       <img
         key={
           (styleParams.cubeImages && styleParams.cubeType === 'fill'
@@ -79,11 +121,15 @@ export default class ImageItem extends GalleryComponent {
         alt={alt ? alt : 'untitled image'}
         src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
         loading="lazy"
+        onLoad={node => node.target.style.opacity = '1'}
         style={restOfDimensions}
         {...imageProps}
       />
-    );
-    const canvas = (
+    ]
+    
+  }
+  
+  const canvas = () => (
       <canvas
         key={
           (styleParams.cubeImages && styleParams.cubeType === 'fill'
