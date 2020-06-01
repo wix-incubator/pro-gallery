@@ -110,7 +110,13 @@ export default class ImageItem extends GalleryComponent {
           loading="lazy"
           onLoad={({target}) => {
             target.style.opacity = '1';
-            setTimeout((() => target.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()), 1000);
+            setTimeout((() => {
+              try {
+                target.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
+              } catch (e) {
+                //
+              }
+            }), 1000);
           }}
           style={restOfDimensions}
           {...imageProps}
