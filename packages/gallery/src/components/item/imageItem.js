@@ -31,8 +31,8 @@ export default class ImageItem extends GalleryComponent {
     } = this.props;
     const imageProps =
       settings &&
-      settings.imageProps &&
-      typeof settings.imageProps === 'function'
+        settings.imageProps &&
+        typeof settings.imageProps === 'function'
         ? settings.imageProps(id)
         : {};
     const backgroundStyle = {}; //remove this inline style if rendered padding (using css) is used
@@ -61,7 +61,7 @@ export default class ImageItem extends GalleryComponent {
           key={'image_container-' + id}
           data-hook={'image-item'}
           style={displayed ?
-            (imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {})
+            (imageDimensions.borderRadius ? { borderRadius: imageDimensions.borderRadius } : {})
             : { ...backgroundStyle, ...restOfDimensions }}
         >
           {renderer()}
@@ -72,64 +72,56 @@ export default class ImageItem extends GalleryComponent {
       const usePreload = ((!this.isTransparent || utils.isSSR()) && !this.isDimensionless);
       let preload = null;
       if (usePreload) {
-      switch (styleParams.imageLoadingMode) {
-        case LOADING_MODE.BLUR: 
-          preload = <img
-            alt=''
-            key={
-              (styleParams.cubeImages && styleParams.cubeType === 'fill'
-                ? 'cubed-'
-                : '') + 'image'
-            }
-            className={'gallery-item-visible gallery-item gallery-item-preloaded'}
-            data-hook='gallery-item-image-img-preload'
-            src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
-            loading="lazy"
-            style={{...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat'}}
-            {...imageProps}
-          />
-        break;
-        case LOADING_MODE.MAIN_COLOR: 
-          preload = <img
-          alt=''
-          key={
-              (styleParams.cubeImages && styleParams.cubeType === 'fill'
-                ? 'cubed-'
-                : '') + 'image'
-            }
-            className={'gallery-item-visible gallery-item gallery-item-preloaded'}
-            data-hook='gallery-item-image-img-preload'
-            src={createUrl(URL_SIZES.PIXEL, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
-            loading="lazy"
-            style={restOfDimensions}
-            {...imageProps}
-          />
-    break;
+        switch (styleParams.imageLoadingMode) {
+          case LOADING_MODE.BLUR:
+            preload = <img
+              alt=''
+              className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+              key='gallery-item-image-img-preload'
+              data-hook='gallery-item-image-img-preload'
+              src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+              loading="lazy"
+              style={{ ...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat' }}
+              {...imageProps}
+            />
+            break;
+          case LOADING_MODE.MAIN_COLOR:
+            preload = <img
+              alt=''
+              key='gallery-item-image-img-preload'
+              className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+              data-hook='gallery-item-image-img-preload'
+              src={createUrl(URL_SIZES.PIXEL, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+              loading="lazy"
+              style={restOfDimensions}
+              {...imageProps}
+            />
+            break;
+        }
       }
+
+      return [preload,
+
+        <img
+          key={
+            (styleParams.cubeImages && styleParams.cubeType === 'fill'
+              ? 'cubed-'
+              : '') + 'image'
+          }
+          className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+          data-hook='gallery-item-image-img'
+          alt={alt ? alt : 'untitled image'}
+          src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
+          loading="lazy"
+          onLoad={node => node.target.style.opacity = '1'}
+          style={restOfDimensions}
+          {...imageProps}
+        />
+      ]
+
     }
 
-    return [preload,
-
-      <img
-        key={
-          (styleParams.cubeImages && styleParams.cubeType === 'fill'
-            ? 'cubed-'
-            : '') + 'image'
-        }
-        className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
-        data-hook='gallery-item-image-img'
-        alt={alt ? alt : 'untitled image'}
-        src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
-        loading="lazy"
-        onLoad={node => node.target.style.opacity = '1'}
-        style={restOfDimensions}
-        {...imageProps}
-      />
-    ]
-    
-  }
-  
-  const canvas = () => (
+    const canvas = () => (
       <canvas
         key={
           (styleParams.cubeImages && styleParams.cubeType === 'fill'
