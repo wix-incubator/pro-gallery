@@ -42,20 +42,20 @@ describe('styleParam - imageLoadingMode', () => {
     })
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
     driver.mount.proGallery(initialProps);
-    expect(imageStub.withArgs('pixel','img').called).to.be.true;
+    expect(imageStub.withArgs('pixel','thumb').called).to.be.true;
     imageStub.restore();
     driver.detach.proGallery();
   });
-  it('should preload color background (MAIN_COLOR)', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout:  GALLERY_CONSTS.layout.GRID,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
-      imageLoadingMode: GALLERY_CONSTS.loadingMode.COLOR,
-    })
-    driver.mount.proGallery(initialProps);
-    const item = driver.find.hook('image-item').at(0);
-    expect(item.hasClass('load-with-color')).to.be.true;
-    driver.detach.proGallery();
-  });
+  // it('should preload color background (MAIN_COLOR)', () => {
+  //   Object.assign(initialProps.styles, {
+  //     galleryLayout:  GALLERY_CONSTS.layout.GRID,
+  //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+  //     oneRow: false,
+  //     imageLoadingMode: GALLERY_CONSTS.loadingMode.COLOR,
+  //   })
+  //   driver.mount.proGallery(initialProps);
+  //   const item = driver.find.hook('image-item').at(0);
+  //   expect(item.hasClass('load-with-color')).to.be.true;
+  //   driver.detach.proGallery();
+  // });
 })
