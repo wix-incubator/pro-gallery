@@ -811,15 +811,22 @@ class ItemView extends GalleryComponent {
     const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
     return !itemDoesntHaveLink;
   }
-
+  
   getItemContainerStyles() {
-    const { styleParams } = this.props;
+    const { offset, style, styleParams } = this.props;
+
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
+      top: offset.top,
+      left: styleParams.isRTL ? 'auto' : offset.left,
+      right: !styleParams.isRTL ? 'auto' : offset.left,
+      width: style.width + style.infoWidth,
+      height: style.height + style.infoHeight,
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
       cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
       (styleParams.itemClick === CLICK_ACTIONS.LINK && itemDoesntHaveLink)
