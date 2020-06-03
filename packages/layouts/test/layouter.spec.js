@@ -693,11 +693,11 @@ describe('Layouter', () => {
     });
   });
 
-  it('should not find ratios under 1 when "cubeType" is "max"', () => {
+  it('should not find ratios under 1 when "cubeType" is "min"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
     styleParams.cubeRatio = ratio;
-    styleParams.cubeType = 'max';
+    styleParams.cubeType = 'min';
     styleParams.cubeImages = true;
     styleParams.smartCrop = false;
     styleParams.isVertical = true;
@@ -710,11 +710,11 @@ describe('Layouter', () => {
     }, true);
   });
 
-  it('should not find ratios above 1 when "cubeType" is "min"', () => {
+  it('should not find ratios above 1 when "cubeType" is "max"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
     styleParams.cubeRatio = ratio;
-    styleParams.cubeType = 'min';
+    styleParams.cubeType = 'max';
     styleParams.cubeImages = true;
     styleParams.smartCrop = false;
     styleParams.isVertical = true;
