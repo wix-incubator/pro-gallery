@@ -35,6 +35,7 @@ export const stylesBySection = {
         'imageMargin',
 
         'gridStyle',
+        'fixedColumns',
         'numberOfImagesPerRow',
         'numberOfImagesPerCol',
 
