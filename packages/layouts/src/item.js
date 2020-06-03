@@ -356,9 +356,9 @@ export class Item {
     }
 
     if (this.cubeType === 'min') {
-      ratio = Math.min(ratio, this.orgRatio);
-    } else if (this.cubeType === 'max') {
       ratio = Math.max(ratio, this.orgRatio);
+    } else if (this.cubeType === 'max') {
+      ratio = Math.min(ratio, this.orgRatio);
     }
 
     return ratio;
