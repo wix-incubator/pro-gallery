@@ -1,3 +1,9 @@
+## [v1.10.18](https://pro-gallery-1-10-18.surge.sh) (03/06/2020)
+ 
+#### LAYOUTS
+ -  Fix: fix support for min / max cubeType
+
+---
 ## [v1.10.17](https://pro-gallery-1-10-17.surge.sh) (28/05/2020)
  
 #### LAYOUTS
