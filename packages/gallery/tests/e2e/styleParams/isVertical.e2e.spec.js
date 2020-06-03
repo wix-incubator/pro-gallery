@@ -1,8 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
 
-jest.setTimeout(30000)
-
 expect.extend({ toMatchImageSnapshot });
 
 describe('isVertical - e2e', () => {

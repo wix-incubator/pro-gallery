@@ -2,8 +2,6 @@ import GalleryDriver from '../../drivers/pptrDriver';
 import GALLERY_CONSTS from '../../../src/common/constants';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
 
-jest.setTimeout(30000)
-
 expect.extend({ toMatchImageSnapshot });
 
 describe('slideshowInfoSize - e2e', () => {

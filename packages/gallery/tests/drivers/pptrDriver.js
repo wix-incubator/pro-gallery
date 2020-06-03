@@ -5,6 +5,7 @@ const devices = require('puppeteer/DeviceDescriptors');
 export default class galleryDriver {
   constructor() {
     this.timeout = 60000;
+    jest.setTimeout(40000)
     this.browser = {};
     this.windowSize = {
       width: 1920,

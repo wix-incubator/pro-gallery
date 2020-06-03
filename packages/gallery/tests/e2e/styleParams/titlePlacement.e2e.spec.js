@@ -2,8 +2,6 @@ import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
 import PLACEMENTS from '../../../src/common/constants/placements';
 
-jest.setTimeout(30000)
-
 expect.extend({ toMatchImageSnapshot });
 
 describe('titlePlacement - e2e', () => {
