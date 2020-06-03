@@ -1,3 +1,6 @@
+## [v1.10.19](https://pro-gallery-1-10-19.surge.sh) (03/06/2020)
+
+---
 ## [v1.10.18](https://pro-gallery-1-10-18.surge.sh) (03/06/2020)
  
 #### LAYOUTS
