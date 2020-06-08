@@ -93,6 +93,7 @@ class ItemView extends GalleryComponent {
       failed: this.state.retries >= 3,
     });
   }
+
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
     this.setState({
