@@ -1,3 +1,9 @@
+## [v1.10.20](https://pro-gallery-1-10-20.surge.sh) (08/06/2020)
+ 
+#### GALLERY
+ -  fixed item-wrapper div container styles.
+
+---
 ## [v1.10.19](https://pro-gallery-1-10-19.surge.sh) (03/06/2020)
 
 ---
