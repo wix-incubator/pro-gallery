@@ -44,7 +44,7 @@ class ItemView extends GalleryComponent {
       retries: 0,
       showShare: false,
       isCurrentHover: false,
-      itemWasHovered: false 
+      itemWasHovered: false
     };
 
     this.activeElement = '';
@@ -325,7 +325,7 @@ class ItemView extends GalleryComponent {
     const { styleParams } = this.props;
     const { alwaysShowHover, previewHover, hoveringBehaviour } = styleParams;
     const { NEVER_SHOW, APPEARS } = INFO_BEHAVIOUR_ON_HOVER;
-    
+
     if (hoveringBehaviour === NEVER_SHOW) {
       return false;
     } else if (alwaysShowHover === true) {
@@ -1119,11 +1119,10 @@ class ItemView extends GalleryComponent {
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
-        {this.getRightInfoElementIfNeeded()}
         <div
           style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
-            // ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
-            // ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
+            ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
+            ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
           }}
         >
           {!isItemWrapperEmpty && (<div
@@ -1136,6 +1135,7 @@ class ItemView extends GalleryComponent {
             {this.getItemInner()}
           </div>)}
         </div>
+        {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );
