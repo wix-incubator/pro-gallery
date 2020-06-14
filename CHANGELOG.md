@@ -1,3 +1,52 @@
+## [v1.10.22](https://pro-gallery-1-10-22.surge.sh) (14/06/2020)
+ 
+#### GALLERY
+ -  fixed slideshow info structure (with/out customSlideshowInfoRenderer)
+ 
+---
+## [v1.10.21](https://pro-gallery-1-10-21.surge.sh) (08/06/2020)
+ 
+#### GALLERY
+ -  dummy commit
+
+--
+## [v1.10.20](https://pro-gallery-1-10-20.surge.sh) (08/06/2020)
+ 
+#### GALLERY
+ -  fixed item-wrapper div container styles.
+
+---
+## [v1.10.19](https://pro-gallery-1-10-19.surge.sh) (03/06/2020)
+
+---
+## [v1.10.18](https://pro-gallery-1-10-18.surge.sh) (03/06/2020)
+ 
+#### LAYOUTS
+ -  Fix: fix support for min / max cubeType
+
+---
+## [v1.10.17](https://pro-gallery-1-10-17.surge.sh) (28/05/2020)
+ 
+#### LAYOUTS
+ -  Improve (cubeType): add min/max cubeTypes to limit images height
+
+#### GALLERY
+ -  fix (imageItem.js): added data-hook for img tags
+
+#### MAIN
+ -  improve (playground): add meta tags
+
+---
+## [v1.10.16](https://pro-gallery-1-10-16.surge.sh) (25/05/2020)
+ 
+#### GALLERY
+ -  fix: hover padding in slider.
+ -  improve: use native lazyLoad when supported
+
+#### MAIN
+ -  improve (package.json): release exact dependencies version
+
+---
 ## [v1.10.14](https://pro-gallery-1-10-14.surge.sh) (18/05/2020)
  
 #### MAIN

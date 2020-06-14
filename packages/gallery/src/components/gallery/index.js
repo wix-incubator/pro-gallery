@@ -5,16 +5,19 @@ import basePropTypes from './proGallery/propTypes';
 import LAYOUTS from '../../common/constants/layout';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';
+import LAZY_LOAD from '../../common/constants/lazyLoad';
+import utils from '../../common/utils';
 
 export default class BaseGallery extends React.Component {
 
   static propTypes = basePropTypes;
   render() {
+    const lazyLoad = utils.hasNativeLazyLoadSupport() ? LAZY_LOAD.NATIVE : this.props.lazyLoad;
     const domId = this.props.domId || 'default-dom-id';
     const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
-    const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId };
+    const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId, lazyLoad};
     dimensionsHelper.updateParams({
       domId: galleryProps.domId,
       container: galleryProps.container,

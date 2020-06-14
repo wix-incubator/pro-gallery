@@ -28,6 +28,7 @@ class VideoScrollHelper {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.getPlayingIdx = this.getPlayingIdx.bind(this);
+    this.isVisible = this.isVisible.bind(this);
     this.top = 0;
     this.left = 0;
     this.videoPlay = undefined;
@@ -236,7 +237,7 @@ class VideoScrollHelper {
 
   isVisible(item, { top, left }) {
     const target = {
-      offsetTop: this.scrollbase || 0,
+      offsetTop: this.scrollBase || 0,
       scrollY: top,
       scrollLeft: left,
     };

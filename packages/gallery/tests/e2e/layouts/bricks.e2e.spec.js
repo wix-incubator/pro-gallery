@@ -2,8 +2,6 @@ import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
 import GALLERY_CONSTS from '../../../src/common/constants';
 
-jest.setTimeout(30000)
-
 expect.extend({ toMatchImageSnapshot });
 
 describe('bricks - e2e', () => {

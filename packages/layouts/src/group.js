@@ -117,6 +117,7 @@ export class Group {
     const shouldUseFixedHeight =
       this.cubeImages &&
       this.groupSize === 1 &&
+      ['fill', 'fit'].includes(this.cubeType) &&
       this.rotatingGroupTypes.length === 0 &&
       this.rotatingCropRatios.length === 0;
     this.cubedHeight = shouldUseFixedHeight ? height : null;

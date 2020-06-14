@@ -21,7 +21,7 @@ describe('styleParam - slideshowInfoSize', () => {
       slideshowInfoSize: 250,
     })
     driver.mount.proGallery(initialProps);
-    const infoContainer = driver.find.selector('.gallery-item-info').at(0);
+    const infoContainer = driver.find.selector('.gallery-slideshow-info').at(0);
     const infoStyleMock = {
       height: '250px',
       bottom: '-250px'

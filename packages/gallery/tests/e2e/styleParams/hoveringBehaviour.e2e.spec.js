@@ -2,8 +2,6 @@ import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
 import { GALLERY_CONSTS } from '../../../src/settings/utils/constants';
 
-jest.setTimeout(30000)
-
 expect.extend({ toMatchImageSnapshot });
 
 describe('hoveringBehaviour - e2e', () => {

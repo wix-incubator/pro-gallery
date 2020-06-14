@@ -2,13 +2,11 @@ import GalleryDriver from '../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../drivers/matchers';
 import GALLERY_CONSTS from '../../src/common/constants';
 
-jest.setTimeout(30000)
-
 expect.extend({ toMatchImageSnapshot });
 
 describe('texts - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -31,7 +29,7 @@ describe('texts - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not use padding bottom in slider layout', async () => {
+  it('should use padding bottom in slider layout', async () => {
     await driver.openPage({
       galleryLayout: 4,
       cubeRatio: 16/9,

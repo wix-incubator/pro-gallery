@@ -6,9 +6,6 @@ import {
   isPreviewMode,
   isSEOMode,
   isFormFactorMobile,
-  isFormFactorTablet,
-  isFormFactorDesktop,
-  isFormFactorTouch,
 } from '../window/viewModeWrapper';
 
 class Utils {
@@ -777,6 +774,14 @@ class Utils {
       return returnValue;
     } catch (error) {
       console.error('Error converting color string to object', error);
+    }
+  }
+
+  hasNativeLazyLoadSupport(){
+    try {
+      return 'loading' in HTMLImageElement.prototype;
+    } catch (error) {
+      return false;
     }
   }
 }

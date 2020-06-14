@@ -74,7 +74,8 @@ export default class ImageItem extends GalleryComponent {
             ? 'cubed-'
             : '') + 'image'
         }
-        className={'gallery-item-visible gallery-item gallery-item-preloaded'}
+        className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+        data-hook='gallery-item-image-img'
         alt={alt ? alt : 'untitled image'}
         src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
         loading="lazy"

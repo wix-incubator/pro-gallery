@@ -335,7 +335,7 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
-        renderCustomInfo={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
+        render={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
       >
       </ItemHover>
     );
@@ -469,6 +469,7 @@ class ItemView extends GalleryComponent {
       itemHover = this.getItemHover(imageDimensions);
     }
 
+
     switch (type) {
       case 'dummy':
           itemInner = <div />;
@@ -498,6 +499,10 @@ class ItemView extends GalleryComponent {
 
     if (styleParams.isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props;
+      const style = {
+        height: `${styleParams.slideshowInfoSize}px`,
+        bottom: `-${styleParams.slideshowInfoSize}px`,
+      };
       const slideshowInfo = customSlideshowInfoRenderer
         ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps()) : null;
 
@@ -514,7 +519,13 @@ class ItemView extends GalleryComponent {
           >
             {itemInner}
           </a>
-          {slideshowInfo}
+          <div
+            className="gallery-slideshow-info"
+            data-hook="gallery-slideshow-info-buttons"
+            style={style}
+          >
+            {slideshowInfo}
+          </div>
         </div>
       );
     }
@@ -924,11 +935,10 @@ class ItemView extends GalleryComponent {
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
-        {this.getRightInfoElementIfNeeded()}
         <div
           style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
-            // ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
-            // ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
+            ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
+            ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
           }}
         >
           {!isItemWrapperEmpty && (<div
@@ -941,6 +951,7 @@ class ItemView extends GalleryComponent {
             {this.getItemInner()}
           </div>)}
         </div>
+        {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );
