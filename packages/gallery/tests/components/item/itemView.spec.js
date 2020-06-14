@@ -404,13 +404,13 @@ describe('Item View', () => {
         type: 'image',
       });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(1);
+      expect(driver.find.hook('gallery-slideshow-info-buttons').length).to.equal(1);
       driver.set.props({
         styleParams: {
           isSlideshow: false,
         },
       });
-      expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(0);
+      expect(driver.find.hook('gallery-slideshow-info-buttons').length).to.equal(0);
     });
   });
   describe('getBottomInfoElement', () => {

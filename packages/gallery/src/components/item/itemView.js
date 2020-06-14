@@ -682,16 +682,12 @@ class ItemView extends GalleryComponent {
       };
       const slideshowInfo = customSlideshowInfoRenderer
         ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps())
-        : (<div
-          className="gallery-item-info gallery-item-bottom-info"
-          data-hook="gallery-item-info-buttons"
-          style={style}
-        >
-          <div>
+        : (
+          <div className="gallery-slideshow-info-inner">
             {social}
             {itemTexts}
           </div>
-        </div>);
+        );
 
       const { photoId, id, idx } = this.props;
       itemInner = (
@@ -706,7 +702,13 @@ class ItemView extends GalleryComponent {
           >
             {itemInner}
           </a>
-          {slideshowInfo}
+          <div
+            className="gallery-slideshow-info"
+            data-hook="gallery-slideshow-info-buttons"
+            style={style}
+          >
+            {slideshowInfo}
+          </div>
         </div>
       );
     }
