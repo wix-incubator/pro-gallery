@@ -131,7 +131,7 @@ class LineHeightFixer {
       const socialMarginBottom = parseInt(
         this.getCss(socialElement, 'margin-bottom', 0),
       );
-      const itemInfoChildDivPaddingTop = 24; //padding-top of the div inside gallery-item-info
+      const itemInfoChildDivPaddingTop = 24; //padding-top of gallery-slideshow-info-inner
       availableHeight =
         styleParams.slideshowInfoSize -
         itemInfoChildDivPaddingTop -
