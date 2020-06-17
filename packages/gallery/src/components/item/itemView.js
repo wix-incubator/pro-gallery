@@ -335,7 +335,7 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
-        render={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
+        renderCustomInfo={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
       >
       </ItemHover>
     );
