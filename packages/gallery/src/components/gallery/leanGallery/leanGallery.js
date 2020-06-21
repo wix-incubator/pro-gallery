@@ -10,8 +10,7 @@ import CLICK_ACTIONS from '../../../common/constants/itemClick'
 
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
-
-import './leanGallery.scss';
+import s from './leanGallery.module.scss';
 
 const get = (item, attr) => {
   if (typeof item[attr] !== 'undefined') {
@@ -22,19 +21,19 @@ const get = (item, attr) => {
       return item.metadata[attr]
     }
   }
-
+  
   if (typeof item.metaData !== 'undefined') {
     if (typeof item.metaData[attr] !== 'undefined') {
       return item.metaData[attr]
     }
   }
-
+  
 }
 export default class LeanGallery extends React.Component {
 
   constructor() {
     super();
-
+    
     this.measureIfNeeded = this.measureIfNeeded.bind(this);
     this.eventsListener = this.eventsListener.bind(this);
 
@@ -86,7 +85,7 @@ export default class LeanGallery extends React.Component {
   calcItemSize() {
     const { styles, container } = this.props;
     const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio } = styles;
-
+    
     let itemSize;
 
     if (gallerySizeType === GALLERY_SIZE_TYPE.PIXELS && gallerySizePx > 0) {
@@ -118,7 +117,7 @@ export default class LeanGallery extends React.Component {
   createItemStyle(imageSize) {
     const { styles } = this.props;
     const {width, height} = imageSize;
-    const {
+    const { 
       itemBorderWidth: borderWidth,
       itemBorderColor: borderColor,
       itemBorderRadius: borderRadius
@@ -225,10 +224,10 @@ export default class LeanGallery extends React.Component {
     const styles = this.fixStylesIfNeeded(props.styles);
 
     const { itemClick } = styles;
-
+    
     return (
-      <div
-        className={['pro-gallery', 'inline-styles', 'lean-gallery-gallery'].join(' ')}
+      <div 
+        className={['pro-gallery', 'inline-styles', s.gallery].join(' ')}
         style={this.createGalleryStyle()}
       >
         {items.map((item, itemIdx) => {
@@ -242,7 +241,7 @@ export default class LeanGallery extends React.Component {
           );
           return (
             <a
-              className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
+              className={['gallery-item-container', s.cell].join(' ')}
               style={{height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
               ref={node => {
                 this.measureIfNeeded(node);
@@ -253,13 +252,13 @@ export default class LeanGallery extends React.Component {
               >{texts(INFO_PLACEMENT.SHOW_ABOVE)}
               <div
                 style={imageSize}
-                className={['gallery-item-hover', 'lean-gallery-image-wrapper'].join(' ')}
+                className={['gallery-item-hover', s.imageWrapper].join(' ')}
                 onClick={() => eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, itemData)}
-              ><img
-                src={this.resizeUrl({ item })}
-                loading="lazy"
-                className={['gallery-item-content', 'lean-gallery-image'].join(' ')}
-                alt={get(item, 'title')}
+              ><img 
+                src={this.resizeUrl({ item })} 
+                loading="lazy" 
+                className={['gallery-item-content', s.image].join(' ')}
+                alt={get(item, 'title')} 
                 style={this.createItemStyle(imageSize)}
                 onLoad={() => eventsListener(EVENTS.ITEM_LOADED, itemData)}
               /></div>
