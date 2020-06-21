@@ -11,6 +11,8 @@ import CLICK_ACTIONS from '../../../common/constants/itemClick'
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 
+import './leanGallery.scss';
+
 const get = (item, attr) => {
   if (typeof item[attr] !== 'undefined') {
     return item[attr]
