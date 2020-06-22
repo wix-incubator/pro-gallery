@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {SideBar} from '../SideBar';
+import React, {useEffect, Suspense} from 'react';
+// import {SideBar} from '../SideBar';
 import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
@@ -12,6 +12,8 @@ import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
 
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
+
+const SideBar = React.lazy(() => import('../SideBar'));
 
 const pJson = require('../../../package.json');
 
@@ -119,9 +121,11 @@ export function App() {
         <div className={s.heading}>
           Pro Gallery Playground <a className={s.version} href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md" target="blank" title="View Changelog on Github">v{pJson.version}</a>
         </div>
-        <SideBar
-          items={getItems()}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <SideBar
+            items={getItems()}
+          />
+        </Suspense>
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ExpandableProGallery
