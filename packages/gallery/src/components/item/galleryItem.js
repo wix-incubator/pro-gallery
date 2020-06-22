@@ -56,6 +56,7 @@ class GalleryItem {
   }
 
   processScheme(scheme) {
+    debugger
     this.id = scheme.id;
     this.idx = scheme.idx;
     this.type = scheme.type;
@@ -795,11 +796,11 @@ class GalleryItem {
 
 
   get isVisible() {
-    return this.visibility && this.visibility.visible;
+    return true;
   }
 
   get isRendered() {
-    return this.visibility && this.visibility.rendered;
+    return true;
   }
 
   get isDimensionless() {
