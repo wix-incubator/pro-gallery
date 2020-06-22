@@ -22,7 +22,6 @@ describe('styleParam - titlePlacement', () => {
       galleryLayout: 2,
       onRow:false,
       scrollDirection:0,
-      allowTitle:true,
       titlePlacement: PLACEMENTS.SHOW_BELOW
     })
     driver.mount.proGallery(initialProps);
@@ -35,7 +34,6 @@ describe('styleParam - titlePlacement', () => {
       galleryLayout: 2,
       onRow:false,
       scrollDirection:0,
-      allowTitle:true,
       titlePlacement: PLACEMENTS.SHOW_ABOVE
     })
     driver.mount.proGallery(initialProps);

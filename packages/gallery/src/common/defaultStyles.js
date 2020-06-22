@@ -56,12 +56,6 @@ export default {
     scrollSnap: false,
     itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     fullscreen: true,
-    allowSocial: true,
-    allowDownload: false,
-    allowTitle: true,
-    allowDescription: false,
-    loveButton: true,
-    loveCounter: false,
     videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
     scrollAnimation:  GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
     scrollDirection: 0,
@@ -74,8 +68,6 @@ export default {
     watermarkDock: GALLERY_CONSTS.watermarkDock.RIGHT_DOWN,
     loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
     defaultShowInfoExpand: 1,
-    allowTitleExpand: true,
-    allowDescriptionExpand: true,
     allowLinkExpand: true,
     expandInfoPosition: 0,
     allowFullscreenExpand: true,
@@ -113,7 +105,6 @@ export default {
     // itemDescriptionFontSlideshow: 'font_8' // startWithSize: 15
     // itemDescriptionFontColorSlideshow: 'color-5'
     // textBoxFillColor: 'color-2', //startWithOpacity: 1,
-    calculateTextBoxHeightMode: GALLERY_CONSTS.textBoxHeightCalculationOptions.AUTOMATIC,
     calculateTextBoxWidthMode: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
     textBoxHeight: 200,
     textBoxWidth: 200,
@@ -124,7 +115,6 @@ export default {
     // textBoxBorderColor: color-5,
     textsVerticalPadding: 0,
     textsHorizontalPadding: 0,
-    titleDescriptionSpace: 6,
     customButtonText: '',
     // customButtonFontForHover: 'font_8', startWithSize: 15
     // customButtonFontColorForHover: color-5

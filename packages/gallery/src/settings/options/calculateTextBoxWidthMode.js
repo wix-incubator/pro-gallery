@@ -8,8 +8,7 @@ export default {
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
     (styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT ||
-      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT) &&
-    (styleParams.allowTitle || styleParams.allowDescription),
+      styleParams.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT),
   type: INPUT_TYPES.OPTIONS,
   options: createOptions('textBoxWidthCalculationOptions'),
   default: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,

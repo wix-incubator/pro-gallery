@@ -21,7 +21,6 @@ describe('styleParam - textImageSpace', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      allowTitle: true,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
       oneRow: false,
@@ -37,7 +36,6 @@ describe('styleParam - textImageSpace', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
-      allowTitle: true,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
       oneRow: false,
@@ -53,7 +51,6 @@ describe('styleParam - textImageSpace', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
-      allowTitle: true,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       textImageSpace: 20,
       oneRow: false,

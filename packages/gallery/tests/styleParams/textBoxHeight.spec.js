@@ -17,14 +17,12 @@ describe('styleParam - textBoxHeight', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set "textBoxHeight" of "250"(manual)', () => {
+  it('should set "textBoxHeight" of "250"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      allowTitle: true,
-      calculateTextBoxHeightMode: GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL,
       textBoxHeight: 250,
     })
     driver.mount.proGallery(initialProps);

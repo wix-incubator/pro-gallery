@@ -23,7 +23,6 @@ describe('styleParam - textBoxWidth', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      allowTitle: true,
       calculateTextBoxWidthMode: GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,
       textBoxWidth: 250,
     })

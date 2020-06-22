@@ -418,7 +418,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryExpensively(
-    { items, styles, container, watermarkData, itemsDimensions },
+    { items, styles, container, watermarkData, itemsDimensions, customInfoRenderer },
     curState,
   ) {
     if (utils.isVerbose()) {
@@ -488,7 +488,7 @@ export class GalleryContainer extends React.Component {
         container,
         domId: this.props.domId,
       });
-      _styles = addLayoutStyles(styles);
+      _styles = addLayoutStyles(styles, customInfoRenderer);
       dimensionsHelper.updateParams({ styles: _styles });
       _container = Object.assign(
         {},

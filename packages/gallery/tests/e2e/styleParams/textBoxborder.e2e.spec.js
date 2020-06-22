@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('textBoxBorder - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -19,8 +19,6 @@ describe('textBoxBorder - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 2,
       textBoxBorderRadius: 2,
@@ -38,8 +36,6 @@ describe('textBoxBorder - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 20,
       textBoxBorderRadius: 20,
@@ -56,8 +52,6 @@ describe('textBoxBorder - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 40,
       textBoxBorderRadius: 40,
@@ -74,8 +68,6 @@ describe('textBoxBorder - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 40,
       textBoxBorderRadius: 40,

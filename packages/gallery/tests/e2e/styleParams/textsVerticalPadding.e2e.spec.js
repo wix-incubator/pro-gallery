@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('textsVerticalPadding - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -19,8 +19,6 @@ describe('textsVerticalPadding - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       textsVerticalPadding: 15,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -31,8 +29,6 @@ describe('textsVerticalPadding - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       textsVerticalPadding: 50,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     await driver.waitFor.hookToBeVisible('item-container');

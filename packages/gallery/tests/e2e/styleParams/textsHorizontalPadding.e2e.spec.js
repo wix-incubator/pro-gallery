@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('textsHorizontalPadding - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -19,8 +19,6 @@ describe('textsHorizontalPadding - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       textsHorizontalPadding: 30,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });
@@ -32,8 +30,6 @@ describe('textsHorizontalPadding - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       textsHorizontalPadding: 60,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     await driver.waitFor.hookToBeVisible('item-container');

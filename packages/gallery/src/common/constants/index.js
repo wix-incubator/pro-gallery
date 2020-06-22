@@ -41,7 +41,6 @@ import resizeMethods from "./resizeMethods";
 import scrollAnimations from './scrollAnimations';
 import scrollDirection from './scrollDirection';
 import socialNetworks from './socialNetworks';
-import textBoxHeightCalculationOptions from './textBoxHeightCalculationOptions';
 import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
 import thumbnailsAlignment from './thumbnailsAlignment';
 import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
@@ -95,7 +94,6 @@ export default {
   scrollAnimations,
   scrollDirection,
   socialNetworks,
-  textBoxHeightCalculationOptions,
   textBoxWidthCalculationOptions,
   thumbnailsAlignment,
   urlSizes,

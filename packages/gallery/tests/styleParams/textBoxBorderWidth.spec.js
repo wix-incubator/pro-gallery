@@ -24,7 +24,6 @@ describe('styleParam - textBoxBorderWidth', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       oneRow: false,
-      allowTitle: true,
       textBoxBorderWidth: 10,
     })
     driver.mount.proGallery(initialProps);
@@ -39,7 +38,6 @@ describe('styleParam - textBoxBorderWidth', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       oneRow: false,
-      allowTitle: true,
       textBoxBorderWidth: 10,
     })
     driver.mount.proGallery(initialProps);

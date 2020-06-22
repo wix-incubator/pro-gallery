@@ -217,8 +217,6 @@ class ItemView extends GalleryComponent {
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       const {
-        allowDescription,
-        allowTitle,
         titlePlacement,
         hoveringBehaviour,
         itemClick,
@@ -232,7 +230,7 @@ class ItemView extends GalleryComponent {
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
-        (allowTitle || allowDescription) &&
+        this.props.customHoverRenderer &&
         hasHoverPlacement(titlePlacement) && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
         isNewMobileSettings
       ) {
@@ -567,9 +565,7 @@ class ItemView extends GalleryComponent {
 
   getExternalInfoElement(placement, elementName) {
     const { styleParams, customInfoRenderer, style } = this.props;
-    if (!styleParams.allowTitle &&
-      !styleParams.allowDescription &&
-      !styleParams.useCustomButton) {
+    if (!customInfoRenderer) {
       return null;
     }
     let info = null;

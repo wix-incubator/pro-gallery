@@ -17,7 +17,6 @@ describe('styleParam - slideshowInfoSize', () => {
   it('should set style for "slideshowInfoSize=250"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout:  GALLERY_CONSTS.layout.SLIDESHOW,
-      allowTitle:true,
       slideshowInfoSize: 250,
     })
     driver.mount.proGallery(initialProps);
@@ -32,7 +31,6 @@ describe('styleParam - slideshowInfoSize', () => {
   it('should set the right height for the gallery', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      allowTitle:true,
       slideshowInfoSize: 250,
       isSlideshow: true,
     })

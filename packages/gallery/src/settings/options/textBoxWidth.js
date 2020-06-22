@@ -8,8 +8,7 @@ export default {
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
     styleParams.calculateTextBoxWidthMode === GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL &&
-    hasHorizontalPlacement(styleParams.titlePlacement) &&
-    (styleParams.allowTitle || styleParams.allowDescription),
+    hasHorizontalPlacement(styleParams.titlePlacement),
   type: INPUT_TYPES.NUMBER,
   default: 200,
   min: 0,

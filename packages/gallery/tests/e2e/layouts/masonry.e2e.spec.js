@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('masonry - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -38,7 +38,6 @@ describe('masonry - e2e', () => {
   it('masonry horizontal orientation', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.MASONRY,
-      allowTitle: true,
       allowDescription: true,
       itemBorderRadius: 50,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
@@ -48,5 +47,5 @@ describe('masonry - e2e', () => {
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-  
+
 })

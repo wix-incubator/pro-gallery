@@ -50,12 +50,6 @@ class galleryDriver {
       cubeImages: false,
       smartCrop: false,
       fullscreen: true,
-      allowSocial: true,
-      allowDownload: false,
-      allowTitle: false,
-      allowDescription: false,
-      loveButton: true,
-      loveCounter: true,
       videoLoop: true,
       videoSound: false,
       videoSpeed: 1,
@@ -302,8 +296,6 @@ class galleryDriver {
             ...this.actions,
             eventsListener: () => {},
           },
-          isLoved: false,
-          loveCounter: 0,
         });
       },
 

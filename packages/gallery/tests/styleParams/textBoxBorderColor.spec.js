@@ -21,7 +21,6 @@ describe('styleParam - textBoxBorderColor', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       oneRow: false,
-      allowTitle: true,
       textBoxBorderColor: { value : 'rgba(0,0,0,0)'},
     })
     driver.mount.proGallery(initialProps);
@@ -36,7 +35,6 @@ describe('styleParam - textBoxBorderColor', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       oneRow: false,
-      allowTitle: true,
       textBoxBorderColor: { value : 'rgba(0,0,0,0)'},
     })
     driver.mount.proGallery(initialProps);

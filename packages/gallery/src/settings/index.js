@@ -1,9 +1,4 @@
 import itemClick from './options/itemClick';
-import allowTitle from './options/allowTitle';
-import allowSocial from './options/allowSocial';
-import allowDescription from './options/allowDescription';
-import allowDownload from './options/allowDownload';
-import loveButton from './options/loveButton';
 import imageMargin from './options/imageMargin';
 import hoveringBehaviour from './options/hoveringBehaviour'
 import enableInfiniteScroll from './options/enableInfiniteScroll';
@@ -53,10 +48,8 @@ import floatingImages from './options/floatingImages';
 import thumbnailSpacings from './options/thumbnailSpacings';
 import slideshowLoop from './options/slideshowLoop';
 import arrowsSize from './options/arrowsSize';
-import titleDescriptionSpace from './options/titleDescriptionSpace';
 import slideshowInfoSize from './options/slideshowInfoSize';
 import textBoxHeight from './options/textBoxHeight';
-import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
 import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
 import chooseBestGroup from './options/chooseBestGroup';
 import imageLoadingMode from './options/imageLoadingMode';
@@ -75,11 +68,6 @@ import showArrows from './options/showArrows';
 
 export default {
     itemClick,
-    allowTitle,
-    allowDescription,
-    loveButton,
-    allowSocial,
-    allowDownload,
     imageMargin,
     hoveringBehaviour,
     enableInfiniteScroll,
@@ -129,10 +117,8 @@ export default {
     thumbnailSpacings,
     slideshowLoop,
     arrowsSize,
-    titleDescriptionSpace,
     slideshowInfoSize,
     textBoxHeight,
-    calculateTextBoxHeightMode,
     calculateTextBoxWidthMode,
     chooseBestGroup,
     imageLoadingMode,

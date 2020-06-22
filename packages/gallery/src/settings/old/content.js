@@ -52,14 +52,6 @@ export default {
     title: "Layout Direction",
     description: "Order images Right to Left or Left to Right, this will also have an effect on slide direction and text direction",
   },
-  allowTitle: {
-    title: "Allow Title",
-    description: "",
-  },
-  allowDescription: {
-    title: "Allow Description",
-    description: "",
-  },
   allowSlideshowCounter: {
     title: "Slideshow counter",
     description: "Display an index of the current slide",
@@ -167,7 +159,7 @@ export default {
   loadMoreAmount: {
     title: "Load More Behaviour",
     description: "Choose whether clicking the 'load more' button toggle an infinite scroll behaviour or adds a few more items and keep the button at the bottom.",
-  }, 
+  },
   //----------| SETTINGS SECTION |---------//
   scrollSnap: {
     title: 'Snap Scroll',
@@ -176,22 +168,6 @@ export default {
   itemClick: {
     title: 'When clicking on an item:',
     description: "",
-  },
-  allowDownload: {
-    title: 'Show Download Button',
-    description: "",
-  },
-  allowSocial: {
-    title: 'Show Share Button',
-    description: "",
-  },
-  loveButton: {
-    title: 'Show Love Button',
-    description: "Shows a Love button on the overlay of each item. Notice, the consumer needs to handle saving and fetching the data",
-  },
-  loveCounter: {
-    title: 'Show Love Counter',
-    description: "Shows a counter next to the Love button. Notice, the consumer should handle the saving and fetching the data.",
   },
   //------------------------ Design ----------------------//
   itemOpacity: {
@@ -258,7 +234,7 @@ export default {
     title: 'Description Color',
     description: "",
   },
-  galleryHorizontalAlign: { // ALSO sets galleryTextAlign --- 
+  galleryHorizontalAlign: { // ALSO sets galleryTextAlign ---
     title: 'Horizontal Text Alignment',
     description: "The horizontal alignment of the texts in the gallery",
   },
@@ -268,10 +244,6 @@ export default {
   },
   textBoxFillColor: {
     title: 'Fill Color & Opacity',
-    description: "",
-  },
-  calculateTextBoxHeightMode: {
-    title: 'Text Box Height Calc Type',
     description: "",
   },
   calculateTextBoxWidthMode: {
@@ -312,10 +284,6 @@ export default {
   },
   textsHorizontalPadding: {
     title: 'Text horizontal padding',
-    description: "",
-  },
-  titleDescriptionSpace: {
-    title: 'Title Description Space',
     description: "",
   },
   useCustomButton: {
@@ -383,7 +351,7 @@ export default {
   loadMoreButtonBorderColor: {
     title: 'Load More Border Color',
     description: "",
-  }, 
+  },
   loadMoreButtonBorderRadius: {
     title: 'Load More Border Radius',
     description: "",
@@ -444,14 +412,6 @@ export default {
     title: 'Color Animation',
     description: "Choose a color to show until the images are loaded",
   },
-  allowTitleExpand: {
-    title: 'Title',
-    description: "",
-  },
-  allowDescriptionExpand: {
-    title: 'Description',
-    description: "",
-  },
   allowLinkExpand: {
     title: 'Link',
     description: "",
@@ -503,7 +463,7 @@ export default {
   addToCartBackColorExpand: {
     title: 'addToCartBackColorExpand - Button color & opacity',
     description: "",
-  }, 
+  },
   addToCartFontExpand: {
     title: 'add To Cart Font Expand',
     description: "",

@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('imageInfoType - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -19,7 +19,6 @@ describe('imageInfoType - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
-      allowTitle: true,
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -35,7 +34,6 @@ describe('imageInfoType - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND,
-      allowTitle: true,
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -51,7 +49,6 @@ describe('imageInfoType - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      allowTitle: true,
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -67,7 +64,6 @@ describe('imageInfoType - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.DONT_SHOW,
-      allowTitle: true,
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
