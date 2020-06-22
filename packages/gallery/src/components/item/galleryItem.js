@@ -56,7 +56,6 @@ class GalleryItem {
   }
 
   processScheme(scheme) {
-    debugger
     this.id = scheme.id;
     this.idx = scheme.idx;
     this.type = scheme.type;
