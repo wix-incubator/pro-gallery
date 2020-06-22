@@ -795,11 +795,11 @@ class GalleryItem {
 
 
   get isVisible() {
-    return true;
+    return this.visibility && this.visibility.visible;
   }
 
   get isRendered() {
-    return true;
+    return this.visibility && this.visibility.rendered;
   }
 
   get isDimensionless() {

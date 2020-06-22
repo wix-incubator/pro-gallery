@@ -39,6 +39,9 @@ class GalleryGroup {
     this.left = scheme.left;
     this.right = scheme.right;
     this.bottom = scheme.bottom;
+    this.visible = scheme.visible;
+    this.rendered = scheme.rendered;
+    this.required = scheme.required;
   }
 
   renderProps(galleryConfig) {
@@ -56,6 +59,9 @@ class GalleryGroup {
       height: this.height,
       totalHeight: this.totalHeight,
       items: this.items,
+      visible: this.visible,
+      rendered: this.rendered,
+      required: this.required,
       galleryConfig,
     };
   }

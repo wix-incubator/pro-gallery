@@ -65,6 +65,10 @@ export class Group {
       this.groupSize = styleParams.groupSize;
     }
 
+    this.visible = true;
+    this.rendered = true;
+    this.required = true;
+
     //prepare the group
     let forcedGroupSize = this.items.length;
 
@@ -828,6 +832,9 @@ export class Group {
       left: this.left,
       right: this.right,
       bottom: this.bottom,
+      visible: this.visible,
+      rendered: this.rendered,
+      required: this.required,
     };
   }
 }
