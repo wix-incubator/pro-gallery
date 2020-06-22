@@ -1,3 +1,8 @@
+## [v1.10.23](https://pro-gallery-1-10-23.surge.sh) (22/06/2020)
+ 
+#### GALLERY
+ -  changed leanGallery css from cssModule to global static.
+ 
 ## [v1.10.22](https://pro-gallery-1-10-22.surge.sh) (14/06/2020)
  
 #### GALLERY
