@@ -1,20 +1,11 @@
 import React from 'react';
 import utils from '../../common/utils/index.js';
 import { GalleryComponent } from '../galleryComponent';
-import { getHoverStyle } from './itemHoverStyleProvider';
 
 export default class ItemHover extends GalleryComponent {
   getHoverClass() {
     const { styleParams, forceShowHover } = this.props;
     const hoverClass = ['gallery-item-hover'];
-
-    if (
-      styleParams.isSlider ||
-      styleParams.isSlideshow ||
-      styleParams.hasThumbnails
-    ) {
-      hoverClass.push(styleParams.galleryVerticalAlign);
-    }
 
     hoverClass.push(
       'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled'),
@@ -62,10 +53,7 @@ export default class ItemHover extends GalleryComponent {
         style={imageDimensions && imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
       >
         <div
-          style={{
-            ...restOfDimensions,
-            ...getHoverStyle(styleParams),
-          }}
+          style={{height: '100%'}}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
         >

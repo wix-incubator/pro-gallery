@@ -8,18 +8,13 @@ import cubeRatio from './options/cubeRatio';
 import oneRow from './options/oneRow';
 import titlePlacement from './options/titlePlacement';
 import useCustomButton from './options/useCustomButton';
-import galleryVerticalAlign from './options/galleryVerticalAlign';
-import galleryHorizontalAlign from './options/galleryHorizontalAlign';
 import galleryMargin from './options/galleryMargin';
 import isVertical from './options/isVertical';
 import numberOfImagesPerRow from './options/numberOfImagesPerRow';
 import numberOfImagesPerCol from './options/numberOfImagesPerCol';
-import galleryTextAlign from './options/galleryTextAlign';
 import videoPlay from './options/videoPlay';
 import imageHoverAnimation from './options/imageHoverAnimation';
 import overlayAnimation from './options/overlayAnimation';
-import textsHorizontalPadding from './options/textsHorizontalPadding';
-import textsVerticalPadding from './options/textsVerticalPadding';
 import textImageSpace from './options/textImageSpace';
 import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
@@ -77,18 +72,13 @@ export default {
     oneRow,
     titlePlacement,
     useCustomButton,
-    galleryVerticalAlign,
-    galleryHorizontalAlign,
     galleryMargin,
     isVertical,
     numberOfImagesPerRow,
     numberOfImagesPerCol,
-    galleryTextAlign,
     videoPlay,
     imageHoverAnimation,
     overlayAnimation,
-    textsHorizontalPadding,
-    textsVerticalPadding,
     textImageSpace,
     textBoxBorderColor,
     textBoxBorderRadius,

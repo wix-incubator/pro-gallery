@@ -50,9 +50,7 @@ export default {
     useCustomButton: false,
     bottomInfoHeight: 0,
     titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-    galleryHorizontalAlign: GALLERY_CONSTS.horizontalAlign.CENTER,
     galleryTextAlign: 'center',
-    galleryVerticalAlign: GALLERY_CONSTS.verticalAlign.CENTER,
     scrollSnap: false,
     itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     fullscreen: true,
@@ -113,8 +111,6 @@ export default {
     textBoxBorderRadius: 0,
     textBoxBorderWidth: 0,
     // textBoxBorderColor: color-5,
-    textsVerticalPadding: 0,
-    textsHorizontalPadding: 0,
     customButtonText: '',
     // customButtonFontForHover: 'font_8', startWithSize: 15
     // customButtonFontColorForHover: color-5

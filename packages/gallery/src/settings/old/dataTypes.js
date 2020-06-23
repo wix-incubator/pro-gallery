@@ -293,15 +293,6 @@ export default {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
   },
-  galleryHorizontalAlign: { // ALSO sets galleryTextAlign ---
-    type: INPUT_TYPES.OPTIONS,
-    options: createOptions('horizontalAlign'),
-    alert: '"galleryTextAlign" should be set accordingly',
-  },
-  galleryVerticalAlign: {
-    type: INPUT_TYPES.OPTIONS,
-    options: createOptions('verticalAlign')
-  },
   textBoxFillColor: {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
@@ -337,18 +328,6 @@ export default {
   textBoxBorderColor: {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
-  },
-  textsVerticalPadding: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 50,
-    units: 'px',
-  },
-  textsHorizontalPadding: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 50,
-    units: 'px',
   },
   useCustomButton: {
     type: INPUT_TYPES.BOOLEAN,

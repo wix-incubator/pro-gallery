@@ -234,14 +234,6 @@ export default {
     title: 'Description Color',
     description: "",
   },
-  galleryHorizontalAlign: { // ALSO sets galleryTextAlign ---
-    title: 'Horizontal Text Alignment',
-    description: "The horizontal alignment of the texts in the gallery",
-  },
-  galleryVerticalAlign: {
-    title: 'Vertical Text Alignment',
-    description: "The vertical alignment of the texts in the gallery",
-  },
   textBoxFillColor: {
     title: 'Fill Color & Opacity',
     description: "",
@@ -276,14 +268,6 @@ export default {
   },
   textBoxBorderColor: {
     title: 'Text box border color',
-    description: "",
-  },
-  textsVerticalPadding: {
-    title: 'Text vertical padding',
-    description: "",
-  },
-  textsHorizontalPadding: {
-    title: 'Text horizontal padding',
     description: "",
   },
   useCustomButton: {

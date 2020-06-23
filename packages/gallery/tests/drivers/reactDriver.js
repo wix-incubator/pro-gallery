@@ -63,8 +63,6 @@ class galleryDriver {
       imageMargin: 5,
       galleryMargin: 1,
       viewMode: 'preview',
-      galleryHorizontalAlign: 0,
-      galleryVerticalAlign: 0,
       enableInfiniteScroll: true,
       itemClick: 'expand',
       cubeRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)

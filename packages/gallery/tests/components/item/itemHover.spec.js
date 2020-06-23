@@ -67,44 +67,6 @@ describe('ItemHover', () => {
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'gallery-item-hover').to.equal(true);
 
-    //-------| vertical align |-------
-
-    Object.assign(sampleItemViewProps.styleParams, {
-      isSlider: false,
-      isSlideshow: false,
-      hasThumbnails: false,
-      galleryVerticalAlign: 'center',
-    });
-    driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'center').to.equal(false);
-
-    Object.assign(sampleItemViewProps.styleParams, {
-      isSlider: true,
-      isSlideshow: false,
-      hasThumbnails: false,
-      galleryVerticalAlign: 'center',
-    });
-    driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'center').to.equal(true);
-
-    Object.assign(sampleItemViewProps.styleParams, {
-      isSlider: false,
-      isSlideshow: true,
-      hasThumbnails: false,
-      galleryVerticalAlign: 'center',
-    });
-    driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'center').to.equal(true);
-
-    Object.assign(sampleItemViewProps.styleParams, {
-      isSlider: false,
-      isSlideshow: false,
-      hasThumbnails: true,
-      galleryVerticalAlign: 'center',
-    });
-    driver.mount(ItemHover, sampleItemViewProps);
-    itemHoverHasClass(driver, 'center').to.equal(true);
-
     //-------| fullscreen |-------
 
     Object.assign(sampleItemViewProps.styleParams, {

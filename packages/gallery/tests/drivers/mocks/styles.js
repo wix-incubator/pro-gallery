@@ -98,8 +98,6 @@ const styleParams = {
     textBoxBorderRadius: 0,
     textBoxBorderWidth: 0,
     // textBoxBorderColor: color-5,
-    textsVerticalPadding: 0,
-    textsHorizontalPadding: 0,
     customButtonText: '',
     // customButtonFontForHover: 'font_8', startWithSize: 15
     // customButtonFontColorForHover: color-5

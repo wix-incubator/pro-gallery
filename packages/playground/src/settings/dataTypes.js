@@ -1,3 +1,6 @@
+
+
+
 import {INPUT_TYPES, GALLERY_CONSTS} from './consts';
 
 const formatTitle = title => title.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.substr(1).toLowerCase()).join(' ');
