@@ -50,9 +50,6 @@ export const removeFieldsNotNeeded = (json, selectedLayout) => {
         } else {
           delete json.numberOfImagesPerRow;
         }
-        if (!json.allowTitle.value && !json.allowDescription.value) {
-          delete json.titlePlacement;
-        }
       }
       if (json.cubeType.value) {
         delete json.galleryImageRatio;
@@ -62,9 +59,6 @@ export const removeFieldsNotNeeded = (json, selectedLayout) => {
       if (json.isVertical.value === 0) {
         delete json.gallerySize;
       } else {
-        if (!json.allowTitle.value && !json.allowDescription.value) {
-          delete json.titlePlacement;
-        }
         if (json.gridStyle.value) {
           delete json.gallerySize;
         } else {

@@ -16,8 +16,6 @@ const VALUES = {
     binaryOptions: ['Vertical', 'Horizontal'],
     title: 'Image Orientation',
   },
-  allowTitle: {value: false, title: 'Show Title'},
-  allowDescription: {value: false, title: 'Show Description'},
   gallerySize: {value: 30, title: 'Thumbnail Size', min: 0, max: 100},
   thumbnailSize: {value: 120, title: 'Thumbnail Size', min: 80, max: 300},
   imageMargin: {value: 10, title: 'Spacing', min: 0, max: 100},
@@ -63,10 +61,6 @@ const VALUES = {
   },
   slideshowLoop: {value: false, title: 'Loop Images'},
   isAutoSlideshow: {value: false, title: 'Auto Slide'},
-  allowDownload: {value: false, title: 'Show Download Button'},
-  loveButton: {value: false, title: 'Show Love Button'},
-  loveCounter: {value: false, title: 'Show Love Counter'},
-  allowSocial: {value: false, title: 'Show Share Button'},
 };
 
 function prepareProps(propList) {
@@ -77,8 +71,6 @@ function prepareProps(propList) {
 }
 
 const commonProps = [
-  'allowTitle',
-  'allowDescription',
   'imageMargin',
 ];
 
@@ -129,10 +121,3 @@ export const layoutProps = {
     ...commonProps
   ]),
 };
-
-export const generalProps = prepareProps([
-  'allowDownload',
-  'loveButton',
-  'loveCounter',
-  'allowSocial',
-])

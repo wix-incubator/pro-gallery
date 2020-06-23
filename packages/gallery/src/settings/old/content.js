@@ -270,48 +270,6 @@ export default {
     title: 'Text box border color',
     description: "",
   },
-  useCustomButton: {
-    title: 'Buy Now Button',
-    description: "",
-  },
-  customButtonText: {
-    title: 'Button Text',
-    description: "",
-  },
-  customButtonFontForHover: {
-    title: 'Button Font Hover',
-    description: "",
-  },
-  customButtonFontColorForHover: {
-    title: 'Button Font Color Hover',
-    description: "",
-  },
-  customButtonFont: {
-    title: 'Button Font',
-    description: "",
-    fontMinSize:14,
-    fontMaxSize: 22,
-  },
-  customButtonFontColor: {
-    title: 'Button Font Color',
-    description: "",
-  },
-  customButtonColor: {
-    title: 'Button Color',
-    description: "",
-  },
-  customButtonBorderWidth: {
-    title: 'Border Width',
-    description: "",
-  },
-  customButtonBorderColor: {
-    title: 'Border Color',
-    description: "",
-  },
-  customButtonBorderRadius: {
-    title: 'Border Radius',
-    description: "",
-  },
   loadMoreButtonText: {
     title: 'load more Button Text',
     description: "",

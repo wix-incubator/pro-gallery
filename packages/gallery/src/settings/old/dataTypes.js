@@ -329,48 +329,6 @@ export default {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
   },
-  useCustomButton: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
-  customButtonText: {
-    type: INPUT_TYPES.TEXT,
-  },
-  customButtonFontForHover: {
-    type: INPUT_TYPES.FONT_PICKER,
-    alert: 'implement',
-  },
-  customButtonFontColorForHover: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonFont: {
-    type: INPUT_TYPES.FONT_PICKER,
-    alert: 'implement',
-    fontMinSize:14,
-    fontMaxSize: 22,
-  },
-  customButtonFontColor: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonColor: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonBorderWidth: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 5,
-  },
-  customButtonBorderColor: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonBorderRadius: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 30,
-  },
   loadMoreButtonText: {
     type: INPUT_TYPES.TEXT,
   },

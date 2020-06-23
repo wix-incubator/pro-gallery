@@ -104,14 +104,18 @@
 }
 
 :global {
-  .gallery-item-title {
+  .playground-info-title {
     font-size: 24px;
     font-weight: 400;
-    color: #333;
+    color: #575252;
+    padding: 10px
   }
-  .gallery-item-description {
+  .playground-info-description {
     font-size: 16px;
     font-weight: 100;
-    color: #666;
+    color: #bfbfbf;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
   }
 }

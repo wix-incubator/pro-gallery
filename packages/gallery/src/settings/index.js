@@ -7,7 +7,6 @@ import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
 import oneRow from './options/oneRow';
 import titlePlacement from './options/titlePlacement';
-import useCustomButton from './options/useCustomButton';
 import galleryMargin from './options/galleryMargin';
 import isVertical from './options/isVertical';
 import numberOfImagesPerRow from './options/numberOfImagesPerRow';
@@ -71,7 +70,6 @@ export default {
     cubeRatio,
     oneRow,
     titlePlacement,
-    useCustomButton,
     galleryMargin,
     isVertical,
     numberOfImagesPerRow,

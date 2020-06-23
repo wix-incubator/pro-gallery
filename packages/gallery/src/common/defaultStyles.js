@@ -47,7 +47,6 @@ export default {
     isAutoSlideshow: false,
     slideshowLoop: false,
     autoSlideshowInterval: 4,
-    useCustomButton: false,
     bottomInfoHeight: 0,
     titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
     galleryTextAlign: 'center',
@@ -110,16 +109,6 @@ export default {
     textImageSpace: 10,
     textBoxBorderRadius: 0,
     textBoxBorderWidth: 0,
-    // textBoxBorderColor: color-5,
-    customButtonText: '',
-    // customButtonFontForHover: 'font_8', startWithSize: 15
-    // customButtonFontColorForHover: color-5
-    // customButtonFont: 'font_8', startWithSize: 15
-    // customButtonFontColor: color-1'
-    // customButtonColor: startWithOpacity: '0', startWithColor: 'color-1'
-    customButtonBorderWidth: 1,
-    // customButtonBorderColor: startWithColor: 'color-1'
-    customButtonBorderRadius: 0,
     loadMoreButtonText: '',
     //loadMoreButtonFont: font_8
     // loadMoreButtonFontColor: color-5
