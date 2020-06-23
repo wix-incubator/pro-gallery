@@ -1,3 +1,12 @@
+## [v2.0.1](https://pro-gallery-2-0-1.surge.sh) (23/06/2020)
+ 
+#### PLAYGROUND
+ - * improve: Lazy load side bar
+
+#### GALLERY
+ -  (isNew.js) fix stylesHaveChanged
+
+---
 ## [v2.0.0](https://pro-gallery-2-0-0.surge.sh) (22/06/2020)
  
 #### GALLERY
