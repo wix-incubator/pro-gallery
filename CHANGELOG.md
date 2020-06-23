@@ -1,3 +1,26 @@
+## [v2.0.1](https://pro-gallery-2-0-1.surge.sh) (23/06/2020)
+ 
+#### PLAYGROUND
+ - * improve: Lazy load side bar
+
+#### GALLERY
+ -  (isNew.js) fix stylesHaveChanged
+
+---
+## [v2.0.0](https://pro-gallery-2-0-0.surge.sh) (22/06/2020)
+ 
+#### GALLERY
+ improve (calcVisibilities): remove deprecated calcVisibilities
+
+#### PLAYGROUND
+ -  improve (sidebar): lazy load the sidebar code
+
+---
+## [v1.10.23](https://pro-gallery-1-10-23.surge.sh) (22/06/2020)
+ 
+#### GALLERY
+ -  changed leanGallery css from cssModule to global static.
+ 
 ## [v1.10.22](https://pro-gallery-1-10-22.surge.sh) (14/06/2020)
  
 #### GALLERY

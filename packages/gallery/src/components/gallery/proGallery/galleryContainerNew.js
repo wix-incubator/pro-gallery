@@ -429,9 +429,10 @@ export class GalleryContainer extends React.Component {
     const state = curState || this.state || {};
 
     let _styles, _container;
+    const stylesWithLayoutStyles = styles && addLayoutStyles(styles);
 
     const isNew = checkNewGalleryProps(
-      { items, styles, container, watermarkData, itemsDimensions },
+      { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
       {...state, items: this.items},
     );
     const newState = {};

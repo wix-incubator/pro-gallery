@@ -12,6 +12,14 @@
     top: 10px;
     left: 10px;
     z-index: 50;
+    color: white;
+    background-color: #1890ff;
+    border-color: #1890ff;
+    &:hover {
+      background-color: #40a9ff;
+      border-color: #40a9ff;
+      cursor: pointer;
+    }
   }
 
   .sideBar {
