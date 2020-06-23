@@ -1,6 +1,5 @@
 import React, {useEffect, Suspense} from 'react';
 // import {SideBar} from '../SideBar';
-import {Button} from 'antd';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
@@ -8,6 +7,8 @@ import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
+import SideBarButton from '../SideBar/SideBarButton';
+
 // import Loader from './loader';
 
 import 'pro-gallery/dist/statics/main.css';
@@ -116,7 +117,7 @@ export function App() {
   return (
     <main className={s.main}>
       {/* <Loader/> */}
-      <Button className={s.toggleButton} onClick={switchState} icon={showSide ? "close" : "menu"} shape="circle" size="default" type="primary" />
+      <SideBarButton className={s.toggleButton} onClick={switchState} isOpen={showSide} />
       <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0, display: showSide ? 'block' : 'none'}}>
         <div className={s.heading}>
           Pro Gallery Playground <a className={s.version} href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md" target="blank" title="View Changelog on Github">v{pJson.version}</a>
