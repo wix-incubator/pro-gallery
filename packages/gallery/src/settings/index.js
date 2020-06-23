@@ -72,6 +72,7 @@ import itemShadowOpacityAndColor from './options/itemShadowOpacityAndColor';
 import itemEnableShadow from './options/itemEnableShadow';
 import videoLoop from './options/videoLoop';
 import showArrows from './options/showArrows';
+import enableScroll from './options/enableScroll';
 
 export default {
     itemClick,
@@ -148,4 +149,5 @@ export default {
     itemEnableShadow,
     videoLoop,
     showArrows,
+    enableScroll,
 }
