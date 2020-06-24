@@ -1,6 +1,6 @@
-import React from 'react';
-import GalleryView from './galleryView';
-import SlideshowView from './slideshowView';
+import React, { Suspense } from 'react';
+// import GalleryView from './galleryView';
+// import SlideshowView from './slideshowView';
 import { addLayoutStyles } from '../../helpers/layoutHelper';
 import { ItemsHelper } from '../../helpers/itemsHelper';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
@@ -16,6 +16,9 @@ import EVENTS from '../../../common/constants/events';
 import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import checkNewGalleryProps from '../../helpers/isNew';
+
+const GalleryView = React.lazy(() => import(/* webpackChunkName: "galleryView" */ './galleryView'))
+const SlideshowView = React.lazy(() => import(/* webpackChunkName: "slideshowView" */ './slideshowView'))
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -900,45 +903,47 @@ export class GalleryContainer extends React.Component {
           enableScrollPreload={this.enableScrollPreload}
           onScroll={this.onGalleryScroll}
         />
-        <ViewComponent
-          isInDisplay={this.props.isInDisplay}
-          isUnknownWidth={dimensionsHelper.isUnknownWidth()}
-          scrollingElement={this._scrollingElement}
-          totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
-          renderedItemsCount={this.props.renderedItemsCount}
-          items={this.items}
-          itemsLoveData={this.props.itemsLoveData}
-          galleryStructure={this.galleryStructure}
-          styleParams={this.state.styles}
-          container={this.state.container}
-          watermark={this.props.watermarkData}
-          settings={this.props.settings}
-          gotScrollEvent={true}
-          scroll={{}} //todo: remove after refactor is 100%
-          lazyLoad={this.props.lazyLoad}
-          displayShowMore={displayShowMore}
-          domId={this.props.domId}
-          currentIdx={this.props.currentIdx || 0}
-          customHoverRenderer={this.props.customHoverRenderer}
-          customInfoRenderer={this.props.customInfoRenderer}
-          customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
-          customLoadMoreRenderer={this.props.customLoadMoreRenderer}
-          playingVideoIdx={this.state.playingVideoIdx}
-          nextVideoIdx={this.state.nextVideoIdx}
-          noFollowForSEO={this.props.noFollowForSEO}
-          proGalleryRegionLabel={this.props.proGalleryRegionLabel}
-          actions={{
-            ...this.props.actions,
-            findNeighborItem,
-            toggleLoadMoreItems: this.toggleLoadMoreItems,
-            eventsListener: this.eventsListener,
-            setWixHeight: (() => {}),
-            scrollToItem: this.scrollToItem,
-            scrollToGroup: this.scrollToGroup,
-            duplicateGalleryItems: this.duplicateGalleryItems,
-          }}
-          {...this.props.gallery}
-        />
+        <Suspense fallback={<div>Loadding...</div>}>
+          <ViewComponent
+            isInDisplay={this.props.isInDisplay}
+            isUnknownWidth={dimensionsHelper.isUnknownWidth()}
+            scrollingElement={this._scrollingElement}
+            totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
+            renderedItemsCount={this.props.renderedItemsCount}
+            items={this.items}
+            itemsLoveData={this.props.itemsLoveData}
+            galleryStructure={this.galleryStructure}
+            styleParams={this.state.styles}
+            container={this.state.container}
+            watermark={this.props.watermarkData}
+            settings={this.props.settings}
+            gotScrollEvent={true}
+            scroll={{}} //todo: remove after refactor is 100%
+            lazyLoad={this.props.lazyLoad}
+            displayShowMore={displayShowMore}
+            domId={this.props.domId}
+            currentIdx={this.props.currentIdx || 0}
+            customHoverRenderer={this.props.customHoverRenderer}
+            customInfoRenderer={this.props.customInfoRenderer}
+            customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
+            customLoadMoreRenderer={this.props.customLoadMoreRenderer}
+            playingVideoIdx={this.state.playingVideoIdx}
+            nextVideoIdx={this.state.nextVideoIdx}
+            noFollowForSEO={this.props.noFollowForSEO}
+            proGalleryRegionLabel={this.props.proGalleryRegionLabel}
+            actions={{
+              ...this.props.actions,
+              findNeighborItem,
+              toggleLoadMoreItems: this.toggleLoadMoreItems,
+              eventsListener: this.eventsListener,
+              setWixHeight: (() => {}),
+              scrollToItem: this.scrollToItem,
+              scrollToGroup: this.scrollToGroup,
+              duplicateGalleryItems: this.duplicateGalleryItems,
+            }}
+            {...this.props.gallery}
+          />
+        </Suspense>
         {this.galleryInitialStateJson && (
           <div id="ssr-state-to-hydrate" style={{ display: 'none' }}>
             {this.galleryInitialStateJson}
