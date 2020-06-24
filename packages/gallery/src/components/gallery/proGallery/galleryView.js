@@ -288,7 +288,6 @@ class GalleryView extends GalleryComponent {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    console.log('____________galleryView_______________', this.props);
     if (utils.isVerbose()) {
       console.count('galleryView render');
       console.time('Rendering Gallery took ');
