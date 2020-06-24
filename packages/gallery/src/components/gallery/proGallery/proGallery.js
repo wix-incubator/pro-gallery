@@ -31,7 +31,7 @@ export default class ProGallery extends GalleryComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.viewMode !== nextProps.viewMode) {
       utils.dumpCache();
       viewModeWrapper.setViewMode(nextProps.viewMode);
