@@ -10,12 +10,12 @@ class VideoItemPlaceholder extends GalleryComponent {
   createImageElement() {
     const {
       alt,
-      loadingStatus,
       createUrl,
       id,
       lazyLoad,
       styleParams,
     } = this.props;
+    
     const url = createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)
     const image = (<img
     key={
@@ -32,11 +32,7 @@ class VideoItemPlaceholder extends GalleryComponent {
   const canvas = (<canvas
     key={'image-' + id}
     alt={alt ? alt : 'untitled video'}
-    className={
-      'gallery-item-hidden gallery-item-visible gallery-item gallery-item-preloaded ' +
-      (loadingStatus.loaded ? ' gallery-item-loaded ' : '') +
-      (loadingStatus.failed ? ' failed ' : '')
-    }
+    className={'gallery-item-hidden gallery-item-visible gallery-item gallery-item-preloaded'}
     data-src={url}
   />)
 

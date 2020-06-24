@@ -43,16 +43,6 @@ describe('Image Item', () => {
   //   stub.restore();
   // });
 
-  // it('should call setItemError on error event if visible is true', () => {
-  //   Object.assign(imageItemsProps, {visible: true});
-  //   const spy = sinon.spy();
-  //   Object.assign(imageItemsProps, {actions: {setItemError: spy}});
-  //   galleryDriver.mount(ImageItem, imageItemsProps);
-  //   const errEvent = new Event('err');
-  //   galleryDriver.find.selector('img').simulate('error', errEvent);
-  //   expect(spy.called).to.be.true;
-  // });
-
   // it('put alternate text for the image if isThumbnail is false', () => {
   //   Object.assign(imageItemsProps, {alt: 'test'});
   //   Object.assign(imageItemsProps, {isThumbnail: false});
