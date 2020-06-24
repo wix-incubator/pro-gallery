@@ -274,16 +274,6 @@ class GalleryView extends GalleryComponent {
     return showMoreButton;
   }
 
-  getStyles() {
-    const marginExceptBottom =
-      -1 *
-      (this.props.styleParams.imageMargin -
-        this.props.styleParams.galleryMargin);
-    return {
-      margin: `${marginExceptBottom}px ${marginExceptBottom}px 0 ${marginExceptBottom}px`,
-    };
-  }
-
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -319,7 +309,6 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        // style={this.getStyles()}
         role="region"
         aria-label={this.props.proGalleryRegionLabel}
       >
