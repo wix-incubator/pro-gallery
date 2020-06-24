@@ -6,7 +6,6 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
-import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
@@ -191,7 +190,7 @@ const getLayoutName = (galleryLayout) => {
   return galleyLayoutList[galleryLayout + 1]
 }
 
-function addLayoutStyles(styles, customInfoRenderer) {
+function addLayoutStyles(styles, customExternalInfoRendererExists) {
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
@@ -237,11 +236,11 @@ function addLayoutStyles(styles, customInfoRenderer) {
       console.log('new selected layout', styles.selectedLayout);
     }
   }
-  styles = Object.assign(styles, processLayouts(styles, customInfoRenderer));
+  styles = Object.assign(styles, processLayouts(styles, customExternalInfoRendererExists));
   return styles;
 }
 
-function processLayouts(styles, customInfoRenderer) {
+function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
   processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
   processedStyles.oneRow = processedStyles.oneRow || processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
@@ -517,13 +516,13 @@ function processLayouts(styles, customInfoRenderer) {
       (processedStyles.gallerySizeRatio / 100);
   }
 
-  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles, customInfoRenderer);
+  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles, customExternalInfoRendererExists);
   processedStyles.externalInfoHeight = getHeightFromStyleParams(
     processedStyles,
     processedStyles.textBoxHeight
   );
 
-  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(processedStyles, customInfoRenderer);
+  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(processedStyles, customExternalInfoRendererExists);
 
   return processedStyles;
 }
@@ -539,8 +538,8 @@ function getHeightFromStyleParams(styleParams, textBoxHeight) {
   return additionalHeight;
 }
 
-function getTextBoxRightOrLeftWidth(styleParams, customInfoRenderer) {
-  if (!shouldShowTextRightOrLeft(styleParams, customInfoRenderer)) {
+function getTextBoxRightOrLeftWidth(styleParams, customExternalInfoRendererExists) {
+  if (!shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)) {
     return 0;
   }
   const {gallerySize, calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent} = styleParams;
@@ -553,7 +552,7 @@ function getTextBoxRightOrLeftWidth(styleParams, customInfoRenderer) {
   return width;
 }
 
-function shouldShowTextRightOrLeft(styleParams, customInfoRenderer) {
+function shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists) {
   const {
     oneRow,
     isVertical,
@@ -565,20 +564,20 @@ function shouldShowTextRightOrLeft(styleParams, customInfoRenderer) {
 
   return (allowedByLayoutConfig &&
     hasHorizontalPlacement(titlePlacement) &&
-    customInfoRenderer)
+    customExternalInfoRendererExists)
 }
 
-function getTextBoxAboveOrBelowHeight(styleParams, customInfoRenderer) {
-  if (!shouldShowTextBoxAboveOrBelow(styleParams, customInfoRenderer)) {
+function getTextBoxAboveOrBelowHeight(styleParams, customExternalInfoRendererExists) {
+  if (!shouldShowTextBoxAboveOrBelow(styleParams, customExternalInfoRendererExists)) {
     return 0;
   }
   return styleParams.textBoxHeight;
 }
 
-function shouldShowTextBoxAboveOrBelow(styleParams, customInfoRenderer) {
+function shouldShowTextBoxAboveOrBelow(styleParams, customExternalInfoRendererExists) {
   return (
     hasVerticalPlacement(styleParams.titlePlacement) &&
-    customInfoRenderer
+    customExternalInfoRendererExists
   );
 }
 
