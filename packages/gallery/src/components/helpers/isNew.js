@@ -48,8 +48,14 @@ export default ({ items, styles, container, itemsDimensions }, state) => {
       return true; //no old styles
     }
     try {
+      const oldStylesSorted = {};
+      Object.keys(state.styles).sort() //sort by keys alphabetically
+      .forEach(key => oldStylesSorted[key] = state.styles[key]);
+      const newStylesSorted = {};
+      Object.keys(_styles).sort() //sort by keys alphabetically
+      .forEach(key => newStylesSorted[key] = _styles[key]);
       const wasChanged =
-        JSON.stringify(_styles) !== JSON.stringify(state.styles);
+        JSON.stringify(newStylesSorted) !== JSON.stringify(oldStylesSorted);
       if (wasChanged) {
         reason.styles = 'styles were changed.';
       }

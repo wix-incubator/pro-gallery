@@ -108,20 +108,8 @@ export class GalleryContainer extends React.Component {
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
     this.scrollToItem(this.props.currentIdx, false, true, 0);
-    const onGalleryCreated = () => {
-      this.getMoreItemsIfNeeded(0);
-      this.handleNewGalleryStructure();
-      this.eventsListener(EVENTS.APP_LOADED, {});
-    };
-    const galleryState = this.reCreateGalleryExpensively(this.props);
-    if (Object.keys(galleryState).length > 0) {
-      utils.isVerbose() && console.warn('Pro Gallery changed after mount', utils.printableObjectsDiff(this.state, galleryState));
-      this.setState(galleryState, () => {
-        onGalleryCreated();
-      });
-    } else {
-      onGalleryCreated();
-    }
+    this.handleNewGalleryStructure();
+    this.eventsListener(EVENTS.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
 
     try {
@@ -429,9 +417,10 @@ export class GalleryContainer extends React.Component {
     const state = curState || this.state || {};
 
     let _styles, _container;
+    const stylesWithLayoutStyles = styles && addLayoutStyles(styles);
 
     const isNew = checkNewGalleryProps(
-      { items, styles, container, watermarkData, itemsDimensions },
+      { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
       {...state, items: this.items},
     );
     const newState = {};
