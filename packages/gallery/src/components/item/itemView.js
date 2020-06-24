@@ -340,7 +340,7 @@ class ItemView extends GalleryComponent {
   }
 
   getCustomInfoRendererProps() {
-    return {...this.props, ...{itemContainer: this.itemContainer, isMobile: utils.isMobile()}}
+    return {...this.props, ...{isMobile: utils.isMobile()}}
   };
 
   getImageItem(imageDimensions) {
