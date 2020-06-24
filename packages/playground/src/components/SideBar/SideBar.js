@@ -13,7 +13,6 @@ import { throttle } from "../../utils/utils";
 import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS, notEligibleReasons } from 'pro-gallery';
-import 'antd/dist/antd.css';
 
 function SideBar({ items }) {
   const {
