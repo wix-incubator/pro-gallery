@@ -1,9 +1,18 @@
 body {
-  margin: 0;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+input, button, select, optgroup, textarea {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
 }
 
 .main {
-
   width: 100%;
   height: 100%;
 
