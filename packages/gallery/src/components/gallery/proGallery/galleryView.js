@@ -111,7 +111,7 @@ class GalleryView extends GalleryComponent {
   }
 
   createGallery(showMore) {
-    const { itemsLoveData, styleParams, container, galleryStructure, isUnknownWidth } = this.props;
+    const { itemsLoveData, styleParams, container, galleryStructure, isUnknownWidth, getVisibleItems } = this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
@@ -123,7 +123,8 @@ class GalleryView extends GalleryComponent {
     } else {
       galleryHeight = galleryStructure.height + 'px';
     }
-    const layout = galleryStructure.galleryItems.map((item, index) =>
+    const galleryStructureItems = getVisibleItems(galleryStructure, container);
+    const layout = galleryStructureItems.map((item, index) =>
       React.createElement(
         itemView,
         item.renderProps({
@@ -274,16 +275,6 @@ class GalleryView extends GalleryComponent {
     return showMoreButton;
   }
 
-  getStyles() {
-    const marginExceptBottom =
-      -1 *
-      (this.props.styleParams.imageMargin -
-        this.props.styleParams.galleryMargin);
-    return {
-      margin: `${marginExceptBottom}px ${marginExceptBottom}px 0 ${marginExceptBottom}px`,
-    };
-  }
-
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -319,7 +310,6 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        // style={this.getStyles()}
         role="region"
         aria-label={this.props.proGalleryRegionLabel}
       >
