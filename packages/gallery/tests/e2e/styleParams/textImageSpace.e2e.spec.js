@@ -20,7 +20,7 @@ describe('textImageSpace - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      textImageSpace: 40,
+      textImageSpace: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -32,7 +32,7 @@ describe('textImageSpace - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      textImageSpace: 40,
+      textImageSpace: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -44,7 +44,7 @@ describe('textImageSpace - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
-      textImageSpace: 40,
+      textImageSpace: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

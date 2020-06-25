@@ -117,6 +117,10 @@ class galleryDriver {
       styleParams: this.get.styleParams,
       actions: this.get.actions,
     };
+
+    this.customHoverRenderer = () => {};
+    this.customInfoRenderer = () => {};
+    this.customSlideshowInfoRenderer = () => {};
   }
 
   get get() {
@@ -225,6 +229,9 @@ class galleryDriver {
           totalItemsCount: this.items.length,
           layout,
           actions: this.actions,
+          customHoverRenderer: this.customHoverRenderer,
+          customInfoRenderer: this.customInfoRenderer,
+          customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
         };
       },
 
@@ -239,6 +246,9 @@ class galleryDriver {
             container: this.container,
             styleParams: this.styleParams,
             actions: this.actions,
+            customHoverRenderer: this.customHoverRenderer,
+            customInfoRenderer: this.customInfoRenderer,
+            customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
             itemsLoveData: {},
           };
         }
@@ -265,6 +275,9 @@ class galleryDriver {
           itemsLoveData: galleryViewProps.itemsLoveData,
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
+          customHoverRenderer: galleryViewProps.customHoverRenderer,
+          customInfoRenderer: galleryViewProps.customInfoRenderer,
+          customSlideshowInfoRenderer: galleryViewProps.customSlideshowInfoRenderer,
         };
       },
 
