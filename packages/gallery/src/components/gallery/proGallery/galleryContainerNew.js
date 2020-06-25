@@ -106,15 +106,26 @@ export class GalleryContainer extends React.Component {
     };
   }
 
-  getVisibleItems({ galleryItems }, container) {
+  getVisibleItems({ galleryItems }, {galleryHeight, scrollBase}) {
+    if(isSEOMode() || utils.isSSR()) { 
+      return galleryItems;
+    }
     let visibleItems = galleryItems;
     if(this.isVerticalGallery()) {
-      //TODO: implement for vertical gallery
-    } else {
       const { gotFirstScrollEvent } = this.state;
       if (!gotFirstScrollEvent) {
-        const {galleryHeight} = container;
-        visibleItems = galleryItems.filter(item => item.offset.top < galleryHeight);
+        try {
+          const scrollY = window.scrollY;
+          const windowHeight = window.innerHeight;
+          const itemTopLimit = scrollY - scrollBase + Math.min(windowHeight, galleryHeight);
+          if(itemTopLimit < 0) { //gallery is not visible
+            visibleItems = [];
+          } else {
+          visibleItems = galleryItems.filter(item => item.offset.top < itemTopLimit);
+          }
+        } catch (e) {}
+    } else {
+      //TODO: implement for vertical gallery
     }
   }
     return visibleItems;
@@ -876,7 +887,7 @@ export class GalleryContainer extends React.Component {
   }
 
   isVerticalGallery() {
-    return !!this.state.styles.oneRow
+    return !this.state.styles.oneRow
   }
 
   render() {
@@ -884,7 +895,7 @@ export class GalleryContainer extends React.Component {
       return null;
     }
 
-    const ViewComponent = this.isVerticalGallery() ? SlideshowView : GalleryView;
+    const ViewComponent = this.isVerticalGallery() ? GalleryView : SlideshowView;
 
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
