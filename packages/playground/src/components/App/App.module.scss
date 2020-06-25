@@ -112,18 +112,30 @@
 }
 
 :global {
-  .playground-info-title {
-    font-size: 24px;
-    font-weight: 400;
-    color: #575252;
-    padding: 10px
-  }
-  .playground-info-description {
-    font-size: 16px;
-    font-weight: 100;
-    color: #bfbfbf;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
+  .playground-info {
+    text-align: center;
+
+    .playground-info-title {
+      font-size: 24px;
+      font-weight: 400;
+      color: #7d7777;
+      padding: 10px;
+      font-family: "HelveticaNeueW01-75Bold",
+      "HelveticaNeueW02-75Bold",
+      "HelveticaNeueW10-75Bold",
+      sans-serif;
+    }
+    .playground-info-description {
+      font-size: 16px;
+      font-weight: 100;
+      color: #bfbfbf;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 10px;
+      font-family: "HelveticaNeueW01-45Ligh",
+      "HelveticaNeueW02-45Ligh",
+      "HelveticaNeueW10-45Ligh",
+      sans-serif;
+    }
   }
 }
