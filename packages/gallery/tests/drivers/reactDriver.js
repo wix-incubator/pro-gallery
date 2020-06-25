@@ -269,6 +269,7 @@ class galleryDriver {
           galleryStructure,
           scroll: galleryViewProps.scroll,
           container: galleryViewProps.container,
+          getVisibleItems: ({ galleryItems }, _container) => galleryItems,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
           itemsLoveData: galleryViewProps.itemsLoveData,
