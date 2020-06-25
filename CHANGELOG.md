@@ -1,3 +1,16 @@
+## [v2.0.2](https://pro-gallery-2-0-2.surge.sh) (25/06/2020)
+ 
+#### PLAYGROUND
+ -  Move antd css import from main entry point to side bar component
+
+#### GALLERY
+ -  reactDriver add getVisibleItems
+ -  (performance) render only visibleItems on first render
+ -  Removed some unused code 
+ -  (isNew.js) use Object.entries
+ -  galleryContainer remove reCreateGalleryExpensively on didMount
+
+---
 ## [v2.0.1](https://pro-gallery-2-0-1.surge.sh) (23/06/2020)
  
 #### PLAYGROUND
