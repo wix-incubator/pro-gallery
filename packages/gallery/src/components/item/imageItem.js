@@ -19,7 +19,6 @@ export default class ImageItem extends GalleryComponent {
   render() {
     const {
       alt,
-      displayed,
       imageDimensions,
       createUrl,
       id,
@@ -34,7 +33,7 @@ export default class ImageItem extends GalleryComponent {
       typeof settings.imageProps === 'function'
         ? settings.imageProps(id)
         : {};
-    const backgroundStyle = {}; //remove this inline style if rendered padding (using css) is used
+
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
     const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
@@ -59,9 +58,7 @@ export default class ImageItem extends GalleryComponent {
           onTouchEnd={actions.handleItemMouseUp}
           key={'image_container-' + id}
           data-hook={'image-item'}
-          style={displayed ?
-            (imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {})
-            : { ...backgroundStyle, ...restOfDimensions }}
+          style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
         >
           {image}
         </div>

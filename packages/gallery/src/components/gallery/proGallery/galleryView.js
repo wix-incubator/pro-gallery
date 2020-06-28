@@ -123,7 +123,7 @@ class GalleryView extends GalleryComponent {
     } else {
       galleryHeight = galleryStructure.height + 'px';
     }
-    const galleryStructureItems = getVisibleItems(galleryStructure, container);
+    const galleryStructureItems = getVisibleItems(galleryStructure.galleryItems, container);
     const layout = galleryStructureItems.map((item, index) =>
       React.createElement(
         itemView,
