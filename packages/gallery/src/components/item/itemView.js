@@ -4,9 +4,9 @@ import React, { Suspense } from 'react';
 // import TextItem from './textItem.js';
 // import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
 // import ItemHover from './itemHover.js';
-import Texts from './texts/texts.js';
-import Social from './social/social.js';
-import Share from './share/share.js';
+// import Texts from './texts/texts.js';
+// import Social from './social/social.js';
+// import Share from './share/share.js';
 import utils from '../../common/utils/index.js';
 import window from '../../common/window/windowWrapper';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
@@ -33,6 +33,9 @@ import {
 const ImageItem = React.lazy(() => import(/* webpackChunkName: "ImageItem" */ './imageItem.js'))
 const VideoItem = React.lazy(() => import(/* webpackChunkName: "VideoItem" */ './videos/videoItem'))
 const TextItem = React.lazy(() => import(/* webpackChunkName: "TextItem" */ './textItem.js'))
+const Texts = React.lazy(() => import(/* webpackChunkName: "Texts" */ './texts/texts.js'))
+const Social = React.lazy(() => import(/* webpackChunkName: "Social" */ './social/social.js'))
+const Share = React.lazy(() => import(/* webpackChunkName: "Share" */ './share/share.js'))
 const VideoItemPlaceholder = React.lazy(() => import(/* webpackChunkName: "VideoItemPlaceholder" */ './videos/videoItemPlaceholder.js'))
 const ItemHover = React.lazy(() => import(/* webpackChunkName: "ItemHover" */ './itemHover.js'))
 
@@ -449,20 +452,22 @@ class ItemView extends GalleryComponent {
     ]);
 
     return (
-      <Social
-        {...props}
-        showShare={this.state.showShare}
-        isSmallItem={this.isSmallItem()}
-        isNarrow={this.isNarrow()}
-        isShort={this.isShort()}
-        isVerticalContainer={this.isVerticalContainer()}
-        key={`item-social-${props.id}`}
-        actions={{
-          toggleShare: this.toggleShare,
-          getShare: this.getShare,
-          eventsListener: this.props.actions.eventsListener,
-        }}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Social
+          {...props}
+          showShare={this.state.showShare}
+          isSmallItem={this.isSmallItem()}
+          isNarrow={this.isNarrow()}
+          isShort={this.isShort()}
+          isVerticalContainer={this.isVerticalContainer()}
+          key={`item-social-${props.id}`}
+          actions={{
+            toggleShare: this.toggleShare,
+            getShare: this.getShare,
+            eventsListener: this.props.actions.eventsListener,
+          }}
+        />
+      </Suspense>
     );
   }
 
@@ -477,17 +482,19 @@ class ItemView extends GalleryComponent {
       'actions',
     ]);
     return (
-      <Share
-        {...props}
-        allProps={this.props}
-        key={`item-share-${props.id}`}
-        showShare={this.state.showShare}
-        isVerticalContainer={this.isVerticalContainer()}
-        actions={{
-          toggleShare: this.toggleShare,
-          eventsListener: this.props.actions.eventsListener,
-        }}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Share
+          {...props}
+          allProps={this.props}
+          key={`item-share-${props.id}`}
+          showShare={this.state.showShare}
+          isVerticalContainer={this.isVerticalContainer()}
+          actions={{
+            toggleShare: this.toggleShare,
+            eventsListener: this.props.actions.eventsListener,
+          }}
+        />
+      </Suspense>
     );
   }
 
@@ -618,16 +625,18 @@ class ItemView extends GalleryComponent {
     ]);
 
     return (
-      <TextItem
-        {...props}
-        key="textItem"
-        imageDimensions={imageDimensions}
-        actions={{
-          handleItemMouseDown: this.handleItemMouseDown,
-          handleItemMouseUp: this.handleItemMouseUp,
-          setItemLoaded: this.setItemLoaded,
-        }}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <TextItem
+          {...props}
+          key="textItem"
+          imageDimensions={imageDimensions}
+          actions={{
+            handleItemMouseDown: this.handleItemMouseDown,
+            handleItemMouseUp: this.handleItemMouseUp,
+            setItemLoaded: this.setItemLoaded,
+          }}
+        />
+      </Suspense>
     );
   }
 
