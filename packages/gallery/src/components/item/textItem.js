@@ -2,6 +2,13 @@ import React from 'react';
 import { GalleryComponent } from '../galleryComponent';
 
 export default class TextItem extends GalleryComponent {
+  constructor(props){
+    super(props);
+    if (typeof this.props.actions.setItemLoaded === 'function') {
+      this.props.actions.setItemLoaded();
+    }
+  }
+
   getTextDimensions() {
     const { style, styleParams, cubeRatio } = this.props;
     const isVerticalItem = style.ratio < cubeRatio - 0.01;
@@ -28,10 +35,6 @@ export default class TextItem extends GalleryComponent {
       OTransform: transform,
       transform,
     };
-  }
-
-  componentWillMount() {
-    this.props.actions.setItemLoaded();
   }
 
   processInnerhtml(html) {

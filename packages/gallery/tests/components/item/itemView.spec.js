@@ -28,23 +28,7 @@ describe('Item View', () => {
     expect(driver.find.hook('item-wrapper').length).to.equal(1);
   });
 
-  describe('when error occurs', () => {
-    it('state - retries should be increase acording to times called setItemError, failed is true after 4 times or more', () => {
-      driver.mount(ItemView, sampleItemViewProps);
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(1);
-      expect(driver.get.state('failed')).to.be.false;
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(2);
-      expect(driver.get.state('failed')).to.be.false;
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(3);
-      expect(driver.get.state('failed')).to.be.false;
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(4);
-      expect(driver.get.state('failed')).to.be.true;
-    });
-  });
+
   describe('item loaded setItemLoaded', () => {
     it('should set states when called', () => {
       const spy = sinon.spy(ItemView.prototype, 'setItemLoaded');
