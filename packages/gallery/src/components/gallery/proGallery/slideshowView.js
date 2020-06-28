@@ -805,7 +805,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   createLayout() {
-    const { itemsLoveData } = this.props;
+    const { itemsLoveData, getVisibleItems, galleryStructure, container } = this.props;
 
     const galleryConfig = {
       scrollingElement: this.props.scrollingElement,
@@ -829,17 +829,17 @@ class SlideshowView extends GalleryComponent {
         eventsListener: this.props.actions.eventsListener,
       },
     };
-
-    return this.props.galleryStructure.columns.map((column, c) => {
+    return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: column.width,
-        height: this.props.container.galleryHeight,
+        height: container.galleryHeight,
       };
       if (this.props.styleParams.isSlideshow) {
         Object.assign(columnStyle, {
           paddingBottom: this.props.styleParams.slideshowInfoSize,
         });
       }
+      const layoutGroupView =  !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
       return (
         <div
           data-hook="gallery-column"
@@ -849,8 +849,8 @@ class SlideshowView extends GalleryComponent {
           style={columnStyle}
         >
           <div className="gallery-horizontal-scroll-inner">
-            {!!column.galleryGroups.length &&
-              column.galleryGroups.map(group =>
+            {layoutGroupView &&
+              layoutGroupView.map(group =>
                 group.rendered
                   ? React.createElement(
                       GroupView,
