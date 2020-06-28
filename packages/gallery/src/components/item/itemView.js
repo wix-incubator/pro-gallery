@@ -52,7 +52,6 @@ class ItemView extends GalleryComponent {
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
-    this.isVerticalContainer = this.isVerticalContainer.bind(this);
     this.isHighlight = this.isHighlight.bind(this);
     this.getItemHover = this.getItemHover.bind(this);
     this.getImageItem = this.getImageItem.bind(this);
