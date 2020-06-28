@@ -74,6 +74,7 @@ class ItemView extends GalleryComponent {
     this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
+    this.onMouseOut = this.onMouseOut.bind(this);
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this,
     );
@@ -110,6 +111,12 @@ class ItemView extends GalleryComponent {
   onMouseOver() {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+    }
+  }
+
+  onMouseOut() {
+    if (!utils.isMobile()) {
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
     }
   }
 
@@ -733,23 +740,13 @@ class ItemView extends GalleryComponent {
       ? customInfoRenderer(this.getCustomInfoRendererProps(), placement)
       : this.getItemTextsDetails(infoHeight);
 
-    //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemExternalInfo) {
       info = (
         <div style={getOuterInfoStyle(placement, styleParams, style.height, styleParams.textBoxHeight)}>
           <div
             style={getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)}
             className={'gallery-item-common-info ' + elementName}
-            onMouseOver={() => {
-              !utils.isMobile() && this.props.actions.eventsListener(
-                EVENTS.HOVER_SET,
-                this.props.idx,
-              );
-            }}
             aria-hidden={true}
-            onMouseOut={() => {
-              !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
-            }}
             onClick={this.onItemInfoClick}
           >
             {itemExternalInfo}
@@ -1072,9 +1069,7 @@ class ItemView extends GalleryComponent {
         id={cssScrollHelper.getSellectorDomId(this.props)}
         ref={e => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
-        onMouseOut={() => {
-          !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
-        }}
+        onMouseOut={this.onMouseOut}
         onKeyDown={this.onKeyPress}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
