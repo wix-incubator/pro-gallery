@@ -1,7 +1,7 @@
 import '../../../common/utils/polyfills';
 
 import React from 'react';
-import GalleryContainer from './galleryContainerNew.js';
+import GalleryContainer from './galleryContainerExtraNew.js';
 import utils from '../../../common/utils';
 import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
 import window from '../../../common/window/windowWrapper';

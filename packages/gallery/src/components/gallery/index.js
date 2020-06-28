@@ -18,16 +18,12 @@ export default class BaseGallery extends React.Component {
     const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
-    let galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId, lazyLoad};
+    const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId, lazyLoad};
     const GalleryComponent = ProGallery;
-    const blueprint = Blueprints.createBlueprint({...galleryProps});
-    galleryProps = {...galleryProps, styles: blueprint.styles}
+    // const blueprints = new Blueprints(eventsListener,);
+    // const blueprint = blueprints.createBlueprint({...galleryProps});
+    // galleryProps = {...galleryProps, styles: blueprint.styles}
     
-    dimensionsHelper.updateParams({
-      domId: galleryProps.domId,
-      container: galleryProps.container,
-      styles: galleryProps.styles
-    });
     
 
     // const { galleryType, galleryLayout } = galleryProps.styles;

@@ -1,253 +1,411 @@
 import { addPresetStyles } from '../gallery/presets/presets';
-// import dimensionsHelper from '../helpers/dimensionsHelper';
+import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';
 // import utils from '../../common/utils';
-// import checkNewGalleryProps from '../helpers/isNew';
-// import { ItemsHelper } from '../../helpers/itemsHelper';
+import checkNewGalleryProps from '../helpers/isNew';
+import { ItemsHelper } from '../helpers/itemsHelper';
 // import window from '../../../common/window/windowWrapper';
-// import { Layouter } from 'pro-layouts';
+import { Layouter } from 'pro-layouts';
 // import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 // import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 // import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
+import EVENTS from '../../common/constants/events';
 
 
 export default class Blueprints {
+  constructor(config){
+    this.eventsCB = config && config.eventsCB;
+    this.lastParams = config && config.lastParams || {};
+    this.existingBlueprint = config && config.existingBlueprint || {};
+  }
+
+    handleNewGalleryStructure() { // TODO rework completely
+      //should be called AFTER new state is set
+      const {
+        container,
+        needToHandleShowMoreClick,
+        initialGalleryHeight,
+      } = this.state;
+      const styleParams = this.state.styles;
+      const numOfItems = this.items.length;
+      const layoutHeight = this.layout.height;
+      const layoutItems = this.layout.items;
+      const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
+      let updatedHeight = false;
+      const needToUpdateHeightNotInfinite =
+        !isInfinite && needToHandleShowMoreClick;
+      if (needToUpdateHeightNotInfinite) {
+        const showMoreContainerHeight = 138; //according to the scss
+        updatedHeight =
+          container.height +
+          (initialGalleryHeight -
+            showMoreContainerHeight);
+      }
+  
+      const onGalleryChangeData = {
+        numOfItems,
+        container,
+        styleParams,
+        layoutHeight,
+        layoutItems,
+        isInfinite,
+        updatedHeight,
+      };
+  
+      this.eventsListener(EVENTS.GALLERY_CHANGE, onGalleryChangeData);
+    }
+  
+    eventsListener(eventName, eventData, event) {
+      if (typeof this.props.eventsListener === 'function') {
+        this.eventsCB(eventName, eventData, event);
+      }
+    }
+
+   createBlueprint(params) {
+    // cacheBlocker
+    // if (this.cache[params]) return this.cache[params];
+
+    const {dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId} =  this.completeBuildingBlocks(params)
+    //getItems,styles and dimesions if not supplied in params;
+
+    dimensionsHelper.updateParams({ // styles process will need an updated dimensionsHelper
+      domId: domId,
+      container: newRawDimensions, //this is a wrong format untill we have it with all the scrollbase etc.... must work on uniting the dim helpers..
+      styles: newRawStyles
+    });
+    this.thingsChanged = false;
+    const formatedItems = this.formatItemsIfNeeded(newRawItems)
+    const formatedStyles = this.formatStylesIfNeeded(newRawStyles)
+    const formatedContainer = this.formatContainerIfNeeded(newRawDimensions);
+    this.thingsChanged && this.updateLastParams({dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId});
+    const structure = this.createStructureIfNeeded({formatedContainer, formatedItems, formatedStyles});
+
+
+    return this.existingBlueprint = {items: formatedItems, styles: formatedStyles, container: formatedContainer, structure};
+
+  }
+
+
+    // ------------------ Get all the needed raw data ---------------------------- //
+    completeBuildingBlocks(params) {
+      
+    let {dimensions, container, items, styles, styleParams, options, domId} = params || {};
+
+    styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
+    dimensions = {...dimensions, ...container}
+    dimensions =  this.fetchDimensionsIfNeeded(dimensions);
+    items =  this.fetchItemsIfNeeded(items);
+    styles =  this.fetchStylesIfNeeded(styles); //can be async... TODO
+    
+    return {dimensions, items, styles, domId} 
+  }
+  
+  
+  fetchDimensionsIfNeeded(dimensions) {
+
+    const shouldFetchDimensions = (dimensions) => {
+      let should = true;
+      if(dimensions) {
+        should = false
+      } 
+      
+      return should;
+    }
+    
+    if (shouldFetchDimensions(dimensions)) {
+      //dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
+    }
+    
+    return dimensions;
+  }
+  
+  fetchItemsIfNeeded(items) {
+    
+    const shouldFetchItems = (items) => {
+      let should = true;
+      if(items) {
+        should = false
+      }
+      
+      return should;
+    }
+
+    if (shouldFetchItems(items)) {
+      //items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
+    }
+
+    return items;
+  }
+
+  fetchStylesIfNeeded(styles) {
+
+    const shouldFetchStyles = (styles) => {
+      let should = true;
+      if(styles) { //TODO - should check if they are ready styles and use ClientLib if not?
+        should = false
+      }
+
+      return should;
+    }
+
+    if (shouldFetchStyles(styles)) {
+      //styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
+    }
+
+    return styles;
+  }
+
+    // ------------------ Raw data to Formated data (if needed) ---------------------------- //
+
+
+  formatItemsIfNeeded(items) {
+    const reason = {
+      items: '',
+      itemsAdded: '',
+    };
+    const itemsWereAdded = (newRawItems, oldRawItems) => {
+      if (newRawItems === oldRawItems) {
+        reason.itemsAdded = 'items are the same object.';
+        return false; //it is the exact same object
+      }
+      if (!newRawItems) {
+        reason.itemsAdded = 'new items do not exist.';
+        return false; // new items do not exist (use old items)
+      }
+      if (!oldRawItems || (oldRawItems && oldRawItems.length === 0)) {
+        reason.itemsAdded = 'old items do not exist.';
+        return false; // old items do not exist (it is not items addition)
+      }
+      if (oldRawItems.length >= newRawItems.length) {
+        reason.itemsAdded = 'more old items than new items.';
+        return false; // more old items than new items
+      }
+      const idsNotChanged = oldRawItems.reduce((is, _item, idx) => {
+        //check that all the existing items exist in the new array
+        return is && _item.id === newRawItems[idx].itemId;
+      }, true);
+  
+      if (!idsNotChanged) {
+        reason.itemsAdded = 'items ids were changed. ';
+      }
+      return idsNotChanged;
+    };
+  
+    const itemsHaveChanged = (newRawItems, oldRawItems) => {
+      if (newRawItems === oldRawItems) {
+        reason.items = 'items are the same object.';
+        return false; //it is the exact same object
+      }
+      if (!newRawItems) {
+        reason.items = 'new items do not exist.';
+        return false; // new items do not exist (use old items)
+      }
+      if (!oldRawItems || (oldRawItems && oldRawItems.length === 0)) {
+        reason.items = 'old items do not exist.';
+        return true; // old items do not exist
+      }
+      if (oldRawItems.length !== newRawItems.length) {
+        reason.items = 'more new items than old items (or vice versa).';
+        return true; // more new items than old items (or vice versa)
+      }
+      return newRawItems.reduce((is, newItem, idx) => {
+        //check that all the items are identical
+        const existingItem = oldRawItems[idx];
+        try {
+          const itemsChanged =
+            is ||
+            !newItem ||
+            !existingItem ||
+            newItem.itemId !== existingItem.itemId ||
+            newItem.mediaUrl !== existingItem.mediaUrl || 
+            newItem.metaData && existingItem.metaData && newItem.metaData.type !== existingItem.metaData.type;
+          if (itemsChanged) {
+            reason.items = `items #${idx} id was changed.`;
+          }
+          return itemsChanged;
+        } catch (e) {
+          reason.items = 'an error occured';
+          return true;
+        }
+      }, false);
+    };
+
+
+    const oldRawItems = this.lastParams.items || [];
+    let formatedItems = this.existingBlueprint.items;
+    if (itemsWereAdded(items, oldRawItems))
+    {
+      formatedItems = oldRawItems.concat(
+      items.slice(oldRawItems.length).map(item => {
+        return ItemsHelper.convertDtoToLayoutItem(item);
+      }),
+      );
+      this.gettingMoreItems = false; //probably finished getting more items       //TODO - what is this and how we keep it alive if needed?
+      this.thingsChanged = true;
+    } else if (itemsHaveChanged(items, oldRawItems)) {
+      formatedItems = items.map(item =>
+      Object.assign(ItemsHelper.convertDtoToLayoutItem(item)),
+      );
+      this.gettingMoreItems = false; //probably finished getting more items
+      this.thingsChanged = true;
+    }
+    return formatedItems;
+  }
+
+  formatStylesIfNeeded(styles) {
+
+
+    const reason = {
+      styles: '',
+    };
+
+    const stylesHaveChanged = (newRawStyles, oldRawStyles) => {
+      if (!newRawStyles) {
+        reason.styles = 'no new styles.';
+        return false; //no new styles - use old styles
+      }
+      if (!oldRawStyles) {
+        reason.styles = 'no old styles.';
+        return true; //no old styles
+      }
+      try {
+        const oldStylesSorted = {};
+        Object.keys(oldRawStyles).sort() //sort by keys alphabetically
+        .forEach(key => oldStylesSorted[key] = oldRawStyles[key]);
+        const newStylesSorted = {};
+        Object.keys(newRawStyles).sort() //sort by keys alphabetically
+        .forEach(key => newStylesSorted[key] = newRawStyles[key]);
+        const wasChanged =
+          JSON.stringify(newStylesSorted) !== JSON.stringify(oldStylesSorted);
+        if (wasChanged) {
+          reason.styles = 'styles were changed.';
+        }
+        return wasChanged;
+      } catch (e) {
+        console.error('Could not compare styles', e);
+        return false;
+      }
+    };
 
 
 
-  static createBlueprint({finalStylesStyles, container, items, watermarkData, options, styleParams, styles, domId = 'default-dom-id'}) {
-    const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
-    let finalStyles, finalContainer, finalStructure, finalItems;
-    finalStyles = addPresetStyles(_styles);
-    const selectedLayoutVars = [
-      'galleryLayout',
-      'galleryThumbnailsAlignment',
-      'magicLayoutSeed',
-      'cubeType',
-      'isVertical',
-      'scrollDirection',
-      'enableInfiniteScroll',
-    ];
-    finalStyles.selectedLayout = selectedLayoutVars
+    const oldRawStyles = this.lastParams.styles || {};
+    let finalStyles = this.existingBlueprint.styles;
+    if (stylesHaveChanged(styles,oldRawStyles)) {
+
+      finalStyles = addPresetStyles(styles);
+      const selectedLayoutVars = [
+        'galleryLayout',
+        'galleryThumbnailsAlignment',
+        'magicLayoutSeed',
+        'cubeType',
+        'isVertical',
+        'scrollDirection',
+        'enableInfiniteScroll',
+      ];
+      finalStyles.selectedLayout = selectedLayoutVars
       .map(key => String(finalStyles[key]))
       .join('|');
       finalStyles.layoutsVersion = 2;
+      this.thingsChanged = true;
 
+  
+      // TODO process styles !!!
 
-    return this.galleryBlueprint = {items: finalItems, styles: finalStyles, container: finalContainer, galleryStructure: finalStructure}
+    }  
+
+    return finalStyles
   }
-    // dimensionsHelper.updateParams({
-    //   domId: domId,
-    //   container: container,
-    //   styles: styles
-    // });
+
+  formatContainerIfNeeded(dimensions, styles) {
+
+    const reason = {
+      dimensions: '',
+    };
+    const dimensionsHaveChanged = ({newRawDimensions, oldRawDimensions, oldRawStyles}) => {
+      if (!oldRawStyles || !oldRawDimensions) {
+        reason.dimensions = 'no old dimensions or styles. ';
+        return true; //no old dimensions or styles (style may change dimensions)
+      }
+      if (!newRawDimensions) {
+        reason.dimensions = 'no new dimensions.';
+        return false; // no new continainer
+      }
+      const dimensionsHaveChanged = {
+        height:
+          !oldRawStyles.oneRow && oldRawStyles.enableInfiniteScroll
+            ? false
+            : !!newRawDimensions.height &&
+            newRawDimensions.height !== oldRawDimensions.height,
+        width:
+          !oldRawDimensions ||
+          (!!newRawDimensions.width &&
+            newRawDimensions.width !== oldRawDimensions.width),
+        scrollBase:
+          !!newRawDimensions.scrollBase &&
+          newRawDimensions.scrollBase !== oldRawDimensions.scrollBase,
+      };
+      return Object.keys(dimensionsHaveChanged).reduce((is, key) => {
+        if (dimensionsHaveChanged[key]) {
+          reason.dimensions += `dimensions.${key} has changed. `;
+        }
+        return is || dimensionsHaveChanged[key];
+      }, false);
+    };
+
+
+    const oldRawDimensions = this.lastParams.dimensions;
+    const oldRawStyles = this.lastParams.styles;
+    dimensionsHelper.updateParams({
+      styles,
+      container: dimensions,
+    });
+    if(dimensionsHaveChanged({newRawDimensions: dimensions, oldRawDimensions, oldRawStyles})){
+      this.thingsChanged = true;
+      return Object.assign(
+        {},
+        dimensions,
+        dimensionsHelper.getGalleryDimensions(),
+      );
+    } else {
+      return this.existingBlueprint.container
+    }
+  }
 
 
 
-    //---------------------- Finalize Styles -----------------------------//
-    
-      // TODO process styles
+  createStructureIfNeeded({formatedContainer, formatedStyles, formatedItems}) {
 
-    //--------------------- Finalize container ------------------------------//
+    if (this.thingsChanged) {
+      const layoutParams = {
+        items: formatedItems,
+        container: formatedContainer,
+        styleParams: formatedStyles,
+        gotScrollEvent: true,
+        options: {
+          showAllItems: true,
+          skipVisibilitiesCalc: true,
+          useLayoutStore: false,
+        },
+      };
+  
+      // if (this.layouter && addingItems) {
+      //   layoutParams.options.useExistingLayout = true;
+      // } else {
+        layoutParams.options.createLayoutOnInit = false; //TODO - what does this do?
+        this.layouter = new Layouter(layoutParams);
+      // }
+  
+      this.layout = this.layouter.createLayout(layoutParams);
       
+      return this.layout;
+    } else {
+      return this.existingBlueprint.structure;
+    }
+  }
 
 
-    //---------------------Finalize Items -----------------------------------------//
-
-
-
-
-
-  //   //----------------------------- Create Structure --------------------------------------//
-
-  //     // ------------ check what actually changed ----------------- //
-  //   const isNew = checkNewGalleryProps(
-  //     { items, styles, container, watermarkData, itemsDimensions },
-  //     {...state, items: this.items},  // TODO - state and items are used as "old" (vs "new" )- need to replace with "this".
-  //   );
-  //     //------------- create the new structure based on changes -----------//
-  //   reCreateGalleryExpensively(
-  //     { items, styles, container, watermarkData, itemsDimensions, isNew},
-  //     curState,
-  //     ) {
-
-
-  //     const state = curState || this.state || {};
-  
-  //     let _styles, _container;
-
-  //     const newState = {};
-  
-
-
-
-  //       // ------- items-stuff ------------------//
-
-  //     if (
-  //       (isNew.itemsDimensions || isNew.itemsMetadata) &&
-  //       !isNew.items &&
-  //       !isNew.addedItems
-  //     ) {
-  //       //if only the items metadata has changed - use the modified items (probably with the measured width and height)
-  //       this.items = this.items.map((item,index) =>
-  //       {
-  //         const metaData = Object.assign(
-  //           {},
-  //           items[index].metaData,
-  //           );
-  //         return Object.assign(item, {metaData}, { ...this.itemsDimensions[item.itemId] })
-  //       }
-  //       );
-  //       newState.items = this.items.map(item => item.itemId);
-  //     } else if (isNew.items && !isNew.addedItems) {
-  //       this.items = items.map(item =>
-  //         Object.assign(ItemsHelper.convertDtoToLayoutItem(item), {
-  //           ...this.itemsDimensions[item.itemId],
-  //         }),
-  //       );
-  //       newState.items = this.items.map(item => item.itemId);
-  //       this.gettingMoreItems = false; //probably finished getting more items
-  //     } else if (isNew.addedItems) {
-  //       this.items = this.items.concat(
-  //         items.slice(this.items.length).map(item => {
-  //           return ItemsHelper.convertDtoToLayoutItem(item);
-  //         }),
-  //       );
-  //       newState.items = this.items.map(item => item.itemId);
-  //       this.gettingMoreItems = false; //probably finished getting more items
-  //     }
-  
-
-
-  //       // ------- styles and container -stuff ------------------//
-
-
-
-
-  //     if (isNew.styles || isNew.container) {
-  //       styles = styles || state.styles;
-  //       container = container || state.container;
-  
-  //       _styles = addLayoutStyles(styles);//process styles - should move up + remove the need for container
-  //         dimensionsHelper.updateParams({
-  //           _styles,
-  //           container,
-  //           domId: this.props.domId,
-  //         });
-  //       _container = Object.assign(
-  //         {},
-  //         container,
-  //         dimensionsHelper.getGalleryDimensions(),
-  //       );
-  //       dimensionsHelper.updateParams({ container: _container }); //check wtf is this double update
-  //       finalStyles = _styles;
-  //       finalContainer = _container;
-  //     } else {
-  //       _styles = state.styles;
-  //       _container = state.container;
-  //     }
-
-
-
-
-
-
-
-  //       // ------- creating a new structure ------------------//
-
-
-
-
-
-
-  //     if (!this.galleryStructure || isNew.any) {
-
-  //       const layoutParams = {
-  //         items: this.items,
-  //         container: _container,
-  //         styleParams: _styles,
-  //         gotScrollEvent: true,
-  //         options: {
-  //           showAllItems: true,
-  //           skipVisibilitiesCalc: true,
-  //           useLayoutStore: false,
-  //         },
-  //       };
-  
-  //       if (this.layouter && isNew.addedItems) {
-  //         layoutParams.options.useExistingLayout = true;
-  //       } else {
-  //         layoutParams.options.createLayoutOnInit = false;
-  //         this.layouter = new Layouter(layoutParams);
-  //       }
-  
-  //       this.layout = this.layouter.createLayout(layoutParams);
-  //       const itemConfig = {
-  //         watermark: watermarkData,
-  //         sharpParams: _styles.sharpParams,
-  //         thumbnailSize: styles.thumbnailSize,
-  //         resizeMediaUrl: this.props.resizeMediaUrl,
-  //         lastVisibleItemIdx: this.lastVisibleItemIdx,
-  //       };
-  //       const existingLayout = this.galleryStructure || this.layout;
-  //       if (isNew.addedItems) {
-  //         this.galleryStructure = ItemsHelper.convertExistingStructureToGalleryItems(
-  //           existingLayout,
-  //           this.layout,
-  //           itemConfig,
-  //         );
-  //       } else {
-  //         this.galleryStructure = ItemsHelper.convertToGalleryItems(
-  //           this.layout,
-  //           itemConfig,
-  //           existingLayout.galleryItems,
-  //         );
-  //       }
-
-  //       if (isNew.items) {
-  //         this.loadItemsDimensionsIfNeeded();
-  //       }
-  
-  //       const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !_styles.oneRow; //FAKE SSR
-  //       this.createCssLayoutsIfNeeded(layoutParams, isApproximateWidth, isNew);
-  
-  //       const allowPreloading =
-  //         isEditMode() ||
-  //         state.gotFirstScrollEvent ||
-  //         state.showMoreClickedAtLeastOnce;
-  
-  //       this.scrollCss = this.getScrollCssIfNeeded({
-  //         domId: this.props.domId,
-  //         items: this.galleryStructure.galleryItems,
-  //         styleParams: _styles,
-  //         allowPreloading,
-  //       });
-  //     }
-
-  
-  //     if (isNew.any) {
-  //       this.galleryBlueprint = {items: finalItems, styleParams: finalStyles, container: finalContainer, galleryStructure: finalStructure}
-
-  //     }
-  //   }
-  
-  
-  // createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
-  //   this.layoutCss = createCssLayouts({
-  //     layoutParams,
-  //     isApproximateWidth,
-  //     isMobile: utils.isMobile(),
-  //     domId: this.props.domId,
-  //     galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
-  //   });
-  // }
-
-
-  // getGalleryBlueprint() {
-  //   return this.galleryBlueprint;
-  // }
-
-
-
-
+  updateLastParams(params) {
+    this.lastParams = params;
+  }
 }
