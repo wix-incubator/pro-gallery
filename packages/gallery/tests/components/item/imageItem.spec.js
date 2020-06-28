@@ -10,6 +10,10 @@ describe('Image Item', () => {
     galleryDriver = new GalleryDriver();
     sampleItem = testImages[0];
     imageItemsProps = galleryDriver.props.itemView(sampleItem);
+    Object.assign(imageItemsProps, {
+      styleParams: { cubeType: 'fit', cubeImages: true },
+      imageDimensions: { borderRadius: null},
+    });
   });
 
   it('should init', () => {
@@ -18,9 +22,6 @@ describe('Image Item', () => {
   });
 
   it('should set grid-fit if cubeType is fit', () => {
-    Object.assign(imageItemsProps, {
-      styleParams: { cubeType: 'fit', cubeImages: true },
-    });
     galleryDriver.mount(ImageItem, imageItemsProps);
     expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be
       .true;

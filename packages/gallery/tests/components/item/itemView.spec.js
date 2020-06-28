@@ -33,17 +33,12 @@ describe('Item View', () => {
     it('should set states when called', () => {
       const spy = sinon.spy(ItemView.prototype, 'setItemLoaded');
       driver.mount(ItemView, sampleItemViewProps);
-      driver.set.state({
-        failed: true,
-        loaded: false,
-      });
       driver.get.instance().setItemLoaded();
-      expect(driver.get.state('failed')).to.be.false;
-      expect(driver.get.state('loaded')).to.be.true;
       expect(spy.called).to.be.true;
       spy.restore();
     });
   });
+  
   describe('toggleShare', () => {
     it('should not be fired if hovering over icons', () => {
       driver.mount(ItemView, sampleItemViewProps);
