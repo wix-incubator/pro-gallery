@@ -38,10 +38,6 @@ class ItemView extends GalleryComponent {
     this.init();
 
     this.state = {
-      failed: false,
-      loaded: false,
-      displayed: false,
-      retries: 0,
       showShare: false,
       isCurrentHover: false,
       itemWasHovered: false
@@ -60,7 +56,6 @@ class ItemView extends GalleryComponent {
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
-    this.setItemError = this.setItemError.bind(this);
     this.isVerticalContainer = this.isVerticalContainer.bind(this);
     this.isHighlight = this.isHighlight.bind(this);
     this.toggleShare = this.toggleShare.bind(this);
@@ -87,22 +82,8 @@ class ItemView extends GalleryComponent {
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
-  setItemError() {
-    this.setState({
-      retries: this.state.retries + 1,
-      failed: this.state.retries >= 3,
-    });
-  }
-
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
-    this.setState({
-      failed: false,
-      loaded: true,
-    });
-    this.itemLoadedTimeout = setTimeout(() => {
-      this.setState(() => ({ displayed: true }));
-    }, 1500);
   }
 
   isIconTag(tagName) {
@@ -152,8 +133,6 @@ class ItemView extends GalleryComponent {
   handleGalleryItemAction(e) {
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props, e);
   }
-
-
 
   onItemWrapperClick(e) {
     const clickTarget = 'item-media';
@@ -520,19 +499,17 @@ class ItemView extends GalleryComponent {
       'settings',
       'lazyLoad',
     ]);
+
     return (
       <ImageItem
         {...props}
         key="imageItem"
-        loaded={this.state.loaded}
-        displayed={this.state.displayed}
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
           setItemLoaded: this.setItemLoaded,
-          setItemError: this.setItemError,
         }}
       />
     );
@@ -547,20 +524,16 @@ class ItemView extends GalleryComponent {
         hover={itemHover}
         imageDimensions={imageDimensions}
         hasLink={this.itemHasLink()}
-        loadingStatus={{
-          failed: this.state.failed,
-          loaded: this.state.loaded,
-        }}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
-          setItemError: this.setItemError,
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
       />
     );
   }
+
   getVideoItemPlaceholder(imageDimensions, itemHover) {
     const props = utils.pick(this.props, [
       'alt',
@@ -576,20 +549,13 @@ class ItemView extends GalleryComponent {
     return (
       <VideoItemPlaceholder
         {...props}
-        loadingStatus={{
-          failed: this.state.failed,
-          loaded: this.state.loaded,
-        }}
         key="videoPlaceholder"
-        loaded={this.state.loaded}
-        displayed={this.state.displayed}
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
           setItemLoaded: this.setItemLoaded,
-          setItemError: this.setItemError,
         }}
         id={this.props.idx}
         hover={itemHover}

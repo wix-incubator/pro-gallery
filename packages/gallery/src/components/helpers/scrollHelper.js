@@ -230,101 +230,6 @@ function isWithinPaddingHorizontally({
   return res.before < padding && res.after < padding;
 }
 
-function setVerticalVisibility({
-  target,
-  props,
-  screenSize,
-  padding,
-  callback,
-}) {
-  const { offset, style } = props;
-  const bottom = offset.top + style.height;
-  const { scrollBase } = props.container;
-  callback({
-    playVertically: isWithinPaddingVertically({
-      target,
-      scrollBase,
-      top: offset.top,
-      bottom,
-      screenHeight: screenSize.height,
-      padding: padding.playVertical,
-    }),
-    visibleVertically: isWithinPaddingVertically({
-      target,
-      scrollBase,
-      top: offset.top,
-      bottom,
-      screenHeight: screenSize.height,
-      padding: padding.visibleVertical,
-    }),
-    renderedVertically: isWithinPaddingVertically({
-      target,
-      scrollBase,
-      top: offset.top,
-      bottom,
-      screenHeight: screenSize.height,
-      padding: padding.renderedVertical,
-    }),
-  });
-}
-
-function setHorizontalVisibility({
-  target,
-  props,
-  screenSize,
-  padding,
-  callback,
-}) {
-  const { offset, style } = props;
-  const right = offset.left + style.width;
-  callback({
-    playHorizontally: isWithinPaddingHorizontally({
-      target,
-      left: offset.left,
-      right,
-      screenWidth: screenSize.width,
-      padding: padding.playHorizontal,
-    }),
-    visibleHorizontally: isWithinPaddingHorizontally({
-      target,
-      left: offset.left,
-      right,
-      screenWidth: screenSize.width,
-      padding: padding.visibleHorizontal,
-    }),
-    renderedHorizontally: isWithinPaddingHorizontally({
-      target,
-      left: offset.left,
-      right,
-      screenWidth: screenSize.width,
-      padding: padding.renderedHorizontal,
-    }),
-  });
-}
-
-function setInitialVisibility({ props, screenSize, padding, callback }) {
-  const { scrollBase } = props.container;
-  setVerticalVisibility({
-    target: {
-      scrollY: props.scroll.scrollY || 0,
-      offsetTop: scrollBase || 0,
-    },
-    props,
-    screenSize,
-    padding,
-    callback,
-  });
-  setHorizontalVisibility({
-    target: {
-      scrollLeft: props.scroll.scrollLeft || 0,
-    },
-    props,
-    screenSize,
-    padding,
-    callback,
-  });
-}
-
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = to - from;
   
@@ -364,7 +269,4 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
 export {
   isWithinPaddingHorizontally,
   isWithinPaddingVertically,
-  setHorizontalVisibility,
-  setVerticalVisibility,
-  setInitialVisibility,
 };
