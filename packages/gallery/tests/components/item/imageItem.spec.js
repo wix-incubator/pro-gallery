@@ -10,6 +10,10 @@ describe('Image Item', () => {
     galleryDriver = new GalleryDriver();
     sampleItem = testImages[0];
     imageItemsProps = galleryDriver.props.itemView(sampleItem);
+    Object.assign(imageItemsProps, {
+      styleParams: { cubeType: 'fit', cubeImages: true },
+      imageDimensions: { borderRadius: null},
+    });
   });
 
   it('should init', () => {
@@ -18,9 +22,6 @@ describe('Image Item', () => {
   });
 
   it('should set grid-fit if cubeType is fit', () => {
-    Object.assign(imageItemsProps, {
-      styleParams: { cubeType: 'fit', cubeImages: true },
-    });
     galleryDriver.mount(ImageItem, imageItemsProps);
     expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be
       .true;
@@ -41,16 +42,6 @@ describe('Image Item', () => {
   //   style = galleryDriver.find.hook('image-item').get(0).props.style;
   //   expect(style.backgroundImage).to.equal(undefined);
   //   stub.restore();
-  // });
-
-  // it('should call setItemError on error event if visible is true', () => {
-  //   Object.assign(imageItemsProps, {visible: true});
-  //   const spy = sinon.spy();
-  //   Object.assign(imageItemsProps, {actions: {setItemError: spy}});
-  //   galleryDriver.mount(ImageItem, imageItemsProps);
-  //   const errEvent = new Event('err');
-  //   galleryDriver.find.selector('img').simulate('error', errEvent);
-  //   expect(spy.called).to.be.true;
   // });
 
   // it('put alternate text for the image if isThumbnail is false', () => {
