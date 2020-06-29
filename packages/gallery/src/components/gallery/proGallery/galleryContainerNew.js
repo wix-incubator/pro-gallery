@@ -114,7 +114,6 @@ export class GalleryContainer extends React.Component {
     }
     let visibleItems = items;
     try {
-      debugger;
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const isInfinite = this.isVerticalGallery() && this.containerInfiniteGrowthDirection() === 'vertical';
@@ -124,10 +123,7 @@ export class GalleryContainer extends React.Component {
       if (maxItemTop < 0) { //gallery is below the fold
         visibleItems = [];
       } else if (this.isVerticalGallery()) {
-        visibleItems = items.filter(item => {
-          console.log('comparing: ', item.offset.top, maxItemTop);
-          return item.offset.top < maxItemTop
-        });
+        visibleItems = items.filter(item => item.offset.top < maxItemTop);
       } else {
         visibleItems = items.filter(item => item.left < galleryWidth);
       }
