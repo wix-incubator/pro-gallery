@@ -443,17 +443,21 @@ export class GalleryContainer extends React.Component {
       sharpParams: this.galleryBlueprint.styles.sharpParams,
       resizeMediaUrl: this.props.resizeMediaUrl,
     });
-    this.scrollCss = this.galleryBlueprint.scrollCss;
     this.layoutCss = this.galleryBlueprint.layoutCss;
+    
+    // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
+    //this.scrollCss = this.galleryBlueprint.scrollCss;
     const allowPreloading =
     isEditMode();
-    
+
     this.scrollCss = this.getScrollCssIfNeeded({
       domId: this.props.domId,
       items: this.galleryStructure.galleryItems,
       styleParams: this.galleryBlueprint.styles,
       allowPreloading,
     });
+
+
       return this.galleryBlueprint;
   }
 

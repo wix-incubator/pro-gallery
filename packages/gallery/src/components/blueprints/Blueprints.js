@@ -10,6 +10,7 @@ import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import { isEditMode , isSEOMode} from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
+import { processLayouts } from '../helpers/layoutHelper'
 
 
 export default class Blueprints {
@@ -297,7 +298,9 @@ export default class Blueprints {
     let finalStyles = this.existingBlueprint.styles;
     if (stylesHaveChanged(styles,oldRawStyles)) {
 
-      finalStyles = addPresetStyles(styles);
+      finalStyles = processLayouts(addPresetStyles(styles));
+            // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+
       const selectedLayoutVars = [
         'galleryLayout',
         'galleryThumbnailsAlignment',
@@ -314,7 +317,6 @@ export default class Blueprints {
       this.thingsChanged = true;
 
       
-      // TODO process styles !!!
 
     }  
 

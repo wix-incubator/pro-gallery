@@ -691,4 +691,4 @@ function isSlideshowFont(styles) {
   return false;
 }
 
-export { addLayoutStyles };
+export { addLayoutStyles , processLayouts};
