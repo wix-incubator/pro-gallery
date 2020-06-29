@@ -1,14 +1,14 @@
 import { addPresetStyles } from '../gallery/presets/presets';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';
-// import utils from '../../common/utils';
+import utils from '../../common/utils';
 import checkNewGalleryProps from '../helpers/isNew';
 import { ItemsHelper } from '../helpers/itemsHelper';
 // import window from '../../../common/window/windowWrapper';
 import { Layouter } from 'pro-layouts';
-// import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
-// import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
-// import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
+import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
+import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
+import { isEditMode , isSEOMode} from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 
 
@@ -74,14 +74,18 @@ export default class Blueprints {
       styles: newRawStyles
     });
     this.thingsChanged = false;
-    const formatedItems = this.formatItemsIfNeeded(newRawItems)
-    const formatedStyles = this.formatStylesIfNeeded(newRawStyles)
-    const formatedContainer = this.formatContainerIfNeeded(newRawDimensions);
+    const formattedItems = this.formatItemsIfNeeded(newRawItems)
+    const formattedStyles = this.formatStylesIfNeeded(newRawStyles)
+    const formattedContainer = this.formatContainerIfNeeded(newRawDimensions);
     this.thingsChanged && this.updateLastParams({dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId});
-    const structure = this.createStructureIfNeeded({formatedContainer, formatedItems, formatedStyles});
+    const structure = this.createStructureIfNeeded({formattedContainer, formattedItems, formattedStyles});
 
 
-    return this.existingBlueprint = {items: formatedItems, styles: formatedStyles, container: formatedContainer, structure};
+    const layoutCss = this.createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId})
+    // const scrollCss = this.getScrollCssIfNeeded({
+    //   domId, formattedStyles, structure
+    // });
+    return this.existingBlueprint = {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, layoutCss,};// scrollCss};
 
   }
 
@@ -96,7 +100,7 @@ export default class Blueprints {
     dimensions =  this.fetchDimensionsIfNeeded(dimensions);
     items =  this.fetchItemsIfNeeded(items);
     styles =  this.fetchStylesIfNeeded(styles); //can be async... TODO
-    
+
     return {dimensions, items, styles, domId} 
   }
   
@@ -232,10 +236,10 @@ export default class Blueprints {
 
 
     const oldRawItems = this.lastParams.items || [];
-    let formatedItems = this.existingBlueprint.items;
+    let formattedItems = this.existingBlueprint.items;
     if (itemsWereAdded(items, oldRawItems))
     {
-      formatedItems = oldRawItems.concat(
+      formattedItems = oldRawItems.concat(
       items.slice(oldRawItems.length).map(item => {
         return ItemsHelper.convertDtoToLayoutItem(item);
       }),
@@ -243,13 +247,13 @@ export default class Blueprints {
       this.gettingMoreItems = false; //probably finished getting more items       //TODO - what is this and how we keep it alive if needed?
       this.thingsChanged = true;
     } else if (itemsHaveChanged(items, oldRawItems)) {
-      formatedItems = items.map(item =>
+      formattedItems = items.map(item =>
       Object.assign(ItemsHelper.convertDtoToLayoutItem(item)),
       );
       this.gettingMoreItems = false; //probably finished getting more items
       this.thingsChanged = true;
     }
-    return formatedItems;
+    return formattedItems;
   }
 
   formatStylesIfNeeded(styles) {
@@ -309,7 +313,7 @@ export default class Blueprints {
       finalStyles.layoutsVersion = 2;
       this.thingsChanged = true;
 
-  
+      
       // TODO process styles !!!
 
     }  
@@ -374,15 +378,14 @@ export default class Blueprints {
 
 
 
-  createStructureIfNeeded({formatedContainer, formatedStyles, formatedItems}) {
+  createStructureIfNeeded({formattedContainer, formattedStyles, formattedItems}) {
 
     if (this.thingsChanged) {
       const layoutParams = {
-        items: formatedItems,
-        container: formatedContainer,
-        styleParams: formatedStyles,
-        gotScrollEvent: true,
-        options: {
+        items: formattedItems,
+        container: formattedContainer,
+        styleParams: formattedStyles,
+          options: {
           showAllItems: true,
           skipVisibilitiesCalc: true,
           useLayoutStore: false,
@@ -404,6 +407,51 @@ export default class Blueprints {
     }
   }
 
+  createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId}) {
+
+    if (this.thingsChanged) {
+      const layoutParams = {
+        items: formattedItems,
+        container: formattedContainer,
+        styleParams: formattedStyles,
+          options: {
+          showAllItems: true,
+          skipVisibilitiesCalc: true,
+          useLayoutStore: false,
+        },
+      };
+      const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !formattedStyles.oneRow; //FAKE SSR - TODO ask guy about this
+      return createCssLayouts({
+        layoutParams,
+        isApproximateWidth,
+        isMobile: utils.isMobile(),
+        domId: domId,
+        galleryItems: isApproximateWidth? null : structure.items,
+      });
+    } else {
+      return this.existingBlueprint.layoutCss;
+    }
+  }
+
+  getScrollCssIfNeeded({ domId, formattedStyles, structure}) {
+    if (this.thingsChanged) {
+    const shouldUseScrollCss = !isSEOMode();
+    const allowPreloading = isEditMode();
+    let scrollCss = [];
+    if (shouldUseScrollCss) {
+      scrollCss = cssScrollHelper.calcScrollCss({
+        items: structure.items,
+        isUnknownWidth: dimensionsHelper.isUnknownWidth(),
+        styleParams: formattedStyles,
+        domId,
+        allowPreloading,
+      });
+    }
+    return (scrollCss && scrollCss.length > 0) ? scrollCss : this.existingBlueprint.scrollCss;
+  } else {
+    return this.existingBlueprint.scrollCss;
+  }
+  }
 
   updateLastParams(params) {
     this.lastParams = params;

@@ -366,7 +366,6 @@ export class GalleryContainer extends React.Component {
       items: this.items,
       container,
       styleParams: styles,
-      gotScrollEvent: true,
       options: {
         showAllItems: true,
         skipVisibilitiesCalc: true,
@@ -426,6 +425,7 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
+
     this.layoutCss = createCssLayouts({
       layoutParams,
       isApproximateWidth,
@@ -436,44 +436,23 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryExpensively(
-    { items, styles, container, watermarkData, itemsDimensions },
-    curState,
-  ) {
-    this.galleryBlueprint = this.blueprints.createBlueprint({ items, styles, container, watermarkData, itemsDimensions })
+    { items, styles, container, watermarkData, itemsDimensions }) {
+    this.galleryBlueprint = this.blueprints.createBlueprint({ items, styles, container, watermarkData, itemsDimensions, domId: this.props.domId })
     this.galleryStructure = ItemsHelper.convertToGalleryItems(this.galleryBlueprint.structure, {
       thumbnailSize: this.galleryBlueprint.styles.thumbnailSize,
       sharpParams: this.galleryBlueprint.styles.sharpParams,
       resizeMediaUrl: this.props.resizeMediaUrl,
     });
+    this.scrollCss = this.galleryBlueprint.scrollCss;
+    this.layoutCss = this.galleryBlueprint.layoutCss;
     const allowPreloading =
     isEditMode();
-
+    
     this.scrollCss = this.getScrollCssIfNeeded({
       domId: this.props.domId,
       items: this.galleryStructure.galleryItems,
       styleParams: this.galleryBlueprint.styles,
       allowPreloading,
-    });
-    const layoutParams = {
-      items: this.galleryBlueprint.items,
-      container: this.galleryBlueprint.container,
-      styleParams: this.galleryBlueprint.styles,
-      gotScrollEvent: true,
-      options: {
-        showAllItems: true,
-        skipVisibilitiesCalc: true,
-        useLayoutStore: false,
-        createLayoutOnInit: false,
-      },
-    };
-    this.createCssLayoutsIfNeeded(layoutParams);
-    this.videoScrollHelper.updateGalleryStructure({
-      galleryStructure: this.galleryStructure,
-      scrollBase: this.galleryBlueprint.container.scrollBase,
-      videoPlay: this.galleryBlueprint.styles.videoPlay,
-      itemClick: this.galleryBlueprint.styles.itemClick,
-      oneRow: this.galleryBlueprint.styles.oneRow,
-      cb: this.setPlayingIdxState,
     });
       return this.galleryBlueprint;
   }
@@ -811,7 +790,6 @@ export class GalleryContainer extends React.Component {
           container={this.galleryBlueprint.container}
           watermark={this.props.watermarkData}
           settings={this.props.settings}
-          gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
           lazyLoad={this.props.lazyLoad}
           displayShowMore={displayShowMore}

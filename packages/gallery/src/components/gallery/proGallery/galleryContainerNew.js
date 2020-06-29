@@ -389,7 +389,6 @@ export class GalleryContainer extends React.Component {
       items: this.items,
       container,
       styleParams: styles,
-      gotScrollEvent: true,
       options: {
         showAllItems: true,
         skipVisibilitiesCalc: true,
@@ -528,7 +527,6 @@ export class GalleryContainer extends React.Component {
         items: this.items,
         container: _container,
         styleParams: _styles,
-        gotScrollEvent: true,
         options: {
           showAllItems: true,
           skipVisibilitiesCalc: true,
@@ -945,7 +943,6 @@ export class GalleryContainer extends React.Component {
           container={this.state.container}
           watermark={this.props.watermarkData}
           settings={this.props.settings}
-          gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
           lazyLoad={this.props.lazyLoad}
           displayShowMore={displayShowMore}
