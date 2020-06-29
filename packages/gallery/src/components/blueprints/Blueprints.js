@@ -2,7 +2,6 @@ import { addPresetStyles } from '../gallery/presets/presets';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';
 import utils from '../../common/utils';
-import checkNewGalleryProps from '../helpers/isNew';
 import { ItemsHelper } from '../helpers/itemsHelper';
 // import window from '../../../common/window/windowWrapper';
 import { Layouter } from 'pro-layouts';
@@ -62,7 +61,7 @@ export default class Blueprints {
       }
     }
 
-   createBlueprint(params) {
+  createBlueprint(params) {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
@@ -78,14 +77,15 @@ export default class Blueprints {
     const formattedItems = this.formatItemsIfNeeded(newRawItems)
     const formattedStyles = this.formatStylesIfNeeded(newRawStyles)
     const formattedContainer = this.formatContainerIfNeeded(newRawDimensions);
-    this.thingsChanged && this.updateLastParams({dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId});
+
     const structure = this.createStructureIfNeeded({formattedContainer, formattedItems, formattedStyles});
-
-
+    
+    
     const layoutCss = this.createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId})
     // const scrollCss = this.getScrollCssIfNeeded({
-    //   domId, formattedStyles, structure
-    // });
+      //   domId, formattedStyles, structure
+      // });
+    this.updateLastParamsIfNeeded({dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId});
     return this.existingBlueprint = {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, layoutCss,};// scrollCss};
 
   }
@@ -138,6 +138,8 @@ export default class Blueprints {
     if (shouldFetchItems(items)) {
       //items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
     }
+
+    // TODO - this.loadItemsDimensionsIfNeeded();
 
     return items;
   }
@@ -298,8 +300,7 @@ export default class Blueprints {
     let finalStyles = this.existingBlueprint.styles;
     if (stylesHaveChanged(styles,oldRawStyles)) {
 
-      finalStyles = processLayouts(addPresetStyles(styles));
-            // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+      finalStyles = processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 
       const selectedLayoutVars = [
         'galleryLayout',
@@ -437,25 +438,27 @@ export default class Blueprints {
 
   getScrollCssIfNeeded({ domId, formattedStyles, structure}) {
     if (this.thingsChanged) {
-    const shouldUseScrollCss = !isSEOMode();
-    const allowPreloading = isEditMode();
-    let scrollCss = [];
-    if (shouldUseScrollCss) {
-      scrollCss = cssScrollHelper.calcScrollCss({
-        items: structure.items,
-        isUnknownWidth: dimensionsHelper.isUnknownWidth(),
-        styleParams: formattedStyles,
-        domId,
-        allowPreloading,
-      });
+      const shouldUseScrollCss = !isSEOMode();
+      const allowPreloading = isEditMode();
+      let scrollCss = [];
+      if (shouldUseScrollCss) {
+        scrollCss = cssScrollHelper.calcScrollCss({
+          items: structure.items,
+          isUnknownWidth: dimensionsHelper.isUnknownWidth(),
+          styleParams: formattedStyles,
+          domId,
+          allowPreloading,
+        });
+      }
+      return (scrollCss && scrollCss.length > 0) ? scrollCss : this.existingBlueprint.scrollCss;
+    } else {
+      return this.existingBlueprint.scrollCss;
     }
-    return (scrollCss && scrollCss.length > 0) ? scrollCss : this.existingBlueprint.scrollCss;
-  } else {
-    return this.existingBlueprint.scrollCss;
-  }
   }
 
-  updateLastParams(params) {
-    this.lastParams = params;
+  updateLastParamsIfNeeded(params) {
+    if(this.thingsChanged){
+      this.lastParams = params;
+    }
   }
 }

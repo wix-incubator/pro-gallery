@@ -49,9 +49,9 @@ export class GalleryContainer extends React.Component {
     };
 
     this.state = initialState;
-
-    this.items = [];
-    this.itemsDimensions = {};
+    this.galleryBlueprint = {};
+    this.galleryBlueprint.items = [];
+    // this.itemsDimensions = {};
     this.preloadedItems = {};
     this.layoutCss = [];
     const videoScrollHelperConfig = {
@@ -71,25 +71,25 @@ export class GalleryContainer extends React.Component {
         this.galleryInitialStateJson = null;
       }
     } else {
-      try {
-        if (!utils.shouldDebug('no_hydrate')) {
-          const state = JSON.parse(
-            window.document.querySelector(
-              `#pro-gallery-${props.domId} #ssr-state-to-hydrate`,
-            ).innerHTML,
-          );
-          this.reCreateGalleryFromState({
-            items: props.items,
-            styles: state.styles,
-            container: state.container,
-            gotFirstScrollEvent: initialState.gotFirstScrollEvent,
-          });
-          this.initialGalleryState = state;
-        } else {
-          this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
-        }
-      } catch (e) {
-        //hydrate phase did not happen - do it all over again
+      // try {
+      //   // if (!utils.shouldDebug('no_hydrate')) {
+      //   //   const state = JSON.parse(
+      //   //     window.document.querySelector(
+      //   //       `#pro-gallery-${props.domId} #ssr-state-to-hydrate`,
+      //   //     ).innerHTML,
+      //   //   );
+      //   //   this.reCreateGalleryFromState({
+      //   //     items: props.items,
+      //   //     styles: state.styles,
+      //   //     container: state.container,
+      //   //     gotFirstScrollEvent: initialState.gotFirstScrollEvent,
+      //   //   });
+      //   //   this.initialGalleryState = state;
+      //   // } else {
+      //     this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
+      //   // }
+      // } catch (e) {
+      //   //hydrate phase did not happen - do it all over again
         this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
@@ -99,9 +99,8 @@ export class GalleryContainer extends React.Component {
         } catch (_e) {
           console.warn(_e);
         }
-      }
+      
     }
-
     this.state = {
       ...initialState,
       ...this.initialGalleryState,
@@ -109,7 +108,7 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.loadItemsDimensionsIfNeeded();
+    // this.loadItemsDimensionsIfNeeded();
     this.scrollToItem(this.props.currentIdx, false, true, 0);
     this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
@@ -191,124 +190,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  loadItemsDimensionsIfNeeded() {
-    if (utils.isSSR()) {
-      return;
-    }
-    if (
-      !(
-        this.galleryStructure &&
-        this.galleryStructure.galleryItems &&
-        this.galleryStructure.galleryItems.length > 0
-      )
-    ) {
-      return;
-    }
-
-    const { galleryItems } = this.galleryStructure;
-
-    const itemsWithoutDimensions = galleryItems.filter(item => {
-      try {
-        return item.isVisible && item.isDimensionless && !item.isPreloaded;
-      } catch (e) {
-        return false;
-      }
-    });
-
-    if (!itemsWithoutDimensions.length) {
-      return;
-    }
-
-    const preloadItem = (item, onload) => {
-      if (!item || !item.itemId || !item.isGalleryItem) {
-        return;
-      }
-      try {
-        const id = item.itemId;
-        if (this.itemsDimensions[id]) {
-          return; //already measured
-        }
-        if (typeof this.preloadedItems[id] !== 'undefined') {
-          return;
-        }
-        this.preloadedItems[id] = new Image();
-        if (utils.isVerbose()) {
-          console.log('Preloading item #' + item);
-        }
-
-        if (typeof item.preload_url === 'string') {
-          this.preloadedItems[id].src = item.preload_url;
-        } else {
-          this.preloadedItems[id].src = item.createUrl(
-            URL_SIZES.PRELOAD,
-            URL_TYPES.LOW_RES,
-          );
-        }
-
-        if (typeof onload === 'function') {
-          this.preloadedItems[id].onload = e => {
-            onload(e);
-          };
-        }
-
-        return this.preloadedItems[id];
-      } catch (e) {
-        console.error('Could not preload item', item, e);
-        return;
-      }
-    };
-
-    const debouncedReCreateGallery = utils.debounce(() => {
-      const { items, styles, container, watermarkData } = this.props;
-      const params = {
-        items,
-        styles,
-        container,
-        watermarkData,
-        itemsDimensions: this.itemsDimensions,
-      };
-
-      const newState = this.reCreateGalleryExpensively(params, this.state);
-      if (Object.keys(newState).length > 0) {
-        this.setState(newState, () => {
-          this.handleNewGalleryStructure();
-        });
-      }
-    }, 500);
-
-    itemsWithoutDimensions.forEach((item, idx) => {
-      item.isPreloaded = true;
-      preloadItem(item, e => {
-        try {
-          if (utils.isVerbose()) {
-            console.log('item loaded event', idx, e);
-          }
-          const ele = e.srcElement;
-          const _item = this.items.find(itm => itm.itemId === item.itemId);
-          if (_item) {
-            const itemDim = {
-              width: ele.width,
-              height: ele.height,
-              measured: true,
-            };
-
-            Object.assign(_item, itemDim);
-            if (typeof _item.metaData === 'object') {
-              Object.assign(_item.metaData, itemDim);
-            }
-            this.itemsDimensions[_item.itemId] = itemDim;
-
-            //rebuild the gallery after every dimension update
-            // if (Object.keys(this.itemsDimensions).length > 0) {
-            debouncedReCreateGallery();
-            // }
-          }
-        } catch (_e) {
-          console.error('Could not calc element dimensions', _e);
-        }
-      });
-    });
-  }
 
   handleNavigation(isInDisplay) {
     if (isInDisplay) {
@@ -320,16 +201,15 @@ export class GalleryContainer extends React.Component {
 
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
-    return;
     const {
       container,
       needToHandleShowMoreClick,
       initialGalleryHeight,
     } = this.state;
-    const styleParams = this.state.styles;
-    const numOfItems = this.items.length;
-    const layoutHeight = this.layout.height;
-    const layoutItems = this.layout.items;
+    const styleParams = this.galleryBlueprint.styles;
+    const numOfItems = this.galleryBlueprint.items.length;
+    const layoutHeight = this.galleryBlueprint.structure.height;
+    const layoutItems = this.galleryBlueprint.structure.items;
     const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
     let updatedHeight = false;
     const needToUpdateHeightNotInfinite =
@@ -351,6 +231,7 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
+    console.log('handleNewGalleryStructure', onGalleryChangeData);
     this.eventsListener(EVENTS.GALLERY_CHANGE, onGalleryChangeData);
 
     if (needToHandleShowMoreClick) {
@@ -358,45 +239,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
-
-    //update this.items
-    this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));
-    const layoutParams = {
-      items: this.items,
-      container,
-      styleParams: styles,
-      options: {
-        showAllItems: true,
-        skipVisibilitiesCalc: true,
-        useLayoutStore: false,
-        createLayoutOnInit: false,
-      },
-    };
-
-    this.layouter = new Layouter(layoutParams);
-    this.layout = this.layouter.createLayout(layoutParams);
-    this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
-      thumbnailSize: styles.thumbnailSize,
-      sharpParams: styles.sharpParams,
-      resizeMediaUrl: this.props.resizeMediaUrl,
-    });
-    this.videoScrollHelper.updateGalleryStructure({
-      galleryStructure: this.galleryStructure,
-      scrollBase: container.scrollBase,
-      videoPlay: styles.videoPlay,
-      itemClick: styles.itemClick,
-      oneRow: styles.oneRow,
-    });
-    const allowPreloading = isEditMode() || gotFirstScrollEvent;
-    this.scrollCss = this.getScrollCssIfNeeded({
-      domId: this.props.domId,
-      items: this.galleryStructure.galleryItems,
-      styleParams: styles,
-      allowPreloading,
-    });
-    this.createCssLayoutsIfNeeded(layoutParams);
-  }
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
@@ -550,7 +392,7 @@ export class GalleryContainer extends React.Component {
   containerInfiniteGrowthDirection(styles = false) {
     const _styles = styles || this.galleryBlueprint.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
-    const { enableInfiniteScroll } = this.props.styles;
+    const { enableInfiniteScroll } = this.props.styles; //TODO - props or "raw" styles
     const { showMoreClickedAtLeastOnce } = this.state;
     const { oneRow, loadMoreAmount } = _styles;
     if (oneRow) {
@@ -660,8 +502,8 @@ export class GalleryContainer extends React.Component {
   duplicateGalleryItems() {
     const galleryState = this.reCreateGalleryExpensively({
       ...this.props,
-      items: this.items.concat(
-        ...this.items.slice(0, this.props.totalItemsCount),
+      items: this.galleryBlueprint.items.concat(
+        ...this.galleryBlueprint.items.slice(0, this.props.totalItemsCount),
       ),
     });
     if (Object.keys(galleryState).length > 0) {
@@ -751,7 +593,7 @@ export class GalleryContainer extends React.Component {
       console.log(
         'PROGALLERY [RENDER] - GalleryContainer',
         this.galleryBlueprint.container.scrollBase,
-        { state: this.galleryBlueprint, items: this.items },
+        { state: this.galleryBlueprint, items: this.galleryBlueprint.items},
       );
     }
 
@@ -785,7 +627,7 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
-          items={this.items}
+          items={this.galleryBlueprint.items}
           getVisibleItems={this.getVisibleItems}
 
           itemsLoveData={this.props.itemsLoveData}
