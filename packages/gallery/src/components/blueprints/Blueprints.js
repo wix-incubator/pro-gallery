@@ -12,12 +12,13 @@ import EVENTS from '../../common/constants/events';
 import { processLayouts } from '../helpers/layoutHelper'
 
 
-export default class Blueprints {
-  constructor(config){
-    this.eventsCB = config && config.eventsCB;
-    this.lastParams = config && config.lastParams || {};
-    this.existingBlueprint = config && config.existingBlueprint || {};
-  }
+class Blueprints {
+
+    init(config) {
+      this.eventsCB = config && config.eventsCB;
+      this.lastParams = config && config.lastParams || {};
+      this.existingBlueprint = config && config.existingBlueprint || {};
+    }
 
     handleNewGalleryStructure() { // TODO rework completely
       //should be called AFTER new state is set
@@ -68,20 +69,22 @@ export default class Blueprints {
     const {dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId} =  this.completeBuildingBlocks(params)
     //getItems,styles and dimesions if not supplied in params;
 
-    dimensionsHelper.updateParams({ // styles process will need an updated dimensionsHelper
-      domId: domId,
-      container: newRawDimensions, //this is a wrong format untill we have it with all the scrollbase etc.... must work on uniting the dim helpers..
-      styles: newRawStyles
-    });
-    this.thingsChanged = false;
-    const formattedItems = this.formatItemsIfNeeded(newRawItems)
-    const formattedStyles = this.formatStylesIfNeeded(newRawStyles)
-    const formattedContainer = this.formatContainerIfNeeded(newRawDimensions);
+    //remove all the gallerySize functions
 
-    const structure = this.createStructureIfNeeded({formattedContainer, formattedItems, formattedStyles});
+    // dimensionsHelper.updateParams({ // styles process will need an updated dimensionsHelper
+    //   domId: domId,
+    //   container: newRawDimensions, //this is a wrong format untill we have it with all the scrollbase etc.... must work on uniting the dim helpers..
+    //   styles: newRawStyles
+    // });
+    const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newRawItems)
+    const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newRawStyles)
+    const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newRawDimensions);
+
+    const changed = itemsChanged || stylesChanged || containerChanged;
+    const structure = this.createStructureIfNeeded({formattedContainer, formattedItems, formattedStyles}, changed);
     
     
-    const layoutCss = this.createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId})
+    const layoutCss = this.createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId}, changed)
     // const scrollCss = this.getScrollCssIfNeeded({
       //   domId, formattedStyles, structure
       // });
@@ -239,6 +242,7 @@ export default class Blueprints {
 
 
     const oldRawItems = this.lastParams.items || [];
+    let changed = false;
     let formattedItems = this.existingBlueprint.items;
     if (itemsWereAdded(items, oldRawItems))
     {
@@ -248,15 +252,15 @@ export default class Blueprints {
       }),
       );
       this.gettingMoreItems = false; //probably finished getting more items       //TODO - what is this and how we keep it alive if needed?
-      this.thingsChanged = true;
+      changed = true;
     } else if (itemsHaveChanged(items, oldRawItems)) {
       formattedItems = items.map(item =>
       Object.assign(ItemsHelper.convertDtoToLayoutItem(item)),
       );
       this.gettingMoreItems = false; //probably finished getting more items
-      this.thingsChanged = true;
+      changed = true;
     }
-    return formattedItems;
+    return {formattedItems, changed};
   }
 
   formatStylesIfNeeded(styles) {
@@ -297,10 +301,11 @@ export default class Blueprints {
 
 
     const oldRawStyles = this.lastParams.styles || {};
-    let finalStyles = this.existingBlueprint.styles;
+    let changed;
+    let formattedStyles = this.existingBlueprint.styles;
     if (stylesHaveChanged(styles,oldRawStyles)) {
 
-      finalStyles = processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+      formattedStyles = processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 
       const selectedLayoutVars = [
         'galleryLayout',
@@ -311,17 +316,15 @@ export default class Blueprints {
         'scrollDirection',
         'enableInfiniteScroll',
       ];
-      finalStyles.selectedLayout = selectedLayoutVars
-      .map(key => String(finalStyles[key]))
+      formattedStyles.selectedLayout = selectedLayoutVars
+      .map(key => String(formattedStyles[key]))
       .join('|');
-      finalStyles.layoutsVersion = 2;
-      this.thingsChanged = true;
-
-      
+      formattedStyles.layoutsVersion = 2;
+      changed = true;
 
     }  
 
-    return finalStyles
+    return {formattedStyles, changed}
   }
 
   formatContainerIfNeeded(dimensions, styles) {
@@ -362,18 +365,19 @@ export default class Blueprints {
 
 
     const oldRawDimensions = this.lastParams.dimensions;
+    let changed = false;
     const oldRawStyles = this.lastParams.styles;
     dimensionsHelper.updateParams({
       styles,
       container: dimensions,
     });
     if(dimensionsHaveChanged({newRawDimensions: dimensions, oldRawDimensions, oldRawStyles})){
-      this.thingsChanged = true;
-      return Object.assign(
+      changed = true;
+      return {formattedContainer: Object.assign(
         {},
         dimensions,
         dimensionsHelper.getGalleryDimensions(),
-      );
+      ), changed};
     } else {
       return this.existingBlueprint.container
     }
@@ -381,9 +385,9 @@ export default class Blueprints {
 
 
 
-  createStructureIfNeeded({formattedContainer, formattedStyles, formattedItems}) {
+  createStructureIfNeeded({formattedContainer, formattedStyles, formattedItems}, changed) {
 
-    if (this.thingsChanged) {
+    if (changed) {
       const layoutParams = {
         items: formattedItems,
         container: formattedContainer,
@@ -410,9 +414,9 @@ export default class Blueprints {
     }
   }
 
-  createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId}) {
+  createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId}, changed) {
 
-    if (this.thingsChanged) {
+    if (changed) {
       const layoutParams = {
         items: formattedItems,
         container: formattedContainer,
@@ -436,8 +440,8 @@ export default class Blueprints {
     }
   }
 
-  getScrollCssIfNeeded({ domId, formattedStyles, structure}) {
-    if (this.thingsChanged) {
+  getScrollCssIfNeeded({ domId, formattedStyles, structure}, changed) {
+    if (changed) {
       const shouldUseScrollCss = !isSEOMode();
       const allowPreloading = isEditMode();
       let scrollCss = [];
@@ -462,3 +466,5 @@ export default class Blueprints {
     }
   }
 }
+const blueprints = new Blueprints();
+export default blueprints;

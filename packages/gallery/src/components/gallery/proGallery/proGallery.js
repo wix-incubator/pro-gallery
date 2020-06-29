@@ -6,6 +6,7 @@ import utils from '../../../common/utils';
 import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
 import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
+import { withBlueprint } from './blueprintProvider';
 
 import '../../../versionLogger';
 
@@ -43,19 +44,21 @@ export default class ProGallery extends GalleryComponent {
   }
 
   render() {
+    const ContainerWithBlueprint = withBlueprint(GalleryContainer); //FLOABN
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.props.domId}`} className="pro-gallery">
-          <GalleryContainer
-            {...this.props}
-            domId={this.props.domId}
-            items={this.props.items || []}
-            watermarkData={this.props.watermarkData}
-            settings={this.props.settings || {}}
-            offsetTop={this.props.offsetTop}
-            itemsLoveData={this.props.itemsLoveData || {}}
-            proGalleryRegionLabel={this.props.proGalleryRegionLabel || 'Gallery. you can navigate the gallery with keyboard arrow keys.'}
-          />
+
+            <ContainerWithBlueprint
+              {...this.props}
+              domId={this.props.domId}
+              items={this.props.items || []}
+              watermarkData={this.props.watermarkData}
+              settings={this.props.settings || {}}
+              offsetTop={this.props.offsetTop}
+              itemsLoveData={this.props.itemsLoveData || {}}
+              proGalleryRegionLabel={this.props.proGalleryRegionLabel || 'Gallery. you can navigate the gallery with keyboard arrow keys.'}
+            />
         </div>
       )
     );

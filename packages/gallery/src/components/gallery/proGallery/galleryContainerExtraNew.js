@@ -36,7 +36,6 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
 
-    this.blueprints = new Blueprints();
     const initialState = {
       pgScroll: 0,
       showMoreClickedAtLeastOnce: false,
@@ -279,16 +278,18 @@ export class GalleryContainer extends React.Component {
 
   reCreateGalleryExpensively(
     { items, styles, container, watermarkData, itemsDimensions }) {
-    this.galleryBlueprint = this.blueprints.createBlueprint({ items, styles, container, watermarkData, itemsDimensions, domId: this.props.domId })
-    this.galleryStructure = ItemsHelper.convertToGalleryItems(this.galleryBlueprint.structure, {
+
+      this.galleryBlueprint = {items: this.props.items, styles: this.props.styles, container: this.props.container, structure: this.props.structure, layoutCss: this.props.layoutCss}
+    // this.galleryBlueprint = this.blueprints.createBlueprint({ items, styles, container, watermarkData, itemsDimensions, domId: this.props.domId })
+    this.galleryStructure = ItemsHelper.convertToGalleryItems(this.galleryBlueprint.structure, { // TODO use same objects in the memory when the galleryItems are changed
       thumbnailSize: this.galleryBlueprint.styles.thumbnailSize,
       sharpParams: this.galleryBlueprint.styles.sharpParams,
       resizeMediaUrl: this.props.resizeMediaUrl,
     });
     this.layoutCss = this.galleryBlueprint.layoutCss;
     
-    // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
-    //this.scrollCss = this.galleryBlueprint.scrollCss;
+    // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
+    // //this.scrollCss = this.galleryBlueprint.scrollCss;
     const allowPreloading =
     isEditMode();
 
