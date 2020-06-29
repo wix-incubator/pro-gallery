@@ -1,4 +1,4 @@
-import {GALLERY_CONSTS as Consts} from 'pro-gallery';
+import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 
 export const defaultStyleParams = {
   isRTL: false,

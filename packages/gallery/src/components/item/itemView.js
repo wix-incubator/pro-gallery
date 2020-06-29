@@ -85,6 +85,8 @@ class ItemView extends GalleryComponent {
   //----------------------------------------| ACTIONS |-------------------------------------------//
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
+    this.setState({
+    });
   }
 
   isIconTag(tagName) {
