@@ -116,7 +116,6 @@ module.exports = function(envType) {
       // CSS
       {
         test: /\.s?css$/,
-        include: [resolvePath('../src')],
         exclude: [/\.module\.s?css$/],
         use: [
           IS_DEV && 'style-loader',
