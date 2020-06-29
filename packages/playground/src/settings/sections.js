@@ -35,6 +35,7 @@ export const stylesBySection = {
         'imageMargin',
 
         'gridStyle',
+        'fixedColumns',
         'numberOfImagesPerRow',
         'numberOfImagesPerCol',
 
@@ -45,6 +46,7 @@ export const stylesBySection = {
         'cubeRatio',
         // 'gallerySliderImageRatio',
 
+        'showArrows',
         'slideshowLoop',
         'isAutoSlideshow',
         'autoSlideshowInterval',
@@ -71,7 +73,7 @@ export const stylesBySection = {
     ],
     [SECTIONS.INFO]: [
         'titlePlacement',
-        // 'itemOpacity',
+        'itemOpacity',
         'allowTitle',
         'allowDescription',
         'allowSlideshowCounter',

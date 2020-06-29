@@ -49,7 +49,7 @@ export default ({ items, styles, container, itemsDimensions }, state) => {
     }
     try {
       const wasChanged =
-        JSON.stringify(_styles) !== JSON.stringify(state.styles);
+      JSON.stringify(Object.entries(_styles).sort()) !== JSON.stringify(Object.entries(state.styles).sort());
       if (wasChanged) {
         reason.styles = 'styles were changed.';
       }

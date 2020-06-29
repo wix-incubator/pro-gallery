@@ -28,38 +28,17 @@ describe('Item View', () => {
     expect(driver.find.hook('item-wrapper').length).to.equal(1);
   });
 
-  describe('when error occurs', () => {
-    it('state - retries should be increase acording to times called setItemError, failed is true after 4 times or more', () => {
-      driver.mount(ItemView, sampleItemViewProps);
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(1);
-      expect(driver.get.state('failed')).to.be.false;
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(2);
-      expect(driver.get.state('failed')).to.be.false;
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(3);
-      expect(driver.get.state('failed')).to.be.false;
-      driver.get.instance().setItemError();
-      expect(driver.get.state('retries')).to.equal(4);
-      expect(driver.get.state('failed')).to.be.true;
-    });
-  });
+
   describe('item loaded setItemLoaded', () => {
     it('should set states when called', () => {
       const spy = sinon.spy(ItemView.prototype, 'setItemLoaded');
       driver.mount(ItemView, sampleItemViewProps);
-      driver.set.state({
-        failed: true,
-        loaded: false,
-      });
       driver.get.instance().setItemLoaded();
-      expect(driver.get.state('failed')).to.be.false;
-      expect(driver.get.state('loaded')).to.be.true;
       expect(spy.called).to.be.true;
       spy.restore();
     });
   });
+  
   describe('toggleShare', () => {
     it('should not be fired if hovering over icons', () => {
       driver.mount(ItemView, sampleItemViewProps);
@@ -404,13 +383,13 @@ describe('Item View', () => {
         type: 'image',
       });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(1);
+      expect(driver.find.hook('gallery-slideshow-info-buttons').length).to.equal(1);
       driver.set.props({
         styleParams: {
           isSlideshow: false,
         },
       });
-      expect(driver.find.hook('gallery-item-info-buttons').length).to.equal(0);
+      expect(driver.find.hook('gallery-slideshow-info-buttons').length).to.equal(0);
     });
   });
   describe('getBottomInfoElement', () => {

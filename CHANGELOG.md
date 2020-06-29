@@ -1,3 +1,66 @@
+## [v2.0.2](https://pro-gallery-2-0-2.surge.sh) (25/06/2020)
+ 
+#### PLAYGROUND
+ -  Move antd css import from main entry point to side bar component
+
+#### GALLERY
+ -  reactDriver add getVisibleItems
+ -  (performance) render only visibleItems on first render
+ -  Removed some unused code 
+ -  (isNew.js) use Object.entries
+ -  galleryContainer remove reCreateGalleryExpensively on didMount
+
+---
+## [v2.0.1](https://pro-gallery-2-0-1.surge.sh) (23/06/2020)
+ 
+#### PLAYGROUND
+ - * improve: Lazy load side bar
+
+#### GALLERY
+ -  (isNew.js) fix stylesHaveChanged
+
+---
+## [v2.0.0](https://pro-gallery-2-0-0.surge.sh) (22/06/2020)
+ 
+#### GALLERY
+ improve (calcVisibilities): remove deprecated calcVisibilities
+
+#### PLAYGROUND
+ -  improve (sidebar): lazy load the sidebar code
+
+---
+## [v1.10.23](https://pro-gallery-1-10-23.surge.sh) (22/06/2020)
+ 
+#### GALLERY
+ -  changed leanGallery css from cssModule to global static.
+ 
+## [v1.10.22](https://pro-gallery-1-10-22.surge.sh) (14/06/2020)
+ 
+#### GALLERY
+ -  fixed slideshow info structure (with/out customSlideshowInfoRenderer)
+ 
+---
+## [v1.10.21](https://pro-gallery-1-10-21.surge.sh) (08/06/2020)
+ 
+#### GALLERY
+ -  dummy commit
+
+--
+## [v1.10.20](https://pro-gallery-1-10-20.surge.sh) (08/06/2020)
+ 
+#### GALLERY
+ -  fixed item-wrapper div container styles.
+
+---
+## [v1.10.19](https://pro-gallery-1-10-19.surge.sh) (03/06/2020)
+
+---
+## [v1.10.18](https://pro-gallery-1-10-18.surge.sh) (03/06/2020)
+ 
+#### LAYOUTS
+ -  Fix: fix support for min / max cubeType
+
+---
 ## [v1.10.17](https://pro-gallery-1-10-17.surge.sh) (28/05/2020)
  
 #### LAYOUTS

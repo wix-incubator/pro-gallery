@@ -38,13 +38,9 @@ class ItemView extends GalleryComponent {
     this.init();
 
     this.state = {
-      failed: false,
-      loaded: false,
-      displayed: false,
-      retries: 0,
       showShare: false,
       isCurrentHover: false,
-      itemWasHovered: false 
+      itemWasHovered: false
     };
 
     this.activeElement = '';
@@ -60,7 +56,6 @@ class ItemView extends GalleryComponent {
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
-    this.setItemError = this.setItemError.bind(this);
     this.isVerticalContainer = this.isVerticalContainer.bind(this);
     this.isHighlight = this.isHighlight.bind(this);
     this.toggleShare = this.toggleShare.bind(this);
@@ -79,6 +74,7 @@ class ItemView extends GalleryComponent {
     this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
+    this.onMouseOut = this.onMouseOut.bind(this);
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this,
     );
@@ -87,21 +83,8 @@ class ItemView extends GalleryComponent {
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
-  setItemError() {
-    this.setState({
-      retries: this.state.retries + 1,
-      failed: this.state.retries >= 3,
-    });
-  }
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
-    this.setState({
-      failed: false,
-      loaded: true,
-    });
-    this.itemLoadedTimeout = setTimeout(() => {
-      this.setState(() => ({ displayed: true }));
-    }, 1500);
   }
 
   isIconTag(tagName) {
@@ -131,6 +114,12 @@ class ItemView extends GalleryComponent {
     }
   }
 
+  onMouseOut() {
+    if (!utils.isMobile()) {
+      this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+    }
+  }
+
   onKeyPress(e) {
     switch (e.keyCode || e.charCode) {
       case 32: //space
@@ -151,8 +140,6 @@ class ItemView extends GalleryComponent {
   handleGalleryItemAction(e) {
     this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props, e);
   }
-
-
 
   onItemWrapperClick(e) {
     const clickTarget = 'item-media';
@@ -325,7 +312,7 @@ class ItemView extends GalleryComponent {
     const { styleParams } = this.props;
     const { alwaysShowHover, previewHover, hoveringBehaviour } = styleParams;
     const { NEVER_SHOW, APPEARS } = INFO_BEHAVIOUR_ON_HOVER;
-    
+
     if (hoveringBehaviour === NEVER_SHOW) {
       return false;
     } else if (alwaysShowHover === true) {
@@ -519,19 +506,17 @@ class ItemView extends GalleryComponent {
       'settings',
       'lazyLoad',
     ]);
+
     return (
       <ImageItem
         {...props}
         key="imageItem"
-        loaded={this.state.loaded}
-        displayed={this.state.displayed}
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
           setItemLoaded: this.setItemLoaded,
-          setItemError: this.setItemError,
         }}
       />
     );
@@ -546,20 +531,16 @@ class ItemView extends GalleryComponent {
         hover={itemHover}
         imageDimensions={imageDimensions}
         hasLink={this.itemHasLink()}
-        loadingStatus={{
-          failed: this.state.failed,
-          loaded: this.state.loaded,
-        }}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
-          setItemError: this.setItemError,
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
       />
     );
   }
+
   getVideoItemPlaceholder(imageDimensions, itemHover) {
     const props = utils.pick(this.props, [
       'alt',
@@ -575,20 +556,13 @@ class ItemView extends GalleryComponent {
     return (
       <VideoItemPlaceholder
         {...props}
-        loadingStatus={{
-          failed: this.state.failed,
-          loaded: this.state.loaded,
-        }}
         key="videoPlaceholder"
-        loaded={this.state.loaded}
-        displayed={this.state.displayed}
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
           setItemLoaded: this.setItemLoaded,
-          setItemError: this.setItemError,
         }}
         id={this.props.idx}
         hover={itemHover}
@@ -681,16 +655,12 @@ class ItemView extends GalleryComponent {
       };
       const slideshowInfo = customSlideshowInfoRenderer
         ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps())
-        : (<div
-          className="gallery-item-info gallery-item-bottom-info"
-          data-hook="gallery-item-info-buttons"
-          style={style}
-        >
-          <div>
+        : (
+          <div className="gallery-slideshow-info-inner">
             {social}
             {itemTexts}
           </div>
-        </div>);
+        );
 
       const { photoId, id, idx } = this.props;
       itemInner = (
@@ -705,7 +675,13 @@ class ItemView extends GalleryComponent {
           >
             {itemInner}
           </a>
-          {slideshowInfo}
+          <div
+            className="gallery-slideshow-info"
+            data-hook="gallery-slideshow-info-buttons"
+            style={style}
+          >
+            {slideshowInfo}
+          </div>
         </div>
       );
     }
@@ -764,23 +740,13 @@ class ItemView extends GalleryComponent {
       ? customInfoRenderer(this.getCustomInfoRendererProps(), placement)
       : this.getItemTextsDetails(infoHeight);
 
-    //TODO: move the creation of the functions that are passed to onMouseOver and onMouseOut outside
     if (itemExternalInfo) {
       info = (
         <div style={getOuterInfoStyle(placement, styleParams, style.height, styleParams.textBoxHeight)}>
           <div
             style={getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)}
             className={'gallery-item-common-info ' + elementName}
-            onMouseOver={() => {
-              !utils.isMobile() && this.props.actions.eventsListener(
-                EVENTS.HOVER_SET,
-                this.props.idx,
-              );
-            }}
             aria-hidden={true}
-            onMouseOut={() => {
-              !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
-            }}
             onClick={this.onItemInfoClick}
           >
             {itemExternalInfo}
@@ -1110,9 +1076,7 @@ class ItemView extends GalleryComponent {
         id={cssScrollHelper.getSellectorDomId(this.props)}
         ref={e => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
-        onMouseOut={() => {
-          !utils.isMobile() && this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
-        }}
+        onMouseOut={this.onMouseOut}
         onKeyDown={this.onKeyPress}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
@@ -1126,11 +1090,10 @@ class ItemView extends GalleryComponent {
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
-        {this.getRightInfoElementIfNeeded()}
         <div
           style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
-            // ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
-            // ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
+            ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
+            ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
           }}
         >
           {!isItemWrapperEmpty && (<div
@@ -1143,6 +1106,7 @@ class ItemView extends GalleryComponent {
             {this.getItemInner()}
           </div>)}
         </div>
+        {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );

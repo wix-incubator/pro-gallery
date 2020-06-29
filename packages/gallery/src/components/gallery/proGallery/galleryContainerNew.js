@@ -33,6 +33,7 @@ export class GalleryContainer extends React.Component {
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
+    this.getVisibleItems = this.getVisibleItems.bind(this);
 
     const initialState = {
       pgScroll: 0,
@@ -105,23 +106,37 @@ export class GalleryContainer extends React.Component {
     };
   }
 
+  getVisibleItems(items, container) {
+    const { gotFirstScrollEvent } = this.state;
+    const {galleryHeight, scrollBase, galleryWidth} = container;
+    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent) {
+      return items;
+    }
+    let visibleItems = items;
+    try {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const galleryBottom = scrollBase + galleryHeight;
+      const windowBottom = scrollY + windowHeight;
+      const maxItemTop = Math.min(galleryBottom, windowBottom) - scrollBase;
+      if(maxItemTop < 0) { //gallery is below the fold
+        visibleItems =  [];
+      } else if(this.isVerticalGallery()) {
+        visibleItems = items.filter(item => item.offset.top < maxItemTop);
+      } else {
+        visibleItems = items.filter(item => item.left < galleryWidth);
+      }
+    } catch (e) {
+      visibleItems = items;
+    }
+    return visibleItems;
+  }
+
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
     this.scrollToItem(this.props.currentIdx, false, true, 0);
-    const onGalleryCreated = () => {
-      this.getMoreItemsIfNeeded(0);
-      this.handleNewGalleryStructure();
-      this.eventsListener(EVENTS.APP_LOADED, {});
-    };
-    const galleryState = this.reCreateGalleryExpensively(this.props);
-    if (Object.keys(galleryState).length > 0) {
-      utils.isVerbose() && console.warn('Pro Gallery changed after mount', utils.printableObjectsDiff(this.state, galleryState));
-      this.setState(galleryState, () => {
-        onGalleryCreated();
-      });
-    } else {
-      onGalleryCreated();
-    }
+    this.handleNewGalleryStructure();
+    this.eventsListener(EVENTS.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
 
     try {
@@ -429,9 +444,10 @@ export class GalleryContainer extends React.Component {
     const state = curState || this.state || {};
 
     let _styles, _container;
+    const stylesWithLayoutStyles = styles && addLayoutStyles(styles);
 
     const isNew = checkNewGalleryProps(
-      { items, styles, container, watermarkData, itemsDimensions },
+      { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
       {...state, items: this.items},
     );
     const newState = {};
@@ -871,12 +887,16 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
+  isVerticalGallery() {
+    return !this.state.styles.oneRow
+  }
+
   render() {
     if (!this.canRender()) {
       return null;
     }
 
-    const ViewComponent = this.state.styles.oneRow ? SlideshowView : GalleryView;
+    const ViewComponent = this.isVerticalGallery() ? GalleryView : SlideshowView;
 
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
@@ -918,6 +938,7 @@ export class GalleryContainer extends React.Component {
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
           items={this.items}
+          getVisibleItems={this.getVisibleItems}
           itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={this.state.styles}

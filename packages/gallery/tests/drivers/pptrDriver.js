@@ -5,6 +5,7 @@ const devices = require('puppeteer/DeviceDescriptors');
 export default class galleryDriver {
   constructor() {
     this.timeout = 60000;
+    jest.setTimeout(40000)
     this.browser = {};
     this.windowSize = {
       width: 1920,
@@ -43,7 +44,7 @@ export default class galleryDriver {
     }
     const pageUrl = this.getPageUrl(styleParams);
     console.log('Testing page at: ', pageUrl);
-    await page.goto(pageUrl, { waitUntil: 'networkidle0' });
+    await page.goto(pageUrl, { waitUntil: 'networkidle2' });
     this.page = page;
     await this.scrollInteraction();
     await page.waitFor(2500);
