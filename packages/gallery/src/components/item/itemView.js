@@ -415,7 +415,7 @@ class ItemView extends GalleryComponent {
       (isImage || !this.props.styleParams.isStoreGallery) && useCustomButton;
 
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense key={`suspense-texts-${props.id}`} fallback={<div>Loading...</div>}>
         <Texts
           {...props}
           key={`item-texts-${props.id}`}
@@ -452,7 +452,7 @@ class ItemView extends GalleryComponent {
     ]);
 
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense key={`suspense-social-${props.id}`} fallback={<div>Loading...</div>}>
         <Social
           {...props}
           showShare={this.state.showShare}
@@ -482,7 +482,7 @@ class ItemView extends GalleryComponent {
       'actions',
     ]);
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense key={`suspense-${props.id}`} fallback={<div>Loading...</div>}>
         <Share
           {...props}
           allProps={this.props}
@@ -503,7 +503,7 @@ class ItemView extends GalleryComponent {
     const { customHoverRenderer, ...props } = this.props;
     const shouldHover = this.shouldHover() || null;
     return shouldHover && (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense key={`suspense-hover-${props.id}`} fallback={<div>Loading...</div>}>
         <ItemHover
           {...props}
           forceShowHover={this.simulateOverlayHover()}
