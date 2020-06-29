@@ -625,7 +625,6 @@ class ItemView extends GalleryComponent {
     ]);
 
     return (
-      <Suspense fallback={<div>Loading...</div>}>
         <TextItem
           {...props}
           key="textItem"
@@ -636,7 +635,6 @@ class ItemView extends GalleryComponent {
             setItemLoaded: this.setItemLoaded,
           }}
         />
-      </Suspense>
     );
   }
 
