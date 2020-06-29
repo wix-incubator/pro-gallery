@@ -59,12 +59,13 @@ export default class ImageItem extends GalleryComponent {
           onTouchEnd={actions.handleItemMouseUp}
           key={'image_container-' + id}
           data-hook={'image-item'}
-          style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
+          style={imageDimensions.borderRadius ? { borderRadius: imageDimensions.borderRadius } : {}}
         >
           {renderer()}
         </div>
       );
     };
+
     const image = () => {
       let preload = null;
       const preloadProps = {
@@ -78,6 +79,7 @@ export default class ImageItem extends GalleryComponent {
         case LOADING_MODE.BLUR:
           preload = <img
             alt=''
+            key={'image_preload_blur-' + id}
             src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
             style={{ ...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat' }}
             {...preloadProps}
@@ -86,6 +88,7 @@ export default class ImageItem extends GalleryComponent {
         case LOADING_MODE.MAIN_COLOR:
           preload = <img
             alt=''
+            key={'image_preload_main_color-' + id}
             src={createUrl(URL_SIZES.PIXEL, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
             style={restOfDimensions}
             {...preloadProps}
@@ -93,32 +96,28 @@ export default class ImageItem extends GalleryComponent {
           break;
       }
 
-      return [preload,
-        <img
-          key={
-            (styleParams.cubeImages && styleParams.cubeType === 'fill'
-              ? 'cubed-'
-              : '') + 'image'
-          }
-          className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
-          data-hook='gallery-item-image-img'
-          alt={alt ? alt : 'untitled image'}
-          src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
-          loading="lazy"
-          onLoad={({target}) => {
-            target.style.opacity = '1';
-            setTimeout((() => {
-              try {
-                target.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
-              } catch (e) {
-                //
-              }
-            }), 1000);
-          }}
-          style={restOfDimensions}
-          {...imageProps}
-        />
-      ]
+      const highres = utils.isSSR() ? null : <img
+        key={'image_highres-' + id}
+        className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+        data-hook='gallery-item-image-img'
+        alt={alt ? alt : 'untitled image'}
+        src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
+        loading="lazy"
+        onLoad={({ target }) => {
+          target.style.opacity = '1';
+          setTimeout((() => {
+            try {
+              target.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
+            } catch (e) {
+              //
+            }
+          }), 1000);
+        }}
+        style={restOfDimensions}
+        {...imageProps}
+      />
+
+      return [preload, highres]
 
     }
 
@@ -141,7 +140,8 @@ export default class ImageItem extends GalleryComponent {
       />
     );
 
-    const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
+    // const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
+    const renderedItem = imageContainer(image);
     return renderedItem;
   }
 }
