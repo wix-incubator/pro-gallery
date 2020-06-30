@@ -27,7 +27,6 @@ class VideoScrollHelper {
     this.handleEvent = this.handleEvent.bind(this);
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
-    this.getPlayingIdx = this.getPlayingIdx.bind(this);
     this.isVisible = this.isVisible.bind(this);
     this.top = 0;
     this.left = 0;
@@ -210,10 +209,6 @@ class VideoScrollHelper {
     this.setPlayingVideos(this.currentPlayingIdx, this.nextInLineIdx);
   }
   //-------------------------------get/set----------------------------------------//
-
-  getPlayingIdx() {
-    return this.currentPlayingIdx;
-  }
 
   setPlayingIdx(idx) {
     if (this.currentPlayingIdx !== idx) {
