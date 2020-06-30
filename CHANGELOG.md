@@ -1,3 +1,10 @@
+## [v2.0.5](https://pro-gallery-2-0-5.surge.sh) (30/06/2020)
+ 
+#### GALLERY
+ -  ItemView: Add setState with setTimeout for text line fixer
+ -  improve: removed unused code
+
+---
 ## [v2.0.4](https://pro-gallery-2-0-4.surge.sh) (30/06/2020)
  
 #### GALLERY
