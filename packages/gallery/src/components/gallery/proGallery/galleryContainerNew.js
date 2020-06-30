@@ -123,9 +123,9 @@ export class GalleryContainer extends React.Component {
       if(maxItemTop < 0) { //gallery is below the fold
         visibleItems =  [];
       } else if(this.isVerticalGallery()) {
-        visibleItems = items.filter(item => item.offset.top < maxItemTop);
+        visibleItems = items.filter(item => item.offset.top <= maxItemTop);
       } else {
-        visibleItems = items.filter(item => item.left < galleryWidth);
+        visibleItems = items.filter(item => item.left <= galleryWidth);
       }
     } catch (e) {
       visibleItems = items;
