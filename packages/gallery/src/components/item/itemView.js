@@ -96,7 +96,12 @@ class ItemView extends GalleryComponent {
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
     this.setState({
+      loaded: true
     });
+
+    this.itemLoadedTimeout = setTimeout(() => {
+      this.setState(() => ({ loaded: true }));
+    }, 1500);
   }
 
   isIconTag(tagName) {
@@ -1014,7 +1019,6 @@ class ItemView extends GalleryComponent {
     clearTimeout(this.itemLoadedTimeout);
     window.removeEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
   }
-
 
   componentDidUpdate(prevProps) {
     this.changeActiveElementIfNeeded(prevProps);
