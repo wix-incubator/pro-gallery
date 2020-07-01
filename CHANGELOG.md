@@ -1,3 +1,9 @@
+## [v2.0.6](https://pro-gallery-2-0-6.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  fix: getVisibleItems only in viewMode site
+
+---
 ## [v2.0.5](https://pro-gallery-2-0-5.surge.sh) (30/06/2020)
  
 #### GALLERY
