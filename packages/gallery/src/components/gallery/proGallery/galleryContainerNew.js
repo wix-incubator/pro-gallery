@@ -108,23 +108,24 @@ export class GalleryContainer extends React.Component {
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
+    const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent) {
+    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
       return items;
     }
     let visibleItems = items;
     try {
-      const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
-      const galleryBottom = scrollBase + galleryHeight;
+      const isInfinite = this.isVerticalGallery() && this.containerInfiniteGrowthDirection() === 'vertical';
+      const galleryBottom = isInfinite ? Infinity : (scrollBase + galleryHeight);
       const windowBottom = scrollY + windowHeight;
       const maxItemTop = Math.min(galleryBottom, windowBottom) - scrollBase;
       if(maxItemTop < 0) { //gallery is below the fold
         visibleItems =  [];
       } else if(this.isVerticalGallery()) {
-        visibleItems = items.filter(item => item.offset.top < maxItemTop);
+        visibleItems = items.filter(item => item.offset.top <= maxItemTop);
       } else {
-        visibleItems = items.filter(item => item.left < galleryWidth);
+        visibleItems = items.filter(item => item.left <= galleryWidth);
       }
     } catch (e) {
       visibleItems = items;

@@ -1,3 +1,24 @@
+## [v2.0.5](https://pro-gallery-2-0-5.surge.sh) (30/06/2020)
+ 
+#### GALLERY
+ -  ItemView: Add setState with setTimeout for text line fixer
+ -  improve: removed unused code
+
+---
+## [v2.0.4](https://pro-gallery-2-0-4.surge.sh) (30/06/2020)
+ 
+#### GALLERY
+ -  Fix (galleryContainer): fix visibleItems calc for galleries with infinite scroll
+ -  ItemView: removed onMouseOver onMouseOut attrs from externalInfo (they are already on the whole item-container).
+ -  Performence: Remove loaded and displayed states from ItemView
+ -  Improve (galleryContainerNew): getVisibleItems
+
+#### OTHER
+ - * Upgrade pro-gallery
+ - * Fix import from pro-gallery
+ - * Fix missing style loaders on external sources
+
+---
 ## [v2.0.2](https://pro-gallery-2-0-2.surge.sh) (25/06/2020)
  
 #### PLAYGROUND
