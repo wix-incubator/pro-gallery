@@ -1,174 +1,43 @@
 import { addPresetStyles } from '../gallery/presets/presets';
 import dimensionsHelper from '../helpers/dimensionsHelper';
-import defaultStyles from '../../common/defaultStyles';
 import utils from '../../common/utils';
 import { ItemsHelper } from '../helpers/itemsHelper';
-// import window from '../../../common/window/windowWrapper';
 import { Layouter } from 'pro-layouts';
-import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
-import { isEditMode , isSEOMode} from '../../common/window/viewModeWrapper';
-import EVENTS from '../../common/constants/events';
 import { processLayouts } from '../helpers/layoutHelper'
+import defaultStyles from '../../common/defaultStyles';
+
 
 
 class Blueprints {
 
-    init(config) {
-      this.eventsCB = config && config.eventsCB;
-      this.lastParams = config && config.lastParams || {};
-      this.existingBlueprint = config && config.existingBlueprint || {};
-    }
-
-    handleNewGalleryStructure() { // TODO rework completely
-      //should be called AFTER new state is set
-      const {
-        container,
-        needToHandleShowMoreClick,
-        initialGalleryHeight,
-      } = this.state;
-      const styleParams = this.state.styles;
-      const numOfItems = this.items.length;
-      const layoutHeight = this.layout.height;
-      const layoutItems = this.layout.items;
-      const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
-      let updatedHeight = false;
-      const needToUpdateHeightNotInfinite =
-        !isInfinite && needToHandleShowMoreClick;
-      if (needToUpdateHeightNotInfinite) {
-        const showMoreContainerHeight = 138; //according to the scss
-        updatedHeight =
-          container.height +
-          (initialGalleryHeight -
-            showMoreContainerHeight);
-      }
-  
-      const onGalleryChangeData = {
-        numOfItems,
-        container,
-        styleParams,
-        layoutHeight,
-        layoutItems,
-        isInfinite,
-        updatedHeight,
-      };
-  
-      this.eventsListener(EVENTS.GALLERY_CHANGE, onGalleryChangeData);
-    }
-  
-    eventsListener(eventName, eventData, event) {
-      if (typeof this.props.eventsListener === 'function') {
-        this.eventsCB(eventName, eventData, event);
-      }
-    }
-
-  createBlueprint(params) {
+  createBlueprint(params, lastParams, existingBlueprint) {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
-    const {dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId} =  this.completeBuildingBlocks(params)
+    const {dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId} =  params
+    const {dimensions: oldRawDimensions, items: oldRawItems, styles: oldRawStyles} =  lastParams
     //getItems,styles and dimesions if not supplied in params;
 
-    //remove all the gallerySize functions
-
-    // dimensionsHelper.updateParams({ // styles process will need an updated dimensionsHelper
-    //   domId: domId,
-    //   container: newRawDimensions, //this is a wrong format untill we have it with all the scrollbase etc.... must work on uniting the dim helpers..
-    //   styles: newRawStyles
-    // });
-    const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newRawItems)
-    const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newRawStyles)
-    const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newRawDimensions);
+    const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newRawItems, oldRawItems, existingBlueprint)
+    const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newRawStyles,oldRawStyles, existingBlueprint)
+    const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newRawDimensions, newRawStyles, oldRawDimensions, oldRawStyles, existingBlueprint);
 
     const changed = itemsChanged || stylesChanged || containerChanged;
-    const structure = this.createStructureIfNeeded({formattedContainer, formattedItems, formattedStyles}, changed);
-    
-    
-    const layoutCss = this.createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId}, changed)
-    // const scrollCss = this.getScrollCssIfNeeded({
-      //   domId, formattedStyles, structure
-      // });
-    this.updateLastParamsIfNeeded({dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId});
-    return this.existingBlueprint = {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, layoutCss,};// scrollCss};
+    if (changed || !existingBlueprint) {
+      const structure = this.createStructure({formattedContainer, formattedItems, formattedStyles}, changed);
+      const layoutCss = this.createCssLayouts({formattedContainer, formattedItems, formattedStyles, structure, domId}, changed)
+      return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, layoutCss,};// scrollCss};
+    }
+
+    return existingBlueprint;
 
   }
-
-
-    // ------------------ Get all the needed raw data ---------------------------- //
-    completeBuildingBlocks(params) {
-      
-    let {dimensions, container, items, styles, styleParams, options, domId} = params || {};
-
-    styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
-    dimensions = {...dimensions, ...container}
-    dimensions =  this.fetchDimensionsIfNeeded(dimensions);
-    items =  this.fetchItemsIfNeeded(items);
-    styles =  this.fetchStylesIfNeeded(styles); //can be async... TODO
-
-    return {dimensions, items, styles, domId} 
-  }
-  
-  
-  fetchDimensionsIfNeeded(dimensions) {
-
-    const shouldFetchDimensions = (dimensions) => {
-      let should = true;
-      if(dimensions) {
-        should = false
-      } 
-      
-      return should;
-    }
     
-    if (shouldFetchDimensions(dimensions)) {
-      //dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
-    }
-    
-    return dimensions;
-  }
-  
-  fetchItemsIfNeeded(items) {
-    
-    const shouldFetchItems = (items) => {
-      let should = true;
-      if(items) {
-        should = false
-      }
-      
-      return should;
-    }
-
-    if (shouldFetchItems(items)) {
-      //items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
-    }
-
-    // TODO - this.loadItemsDimensionsIfNeeded();
-
-    return items;
-  }
-
-  fetchStylesIfNeeded(styles) {
-
-    const shouldFetchStyles = (styles) => {
-      let should = true;
-      if(styles) { //TODO - should check if they are ready styles and use ClientLib if not?
-        should = false
-      }
-
-      return should;
-    }
-
-    if (shouldFetchStyles(styles)) {
-      //styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
-    }
-
-    return styles;
-  }
-
     // ------------------ Raw data to Formated data (if needed) ---------------------------- //
 
 
-  formatItemsIfNeeded(items) {
+  formatItemsIfNeeded(items, lastItems, existingBlueprint) {
     const reason = {
       items: '',
       itemsAdded: '',
@@ -241,9 +110,9 @@ class Blueprints {
     };
 
 
-    const oldRawItems = this.lastParams.items || [];
+    const oldRawItems = lastItems;
     let changed = false;
-    let formattedItems = this.existingBlueprint.items;
+    let formattedItems = existingBlueprint.items;
     if (itemsWereAdded(items, oldRawItems))
     {
       formattedItems = oldRawItems.concat(
@@ -263,7 +132,7 @@ class Blueprints {
     return {formattedItems, changed};
   }
 
-  formatStylesIfNeeded(styles) {
+  formatStylesIfNeeded(styles, lastStyles, existingBlueprint) {
 
 
     const reason = {
@@ -300,11 +169,11 @@ class Blueprints {
 
 
 
-    const oldRawStyles = this.lastParams.styles || {};
+    const oldRawStyles = lastStyles;
     let changed;
-    let formattedStyles = this.existingBlueprint.styles;
+    let formattedStyles = existingBlueprint.styles;
     if (stylesHaveChanged(styles,oldRawStyles)) {
-
+      styles = {...defaultStyles, ...styles}
       formattedStyles = processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 
       const selectedLayoutVars = [
@@ -327,7 +196,7 @@ class Blueprints {
     return {formattedStyles, changed}
   }
 
-  formatContainerIfNeeded(dimensions, styles) {
+  formatContainerIfNeeded(dimensions, styles, lastDimensions, lastStyles, existingBlueprint) {
 
     const reason = {
       dimensions: '',
@@ -364,9 +233,9 @@ class Blueprints {
     };
 
 
-    const oldRawDimensions = this.lastParams.dimensions;
+    const oldRawDimensions = lastDimensions;
     let changed = false;
-    const oldRawStyles = this.lastParams.styles;
+    const oldRawStyles = lastStyles;
     dimensionsHelper.updateParams({
       styles,
       container: dimensions,
@@ -379,15 +248,15 @@ class Blueprints {
         dimensionsHelper.getGalleryDimensions(),
       ), changed};
     } else {
-      return this.existingBlueprint.container
+      return existingBlueprint.container
     }
   }
 
 
 
-  createStructureIfNeeded({formattedContainer, formattedStyles, formattedItems}, changed) {
+  createStructure({formattedContainer, formattedStyles, formattedItems}) {
 
-    if (changed) {
+
       const layoutParams = {
         items: formattedItems,
         container: formattedContainer,
@@ -409,14 +278,11 @@ class Blueprints {
       this.layout = this.layouter.createLayout(layoutParams);
       
       return this.layout;
-    } else {
-      return this.existingBlueprint.structure;
-    }
+
   }
 
-  createCssLayoutsIfNeeded({formattedContainer, formattedItems, formattedStyles, structure, domId}, changed) {
+  createCssLayouts({formattedContainer, formattedItems, formattedStyles, structure, domId}) {
 
-    if (changed) {
       const layoutParams = {
         items: formattedItems,
         container: formattedContainer,
@@ -435,36 +301,8 @@ class Blueprints {
         domId: domId,
         galleryItems: isApproximateWidth? null : structure.items,
       });
-    } else {
-      return this.existingBlueprint.layoutCss;
-    }
   }
 
-  getScrollCssIfNeeded({ domId, formattedStyles, structure}, changed) {
-    if (changed) {
-      const shouldUseScrollCss = !isSEOMode();
-      const allowPreloading = isEditMode();
-      let scrollCss = [];
-      if (shouldUseScrollCss) {
-        scrollCss = cssScrollHelper.calcScrollCss({
-          items: structure.items,
-          isUnknownWidth: dimensionsHelper.isUnknownWidth(),
-          styleParams: formattedStyles,
-          domId,
-          allowPreloading,
-        });
-      }
-      return (scrollCss && scrollCss.length > 0) ? scrollCss : this.existingBlueprint.scrollCss;
-    } else {
-      return this.existingBlueprint.scrollCss;
-    }
-  }
-
-  updateLastParamsIfNeeded(params) {
-    if(this.thingsChanged){
-      this.lastParams = params;
-    }
-  }
 }
 const blueprints = new Blueprints();
 export default blueprints;

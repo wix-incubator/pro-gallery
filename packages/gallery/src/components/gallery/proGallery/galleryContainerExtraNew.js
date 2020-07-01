@@ -1,22 +1,17 @@
 import React from 'react';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import { addLayoutStyles } from '../../helpers/layoutHelper';
 import { ItemsHelper } from '../../helpers/itemsHelper';
 import dimensionsHelper from '../../helpers/dimensionsHelper';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
 import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
-import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
 import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
-import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
-import checkNewGalleryProps from '../../helpers/isNew';
-import Blueprints from '../../blueprints/Blueprints.js'
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -48,10 +43,6 @@ export class GalleryContainer extends React.Component {
     };
 
     this.state = initialState;
-    this.galleryBlueprint = {};
-    this.galleryBlueprint.items = [];
-    // this.itemsDimensions = {};
-    this.preloadedItems = {};
     this.layoutCss = [];
     const videoScrollHelperConfig = {
       setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
@@ -59,7 +50,7 @@ export class GalleryContainer extends React.Component {
     this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
 
     if (utils.isSSR()) {
-      this.initialGalleryState = this.reCreateGalleryExpensively(
+      this.initialGalleryState = this.propsToState(
         props,
         initialState,
       );
@@ -70,28 +61,9 @@ export class GalleryContainer extends React.Component {
         this.galleryInitialStateJson = null;
       }
     } else {
-      // try {
-      //   // if (!utils.shouldDebug('no_hydrate')) {
-      //   //   const state = JSON.parse(
-      //   //     window.document.querySelector(
-      //   //       `#pro-gallery-${props.domId} #ssr-state-to-hydrate`,
-      //   //     ).innerHTML,
-      //   //   );
-      //   //   this.reCreateGalleryFromState({
-      //   //     items: props.items,
-      //   //     styles: state.styles,
-      //   //     container: state.container,
-      //   //     gotFirstScrollEvent: initialState.gotFirstScrollEvent,
-      //   //   });
-      //   //   this.initialGalleryState = state;
-      //   // } else {
-      //     this.initialGalleryState = {}; //this will cause a flicker between ssr and csr
-      //   // }
-      // } catch (e) {
-      //   //hydrate phase did not happen - do it all over again
         this.initialGalleryState = {};
         try {
-          const galleryState = this.reCreateGalleryExpensively(props);
+          const galleryState = this.propsToState(props);
           if (Object.keys(galleryState).length > 0) {
             this.initialGalleryState = galleryState;
           }
@@ -107,7 +79,6 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    // this.loadItemsDimensionsIfNeeded();
     this.scrollToItem(this.props.currentIdx, false, true, 0);
     this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
@@ -138,7 +109,7 @@ export class GalleryContainer extends React.Component {
     }
 
     const reCreateGallery = () => {
-      const galleryState = this.reCreateGalleryExpensively(nextProps);
+      const galleryState = this.propsToState(nextProps);
       if (Object.keys(galleryState).length > 0) {
         this.setState(galleryState, () => {
           this.handleNewGalleryStructure();
@@ -205,10 +176,10 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick,
       initialGalleryHeight,
     } = this.state;
-    const styleParams = this.galleryBlueprint.styles;
-    const numOfItems = this.galleryBlueprint.items.length;
-    const layoutHeight = this.galleryBlueprint.structure.height;
-    const layoutItems = this.galleryBlueprint.structure.items;
+    const styleParams = this.props.styles;
+    const numOfItems = this.state.items.length;
+    const layoutHeight = this.props.structure.height;
+    const layoutItems = this.props.structure.items;
     const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
     let updatedHeight = false;
     const needToUpdateHeightNotInfinite =
@@ -276,32 +247,43 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  reCreateGalleryExpensively(
-    { items, styles, container, watermarkData, itemsDimensions }) {
+  propsToState({loopingItems, items, styles, structure, container, layoutCss, domId, resizeMediaUrl}) {
 
-      this.galleryBlueprint = {items: this.props.items, styles: this.props.styles, container: this.props.container, structure: this.props.structure, layoutCss: this.props.layoutCss}
-    // this.galleryBlueprint = this.blueprints.createBlueprint({ items, styles, container, watermarkData, itemsDimensions, domId: this.props.domId })
-    this.galleryStructure = ItemsHelper.convertToGalleryItems(this.galleryBlueprint.structure, { // TODO use same objects in the memory when the galleryItems are changed
-      thumbnailSize: this.galleryBlueprint.styles.thumbnailSize,
-      sharpParams: this.galleryBlueprint.styles.sharpParams,
-      resizeMediaUrl: this.props.resizeMediaUrl,
-    });
-    this.layoutCss = this.galleryBlueprint.layoutCss;
-    
-    // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
-    // //this.scrollCss = this.galleryBlueprint.scrollCss;
-    const allowPreloading =
-    isEditMode();
+    items = items || this.props.items;
+    styles = styles || this.props.styles;
+    container = container || this.props.container;
+    structure = structure || this.props.structure;
+    layoutCss = layoutCss || this.props.layoutCss;
+    domId = domId || this.props.domId;
+    resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
 
-    this.scrollCss = this.getScrollCssIfNeeded({
-      domId: this.props.domId,
-      items: this.galleryStructure.galleryItems,
-      styleParams: this.galleryBlueprint.styles,
-      allowPreloading,
-    });
-
-
-      return this.galleryBlueprint;
+      this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, { // TODO use same objects in the memory when the galleryItems are changed
+        thumbnailSize: styles.thumbnailSize,
+        sharpParams: styles.sharpParams,
+        resizeMediaUrl: resizeMediaUrl,
+      });
+      this.layoutCss = layoutCss;
+      
+      // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
+      const allowPreloading =
+      isEditMode();
+      
+      this.scrollCss = this.getScrollCssIfNeeded({
+        domId: domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: styles,
+        allowPreloading,
+      });
+      this.videoScrollHelper.updateGalleryStructure({
+        galleryStructure: this.galleryStructure,
+        scrollBase: container.scrollBase,
+        videoPlay: styles.videoPlay,
+        itemClick: styles.itemClick,
+        oneRow: styles.oneRow,
+        cb: this.setPlayingIdxState,
+      });
+      const newState = {items: loopingItems || items, styles: styles, container: container, structure: structure, layoutCss: layoutCss}
+      return newState;
   }
 
   getScrollingElement() {
@@ -391,7 +373,7 @@ export class GalleryContainer extends React.Component {
   }
 
   containerInfiniteGrowthDirection(styles = false) {
-    const _styles = styles || this.galleryBlueprint.styles;
+    const _styles = styles || this.props.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
     const { enableInfiniteScroll } = this.props.styles; //TODO - props or "raw" styles
     const { showMoreClickedAtLeastOnce } = this.state;
@@ -501,10 +483,10 @@ export class GalleryContainer extends React.Component {
   }
 
   duplicateGalleryItems() {
-    const galleryState = this.reCreateGalleryExpensively({
+    const galleryState = this.propsToState({
       ...this.props,
-      items: this.galleryBlueprint.items.concat(
-        ...this.galleryBlueprint.items.slice(0, this.props.totalItemsCount),
+      loopingItems: this.state.items.concat(
+        ...this.state.items.slice(0, this.props.totalItemsCount),
       ),
     });
     if (Object.keys(galleryState).length > 0) {
@@ -568,15 +550,14 @@ export class GalleryContainer extends React.Component {
   }
 
   canRender() {
-    const can = this.galleryBlueprint.container && this.galleryBlueprint.styles && this.galleryBlueprint.items;
+    const can = this.props.container && this.props.styles && this.state.items;
     if (!can && utils.isVerbose()) {
       console.log(
         'PROGALLERY [CAN_RENDER] GalleryContainer',
-        this.galleryBlueprint,
         can,
-        this.galleryBlueprint.container,
-        this.galleryBlueprint.styles,
-        this.galleryBlueprint.items,
+        this.props.container,
+        this.props.styles,
+        this.state.items,
       );
     }
     return can;
@@ -587,14 +568,14 @@ export class GalleryContainer extends React.Component {
       return null;
     }
 
-    const ViewComponent = this.galleryBlueprint.styles.oneRow ? SlideshowView : GalleryView;
+    const ViewComponent = this.props.styles.oneRow ? SlideshowView : GalleryView;
 
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
         'PROGALLERY [RENDER] - GalleryContainer',
-        this.galleryBlueprint.container.scrollBase,
-        { state: this.galleryBlueprint, items: this.galleryBlueprint.items},
+        this.props.container.scrollBase,
+        { props: this.props, items: this.state.items},
       );
     }
 
@@ -613,10 +594,10 @@ export class GalleryContainer extends React.Component {
       >
         <ScrollIndicator
           domId={this.props.domId}
-          oneRow={this.galleryBlueprint.styles.oneRow}
-          isRTL={this.galleryBlueprint.styles.isRTL}
+          oneRow={this.props.styles.oneRow}
+          isRTL={this.props.styles.isRTL}
           totalWidth={this.galleryStructure.width}
-          scrollBase={this.galleryBlueprint.container.scrollBase}
+          scrollBase={this.props.container.scrollBase}
           scrollingElement={this._scrollingElement}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
           enableScrollPreload={this.enableScrollPreload}
@@ -628,13 +609,12 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
-          items={this.galleryBlueprint.items}
+          items={this.state.items}
           getVisibleItems={this.getVisibleItems}
-
           itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
-          styleParams={this.galleryBlueprint.styles}
-          container={this.galleryBlueprint.container}
+          styleParams={this.props.styles}
+          container={this.props.container}
           watermark={this.props.watermarkData}
           settings={this.props.settings}
           scroll={{}} //todo: remove after refactor is 100%
