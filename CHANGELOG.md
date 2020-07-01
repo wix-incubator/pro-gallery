@@ -1,3 +1,9 @@
+## [v2.0.8](https://pro-gallery-2-0-8.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  changed pro-gallery/lib to be only ESM.
+
+---
 ## [v2.0.7](https://pro-gallery-2-0-7.surge.sh) (01/07/2020)
  
 #### GALLERY
