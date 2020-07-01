@@ -1,3 +1,9 @@
+## [v2.0.7](https://pro-gallery-2-0-7.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  **** Removed all info from the gallery ****
+
+---
 ## [v2.0.6](https://pro-gallery-2-0-6.surge.sh) (01/07/2020)
  
 #### GALLERY
