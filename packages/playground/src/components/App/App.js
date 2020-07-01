@@ -140,6 +140,7 @@ export function App() {
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}
+          useBlueprints={true}
         />
       </section>
     </main>
