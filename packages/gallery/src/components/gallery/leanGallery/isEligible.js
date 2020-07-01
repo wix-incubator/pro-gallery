@@ -1,7 +1,7 @@
 import GALLERY_CONSTS from '../../../common/constants/index';
 import {isVerticalPlacement} from '../../../common/constants/placements';
 import { fixedStyles } from '../presets/gridGallery';
-//example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowTitle=true&allowHover=false&galleryLayout=2&allowLeanGallery=true
+//example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export const notEligibleReasons = ({items, styles}) => {
   const s = {...styles, ...fixedStyles, allowLeanGallery: true};
@@ -99,8 +99,6 @@ const handledStyleParams = {
   itemBorderRadius: 0,
   imageQuality: 90,
   textBoxHeight: 200,
-  allowTitle: false,
-  allowDescription: false,
 };
 
 //these params are not relevant when a lean gallery is rendered - the fixed styles will override them
@@ -136,8 +134,6 @@ const ignoredStyleParams = {
   arrowsPosition: 0,
   arrowsSize: 23,
   defaultShowInfoExpand: 1,
-  allowTitleExpand: true,
-  allowDescriptionExpand: true,
   allowLinkExpand: true,
   expandInfoPosition: 0,
   allowFullscreenExpand: true,
@@ -152,12 +148,6 @@ const ignoredStyleParams = {
   textImageSpace: 10,
   textBoxBorderRadius: 0,
   textBoxBorderWidth: 0,
-  textsVerticalPadding: 0,
-  textsHorizontalPadding: 0,
-  titleDescriptionSpace: 6,
-  customButtonText: '',
-  customButtonBorderWidth: 1,
-  customButtonBorderRadius: 0,
   loadMoreButtonText: '',
   loadMoreButtonBorderWidth: 1,
   loadMoreButtonBorderRadius: 0,
@@ -171,8 +161,6 @@ const ignoredStyleParams = {
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,
-  galleryHorizontalAlign: 'center',
-  galleryVerticalAlign: 'center',
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   watermarkOpacity: 40,
   watermarkSize: 40,
@@ -216,14 +204,8 @@ const fixedStyleParams = {
   placeGroupsLtr: false,
   mobilePanorama: false,
   enableInfiniteScroll: [true, 1],
-  useCustomButton: false,
   itemEnableShadow: false,
-  allowSocial: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.allowSocial,
-  allowDownload: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.allowDownload,
-  loveButton: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.loveButton,
-  loveCounter: sp => sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || !sp.loveCounter,
   itemClick: [GALLERY_CONSTS.itemClick.NOTHING, GALLERY_CONSTS.itemClick.LINK, GALLERY_CONSTS.itemClick.FULLSCREEN, GALLERY_CONSTS.itemClick.EXPAND],
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
-  titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW || (!sp.allowTitle && !sp.allowTitle && !sp.allowDownload && !sp.allowSocial && !sp.loveButton),
-  calculateTextBoxHeightMode: sp => sp.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL || !isVerticalPlacement(sp.titlePlacement),
+  titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
 };

@@ -434,7 +434,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryExpensively(
-    { items, styles, container, watermarkData, itemsDimensions },
+    { items, styles, container, watermarkData, itemsDimensions, customInfoRenderer },
     curState,
   ) {
     if (utils.isVerbose()) {
@@ -445,7 +445,8 @@ export class GalleryContainer extends React.Component {
     const state = curState || this.state || {};
 
     let _styles, _container;
-    const stylesWithLayoutStyles = styles && addLayoutStyles(styles);
+    const customExternalInfoRendererExists = !!customInfoRenderer;
+    const stylesWithLayoutStyles = styles && addLayoutStyles(styles, customExternalInfoRendererExists);
 
     const isNew = checkNewGalleryProps(
       { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
@@ -505,7 +506,8 @@ export class GalleryContainer extends React.Component {
         container,
         domId: this.props.domId,
       });
-      _styles = addLayoutStyles(styles);
+
+      _styles = addLayoutStyles(styles, customExternalInfoRendererExists);
       dimensionsHelper.updateParams({ styles: _styles });
       _container = Object.assign(
         {},

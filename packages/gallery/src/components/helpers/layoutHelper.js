@@ -6,9 +6,7 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import dimensionsHelper from './dimensionsHelper';
-import designConsts from '../../common/constants/designConsts';
 import INFO_TYPE from '../../common/constants/infoType';
-import TEXT_BOX_HEIGHT_CALCULATION_OPTIONS from '../../common/constants/textBoxHeightCalculationOptions';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import LOADING_MODE from '../../common/constants/loadingMode';
@@ -192,7 +190,7 @@ const getLayoutName = (galleryLayout) => {
   return galleyLayoutList[galleryLayout + 1]
 }
 
-function addLayoutStyles(styles) {
+function addLayoutStyles(styles, customExternalInfoRendererExists) {
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
@@ -238,11 +236,11 @@ function addLayoutStyles(styles) {
       console.log('new selected layout', styles.selectedLayout);
     }
   }
-  styles = Object.assign(styles, processLayouts(styles));
+  styles = Object.assign(styles, processLayouts(styles, customExternalInfoRendererExists));
   return styles;
 }
 
-function processLayouts(styles) {
+function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
   processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
   processedStyles.oneRow = processedStyles.oneRow || processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
@@ -415,8 +413,8 @@ function processLayouts(styles) {
     } else {
       processedStyles.textDecorationLoadMore = 'none';
     }
-  } 
-  
+  }
+
   if (
     (processedStyles.isGrid && !processedStyles.oneRow) ||
     (featureManager.supports.fixedColumnsInMasonry &&
@@ -518,22 +516,21 @@ function processLayouts(styles) {
       (processedStyles.gallerySizeRatio / 100);
   }
 
-  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles);
+  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles, customExternalInfoRendererExists);
   processedStyles.externalInfoHeight = getHeightFromStyleParams(
     processedStyles,
-    processedStyles.textBoxHeight,
+    processedStyles.textBoxHeight
   );
 
-  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(processedStyles);
+  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(processedStyles, customExternalInfoRendererExists);
 
   return processedStyles;
 }
 
 function getHeightFromStyleParams(styleParams, textBoxHeight) {
   let additionalHeight = textBoxHeight;
-  if (hasVerticalPlacement(styleParams.titlePlacement) &&
-    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND &&
-    (styleParams.allowTitle || styleParams.allowDescription)
+  if (textBoxHeight > 0 && hasVerticalPlacement(styleParams.titlePlacement) &&
+    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
   ) {
     additionalHeight += styleParams.textImageSpace;
     additionalHeight += styleParams.textBoxBorderWidth * 2;
@@ -541,8 +538,8 @@ function getHeightFromStyleParams(styleParams, textBoxHeight) {
   return additionalHeight;
 }
 
-function getTextBoxRightOrLeftWidth(styleParams) {
-  if (!shouldShowTextRightOrLeftBelow(styleParams)) {
+function getTextBoxRightOrLeftWidth(styleParams, customExternalInfoRendererExists) {
+  if (!shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)) {
     return 0;
   }
   const {gallerySize, calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent} = styleParams;
@@ -555,122 +552,36 @@ function getTextBoxRightOrLeftWidth(styleParams) {
   return width;
 }
 
-function shouldShowTextRightOrLeftBelow(styleParams) {
+function shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists) {
   const {
     oneRow,
     isVertical,
     groupSize,
     titlePlacement,
-    allowTitle,
-    allowDescription,
-    useCustomButton,
   } = styleParams;
 
   const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
 
-  return (allowedByLayoutConfig && 
+  return (allowedByLayoutConfig &&
     hasHorizontalPlacement(titlePlacement) &&
-    (allowTitle || allowDescription || useCustomButton))
+    customExternalInfoRendererExists)
 }
 
-function getTextBoxAboveOrBelowHeight(styleParams) {
-  if (!shouldShowTextBoxAboveOrBelow(styleParams)) {
+function getTextBoxAboveOrBelowHeight(styleParams, customExternalInfoRendererExists) {
+  if (!shouldShowTextBoxAboveOrBelow(styleParams, customExternalInfoRendererExists)) {
     return 0;
   }
-
-  if (
-    styleParams.calculateTextBoxHeightMode === TEXT_BOX_HEIGHT_CALCULATION_OPTIONS.AUTOMATIC
-  ) {
-    return getHeightByContent(styleParams);
-  } else {
-    return styleParams.textBoxHeight;
-  }
+  return styleParams.textBoxHeight;
 }
 
-function shouldShowTextBoxAboveOrBelow(styleParams) {
-  const {
-    titlePlacement,
-    allowTitle,
-    allowDescription,
-    useCustomButton,
-  } = styleParams;
-
+function shouldShowTextBoxAboveOrBelow(styleParams, customExternalInfoRendererExists) {
   return (
-    hasVerticalPlacement(titlePlacement) &&
-    (allowTitle || allowDescription || useCustomButton)
+    hasVerticalPlacement(styleParams.titlePlacement) &&
+    customExternalInfoRendererExists
   );
 }
 
-function getHeightByContent(styleParams) {
-  const {
-    itemFontSlideshow,
-    itemDescriptionFontSlideshow,
-    allowTitle,
-    allowDescription,
-    useCustomButton,
-  } = styleParams;
 
-  if (!shouldShowTextBoxAboveOrBelow(styleParams)) {
-    return 0;
-  }
-
-  const paddingTopAndBottom = 45;
-  const defaultButtonHeight = useCustomButton ? 33 : 0;
-  const defaultItemFontSize = 22;
-  const defaultItemDescriptionFontSize = 15;
-
-  let totalSpaceBetweenElements =
-    useCustomButton && (allowTitle || allowDescription)
-      ? designConsts.spaceBetweenElements
-      : 0;
-  let titleFontSize = 0;
-  let descriptionFontSize = 0;
-
-  if (allowTitle) {
-    titleFontSize = itemFontSlideshow
-      ? getFontLineHeight(itemFontSlideshow)
-      : defaultItemFontSize;
-    totalSpaceBetweenElements += allowDescription
-      ? designConsts.spaceBetweenTitleAndDescription
-      : 0;
-  }
-
-  if (allowDescription) {
-    descriptionFontSize = itemDescriptionFontSlideshow
-      ? getFontLineHeight(itemDescriptionFontSlideshow)
-      : defaultItemDescriptionFontSize;
-  }
-
-  return (
-    10 +
-    titleFontSize +
-    3 * descriptionFontSize +
-    paddingTopAndBottom +
-    totalSpaceBetweenElements +
-    defaultButtonHeight
-  ); // HACK  +10 for spare place. we can not really know that this is the final font - thus, this whole calc to get the bottom info height will break one day again.
-}
-
-function getFontLineHeight(font) {
-  if (font.value.match(/\/(\d+)px/)) {
-    //lineHeight is in px
-    return parseInt(font.value.match(/\/(\d+)px/)[1]);
-  } else if (font.value.match(/\/(\d+)%/)) {
-    //lineHeight is in percentage
-    return font.size * (parseInt(font.value.match(/\/(\d+)%/)[1]) / 100);
-  } else if (font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)) {
-    //lineHeight is in em or without any units (which means em too)
-    return (
-      font.size * parseFloat(font.value.match(/px\/(([0-9]*[.])?[0-9]*)/)[1])
-    );
-  } else {
-    console.error(
-      'GalleryContainer -> getFontLineHeight -> font lineHeight do not match any pattern. font value: ',
-      font.value,
-    );
-    return font.size;
-  }
-}
 
 function isSlideshowFont(styles) {
   const galleryLayout = styles.galleryLayout;

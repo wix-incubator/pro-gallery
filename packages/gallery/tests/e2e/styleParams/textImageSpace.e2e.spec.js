@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('textImageSpace - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -19,10 +19,8 @@ describe('textImageSpace - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      allowTitle: true,
-      allowDescription: true,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      textImageSpace: 40,
+      textImageSpace: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -33,10 +31,8 @@ describe('textImageSpace - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
-      allowTitle: true,
-      allowDescription: true,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
-      textImageSpace: 40,
+      textImageSpace: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -47,10 +43,8 @@ describe('textImageSpace - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      allowTitle: true,
-      allowDescription: true,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
-      textImageSpace: 40,
+      textImageSpace: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

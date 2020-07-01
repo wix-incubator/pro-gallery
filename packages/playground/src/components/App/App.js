@@ -114,6 +114,56 @@ export function App() {
     }
   }
 
+  const renderInfoElement = (type, pgItemProps) => {
+
+    const infoElement = (<div className={'playground-info'}>
+      <div className={'playground-info-title'}>
+        <span>{pgItemProps.title}</span>
+      </div>
+      <div className={'playground-info-description'}>
+        <span>{pgItemProps.description}</span>
+      </div>
+    </div>);
+
+    const { titlePlacement } = pgItemProps.styleParams;
+
+    switch (type) {
+      case 'HOVER':
+        if (GALLERY_CONSTS.hasHoverPlacement(titlePlacement)) {
+          return infoElement;
+        }
+        break;
+      case 'EXTERNAL':
+        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+          return infoElement;
+        }
+        break;
+      case 'SLIDESHOW':
+        return infoElement;
+      default:
+        return null;
+    }
+  };
+
+  const hoverInfoElement = (pgItemProps) => {
+    return renderInfoElement('HOVER', pgItemProps);
+  };
+
+  const externalInfoElement = (pgItemProps) => {
+    return renderInfoElement('EXTERNAL', pgItemProps);
+  };
+
+  const slideshowInfoElement = (pgItemProps) => {
+    return renderInfoElement('SLIDESHOW', pgItemProps);
+  };
+
+  const getExternalInfoRenderers = () => {
+    return {
+      customHoverRenderer: hoverInfoElement,
+      customInfoRenderer: externalInfoElement,
+      customSlideshowInfoRenderer: slideshowInfoElement,
+    };
+  }
   return (
     <main className={s.main}>
       {/* <Loader/> */}
@@ -140,6 +190,7 @@ export function App() {
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}
+          {...getExternalInfoRenderers()}
         />
       </section>
     </main>
