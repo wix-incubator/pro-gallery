@@ -108,13 +108,13 @@ export class GalleryContainer extends React.Component {
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
+    const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent) {
+    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
       return items;
     }
     let visibleItems = items;
     try {
-      const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const isInfinite = this.isVerticalGallery() && this.containerInfiniteGrowthDirection() === 'vertical';
       const galleryBottom = isInfinite ? Infinity : (scrollBase + galleryHeight);
