@@ -21,7 +21,6 @@ export const fixedStyles = {
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   smartCrop: false,
   galleryType: 'Strips',
-  gallerySize: 1, //TODO guyso - fix this
   hasThumbnails: true,
   enableScroll: true,
   scrollSnap: true,

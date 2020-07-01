@@ -46,13 +46,12 @@ export default class ProGallery extends GalleryComponent {
 
   render() {
     const {useBlueprints} = this.props;
-    const GalleryComponent = useBlueprints ? GalleryContainerForBlueprints : GalleryContainer;
-    const blueprintProps = useBlueprints ? {...blueprintsManager.getOrCreateBlueprint(this.props)} : {};
+    const Gallery = useBlueprints ? GalleryContainerForBlueprints : GalleryContainer;
+    const blueprintProps = useBlueprints ? blueprintsManager.getOrCreateBlueprint(this.props) : {};
     return (
       this.canRender && (
         <div id={`pro-gallery-${this.props.domId}`} className="pro-gallery">
-
-            <GalleryComponent
+            <Gallery
               {...this.props}
               domId={this.props.domId}
               items={this.props.items || []}
