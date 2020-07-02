@@ -138,6 +138,7 @@ export class GalleryContainer extends React.Component {
     this.scrollToItem(this.props.currentIdx, false, true, 0);
     this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
+    this.getMoreItemsIfNeeded(0);
     this.videoScrollHelper.initializePlayState();
 
     try {
