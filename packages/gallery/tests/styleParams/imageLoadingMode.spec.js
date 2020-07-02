@@ -42,7 +42,7 @@ describe('styleParam - imageLoadingMode', () => {
     })
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
     driver.mount.proGallery(initialProps);
-    expect(imageStub.withArgs('pixel','img').called).to.be.true;
+    expect(imageStub.withArgs('pixel','thumb').called).to.be.true;
     imageStub.restore();
     driver.detach.proGallery();
   });
@@ -54,8 +54,8 @@ describe('styleParam - imageLoadingMode', () => {
       imageLoadingMode: GALLERY_CONSTS.loadingMode.COLOR,
     })
     driver.mount.proGallery(initialProps);
-    const item = driver.find.hook('image-item').at(0);
-    expect(item.hasClass('load-with-color')).to.be.true;
+    const items = driver.find.selector('.load-with-color').length;
+    expect(items).to.be.above(0);
     driver.detach.proGallery();
   });
 })

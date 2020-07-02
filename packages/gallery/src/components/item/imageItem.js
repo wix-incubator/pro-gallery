@@ -4,6 +4,7 @@ import LAZY_LOAD from '../../common/constants/lazyLoad';
 import { GalleryComponent } from '../galleryComponent';
 import { isSEOMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
+import utils from '../../common/utils';
 
 export default class ImageItem extends GalleryComponent {
   componentDidMount() {
@@ -29,8 +30,8 @@ export default class ImageItem extends GalleryComponent {
     } = this.props;
     const imageProps =
       settings &&
-      settings.imageProps &&
-      typeof settings.imageProps === 'function'
+        settings.imageProps &&
+        typeof settings.imageProps === 'function'
         ? settings.imageProps(id)
         : {};
 
@@ -50,7 +51,7 @@ export default class ImageItem extends GalleryComponent {
         ? 'load-with-color'
         : '',
     ].join(' ');
-    const imageContainer = image => {
+    const imageContainer = renderer => {
       return (
         <div
           className={imageItemClassName}
@@ -58,29 +59,69 @@ export default class ImageItem extends GalleryComponent {
           onTouchEnd={actions.handleItemMouseUp}
           key={'image_container-' + id}
           data-hook={'image-item'}
-          style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
+          style={imageDimensions.borderRadius ? { borderRadius: imageDimensions.borderRadius } : {}}
         >
-          {image}
+          {renderer()}
         </div>
       );
     };
-    const image = (
-      <img
-        key={
-          (styleParams.cubeImages && styleParams.cubeType === 'fill'
-            ? 'cubed-'
-            : '') + 'image'
-        }
+
+    const image = () => {
+      let preload = null;
+      const preloadProps = {
+        className: 'gallery-item-visible gallery-item gallery-item-preloaded',
+        key: 'gallery-item-image-img-preload',
+        'data-hook': 'gallery-item-image-img-preload',
+        loading: "lazy",
+        ...imageProps
+      };
+      switch (styleParams.imageLoadingMode) {
+        case LOADING_MODE.BLUR:
+          preload = <img
+            alt=''
+            key={'image_preload_blur-' + id}
+            src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+            style={{ ...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat' }}
+            {...preloadProps}
+          />
+          break;
+        case LOADING_MODE.MAIN_COLOR:
+          preload = <img
+            alt=''
+            key={'image_preload_main_color-' + id}
+            src={createUrl(URL_SIZES.PIXEL, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+            style={restOfDimensions}
+            {...preloadProps}
+          />
+          break;
+      }
+
+      const highres = utils.isSSR() ? null : <img
+        key={'image_highres-' + id}
         className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
         data-hook='gallery-item-image-img'
         alt={alt ? alt : 'untitled image'}
         src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
         loading="lazy"
+        onLoad={({ target }) => {
+          target.style.opacity = '1';
+          setTimeout((() => {
+            try {
+              target.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
+            } catch (e) {
+              //
+            }
+          }), 1000);
+        }}
         style={restOfDimensions}
         {...imageProps}
       />
-    );
-    const canvas = (
+
+      return [preload, highres]
+
+    }
+
+    const canvas = () => (
       <canvas
         key={
           (styleParams.cubeImages && styleParams.cubeType === 'fill'
@@ -99,7 +140,8 @@ export default class ImageItem extends GalleryComponent {
       />
     );
 
-    const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
+    // const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
+    const renderedItem = imageContainer(image);
     return renderedItem;
   }
 }
