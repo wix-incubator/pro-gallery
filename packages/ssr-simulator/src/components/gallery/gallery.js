@@ -17,7 +17,7 @@ export default class Gallery extends React.Component {
     const container =
       typeof window === 'undefined'
         ? {
-            width: '',
+            width: 980,
             height: 500
           }
         : {
@@ -43,7 +43,7 @@ export default class Gallery extends React.Component {
           domId="ssr-simulator"
           items={items}
           styles={styles}
-          allowSSR={true}
+          allowSSR={!!urlStyles.allowSSR}
           container={container}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
