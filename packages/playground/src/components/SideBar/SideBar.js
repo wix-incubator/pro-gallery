@@ -4,7 +4,7 @@ import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
-import { Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
+import { List, Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { SECTIONS, settingsManager } from '../../settings/settingsManager';
 import { INPUT_TYPES } from '../../settings/consts';
 import { Divider, Alert } from 'antd';
@@ -12,7 +12,7 @@ import comments from './comments';
 import { throttle } from "../../utils/utils";
 import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
-import { GALLERY_CONSTS, notEligibleReasons } from 'pro-gallery';
+import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pro-gallery';
 import 'antd/dist/antd.css';
 
 function SideBar({ items }) {
@@ -208,7 +208,18 @@ function SideBar({ items }) {
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
                 <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e )} />
               </Form.Item>
-              {(notEligibleReasons({ items, styles: styleParams }) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
+              {
+                isEligibleForLeanGallery({ items, styles: styleParams }) ? 
+                <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
+                :
+                <List
+                  size="small"
+                  header="CAN NOT RENDER LEAN GALLERY"
+                  bordered
+                  dataSource={notEligibleReasons({ items, styles: styleParams })}
+                  renderItem={item => <List.Item>{item}</List.Item>}
+                />      
+              }        
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">

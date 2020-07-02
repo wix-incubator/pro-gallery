@@ -6,7 +6,10 @@ import { fixedStyles } from '../presets/gridGallery';
 export const notEligibleReasons = ({items, styles}) => {
   const s = {...styles, ...fixedStyles, allowLeanGallery: true};
   const res = [];
-  if (String(styles.galleryLayout) !== '2') {
+  if (!styles.allowLeanGallery) {
+    res.push('Lean Gallery not allowed');
+  }
+  if (String(s.galleryLayout) !== '2') {
     res.push('not a Grid layout');
   }
   if (items.length > MAX_ITEMS_COUNT) {
