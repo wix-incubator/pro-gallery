@@ -204,7 +204,12 @@ function SideBar({ items }) {
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Lean Gallery" key="lean">
-            {(notEligibleReasons({ items, styles: styleParams }) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
+            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form.Item label="Allow Lean Gallery" labelAlign="left">
+                <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e )} />
+              </Form.Item>
+              {(notEligibleReasons({ items, styles: styleParams }) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
+            </Form>
           </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
