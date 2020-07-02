@@ -14,16 +14,7 @@ export default class Gallery extends React.Component {
     const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
 
     // The size of the gallery container. The images will fit themselves in it
-    const container =
-      typeof window === 'undefined'
-        ? {
-            width: 980,
-            height: 500
-          }
-        : {
-            width: window.innerWidth,
-            height: window.innerHeight
-          };
+    const {container} = this.props;
 
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
