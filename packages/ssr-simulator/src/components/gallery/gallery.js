@@ -17,7 +17,7 @@ export default class Gallery extends React.Component {
     const container =
       typeof window === 'undefined'
         ? {
-            width: '',
+            width: 980,
             height: 500
           }
         : {
