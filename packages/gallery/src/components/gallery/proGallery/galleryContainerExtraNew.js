@@ -238,14 +238,14 @@ export class GalleryContainer extends React.Component {
 
   createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
 
-    this.layoutCss = createCssLayouts({
+/*     this.layoutCss = createCssLayouts({
       layoutParams,
       isApproximateWidth,
       isMobile: utils.isMobile(),
       domId: this.props.domId,
       galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
     });
-  }
+ */  }
 
   propsToState({loopingItems, items, styles, structure, container, layoutCss, domId, resizeMediaUrl}) {
 
@@ -649,7 +649,7 @@ export class GalleryContainer extends React.Component {
         )}
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
-          {(this.scrollCss || []).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
+          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
           {ssrDisableTransition && <style dangerouslySetInnerHTML={{__html: ssrDisableTransition}}/>}
         </div>
       </div>
