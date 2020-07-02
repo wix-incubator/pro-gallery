@@ -335,7 +335,6 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getImageDimensions() {
-    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
     const { styleParams, cubeRatio, style } = this.props;
     const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
@@ -1075,7 +1074,12 @@ class ItemView extends GalleryComponent {
         className={this.getItemContainerClass()}
         onContextMenu={e => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={e => (this.itemContainer = e)}
+        ref={e => {
+          this.itemContainer = e;
+          if (e && e.style) {
+            Object.assign(e.style, this.getItemContainerStyles());
+          }
+        }}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
         onKeyDown={this.onKeyPress}
