@@ -1,3 +1,10 @@
+## [v2.0.9](https://pro-gallery-2-0-9.surge.sh) (02/07/2020)
+ 
+#### GALLERY
+ -  bug fix (ContainerNew) getMoreItems on didMount
+ -  REVERT: changed pro-gallery/lib to be only ESM.
+
+---
 ## [v2.0.8](https://pro-gallery-2-0-8.surge.sh) (01/07/2020)
  
 #### GALLERY
@@ -20,7 +27,7 @@
  
 #### GALLERY
  -  ItemView: Add setState with setTimeout for text line fixer
- -  improve: removed unused code
+ -  improve: removed unused cod
 
 ---
 ## [v2.0.4](https://pro-gallery-2-0-4.surge.sh) (30/06/2020)
