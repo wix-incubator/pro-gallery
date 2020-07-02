@@ -44,6 +44,7 @@ export default class Gallery extends React.Component {
           items={items}
           styles={styles}
           allowSSR={!!urlStyles.allowSSR}
+          useBlueprints={!!urlStyles.useBlueprints}
           container={container}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
