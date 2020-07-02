@@ -37,7 +37,7 @@ export default class ImageItem extends GalleryComponent {
 
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
-    const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
+    const useImageTag = true;// lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
     const imageItemClassName = [
       'gallery-item-content',
       'image-item',
@@ -140,8 +140,8 @@ export default class ImageItem extends GalleryComponent {
       />
     );
 
-    // const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
-    const renderedItem = imageContainer(image);
+    const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
+    // const renderedItem = imageContainer(image);
     return renderedItem;
   }
 }
