@@ -94,6 +94,10 @@ class ItemView extends GalleryComponent {
     }, 1500);
   }
 
+  setItemError() {
+    this.props.actions.eventsListener(EVENTS.ITEM_ERROR, this.props);
+  }
+
   isIconTag(tagName) {
     return ['button', 'i', 'a', 'svg', 'path'].indexOf(tagName.toLowerCase()) >= 0;
   }
@@ -521,6 +525,7 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
           setItemLoaded: this.setItemLoaded,
+          setItemError: this.setItemError,
         }}
       />
     );

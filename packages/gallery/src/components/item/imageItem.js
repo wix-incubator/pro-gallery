@@ -103,7 +103,9 @@ export default class ImageItem extends GalleryComponent {
         alt={alt ? alt : 'untitled image'}
         src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
         loading="lazy"
+        onError={() => this.props.actions.setItemError()}
         onLoad={({ target }) => {
+          this.props.actions.setItemLoaded();
           target.style.opacity = '1';
           setTimeout((() => {
             try {
