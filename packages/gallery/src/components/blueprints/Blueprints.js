@@ -1,9 +1,9 @@
 import { addPresetStyles } from '../gallery/presets/presets';
 import dimensionsHelper from '../helpers/dimensionsHelper';
-import utils from '../../common/utils';
+// import utils from '../../common/utils';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import { Layouter } from 'pro-layouts';
-import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
+// import { createCssLayouts } from '../helpers/cssLayoutsHelper.js';
 import { processLayouts } from '../helpers/layoutHelper'
 import defaultStyles from '../../common/defaultStyles';
 
@@ -26,8 +26,7 @@ class Blueprints {
     const changed = itemsChanged || stylesChanged || containerChanged;
     if (changed || !existingBlueprint) {
       const structure = this.createStructure({formattedContainer, formattedItems, formattedStyles}, changed);
-      const layoutCss = this.createCssLayouts({formattedContainer, formattedItems, formattedStyles, structure, domId}, changed)
-      return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, layoutCss,};// scrollCss};
+      return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure,};// scrollCss};
     }
 
     return existingBlueprint;
@@ -281,27 +280,27 @@ class Blueprints {
 
   }
 
-  createCssLayouts({formattedContainer, formattedItems, formattedStyles, structure, domId}) {
+  // createCssLayouts({formattedContainer, formattedItems, formattedStyles, structure, domId}) {
 
-      const layoutParams = {
-        items: formattedItems,
-        container: formattedContainer,
-        styleParams: formattedStyles,
-          options: {
-          showAllItems: true,
-          skipVisibilitiesCalc: true,
-          useLayoutStore: false,
-        },
-      };
-      const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !formattedStyles.oneRow; //FAKE SSR - TODO ask guy about this
-      return createCssLayouts({
-        layoutParams,
-        isApproximateWidth,
-        isMobile: utils.isMobile(),
-        domId: domId,
-        galleryItems: isApproximateWidth? null : structure.items,
-      });
-  }
+  //     const layoutParams = {
+  //       items: formattedItems,
+  //       container: formattedContainer,
+  //       styleParams: formattedStyles,
+  //         options: {
+  //         showAllItems: true,
+  //         skipVisibilitiesCalc: true,
+  //         useLayoutStore: false,
+  //       },
+  //     };
+  //     const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !formattedStyles.oneRow; //FAKE SSR - TODO ask guy about this
+  //     return createCssLayouts({
+  //       layoutParams,
+  //       isApproximateWidth,
+  //       isMobile: utils.isMobile(),
+  //       domId: domId,
+  //       galleryItems: isApproximateWidth? null : structure.items,
+  //     });
+  // }
 
 }
 const blueprints = new Blueprints();

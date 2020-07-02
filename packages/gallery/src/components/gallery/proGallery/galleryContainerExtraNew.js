@@ -7,7 +7,6 @@ import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
 import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
-import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
@@ -236,24 +235,12 @@ export class GalleryContainer extends React.Component {
     return visibleItems;
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
-
-/*     this.layoutCss = createCssLayouts({
-      layoutParams,
-      isApproximateWidth,
-      isMobile: utils.isMobile(),
-      domId: this.props.domId,
-      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
-    });
- */  }
-
-  propsToState({loopingItems, items, styles, structure, container, layoutCss, domId, resizeMediaUrl}) {
+  propsToState({loopingItems, items, styles, structure, container, domId, resizeMediaUrl}) {
 
     items = items || this.props.items;
     styles = styles || this.props.styles;
     container = container || this.props.container;
     structure = structure || this.props.structure;
-    layoutCss = layoutCss || this.props.layoutCss;
     domId = domId || this.props.domId;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
 
@@ -262,7 +249,6 @@ export class GalleryContainer extends React.Component {
         sharpParams: styles.sharpParams,
         resizeMediaUrl: resizeMediaUrl,
       });
-      this.layoutCss = layoutCss;
       
       // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
       const allowPreloading =
@@ -282,7 +268,7 @@ export class GalleryContainer extends React.Component {
         oneRow: styles.oneRow,
         cb: this.setPlayingIdxState,
       });
-      const newState = {items: loopingItems || items, styles: styles, container: container, structure: structure, layoutCss: layoutCss}
+      const newState = {items: loopingItems || items, styles: styles, container: container, structure: structure}
       return newState;
   }
 
