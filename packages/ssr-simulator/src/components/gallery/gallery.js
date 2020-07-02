@@ -43,7 +43,7 @@ export default class Gallery extends React.Component {
           domId="ssr-simulator"
           items={items}
           styles={styles}
-          allowSSR={true}
+          allowSSR={!!urlStyles.allowSSR}
           container={container}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}

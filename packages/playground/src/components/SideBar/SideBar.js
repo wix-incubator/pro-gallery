@@ -199,7 +199,7 @@ function SideBar({ items }) {
                 <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowSSR=true&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
