@@ -1,40 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Head from './Head';
 import Gallery from './gallery';
-
-const DEFAULT_CONTAINER = typeof window !== 'undefined' ? {
-  width: window.innerWidth,
-  height: window.innerHeight
-} : {
-  width: 980,
-  height: 500
-};
+import * as utils from './gallery/utils';
 
 const App = ({ location }) => {
-  const [container, setContainer] = useState(DEFAULT_CONTAINER)
-
-  useEffect(() => { 
-    const handleResize = () => {
-      const container = {
-        width: window.innerWidth,
-        height: window.innerHeight
-      }
-
-      setContainer(container);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [setContainer])
+  const searchString = location || window.location.search;
+  const urlParams = utils.getStyleParamsFromUrl(searchString);
 
   return (
   <div className="app">
     <Head />
-      <Gallery location={location} container={container}/>
+      <Gallery urlParams={urlParams}/>
   </div>
 )
 }
