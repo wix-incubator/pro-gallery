@@ -1,5 +1,5 @@
 import blueprints from './Blueprints'
-
+// import EVENTS from '../../common/constants/events';
 
 class BlueprintsManager {
 
@@ -8,19 +8,42 @@ class BlueprintsManager {
     this.lastParams = config && config.lastParams || {};
     this.existingBlueprint = config && config.existingBlueprint || {};
     this.cache = {};
+    // this.totalItemsCount = 200; //TODO - populate;
+    // this.api = {};
   }
 
   getOrCreateBlueprint(params) {
         // cacheBlocker
         // if (this.cache[params]) return this.cache[params];
-    params =  this.completeBuildingBlocks(params)
+    const eventsListener = (...args) => this.eventsListenerWrapper(params.eventsListener, args);
+    params =  {...params,...this.completeBuildingBlocks(params)}
     const lastparams = this.lastParams;
     const existingBlueprint = this.existingBlueprint;
-    return this.cache[params] = blueprints.createBlueprint(params, lastparams, existingBlueprint);
+
+    return this.cache[params] = this.existingBlueprint = {eventsListener, ...blueprints.createBlueprint(params, lastparams, existingBlueprint)};
   }
 
 
 
+  // getMoreItems({currentItemLength}) {
+  //   if (currentItemLength < this.totalItemsCount) {
+  //     this.gettingMoreItems = true;
+  //     // this.api.getMoreITems(currentItemLength);
+  //     // setTimeout(() => {
+  //     //   //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
+  //     //   this.gettingMoreItems = false;
+  //     // }, 2000);
+  //   } else if (this.existingBlueprint.styles.slideshowLoop) {
+  //     this.duplicateGalleryItems();
+  //   }
+  // }
+
+  // duplicateGalleryItems() {
+  //     //TBD...
+  //     // this.items = this.items.concat(
+  //     //   ...this.items.slice(0, this.props.totalItemsCount),
+  //     // )
+  // }
 
 
 
@@ -101,6 +124,10 @@ class BlueprintsManager {
     if(this.thingsChanged){
       this.lastParams = params;
     }
+  }
+
+  eventsListenerWrapper(eventsListenerFunc, initArgs) {
+    eventsListenerFunc(...initArgs);
   }
 }
 
