@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Head from './Head';
 import Gallery from './gallery';
 
-const DEFAULT_CONTAINER = {
+const DEFAULT_CONTAINER = typeof window !== 'undefined' ? {
+  width: window.innerWidth,
+  height: window.innerHeight
+} : {
   width: 980,
   height: 500
 };
