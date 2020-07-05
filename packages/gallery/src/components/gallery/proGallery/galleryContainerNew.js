@@ -25,6 +25,7 @@ export class GalleryContainer extends React.Component {
     }
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
+    this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
     this.scrollToGroup = this.scrollToGroup.bind(this);
@@ -802,6 +803,10 @@ export class GalleryContainer extends React.Component {
         allowPreloading: true,
       });
     }
+    this.setGotFirstScrollIfNeeded();
+  }
+
+  setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
       this.setState({
         gotFirstScrollEvent: true,
@@ -933,6 +938,7 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
           enableScrollPreload={this.enableScrollPreload}
+          setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           onScroll={this.onGalleryScroll}
         />
         <ViewComponent
