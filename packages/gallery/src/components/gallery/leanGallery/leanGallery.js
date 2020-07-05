@@ -22,13 +22,6 @@ const get = (item, attr) => {
       return item.metadata[attr]
     }
   }
-
-  if (typeof item.metaData !== 'undefined') {
-    if (typeof item.metaData[attr] !== 'undefined') {
-      return item.metaData[attr]
-    }
-  }
-
 }
 export default class LeanGallery extends React.Component {
 

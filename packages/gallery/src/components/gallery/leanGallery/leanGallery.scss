@@ -1,10 +1,11 @@
 :global {
   div.lean-gallery-gallery {
     display: grid;
+    position: static;
 
     a.lean-gallery-cell {
       overflow: hidden;
-      position: relative;
+      position: static;
       display: block;
 
       div.lean-gallery-image-wrapper {
