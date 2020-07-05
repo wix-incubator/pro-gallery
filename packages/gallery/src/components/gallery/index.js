@@ -19,16 +19,16 @@ export default class BaseGallery extends React.Component {
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
     const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId, lazyLoad};
+    const { galleryType, galleryLayout } = galleryProps.styles;
     let GalleryComponent = ProGallery;
-    if(!this.props.useBlueprints) {
 
+    if(!this.props.useBlueprints) {
       dimensionsHelper.updateParams({
         domId: galleryProps.domId,	  
         container: galleryProps.container,
         styles: galleryProps.styles
       });    
       
-      const { galleryType, galleryLayout } = galleryProps.styles;
       if (galleryType === undefined || galleryLayout !== undefined) {
         switch (galleryLayout) {
           case LAYOUTS.MASONRY:
@@ -76,8 +76,10 @@ export default class BaseGallery extends React.Component {
         }
       }
     }
+    else if (galleryType === undefined || galleryLayout === LAYOUTS.GRID){
+      GalleryComponent = PRESETS.GridGallery;
+    }
 
     return <GalleryComponent {...galleryProps} />
   }
 }
-
