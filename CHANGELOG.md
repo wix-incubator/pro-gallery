@@ -1,3 +1,15 @@
+## [v2.0.11](https://pro-gallery-2-0-11.surge.sh) (05/07/2020)
+ 
+#### GALLERY
+ -  fix: (containerNew) getVisibleItems - dont render less then 2 items
+
+---
+## [v2.0.10](https://pro-gallery-2-0-10.surge.sh) (05/07/2020)
+ 
+#### GALLERY
+ -  set gotFirstScrollEvent on horizontal scroll in oneRow gallery
+
+---
 ## [v2.0.9](https://pro-gallery-2-0-9.surge.sh) (02/07/2020)
  
 #### GALLERY

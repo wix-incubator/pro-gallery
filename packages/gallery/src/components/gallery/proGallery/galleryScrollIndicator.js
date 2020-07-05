@@ -92,6 +92,8 @@ export default class ScrollIndicator extends GalleryComponent {
           this.props.getMoreItemsIfNeeded(top);
           this.props.enableScrollPreload();
           this.debouncedOnScroll({ top, left });
+        } else {
+          this.props.setGotFirstScrollIfNeeded();
         }
       }
     };
