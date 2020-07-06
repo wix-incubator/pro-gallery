@@ -186,6 +186,13 @@ function SideBar({ items }) {
                 <Switch checked={gallerySettings.lazyLoad === GALLERY_CONSTS.lazyLoad.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? GALLERY_CONSTS.lazyLoad.NATIVE : GALLERY_CONSTS.lazyLoad.CSS })} />
               </Form.Item>
             </Form>
+            <Form layout="vertical">
+              <Form.Item label="View Mode">
+                <Select defaultValue={gallerySettings.viewMode || GALLERY_CONSTS.viewMode.SITE} onChange={val => setGallerySettings({ viewMode: val })}>
+                  {Object.entries(GALLERY_CONSTS.viewMode).map(([key, val]) => <Select.Option value={key}>{val}</Select.Option>)}
+                </Select>
+              </Form.Item>
+            </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Develop" key="develop">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>

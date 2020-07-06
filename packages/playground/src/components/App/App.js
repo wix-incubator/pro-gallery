@@ -192,12 +192,12 @@ export function App() {
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
         <ExpandableProGallery
-          key={`pro-gallery-${gallerySettings.isUnknownDimensions}-${gallerySettings.isAvoidGallerySelfMeasure}-${getItems()[0].itemId}`}
+          key={`pro-gallery-${JSON.stringify(gallerySettings)}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
           container={container}
           items={getItems()}
-          lazyLoad={gallerySettings.lazyLoad}
+          viewMode={gallerySettings.viewMode}
           options={styleParams}
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
