@@ -4,13 +4,11 @@ import { GALLERY_CONSTS } from './consts';
 export const showColorOverlay = (sp, context = {}) => {
   const hasHoverOnMobile = styleParams => {
     const firstTapSimulatesHover = sp.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-      (showTexts(styleParams) &&
-        (
-          (layoutPresentOuterInformation(styleParams) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER) ||
-          !layoutPresentOuterInformation(styleParams)
-        )
+      (
+        (layoutPresentOuterInformation(styleParams) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER) ||
+        !layoutPresentOuterInformation(styleParams)
       )
-      ;
+    ;
 
     return !isSlideshowLayout(styleParams) &&
       firstTapSimulatesHover;
@@ -39,7 +37,6 @@ export const layoutPresentOuterInformation = sp =>
 export const layoutPresentSideOuterInformation = sp =>
   !oneRow(sp) && sp.isVertical && sp.groupSize === 1;
 
-export const showTexts = sp => sp.allowTitle || sp.allowDescription;
 export const showAlignTextVertical = sp => [GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.COLUMN, GALLERY_CONSTS.layout.MAGIC].indexOf(sp.galleryLayout) > -1 && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 export const presentOuterInformation = sp => layoutPresentOuterInformation(sp) && sp.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER;
 export const presentSideOuterInformation = sp => layoutPresentSideOuterInformation(sp) && (sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT || sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT);
@@ -52,8 +49,7 @@ export const oneRow = sp => sp.oneRow || sp.scrollDirection === GALLERY_CONSTS.s
 export const showSlideshowSettings = sp => [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1;
 export const showAutoSlideshow = sp => [GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE].indexOf(sp.galleryLayout) > -1;
 export const showImagesDisplaySection = sp => [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.COLLAGE, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.THUMBNAIL, GALLERY_CONSTS.layout.SLIDER, GALLERY_CONSTS.layout.SLIDESHOW, GALLERY_CONSTS.layout.FULLSIZE, GALLERY_CONSTS.layout.PANORAMA, GALLERY_CONSTS.layout.COLUMN].indexOf(sp.galleryLayout) > -1;
-export const showHoveringBehaviour = sp => showImagesDisplaySection(sp) && !isSlideshowLayout(sp) && showTexts(sp) && ((presentOuterInformation(sp) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER) || !presentOuterInformation(sp));
-export const showTextSubSection = sp => showTexts(sp);
+export const showHoveringBehaviour = sp => showImagesDisplaySection(sp) && !isSlideshowLayout(sp) && ((presentOuterInformation(sp) && sp.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER) || !presentOuterInformation(sp));
 export const showButtonSection = sp => showInfiniteScroll(sp) && !sp.enableInfiniteScroll && isStore(sp);
 export const showExpendSection = sp => sp.itemClick === GALLERY_CONSTS.itemClick.EXPAND || isStore(sp);
 export const showScrollAnimations = sp => !oneRow(sp);

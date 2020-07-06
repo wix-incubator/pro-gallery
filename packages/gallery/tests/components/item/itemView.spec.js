@@ -1,8 +1,6 @@
 //Yonatan Hattav Jun21
 
 import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder';
-import CustomButton from '../../../src/components/item/buttons/customButton';
-import ItemTitle from '../../../src/components/item/texts/itemTitle';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
@@ -35,87 +33,6 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       driver.get.instance().setItemLoaded();
       expect(spy.called).to.be.true;
-      spy.restore();
-    });
-  });
-  
-  describe('toggleShare', () => {
-    it('should not be fired if hovering over icons', () => {
-      driver.mount(ItemView, sampleItemViewProps);
-      let spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({
-        type: 'click',
-        target: { tagName: 'button' },
-        relatedTarget: { tagName: 'button' },
-        stopPropagation: () => {},
-        preventDefault: () => {},
-      });
-      expect(spy.called).to.be.true; //called on any event type other than mouseout
-      spy.restore();
-      spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({
-        type: 'mouseout',
-        target: { tagName: 'foo' },
-        relatedTarget: { tagName: 'button' },
-        stopPropagation: () => {},
-        preventDefault: () => {},
-      });
-      expect(spy.called).to.be.false; //not called is mouseout but one of the tagName isnt listed
-      spy.restore();
-      spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({
-        type: 'mouseout',
-        target: { tagName: 'button' },
-        relatedTarget: { tagName: 'foo' },
-        stopPropagation: () => {},
-        preventDefault: () => {},
-      });
-      expect(spy.called).to.be.false; //not called is mouseout but at least one of the tagName isnt listed
-      spy.restore();
-      spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.get.instance().toggleShare({
-        type: 'mouseout',
-        target: { tagName: 'foo' },
-        relatedTarget: { tagName: 'foo' },
-        stopPropagation: () => {},
-        preventDefault: () => {},
-      });
-      expect(spy.called).to.be.true; // called if mouseout but no listed tagName
-      spy.restore();
-    });
-    it('should changes showShare properly when fired', () => {
-      driver.mount(ItemView, sampleItemViewProps);
-      const spy = sinon.spy(ItemView.prototype, 'setState');
-      driver.set.state({
-        showShare: true,
-      });
-      driver.get.instance().toggleShare({
-        type: 'click',
-        target: { tagName: 'button' },
-        relatedTarget: { tagName: 'button' },
-        stopPropagation: () => {},
-        preventDefault: () => {},
-      });
-      expect(driver.get.state().showShare).to.be.false; //when forceVal is not sent - toggles showShare
-      driver.get.instance().toggleShare({
-        type: 'click',
-        target: { tagName: 'button' },
-        relatedTarget: { tagName: 'button' },
-        stopPropagation: () => {},
-        preventDefault: () => {},
-      });
-      expect(driver.get.state().showShare).to.be.true; //when forceVal is not sent - toggles showShare
-      driver.get.instance().toggleShare(
-        {
-          type: 'click',
-          target: { tagName: 'button' },
-          relatedTarget: { tagName: 'button' },
-          stopPropagation: () => {},
-          preventDefault: () => {},
-        },
-        true,
-      );
-      expect(driver.get.state().showShare).to.be.true; //assignes forceVal to showShare if it is defined
       spy.restore();
     });
   });
@@ -373,39 +290,6 @@ describe('Item View', () => {
       });
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
-    });
-    it('should create a separate div for buttons when in slideshow', () => {
-      Object.assign(sampleItemViewProps, {
-        visible: true,
-        styleParams: {
-          isSlideshow: true,
-        },
-        type: 'image',
-      });
-      driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.hook('gallery-slideshow-info-buttons').length).to.equal(1);
-      driver.set.props({
-        styleParams: {
-          isSlideshow: false,
-        },
-      });
-      expect(driver.find.hook('gallery-slideshow-info-buttons').length).to.equal(0);
-    });
-  });
-  describe('getBottomInfoElement', () => {
-    it('should create a CustomButton/ItemTitle if needed', () => {
-      Object.assign(sampleItemViewProps, {
-        visible: true,
-        styleParams: {
-          useCustomButton: true,
-          titlePlacement: 'SHOW_BELOW',
-          allowTitle: true,
-        },
-        type: 'image',
-      });
-      driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.selector(CustomButton).length).to.equal(1);
-      expect(driver.find.selector(ItemTitle).length).to.equal(1);
     });
   });
   //compunentDidUpdate not tested

@@ -1,7 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { styleParams, container, customRenderers } from '../drivers/mocks/styles';
 import GALLERY_CONSTS from '../../src/common/constants';
 
 describe('styleParam - textImageSpace', () => {
@@ -10,7 +10,8 @@ describe('styleParam - textImageSpace', () => {
   const initialProps = {
     container,
     items: images2,
-    styles: styleParams
+    styles: styleParams,
+    ...customRenderers,
   }
 
   beforeEach(() => {
@@ -21,7 +22,6 @@ describe('styleParam - textImageSpace', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      allowTitle: true,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
       oneRow: false,
@@ -37,7 +37,6 @@ describe('styleParam - textImageSpace', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
-      allowTitle: true,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
       oneRow: false,
@@ -53,7 +52,6 @@ describe('styleParam - textImageSpace', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
-      allowTitle: true,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       textImageSpace: 20,
       oneRow: false,

@@ -25,6 +25,7 @@ export class GalleryContainer extends React.Component {
     }
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.enableScrollPreload = this.enableScrollPreload.bind(this);
+    this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
     this.scrollToGroup = this.scrollToGroup.bind(this);
@@ -125,7 +126,11 @@ export class GalleryContainer extends React.Component {
       } else if (this.isVerticalGallery()) {
         visibleItems = items.filter(item => item.offset.top < maxItemTop);
       } else {
-        visibleItems = items.filter(item => item.left <= galleryWidth);
+        visibleItems = items.filter(item => item.left <= galleryWidth + 20);
+      }
+      if(visibleItems.length < 2 && visibleItems.length < items.length) {
+        //dont render less then 2 items (otherwise slide show Arrow will be removed)
+        visibleItems = items.slice(1);
       }
     } catch (e) {
       visibleItems = items;
@@ -138,6 +143,7 @@ export class GalleryContainer extends React.Component {
     this.scrollToItem(this.props.currentIdx, false, true, 0);
     this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
+    this.getMoreItemsIfNeeded(0);
     this.videoScrollHelper.initializePlayState();
 
     try {
@@ -433,7 +439,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryExpensively(
-    { items, styles, container, watermarkData, itemsDimensions },
+    { items, styles, container, watermarkData, itemsDimensions, customInfoRenderer },
     curState,
   ) {
     if (utils.isVerbose()) {
@@ -444,7 +450,8 @@ export class GalleryContainer extends React.Component {
     const state = curState || this.state || {};
 
     let _styles, _container;
-    const stylesWithLayoutStyles = styles && addLayoutStyles(styles);
+    const customExternalInfoRendererExists = !!customInfoRenderer;
+    const stylesWithLayoutStyles = styles && addLayoutStyles(styles, customExternalInfoRendererExists);
 
     const isNew = checkNewGalleryProps(
       { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
@@ -503,7 +510,8 @@ export class GalleryContainer extends React.Component {
         container,
         domId: this.props.domId,
       });
-      _styles = addLayoutStyles(styles);
+
+      _styles = addLayoutStyles(styles, customExternalInfoRendererExists);
       dimensionsHelper.updateParams({ styles: _styles });
       _container = Object.assign(
         {},
@@ -796,6 +804,10 @@ export class GalleryContainer extends React.Component {
         allowPreloading: true,
       });
     }
+    this.setGotFirstScrollIfNeeded();
+  }
+
+  setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
       this.setState({
         gotFirstScrollEvent: true,
@@ -927,6 +939,7 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
           enableScrollPreload={this.enableScrollPreload}
+          setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           onScroll={this.onGalleryScroll}
         />
         <ViewComponent
