@@ -3,28 +3,54 @@ import { ProGallery } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
+import { GALLERY_CONSTS } from 'pro-gallery';
 
-export default class Gallery extends React.Component {
+export default class Gallery extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleResize = this.handleResize.bind(this);
+    const container = {
+      width: 1920,
+      height: 730
+    };
+
+    this.state = {
+      isClient: false,
+      container: container
+    };
+  }
+
+  handleResize = () => {
+    const container = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+    this.setState({
+      container
+    });
+  };
+
+  componentDidMount() {
+    this.setState({ isClient: true });
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
   render() {
+    const { isClient, container } = this.state;
+    const viewMode = isClient
+      ? GALLERY_CONSTS.viewMode.SITE
+      : GALLERY_CONSTS.viewMode.PRERENDER;
     const searchString = this.props.location || window.location.search;
     const urlStyles = utils.getStyleParamsFromUrl(searchString);
     const hasUrlStyles = Object.keys(urlStyles).length > 0;
     const styles = hasUrlStyles ? urlStyles : utils.defaultStyleParams;
 
     const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
-
-    // The size of the gallery container. The images will fit themselves in it
-    const container =
-      typeof window === 'undefined'
-        ? {
-            width: 980,
-            height: 500
-          }
-        : {
-            width: window.innerWidth,
-            height: window.innerHeight
-          };
-
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
       // console.log({eventName, eventData});
@@ -46,6 +72,7 @@ export default class Gallery extends React.Component {
           allowSSR={!!urlStyles.allowSSR}
           useBlueprints={!!urlStyles.useBlueprints}
           container={container}
+          viewMode={viewMode}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
         />
