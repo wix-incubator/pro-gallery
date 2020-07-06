@@ -229,7 +229,11 @@ export class GalleryContainer extends React.Component {
       } else if (this.isVerticalGallery()) {
         visibleItems = items.filter(item => item.offset.top < maxItemTop);
       } else {
-        visibleItems = items.filter(item => item.left <= galleryWidth);
+        visibleItems = items.filter(item => item.left <= galleryWidth + 20);
+      }
+      if(visibleItems.length < 2 && visibleItems.length < items.length) {
+        //dont render less then 2 items (otherwise slide show Arrow will be removed)
+        visibleItems = items.slice(1);
       }
     } catch (e) {
       visibleItems = items;
