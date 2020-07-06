@@ -2,7 +2,6 @@
 import React from 'react';
 import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
-import dimensionsHelper from '../../helpers/dimensionsHelper';
 import PLACEMENTS from '../../../common/constants/placements';
 import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
@@ -16,13 +15,12 @@ export const fixedStyles = {
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   galleryMargin: 0,
   isVertical: false,
-  groupSize: 1,
+  groupSize: 1, 
   groupTypes: '1',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   smartCrop: false,
   galleryType: 'Strips',
-  gallerySize: () => dimensionsHelper.getGalleryWidth(),
   hasThumbnails: true,
   enableScroll: true,
   scrollSnap: true,

@@ -78,13 +78,10 @@ class ItemView extends GalleryComponent {
   //----------------------------------------| ACTIONS |-------------------------------------------//
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
-    this.setState({
-      loaded: true
-    });
+  }
 
-    this.itemLoadedTimeout = setTimeout(() => {
-      this.setState(() => ({ loaded: true }));
-    }, 1500);
+  setItemError() {
+    this.props.actions.eventsListener(EVENTS.ITEM_ERROR, this.props);
   }
 
   isIconTag(tagName) {
@@ -271,10 +268,6 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getImageDimensions() {
-    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    if (this.props.isUnknownWidth) {
-      return {};
-    }
     const { styleParams, cubeRatio, style } = this.props;
     const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
@@ -361,6 +354,7 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
           setItemLoaded: this.setItemLoaded,
+          setItemError: this.setItemError,
         }}
       />
     );
@@ -593,15 +587,22 @@ class ItemView extends GalleryComponent {
     const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
     return !itemDoesntHaveLink;
   }
-
+  
   getItemContainerStyles() {
-    const { styleParams } = this.props;
+    const { offset, style, styleParams } = this.props;
+
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
+      top: offset.top,
+      left: styleParams.isRTL ? 'auto' : offset.left,
+      right: !styleParams.isRTL ? 'auto' : offset.left,
+      width: style.width + style.infoWidth,
+      height: style.height + style.infoHeight,
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
       cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
       (styleParams.itemClick === CLICK_ACTIONS.LINK && itemDoesntHaveLink)
@@ -882,7 +883,7 @@ class ItemView extends GalleryComponent {
         className={this.getItemContainerClass()}
         onContextMenu={e => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={e => (this.itemContainer = e)}
+        ref={e => this.itemContainer = e}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
         onKeyDown={this.onKeyPress}
