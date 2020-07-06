@@ -10,8 +10,8 @@ export default class Gallery extends React.PureComponent {
     super(props);
     this.handleResize = this.handleResize.bind(this);
     const container = {
-      width: 1920,
-      height: 730
+      width: 900,
+      height: 500
     };
 
     this.state = {
@@ -41,14 +41,14 @@ export default class Gallery extends React.PureComponent {
   }
 
   render() {
+    const { urlParams} = this.props;
     const { isClient, container } = this.state;
     const viewMode = isClient
       ? GALLERY_CONSTS.viewMode.SITE
       : GALLERY_CONSTS.viewMode.PRERENDER;
-    const searchString = this.props.location || window.location.search;
-    const urlStyles = utils.getStyleParamsFromUrl(searchString);
-    const hasUrlStyles = Object.keys(urlStyles).length > 0;
-    const styles = hasUrlStyles ? urlStyles : utils.defaultStyleParams;
+
+    const hasUrlStyles = Object.keys(urlParams).length > 0;
+    const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
 
     const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
@@ -63,17 +63,16 @@ export default class Gallery extends React.PureComponent {
         container
       });
 
-
     return (
       <div>
         <ProGallery
           domId="ssr-simulator"
           items={items}
           styles={styles}
-          allowSSR={!!urlStyles.allowSSR}
-          useBlueprints={!!urlStyles.useBlueprints}
+          allowSSR={!!urlParams.allowSSR}
+          useBlueprints={!!urlParams.useBlueprints}
           container={container}
-          viewMode={viewMode}
+          // viewMode={viewMode}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
         />
