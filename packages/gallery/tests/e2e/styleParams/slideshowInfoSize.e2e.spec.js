@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('slideshowInfoSize - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -19,7 +19,6 @@ describe('slideshowInfoSize - e2e', () => {
   it('should set "slideshowInfoSize"(400)', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      allowTitle: true,
       slideshowInfoSize:400,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -30,7 +29,6 @@ describe('slideshowInfoSize - e2e', () => {
   it('should set "slideshowInfoSize"(250)', async () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      allowTitle: true,
       slideshowInfoSize:250,
     });
     await driver.waitFor.hookToBeVisible('item-container');

@@ -1,8 +1,45 @@
+## [v2.0.11](https://pro-gallery-2-0-11.surge.sh) (05/07/2020)
+ 
+#### GALLERY
+ -  fix: (containerNew) getVisibleItems - dont render less then 2 items
+
+---
+## [v2.0.10](https://pro-gallery-2-0-10.surge.sh) (05/07/2020)
+ 
+#### GALLERY
+ -  set gotFirstScrollEvent on horizontal scroll in oneRow gallery
+
+---
+## [v2.0.9](https://pro-gallery-2-0-9.surge.sh) (02/07/2020)
+ 
+#### GALLERY
+ -  bug fix (ContainerNew) getMoreItems on didMount
+ -  REVERT: changed pro-gallery/lib to be only ESM.
+
+---
+## [v2.0.8](https://pro-gallery-2-0-8.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  changed pro-gallery/lib to be only ESM.
+
+---
+## [v2.0.7](https://pro-gallery-2-0-7.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  **** Removed all info from the gallery ****
+
+---
+## [v2.0.6](https://pro-gallery-2-0-6.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  fix: getVisibleItems only in viewMode site
+
+---
 ## [v2.0.5](https://pro-gallery-2-0-5.surge.sh) (30/06/2020)
  
 #### GALLERY
  -  ItemView: Add setState with setTimeout for text line fixer
- -  improve: removed unused code
+ -  improve: removed unused cod
 
 ---
 ## [v2.0.4](https://pro-gallery-2-0-4.surge.sh) (30/06/2020)

@@ -87,24 +87,10 @@ export function getOuterInfoStyle(placement, styleParams, mediaHeight, textBoxHe
   return styles;
 }
 
-function getInfoHorizontalPadding(styleParams) {
-  if (
-    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND ||
-    styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND
-  ) {
-    return styleParams.textsHorizontalPadding + 30;
-  }
-  return styleParams.textsHorizontalPadding;
-}
-
 function getInnerInfoStylesAboveOrBelow(styleParams, infoHeight) {
   return {
     width: '100%',
     height: infoHeight,
-    paddingBottom: styleParams.textsVerticalPadding + 15 + 'px',
-    paddingTop: styleParams.textsVerticalPadding + 15 + 'px',
-    paddingRight: getInfoHorizontalPadding(styleParams) + 'px',
-    paddingLeft: getInfoHorizontalPadding(styleParams) + 'px'
   }
 }
 
@@ -123,7 +109,6 @@ export function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)
       styleParams.textBoxFillColor.value && {
         backgroundColor: styleParams.textBoxFillColor.value,
       }),
-    textAlign: styleParams.galleryTextAlign,
     overflow: 'hidden',
     boxSizing: 'border-box',
   };

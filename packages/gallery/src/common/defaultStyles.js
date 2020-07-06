@@ -47,21 +47,12 @@ export default {
     isAutoSlideshow: false,
     slideshowLoop: false,
     autoSlideshowInterval: 4,
-    useCustomButton: false,
     bottomInfoHeight: 0,
     titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-    galleryHorizontalAlign: GALLERY_CONSTS.horizontalAlign.CENTER,
     galleryTextAlign: 'center',
-    galleryVerticalAlign: GALLERY_CONSTS.verticalAlign.CENTER,
     scrollSnap: false,
     itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     fullscreen: true,
-    allowSocial: true,
-    allowDownload: false,
-    allowTitle: true,
-    allowDescription: false,
-    loveButton: true,
-    loveCounter: false,
     videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
     scrollAnimation:  GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
     scrollDirection: 0,
@@ -74,8 +65,6 @@ export default {
     watermarkDock: GALLERY_CONSTS.watermarkDock.RIGHT_DOWN,
     loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
     defaultShowInfoExpand: 1,
-    allowTitleExpand: true,
-    allowDescriptionExpand: true,
     allowLinkExpand: true,
     expandInfoPosition: 0,
     allowFullscreenExpand: true,
@@ -113,7 +102,6 @@ export default {
     // itemDescriptionFontSlideshow: 'font_8' // startWithSize: 15
     // itemDescriptionFontColorSlideshow: 'color-5'
     // textBoxFillColor: 'color-2', //startWithOpacity: 1,
-    calculateTextBoxHeightMode: GALLERY_CONSTS.textBoxHeightCalculationOptions.AUTOMATIC,
     calculateTextBoxWidthMode: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
     textBoxHeight: 200,
     textBoxWidth: 200,
@@ -121,19 +109,6 @@ export default {
     textImageSpace: 10,
     textBoxBorderRadius: 0,
     textBoxBorderWidth: 0,
-    // textBoxBorderColor: color-5,
-    textsVerticalPadding: 0,
-    textsHorizontalPadding: 0,
-    titleDescriptionSpace: 6,
-    customButtonText: '',
-    // customButtonFontForHover: 'font_8', startWithSize: 15
-    // customButtonFontColorForHover: color-5
-    // customButtonFont: 'font_8', startWithSize: 15
-    // customButtonFontColor: color-1'
-    // customButtonColor: startWithOpacity: '0', startWithColor: 'color-1'
-    customButtonBorderWidth: 1,
-    // customButtonBorderColor: startWithColor: 'color-1'
-    customButtonBorderRadius: 0,
     loadMoreButtonText: '',
     //loadMoreButtonFont: font_8
     // loadMoreButtonFontColor: color-5

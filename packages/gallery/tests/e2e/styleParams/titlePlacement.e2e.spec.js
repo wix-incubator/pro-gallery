@@ -6,7 +6,7 @@ expect.extend({ toMatchImageSnapshot });
 
 describe('titlePlacement - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -18,8 +18,6 @@ describe('titlePlacement - e2e', () => {
   it('should place texts on the bottom of the items', async () => {
     await driver.openPage({
       galleryLayout: 2,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: PLACEMENTS.SHOW_BELOW
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -30,8 +28,6 @@ describe('titlePlacement - e2e', () => {
   it('should place texts on top of the items', async () => {
     await driver.openPage({
       galleryLayout: 2,
-      allowTitle: true,
-      allowDescription: true,
       titlePlacement: PLACEMENTS.SHOW_ABOVE
     });
     await driver.waitFor.hookToBeVisible('item-container');

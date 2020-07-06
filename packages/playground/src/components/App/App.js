@@ -8,6 +8,8 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
 import SideBarButton from '../SideBar/SideBarButton';
+import {BlueprintsManager} from 'pro-gallery'
+import blueprintsApi from './PlaygroundBlueprintsApi'
 
 // import Loader from './loader';
 
@@ -59,6 +61,16 @@ export function App() {
 
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
+  }
+
+  const configureBlueprintsManager = () => {
+    const config = {
+      api: new blueprintsApi(),
+      rerenderWithNewBlueprintCB: ()=>{},
+    }
+    BlueprintsManager.updateConfig(config)
+
+    return true;
   }
 
   const eventListener = (eventName, eventData) => {
@@ -114,6 +126,56 @@ export function App() {
     }
   }
 
+  const renderInfoElement = (type, pgItemProps) => {
+
+    const infoElement = (<div className={'playground-info'}>
+      <div className={'playground-info-title'}>
+        <span>{pgItemProps.title}</span>
+      </div>
+      <div className={'playground-info-description'}>
+        <span>{pgItemProps.description}</span>
+      </div>
+    </div>);
+
+    const { titlePlacement } = pgItemProps.styleParams;
+
+    switch (type) {
+      case 'HOVER':
+        if (GALLERY_CONSTS.hasHoverPlacement(titlePlacement)) {
+          return infoElement;
+        }
+        break;
+      case 'EXTERNAL':
+        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+          return infoElement;
+        }
+        break;
+      case 'SLIDESHOW':
+        return infoElement;
+      default:
+        return null;
+    }
+  };
+
+  const hoverInfoElement = (pgItemProps) => {
+    return renderInfoElement('HOVER', pgItemProps);
+  };
+
+  const externalInfoElement = (pgItemProps) => {
+    return renderInfoElement('EXTERNAL', pgItemProps);
+  };
+
+  const slideshowInfoElement = (pgItemProps) => {
+    return renderInfoElement('SLIDESHOW', pgItemProps);
+  };
+
+  const getExternalInfoRenderers = () => {
+    return {
+      customHoverRenderer: hoverInfoElement,
+      customInfoRenderer: externalInfoElement,
+      customSlideshowInfoRenderer: slideshowInfoElement,
+    };
+  }
   return (
     <main className={s.main}>
       {/* <Loader/> */}
@@ -140,7 +202,8 @@ export function App() {
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}
-          useBlueprints={gallerySettings.useBlueprints}
+          useBlueprints={gallerySettings.useBlueprints && configureBlueprintsManager()}
+          {...getExternalInfoRenderers()}
         />
       </section>
     </main>
