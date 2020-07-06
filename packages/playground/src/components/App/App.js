@@ -8,6 +8,8 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
 import SideBarButton from '../SideBar/SideBarButton';
+import {BlueprintsManager} from 'pro-gallery'
+import blueprintsApi from './PlaygroundBlueprintsApi'
 
 // import Loader from './loader';
 
@@ -59,6 +61,16 @@ export function App() {
 
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
+  }
+
+  const configureBlueprintsManager = () => {
+    const config = {
+      api: new blueprintsApi(),
+      rerenderWithNewBlueprintCB: ()=>{},
+    }
+    BlueprintsManager.updateConfig(config)
+
+    return true;
   }
 
   const eventListener = (eventName, eventData) => {
@@ -140,7 +152,7 @@ export function App() {
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}
-          useBlueprints={gallerySettings.useBlueprints}
+          useBlueprints={gallerySettings.useBlueprints && configureBlueprintsManager()}
         />
       </section>
     </main>

@@ -7,7 +7,6 @@ import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';
 import LAZY_LOAD from '../../common/constants/lazyLoad';
 import utils from '../../common/utils';
-import Blueprints from '../blueprints/Blueprints'
 
 export default class BaseGallery extends React.Component {
 
