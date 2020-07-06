@@ -5,14 +5,18 @@ import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
 import { GALLERY_CONSTS } from 'pro-gallery';
 
+const UNKNOWN_CONTAINER = { 
+  width: 980,
+  height: 500
+}
 export default class Gallery extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    this.shouldReCalculateContainerOnMount = false;
+    const container = this.initContainer(props);
+
     this.handleResize = this.handleResize.bind(this);
-    const container = {
-      width: 900,
-      height: 500
-    };
 
     this.state = {
       isClient: false,
@@ -20,19 +24,50 @@ export default class Gallery extends React.PureComponent {
     };
   }
 
-  handleResize = () => {
-    const container = {
+  initContainer(props) {
+    let container = UNKNOWN_CONTAINER;
+
+    const { urlParams: { containerWidth, containerHeight } = {} } = props;
+    if (containerWidth !== undefined && containerHeight !== undefined) {
+      container = {
+        width: containerWidth,
+        height: containerHeight
+      }
+    } else if (typeof window !== 'undefined') {
+      container = this.getContainerFromWindowDimensions();
+    }
+
+    if (container === UNKNOWN_CONTAINER){
+      this.shouldReCalculateContainerOnMount = true;
+    }
+
+    return container;
+  }
+
+  getContainerFromWindowDimensions(){
+    return {
       width: window.innerWidth,
-      height: window.innerHeight
-    };
+        height: window.innerHeight
+    }
+  }
+
+  handleResize = () => {
+    const container = this.getContainerFromWindowDimensions();
+
     this.setState({
       container
     });
   };
 
   componentDidMount() {
-    this.setState({ isClient: true });
-    this.handleResize();
+    const newState = { isClient: true};
+    
+    if (this.shouldReCalculateContainerOnMount){
+      newState.container = this.this.getContainerFromWindowDimensions();
+      this.shouldReCalculateContainerOnMount = false;
+    }
+
+    this.setState(newState);
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -72,7 +107,7 @@ export default class Gallery extends React.PureComponent {
           allowSSR={!!urlParams.allowSSR}
           useBlueprints={!!urlParams.useBlueprints}
           container={container}
-          // viewMode={viewMode}
+          viewMode={viewMode}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
         />
