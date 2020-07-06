@@ -1,3 +1,6 @@
+
+
+
 import {INPUT_TYPES, GALLERY_CONSTS} from './consts';
 
 const formatTitle = title => title.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.substr(1).toLowerCase()).join(' ');
@@ -58,12 +61,6 @@ export default {
   isRTL: {
     type: INPUT_TYPES.OPTIONS,
     options: [{ value: false, title: "Left to Right" }, { value: true, title: "Right to Left" }],
-  },
-  allowTitle: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
-  allowDescription: {
-    type: INPUT_TYPES.BOOLEAN,
   },
   allowSlideshowCounter: {
     type: INPUT_TYPES.BOOLEAN,
@@ -204,7 +201,7 @@ export default {
   loadMoreAmount: {
     type: INPUT_TYPES.OPTIONS,
     options: createOptions('loadMoreAmount')
-  }, 
+  },
   //----------| SETTINGS SECTION |---------//
   scrollSnap: {
     type: INPUT_TYPES.BOOLEAN,
@@ -230,18 +227,6 @@ export default {
     type: INPUT_TYPES.OPTIONS,
     options: createOptions('watermarkDock'),
     alert: 'now is being saved in "appSettings"',
-  },
-  allowDownload: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
-  allowSocial: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
-  loveButton: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
-  loveCounter: {
-    type: INPUT_TYPES.BOOLEAN,
   },
   //------------------------ Design ----------------------//
   itemOpacity: {
@@ -311,22 +296,9 @@ export default {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
   },
-  galleryHorizontalAlign: { // ALSO sets galleryTextAlign --- 
-    type: INPUT_TYPES.OPTIONS,
-    options: createOptions('horizontalAlign'),
-    alert: '"galleryTextAlign" should be set accordingly',
-  },
-  galleryVerticalAlign: {
-    type: INPUT_TYPES.OPTIONS,
-    options: createOptions('verticalAlign')
-  },
   textBoxFillColor: {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
-  },
-  calculateTextBoxHeightMode: {
-    type: INPUT_TYPES.OPTIONS,
-    options: createOptions('textBoxHeightCalculationOptions')
   },
   textBoxHeight: {
     type: INPUT_TYPES.NUMBER,
@@ -356,66 +328,6 @@ export default {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
   },
-  textsVerticalPadding: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 50,
-    units: 'px',
-  },
-  textsHorizontalPadding: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 50,
-    units: 'px',
-  },
-  titleDescriptionSpace: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 50,
-    units: 'px',
-  },
-  useCustomButton: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
-  customButtonText: {
-    type: INPUT_TYPES.TEXT,
-  },
-  customButtonFontForHover: {
-    type: INPUT_TYPES.FONT_PICKER,
-    alert: 'implement',
-  },
-  customButtonFontColorForHover: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonFont: {
-    type: INPUT_TYPES.FONT_PICKER,
-    alert: 'implement',
-    fontMinSize:14,
-    fontMaxSize: 22,
-  },
-  customButtonFontColor: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonColor: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonBorderWidth: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 5,
-  },
-  customButtonBorderColor: {
-    type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement!',
-  },
-  customButtonBorderRadius: {
-    type: INPUT_TYPES.NUMBER,
-    min: 0,
-    max: 30,
-  },
   loadMoreButtonText: {
     type: INPUT_TYPES.TEXT,
   },
@@ -439,7 +351,7 @@ export default {
   loadMoreButtonBorderColor: {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
-  }, 
+  },
   loadMoreButtonBorderRadius: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
@@ -510,12 +422,6 @@ export default {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
   },
-  allowTitleExpand: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
-  allowDescriptionExpand: {
-    type: INPUT_TYPES.BOOLEAN,
-  },
   allowLinkExpand: {
     type: INPUT_TYPES.BOOLEAN,
   },
@@ -576,7 +482,7 @@ export default {
   addToCartBackColorExpand: {
     type: INPUT_TYPES.COLOR_PICKER,
     alert: 'implement!',
-  }, 
+  },
   addToCartFontExpand: {
     type: INPUT_TYPES.FONT_PICKER,
     alert: 'implement',
@@ -656,15 +562,15 @@ export default {
   }
 };
 
-// store and mobile 
+// store and mobile
 // cubeRatio: { -- It's defined in styleBuilder
 // parseStyleParams - for expand mode need to investigate file - sets lots of other params.SECTIONS.EXPAND_MODE
 // second parameter in proGalleryStyleBuilder - 'scrollDirection', 'oneRow'
-// Maybe to add the default to this interface ? 
-// cubeRatio didnt 
+// Maybe to add the default to this interface ?
+// cubeRatio didnt
 // is store
-// is mobile 
-// check expand conditions 
+// is mobile
+// check expand conditions
 // decity should have precents - precents conversion
 
 // defined in wixers!?

@@ -1,22 +1,31 @@
 import blueprints from './Blueprints'
-// import EVENTS from '../../common/constants/events';
+import EVENTS from '../../common/constants/events';
 
 class BlueprintsManager {
 
-  constructor(config) {
-    this.eventsCB = config && config.eventsCB;
-    this.lastParams = config && config.lastParams || {};
-    this.existingBlueprint = config && config.existingBlueprint || {};
+  constructor() {
+    // this.eventsCB = config && config.eventsCB;
+    this.lastParams = {};
+    this.existingBlueprint = {};
     this.cache = {};
-    // this.totalItemsCount = 200; //TODO - populate;
-    // this.api = {};
+    this.totalItemsCount = Infinity;
+    this.rerenderWithNewBlueprintCB = (() => {});
+  }
+
+  updateConfig(config) {
+    this.lastParams = config && config.lastParams || this.lastParams;
+    this.existingBlueprint = config && config.existingBlueprint || this.existingBlueprint;
+    this.rerenderWithNewBlueprintCB = config && config.rerenderWithNewBlueprintCB || this.rerenderWithNewBlueprintCB;
+    this.api = config && config.api || this.api || {};
+    this.totalItemsCount = config && config.totalItemsCount || this.totalItemsCount;
   }
 
   getOrCreateBlueprint(params) {
         // cacheBlocker
         // if (this.cache[params]) return this.cache[params];
     const eventsListener = (...args) => this.eventsListenerWrapper(params.eventsListener, args);
-    params =  {...params,...this.completeBuildingBlocks(params)}
+    this.totalItemsCount = params.totalItemsCount;
+    params =  {...params,...this.completeParams(params)}
     const lastparams = this.lastParams;
     const existingBlueprint = this.existingBlueprint;
 
@@ -25,31 +34,37 @@ class BlueprintsManager {
 
 
 
-  // getMoreItems({currentItemLength}) {
-  //   if (currentItemLength < this.totalItemsCount) {
-  //     this.gettingMoreItems = true;
-  //     // this.api.getMoreITems(currentItemLength);
-  //     // setTimeout(() => {
-  //     //   //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
-  //     //   this.gettingMoreItems = false;
-  //     // }, 2000);
-  //   } else if (this.existingBlueprint.styles.slideshowLoop) {
-  //     this.duplicateGalleryItems();
-  //   }
-  // }
+  getMoreItems(currentItemLength) {
+    // let eventHandledInternaly = false;
+    // let items;
+    if (currentItemLength < this.totalItemsCount) {
+      // this.gettingMoreItems = true;
+      const {eventHandledInternaly, items} = this.api.getMoreItems(currentItemLength);
+      
+      if (items) {
+        //work with the new items...
+      }
+      return eventHandledInternaly;
+    } else if (this.existingBlueprint.styles.slideshowLoop) {
+      this.duplicateGalleryItems();
+      const eventHandledInternaly = true;
+      return eventHandledInternaly;
+    }
 
-  // duplicateGalleryItems() {
-  //     //TBD...
-  //     // this.items = this.items.concat(
-  //     //   ...this.items.slice(0, this.props.totalItemsCount),
-  //     // )
-  // }
+  }
+
+  duplicateGalleryItems() {
+      //TODO  -- TBD...(playgrounds doesnt use this anyways)
+      // this.items = this.items.concat(
+      //   ...this.items.slice(0, this.props.totalItemsCount),
+      // )
+  }
 
 
 
 
     // ------------------ Get all the needed raw data ---------------------------- //
-    completeBuildingBlocks(params) {
+    completeParams(params) {
       
     let {dimensions, container, items, styles, styleParams, options, domId} = params || {};
 
@@ -126,8 +141,29 @@ class BlueprintsManager {
     }
   }
 
-  eventsListenerWrapper(eventsListenerFunc, initArgs) {
-    eventsListenerFunc(...initArgs);
+  eventsListenerWrapper(eventsListenerFunc, originalArgs) {
+    const eventHandledInternaly = this.internalEventHandler(...originalArgs)
+    !eventHandledInternaly && eventsListenerFunc(...originalArgs);
+  }
+
+
+  internalEventHandler(eventName, eventData, event) {
+    let eventHandledInternaly = false;
+    switch (eventName) {
+      // case EVENTS.LOAD_MORE_CLICKED:
+      //   this.galleryWrapper.loadMoreClicked = true;
+      //   break;
+      // case EVENTS.GALLERY_CHANGE:
+      //   this.onGalleryChangeEvent();
+      //   this.galleryWrapper.siteHelper.handleNewGalleryStructure(eventData);
+      //   break;
+      case EVENTS.NEED_MORE_ITEMS:
+        const currentItemLength = eventData;
+        eventHandledInternaly = this.getMoreItems(currentItemLength);
+        break;
+      default:
+    }
+    return eventHandledInternaly;
   }
 }
 

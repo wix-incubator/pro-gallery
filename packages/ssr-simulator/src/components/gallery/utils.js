@@ -49,18 +49,10 @@ export const defaultStyleParams = {
   useCustomButton: false,
   bottomInfoHeight: 0,
   titlePlacement: Consts.placements.SHOW_ON_HOVER,
-  galleryHorizontalAlign: Consts.horizontalAlign.CENTER,
   galleryTextAlign: 'center',
-  galleryVerticalAlign: Consts.verticalAlign.CENTER,
   scrollSnap: false,
   itemClick: Consts.itemClick.EXPAND,
   fullscreen: true,
-  allowSocial: true,
-  allowDownload: false,
-  allowTitle: true,
-  allowDescription: false,
-  loveButton: true,
-  loveCounter: false,
   videoPlay: Consts.videoPlay.HOVER,
   scrollAnimation: Consts.scrollAnimations.NO_EFFECT,
   scrollDirection: 0,
@@ -73,8 +65,6 @@ export const defaultStyleParams = {
   watermarkDock: Consts.watermarkDock.RIGHT_DOWN,
   loadMoreAmount: Consts.loadMoreAmount.ALL,
   defaultShowInfoExpand: 1,
-  allowTitleExpand: true,
-  allowDescriptionExpand: true,
   allowLinkExpand: true,
   expandInfoPosition: 0,
   allowFullscreenExpand: true,
@@ -112,24 +102,10 @@ export const defaultStyleParams = {
   // itemDescriptionFontSlideshow: 'font_8' // startWithSize: 15
   // itemDescriptionFontColorSlideshow: 'color-5'
   // textBoxFillColor: 'color-2', //startWithOpacity: 1,
-  calculateTextBoxHeightMode: Consts.textBoxHeightCalculationOptions.AUTOMATIC,
   textBoxHeight: 200,
   textImageSpace: 10,
   textBoxBorderRadius: 0,
   textBoxBorderWidth: 0,
-  // textBoxBorderColor: color-5,
-  textsVerticalPadding: 0,
-  textsHorizontalPadding: 0,
-  titleDescriptionSpace: 6,
-  customButtonText: '',
-  // customButtonFontForHover: 'font_8', startWithSize: 15
-  // customButtonFontColorForHover: color-5
-  // customButtonFont: 'font_8', startWithSize: 15
-  // customButtonFontColor: color-1'
-  // customButtonColor: startWithOpacity: '0', startWithColor: 'color-1'
-  customButtonBorderWidth: 1,
-  // customButtonBorderColor: startWithColor: 'color-1'
-  customButtonBorderRadius: 0,
   loadMoreButtonText: '',
   //loadMoreButtonFont: font_8
   // loadMoreButtonFontColor: color-5

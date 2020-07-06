@@ -1,7 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { styleParams, container, customRenderers } from '../drivers/mocks/styles';
 import GALLERY_CONSTS from '../../src/common/constants';
 
 describe('styleParam - textBoxHeight', () => {
@@ -10,21 +10,20 @@ describe('styleParam - textBoxHeight', () => {
   const initialProps = {
     container,
     items: images2,
-    styles: styleParams
+    styles: styleParams,
+    ...customRenderers,
   }
 
   beforeEach(() => {
     driver = new GalleryDriver();
   });
 
-  it('should set "textBoxHeight" of "250"(manual)', () => {
+  it('should set "textBoxHeight" of "250"', () => {
     Object.assign(initialProps.styles, {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      allowTitle: true,
-      calculateTextBoxHeightMode: GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL,
       textBoxHeight: 250,
     })
     driver.mount.proGallery(initialProps);

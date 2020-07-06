@@ -3,10 +3,9 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Text alignment',
-  isRelevant: (styleParams)  => styleParams.allowTitle || styleParams.allowDescription,
+  isRelevant: ()  => true,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.galleryTextAlign.CENTER,
   options: createOptions('galleryTextAlign'),
-  description: `This option sets the alignment (left, right or center) of each item in the gallery.
-  `,
+  description: `This option effects the slideshow Play Button and slideshow number location.`,
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import LOADING_MODE from '../../common/constants/loadingMode';
-import LAZY_LOAD from '../../common/constants/lazyLoad';
 import { GalleryComponent } from '../galleryComponent';
-import { isSEOMode } from '../../common/window/viewModeWrapper';
+import { isSEOMode, isPrerenderMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 import utils from '../../common/utils';
 
@@ -81,7 +80,7 @@ export default class ImageItem extends GalleryComponent {
             alt=''
             key={'image_preload_blur-' + id}
             src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
-            style={{ ...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat' }}
+            style={{ ...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat', transition: 'all 3s ease-in-out' }}
             {...preloadProps}
           />
           break;
@@ -96,7 +95,7 @@ export default class ImageItem extends GalleryComponent {
           break;
       }
 
-      const highres = utils.isSSR() ? null : <img
+      const highres = <img
         key={'image_highres-' + id}
         className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
         data-hook='gallery-item-image-img'
@@ -117,10 +116,10 @@ export default class ImageItem extends GalleryComponent {
         }}
         style={restOfDimensions}
         {...imageProps}
-      />
-
-      return [preload, highres]
-
+      />;
+      const _preload = isPrerenderMode() ? preload : null;
+      const _highres = isPrerenderMode() ? null : highres;
+      return [_preload, _highres]
     }
 
     const canvas = () => (

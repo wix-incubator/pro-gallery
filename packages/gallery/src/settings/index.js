@@ -1,9 +1,4 @@
 import itemClick from './options/itemClick';
-import allowTitle from './options/allowTitle';
-import allowSocial from './options/allowSocial';
-import allowDescription from './options/allowDescription';
-import allowDownload from './options/allowDownload';
-import loveButton from './options/loveButton';
 import imageMargin from './options/imageMargin';
 import hoveringBehaviour from './options/hoveringBehaviour'
 import enableInfiniteScroll from './options/enableInfiniteScroll';
@@ -12,9 +7,6 @@ import cubeImages from './options/cubeImages';
 import cubeRatio from './options/cubeRatio';
 import oneRow from './options/oneRow';
 import titlePlacement from './options/titlePlacement';
-import useCustomButton from './options/useCustomButton';
-import galleryVerticalAlign from './options/galleryVerticalAlign';
-import galleryHorizontalAlign from './options/galleryHorizontalAlign';
 import galleryMargin from './options/galleryMargin';
 import isVertical from './options/isVertical';
 import numberOfImagesPerRow from './options/numberOfImagesPerRow';
@@ -23,8 +15,6 @@ import galleryTextAlign from './options/galleryTextAlign';
 import videoPlay from './options/videoPlay';
 import imageHoverAnimation from './options/imageHoverAnimation';
 import overlayAnimation from './options/overlayAnimation';
-import textsHorizontalPadding from './options/textsHorizontalPadding';
-import textsVerticalPadding from './options/textsVerticalPadding';
 import textImageSpace from './options/textImageSpace';
 import textBoxBorderColor from './options/textBoxBorderColor';
 import textBoxBorderRadius from './options/textBoxBorderRadius';
@@ -53,10 +43,8 @@ import floatingImages from './options/floatingImages';
 import thumbnailSpacings from './options/thumbnailSpacings';
 import slideshowLoop from './options/slideshowLoop';
 import arrowsSize from './options/arrowsSize';
-import titleDescriptionSpace from './options/titleDescriptionSpace';
 import slideshowInfoSize from './options/slideshowInfoSize';
 import textBoxHeight from './options/textBoxHeight';
-import calculateTextBoxHeightMode from './options/calculateTextBoxHeightMode';
 import calculateTextBoxWidthMode from './options/calculateTextBoxWidthMode';
 import chooseBestGroup from './options/chooseBestGroup';
 import imageLoadingMode from './options/imageLoadingMode';
@@ -76,11 +64,6 @@ import enableScroll from './options/enableScroll';
 
 export default {
     itemClick,
-    allowTitle,
-    allowDescription,
-    loveButton,
-    allowSocial,
-    allowDownload,
     imageMargin,
     hoveringBehaviour,
     enableInfiniteScroll,
@@ -89,9 +72,6 @@ export default {
     cubeRatio,
     oneRow,
     titlePlacement,
-    useCustomButton,
-    galleryVerticalAlign,
-    galleryHorizontalAlign,
     galleryMargin,
     isVertical,
     numberOfImagesPerRow,
@@ -100,8 +80,6 @@ export default {
     videoPlay,
     imageHoverAnimation,
     overlayAnimation,
-    textsHorizontalPadding,
-    textsVerticalPadding,
     textImageSpace,
     textBoxBorderColor,
     textBoxBorderRadius,
@@ -130,10 +108,8 @@ export default {
     thumbnailSpacings,
     slideshowLoop,
     arrowsSize,
-    titleDescriptionSpace,
     slideshowInfoSize,
     textBoxHeight,
-    calculateTextBoxHeightMode,
     calculateTextBoxWidthMode,
     chooseBestGroup,
     imageLoadingMode,
