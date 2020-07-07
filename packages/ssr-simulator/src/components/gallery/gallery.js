@@ -12,8 +12,7 @@ const UNKNOWN_CONTAINER = {
 export default class Gallery extends React.PureComponent {
   constructor(props) {
     super(props);
-
-    this.shouldReCalculateContainerOnMount = false;
+    
     const container = this.initContainer(props);
 
     this.handleResize = this.handleResize.bind(this);
@@ -35,11 +34,7 @@ export default class Gallery extends React.PureComponent {
       }
     } else if (typeof window !== 'undefined') {
       container = this.getContainerFromWindowDimensions();
-    }
-
-    if (container === UNKNOWN_CONTAINER){
-      this.shouldReCalculateContainerOnMount = true;
-    }
+    }    
 
     return container;
   }
@@ -59,12 +54,26 @@ export default class Gallery extends React.PureComponent {
     });
   };
 
+  shouldUpdateContainerOnMount = () => {
+    let shouldUpdateContainer = true;
+    const { urlParams: { containerWidth, containerHeight } = {} } = this.props;
+    const containerWithWindowDimensions = this.getContainerFromWindowDimensions();
+
+    if (containerWidth !== undefined && containerHeight !== undefined) {
+      if (containerWithWindowDimensions.width === containerWidth && containerWithWindowDimensions.height === containerHeight){
+        shouldUpdateContainer = false;
+      }
+    }
+
+    return shouldUpdateContainer;
+
+  }
+
   componentDidMount() {
     const newState = { isClient: true};
     
-    if (this.shouldReCalculateContainerOnMount){
-      newState.container = this.this.getContainerFromWindowDimensions();
-      this.shouldReCalculateContainerOnMount = false;
+    if (this.shouldUpdateContainerOnMount()){
+      newState.container = this.getContainerFromWindowDimensions();
     }
 
     this.setState(newState);
