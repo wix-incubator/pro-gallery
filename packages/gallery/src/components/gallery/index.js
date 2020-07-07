@@ -7,7 +7,9 @@ import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';
 import LAZY_LOAD from '../../common/constants/lazyLoad';
 import utils from '../../common/utils';
-import Blueprints from '../blueprints/Blueprints'
+import isEligibleForLeanGallery from './leanGallery/isEligible';
+import { createStylesFromProps } from './presets/gridGallery.js';
+import { default as LeanGallery, formatLeanGalleryStyles }  from './leanGallery/leanGallery.js';
 
 export default class BaseGallery extends React.Component {
 
@@ -20,8 +22,8 @@ export default class BaseGallery extends React.Component {
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
     const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId, lazyLoad};
     let GalleryComponent = ProGallery;
-    if(!this.props.useBlueprints) {
 
+    if(!this.props.useBlueprints) {
       dimensionsHelper.updateParams({
         domId: galleryProps.domId,	  
         container: galleryProps.container,
@@ -76,8 +78,9 @@ export default class BaseGallery extends React.Component {
         }
       }
     }
-    else if(galleryType === undefined || galleryLayout === LAYOUTS.GRID) {
-      GalleryComponent = PRESETS.GridGallery;
+    else if(isEligibleForLeanGallery(createStylesFromProps(galleryProps))) {
+      galleryProps.styles = formatLeanGalleryStyles(galleryProps.styles);
+      GalleryComponent = LeanGallery;
     }
 
     return <GalleryComponent {...galleryProps} />

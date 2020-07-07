@@ -35,6 +35,10 @@ export const createStyles = styles => {
   }
 }
 
+export const createStylesFromProps = props => {
+  return {...props, styles: createStyles(props.styles)};
+}
+
 export default class GridGallery extends React.Component {
 
   render() {

@@ -11,6 +11,9 @@ import CLICK_ACTIONS from '../../../common/constants/itemClick'
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 
+import { processLayouts } from '../../helpers/layoutHelper';
+import { addPresetStyles } from '../presets/presets';
+
 import './leanGallery.scss';
 
 const get = (item, attr) => {
@@ -23,8 +26,28 @@ const get = (item, attr) => {
     }
   }
 }
-export default class LeanGallery extends React.Component {
 
+export const formatLeanGalleryStyles = (styles) => {
+	const formattedStyles = processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+
+	const selectedLayoutVars = [
+		'galleryLayout',
+		'galleryThumbnailsAlignment',
+		'magicLayoutSeed',
+		'cubeType',
+		'isVertical',
+		'scrollDirection',
+		'enableInfiniteScroll',
+	];
+
+	formattedStyles.selectedLayout = selectedLayoutVars
+	.map(key => String(formattedStyles[key]))
+	.join('|');
+	formattedStyles.layoutsVersion = 2;
+
+	return formattedStyles;
+};
+export default class LeanGallery extends React.Component {
   constructor() {
     super();
 
