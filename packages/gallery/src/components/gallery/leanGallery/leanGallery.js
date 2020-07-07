@@ -28,24 +28,7 @@ const get = (item, attr) => {
 }
 
 export const formatLeanGalleryStyles = (styles) => {
-	const formattedStyles = processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
-
-	const selectedLayoutVars = [
-		'galleryLayout',
-		'galleryThumbnailsAlignment',
-		'magicLayoutSeed',
-		'cubeType',
-		'isVertical',
-		'scrollDirection',
-		'enableInfiniteScroll',
-	];
-
-	formattedStyles.selectedLayout = selectedLayoutVars
-	.map(key => String(formattedStyles[key]))
-	.join('|');
-	formattedStyles.layoutsVersion = 2;
-
-	return formattedStyles;
+	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };
 export default class LeanGallery extends React.Component {
   constructor() {

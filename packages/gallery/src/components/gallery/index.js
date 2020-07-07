@@ -8,7 +8,7 @@ import defaultStyles from '../../common/defaultStyles';
 import LAZY_LOAD from '../../common/constants/lazyLoad';
 import utils from '../../common/utils';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
-import { createStylesFromProps } from './presets/gridGallery.js';
+import { createStyles } from './presets/gridGallery.js';
 import { default as LeanGallery, formatLeanGalleryStyles }  from './leanGallery/leanGallery.js';
 
 export default class BaseGallery extends React.Component {
@@ -78,7 +78,7 @@ export default class BaseGallery extends React.Component {
         }
       }
     }
-    else if(isEligibleForLeanGallery(createStylesFromProps(galleryProps))) {
+    else if(isEligibleForLeanGallery({...galleryProps, styles: createStyles(galleryProps.styles)})) {
       galleryProps.styles = formatLeanGalleryStyles(galleryProps.styles);
       GalleryComponent = LeanGallery;
     }
