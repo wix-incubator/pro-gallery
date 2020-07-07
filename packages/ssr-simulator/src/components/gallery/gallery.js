@@ -18,7 +18,7 @@ export default class Gallery extends React.PureComponent {
     this.handleResize = this.handleResize.bind(this);
 
     this.state = {
-      isClient: false,
+      knownContainer: container !== UNKNOWN_CONTAINER,
       container: container
     };
   }
@@ -32,8 +32,6 @@ export default class Gallery extends React.PureComponent {
         width: containerWidth,
         height: containerHeight
       }
-    } else if (typeof window !== 'undefined') {
-      container = this.getContainerFromWindowDimensions();
     }    
 
     return container;
@@ -70,7 +68,7 @@ export default class Gallery extends React.PureComponent {
   }
 
   componentDidMount() {
-    const newState = { isClient: true};
+    const newState = { knownContainer: true};
     
     if (this.shouldUpdateContainerOnMount()){
       newState.container = this.getContainerFromWindowDimensions();
@@ -86,8 +84,8 @@ export default class Gallery extends React.PureComponent {
 
   render() {
     const { urlParams} = this.props;
-    const { isClient, container } = this.state;
-    const viewMode = isClient
+    const { knownContainer, container } = this.state;
+    const viewMode = knownContainer
       ? GALLERY_CONSTS.viewMode.SITE
       : GALLERY_CONSTS.viewMode.PRERENDER;
 
