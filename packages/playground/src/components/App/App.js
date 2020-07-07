@@ -33,7 +33,15 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings} = useGalleryContext();
+  if (!blueprintsManager.api) {
+    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: (() => {})});
+    blueprintsManager.init({api: playgroundBlueprintsApi})
+  }
+  
+  const [blueprint, setBlueprint] = useState(blueprintsManager.getOrCreateBlueprint({})); // integer state
+  blueprintsManager.api.onBlueprintReady = setBlueprint;
+
+  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings} = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
@@ -170,33 +178,7 @@ export function App() {
       customSlideshowInfoRenderer: slideshowInfoElement,
     };
   }
-
-
-  let playgroundBlueprintsApi;
-  const [initialBlueprintLoaded, setInitialBlueprintLoaded] = useState(false);
-  const configureBlueprintsManager = () => {
-    playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles})
-    const config = {
-      api: playgroundBlueprintsApi,
-    }
-    blueprintsManager.init(config)
-  }
-  const [blueprint, setBlueprint] = useState(getInitialBlueprint()); // integer state
-  gallerySettings.useBlueprints && configureBlueprintsManager();
-
-  function getInitialBlueprint() {
-    if (!initialBlueprintLoaded) {
-      configureBlueprintsManager();
-    const params = {}
-    setInitialBlueprintLoaded(true);
-    return blueprintsManager.getOrCreateBlueprint(params);
-    }
-    return;
-  }
   
-  playgroundBlueprintsApi.addSetBlueprintFunction(setBlueprint);
-  
-
   function getContainer() {
     return container;
   }
@@ -205,11 +187,7 @@ export function App() {
     return styleParams;
   }
 
-
-
-
-
-  const blueprintObject = gallerySettings.useBlueprints ? blueprint : { items: getItems(),
+  const blueprintProps = gallerySettings.useBlueprints ? blueprint : { items: getItems(),
     options: styleParams,
     container };
 
@@ -238,7 +216,7 @@ export function App() {
           resizeMediaUrl={resizeMediaUrl}
           useBlueprints={gallerySettings.useBlueprints} //Todo - use it react way
           {...getExternalInfoRenderers()}
-          {...blueprintObject}
+          {...blueprintProps}
         />
       </section>
     </main>

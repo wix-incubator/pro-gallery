@@ -1,32 +1,29 @@
 export default class PlaygroundsBlueprintsApi {
 
-  constructor(functions){
-    this.addItems = functions.addItems || (()=>{});
-    this.getItems = functions.getItems || (()=>{});
-    this.getStyles = functions.getStyles || (()=>{});
-    this.getContainer = functions.getContainer || (()=>{});
-    this.setBlueprint = functions.setBlueprint || (()=>{});
+  constructor({addItems, getItems, getContainer, getStyles, onBlueprintReady}){
+    this.addItems = addItems || (()=>{});
+    this.getItems = getItems || (()=>{});
+    this.getStyles = getStyles || (()=>{});
+    this.getContainer = getContainer || (()=>{});
+
+    this.onBlueprintReadyCallback = onBlueprintReady || (()=>{});
   }
 
-  addSetBlueprintFunction(func) {
-    this.setBlueprint = func;
-  }
-
-  getMoreItems() {
+  fetchMoreItems() {
     this.addItems();
   }
-  getItems() {
-    return this.getITems();
+  fetchItems() {
+    return this.getItems();
   }
-  getStyles() {
+  fetchStyles() {
     return this.getStyles();
   }
-  getDimensions() {
+  fetchDimensions() {
     return this.getContainer();
   }
 
   onBlueprintReady(blueprint) {
-    this.setBlueprint(blueprint);
+    this.onBlueprintReadyCallback(blueprint);
   }
 
 
