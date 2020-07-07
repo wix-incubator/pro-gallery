@@ -1,63 +1,62 @@
 import blueprints from './Blueprints'
-import EVENTS from '../../common/constants/events';
+// import EVENTS from '../../common/constants/events';
 
 class BlueprintsManager {
 
   constructor() {
     // this.eventsCB = config && config.eventsCB;
-    this.lastParams = {};
+    this.currentState = {};
     this.existingBlueprint = {};
     this.cache = {};
-    this.totalItemsCount = Infinity;
-    this.rerenderWithNewBlueprintCB = (() => {});
+    this.api = {};
+    this.currentState.totalItemsCount = Infinity;
+    this.onBlueprintReady = (() => {});
   }
 
-  updateConfig(config) {
-    this.lastParams = config && config.lastParams || this.lastParams;
-    this.existingBlueprint = config && config.existingBlueprint || this.existingBlueprint;
-    this.rerenderWithNewBlueprintCB = config && config.rerenderWithNewBlueprintCB || this.rerenderWithNewBlueprintCB;
+  setInitialBlueprint({initialState, initialBlueprint}) {
+    this.currentState = initialState || this.currentState;
+    this.existingBlueprint = initialBlueprint || this.existingBlueprint;
+  }
+
+  init(config) { // is this init? should dump cache
+    // this.onBlueprintReady = config && config.onBlueprintReady || this.onBlueprintReady;
     this.api = config && config.api || this.api || {};
-    this.totalItemsCount = config && config.totalItemsCount || this.totalItemsCount;
+    this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
   }
 
   getOrCreateBlueprint(params) {
         // cacheBlocker
         // if (this.cache[params]) return this.cache[params];
-    const eventsListener = (...args) => this.eventsListenerWrapper(params.eventsListener, args);
-    this.totalItemsCount = params.totalItemsCount;
+    // const eventsListener = params.eventsListener ? (...args) => this.eventsListenerWrapper(params.eventsListener, args) : this.currentState.eventsListener;
+    this.currentState.totalItemsCount = params.totalItemsCount ? params.totalItemsCount : this.currentState.totalItemsCount;
     params =  {...params,...this.completeParams(params)}
-    const lastparams = this.lastParams;
+    const currentState = this.currentState;
     const existingBlueprint = this.existingBlueprint;
+    const {changedParams, ...blueprint} = blueprints.createBlueprint(params, currentState, existingBlueprint)
+    this.updateLastParamsIfNeeded(params, changedParams);
 
-    return this.cache[params] = this.existingBlueprint = {eventsListener, ...blueprints.createBlueprint(params, lastparams, existingBlueprint)};
+    return this.cache[params] = this.existingBlueprint = {...blueprint};
   }
 
-
-
   getMoreItems(currentItemLength) {
-    // let eventHandledInternaly = false;
     // let items;
-    if (currentItemLength < this.totalItemsCount) {
-      // this.gettingMoreItems = true;
-      const {eventHandledInternaly, items} = this.api.getMoreItems(currentItemLength);
-      
-      if (items) {
-        //work with the new items...
-      }
-      return eventHandledInternaly;
-    } else if (this.existingBlueprint.styles.slideshowLoop) {
+    // if (currentItemLength < this.currentState.totalItemsCount) {
+    //   // this.gettingMoreItems = true;
+    //   const items = this.api.getMoreItems(currentItemLength);
+    //   if (items) {
+    //     this.api.onBlueprintReady(this.getOrCreateBlueprint({items}));
+    //     //work with the new items...
+    //   }
+    // } else if (this.existingBlueprint.styles.slideshowLoop) {
       this.duplicateGalleryItems();
-      const eventHandledInternaly = true;
-      return eventHandledInternaly;
-    }
-
+    // }
   }
 
   duplicateGalleryItems() {
-      //TODO  -- TBD...(playgrounds doesnt use this anyways)
-      // this.items = this.items.concat(
-      //   ...this.items.slice(0, this.props.totalItemsCount),
-      // )
+      const items = this.currentState.items.concat(
+        ...this.currentState.items.slice(0, this.currentState.totalItemsCount),
+      );
+        this.api.onBlueprintReady(this.getOrCreateBlueprint({items}));
   }
 
 
@@ -65,7 +64,7 @@ class BlueprintsManager {
 
     // ------------------ Get all the needed raw data ---------------------------- //
     completeParams(params) {
-      
+    
     let {dimensions, container, items, styles, styleParams, options, domId} = params || {};
 
     styles = {...options, ...styles, ...styleParams };
@@ -82,7 +81,7 @@ class BlueprintsManager {
 
     const shouldFetchDimensions = (dimensions) => {
       let should = true;
-      if(dimensions) {
+      if(dimensions && Object.keys(dimensions).length > 0) {
         should = false
       } 
       
@@ -91,6 +90,7 @@ class BlueprintsManager {
     
     if (shouldFetchDimensions(dimensions)) {
       //dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
+      dimensions = (this.api.getDimensions && this.api.getDimensions()) || this.currentState.dimensions;
     }
     
     return dimensions;
@@ -100,7 +100,7 @@ class BlueprintsManager {
     
     const shouldFetchItems = (items) => {
       let should = true;
-      if(items) {
+      if(items && items.length > 0) {
         should = false
       }
       
@@ -109,6 +109,7 @@ class BlueprintsManager {
 
     if (shouldFetchItems(items)) {
       //items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
+      items = (this.api.getItems && this.api.getItems()) || this.currentState.items;
     }
 
     // TODO - this.loadItemsDimensionsIfNeeded();
@@ -120,25 +121,26 @@ class BlueprintsManager {
 
     const shouldFetchStyles = (styles) => {
       let should = true;
-      if(styles) { //TODO - should check if they are ready styles and use ClientLib if not?
+      if(styles && Object.keys(styles).length > 0) { //TODO - should check if they are ready styles and use ClientLib if not?
         should = false
       }
 
       return should;
     }
-
     if (shouldFetchStyles(styles)) {
       //styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
+      styles = this.api.getStyles && this.api.getStyles() || this.currentState.styles;
     }
 
     return styles;
   }
 
 
-  updateLastParamsIfNeeded(params) {
-    if(this.thingsChanged){
-      this.lastParams = params;
-    }
+  updateLastParamsIfNeeded(params, changedParams) {
+    if(!changedParams) debugger;
+    this.currentState.items = changedParams.itemsChanged ? params.items : this.currentState.items ;
+    this.currentState.dimensions = changedParams.containerChanged ? params.dimensions : this.currentState.dimensions ;
+    this.currentState.styles = changedParams.stylesChanged ? params.styles : this.currentState.styles ;
   }
 
   eventsListenerWrapper(eventsListenerFunc, originalArgs) {
@@ -146,25 +148,10 @@ class BlueprintsManager {
     !eventHandledInternaly && eventsListenerFunc(...originalArgs);
   }
 
-
-  internalEventHandler(eventName, eventData, event) {
-    let eventHandledInternaly = false;
-    switch (eventName) {
-      // case EVENTS.LOAD_MORE_CLICKED:
-      //   this.galleryWrapper.loadMoreClicked = true;
-      //   break;
-      // case EVENTS.GALLERY_CHANGE:
-      //   this.onGalleryChangeEvent();
-      //   this.galleryWrapper.siteHelper.handleNewGalleryStructure(eventData);
-      //   break;
-      case EVENTS.NEED_MORE_ITEMS:
-        const currentItemLength = eventData;
-        eventHandledInternaly = this.getMoreItems(currentItemLength);
-        break;
-      default:
-    }
-    return eventHandledInternaly;
+  needMoreItems(currentItemLength) {
+    this.getMoreItems(currentItemLength);
   }
+
 }
 
 const blueprintsManager = new BlueprintsManager();

@@ -1,4 +1,4 @@
-import React, {useEffect, Suspense} from 'react';
+import React, {useEffect, Suspense, useState} from 'react';
 // import {SideBar} from '../SideBar';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
@@ -8,8 +8,8 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import {BlueprintsManager} from 'pro-gallery'
-import blueprintsApi from './PlaygroundBlueprintsApi'
+import {blueprintsManager} from 'pro-gallery'
+import BlueprintsApi from './PlaygroundBlueprintsApi'
 
 // import Loader from './loader';
 
@@ -62,17 +62,7 @@ export function App() {
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
   }
-
-  const configureBlueprintsManager = () => {
-    const config = {
-      api: new blueprintsApi(),
-      rerenderWithNewBlueprintCB: ()=>{},
-    }
-    BlueprintsManager.updateConfig(config)
-
-    return true;
-  }
-
+  
   const eventListener = (eventName, eventData) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED:
@@ -82,7 +72,11 @@ export function App() {
         // setGalleryReady();
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
-        addItems();
+        if(gallerySettings.useBlueprints){
+          blueprintsManager.needMoreItems(eventData);
+        } else {
+          addItems();
+        }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
         // setFullscreenIdx(eventData.idx);
@@ -176,6 +170,49 @@ export function App() {
       customSlideshowInfoRenderer: slideshowInfoElement,
     };
   }
+
+
+  let playgroundBlueprintsApi;
+  const [initialBlueprintLoaded, setInitialBlueprintLoaded] = useState(false);
+  const configureBlueprintsManager = () => {
+    playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles})
+    const config = {
+      api: playgroundBlueprintsApi,
+    }
+    blueprintsManager.init(config)
+  }
+  const [blueprint, setBlueprint] = useState(getInitialBlueprint()); // integer state
+  gallerySettings.useBlueprints && configureBlueprintsManager();
+
+  function getInitialBlueprint() {
+    if (!initialBlueprintLoaded) {
+      configureBlueprintsManager();
+    const params = {}
+    setInitialBlueprintLoaded(true);
+    return blueprintsManager.getOrCreateBlueprint(params);
+    }
+    return;
+  }
+  
+  playgroundBlueprintsApi.addSetBlueprintFunction(setBlueprint);
+  
+
+  function getContainer() {
+    return container;
+  }
+
+  function getStyles() {
+    return styleParams;
+  }
+
+
+
+
+
+  const blueprintObject = gallerySettings.useBlueprints ? blueprint : { items: getItems(),
+    options: styleParams,
+    container };
+
   return (
     <main className={s.main}>
       {/* <Loader/> */}
@@ -195,15 +232,13 @@ export function App() {
           key={`pro-gallery-${JSON.stringify(gallerySettings)}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
-          container={container}
-          items={getItems()}
           viewMode={gallerySettings.viewMode}
-          options={styleParams}
           eventsListener={eventListener}
           totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
           resizeMediaUrl={resizeMediaUrl}
-          useBlueprints={gallerySettings.useBlueprints && configureBlueprintsManager()}
+          useBlueprints={gallerySettings.useBlueprints} //Todo - use it react way
           {...getExternalInfoRenderers()}
+          {...blueprintObject}
         />
       </section>
     </main>

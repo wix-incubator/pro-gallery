@@ -15,7 +15,7 @@ class Blueprints {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
-    const {dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles, domId} =  params
+    const {dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles} =  params
     const {dimensions: oldRawDimensions, items: oldRawItems, styles: oldRawStyles} =  lastParams
     //getItems,styles and dimesions if not supplied in params;
 
@@ -24,12 +24,13 @@ class Blueprints {
     const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newRawDimensions, newRawStyles, oldRawDimensions, oldRawStyles, existingBlueprint);
 
     const changed = itemsChanged || stylesChanged || containerChanged;
+    const changedParams = {itemsChanged , stylesChanged , containerChanged}
     if (changed || !existingBlueprint) {
       const structure = this.createStructure({formattedContainer, formattedItems, formattedStyles}, changed);
-      return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure,};// scrollCss};
+      return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, changedParams};// scrollCss};
     }
 
-    return existingBlueprint;
+    return {...existingBlueprint, changedParams};
 
   }
     
@@ -169,7 +170,7 @@ class Blueprints {
 
 
     const oldRawStyles = lastStyles;
-    let changed;
+    let changed = false;
     let formattedStyles = existingBlueprint.styles;
     if (stylesHaveChanged(styles,oldRawStyles)) {
       styles = {...defaultStyles, ...styles}
@@ -235,21 +236,22 @@ class Blueprints {
     const oldRawDimensions = lastDimensions;
     let changed = false;
     const oldRawStyles = lastStyles;
+    let formattedContainer = existingBlueprint.container;
     dimensionsHelper.updateParams({
       styles,
       container: dimensions,
     });
     if(dimensionsHaveChanged({newRawDimensions: dimensions, oldRawDimensions, oldRawStyles})){
       changed = true;
-      return {formattedContainer: Object.assign(
+      formattedContainer = Object.assign(
         {},
         dimensions,
         dimensionsHelper.getGalleryDimensions(),
-      ), changed};
-    } else {
-      return existingBlueprint.container
-    }
+      );
+
   }
+  return {formattedContainer,changed}
+}
 
 
 
@@ -271,36 +273,11 @@ class Blueprints {
       //   layoutParams.options.useExistingLayout = true;
       // } else {
         layoutParams.options.createLayoutOnInit = false; //TODO - what does this do?
-        this.layouter = new Layouter(layoutParams);
+        this.layouter = new Layouter(layoutParams); //TODO - no need for "this."
       // }
   
-      this.layout = this.layouter.createLayout(layoutParams);
-      
-      return this.layout;
-
+      return this.layouter.createLayout(layoutParams);
   }
-
-  // createCssLayouts({formattedContainer, formattedItems, formattedStyles, structure, domId}) {
-
-  //     const layoutParams = {
-  //       items: formattedItems,
-  //       container: formattedContainer,
-  //       styleParams: formattedStyles,
-  //         options: {
-  //         showAllItems: true,
-  //         skipVisibilitiesCalc: true,
-  //         useLayoutStore: false,
-  //       },
-  //     };
-  //     const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !formattedStyles.oneRow; //FAKE SSR - TODO ask guy about this
-  //     return createCssLayouts({
-  //       layoutParams,
-  //       isApproximateWidth,
-  //       isMobile: utils.isMobile(),
-  //       domId: domId,
-  //       galleryItems: isApproximateWidth? null : structure.items,
-  //     });
-  // }
 
 }
 const blueprints = new Blueprints();
