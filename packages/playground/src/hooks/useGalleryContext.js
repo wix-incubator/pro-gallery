@@ -8,10 +8,16 @@ export function useGalleryContext(blueprintsManager) {
   const [context, setContext] = useContext(GalleryContext);
 
   const setDimentions = (width, height) => {
-    setContext({
+    const newContext = {
       galleryWidth: width,
       galleryHeight: height,
-    });
+    };
+
+    if(getGallerySettings().useBlueprints) {
+      setBlueprintParam(newContext);
+    } else {
+      setContext(newContext);
+    }
   };
 
   const setPreset = newPreset => {
