@@ -130,14 +130,14 @@ export function App() {
     blueprintsManager.init({api: playgroundBlueprintsApi})
   // }
 
-  function getInitialBlueprint() {
+  function getOrCreateInitialBlueprint() {
     initialBlueprint = initialBlueprint || blueprintsManager.getOrCreateBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()});
     // setBlueprint(initialBlueprint);
     return initialBlueprint;
   }
 
   function getBlueprint() {
-    return blueprint || getInitialBlueprint();
+    return blueprint || getOrCreateInitialBlueprint();
   }
 
   function getTotalItemsCount() {

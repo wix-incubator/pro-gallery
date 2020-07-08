@@ -135,7 +135,6 @@ class BlueprintsManager {
 
 
   updateLastParamsIfNeeded(params, changedParams) {
-    if(!changedParams) debugger;
     this.currentState.items = changedParams.itemsChanged ? params.items : this.currentState.items ;
     this.currentState.dimensions = changedParams.containerChanged ? params.dimensions : this.currentState.dimensions ;
     this.currentState.styles = changedParams.stylesChanged ? params.styles : this.currentState.styles ;
