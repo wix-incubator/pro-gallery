@@ -15,10 +15,16 @@ export function useGalleryContext(blueprintsManager) {
   };
 
   const setPreset = newPreset => {
-    setContext({
+    const newContext = {
       preset: newPreset,
       styleParams: getInitialStyleParams(newPreset)
-    });
+    };
+
+    if(getGallerySettings().useBlueprints) {
+      setBlueprintParam(newContext);
+    } else {
+      setContext(newContext);
+    }
   };
 
   const setShowSide = () => {
@@ -26,11 +32,23 @@ export function useGalleryContext(blueprintsManager) {
   };
 
   const setStyleParams = (newProp, value) => {
-    setContext({styleParams: {...context.styleParams, [newProp]: value}});
+
+    const newContext = {styleParams: {...context.styleParams, [newProp]: value}}
+    if(getGallerySettings().useBlueprints) {
+      setBlueprintParam(newContext);
+    } else {
+      setContext(newContext);
+    }
   };
 
   const setItems = items => {
-    setContext({items});
+
+    const newContext = {items};
+    if(getGallerySettings().useBlueprints) {
+      setBlueprintParam(newContext);
+    } else {
+      setContext(newContext);
+    }
   };
 
   const setBlueprint = blueprint => {
@@ -43,7 +61,12 @@ export function useGalleryContext(blueprintsManager) {
 
   const setGallerySettings = _gallerySettings => {
     const gallerySettings = {...getGallerySettings(), ..._gallerySettings};
-    setContext({gallerySettings});
+    const newContext = {gallerySettings}
+    if(getGallerySettings().useBlueprints) {
+      setBlueprintParam(newContext);
+    } else {
+      setContext(newContext);
+    }
     try {
       console.log('Saving gallerySettings to localStorage', gallerySettings)
       localStorage.gallerySettings = JSON.stringify(gallerySettings);
@@ -66,9 +89,9 @@ export function useGalleryContext(blueprintsManager) {
     }
   }
 
-  const setBlueprintParam = (changed) => {
-    const blueprint = blueprintsManager.getOrCreateBlueprint({...changed})
-    setContext({blueprint, ...changed})
+  const setBlueprintParam = (newContext) => {
+    const blueprint = blueprintsManager.getOrCreateBlueprint({...newContext})
+    setContext({blueprint, ...newContext})
   }
   const res = {
     showSide: context.showSide,
@@ -85,7 +108,6 @@ export function useGalleryContext(blueprintsManager) {
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
-    setBlueprintParam,
     dimensions: {
       width: context.galleryWidth,
       height: context.galleryHeight,

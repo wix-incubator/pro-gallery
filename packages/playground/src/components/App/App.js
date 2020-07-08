@@ -35,7 +35,7 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setBlueprintParam} = useGalleryContext(blueprintsManager);
+  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint} = useGalleryContext(blueprintsManager);
   
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
@@ -101,11 +101,7 @@ export function App() {
     const currentItems = getItems();
     if (!window.benchmarking && (!numberOfItems || currentItems.length < numberOfItems)) { //zero items means infinite
       const newItems = currentItems.concat(createItems());
-      if(gallerySettings.useBlueprints) {
-        setBlueprintParam({items: newItems})
-      } else {
-        setItems(newItems);
-      }
+      setItems(newItems);
       return newItems;
     }
   }

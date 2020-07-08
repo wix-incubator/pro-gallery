@@ -14,6 +14,7 @@ import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pro-gallery';
 import 'antd/dist/antd.css';
+import {blueprintsManager} from 'pro-gallery'
 
 function SideBar({ items }) {
   const {
@@ -23,7 +24,7 @@ function SideBar({ items }) {
     setGallerySettings,
     setStyleParams,
     styleParams,
-  } = useGalleryContext();
+  } = useGalleryContext(blueprintsManager);
 
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
