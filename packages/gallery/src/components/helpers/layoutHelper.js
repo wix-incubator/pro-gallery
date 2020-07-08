@@ -602,4 +602,4 @@ function isSlideshowFont(styles) {
   return false;
 }
 
-export { addLayoutStyles , processLayouts};
+export { addLayoutStyles };

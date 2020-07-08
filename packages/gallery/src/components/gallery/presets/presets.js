@@ -17,33 +17,6 @@ import { fixedStyles as empty, createStyles as emptyStyles} from './emptyGallery
 
 
 export const addPresetStyles = styles => {
-  const galleryType = styles.galleryType;
-  const galleryLayoutV1 = styles.galleryType;
-  const galleryLayoutV2 = styles.galleryLayout;
-
-  if (galleryLayoutV1 !== undefined && galleryLayoutV2 === undefined) {
-    //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
-    switch (galleryType) {
-      case '1': //horizontal collage
-        return collageStyles(styles);
-      case '2': //grid
-        return gridStyles(styles);
-      case '3': //vertical masonry
-        return masonryStyles(styles);
-      case '4': //horizontal masonry
-        return masonryStyles(styles);
-      case '5': //one column
-        return panoramaStyles(styles);
-      case '6': //one row
-        return columnStyles(styles);
-      case '7': //slideshow
-        return slideshowStyles(styles);
-      case '0': //vertical collage
-        default:
-        return collageStyles(styles);
-      }
-  } else {
-    //new layouts
   switch (styles.galleryLayout) {
       case LAYOUTS.MASONRY:
           return masonryStyles(styles);
@@ -75,10 +48,7 @@ export const addPresetStyles = styles => {
       default:
           return collageStyles(styles);
     }
-  
-  
   }
-}
   
   export default {
     alternate,
