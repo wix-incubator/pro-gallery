@@ -79,7 +79,6 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.scrollToItem(this.props.currentIdx, false, true, 0);
-    this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
 
@@ -110,9 +109,7 @@ export class GalleryContainer extends React.Component {
     const reCreateGallery = () => {
       const galleryState = this.propsToState(nextProps);
       if (Object.keys(galleryState).length > 0) {
-        this.setState(galleryState, () => {
-          this.handleNewGalleryStructure();
-        });
+        this.setState(galleryState);
       }
     };
 
@@ -167,47 +164,6 @@ export class GalleryContainer extends React.Component {
       this.videoScrollHelper.stop();
     }
   }
-
-  handleNewGalleryStructure() {
-    //should be called AFTER new state is set
-    const {
-      container,
-      needToHandleShowMoreClick,
-      initialGalleryHeight,
-    } = this.state;
-    const styleParams = this.props.styles;
-    const numOfItems = this.state.items.length;
-    const layoutHeight = this.props.structure.height;
-    const layoutItems = this.props.structure.items;
-    const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
-    let updatedHeight = false;
-    const needToUpdateHeightNotInfinite =
-      !isInfinite && needToHandleShowMoreClick;
-    if (needToUpdateHeightNotInfinite) {
-      const showMoreContainerHeight = 138; //according to the scss
-      updatedHeight =
-        container.height +
-        (initialGalleryHeight -
-          showMoreContainerHeight);
-    }
-
-    const onGalleryChangeData = {
-      numOfItems,
-      container,
-      styleParams,
-      layoutHeight,
-      layoutItems,
-      isInfinite,
-      updatedHeight,
-    };
-    console.log('handleNewGalleryStructure', onGalleryChangeData);
-    this.eventsListener(EVENTS.GALLERY_CHANGE, onGalleryChangeData);
-
-    if (needToHandleShowMoreClick) {
-      this.setState({ needToHandleShowMoreClick: false });
-    }
-  }
-
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
@@ -437,20 +393,14 @@ export class GalleryContainer extends React.Component {
           showMoreClickedAtLeastOnce,
           initialGalleryHeight,
           needToHandleShowMoreClick,
-        },
-        () => {
-          this.handleNewGalleryStructure();
-        },
+        }
       );
     } else {
       //from second click
       this.setState(
         {
           needToHandleShowMoreClick,
-        },
-        () => {
-          this.handleNewGalleryStructure();
-        },
+        }
       );
     }
   }
@@ -510,10 +460,6 @@ export class GalleryContainer extends React.Component {
       const scrollEnd = scrollPos + screenSize;
       const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
-      // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
-
-      //const curDistance = galleryEnd - scrollEnd;
-      //if (curDistance > 0 && curDistance < getItemsDistance) {
       if (galleryEnd - scrollEnd < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
           this.gettingMoreItems = true;

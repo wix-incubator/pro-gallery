@@ -24,16 +24,23 @@ class BlueprintsManager {
   }
 
   getOrCreateBlueprint(params) {
-        // cacheBlocker
-        // if (this.cache[params]) return this.cache[params];
-    // const eventsListener = params.eventsListener ? (...args) => this.eventsListenerWrapper(params.eventsListener, args) : this.currentState.eventsListener;
+    console.count('>>>>>>>>>>requestingBlueprint'); //TODO - remove when done :D
+
+
     this.currentState.totalItemsCount = params.totalItemsCount ? params.totalItemsCount : this.currentState.totalItemsCount;
     params =  {...params,...this.completeParams(params)}
-    const currentState = this.currentState;
-    const existingBlueprint = this.existingBlueprint;
-    const {changedParams, ...blueprint} = blueprints.createBlueprint(params, currentState, existingBlueprint)
+    let {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
+    this.existingBlueprint = blueprint
+    const finalizedHieght = this.updateContainerHeight(blueprint);
+    if (finalizedHieght) {
+      this.updateLastParamsIfNeeded({...params}, changedParams);
+      params.dimensions.height = finalizedHieght;
+      const {changedParams: newChangedParams, ...newBlueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint)
+      this.existingBlueprint = blueprint = newBlueprint
+      changedParams = newChangedParams;
+    }
     this.updateLastParamsIfNeeded(params, changedParams);
-    return this.cache[params] = this.existingBlueprint = {...blueprint};
+    return this.cache[params] = {...blueprint};
   }
 
   getMoreItems(currentItemLength) {
@@ -134,10 +141,10 @@ class BlueprintsManager {
   }
 
 
-  updateLastParamsIfNeeded(params, changedParams) {
-    this.currentState.items = changedParams.itemsChanged ? params.items : this.currentState.items ;
-    this.currentState.dimensions = changedParams.containerChanged ? params.dimensions : this.currentState.dimensions ;
-    this.currentState.styles = changedParams.stylesChanged ? params.styles : this.currentState.styles ;
+  updateLastParamsIfNeeded({items,dimensions,styles}, changedParams) {
+    this.currentState.items = changedParams.itemsChanged ? items : this.currentState.items ;
+    this.currentState.dimensions = changedParams.containerChanged ? {...dimensions} : this.currentState.dimensions ;
+    this.currentState.styles = changedParams.stylesChanged ? {...styles} : this.currentState.styles ;
   }
 
   eventsListenerWrapper(eventsListenerFunc, originalArgs) {
@@ -148,6 +155,52 @@ class BlueprintsManager {
   needMoreItems(currentItemLength) {
     this.getMoreItems(currentItemLength);
   }
+
+
+  containerInfiniteGrowthDirection({styles}) {
+    const _styles = styles;
+    // return the direction in which the gallery can grow on it's own (aka infinite scroll)
+    const { enableInfiniteScroll } = styles; //TODO - props or "raw" styles
+    const { showMoreClickedAtLeastOnce } = this.currentState;
+    const { oneRow, loadMoreAmount } = _styles;
+    if (oneRow) {
+      return 'horizontal';
+    } else if (!enableInfiniteScroll) {
+      //vertical gallery with showMore button enabled
+      if (showMoreClickedAtLeastOnce && loadMoreAmount === 'all') {
+        return 'vertical';
+      } else {
+        return 'none';
+      }
+    } else {
+      return 'vertical';
+    }
+  }
+
+  updateContainerHeight({items, styles, container, structure, changedParams}, isALoadMoreClick = false){
+
+
+      const styleParams = styles;
+      const numOfItems = items.length;
+      const layoutHeight = structure.height;
+      const layoutItems = structure.items;
+      const isInfinite = this.containerInfiniteGrowthDirection({items, styles, container, structure, changedParams}) === 'vertical';
+      const updatedHeight = false;
+  
+      const onGalleryChangeData = {
+        numOfItems,
+        container,
+        styleParams,
+        layoutHeight,
+        layoutItems,
+        isInfinite,
+        updatedHeight,
+      };
+      
+      return this.api.finalizeHeightByStructure(onGalleryChangeData);
+
+      //do something
+    }
 
 }
 
