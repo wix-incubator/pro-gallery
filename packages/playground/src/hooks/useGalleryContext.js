@@ -4,7 +4,7 @@ import {getInitialStyleParams} from '../constants/styleParams';
 import { addPresetStyles } from 'pro-gallery';
 
 
-export function useGalleryContext() {
+export function useGalleryContext(blueprintsManager) {
   const [context, setContext] = useContext(GalleryContext);
 
   const setDimentions = (width, height) => {
@@ -31,6 +31,10 @@ export function useGalleryContext() {
 
   const setItems = items => {
     setContext({items});
+  };
+
+  const setBlueprint = blueprint => {
+    setContext({blueprint});
   };
 
   const setGalleryReady = galleryReady => {
@@ -62,19 +66,26 @@ export function useGalleryContext() {
     }
   }
 
+  const setBlueprintParam = (changed) => {
+    const blueprint = blueprintsManager.getOrCreateBlueprint({...changed})
+    setContext({blueprint, ...changed})
+  }
   const res = {
     showSide: context.showSide,
     setShowSide,
     preset: context.preset,
     setPreset,
-    styleParams: addPresetStyles(context.styleParams),
+    styleParams: addPresetStyles(context.styleParams), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setStyleParams,
     items: context.items,
     setItems,
+    blueprint: context.blueprint,
+    setBlueprint,
     galleryReady: context.galleryReady,
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
+    setBlueprintParam,
     dimensions: {
       width: context.galleryWidth,
       height: context.galleryHeight,

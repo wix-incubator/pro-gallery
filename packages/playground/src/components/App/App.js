@@ -1,4 +1,4 @@
-import React, {useEffect, Suspense, useState} from 'react';
+import React, {useEffect, Suspense} from 'react';
 // import {SideBar} from '../SideBar';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
@@ -29,19 +29,14 @@ const initialItems = {
   images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
 };
 
+let initialBlueprint
+
 const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  if (!blueprintsManager.api) {
-    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: (() => {})});
-    blueprintsManager.init({api: playgroundBlueprintsApi})
-  }
+  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setBlueprintParam} = useGalleryContext(blueprintsManager);
   
-  const [blueprint, setBlueprint] = useState(blueprintsManager.getOrCreateBlueprint({})); // integer state
-  blueprintsManager.api.onBlueprintReady = setBlueprint;
-
-  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings} = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
@@ -103,12 +98,18 @@ export function App() {
   };
 
   const addItems = () => {
-    const items = getItems();
-    if (!window.benchmarking && (!numberOfItems || items.length < numberOfItems)) { //zero items means infinite
-      setItems(items.concat(createItems()));
+    const currentItems = getItems();
+    if (!window.benchmarking && (!numberOfItems || currentItems.length < numberOfItems)) { //zero items means infinite
+      const newItems = currentItems.concat(createItems());
+      if(gallerySettings.useBlueprints) {
+        setBlueprintParam({items: newItems})
+      } else {
+        setItems(newItems);
+      }
+      return newItems;
     }
-
   }
+
   const createItems = () => {
     return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : mediaType === 'texts' ? testTexts : testItems), numberOfItems || ITEMS_BATCH_SIZE);
   }
@@ -126,6 +127,25 @@ export function App() {
     } else {
       return theItems;
     }
+  }
+
+  // if (!blueprintsManager.api) {
+    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint});
+    blueprintsManager.init({api: playgroundBlueprintsApi})
+  // }
+
+  function getInitialBlueprint() {
+    initialBlueprint = initialBlueprint || blueprintsManager.getOrCreateBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()});
+    // setBlueprint(initialBlueprint);
+    return initialBlueprint;
+  }
+
+  function getBlueprint() {
+    return blueprint || getInitialBlueprint();
+  }
+
+  function getTotalItemsCount() {
+    return numberOfItems > 0 ? numberOfItems : Infinity
   }
 
   const renderInfoElement = (type, pgItemProps) => {
@@ -187,7 +207,7 @@ export function App() {
     return styleParams;
   }
 
-  const blueprintProps = gallerySettings.useBlueprints ? blueprint : { items: getItems(),
+  const blueprintProps = gallerySettings.useBlueprints ? getBlueprint() : { items: getItems(),
     options: styleParams,
     container };
 
@@ -212,7 +232,7 @@ export function App() {
           scrollingElement={window}
           viewMode={gallerySettings.viewMode}
           eventsListener={eventListener}
-          totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
+          totalItemsCount={getTotalItemsCount()}
           resizeMediaUrl={resizeMediaUrl}
           useBlueprints={gallerySettings.useBlueprints} //Todo - use it react way
           {...getExternalInfoRenderers()}

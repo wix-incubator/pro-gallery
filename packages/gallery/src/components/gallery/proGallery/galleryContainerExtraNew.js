@@ -25,7 +25,6 @@ export class GalleryContainer extends React.Component {
     this.scrollToItem = this.scrollToItem.bind(this);
     this.scrollToGroup = this.scrollToGroup.bind(this);
     this._scrollingElement = this.getScrollingElement();
-    this.duplicateGalleryItems = this.duplicateGalleryItems.bind(this);
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
@@ -478,20 +477,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  duplicateGalleryItems() {
-    const galleryState = this.propsToState({
-      ...this.props,
-      loopingItems: this.state.items.concat(
-        ...this.state.items.slice(0, this.props.totalItemsCount),
-      ),
-    });
-    if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
-        this.handleNewGalleryStructure();
-      });
-    }
-  }
-
   eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
@@ -531,19 +516,15 @@ export class GalleryContainer extends React.Component {
       //if (curDistance > 0 && curDistance < getItemsDistance) {
       if (galleryEnd - scrollEnd < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
-        if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
           this.eventsListener(EVENTS.NEED_MORE_ITEMS, this.state.items.length);
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
             this.gettingMoreItems = false;
           }, 2000);
-        } else if (this.state.styles.slideshowLoop) {
-          this.duplicateGalleryItems();
-        }
-      }
     }
   }
+}
 
   canRender() {
     const can = this.props.container && this.props.styles && this.state.items;
@@ -635,7 +616,6 @@ export class GalleryContainer extends React.Component {
             setWixHeight: (() => {}),
             scrollToItem: this.scrollToItem,
             scrollToGroup: this.scrollToGroup,
-            duplicateGalleryItems: this.duplicateGalleryItems,
           }}
           {...this.props.gallery}
         />

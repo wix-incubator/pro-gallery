@@ -8,7 +8,6 @@ class BlueprintsManager {
     this.currentState = {};
     this.existingBlueprint = {};
     this.cache = {};
-    this.api = {};
     this.currentState.totalItemsCount = Infinity;
     this.onBlueprintReady = (() => {});
   }
@@ -20,7 +19,7 @@ class BlueprintsManager {
 
   init(config) { // is this init? should dump cache
     // this.onBlueprintReady = config && config.onBlueprintReady || this.onBlueprintReady;
-    this.api = config && config.api || this.api || {};
+    this.api = config.api;
     this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
   }
 
@@ -34,22 +33,21 @@ class BlueprintsManager {
     const existingBlueprint = this.existingBlueprint;
     const {changedParams, ...blueprint} = blueprints.createBlueprint(params, currentState, existingBlueprint)
     this.updateLastParamsIfNeeded(params, changedParams);
-
     return this.cache[params] = this.existingBlueprint = {...blueprint};
   }
 
   getMoreItems(currentItemLength) {
-    // let items;
-    // if (currentItemLength < this.currentState.totalItemsCount) {
-    //   // this.gettingMoreItems = true;
-    //   const items = this.api.getMoreItems(currentItemLength);
-    //   if (items) {
-    //     this.api.onBlueprintReady(this.getOrCreateBlueprint({items}));
-    //     //work with the new items...
-    //   }
-    // } else if (this.existingBlueprint.styles.slideshowLoop) {
+    let items;
+    if (currentItemLength < this.currentState.totalItemsCount) {
+      // this.gettingMoreItems = true;
+      items = this.api.fetchMoreItems(currentItemLength);
+      if (items) {
+        this.api.onBlueprintReady(this.getOrCreateBlueprint({items}));
+        //work with the new items...
+      }
+    } else if (this.existingBlueprint.styles.slideshowLoop) {
       this.duplicateGalleryItems();
-    // }
+    }
   }
 
   duplicateGalleryItems() {
@@ -90,7 +88,7 @@ class BlueprintsManager {
     
     if (shouldFetchDimensions(dimensions)) {
       //dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
-      dimensions = (this.api.getDimensions && this.api.getDimensions()) || this.currentState.dimensions;
+      dimensions = (this.api.fetchDimensions && this.api.fetchDimensions()) || this.currentState.dimensions;
     }
     
     return dimensions;
@@ -109,7 +107,7 @@ class BlueprintsManager {
 
     if (shouldFetchItems(items)) {
       //items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
-      items = (this.api.getItems && this.api.getItems()) || this.currentState.items;
+      items = (this.api.fetchItems && this.api.fetchItems()) || this.currentState.items;
     }
 
     // TODO - this.loadItemsDimensionsIfNeeded();
@@ -129,7 +127,7 @@ class BlueprintsManager {
     }
     if (shouldFetchStyles(styles)) {
       //styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
-      styles = this.api.getStyles && this.api.getStyles() || this.currentState.styles;
+      styles = this.api.fetchStyles && this.api.fetchStyles() || this.currentState.styles;
     }
 
     return styles;
