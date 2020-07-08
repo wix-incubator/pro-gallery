@@ -12,10 +12,14 @@ export const notEligibleReasons = ({items, styles}) => {
   if (items.length > MAX_ITEMS_COUNT) {
     res.push(`more than ${MAX_ITEMS_COUNT} items`);
   }
+  let nonImagesCount = 0;
   for (const item of items) {
     if (!isImage(item)) {
-      res.push(`at least one item is not an image`);
+      nonImagesCount++;
     }
+  }
+  if (nonImagesCount > 0) {
+    res.push(`${nonImagesCount} items are not an image`);
   }
   for (const [styleParam, value] of Object.entries(s)) {
     if (!isValidStyleParam(styleParam, value, s)) {
