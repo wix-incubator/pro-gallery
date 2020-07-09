@@ -4,6 +4,7 @@ import {
   isEditMode,
   isPreviewMode,
   isFormFactorMobile,
+  isPrerenderMode
 } from '../window/viewModeWrapper';
 
 class Utils {
@@ -16,7 +17,7 @@ class Utils {
   }
 
   shouldUseCache() {
-    return !isEditMode() && !isPreviewMode();
+    return !isEditMode() && !isPreviewMode() && isPrerenderMode();
   }
 
   isUndefined(something) {
@@ -28,8 +29,8 @@ class Utils {
   }
 
   getOrPutFromCache(fld, func) {
-    //ignore cache in SSR (in ssr the module is kept alive between different renders) and in Editor and preview
-    if (!this.shouldUseCache() || this.isSSR()) {
+    //ignore cache in pre-render (in pre-render the module can stay alive between different renders) and in Editor and preview
+    if (!this.shouldUseCache()) {
       return func();
     }
     if (this._cache[fld] !== undefined) {
@@ -284,6 +285,10 @@ class Utils {
   }
 
   isSSR() {
+    return !!window.isMock;
+  }
+
+  isMockedWindow() {
     return !!window.isMock;
   }
 
