@@ -4,6 +4,7 @@ import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
 import { GALLERY_CONSTS } from 'pro-gallery';
+import 'pro-gallery/dist/statics/main.css';
 
 const UNKNOWN_CONTAINER = { 
   width: 980,
@@ -72,10 +73,22 @@ export default class Gallery extends React.PureComponent {
     
     if (this.shouldUpdateContainerOnMount()){
       newState.container = this.getContainerFromWindowDimensions();
+    } else {
+      this.triggerSSRHighResImageOnLoadEvent();
     }
-
+    
     this.setState(newState);
     window.addEventListener('resize', this.handleResize);
+  }
+
+  triggerSSRHighResImageOnLoadEvent = () => {
+    const imageElements = document.querySelectorAll("img.gallery-item.gallery-item-hidden.gallery-item-preloaded");
+    
+    imageElements.forEach(imageElement => {
+      if (imageElement.complete) {
+        imageElement.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
+      }
+    })
   }
 
   componentWillUnmount() {

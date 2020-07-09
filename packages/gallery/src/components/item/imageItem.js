@@ -117,9 +117,9 @@ export default class ImageItem extends GalleryComponent {
         style={restOfDimensions}
         {...imageProps}
       />;
-      const _preload = isPrerenderMode() ? preload : null;
-      const _highres = isPrerenderMode() ? null : highres;
-      return [_preload, _highres]
+            
+      const imagesComponents = isPrerenderMode() ? [preload] : [preload, highres];
+      return imagesComponents;
     }
 
     const canvas = () => (

@@ -26,6 +26,7 @@ import {
   getContainerStyle,
   getImageStyle,
 } from './itemViewStyleProvider';
+import ANIMATIONS from '../../common/constants/animations.js';
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -595,6 +596,7 @@ class ItemView extends GalleryComponent {
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
 
     const itemStyles = {
+      transition: ANIMATIONS[styleParams.imagePlacementAnimation],
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
