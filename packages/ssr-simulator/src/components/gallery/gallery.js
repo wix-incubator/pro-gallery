@@ -87,7 +87,12 @@ export default class Gallery extends React.PureComponent {
     imageElements.forEach(imageElement => {
       if (imageElement.complete) {
         imageElement.style.opacity = '1';
-        imageElement.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
+        setTimeout((() => {
+          try {
+            imageElement.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
+          } catch (e) {
+          }
+        }), 1000);
       }
     })
   }
