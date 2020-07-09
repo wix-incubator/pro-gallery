@@ -6,6 +6,13 @@ import { isSEOMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 
 export default class ImageItem extends GalleryComponent {
+  constructor(props) {
+    super(props);
+    this.getImageContainer = this.getImageContainer.bind(this);
+    this.getImageContainerClassNames = this.getImageContainerClassNames.bind(this);
+    this.getImageElement = this.getImageElement.bind(this);
+  }
+
   componentDidMount() {
     try {
       if (typeof this.props.actions.setItemLoaded === 'function') {
@@ -16,13 +23,57 @@ export default class ImageItem extends GalleryComponent {
     }
   }
 
-  render() {
+  getImageContainerClassNames() {
+    const {
+      styleParams,
+    } = this.props;
+
+    const imageContainerClassNames = [
+      'gallery-item-content',
+      'image-item',
+      'gallery-item-visible',
+      'gallery-item',
+      'gallery-item-preloaded',
+      styleParams.cubeImages && styleParams.cubeType === 'fit'
+        ? 'grid-fit'
+        : '',
+      styleParams.imageLoadingMode === LOADING_MODE.COLOR
+        ? 'load-with-color'
+        : '',
+    ].join(' ');
+
+    return imageContainerClassNames
+  }
+
+  getImageContainer(image) {
+    const {
+      imageDimensions,
+      id,
+      actions,
+    } = this.props;
+
+    const imageContainerClassNames = this.getImageContainerClassNames();
+
+    return (
+      <div
+        className={imageContainerClassNames}
+        onTouchStart={actions.handleItemMouseDown}
+        onTouchEnd={actions.handleItemMouseUp}
+        key={'image_container-' + id}
+        data-hook={'image-item'}
+        style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
+      >
+        {image}
+      </div>
+    );
+  };
+
+  getImageElement() {
     const {
       alt,
       imageDimensions,
       createUrl,
       id,
-      actions,
       settings,
       lazyLoad,
       styleParams,
@@ -37,33 +88,7 @@ export default class ImageItem extends GalleryComponent {
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
     const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
-    const imageItemClassName = [
-      'gallery-item-content',
-      'image-item',
-      'gallery-item-visible',
-      'gallery-item',
-      'gallery-item-preloaded',
-      styleParams.cubeImages && styleParams.cubeType === 'fit'
-        ? 'grid-fit'
-        : '',
-      styleParams.imageLoadingMode === LOADING_MODE.COLOR
-        ? 'load-with-color'
-        : '',
-    ].join(' ');
-    const imageContainer = image => {
-      return (
-        <div
-          className={imageItemClassName}
-          onTouchStart={actions.handleItemMouseDown}
-          onTouchEnd={actions.handleItemMouseUp}
-          key={'image_container-' + id}
-          data-hook={'image-item'}
-          style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
-        >
-          {image}
-        </div>
-      );
-    };
+
     const image = (
       <img
         key={
@@ -99,7 +124,12 @@ export default class ImageItem extends GalleryComponent {
       />
     );
 
-    const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
+    return useImageTag ? image : canvas
+  }
+
+  render() {
+    const imageElement = this.getImageElement();
+    const renderedItem = this.getImageContainer(imageElement)
     return renderedItem;
   }
 }

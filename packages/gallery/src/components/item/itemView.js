@@ -73,6 +73,7 @@ class ItemView extends GalleryComponent {
     );
     this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(this);
     this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(this);
+    this.canVideoPlayInGallery = this.canVideoPlayInGallery.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -437,6 +438,19 @@ class ItemView extends GalleryComponent {
     );
   }
 
+  canVideoPlayInGallery() {
+    const { videoPlay, itemClick } = this.props.styleParams;
+    const { hasLink } = this.props;
+    if (
+      videoPlay === 'hover' || videoPlay === 'auto'
+    ) { return true; } else if (
+      itemClick === 'nothing'
+    ) { return true; } else if (
+      itemClick === 'link' && !hasLink
+    ) { return true; }
+    return false;
+  }
+
   getItemInner() {
     const { styleParams, type } = this.props;
     let itemInner;
@@ -455,12 +469,12 @@ class ItemView extends GalleryComponent {
         break;
       case 'video':
         if (
-          this.props.idx === this.props.playingVideoIdx ||
-          this.props.idx === this.props.nextVideoIdx
+          (this.props.idx === this.props.playingVideoIdx ||
+          this.props.idx === this.props.nextVideoIdx) && this.canVideoPlayInGallery()
         ) {
           itemInner = this.getVideoItem(imageDimensions, itemHover);
         } else {
-          itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
+          itemInner = [this.getVideoItemPlaceholder(imageDimensions), itemHover];
         }
         break;
       case 'text':
@@ -470,7 +484,7 @@ class ItemView extends GalleryComponent {
       case 'picture':
       default:
         if (this.props.isVideoPlaceholder) {
-          itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
+          itemInner = [this.getVideoItemPlaceholder(imageDimensions), itemHover];
         } else {
         itemInner = [this.getImageItem(imageDimensions), itemHover];
         }

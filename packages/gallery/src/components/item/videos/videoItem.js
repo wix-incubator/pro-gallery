@@ -6,7 +6,6 @@ import EVENTS from '../../../common/constants/events';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
-import VideoItemPlaceholder from './videoItemPlaceholder.js';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -215,18 +214,6 @@ class VideoItem extends GalleryComponent {
     }
   }
 
-  canVideoPlayInGallery(itemClick, videoPlay , hasLink) {
-      if (
-        videoPlay === 'hover' || videoPlay === 'auto'
-      ) {return true;}
-      else if (
-        itemClick === 'nothing'
-      ) {return true;}
-      else if (
-        itemClick === 'link' && !hasLink
-      ) {return true;}
-      return false;
-    }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -292,13 +279,11 @@ class VideoItem extends GalleryComponent {
 
     const hover = this.props.hover;
 
-    return this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
+    return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {[video, hover]}
       </div>
-    ): (
-      <VideoItemPlaceholder {...this.props}/>
-    );
+    )
   }
 }
 
