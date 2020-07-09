@@ -29,6 +29,12 @@ class Blueprints {
       console.count('>>>>>>>>>>>> Actually calculating a structure')
       console.log('>>>>>>>>>', {itemsChanged , stylesChanged , containerChanged})
       const structure = this.createStructure({formattedContainer, formattedItems, formattedStyles}, changed);
+
+      const isInfinite = formattedStyles.oneRow && formattedStyles.enableInfiniteScroll
+      if (isInfinite) {
+        formattedContainer.height = structure.height;
+      }
+
       return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, changedParams};// scrollCss};
     }
 

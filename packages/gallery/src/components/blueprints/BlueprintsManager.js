@@ -23,26 +23,18 @@ class BlueprintsManager {
     this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
   }
 
-  getOrCreateBlueprint(params, galleryStylesEdited) {
+  getOrCreateBlueprint(params) {
     console.count('>>>>>>>>>>requestingBlueprint'); //TODO - remove when done :D
-    if (galleryStylesEdited) {
-      // reset state things?? noooooooooo
-      this.loadMoreState = 0;
-      this.showMoreClickedAtLeastOnce = false;
-    } 
+
+
     this.currentState.totalItemsCount = params.totalItemsCount ? params.totalItemsCount : this.currentState.totalItemsCount;
+
     params =  {...params,...this.completeParams(params)}
-    let {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
-    this.existingBlueprint = blueprint
-    const finalizedHieght = this.updateContainerHeight(blueprint);
-    if (finalizedHieght) {
-      this.updateLastParamsIfNeeded({...params}, changedParams);
-      params.dimensions.height = finalizedHieght;
-      const {changedParams: newChangedParams, ...newBlueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint)
-      this.existingBlueprint = blueprint = newBlueprint
-      changedParams = newChangedParams;
-    }
+
+    const {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
+
     this.updateLastParamsIfNeeded(params, changedParams);
+    this.existingBlueprint = blueprint;
     return this.cache[params] = {...blueprint};
   }
 
@@ -87,9 +79,9 @@ class BlueprintsManager {
   
   fetchDimensionsIfNeeded(dimensions) {
 
-    const shouldFetchDimensions = (dimensions) => {
+    const shouldFetchDimensions = (_dimensions) => {
       let should = true;
-      if(dimensions && Object.keys(dimensions).length > 0) {
+      if(_dimensions && Object.keys(_dimensions).length > 0) {
         should = false
       } 
       
@@ -106,9 +98,9 @@ class BlueprintsManager {
   
   fetchItemsIfNeeded(items) {
     
-    const shouldFetchItems = (items) => {
+    const shouldFetchItems = (_items) => {
       let should = true;
-      if(items && items.length > 0) {
+      if(_items && _items.length > 0) {
         should = false
       }
       
@@ -127,9 +119,9 @@ class BlueprintsManager {
 
   fetchStylesIfNeeded(styles) {
 
-    const shouldFetchStyles = (styles) => {
+    const shouldFetchStyles = (_styles) => {
       let should = true;
-      if(styles && Object.keys(styles).length > 0) { //TODO - should check if they are ready styles and use ClientLib if not?
+      if(_styles && Object.keys(_styles).length > 0) { //TODO - should check if they are ready styles and use ClientLib if not?
         should = false
       }
 
@@ -157,78 +149,6 @@ class BlueprintsManager {
 
   needMoreItems(currentItemLength) {
     this.getMoreItems(currentItemLength);
-  }
-
-
-  containerInfiniteGrowthDirection({styles}) {
-    const _styles = styles;
-    // return the direction in which the gallery can grow on it's own (aka infinite scroll)
-    const { enableInfiniteScroll } = styles; //TODO - props or "raw" styles
-    const { showMoreClickedAtLeastOnce } = this.currentState;
-    const { oneRow, loadMoreAmount } = _styles;
-    if (oneRow) {
-      return 'horizontal';
-    } else if (!enableInfiniteScroll) {
-      //vertical gallery with showMore button enabled
-      if (showMoreClickedAtLeastOnce && loadMoreAmount === 'all') {
-        return 'vertical';
-      } else {
-        return 'none';
-      }
-    } else {
-      return 'vertical';
-    }
-  }
-
-  updateContainerHeight({items, styles, container, structure} = this.existingBlueprint){
-
-
-      const styleParams = styles;
-      const numOfItems = items.length;
-      const layoutHeight = structure.height;
-      const layoutItems = structure.items;
-      const isInfinite = this.containerInfiniteGrowthDirection({items, styles, container, structure}) === 'vertical';
-      const updatedHeight = this.loadMoreState;
-      const onGalleryChangeData = {
-        numOfItems,
-        container,
-        styleParams,
-        layoutHeight,
-        layoutItems,
-        isInfinite,
-        updatedHeight,
-      };
-      
-      return this.api.finalizeHeightByStructure(onGalleryChangeData);
-
-      //do something
-    }
-
-    handleLoadMoreClick() {
-          //---------------- Save initial height ------------------- //
-          if (!this.showMoreClickedAtLeastOnce) {
-            this.currentState.initialGalleryHeight = this.existingBlueprint.container.height; //save the container's initial height for the horrible partially load more feature
-            this.loadMoreState = this.existingBlueprint.container.height;
-          } 
-          this.showMoreClickedAtLeastOnce = true;
-
-
-          //---------------- Handle it ------------------- //
-
-          if(this.existingBlueprint.styles.loadMoreAmount === 'all') {
-            this.loadMoreState = Infinity; //This is something new and ugly - maybe I can find a neater way to do this
-          } else {
-            const showMoreContainerHeight = 138; //according to the scss
-            this.loadMoreState +=
-              (this.currentState.initialGalleryHeight -
-                showMoreContainerHeight);
-          }
-
-          const height = this.updateContainerHeight();
-          // this.currentState.dimensions = {...this.currentState.dimensions, height}
-
-          this.api.onBlueprintReady(this.getOrCreateBlueprint({dimensions: {...this.currentState.dimensions, height}}));
-          //Do something now.....
   }
 
 }

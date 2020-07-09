@@ -35,7 +35,7 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setDimentionsHeight, setDimentionsWidth} = useGalleryContext(blueprintsManager);
+  const {setDimensions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setDimensionsHeight, setDimensionsWidth, dimensions} = useGalleryContext(blueprintsManager);
   
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
@@ -47,20 +47,20 @@ export function App() {
 
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-    setDimentions(width, window.innerHeight);
+    setDimensions(width, window.innerHeight);
     setGallerySettings({showSide: !showSide});
   };
 
   useEffect(() => {
     const handleResize = () => {
       const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-      setDimentionsWidth(width);
+      setDimensionsWidth(width);
     };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [setDimentions, setDimentionsWidth, showSide]);
+  }, [setDimensions, setDimensionsWidth, showSide]);
 
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
@@ -71,8 +71,10 @@ export function App() {
       case GALLERY_EVENTS.APP_LOADED:
         setGalleryReady();
         break;
-      case GALLERY_EVENTS.GALLERY_CHANGE:
-        // setGalleryReady();
+      case GALLERY_EVENTS.GALLERY_CHANGE: //TODO split to an event named "PARTIALY_GROW_GALLERY_PRETTY_PLEASE"
+        if(gallerySettings.useBlueprints && eventData.updatedHeight){
+          setDimensionsHeight(eventData.updatedHeight);
+        }
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
         if(gallerySettings.useBlueprints){
@@ -85,9 +87,6 @@ export function App() {
         // setFullscreenIdx(eventData.idx);
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
-        if(gallerySettings.useBlueprints){
-          blueprintsManager.handleLoadMoreClick(eventData);
-        }
         break;
       default:
         // console.log({eventName, eventData});
@@ -131,7 +130,7 @@ export function App() {
   }
 
   // if (!blueprintsManager.api) {
-    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, setDimentionsHeight});
+    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, setDimensionsHeight});
     blueprintsManager.init({api: playgroundBlueprintsApi})
   // }
 
@@ -201,7 +200,7 @@ export function App() {
   }
   
   function getContainer() {
-    return container;
+    return {...container, ...dimensions};
   }
 
   function getStyles() {

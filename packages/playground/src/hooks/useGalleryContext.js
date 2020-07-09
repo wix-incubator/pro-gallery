@@ -7,10 +7,10 @@ import { addPresetStyles } from 'pro-gallery';
 export function useGalleryContext(blueprintsManager) {
   const [context, setContext] = useContext(GalleryContext);
 
-  const setDimentions = (width, height) => {
-    const newContext = {
-      galleryWidth: width,
-      galleryHeight: height,
+  const setDimensions = (width, height) => {
+    const newContext = { dimensions:
+      width,
+      height,
     };
 
     if(getGallerySettings().useBlueprints) {
@@ -19,9 +19,9 @@ export function useGalleryContext(blueprintsManager) {
       setContext(newContext);
     }
   };
-  const setDimentionsWidth = (width) => {
+  const setDimensionsWidth = (width) => {
     const newContext = {
-      galleryWidth: width,
+      dimensions: {...context.dimensions, width }  
     };
 
     if(getGallerySettings().useBlueprints) {
@@ -30,9 +30,9 @@ export function useGalleryContext(blueprintsManager) {
       setContext(newContext);
     }
   };
-  const setDimentionsHeight = (height) => {
+  const setDimensionsHeight = (height) => {
     const newContext = {
-      galleryHeight: height,
+      dimensions: {...context.dimensions, height }  
     };
 
     if(getGallerySettings().useBlueprints) {
@@ -49,7 +49,7 @@ export function useGalleryContext(blueprintsManager) {
     };
 
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext, true);
+      setBlueprintParam(newContext);
     } else {
       setContext(newContext);
     }
@@ -63,7 +63,7 @@ export function useGalleryContext(blueprintsManager) {
 
     const newContext = {styleParams: {...context.styleParams, [newProp]: value}}
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext, true);
+      setBlueprintParam(newContext);
     } else {
       setContext(newContext);
     }
@@ -117,8 +117,8 @@ export function useGalleryContext(blueprintsManager) {
     }
   }
 
-  const setBlueprintParam = (newContext, majorChange) => {
-    const blueprint = blueprintsManager.getOrCreateBlueprint({...newContext}, majorChange)
+  const setBlueprintParam = (newContext) => {
+    const blueprint = blueprintsManager.getOrCreateBlueprint({...newContext})
     setContext({blueprint, ...newContext})
   }
   const res = {
@@ -136,13 +136,10 @@ export function useGalleryContext(blueprintsManager) {
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
-    dimensions: {
-      width: context.galleryWidth,
-      height: context.galleryHeight,
-    },
-    setDimentions,
-    setDimentionsHeight,
-    setDimentionsWidth
+    dimensions: context.dimensions,
+    setDimensions,
+    setDimensionsHeight,
+    setDimensionsWidth
   };
 
   return res;

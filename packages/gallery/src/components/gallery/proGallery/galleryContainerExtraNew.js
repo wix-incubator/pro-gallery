@@ -165,6 +165,47 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  handleNewGalleryStructure() {
+    //should be called AFTER new state is set
+    const {
+      container,
+      needToHandleShowMoreClick,
+      initialGalleryHeight,
+    } = this.state;
+    const styleParams = this.props.styles;
+    const numOfItems = this.state.items.length;
+    const layoutHeight = this.props.structure.height;
+    const layoutItems = this.props.structure.items;
+    const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
+    let updatedHeight = false;
+    const needToUpdateHeightNotInfinite =
+      !isInfinite && needToHandleShowMoreClick;
+    if (needToUpdateHeightNotInfinite) {
+      const showMoreContainerHeight = 138; //according to the scss
+      updatedHeight =
+        container.height +
+        (initialGalleryHeight -
+          showMoreContainerHeight);
+    }
+
+    const onGalleryChangeData = {
+      numOfItems,
+      container,
+      styleParams,
+      layoutHeight,
+      layoutItems,
+      isInfinite,
+      updatedHeight,
+    };
+    console.log('handleNewGalleryStructure', onGalleryChangeData);
+    this.eventsListener(EVENTS.GALLERY_CHANGE, onGalleryChangeData);
+
+    if (needToHandleShowMoreClick) {
+      this.setState({ needToHandleShowMoreClick: false });
+    }
+  }
+
+
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
@@ -369,20 +410,46 @@ export class GalleryContainer extends React.Component {
   }
 
   toggleLoadMoreItems() {
+    if (!this.allowedPreloading) {
+      //we already called to calcScrollCss with allowPreloading = true
+      this.allowedPreloading = true;
+      this.scrollCss = this.getScrollCssIfNeeded({
+        domId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: this.state.styles,
+        allowPreloading: true,
+      });
+    }
     this.eventsListener(
       EVENTS.LOAD_MORE_CLICKED,
       this.galleryStructure.galleryItems,
     );
-          if (!this.allowedPreloading) {
-          //we already called to calcScrollCss with allowPreloading = true
-          this.allowedPreloading = true;
-          this.scrollCss = this.getScrollCssIfNeeded({
-              domId: this.props.domId,
-              items: this.galleryStructure.galleryItems,
-              styleParams: this.state.styles,
-              allowPreloading: true,
-            });
-          }
+    const showMoreClickedAtLeastOnce = true;
+    const needToHandleShowMoreClick = true;
+    //before clicking "load more" at the first time
+    if (!this.state.showMoreClickedAtLeastOnce) {
+      const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
+      this.setState(
+        {
+          showMoreClickedAtLeastOnce,
+          initialGalleryHeight,
+          needToHandleShowMoreClick,
+        },
+        () => {
+          this.handleNewGalleryStructure();
+        },
+      );
+    } else {
+      //from second click
+      this.setState(
+        {
+          needToHandleShowMoreClick,
+        },
+        () => {
+          this.handleNewGalleryStructure();
+        },
+      );
+    }
   }
 
   enableScrollPreload() {
