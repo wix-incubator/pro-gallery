@@ -26,6 +26,8 @@ class Blueprints {
     const changed = itemsChanged || stylesChanged || containerChanged;
     const changedParams = {itemsChanged , stylesChanged , containerChanged}
     if (changed || !existingBlueprint) {
+      console.count('>>>>>>>>>>>> Actually calculating a structure')
+      console.log('>>>>>>>>>', {itemsChanged , stylesChanged , containerChanged})
       const structure = this.createStructure({formattedContainer, formattedItems, formattedStyles}, changed);
       return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, changedParams};// scrollCss};
     }

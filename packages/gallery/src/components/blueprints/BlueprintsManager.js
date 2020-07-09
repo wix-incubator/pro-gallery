@@ -23,10 +23,13 @@ class BlueprintsManager {
     this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
   }
 
-  getOrCreateBlueprint(params) {
+  getOrCreateBlueprint(params, galleryStylesEdited) {
     console.count('>>>>>>>>>>requestingBlueprint'); //TODO - remove when done :D
-
-
+    if (galleryStylesEdited) {
+      // reset state things?? noooooooooo
+      this.loadMoreState = 0;
+      this.showMoreClickedAtLeastOnce = false;
+    } 
     this.currentState.totalItemsCount = params.totalItemsCount ? params.totalItemsCount : this.currentState.totalItemsCount;
     params =  {...params,...this.completeParams(params)}
     let {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
@@ -177,16 +180,15 @@ class BlueprintsManager {
     }
   }
 
-  updateContainerHeight({items, styles, container, structure, changedParams}, isALoadMoreClick = false){
+  updateContainerHeight({items, styles, container, structure} = this.existingBlueprint){
 
 
       const styleParams = styles;
       const numOfItems = items.length;
       const layoutHeight = structure.height;
       const layoutItems = structure.items;
-      const isInfinite = this.containerInfiniteGrowthDirection({items, styles, container, structure, changedParams}) === 'vertical';
-      const updatedHeight = false;
-  
+      const isInfinite = this.containerInfiniteGrowthDirection({items, styles, container, structure}) === 'vertical';
+      const updatedHeight = this.loadMoreState;
       const onGalleryChangeData = {
         numOfItems,
         container,
@@ -201,6 +203,33 @@ class BlueprintsManager {
 
       //do something
     }
+
+    handleLoadMoreClick() {
+          //---------------- Save initial height ------------------- //
+          if (!this.showMoreClickedAtLeastOnce) {
+            this.currentState.initialGalleryHeight = this.existingBlueprint.container.height; //save the container's initial height for the horrible partially load more feature
+            this.loadMoreState = this.existingBlueprint.container.height;
+          } 
+          this.showMoreClickedAtLeastOnce = true;
+
+
+          //---------------- Handle it ------------------- //
+
+          if(this.existingBlueprint.styles.loadMoreAmount === 'all') {
+            this.loadMoreState = Infinity; //This is something new and ugly - maybe I can find a neater way to do this
+          } else {
+            const showMoreContainerHeight = 138; //according to the scss
+            this.loadMoreState +=
+              (this.currentState.initialGalleryHeight -
+                showMoreContainerHeight);
+          }
+
+          const height = this.updateContainerHeight();
+          // this.currentState.dimensions = {...this.currentState.dimensions, height}
+
+          this.api.onBlueprintReady(this.getOrCreateBlueprint({dimensions: {...this.currentState.dimensions, height}}));
+          //Do something now.....
+  }
 
 }
 

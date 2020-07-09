@@ -6,6 +6,7 @@ export default class PlaygroundsBlueprintsApi {
     this.getStyles = getStyles || (()=>{});
     this.getContainer = getContainer || (()=>{});
     this.onBlueprintReadyCallback = onBlueprintReady || (()=>{});
+    this.setDimentionsHeight = this.setDimentionsHeight || (()=>{});
   }
 
   updateFunctions({addItems, getItems, getContainer, getStyles, onBlueprintReady}){
@@ -14,6 +15,7 @@ export default class PlaygroundsBlueprintsApi {
     this.getStyles = getStyles || this.getStyles;
     this.getContainer = getContainer || this.getContainer;
     this.onBlueprintReadyCallback = onBlueprintReady || this.onBlueprintReadyCallback;
+    this.setDimentionsHeight = this.setDimentionsHeight || (()=>{});
   }
 
   fetchMoreItems() {
@@ -35,14 +37,26 @@ export default class PlaygroundsBlueprintsApi {
 
   finalizeHeightByStructure({
     styleParams,
+    isInfinite,
+    updatedHeight,
+    layoutHeight,
+    container,
   }) {
+    let newHeight = container.height;
     
     if (styleParams.oneRow) {
-      return window.innerHeight;
+      newHeight = window.innerHeight;
     } else {
-      return false;
+      if(isInfinite || updatedHeight === Infinity) {
+        newHeight = layoutHeight;
+      } else if (updatedHeight > 0) {
+        newHeight = updatedHeight;
+      } 
     }
-
+    if (!(container.height === newHeight) && newHeight){
+      this.setDimentionsHeight(newHeight);
+    }
+    return !(container.height === newHeight) && newHeight;
 }
 
 }

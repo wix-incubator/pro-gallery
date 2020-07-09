@@ -35,7 +35,7 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint} = useGalleryContext(blueprintsManager);
+  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setDimentionsHeight, setDimentionsWidth} = useGalleryContext(blueprintsManager);
   
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
@@ -54,13 +54,13 @@ export function App() {
   useEffect(() => {
     const handleResize = () => {
       const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-      setDimentions(width, window.innerHeight);
+      setDimentionsWidth(width);
     };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [setDimentions, showSide]);
+  }, [setDimentions, setDimentionsWidth, showSide]);
 
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
@@ -83,6 +83,11 @@ export function App() {
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
         // setFullscreenIdx(eventData.idx);
+        break;
+      case GALLERY_EVENTS.LOAD_MORE_CLICKED:
+        if(gallerySettings.useBlueprints){
+          blueprintsManager.handleLoadMoreClick(eventData);
+        }
         break;
       default:
         // console.log({eventName, eventData});
@@ -126,12 +131,12 @@ export function App() {
   }
 
   // if (!blueprintsManager.api) {
-    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint});
+    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, setDimentionsHeight});
     blueprintsManager.init({api: playgroundBlueprintsApi})
   // }
 
   function getOrCreateInitialBlueprint() {
-    initialBlueprint = initialBlueprint || blueprintsManager.getOrCreateBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()});
+    initialBlueprint = initialBlueprint || blueprintsManager.getOrCreateBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     // setBlueprint(initialBlueprint);
     return initialBlueprint;
   }

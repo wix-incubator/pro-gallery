@@ -373,36 +373,16 @@ export class GalleryContainer extends React.Component {
       EVENTS.LOAD_MORE_CLICKED,
       this.galleryStructure.galleryItems,
     );
-    const showMoreClickedAtLeastOnce = true;
-    const needToHandleShowMoreClick = true;
-    if (!this.allowedPreloading) {
-      //we already called to calcScrollCss with allowPreloading = true
-      this.allowedPreloading = true;
-      this.scrollCss = this.getScrollCssIfNeeded({
-        domId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
-        allowPreloading: true,
-      });
-    }
-    //before clicking "load more" at the first time
-    if (!this.state.showMoreClickedAtLeastOnce) {
-      const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
-      this.setState(
-        {
-          showMoreClickedAtLeastOnce,
-          initialGalleryHeight,
-          needToHandleShowMoreClick,
-        }
-      );
-    } else {
-      //from second click
-      this.setState(
-        {
-          needToHandleShowMoreClick,
-        }
-      );
-    }
+          if (!this.allowedPreloading) {
+          //we already called to calcScrollCss with allowPreloading = true
+          this.allowedPreloading = true;
+          this.scrollCss = this.getScrollCssIfNeeded({
+              domId: this.props.domId,
+              items: this.galleryStructure.galleryItems,
+              styleParams: this.state.styles,
+              allowPreloading: true,
+            });
+          }
   }
 
   enableScrollPreload() {
