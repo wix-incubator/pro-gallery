@@ -2,7 +2,6 @@ import React from 'react';
 import ImageItem from './imageItem.js';
 import VideoItem from './videos/videoItem';
 import TextItem from './textItem.js';
-import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
 import ItemHover from './itemHover.js';
 import utils from '../../common/utils/index.js';
 import window from '../../common/window/windowWrapper';
@@ -56,7 +55,6 @@ class ItemView extends GalleryComponent {
     this.getItemHover = this.getItemHover.bind(this);
     this.getImageItem = this.getImageItem.bind(this);
     this.getVideoItem = this.getVideoItem.bind(this);
-    this.getVideoItemPlaceholder = this.getVideoItemPlaceholder.bind(this);
     this.getTextItem = this.getTextItem.bind(this);
     this.getItemInner = this.getItemInner.bind(this);
     this.getItemContainerStyles = this.getItemContainerStyles.bind(this);
@@ -73,7 +71,6 @@ class ItemView extends GalleryComponent {
     );
     this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(this);
     this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(this);
-    this.canVideoPlayInGallery = this.canVideoPlayInGallery.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -386,34 +383,6 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  getVideoItemPlaceholder(imageDimensions, itemHover) {
-    const props = utils.pick(this.props, [
-      'alt',
-      'title',
-      'description',
-      'id',
-      'idx',
-      'styleParams',
-      'createUrl',
-      'settings',
-      'lazyLoad'
-    ]);
-    return (
-      <VideoItemPlaceholder
-        {...props}
-        key="videoPlaceholder"
-        imageDimensions={imageDimensions}
-        isThumbnail={!!this.props.thumbnailHighlightId}
-        actions={{
-          handleItemMouseDown: this.handleItemMouseDown,
-          handleItemMouseUp: this.handleItemMouseUp,
-          setItemLoaded: this.setItemLoaded,
-        }}
-        id={this.props.idx}
-        hover={itemHover}
-      />
-    );
-  }
 
   getTextItem(imageDimensions) {
     const props = utils.pick(this.props, [
@@ -438,19 +407,6 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  canVideoPlayInGallery() {
-    const { videoPlay, itemClick } = this.props.styleParams;
-    const { hasLink } = this.props;
-    if (
-      videoPlay === 'hover' || videoPlay === 'auto'
-    ) { return true; } else if (
-      itemClick === 'nothing'
-    ) { return true; } else if (
-      itemClick === 'link' && !hasLink
-    ) { return true; }
-    return false;
-  }
-
   getItemInner() {
     const { styleParams, type } = this.props;
     let itemInner;
@@ -468,14 +424,8 @@ class ItemView extends GalleryComponent {
           itemInner = <div />;
         break;
       case 'video':
-        if (
-          (this.props.idx === this.props.playingVideoIdx ||
-          this.props.idx === this.props.nextVideoIdx) && this.canVideoPlayInGallery()
-        ) {
+        
           itemInner = this.getVideoItem(imageDimensions, itemHover);
-        } else {
-          itemInner = [this.getVideoItemPlaceholder(imageDimensions), itemHover];
-        }
         break;
       case 'text':
         itemInner = [this.getTextItem(imageDimensions), itemHover];
@@ -484,7 +434,7 @@ class ItemView extends GalleryComponent {
       case 'picture':
       default:
         if (this.props.isVideoPlaceholder) {
-          itemInner = [this.getVideoItemPlaceholder(imageDimensions), itemHover];
+          itemInner = this.getVideoItem(imageDimensions, itemHover);
         } else {
         itemInner = [this.getImageItem(imageDimensions), itemHover];
         }

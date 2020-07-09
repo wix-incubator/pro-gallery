@@ -6,6 +6,26 @@ import EVENTS from '../../../common/constants/events';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
+import VideoItemPlaceholder from './videoItemPlaceholder'
+
+
+const videoControls = 
+    [
+        <i
+          key="play-triangle"
+          data-hook="play-triangle"
+          className={
+            'gallery-item-video-play-triangle play-triangle '
+          }
+        ><PlayTriangle/></i>,
+        <i
+          key="play-bg"
+          data-hook="play-background"
+          className={
+            'gallery-item-video-play-background play-background '
+          }
+        ><PlayBackground/></i>,
+      ];
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -14,6 +34,8 @@ class VideoItem extends GalleryComponent {
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
+    this.canVideoPlayInGallery = this.canVideoPlayInGallery.bind(this);
+    this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(this);
 
     this.state = {
       playedOnce: false,
@@ -70,6 +92,22 @@ class VideoItem extends GalleryComponent {
 
   shouldForceVideoForHLS(){
     return this.isHLSVideo() && utils.isiOS();
+  }
+
+  canVideoPlayInGallery() {
+    const { videoPlay, itemClick } = this.props.styleParams;
+    const { hasLink } = this.props;
+    if( this.props.idx === this.props.playingVideoIdx ||
+      this.props.idx === this.props.nextVideoIdx) {
+      if (
+        videoPlay === 'hover' || videoPlay === 'auto'
+      ) { return true; } else if (
+        itemClick === 'nothing'
+      ) { return true; } else if (
+        itemClick === 'link' && !hasLink
+      ) { return true; }
+    }
+    return false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -196,6 +234,30 @@ class VideoItem extends GalleryComponent {
     );
   }
 
+  createVideoItemPlaceholder(showVideoControls) {
+    const props = utils.pick(this.props, [
+      'alt',
+      'title',
+      'description',
+      'id',
+      'idx',
+      'styleParams',
+      'createUrl',
+      'settings',
+      'lazyLoad',
+      'actions'
+    ]);
+
+    return <VideoItemPlaceholder
+        {...props}
+        key="videoPlaceholder"
+        imageDimensions={this.props.imageDimensions}
+        isThumbnail={!!this.props.thumbnailHighlightId}
+        id={this.props.idx}
+        videoControls={showVideoControls && videoControls}
+      />
+  }
+
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
       const videoGalleryItem =
@@ -217,42 +279,29 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+    
+    const hover = this.props.hover;
+    const showVideoControls = !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
+
+    if((this.props.type ==='video' && !this.canVideoPlayInGallery()) || this.props.isVideoPlaceholder) {
+      const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls)
+      return [videoPlaceholder, hover]
+    }  
+    
     let baseClassName =
       'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
       (utils.isiPhone() ? ' ios' : '');
     if (this.state.playing) {
       baseClassName += ' playing';
     }
-    const showVideoControls = this.props.hidePlay ? false : this.props.styleParams.showVideoPlayButton;
-    const videoControls = !showVideoControls
-      ? false
-      : [
-          <i
-            key="play-triangle"
-            data-hook="play-triangle"
-            className={
-              'gallery-item-video-play-triangle play-triangle '
-            }
-          ><PlayTriangle/></i>,
-          <i
-            key="play-bg"
-            data-hook="play-background"
-            className={
-              'gallery-item-video-play-background play-background '
-            }
-          ><PlayBackground/></i>,
-        ];
-
     const videoPreloader = (
       <div
-        className="pro-circle-preloader"
+      className="pro-circle-preloader"
         key={'video-preloader-' + this.props.idx}
       />
     );
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
-    const { videoPlay, itemClick } = this.props.styleParams;
-    const {hasLink} = this.props;
     const video =
       (
         <div
@@ -272,12 +321,12 @@ class VideoItem extends GalleryComponent {
           }
         >
           {this.createPlayerElement()}
-          {videoControls}
+          {showVideoControls && videoControls}
           {videoPreloader}
         </div>
       );
 
-    const hover = this.props.hover;
+    
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
