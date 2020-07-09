@@ -20,9 +20,11 @@ const get = (item, attr) => {
   if (typeof item[attr] !== 'undefined') {
     return item[attr]
   }
-  if (typeof item.metadata !== 'undefined') {
-    if (typeof item.metadata[attr] !== 'undefined') {
-      return item.metadata[attr]
+
+  const metadata = item.metadata || item.metaData;
+  if (typeof metadata !== 'undefined') {
+    if (typeof metadata[attr] !== 'undefined') {
+      return metadata[attr]
     }
   }
 }
@@ -30,6 +32,7 @@ const get = (item, attr) => {
 export const formatLeanGalleryStyles = (styles) => {
 	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };
+
 export default class LeanGallery extends React.Component {
   constructor() {
     super();
@@ -114,22 +117,26 @@ export default class LeanGallery extends React.Component {
 
   }
 
-  createItemStyle(imageSize) {
-    const { styles } = this.props;
+  createImageStyle(imageSize) {
     const {width, height} = imageSize;
-    const {
-      itemBorderWidth: borderWidth,
-      itemBorderColor: borderColor,
-      itemBorderRadius: borderRadius
-    } = styles;
 
     return {
       width,
-      height,
-      borderWidth,
-      borderColor,
-      borderRadius
+      height
     }
+  }
+
+  createItemBorder() {
+    const { styles } = this.props;
+
+    const borderStyle = {
+      borderStyle: 'solid',
+      borderWidth: styles.itemBorderWidth,
+      borderColor: styles.itemBorderColor.value,
+      borderRadius: styles.itemBorderRadius
+    };
+  
+    return borderStyle;
   }
 
   calcImageSize(image) {
@@ -142,7 +149,8 @@ export default class LeanGallery extends React.Component {
     const imageWidth = get(image, 'width');
     const imageHeight = get(image, 'height');
     const imageRatio = imageWidth / imageHeight;
-    const containerRatio = width / height
+    const containerRatio = width / height;
+
     if (imageRatio > containerRatio) {
       //image is wider than container
       const _height = width / imageRatio;
@@ -157,7 +165,6 @@ export default class LeanGallery extends React.Component {
         height,
         width: _width,
         marginLeft: (width - _width) / 2
-
       }
     }
   }
@@ -242,7 +249,7 @@ export default class LeanGallery extends React.Component {
           return (
             <a
               className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
-              style={{height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
+              style={{...this.createItemBorder(), height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
               ref={node => {
                 this.measureIfNeeded(node);
                 eventsListener(EVENTS.ITEM_CREATED, itemData);
@@ -259,7 +266,7 @@ export default class LeanGallery extends React.Component {
                 loading="lazy"
                 className={['gallery-item-content', 'lean-gallery-image'].join(' ')}
                 alt={get(item, 'title')}
-                style={this.createItemStyle(imageSize)}
+                style={this.createImageStyle(imageSize)}
                 onLoad={() => eventsListener(EVENTS.ITEM_LOADED, itemData)}
               /></div>
               {texts(INFO_PLACEMENT.SHOW_BELOW)}
