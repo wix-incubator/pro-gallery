@@ -130,7 +130,6 @@ export default class Gallery extends React.PureComponent {
           domId="ssr-simulator"
           items={items}
           styles={styles}
-          allowSSR={!!urlParams.allowSSR}
           useBlueprints={!!urlParams.useBlueprints}
           container={container}
           viewMode={viewMode}
