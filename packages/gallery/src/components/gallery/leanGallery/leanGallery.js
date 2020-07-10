@@ -7,12 +7,13 @@ import CROP_TYPES from '../../../common/constants/resizeMethods'
 import {hasVerticalPlacement, default as INFO_PLACEMENT} from '../../../common/constants/placements'
 
 import CLICK_ACTIONS from '../../../common/constants/itemClick'
+import INFO_TYPE from '../../../common/constants/infoType';
 
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 
-import { processLayouts } from '../../helpers/layoutHelper';
-import { addPresetStyles } from '../presets/presets';
+// import { processLayouts } from '../../helpers/layoutHelper'; // Todo: Reuse when blueprints is ready [IP]
+// import { addPresetStyles } from '../presets/presets'; // Todo: Reuse when blueprints is ready [IP]
 
 import './leanGallery.scss';
 
@@ -28,10 +29,10 @@ const get = (item, attr) => {
     }
   }
 }
-
-export const formatLeanGalleryStyles = (styles) => {
-	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
-};
+ // Todo: Reuse when blueprints is ready [IP]
+// export const formatLeanGalleryStyles = (styles) => {
+// 	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+// };
 
 export default class LeanGallery extends React.Component {
   constructor() {
@@ -119,24 +120,38 @@ export default class LeanGallery extends React.Component {
 
   createImageStyle(imageSize) {
     const {width, height} = imageSize;
+    const { styles } = this.props;
+    let borderStyle;
+
+    if(styles.imageInfoType !== INFO_TYPE.ATTACHED_BACKGROUND) {
+      borderStyle = {
+        borderStyle: 'solid',
+        borderWidth: styles.itemBorderWidth,
+        borderColor: styles.itemBorderColor.value,
+        borderRadius: styles.itemBorderRadius,
+        boxSizing: 'border-box'
+      }
+    }
 
     return {
       width,
-      height
+      height,
+      ...borderStyle
     }
   }
 
   createItemBorder() {
+    // Set border of the entire Item - including the info text
     const { styles } = this.props;
 
-    const borderStyle = {
-      borderStyle: 'solid',
-      borderWidth: styles.itemBorderWidth,
-      borderColor: styles.itemBorderColor.value,
-      borderRadius: styles.itemBorderRadius
-    };
-  
-    return borderStyle;
+    if(styles.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND) {
+      return {
+        borderStyle: 'solid',
+        borderWidth: styles.itemBorderWidth,
+        borderColor: styles.itemBorderColor.value,
+        borderRadius: styles.itemBorderRadius
+      };
+    }
   }
 
   calcImageSize(image) {
