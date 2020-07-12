@@ -35,7 +35,7 @@ export default ({items, styles}) => {
     // styles = formatLeanGalleryStyles(styles); // Todo: Reuse when blueprints is ready [IP]
 
     const allowLeanGallery = !!styles.allowLeanGallery;
-
+    
     if (!allowLeanGallery) {
       return false;
     }
@@ -214,5 +214,7 @@ const fixedStyleParams = {
   itemClick: [GALLERY_CONSTS.itemClick.NOTHING, GALLERY_CONSTS.itemClick.LINK, GALLERY_CONSTS.itemClick.FULLSCREEN, GALLERY_CONSTS.itemClick.EXPAND],
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
-  imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT
+  imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
+  loveButton: false,
+  loveCounter: false
 };
