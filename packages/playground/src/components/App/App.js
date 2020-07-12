@@ -85,7 +85,6 @@ export function App() {
     height: gallerySettings.isUnknownDimensions ? '' : window.innerHeight,
     width: gallerySettings.isUnknownDimensions ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
     scrollBase: gallerySettings.isUnknownDimensions ? '' : 0,
-    avoidGallerySelfMeasure: gallerySettings.isAvoidGallerySelfMeasure,
   };
 
   const addItems = () => {

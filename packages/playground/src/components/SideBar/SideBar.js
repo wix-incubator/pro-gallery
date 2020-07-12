@@ -176,9 +176,6 @@ function SideBar({ items }) {
               <Form.Item label="Unknown dimension" labelAlign="left">
                 <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({ isUnknownDimensions: e })} />
               </Form.Item>
-              <Form.Item label="Avoid Pro-Gallery self measure" labelAlign="left">
-                <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({ isAvoidGallerySelfMeasure: e })} />
-              </Form.Item>
               <Form.Item label="Use Native Lazy Loading" labelAlign="left">
                 <Switch checked={gallerySettings.lazyLoad === GALLERY_CONSTS.lazyLoad.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? GALLERY_CONSTS.lazyLoad.NATIVE : GALLERY_CONSTS.lazyLoad.CSS })} />
               </Form.Item>

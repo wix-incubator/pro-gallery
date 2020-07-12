@@ -28,17 +28,6 @@ class DimensionsHelper {
 
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
-      if (!utils.isSSR() && !this.container.avoidGallerySelfMeasure) {
-        if (this.isUnknownWidth()) {
-          this.tryCalcAndSetContainerWidth(); //will try to set container.width
-        }
-        if (this.isUnknownHeight()) {
-          this.tryCalcAndSetContainerHeight(); //will try to set container.height
-        }
-        if (typeof this.container.scrollBase === 'undefined') {
-          this.calcScrollBase(); //will set container.scrollBase
-        }
-      }
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
         galleryHeight: Math.ceil(this.getGalleryHeight()),
@@ -131,10 +120,8 @@ class DimensionsHelper {
       //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
       const dimensionFix = () =>
         this.styles.oneRow ? this.getDimensionFix() : 0;
-      const domHeight = () =>
-      this.container.avoidGallerySelfMeasure ? 0 : (window.isMock ? utils.getScreenHeight() : window.innerHeight); //() => protectGalleryHeight(this.container.windowHeight, offsetTop);
       const res = Math.floor(
-          (this.container.height > 0 ? this.container.height : domHeight()) +
+          (this.container.height > 0 ? this.container.height : 0) +
           dimensionFix(),
       )
       return res;
@@ -166,8 +153,8 @@ class DimensionsHelper {
         this.calcBoundingRect() || {
           x: 0,
           y: 0,
-          width: this.avoidGallerySelfMeasure ? 0 : window.innerWidth,
-          height: this.avoidGallerySelfMeasure ? 0 : window.innerHeight,
+          width: 0,
+          height: 0,
         }
       );
     });
