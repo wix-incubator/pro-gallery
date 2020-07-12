@@ -1,6 +1,7 @@
 import GALLERY_CONSTS from '../../../common/constants/index';
 import {isVerticalPlacement} from '../../../common/constants/placements';
 import { fixedStyles } from '../presets/gridGallery';
+// import { formatLeanGalleryStyles } from './leanGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export const notEligibleReasons = ({items, styles}) => {
@@ -31,9 +32,10 @@ export const notEligibleReasons = ({items, styles}) => {
 }
 
 export default ({items, styles}) => {
+    // styles = formatLeanGalleryStyles(styles); // Todo: Reuse when blueprints is ready [IP]
 
     const allowLeanGallery = !!styles.allowLeanGallery;
-
+    
     if (!allowLeanGallery) {
       return false;
     }
@@ -212,4 +214,9 @@ const fixedStyleParams = {
   itemClick: [GALLERY_CONSTS.itemClick.NOTHING, GALLERY_CONSTS.itemClick.LINK, GALLERY_CONSTS.itemClick.FULLSCREEN, GALLERY_CONSTS.itemClick.EXPAND],
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
+  imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
+  loveButton: false,
+  loveCounter: false,
+  allowDownload: false,
+  allowSocial: false
 };
