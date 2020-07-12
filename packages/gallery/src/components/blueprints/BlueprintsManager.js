@@ -12,39 +12,35 @@ class BlueprintsManager {
     this.onBlueprintReady = (() => {});
   }
 
-  setInitialBlueprint({initialState, initialBlueprint}) {
-    this.currentState = initialState || this.currentState;
-    this.existingBlueprint = initialBlueprint || this.existingBlueprint;
-  }
-
-  init(config) { // is this init? should dump cache
-    // this.onBlueprintReady = config && config.onBlueprintReady || this.onBlueprintReady;
+  init(config) {
     this.api = config.api;
     this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
   }
 
-  getOrCreateBlueprint(params) {
+  createBlueprint(params) {
     console.count('>>>>>>>>>>requestingBlueprint'); //TODO - remove when done :D
-
 
     this.currentState.totalItemsCount = params.totalItemsCount ? params.totalItemsCount : this.currentState.totalItemsCount;
 
-    params =  {...params,...this.completeParams(params)}
+    return this.completeParams(params).then((res) => {
 
-    const {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
+      params =  {...params,... res}
+      const {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
+  
+      this.updateLastParamsIfNeeded(params, changedParams);
+      this.api.onBlueprintReady(blueprint);
+      return this.cache[params] = this.existingBlueprint = blueprint;
+    })
 
-    this.updateLastParamsIfNeeded(params, changedParams);
-    this.existingBlueprint = blueprint;
-    return this.cache[params] = {...blueprint};
   }
 
-  getMoreItems(currentItemLength) {
+  async getMoreItems(currentItemLength) {
     let items;
     if (currentItemLength < this.currentState.totalItemsCount) {
       // this.gettingMoreItems = true;
       items = this.api.fetchMoreItems(currentItemLength);
       if (items) {
-        this.api.onBlueprintReady(this.getOrCreateBlueprint({items}));
+        this.createBlueprint({items})
         //work with the new items...
       }
     } else if (this.existingBlueprint.styles.slideshowLoop) {
@@ -56,28 +52,28 @@ class BlueprintsManager {
       const items = this.currentState.items.concat(
         ...this.currentState.items.slice(0, this.currentState.totalItemsCount),
       );
-        this.api.onBlueprintReady(this.getOrCreateBlueprint({items}));
+        this.createBlueprint({items});
   }
 
 
 
 
     // ------------------ Get all the needed raw data ---------------------------- //
-    completeParams(params) {
+    async completeParams(params) {
     
     let {dimensions, container, items, styles, styleParams, options, domId} = params || {};
 
     styles = {...options, ...styles, ...styleParams };
     dimensions = {...dimensions, ...container}
-    dimensions =  this.fetchDimensionsIfNeeded(dimensions);
-    items =  this.fetchItemsIfNeeded(items);
-    styles =  this.fetchStylesIfNeeded(styles); //can be async... TODO
+    dimensions =  await this.fetchDimensionsIfNeeded(dimensions);
+    items =  await this.fetchItemsIfNeeded(items);
+    styles =  await this.fetchStylesIfNeeded(styles); //can be async... TODO
 
     return {dimensions, items, styles, domId} 
   }
   
   
-  fetchDimensionsIfNeeded(dimensions) {
+  async fetchDimensionsIfNeeded(dimensions) {
 
     const shouldFetchDimensions = (_dimensions) => {
       let should = true;
@@ -90,13 +86,13 @@ class BlueprintsManager {
     
     if (shouldFetchDimensions(dimensions)) {
       //dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
-      dimensions = (this.api.fetchDimensions && this.api.fetchDimensions()) || this.currentState.dimensions;
+      dimensions = (this.api.fetchDimensions && await this.api.fetchDimensions()) || this.currentState.dimensions;
     }
     
     return dimensions;
   }
   
-  fetchItemsIfNeeded(items) {
+  async fetchItemsIfNeeded(items) {
     
     const shouldFetchItems = (_items) => {
       let should = true;
@@ -109,7 +105,7 @@ class BlueprintsManager {
 
     if (shouldFetchItems(items)) {
       //items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
-      items = (this.api.fetchItems && this.api.fetchItems()) || this.currentState.items;
+      items = (this.api.fetchItems && await this.api.fetchItems()) || this.currentState.items;
     }
 
     // TODO - this.loadItemsDimensionsIfNeeded();
@@ -117,7 +113,7 @@ class BlueprintsManager {
     return items;
   }
 
-  fetchStylesIfNeeded(styles) {
+  async fetchStylesIfNeeded(styles) {
 
     const shouldFetchStyles = (_styles) => {
       let should = true;
@@ -129,7 +125,7 @@ class BlueprintsManager {
     }
     if (shouldFetchStyles(styles)) {
       //styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
-      styles = this.api.fetchStyles && this.api.fetchStyles() || this.currentState.styles;
+      styles = this.api.fetchStyles && await this.api.fetchStyles() || this.currentState.styles;
     }
 
     return styles;

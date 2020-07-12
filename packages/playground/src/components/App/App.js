@@ -29,7 +29,6 @@ const initialItems = {
   images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
 };
 
-let initialBlueprint
 
 const galleryReadyEvent = new Event('galleryReady');
 
@@ -134,14 +133,12 @@ export function App() {
     blueprintsManager.init({api: playgroundBlueprintsApi})
   // }
 
-  function getOrCreateInitialBlueprint() {
-    initialBlueprint = initialBlueprint || blueprintsManager.getOrCreateBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
-    // setBlueprint(initialBlueprint);
-    return initialBlueprint;
-  }
-
-  function getBlueprint() {
-    return blueprint || getOrCreateInitialBlueprint();
+  function getOrInitBlueprint() {
+    if (blueprint) {
+      return blueprint;
+    } else {
+      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+    }
   }
 
   function getTotalItemsCount() {
@@ -207,10 +204,22 @@ export function App() {
     return styleParams;
   }
 
-  const blueprintProps = gallerySettings.useBlueprints ? getBlueprint() : { items: getItems(),
+  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() : { items: getItems(),
     options: styleParams,
     container };
 
+    
+    const canRender = ()=> {
+      if (blueprint) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    if (!canRender()) {
+      return null;
+    }
   return (
     <main className={s.main}>
       {/* <Loader/> */}

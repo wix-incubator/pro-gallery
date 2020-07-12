@@ -14,33 +14,36 @@ export function useGalleryContext(blueprintsManager) {
     };
 
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext);
-    } else {
-      setContext(newContext);
+      blueprintsManager.createBlueprint({...newContext})
     }
+
+    setContext(newContext);
   };
+
   const setDimensionsWidth = (width) => {
     const newContext = {
       dimensions: {...context.dimensions, width }  
     };
 
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext);
-    } else {
-      setContext(newContext);
+      blueprintsManager.createBlueprint({...newContext})
     }
+
+    setContext(newContext);
   };
+
   const setDimensionsHeight = (height) => {
     const newContext = {
       dimensions: {...context.dimensions, height }  
     };
 
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext);
-    } else {
-      setContext(newContext);
+      blueprintsManager.createBlueprint({...newContext})
     }
+
+    setContext(newContext);
   };
+
 
   const setPreset = newPreset => {
     const newContext = {
@@ -49,11 +52,12 @@ export function useGalleryContext(blueprintsManager) {
     };
 
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext);
-    } else {
-      setContext(newContext);
+      blueprintsManager.createBlueprint({...newContext})
     }
+
+    setContext(newContext);
   };
+
 
   const setShowSide = () => {
     setContext({showSide: !context.showSide});
@@ -63,21 +67,23 @@ export function useGalleryContext(blueprintsManager) {
 
     const newContext = {styleParams: {...context.styleParams, [newProp]: value}}
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext);
-    } else {
-      setContext(newContext);
+      blueprintsManager.createBlueprint({...newContext})
     }
+
+    setContext(newContext);
   };
+
 
   const setItems = items => {
 
     const newContext = {items};
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext);
-    } else {
-      setContext(newContext);
+      blueprintsManager.createBlueprint({...newContext})
     }
+
+    setContext(newContext);
   };
+
 
   const setBlueprint = blueprint => {
     setContext({blueprint});
@@ -91,10 +97,10 @@ export function useGalleryContext(blueprintsManager) {
     const gallerySettings = {...getGallerySettings(), ..._gallerySettings};
     const newContext = {gallerySettings}
     if(getGallerySettings().useBlueprints) {
-      setBlueprintParam(newContext);
-    } else {
-      setContext(newContext);
+      blueprintsManager.createBlueprint({...newContext})
     }
+
+    setContext(newContext);
     try {
       console.log('Saving gallerySettings to localStorage', gallerySettings)
       localStorage.gallerySettings = JSON.stringify(gallerySettings);
@@ -117,10 +123,6 @@ export function useGalleryContext(blueprintsManager) {
     }
   }
 
-  const setBlueprintParam = (newContext) => {
-    const blueprint = blueprintsManager.getOrCreateBlueprint({...newContext})
-    setContext({blueprint, ...newContext})
-  }
   const res = {
     showSide: context.showSide,
     setShowSide,
