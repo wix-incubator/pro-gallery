@@ -123,6 +123,11 @@ class VideoItem extends GalleryComponent {
     if (prevProps.currentIdx !== this.props.currentIdx) {
       this.fixIFrameTabIndexIfNeeded();
     }
+
+    if(prevProps.type === 'image' && this.props.type === "video") {
+      this.dynamiclyImportVideoPlayers();
+    }
+
     this.playVideoIfNeeded();
   }
 
