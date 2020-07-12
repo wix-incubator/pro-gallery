@@ -216,5 +216,7 @@ const fixedStyleParams = {
   titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
   imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
   loveButton: false,
-  loveCounter: false
+  loveCounter: false,
+  allowDownload: false,
+  allowSocial: false
 };
