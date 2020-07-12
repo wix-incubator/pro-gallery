@@ -15,7 +15,7 @@ export const fixedStyles = {
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   galleryMargin: 0,
   isVertical: false,
-  groupSize: 1, 
+  groupSize: 1,
   groupTypes: '1',
   
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.

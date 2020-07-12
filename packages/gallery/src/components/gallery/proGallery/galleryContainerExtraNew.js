@@ -6,6 +6,7 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
 import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
+import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
@@ -270,6 +271,21 @@ export class GalleryContainer extends React.Component {
         oneRow: styles.oneRow,
         cb: this.setPlayingIdxState,
       });
+      const layoutParams = {
+        items: items,
+        container,
+        styleParams: styles,
+        gotScrollEvent: true,
+        options: {
+          showAllItems: true,
+          skipVisibilitiesCalc: true,
+          useLayoutStore: false,
+          createLayoutOnInit: false,
+        },
+      };
+
+      this.createCssLayoutsIfNeeded(layoutParams);
+
       const newState = {items: loopingItems || items, styles: styles, container: container, structure: structure}
       return newState;
   }
@@ -391,6 +407,16 @@ export class GalleryContainer extends React.Component {
     this.videoScrollHelper.trigger.SCROLL({
       top,
       left,
+    });
+  }
+
+  createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximateWidth,
+      isMobile: utils.isMobile(),
+      domId: this.props.domId,
+      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
     });
   }
 

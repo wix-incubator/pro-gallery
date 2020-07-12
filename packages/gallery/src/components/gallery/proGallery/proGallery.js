@@ -1,13 +1,12 @@
 import '../../../common/utils/polyfills';
 
 import React from 'react';
-import GalleryContainer from './galleryContainerNew.js';
 import GalleryContainerForBlueprints from './galleryContainerExtraNew.js';
+import GalleryContainer from './galleryContainerNew.js';
 import utils from '../../../common/utils';
 import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
 import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
-// import blueprintsManager from '../../blueprints/BlueprintsManager'
 
 import '../../../versionLogger';
 

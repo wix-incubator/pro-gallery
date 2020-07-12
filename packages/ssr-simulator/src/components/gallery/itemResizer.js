@@ -3,14 +3,6 @@ import * as imageSdk from 'image-client-api/dist/imageClientSDK';
 const getWixFilename = url =>
   url.replace('https://static.wixstatic.com/media/', '');
 
-const allowWebp = (item, sharpParams, requiredWidth) => {
-  const isImageSizeAvailable = !item.isDimensionless;
-  const isThumb = sharpParams && sharpParams.blur > 0;
-  const isPixelImage = requiredWidth === 1;
-  // const hasWatermark = watermarkHelper.exists;
-  return !isPixelImage && isImageSizeAvailable && !isThumb; // && !hasWatermark;
-};
-
 const resizeUrlImp = (
   item,
   originalUrl,
@@ -137,16 +129,15 @@ const resizeMediaUrl = (
   requiredWidth = Math.ceil(requiredWidth);
   requiredHeight = Math.ceil(requiredHeight);
 
-  let url;
   if (resizeMethod === 'video') {
-    url = originalUrl;
+    return originalUrl;
   } else if (
     requiredWidth >= item.maxWidth &&
     requiredHeight >= item.maxHeight
   ) {
-    url = item.url;
+    return item.url;
   } else {
-    url = resizeUrlImp(
+    return resizeUrlImp(
       item,
       originalUrl,
       resizeMethod,
@@ -158,11 +149,6 @@ const resizeMediaUrl = (
       focalPoint
     );
   }
-
-  if (!allowWebp(item, sharpParams, requiredWidth)) {
-    url = url.replace('webp', 'jpg');
-  }
-  return url;
 };
 
 export { resizeMediaUrl };

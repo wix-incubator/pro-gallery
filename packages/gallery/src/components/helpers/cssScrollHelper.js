@@ -179,19 +179,24 @@ class CssScrollHelper {
 
     if (type !== 'text') {
       //load hi-res image + loading transition
-      if (!utils.hasNativeLazyLoadSupport() && !isUnknownWidth && !item.isDimensionless) { //FAKE SSR
-        const selector = createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`);
+      if (!isUnknownWidth && !item.isDimensionless) { //FAKE SSR
+        const selector = createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`)
+        if (utils.hasNativeLazyLoadSupport()) {
           scrollCss +=
           selector +
-            `{opacity: 1; background-image: url(${createUrl(
+          `{opacity: 1; transition: opacity 1s linear;}`
+        } else {
+          scrollCss +=
+          selector +
+            `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
               URL_SIZES.RESIZED,
               URL_TYPES.HIGH_RES,
             )})}`;
+        }
       }
 
       //add the blurry image/color
       if (
-        !utils.hasNativeLazyLoadSupport() && 
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode === LOADING_MODE.BLUR &&
         (!item.isTransparent || isUnknownWidth) &&
@@ -205,7 +210,6 @@ class CssScrollHelper {
           )})}`;
       }
       if (
-        !utils.hasNativeLazyLoadSupport() && 
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode === LOADING_MODE.MAIN_COLOR &&
         (!item.isTransparent || isUnknownWidth) && //FAKE SSR
@@ -214,7 +218,7 @@ class CssScrollHelper {
         scrollCss +=
           createScrollSelectors(this.lowResPadding(), ' .image-item') + `{background-size: 0.3px; background-repeat: repeat; background-image: url(${createUrl(
             URL_SIZES.PIXEL,
-            URL_TYPES.LOW_RES,
+            URL_TYPES.HIGH_RES,
           )})}`;
       }
     }

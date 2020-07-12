@@ -64,7 +64,6 @@ export function App() {
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
   }
-  
   const eventListener = (eventName, eventData) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED:
