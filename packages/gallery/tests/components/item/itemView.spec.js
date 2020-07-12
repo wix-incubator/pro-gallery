@@ -136,8 +136,8 @@ describe('Item View', () => {
   //   });
   // });
 
-  describe('getImageDimentions', () => {
-    it('should return the correct dimentions for image parameters', () => {
+  describe('getImageDimensions', () => {
+    it('should return the correct dimensions for image parameters', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           cubeImages: false,

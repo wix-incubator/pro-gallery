@@ -8,8 +8,8 @@ const GalleryProvider = props => {
   const [viewport, setViewport] = useState({
     preset: 'empty',
     styleParams: getInitialStyleParams('empty', window.innerWidth - SIDEBAR_WIDTH, window.innerHeight),
-    galleryWidth: window.innerWidth - SIDEBAR_WIDTH,
-    galleryHeight: window.innerHeight
+    dimensions: {    width: window.innerWidth - SIDEBAR_WIDTH,
+    height: window.innerHeight},
   });
 
   const setContext = x => {
