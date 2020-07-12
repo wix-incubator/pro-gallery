@@ -1,7 +1,7 @@
 import React from 'react';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import { GalleryComponent } from '../galleryComponent';
-import { isSEOMode, isPrerenderMode, isMockedWindow } from '../../common/window/viewModeWrapper';
+import { isSEOMode, isPrerenderMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 import utils from '../../common/utils';
 
@@ -128,7 +128,7 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      if (!isPrerenderMode() && !isMockedWindow()) {
+      if (!isPrerenderMode() && !utils.isMockedWindow()) {
         const highres = <img
           key={'image_highres-' + id}
           className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
