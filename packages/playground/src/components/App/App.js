@@ -209,7 +209,7 @@ export function App() {
 
     
     const canRender = ()=> {
-      if (blueprint) {
+      if (!gallerySettings.useBlueprints || blueprint) {
         return true;
       } else {
         return false;
