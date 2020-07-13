@@ -592,7 +592,7 @@ class ItemView extends GalleryComponent {
   }
   
   getItemContainerStyles() {
-    const { offset, style, styleParams } = this.props;
+    const { offset, style, styleParams, settings = {} } = this.props;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -608,7 +608,7 @@ class ItemView extends GalleryComponent {
         : 'pointer'
     };
 
-    const layoutStyles = this.props.settings.avoidInlineStyles ? {} : {
+    const layoutStyles = settings.avoidInlineStyles ? {} : {
       top: offset.top,
       left: styleParams.isRTL ? 'auto' : offset.left,
       right: !styleParams.isRTL ? 'auto' : offset.left,
