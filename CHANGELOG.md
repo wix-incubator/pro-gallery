@@ -1,3 +1,12 @@
+## [v2.0.13](https://pro-gallery-2-0-13.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (slideshowView): fix isLastItem and isScrollEnd for infiniteScroll galleries
+
+#### PLAYGROUND
+ -  connect blueprints
+
+---
 ## [v2.0.12](https://pro-gallery-2-0-12.surge.sh) (12/07/2020)
  
 #### GALLERY
