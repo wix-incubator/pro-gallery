@@ -104,6 +104,7 @@ class galleryDriver {
       items: this.items,
       container: this.container,
       styleParams: this.styleParams,
+      gotScrollEvent: true,
     };
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(

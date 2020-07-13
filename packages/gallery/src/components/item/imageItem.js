@@ -1,5 +1,6 @@
 import React from 'react';
 import LOADING_MODE from '../../common/constants/loadingMode';
+import LAZY_LOAD from '../../common/constants/lazyLoad';
 import { GalleryComponent } from '../galleryComponent';
 import { isSEOMode, isPrerenderMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
@@ -64,7 +65,7 @@ export default class ImageItem extends GalleryComponent {
 
     const { marginLeft, marginTop, ...restOfDimensions } =
       imageDimensions || {};
-    const useImageTag = true;// lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
+    const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
     const imageItemClassName = [
       'gallery-item-content',
       'image-item',
@@ -129,7 +130,7 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      const shouldRenderHighResImages = !isPrerenderMode();
+      const shouldRenderHighResImages = !isPrerenderMode() && !utils.isSSR();
       if (shouldRenderHighResImages) {
         const highres = <img
           key={'image_highres-' + id}
@@ -138,7 +139,6 @@ export default class ImageItem extends GalleryComponent {
           alt={alt ? alt : 'untitled image'}
           src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
           loading="lazy"
-          onError={() => this.props.actions.setItemError()}
           onLoad={this.handleHighResImageLoad}
           style={restOfDimensions}
           {...imageProps}
@@ -169,8 +169,8 @@ export default class ImageItem extends GalleryComponent {
       />
     );
 
-    const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
-    // const renderedItem = imageContainer(image);
+    // const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
+    const renderedItem = imageContainer(image);
     return renderedItem;
   }
 }

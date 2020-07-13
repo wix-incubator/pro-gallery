@@ -79,10 +79,13 @@ class ItemView extends GalleryComponent {
   //----------------------------------------| ACTIONS |-------------------------------------------//
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
-  }
+    this.setState({
+      loaded: true
+    });
 
-  setItemError() {
-    this.props.actions.eventsListener(EVENTS.ITEM_ERROR, this.props);
+    this.itemLoadedTimeout = setTimeout(() => {
+      this.setState(() => ({ loaded: true }));
+    }, 1500);
   }
 
   isIconTag(tagName) {
@@ -269,6 +272,7 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getImageDimensions() {
+    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
     const { styleParams, cubeRatio, style } = this.props;
     const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
@@ -355,7 +359,6 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
           setItemLoaded: this.setItemLoaded,
-          setItemError: this.setItemError,
         }}
       />
     );
@@ -889,7 +892,7 @@ class ItemView extends GalleryComponent {
         className={this.getItemContainerClass()}
         onContextMenu={e => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={e => this.itemContainer = e}
+        ref={e => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
         onKeyDown={this.onKeyPress}

@@ -1,12 +1,11 @@
 import '../../../common/utils/polyfills';
 
 import React from 'react';
-import GalleryContainer from './galleryContainerNew.js';
 import GalleryContainerForBlueprints from './galleryContainerExtraNew.js';
+import GalleryContainer from './galleryContainerNew.js';
 import utils from '../../../common/utils';
 import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
 import { GalleryComponent } from '../../galleryComponent';
-import blueprintsManager from '../../blueprints/BlueprintsManager'
 
 import '../../../versionLogger';
 
@@ -43,7 +42,6 @@ export default class ProGallery extends GalleryComponent {
   render() {
     const {useBlueprints} = this.props;
     const Gallery = useBlueprints ? GalleryContainerForBlueprints : GalleryContainer;
-    const blueprintProps = useBlueprints ? blueprintsManager.getOrCreateBlueprint(this.props) : {};
     return (
       <div id={`pro-gallery-${this.props.domId}`} className="pro-gallery">
           <Gallery
@@ -55,7 +53,7 @@ export default class ProGallery extends GalleryComponent {
             offsetTop={this.props.offsetTop}
             itemsLoveData={this.props.itemsLoveData || {}}
             proGalleryRegionLabel={this.props.proGalleryRegionLabel || 'Gallery. you can navigate the gallery with keyboard arrow keys.'}
-            {...blueprintProps}
+            //{...blueprintProps}
           />
       </div>
     );

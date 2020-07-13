@@ -6,6 +6,7 @@ import dimensionsHelper from '../../helpers/dimensionsHelper';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
 import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
+import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isSiteMode } from '../../../common/window/viewModeWrapper';
@@ -25,7 +26,6 @@ export class GalleryContainer extends React.Component {
     this.scrollToItem = this.scrollToItem.bind(this);
     this.scrollToGroup = this.scrollToGroup.bind(this);
     this._scrollingElement = this.getScrollingElement();
-    this.duplicateGalleryItems = this.duplicateGalleryItems.bind(this);
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
@@ -67,7 +67,6 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.scrollToItem(this.props.currentIdx, false, true, 0);
-    this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
 
@@ -98,9 +97,7 @@ export class GalleryContainer extends React.Component {
     const reCreateGallery = () => {
       const galleryState = this.propsToState(nextProps);
       if (Object.keys(galleryState).length > 0) {
-        this.setState(galleryState, () => {
-          this.handleNewGalleryStructure();
-        });
+        this.setState(galleryState);
       }
     };
 
@@ -261,6 +258,21 @@ export class GalleryContainer extends React.Component {
         oneRow: styles.oneRow,
         cb: this.setPlayingIdxState,
       });
+      const layoutParams = {
+        items: items,
+        container,
+        styleParams: styles,
+        gotScrollEvent: true,
+        options: {
+          showAllItems: true,
+          skipVisibilitiesCalc: true,
+          useLayoutStore: false,
+          createLayoutOnInit: false,
+        },
+      };
+
+      this.createCssLayoutsIfNeeded(layoutParams);
+
       const newState = {items: loopingItems || items, styles: styles, container: container, structure: structure}
       return newState;
   }
@@ -383,6 +395,16 @@ export class GalleryContainer extends React.Component {
     });
   }
 
+  createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximateWidth,
+      isMobile: utils.isMobile(),
+      domId: this.props.domId,
+      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+    });
+  }
+
   getScrollCssIfNeeded({ domId, items, styleParams, allowPreloading }) {
     const shouldUseScrollCss = !isSEOMode();
     let scrollCss = [];
@@ -399,12 +421,6 @@ export class GalleryContainer extends React.Component {
   }
 
   toggleLoadMoreItems() {
-    this.eventsListener(
-      EVENTS.LOAD_MORE_CLICKED,
-      this.galleryStructure.galleryItems,
-    );
-    const showMoreClickedAtLeastOnce = true;
-    const needToHandleShowMoreClick = true;
     if (!this.allowedPreloading) {
       //we already called to calcScrollCss with allowPreloading = true
       this.allowedPreloading = true;
@@ -415,6 +431,12 @@ export class GalleryContainer extends React.Component {
         allowPreloading: true,
       });
     }
+    this.eventsListener(
+      EVENTS.LOAD_MORE_CLICKED,
+      this.galleryStructure.galleryItems,
+    );
+    const showMoreClickedAtLeastOnce = true;
+    const needToHandleShowMoreClick = true;
     //before clicking "load more" at the first time
     if (!this.state.showMoreClickedAtLeastOnce) {
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
@@ -463,20 +485,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  duplicateGalleryItems() {
-    const galleryState = this.propsToState({
-      ...this.props,
-      loopingItems: this.state.items.concat(
-        ...this.state.items.slice(0, this.props.totalItemsCount),
-      ),
-    });
-    if (Object.keys(galleryState).length > 0) {
-      this.setState(galleryState, () => {
-        this.handleNewGalleryStructure();
-      });
-    }
-  }
-
   eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
@@ -510,25 +518,17 @@ export class GalleryContainer extends React.Component {
       const scrollEnd = scrollPos + screenSize;
       const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
-      // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
-
-      //const curDistance = galleryEnd - scrollEnd;
-      //if (curDistance > 0 && curDistance < getItemsDistance) {
       if (galleryEnd - scrollEnd < getItemsDistance) {
         //only when the last item turns visible we should try getting more items
-        if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
           this.eventsListener(EVENTS.NEED_MORE_ITEMS, this.state.items.length);
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
             this.gettingMoreItems = false;
           }, 2000);
-        } else if (this.state.styles.slideshowLoop) {
-          this.duplicateGalleryItems();
-        }
-      }
     }
   }
+}
 
   canRender() {
     const can = this.props.container && this.props.styles && this.state.items;
@@ -617,7 +617,6 @@ export class GalleryContainer extends React.Component {
             setWixHeight: (() => {}),
             scrollToItem: this.scrollToItem,
             scrollToGroup: this.scrollToGroup,
-            duplicateGalleryItems: this.duplicateGalleryItems,
           }}
           {...this.props.gallery}
         />

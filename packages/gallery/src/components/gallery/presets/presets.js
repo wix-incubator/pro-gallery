@@ -75,8 +75,6 @@ export const addPresetStyles = styles => {
       default:
           return collageStyles(styles);
     }
-  
-  
   }
 }
   

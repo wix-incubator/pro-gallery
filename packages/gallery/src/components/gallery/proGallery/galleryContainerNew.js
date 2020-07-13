@@ -121,10 +121,10 @@ export class GalleryContainer extends React.Component {
       const galleryBottom = isInfinite ? Infinity : (scrollBase + galleryHeight);
       const windowBottom = scrollY + windowHeight;
       const maxItemTop = Math.min(galleryBottom, windowBottom) - scrollBase;
-      if (maxItemTop < 0) { //gallery is below the fold
-        visibleItems = [];
-      } else if (this.isVerticalGallery()) {
-        visibleItems = items.filter(item => item.offset.top < maxItemTop);
+      if(maxItemTop < 0) { //gallery is below the fold
+        visibleItems =  [];
+      } else if(this.isVerticalGallery()) {
+        visibleItems = items.filter(item => item.offset.top <= maxItemTop);
       } else {
         visibleItems = items.filter(item => item.left <= galleryWidth + 20);
       }
@@ -396,6 +396,7 @@ export class GalleryContainer extends React.Component {
       items: this.items,
       container,
       styleParams: styles,
+      gotScrollEvent: true,
       options: {
         showAllItems: true,
         skipVisibilitiesCalc: true,
@@ -535,6 +536,7 @@ export class GalleryContainer extends React.Component {
         items: this.items,
         container: _container,
         styleParams: _styles,
+        gotScrollEvent: true,
         options: {
           showAllItems: true,
           skipVisibilitiesCalc: true,
@@ -954,6 +956,7 @@ export class GalleryContainer extends React.Component {
           container={this.state.container}
           watermark={this.props.watermarkData}
           settings={this.props.settings}
+          gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
           lazyLoad={this.props.lazyLoad}
           displayShowMore={displayShowMore}
