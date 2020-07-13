@@ -430,13 +430,13 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
-    // this.layoutCss = createCssLayouts({
-    //   layoutParams,
-    //   isApproximateWidth,
-    //   isMobile: utils.isMobile(),
-    //   domId: this.props.domId,
-    //   galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
-    // });
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximateWidth,
+      isMobile: utils.isMobile(),
+      domId: this.props.domId,
+      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+    });
   }
 
   reCreateGalleryExpensively(
