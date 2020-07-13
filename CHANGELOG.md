@@ -1,7 +1,7 @@
-## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
+## [v2.0.16](https://pro-gallery-2-0-16.surge.sh) (13/07/2020)
  
 #### GALLERY
- -  fix (galleryContainerNew): use layoutCss in non-blueprints flow
+ -  fix (itemView): avoid inline styles in non-blueprints flow
 
 ---
 ## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
