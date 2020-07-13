@@ -129,7 +129,7 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      const shouldRenderHighResImages = !utils.isSSR();
+      const shouldRenderHighResImages = !isPrerenderMode();
       if (shouldRenderHighResImages) {
         const highres = <img
           key={'image_highres-' + id}

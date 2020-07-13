@@ -65,11 +65,14 @@ export default class Gallery extends React.PureComponent {
     }
 
     return shouldUpdateContainer;
+  }
 
+  isSSR() {
+    return typeof window === 'undefined';
   }
 
   componentDidMount() {
-    const newState = { knownContainer: true};
+    const newState = { knownContainer: true };
     
     if (this.shouldUpdateContainerOnMount()){
       newState.container = this.getContainerFromWindowDimensions();
@@ -87,9 +90,7 @@ export default class Gallery extends React.PureComponent {
   render() {
     const { urlParams} = this.props;
     const { knownContainer, container } = this.state;
-    const viewMode = knownContainer
-      ? GALLERY_CONSTS.viewMode.SITE
-      : GALLERY_CONSTS.viewMode.PRERENDER;
+    const viewMode = !knownContainer || this.isSSR() ? GALLERY_CONSTS.viewMode.PRERENDER : GALLERY_CONSTS.viewMode.SITE;
     const containerClassName = viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
     const hasUrlStyles = Object.keys(urlParams).length > 0;

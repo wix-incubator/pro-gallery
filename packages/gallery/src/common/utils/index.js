@@ -282,6 +282,7 @@ class Utils {
     });
   }
 
+  //TODO : Replace with isPrerender mode
   isSSR() {
     return typeof global.window === 'undefined';;
   }
