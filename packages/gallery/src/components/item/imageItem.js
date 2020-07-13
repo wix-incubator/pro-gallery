@@ -34,29 +34,27 @@ export default class ImageItem extends GalleryComponent {
       'gallery-item-visible',
       'gallery-item',
       'gallery-item-preloaded',
-      styleParams.cubeImages && styleParams.cubeType === 'fit'
-        ? 'grid-fit'
-        : '',
-      styleParams.imageLoadingMode === LOADING_MODE.COLOR
-        ? 'load-with-color'
-        : '',
+      styleParams.cubeImages && styleParams.cubeType === 'fit' ?
+      'grid-fit' :
+      '',
+      styleParams.imageLoadingMode === LOADING_MODE.COLOR ?
+      'load-with-color' :
+      '',
     ].join(' ');
 
     return imageContainerClassNames
   }
 
-  getImageContainer(image) {
+  getImageContainer(image, classNames) {
     const {
       imageDimensions,
       id,
       actions,
     } = this.props;
 
-    const imageContainerClassNames = this.getImageContainerClassNames();
-
     return (
       <div
-        className={imageContainerClassNames}
+        className={classNames}
         onTouchStart={actions.handleItemMouseDown}
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
@@ -81,12 +79,11 @@ export default class ImageItem extends GalleryComponent {
     const imageProps =
       settings &&
       settings.imageProps &&
-      typeof settings.imageProps === 'function'
-        ? settings.imageProps(id)
-        : {};
+      typeof settings.imageProps === 'function' ?
+      settings.imageProps(id) : {};
 
     const { marginLeft, marginTop, ...restOfDimensions } =
-      imageDimensions || {};
+    imageDimensions || {};
     const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
 
     const image = (
@@ -129,7 +126,8 @@ export default class ImageItem extends GalleryComponent {
 
   render() {
     const imageElement = this.getImageElement();
-    const renderedItem = this.getImageContainer(imageElement)
+    const imageContainerClassNames = this.getImageContainerClassNames();
+    const renderedItem = this.getImageContainer(imageElement, imageContainerClassNames)
     return renderedItem;
   }
 }

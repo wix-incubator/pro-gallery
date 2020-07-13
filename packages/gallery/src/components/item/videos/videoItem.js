@@ -8,29 +8,27 @@ import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder'
 
-
-const videoControls = 
-    [
-        <i
+const videoControls = [
+  <i
           key="play-triangle"
           data-hook="play-triangle"
           className={
             'gallery-item-video-play-triangle play-triangle '
           }
         ><PlayTriangle/></i>,
-        <i
+  <i
           key="play-bg"
           data-hook="play-background"
           className={
             'gallery-item-video-play-background play-background '
           }
         ><PlayBackground/></i>,
-      ];
+];
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
     super(props);
-    
+
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
@@ -52,7 +50,7 @@ class VideoItem extends GalleryComponent {
 
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
-      import(/* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
+      import( /* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -64,7 +62,7 @@ class VideoItem extends GalleryComponent {
       this.props.videoUrl &&
       this.props.videoUrl.includes('vimeo.com')
     ) {
-      import(/* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
+      import( /* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -75,29 +73,29 @@ class VideoItem extends GalleryComponent {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import(/* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
-        window.Hls =  Player.default;
+      import( /* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
+        window.Hls = Player.default;
         this.setState({ hlsPlayerLoaded: true });
         this.playVideoIfNeeded();
       });
     }
   }
-  
-  isHLSVideo(){
-    return  this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
+
+  isHLSVideo() {
+    return this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
   }
-  shouldUseHlsPlayer(){
-    return  this.isHLSVideo() && !utils.isiOS()
+  shouldUseHlsPlayer() {
+    return this.isHLSVideo() && !utils.isiOS()
   }
 
-  shouldForceVideoForHLS(){
+  shouldForceVideoForHLS() {
     return this.isHLSVideo() && utils.isiOS();
   }
 
   canVideoPlayInGallery() {
     const { videoPlay, itemClick } = this.props.styleParams;
     const { hasLink } = this.props;
-    if( this.props.idx === this.props.playingVideoIdx ||
+    if (this.props.idx === this.props.playingVideoIdx ||
       this.props.idx === this.props.nextVideoIdx) {
       if (
         videoPlay === 'hover' || videoPlay === 'auto'
@@ -124,7 +122,7 @@ class VideoItem extends GalleryComponent {
       this.fixIFrameTabIndexIfNeeded();
     }
 
-    if(prevProps.type === 'image' && this.props.type === "video") {
+    if (prevProps.type === 'image' && this.props.type === "video") {
       this.dynamiclyImportVideoPlayers();
     }
 
@@ -141,7 +139,7 @@ class VideoItem extends GalleryComponent {
 
   playVideoIfNeeded(props = this.props) {
     try {
-      const {playingVideoIdx} = props;
+      const { playingVideoIdx } = props;
       if (playingVideoIdx === this.props.idx && !this.isPlaying) {
         this.videoElement = this.videoElement || window.document.querySelector(`#video-${this.props.id} video`);
         if (this.videoElement) {
@@ -186,9 +184,9 @@ class VideoItem extends GalleryComponent {
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
     }
-    const url = this.props.videoUrl
-      ? this.props.videoUrl
-      : this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO);
+    const url = this.props.videoUrl ?
+      this.props.videoUrl :
+      this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO);
     return (
       <PlayerElement
         className={'gallery-item-visible video gallery-item'}
@@ -284,15 +282,15 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    
+
     const hover = this.props.hover;
     const showVideoControls = !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
 
-    if((this.props.type ==='video' && !this.canVideoPlayInGallery()) || this.props.isVideoPlaceholder) {
+    if (!this.canVideoPlayInGallery() || this.props.isVideoPlaceholder) {
       const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls)
       return [videoPlaceholder, hover]
-    }  
-    
+    }
+
     let baseClassName =
       'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
       (utils.isiPhone() ? ' ios' : '');
@@ -306,7 +304,7 @@ class VideoItem extends GalleryComponent {
       />
     );
     const { marginLeft, marginTop, ...restOfDimensions } =
-      this.props.imageDimensions || {};
+    this.props.imageDimensions || {};
     const video =
       (
         <div
@@ -330,8 +328,6 @@ class VideoItem extends GalleryComponent {
           {videoPreloader}
         </div>
       );
-
-    
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>

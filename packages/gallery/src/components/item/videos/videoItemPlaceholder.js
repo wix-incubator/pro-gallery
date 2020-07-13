@@ -7,28 +7,17 @@ class VideoItemPlaceholder extends ImageItem {
     super(props)
   }
   
+
   render() {
     const {
-      imageDimensions,
-      id,
-      actions,
       videoControls
     } = this.props;
 
     const VideoPlaceholderContainerClassnames = this.getImageContainerClassNames() + ' video-item gallery-item-video'
-    return (
-      <div
-        className={VideoPlaceholderContainerClassnames}
-        onTouchStart={actions.handleItemMouseDown}
-        onTouchEnd={actions.handleItemMouseUp}
-        key={'image_container-' + id}
-        data-hook={'image-item'}
-        style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
-      >
-        {this.getImageElement()}
-        {videoControls}
-      </div>
-    );
+    const videoPlaceholderImage = this.getImageElement();
+    const renderedItem = this.getImageContainer([videoPlaceholderImage, videoControls], VideoPlaceholderContainerClassnames)
+
+    return renderedItem
   }
 }
 
