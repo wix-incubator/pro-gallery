@@ -12,7 +12,6 @@ export default class ImageItem extends GalleryComponent {
 
     this.state = {
       isHighResImageLoaded: false,
-      shouldReRenderAfterMount: utils.isSSR()
     }
 
     this.removeLowResImageTimeoutId = undefined;
@@ -20,12 +19,6 @@ export default class ImageItem extends GalleryComponent {
   }
 
   componentDidMount() {
-    const { shouldReRenderAfterMount} = this.state;
-
-    if (shouldReRenderAfterMount && !utils.isSSR()){
-      this.setState({ shouldReRenderAfterMount: false})
-    }
-    
     try {
       if (typeof this.props.actions.setItemLoaded === 'function') {
         this.props.actions.setItemLoaded();
@@ -136,7 +129,8 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      if (!isPrerenderMode() && !utils.isSSR()) {
+      const shouldRenderHighResImages = !utils.isSSR();
+      if (shouldRenderHighResImages) {
         const highres = <img
           key={'image_highres-' + id}
           className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
