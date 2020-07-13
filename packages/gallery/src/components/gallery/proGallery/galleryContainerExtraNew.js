@@ -621,11 +621,6 @@ export class GalleryContainer extends React.Component {
           }}
           {...this.props.gallery}
         />
-        {this.galleryInitialStateJson && (
-          <div id="ssr-state-to-hydrate" style={{ display: 'none' }}>
-            {this.galleryInitialStateJson}
-          </div>
-        )}
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
           {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
