@@ -63,42 +63,14 @@ class DimensionsHelper {
   }
 
   isUnknownWidth(container = this.container) {
-      //if the container width is not a number, it is unknownWidth (e.g.: "", "100%", "calc(100% + -160px)")
-      return !(container.width > 0);
+    //if the container width is not a number, it is unknownWidth (e.g.: "", "100%", "calc(100% + -160px)")
+    return !(container.width > 0);
   }
 
   isUnknownHeight(container = this.container) {
     //if the container height is not a number, it is unknownHeight (e.g.: "", "100%", "calc(100% + -160px)")
     return !(container.height > 0);
   }
-
-  tryCalcAndSetContainerWidth() {
-    const boundingRect = this.calcBoundingRect();
-    const calcWidth = boundingRect && boundingRect.width;
-    if (calcWidth) {
-      this.container.width = calcWidth;
-      if (utils.isVerbose()) {
-        console.log('Pro-Gallery calculated width');
-      }
-    }
-  }
-
-  tryCalcAndSetContainerHeight() {
-    const boundingRect = this.calcBoundingRect();
-    const calcHeight = boundingRect && boundingRect.height;
-    if (calcHeight > 0) {
-      this.container.height = calcHeight;
-      if (utils.isVerbose()) {
-        console.log('Pro-Gallery calculated height');
-      }
-    } else if (calcHeight === 0) {
-      this.container.height = 200; //default height, just to not be 0
-      if (utils.isVerbose()) {
-        console.log('Pro-Gallery calculated height of 0, will set manually to 200');
-      }
-    }
-  }
-
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
       const domWidth = () =>
@@ -121,79 +93,10 @@ class DimensionsHelper {
       const dimensionFix = () =>
         this.styles.oneRow ? this.getDimensionFix() : 0;
       const res = Math.floor(
-          (this.container.height > 0 ? this.container.height : 0) +
-          dimensionFix(),
+        (this.container.height > 0 ? this.container.height : 0) +
+        dimensionFix(),
       )
       return res;
-    });
-  }
-
-  calcScrollBase() {
-    return this.getOrPutInCache('scrollBase', () => {
-      let scrollBase = 0;
-      try {
-        const offset = this.getBoundingRect().y - this.getBodyBoundingRect().y; //clientRect are relative to the viewport, thus affected by scroll and need to be normalized to the body
-        if (offset >= 0) {
-          scrollBase += offset;
-        }
-        if (utils.isVerbose()) {
-          console.log('Pro-Gallery calculated scrollBase');
-        }
-      } catch (e) {
-        //
-      }
-      this.container.scrollBase = scrollBase;
-      return scrollBase;
-    });
-  }
-
-  getBoundingRect() {
-    return this.getOrPutInCache('boundingRect', () => {
-      return (
-        this.calcBoundingRect() || {
-          x: 0,
-          y: 0,
-          width: 0,
-          height: 0,
-        }
-      );
-    });
-  }
-
-  calcBoundingRect() {
-    if (utils.isVerbose()) {
-      console.count('calcBoundingRect');
-    }
-    try {
-      const proGalleryElement = window.document.getElementById(`pro-gallery-${this.domId}`);
-      utils.isVerbose() && console.log('pro gallery element =', proGalleryElement);
-      return proGalleryElement.getBoundingClientRect();
-    } catch (e) {
-      return false;
-    }
-  }
-
-  calcBodyBoundingRect() {
-    if (utils.isVerbose()) {
-      console.count('calcBodyBoundingRect');
-    }
-    try {
-      return window.document.body.getBoundingClientRect();
-    } catch (e) {
-      return false;
-    }
-  }
-
-  getBodyBoundingRect() {
-    return this.getOrPutInCache('bodyBoundingRect', () => {
-      return (
-        this.calcBodyBoundingRect() || {
-          x: 0,
-          y: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        }
-      );
     });
   }
 
