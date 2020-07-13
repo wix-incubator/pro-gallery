@@ -1,3 +1,15 @@
+## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainerNew): use layoutCss in non-blueprints flow
+
+---
+## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainerNew): use layoutCss in non-blueprints flow
+
+---
 ## [v2.0.14](https://pro-gallery-2-0-14.surge.sh) (13/07/2020)
  
 #### GALLERY
