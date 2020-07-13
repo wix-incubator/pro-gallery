@@ -5,12 +5,14 @@ import { isSEOMode, isPrerenderMode } from '../../common/window/viewModeWrapper'
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
 import utils from '../../common/utils';
 
+const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
 export default class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      isHighResImageLoaded: false
+      isHighResImageLoaded: false,
+      shouldReRenderAfterMount: utils.isSSR()
     }
 
     this.removeLowResImageTimeoutId = undefined;
@@ -18,6 +20,12 @@ export default class ImageItem extends GalleryComponent {
   }
 
   componentDidMount() {
+    const { shouldReRenderAfterMount} = this.state;
+
+    if (shouldReRenderAfterMount && !utils.isSSR()){
+      this.setState({ shouldReRenderAfterMount: false})
+    }
+    
     try {
       if (typeof this.props.actions.setItemLoaded === 'function') {
         this.props.actions.setItemLoaded();
@@ -33,7 +41,7 @@ export default class ImageItem extends GalleryComponent {
     this.removeLowResImageTimeoutId = setTimeout((() => {
       this.setState({ isHighResImageLoaded: true});
       this.removeLowResImageTimeoutId = undefined;
-    }), 1000);
+    }), BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION);
   }
 
   componentWillUnmount(){
@@ -53,7 +61,7 @@ export default class ImageItem extends GalleryComponent {
       lazyLoad,
       styleParams,
     } = this.props;
-    const { isHighResImageLoaded} = this.state;
+    const { isHighResImageLoaded } = this.state;
     const imageProps =
       settings &&
         settings.imageProps &&
@@ -128,7 +136,7 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      if (!isPrerenderMode() && !utils.isMockedWindow()) {
+      if (!isPrerenderMode() && !utils.isSSR()) {
         const highres = <img
           key={'image_highres-' + id}
           className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}

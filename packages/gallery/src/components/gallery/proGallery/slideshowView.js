@@ -3,7 +3,7 @@ import utils from '../../../common/utils';
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import window from '../../../common/window/windowWrapper';
-import { isEditMode, isPreviewMode } from '../../../common/window/viewModeWrapper';
+import { isEditMode } from '../../../common/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
@@ -293,7 +293,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   autoScrollToNextItem = () => {
-    if (!isEditMode() && (isGalleryInViewport(this.props.container) || isPreviewMode())) {
+    if (!isEditMode() && (isGalleryInViewport(this.props.container))) {
       this._next({direction: 1 , isAutoTrigger: true , scrollDuration: 800});
     }
   };
@@ -1095,7 +1095,7 @@ class SlideshowView extends GalleryComponent {
         this.startAutoSlideshowIfNeeded(props.styleParams),
       );
     }
-    if (isEditMode() || isPreviewMode()) {
+    if (isEditMode()) {
       if (
         //check that the change is related to the slideshow settings
         this.props.styleParams.isAutoSlideshow !==

@@ -8,7 +8,7 @@ import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import utils from '../../../common/utils';
-import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
+import { isEditMode, isSEOMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
 import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 
@@ -201,7 +201,7 @@ export class GalleryContainer extends React.Component {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if (isSEOMode() || utils.isMockedWindow() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
+    if (isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
       return items;
     }
     let visibleItems = items;
@@ -304,7 +304,6 @@ export class GalleryContainer extends React.Component {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToItem, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
-          ' isPreviewMode =', isPreviewMode(),
           ' isSiteMode =', isSiteMode(),
           ' this.state.styles =', this.state.styles,
           ' this.state.container =', this.state.container,
@@ -340,7 +339,6 @@ export class GalleryContainer extends React.Component {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToGroup, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
-          ' isPreviewMode =', isPreviewMode(),
           ' isSiteMode =', isSiteMode(),
           ' this.state.styles =', this.state.styles,
           ' this.state.container =', this.state.container,

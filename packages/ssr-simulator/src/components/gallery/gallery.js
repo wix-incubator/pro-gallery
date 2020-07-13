@@ -73,29 +73,12 @@ export default class Gallery extends React.PureComponent {
     
     if (this.shouldUpdateContainerOnMount()){
       newState.container = this.getContainerFromWindowDimensions();
-    } else {
-      this.triggerSSRHighResImageOnLoadEvent();
     }
     
     this.setState(newState);
     window.addEventListener('resize', this.handleResize);
   }
 
-  triggerSSRHighResImageOnLoadEvent = () => {
-    const imageElements = document.querySelectorAll("img.gallery-item.gallery-item-hidden.gallery-item-preloaded");
-    
-    imageElements.forEach(imageElement => {
-      if (imageElement.complete) {
-        imageElement.style.opacity = '1';
-        setTimeout((() => {
-          try {
-            imageElement.parentElement.querySelector('[data-hook="gallery-item-image-img-preload"]').remove()
-          } catch (e) {
-          }
-        }), 1000);
-      }
-    })
-  }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
@@ -107,6 +90,7 @@ export default class Gallery extends React.PureComponent {
     const viewMode = knownContainer
       ? GALLERY_CONSTS.viewMode.SITE
       : GALLERY_CONSTS.viewMode.PRERENDER;
+    const containerClassName = viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
@@ -123,9 +107,9 @@ export default class Gallery extends React.PureComponent {
         styles,
         container
       });
-
+      
     return (
-      <div>
+      <div className={containerClassName}>
         <ProGallery
           domId="ssr-simulator"
           items={items}
@@ -136,7 +120,6 @@ export default class Gallery extends React.PureComponent {
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
         />
-        {/* <ol style={{display: 'none'}}>{Object.entries(styles).map(([key, val]) => <li>{key}: {val}</li>)}</ol> */}
       </div>
     );
   }

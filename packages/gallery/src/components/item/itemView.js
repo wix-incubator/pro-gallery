@@ -26,7 +26,7 @@ import {
   getContainerStyle,
   getImageStyle,
 } from './itemViewStyleProvider';
-import ANIMATIONS from '../../common/constants/animations.js';
+import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations.js';
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -596,7 +596,6 @@ class ItemView extends GalleryComponent {
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
 
     const itemStyles = {
-      transition: ANIMATIONS[styleParams.imagePlacementAnimation],
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
@@ -666,6 +665,7 @@ class ItemView extends GalleryComponent {
   getItemContainerClass() {
     const { styleParams } = this.props;
     const isNOTslideshow = !styleParams.isSlideshow;
+    const imagePlacementAnimation = styleParams.imagePlacementAnimation;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
     const classNames = {
@@ -677,6 +677,10 @@ class ItemView extends GalleryComponent {
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
         styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS,
+
+      //animations
+      'animation-slide':
+        isNOTslideshow && imagePlacementAnimation === IMAGE_PLACEMENT_ANIMATIONS.SLIDE,
 
       //overlay animations
       'hover-animation-fade-in':
