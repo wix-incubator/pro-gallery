@@ -4,9 +4,6 @@ import VideoItem from './videos/videoItem';
 import TextItem from './textItem.js';
 import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
 import ItemHover from './itemHover.js';
-import Texts from './texts/texts.js';
-import Social from './social/social.js';
-import Share from './share/share.js';
 import utils from '../../common/utils/index.js';
 import window from '../../common/window/windowWrapper';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
@@ -38,7 +35,6 @@ class ItemView extends GalleryComponent {
     this.init();
 
     this.state = {
-      showShare: false,
       isCurrentHover: false,
       itemWasHovered: false
     };
@@ -56,10 +52,7 @@ class ItemView extends GalleryComponent {
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
-    this.isVerticalContainer = this.isVerticalContainer.bind(this);
     this.isHighlight = this.isHighlight.bind(this);
-    this.toggleShare = this.toggleShare.bind(this);
-    this.getShare = this.getShare.bind(this);
     this.getItemHover = this.getItemHover.bind(this);
     this.getImageItem = this.getImageItem.bind(this);
     this.getVideoItem = this.getVideoItem.bind(this);
@@ -85,27 +78,17 @@ class ItemView extends GalleryComponent {
   //----------------------------------------| ACTIONS |-------------------------------------------//
   setItemLoaded() {
     this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
+    this.setState({
+      loaded: true
+    });
+
+    this.itemLoadedTimeout = setTimeout(() => {
+      this.setState(() => ({ loaded: true }));
+    }, 1500);
   }
 
   isIconTag(tagName) {
     return ['button', 'i', 'a', 'svg', 'path'].indexOf(tagName.toLowerCase()) >= 0;
-  }
-
-  toggleShare(event, forceVal) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (
-      event.type === 'mouseout' &&
-      (this.isIconTag(event.target.tagName) ||
-        (event.relatedTarget && this.isIconTag(event.relatedTarget.tagName)))
-    ) {
-      //mouseout event should not be fired if hovering over icons (tag name === I)
-      return;
-    }
-    this.setState({
-      showShare:
-        typeof forceVal === 'undefined' ? !this.state.showShare : !!forceVal,
-    });
   }
 
   onMouseOver() {
@@ -226,52 +209,9 @@ class ItemView extends GalleryComponent {
 
   //-----------------------------------------| UTILS |--------------------------------------------//
 
-  isSmallItem() {
-    if (this.props.styleParams.isSlideshow) {
-      return false;
-    }
-
-    let isSmallItem;
-    const maxWidth = 90;
-    const maxHeight = 90;
-    if (
-      this.props.styleParams.cubeImages &&
-      this.props.styleParams.cubeType === 'fit'
-    ) {
-      if (this.props.style.orientation === 'landscape') {
-        //wide image
-        isSmallItem =
-          this.props.style.width / this.props.style.ratio <= maxHeight;
-      } else {
-        //tall image
-        isSmallItem =
-          this.props.style.height * this.props.style.ratio <= maxWidth;
-      }
-    } else {
-      isSmallItem =
-        this.props.style.width <= maxWidth ||
-        this.props.style.height <= maxHeight;
-    }
-    return isSmallItem;
-  }
-
-  isNarrow() {
-    return this.props.style.width < 200;
-  }
-
-  isShort() {
-    return this.props.style.height < 150;
-  }
-
-  isVerticalContainer() {
-    return this.props.style.width < this.props.style.height + 3; //at least in Grid, sometimes not all the columns are the same width (x), and a column can contain items that have height x and width x+1, so increased to 3.
-  }
-
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       const {
-        allowDescription,
-        allowTitle,
         titlePlacement,
         hoveringBehaviour,
         itemClick,
@@ -285,7 +225,7 @@ class ItemView extends GalleryComponent {
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
-        (allowTitle || allowDescription) &&
+        this.props.customHoverRenderer &&
         hasHoverPlacement(titlePlacement) && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
         isNewMobileSettings
       ) {
@@ -371,102 +311,7 @@ class ItemView extends GalleryComponent {
     return dimensions;
   }
 
-  getItemTextsDetails(externalTotalInfoHeight = 0) {
-    const props = utils.pick(this.props, [
-      'title',
-      'description',
-      'id',
-      'styleParams',
-      'style',
-      'container',
-    ]);
-
-    const isImage =
-      this.props.type === 'image' || this.props.type === 'picture';
-    const useCustomButton = this.props.styleParams.useCustomButton === true;
-    const shouldShowButton =
-      (isImage || !this.props.styleParams.isStoreGallery) && useCustomButton;
-
-    return (
-      <Texts
-        {...props}
-        key={`item-texts-${props.id}`}
-        itemContainer={this.itemContainer}
-        showShare={this.state.showShare}
-        isSmallItem={this.isSmallItem()}
-        isNarrow={this.isNarrow()}
-        shouldShowButton={shouldShowButton}
-        externalTotalInfoHeight={externalTotalInfoHeight}
-        actions={{
-          eventsListener: this.props.actions.eventsListener,
-        }}
-      />
-    );
-  }
-
-  getSocial() {
-    const props = utils.pick(this.props, [
-      'html',
-      'hashtag',
-      'photoId',
-      'item',
-      'idx',
-      'currentIdx',
-      'id',
-      'styleParams',
-      'style',
-      'isDemo',
-      'type',
-      'createUrl',
-      'loveCount',
-      'isLoved',
-    ]);
-
-    return (
-      <Social
-        {...props}
-        showShare={this.state.showShare}
-        isSmallItem={this.isSmallItem()}
-        isNarrow={this.isNarrow()}
-        isShort={this.isShort()}
-        isVerticalContainer={this.isVerticalContainer()}
-        key={`item-social-${props.id}`}
-        actions={{
-          toggleShare: this.toggleShare,
-          getShare: this.getShare,
-          eventsListener: this.props.actions.eventsListener,
-        }}
-      />
-    );
-  }
-
-  getShare() {
-    const props = utils.pick(this.props, [
-      'styleParams',
-      'id',
-      'type',
-      'style',
-      'currentIdx',
-      'idx',
-      'actions',
-    ]);
-    return (
-      <Share
-        {...props}
-        allProps={this.props}
-        key={`item-share-${props.id}`}
-        showShare={this.state.showShare}
-        isVerticalContainer={this.isVerticalContainer()}
-        actions={{
-          toggleShare: this.toggleShare,
-          eventsListener: this.props.actions.eventsListener,
-        }}
-      />
-    );
-  }
-
-  getItemHover(children, imageDimensions) {
-    // const props = utils.pick(this.props, ['styleParams', 'type', 'idx', 'type']);
+  getItemHover(imageDimensions) {
     const { customHoverRenderer, ...props } = this.props;
     const shouldHover = this.shouldHover() || null;
     return shouldHover && (
@@ -480,15 +325,14 @@ class ItemView extends GalleryComponent {
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
-        render={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
+        renderCustomInfo={customHoverRenderer ? () => customHoverRenderer(this.getCustomInfoRendererProps()) : null}
       >
-        {children}
       </ItemHover>
     );
   }
 
   getCustomInfoRendererProps() {
-    return {...this.props, ...{itemContainer: this.itemContainer, isMobile: utils.isMobile()}}
+    return {...this.props, ...{isMobile: utils.isMobile()}}
   };
 
   getImageItem(imageDimensions) {
@@ -595,24 +439,10 @@ class ItemView extends GalleryComponent {
     let itemInner;
     const {width, height} = this.getImageDimensions();
     const imageDimensions = {width, height};
-    let itemTexts;
-    let social;
-    let share;
 
     let itemHover = null;
-
     if (this.shouldHover() || styleParams.isSlideshow) {
-      itemTexts =
-        hasHoverPlacement(styleParams.titlePlacement) && styleParams.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
-          ? this.getItemTextsDetails()
-          : null; //if titlePlacement (title & description) is BELOW or ABOVE, it is not part of the itemHover
-      social = this.getSocial();
-      share = this.getShare();
-
-      itemHover = this.getItemHover(
-        [itemTexts, social, share],
-        imageDimensions,
-      );
+      itemHover = this.getItemHover(imageDimensions);
     }
 
 
@@ -645,19 +475,12 @@ class ItemView extends GalleryComponent {
 
     if (styleParams.isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props;
-      itemTexts = this.getItemTextsDetails();
       const style = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
       };
       const slideshowInfo = customSlideshowInfoRenderer
-        ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps())
-        : (
-          <div className="gallery-slideshow-info-inner">
-            {social}
-            {itemTexts}
-          </div>
-        );
+        ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps()) : null;
 
       const { photoId, id, idx } = this.props;
       itemInner = (
@@ -688,7 +511,7 @@ class ItemView extends GalleryComponent {
 
   getRightInfoElementIfNeeded() {
     if (hasRightPlacement(this.props.styleParams.titlePlacement)) {
-      return this.getInfoElement(PLACEMENTS.SHOW_ON_THE_RIGHT, 'gallery-item-right-info');
+      return this.getExternalInfoElement(PLACEMENTS.SHOW_ON_THE_RIGHT, 'gallery-item-right-info');
     } else {
       return null;
     }
@@ -696,7 +519,7 @@ class ItemView extends GalleryComponent {
 
   getLeftInfoElementIfNeeded() {
     if (hasLeftPlacement(this.props.styleParams.titlePlacement)) {
-      return this.getInfoElement(PLACEMENTS.SHOW_ON_THE_LEFT, 'gallery-item-left-info');
+      return this.getExternalInfoElement(PLACEMENTS.SHOW_ON_THE_LEFT, 'gallery-item-left-info');
     } else {
       return null;
     }
@@ -704,7 +527,7 @@ class ItemView extends GalleryComponent {
 
   getBottomInfoElementIfNeeded() {
     if (hasBelowPlacement(this.props.styleParams.titlePlacement)) {
-      return this.getInfoElement(PLACEMENTS.SHOW_BELOW, 'gallery-item-bottom-info');
+      return this.getExternalInfoElement(PLACEMENTS.SHOW_BELOW, 'gallery-item-bottom-info');
     } else {
       return null;
     }
@@ -712,45 +535,38 @@ class ItemView extends GalleryComponent {
 
   getTopInfoElementIfNeeded() {
     if (hasAbovePlacement(this.props.styleParams.titlePlacement)) {
-      return this.getInfoElement(PLACEMENTS.SHOW_ABOVE, 'gallery-item-top-info');
+      return this.getExternalInfoElement(PLACEMENTS.SHOW_ABOVE, 'gallery-item-top-info');
     } else {
       return null;
     }
   }
 
-  getInfoElement(placement, elementName) {
+  getExternalInfoElement(placement, elementName) {
     const { styleParams, customInfoRenderer, style } = this.props;
-    if (!styleParams.allowTitle &&
-      !styleParams.allowDescription &&
-      !styleParams.useCustomButton) {
+    if (!customInfoRenderer) {
       return null;
     }
     let info = null;
-
-
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
     const infoHeight = styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
     const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemExternalInfo = customInfoRenderer
-      ? customInfoRenderer(this.getCustomInfoRendererProps(), placement)
-      : this.getItemTextsDetails(infoHeight);
+    const itemExternalInfo = customInfoRenderer(this.getCustomInfoRendererProps(), placement);
 
-    if (itemExternalInfo) {
-      info = (
-        <div style={getOuterInfoStyle(placement, styleParams, style.height, styleParams.textBoxHeight)}>
-          <div
-            style={getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)}
-            className={'gallery-item-common-info ' + elementName}
-            aria-hidden={true}
-            onClick={this.onItemInfoClick}
-          >
-            {itemExternalInfo}
-          </div>
+    info = (
+      <div style={getOuterInfoStyle(placement, styleParams, style.height, styleParams.textBoxHeight)}>
+        <div
+          style={getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)}
+          className={'gallery-item-common-info ' + elementName}
+          aria-hidden={true}
+          onClick={this.onItemInfoClick}
+        >
+          {itemExternalInfo}
         </div>
-      );
-    }
+      </div>
+    );
+
     return info;
   }
 
@@ -997,7 +813,6 @@ class ItemView extends GalleryComponent {
     window.removeEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
   }
 
-
   componentDidUpdate(prevProps) {
     this.changeActiveElementIfNeeded(prevProps);
   }
@@ -1125,6 +940,7 @@ class ItemView extends GalleryComponent {
       )
     }
   }
+
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {

@@ -7,9 +7,7 @@ export default {
   isRelevant: (styleParams) => (styleParams.isVertical &&
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
-    hasVerticalPlacement(styleParams.titlePlacement) &&
-    styleParams.calculateTextBoxHeightMode === GALLERY_CONSTS.textBoxHeightCalculationOptions.MANUAL &&
-    (styleParams.allowTitle || styleParams.allowDescription),
+    hasVerticalPlacement(styleParams.titlePlacement),
   type: INPUT_TYPES.NUMBER,
   default: 200,
   min: 0,

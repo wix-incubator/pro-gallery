@@ -1,7 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { styleParams, container, customRenderers } from '../drivers/mocks/styles';
 import GALLERY_CONSTS from '../../src/common/constants';
 
 describe('styleParam - textBoxWidth', () => {
@@ -10,7 +10,8 @@ describe('styleParam - textBoxWidth', () => {
   const initialProps = {
     container,
     items: images2,
-    styles: styleParams
+    styles: styleParams,
+    ...customRenderers,
   }
 
   beforeEach(() => {
@@ -23,7 +24,6 @@ describe('styleParam - textBoxWidth', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      allowTitle: true,
       calculateTextBoxWidthMode: GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,
       textBoxWidth: 250,
     })

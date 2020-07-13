@@ -1,3 +1,81 @@
+## [v2.0.13](https://pro-gallery-2-0-13.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (slideshowView): fix isLastItem and isScrollEnd for infiniteScroll galleries
+
+#### PLAYGROUND
+ -  connect blueprints
+
+---
+## [v2.0.12](https://pro-gallery-2-0-12.surge.sh) (12/07/2020)
+ 
+#### GALLERY
+ -  fix leanGallery broken styleParams
+ -  fix leanGallery isEligible reasons
+ -  update getVisibleItems in containerExtraNew
+
+#### PLAYGROUND
+ -  improve: add viewMode settings to the simulators tab
+
+---
+## [v2.0.11](https://pro-gallery-2-0-11.surge.sh) (05/07/2020)
+ 
+#### GALLERY
+ -  fix: (containerNew) getVisibleItems - dont render less then 2 items
+
+---
+## [v2.0.10](https://pro-gallery-2-0-10.surge.sh) (05/07/2020)
+ 
+#### GALLERY
+ -  set gotFirstScrollEvent on horizontal scroll in oneRow gallery
+
+---
+## [v2.0.9](https://pro-gallery-2-0-9.surge.sh) (02/07/2020)
+ 
+#### GALLERY
+ -  bug fix (ContainerNew) getMoreItems on didMount
+ -  REVERT: changed pro-gallery/lib to be only ESM.
+
+---
+## [v2.0.8](https://pro-gallery-2-0-8.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  changed pro-gallery/lib to be only ESM.
+
+---
+## [v2.0.7](https://pro-gallery-2-0-7.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  **** Removed all info from the gallery ****
+
+---
+## [v2.0.6](https://pro-gallery-2-0-6.surge.sh) (01/07/2020)
+ 
+#### GALLERY
+ -  fix: getVisibleItems only in viewMode site
+
+---
+## [v2.0.5](https://pro-gallery-2-0-5.surge.sh) (30/06/2020)
+ 
+#### GALLERY
+ -  ItemView: Add setState with setTimeout for text line fixer
+ -  improve: removed unused cod
+
+---
+## [v2.0.4](https://pro-gallery-2-0-4.surge.sh) (30/06/2020)
+ 
+#### GALLERY
+ -  Fix (galleryContainer): fix visibleItems calc for galleries with infinite scroll
+ -  ItemView: removed onMouseOver onMouseOut attrs from externalInfo (they are already on the whole item-container).
+ -  Performence: Remove loaded and displayed states from ItemView
+ -  Improve (galleryContainerNew): getVisibleItems
+
+#### OTHER
+ - * Upgrade pro-gallery
+ - * Fix import from pro-gallery
+ - * Fix missing style loaders on external sources
+
+---
 ## [v2.0.2](https://pro-gallery-2-0-2.surge.sh) (25/06/2020)
  
 #### PLAYGROUND

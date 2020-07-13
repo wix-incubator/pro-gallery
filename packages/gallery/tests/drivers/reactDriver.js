@@ -50,12 +50,6 @@ class galleryDriver {
       cubeImages: false,
       smartCrop: false,
       fullscreen: true,
-      allowSocial: true,
-      allowDownload: false,
-      allowTitle: false,
-      allowDescription: false,
-      loveButton: true,
-      loveCounter: true,
       videoLoop: true,
       videoSound: false,
       videoSpeed: 1,
@@ -69,8 +63,6 @@ class galleryDriver {
       imageMargin: 5,
       galleryMargin: 1,
       viewMode: 'preview',
-      galleryHorizontalAlign: 0,
-      galleryVerticalAlign: 0,
       enableInfiniteScroll: true,
       itemClick: 'expand',
       cubeRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
@@ -106,7 +98,6 @@ class galleryDriver {
       pauseAllVideos: (() => {}),
       setWixHeight: (() => {}),
       scrollToItem: (() => new Promise(res => res())),
-      toggleShare: (() => {}),
     };
 
     this.layoutParams = {
@@ -126,6 +117,10 @@ class galleryDriver {
       styleParams: this.get.styleParams,
       actions: this.get.actions,
     };
+
+    this.customHoverRenderer = () => {};
+    this.customInfoRenderer = () => {};
+    this.customSlideshowInfoRenderer = () => {};
   }
 
   get get() {
@@ -234,6 +229,9 @@ class galleryDriver {
           totalItemsCount: this.items.length,
           layout,
           actions: this.actions,
+          customHoverRenderer: this.customHoverRenderer,
+          customInfoRenderer: this.customInfoRenderer,
+          customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
         };
       },
 
@@ -248,6 +246,9 @@ class galleryDriver {
             container: this.container,
             styleParams: this.styleParams,
             actions: this.actions,
+            customHoverRenderer: this.customHoverRenderer,
+            customInfoRenderer: this.customInfoRenderer,
+            customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
             itemsLoveData: {},
           };
         }
@@ -275,6 +276,9 @@ class galleryDriver {
           itemsLoveData: galleryViewProps.itemsLoveData,
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
+          customHoverRenderer: galleryViewProps.customHoverRenderer,
+          customInfoRenderer: galleryViewProps.customInfoRenderer,
+          customSlideshowInfoRenderer: galleryViewProps.customSlideshowInfoRenderer,
         };
       },
 
@@ -304,8 +308,6 @@ class galleryDriver {
             ...this.actions,
             eventsListener: () => {},
           },
-          isLoved: false,
-          loveCounter: 0,
         });
       },
 

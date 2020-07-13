@@ -1,10 +1,8 @@
 import * as lodash from './lodash';
 import window from '../window/windowWrapper';
 import {
-  isSiteMode,
   isEditMode,
   isPreviewMode,
-  isSEOMode,
   isFormFactorMobile,
 } from '../window/viewModeWrapper';
 
@@ -266,19 +264,6 @@ class Utils {
     });
   }
 
-  isPlayground() {
-    return this.getOrPutFromCache('isPlayground', () => {
-      try {
-        return (
-          this.isLocal() ||
-          window.location.origin.indexOf('pro-gallery.surge.sh') > -1
-        );
-      } catch (e) {
-        return false;
-      }
-    });
-  }
-
   isVerbose() {
     return (
       !this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true')
@@ -534,63 +519,11 @@ class Utils {
     }
   }
 
-  fixViewport() {
-    if (this.isOOI()) {
-      return;
-    }
-    try {
-      this._cache.isLandscape = undefined;
-      if (
-        (isSiteMode() || isSEOMode()) &&
-        this.isMobile() &&
-        !this.isMobileViewer()
-      ) {
-        //using isUserAgentMobile creates a bug in mobile view when configured to show desktop on mobile (so isWixMobile is false)
-        const viewportAspectRatio = this.getViewportScaleRatio();
-        window.document.body.style.transform =
-          'scale(' + viewportAspectRatio + ')';
-        window.document.body.style.transformOrigin = '0 0';
-        window.document.body.style.width = 100 / viewportAspectRatio + '%';
-        window.document.body.style.height = 100 / viewportAspectRatio + '%';
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
-  getDevicePixelRatio() {
-    try {
-      return (
-        window.devicePixelRatio ||
-        window.screen.deviceXDPI / window.screen.logicalXDPI
-      ); // Support for IE10
-    } catch (e) {
-      return 1;
-    }
-  }
-
   getWindowWidth() {
     try {
       return window.innerWidth || 980;
     } catch (e) {
       return 980;
-    }
-  }
-
-  getViewportScaleRatio() {
-    //320 is a hack for wix - they have fixed viewport of 320 pixels regardlessof phone type
-    const isGallery = typeof window !== 'undefined' && window.isGallery;
-    const shouldIgnoreRatio = this.isiOS() && isGallery; // PHOT 917, this is a hack to get galleries back to their normal placement on iOS, w/o this galleries on iOS are smaller by the ratio returned here.
-    if (
-      !this.isOOI() &&
-      this.isMobile() &&
-      !this.isMobileViewer() &&
-      (isSiteMode() || isSEOMode()) &&
-      !shouldIgnoreRatio
-    ) {
-      return 320 / this.getScreenWidth();
-    } else {
-      return 1;
     }
   }
 
@@ -672,109 +605,6 @@ class Utils {
 
     element.setAttribute('data-scrolling', 'true');
     animateScroll();
-  }
-
-  // isVerbose() {
-  //   return window.isMock || (!this.isTest() && ((this.safeLocalStorage() || {}).forceDevMode === 'true'));
-  // }
-
-  getTitleOrFilename(title, filename) {
-    const shouldShowTitle = typeof title === typeof '';
-    return shouldShowTitle ? title : filename;
-  }
-
-  isSmallScreen() {
-    try {
-      return ((window.innerWidth || window.outerWidth) < 640) || this.isMobile();
-    } catch (e) {
-      return false;
-    }
-  }
-
-  isTouch() {
-    return this.getOrPutFromCache('isTouch', () => {
-      try {
-        return this.isMobile() || ('ontouchstart' in window.document.documentElement);
-      } catch (e) {
-        return false;
-      }
-    });
-  }
-
-  browserIs(browserName) {
-
-    const _browsers = this.getOrPutFromCache('browsers', () => {
-      const browsers = {
-        chrome: false,
-        chromeIos: false,
-        explorer: false,
-        firefox: false,
-        safari: false,
-        opera: false,
-      };
-      try {
-        browsers.chrome = navigator.userAgent.indexOf('Chrome') > -1;
-        browsers.chromeIos = navigator.userAgent.indexOf('CriOS') > -1;
-        browsers.explorer = navigator.userAgent.indexOf('MSIE') > -1 || !!navigator.userAgent.match(/Trident.*rv:11\./); // support for edge
-        browsers.firefox = navigator.userAgent.indexOf('Firefox') > -1;
-        browsers.safari = navigator.userAgent.indexOf('Safari') > -1;
-        browsers.opera = navigator.userAgent.toLowerCase().indexOf('op') > -1;
-
-        if ((browsers.chrome) && (browsers.safari)) {
-          browsers.safari = false;
-        }
-
-        if ((browsers.chrome) && (browsers.opera)) {
-          browsers.chrome = false;
-        }
-
-        return browsers;
-      } catch (e) {
-        return browsers;
-      }
-    });
-    return _browsers[browserName];
-  }
-
-  colorStringToObject(colorString) {
-    // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-    try {
-      let returnValue = null;
-      if (typeof colorString === 'string') {
-        if (colorString.trim().indexOf('rgb') === 0) {
-          // rgb(1,2,3) | rgba(4,5,6,0.7)
-          const values = colorString.match(/\d+/g);
-          if (values && Array.isArray(values) && values.length >= 3) {
-            returnValue = {
-              r: values[0],
-              g: values[1],
-              b: values[2],
-            };
-          }
-        } else {
-          // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-          const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-          colorString = colorString.replace(shorthandRegex, (m, r, g, b) => {
-            return r + r + g + g + b + b;
-          });
-
-          const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
-            colorString,
-          );
-          returnValue = result
-            ? {
-              r: parseInt(result[1], 16),
-              g: parseInt(result[2], 16),
-              b: parseInt(result[3], 16),
-            }
-            : null;
-        }
-      }
-
-      return returnValue;
-    } catch (error) {
-      console.error('Error converting color string to object', error);
-    }
   }
 
   hasNativeLazyLoadSupport(){

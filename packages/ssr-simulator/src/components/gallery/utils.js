@@ -105,6 +105,13 @@ export const defaultStyleParams = {
   textImageSpace: 10,
   textBoxBorderRadius: 0,
   textBoxBorderWidth: 0,
+  loadMoreButtonText: '',
+  //loadMoreButtonFont: font_8
+  // loadMoreButtonFontColor: color-5
+  // loadMoreButtonColor: startWithOpacity: '1', startWithColor: 'color-1'
+  loadMoreButtonBorderWidth: 1,
+  // loadMoreButtonBorderColor:  startWithColor: 'color-5'
+  loadMoreButtonBorderRadius: 0,
   imageInfoType: Consts.infoType.NO_BACKGROUND,
   itemBorderWidth: 0,
   // itemBorderColor: 'color-5'

@@ -9,7 +9,6 @@ import gallerySizeType from './gallerySizeType';
 import galleryTextAlign from './galleryTextAlign.js';
 import gridStyle from './gridStyle';
 import groupTypes from './groupTypes';
-import horizontalAlign from './horizontalAlign';
 import imageHoverAnimations from './imageHoverAnimations';
 import infoBehaviourOnHover from './infoBehaviourOnHover';
 import infoType from './infoType';
@@ -41,11 +40,9 @@ import resizeMethods from "./resizeMethods";
 import scrollAnimations from './scrollAnimations';
 import scrollDirection from './scrollDirection';
 import socialNetworks from './socialNetworks';
-import textBoxHeightCalculationOptions from './textBoxHeightCalculationOptions';
 import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
 import thumbnailsAlignment from './thumbnailsAlignment';
 import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
-import verticalAlign from './verticalAlign';
 import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import watermarkDock from './watermarkDock';
@@ -62,7 +59,6 @@ export default {
   galleryTextAlign,
   gridStyle,
   groupTypes,
-  horizontalAlign,
   imageHoverAnimations,
   infoBehaviourOnHover,
   infoType,
@@ -95,12 +91,10 @@ export default {
   scrollAnimations,
   scrollDirection,
   socialNetworks,
-  textBoxHeightCalculationOptions,
   textBoxWidthCalculationOptions,
   thumbnailsAlignment,
   urlSizes,
   urlTypes,
-  verticalAlign,
   videoPlay,
   viewMode,
   watermarkDock,

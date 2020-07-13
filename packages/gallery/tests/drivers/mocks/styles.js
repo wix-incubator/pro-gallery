@@ -46,25 +46,16 @@ const styleParams = {
     isAutoSlideshow: false,
     slideshowLoop: false,
     autoSlideshowInterval: 4,
-    useCustomButton: false,
     bottomInfoHeight: 0,
     galleryTextAlign: 'center',
     scrollSnap: false,
     fullscreen: true,
-    allowSocial: true,
-    allowDownload: false,
-    allowTitle: true,
-    allowDescription: false,
-    loveButton: true,
-    loveCounter: false,
     arrowsPosition: 0,
     arrowsSize: 23,
     watermarkOpacity: 40,
     watermarkSize: 40,
     useWatermark: true,
     defaultShowInfoExpand: 1,
-    allowTitleExpand: true,
-    allowDescriptionExpand: true,
     allowLinkExpand: true,
     expandInfoPosition: 0,
     allowFullscreenExpand: true,
@@ -106,18 +97,6 @@ const styleParams = {
     textBoxBorderRadius: 0,
     textBoxBorderWidth: 0,
     // textBoxBorderColor: color-5,
-    textsVerticalPadding: 0,
-    textsHorizontalPadding: 0,
-    titleDescriptionSpace: 6,
-    customButtonText: '',
-    // customButtonFontForHover: 'font_8', startWithSize: 15
-    // customButtonFontColorForHover: color-5
-    // customButtonFont: 'font_8', startWithSize: 15
-    // customButtonFontColor: color-1'
-    // customButtonColor: startWithOpacity: '0', startWithColor: 'color-1'
-    customButtonBorderWidth: 1,
-    // customButtonBorderColor: startWithColor: 'color-1'
-    customButtonBorderRadius: 0,
     loadMoreButtonText: '',
     //loadMoreButtonFont: font_8
     // loadMoreButtonFontColor: color-5
@@ -144,14 +123,17 @@ const styleParams = {
     videoSpeed: '1',
     videoLoop: true,
   };
-  
-  const container = {
+
+const container = {
     width: 1150,
     height: 850,
     scrollBase: 0
-  };
-  
-  
-  
-  export { container, styleParams}
-  
+};
+
+const customRenderers = {
+    customHoverRenderer: () => {},
+    customInfoRenderer: () => {},
+    customSlideshowInfoRenderer: () => {},
+}
+
+export { container, styleParams, customRenderers }
