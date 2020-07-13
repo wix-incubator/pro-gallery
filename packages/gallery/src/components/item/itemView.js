@@ -601,18 +601,22 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      top: offset.top,
-      left: styleParams.isRTL ? 'auto' : offset.left,
-      right: !styleParams.isRTL ? 'auto' : offset.left,
-      width: style.width + style.infoWidth,
-      height: style.height + style.infoHeight,
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
       cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
       (styleParams.itemClick === CLICK_ACTIONS.LINK && itemDoesntHaveLink)
         ? 'default'
         : 'pointer'
     };
-    return { ...itemStyles, ...containerStyleByStyleParams };
+
+    const layoutStyles = this.props.settings.avoidInlineStyles ? {} : {
+      top: offset.top,
+      left: styleParams.isRTL ? 'auto' : offset.left,
+      right: !styleParams.isRTL ? 'auto' : offset.left,
+      width: style.width + style.infoWidth,
+      height: style.height + style.infoHeight,
+    };
+
+    return { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {
