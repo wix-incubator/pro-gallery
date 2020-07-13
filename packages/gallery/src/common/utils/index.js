@@ -608,13 +608,11 @@ class Utils {
   }
 
   hasNativeLazyLoadSupport(){
-    return true;
-
-    // try {
-    //   return 'loading' in HTMLImageElement.prototype;
-    // } catch (error) {
-    //   return false;
-    // }
+    try {
+      return 'loading' in HTMLImageElement.prototype;
+    } catch (error) {
+      return false;
+    }
   }
 }
 

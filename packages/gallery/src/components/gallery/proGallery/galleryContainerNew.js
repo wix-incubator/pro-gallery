@@ -54,7 +54,7 @@ export class GalleryContainer extends React.Component {
     this.preloadedItems = {};
     this.layoutCss = [];
     const videoScrollHelperConfig = {
-      setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
+      setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
     };
     this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
 
@@ -153,7 +153,7 @@ export class GalleryContainer extends React.Component {
         this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
         this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
       }
-    } catch (e) {
+    } catch(e) {
       console.error('could not create \'current_hover_change\' customEvent. Error =', e);
     }
 
@@ -195,12 +195,12 @@ export class GalleryContainer extends React.Component {
       hasPropsChanged =
         JSON.stringify(currentSignificatProps) !==
         JSON.stringify(nextSignificatProps);
-      if (utils.isVerbose() && hasPropsChanged) {
-        console.log(
-          'New props arrived',
-          utils.printableObjectsDiff(currentSignificatProps, nextSignificatProps),
-        );
-      }
+        if (utils.isVerbose() && hasPropsChanged) {
+          console.log(
+            'New props arrived',
+            utils.printableObjectsDiff(currentSignificatProps, nextSignificatProps),
+          );
+          }
     } catch (e) {
       console.error('Cannot compare props', e);
     }
@@ -430,13 +430,13 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
-    // this.layoutCss = createCssLayouts({
-    //   layoutParams,
-    //   isApproximateWidth,
-    //   isMobile: utils.isMobile(),
-    //   domId: this.props.domId,
-    //   galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
-    // });
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximateWidth,
+      isMobile: utils.isMobile(),
+      domId: this.props.domId,
+      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+    });
   }
 
   reCreateGalleryExpensively(
@@ -456,7 +456,7 @@ export class GalleryContainer extends React.Component {
 
     const isNew = checkNewGalleryProps(
       { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
-      { ...state, items: this.items },
+      {...state, items: this.items},
     );
     const newState = {};
 
@@ -475,12 +475,13 @@ export class GalleryContainer extends React.Component {
       !isNew.addedItems
     ) {
       //if only the items metadata has changed - use the modified items (probably with the measured width and height)
-      this.items = this.items.map((item, index) => {
+      this.items = this.items.map((item,index) =>
+      {
         const metaData = Object.assign(
           {},
           items[index].metaData,
-        );
-        return Object.assign(item, { metaData }, { ...this.itemsDimensions[item.itemId] })
+          );
+        return Object.assign(item, {metaData}, { ...this.itemsDimensions[item.itemId] })
       }
       );
       newState.items = this.items.map(item => item.itemId);
@@ -652,7 +653,7 @@ export class GalleryContainer extends React.Component {
           durationInMS,
         };
         return scrollToItemImp(scrollParams);
-      } catch (e) {
+      } catch(e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToItem, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
@@ -688,7 +689,7 @@ export class GalleryContainer extends React.Component {
           durationInMS,
         };
         return scrollToGroupImp(scrollParams);
-      } catch (e) {
+      } catch(e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToGroup, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
@@ -798,7 +799,7 @@ export class GalleryContainer extends React.Component {
   enableScrollPreload() {
     if (!this.allowedPreloading) {
       this.allowedPreloading = true;
-      //we already called to calcScrollCss with allowPreloading = true
+        //we already called to calcScrollCss with allowPreloading = true
       this.scrollCss = this.getScrollCssIfNeeded({
         domId: this.props.domId,
         items: this.galleryStructure.galleryItems,
@@ -922,7 +923,7 @@ export class GalleryContainer extends React.Component {
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
-      : (() => { });
+      : (() => {});
     const ssrDisableTransition =
       !!utils.isSSR() &&
       'div.pro-gallery-parent-container * { transition: none !important }';
@@ -977,7 +978,7 @@ export class GalleryContainer extends React.Component {
             findNeighborItem,
             toggleLoadMoreItems: this.toggleLoadMoreItems,
             eventsListener: this.eventsListener,
-            setWixHeight: (() => { }),
+            setWixHeight: (() => {}),
             scrollToItem: this.scrollToItem,
             scrollToGroup: this.scrollToGroup,
             duplicateGalleryItems: this.duplicateGalleryItems,
@@ -989,10 +990,10 @@ export class GalleryContainer extends React.Component {
             {this.galleryInitialStateJson}
           </div>
         )}
-        <div data-key="items-styles" key="items-styles" style={{ display: 'none' }}>
-          {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
-          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{ __html: scrollCss }} />)}
-          {ssrDisableTransition && <style dangerouslySetInnerHTML={{ __html: ssrDisableTransition }} />}
+        <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
+          {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
+          {(this.scrollCss || []).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
+          {ssrDisableTransition && <style dangerouslySetInnerHTML={{__html: ssrDisableTransition}}/>}
         </div>
       </div>
     );
