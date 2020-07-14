@@ -1,3 +1,9 @@
+## [v2.0.17](https://pro-gallery-2-0-17.surge.sh) (14/07/2020)
+ 
+#### GALLERY
+ -  fix: gallery is not visible when only first item is in view
+
+---
 ## [v2.0.16](https://pro-gallery-2-0-16.surge.sh) (13/07/2020)
  
 #### GALLERY
