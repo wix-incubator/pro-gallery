@@ -26,9 +26,10 @@ class BlueprintsManager {
 
       params =  {...params,... res}
       const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
-  
+      const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
+      console.log('>>>did blueprint actually change?', blueprintChanged);
       this.updateLastParamsIfNeeded(params, changedParams);
-      this.api.onBlueprintReady(blueprint);
+      this.api.onBlueprintReady({blueprint, blueprintChanged});
       return this.cache[params] = this.existingBlueprint = blueprint;
     })
 

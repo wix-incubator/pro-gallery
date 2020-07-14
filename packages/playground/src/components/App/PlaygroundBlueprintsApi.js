@@ -31,7 +31,7 @@ export default class PlaygroundsBlueprintsApi {
     return this.getContainer();
   }
 
-  onBlueprintReady(blueprint) {
+  onBlueprintReady({blueprint, blueprintChanged}) {
 
     this.onBlueprintReadyCallback(blueprint);
   }
