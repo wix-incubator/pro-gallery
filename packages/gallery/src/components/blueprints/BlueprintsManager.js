@@ -25,7 +25,7 @@ class BlueprintsManager {
     return this.completeParams(params).then((res) => {
 
       params =  {...params,... res}
-      const {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
+      const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
   
       this.updateLastParamsIfNeeded(params, changedParams);
       this.api.onBlueprintReady(blueprint);

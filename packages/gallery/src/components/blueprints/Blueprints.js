@@ -15,61 +15,72 @@ class Blueprints {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
-    const {dimensions: newRawDimensions, items: newRawItems, styles: newRawStyles} =  params
-    const {dimensions: oldRawDimensions, items: oldRawItems, styles: oldRawStyles} =  lastParams
+    const {dimensions: newDimensionsParams, items: newItemsParams, styles: newStylesParams} =  params
+    const {dimensions: oldDimensionsParams, items: oldItemsParams, styles: oldStylesParams} =  lastParams
     //getItems,styles and dimesions if not supplied in params;
 
-    const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newRawItems, oldRawItems, existingBlueprint)
-    const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newRawStyles,oldRawStyles, existingBlueprint)
-    const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newRawDimensions, newRawStyles, oldRawDimensions, oldRawStyles, existingBlueprint);
+    const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newItemsParams, oldItemsParams)
+    const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newStylesParams,oldStylesParams)
+    const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newDimensionsParams, newStylesParams, oldDimensionsParams, oldStylesParams, {formattedStyles: formattedStyles || existingBlueprint.styles});
 
     const changed = itemsChanged || stylesChanged || containerChanged;
     const changedParams = {itemsChanged , stylesChanged , containerChanged}
+
     if (changed || !existingBlueprint) {
+      if (!existingBlueprint){
+        existingBlueprint = {};
+      }
       console.count('>>>>>>>>>>>> Actually calculating a structure')
       console.log('>>>>>>>>>', {itemsChanged , stylesChanged , containerChanged})
-      const structure = this.createStructure({formattedContainer, formattedItems, formattedStyles}, changed);
+      const structure = this.createStructure({formattedContainer: formattedContainer || existingBlueprint.container, formattedItems: formattedItems || existingBlueprint.items, formattedStyles: formattedStyles || existingBlueprint.styles}, changed);
 
-      const isInfinite = formattedStyles.oneRow && formattedStyles.enableInfiniteScroll
+      //assign changed values w/o replacing the original object;
+      if (formattedStyles) {existingBlueprint.styles = formattedStyles;}
+      if (formattedItems) {existingBlueprint.items = formattedItems;}
+      if (formattedContainer) {existingBlueprint.container = formattedContainer;}
+      existingBlueprint.structure = structure;
+
+      //if its an infinite gallery - let the container loose
+      const isInfinite = existingBlueprint.styles.oneRow && existingBlueprint.styles.enableInfiniteScroll
       if (isInfinite) {
-        formattedContainer.height = structure.height;
+        existingBlueprint.container.height = structure.height;
       }
 
-      return {items: formattedItems, styles: formattedStyles, container: formattedContainer, structure, changedParams};// scrollCss};
     }
 
-    return {...existingBlueprint, changedParams};
+    //return the existing or the modified existing object
+    return {blueprint: existingBlueprint, changedParams};
 
   }
     
     // ------------------ Raw data to Formated data (if needed) ---------------------------- //
 
 
-  formatItemsIfNeeded(items, lastItems, existingBlueprint) {
+  formatItemsIfNeeded(items, lastItems) {
     const reason = {
       items: '',
       itemsAdded: '',
     };
-    const itemsWereAdded = (newRawItems, oldRawItems) => {
-      if (newRawItems === oldRawItems) {
+    const itemsWereAdded = (newItemsParams, oldItemsParams) => {
+      if (newItemsParams === oldItemsParams) {
         reason.itemsAdded = 'items are the same object.';
         return false; //it is the exact same object
       }
-      if (!newRawItems) {
+      if (!newItemsParams) {
         reason.itemsAdded = 'new items do not exist.';
         return false; // new items do not exist (use old items)
       }
-      if (!oldRawItems || (oldRawItems && oldRawItems.length === 0)) {
+      if (!oldItemsParams || (oldItemsParams && oldItemsParams.length === 0)) {
         reason.itemsAdded = 'old items do not exist.';
         return false; // old items do not exist (it is not items addition)
       }
-      if (oldRawItems.length >= newRawItems.length) {
+      if (oldItemsParams.length >= newItemsParams.length) {
         reason.itemsAdded = 'more old items than new items.';
         return false; // more old items than new items
       }
-      const idsNotChanged = oldRawItems.reduce((is, _item, idx) => {
+      const idsNotChanged = oldItemsParams.reduce((is, _item, idx) => {
         //check that all the existing items exist in the new array
-        return is && _item.id === newRawItems[idx].itemId;
+        return is && _item.id === newItemsParams[idx].itemId;
       }, true);
   
       if (!idsNotChanged) {
@@ -78,26 +89,26 @@ class Blueprints {
       return idsNotChanged;
     };
   
-    const itemsHaveChanged = (newRawItems, oldRawItems) => {
-      if (newRawItems === oldRawItems) {
+    const itemsHaveChanged = (newItemsParams, oldItemsParams) => {
+      if (newItemsParams === oldItemsParams) {
         reason.items = 'items are the same object.';
         return false; //it is the exact same object
       }
-      if (!newRawItems) {
+      if (!newItemsParams) {
         reason.items = 'new items do not exist.';
         return false; // new items do not exist (use old items)
       }
-      if (!oldRawItems || (oldRawItems && oldRawItems.length === 0)) {
+      if (!oldItemsParams || (oldItemsParams && oldItemsParams.length === 0)) {
         reason.items = 'old items do not exist.';
         return true; // old items do not exist
       }
-      if (oldRawItems.length !== newRawItems.length) {
+      if (oldItemsParams.length !== newItemsParams.length) {
         reason.items = 'more new items than old items (or vice versa).';
         return true; // more new items than old items (or vice versa)
       }
-      return newRawItems.reduce((is, newItem, idx) => {
+      return newItemsParams.reduce((is, newItem, idx) => {
         //check that all the items are identical
-        const existingItem = oldRawItems[idx];
+        const existingItem = oldItemsParams[idx];
         try {
           const itemsChanged =
             is ||
@@ -118,19 +129,19 @@ class Blueprints {
     };
 
 
-    const oldRawItems = lastItems;
+    const oldItemsParams = lastItems;
     let changed = false;
-    let formattedItems = existingBlueprint.items;
-    if (itemsWereAdded(items, oldRawItems))
+    let formattedItems;
+    if (itemsWereAdded(items, oldItemsParams))
     {
-      formattedItems = oldRawItems.concat(
-      items.slice(oldRawItems.length).map(item => {
+      formattedItems = oldItemsParams.concat(
+      items.slice(oldItemsParams.length).map(item => {
         return ItemsHelper.convertDtoToLayoutItem(item);
       }),
       );
       this.gettingMoreItems = false; //probably finished getting more items       //TODO - what is this and how we keep it alive if needed?
       changed = true;
-    } else if (itemsHaveChanged(items, oldRawItems)) {
+    } else if (itemsHaveChanged(items, oldItemsParams)) {
       formattedItems = items.map(item =>
       Object.assign(ItemsHelper.convertDtoToLayoutItem(item)),
       );
@@ -140,29 +151,29 @@ class Blueprints {
     return {formattedItems, changed};
   }
 
-  formatStylesIfNeeded(styles, lastStyles, existingBlueprint) {
+  formatStylesIfNeeded(styles, lastStyles) {
 
 
     const reason = {
       styles: '',
     };
 
-    const stylesHaveChanged = (newRawStyles, oldRawStyles) => {
-      if (!newRawStyles) {
+    const stylesHaveChanged = (newStylesParams, oldStylesParams) => {
+      if (!newStylesParams) {
         reason.styles = 'no new styles.';
         return false; //no new styles - use old styles
       }
-      if (!oldRawStyles) {
+      if (!oldStylesParams) {
         reason.styles = 'no old styles.';
         return true; //no old styles
       }
       try {
         const oldStylesSorted = {};
-        Object.keys(oldRawStyles).sort() //sort by keys alphabetically
-        .forEach(key => oldStylesSorted[key] = oldRawStyles[key]);
+        Object.keys(oldStylesParams).sort() //sort by keys alphabetically
+        .forEach(key => oldStylesSorted[key] = oldStylesParams[key]);
         const newStylesSorted = {};
-        Object.keys(newRawStyles).sort() //sort by keys alphabetically
-        .forEach(key => newStylesSorted[key] = newRawStyles[key]);
+        Object.keys(newStylesParams).sort() //sort by keys alphabetically
+        .forEach(key => newStylesSorted[key] = newStylesParams[key]);
         const wasChanged =
           JSON.stringify(newStylesSorted) !== JSON.stringify(oldStylesSorted);
         if (wasChanged) {
@@ -177,10 +188,10 @@ class Blueprints {
 
 
 
-    const oldRawStyles = lastStyles;
+    const oldStylesParams = lastStyles;
     let changed = false;
-    let formattedStyles = existingBlueprint.styles;
-    if (stylesHaveChanged(styles,oldRawStyles)) {
+    let formattedStyles;
+    if (stylesHaveChanged(styles,oldStylesParams)) {
       styles = {...defaultStyles, ...styles}
       formattedStyles = processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 
@@ -204,33 +215,33 @@ class Blueprints {
     return {formattedStyles, changed}
   }
 
-  formatContainerIfNeeded(dimensions, styles, lastDimensions, lastStyles, existingBlueprint) {
+  formatContainerIfNeeded(dimensions, styles, lastDimensions, lastStyles, {formattedStyles}) {
 
     const reason = {
       dimensions: '',
     };
-    const dimensionsHaveChanged = ({newRawDimensions, oldRawDimensions, oldRawStyles}) => {
-      if (!oldRawStyles || !oldRawDimensions) {
+    const dimensionsHaveChanged = ({newDimensionsParams, oldDimensionsParams, oldStylesParams}) => {
+      if (!oldStylesParams || !oldDimensionsParams) {
         reason.dimensions = 'no old dimensions or styles. ';
         return true; //no old dimensions or styles (style may change dimensions)
       }
-      if (!newRawDimensions) {
+      if (!newDimensionsParams) {
         reason.dimensions = 'no new dimensions.';
         return false; // no new continainer
       }
       const dimensionsHaveChanged = {
         height:
-          !oldRawStyles.oneRow && oldRawStyles.enableInfiniteScroll
+          !oldStylesParams.oneRow && oldStylesParams.enableInfiniteScroll
             ? false
-            : !!newRawDimensions.height &&
-            newRawDimensions.height !== oldRawDimensions.height,
+            : !!newDimensionsParams.height &&
+            newDimensionsParams.height !== oldDimensionsParams.height,
         width:
-          !oldRawDimensions ||
-          (!!newRawDimensions.width &&
-            newRawDimensions.width !== oldRawDimensions.width),
+          !oldDimensionsParams ||
+          (!!newDimensionsParams.width &&
+            newDimensionsParams.width !== oldDimensionsParams.width),
         scrollBase:
-          !!newRawDimensions.scrollBase &&
-          newRawDimensions.scrollBase !== oldRawDimensions.scrollBase,
+          !!newDimensionsParams.scrollBase &&
+          newDimensionsParams.scrollBase !== oldDimensionsParams.scrollBase,
       };
       return Object.keys(dimensionsHaveChanged).reduce((is, key) => {
         if (dimensionsHaveChanged[key]) {
@@ -241,15 +252,15 @@ class Blueprints {
     };
 
 
-    const oldRawDimensions = lastDimensions;
+    const oldDimensionsParams = lastDimensions;
     let changed = false;
-    const oldRawStyles = lastStyles;
-    let formattedContainer = existingBlueprint.container;
-    dimensionsHelper.updateParams({
-      styles,
-      container: dimensions,
-    });
-    if(dimensionsHaveChanged({newRawDimensions: dimensions, oldRawDimensions, oldRawStyles})){
+    const oldStylesParams = lastStyles;
+    let formattedContainer;
+    if(dimensionsHaveChanged({newDimensionsParams: dimensions, oldDimensionsParams, oldStylesParams})){
+      dimensionsHelper.updateParams({
+        styles: formattedStyles,
+        container: dimensions,
+      });
       changed = true;
       formattedContainer = Object.assign(
         {},
