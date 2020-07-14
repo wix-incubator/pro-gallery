@@ -430,13 +430,19 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
-    this.layoutCss = createCssLayouts({
-      layoutParams,
-      isApproximateWidth,
-      isMobile: utils.isMobile(),
-      domId: this.props.domId,
-      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
-    });
+    const {settings = {}} = this.props;
+    const {avoidInlineStyles = true} = settings;
+    if (avoidInlineStyles) {
+      // inline styles are replacing the layoutCss
+      // avoid inline styles === use layout css
+      this.layoutCss = createCssLayouts({
+        layoutParams,
+        isApproximateWidth,
+        isMobile: utils.isMobile(),
+        domId: this.props.domId,
+        galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+      });
+    }
   }
 
   reCreateGalleryExpensively(
@@ -957,7 +963,7 @@ export class GalleryContainer extends React.Component {
           styleParams={this.state.styles}
           container={this.state.container}
           watermark={this.props.watermarkData}
-          settings={{...this.props.settings, avoidInlineStyles: true}}
+          settings={{avoidInlineStyles: true, ...this.props.settings}}
           gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
           lazyLoad={this.props.lazyLoad}
