@@ -28,7 +28,7 @@ class DimensionsHelper {
 
   getGalleryDimensions() {
     return this.getOrPutInCache('galleryDimensions', () => {
-      if (!utils.isSSR() && !this.container.avoidGallerySelfMeasure) {
+      if (!this.container.avoidGallerySelfMeasure) {
         if (this.isUnknownWidth()) {
           this.tryCalcAndSetContainerWidth(); //will try to set container.width
         }
