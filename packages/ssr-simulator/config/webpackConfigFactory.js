@@ -82,20 +82,14 @@ module.exports = function(envType) {
         }
       },
 
-      // CSS Modules
+      // CSS
       {
-        test: /\.module\.s?css$/,
-        include: [resolvePath('../src')],
+        test: /\.s?css$/,
+        exclude: [/\.module\.s?css$/],
         use: [
           IS_DEV && 'style-loader',
           IS_PROD && MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              localsConvention: 'camelCase',
-              modules: true
-            }
-          },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
@@ -112,15 +106,20 @@ module.exports = function(envType) {
           'import-glob-loader'
         ].filter(Boolean)
       },
-
-      // CSS
+      // CSS Modules
       {
-        test: /\.s?css$/,
-        exclude: [/\.module\.s?css$/],
+        test: /\.module\.s?css$/,
+        include: [resolvePath('../src')],
         use: [
           IS_DEV && 'style-loader',
           IS_PROD && MiniCssExtractPlugin.loader,
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              localsConvention: 'camelCase',
+              modules: true
+            }
+          },
           {
             loader: 'postcss-loader',
             options: {
