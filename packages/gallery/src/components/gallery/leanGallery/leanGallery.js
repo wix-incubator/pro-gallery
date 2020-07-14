@@ -12,8 +12,8 @@ import INFO_TYPE from '../../../common/constants/infoType';
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 
-// import { processLayouts } from '../../helpers/layoutHelper'; // Todo: Reuse when blueprints is ready [IP]
-// import { addPresetStyles } from '../presets/presets'; // Todo: Reuse when blueprints is ready [IP]
+import { processLayouts } from '../../helpers/layoutHelper';
+import { addPresetStyles } from '../presets/presets';
 
 import './leanGallery.scss';
 
@@ -29,10 +29,10 @@ const get = (item, attr) => {
     }
   }
 }
- // Todo: Reuse when blueprints is ready [IP]
-// export const formatLeanGalleryStyles = (styles) => {
-// 	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
-// };
+
+export const formatLeanGalleryStyles = (styles) => {
+	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+};
 
 export default class LeanGallery extends React.Component {
   constructor() {
@@ -249,6 +249,7 @@ export default class LeanGallery extends React.Component {
 
     return (
       <div
+        data-hook="lean-gallery"
         className={['pro-gallery', 'inline-styles', 'lean-gallery-gallery'].join(' ')}
         style={this.createGalleryStyle()}
       >
