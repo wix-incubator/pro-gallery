@@ -20,7 +20,7 @@ class BlueprintsManager {
   createBlueprint(params) {
     console.count('>>>>>>>>>>requestingBlueprint'); //TODO - remove when done :D
 
-    this.currentState.totalItemsCount = params.totalItemsCount ? params.totalItemsCount : this.currentState.totalItemsCount;
+    this.currentState.totalItemsCount = params.totalItemsCount || this.api.getTotalItemsCount && this.api.getTotalItemsCount()  || this.currentState.totalItemsCount;
 
     return this.completeParams(params).then((res) => {
 
