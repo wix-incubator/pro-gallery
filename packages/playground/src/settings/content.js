@@ -202,10 +202,6 @@ export default {
     title: 'Image Hover Animation',
     description: "Choose an effect that happens to the image when hovering over it",
   },
-  imagePlacementAnimation: {
-    title: 'Image Placement Animation',
-    description: "Choose an effect that happens to the image when placed/replaced on the gallery",
-  },
   itemFont: {
     title: 'Title Font',
     description: "",

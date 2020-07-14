@@ -244,6 +244,10 @@ class CssScrollHelper {
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
     const scrollAnimation = styleParams.scrollAnimation;
 
+    if (utils.isSSR()) {
+      return '';
+    }
+
     if (!scrollAnimation || scrollAnimation === SCROLL_ANIMATIONS.NO_EFFECT) {
       return '';
     }

@@ -9,7 +9,7 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import utils from '../../../common/utils';
-import { isEditMode, isSEOMode, isSiteMode } from '../../../common/window/viewModeWrapper';
+import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
 import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 
@@ -49,16 +49,29 @@ export class GalleryContainer extends React.Component {
     };
     this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
 
-    this.initialGalleryState = {};
-    try {
-      const galleryState = this.propsToState(props);
-      if (Object.keys(galleryState).length > 0) {
-        this.initialGalleryState = galleryState;
+    if (utils.isSSR()) {
+      this.initialGalleryState = this.propsToState(
+        props,
+        initialState,
+      );
+      try {
+        this.galleryInitialStateJson = JSON.stringify(this.initialGalleryState);
+      } catch (e) {
+        //todo - report to sentry
+        this.galleryInitialStateJson = null;
       }
-    } catch (_e) {
-      console.warn(_e);
+    } else {
+        this.initialGalleryState = {};
+        try {
+          const galleryState = this.propsToState(props);
+          if (Object.keys(galleryState).length > 0) {
+            this.initialGalleryState = galleryState;
+          }
+        } catch (_e) {
+          console.warn(_e);
+        }
+      
     }
-
     this.state = {
       ...initialState,
       ...this.initialGalleryState,
@@ -198,7 +211,7 @@ export class GalleryContainer extends React.Component {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if (isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
+    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
       return items;
     }
     let visibleItems = items;
@@ -217,7 +230,7 @@ export class GalleryContainer extends React.Component {
       }
       if(visibleItems.length < 2 && visibleItems.length < items.length) {
         //dont render less then 2 items (otherwise slide show Arrow will be removed)
-        visibleItems = items.slice(0,2);
+        visibleItems = items.slice(1);
       }
     } catch (e) {
       visibleItems = items;
@@ -316,6 +329,7 @@ export class GalleryContainer extends React.Component {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToItem, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
+          ' isPreviewMode =', isPreviewMode(),
           ' isSiteMode =', isSiteMode(),
           ' this.state.styles =', this.state.styles,
           ' this.state.container =', this.state.container,
@@ -351,6 +365,7 @@ export class GalleryContainer extends React.Component {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToGroup, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
+          ' isPreviewMode =', isPreviewMode(),
           ' isSiteMode =', isSiteMode(),
           ' this.state.styles =', this.state.styles,
           ' this.state.container =', this.state.container,
@@ -564,6 +579,9 @@ export class GalleryContainer extends React.Component {
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
       : (() => {});
+    const ssrDisableTransition =
+      !!utils.isSSR() &&
+      'div.pro-gallery-parent-container * { transition: none !important }';
 
     return (
       <div
@@ -620,9 +638,15 @@ export class GalleryContainer extends React.Component {
           }}
           {...this.props.gallery}
         />
+        {this.galleryInitialStateJson && (
+          <div id="ssr-state-to-hydrate" style={{ display: 'none' }}>
+            {this.galleryInitialStateJson}
+          </div>
+        )}
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
           {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
+          {ssrDisableTransition && <style dangerouslySetInnerHTML={{__html: ssrDisableTransition}}/>}
         </div>
       </div>
     );

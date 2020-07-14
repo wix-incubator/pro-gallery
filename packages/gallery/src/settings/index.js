@@ -61,7 +61,6 @@ import itemEnableShadow from './options/itemEnableShadow';
 import videoLoop from './options/videoLoop';
 import showArrows from './options/showArrows';
 import enableScroll from './options/enableScroll';
-import imagePlacementAnimation from './options/imagePlacementAnimation';
 
 export default {
     itemClick,
@@ -127,5 +126,4 @@ export default {
     videoLoop,
     showArrows,
     enableScroll,
-    imagePlacementAnimation
 }

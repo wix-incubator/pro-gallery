@@ -2,6 +2,7 @@ import * as lodash from './lodash';
 import window from '../window/windowWrapper';
 import {
   isEditMode,
+  isPreviewMode,
   isFormFactorMobile,
 } from '../window/viewModeWrapper';
 
@@ -15,8 +16,7 @@ class Utils {
   }
 
   shouldUseCache() {
-    //ignore cache in pre-render (in pre-render the module can stay alive between different renders) and in Editor
-    return !isEditMode();
+    return !isEditMode() && !isPreviewMode();
   }
 
   isUndefined(something) {
@@ -28,7 +28,8 @@ class Utils {
   }
 
   getOrPutFromCache(fld, func) {
-    if (!this.shouldUseCache()) {
+    //ignore cache in SSR (in ssr the module is kept alive between different renders) and in Editor and preview
+    if (!this.shouldUseCache() || this.isSSR()) {
       return func();
     }
     if (this._cache[fld] !== undefined) {
@@ -282,9 +283,8 @@ class Utils {
     });
   }
 
-  //TODO : Replace with isPrerender mode
   isSSR() {
-    return typeof global.window === 'undefined';;
+    return !!window.isMock;
   }
 
   isOOI() {
@@ -486,7 +486,7 @@ class Utils {
   }
 
   getScreenWidth() {
-    if (isEditMode() && this.isMobile()) {
+    if (isPreviewMode() && this.isMobile()) {
       // In editor preview-mode, the screen is still a desktop, but the viewport in which the preview mode renders us is only 320, so 'window.screen.width' returns a wrong value.
       return 320;
     }

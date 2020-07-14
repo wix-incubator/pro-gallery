@@ -5,6 +5,7 @@ import GalleryContainerForBlueprints from './galleryContainerExtraNew.js';
 import GalleryContainer from './galleryContainerNew.js';
 import utils from '../../../common/utils';
 import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
+import window from '../../../common/window/windowWrapper';
 import { GalleryComponent } from '../../galleryComponent';
 
 import '../../../versionLogger';
@@ -12,8 +13,11 @@ import '../../../versionLogger';
 export default class ProGallery extends GalleryComponent {
   constructor(props) {
     super();
-  
-    this.init(props);
+    const isSSR = !!window.isMock;
+    this.canRender = !isSSR || props.allowSSR === true; //do not render if it is SSR
+    if (this.canRender) {
+      this.init(props);
+    }
     if (utils.isLocal() && !utils.isTest()) {
       console.log('PRO GALLERY DEV');
     }
@@ -43,19 +47,21 @@ export default class ProGallery extends GalleryComponent {
     const {useBlueprints} = this.props;
     const Gallery = useBlueprints ? GalleryContainerForBlueprints : GalleryContainer;
     return (
-      <div id={`pro-gallery-${this.props.domId}`} className="pro-gallery">
-          <Gallery
-            {...this.props}
-            domId={this.props.domId}
-            items={this.props.items || []}
-            watermarkData={this.props.watermarkData}
-            settings={this.props.settings || {}}
-            offsetTop={this.props.offsetTop}
-            itemsLoveData={this.props.itemsLoveData || {}}
-            proGalleryRegionLabel={this.props.proGalleryRegionLabel || 'Gallery. you can navigate the gallery with keyboard arrow keys.'}
-            // {...blueprintProps}
-          />
-      </div>
+      this.canRender && (
+        <div id={`pro-gallery-${this.props.domId}`} className="pro-gallery">
+            <Gallery
+              {...this.props}
+              domId={this.props.domId}
+              items={this.props.items || []}
+              watermarkData={this.props.watermarkData}
+              settings={this.props.settings || {}}
+              offsetTop={this.props.offsetTop}
+              itemsLoveData={this.props.itemsLoveData || {}}
+              proGalleryRegionLabel={this.props.proGalleryRegionLabel || 'Gallery. you can navigate the gallery with keyboard arrow keys.'}
+              // {...blueprintProps}
+            />
+        </div>
+      )
     );
   }
 }

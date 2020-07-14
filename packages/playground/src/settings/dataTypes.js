@@ -265,10 +265,6 @@ export default {
     type: INPUT_TYPES.OPTIONS,
     options: createOptions('imageHoverAnimations')
   },
-  imagePlacementAnimation: {
-    type: INPUT_TYPES.OPTIONS,
-    options: createOptions('imagePlacementAnimations')
-  },
   itemFont: {
     type: INPUT_TYPES.FONT_PICKER,
     alert: 'implement',
