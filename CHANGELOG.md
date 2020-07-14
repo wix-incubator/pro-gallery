@@ -1,3 +1,21 @@
+## [v2.0.16](https://pro-gallery-2-0-16.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (itemView): avoid inline styles in non-blueprints flow
+
+---
+## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainerNew): use layoutCss in non-blueprints flow
+
+---
+## [v2.0.14](https://pro-gallery-2-0-14.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  remove inline styles tags
+
+---
 ## [v2.0.13](https://pro-gallery-2-0-13.surge.sh) (13/07/2020)
  
 #### GALLERY
@@ -23,7 +41,7 @@
 #### GALLERY
  -  fix: (containerNew) getVisibleItems - dont render less then 2 items
 
----
+---ונת
 ## [v2.0.10](https://pro-gallery-2-0-10.surge.sh) (05/07/2020)
  
 #### GALLERY

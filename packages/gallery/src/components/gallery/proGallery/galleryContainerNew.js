@@ -130,7 +130,7 @@ export class GalleryContainer extends React.Component {
       }
       if(visibleItems.length < 2 && visibleItems.length < items.length) {
         //dont render less then 2 items (otherwise slide show Arrow will be removed)
-        visibleItems = items.slice(1);
+        visibleItems = items.slice(0,2);
       }
     } catch (e) {
       visibleItems = items;
@@ -430,13 +430,13 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
-    // this.layoutCss = createCssLayouts({
-    //   layoutParams,
-    //   isApproximateWidth,
-    //   isMobile: utils.isMobile(),
-    //   domId: this.props.domId,
-    //   galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
-    // });
+    this.layoutCss = createCssLayouts({
+      layoutParams,
+      isApproximateWidth,
+      isMobile: utils.isMobile(),
+      domId: this.props.domId,
+      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+    });
   }
 
   reCreateGalleryExpensively(
@@ -955,7 +955,7 @@ export class GalleryContainer extends React.Component {
           styleParams={this.state.styles}
           container={this.state.container}
           watermark={this.props.watermarkData}
-          settings={this.props.settings}
+          settings={{...this.props.settings, avoidInlineStyles: true}}
           gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
           lazyLoad={this.props.lazyLoad}
