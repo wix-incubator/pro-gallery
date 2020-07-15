@@ -46,6 +46,7 @@ import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
 import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import watermarkDock from './watermarkDock';
+import imagePlacementAnimations from './imagePlacementAnimations';
 
 export default {
   arrowsPosition,
@@ -98,4 +99,5 @@ export default {
   videoPlay,
   viewMode,
   watermarkDock,
+  imagePlacementAnimations
 };

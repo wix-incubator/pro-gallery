@@ -1,9 +1,59 @@
+## [v2.0.18](https://pro-gallery-2-0-18.surge.sh) (15/07/2020)
+
+#### GALLERY
+ -  SSR refactor
+
+---
+## [v2.0.17](https://pro-gallery-2-0-17.surge.sh) (14/07/2020)
+ 
+#### GALLERY
+ -  fix: gallery is not visible when only first item is in view
+
+---
+## [v2.0.16](https://pro-gallery-2-0-16.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (itemView): avoid inline styles in non-blueprints flow
+
+---
+## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainerNew): use layoutCss in non-blueprints flow
+
+---
+## [v2.0.14](https://pro-gallery-2-0-14.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  remove inline styles tags
+
+---
+## [v2.0.13](https://pro-gallery-2-0-13.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (slideshowView): fix isLastItem and isScrollEnd for infiniteScroll galleries
+
+#### PLAYGROUND
+ -  connect blueprints
+
+---
+## [v2.0.12](https://pro-gallery-2-0-12.surge.sh) (12/07/2020)
+ 
+#### GALLERY
+ -  fix leanGallery broken styleParams
+ -  fix leanGallery isEligible reasons
+ -  update getVisibleItems in containerExtraNew
+
+#### PLAYGROUND
+ -  improve: add viewMode settings to the simulators tab
+
+---
 ## [v2.0.11](https://pro-gallery-2-0-11.surge.sh) (05/07/2020)
  
 #### GALLERY
  -  fix: (containerNew) getVisibleItems - dont render less then 2 items
 
----
+---ונת
 ## [v2.0.10](https://pro-gallery-2-0-10.surge.sh) (05/07/2020)
  
 #### GALLERY

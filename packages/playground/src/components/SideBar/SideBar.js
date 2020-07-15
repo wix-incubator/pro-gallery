@@ -14,6 +14,8 @@ import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS, notEligibleReasons } from 'pro-gallery';
 import 'antd/dist/antd.css';
+import { getContainerUrlParams } from "./helper";
+import {blueprintsManager} from 'pro-gallery'
 
 function SideBar({ items }) {
   const {
@@ -23,7 +25,7 @@ function SideBar({ items }) {
     setGallerySettings,
     setStyleParams,
     styleParams,
-  } = useGalleryContext();
+  } = useGalleryContext(blueprintsManager);
 
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -179,6 +181,9 @@ function SideBar({ items }) {
               <Form.Item label="Avoid Pro-Gallery self measure" labelAlign="left">
                 <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({ isAvoidGallerySelfMeasure: e })} />
               </Form.Item>
+              <Form.Item label="Use Blueprints" labelAlign="left">
+                <Switch checked={!!gallerySettings.useBlueprints} onChange={e => setGallerySettings({ useBlueprints: e })} />
+              </Form.Item>
               <Form.Item label="Use Native Lazy Loading" labelAlign="left">
                 <Switch checked={gallerySettings.lazyLoad === GALLERY_CONSTS.lazyLoad.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? GALLERY_CONSTS.lazyLoad.NATIVE : GALLERY_CONSTS.lazyLoad.CSS })} />
               </Form.Item>
@@ -203,7 +208,7 @@ function SideBar({ items }) {
                 <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>

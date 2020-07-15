@@ -25,6 +25,7 @@ import {
   getContainerStyle,
   getImageStyle,
 } from './itemViewStyleProvider';
+import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations.js';
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -270,9 +271,6 @@ class ItemView extends GalleryComponent {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    if (this.props.isUnknownWidth) {
-      return {};
-    }
     const { styleParams, cubeRatio, style } = this.props;
     const isLandscape = style.ratio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
@@ -557,11 +555,13 @@ class ItemView extends GalleryComponent {
     const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
     return !itemDoesntHaveLink;
   }
-
+  
   getItemContainerStyles() {
-    const { styleParams } = this.props;
+    const { offset, style, styleParams, settings = {} } = this.props;
+
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -572,7 +572,16 @@ class ItemView extends GalleryComponent {
         ? 'default'
         : 'pointer'
     };
-    return { ...itemStyles, ...containerStyleByStyleParams };
+
+    const layoutStyles = settings.avoidInlineStyles ? {} : {
+      top: offset.top,
+      left: styleParams.isRTL ? 'auto' : offset.left,
+      right: !styleParams.isRTL ? 'auto' : offset.left,
+      width: style.width + style.infoWidth,
+      height: style.height + style.infoHeight,
+    };
+
+    return { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {
@@ -627,6 +636,7 @@ class ItemView extends GalleryComponent {
   getItemContainerClass() {
     const { styleParams } = this.props;
     const isNOTslideshow = !styleParams.isSlideshow;
+    const imagePlacementAnimation = styleParams.imagePlacementAnimation;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
     const classNames = {
@@ -638,6 +648,10 @@ class ItemView extends GalleryComponent {
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
         styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS,
+
+      //animations
+      'animation-slide':
+        isNOTslideshow && imagePlacementAnimation === IMAGE_PLACEMENT_ANIMATIONS.SLIDE,
 
       //overlay animations
       'hover-animation-fade-in':

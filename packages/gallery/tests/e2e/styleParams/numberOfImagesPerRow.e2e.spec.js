@@ -28,19 +28,19 @@ describe('numberOfImagesPerRow - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should set 2 images per a row', async () => {
-    await driver.openPage({
-      galleryLayout: 2,
-      numberOfImagesPerRow:2,
-      gridStyle: 1,
-      oneRow: false,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
-  });
+  // it('should set 2 images per a row', async () => {
+  //   await driver.openPage({
+  //     galleryLayout: 2,
+  //     numberOfImagesPerRow:2,
+  //     gridStyle: 1,
+  //     oneRow: false,
+  //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+  //   });
+  //   await driver.waitFor.hookToBeVisible('item-container');
+  //   await driver.waitFor.timer(200);
+  //   const page = await driver.grab.elemScreenshot('.pro-gallery');
+  //   expect(page).toMatchImageSnapshot();
+  // });
   it('should set 3 images per a row', async () => {
     await driver.openPage({
       galleryLayout: 2,

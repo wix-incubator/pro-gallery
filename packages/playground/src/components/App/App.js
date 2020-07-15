@@ -8,6 +8,8 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
 import SideBarButton from '../SideBar/SideBarButton';
+import {blueprintsManager} from 'pro-gallery'
+import BlueprintsApi from './PlaygroundBlueprintsApi'
 
 // import Loader from './loader';
 
@@ -27,11 +29,13 @@ const initialItems = {
   images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
 };
 
+
 const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
 
-  const {setDimentions, styleParams, setItems, items, gallerySettings, setGallerySettings} = useGalleryContext();
+  const {setDimensions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setDimensionsHeight, setDimensionsWidth, dimensions} = useGalleryContext(blueprintsManager);
+  
   const {showSide} = gallerySettings;
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
@@ -42,38 +46,45 @@ export function App() {
 
   const switchState = () => {
     const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-    setDimentions(width, window.innerHeight);
+    setDimensions(width, window.innerHeight);
     setGallerySettings({showSide: !showSide});
   };
 
   useEffect(() => {
     const handleResize = () => {
       const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-      setDimentions(width, window.innerHeight);
+      setDimensionsWidth(width);
     };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [setDimentions, showSide]);
+  }, [setDimensions, setDimensionsWidth, showSide]);
 
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
   }
-
   const eventListener = (eventName, eventData) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED:
         setGalleryReady();
         break;
-      case GALLERY_EVENTS.GALLERY_CHANGE:
-        // setGalleryReady();
+      case GALLERY_EVENTS.GALLERY_CHANGE: //TODO split to an event named "PARTIALY_GROW_GALLERY_PRETTY_PLEASE"
+        if(gallerySettings.useBlueprints && eventData.updatedHeight){
+          setDimensionsHeight(eventData.updatedHeight);
+        }
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
-        addItems();
+        if(gallerySettings.useBlueprints){
+          blueprintsManager.needMoreItems(eventData);
+        } else {
+          addItems();
+        }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
         // setFullscreenIdx(eventData.idx);
+        break;
+      case GALLERY_EVENTS.LOAD_MORE_CLICKED:
         break;
       default:
         // console.log({eventName, eventData});
@@ -89,12 +100,14 @@ export function App() {
   };
 
   const addItems = () => {
-    const items = getItems();
-    if (!window.benchmarking && (!numberOfItems || items.length < numberOfItems)) { //zero items means infinite
-      setItems(items.concat(createItems()));
+    const currentItems = getItems();
+    if (!window.benchmarking && (!numberOfItems || currentItems.length < numberOfItems)) { //zero items means infinite
+      const newItems = currentItems.concat(createItems());
+      setItems(newItems);
+      return newItems;
     }
-
   }
+
   const createItems = () => {
     return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : mediaType === 'texts' ? testTexts : testItems), numberOfItems || ITEMS_BATCH_SIZE);
   }
@@ -111,6 +124,23 @@ export function App() {
       return theItems.slice(0, numberOfItems);
     } else {
       return theItems;
+    }
+  }
+
+  
+    function getTotalItemsCount() {
+      return numberOfItems > 0 ? numberOfItems : Infinity
+    }
+  // if (!blueprintsManager.api) {
+    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, setDimensionsHeight, getTotalItemsCount});
+    blueprintsManager.init({api: playgroundBlueprintsApi})
+  // }
+
+  function getOrInitBlueprint() {
+    if (blueprint) {
+      return blueprint;
+    } else {
+      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
 
@@ -164,6 +194,31 @@ export function App() {
       customSlideshowInfoRenderer: slideshowInfoElement,
     };
   }
+  
+  function getContainer() {
+    return {...container, ...dimensions};
+  }
+
+  function getStyles() {
+    return styleParams;
+  }
+
+  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() : { items: getItems(),
+    options: styleParams,
+    container };
+
+    
+    const canRender = ()=> {
+      if (!gallerySettings.useBlueprints || blueprint) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    if (!canRender()) {
+      return null;
+    }
   return (
     <main className={s.main}>
       {/* <Loader/> */}
@@ -183,14 +238,13 @@ export function App() {
           key={`pro-gallery-${JSON.stringify(gallerySettings)}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
-          container={container}
-          items={getItems()}
           viewMode={gallerySettings.viewMode}
-          options={styleParams}
           eventsListener={eventListener}
-          totalItemsCount={numberOfItems > 0 ? numberOfItems : Infinity}
+          totalItemsCount={getTotalItemsCount()}
           resizeMediaUrl={resizeMediaUrl}
+          useBlueprints={gallerySettings.useBlueprints} //Todo - use it react way
           {...getExternalInfoRenderers()}
+          {...blueprintProps}
         />
       </section>
     </main>

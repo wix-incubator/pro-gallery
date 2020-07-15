@@ -176,7 +176,7 @@ describe('styleParam - scrollAnimation', () => {
         scrollAnimation: GALLERY_CONSTS.scrollAnimations.MAIN_COLOR,
       });
       driver.mount.proGallery(initialProps);
-      const item = driver.find.hook('gallery-item-image-canvas').at(3).getDOMNode();
+      const item = driver.find.hook('gallery-item-image-img').at(3).getDOMNode();
       const animationProps = {
         filter: getComputedStyle(item).filter,
         transition: getComputedStyle(item).transition,
@@ -198,7 +198,7 @@ describe('styleParam - scrollAnimation', () => {
         scrollAnimation: GALLERY_CONSTS.scrollAnimations.BLUR,
       });
       driver.mount.proGallery(initialProps);
-      const item = driver.find.hook('gallery-item-image-canvas').at(3).getDOMNode();
+      const item = driver.find.hook('gallery-item-image-img').at(3).getDOMNode();
       const animationProps = {
         filter: getComputedStyle(item).filter,
         transition: getComputedStyle(item).transition,
@@ -384,7 +384,7 @@ describe('styleParam - scrollAnimation', () => {
         scrollAnimation: GALLERY_CONSTS.scrollAnimations.MAIN_COLOR,
       });
       driver.mount.proGallery(initialProps);
-      const item = driver.find.hook('gallery-item-image-canvas').at(0).getDOMNode();
+      const item = driver.find.hook('gallery-item-image-img').at(0).getDOMNode();
       const animationProps = {
         filter: getComputedStyle(item).filter,
         transition: getComputedStyle(item).transition,
@@ -406,7 +406,7 @@ describe('styleParam - scrollAnimation', () => {
         scrollAnimation: GALLERY_CONSTS.scrollAnimations.BLUR,
       });
       driver.mount.proGallery(initialProps);
-      const item = driver.find.hook('gallery-item-image-canvas').at(0).getDOMNode();
+      const item = driver.find.hook('gallery-item-image-img').at(0).getDOMNode();
       const animationProps = {
         filter: getComputedStyle(item).filter,
         transition: getComputedStyle(item).transition,
