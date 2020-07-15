@@ -1,7 +1,7 @@
 import GALLERY_CONSTS from '../../../common/constants/index';
 import {isVerticalPlacement} from '../../../common/constants/placements';
 import { fixedStyles } from '../presets/gridGallery';
-// import { formatLeanGalleryStyles } from './leanGallery';
+import { formatLeanGalleryStyles } from './leanGallery';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export const notEligibleReasons = ({items, styles}) => {
@@ -32,7 +32,7 @@ export const notEligibleReasons = ({items, styles}) => {
 }
 
 export default ({items, styles}) => {
-    // styles = formatLeanGalleryStyles(styles); // Todo: Reuse when blueprints is ready [IP]
+    styles = formatLeanGalleryStyles(styles);
 
     const allowLeanGallery = !!styles.allowLeanGallery;
     
