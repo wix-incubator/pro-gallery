@@ -4,7 +4,7 @@ import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
-import { Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
+import { List, Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { SECTIONS, settingsManager } from '../../settings/settingsManager';
 import { INPUT_TYPES } from '../../settings/consts';
 import { Divider, Alert } from 'antd';
@@ -12,7 +12,7 @@ import comments from './comments';
 import { throttle } from "../../utils/utils";
 import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
-import { GALLERY_CONSTS, notEligibleReasons } from 'pro-gallery';
+import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pro-gallery';
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {blueprintsManager} from 'pro-gallery'
@@ -208,12 +208,28 @@ function SideBar({ items }) {
                 <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Lean Gallery" key="lean">
-            {(notEligibleReasons({ items, styles: styleParams }) || []).map((reason, idx) => <Alert key={idx} message={reason} type="info" />)}
+          <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form.Item label="Allow Lean Gallery" labelAlign="left">
+                <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e )} />
+              </Form.Item>
+              {
+                isEligibleForLeanGallery({ items, styles: styleParams }) ? 
+                <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
+                :
+                <List
+                  size="small"
+                  header="CAN NOT RENDER LEAN GALLERY"
+                  bordered
+                  dataSource={notEligibleReasons({ items, styles: styleParams })}
+                  renderItem={item => <List.Item>{item}</List.Item>}
+                />      
+              }        
+            </Form>
           </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
