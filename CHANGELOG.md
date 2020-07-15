@@ -1,3 +1,10 @@
+## [v2.0.19](https://pro-gallery-2-0-19.surge.sh) (15/07/2020)
+ 
+#### GALLERY
+ -  render videoItemPlaceholder in videoItem
+ -  LeanGallery supported in Ssr
+
+---
 ## [v2.0.18](https://pro-gallery-2-0-18.surge.sh) (15/07/2020)
 
 #### GALLERY
