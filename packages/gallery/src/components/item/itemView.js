@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import ImageItem from './imageItem.js';
-import VideoItem from './videos/videoItem';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import utils from '../../common/utils/index.js';
@@ -26,6 +25,8 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations.js';
+
+const VideoItem = lazy(() => import('./videos/videoItem'))
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -364,20 +365,22 @@ class ItemView extends GalleryComponent {
 
   getVideoItem(imageDimensions, itemHover) {
     return (
-      <VideoItem
-        {...this.props}
-        playing={this.props.idx === this.props.playingVideoIdx}
-        key={'video' + this.props.idx}
-        hover={itemHover}
-        imageDimensions={imageDimensions}
-        hasLink={this.itemHasLink()}
-        actions={{
-          ...this.props.actions,
-          setItemLoaded: this.setItemLoaded,
-          handleItemMouseDown: this.handleItemMouseDown,
-          handleItemMouseUp: this.handleItemMouseUp,
-        }}
-      />
+      <Suspense fallback={[this.getImageItem(imageDimensions), itemHover]}>
+        <VideoItem
+          {...this.props}
+          playing={this.props.idx === this.props.playingVideoIdx}
+          key={'video' + this.props.idx}
+          hover={itemHover}
+          imageDimensions={imageDimensions}
+          hasLink={this.itemHasLink()}
+          actions={{
+            ...this.props.actions,
+            setItemLoaded: this.setItemLoaded,
+            handleItemMouseDown: this.handleItemMouseDown,
+            handleItemMouseUp: this.handleItemMouseUp,
+          }}
+        />
+      </Suspense>
     );
   }
 

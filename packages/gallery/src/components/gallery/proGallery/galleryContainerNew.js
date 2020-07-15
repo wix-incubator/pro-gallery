@@ -743,7 +743,6 @@ export class GalleryContainer extends React.Component {
   }
 
   containerInfiniteGrowthDirection(styles = false) {
-    debugger;
     const _styles = styles || this.state.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
     const { enableInfiniteScroll } = this.props.styles;
