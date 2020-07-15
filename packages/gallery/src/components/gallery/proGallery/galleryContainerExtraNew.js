@@ -191,14 +191,14 @@ export class GalleryContainer extends React.Component {
   }
 
   initVideoScrollHelperIfNeeded(galleryStructureData) {
-    if(this.items.some(item => item.metaData.type === "video")) {
+    if(this.items.some(item => (item.metaData && item.metaData.type === "video") || (item.metadata && item.metadata.type === "video"))) {
         const videoScrollHelperConfig = {
           setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
         };
         import('../../helpers/videoScrollHelper.js').then(VideoScrollHelper => {
           this.videoScrollHelper = new VideoScrollHelper.default(videoScrollHelperConfig);
           this.videoScrollHelper.updateGalleryStructure(galleryStructureData);
-        }).catch(() => {
+        }).catch((e) => {
           console.error('Failed to load videoScrollHelper. error: ' + e)
         })
     }

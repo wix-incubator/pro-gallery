@@ -146,14 +146,14 @@ export class GalleryContainer extends React.Component {
   // }
  
   initVideoScrollHelperIfNeeded(galleryStructureData) {
-    if(this.items.some(item => item.metaData.type === "video")) {
+    if(this.items.some(item => (item.metaData && item.metaData.type === "video") || (item.metadata && item.metadata.type === "video"))) {
         const videoScrollHelperConfig = {
           setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
         };
         import('../../helpers/videoScrollHelper.js').then(VideoScrollHelper => {
           this.videoScrollHelper = new VideoScrollHelper.default(videoScrollHelperConfig);
           this.videoScrollHelper.updateGalleryStructure(galleryStructureData);
-        }).catch(() => {
+        }).catch((e) => {
           console.error('Failed to load videoScrollHelper. error: ' + e)
         })
     }
@@ -743,6 +743,7 @@ export class GalleryContainer extends React.Component {
   }
 
   containerInfiniteGrowthDirection(styles = false) {
+    debugger;
     const _styles = styles || this.state.styles;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
     const { enableInfiniteScroll } = this.props.styles;
