@@ -11,7 +11,6 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
-import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -44,10 +43,6 @@ export class GalleryContainer extends React.Component {
 
     this.state = initialState;
     this.layoutCss = [];
-    const videoScrollHelperConfig = {
-      setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
-    };
-    this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
 
     this.initialGalleryState = {};
     try {
@@ -68,7 +63,7 @@ export class GalleryContainer extends React.Component {
   componentDidMount() {
     this.scrollToItem(this.props.currentIdx, false, true, 0);
     this.eventsListener(EVENTS.APP_LOADED, {});
-    this.videoScrollHelper.initializePlayState();
+    this.videoScrollHelper && this.videoScrollHelper.initializePlayState();
 
     try {
       if (typeof window.CustomEvent === 'function') {
@@ -146,10 +141,12 @@ export class GalleryContainer extends React.Component {
 
 
   handleNavigation(isInDisplay) {
-    if (isInDisplay) {
-      this.videoScrollHelper.trigger.INIT_SCROLL();
-    } else {
-      this.videoScrollHelper.stop();
+    if(this.videoScrollHelper) {
+      if (isInDisplay) {
+        this.videoScrollHelper.trigger.INIT_SCROLL();
+      } else {
+        this.videoScrollHelper.stop();
+      }
     }
   }
 
@@ -193,6 +190,19 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  initVideoScrollHelperIfNeeded(galleryStructureData) {
+    if(this.items.some(item => item.metaData.type === "video")) {
+        const videoScrollHelperConfig = {
+          setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
+        };
+        import('../../helpers/videoScrollHelper.js').then(VideoScrollHelper => {
+          this.videoScrollHelper = new VideoScrollHelper.default(videoScrollHelperConfig);
+          this.videoScrollHelper.updateGalleryStructure(galleryStructureData);
+        }).catch(() => {
+          console.error('Failed to load videoScrollHelper. error: ' + e)
+        })
+    }
+  }
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
@@ -250,14 +260,25 @@ export class GalleryContainer extends React.Component {
         styleParams: styles,
         allowPreloading,
       });
-      this.videoScrollHelper.updateGalleryStructure({
-        galleryStructure: this.galleryStructure,
-        scrollBase: container.scrollBase,
-        videoPlay: styles.videoPlay,
-        itemClick: styles.itemClick,
-        oneRow: styles.oneRow,
-        cb: this.setPlayingIdxState,
-      });
+      if(this.videoScrollHelper) {
+        this.videoScrollHelper.updateGalleryStructure({
+          galleryStructure: this.galleryStructure,
+          scrollBase: container.scrollBase,
+          videoPlay: styles.videoPlay,
+          itemClick: styles.itemClick,
+          oneRow: styles.oneRow,
+          cb: this.setPlayingIdxState,
+        })}
+      else {
+        this.initVideoScrollHelperIfNeeded({
+          galleryStructure: this.galleryStructure,
+          scrollBase: container.scrollBase,
+          videoPlay: styles.videoPlay,
+          itemClick: styles.itemClick,
+          oneRow: styles.oneRow,
+          cb: this.setPlayingIdxState,
+        })
+      }
       const layoutParams = {
         items: items,
         container,
@@ -391,7 +412,7 @@ export class GalleryContainer extends React.Component {
   }
 
   onGalleryScroll({ top, left }) {
-    this.videoScrollHelper.trigger.SCROLL({
+    this.videoScrollHelper && this.videoScrollHelper.trigger.SCROLL({
       top,
       left,
     });
@@ -488,7 +509,7 @@ export class GalleryContainer extends React.Component {
   }
 
   eventsListener(eventName, eventData, event) {
-    this.videoScrollHelper.handleEvent({
+    this.videoScrollHelper && this.videoScrollHelper.handleEvent({
       eventName,
       eventData,
     });
