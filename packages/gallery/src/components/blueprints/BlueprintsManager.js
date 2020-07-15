@@ -20,15 +20,16 @@ class BlueprintsManager {
   createBlueprint(params) {
     console.count('>>>>>>>>>>requestingBlueprint'); //TODO - remove when done :D
 
-    this.currentState.totalItemsCount = params.totalItemsCount ? params.totalItemsCount : this.currentState.totalItemsCount;
+    this.currentState.totalItemsCount = params.totalItemsCount || this.api.getTotalItemsCount && this.api.getTotalItemsCount()  || this.currentState.totalItemsCount;
 
     return this.completeParams(params).then((res) => {
 
       params =  {...params,... res}
-      const {changedParams, ...blueprint} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
-  
+      const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
+      const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
+      console.log('>>>did blueprint actually change?', blueprintChanged);
       this.updateLastParamsIfNeeded(params, changedParams);
-      this.api.onBlueprintReady(blueprint);
+      this.api.onBlueprintReady({blueprint, blueprintChanged});
       return this.cache[params] = this.existingBlueprint = blueprint;
     })
 

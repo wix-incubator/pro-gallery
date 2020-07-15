@@ -142,6 +142,9 @@ export function formatValue(val) {
     return true;
   } else if (val === 'false') {
     return false;
+  }
+  if (val === 'undefined') {
+    return undefined;
   } else {
     return String(val);
   }
