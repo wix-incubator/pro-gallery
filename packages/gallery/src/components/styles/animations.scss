@@ -1,5 +1,5 @@
 :global {
     .animation-slide {
-        transition: all 0.4s ease
+        transition: width 0.4s ease, height 0.4s ease, top 0.4s ease, left 0.4s ease;
     }
 }

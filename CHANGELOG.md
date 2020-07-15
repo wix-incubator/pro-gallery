@@ -1,3 +1,9 @@
+## [v2.0.18](https://pro-gallery-2-0-18.surge.sh) (15/07/2020)
+
+#### GALLERY
+ -  SSR refactor
+
+---
 ## [v2.0.17](https://pro-gallery-2-0-17.surge.sh) (14/07/2020)
  
 #### GALLERY

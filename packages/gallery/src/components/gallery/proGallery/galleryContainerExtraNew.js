@@ -9,7 +9,7 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import utils from '../../../common/utils';
-import { isEditMode, isSEOMode, isSiteMode } from '../../../common/window/viewModeWrapper';
+import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
 import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 
@@ -217,7 +217,7 @@ export class GalleryContainer extends React.Component {
       }
       if(visibleItems.length < 2 && visibleItems.length < items.length) {
         //dont render less then 2 items (otherwise slide show Arrow will be removed)
-        visibleItems = items.slice(0,2);
+        visibleItems = items.slice(1);
       }
     } catch (e) {
       visibleItems = items;
@@ -316,6 +316,7 @@ export class GalleryContainer extends React.Component {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToItem, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
+          ' isPreviewMode =', isPreviewMode(),
           ' isSiteMode =', isSiteMode(),
           ' this.state.styles =', this.state.styles,
           ' this.state.container =', this.state.container,
@@ -351,6 +352,7 @@ export class GalleryContainer extends React.Component {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error('error:', e, ' pro-gallery, scrollToGroup, cannot get scrollParams, ',
           'isEditMode =', isEditMode(),
+          ' isPreviewMode =', isPreviewMode(),
           ' isSiteMode =', isSiteMode(),
           ' this.state.styles =', this.state.styles,
           ' this.state.container =', this.state.container,

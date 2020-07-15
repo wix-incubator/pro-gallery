@@ -14,7 +14,7 @@ export default class Gallery extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const container = this.initContainer(props);
+    const container = this.getContainerFromUrl(props);
 
     this.handleResize = this.handleResize.bind(this);
 
@@ -24,7 +24,7 @@ export default class Gallery extends React.PureComponent {
     };
   }
 
-  initContainer(props) {
+  getContainerFromUrl(props) {
     let container = UNKNOWN_CONTAINER;
 
     const { urlParams: { containerWidth, containerHeight } = {} } = props;

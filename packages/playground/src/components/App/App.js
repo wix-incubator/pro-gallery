@@ -127,8 +127,12 @@ export function App() {
     }
   }
 
+  
+    function getTotalItemsCount() {
+      return numberOfItems > 0 ? numberOfItems : Infinity
+    }
   // if (!blueprintsManager.api) {
-    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, setDimensionsHeight});
+    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, setDimensionsHeight, getTotalItemsCount});
     blueprintsManager.init({api: playgroundBlueprintsApi})
   // }
 
@@ -138,10 +142,6 @@ export function App() {
     } else {
       blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
-  }
-
-  function getTotalItemsCount() {
-    return numberOfItems > 0 ? numberOfItems : Infinity
   }
 
   const renderInfoElement = (type, pgItemProps) => {

@@ -12,7 +12,6 @@ import '../../../versionLogger';
 export default class ProGallery extends GalleryComponent {
   constructor(props) {
     super();
-  
     this.init(props);
     if (utils.isLocal() && !utils.isTest()) {
       console.log('PRO GALLERY DEV');
