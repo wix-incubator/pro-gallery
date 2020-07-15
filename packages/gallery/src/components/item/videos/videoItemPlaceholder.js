@@ -14,8 +14,8 @@ class VideoItemPlaceholder extends ImageItem {
     } = this.props;
 
     const VideoPlaceholderContainerClassnames = this.getImageContainerClassNames() + ' video-item gallery-item-video'
-    const videoPlaceholderImage = this.getImageElement();
-    const renderedItem = this.getImageContainer([videoPlaceholderImage, videoControls], VideoPlaceholderContainerClassnames)
+    const videoPlaceholderImageRenderer = this.getImageElement();
+    const renderedItem = this.getImageContainer(videoPlaceholderImageRenderer, VideoPlaceholderContainerClassnames, videoControls)
 
     return renderedItem
   }

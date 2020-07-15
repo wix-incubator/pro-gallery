@@ -70,7 +70,7 @@ export default class ImageItem extends GalleryComponent {
     return imageContainerClassNames
   }
 
-  getImageContainer(image, classNames) {
+  getImageContainer(imageRenerer, classNames, extraNodes) {
     const {
       imageDimensions,
       id,
@@ -86,7 +86,8 @@ export default class ImageItem extends GalleryComponent {
         data-hook={'image-item'}
         style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
       >
-        {image}
+        {imageRenerer()}
+        {extraNodes}
       </div>
     );
   };
@@ -193,9 +194,9 @@ export default class ImageItem extends GalleryComponent {
   }
 
   render() {
-    const imageElement = this.getImageElement();
+    const imageRenderer = this.getImageElement();
     const imageContainerClassNames = this.getImageContainerClassNames();
-    const renderedItem = this.getImageContainer(imageElement, imageContainerClassNames)
+    const renderedItem = this.getImageContainer(imageRenderer, imageContainerClassNames)
     return renderedItem;
   }
 }
