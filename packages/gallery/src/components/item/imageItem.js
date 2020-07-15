@@ -10,6 +10,9 @@ const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
 export default class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
+    this.getImageContainer = this.getImageContainer.bind(this);
+    this.getImageContainerClassNames = this.getImageContainerClassNames.bind(this);
+    this.getImageElement = this.getImageElement.bind(this);
 
     this.state = {
       isHighResImageLoaded: false,
@@ -44,13 +47,57 @@ export default class ImageItem extends GalleryComponent {
     }
   }
   
-  render() {
+
+  getImageContainerClassNames() {
     const {
+      styleParams,
+    } = this.props;
+
+    const imageContainerClassNames = [
+      'gallery-item-content',
+      'image-item',
+      'gallery-item-visible',
+      'gallery-item',
+      'gallery-item-preloaded',
+      styleParams.cubeImages && styleParams.cubeType === 'fit'
+        ? 'grid-fit'
+        : '',
+      styleParams.imageLoadingMode === LOADING_MODE.COLOR
+        ? 'load-with-color'
+        : '',
+    ].join(' ');
+
+    return imageContainerClassNames
+  }
+
+  getImageContainer(imageRenerer, classNames, extraNodes) {
+    const {
+      imageDimensions,
+      id,
+      actions,
+    } = this.props;
+
+    return (
+      <div
+        className={classNames}
+        onTouchStart={actions.handleItemMouseDown}
+        onTouchEnd={actions.handleItemMouseUp}
+        key={'image_container-' + id}
+        data-hook={'image-item'}
+        style={imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
+      >
+        {imageRenerer()}
+        {extraNodes}
+      </div>
+    );
+  };
+
+  getImageElement() {
+      const {
       alt,
       imageDimensions,
       createUrl,
       id,
-      actions,
       settings,
       lazyLoad,
       styleParams,
@@ -64,35 +111,9 @@ export default class ImageItem extends GalleryComponent {
         : {};
 
     const { marginLeft, marginTop, ...restOfDimensions } =
-      imageDimensions || {};
+    imageDimensions || {};
     const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
-    const imageItemClassName = [
-      'gallery-item-content',
-      'image-item',
-      'gallery-item-visible',
-      'gallery-item',
-      'gallery-item-preloaded',
-      styleParams.cubeImages && styleParams.cubeType === 'fit'
-        ? 'grid-fit'
-        : '',
-      styleParams.imageLoadingMode === LOADING_MODE.COLOR
-        ? 'load-with-color'
-        : '',
-    ].join(' ');
-    const imageContainer = renderer => {
-      return (
-        <div
-          className={imageItemClassName}
-          onTouchStart={actions.handleItemMouseDown}
-          onTouchEnd={actions.handleItemMouseUp}
-          key={'image_container-' + id}
-          data-hook={'image-item'}
-          style={imageDimensions.borderRadius ? { borderRadius: imageDimensions.borderRadius } : {}}
-        >
-          {renderer()}
-        </div>
-      );
-    };
+    
 
     const image = () => {
       const imagesComponents =[]
@@ -169,8 +190,13 @@ export default class ImageItem extends GalleryComponent {
       />
     );
 
-    // const renderedItem = useImageTag ? imageContainer(image) : imageContainer(canvas);
-    const renderedItem = imageContainer(image);
+    return useImageTag ? image : canvas
+  }
+
+  render() {
+    const imageRenderer = this.getImageElement();
+    const imageContainerClassNames = this.getImageContainerClassNames();
+    const renderedItem = this.getImageContainer(imageRenderer, imageContainerClassNames)
     return renderedItem;
   }
 }

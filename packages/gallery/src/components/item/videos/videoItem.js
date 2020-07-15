@@ -6,15 +6,34 @@ import EVENTS from '../../../common/constants/events';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
-import VideoItemPlaceholder from './videoItemPlaceholder.js';
+import VideoItemPlaceholder from './videoItemPlaceholder'
+
+const videoControls = [
+  <i
+          key="play-triangle"
+          data-hook="play-triangle"
+          className={
+            'gallery-item-video-play-triangle play-triangle '
+          }
+        ><PlayTriangle/></i>,
+  <i
+          key="play-bg"
+          data-hook="play-background"
+          className={
+            'gallery-item-video-play-background play-background '
+          }
+        ><PlayBackground/></i>,
+];
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
     super(props);
-    
+
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
+    this.canVideoPlayInGallery = this.canVideoPlayInGallery.bind(this);
+    this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(this);
 
     this.state = {
       playedOnce: false,
@@ -31,7 +50,7 @@ class VideoItem extends GalleryComponent {
 
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
-      import(/* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
+      import( /* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -43,7 +62,7 @@ class VideoItem extends GalleryComponent {
       this.props.videoUrl &&
       this.props.videoUrl.includes('vimeo.com')
     ) {
-      import(/* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
+      import( /* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -54,23 +73,39 @@ class VideoItem extends GalleryComponent {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import(/* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
-        window.Hls =  Player.default;
+      import( /* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
+        window.Hls = Player.default;
         this.setState({ hlsPlayerLoaded: true });
         this.playVideoIfNeeded();
       });
     }
   }
-  
-  isHLSVideo(){
-    return  this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
+
+  isHLSVideo() {
+    return this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
   }
-  shouldUseHlsPlayer(){
-    return  this.isHLSVideo() && !utils.isiOS()
+  shouldUseHlsPlayer() {
+    return this.isHLSVideo() && !utils.isiOS()
   }
 
-  shouldForceVideoForHLS(){
+  shouldForceVideoForHLS() {
     return this.isHLSVideo() && utils.isiOS();
+  }
+
+  canVideoPlayInGallery() {
+    const { videoPlay, itemClick } = this.props.styleParams;
+    const { hasLink } = this.props;
+    if (this.props.idx === this.props.playingVideoIdx ||
+      this.props.idx === this.props.nextVideoIdx) {
+      if (
+        videoPlay === 'hover' || videoPlay === 'auto'
+      ) { return true; } else if (
+        itemClick === 'nothing'
+      ) { return true; } else if (
+        itemClick === 'link' && !hasLink
+      ) { return true; }
+    }
+    return false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -86,6 +121,11 @@ class VideoItem extends GalleryComponent {
     if (prevProps.currentIdx !== this.props.currentIdx) {
       this.fixIFrameTabIndexIfNeeded();
     }
+
+    if (prevProps.type === 'image' && this.props.type === "video") {
+      this.dynamiclyImportVideoPlayers();
+    }
+
     this.playVideoIfNeeded();
   }
 
@@ -99,7 +139,7 @@ class VideoItem extends GalleryComponent {
 
   playVideoIfNeeded(props = this.props) {
     try {
-      const {playingVideoIdx} = props;
+      const { playingVideoIdx } = props;
       if (playingVideoIdx === this.props.idx && !this.isPlaying) {
         this.videoElement = this.videoElement || window.document.querySelector(`#video-${this.props.id} video`);
         if (this.videoElement) {
@@ -144,9 +184,9 @@ class VideoItem extends GalleryComponent {
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
     }
-    const url = this.props.videoUrl
-      ? this.props.videoUrl
-      : this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO);
+    const url = this.props.videoUrl ?
+      this.props.videoUrl :
+      this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO);
     return (
       <PlayerElement
         className={'gallery-item-visible video gallery-item'}
@@ -197,6 +237,30 @@ class VideoItem extends GalleryComponent {
     );
   }
 
+  createVideoItemPlaceholder(showVideoControls) {
+    const props = utils.pick(this.props, [
+      'alt',
+      'title',
+      'description',
+      'id',
+      'idx',
+      'styleParams',
+      'createUrl',
+      'settings',
+      'lazyLoad',
+      'actions'
+    ]);
+
+    return <VideoItemPlaceholder
+        {...props}
+        key="videoPlaceholder"
+        imageDimensions={this.props.imageDimensions}
+        isThumbnail={!!this.props.thumbnailHighlightId}
+        id={this.props.idx}
+        videoControls={showVideoControls && videoControls}
+      />
+  }
+
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
       const videoGalleryItem =
@@ -215,57 +279,32 @@ class VideoItem extends GalleryComponent {
     }
   }
 
-  canVideoPlayInGallery(itemClick, videoPlay , hasLink) {
-      if (
-        videoPlay === 'hover' || videoPlay === 'auto'
-      ) {return true;}
-      else if (
-        itemClick === 'nothing'
-      ) {return true;}
-      else if (
-        itemClick === 'link' && !hasLink
-      ) {return true;}
-      return false;
-    }
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+
+    const hover = this.props.hover;
+    const showVideoControls = !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
+
+    if (!this.canVideoPlayInGallery() || (this.props.type ==='image' && this.props.isVideoPlaceholder)) {
+      const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls)
+      return [videoPlaceholder, hover]
+    }
+
     let baseClassName =
       'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
       (utils.isiPhone() ? ' ios' : '');
     if (this.state.playing) {
       baseClassName += ' playing';
     }
-    const showVideoControls = this.props.hidePlay ? false : this.props.styleParams.showVideoPlayButton;
-    const videoControls = !showVideoControls
-      ? false
-      : [
-          <i
-            key="play-triangle"
-            data-hook="play-triangle"
-            className={
-              'gallery-item-video-play-triangle play-triangle '
-            }
-          ><PlayTriangle/></i>,
-          <i
-            key="play-bg"
-            data-hook="play-background"
-            className={
-              'gallery-item-video-play-background play-background '
-            }
-          ><PlayBackground/></i>,
-        ];
-
     const videoPreloader = (
       <div
-        className="pro-circle-preloader"
+      className="pro-circle-preloader"
         key={'video-preloader-' + this.props.idx}
       />
     );
     const { marginLeft, marginTop, ...restOfDimensions } =
-      this.props.imageDimensions || {};
-    const { videoPlay, itemClick } = this.props.styleParams;
-    const {hasLink} = this.props;
+    this.props.imageDimensions || {};
     const video =
       (
         <div
@@ -285,20 +324,16 @@ class VideoItem extends GalleryComponent {
           }
         >
           {this.createPlayerElement()}
-          {videoControls}
+          {showVideoControls && videoControls}
           {videoPreloader}
         </div>
       );
 
-    const hover = this.props.hover;
-
-    return this.canVideoPlayInGallery(itemClick, videoPlay, hasLink) ? (
+    return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {[video, hover]}
       </div>
-    ): (
-      <VideoItemPlaceholder {...this.props}/>
-    );
+    )
   }
 }
 
