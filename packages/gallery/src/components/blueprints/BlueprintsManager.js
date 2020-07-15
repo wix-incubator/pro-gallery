@@ -1,13 +1,15 @@
 import blueprints from './Blueprints'
 // import EVENTS from '../../common/constants/events';
 
-class BlueprintsManager {
+export default class BlueprintsManager {
 
-  constructor() {
+  constructor({id}) {
     // this.eventsCB = config && config.eventsCB;
+    this.id = id + `'s blueprintsManager`
     this.currentState = {};
     this.existingBlueprint = {};
     this.cache = {};
+    this.api = {};
     this.currentState.totalItemsCount = Infinity;
     this.onBlueprintReady = (() => {});
   }
@@ -18,16 +20,16 @@ class BlueprintsManager {
   }
 
   createBlueprint(params) {
-    console.count('>>>>>>>>>>requestingBlueprint'); //TODO - remove when done :D
+    console.count('>>>>>>>>>>requestingBlueprint from ' + this.id); //TODO - remove when done :D
 
     this.currentState.totalItemsCount = params.totalItemsCount || this.api.getTotalItemsCount && this.api.getTotalItemsCount()  || this.currentState.totalItemsCount;
 
     return this.completeParams(params).then((res) => {
 
       params =  {...params,... res}
-      const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint);
+      const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint, this.id);
       const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
-      console.log('>>>did blueprint actually change?', blueprintChanged);
+      console.log('>>>did blueprint actually change for: ',  this.id,'?', blueprintChanged);
       this.updateLastParamsIfNeeded(params, changedParams);
       this.api.onBlueprintReady({blueprint, blueprintChanged});
       return this.cache[params] = this.existingBlueprint = blueprint;
@@ -39,7 +41,7 @@ class BlueprintsManager {
     let items;
     if (currentItemLength < this.currentState.totalItemsCount) {
       // this.gettingMoreItems = true;
-      items = this.api.fetchMoreItems(currentItemLength);
+      items = await this.api.fetchMoreItems(currentItemLength);
       if (items) {
         this.createBlueprint({items})
         //work with the new items...
@@ -149,6 +151,3 @@ class BlueprintsManager {
   }
 
 }
-
-const blueprintsManager = new BlueprintsManager();
-export default blueprintsManager;

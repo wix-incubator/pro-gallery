@@ -15,9 +15,8 @@ import s from './SideBar.module.scss';
 import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pro-gallery';
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
-import {blueprintsManager} from 'pro-gallery'
 
-function SideBar({ items }) {
+function SideBar({ items , blueprintsManager}) {
   const {
     // preset,
     // setPreset,

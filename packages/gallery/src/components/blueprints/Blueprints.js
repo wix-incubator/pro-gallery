@@ -11,7 +11,7 @@ import defaultStyles from '../../common/defaultStyles';
 
 class Blueprints {
 
-  createBlueprint(params, lastParams, existingBlueprint) {
+  createBlueprint(params, lastParams, existingBlueprint, blueprintManagerId) {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
@@ -27,10 +27,10 @@ class Blueprints {
     const changedParams = {itemsChanged , stylesChanged , containerChanged}
 
     if (changed || !existingBlueprint) {
-      if (!existingBlueprint){
+      if (!existingBlueprint) {
         existingBlueprint = {};
       }
-      console.count('>>>>>>>>>>>> Actually calculating a structure')
+      console.count('>>>>>>>>>>>> Actually calculating a structure for ' + blueprintManagerId)
       console.log('>>>>>>>>>', {itemsChanged , stylesChanged , containerChanged})
       const structure = this.createStructure({formattedContainer: formattedContainer || existingBlueprint.container, formattedItems: formattedItems || existingBlueprint.items, formattedStyles: formattedStyles || existingBlueprint.styles}, changed);
 
@@ -269,7 +269,7 @@ class Blueprints {
       );
 
   }
-  return {formattedContainer,changed}
+  return {formattedContainer, changed}
 }
 
 
