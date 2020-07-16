@@ -1,3 +1,9 @@
+## [v2.0.21](https://pro-gallery-2-0-21.surge.sh) (16/07/2020)
+ 
+ -  blueprint manager is no longer a singleton
+ - reverted "changed pro-gallery/lib to be only ESM."
+
+---
 ## [v2.0.20](https://pro-gallery-2-0-20.surge.sh) (15/07/2020)
  
 #### GALLERY
