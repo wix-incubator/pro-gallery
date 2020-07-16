@@ -18,8 +18,8 @@ class VideoScrollHelperWrapper {
             };
             import( /* webpackChunkName: "videoScrollHelper" */ './videoScrollHelper.js').then(VideoScrollHelper => {
               Object.assign(this, new VideoScrollHelper.default(videoScrollHelperConfig));
-              debugger;
               this.updateGalleryStructure(galleryStructureData);
+              this.initializePlayState();
             }).catch((e) => {
               console.error('Failed to load videoScrollHelper. error: ' + e)
             })
