@@ -133,18 +133,6 @@ export class GalleryContainer extends React.Component {
     return visibleItems;
   }
 
-  // async initVideoScrollHelper() {
-  //   try {
-  //     const videoScrollHelperConfig = {
-  //       setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
-  //     };
-  //     const VideoScrollHelper = await import('../../helpers/videoScrollHelper.js');
-  //     this.videoScrollHelper = new VideoScrollHelper.default(videoScrollHelperConfig);
-  //   } catch (e) {
-  //     console.error('Failed to load videoScrollHelper. error: ' + e)
-  //   }
-  // }
- 
   initVideoScrollHelperIfNeeded(galleryStructureData) {
     if(this.items.some(item => (item.metaData && item.metaData.type === "video") || (item.metadata && item.metadata.type === "video"))) {
         const videoScrollHelperConfig = {

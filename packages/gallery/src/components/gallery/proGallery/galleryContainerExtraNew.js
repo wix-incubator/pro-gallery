@@ -29,6 +29,7 @@ export class GalleryContainer extends React.Component {
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
+    this.initVideoScrollHelperIfNeeded = this.initVideoScrollHelperIfNeeded.bind(this);
 
     const initialState = {
       pgScroll: 0,
@@ -260,24 +261,19 @@ export class GalleryContainer extends React.Component {
         styleParams: styles,
         allowPreloading,
       });
+
+      const scrollHelperNewGalleryStructure = {
+        galleryStructure: this.galleryStructure,
+        scrollBase: container.scrollBase,
+        videoPlay: styles.videoPlay,
+        itemClick: styles.itemClick,
+        oneRow: styles.oneRow,
+        cb: this.setPlayingIdxState,
+      }
       if(this.videoScrollHelper) {
-        this.videoScrollHelper.updateGalleryStructure({
-          galleryStructure: this.galleryStructure,
-          scrollBase: container.scrollBase,
-          videoPlay: styles.videoPlay,
-          itemClick: styles.itemClick,
-          oneRow: styles.oneRow,
-          cb: this.setPlayingIdxState,
-        })}
+        this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure)}
       else {
-        this.initVideoScrollHelperIfNeeded({
-          galleryStructure: this.galleryStructure,
-          scrollBase: container.scrollBase,
-          videoPlay: styles.videoPlay,
-          itemClick: styles.itemClick,
-          oneRow: styles.oneRow,
-          cb: this.setPlayingIdxState,
-        })
+        this.initVideoScrollHelperIfNeeded(scrollHelperNewGalleryStructure)
       }
       const layoutParams = {
         items: items,
