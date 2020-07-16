@@ -1,3 +1,9 @@
+## [v2.0.22](https://pro-gallery-2-0-22.surge.sh) (16/07/2020)
+ 
+#### GALLERY
+ -  export blueprints in the lib
+ 
+---
 ## [v2.0.21](https://pro-gallery-2-0-21.surge.sh) (16/07/2020)
  
  -  blueprint manager is no longer a singleton
