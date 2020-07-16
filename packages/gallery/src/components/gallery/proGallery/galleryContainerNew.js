@@ -741,7 +741,7 @@ export class GalleryContainer extends React.Component {
   }
 
   getScrollCssIfNeeded({ domId, items, styleParams, allowPreloading }) {
-    const shouldUseScrollCss = !isSEOMode();
+    const shouldUseScrollCss = !isSEOMode() && this.state.gotFirstScrollEvent;
     let scrollCss = [];
     if (shouldUseScrollCss) {
       scrollCss = cssScrollHelper.calcScrollCss({

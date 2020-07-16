@@ -239,11 +239,11 @@ export class GalleryContainer extends React.Component {
         sharpParams: styles.sharpParams,
         resizeMediaUrl: resizeMediaUrl,
       });
-      
+
       // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
       const allowPreloading =
       isEditMode();
-      
+
       this.scrollCss = this.getScrollCssIfNeeded({
         domId: domId,
         items: this.galleryStructure.galleryItems,
@@ -408,7 +408,7 @@ export class GalleryContainer extends React.Component {
   }
 
   getScrollCssIfNeeded({ domId, items, styleParams, allowPreloading }) {
-    const shouldUseScrollCss = !isSEOMode();
+    const shouldUseScrollCss = !isSEOMode() && this.state.gotFirstScrollEvent;
     let scrollCss = [];
     if (shouldUseScrollCss) {
       scrollCss = cssScrollHelper.calcScrollCss({
