@@ -138,7 +138,7 @@ export class GalleryContainer extends React.Component {
         const videoScrollHelperConfig = {
           setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
         };
-        import('../../helpers/videoScrollHelper.js').then(VideoScrollHelper => {
+        import( /* webpackChunkName: "videoScrollHelper" */ '../../helpers/videoScrollHelper.js').then(VideoScrollHelper => {
           this.videoScrollHelper = new VideoScrollHelper.default(videoScrollHelperConfig);
           this.videoScrollHelper.updateGalleryStructure(galleryStructureData);
         }).catch((e) => {

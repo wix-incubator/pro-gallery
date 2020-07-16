@@ -26,7 +26,7 @@ import {
 } from './itemViewStyleProvider';
 import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations.js';
 
-const VideoItem = lazy(() => import('./videos/videoItem'))
+const VideoItem = lazy(() => import(/* webpackChunkName: "videoItem" */ './videos/videoItem'))
 
 class ItemView extends GalleryComponent {
   constructor(props) {
