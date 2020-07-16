@@ -19,21 +19,22 @@ export default class BlueprintsManager {
     this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
   }
 
-  createBlueprint(params) {
+  async createBlueprint(params) {
     console.count('>>>>>>>>>>requestingBlueprint from ' + this.id); //TODO - remove when done :D
 
     this.currentState.totalItemsCount = params.totalItemsCount || this.api.getTotalItemsCount && this.api.getTotalItemsCount()  || this.currentState.totalItemsCount;
 
-    return this.completeParams(params).then((res) => {
+    params =  {...params,... await this.completeParams(params)}
 
-      params =  {...params,... res}
-      const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint, this.id);
-      const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
-      console.log('>>>did blueprint actually change for: ',  this.id,'?', blueprintChanged);
-      this.updateLastParamsIfNeeded(params, changedParams);
-      this.api.onBlueprintReady({blueprint, blueprintChanged});
-      return this.cache[params] = this.existingBlueprint = blueprint;
-    })
+    const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint, this.id);
+
+    const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
+    console.log('>>>did blueprint actually change for: ',  this.id,'?', blueprintChanged);
+
+    this.updateLastParamsIfNeeded(params, changedParams);
+    
+    this.api.onBlueprintReady({blueprint, blueprintChanged});
+    return this.cache[params] = this.existingBlueprint = blueprint;
 
   }
 
