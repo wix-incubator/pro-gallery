@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import React from 'react';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -25,8 +25,8 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations.js';
+import VideoItemWrapper from './videos/videoItemWrapper';
 
-const VideoItem = lazy(() => import(/* webpackChunkName: "videoItem" */ './videos/videoItem'))
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -365,8 +365,7 @@ class ItemView extends GalleryComponent {
 
   getVideoItem(imageDimensions, itemHover) {
     return (
-      <Suspense fallback={[this.getImageItem(imageDimensions), itemHover]}>
-        <VideoItem
+        <VideoItemWrapper
           {...this.props}
           playing={this.props.idx === this.props.playingVideoIdx}
           key={'video' + this.props.idx}
@@ -380,7 +379,6 @@ class ItemView extends GalleryComponent {
             handleItemMouseUp: this.handleItemMouseUp,
           }}
         />
-      </Suspense>
     );
   }
 

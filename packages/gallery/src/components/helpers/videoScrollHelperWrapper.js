@@ -3,7 +3,6 @@ import { isEditMode } from '../../common/window/viewModeWrapper';
 
 class VideoScrollHelperWrapper {
     constructor(setPlayingIdxState) {
-        this.videoScrollHelper = null;
         this.setPlayingIdxState = setPlayingIdxState;
         this.handleEvent = () => {};
         this.trigger =  {SCROLL: () => {}, INIT_SCROLL: () => {}};
@@ -31,7 +30,6 @@ class VideoScrollHelperWrapper {
             this.initVideoScrollHelperIfNeeded(scrollHelperNewGalleryStructure, items)
         }
     }
-
 
 }
 
