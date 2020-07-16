@@ -15,6 +15,7 @@ import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../commo
 import EVENTS from '../../../common/constants/events';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import checkNewGalleryProps from '../../helpers/isNew';
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js'
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -34,7 +35,6 @@ export class GalleryContainer extends React.Component {
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
-    this.initVideoScrollHelperIfNeeded = this.initVideoScrollHelperIfNeeded.bind(this);
 
     const initialState = {
       pgScroll: 0,
@@ -48,6 +48,7 @@ export class GalleryContainer extends React.Component {
     };
 
     this.state = initialState;
+    this.videoScrollHelper = new VideoScrollHelperWrapper(this.setPlayingIdxState);
 
     this.items = [];
     this.itemsDimensions = {};
@@ -133,19 +134,6 @@ export class GalleryContainer extends React.Component {
     return visibleItems;
   }
 
-  initVideoScrollHelperIfNeeded(galleryStructureData) {
-    if(this.items.some(item => (item.metaData && item.metaData.type === "video") || (item.metadata && item.metadata.type === "video"))) {
-        const videoScrollHelperConfig = {
-          setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
-        };
-        import( /* webpackChunkName: "videoScrollHelper" */ '../../helpers/videoScrollHelper.js').then(VideoScrollHelper => {
-          this.videoScrollHelper = new VideoScrollHelper.default(videoScrollHelperConfig);
-          this.videoScrollHelper.updateGalleryStructure(galleryStructureData);
-        }).catch((e) => {
-          console.error('Failed to load videoScrollHelper. error: ' + e)
-        })
-    }
-  }
   
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
@@ -153,7 +141,7 @@ export class GalleryContainer extends React.Component {
     this.handleNewGalleryStructure();
     this.eventsListener(EVENTS.APP_LOADED, {});
     this.getMoreItemsIfNeeded(0);
-    this.videoScrollHelper && this.videoScrollHelper.initializePlayState();
+    this.videoScrollHelper.initializePlayState();
 
     try {
       if (typeof window.CustomEvent === 'function') {
@@ -351,12 +339,10 @@ export class GalleryContainer extends React.Component {
   }
 
   handleNavigation(isInDisplay) {
-    if(this.videoScrollHelper) {
-      if (isInDisplay) {
-        this.videoScrollHelper.trigger.INIT_SCROLL();
-      } else {
-        this.videoScrollHelper.stop();
-      }
+    if (isInDisplay) {
+      this.videoScrollHelper.trigger.INIT_SCROLL();
+    } else {
+      this.videoScrollHelper.stop();
     }
   }
 
@@ -423,13 +409,13 @@ export class GalleryContainer extends React.Component {
       sharpParams: styles.sharpParams,
       resizeMediaUrl: this.props.resizeMediaUrl,
     });
-    this.initVideoScrollHelperIfNeeded({
+    this.videoScorllHelper.updateGalleryStructure({
       galleryStructure: this.galleryStructure,
       scrollBase: container.scrollBase,
       videoPlay: styles.videoPlay,
       itemClick: styles.itemClick,
       oneRow: styles.oneRow,
-    });
+    }, true, this.items);
     const allowPreloading = isEditMode() || gotFirstScrollEvent;
     this.scrollCss = this.getScrollCssIfNeeded({
       domId: this.props.domId,
@@ -599,14 +585,8 @@ export class GalleryContainer extends React.Component {
         oneRow: _styles.oneRow,
         cb: this.setPlayingIdxState,
       }
-      if(this.videoScrollHelper){
-        this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure);
-      } else {
-        if(isNew.addedItems || isNew.items) {
-          this.initVideoScrollHelperIfNeeded(scrollHelperNewGalleryStructure)
-        }
-      }
-      
+
+      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, isNew.addedItems || isNew.items, this.items);
 
       if (isNew.items) {
         this.loadItemsDimensionsIfNeeded();
@@ -758,7 +738,7 @@ export class GalleryContainer extends React.Component {
   }
 
   onGalleryScroll({ top, left }) {
-    this.videoScrollHelper && this.videoScrollHelper.trigger.SCROLL({
+    this.videoScrollHelper.trigger.SCROLL({
       top,
       left,
     });
@@ -859,7 +839,7 @@ export class GalleryContainer extends React.Component {
   }
 
   eventsListener(eventName, eventData, event) {
-    this.videoScrollHelper && this.videoScrollHelper.handleEvent({
+    this.videoScrollHelper.handleEvent({
       eventName,
       eventData,
     });
