@@ -1,3 +1,9 @@
+## [v2.0.23](https://pro-gallery-2-0-23.surge.sh) (16/07/2020)
+ 
+#### GALLERY
+ -  SSR improve: item dimension
+
+---
 ## [v2.0.22](https://pro-gallery-2-0-22.surge.sh) (16/07/2020)
  
 #### GALLERY
