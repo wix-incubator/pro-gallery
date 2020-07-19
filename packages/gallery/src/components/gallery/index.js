@@ -5,7 +5,7 @@ import dimensionsHelper from '../helpers/dimensionsHelper';
 import defaultStyles from '../../common/defaultStyles';
 import LAZY_LOAD from '../../common/constants/lazyLoad';
 import utils from '../../common/utils';
-import { addPresetStyles } from '../gallery/presets/presets';
+import { addPresetStyles } from './presets/presets';
 
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery from './leanGallery/leanGallery';
