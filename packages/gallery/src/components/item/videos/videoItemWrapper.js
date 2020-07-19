@@ -84,7 +84,7 @@ class VideoItemWrapper extends ImageItem {
       return [videoPlaceholder, hover]
     }
 
-    return <Suspense fallback={videoPlaceholder}>
+    return <Suspense fallback={[videoPlaceholder, hover]}>
             <VideoItem {...this.props} videoControls={showVideoControls && videoControls}/>
         </Suspense> 
   }

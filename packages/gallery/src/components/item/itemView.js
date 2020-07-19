@@ -438,7 +438,6 @@ class ItemView extends GalleryComponent {
           itemInner = <div />;
         break;
       case 'video':
-        
           itemInner = this.getVideoItem(imageDimensions, itemHover);
         break;
       case 'text':
