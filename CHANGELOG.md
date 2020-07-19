@@ -1,3 +1,9 @@
+## [v2.0.26](https://pro-gallery-2-0-26.surge.sh) (19/07/2020)
+ 
+#### GALLERY
+ -  leanGallery: fix image size in ssr
+
+---
 ## [v2.0.25](https://pro-gallery-2-0-25.surge.sh) (19/07/2020)
  
 #### GALLERY

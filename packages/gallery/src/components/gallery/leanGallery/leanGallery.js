@@ -101,10 +101,7 @@ export default class LeanGallery extends React.Component {
       itemSize = gallerySize;
     }
 
-    const minmaxFix = 0.75; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
-    itemSize *= minmaxFix;
-
-    return Math.min(itemSize, container.width);
+    return container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
   }
 
   createGalleryStyle() {
@@ -165,7 +162,7 @@ export default class LeanGallery extends React.Component {
       return this.state.itemStyle
     } else if (!(this.state.itemStyle.width > 0)) {
       return {
-        width: 'auto',
+        width: '100%',
         height: 'auto',
       }
     }
@@ -212,7 +209,8 @@ export default class LeanGallery extends React.Component {
   }
 
   createContainerStyles(clickable) {
-    let { height = null } = this.state.itemStyle
+    let { height = null } = this.state.itemStyle;
+
     return {
       ...this.createItemBorder(), 
       ...(height ? {height: this.calcContainerHeight()} : {height: 'auto', textAlign: 'center'}), 
@@ -265,11 +263,8 @@ export default class LeanGallery extends React.Component {
 
   render() {
     const { eventsListener, props } = this;
-
     const { customInfoRenderer, items } = props;
-
     const styles = this.fixStylesIfNeeded(props.styles);
-
     const { itemClick } = styles;
 
     return (
