@@ -47,7 +47,7 @@ export const get = (obj, path, defaultValue) => {
   return result === undefined || result === obj ? defaultValue : result;
 };
 
-export const isFunction = something => typeof something === 'function';
+export const isFunction = (something) => typeof something === 'function';
 
 export const isEqual = (obj1, obj2) => {
   try {
@@ -57,6 +57,6 @@ export const isEqual = (obj1, obj2) => {
   }
 };
 
-export const isNumber = n => {
+export const isNumber = (n) => {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };

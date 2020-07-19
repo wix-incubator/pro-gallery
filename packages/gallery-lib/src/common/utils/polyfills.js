@@ -1,5 +1,5 @@
 if (!Object.entries) {
-  Object.entries = function(obj) {
+  Object.entries = function (obj) {
     const ownProps = Object.keys(obj);
     let i = ownProps.length;
     const resArray = new Array(i); // preallocate the Array
@@ -11,5 +11,5 @@ if (!Object.entries) {
 }
 
 if (!Object.values) {
-  Object.values = obj => Object.keys(obj).map(e => obj[e]);
+  Object.values = (obj) => Object.keys(obj).map((e) => obj[e]);
 }

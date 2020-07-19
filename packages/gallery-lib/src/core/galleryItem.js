@@ -18,12 +18,12 @@ class GalleryItem {
     this.resizeMediaUrl = config.resizeMediaUrl;
 
     if (config.dto && config.dto.dto) {
-      config.dto = config.dto.dto; //defence patch due to mis-use of item-core
+      config.dto = config.dto.dto; // defence patch due to mis-use of item-core
       if (utils.isDev()) {
         console.warn('Item core is created with already existing item core');
       }
     }
-    this.dto = {...config.dto};
+    this.dto = { ...config.dto };
 
     if (config.scheme) {
       this.processScheme(config.scheme);
@@ -36,12 +36,12 @@ class GalleryItem {
     if (this.dto) {
       const itemMetadata = this.dto.metaData || this.dto.metadata;
       if (itemMetadata) {
-        //metadata is encoded encoded, parsed if needed
+        // metadata is encoded encoded, parsed if needed
         this.dto.metaData = utils.parseStringObject(itemMetadata);
       }
     }
 
-    this.sharpParams = {...config.sharpParams};
+    this.sharpParams = { ...config.sharpParams };
     if (!this.sharpParams.quality) {
       this.sharpParams.quality = 90;
     }
@@ -142,7 +142,7 @@ class GalleryItem {
   }
 
   getHighestMp4Resolution(qualities) {
-    const mp4s = qualities.filter(video => video.formats[0] === 'mp4');
+    const mp4s = qualities.filter((video) => video.formats[0] === 'mp4');
     const { width, height } = mp4s.sort((a, b) => b.width - a.width)[0];
     return { width, height };
   }
@@ -181,7 +181,7 @@ class GalleryItem {
     if (this.isText) {
       return Object.assign(
         {},
-        ...Object.values(URL_TYPES).map(value => ({
+        ...Object.values(URL_TYPES).map((value) => ({
           [value]: () => '',
         })),
       );
@@ -224,7 +224,8 @@ class GalleryItem {
         focalPoint,
       );
 
-    urls[URL_TYPES.SEO] = () => urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, `.${this.fileType}`); //SEO needs the original file type (jpg or png, etc..) instead of .webp, replace does not mutate
+    urls[URL_TYPES.SEO] = () =>
+      urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, `.${this.fileType}`); // SEO needs the original file type (jpg or png, etc..) instead of .webp, replace does not mutate
 
     return urls;
   }
@@ -332,13 +333,14 @@ class GalleryItem {
     if (!this.urls.download_url) {
       this.urls.download_url = url;
       this.urls.download_url._img = this.urls.download_url.img;
-      this.urls.download_url.img = () => this.urls.download_url._img() + `?dn=${this.fileName}`;
+      this.urls.download_url.img = () =>
+        this.urls.download_url._img() + `?dn=${this.fileName}`;
     }
     return this.urls.download_url;
   }
 
   updateSharpParams() {
-    //override sharpParams with item sharpParams
+    // override sharpParams with item sharpParams
     if (
       this.dto.metaData &&
       this.dto.metaData.sharpParams &&
@@ -381,9 +383,8 @@ class GalleryItem {
     if (this.isText) {
       bg =
         this.metadata &&
-        (this.metadata.textStyle &&
-        this.metadata.textStyle.backgroundColor
-        || this.metadata.backgroundColor);
+        ((this.metadata.textStyle && this.metadata.textStyle.backgroundColor) ||
+          this.metadata.backgroundColor);
     } else {
       bg = 'none';
     }
@@ -402,7 +403,7 @@ class GalleryItem {
     this.metadata.focalPoint = value;
   }
 
-  //----------------------------------------------------------------//
+  // ----------------------------------------------------------------//
 
   get photoId() {
     return this.id;
@@ -435,7 +436,7 @@ class GalleryItem {
   }
 
   get url() {
-    //todo :change from mediaUrl
+    // todo :change from mediaUrl
     return (
       this.dto.file_url || this.dto.mediaUrl || this.dto.url || this.dto.src
     );
@@ -503,7 +504,10 @@ class GalleryItem {
 
   get type() {
     switch (
-      this._type || this.dto.type || this.metadata.type || this.dto.media_type
+      this._type ||
+      this.dto.type ||
+      this.metadata.type ||
+      this.dto.media_type
     ) {
       case 'dummy':
         return 'dummy';
@@ -522,7 +526,11 @@ class GalleryItem {
   }
 
   get isVideoPlaceholder() {
-      return !!(this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder)
+    return !!(
+      this.dto.isVideoPlaceholder ||
+      this.metadata.isVideoPlaceholder ||
+      this.dto.media_isVideoPlaceholder
+    );
   }
 
   get alt() {
@@ -776,7 +784,9 @@ class GalleryItem {
       this.metadata.isDemo ||
       this.dto.isDemo ||
       this.metadata.sourceName === 'public' ||
-      (this.metadata.tags && Array.isArray(this.metadata.tags) && this.metadata.tags.indexOf('_paid') >= 0)
+      (this.metadata.tags &&
+        Array.isArray(this.metadata.tags) &&
+        this.metadata.tags.indexOf('_paid') >= 0)
     );
   }
 
@@ -791,7 +801,6 @@ class GalleryItem {
   get isVideo() {
     return this.type === 'video';
   }
-
 
   get isVisible() {
     return true;

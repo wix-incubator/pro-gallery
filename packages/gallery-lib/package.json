@@ -24,11 +24,6 @@
     "lint": "yoshi lint",
     "posttest": "npm run lint"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,scss,less}": "yoshi lint"
   },

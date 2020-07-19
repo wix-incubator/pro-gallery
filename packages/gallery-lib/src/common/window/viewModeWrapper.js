@@ -51,7 +51,7 @@ class ViewModeWrapper {
   }
 
   isPrerenderMode() {
-    return this._viewMode === VIEW_MODE.PRERENDER
+    return this._viewMode === VIEW_MODE.PRERENDER;
   }
 
   isSEOMode() {
@@ -70,4 +70,15 @@ const isFormFactorDesktop = viewModeWrapper.isFormFactorDesktop;
 const isFormFactorTouch = viewModeWrapper.isFormFactorTouch;
 const isPrerenderMode = viewModeWrapper.isPrerenderMode;
 
-export { viewModeWrapper, isSiteMode, isEditMode, isPreviewMode, isSEOMode, isFormFactorMobile, isFormFactorTablet, isFormFactorDesktop, isFormFactorTouch, isPrerenderMode };
+export {
+  viewModeWrapper,
+  isSiteMode,
+  isEditMode,
+  isPreviewMode,
+  isSEOMode,
+  isFormFactorMobile,
+  isFormFactorTablet,
+  isFormFactorDesktop,
+  isFormFactorTouch,
+  isPrerenderMode,
+};
