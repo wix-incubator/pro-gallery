@@ -1,3 +1,12 @@
+## [v2.0.24](https://pro-gallery-2-0-24.surge.sh) (19/07/2020)
+ 
+#### GALLERY
+ -  export blueprints in the lib
+
+#### OTHER
+ - This reverts commit b6793154ae8079e0e1e9388340ed014d6296dd52.
+
+---
 ## [v2.0.23](https://pro-gallery-2-0-23.surge.sh) (16/07/2020)
  
 #### GALLERY
