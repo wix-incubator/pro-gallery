@@ -127,13 +127,23 @@ export default class ImageItem extends GalleryComponent {
           loading: "lazy",
           ...imageProps
         };
+        const preloadStyles = isPrerenderMode() ? {
+          width: '100%',
+          height: '100%',
+        } : {};
         switch (styleParams.imageLoadingMode) {
           case LOADING_MODE.BLUR:
+            const imageStyles = { 
+              ...restOfDimensions, 
+              backgroundSize: '0.3px', 
+              backgroundRepeat: 'repeat', 
+              transition: 'all 3s ease-in-out'
+            };
             preload = <img
               alt=''
               key={'image_preload_blur-' + id}
               src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
-              style={{ ...restOfDimensions, backgroundSize: '0.3px', backgroundRepeat: 'repeat', transition: 'all 3s ease-in-out' }}
+              style={{...imageStyles, ...preloadStyles}}
               {...preloadProps}
             />
             break;
@@ -142,7 +152,7 @@ export default class ImageItem extends GalleryComponent {
               alt=''
               key={'image_preload_main_color-' + id}
               src={createUrl(URL_SIZES.PIXEL, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
-              style={restOfDimensions}
+              style={{...restOfDimensions, ...preloadStyles}}
               {...preloadProps}
             />
             break;

@@ -8,7 +8,7 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import {blueprintsManager} from 'pro-gallery'
+import {BlueprintsManager} from 'pro-gallery'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 
 // import Loader from './loader';
@@ -20,6 +20,7 @@ const SideBar = React.lazy(() => import('../SideBar'));
 
 const pJson = require('../../../package.json');
 
+const blueprintsManager = new BlueprintsManager({id: 'playground'});
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
 
 const initialItems = {
@@ -33,7 +34,6 @@ const initialItems = {
 const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
-
   const {setDimensions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setDimensionsHeight, setDimensionsWidth, dimensions} = useGalleryContext(blueprintsManager);
   
   const {showSide} = gallerySettings;
@@ -229,6 +229,7 @@ export function App() {
         </div>
         {showSide && <Suspense fallback={<div>Loading...</div>}>
           <SideBar
+            blueprintsManager = {blueprintsManager}
             items={getItems()}
           />
         </Suspense>}

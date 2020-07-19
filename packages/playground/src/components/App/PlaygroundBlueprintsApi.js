@@ -23,18 +23,20 @@ export default class PlaygroundsBlueprintsApi {
   fetchMoreItems() {
     this.addItems();
   }
+
   fetchItems() {
     return this.getItems();
   }
+
   fetchStyles() {
     return this.getStyles();
   }
+
   fetchDimensions() {
     return this.getContainer();
   }
 
   onBlueprintReady({blueprint, blueprintChanged}) {
-
     this.onBlueprintReadyCallback(blueprint);
   }
 

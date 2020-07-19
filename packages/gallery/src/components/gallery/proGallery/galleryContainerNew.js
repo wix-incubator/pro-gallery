@@ -203,13 +203,10 @@ export class GalleryContainer extends React.Component {
     }
 
     if (hasPropsChanged) {
-
       reCreateGallery();
-
       if (!!nextProps.currentIdx && nextProps.currentIdx > 0) {
         this.scrollToItem(nextProps.currentIdx, false, true, 0);
       }
-
       if (this.props.isInDisplay !== nextProps.isInDisplay) {
         this.handleNavigation(nextProps.isInDisplay);
       }
