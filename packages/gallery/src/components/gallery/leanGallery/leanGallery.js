@@ -124,7 +124,7 @@ export default class LeanGallery extends React.Component {
   }
 
   createImageStyle(imageSize) {
-    const {width, height} = imageSize;
+    const { width = '100%', height = 'auto' } = imageSize;
     const { styles } = this.props;
     let borderStyle;
 
@@ -161,8 +161,13 @@ export default class LeanGallery extends React.Component {
 
   calcImageSize(image) {
     const { styles } = this.props;
-    if (styles.cubeType !== CROP_TYPES.FIT) {
+    if (this.state.itemStyle.width && styles.cubeType !== CROP_TYPES.FIT) {
       return this.state.itemStyle
+    } else if (!(this.state.itemStyle.width > 0)) {
+      return {
+        width: 'auto',
+        height: 'auto',
+      }
     }
 
     const {width, height} = this.state.itemStyle;
@@ -196,12 +201,22 @@ export default class LeanGallery extends React.Component {
     if (height === null) {
       const itemSize = this.calcItemSize();
       height = itemSize / cubeRatio;
+      return 'auto';
     }
 
     if (hasVerticalPlacement(titlePlacement)) {
       return height + textBoxHeight;
     } else {
       return height;
+    }
+  }
+
+  createContainerStyles(clickable) {
+    let { height = null } = this.state.itemStyle
+    return {
+      ...this.createItemBorder(), 
+      ...(height ? {height: this.calcContainerHeight()} : {height: 'auto', textAlign: 'center'}), 
+      cursor: clickable ? 'pointer' : 'default'
     }
   }
 
@@ -275,7 +290,7 @@ export default class LeanGallery extends React.Component {
           return (
             <a
               className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
-              style={{...this.createItemBorder(), height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
+              style={this.createContainerStyles(clickable)}
               ref={node => {
                 this.measureIfNeeded(node);
                 eventsListener(EVENTS.ITEM_CREATED, itemData);

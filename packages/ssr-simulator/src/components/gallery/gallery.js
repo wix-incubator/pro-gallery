@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProGallery } from 'pro-gallery';
-import { testItems } from './images';
+import { testImages } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
 import { GALLERY_CONSTS } from 'pro-gallery';
@@ -102,7 +102,7 @@ export default class Gallery extends React.PureComponent {
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
 
-    const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
+    const items = utils.mixAndSlice(testImages, 5, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
       // console.log({eventName, eventData});
