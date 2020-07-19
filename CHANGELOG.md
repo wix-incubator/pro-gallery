@@ -1,3 +1,30 @@
+## [v2.0.25](https://pro-gallery-2-0-25.surge.sh) (19/07/2020)
+ 
+#### GALLERY
+ -  add blueprints to lib
+ -  remove preset components
+ -  ssrSimulator: update number of testItems
+ -  improve (leanGallery): improve rendering of lean galleries in SSR
+
+---
+## [v2.0.24](https://pro-gallery-2-0-24.surge.sh) (19/07/2020)
+ 
+#### OTHER
+ - revert export blueprints in the lib.
+
+---
+## [v2.0.23](https://pro-gallery-2-0-23.surge.sh) (16/07/2020)
+ 
+#### GALLERY
+ -  SSR improve: item dimension
+
+---
+## [v2.0.22](https://pro-gallery-2-0-22.surge.sh) (16/07/2020)
+ 
+#### GALLERY
+ -  export blueprints in the lib
+ 
+---
 ## [v2.0.21](https://pro-gallery-2-0-21.surge.sh) (16/07/2020)
  
  -  blueprint manager is no longer a singleton
