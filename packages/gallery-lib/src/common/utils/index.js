@@ -78,11 +78,11 @@ class Utils {
       }
 
       _location.search
-        //.replace ( "?", "" )
+        // .replace ( "?", "" )
         // this is better, there might be a question mark inside
         .substr(1)
         .split('&')
-        .forEach(item => {
+        .forEach((item) => {
           tmp = item.split('=');
           if (tmp[0] === val) {
             result = decodeURIComponent(tmp[1]);
@@ -90,13 +90,13 @@ class Utils {
         });
 
       if (!result) {
-        //if the param was not found in the search, try decoding the path
+        // if the param was not found in the search, try decoding the path
         const query = decodeURIComponent(_location.pathname).split('?')[1];
         if (!query) {
           return '';
         }
 
-        query.split('&').forEach(item => {
+        query.split('&').forEach((item) => {
           tmp = item.split('=');
           if (tmp[0] === val) {
             result = decodeURIComponent(tmp[1]);
@@ -143,7 +143,7 @@ class Utils {
           .replace(/(?:^|:|,)(?:\s*\[)+/g, ''),
       )
     ) {
-      //this is a json
+      // this is a json
       try {
         return JSON.parse(stripedObj);
       } catch (e) {
@@ -174,11 +174,7 @@ class Utils {
       if (isMobileViewer) {
         return true;
       } else if (deviceType) {
-        return (
-          String(deviceType)
-            .toLowerCase()
-            .indexOf('mobile') >= 0
-        );
+        return String(deviceType).toLowerCase().indexOf('mobile') >= 0;
       } else if (formFactorMobile) {
         return formFactorMobile;
       } else {
@@ -193,7 +189,7 @@ class Utils {
     try {
       const _isUserAgentMobile = () => {
         let check = false;
-        (function(a) {
+        (function (a) {
           if (
             /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|pixel|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
               a,
@@ -282,7 +278,7 @@ class Utils {
     });
   }
 
-  //TODO : Replace with isPrerender mode
+  // TODO : Replace with isPrerender mode
   isSSR() {
     return typeof global.window === 'undefined';
   }
@@ -297,7 +293,7 @@ class Utils {
   }
 
   generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       const r = Math.floor(Math.random() * 16) || 0;
       return c === 'x' ? r.toString(16) : c;
     });
@@ -351,7 +347,7 @@ class Utils {
 
   safeLocalStorage() {
     try {
-      return localStorage ? localStorage : window; //TrackJS errors, function returning null
+      return localStorage ? localStorage : window; // TrackJS errors, function returning null
     } catch (e) {
       return window;
     }
@@ -412,7 +408,7 @@ class Utils {
     if (elementIdx >= 0 && this.isOOI()) {
       return 0;
     }
-    return elementIdx || -1; //no tabIndex (tab will not focus on this item)
+    return elementIdx || -1; // no tabIndex (tab will not focus on this item)
   }
 
   setStateAndLog(that, caller, state, callback) {
@@ -439,7 +435,7 @@ class Utils {
   }
 
   printableObjectsDiff(obj1, obj2, prefix = '') {
-    const _toString = v => {
+    const _toString = (v) => {
       if (v === '') {
         v = "''";
       } else if (this.isUndefined(v)) {
@@ -534,7 +530,7 @@ class Utils {
   }
 
   getMobileEnabledClick(action) {
-    //todo: bring back this line before pushing to master
+    // todo: bring back this line before pushing to master
     return this.isMobile() ? { onTouchEnd: action } : { onClick: action };
     // return {onClick: action};
   }
@@ -548,7 +544,7 @@ class Utils {
         this._cache.params[name] = top.location.search
           .replace('?', '')
           .split('&')
-          .map(ele => {
+          .map((ele) => {
             const arr = ele.split('=');
             return arr[0] === name ? arr[1] || '' : '';
           })
@@ -556,7 +552,7 @@ class Utils {
       } catch (e) {
         this._cache.params[name] = false;
         // console.log('caught cross origin error');
-        //comment to avoid 'block is empty' from linter
+        // comment to avoid 'block is empty' from linter
       }
     }
     return this._cache.params[name];
@@ -564,14 +560,14 @@ class Utils {
 
   scrollTo(element, to, duration, isHorizontal, callback) {
     if (this.isMobile()) {
-      duration = 0; //do not animate scroll on mobile (looks jumpy and buggy)
+      duration = 0; // do not animate scroll on mobile (looks jumpy and buggy)
     }
 
     const easeInOutQuad = (currentTime, start, change, _duration) => {
-      //t = current time
-      //b = start value
-      //c = change in value
-      //d = _duration
+      // t = current time
+      // b = start value
+      // c = change in value
+      // d = _duration
       if (_duration === 0) {
         return change + start;
       }

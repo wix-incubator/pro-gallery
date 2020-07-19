@@ -1,6 +1,6 @@
 import GALLERY_CONSTS from './constants';
 
-//this is the one place for the default styles !!!
+// this is the one place for the default styles !!!
 
 export default {
   isRTL: false,
@@ -11,7 +11,7 @@ export default {
   groupSize: 3,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
   rotatingGroupTypes: '',
-  collageDensity: 0.8, //80, // should be 0.8 after
+  collageDensity: 0.8, // 80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
   cubeRatio: 1,
@@ -80,7 +80,7 @@ export default {
   // addToCartFontExpand: font-8
   // addToCartColorExpand: color-1
   addToCartBorderWidth: 1,
-  //addToCartBorderColor: color-5,
+  // addToCartBorderColor: color-5,
   addToCartButtonText: '',
   slideshowInfoSize: 200,
   playButtonForAutoSlideShow: false,
@@ -88,8 +88,8 @@ export default {
   hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
   thumbnailSize: 120,
   magicLayoutSeed: 1,
-  //itemOpacity:'color-5', startWithOpacity: 0.60,
-  //itemIconColorSlideshow: 'color-5'
+  // itemOpacity:'color-5', startWithOpacity: 0.60,
+  // itemIconColorSlideshow: 'color-5'
   // itemIconColor: color-1
   // arrowsColor: 'color-1'
   imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
@@ -112,7 +112,7 @@ export default {
   textBoxBorderRadius: 0,
   textBoxBorderWidth: 0,
   loadMoreButtonText: '',
-  //loadMoreButtonFont: font_8
+  // loadMoreButtonFont: font_8
   // loadMoreButtonFontColor: color-5
   // loadMoreButtonColor: startWithOpacity: '1', startWithColor: 'color-1'
   loadMoreButtonBorderWidth: 1,

@@ -22,7 +22,8 @@ import loadingWithColorMode from './loadingWithColorMode';
 import loadMoreAmount from './loadMoreAmount';
 import mobileSwipeAnimations from './mobileSwipeAnimations';
 import overlayAnimations from './overlayAnimations';
-import placements, { hasAbovePlacement,
+import placements, {
+  hasAbovePlacement,
   hasBelowPlacement,
   hasHoverPlacement,
   hasRightPlacement,
@@ -35,8 +36,9 @@ import placements, { hasAbovePlacement,
   isRightPlacement,
   isLeftPlacement,
   isVerticalPlacement,
-  isHorizontalPlacement } from './placements';
-import resizeMethods from "./resizeMethods";
+  isHorizontalPlacement,
+} from './placements';
+import resizeMethods from './resizeMethods';
 import scrollAnimations from './scrollAnimations';
 import scrollDirection from './scrollDirection';
 import socialNetworks from './socialNetworks';
@@ -99,5 +101,5 @@ export default {
   videoPlay,
   viewMode,
   watermarkDock,
-  imagePlacementAnimations
+  imagePlacementAnimations,
 };
