@@ -66,6 +66,11 @@
     "preset": "jest-yoshi-preset"
   },
   "eslintConfig": {
-    "extends": "yoshi"
+    "extends": "yoshi",
+    "rules": {
+      "import/no-unresolved": "off",
+      "default-case": "off",
+      "prettier/prettier": "off"
+    }
   }
 }
