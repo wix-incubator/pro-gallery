@@ -1,0 +1,11 @@
+{
+    "appName": "pro-gallery-lib",
+    "notifications": {
+      "slack_channels": [
+        "fedops-urgent-default"
+      ]
+    },
+    "deploy_annotations": [
+      "pro-gallery-lib"
+    ]
+  }
