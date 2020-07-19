@@ -1,0 +1,6 @@
+const EXPAND_INFO_POSITIONS = {
+  SIDE: 'SIDE',
+  BOTTOM: 'BOTTOM'
+};
+
+export default EXPAND_INFO_POSITIONS;

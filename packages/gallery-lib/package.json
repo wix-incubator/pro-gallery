@@ -1,0 +1,75 @@
+{
+  "name": "pro-gallery-lib",
+  "version": "1.0.0",
+  "publishScoped": false,
+  "private": false,
+  "author": {
+    "name": "Rita Bazak",
+    "email": "ritab@wix.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/pro-gallery.git"
+  },
+  "sideEffects": false,
+  "main": "dist/src/index.js",
+  "module": "dist/es/src/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "yoshi start",
+    "build": "yoshi build",
+    "test": "yoshi test",
+    "lint": "yoshi lint",
+    "posttest": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,scss,less}": "yoshi lint"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^9.3.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "husky": "^4.2.1",
+    "jest-yoshi-preset": "^4.1.0",
+    "lint-staged": "^10.0.7",
+    "puppeteer": "^1.1.0",
+    "velocity": "~0.7.0",
+    "yoshi": "^4.1.0",
+    "yoshi-style-dependencies": "^4.1.0"
+  },
+  "dependencies": {
+    "pro-layouts": "2.0.4",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-i18next": "^11.3.2",
+    "yoshi-template-intro": "^4.1.0"
+  },
+  "yoshi": {
+    "entry": {
+      "main": "./index"
+    },
+    "servers": {
+      "cdn": {
+        "port": 9995
+      }
+    },
+    "externals": {
+      "react": "React",
+      "react-dom": "ReactDOM"
+    },
+    "exports": "pro-gallery-lib"
+  },
+  "jest": {
+    "preset": "jest-yoshi-preset"
+  },
+  "eslintConfig": {
+    "extends": "yoshi"
+  }
+}

@@ -19,6 +19,7 @@ const BUMP_TYPES = {
 const PROJECTS = {
     MAIN: 'main',
     GALLERY: 'gallery',
+    GALLERY_LIB: 'gallery-lib',
     LAYOUTS: 'layouts',
     FULLSCREEN: 'fullscreen',
     PLAYGROUND: 'playground',
@@ -199,7 +200,7 @@ function run() {
     }
     writeToChangelog(formatForChangelog(newVersion, latestCommits));
     writeVersion(newVersion);
-    
+
     log(`Wrote changes to ${CHANGELOG}`);
 
     editChangelogAndUpdateVersion(bump);
