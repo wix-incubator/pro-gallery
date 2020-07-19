@@ -21,7 +21,8 @@
     "start": "yoshi start",
     "build": "yoshi build",
     "test": "yoshi test",
-    "lint": "yoshi lint",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint:fix": "npm run lint -- --fix",
     "posttest": "npm run lint"
   },
   "lint-staged": {
