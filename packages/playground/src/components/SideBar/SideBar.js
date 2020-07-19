@@ -213,6 +213,9 @@ function SideBar({ items , blueprintsManager}) {
           </Collapse.Panel>
           <Collapse.Panel header="Lean Gallery" key="lean">
           <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form.Item label="Force Lean Gallery" labelAlign="left">
+                <Switch checked={!!styleParams.forceLeanGallery} onChange={e => setStyleParams('forceLeanGallery', !!e )} />
+              </Form.Item>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
                 <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e )} />
               </Form.Item>

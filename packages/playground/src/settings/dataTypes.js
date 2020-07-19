@@ -10,6 +10,9 @@ export default {
   allowLeanGallery: {
     type: INPUT_TYPES.BOOLEAN,
   },
+  forceLeanGallery: {
+    type: INPUT_TYPES.BOOLEAN,
+  },
   isStore: {
     type: INPUT_TYPES.BOOLEAN,
     alert: 'MOCK PARAM',

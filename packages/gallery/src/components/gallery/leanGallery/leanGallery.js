@@ -66,7 +66,9 @@ export default class LeanGallery extends React.Component {
     
     const itemSize = this.calcItemSize();
     const width = itemStyle.width || itemSize;
-    const height = itemStyle.height || (itemSize / cubeRatio);
+    // const height = itemStyle.height || (itemSize / cubeRatio);
+
+    const height = width / get(item, 'width') * get(item, 'height');
 
     const focalPoint = false;
 
@@ -119,7 +121,8 @@ export default class LeanGallery extends React.Component {
     
     return {
       gridTemplateColumns,
-      gridGap: `${imageMargin}px`
+      columnGap: `${imageMargin}px`,
+      gridAutoRows: '1px' 
     };
   }
 
@@ -154,7 +157,7 @@ export default class LeanGallery extends React.Component {
         borderStyle: 'solid',
         borderWidth: styles.itemBorderWidth,
         borderColor: styles.itemBorderColor.value,
-        borderRadius: styles.itemBorderRadius
+        borderRadius: styles.itemBorderRadius,
       };
     }
   }
@@ -170,7 +173,10 @@ export default class LeanGallery extends React.Component {
     const imageHeight = get(image, 'height');
     const imageRatio = imageWidth / imageHeight;
     const containerRatio = width / height;
-
+    return {
+      width: imageWidth,
+      height: imageHeight,
+    };
     if (imageRatio > containerRatio) {
       //image is wider than container
       const _height = width / imageRatio;
@@ -189,13 +195,14 @@ export default class LeanGallery extends React.Component {
     }
   }
 
-  calcContainerHeight() {
+  calcContainerHeight(item) {
     let { height = null } = this.state.itemStyle
     const { textBoxHeight = 0, titlePlacement, cubeRatio } = this.props.styles;
 
     if (height === null) {
+      const ratio = get(item, 'width') / get(item, 'height');
       const itemSize = this.calcItemSize();
-      height = itemSize / cubeRatio;
+      height = itemSize / ratio;
     }
 
     if (hasVerticalPlacement(titlePlacement)) {
@@ -231,7 +238,7 @@ export default class LeanGallery extends React.Component {
       this.setState({
         itemStyle: {
           width: this.clientWidth,
-          height: Math.round(this.clientWidth / styles.cubeRatio),
+          // height: this.clientHeight//Math.round(this.clientWidth / styles.cubeRatio),
         }
       });
     }
@@ -255,7 +262,7 @@ export default class LeanGallery extends React.Component {
 
     const styles = this.fixStylesIfNeeded(props.styles);
 
-    const { itemClick } = styles;
+    const { itemClick, imageMargin } = styles;
 
     return (
       <div
@@ -272,10 +279,13 @@ export default class LeanGallery extends React.Component {
           const texts = placement => (typeof customInfoRenderer === 'function') && (styles.titlePlacement === placement) && (
             <div className={`gallery-item-common-info gallery-item-${placement === INFO_PLACEMENT.SHOW_ABOVE ? `top` : `bottom`}-info`} style={getInnerInfoStyle(placement, styles)} >{customInfoRenderer(itemProps, placement)}</div>
           );
+          const containerStyle={...this.createItemBorder(), marginBottom: `${imageMargin}px`, gridRowEnd: `span ${Math.round(this.calcContainerHeight(item))}`, cursor: clickable ? 'pointer' : 'default'};
+          console.log({containerStyle})
+          
           return (
             <a
               className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
-              style={{...this.createItemBorder(), height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
+              style={containerStyle}
               ref={node => {
                 this.measureIfNeeded(node);
                 eventsListener(EVENTS.ITEM_CREATED, itemData);

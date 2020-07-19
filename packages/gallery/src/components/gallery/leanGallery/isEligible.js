@@ -34,7 +34,11 @@ export const notEligibleReasons = ({items, styles}) => {
 export default ({items, styles}) => {
     styles = formatLeanGalleryStyles(styles);
 
-    const allowLeanGallery = !!styles.allowLeanGallery;
+    const {forceLeanGallery, allowLeanGallery} = styles;
+    
+    if (forceLeanGallery) {
+      return true;
+    }
     
     if (!allowLeanGallery) {
       return false;

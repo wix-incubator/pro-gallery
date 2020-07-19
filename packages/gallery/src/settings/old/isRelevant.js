@@ -27,7 +27,8 @@ import {
 
 export default {
   isStore: always,
-  allowLeanGallery: sp => isLayout(sp, [GALLERY_CONSTS.layout.GRID]),
+  allowLeanGallery: sp => true,
+  forceLeanGallery: sp => true,
   showAddToCartSection: sp => isStore(sp),
   canUseWatermark: sp => isStore(sp),
   galleryLayout: always,
