@@ -20,7 +20,6 @@ export class GalleryContainer extends React.Component {
       console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
     }
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
-    this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
@@ -239,16 +238,13 @@ export class GalleryContainer extends React.Component {
         sharpParams: styles.sharpParams,
         resizeMediaUrl: resizeMediaUrl,
       });
-      
+
       // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
-      const allowPreloading =
-      isEditMode();
-      
-      this.scrollCss = this.getScrollCssIfNeeded({
+
+      this.getScrollCssIfNeeded({
         domId: domId,
         items: this.galleryStructure.galleryItems,
         styleParams: styles,
-        allowPreloading,
       });
       this.videoScrollHelper.updateGalleryStructure({
         galleryStructure: this.galleryStructure,
@@ -407,8 +403,8 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCssIfNeeded({ domId, items, styleParams, allowPreloading }) {
-    const shouldUseScrollCss = !isSEOMode();
+  getScrollCssIfNeeded({ domId, items, styleParams }) {
+    const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
     let scrollCss = [];
     if (shouldUseScrollCss) {
       scrollCss = cssScrollHelper.calcScrollCss({
@@ -416,23 +412,18 @@ export class GalleryContainer extends React.Component {
         isUnknownWidth: dimensionsHelper.isUnknownWidth(),
         styleParams,
         domId,
-        allowPreloading,
       });
     }
-    return (scrollCss && scrollCss.length > 0) ? scrollCss : this.scrollCss;
+    if (scrollCss && scrollCss.length > 0) {
+      if (JSON.stringify(this.state.scrollCss) !== JSON.stringify(scrollCss)) {
+        this.setState({
+          scrollCss
+        });
+      }
+    }
   }
 
   toggleLoadMoreItems() {
-    if (!this.allowedPreloading) {
-      //we already called to calcScrollCss with allowPreloading = true
-      this.allowedPreloading = true;
-      this.scrollCss = this.getScrollCssIfNeeded({
-        domId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
-        allowPreloading: true,
-      });
-    }
     this.eventsListener(
       EVENTS.LOAD_MORE_CLICKED,
       this.galleryStructure.galleryItems,
@@ -450,6 +441,11 @@ export class GalleryContainer extends React.Component {
         },
         () => {
           this.handleNewGalleryStructure();
+          this.getScrollCssIfNeeded({
+            domId: this.props.domId,
+            items: this.galleryStructure.galleryItems,
+            styleParams: this.state.styles,
+          });
         },
       );
     } else {
@@ -465,24 +461,16 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  enableScrollPreload() {
-    if (!this.allowedPreloading) {
-      this.allowedPreloading = true;
-        //we already called to calcScrollCss with allowPreloading = true
-      this.scrollCss = this.getScrollCssIfNeeded({
-        domId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
-        allowPreloading: true,
-      });
-    }
-    this.setGotFirstScrollIfNeeded();
-  }
-
   setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
       this.setState({
         gotFirstScrollEvent: true,
+      }, () => {
+        this.getScrollCssIfNeeded({
+          domId: this.props.domId,
+          items: this.galleryStructure.galleryItems,
+          styleParams: this.state.styles,
+        });
       });
     }
   }
@@ -581,7 +569,6 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
-          enableScrollPreload={this.enableScrollPreload}
           onScroll={this.onGalleryScroll}
         />
         <ViewComponent
@@ -624,7 +611,7 @@ export class GalleryContainer extends React.Component {
         />
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
-          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
+          {(this.state.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
         </div>
       </div>
     );
