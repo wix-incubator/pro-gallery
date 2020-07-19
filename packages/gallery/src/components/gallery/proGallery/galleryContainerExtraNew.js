@@ -241,11 +241,14 @@ export class GalleryContainer extends React.Component {
 
       // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
 
-      this.getScrollCssIfNeeded({
-        domId: domId,
-        items: this.galleryStructure.galleryItems,
-        styleParams: styles,
-      });
+      const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
+      if (shouldUseScrollCss) {
+        this.getScrollCss({
+          domId: this.props.domId,
+          items: this.galleryStructure.galleryItems,
+          styleParams: styles,
+        });
+      }
       this.videoScrollHelper.updateGalleryStructure({
         galleryStructure: this.galleryStructure,
         scrollBase: container.scrollBase,
@@ -403,24 +406,13 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCssIfNeeded({ domId, items, styleParams }) {
-    const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
-    let scrollCss = [];
-    if (shouldUseScrollCss) {
-      scrollCss = cssScrollHelper.calcScrollCss({
-        items,
-        isUnknownWidth: dimensionsHelper.isUnknownWidth(),
-        styleParams,
-        domId,
-      });
-    }
-    if (scrollCss && scrollCss.length > 0) {
-      if (JSON.stringify(this.state.scrollCss) !== JSON.stringify(scrollCss)) {
-        this.setState({
-          scrollCss
-        });
-      }
-    }
+  getScrollCss({ domId, items, styleParams }) {
+    this.scrollCss = cssScrollHelper.calcScrollCss({
+      items,
+      isUnknownWidth: dimensionsHelper.isUnknownWidth(),
+      styleParams,
+      domId,
+    });
   }
 
   toggleLoadMoreItems() {
@@ -432,6 +424,11 @@ export class GalleryContainer extends React.Component {
     const needToHandleShowMoreClick = true;
     //before clicking "load more" at the first time
     if (!this.state.showMoreClickedAtLeastOnce) {
+      this.getScrollCss({
+        domId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: this.state.styles,
+      });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
         {
@@ -441,11 +438,6 @@ export class GalleryContainer extends React.Component {
         },
         () => {
           this.handleNewGalleryStructure();
-          this.getScrollCssIfNeeded({
-            domId: this.props.domId,
-            items: this.galleryStructure.galleryItems,
-            styleParams: this.state.styles,
-          });
         },
       );
     } else {
@@ -463,14 +455,13 @@ export class GalleryContainer extends React.Component {
 
   setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
+      this.getScrollCss({
+        domId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: this.state.styles,
+      });
       this.setState({
         gotFirstScrollEvent: true,
-      }, () => {
-        this.getScrollCssIfNeeded({
-          domId: this.props.domId,
-          items: this.galleryStructure.galleryItems,
-          styleParams: this.state.styles,
-        });
       });
     }
   }
@@ -611,7 +602,7 @@ export class GalleryContainer extends React.Component {
         />
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
-          {(this.state.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
+          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
         </div>
       </div>
     );
