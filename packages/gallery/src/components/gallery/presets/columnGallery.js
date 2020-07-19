@@ -1,6 +1,4 @@
 
-import React from 'react';
-import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
 
@@ -32,19 +30,5 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-  }
-}
-
-export default class ColumnGallery extends React.Component {
-  
-  render() {
-    return (
-      <ProGallery
-        {...this.props}
-        styles={
-          createStyles(this.props.styles)
-        }
-      />
-    );
   }
 }
