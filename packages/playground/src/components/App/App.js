@@ -6,7 +6,8 @@ import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
+import { GALLERY_CONSTS } from 'pro-gallery';
+import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import {BlueprintsManager} from 'pro-gallery'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
@@ -205,7 +206,7 @@ export function App() {
 
   const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() : { items: getItems(),
     options: styleParams,
-    container };
+    container: getContainer() };
 
     
     const canRender = ()=> {
