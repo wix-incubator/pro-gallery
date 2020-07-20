@@ -23,6 +23,7 @@ class VideoScrollHelper {
     this.lastItemCount = 0;
     this.playing = false;
     this.updateGalleryStructure = this.updateGalleryStructure.bind(this);
+    this.initializePlayState = this.initializePlayState.bind(this);
     this.onScroll = this.onScroll.bind(this);
     this.handleEvent = this.handleEvent.bind(this);
     this.play = this.play.bind(this);

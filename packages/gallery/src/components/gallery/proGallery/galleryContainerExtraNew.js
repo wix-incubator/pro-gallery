@@ -11,7 +11,7 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
-import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper'
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -29,6 +29,7 @@ export class GalleryContainer extends React.Component {
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
+    this.videoScrollHelper = new VideoScrollHelperWrapper(this.setPlayingIdxState);
 
     const initialState = {
       pgScroll: 0,
@@ -43,10 +44,6 @@ export class GalleryContainer extends React.Component {
 
     this.state = initialState;
     this.layoutCss = [];
-    const videoScrollHelperConfig = {
-      setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,
-    };
-    this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
 
     this.initialGalleryState = {};
     try {
@@ -192,7 +189,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
@@ -249,14 +245,17 @@ export class GalleryContainer extends React.Component {
           styleParams: styles,
         });
       }
-      this.videoScrollHelper.updateGalleryStructure({
+      const scrollHelperNewGalleryStructure = {
         galleryStructure: this.galleryStructure,
         scrollBase: container.scrollBase,
         videoPlay: styles.videoPlay,
         itemClick: styles.itemClick,
         oneRow: styles.oneRow,
         cb: this.setPlayingIdxState,
-      });
+      }
+
+      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, true , this.items)
+      
       const layoutParams = {
         items: items,
         container,

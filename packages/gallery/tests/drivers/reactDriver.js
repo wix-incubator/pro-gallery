@@ -14,6 +14,10 @@ import ProGallery from '../../src/components/gallery';
 
 configure({ adapter: new Adapter() });
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 class galleryDriver {
   constructor() {
     this.initDefaults();
@@ -137,6 +141,7 @@ class galleryDriver {
       instance: () => this.wrapper.instance(),
       props: str => this.wrapper.props(str),
       node: () => this.wrapper.getNode(),
+      wrapper: () => this.wrapper,
     };
   }
 
@@ -211,7 +216,8 @@ class galleryDriver {
     return this.wrapper.text();
   }
 
-  update() {
+  async update(ms) {
+    await sleep(ms)
     this.wrapper.update();
   }
 
