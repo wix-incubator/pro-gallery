@@ -1,0 +1,70 @@
+{
+  "name": "pro-gallery-lib",
+  "version": "2.0.0",
+  "publishScoped": false,
+  "private": false,
+  "author": {
+    "name": "Rita Bazak",
+    "email": "ritab@wix.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/pro-gallery.git"
+  },
+  "sideEffects": false,
+  "main": "dist/src/index.js",
+  "module": "dist/es/src/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "watch": "yoshi start",
+    "start": "yoshi start",
+    "build": "yoshi build",
+    "test": "yoshi test",
+    "release": "yoshi release",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint:fix": "npm run lint -- --fix",
+    "posttest": "npm run lint"
+  },
+  "lint-staged": {
+    "*.{js,scss,less}": "yoshi lint"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^9.3.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.7",
+    "puppeteer": "^1.1.0",
+    "velocity": "~0.7.0",
+    "yoshi": "^4.1.0",
+    "yoshi-style-dependencies": "^4.1.0"
+  },
+  "dependencies": {
+    "pro-layouts": "2.0.4",
+    "yoshi-template-intro": "^4.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "yoshi": {
+    "entry": {
+      "main": "./index"
+    },
+    "servers": {
+      "cdn": {
+        "port": 9995
+      }
+    },
+    "exports": "pro-gallery-lib"
+  },
+  "eslintConfig": {
+    "extends": "yoshi",
+    "rules": {
+      "import/no-unresolved": "off",
+      "default-case": "off",
+      "prettier/prettier": "off"
+    }
+  }
+}
