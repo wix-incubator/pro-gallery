@@ -35,7 +35,6 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "husky": "^4.2.1",
-    "jest-yoshi-preset": "^4.1.0",
     "lint-staged": "^10.0.7",
     "puppeteer": "^1.1.0",
     "velocity": "~0.7.0",
@@ -59,9 +58,6 @@
       }
     },
     "exports": "pro-gallery-lib"
-  },
-  "jest": {
-    "preset": "jest-yoshi-preset"
   },
   "eslintConfig": {
     "extends": "yoshi",
