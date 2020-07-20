@@ -18,9 +18,11 @@
     "dist"
   ],
   "scripts": {
+    "watch": "yoshi start",
     "start": "yoshi start",
     "build": "yoshi build",
     "test": "yoshi test",
+    "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "posttest": "npm run lint"
@@ -42,10 +44,10 @@
   },
   "dependencies": {
     "pro-layouts": "2.0.4",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "react-i18next": "^11.3.2",
     "yoshi-template-intro": "^4.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "yoshi": {
     "entry": {
@@ -55,10 +57,6 @@
       "cdn": {
         "port": 9995
       }
-    },
-    "externals": {
-      "react": "React",
-      "react-dom": "ReactDOM"
     },
     "exports": "pro-gallery-lib"
   },
