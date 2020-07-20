@@ -1,6 +1,3 @@
-
-import React from 'react';
-import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 import { featureManager } from '../../helpers/versionsHelper';
 import SCROLL_DIRECTION from '../../../common/constants/scrollDirection';
@@ -122,19 +119,5 @@ export const createStyles = styles => {
     ...styles,
     ...fixedStyles,
     ...getStyleBySeed(styles.magicLayoutSeed)
-  }
-}
-
-export default class MagicGallery extends React.Component {
-
-  render() {
-    return (
-      <ProGallery
-        {...this.props}
-        styles={
-          createStyles(this.props.styles)
-        }
-      />
-    );
   }
 }

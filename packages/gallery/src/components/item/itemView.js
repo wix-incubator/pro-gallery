@@ -12,6 +12,7 @@ import {
   isEditMode,
   isSiteMode,
   isSEOMode,
+  isPrerenderMode,
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 import PLACEMENTS, { hasBelowPlacement, hasAbovePlacement, hasRightPlacement, hasLeftPlacement, hasHoverPlacement } from '../../common/constants/placements';
@@ -306,7 +307,21 @@ class ItemView extends GalleryComponent {
     if (styleParams.itemBorderRadius) {
       dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
     }
+    if (isPrerenderMode()) {
+      const itemContainerDimensions = this.getItemContainerDimensions();
+      dimensions = {...dimensions, ...itemContainerDimensions, transition: 'width 1s, height 1s'};
+    }
+    return dimensions;
+  }
 
+  getItemContainerDimensions() {
+    const dimensions = {}
+    if (this.itemContainer && window.getComputedStyle) {
+      const height = window.getComputedStyle(this.itemContainer).getPropertyValue("height");
+      const width = window.getComputedStyle(this.itemContainer).getPropertyValue("width");
+      width && (dimensions.width = width);
+      height && (dimensions.height = height);
+    }
     return dimensions;
   }
 
