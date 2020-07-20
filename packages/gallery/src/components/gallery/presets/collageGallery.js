@@ -1,9 +1,4 @@
-
-import React from 'react';
-import PropTypes from 'prop-types';
-import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
-import basePropTypes from '../proGallery/propTypes';
 import PLACEMENTS from '../../../common/constants/placements';
 
 export const fixedStyles = {
@@ -31,28 +26,5 @@ export const createStyles = styles => {
     ...fixedStyles,
     gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 5 + 500),
     modifiedGallerySize: true
-  }
-}
-
-export default class CollageGallery extends React.Component {
-
-  static propTypes = {
-    ...basePropTypes,
-
-    isVertical: PropTypes.bool,
-    isRTL: PropTypes.bool,
-    imageMargin: PropTypes.number
-  }
-
-  render() {
-
-    return (
-      <ProGallery
-        {...this.props}
-        styles={
-          createStyles(this.props.styles)
-        }
-      />
-    );
   }
 }

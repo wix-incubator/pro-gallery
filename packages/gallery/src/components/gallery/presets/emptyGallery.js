@@ -1,6 +1,4 @@
 
-import React from 'react';
-import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
 
 export const fixedStyles = {
@@ -16,16 +14,3 @@ export const createStyles = styles => {
   }
 }
 
-export default class EmptyGallery extends React.Component {
-  
-  render() {
-    return (
-      <ProGallery
-        {...this.props}
-        styles={
-          createStyles(this.props.styles)
-        }
-      />
-    );
-  }
-}

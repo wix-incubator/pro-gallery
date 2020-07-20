@@ -1,8 +1,5 @@
-import React from 'react';
-import ProGallery from '../proGallery/proGallery';
 import LAYOUTS from '../../../common/constants/layout';
-import isEligibleForLeanGallery from '../leanGallery/isEligible';
-import LeanGallery from '../leanGallery/leanGallery';
+
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.GRID,
@@ -35,21 +32,3 @@ export const createStyles = styles => {
   }
 }
 
-export default class GridGallery extends React.Component {
-
-  render() {
-
-    const props = {...this.props, styles: createStyles(this.props.styles)};
-
-    let GalleryComponent = ProGallery;
-    if (isEligibleForLeanGallery(props)) {
-      GalleryComponent = LeanGallery;
-    }
-
-    return (
-      <GalleryComponent
-        {...props}
-      />
-    );
-  }
-}

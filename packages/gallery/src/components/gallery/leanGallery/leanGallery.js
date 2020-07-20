@@ -101,10 +101,7 @@ export default class LeanGallery extends React.Component {
       itemSize = gallerySize;
     }
 
-    const minmaxFix = 0.75; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
-    itemSize *= minmaxFix;
-
-    return Math.min(itemSize, container.width);
+    return container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
   }
 
   createGalleryStyle() {
@@ -124,7 +121,7 @@ export default class LeanGallery extends React.Component {
   }
 
   createImageStyle(imageSize) {
-    const {width, height} = imageSize;
+    const { width = '100%', height = 'auto' } = imageSize;
     const { styles } = this.props;
     let borderStyle;
 
@@ -161,8 +158,13 @@ export default class LeanGallery extends React.Component {
 
   calcImageSize(image) {
     const { styles } = this.props;
-    if (styles.cubeType !== CROP_TYPES.FIT) {
+    if (this.state.itemStyle.width && styles.cubeType !== CROP_TYPES.FIT) {
       return this.state.itemStyle
+    } else if (!(this.state.itemStyle.width > 0)) {
+      return {
+        width: '100%',
+        height: 'auto',
+      }
     }
 
     const {width, height} = this.state.itemStyle;
@@ -196,12 +198,23 @@ export default class LeanGallery extends React.Component {
     if (height === null) {
       const itemSize = this.calcItemSize();
       height = itemSize / cubeRatio;
+      return 'auto';
     }
 
     if (hasVerticalPlacement(titlePlacement)) {
       return height + textBoxHeight;
     } else {
       return height;
+    }
+  }
+
+  createContainerStyles(clickable) {
+    let { height = null } = this.state.itemStyle;
+
+    return {
+      ...this.createItemBorder(), 
+      ...(height ? {height: this.calcContainerHeight()} : {height: 'auto', textAlign: 'center'}), 
+      cursor: clickable ? 'pointer' : 'default'
     }
   }
 
@@ -250,11 +263,8 @@ export default class LeanGallery extends React.Component {
 
   render() {
     const { eventsListener, props } = this;
-
     const { customInfoRenderer, items } = props;
-
     const styles = this.fixStylesIfNeeded(props.styles);
-
     const { itemClick } = styles;
 
     return (
@@ -275,7 +285,7 @@ export default class LeanGallery extends React.Component {
           return (
             <a
               className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
-              style={{...this.createItemBorder(), height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
+              style={this.createContainerStyles(clickable)}
               ref={node => {
                 this.measureIfNeeded(node);
                 eventsListener(EVENTS.ITEM_CREATED, itemData);
