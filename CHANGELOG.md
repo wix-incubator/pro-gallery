@@ -1,3 +1,9 @@
+## [v2.0.27](https://pro-gallery-2-0-27.surge.sh) (20/07/2020)
+ 
+#### GALLERY
+ -  getScrollCss will be called only whe needed (!isSEOMode() && (isEditMode() || gotFirstScrollEvent|| showMoreClickedAtLeastOnce)
+
+---
 ## [v2.0.26](https://pro-gallery-2-0-26.surge.sh) (19/07/2020)
  
 #### GALLERY
