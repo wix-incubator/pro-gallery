@@ -49,12 +49,13 @@ export default class ScrollIndicator extends GalleryComponent {
     const scrollingElement = this.props.scrollingElement;
     //Horizontal Scroll
     this.onHorizontalScroll = e => {
+      this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
       let left = target && (target.scrollX || target.scrollLeft || target.x);
       if (this.props.isRTL) {
         left = this.props.totalWidth - left;
-      };
+      }
       // console.log('[RTL SCROLL] onHorizontalScroll: ', left);
       if (left >= 0) {
         if (oneRow) {
@@ -63,7 +64,6 @@ export default class ScrollIndicator extends GalleryComponent {
             scrollLeft: left,
           });
           this.props.getMoreItemsIfNeeded(left);
-          this.props.enableScrollPreload();
           this.debouncedOnScroll({ top, left });
         }
       }
@@ -77,12 +77,13 @@ export default class ScrollIndicator extends GalleryComponent {
     }
     //Vertical Scroll
     this.onVerticalScroll = e => {
+      this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
       let left = target && (target.scrollX || target.scrollLeft || target.x);
       if (this.props.isRTL) {
         left = this.props.totalWidth - left;
-      };
+      }
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
         if (!oneRow) {
@@ -90,10 +91,7 @@ export default class ScrollIndicator extends GalleryComponent {
             scrollTop: top,
           });
           this.props.getMoreItemsIfNeeded(top);
-          this.props.enableScrollPreload();
           this.debouncedOnScroll({ top, left });
-        } else {
-          this.props.setGotFirstScrollIfNeeded();
         }
       }
     };
