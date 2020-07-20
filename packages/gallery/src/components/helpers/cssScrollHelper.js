@@ -30,7 +30,7 @@ class CssScrollHelper {
     this.calcScrollPaddings(false);
   }
 
-  calcScrollPaddings(allowPreloading = true) {
+  calcScrollPaddings() {
     //padding: [belowScreen, aboveScreen]
     //padding: [above images, below image]
     this.allPagePadding = () => [Infinity, Infinity];
@@ -44,8 +44,8 @@ class CssScrollHelper {
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
 
-    this.highResPadding = () => (allowPreloading ? [5120, Infinity] : [0, 0]);
-    this.lowResPadding = () => (allowPreloading ? [10240, Infinity] : [0, 0]);
+    this.highResPadding = () => ([5120, Infinity]);
+    this.lowResPadding = () => ([10240, Infinity]);
   }
 
   getSellectorDomId({ id, idx }) {
@@ -77,7 +77,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams, allowPreloading }) {
+  calcScrollCss({ domId, items, styleParams }) {
     if (!(items && items.length)) {
       return [];
     }
@@ -87,7 +87,7 @@ class CssScrollHelper {
     if (!styleParams.oneRow && utils.isMobile()) {
       this.screenSize += 50;
     }
-    this.calcScrollPaddings(allowPreloading);
+    this.calcScrollPaddings();
 
     const [lastItem] = items.slice(-1);
     const { top, right } = lastItem.offset;
@@ -191,7 +191,7 @@ class CssScrollHelper {
 
       //add the blurry image/color
       if (
-        !utils.hasNativeLazyLoadSupport() && 
+        !utils.hasNativeLazyLoadSupport() &&
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode === LOADING_MODE.BLUR &&
         !item.isTransparent &&
@@ -205,7 +205,7 @@ class CssScrollHelper {
           )})}`;
       }
       if (
-        !utils.hasNativeLazyLoadSupport() && 
+        !utils.hasNativeLazyLoadSupport() &&
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode === LOADING_MODE.MAIN_COLOR &&
         !item.isTransparent && //FAKE SSR

@@ -13,9 +13,9 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
-import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import checkNewGalleryProps from '../../helpers/isNew';
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js'
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -24,7 +24,6 @@ export class GalleryContainer extends React.Component {
       console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
     }
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
-    this.enableScrollPreload = this.enableScrollPreload.bind(this);
     this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
@@ -48,16 +47,12 @@ export class GalleryContainer extends React.Component {
     };
 
     this.state = initialState;
+    this.videoScrollHelper = new VideoScrollHelperWrapper(this.setPlayingIdxState);
 
     this.items = [];
     this.itemsDimensions = {};
     this.preloadedItems = {};
     this.layoutCss = [];
-    const videoScrollHelperConfig = {
-      setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
-    };
-    this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
-
     if (utils.isSSR()) {
       this.initialGalleryState = this.reCreateGalleryExpensively(
         props,
@@ -138,6 +133,7 @@ export class GalleryContainer extends React.Component {
     return visibleItems;
   }
 
+  
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
     this.scrollToItem(this.props.currentIdx, false, true, 0);
@@ -415,14 +411,16 @@ export class GalleryContainer extends React.Component {
       videoPlay: styles.videoPlay,
       itemClick: styles.itemClick,
       oneRow: styles.oneRow,
-    });
-    const allowPreloading = isEditMode() || gotFirstScrollEvent;
-    this.scrollCss = this.getScrollCssIfNeeded({
-      domId: this.props.domId,
-      items: this.galleryStructure.galleryItems,
-      styleParams: styles,
-      allowPreloading,
-    });
+    }, true, this.items);
+    
+    const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
+    if (shouldUseScrollCss) {
+      this.getScrollCss({
+        domId: this.props.domId,
+        items: this.galleryStructure.galleryItems,
+        styleParams: styles,
+      });
+    }
     this.createCssLayoutsIfNeeded(layoutParams);
   }
 
@@ -575,31 +573,32 @@ export class GalleryContainer extends React.Component {
           existingLayout.galleryItems,
         );
       }
-      this.videoScrollHelper.updateGalleryStructure({
+
+      const scrollHelperNewGalleryStructure = {
         galleryStructure: this.galleryStructure,
         scrollBase: _container.scrollBase,
         videoPlay: _styles.videoPlay,
         itemClick: _styles.itemClick,
         oneRow: _styles.oneRow,
         cb: this.setPlayingIdxState,
-      });
+      }
+
+      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, isNew.addedItems || isNew.items, this.items);
+
       if (isNew.items) {
         this.loadItemsDimensionsIfNeeded();
       }
 
       this.createCssLayoutsIfNeeded(layoutParams);
 
-      const allowPreloading =
-        isEditMode() ||
-        state.gotFirstScrollEvent ||
-        state.showMoreClickedAtLeastOnce;
-
-      this.scrollCss = this.getScrollCssIfNeeded({
-        domId: this.props.domId,
-        items: this.galleryStructure.galleryItems,
-        styleParams: _styles,
-        allowPreloading,
-      });
+      const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
+      if (shouldUseScrollCss) {
+        this.getScrollCss({
+          domId: this.props.domId,
+          items: this.galleryStructure.galleryItems,
+          styleParams: _styles,
+        });
+      }
     }
 
     if (utils.isVerbose()) {
@@ -738,18 +737,12 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCssIfNeeded({ domId, items, styleParams, allowPreloading }) {
-    const shouldUseScrollCss = !isSEOMode();
-    let scrollCss = [];
-    if (shouldUseScrollCss) {
-      scrollCss = cssScrollHelper.calcScrollCss({
-        items,
-        styleParams,
-        domId,
-        allowPreloading,
-      });
-    }
-    return (scrollCss && scrollCss.length > 0) ? scrollCss : this.scrollCss;
+  getScrollCss({ domId, items, styleParams }) {
+    this.scrollCss = cssScrollHelper.calcScrollCss({
+      items,
+      styleParams,
+      domId,
+    });
   }
 
   toggleLoadMoreItems() {
@@ -759,18 +752,13 @@ export class GalleryContainer extends React.Component {
     );
     const showMoreClickedAtLeastOnce = true;
     const needToHandleShowMoreClick = true;
-    if (!this.allowedPreloading) {
-      //we already called to calcScrollCss with allowPreloading = true
-      this.allowedPreloading = true;
-      this.scrollCss = this.getScrollCssIfNeeded({
+    //before clicking "load more" at the first time
+    if (!this.state.showMoreClickedAtLeastOnce) {
+      this.getScrollCss({
         domId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
-        allowPreloading: true,
       });
-    }
-    //before clicking "load more" at the first time
-    if (!this.state.showMoreClickedAtLeastOnce) {
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
         {
@@ -795,22 +783,13 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  enableScrollPreload() {
-    if (!this.allowedPreloading) {
-      this.allowedPreloading = true;
-      //we already called to calcScrollCss with allowPreloading = true
-      this.scrollCss = this.getScrollCssIfNeeded({
+  setGotFirstScrollIfNeeded() {
+    if (!this.state.gotFirstScrollEvent) {
+      this.getScrollCss({
         domId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
-        allowPreloading: true,
       });
-    }
-    this.setGotFirstScrollIfNeeded();
-  }
-
-  setGotFirstScrollIfNeeded() {
-    if (!this.state.gotFirstScrollEvent) {
       this.setState({
         gotFirstScrollEvent: true,
       });
@@ -940,7 +919,6 @@ export class GalleryContainer extends React.Component {
           scrollBase={this.state.container.scrollBase}
           scrollingElement={this._scrollingElement}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
-          enableScrollPreload={this.enableScrollPreload}
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           onScroll={this.onGalleryScroll}
         />
@@ -990,7 +968,7 @@ export class GalleryContainer extends React.Component {
         )}
         <div data-key="items-styles" key="items-styles" style={{ display: 'none' }}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
-          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_${this.allowedPreloading ? 'padded' : 'padless'}`} dangerouslySetInnerHTML={{ __html: scrollCss }} />)}
+          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{ __html: scrollCss }} />)}
           {ssrDisableTransition && <style dangerouslySetInnerHTML={{ __html: ssrDisableTransition }} />}
         </div>
       </div>

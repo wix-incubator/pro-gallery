@@ -2,6 +2,7 @@ import GalleryDriver from '../../../drivers/reactDriver';
 import { testVideos } from '../../../drivers/mocks/images-mock';
 import sinon from 'sinon';
 import VideoItem from '../../../../src/components/item/videos/videoItem';
+import VideoItemWrapper from '../../../../src/components/item/videos/videoItemWrapper';
 import { expect } from 'chai';
 import utils from '../../../../src/common/utils';
 import { URL_TYPES, URL_SIZES } from '../../../../src/common/constants/urlTypes';
@@ -21,10 +22,11 @@ describe('Video Item ', () => {
       onMount: () => {},
       onUnmount: () => {},
       loadingStatus: {},
+      imageDimensions: {}
     });
   });
 
-  it('should create PlayerElement if video can play in gallery, and is set to play', () => {
+  it('should create PlayerElement if video can play in gallery, and is set to play', async () => {
     //utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(true);
     Object.assign(sampleItemViewProps.styleParams, {
@@ -105,7 +107,7 @@ describe('Video Item ', () => {
     stub.restore();
   });
 
-  it('source should have right src', () => {
+  it('source should have right src', async () => {
     Object.assign(sampleItemViewProps, {
       videoUrl: '',
     });
@@ -132,11 +134,11 @@ describe('Video Item ', () => {
     );
   });
 
-  it('video controls should be hidden if hidePlay', () => {
+  it('video controls should be hidden if hidePlay', async () => {
     Object.assign(sampleItemViewProps, {
       hidePlay: true,
     });
-    driver.mount(VideoItem, sampleItemViewProps);
+    driver.mount(VideoItemWrapper, sampleItemViewProps);
     expect(driver.find.hook('play-triangle').length).to.equal(0);
     expect(driver.find.hook('play-background').length).to.equal(0);
     Object.assign(sampleItemViewProps, {
@@ -145,19 +147,19 @@ describe('Video Item ', () => {
     Object.assign(sampleItemViewProps.styleParams, {
       showVideoPlayButton: true,
     });
-    driver.mount(VideoItem, sampleItemViewProps);
+    driver.mount(VideoItemWrapper, sampleItemViewProps);
     expect(driver.find.hook('play-triangle').length).to.equal(0);
     expect(driver.find.hook('play-background').length).to.equal(0);
   });
 
-  it('video controls should appear if not hidePlay and showVideoPlayButton', () => {
+  it('video controls should appear if not hidePlay and showVideoPlayButton', async () => {
     Object.assign(sampleItemViewProps, {
       hidePlay: false,
     });
     Object.assign(sampleItemViewProps.styleParams, {
       showVideoPlayButton: true,
     });
-    driver.mount(VideoItem, sampleItemViewProps);
+    driver.mount(VideoItemWrapper, sampleItemViewProps);
     expect(driver.find.hook('play-triangle').length).to.equal(1);
     expect(driver.find.hook('play-background').length).to.equal(1);
     Object.assign(sampleItemViewProps, {
@@ -166,7 +168,7 @@ describe('Video Item ', () => {
     Object.assign(sampleItemViewProps.styleParams, {
       showVideoPlayButton: false,
     });
-    driver.mount(VideoItem, sampleItemViewProps);
+    driver.mount(VideoItemWrapper, sampleItemViewProps);
     expect(driver.find.hook('play-triangle').length).to.equal(0);
     expect(driver.find.hook('play-background').length).to.equal(0);
   });

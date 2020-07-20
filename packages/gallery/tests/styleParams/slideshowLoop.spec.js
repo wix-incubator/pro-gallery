@@ -22,8 +22,7 @@ describe('styleParam - slideshowLoop', () => {
     })
     driver.mount.proGallery(initialProps);
     driver.find.hook('nav-arrow-next').simulate('click');
-    await sleep(500);
-    driver.update()
+    await driver.update(500)
     expect(driver.find.hook('nav-arrow-next')).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
@@ -34,14 +33,8 @@ describe('styleParam - slideshowLoop', () => {
     })
     driver.mount.proGallery(initialProps);
     driver.find.hook('nav-arrow-next').simulate('click');
-    await sleep(500);
-    driver.update()
+    await driver.update(500)
     expect(driver.find.hook('nav-arrow-next')).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
 })
-
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
