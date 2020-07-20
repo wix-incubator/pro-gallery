@@ -1,9 +1,7 @@
 import React from 'react';
-import ProGallery from '../index';
-import ProBlueprintsGallery from '../proGallery/proBlueprintsGallery';
-import GALLERY_EVENTS from '../../../common/constants/events';
+import {GALLERY_CONSTS, ProGallery, ProBlueprintsGallery} from 'pro-gallery';
 // import CLICK_ACTIONS from '../../../common/constants/itemClick';
-import CloseButton from '../../svgs/components/x';
+import CloseButton from './x';
 
 const styles = {
     gallery: {
@@ -40,6 +38,8 @@ const styles = {
         cursor: 'pointer'
     }
 } 
+
+const GALLERY_EVENTS = GALLERY_CONSTS.events;
 
 export default class ExpandableProGallery extends React.Component {
 
