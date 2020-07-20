@@ -179,24 +179,19 @@ class CssScrollHelper {
 
     if (type !== 'text') {
       //load hi-res image + loading transition
-      if (!item.isDimensionless) { //FAKE SSR
-        const selector = createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`)
-        if (utils.hasNativeLazyLoadSupport()) {
+      if (!utils.hasNativeLazyLoadSupport() && !item.isDimensionless) { //FAKE SSR
+        const selector = createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`);
           scrollCss +=
           selector +
-          `{opacity: 1; transition: opacity 1s linear;}`
-        } else {
-          scrollCss +=
-          selector +
-            `{opacity: 1; transition: opacity 1s linear; background-image: url(${createUrl(
+            `{opacity: 1; background-image: url(${createUrl(
               URL_SIZES.RESIZED,
               URL_TYPES.HIGH_RES,
             )})}`;
-        }
       }
 
       //add the blurry image/color
       if (
+        !utils.hasNativeLazyLoadSupport() && 
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode === LOADING_MODE.BLUR &&
         !item.isTransparent &&
@@ -210,6 +205,7 @@ class CssScrollHelper {
           )})}`;
       }
       if (
+        !utils.hasNativeLazyLoadSupport() && 
         !utils.deviceHasMemoryIssues() &&
         styleParams.imageLoadingMode === LOADING_MODE.MAIN_COLOR &&
         !item.isTransparent && //FAKE SSR
@@ -218,7 +214,7 @@ class CssScrollHelper {
         scrollCss +=
           createScrollSelectors(this.lowResPadding(), ' .image-item') + `{background-size: 0.3px; background-repeat: repeat; background-image: url(${createUrl(
             URL_SIZES.PIXEL,
-            URL_TYPES.HIGH_RES,
+            URL_TYPES.LOW_RES,
           )})}`;
       }
     }
@@ -247,10 +243,6 @@ class CssScrollHelper {
 
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
     const scrollAnimation = styleParams.scrollAnimation;
-
-    if (utils.isSSR()) {
-      return '';
-    }
 
     if (!scrollAnimation || scrollAnimation === SCROLL_ANIMATIONS.NO_EFFECT) {
       return '';

@@ -93,6 +93,7 @@ export default {
     // itemIconColor: color-1
     // arrowsColor: 'color-1'
     imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
+    imagePlacementAnimation: GALLERY_CONSTS.imagePlacementAnimations.NO_EFFECT,
     // itemFont: 'font_5'  // startWithSize: 22,
     // itemFontColor: 'color-1'
     // itemFontSlideshow:'font_5' // startWithSize: 22,

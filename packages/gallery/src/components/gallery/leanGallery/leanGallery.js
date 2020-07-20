@@ -12,8 +12,8 @@ import INFO_TYPE from '../../../common/constants/infoType';
 import { isSEOMode } from '../../../common/window/viewModeWrapper';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 
-// import { processLayouts } from '../../helpers/layoutHelper'; // Todo: Reuse when blueprints is ready [IP]
-// import { addPresetStyles } from '../presets/presets'; // Todo: Reuse when blueprints is ready [IP]
+import { processLayouts } from '../../helpers/layoutHelper';
+import { addPresetStyles } from '../presets/presets';
 
 import './leanGallery.scss';
 
@@ -29,10 +29,10 @@ const get = (item, attr) => {
     }
   }
 }
- // Todo: Reuse when blueprints is ready [IP]
-// export const formatLeanGalleryStyles = (styles) => {
-// 	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
-// };
+
+export const formatLeanGalleryStyles = (styles) => {
+	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+};
 
 export default class LeanGallery extends React.Component {
   constructor() {
@@ -57,16 +57,17 @@ export default class LeanGallery extends React.Component {
   }
 
   resizeUrl({ item }) {
-
     const { styles, resizeMediaUrl } = this.props;
-    const { cubeType, imageQuality } = styles;
+    const { cubeType, imageQuality, cubeRatio } = styles;
     const { itemStyle } = this.state;
 
     const { url, mediaUrl, src } = item;
     const itemUrl = url || mediaUrl || src;
+    
+    const itemSize = this.calcItemSize();
+    const width = itemStyle.width || itemSize;
+    const height = itemStyle.height || (itemSize / cubeRatio);
 
-    const width = itemStyle.width || 250;
-    const height = itemStyle.height || 250;
     const focalPoint = false;
 
     const isPreload = !(itemStyle.width > 0)
@@ -100,26 +101,27 @@ export default class LeanGallery extends React.Component {
       itemSize = gallerySize;
     }
 
-    const minmaxFix = 0.75; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
-    itemSize *= minmaxFix;
-
-    return Math.min(itemSize, container.width);
+    return container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
   }
 
   createGalleryStyle() {
     const { styles } = this.props;
     const { gridStyle, numberOfImagesPerRow, imageMargin } = styles;
-    const gridTemplateColumns = gridStyle === 1 ? `repeat(${numberOfImagesPerRow}, 1fr)` : `repeat(auto-fit, minmax(${this.calcItemSize()}px, 1fr))`;
 
+    // const minmaxFix = 0.75; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
+    const minmaxFix = 1;
+    const itemSize = this.calcItemSize() * minmaxFix;
+
+    const gridTemplateColumns = gridStyle === 1 ? `repeat(${numberOfImagesPerRow}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
+    
     return {
       gridTemplateColumns,
       gridGap: `${imageMargin}px`
     };
-
   }
 
   createImageStyle(imageSize) {
-    const {width, height} = imageSize;
+    const { width = '100%', height = 'auto' } = imageSize;
     const { styles } = this.props;
     let borderStyle;
 
@@ -156,8 +158,13 @@ export default class LeanGallery extends React.Component {
 
   calcImageSize(image) {
     const { styles } = this.props;
-    if (styles.cubeType !== CROP_TYPES.FIT) {
+    if (this.state.itemStyle.width && styles.cubeType !== CROP_TYPES.FIT) {
       return this.state.itemStyle
+    } else if (!(this.state.itemStyle.width > 0)) {
+      return {
+        width: '100%',
+        height: 'auto',
+      }
     }
 
     const {width, height} = this.state.itemStyle;
@@ -185,13 +192,29 @@ export default class LeanGallery extends React.Component {
   }
 
   calcContainerHeight() {
-    const { height = 0 } = this.state.itemStyle
-    const { textBoxHeight = 0, titlePlacement } = this.props.styles;
+    let { height = null } = this.state.itemStyle
+    const { textBoxHeight = 0, titlePlacement, cubeRatio } = this.props.styles;
+
+    if (height === null) {
+      const itemSize = this.calcItemSize();
+      height = itemSize / cubeRatio;
+      return 'auto';
+    }
 
     if (hasVerticalPlacement(titlePlacement)) {
       return height + textBoxHeight;
     } else {
       return height;
+    }
+  }
+
+  createContainerStyles(clickable) {
+    let { height = null } = this.state.itemStyle;
+
+    return {
+      ...this.createItemBorder(), 
+      ...(height ? {height: this.calcContainerHeight()} : {height: 'auto', textAlign: 'center'}), 
+      cursor: clickable ? 'pointer' : 'default'
     }
   }
 
@@ -240,15 +263,13 @@ export default class LeanGallery extends React.Component {
 
   render() {
     const { eventsListener, props } = this;
-
     const { customInfoRenderer, items } = props;
-
     const styles = this.fixStylesIfNeeded(props.styles);
-
     const { itemClick } = styles;
 
     return (
       <div
+        data-hook="lean-gallery"
         className={['pro-gallery', 'inline-styles', 'lean-gallery-gallery'].join(' ')}
         style={this.createGalleryStyle()}
       >
@@ -264,7 +285,7 @@ export default class LeanGallery extends React.Component {
           return (
             <a
               className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
-              style={{...this.createItemBorder(), height: this.calcContainerHeight(), cursor: clickable ? 'pointer' : 'default'}}
+              style={this.createContainerStyles(clickable)}
               ref={node => {
                 this.measureIfNeeded(node);
                 eventsListener(EVENTS.ITEM_CREATED, itemData);

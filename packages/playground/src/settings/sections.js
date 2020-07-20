@@ -121,6 +121,7 @@ export const stylesBySection = {
         'imageHoverAnimation',
         'imageLoadingMode',
         'imageLoadingColor',
+        'imagePlacementAnimation',
         'scrollAnimation',
         'oneColorAnimationColor',
     ],

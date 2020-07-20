@@ -1,3 +1,94 @@
+## [v2.0.26](https://pro-gallery-2-0-26.surge.sh) (19/07/2020)
+ 
+#### GALLERY
+ -  leanGallery: fix image size in ssr
+
+---
+## [v2.0.25](https://pro-gallery-2-0-25.surge.sh) (19/07/2020)
+ 
+#### GALLERY
+ -  add blueprints to lib
+ -  remove preset components
+ -  ssrSimulator: update number of testItems
+ -  improve (leanGallery): improve rendering of lean galleries in SSR
+
+---
+## [v2.0.24](https://pro-gallery-2-0-24.surge.sh) (19/07/2020)
+ 
+#### OTHER
+ - revert export blueprints in the lib.
+
+---
+## [v2.0.23](https://pro-gallery-2-0-23.surge.sh) (16/07/2020)
+ 
+#### GALLERY
+ -  SSR improve: item dimension
+
+---
+## [v2.0.22](https://pro-gallery-2-0-22.surge.sh) (16/07/2020)
+ 
+#### GALLERY
+ -  export blueprints in the lib
+ 
+---
+## [v2.0.21](https://pro-gallery-2-0-21.surge.sh) (16/07/2020)
+ 
+ -  blueprint manager is no longer a singleton
+ - reverted "changed pro-gallery/lib to be only ESM."
+
+---
+## [v2.0.20](https://pro-gallery-2-0-20.surge.sh) (15/07/2020)
+ 
+#### GALLERY
+ -  changed pro-gallery/lib to be only ESM.
+
+---
+## [v2.0.19](https://pro-gallery-2-0-19.surge.sh) (15/07/2020)
+ 
+#### GALLERY
+ -  render videoItemPlaceholder in videoItem
+ -  LeanGallery supported in Ssr
+
+---
+## [v2.0.18](https://pro-gallery-2-0-18.surge.sh) (15/07/2020)
+
+#### GALLERY
+ -  SSR refactor
+
+---
+## [v2.0.17](https://pro-gallery-2-0-17.surge.sh) (14/07/2020)
+ 
+#### GALLERY
+ -  fix: gallery is not visible when only first item is in view
+
+---
+## [v2.0.16](https://pro-gallery-2-0-16.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (itemView): avoid inline styles in non-blueprints flow
+
+---
+## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainerNew): use layoutCss in non-blueprints flow
+
+---
+## [v2.0.14](https://pro-gallery-2-0-14.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  remove inline styles tags
+
+---
+## [v2.0.13](https://pro-gallery-2-0-13.surge.sh) (13/07/2020)
+ 
+#### GALLERY
+ -  fix (slideshowView): fix isLastItem and isScrollEnd for infiniteScroll galleries
+
+#### PLAYGROUND
+ -  connect blueprints
+
+---
 ## [v2.0.12](https://pro-gallery-2-0-12.surge.sh) (12/07/2020)
  
 #### GALLERY
@@ -14,7 +105,7 @@
 #### GALLERY
  -  fix: (containerNew) getVisibleItems - dont render less then 2 items
 
----
+---ונת
 ## [v2.0.10](https://pro-gallery-2-0-10.surge.sh) (05/07/2020)
  
 #### GALLERY

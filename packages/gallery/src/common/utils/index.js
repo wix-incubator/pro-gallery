@@ -28,8 +28,7 @@ class Utils {
   }
 
   getOrPutFromCache(fld, func) {
-    //ignore cache in SSR (in ssr the module is kept alive between different renders) and in Editor and preview
-    if (!this.shouldUseCache() || this.isSSR()) {
+    if (!this.shouldUseCache()) {
       return func();
     }
     if (this._cache[fld] !== undefined) {
@@ -283,8 +282,9 @@ class Utils {
     });
   }
 
+  //TODO : Replace with isPrerender mode 
   isSSR() {
-    return !!window.isMock;
+    return typeof global.window === 'undefined';;
   }
 
   isOOI() {
@@ -608,11 +608,13 @@ class Utils {
   }
 
   hasNativeLazyLoadSupport(){
-    try {
-      return 'loading' in HTMLImageElement.prototype;
-    } catch (error) {
-      return false;
-    }
+    return true;
+
+    // try {
+    //   return 'loading' in HTMLImageElement.prototype;
+    // } catch (error) {
+    //   return false;
+    // }
   }
 }
 

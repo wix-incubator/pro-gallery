@@ -46,7 +46,6 @@ export const defaultStyleParams = {
   isAutoSlideshow: false,
   slideshowLoop: false,
   autoSlideshowInterval: 4,
-  useCustomButton: false,
   bottomInfoHeight: 0,
   titlePlacement: Consts.placements.SHOW_ON_HOVER,
   galleryTextAlign: 'center',
@@ -143,6 +142,9 @@ export function formatValue(val) {
     return true;
   } else if (val === 'false') {
     return false;
+  }
+  if (val === 'undefined') {
+    return undefined;
   } else {
     return String(val);
   }

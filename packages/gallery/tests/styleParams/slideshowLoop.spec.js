@@ -9,6 +9,7 @@ describe('styleParam - slideshowLoop', () => {
   const initialProps = {
     container: {...container, width:400},
     items: images2.slice(0,2),
+    totalItemsCount: 2,
     styles: styleParams
   }
   beforeEach(() => {

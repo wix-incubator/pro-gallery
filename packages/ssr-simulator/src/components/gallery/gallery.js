@@ -3,28 +3,106 @@ import { ProGallery } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
+import { GALLERY_CONSTS } from 'pro-gallery';
+import 'pro-gallery/dist/statics/main.css';
 
-export default class Gallery extends React.Component {
+const UNKNOWN_CONTAINER = {
+  width: 980,
+  height: 500
+};
+export default class Gallery extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    const container = this.getContainerFromUrl(props);
+
+    this.handleResize = this.handleResize.bind(this);
+
+    this.state = {
+      knownContainer: container !== UNKNOWN_CONTAINER,
+      container: container
+    };
+  }
+
+  getContainerFromUrl(props) {
+    let container = UNKNOWN_CONTAINER;
+
+    const { urlParams: { containerWidth, containerHeight } = {} } = props;
+    if (containerWidth !== undefined && containerHeight !== undefined) {
+      container = {
+        width: containerWidth,
+        height: containerHeight
+      };
+    }
+
+    return container;
+  }
+
+  getContainerFromWindowDimensions() {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight
+    };
+  }
+
+  handleResize = () => {
+    const container = this.getContainerFromWindowDimensions();
+
+    this.setState({
+      container
+    });
+  };
+
+  shouldUpdateContainerOnMount = () => {
+    let shouldUpdateContainer = true;
+    const { urlParams: { containerWidth, containerHeight } = {} } = this.props;
+    const containerWithWindowDimensions = this.getContainerFromWindowDimensions();
+
+    if (containerWidth !== undefined && containerHeight !== undefined) {
+      if (
+        containerWithWindowDimensions.width === containerWidth &&
+        containerWithWindowDimensions.height === containerHeight
+      ) {
+        shouldUpdateContainer = false;
+      }
+    }
+
+    return shouldUpdateContainer;
+  };
+
+  isSSR() {
+    return typeof window === 'undefined';
+  }
+
+  componentDidMount() {
+    const newState = { knownContainer: true };
+
+    if (this.shouldUpdateContainerOnMount()) {
+      newState.container = this.getContainerFromWindowDimensions();
+    }
+
+    this.setState(newState);
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
   render() {
-    const searchString = this.props.location || window.location.search;
-    const urlStyles = utils.getStyleParamsFromUrl(searchString);
-    const hasUrlStyles = Object.keys(urlStyles).length > 0;
-    const styles = hasUrlStyles ? urlStyles : utils.defaultStyleParams;
+    const { urlParams } = this.props;
+    const { knownContainer, container } = this.state;
+    const viewMode =
+      !knownContainer || this.isSSR()
+        ? GALLERY_CONSTS.viewMode.PRERENDER
+        : GALLERY_CONSTS.viewMode.SITE;
+    const containerClassName =
+      viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
+
+    const hasUrlStyles = Object.keys(urlParams).length > 0;
+    const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
 
     const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
-
-    // The size of the gallery container. The images will fit themselves in it
-    const container =
-      typeof window === 'undefined'
-        ? {
-            width: '',
-            height: 500
-          }
-        : {
-            width: window.innerWidth,
-            height: window.innerHeight
-          };
-
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
       // console.log({eventName, eventData});
@@ -38,17 +116,17 @@ export default class Gallery extends React.Component {
       });
 
     return (
-      <div>
+      <div className={containerClassName}>
         <ProGallery
           domId="ssr-simulator"
           items={items}
           styles={styles}
-          allowSSR={true}
+          useBlueprints={!!urlParams.useBlueprints}
           container={container}
+          viewMode={viewMode}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
         />
-        {/* <ol style={{display: 'none'}}>{Object.entries(styles).map(([key, val]) => <li>{key}: {val}</li>)}</ol> */}
       </div>
     );
   }

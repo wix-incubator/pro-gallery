@@ -1,5 +1,6 @@
 @import 'consts.scss';
 @import 'hoverEffects.scss';
+@import 'animations.scss';
 
 :global {
 
@@ -433,6 +434,7 @@
 
           &.gallery-item-hidden {
             opacity: 0;
+            transition: opacity .5s ease .1s;
           }
 
           &.gallery-item-video {

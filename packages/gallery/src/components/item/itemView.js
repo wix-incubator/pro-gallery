@@ -2,7 +2,6 @@ import React from 'react';
 import ImageItem from './imageItem.js';
 import VideoItem from './videos/videoItem';
 import TextItem from './textItem.js';
-import VideoItemPlaceholder from './videos/videoItemPlaceholder.js';
 import ItemHover from './itemHover.js';
 import utils from '../../common/utils/index.js';
 import window from '../../common/window/windowWrapper';
@@ -13,6 +12,7 @@ import {
   isEditMode,
   isSiteMode,
   isSEOMode,
+  isPrerenderMode,
 } from '../../common/window/viewModeWrapper';
 import EVENTS from '../../common/constants/events';
 import PLACEMENTS, { hasBelowPlacement, hasAbovePlacement, hasRightPlacement, hasLeftPlacement, hasHoverPlacement } from '../../common/constants/placements';
@@ -26,6 +26,7 @@ import {
   getContainerStyle,
   getImageStyle,
 } from './itemViewStyleProvider';
+import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations.js';
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -56,7 +57,6 @@ class ItemView extends GalleryComponent {
     this.getItemHover = this.getItemHover.bind(this);
     this.getImageItem = this.getImageItem.bind(this);
     this.getVideoItem = this.getVideoItem.bind(this);
-    this.getVideoItemPlaceholder = this.getVideoItemPlaceholder.bind(this);
     this.getTextItem = this.getTextItem.bind(this);
     this.getItemInner = this.getItemInner.bind(this);
     this.getItemContainerStyles = this.getItemContainerStyles.bind(this);
@@ -307,7 +307,21 @@ class ItemView extends GalleryComponent {
     if (styleParams.itemBorderRadius) {
       dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
     }
+    if (isPrerenderMode()) {
+      const itemContainerDimensions = this.getItemContainerDimensions();
+      dimensions = {...dimensions, ...itemContainerDimensions, transition: 'width 1s, height 1s'};
+    }
+    return dimensions;
+  }
 
+  getItemContainerDimensions() {
+    const dimensions = {}
+    if (this.itemContainer && window.getComputedStyle) {
+      const height = window.getComputedStyle(this.itemContainer).getPropertyValue("height");
+      const width = window.getComputedStyle(this.itemContainer).getPropertyValue("width");
+      width && (dimensions.width = width);
+      height && (dimensions.height = height);
+    }
     return dimensions;
   }
 
@@ -382,34 +396,6 @@ class ItemView extends GalleryComponent {
     );
   }
 
-  getVideoItemPlaceholder(imageDimensions, itemHover) {
-    const props = utils.pick(this.props, [
-      'alt',
-      'title',
-      'description',
-      'id',
-      'idx',
-      'styleParams',
-      'createUrl',
-      'settings',
-      'lazyLoad'
-    ]);
-    return (
-      <VideoItemPlaceholder
-        {...props}
-        key="videoPlaceholder"
-        imageDimensions={imageDimensions}
-        isThumbnail={!!this.props.thumbnailHighlightId}
-        actions={{
-          handleItemMouseDown: this.handleItemMouseDown,
-          handleItemMouseUp: this.handleItemMouseUp,
-          setItemLoaded: this.setItemLoaded,
-        }}
-        id={this.props.idx}
-        hover={itemHover}
-      />
-    );
-  }
 
   getTextItem(imageDimensions) {
     const props = utils.pick(this.props, [
@@ -451,14 +437,8 @@ class ItemView extends GalleryComponent {
           itemInner = <div />;
         break;
       case 'video':
-        if (
-          this.props.idx === this.props.playingVideoIdx ||
-          this.props.idx === this.props.nextVideoIdx
-        ) {
+        
           itemInner = this.getVideoItem(imageDimensions, itemHover);
-        } else {
-          itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
-        }
         break;
       case 'text':
         itemInner = [this.getTextItem(imageDimensions), itemHover];
@@ -467,7 +447,7 @@ class ItemView extends GalleryComponent {
       case 'picture':
       default:
         if (this.props.isVideoPlaceholder) {
-          itemInner = this.getVideoItemPlaceholder(imageDimensions, itemHover);
+          itemInner = this.getVideoItem(imageDimensions, itemHover);
         } else {
         itemInner = [this.getImageItem(imageDimensions), itemHover];
         }
@@ -590,11 +570,13 @@ class ItemView extends GalleryComponent {
     const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
     return !itemDoesntHaveLink;
   }
-
+  
   getItemContainerStyles() {
-    const { styleParams } = this.props;
+    const { offset, style, styleParams, settings = {} } = this.props;
+
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -605,7 +587,16 @@ class ItemView extends GalleryComponent {
         ? 'default'
         : 'pointer'
     };
-    return { ...itemStyles, ...containerStyleByStyleParams };
+
+    const layoutStyles = settings.avoidInlineStyles ? {} : {
+      top: offset.top,
+      left: styleParams.isRTL ? 'auto' : offset.left,
+      right: !styleParams.isRTL ? 'auto' : offset.left,
+      width: style.width + style.infoWidth,
+      height: style.height + style.infoHeight,
+    };
+
+    return { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams };
   }
 
   getItemWrapperStyles() {
@@ -658,6 +649,7 @@ class ItemView extends GalleryComponent {
   getItemContainerClass() {
     const { styleParams } = this.props;
     const isNOTslideshow = !styleParams.isSlideshow;
+    const imagePlacementAnimation = styleParams.imagePlacementAnimation;
     const overlayAnimation = styleParams.overlayAnimation;
     const imageHoverAnimation = styleParams.imageHoverAnimation;
     const classNames = {
@@ -669,6 +661,10 @@ class ItemView extends GalleryComponent {
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
         styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS,
+
+      //animations
+      'animation-slide':
+        isNOTslideshow && imagePlacementAnimation === IMAGE_PLACEMENT_ANIMATIONS.SLIDE,
 
       //overlay animations
       'hover-animation-fade-in':

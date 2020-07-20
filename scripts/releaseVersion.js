@@ -19,6 +19,7 @@ const BUMP_TYPES = {
 const PROJECTS = {
     MAIN: 'main',
     GALLERY: 'gallery',
+    GALLERY_LIB: 'gallery-lib',
     LAYOUTS: 'layouts',
     FULLSCREEN: 'fullscreen',
     PLAYGROUND: 'playground',
@@ -67,20 +68,24 @@ function editChangelogAndUpdateVersion(bump) {
     prompt.get(property, function (err, result) {
         console.log(result);
 
-        if (result.yesno === 'yes' || result.yesno === 'y') {
-            // child.on('exit', function (e, code) {
-            execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
-                stdio: 'pipe'
-            });
-            log(`Saved ${CHANGELOG}, releasing new version`);
-            const bumpCommand = `lerna version ${bump} --exact --yes`;
-            execSync(`${bumpCommand}`, {
-                stdio: 'pipe'
-            });
-            // });
-        } else {
-            fail('not releasing by user request');
-            process.exit(0);
+        try {
+            if (result.yesno === 'yes' || result.yesno === 'y') {
+                // child.on('exit', function (e, code) {
+                execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
+                    stdio: 'pipe'
+                });
+                log(`Saved ${CHANGELOG}, releasing new version`);
+                const bumpCommand = `lerna version ${bump} --exact --yes`;
+                execSync(`${bumpCommand}`, {
+                    stdio: 'pipe'
+                });
+                // });
+            } else {
+                fail('not releasing by user request');
+                process.exit(0);
+            }
+        } catch (e) {
+            console.error('Cannot release version', e);
         }
     });
 
@@ -195,7 +200,7 @@ function run() {
     }
     writeToChangelog(formatForChangelog(newVersion, latestCommits));
     writeVersion(newVersion);
-    
+
     log(`Wrote changes to ${CHANGELOG}`);
 
     editChangelogAndUpdateVersion(bump);
