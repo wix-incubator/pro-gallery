@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -18,10 +18,13 @@
     "dist"
   ],
   "scripts": {
+    "watch": "yoshi start",
     "start": "yoshi start",
     "build": "yoshi build",
     "test": "yoshi test",
-    "lint": "yoshi lint",
+    "release": "yoshi release",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint:fix": "npm run lint -- --fix",
     "posttest": "npm run lint"
   },
   "lint-staged": {
@@ -41,10 +44,10 @@
   },
   "dependencies": {
     "pro-layouts": "2.0.4",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "react-i18next": "^11.3.2",
     "yoshi-template-intro": "^4.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "yoshi": {
     "entry": {
@@ -55,16 +58,17 @@
         "port": 9995
       }
     },
-    "externals": {
-      "react": "React",
-      "react-dom": "ReactDOM"
-    },
     "exports": "pro-gallery-lib"
   },
   "jest": {
     "preset": "jest-yoshi-preset"
   },
   "eslintConfig": {
-    "extends": "yoshi"
+    "extends": "yoshi",
+    "rules": {
+      "import/no-unresolved": "off",
+      "default-case": "off",
+      "prettier/prettier": "off"
+    }
   }
 }
