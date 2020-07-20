@@ -1,7 +1,8 @@
 import '../../../common/utils/polyfills';
 
 import React from 'react';
-import Gallery from './galleryContainerNew.js';
+import GalleryContainerForBlueprints from './galleryContainerExtraNew.js';
+import GalleryContainer from './galleryContainerNew.js';
 import utils from '../../../common/utils';
 import { viewModeWrapper } from '../../../common/window/viewModeWrapper';
 import { GalleryComponent } from '../../galleryComponent';
@@ -37,31 +38,21 @@ export default class ProGallery extends GalleryComponent {
     }
   }
 
-  renderProps() {
-    return {
-      ...this.props,
-      domId: this.props.domId,
-      items: this.props.items || [],
-      watermarkData: this.props.watermarkData,
-      settings: this.props.settings || {},
-      offsetTop: this.props.offsetTop,
-      itemsLoveData: this.props.itemsLoveData || {},
-      proGalleryRegionLabel: this.props.proGalleryRegionLabel || 'Gallery. you can navigate the gallery with keyboard arrow keys.',
-    }
-  }
-
-  containerProps() {
-    return {
-      id: `pro-gallery-${this.props.domId}`,
-      className: "pro-gallery"
-    }
-  }
-
   render() {
+    const {useBlueprints} = this.props;
+    const Gallery = useBlueprints ? GalleryContainerForBlueprints : GalleryContainer;
     return (
-      <div {...this.containerProps()}>
+      <div id={`pro-gallery-${this.props.domId}`} className="pro-gallery">
           <Gallery
-            {...this.renderProps()}
+            {...this.props}
+            domId={this.props.domId}
+            items={this.props.items || []}
+            watermarkData={this.props.watermarkData}
+            settings={this.props.settings || {}}
+            offsetTop={this.props.offsetTop}
+            itemsLoveData={this.props.itemsLoveData || {}}
+            proGalleryRegionLabel={this.props.proGalleryRegionLabel || 'Gallery. you can navigate the gallery with keyboard arrow keys.'}
+            // {...blueprintProps}
           />
       </div>
     );

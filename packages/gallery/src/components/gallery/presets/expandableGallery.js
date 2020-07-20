@@ -1,7 +1,8 @@
 import React from 'react';
-import {GALLERY_CONSTS, ProGallery, ProBlueprintsGallery} from 'pro-gallery';
+import ProGallery from '../index';
+import GALLERY_EVENTS from '../../../common/constants/events';
 // import CLICK_ACTIONS from '../../../common/constants/itemClick';
-import CloseButton from './x';
+import CloseButton from '../../svgs/components/x';
 
 const styles = {
     gallery: {
@@ -39,8 +40,6 @@ const styles = {
     }
 } 
 
-const GALLERY_EVENTS = GALLERY_CONSTS.events;
-
 export default class ExpandableProGallery extends React.Component {
 
     constructor(props) {
@@ -66,11 +65,10 @@ export default class ExpandableProGallery extends React.Component {
     }
 
     render() {
-        const Gallery = this.props.useBlueprints ? ProBlueprintsGallery : ProGallery;
         return (
             <>
                 <section style={{...styles.gallery, display: (this.state.fullscreenIdx < 0 ? 'block' : 'none')}}>
-                    <Gallery
+                    <ProGallery
                         {...this.props}
                         key={`pro-gallery-${this.props.domId}`}
                         domId={`pro-gallery-${this.props.domId}`}
@@ -79,7 +77,7 @@ export default class ExpandableProGallery extends React.Component {
                 </section>
                 {this.state.fullscreenIdx < 0 ? null : <section style={{ ...styles.fullscreen, ...(this.state.fullscreenIdx >= 0 && styles.shown) }}>
                     <CloseButton style={styles.close} onClick={() => this.setState({fullscreenIdx: -1})} />
-                    <Gallery
+                    <ProGallery
                         {...this.props}
                         key={`pro-fullscreen-${this.props.domId}`}
                         domId={`pro-fullscreen-${this.props.domId}`}
