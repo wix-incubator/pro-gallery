@@ -62,24 +62,10 @@ class DimensionsHelper {
     });
   }
 
-  isUnknownWidth(container = this.container) {
-    //if the container width is not a number, it is unknownWidth (e.g.: "", "100%", "calc(100% + -160px)")
-    return !(container.width > 0);
-  }
 
-  isUnknownHeight(container = this.container) {
-    //if the container height is not a number, it is unknownHeight (e.g.: "", "100%", "calc(100% + -160px)")
-    return !(container.height > 0);
-  }
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
-      const domWidth = () =>
-        window.isMock ? utils.getScreenWidth() : window.innerWidth;
-      let width = Math.floor(
-        (this.container.width > 0 ? this.container.width : domWidth()) +
-        this.getDimensionFix() * 2,
-      ); //add margins to width and then remove them in css negative margins
-
+      let width = Math.floor(this.container.width) + (this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
       if (this.styles.arrowsPosition && this.styles.oneRow) {
         width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
       }

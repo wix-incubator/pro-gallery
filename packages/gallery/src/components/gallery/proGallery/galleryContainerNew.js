@@ -429,13 +429,11 @@ export class GalleryContainer extends React.Component {
     this.createCssLayoutsIfNeeded(layoutParams);
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
+  createCssLayoutsIfNeeded(layoutParams) {
     this.layoutCss = createCssLayouts({
       layoutParams,
-      isApproximateWidth,
-      isMobile: utils.isMobile(),
       domId: this.props.domId,
-      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+      galleryItems: this.galleryStructure.galleryItems,
     });
   }
 
@@ -586,8 +584,7 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !_styles.oneRow; //FAKE SSR
-      this.createCssLayoutsIfNeeded(layoutParams, isApproximateWidth, isNew);
+      this.createCssLayoutsIfNeeded(layoutParams);
 
       const allowPreloading =
         isEditMode() ||
@@ -744,7 +741,6 @@ export class GalleryContainer extends React.Component {
     if (shouldUseScrollCss) {
       scrollCss = cssScrollHelper.calcScrollCss({
         items,
-        isUnknownWidth: dimensionsHelper.isUnknownWidth(),
         styleParams,
         domId,
         allowPreloading,
@@ -947,7 +943,6 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           isInDisplay={this.props.isInDisplay}
-          isUnknownWidth={dimensionsHelper.isUnknownWidth()}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
