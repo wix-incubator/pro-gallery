@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import {getInitialStyleParams} from '../constants/styleParams';
-import {SIDEBAR_WIDTH} from '../constants/consts';
 
 const GalleryContext = React.createContext([{}, () => {}]);
 
