@@ -596,7 +596,9 @@ class ItemView extends GalleryComponent {
       height: style.height + style.infoHeight,
     };
 
-    return { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams };
+    const customElementSsrStyles = (utils.isSSR() && isPrerenderMode()) ? {opacity: 0} : {}
+ 
+    return { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...customElementSsrStyles };
   }
 
   getItemWrapperStyles() {
