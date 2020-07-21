@@ -53,9 +53,13 @@ function getCommitsUntilVersion(version) {
 
 function editChangelogAndUpdateVersion(bump) {
     var editor = 'code';
-    var child = spawn(editor, [CHANGELOG], {
-        stdio: 'inherit'
-    });
+    try {
+        var child = spawn(editor, [CHANGELOG], {
+            stdio: 'inherit'
+        });
+    } catch (e) {
+        console.error('Cannot open code editor with "code" command', e);
+    }
 
     prompt.start();
     var property = {
