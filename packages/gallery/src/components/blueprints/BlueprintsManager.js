@@ -23,10 +23,12 @@ export default class BlueprintsManager {
     console.count('>>>>>>>>>>requestingBlueprint from ' + this.id); //TODO - remove when done :D
 
     this.currentState.totalItemsCount = params.totalItemsCount || this.api.getTotalItemsCount && this.api.getTotalItemsCount()  || this.currentState.totalItemsCount;
+    
+    this.currentState.isUsingCustomInfoElements = params.isUsingCustomInfoElements || this.api.isUsingCustomInfoElements && this.api.isUsingCustomInfoElements()  || this.currentState.isUsingCustomInfoElements;
 
     params =  {...params,... await this.completeParams(params)}
 
-    const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint, this.id);
+    const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint, this.id, this.currentState.isUsingCustomInfoElements);
 
     const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
     console.log('>>>did blueprint actually change for: ',  this.id,'?', blueprintChanged);
