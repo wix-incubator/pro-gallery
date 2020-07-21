@@ -218,6 +218,9 @@ class ItemView extends GalleryComponent {
         itemClick,
         alwaysShowHover,
         previewHover,
+        allowDescription,
+        allowTitle,
+        isStoreGallery
       } = this.props.styleParams;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
@@ -227,8 +230,10 @@ class ItemView extends GalleryComponent {
         return true;
       } else if (
         this.props.customHoverRenderer &&
-        hasHoverPlacement(titlePlacement) && hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
-        isNewMobileSettings
+        hasHoverPlacement(titlePlacement) &&
+         hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
+        isNewMobileSettings && 
+        (allowDescription || allowTitle || isStoreGallery)
       ) {
         return true;
       }
