@@ -576,7 +576,6 @@ export class GalleryContainer extends React.Component {
           watermark={this.props.watermarkData}
           settings={this.props.settings}
           scroll={{}} //todo: remove after refactor is 100%
-          lazyLoad={this.props.lazyLoad}
           displayShowMore={displayShowMore}
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}

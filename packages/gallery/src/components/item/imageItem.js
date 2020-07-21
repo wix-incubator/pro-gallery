@@ -1,6 +1,5 @@
 import React from 'react';
 import LOADING_MODE from '../../common/constants/loadingMode';
-import LAZY_LOAD from '../../common/constants/lazyLoad';
 import { GalleryComponent } from '../galleryComponent';
 import { isSEOMode, isPrerenderMode } from '../../common/window/viewModeWrapper';
 import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
@@ -99,7 +98,6 @@ export default class ImageItem extends GalleryComponent {
       createUrl,
       id,
       settings,
-      lazyLoad,
       styleParams,
     } = this.props;
     const { isHighResImageLoaded } = this.state;
@@ -112,7 +110,6 @@ export default class ImageItem extends GalleryComponent {
 
     const { marginLeft, marginTop, ...restOfDimensions } =
     imageDimensions || {};
-    const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
     
 
     const image = () => {
@@ -181,26 +178,8 @@ export default class ImageItem extends GalleryComponent {
       return imagesComponents;
     }
 
-    const canvas = () => (
-      <canvas
-        key={
-          (styleParams.cubeImages && styleParams.cubeType === 'fill'
-            ? 'cubed-'
-            : '') + 'image'
-        }
-        className={
-          'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'
-        }
-        data-hook='gallery-item-image-canvas'
-        role="img"
-        alt={alt ? alt : 'untitled image'}
-        data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
-        style={restOfDimensions}
-        {...imageProps}
-      />
-    );
 
-    return useImageTag ? image : canvas
+    return image;
   }
 
   render() {

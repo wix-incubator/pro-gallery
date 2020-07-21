@@ -941,7 +941,6 @@ export class GalleryContainer extends React.Component {
           settings={{avoidInlineStyles: true, ...this.props.settings}}
           gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
-          lazyLoad={this.props.lazyLoad}
           displayShowMore={displayShowMore}
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}

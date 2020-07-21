@@ -16,7 +16,6 @@ import isVertical from './isVertical';
 import itemClick from './itemClick';
 import layout from './layout';
 import layoutDirection from './layoutDirection';
-import lazyLoad from './lazyLoad';
 import loadingMode from './loadingMode';
 import loadingWithColorMode from './loadingWithColorMode';
 import loadMoreAmount from './loadMoreAmount';
@@ -67,7 +66,6 @@ export default {
   itemClick,
   layout,
   layoutDirection,
-  lazyLoad,
   loadingMode,
   loadingWithColorMode,
   loadMoreAmount,

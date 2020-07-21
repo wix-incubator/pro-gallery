@@ -167,57 +167,14 @@ class CssScrollHelper {
     };
   }
 
-  calcScrollCssForItem({ domId, item, styleParams, isUnknownWidth }) {
-    const { type, createUrl, idx } = item;
-    const itemTag = utils.hasNativeLazyLoadSupport() ? 'img' : 'canvas';
+  calcScrollCssForItem({ domId, item, styleParams }) {
+    const { idx } = item;
     let scrollCss = '';
     const createScrollSelectors = this.createScrollSelectorsFunction({
       domId,
       item,
       styleParams,
     });
-
-    if (type !== 'text') {
-      //load hi-res image + loading transition
-      if (!utils.hasNativeLazyLoadSupport() && !isUnknownWidth && !item.isDimensionless) { //FAKE SSR
-        const selector = createScrollSelectors(this.highResPadding(), `.${type}-item>${itemTag}`);
-          scrollCss +=
-          selector +
-            `{opacity: 1; background-image: url(${createUrl(
-              URL_SIZES.RESIZED,
-              URL_TYPES.HIGH_RES,
-            )})}`;
-      }
-
-      //add the blurry image/color
-      if (
-        !utils.hasNativeLazyLoadSupport() &&
-        !utils.deviceHasMemoryIssues() &&
-        styleParams.imageLoadingMode === LOADING_MODE.BLUR &&
-        (!item.isTransparent || isUnknownWidth) &&
-        !item.isDimensionless
-      ) {
-        scrollCss +=
-          createScrollSelectors(this.lowResPadding(), `.image-item`) +
-          `{background-image: url(${createUrl(
-            URL_SIZES.RESIZED,
-            URL_TYPES.LOW_RES,
-          )})}`;
-      }
-      if (
-        !utils.hasNativeLazyLoadSupport() &&
-        !utils.deviceHasMemoryIssues() &&
-        styleParams.imageLoadingMode === LOADING_MODE.MAIN_COLOR &&
-        (!item.isTransparent || isUnknownWidth) && //FAKE SSR
-        !item.isDimensionless
-      ) {
-        scrollCss +=
-          createScrollSelectors(this.lowResPadding(), ' .image-item') + `{background-size: 0.3px; background-repeat: repeat; background-image: url(${createUrl(
-            URL_SIZES.PIXEL,
-            URL_TYPES.LOW_RES,
-          )})}`;
-      }
-    }
 
     //scrollAnimation
     scrollCss += this.createScrollAnimationsIfNeeded({
@@ -254,17 +211,16 @@ class CssScrollHelper {
     const animationActivePadding = this.aboveScreenPadding();
 
     let scrollAnimationCss = '';
-    const itemTag = utils.hasNativeLazyLoadSupport() ? 'img' : 'canvas';
     // notice: these 2 animations must have the blurry image
     if (scrollAnimation === SCROLL_ANIMATIONS.MAIN_COLOR) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` ${itemTag}`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` ${itemTag}`) + `{filter: opacity(1) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === SCROLL_ANIMATIONS.BLUR) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` ${itemTag}`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` ${itemTag}`) + `{filter: opacity(1) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === SCROLL_ANIMATIONS.FADE_IN) {
