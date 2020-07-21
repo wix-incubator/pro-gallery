@@ -13,9 +13,9 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import utils from '../../../common/utils';
 import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
 import EVENTS from '../../../common/constants/events';
-import VideoScrollHelper from '../../helpers/videoScrollHelper.js';
 import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import checkNewGalleryProps from '../../helpers/isNew';
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js'
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -47,16 +47,12 @@ export class GalleryContainer extends React.Component {
     };
 
     this.state = initialState;
+    this.videoScrollHelper = new VideoScrollHelperWrapper(this.setPlayingIdxState);
 
     this.items = [];
     this.itemsDimensions = {};
     this.preloadedItems = {};
     this.layoutCss = [];
-    const videoScrollHelperConfig = {
-      setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
-    };
-    this.videoScrollHelper = new VideoScrollHelper(videoScrollHelperConfig);
-
     if (utils.isSSR()) {
       this.initialGalleryState = this.reCreateGalleryExpensively(
         props,
@@ -137,6 +133,7 @@ export class GalleryContainer extends React.Component {
     return visibleItems;
   }
 
+  
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
     this.scrollToItem(this.props.currentIdx, false, true, 0);
@@ -414,7 +411,8 @@ export class GalleryContainer extends React.Component {
       videoPlay: styles.videoPlay,
       itemClick: styles.itemClick,
       oneRow: styles.oneRow,
-    });
+    }, true, this.items);
+    
     const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
     if (shouldUseScrollCss) {
       this.getScrollCss({
@@ -576,14 +574,18 @@ export class GalleryContainer extends React.Component {
           existingLayout.galleryItems,
         );
       }
-      this.videoScrollHelper.updateGalleryStructure({
+
+      const scrollHelperNewGalleryStructure = {
         galleryStructure: this.galleryStructure,
         scrollBase: _container.scrollBase,
         videoPlay: _styles.videoPlay,
         itemClick: _styles.itemClick,
         oneRow: _styles.oneRow,
         cb: this.setPlayingIdxState,
-      });
+      }
+
+      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, isNew.addedItems || isNew.items, this.items);
+
       if (isNew.items) {
         this.loadItemsDimensionsIfNeeded();
       }

@@ -1,3 +1,19 @@
+## [v2.0.28](https://pro-gallery-2-0-28.surge.sh) (21/07/2020)
+ 
+#### MAIN
+ -  add error message when the default editor is not defined
+
+#### GALLERY
+ -  leanGallery: use isVerbose, fix cursor style, and block 'isAccessible'
+ -  load video code dynamically
+
+---
+## [v2.0.27](https://pro-gallery-2-0-27.surge.sh) (20/07/2020)
+ 
+#### GALLERY
+ -  getScrollCss will be called only whe needed (!isSEOMode() && (isEditMode() || gotFirstScrollEvent|| showMoreClickedAtLeastOnce)
+
+---
 ## [v2.0.26](https://pro-gallery-2-0-26.surge.sh) (19/07/2020)
  
 #### GALLERY
