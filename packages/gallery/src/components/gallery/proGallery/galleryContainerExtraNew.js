@@ -254,7 +254,7 @@ export class GalleryContainer extends React.Component {
         cb: this.setPlayingIdxState,
       }
 
-      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, true , this.items)
+      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, true , items)
       
       const layoutParams = {
         items: items,
