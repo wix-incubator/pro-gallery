@@ -1,3 +1,12 @@
+## [v2.0.29](https://pro-gallery-2-0-29.surge.sh) (21/07/2020)
+ 
+#### GALLERY
+ -  item-container opacity 0 on prerender mode
+
+#### LAYOUTS
+ -  fix: gaps in vertical layouts
+
+---
 ## [v2.0.28](https://pro-gallery-2-0-28.surge.sh) (21/07/2020)
  
 #### MAIN
