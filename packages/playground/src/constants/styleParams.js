@@ -1,11 +1,11 @@
 import { gallerySettings, defaultStyles } from 'pro-gallery';
 
-export const getInitialStyleParams = (gallery, galleryWidth, galleryHeight) => {
-  const styleParams = styleParamsByLayout(galleryWidth, galleryHeight);
+export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl();
+  const styleParams = styleParamsByLayout();
   return {
     ...defaultStyleParams,
-    ...styleParams[gallery],
+    ...styleParams[savedStyleParams.galleryLayout],
     ...savedStyleParams,
   };
 }

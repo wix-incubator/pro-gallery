@@ -8,7 +8,6 @@ export default class ProBlueprintsGallery extends ProGallery {
       <div {...this.containerProps()}>
           <Gallery
             {...this.renderProps()}
-            useBlueprints={true}
           />
       </div>
     );
