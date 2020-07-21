@@ -126,7 +126,7 @@ export default class Layouter {
               column.groups.splice(-1, 1);
             }
             this.groups.splice(-1, 1);
-            group.items.forEach(() => {
+            group.realItems.forEach(() => {
               this.layoutItems.splice(-1, 1);
               this.pointer--;
             });
