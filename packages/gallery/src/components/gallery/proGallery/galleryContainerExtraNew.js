@@ -229,50 +229,50 @@ export class GalleryContainer extends React.Component {
     domId = domId || this.props.domId;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
 
-      this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, { // TODO use same objects in the memory when the galleryItems are changed
-        thumbnailSize: styles.thumbnailSize,
-        sharpParams: styles.sharpParams,
-        resizeMediaUrl: resizeMediaUrl,
-      });
+    this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, { // TODO use same objects in the memory when the galleryItems are changed
+      thumbnailSize: styles.thumbnailSize,
+      sharpParams: styles.sharpParams,
+      resizeMediaUrl: resizeMediaUrl,
+    });
 
-      // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
+    // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
 
-      const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
-      if (shouldUseScrollCss) {
-        this.getScrollCss({
-          domId: domId,
-          items: this.galleryStructure.galleryItems,
-          styleParams: styles,
-        });
-      }
-      const scrollHelperNewGalleryStructure = {
-        galleryStructure: this.galleryStructure,
-        scrollBase: container.scrollBase,
-        videoPlay: styles.videoPlay,
-        itemClick: styles.itemClick,
-        oneRow: styles.oneRow,
-        cb: this.setPlayingIdxState,
-      }
-
-      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, true , this.items)
-      
-      const layoutParams = {
-        items: items,
-        container,
+    const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
+    if (shouldUseScrollCss) {
+      this.getScrollCss({
+        domId: domId,
+        items: this.galleryStructure.galleryItems,
         styleParams: styles,
-        gotScrollEvent: true,
-        options: {
-          showAllItems: true,
-          skipVisibilitiesCalc: true,
-          useLayoutStore: false,
-          createLayoutOnInit: false,
-        },
-      };
+      });
+    }
+    const scrollHelperNewGalleryStructure = {
+      galleryStructure: this.galleryStructure,
+      scrollBase: container.scrollBase,
+      videoPlay: styles.videoPlay,
+      itemClick: styles.itemClick,
+      oneRow: styles.oneRow,
+      cb: this.setPlayingIdxState,
+    }
 
-      this.createCssLayoutsIfNeeded(layoutParams);
+    this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, true , items)
+    
+    const layoutParams = {
+      items: items,
+      container,
+      styleParams: styles,
+      gotScrollEvent: true,
+      options: {
+        showAllItems: true,
+        skipVisibilitiesCalc: true,
+        useLayoutStore: false,
+        createLayoutOnInit: false,
+      },
+    };
 
-      const newState = {items: loopingItems || items, styles: styles, container: container, structure: structure}
-      return newState;
+    this.createCssLayoutsIfNeeded(layoutParams);
+
+    const newState = {items: loopingItems || items, styles, container, structure}
+    return newState;
   }
 
   getScrollingElement() {
