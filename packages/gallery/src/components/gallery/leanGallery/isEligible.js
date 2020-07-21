@@ -2,6 +2,7 @@ import GALLERY_CONSTS from '../../../common/constants/index';
 import {isVerticalPlacement} from '../../../common/constants/placements';
 import { fixedStyles } from '../presets/gridGallery';
 import { formatLeanGalleryStyles } from './leanGallery';
+import utils from '../../../common/utils';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export const notEligibleReasons = ({items, styles}) => {
@@ -40,23 +41,23 @@ export default ({items, styles}) => {
       return false;
     }
     if (items.length > MAX_ITEMS_COUNT) {
-      console.log(`[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`, items.length);
+      utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`, items.length);
       return false;
     }
     for (const item of items) {
       if (!isImage(item)) {
-        console.log(`[LEAN GALLERY] NOT ALLOWED - an item that is not an image`, item);
+        utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - an item that is not an image`, item);
         return false;
       }
     }
     for (const [styleParam, value] of Object.entries(styles)) {
       if (!isValidStyleParam(styleParam, value, styles)) {
-        console.log(`[LEAN GALLERY] NOT ALLOWED - invalid styleParam`, styleParam, value);
+        utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - invalid styleParam`, styleParam, value);
         return false;
       }
     }
 
-    console.log(`[LEAN GALLERY] ALLOWED!`, styles);
+    utils.isVerbose() && console.log(`[LEAN GALLERY] ALLOWED!`, styles);
     return true;
 
 }
@@ -218,5 +219,6 @@ const fixedStyleParams = {
   loveButton: false,
   loveCounter: false,
   allowDownload: false,
-  allowSocial: false
+  allowSocial: false,
+  isAccessible: false
 };

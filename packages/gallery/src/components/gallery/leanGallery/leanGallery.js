@@ -261,6 +261,11 @@ export default class LeanGallery extends React.Component {
     this.measureIfNeeded();
   }
 
+  isMetadataLinkExists(item) {
+    const metadata = item.metadata || item.metaData;
+    return (metadata && metadata.link) ? true : false;
+  }
+
   render() {
     const { eventsListener, props } = this;
     const { customInfoRenderer, items } = props;
@@ -275,13 +280,15 @@ export default class LeanGallery extends React.Component {
       >
         {items.map((item, itemIdx) => {
           const linkParams = this.createLinkParams(item);
-          const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick));
+          const clickable = (linkParams && itemClick === CLICK_ACTIONS.LINK) || ([CLICK_ACTIONS.EXPAND, CLICK_ACTIONS.FULLSCREEN].includes(itemClick)) || this.isMetadataLinkExists(item);
           const imageSize = this.calcImageSize(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
           const itemProps = {...itemData, ...item.metaData, style: this.state.itemStyle, styleParams: styles};
+
           const texts = placement => (typeof customInfoRenderer === 'function') && (styles.titlePlacement === placement) && (
             <div className={`gallery-item-common-info gallery-item-${placement === INFO_PLACEMENT.SHOW_ABOVE ? `top` : `bottom`}-info`} style={getInnerInfoStyle(placement, styles)} >{customInfoRenderer(itemProps, placement)}</div>
           );
+
           return (
             <a
               className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
