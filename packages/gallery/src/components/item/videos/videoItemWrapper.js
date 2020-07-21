@@ -4,6 +4,7 @@ import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder'
 import utils from '../../../common/utils';
+import window from '../../../common/window/windowWrapper';
 
 
 const videoControls = [
