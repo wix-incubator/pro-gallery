@@ -1,3 +1,9 @@
+## [v2.0.30](https://pro-gallery-2-0-30.surge.sh) (21/07/2020)
+ 
+#### GALLERY
+ -  mobile 1st tap hover only if has title or description
+
+---
 ## [v2.0.29](https://pro-gallery-2-0-29.surge.sh) (21/07/2020)
  
 #### GALLERY
