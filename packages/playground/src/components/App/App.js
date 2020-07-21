@@ -6,7 +6,8 @@ import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import { GALLERY_CONSTS, ExpandableProGallery } from 'pro-gallery';
+import { GALLERY_CONSTS } from 'pro-gallery';
+import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import {BlueprintsManager} from 'pro-gallery'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
@@ -30,36 +31,20 @@ const initialItems = {
   images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
 };
 
-
 const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
-  const {setDimensions, styleParams, setItems, items, gallerySettings, setGallerySettings, setBlueprint, blueprint, setDimensionsHeight, setDimensionsWidth, dimensions} = useGalleryContext(blueprintsManager);
+  const {setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
   
   const {showSide} = gallerySettings;
+
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
-  if (!isTestingEnv) { // isTestingEnvironment is not a valid style param and would be removed from the url if we use setStyleParamsInUrl. this removed this protection for testing environment as well
-    setStyleParamsInUrl(styleParams);
-  }
 
   const switchState = () => {
-    const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-    setDimensions(width, window.innerHeight);
-    setGallerySettings({showSide: !showSide});
+    setShowSide(!showSide);
   };
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-      setDimensionsWidth(width);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [setDimensions, setDimensionsWidth, showSide]);
 
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
@@ -71,7 +56,7 @@ export function App() {
         break;
       case GALLERY_EVENTS.GALLERY_CHANGE: //TODO split to an event named "PARTIALY_GROW_GALLERY_PRETTY_PLEASE"
         if(gallerySettings.useBlueprints && eventData.updatedHeight){
-          setDimensionsHeight(eventData.updatedHeight);
+          setDimensions({height: eventData.updatedHeight});
         }
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
@@ -91,13 +76,6 @@ export function App() {
         break;
     }
   }
-
-  const container = {
-    height: gallerySettings.isUnknownDimensions ? '' : window.innerHeight,
-    width: gallerySettings.isUnknownDimensions ? '' : window.innerWidth - (showSide ? SIDEBAR_WIDTH : 0),
-    scrollBase: gallerySettings.isUnknownDimensions ? '' : 0,
-    avoidGallerySelfMeasure: gallerySettings.isAvoidGallerySelfMeasure,
-  };
 
   const addItems = () => {
     const currentItems = getItems();
@@ -126,20 +104,17 @@ export function App() {
       return theItems;
     }
   }
-
   
-    function getTotalItemsCount() {
-      return numberOfItems > 0 ? numberOfItems : Infinity
-    }
-  // if (!blueprintsManager.api) {
-    const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, setDimensionsHeight, getTotalItemsCount});
-    blueprintsManager.init({api: playgroundBlueprintsApi})
-  // }
+  const getTotalItemsCount = () => {
+    return numberOfItems > 0 ? numberOfItems : Infinity
+  }
 
-  function getOrInitBlueprint() {
+  const getOrInitBlueprint = () => {
     if (blueprint) {
       return blueprint;
     } else {
+      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
+      blueprintsManager.init({api: playgroundBlueprintsApi})
       blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
@@ -195,30 +170,43 @@ export function App() {
     };
   }
   
-  function getContainer() {
-    return {...container, ...dimensions};
+  const getContainer = () => {
+    return {scrollBase: 0, ...dimensions};
   }
 
-  function getStyles() {
+  const getStyles = () => {
     return styleParams;
   }
 
-  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() : { items: getItems(),
+  const canRender = ()=> {
+    if (!gallerySettings.useBlueprints || blueprint) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  useEffect(() => {
+    window.addEventListener('resize', setDimensions);
+    return () => {
+      window.removeEventListener('resize', setDimensions);
+    };
+  }, [setDimensions]);
+
+  if (!isTestingEnv) { // isTestingEnvironment is not a valid style param and would be removed from the url if we use setStyleParamsInUrl. this removed this protection for testing environment as well
+    setStyleParamsInUrl(styleParams);
+  }
+
+  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() : 
+  { 
+    items: getItems(),
     options: styleParams,
-    container };
+    container: getContainer() 
+  };
 
-    
-    const canRender = ()=> {
-      if (!gallerySettings.useBlueprints || blueprint) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+  // console.log('Rendering App: ', {styleParams, items, dimensions, showSide, blueprint, blueprintProps})
 
-    if (!canRender()) {
-      return null;
-    }
   return (
     <main className={s.main}>
       {/* <Loader/> */}
@@ -235,7 +223,7 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
-        <ExpandableProGallery
+        {!canRender() ? <div>Waiting for blueprint...</div> : <ExpandableProGallery
           key={`pro-gallery-${JSON.stringify(gallerySettings)}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
@@ -246,7 +234,7 @@ export function App() {
           useBlueprints={gallerySettings.useBlueprints} //Todo - use it react way
           {...getExternalInfoRenderers()}
           {...blueprintProps}
-        />
+        />}
       </section>
     </main>
   );
