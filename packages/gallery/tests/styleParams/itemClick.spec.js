@@ -116,8 +116,8 @@ describe('styleParam - itemClick', () => {
         })
     });
 
-    describe('should play video onClick in gallery only when "itemClick" is "nothing" and "videoPlay" is "onClick"', () => {
-        it('expect to find video element', () => {
+    describe('should play video onClick in gallery only when itemClick is nothing and videoPlay is onClick', () => {
+        it('expect to find video element', async () => {
             Object.assign(initialProps, {
                 items: videoItems
             });
@@ -125,13 +125,15 @@ describe('styleParam - itemClick', () => {
                 itemClick: 'nothing',
                 videoPlay: 'onClick'
             });
-            driver.mount.proGallery(initialProps);
+            driver.mount.proGallery(initialProps);    
+            await driver.update(100);        
             const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
+            await driver.update(100);
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(1);
             driver.detach.proGallery();
         });
-        it('expect not to find video element when "itemClick" is "expand"', () => {
+        it('expect not to find video element when "itemClick" is "expand"', async () => {
             Object.assign(initialProps, {
                 items: videoItems
             });
@@ -140,12 +142,13 @@ describe('styleParam - itemClick', () => {
                 videoPlay: 'onClick'
             });
             driver.mount.proGallery(initialProps);
+            await driver.update(100);
             const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(0);
             driver.detach.proGallery();
         });
-        it('expect not to find video element when "itemClick" is "fullscreen"', () => {
+        it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
             Object.assign(initialProps, {
                 items: videoItems
             });
@@ -154,13 +157,14 @@ describe('styleParam - itemClick', () => {
                 videoPlay: 'onClick'
             });
             driver.mount.proGallery(initialProps);
+            await driver.update(100);
             const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(0);
 
             driver.detach.proGallery();
         });
-        it('expect not to find video element when "itemClick" is "link"', () => {
+        it('expect not to find video element when "itemClick" is "link"', async () => {
             Object.assign(initialProps, {
                 items: videoItems
             });
@@ -169,6 +173,7 @@ describe('styleParam - itemClick', () => {
                 videoPlay: 'onClick'
             });
             driver.mount.proGallery(initialProps);
+            await driver.update(100);
             const item = driver.find.hook('item-wrapper').at(0);
             item.simulate('click');
             expect(driver.find.hook('video_container-video-player-element').length).to.eq(0);
