@@ -4,7 +4,6 @@ import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder'
 import utils from '../../../common/utils';
-import window from '../../../common/window/windowWrapper';
 
 
 const videoControls = [
@@ -78,18 +77,15 @@ class VideoItemWrapper extends ImageItem {
   }
 
   async componentDidMount() {
-    if(!(window && window.VideoItemLoaded)) {
       try {
-        window.VideoItemLoaded = true;
-        const VideoItem = await import('./videoItem');
-        window.VideoItem = VideoItem.default;
+        const VideoItem = await import( /* webpackChunkName: "videoItem" */ './videoItem');
+        this.VideoItem = VideoItem.default;
         if(this.shouldPlayVideo()){
           this.setState({VideoItemLoaded: true});
         }
       } catch(e) {
         console.error('Failed to fetch VideoItem')
       }
-    }
   }
   
 
@@ -98,7 +94,7 @@ class VideoItemWrapper extends ImageItem {
     const showVideoControls = !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
     const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls)
     
-    const VideoItem = window && window.VideoItem;
+    const VideoItem = this.VideoItem;
     if (!this.shouldPlayVideo() || !VideoItem) {
       return [videoPlaceholder, hover]
     }
