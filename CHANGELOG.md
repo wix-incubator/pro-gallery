@@ -1,3 +1,9 @@
+## [v2.0.33](https://pro-gallery-2-0-33.surge.sh) (22/07/2020)
+ 
+#### GALLERY
+ -  fix (videoScrollHelper): do not init scroll helper in ssr
+
+---
 ## [v2.0.32](https://pro-gallery-2-0-32.surge.sh) (22/07/2020)
  
 #### GALLERY
