@@ -1,3 +1,9 @@
+## [v2.0.32](https://pro-gallery-2-0-32.surge.sh) (22/07/2020)
+ 
+#### GALLERY
+ -  avoid using window in videoItem
+
+---
 ## [v2.0.30](https://pro-gallery-2-0-30.surge.sh) (21/07/2020)
  
 #### GALLERY
@@ -14,9 +20,6 @@
 
 ---
 ## [v2.0.28](https://pro-gallery-2-0-28.surge.sh) (21/07/2020)
- 
-#### MAIN
- -  add error message when the default editor is not defined
 
 #### GALLERY
  -  leanGallery: use isVerbose, fix cursor style, and block 'isAccessible'
