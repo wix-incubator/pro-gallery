@@ -1,38 +1,23 @@
 import React from 'react';
+import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isSiteMode, isSEOMode, isPrerenderMode } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
-import utils from '../../common/utils/index.js';
-import window from '../../common/window/windowWrapper';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import { featureManager } from '../helpers/versionsHelper';
 import { GalleryComponent } from '../galleryComponent';
-import {
-  isEditMode,
-  isSiteMode,
-  isSEOMode,
-  isPrerenderMode,
-} from '../../common/window/viewModeWrapper';
-import EVENTS from '../../common/constants/events';
-import PLACEMENTS, { hasBelowPlacement, hasAbovePlacement, hasRightPlacement, hasLeftPlacement, hasHoverPlacement } from '../../common/constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
-import CLICK_ACTIONS from '../../common/constants/itemClick';
-import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
-import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,
   getContainerStyle,
   getImageStyle,
 } from './itemViewStyleProvider';
-import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations.js';
 import VideoItemWrapper from './videos/videoItemWrapper';
 
 
 class ItemView extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.props.actions.eventsListener(EVENTS.ITEM_CREATED, this.props);
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_CREATED, this.props);
 
     this.init();
 
@@ -78,7 +63,7 @@ class ItemView extends GalleryComponent {
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
   setItemLoaded() {
-    this.props.actions.eventsListener(EVENTS.ITEM_LOADED, this.props);
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_LOADED, this.props);
     this.setState({
       loaded: true
     });
@@ -94,13 +79,13 @@ class ItemView extends GalleryComponent {
 
   onMouseOver() {
     if (!utils.isMobile()) {
-      this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, this.props.idx);
     }
   }
 
   onMouseOut() {
     if (!utils.isMobile()) {
-      this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
   }
 
@@ -122,7 +107,7 @@ class ItemView extends GalleryComponent {
   }
 
   handleGalleryItemAction(e) {
-    this.props.actions.eventsListener(EVENTS.ITEM_ACTION_TRIGGERED, this.props, e);
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED, this.props, e);
   }
 
   onItemWrapperClick(e) {
@@ -139,7 +124,7 @@ class ItemView extends GalleryComponent {
     if (utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))) {
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
     }
-    this.props.actions.eventsListener(EVENTS.ITEM_CLICKED, {...this.props, clickTarget}, e);
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_CLICKED, {...this.props, clickTarget}, e);
 
     if (this.shouldUseDirectLink()) {
       return;
@@ -168,7 +153,7 @@ class ItemView extends GalleryComponent {
       useDirectLink;
 
     if (shouldUseDirectLinkMobileSecondClick) {
-      this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
       return true;
     }
     if (useDirectLink && !this.shouldShowHoverOnMobile()) {
@@ -183,9 +168,9 @@ class ItemView extends GalleryComponent {
   handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
       this.handleGalleryItemAction(e);
-      this.props.actions.eventsListener(EVENTS.HOVER_SET, -1);
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     } else {
-      this.props.actions.eventsListener(EVENTS.HOVER_SET, this.props.idx);
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, this.props.idx);
     }
   }
 
@@ -223,16 +208,16 @@ class ItemView extends GalleryComponent {
         isStoreGallery
       } = this.props.styleParams;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
-      if (hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW) {
+      if (hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW) {
         return false;
       }
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
         this.props.customHoverRenderer &&
-        hasHoverPlacement(titlePlacement) &&
-         hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW &&
-        isNewMobileSettings && 
+        GALLERY_CONSTS.hasHoverPlacement(titlePlacement) &&
+         hoveringBehaviour !== GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW &&
+        isNewMobileSettings &&
         (allowDescription || allowTitle || isStoreGallery)
       ) {
         return true;
@@ -257,7 +242,7 @@ class ItemView extends GalleryComponent {
   shouldHover() { //see if this could be decided in the preset
     const { styleParams } = this.props;
     const { alwaysShowHover, previewHover, hoveringBehaviour } = styleParams;
-    const { NEVER_SHOW, APPEARS } = INFO_BEHAVIOUR_ON_HOVER;
+    const { NEVER_SHOW, APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
 
     if (hoveringBehaviour === NEVER_SHOW) {
       return false;
@@ -495,32 +480,32 @@ class ItemView extends GalleryComponent {
   }
 
   getRightInfoElementIfNeeded() {
-    if (hasRightPlacement(this.props.styleParams.titlePlacement)) {
-      return this.getExternalInfoElement(PLACEMENTS.SHOW_ON_THE_RIGHT, 'gallery-item-right-info');
+    if (GALLERY_CONSTS.hasRightPlacement(this.props.styleParams.titlePlacement)) {
+      return this.getExternalInfoElement(GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT, 'gallery-item-right-info');
     } else {
       return null;
     }
   }
 
   getLeftInfoElementIfNeeded() {
-    if (hasLeftPlacement(this.props.styleParams.titlePlacement)) {
-      return this.getExternalInfoElement(PLACEMENTS.SHOW_ON_THE_LEFT, 'gallery-item-left-info');
+    if (GALLERY_CONSTS.hasLeftPlacement(this.props.styleParams.titlePlacement)) {
+      return this.getExternalInfoElement(GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT, 'gallery-item-left-info');
     } else {
       return null;
     }
   }
 
   getBottomInfoElementIfNeeded() {
-    if (hasBelowPlacement(this.props.styleParams.titlePlacement)) {
-      return this.getExternalInfoElement(PLACEMENTS.SHOW_BELOW, 'gallery-item-bottom-info');
+    if (GALLERY_CONSTS.hasBelowPlacement(this.props.styleParams.titlePlacement)) {
+      return this.getExternalInfoElement(GALLERY_CONSTS.placements.SHOW_BELOW, 'gallery-item-bottom-info');
     } else {
       return null;
     }
   }
 
   getTopInfoElementIfNeeded() {
-    if (hasAbovePlacement(this.props.styleParams.titlePlacement)) {
-      return this.getExternalInfoElement(PLACEMENTS.SHOW_ABOVE, 'gallery-item-top-info');
+    if (GALLERY_CONSTS.hasAbovePlacement(this.props.styleParams.titlePlacement)) {
+      return this.getExternalInfoElement(GALLERY_CONSTS.placements.SHOW_ABOVE, 'gallery-item-top-info');
     } else {
       return null;
     }
@@ -566,7 +551,7 @@ class ItemView extends GalleryComponent {
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.NO_CHANGE
+      this.props.styleParams.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
     );
   }
 
@@ -575,7 +560,7 @@ class ItemView extends GalleryComponent {
     const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
     return !itemDoesntHaveLink;
   }
-  
+
   getItemContainerStyles() {
     const { offset, style, styleParams, settings = {} } = this.props;
 
@@ -587,8 +572,8 @@ class ItemView extends GalleryComponent {
       position: 'absolute',
       bottom: 'auto',
       margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
-      cursor: styleParams.itemClick === CLICK_ACTIONS.NOTHING ||
-      (styleParams.itemClick === CLICK_ACTIONS.LINK && itemDoesntHaveLink)
+      cursor: styleParams.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
+      (styleParams.itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
         ? 'default'
         : 'pointer'
     };
@@ -602,7 +587,7 @@ class ItemView extends GalleryComponent {
     };
 
     const customElementSsrStyles = (utils.isSSR() && isPrerenderMode()) ? {opacity: 0} : {}
- 
+
     return { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...customElementSsrStyles };
   }
 
@@ -669,41 +654,41 @@ class ItemView extends GalleryComponent {
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
-        styleParams.hoveringBehaviour === INFO_BEHAVIOUR_ON_HOVER.DISAPPEARS,
+        styleParams.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
 
       //animations
       'animation-slide':
-        isNOTslideshow && imagePlacementAnimation === IMAGE_PLACEMENT_ANIMATIONS.SLIDE,
+        isNOTslideshow && imagePlacementAnimation === GALLERY_CONSTS.imagePlacementAnimations.SLIDE,
 
       //overlay animations
       'hover-animation-fade-in':
-        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.FADE_IN,
+        isNOTslideshow && overlayAnimation === GALLERY_CONSTS.overlayAnimations.FADE_IN,
       'hover-animation-expand':
-        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.EXPAND,
+        isNOTslideshow && overlayAnimation === GALLERY_CONSTS.overlayAnimations.EXPAND,
       'hover-animation-slide-up':
-        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.SLIDE_UP,
+        isNOTslideshow && overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
       'hover-animation-slide-right':
-        isNOTslideshow && overlayAnimation === OVERLAY_ANIMATIONS.SLIDE_RIGHT,
+        isNOTslideshow && overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
 
       //image hover animations
       'zoom-in-on-hover':
         isNOTslideshow &&
-        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.ZOOM_IN,
+        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
       'blur-on-hover':
-        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.BLUR,
+        isNOTslideshow && imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.BLUR,
       'grayscale-on-hover':
         isNOTslideshow &&
-        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.GRAYSCALE,
+        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE,
       'shrink-on-hover':
-        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.SHRINK,
+        isNOTslideshow && imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.SHRINK,
       'invert-on-hover':
-        isNOTslideshow && imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.INVERT,
+        isNOTslideshow && imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.INVERT,
       'color-in-on-hover':
         isNOTslideshow &&
-        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.COLOR_IN,
+        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.COLOR_IN,
       'darkened-on-hover':
         isNOTslideshow &&
-        imageHoverAnimation === IMAGE_HOVER_ANIMATIONS.DARKENED,
+        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
     };
@@ -849,7 +834,7 @@ class ItemView extends GalleryComponent {
   getLinkParams() {
     const { directLink, styleParams, directShareLink } = this.props;
     const isSEO = isSEOMode();
-    if (styleParams.itemClick === CLICK_ACTIONS.LINK) {
+    if (styleParams.itemClick === GALLERY_CONSTS.itemClick.LINK) {
     const { url, target } = directLink || {};
     const noFollowForSEO = this.props.noFollowForSEO;
     const shouldUseNofollow = isSEO && noFollowForSEO;
@@ -859,7 +844,7 @@ class ItemView extends GalleryComponent {
       ? { href: url, target, ...seoLinkParams }
       : {};
     return linkParams;
-  } else if (styleParams.itemClick === CLICK_ACTIONS.FULLSCREEN || styleParams.itemClick === CLICK_ACTIONS.EXPAND){
+  } else if (styleParams.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN || styleParams.itemClick === GALLERY_CONSTS.itemClick.EXPAND){
     // place share link as the navigation item
     const url = directShareLink;
     const shouldUseDirectShareLink = !!url;
@@ -876,7 +861,7 @@ class ItemView extends GalleryComponent {
     //if (there is an url for video items and image items) OR text item (text item do not use media url)
     this.hasRequiredMediaUrl = url || type === 'text';
     //if titlePlacement !== SHOW_ON_HOVER and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
-    const isItemWrapperEmpty = styleParams.titlePlacement !== PLACEMENTS.SHOW_ON_HOVER && !this.hasRequiredMediaUrl;
+    const isItemWrapperEmpty = styleParams.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER && !this.hasRequiredMediaUrl;
     const innerDiv = (
       <div
         className={this.getItemContainerClass()}
@@ -900,8 +885,8 @@ class ItemView extends GalleryComponent {
         {this.getLeftInfoElementIfNeeded()}
         <div
           style={{...(!this.props.styleParams.isSlideshow && getImageStyle(this.props.styleParams)),
-            ...((hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
-            ...((hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
+            ...((GALLERY_CONSTS.hasRightPlacement(this.props.styleParams.titlePlacement)) && {float: 'left'}),
+            ...((GALLERY_CONSTS.hasLeftPlacement(this.props.styleParams.titlePlacement)) && {float: 'right'})
           }}
         >
           {!isItemWrapperEmpty && (<div

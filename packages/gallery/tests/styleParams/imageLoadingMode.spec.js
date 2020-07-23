@@ -1,9 +1,8 @@
+import { GALLERY_CONSTS, GalleryItem } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
-import GALLERY_CONSTS from '../../src/common/constants';
-import GalleryItem from '../../src/components/item/galleryItem';
 import sinon from 'sinon';
 
 describe('styleParam - imageLoadingMode', () => {

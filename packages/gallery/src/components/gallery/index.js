@@ -1,22 +1,15 @@
 import React from 'react';
+import { GALLERY_CONSTS, defaultStyles, dimensionsHelper, addPresetStyles, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
-import dimensionsHelper from '../helpers/dimensionsHelper';
-import defaultStyles from '../../common/defaultStyles';
-import LAZY_LOAD from '../../common/constants/lazyLoad';
-import utils from '../../common/utils';
-import { addPresetStyles } from './presets/presets';
-
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery from './leanGallery/leanGallery';
-
-
 
 export default class BaseGallery extends React.Component {
 
   static propTypes = basePropTypes;
   render() {
-    const lazyLoad = utils.hasNativeLazyLoadSupport() ? LAZY_LOAD.NATIVE : this.props.lazyLoad;
+    const lazyLoad = utils.hasNativeLazyLoadSupport() ? GALLERY_CONSTS.lazyLoad.NATIVE : this.props.lazyLoad;
     const domId = this.props.domId || 'default-dom-id';
     const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
@@ -44,7 +37,7 @@ export default class BaseGallery extends React.Component {
 
     if (isEligibleForLeanGallery(galleryProps)) {
       GalleryComponent = LeanGallery;
-    } 
+    }
 
     return <GalleryComponent {...galleryProps} />
   }

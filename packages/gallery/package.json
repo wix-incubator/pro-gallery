@@ -18,8 +18,7 @@
   "main": "dist/src/index.js",
   "module": "dist/es/src/index.js",
   "files": [
-    "dist",
-    "lib.js"
+    "dist"
   ],
   "scripts": {
     "watch": "PORT=9837 yoshi start",
@@ -38,6 +37,7 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.13.2",
+    "pro-gallery-lib": "^2.0.29",
     "pro-layouts": "2.0.29",
     "react-player": "^1.15.3"
   },

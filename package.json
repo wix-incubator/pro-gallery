@@ -9,7 +9,7 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "watch": "npm run link-packages && lerna run --parallel watch",
-    "link-packages": "cd packages/layouts && yarn link && cd ../gallery && yarn link && yarn link pro-layouts && cd ../playground && yarn link pro-gallery && cd ../ssr-simulator && yarn link pro-gallery && cd ../..",
+    "link-packages": "cd packages/layouts && yarn link && cd ../lib && yarn link && yarn link pro-layouts && yarn link && cd ../gallery && yarn link && yarn link pro-layouts && yarn link pro-gallery-lib && cd ../playground && yarn link pro-gallery && yarn link pro-gallery-lib && cd ../ssr-simulator && yarn link pro-gallery && cd ../..",
     "bootstrap": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
     "deploy": "node scripts/deployToSurge",

@@ -1,10 +1,9 @@
 import React from 'react';
+import { utils } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder'
-import utils from '../../../common/utils';
-
 
 const videoControls = [
     <i
@@ -51,7 +50,7 @@ class VideoItemWrapper extends ImageItem {
     }
     return false;
   }
-  
+
   createVideoItemPlaceholder(showVideoControls) {
     const props = utils.pick(this.props, [
       'alt',
@@ -87,18 +86,18 @@ class VideoItemWrapper extends ImageItem {
         console.error('Failed to fetch VideoItem')
       }
   }
-  
+
 
   render() {
     const hover = this.props.hover;
     const showVideoControls = !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
     const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls)
-    
+
     const VideoItem = this.VideoItem;
     if (!this.shouldPlayVideo() || !VideoItem) {
       return [videoPlaceholder, hover]
     }
-    return <VideoItem {...this.props} videoControls={showVideoControls && videoControls}/>; 
+    return <VideoItem {...this.props} videoControls={showVideoControls && videoControls}/>;
   }
 }
 

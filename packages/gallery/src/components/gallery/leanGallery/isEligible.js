@@ -1,12 +1,9 @@
-import GALLERY_CONSTS from '../../../common/constants/index';
-import {isVerticalPlacement} from '../../../common/constants/placements';
-import { fixedStyles } from '../presets/gridGallery';
+import { GALLERY_CONSTS, NEW_PRESETS, utils } from 'pro-gallery-lib';
 import { formatLeanGalleryStyles } from './leanGallery';
-import utils from '../../../common/utils';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 export const notEligibleReasons = ({items, styles}) => {
-  const s = {...styles, ...fixedStyles, allowLeanGallery: true};
+  const s = {...styles, ...NEW_PRESETS.grid, allowLeanGallery: true};
   const res = [];
   if (String(styles.galleryLayout) !== '2') {
     res.push('not a Grid layout');
@@ -36,7 +33,7 @@ export default ({items, styles}) => {
     styles = formatLeanGalleryStyles(styles);
 
     const allowLeanGallery = !!styles.allowLeanGallery;
-    
+
     if (!allowLeanGallery) {
       return false;
     }
@@ -214,7 +211,7 @@ const fixedStyleParams = {
   itemEnableShadow: false,
   itemClick: [GALLERY_CONSTS.itemClick.NOTHING, GALLERY_CONSTS.itemClick.LINK, GALLERY_CONSTS.itemClick.FULLSCREEN, GALLERY_CONSTS.itemClick.EXPAND],
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
-  titlePlacement: sp => isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
+  titlePlacement: sp => GALLERY_CONSTS.isVerticalPlacement(sp.titlePlacement) || sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
   imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
   loveButton: false,
   loveCounter: false,

@@ -1,8 +1,4 @@
-import LOADING_MODE from '../../common/constants/loadingMode';
-import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
-import utils from '../../common/utils/index.js';
-import window from '../../common/window/windowWrapper';
-import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
+import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 
 class CssScrollHelper {
   constructor() {
@@ -184,8 +180,8 @@ class CssScrollHelper {
           scrollCss +=
           selector +
             `{opacity: 1; background-image: url(${createUrl(
-              URL_SIZES.RESIZED,
-              URL_TYPES.HIGH_RES,
+              GALLERY_CONSTS.urlSizes.RESIZED,
+              GALLERY_CONSTS.urlTypes.HIGH_RES,
             )})}`;
       }
 
@@ -193,28 +189,28 @@ class CssScrollHelper {
       if (
         !utils.hasNativeLazyLoadSupport() &&
         !utils.deviceHasMemoryIssues() &&
-        styleParams.imageLoadingMode === LOADING_MODE.BLUR &&
+        styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.BLUR &&
         (!item.isTransparent || isUnknownWidth) &&
         !item.isDimensionless
       ) {
         scrollCss +=
           createScrollSelectors(this.lowResPadding(), `.image-item`) +
           `{background-image: url(${createUrl(
-            URL_SIZES.RESIZED,
-            URL_TYPES.LOW_RES,
+            GALLERY_CONSTS.urlSizes.RESIZED,
+            GALLERY_CONSTS.urlTypes.LOW_RES,
           )})}`;
       }
       if (
         !utils.hasNativeLazyLoadSupport() &&
         !utils.deviceHasMemoryIssues() &&
-        styleParams.imageLoadingMode === LOADING_MODE.MAIN_COLOR &&
+        styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.MAIN_COLOR &&
         (!item.isTransparent || isUnknownWidth) && //FAKE SSR
         !item.isDimensionless
       ) {
         scrollCss +=
           createScrollSelectors(this.lowResPadding(), ' .image-item') + `{background-size: 0.3px; background-repeat: repeat; background-image: url(${createUrl(
-            URL_SIZES.PIXEL,
-            URL_TYPES.LOW_RES,
+            GALLERY_CONSTS.urlSizes.PIXEL,
+            GALLERY_CONSTS.urlTypes.LOW_RES,
           )})}`;
       }
     }
@@ -244,7 +240,7 @@ class CssScrollHelper {
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
     const scrollAnimation = styleParams.scrollAnimation;
 
-    if (!scrollAnimation || scrollAnimation === SCROLL_ANIMATIONS.NO_EFFECT) {
+    if (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) {
       return '';
     }
 
@@ -256,18 +252,18 @@ class CssScrollHelper {
     let scrollAnimationCss = '';
     const itemTag = utils.hasNativeLazyLoadSupport() ? 'img' : 'canvas';
     // notice: these 2 animations must have the blurry image
-    if (scrollAnimation === SCROLL_ANIMATIONS.MAIN_COLOR) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` ${itemTag}`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ` ${itemTag}`) + `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.BLUR) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` ${itemTag}`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ` ${itemTag}`) + `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.FADE_IN) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.FADE_IN) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -281,7 +277,7 @@ class CssScrollHelper {
         ) + `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.GRAYSCALE) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.GRAYSCALE) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -296,7 +292,7 @@ class CssScrollHelper {
         ) + `{filter: grayscale(0) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.SLIDE_UP) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SLIDE_UP) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: translateY(100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -305,7 +301,7 @@ class CssScrollHelper {
         `{transform: translateY(0) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.EXPAND) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -314,7 +310,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.SHRINK) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -323,7 +319,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.ZOOM_OUT) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ZOOM_OUT) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -337,7 +333,7 @@ class CssScrollHelper {
         ) + `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.ONE_COLOR) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor =
         styleParams.oneColorAnimationColor &&
           styleParams.oneColorAnimationColor.value

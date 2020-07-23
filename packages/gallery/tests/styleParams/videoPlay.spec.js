@@ -1,8 +1,8 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { videoItems } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
-import GALLERY_CONSTS from '../../src/common/constants';
 
 describe('styleParam - videoPlay', () => {
 

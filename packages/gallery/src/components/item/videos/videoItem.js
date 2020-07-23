@@ -1,12 +1,6 @@
 import React from 'react';
-import utils from '../../../common/utils';
-import window from '../../../common/window/windowWrapper';
+import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../../galleryComponent';
-import EVENTS from '../../../common/constants/events';
-import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
-
-
-
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -151,7 +145,7 @@ class VideoItem extends GalleryComponent {
     }
     const url = this.props.videoUrl ?
       this.props.videoUrl :
-      this.props.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO);
+      this.props.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.VIDEO);
     return (
       <PlayerElement
         className={'gallery-item-visible video gallery-item'}
@@ -166,7 +160,7 @@ class VideoItem extends GalleryComponent {
         playing={this.props.playing}
         onEnded={() => {
           this.setState({ playing: false });
-          this.props.actions.eventsListener(EVENTS.VIDEO_ENDED, this.props);
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ENDED, this.props);
         }}
         onPause={() => {
           this.setState({ playing: false });
@@ -187,8 +181,8 @@ class VideoItem extends GalleryComponent {
               muted: !this.props.styleParams.videoSound,
               preload: 'metadata',
               poster: this.props.createUrl(
-                URL_SIZES.RESIZED,
-                URL_TYPES.HIGH_RES,
+                GALLERY_CONSTS.urlSizes.RESIZED,
+                GALLERY_CONSTS.urlTypes.HIGH_RES,
               ),
               style: videoDimensionsCss,
               type: 'video/mp4',
@@ -202,7 +196,7 @@ class VideoItem extends GalleryComponent {
     );
   }
 
-  
+
 
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
@@ -252,8 +246,8 @@ class VideoItem extends GalleryComponent {
               ? {backgroundColor: 'black'}
               : {
                   backgroundImage: `url(${this.props.createUrl(
-                    URL_SIZES.RESIZED,
-                    URL_TYPES.HIGH_RES,
+                    GALLERY_CONSTS.urlSizes.RESIZED,
+                    GALLERY_CONSTS.urlTypes.HIGH_RES,
                   )})`,
                   ...restOfDimensions,
                 }

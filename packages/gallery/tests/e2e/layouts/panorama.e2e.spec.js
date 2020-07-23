@@ -1,12 +1,12 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
-import GALLERY_CONSTS from '../../../src/common/constants';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('panorama - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -35,5 +35,5 @@ describe('panorama - e2e', () => {
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  
+
 })

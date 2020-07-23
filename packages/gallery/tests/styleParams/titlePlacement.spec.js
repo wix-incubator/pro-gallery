@@ -1,8 +1,8 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container, customRenderers } from '../drivers/mocks/styles';
-import PLACEMENTS from '../../src/common/constants/placements';
 
 describe('styleParam - titlePlacement', () => {
 
@@ -23,7 +23,7 @@ describe('styleParam - titlePlacement', () => {
       galleryLayout: 2,
       onRow:false,
       scrollDirection:0,
-      titlePlacement: PLACEMENTS.SHOW_BELOW
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW
     })
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.gallery-item-bottom-info');
@@ -35,7 +35,7 @@ describe('styleParam - titlePlacement', () => {
       galleryLayout: 2,
       onRow:false,
       scrollDirection:0,
-      titlePlacement: PLACEMENTS.SHOW_ABOVE
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE
     })
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.gallery-item-top-info');
@@ -47,7 +47,7 @@ describe('styleParam - titlePlacement', () => {
       galleryLayout: 2,
       onRow:false,
       scrollDirection:0,
-      titlePlacement: PLACEMENTS.SHOW_ON_HOVER
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER
     })
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.gallery-item-hover');

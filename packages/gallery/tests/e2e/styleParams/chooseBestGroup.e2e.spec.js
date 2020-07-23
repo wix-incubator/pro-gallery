@@ -1,12 +1,12 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import GALLERY_CONSTS from '../../../src/common/constants';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('chooseBestGroup - e2e', () => {
   let driver;
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();

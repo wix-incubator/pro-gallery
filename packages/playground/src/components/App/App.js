@@ -9,7 +9,7 @@ import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import {BlueprintsManager} from 'pro-gallery'
+import { BlueprintsManager } from 'pro-gallery-lib'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 
 // import Loader from './loader';
@@ -35,7 +35,6 @@ const galleryReadyEvent = new Event('galleryReady');
 
 export function App() {
   const {setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
-  
   const {showSide} = gallerySettings;
 
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
@@ -104,8 +103,9 @@ export function App() {
       return theItems;
     }
   }
-  
-  const getTotalItemsCount = () => {
+
+
+    const getTotalItemsCount = () => {
     return numberOfItems > 0 ? numberOfItems : Infinity
   }
 
@@ -169,7 +169,7 @@ export function App() {
       customSlideshowInfoRenderer: slideshowInfoElement,
     };
   }
-  
+
   const getContainer = () => {
     return {scrollBase: 0, ...dimensions};
   }
@@ -178,13 +178,16 @@ export function App() {
     return styleParams;
   }
 
-  const canRender = ()=> {
-    if (!gallerySettings.useBlueprints || blueprint) {
-      return true;
-    } else {
-      return false;
+
+
+
+    const canRender = ()=> {
+      if (!gallerySettings.useBlueprints || blueprint) {
+        return true;
+      } else {
+        return false;
+      }
     }
-  }
 
 
   useEffect(() => {
@@ -198,11 +201,11 @@ export function App() {
     setStyleParamsInUrl(styleParams);
   }
 
-  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() : 
-  { 
+  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() :
+  {
     items: getItems(),
     options: styleParams,
-    container: getContainer() 
+    container: getContainer()
   };
 
   // console.log('Rendering App: ', {styleParams, items, dimensions, showSide, blueprint, blueprintProps})

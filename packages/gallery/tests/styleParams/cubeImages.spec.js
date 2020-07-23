@@ -1,8 +1,8 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
-import CUBE_TYPE from '../../src/common/constants/cubeType';
 
 describe('styleParam - cubeImages', () => {
 
@@ -21,7 +21,7 @@ describe('styleParam - cubeImages', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
-      cubeType: CUBE_TYPE.CROP,
+      cubeType: GALLERY_CONSTS.cubeType.CROP,
     })
     driver.mount.proGallery(initialProps);
     const itemWrappers = driver.find.selector('.cube-type-fill');
@@ -33,7 +33,7 @@ describe('styleParam - cubeImages', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
-      cubeType: CUBE_TYPE.CROP,
+      cubeType: GALLERY_CONSTS.cubeType.CROP,
     })
     driver.mount.proGallery(initialProps);
     const itemWrappers = driver.find.selector('.cube-type-fill');

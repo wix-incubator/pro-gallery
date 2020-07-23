@@ -1,10 +1,6 @@
 import React from 'react';
-import LOADING_MODE from '../../common/constants/loadingMode';
-import LAZY_LOAD from '../../common/constants/lazyLoad';
+import { GALLERY_CONSTS, utils, isSEOMode, isPrerenderMode } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
-import { isSEOMode, isPrerenderMode } from '../../common/window/viewModeWrapper';
-import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
-import utils from '../../common/utils';
 
 const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
 export default class ImageItem extends GalleryComponent {
@@ -46,7 +42,7 @@ export default class ImageItem extends GalleryComponent {
       clearTimeout(this.removeLowResImageTimeoutId);
     }
   }
-  
+
 
   getImageContainerClassNames() {
     const {
@@ -62,7 +58,7 @@ export default class ImageItem extends GalleryComponent {
       styleParams.cubeImages && styleParams.cubeType === 'fit'
         ? 'grid-fit'
         : '',
-      styleParams.imageLoadingMode === LOADING_MODE.COLOR
+      styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR
         ? 'load-with-color'
         : '',
     ].join(' ');
@@ -112,8 +108,8 @@ export default class ImageItem extends GalleryComponent {
 
     const { marginLeft, marginTop, ...restOfDimensions } =
     imageDimensions || {};
-    const useImageTag = lazyLoad === LAZY_LOAD.NATIVE || isSEOMode();
-    
+    const useImageTag = lazyLoad === GALLERY_CONSTS.lazyLoad.NATIVE || isSEOMode();
+
 
     const image = () => {
       const imagesComponents =[]
@@ -132,26 +128,26 @@ export default class ImageItem extends GalleryComponent {
           height: '100%',
         } : {};
         switch (styleParams.imageLoadingMode) {
-          case LOADING_MODE.BLUR:
-            const imageStyles = { 
-              ...restOfDimensions, 
-              backgroundSize: '0.3px', 
-              backgroundRepeat: 'repeat', 
+          case GALLERY_CONSTS.loadingMode.BLUR:
+            const imageStyles = {
+              ...restOfDimensions,
+              backgroundSize: '0.3px',
+              backgroundRepeat: 'repeat',
               transition: 'all 3s ease-in-out'
             };
             preload = <img
               alt=''
               key={'image_preload_blur-' + id}
-              src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+              src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.LOW_RES)}
               style={{...imageStyles, ...preloadStyles}}
               {...preloadProps}
             />
             break;
-          case LOADING_MODE.MAIN_COLOR:
+          case GALLERY_CONSTS.loadingMode.MAIN_COLOR:
             preload = <img
               alt=''
               key={'image_preload_main_color-' + id}
-              src={createUrl(URL_SIZES.PIXEL, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.LOW_RES)}
+              src={createUrl(GALLERY_CONSTS.urlSizes.PIXEL, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.LOW_RES)}
               style={{...restOfDimensions, ...preloadStyles}}
               {...preloadProps}
             />
@@ -168,7 +164,7 @@ export default class ImageItem extends GalleryComponent {
           className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
           data-hook='gallery-item-image-img'
           alt={alt ? alt : 'untitled image'}
-          src={createUrl(URL_SIZES.RESIZED, isSEOMode() ? URL_TYPES.SEO : URL_TYPES.HIGH_RES)}
+          src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES)}
           loading="lazy"
           onLoad={this.handleHighResImageLoad}
           style={restOfDimensions}
@@ -177,7 +173,7 @@ export default class ImageItem extends GalleryComponent {
 
         imagesComponents.push(highres)
       }
-            
+
       return imagesComponents;
     }
 
@@ -194,7 +190,7 @@ export default class ImageItem extends GalleryComponent {
         data-hook='gallery-item-image-canvas'
         role="img"
         alt={alt ? alt : 'untitled image'}
-        data-src={createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES)}
+        data-src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.HIGH_RES)}
         style={restOfDimensions}
         {...imageProps}
       />

@@ -1,8 +1,8 @@
-import GalleryDriver from '../../drivers/reactDriver';
-import GalleryView from '../../../src/components/gallery/proGallery/galleryView';
-import utils from '../../../src/common/utils/index';
+import { utils } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import GalleryDriver from '../../drivers/reactDriver';
+import GalleryView from '../../../src/components/gallery/proGallery/galleryView';
 
 describe('Gallery View', () => {
   let driver;

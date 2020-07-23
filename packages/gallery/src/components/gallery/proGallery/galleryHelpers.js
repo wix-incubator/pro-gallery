@@ -1,4 +1,4 @@
-import window from '../../../common/window/windowWrapper';
+import { window } from 'pro-gallery-lib';
 
 export function isGalleryInViewport(container) {
   const haveAllVariablesForViewPortCalc = !!(

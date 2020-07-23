@@ -1,15 +1,11 @@
 import React from 'react';
-import utils from '../../../common/utils';
+import { GALLERY_CONSTS, window, utils, isEditMode, isPreviewMode } from 'pro-gallery-lib';
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import window from '../../../common/window/windowWrapper';
-import { isEditMode, isPreviewMode } from '../../../common/window/viewModeWrapper';
 import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
-import EVENTS from '../../../common/constants/events';
 import { GalleryComponent } from '../../galleryComponent';
-import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 
 class SlideshowView extends GalleryComponent {
   constructor(props) {
@@ -260,7 +256,7 @@ class SlideshowView extends GalleryComponent {
       this.lastCurrentItem = this.state.currentIdx;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
       this.props.actions.eventsListener(
-        EVENTS.CURRENT_ITEM_CHANGED,
+        GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED,
         this.props.items[this.state.currentIdx],
       );
     }
@@ -303,7 +299,7 @@ class SlideshowView extends GalleryComponent {
   scrollToThumbnail(itemIdx, scrollDuration = 400) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
-    this.props.actions.eventsListener(EVENTS.THUMBNAIL_CLICKED, this.props);
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.THUMBNAIL_CLICKED, this.props);
 
     this.isAutoScrolling = true;
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
@@ -550,8 +546,8 @@ class SlideshowView extends GalleryComponent {
               height: thumbnailSize,
               margin: thumbnailSpacings,
               backgroundImage: `url(${thumbnailItem.createUrl(
-                URL_SIZES.THUMBNAIL,
-                URL_TYPES.HIGH_RES,
+                GALLERY_CONSTS.urlSizes.THUMBNAIL,
+                GALLERY_CONSTS.urlTypes.HIGH_RES,
               )})`,
             };
             const thumbnailOffset = oneRow

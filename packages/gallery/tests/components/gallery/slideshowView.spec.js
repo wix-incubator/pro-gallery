@@ -1,9 +1,8 @@
-import { viewModeWrapper } from '../../../src/common/window/viewModeWrapper';
+import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/reactDriver'
 import SlideshowView from '../../../src/components/gallery/proGallery/slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import VIEW_MODE from '../../../src/common/constants/viewMode';
 
 describe('Slideshow View', () => {
   let driver;
@@ -218,7 +217,7 @@ describe('Slideshow View', () => {
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       const stub = sinon.stub(SlideshowView.prototype, 'nextItem');
-      viewModeWrapper.setViewMode(VIEW_MODE.PREVIEW);
+      viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
       driver.mount(SlideshowView, galleryViewProps);
       expect(stub.called).to.equal(false);
       clock.tick(900);
@@ -226,7 +225,7 @@ describe('Slideshow View', () => {
       clock.tick(300);
       expect(stub.called).to.equal(true);
       stub.restore();
-      viewModeWrapper.setViewMode(VIEW_MODE.SITE);
+      viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
     });
 
   });

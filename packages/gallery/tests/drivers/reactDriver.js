@@ -1,13 +1,9 @@
 import { Layouter } from 'pro-layouts';
-import GalleryItem from '../../src/components/item/galleryItem';
+import { GALLERY_CONSTS, GalleryItem, ItemsHelper, window, utils } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainerNew'; //import GalleryContainer before the connect (without redux)
-import { ItemsHelper } from '../../src/components/helpers/itemsHelper';
-import PLACEMENTS from '../../src/common/constants/placements';
 import React from 'react';
-import utils from '../../src/common/utils';
-import window from '../../src/common/window/windowWrapper';
 import Adapter from 'enzyme-adapter-react-16';
 import ProGallery from '../../src/components/gallery';
 
@@ -79,7 +75,7 @@ class galleryDriver {
       thumbnailSize: utils.isMobile() ? 90 : 120,
       galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,
-      titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       itemEnableShadow: false,
       itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
       itemShadowBlur: 20,

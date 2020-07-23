@@ -1,9 +1,8 @@
 import React from 'react';
-import { ProGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
-import { GALLERY_CONSTS } from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
 
 const UNKNOWN_CONTAINER = {
