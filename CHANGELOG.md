@@ -1,3 +1,9 @@
+## [v2.0.34](https://pro-gallery-2-0-34.surge.sh) (23/07/2020)
+ 
+#### LIB
+ -  moved GALLERY_CONSTS, GalleryItem, utils, windowWrapper, viewModeWrapper, Blueprints, presets,  defaultStyles, dimensionsHelper, ItemsHelper, processLayouts, versionsHelper, GalleryGroup to pro-gallery-lib.
+
+---
 ## [v2.0.33](https://pro-gallery-2-0-33.surge.sh) (22/07/2020)
  
 #### GALLERY
