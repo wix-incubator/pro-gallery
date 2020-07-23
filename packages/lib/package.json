@@ -21,6 +21,7 @@
     "watch": "yoshi start",
     "start": "yoshi start",
     "build": "yoshi build",
+    "pretest": "yoshi build",
     "test": "yoshi test",
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
