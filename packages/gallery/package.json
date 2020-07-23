@@ -38,7 +38,7 @@
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.13.2",
     "pro-gallery-lib": "^2.0.29",
-    "pro-layouts": "2.0.29",
+    "pro-layouts": "2.0.4",
     "react-player": "^1.15.3"
   },
   "peerDependencies": {
