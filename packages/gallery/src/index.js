@@ -1,7 +1,7 @@
 import './components/styles/gallery.scss';
 
 export { default as ProGallery } from './components/gallery/index';
-export { default as ProBlueprintsGallery } from './components/gallery/proGallery/proBlueprintsGallery';
+export { default as ProBlueprintsGallery } from './components/gallery/blueprintsIndex';
 export { default as gallerySettings } from './settings/merged';
 export { default as LeanGallery } from './components/gallery/leanGallery/leanGallery';
 export { default as isEligibleForLeanGallery, notEligibleReasons } from './components/gallery/leanGallery/isEligible';
