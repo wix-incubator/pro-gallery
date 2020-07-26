@@ -61,7 +61,6 @@ class VideoItemWrapper extends ImageItem {
       'styleParams',
       'createUrl',
       'settings',
-      'lazyLoad',
       'actions'
     ]);
 

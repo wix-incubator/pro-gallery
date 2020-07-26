@@ -183,9 +183,6 @@ function SideBar({ items , blueprintsManager}) {
               <Form.Item label="Use Blueprints" labelAlign="left">
                 <Switch checked={!!gallerySettings.useBlueprints} onChange={e => setGallerySettings({ useBlueprints: e })} />
               </Form.Item>
-              <Form.Item label="Use Native Lazy Loading" labelAlign="left">
-                <Switch checked={gallerySettings.lazyLoad === GALLERY_CONSTS.lazyLoad.NATIVE} onChange={e => setGallerySettings({ lazyLoad: e ? GALLERY_CONSTS.lazyLoad.NATIVE : GALLERY_CONSTS.lazyLoad.CSS })} />
-              </Form.Item>
             </Form>
             <Form layout="vertical">
               <Form.Item label="View Mode">

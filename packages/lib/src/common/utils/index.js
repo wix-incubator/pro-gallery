@@ -609,15 +609,6 @@ class Utils {
     animateScroll();
   }
 
-  hasNativeLazyLoadSupport() {
-    return true;
-
-    // try {
-    //   return 'loading' in HTMLImageElement.prototype;
-    // } catch (error) {
-    //   return false;
-    // }
-  }
 }
 
 export default new Utils();
