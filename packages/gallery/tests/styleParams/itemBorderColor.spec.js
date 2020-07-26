@@ -1,8 +1,8 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver'
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
-import GALLERY_CONSTS from '../../src/common/constants';
 
 describe('styleParam - itemBorderColor', () => {
 
@@ -26,7 +26,7 @@ describe('styleParam - itemBorderColor', () => {
     })
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
-    
+
     expect(item.props().style.borderColor).to.eq('rgba(0,0,0,1)');
     driver.detach.proGallery();
   });

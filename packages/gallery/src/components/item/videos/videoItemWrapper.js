@@ -1,10 +1,9 @@
-import React, {lazy, Suspense} from 'react';
+import React from 'react';
+import { utils } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder'
-import utils from '../../../common/utils';
-
 
 const videoControls = [
     <i
@@ -24,19 +23,21 @@ const videoControls = [
   ];
 
 
-const VideoItem = lazy(() => import(/* webpackChunkName: "videoItem" */ './videoItem'))
 
 class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
-    this.canVideoPlayInGallery = this.canVideoPlayInGallery.bind(this);
+    this.shouldPlayVideo = this.shouldPlayVideo.bind(this);
     this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(this);
-
+    this.state = {VideoItemLoaded: false}
   }
 
-  canVideoPlayInGallery() {
+  shouldPlayVideo() {
     const { videoPlay, itemClick } = this.props.styleParams;
     const { hasLink } = this.props;
+    if(this.props.isVideoPlaceholder) {
+      return false;
+    }
     if (this.props.idx === this.props.playingVideoIdx ||
       this.props.idx === this.props.nextVideoIdx) {
       if (
@@ -49,7 +50,7 @@ class VideoItemWrapper extends ImageItem {
     }
     return false;
   }
-  
+
   createVideoItemPlaceholder(showVideoControls) {
     const props = utils.pick(this.props, [
       'alt',
@@ -73,19 +74,29 @@ class VideoItemWrapper extends ImageItem {
       />
   }
 
+  async componentDidMount() {
+      try {
+        const VideoItem = await import( /* webpackChunkName: "videoItem" */ './videoItem');
+        this.VideoItem = VideoItem.default;
+        if(this.shouldPlayVideo()){
+          this.setState({VideoItemLoaded: true});
+        }
+      } catch(e) {
+        console.error('Failed to fetch VideoItem')
+      }
+  }
+
 
   render() {
     const hover = this.props.hover;
     const showVideoControls = !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
     const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls)
 
-    if (!this.canVideoPlayInGallery() || this.props.isVideoPlaceholder) {
+    const VideoItem = this.VideoItem;
+    if (!this.shouldPlayVideo() || !VideoItem) {
       return [videoPlaceholder, hover]
     }
-
-    return <Suspense fallback={[videoPlaceholder, hover]}>
-            <VideoItem {...this.props} videoControls={showVideoControls && videoControls}/>
-        </Suspense> 
+    return <VideoItem {...this.props} videoControls={showVideoControls && videoControls}/>;
   }
 }
 

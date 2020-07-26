@@ -1,10 +1,9 @@
-import INFO_TYPE from '../../common/constants/infoType';
-import { hasVerticalPlacement, hasHorizontalPlacement, hasHoverPlacement, hasAbovePlacement, hasBelowPlacement, isRightPlacement} from '../../common/constants/placements';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 export function getContainerStyle(styleParams) {
   return {
-    ...((styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND ||
-      hasHoverPlacement(styleParams.titlePlacement)) &&
+    ...((styleParams.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND ||
+      GALLERY_CONSTS.hasHoverPlacement(styleParams.titlePlacement)) &&
       {
         ...getBorderStyle(
           styleParams.itemBorderRadius,
@@ -33,9 +32,9 @@ function boxShadow(styleParams) {
 
 export function getImageStyle(styleParams) {
   return {
-    ...(!(hasHoverPlacement(styleParams.titlePlacement)) &&
-      (styleParams.imageInfoType === INFO_TYPE.NO_BACKGROUND ||
-        styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) && {
+    ...(!(GALLERY_CONSTS.hasHoverPlacement(styleParams.titlePlacement)) &&
+      (styleParams.imageInfoType === GALLERY_CONSTS.infoType.NO_BACKGROUND ||
+        styleParams.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND) && {
         ...getBorderStyle(
           styleParams.itemBorderRadius,
           styleParams.itemBorderWidth,
@@ -59,16 +58,16 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
 
 export function getOuterInfoStyle(placement, styleParams, mediaHeight, textBoxHeight) {
   const styles = {
-    ...((hasHorizontalPlacement(placement)) && {
+    ...((GALLERY_CONSTS.hasHorizontalPlacement(placement)) && {
       height: mediaHeight,
-      float: isRightPlacement(placement) ? 'right' : 'left',
+      float: GALLERY_CONSTS.isRightPlacement(placement) ? 'right' : 'left',
     }),
-    ...((hasVerticalPlacement(placement)) && {
+    ...((GALLERY_CONSTS.hasVerticalPlacement(placement)) && {
       height: textBoxHeight,
       boxSizing: 'content-box'
     })
   };
-  if (styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND) {
+  if (styleParams.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND) {
     return {
       ...styles,
       ...getBorderStyle(
@@ -76,10 +75,10 @@ export function getOuterInfoStyle(placement, styleParams, mediaHeight, textBoxHe
         styleParams.textBoxBorderWidth,
         styleParams.textBoxBorderColor,
       ),
-      ...(hasAbovePlacement(placement) && {
+      ...(GALLERY_CONSTS.hasAbovePlacement(placement) && {
         marginBottom: styleParams.textImageSpace,
       }),
-      ...(hasBelowPlacement(placement) && {
+      ...(GALLERY_CONSTS.hasBelowPlacement(placement) && {
         marginTop: styleParams.textImageSpace,
       }),
     };
@@ -103,8 +102,8 @@ function getInnerInfoStylesRightOrLeft(styleParams, infoWidth) {
 
 export function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth) {
   const commonStyles = {
-    ...((styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND ||
-      styleParams.imageInfoType === INFO_TYPE.ATTACHED_BACKGROUND) &&
+    ...((styleParams.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND ||
+      styleParams.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND) &&
       styleParams.textBoxFillColor &&
       styleParams.textBoxFillColor.value && {
         backgroundColor: styleParams.textBoxFillColor.value,
@@ -113,8 +112,8 @@ export function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)
     boxSizing: 'border-box',
   };
 
-  const infoAboveOrBelow = hasVerticalPlacement(placement);
-  const infoRightOrLeft = hasHorizontalPlacement(placement);
+  const infoAboveOrBelow = GALLERY_CONSTS.hasVerticalPlacement(placement);
+  const infoRightOrLeft = GALLERY_CONSTS.hasHorizontalPlacement(placement);
 
   return {
     ...commonStyles,

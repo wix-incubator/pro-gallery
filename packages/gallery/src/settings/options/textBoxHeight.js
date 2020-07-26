@@ -1,5 +1,4 @@
-import {GALLERY_CONSTS, INPUT_TYPES} from '../utils/constants';
-import { hasVerticalPlacement } from '../../common/constants/placements';
+import { GALLERY_CONSTS, INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Text Box Height (pixels)',
@@ -7,7 +6,7 @@ export default {
   isRelevant: (styleParams) => (styleParams.isVertical &&
     styleParams.groupSize === 1 &&
     !styleParams.oneRow) &&
-    hasVerticalPlacement(styleParams.titlePlacement),
+    GALLERY_CONSTS.hasVerticalPlacement(styleParams.titlePlacement),
   type: INPUT_TYPES.NUMBER,
   default: 200,
   min: 0,

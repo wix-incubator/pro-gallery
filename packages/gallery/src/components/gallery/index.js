@@ -1,15 +1,9 @@
 import React from 'react';
+import { defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
-import dimensionsHelper from '../helpers/dimensionsHelper';
-import defaultStyles from '../../common/defaultStyles';
-import utils from '../../common/utils';
-import { addPresetStyles } from './presets/presets';
-
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery from './leanGallery/leanGallery';
-
-
 
 export default class BaseGallery extends React.Component {
 
@@ -42,7 +36,7 @@ export default class BaseGallery extends React.Component {
 
     if (isEligibleForLeanGallery(galleryProps)) {
       GalleryComponent = LeanGallery;
-    } 
+    }
 
     return <GalleryComponent {...galleryProps} />
   }

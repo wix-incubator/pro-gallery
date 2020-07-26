@@ -70,15 +70,14 @@ const isFormFactorDesktop = viewModeWrapper.isFormFactorDesktop;
 const isFormFactorTouch = viewModeWrapper.isFormFactorTouch;
 const isPrerenderMode = viewModeWrapper.isPrerenderMode;
 
-export {
-  viewModeWrapper,
-  isSiteMode,
-  isEditMode,
-  isPreviewMode,
-  isSEOMode,
-  isFormFactorMobile,
-  isFormFactorTablet,
-  isFormFactorDesktop,
-  isFormFactorTouch,
-  isPrerenderMode,
-};
+export { viewModeWrapper };
+export { isSiteMode };
+export { isEditMode };
+export { isPreviewMode };
+export { isSEOMode };
+export { isFormFactorMobile };
+export { isFormFactorTablet };
+export { isFormFactorDesktop };
+export { isFormFactorTouch };
+export { isPrerenderMode };
+

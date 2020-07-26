@@ -1,4 +1,4 @@
-import utils from '../../common/utils';
+import { utils } from 'pro-gallery-lib';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -232,7 +232,7 @@ function isWithinPaddingHorizontally({
 
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = to - from;
-  
+
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');

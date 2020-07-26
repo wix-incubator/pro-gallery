@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "2.0.27",
+  "version": "2.0.34",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -21,6 +21,7 @@
     "watch": "yoshi start",
     "start": "yoshi start",
     "build": "yoshi build",
+    "pretest": "yoshi build",
     "test": "yoshi test",
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
@@ -42,6 +43,7 @@
     "yoshi-style-dependencies": "^4.1.0"
   },
   "dependencies": {
+    "chai": "^4.2.0",
     "pro-layouts": "2.0.4",
     "yoshi-template-intro": "^4.1.0"
   },

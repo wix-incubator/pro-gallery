@@ -1,12 +1,11 @@
 //Yonatan Hattav Jun21
-
-import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
 import { testImages } from '../../drivers/mocks/images-mock';
 import ItemView from '../../../src/components/item/itemView';
-import EVENTS from '../../../src/common/constants/events';
+import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder';
 
 describe('Item View', () => {
   let driver;
@@ -57,7 +56,7 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
-      expect(stub.calledWith(EVENTS.ITEM_CLICKED)).to.be.true;
+      expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_CLICKED)).to.be.true;
       stub.restore();
     });
 
@@ -70,7 +69,7 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
-      expect(stub.calledWith(EVENTS.ITEM_ACTION_TRIGGERED)).to.be.true;
+      expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED)).to.be.true;
       stub.restore();
     });
 

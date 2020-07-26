@@ -1,7 +1,37 @@
-## [v2.0.28](https://pro-gallery-2-0-28.surge.sh) (21/07/2020)
+## [v2.0.34](https://pro-gallery-2-0-34.surge.sh) (23/07/2020)
  
-#### MAIN
- -  add error message when the default editor is not defined
+#### LIB
+ -  moved GALLERY_CONSTS, GalleryItem, utils, windowWrapper, viewModeWrapper, Blueprints, presets,  defaultStyles, dimensionsHelper, ItemsHelper, processLayouts, versionsHelper, GalleryGroup to pro-gallery-lib.
+
+---
+## [v2.0.33](https://pro-gallery-2-0-33.surge.sh) (22/07/2020)
+ 
+#### GALLERY
+ -  fix (videoScrollHelper): do not init scroll helper in ssr
+
+---
+## [v2.0.32](https://pro-gallery-2-0-32.surge.sh) (22/07/2020)
+ 
+#### GALLERY
+ -  avoid using window in videoItem
+
+---
+## [v2.0.30](https://pro-gallery-2-0-30.surge.sh) (21/07/2020)
+ 
+#### GALLERY
+ -  mobile 1st tap hover only if has title or description
+
+---
+## [v2.0.29](https://pro-gallery-2-0-29.surge.sh) (21/07/2020)
+ 
+#### GALLERY
+ -  item-container opacity 0 on prerender mode
+
+#### LAYOUTS
+ -  fix: gaps in vertical layouts
+
+---
+## [v2.0.28](https://pro-gallery-2-0-28.surge.sh) (21/07/2020)
 
 #### GALLERY
  -  leanGallery: use isVerbose, fix cursor style, and block 'isAccessible'

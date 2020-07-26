@@ -1,6 +1,6 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
-import GALLERY_CONSTS from '../../../src/common/constants';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -19,7 +19,7 @@ describe('leanGallery - e2e', () => {
     imageInfoType: GALLERY_CONSTS.infoType.DONT_SHOW,
     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   };
-  
+
   beforeEach(async () => {
     driver = new GalleryDriver();
     await driver.launchBrowser();
@@ -37,7 +37,7 @@ describe('leanGallery - e2e', () => {
     await driver.waitFor.timer(200);
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
-  });  
+  });
 
 
   it('should NOT render leanGallery (beacause scrollDirection: HORIZONTAL)', async () => {
@@ -49,7 +49,7 @@ describe('leanGallery - e2e', () => {
     await driver.waitFor.timer(200);
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
-  }); 
+  });
 
   it('should NOT render leanGallery (beacause titlePlacement: SHOW_ON_THE_RIGHT)', async () => {
     await driver.openPage({
@@ -60,7 +60,7 @@ describe('leanGallery - e2e', () => {
     await driver.waitFor.timer(200);
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
-  }); 
+  });
 
   it('should NOT render leanGallery (beacause imageHoverAnimation: ZOOM_IN)', async () => {
     await driver.openPage({
@@ -71,5 +71,5 @@ describe('leanGallery - e2e', () => {
     await driver.waitFor.timer(200);
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
-  }); 
+  });
 })

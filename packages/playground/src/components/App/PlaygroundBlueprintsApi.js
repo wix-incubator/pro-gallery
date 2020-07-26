@@ -40,6 +40,10 @@ export default class PlaygroundsBlueprintsApi {
     this.onBlueprintReadyCallback(blueprint);
   }
 
+  isUsingCustomInfoElements(){
+    return true;
+  }
+
   // finalizeHeightByStructure({
   //   styleParams,
   //   isInfinite,

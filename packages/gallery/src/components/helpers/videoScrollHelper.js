@@ -1,10 +1,8 @@
+import { GALLERY_CONSTS, dimensionsHelper, window } from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
 } from './scrollHelper';
-import EVENTS from '../../common/constants/events';
-import window from '../../common/window/windowWrapper';
-import dimensionsHelper from './dimensionsHelper';
 
 const VIDEO_EVENTS = {
   SCROLL: 'SCROLL',
@@ -75,15 +73,15 @@ class VideoScrollHelper {
       case VIDEO_EVENTS.SCROLL:
         this.onScroll(eventData);
         break;
-      case EVENTS.ITEM_ACTION_TRIGGERED:
+      case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
         //case VIDEO_EVENTS.clicked:
         this.itemClicked(eventData.idx);
         break;
-      case EVENTS.HOVER_SET:
+      case GALLERY_CONSTS.events.HOVER_SET:
         //case VIDEO_EVENTS.hovered:
         this.itemHovered(eventData);
         break;
-      case EVENTS.VIDEO_ENDED:
+      case GALLERY_CONSTS.events.VIDEO_ENDED:
         //case VIDEO_EVENTS.ended:
         this.videoEnded(eventData.idx);
         break;

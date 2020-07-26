@@ -1,19 +1,13 @@
+import { Layouter } from 'pro-layouts';
+import { GALLERY_CONSTS, dimensionsHelper, ItemsHelper, window, utils, isEditMode, isSEOMode, isPreviewMode, isSiteMode } from 'pro-gallery-lib';
 import React from 'react';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import { addLayoutStyles } from '../../helpers/layoutHelper';
-import { ItemsHelper } from '../../helpers/itemsHelper';
-import dimensionsHelper from '../../helpers/dimensionsHelper';
+import addLayoutStyles from '../../helpers/layoutHelper';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
-import window from '../../../common/window/windowWrapper';
 import ScrollIndicator from './galleryScrollIndicator';
-import { Layouter } from 'pro-layouts';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
-import utils from '../../../common/utils';
-import { isEditMode, isSEOMode, isPreviewMode, isSiteMode } from '../../../common/window/viewModeWrapper';
-import EVENTS from '../../../common/constants/events';
-import { URL_TYPES, URL_SIZES } from '../../../common/constants/urlTypes';
 import checkNewGalleryProps from '../../helpers/isNew';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js'
 
@@ -133,12 +127,12 @@ export class GalleryContainer extends React.Component {
     return visibleItems;
   }
 
-  
+
   componentDidMount() {
     this.loadItemsDimensionsIfNeeded();
     this.scrollToItem(this.props.currentIdx, false, true, 0);
     this.handleNewGalleryStructure();
-    this.eventsListener(EVENTS.APP_LOADED, {});
+    this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.getMoreItemsIfNeeded(0);
     this.videoScrollHelper.initializePlayState();
 
@@ -264,8 +258,8 @@ export class GalleryContainer extends React.Component {
           this.preloadedItems[id].src = item.preload_url;
         } else {
           this.preloadedItems[id].src = item.createUrl(
-            URL_SIZES.PRELOAD,
-            URL_TYPES.LOW_RES,
+            GALLERY_CONSTS.urlSizes.PRELOAD,
+            GALLERY_CONSTS.urlTypes.LOW_RES,
           );
         }
 
@@ -374,7 +368,7 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
-    this.eventsListener(EVENTS.GALLERY_CHANGE, onGalleryChangeData);
+    this.eventsListener(GALLERY_CONSTS.events.GALLERY_CHANGE, onGalleryChangeData);
 
     if (needToHandleShowMoreClick) {
       this.setState({ needToHandleShowMoreClick: false });
@@ -412,7 +406,7 @@ export class GalleryContainer extends React.Component {
       itemClick: styles.itemClick,
       oneRow: styles.oneRow,
     }, true, this.items);
-    
+
     const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
     if (shouldUseScrollCss) {
       this.getScrollCss({
@@ -584,7 +578,7 @@ export class GalleryContainer extends React.Component {
         cb: this.setPlayingIdxState,
       }
 
-      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, isNew.addedItems || isNew.items, this.items);
+      this.videoScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure, (!utils.isSSR() && (isNew.addedItems || isNew.items)), this.items);
 
       if (isNew.items) {
         this.loadItemsDimensionsIfNeeded();
@@ -750,7 +744,7 @@ export class GalleryContainer extends React.Component {
 
   toggleLoadMoreItems() {
     this.eventsListener(
-      EVENTS.LOAD_MORE_CLICKED,
+      GALLERY_CONSTS.events.LOAD_MORE_CLICKED,
       this.galleryStructure.galleryItems,
     );
     const showMoreClickedAtLeastOnce = true;
@@ -818,7 +812,7 @@ export class GalleryContainer extends React.Component {
       eventName,
       eventData,
     });
-    if (eventName === EVENTS.HOVER_SET) {
+    if (eventName === GALLERY_CONSTS.events.HOVER_SET) {
       this.currentHoverChangeEvent.currentHoverIdx = eventData;
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
@@ -854,7 +848,7 @@ export class GalleryContainer extends React.Component {
         //only when the last item turns visible we should try getting more items
         if (this.state.items.length < this.props.totalItemsCount) {
           this.gettingMoreItems = true;
-          this.eventsListener(EVENTS.NEED_MORE_ITEMS, this.state.items.length);
+          this.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, this.state.items.length);
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
             this.gettingMoreItems = false;

@@ -1,4 +1,4 @@
-import { isEditMode } from '../../common/window/viewModeWrapper';
+import { isEditMode } from 'pro-gallery-lib';
 
 
 class VideoScrollHelperWrapper {

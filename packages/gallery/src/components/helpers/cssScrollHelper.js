@@ -1,8 +1,4 @@
-import LOADING_MODE from '../../common/constants/loadingMode';
-import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
-import utils from '../../common/utils/index.js';
-import window from '../../common/window/windowWrapper';
-import { URL_TYPES, URL_SIZES } from '../../common/constants/urlTypes';
+import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 
 class CssScrollHelper {
   constructor() {
@@ -201,7 +197,7 @@ class CssScrollHelper {
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
     const scrollAnimation = styleParams.scrollAnimation;
 
-    if (!scrollAnimation || scrollAnimation === SCROLL_ANIMATIONS.NO_EFFECT) {
+    if (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) {
       return '';
     }
 
@@ -212,18 +208,18 @@ class CssScrollHelper {
 
     let scrollAnimationCss = '';
     // notice: these 2 animations must have the blurry image
-    if (scrollAnimation === SCROLL_ANIMATIONS.MAIN_COLOR) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.BLUR) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.FADE_IN) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.FADE_IN) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -237,7 +233,7 @@ class CssScrollHelper {
         ) + `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.GRAYSCALE) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.GRAYSCALE) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -252,7 +248,7 @@ class CssScrollHelper {
         ) + `{filter: grayscale(0) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.SLIDE_UP) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SLIDE_UP) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: translateY(100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -261,7 +257,7 @@ class CssScrollHelper {
         `{transform: translateY(0) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.EXPAND) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -270,7 +266,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.SHRINK) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
@@ -279,7 +275,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.ZOOM_OUT) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ZOOM_OUT) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -293,7 +289,7 @@ class CssScrollHelper {
         ) + `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === SCROLL_ANIMATIONS.ONE_COLOR) {
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor =
         styleParams.oneColorAnimationColor &&
           styleParams.oneColorAnimationColor.value

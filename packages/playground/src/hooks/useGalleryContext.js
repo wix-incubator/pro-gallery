@@ -2,15 +2,27 @@ import {useContext} from 'react';
 import {GalleryContext} from './GalleryContext';
 import {getInitialStyleParams} from '../constants/styleParams';
 import { addPresetStyles } from 'pro-gallery';
-
+import {SIDEBAR_WIDTH} from '../constants/consts';
 
 export function useGalleryContext(blueprintsManager) {
   const [context, setContext] = useContext(GalleryContext);
 
-  const setDimensions = (width, height) => {
-    const newContext = { dimensions:
-      width,
-      height,
+  const setShowSide = (newShowSide) => {
+    setGallerySettings({showSide: newShowSide});
+//    const widthChange = SIDEBAR_WIDTH * (newShowSide ? -1 : 1)
+
+  //  setDimensions({width: calcGalleryDimensions().width + widthChange});
+    setDimensions()
+  };
+
+  const setDimensions = (config = {}) => {
+    const {width, height} = config;
+    const newContext = { 
+      dimensions: {
+        ...calcGalleryDimensions(),
+        ...(width && {width}),
+        ...(height && {height}),
+      }
     };
 
     if(getGallerySettings().useBlueprints) {
@@ -19,31 +31,6 @@ export function useGalleryContext(blueprintsManager) {
 
     setContext(newContext);
   };
-
-  const setDimensionsWidth = (width) => {
-    const newContext = {
-      dimensions: {...context.dimensions, width }  
-    };
-
-    if(getGallerySettings().useBlueprints) {
-      blueprintsManager.createBlueprint({...newContext})
-    }
-
-    setContext(newContext);
-  };
-
-  const setDimensionsHeight = (height) => {
-    const newContext = {
-      dimensions: {...context.dimensions, height }  
-    };
-
-    if(getGallerySettings().useBlueprints) {
-      blueprintsManager.createBlueprint({...newContext})
-    }
-
-    setContext(newContext);
-  };
-
 
   const setPreset = newPreset => {
     const newContext = {
@@ -58,10 +45,6 @@ export function useGalleryContext(blueprintsManager) {
     setContext(newContext);
   };
 
-
-  const setShowSide = () => {
-    setContext({showSide: !context.showSide});
-  };
 
   const setStyleParams = (newProp, value) => {
 
@@ -96,13 +79,8 @@ export function useGalleryContext(blueprintsManager) {
   const setGallerySettings = _gallerySettings => {
     const gallerySettings = {...getGallerySettings(), ..._gallerySettings};
     const newContext = {gallerySettings}
-    if(getGallerySettings().useBlueprints) {
-      blueprintsManager.createBlueprint({...newContext})
-    }
-
     setContext(newContext);
     try {
-      console.log('Saving gallerySettings to localStorage', gallerySettings)
       localStorage.gallerySettings = JSON.stringify(gallerySettings);
     } catch (e) {
       console.error('Could not save gallerySettings', e);
@@ -123,12 +101,23 @@ export function useGalleryContext(blueprintsManager) {
     }
   }
 
+  const calcGalleryDimensions = () => {
+    let dimensions = {};
+    const showSide = !!getGallerySettings().showSide
+    dimensions.width = !showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
+    dimensions.height = window.innerHeight;
+
+    return dimensions;
+  };
+  
+  
+
   const res = {
     showSide: context.showSide,
     setShowSide,
     preset: context.preset,
     setPreset,
-    styleParams: addPresetStyles(context.styleParams), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
+    styleParams: addPresetStyles(context.styleParams || getInitialStyleParams()), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setStyleParams,
     items: context.items,
     setItems,
@@ -138,10 +127,8 @@ export function useGalleryContext(blueprintsManager) {
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
-    dimensions: context.dimensions,
+    dimensions: context.dimensions || calcGalleryDimensions(),
     setDimensions,
-    setDimensionsHeight,
-    setDimensionsWidth
   };
 
   return res;

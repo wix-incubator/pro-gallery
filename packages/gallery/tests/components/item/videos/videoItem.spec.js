@@ -1,11 +1,10 @@
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import GalleryDriver from '../../../drivers/reactDriver';
 import { testVideos } from '../../../drivers/mocks/images-mock';
 import sinon from 'sinon';
 import VideoItem from '../../../../src/components/item/videos/videoItem';
 import VideoItemWrapper from '../../../../src/components/item/videos/videoItemWrapper';
 import { expect } from 'chai';
-import utils from '../../../../src/common/utils';
-import { URL_TYPES, URL_SIZES } from '../../../../src/common/constants/urlTypes';
 
 describe('Video Item ', () => {
   let driver;
@@ -113,12 +112,12 @@ describe('Video Item ', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.selector('ReactPlayer').props().url).equal(
-      sampleItemViewProps.createUrl(URL_SIZES.RESIZED, URL_TYPES.VIDEO),
+      sampleItemViewProps.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.VIDEO),
     );
     expect(
       driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
     ).equal(
-      sampleItemViewProps.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES),
+      sampleItemViewProps.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.HIGH_RES),
     );
     Object.assign(sampleItemViewProps, {
       videoUrl: 'https://www.youtube.com/watch?v=2J5GzHoKl1Q',
@@ -130,7 +129,7 @@ describe('Video Item ', () => {
     expect(
       driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
     ).equal(
-      sampleItemViewProps.createUrl(URL_SIZES.RESIZED, URL_TYPES.HIGH_RES),
+      sampleItemViewProps.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.HIGH_RES),
     );
   });
 
