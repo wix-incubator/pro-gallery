@@ -236,6 +236,7 @@ function SideBar({ items , blueprintsManager}) {
 
         <div className={s.code}>
           <CodePanel />
+          <a className={s.report} target="_blank" href="https://github.com/wix/pro-gallery/issues">report an issue</a>
         </div>
 
       </div>
