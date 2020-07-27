@@ -94,16 +94,44 @@ export default class LeanGallery extends React.Component {
     const { styles } = this.props;
     const { gridStyle, numberOfImagesPerRow, imageMargin } = styles;
 
-    // const minmaxFix = 0.75; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
-    const minmaxFix = 1;
+    const minmaxFix = 1; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
     const itemSize = this.calcItemSize() * minmaxFix;
-
-    const gridTemplateColumns = gridStyle === 1 ? `repeat(${numberOfImagesPerRow}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
+    // debugger;
+    let numberOfColumns = this.calcNumberOfColumns();
+    const useFixedColumns = numberOfColumns > 0 || gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW;
+    numberOfColumns = numberOfColumns > 0 ? numberOfColumns : numberOfImagesPerRow;
+    const gridTemplateColumns = useFixedColumns ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
 
     return {
       gridTemplateColumns,
       gridGap: `${imageMargin}px`
     };
+  }
+
+  calcNumberOfColumns() {
+    // debugger;
+    const { galleryWidth } = this.props.container;
+    if(!galleryWidth) {
+      return 0;
+    }
+
+    const gallerySize = this.calcItemSize();
+    let numOfCols = 1;
+    if (this.props.styles.fixedColumns > 0) {
+      numOfCols = this.props.styles.fixedColumns;
+    } else {
+      // find the number of columns that makes each column width the closet to the gallerySize
+      const numOfColsFloat = galleryWidth / gallerySize;
+      const roundFuncs = [Math.floor, Math.ceil];
+      const diffs = roundFuncs
+        .map(func => func(numOfColsFloat)) //round to top, round to bottom
+        .map(n => Math.round(galleryWidth / n)) //width of each col
+        .map(w => Math.abs(gallerySize - w)); //diff from gallerySize
+      const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the gallerySize
+      numOfCols = roundFunc(numOfColsFloat) || 1;
+    }
+    
+    return numOfCols;
   }
 
   createImageStyle(imageSize) {
@@ -195,7 +223,7 @@ export default class LeanGallery extends React.Component {
   }
 
   createContainerStyles(clickable) {
-    let { height = null } = this.state.itemStyle;
+    const { height = null } = this.state.itemStyle;
 
     return {
       ...this.createItemBorder(),
