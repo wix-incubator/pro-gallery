@@ -96,11 +96,9 @@ export default class LeanGallery extends React.Component {
 
     const minmaxFix = 1; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
     const itemSize = this.calcItemSize() * minmaxFix;
-    // debugger;
-    let numberOfColumns = this.calcNumberOfColumns();
-    const useFixedColumns = numberOfColumns > 0 || gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW;
-    numberOfColumns = numberOfColumns > 0 ? numberOfColumns : numberOfImagesPerRow;
-    const gridTemplateColumns = useFixedColumns ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
+
+    const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? numberOfImagesPerRow : this.calcNumberOfColumns();
+    const gridTemplateColumns = numberOfColumns > 0 ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
 
     return {
       gridTemplateColumns,
@@ -109,7 +107,6 @@ export default class LeanGallery extends React.Component {
   }
 
   calcNumberOfColumns() {
-    // debugger;
     const { galleryWidth } = this.props.container;
     if(!galleryWidth) {
       return 0;
