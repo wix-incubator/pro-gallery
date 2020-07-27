@@ -1,3 +1,12 @@
+## [v2.0.35](https://pro-gallery-2-0-35.surge.sh) (27/07/2020)
+ 
+#### PLAYGROUND
+ -  Add a report an issue link
+
+#### GALLERY
+ -  Remove css lazy load code
+
+---
 ## [v2.0.34](https://pro-gallery-2-0-34.surge.sh) (23/07/2020)
  
 #### LIB
