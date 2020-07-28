@@ -19,14 +19,17 @@ export default class LeanGallery extends React.Component {
   // #region Lifecycle functions
   componentDidMount() {
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
+    this.measureIfNeeded();
+    this.setState({
+      numberOfColumns: this.calcNumberOfColumns(this.props)
+    });
   }
 
-  componentDidUpdate(prevProps) {
-    this.measureIfNeeded();
-
-    if (this.props.container.galleryWidth !== prevProps.container.galleryWidth) {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.container.galleryWidth !== nextProps.container.galleryWidth) {
+      this.measureIfNeeded();
       this.setState({
-        numberOfColumns: this.calcNumberOfColumns()
+        numberOfColumns: this.calcNumberOfColumns(nextProps)
       });
     }
   }
@@ -47,16 +50,17 @@ export default class LeanGallery extends React.Component {
     };
   }
 
-  calcNumberOfColumns() {
-    const { galleryWidth } = this.props.container;
+  calcNumberOfColumns(props) {
+    const { galleryWidth } = props.container;
+
     if(!galleryWidth) {
       return 0;
     }
 
     const gallerySize = this.calcItemContainerSize();
     let numOfCols = 1;
-    if (this.props.styles.fixedColumns > 0) {
-      numOfCols = this.props.styles.fixedColumns;
+    if (props.styles.fixedColumns > 0) {
+      numOfCols = props.styles.fixedColumns;
     } else {
       // find the number of columns that makes each column width the closet to the gallerySize
       const numOfColsFloat = galleryWidth / gallerySize;
@@ -77,7 +81,6 @@ export default class LeanGallery extends React.Component {
   calcItemContainerSize() {
     const { styles, container } = this.props;
     const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio } = styles;
-
     let itemSize;
 
     if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.PIXELS && gallerySizePx > 0) {
@@ -136,8 +139,10 @@ export default class LeanGallery extends React.Component {
   // #region Image wrapper
   createImageWrapperStyle(item) {
     const { styles } = this.props;
+    
     if (this.state.itemStyle.width && styles.cubeType !== GALLERY_CONSTS.resizeMethods.FIT) {
-      return this.state.itemStyle
+      //image is croped
+      return this.state.itemStyle;
     } else if (!(this.state.itemStyle.width > 0)) {
       return {
         width: '100%',
@@ -204,23 +209,25 @@ export default class LeanGallery extends React.Component {
 
   createImageStyle(imageWrapperStyle) {
     const { width = '100%', height = 'auto' } = imageWrapperStyle;
-    const { styles } = this.props;
-    let borderStyle;
-
-    if(styles.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND) {
-      borderStyle = {
-        borderStyle: 'solid',
-        borderWidth: styles.itemBorderWidth,
-        borderColor: styles.itemBorderColor.value,
-        borderRadius: styles.itemBorderRadius,
-        boxSizing: 'border-box'
-      }
-    }
 
     return {
       width,
       height,
-      ...borderStyle
+      ...this.createImageBorder()
+    }
+  }
+
+  createImageBorder() {
+    const { styles } = this.props;
+
+    if(styles.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND) {
+      return {
+        boxSizing: 'border-box',
+        borderStyle: 'solid',
+        borderWidth: styles.itemBorderWidth,
+        borderColor: styles.itemBorderColor.value,
+        borderRadius: styles.itemBorderRadius,
+      }
     }
   }
   // #endregion
@@ -292,10 +299,9 @@ export default class LeanGallery extends React.Component {
         {items.map((item, itemIdx) => {
           const linkParams = this.createLinkParams(item);
           const clickable = (linkParams && itemClick === GALLERY_CONSTS.itemClick.LINK) || ([GALLERY_CONSTS.itemClick.EXPAND, GALLERY_CONSTS.itemClick.FULLSCREEN].includes(itemClick)) || this.isMetadataLinkExists(item);
-          const imageWrapperStyle = this.createImageWrapperStyle(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
           const itemProps = {...itemData, ...item.metaData, style: this.state.itemStyle, styleParams: styles};
-
+          const imageWrapperStyle = this.createImageWrapperStyle(item);
           const texts = placement => (typeof customInfoRenderer === 'function') && (styles.titlePlacement === placement) && (
             <div className={`gallery-item-common-info gallery-item-${placement === GALLERY_CONSTS.placements.SHOW_ABOVE ? `top` : `bottom`}-info`} style={getInnerInfoStyle(placement, styles)} >{customInfoRenderer(itemProps, placement)}</div>
           );

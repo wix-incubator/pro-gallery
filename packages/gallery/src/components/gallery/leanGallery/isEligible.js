@@ -1,6 +1,6 @@
 import { NEW_PRESETS, utils } from 'pro-gallery-lib';
 import { formatLeanGalleryStyles } from './leanGallery';
-import {handledStyleParams, fixedStyleParams} from './consts';
+import { handledStyleParams, fixedStyleParams } from './consts';
 //example: http://pro-gallery.surge.sh/?titlePlacement=DONT_SHOW&itemClick=nothing&allowHover=false&galleryLayout=2&allowLeanGallery=true
 
 const MAX_ITEMS_COUNT = 25;
