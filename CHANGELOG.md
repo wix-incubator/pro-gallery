@@ -1,3 +1,12 @@
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
 ## [v2.0.35](https://pro-gallery-2-0-35.surge.sh) (27/07/2020)
  
 #### PLAYGROUND
