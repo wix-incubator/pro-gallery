@@ -16,7 +16,7 @@ class Utils {
   }
 
   shouldUseCache() {
-    return !isEditMode() && !isPreviewMode();
+    return !isEditMode() && !isPreviewMode() && !this.isSSR();
   }
 
   isUndefined(something) {
