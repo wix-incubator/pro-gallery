@@ -41,6 +41,20 @@ export default class LeanGallery extends React.Component {
 
   componentDidMount() {
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
+    this.measureIfNeeded();
+    this.setState({
+      numberOfColumns: this.calcNumberOfColumns(this.props)
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.measureIfNeeded();
+
+    if (this.props.container.galleryWidth !== nextProps.container.galleryWidth) {
+      this.setState({
+        numberOfColumns: this.calcNumberOfColumns(nextProps)
+      });
+    }
   }
 
   resizeUrl({ item }) {
@@ -105,16 +119,16 @@ export default class LeanGallery extends React.Component {
     };
   }
 
-  calcNumberOfColumns() {
-    const { galleryWidth } = this.props.container;
+  calcNumberOfColumns(props) {
+    const { galleryWidth } = props.container;
     if(!galleryWidth) {
       return 0;
     }
 
     const gallerySize = this.calcItemSize();
     let numOfCols = 1;
-    if (this.props.styles.fixedColumns > 0) {
-      numOfCols = this.props.styles.fixedColumns;
+    if (props.styles.fixedColumns > 0) {
+      numOfCols = props.styles.fixedColumns;
     } else {
       // find the number of columns that makes each column width the closet to the gallerySize
       const numOfColsFloat = galleryWidth / gallerySize;
@@ -264,16 +278,6 @@ export default class LeanGallery extends React.Component {
     return {
       ...styles,
       externalInfoHeight: styles.textBoxHeight
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    this.measureIfNeeded();
-
-    if (this.props.container.galleryWidth !== prevProps.container.galleryWidth) {
-      this.setState({
-        numberOfColumns: this.calcNumberOfColumns()
-      });
     }
   }
 
