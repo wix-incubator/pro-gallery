@@ -48,9 +48,8 @@ export default class LeanGallery extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.measureIfNeeded();
-
     if (this.props.container.galleryWidth !== nextProps.container.galleryWidth) {
+      this.measureIfNeeded();
       this.setState({
         numberOfColumns: this.calcNumberOfColumns(nextProps)
       });
