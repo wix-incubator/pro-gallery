@@ -28,7 +28,8 @@ export default class LeanGallery extends React.Component {
     this.eventsListener = this.eventsListener.bind(this);
 
     this.state = {
-      itemStyle: {}
+      itemStyle: {},
+      numberOfColumns: 0
     };
   }
 
@@ -94,10 +95,8 @@ export default class LeanGallery extends React.Component {
     const { styles } = this.props;
     const { gridStyle, numberOfImagesPerRow, imageMargin } = styles;
 
-    const minmaxFix = 1; //this fix is meant to compensate for the css grid ability to use the number as a minimum only (the pro-gallery is trying to get as close as possible to this number)
-    const itemSize = this.calcItemSize() * minmaxFix;
-
-    const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? numberOfImagesPerRow : this.calcNumberOfColumns();
+    const itemSize = this.calcItemSize();
+    const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? numberOfImagesPerRow : this.state.numberOfColumns;
     const gridTemplateColumns = numberOfColumns > 0 ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
 
     return {
@@ -268,8 +267,14 @@ export default class LeanGallery extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.measureIfNeeded();
+
+    if (this.props.container.galleryWidth !== prevProps.container.galleryWidth) {
+      this.setState({
+        numberOfColumns: this.calcNumberOfColumns()
+      });
+    }
   }
 
   isMetadataLinkExists(item) {
