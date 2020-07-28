@@ -2,6 +2,19 @@
  
 #### MAIN
  -  update changelog.md
+ -  update changelog.md
+
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### MAIN
+ -  update changelog.md
 
 #### GALLERY
  -  leanGallery: added logic of calcNumberOfColumns
