@@ -73,7 +73,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams, isUnknownWidth }) {
+  calcScrollCss({ domId, items, styleParams }) {
     if (!(items && items.length)) {
       return [];
     }
@@ -97,7 +97,7 @@ class CssScrollHelper {
       maxStep;
     return items
       .map(item =>
-        this.calcScrollCssForItem({ domId, item, styleParams, isUnknownWidth }),
+        this.calcScrollCssForItem({ domId, item, styleParams }),
       )
   }
 

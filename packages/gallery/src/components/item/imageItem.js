@@ -131,7 +131,7 @@ export default class ImageItem extends GalleryComponent {
               ...restOfDimensions,
               backgroundSize: '0.3px',
               backgroundRepeat: 'repeat',
-              transition: 'all 3s ease-in-out'
+              transition: 'all 1s ease-in-out'
             };
             preload = <img
               alt=''

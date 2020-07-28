@@ -110,7 +110,7 @@ class GalleryView extends GalleryComponent {
   }
 
   createGallery(showMore) {
-    const { itemsLoveData, styleParams, container, galleryStructure, isUnknownWidth, getVisibleItems } = this.props;
+    const { itemsLoveData, styleParams, container, galleryStructure, getVisibleItems } = this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
@@ -131,7 +131,6 @@ class GalleryView extends GalleryComponent {
           ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
-          isUnknownWidth,
         }),
       ),
     );
@@ -159,7 +158,7 @@ class GalleryView extends GalleryComponent {
           style={{
             margin: styleParams.galleryMargin + 'px',
             height: galleryHeight,
-            width: this.props.isUnknownWidth ? '100%' : this.props.container.galleryWidth - styleParams.imageMargin * 2,
+            width: this.props.container.galleryWidth - styleParams.imageMargin * 2,
             overflow: 'visible',
             position: 'relative',
           }}
