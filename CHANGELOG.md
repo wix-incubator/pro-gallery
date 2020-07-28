@@ -1,3 +1,46 @@
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### MAIN
+ -  update changelog.md
+ -  update changelog.md
+
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### MAIN
+ -  update changelog.md
+
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
+## [v2.0.35](https://pro-gallery-2-0-35.surge.sh) (27/07/2020)
+ 
+#### PLAYGROUND
+ -  Add a report an issue link
+
+#### GALLERY
+ -  Remove css lazy load code
+
+---
 ## [v2.0.34](https://pro-gallery-2-0-34.surge.sh) (23/07/2020)
  
 #### LIB

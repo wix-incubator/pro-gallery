@@ -19,7 +19,6 @@ export default class BlueprintsManager {
   }
 
   async createBlueprint(params) {
-    console.count('>>>>>>>>>>requestingBlueprint from ' + this.id); //TODO - remove when done :D
 
     this.currentState.totalItemsCount = params.totalItemsCount || this.api.getTotalItemsCount && this.api.getTotalItemsCount()  || this.currentState.totalItemsCount;
     
@@ -30,7 +29,6 @@ export default class BlueprintsManager {
     const {blueprint, changedParams} = blueprints.createBlueprint(params, this.currentState, this.existingBlueprint, this.id, this.currentState.isUsingCustomInfoElements);
 
     const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
-    console.log('>>>did blueprint actually change for: ',  this.id,'?', blueprintChanged);
 
     this.updateLastParamsIfNeeded(params, changedParams);
 
@@ -46,7 +44,7 @@ export default class BlueprintsManager {
       items = await this.api.fetchMoreItems(currentItemLength);
       if (items) {
         this.createBlueprint({items})
-        //work with the new items...
+        // work with the new items...
       }
     } else if (this.existingBlueprint.styles.slideshowLoop) {
       this.duplicateGalleryItems();
@@ -72,7 +70,7 @@ export default class BlueprintsManager {
     dimensions = {...dimensions, ...container}
     dimensions =  await this.fetchDimensionsIfNeeded(dimensions);
     items =  await this.fetchItemsIfNeeded(items);
-    styles =  await this.fetchStylesIfNeeded(styles); //can be async... TODO
+    styles =  await this.fetchStylesIfNeeded(styles); // can be async... TODO
 
     return {dimensions, items, styles, domId}
   }
@@ -90,7 +88,7 @@ export default class BlueprintsManager {
     }
 
     if (shouldFetchDimensions(dimensions)) {
-      //dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
+      // dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
       dimensions = (this.api.fetchDimensions && await this.api.fetchDimensions()) || this.currentState.dimensions;
     }
 
@@ -109,7 +107,7 @@ export default class BlueprintsManager {
     }
 
     if (shouldFetchItems(items)) {
-      //items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
+      // items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
       items = (this.api.fetchItems && await this.api.fetchItems()) || this.currentState.items;
     }
 
@@ -122,14 +120,14 @@ export default class BlueprintsManager {
 
     const shouldFetchStyles = (_styles) => {
       let should = true;
-      if(_styles && Object.keys(_styles).length > 0) { //TODO - should check if they are ready styles and use ClientLib if not?
+      if(_styles && Object.keys(_styles).length > 0) { // TODO - should check if they are ready styles and use ClientLib if not?
         should = false
       }
 
       return should;
     }
     if (shouldFetchStyles(styles)) {
-      //styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
+      // styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
       styles = this.api.fetchStyles && await this.api.fetchStyles() || this.currentState.styles;
     }
 

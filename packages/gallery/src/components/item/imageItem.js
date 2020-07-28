@@ -95,7 +95,6 @@ export default class ImageItem extends GalleryComponent {
       createUrl,
       id,
       settings,
-      lazyLoad,
       styleParams,
     } = this.props;
     const { isHighResImageLoaded } = this.state;
@@ -108,8 +107,7 @@ export default class ImageItem extends GalleryComponent {
 
     const { marginLeft, marginTop, ...restOfDimensions } =
     imageDimensions || {};
-    const useImageTag = lazyLoad === GALLERY_CONSTS.lazyLoad.NATIVE || isSEOMode();
-
+    
 
     const image = () => {
       const imagesComponents =[]
@@ -177,26 +175,7 @@ export default class ImageItem extends GalleryComponent {
       return imagesComponents;
     }
 
-    const canvas = () => (
-      <canvas
-        key={
-          (styleParams.cubeImages && styleParams.cubeType === 'fill'
-            ? 'cubed-'
-            : '') + 'image'
-        }
-        className={
-          'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'
-        }
-        data-hook='gallery-item-image-canvas'
-        role="img"
-        alt={alt ? alt : 'untitled image'}
-        data-src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.HIGH_RES)}
-        style={restOfDimensions}
-        {...imageProps}
-      />
-    );
-
-    return useImageTag ? image : canvas
+    return image;
   }
 
   render() {
