@@ -37,8 +37,7 @@ export default class LeanGallery extends React.Component {
 
   // #region Gallery
   createGalleryStyle() {
-    const { styles } = this.props;
-    const { gridStyle, numberOfImagesPerRow, imageMargin } = styles;
+    const { gridStyle, numberOfImagesPerRow, imageMargin, cubeImages } = this.props.styles;
 
     const itemSize = this.calcItemContainerSize();
     const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? numberOfImagesPerRow : this.state.numberOfColumns;
@@ -46,30 +45,39 @@ export default class LeanGallery extends React.Component {
 
     return {
       gridTemplateColumns,
-      gridGap: `${imageMargin}px`
+      gridGap: `${imageMargin}px`,
+      ...(cubeImages === false ? {
+        gridAutoRows: '1px',
+        gridGap: 0,
+        columnGap: `${imageMargin}px`,
+        backgroundColor: 'yellow'
+      } : {})
     };
   }
 
   calcNumberOfColumns(props) {
     const { galleryWidth } = props.container;
+    const { cubeImages } = props.styles;
 
     if(!galleryWidth) {
       return 0;
     }
 
-    const gallerySize = this.calcItemContainerSize();
+    let itemSize = this.calcItemContainerSize();
+    itemSize = cubeImages === false ? this.fixItemSizeOfMasonryVertical(itemSize) : itemSize;
+
     let numOfCols = 1;
     if (props.styles.fixedColumns > 0) {
       numOfCols = props.styles.fixedColumns;
     } else {
-      // find the number of columns that makes each column width the closet to the gallerySize
-      const numOfColsFloat = galleryWidth / gallerySize;
+      // find the number of columns that makes each column width the closet to the itemSize
+      const numOfColsFloat = galleryWidth / itemSize;
       const roundFuncs = [Math.floor, Math.ceil];
       const diffs = roundFuncs
         .map(func => func(numOfColsFloat)) //round to top, round to bottom
         .map(n => Math.round(galleryWidth / n)) //width of each col
-        .map(w => Math.abs(gallerySize - w)); //diff from gallerySize
-      const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the gallerySize
+        .map(w => Math.abs(itemSize - w)); //diff from itemSize
+      const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the itemSize
       numOfCols = roundFunc(numOfColsFloat) || 1;
     }
     
@@ -94,13 +102,23 @@ export default class LeanGallery extends React.Component {
     return container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
   }
 
-  createItemContainerStyle(clickable) {
+  createItemContainerStyle(clickable, item) {
     const { height = null } = this.state.itemStyle;
+
+    const { imageMargin, cubeImages } = this.props.styles;
+
+    const masonryVerticalStyle = cubeImages === false ? {
+      gridRowEnd: `span ${this.calcMasonryVerticalItemHeight(item)}`,
+      marginBottom: `${imageMargin}px`,
+      // height: this.calcMasonryVerticalItemHeight(item) - imageMargin
+      height: 'auto'
+    } : {};
 
     return {
       ...this.createItemContainerBorder(),
       ...(height ? {height: this.calcItemContainerHeight()} : {height: 'auto', textAlign: 'center'}),
-      cursor: clickable ? 'pointer' : 'default'
+      cursor: clickable ? 'pointer' : 'default',
+      ...masonryVerticalStyle,
     }
   }
   
@@ -134,15 +152,26 @@ export default class LeanGallery extends React.Component {
       };
     }
   }
+
+  calcMasonryVerticalItemHeight(item) {
+    const ratio = get(item, 'width') / get(item, 'height');
+    const itemSize = this.fixItemSizeOfMasonryVertical(this.calcItemContainerSize());
+    const height = Math.round(itemSize / ratio);
+
+    return height;
+  }
   // #endregion
 
   // #region Image wrapper
   createImageWrapperStyle(item) {
-    const { styles } = this.props;
-    
-    if (this.state.itemStyle.width && styles.cubeType !== GALLERY_CONSTS.resizeMethods.FIT) {
+    const { cubeType, cubeImages } = this.props.styles;
+
+    if (this.state.itemStyle.width && cubeType !== GALLERY_CONSTS.resizeMethods.FIT) {
       //image is croped
-      return this.state.itemStyle;
+      return {
+        ...this.state.itemStyle, 
+        height: cubeImages === false ? this.calcMasonryVerticalItemHeight(item) : this.state.itemStyle.height
+      };
     } else if (!(this.state.itemStyle.width > 0)) {
       return {
         width: '100%',
@@ -151,6 +180,7 @@ export default class LeanGallery extends React.Component {
     }
 
     const {width, height} = this.state.itemStyle;
+
     const imageWidth = get(item, 'width');
     const imageHeight = get(item, 'height');
     const imageRatio = imageWidth / imageHeight;
@@ -178,7 +208,7 @@ export default class LeanGallery extends React.Component {
   // #region Image
   resizeUrl({ item }) {
     const { styles, resizeMediaUrl } = this.props;
-    const { cubeType, imageQuality, cubeRatio } = styles;
+    const { cubeType, imageQuality, cubeRatio, cubeImages } = styles;
     const { itemStyle } = this.state;
 
     const { url, mediaUrl, src } = item;
@@ -186,7 +216,8 @@ export default class LeanGallery extends React.Component {
 
     const itemSize = this.calcItemContainerSize();
     const width = itemStyle.width || itemSize;
-    const height = itemStyle.height || (itemSize / cubeRatio);
+    let height = itemStyle.height || (itemSize / cubeRatio);
+    height = cubeImages === false ? this.calcMasonryVerticalItemHeight(item) : height;
 
     const focalPoint = false;
 
@@ -229,6 +260,10 @@ export default class LeanGallery extends React.Component {
         borderRadius: styles.itemBorderRadius,
       }
     }
+  }
+
+  fixItemSizeOfMasonryVertical(itemSize) {
+    return itemSize * 8 + 200;
   }
   // #endregion
 
@@ -309,7 +344,7 @@ export default class LeanGallery extends React.Component {
           return (
             <a
               className={['gallery-item-container', 'lean-gallery-cell'].join(' ')}
-              style={this.createItemContainerStyle(clickable)}
+              style={this.createItemContainerStyle(clickable, item)}
               ref={node => {
                 this.measureIfNeeded(node);
                 eventsListener(GALLERY_CONSTS.events.ITEM_CREATED, itemData);

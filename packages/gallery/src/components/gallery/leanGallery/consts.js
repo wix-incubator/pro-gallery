@@ -17,12 +17,13 @@ export const handledStyleParams = {
   itemBorderRadius: 0,
   imageQuality: 90,
   textBoxHeight: 200,
+  cubeImages: true,
 };
   
 //these params must be set to these exact values in order for the lean gallery to render well
 export const fixedStyleParams = {
   allowLeanGallery: true,
-  galleryLayout: [-1, 2],
+  galleryLayout: [-1, 1, 2], // 1 - Masonry, 2 - Grid
   isVertical: true,
   oneRow: false,
   isRTL: false,
@@ -30,7 +31,6 @@ export const fixedStyleParams = {
   groupSize: 1,
   hoveringBehaviour: [GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW, GALLERY_CONSTS.infoBehaviourOnHover.APPEARS],
   rotatingGroupTypes: '',
-  cubeImages: true,
   smartCrop: false,
   rotatingCubeRatio: '',
   boxShadow: 0,
