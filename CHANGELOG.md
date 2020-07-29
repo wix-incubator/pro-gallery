@@ -1,3 +1,9 @@
+## [v2.0.37](https://pro-gallery-2-0-37.surge.sh) (29/07/2020)
+ 
+#### GALLERY
+ -  remove unknown dimensions
+
+---
 ## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
  
 #### MAIN
