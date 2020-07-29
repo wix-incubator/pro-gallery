@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, dimensionsHelper, ItemsHelper, window, utils, isEditMode, isSEOMode, isPreviewMode, isSiteMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, ItemsHelper, window, utils, isEditMode, isPrerenderMode, isSEOMode, isPreviewMode, isSiteMode } from 'pro-gallery-lib';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
@@ -390,20 +390,18 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
+  createCssLayoutsIfNeeded(layoutParams) {
     this.layoutCss = createCssLayouts({
       layoutParams,
-      isApproximateWidth,
       isMobile: utils.isMobile(),
       domId: this.props.domId,
-      galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+      galleryItems: this.galleryStructure.galleryItems,
     });
   }
 
   getScrollCss({ domId, items, styleParams }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
-      isUnknownWidth: dimensionsHelper.isUnknownWidth(),
       styleParams,
       domId,
     });
@@ -519,6 +517,12 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
+  allowSSROpacity() {
+    const {settings = {}} = this.props;
+    const {allowSSROpacity = false} = settings;
+    return isPrerenderMode() && allowSSROpacity;
+  }
+
   render() {
     if (!this.canRender()) {
       return null;
@@ -536,6 +540,9 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
+    const ssrOpacity =
+      this.allowSSROpacity() &&
+      '.gallery-item-container { opacity: 0 }';
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
       : (() => {});
@@ -558,7 +565,6 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           isInDisplay={this.props.isInDisplay}
-          isUnknownWidth={dimensionsHelper.isUnknownWidth()}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
@@ -596,6 +602,7 @@ export class GalleryContainer extends React.Component {
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
           {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
+          {ssrOpacity && <style dangerouslySetInnerHTML={{__html: ssrOpacity}} />}
         </div>
       </div>
     );

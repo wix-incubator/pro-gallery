@@ -1,5 +1,5 @@
 import { Layouter } from 'pro-layouts';
-import { GALLERY_CONSTS, dimensionsHelper, ItemsHelper, window, utils, isEditMode, isSEOMode, isPreviewMode, isSiteMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, dimensionsHelper, ItemsHelper, window, utils, isEditMode, isPrerenderMode, isSEOMode, isPreviewMode, isSiteMode } from 'pro-gallery-lib';
 import React from 'react';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
@@ -418,7 +418,7 @@ export class GalleryContainer extends React.Component {
     this.createCssLayoutsIfNeeded(layoutParams);
   }
 
-  createCssLayoutsIfNeeded(layoutParams, isApproximateWidth = false) {
+  createCssLayoutsIfNeeded(layoutParams) {
     const {settings = {}} = this.props;
     const {avoidInlineStyles = true} = settings;
     if (avoidInlineStyles) {
@@ -426,10 +426,9 @@ export class GalleryContainer extends React.Component {
       // avoid inline styles === use layout css
       this.layoutCss = createCssLayouts({
         layoutParams,
-        isApproximateWidth,
         isMobile: utils.isMobile(),
         domId: this.props.domId,
-        galleryItems: isApproximateWidth? null : this.galleryStructure.galleryItems,
+        galleryItems: this.galleryStructure.galleryItems,
       });
     }
   }
@@ -584,8 +583,7 @@ export class GalleryContainer extends React.Component {
         this.loadItemsDimensionsIfNeeded();
       }
 
-      const isApproximateWidth = dimensionsHelper.isUnknownWidth() && !_styles.oneRow; //FAKE SSR
-      this.createCssLayoutsIfNeeded(layoutParams, isApproximateWidth, isNew);
+      this.createCssLayoutsIfNeeded(layoutParams);
 
       const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
       if (shouldUseScrollCss) {
@@ -736,7 +734,6 @@ export class GalleryContainer extends React.Component {
   getScrollCss({ domId, items, styleParams }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
-      isUnknownWidth: dimensionsHelper.isUnknownWidth(),
       styleParams,
       domId,
     });
@@ -875,6 +872,12 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
+  allowSSROpacity() {
+    const {settings = {}} = this.props;
+    const {allowSSROpacity = false} = settings;
+    return isPrerenderMode() && allowSSROpacity;
+  }
+
   isVerticalGallery() {
     return !this.state.styles.oneRow
   }
@@ -902,7 +905,9 @@ export class GalleryContainer extends React.Component {
     const ssrDisableTransition =
       !!utils.isSSR() &&
       'div.pro-gallery-parent-container * { transition: none !important }';
-
+    const ssrOpacity =
+      this.allowSSROpacity() &&
+      '.gallery-item-container { opacity: 0 }';
     return (
       <div
         data-key="pro-gallery-inner-container"
@@ -921,7 +926,6 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           isInDisplay={this.props.isInDisplay}
-          isUnknownWidth={dimensionsHelper.isUnknownWidth()}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
@@ -967,6 +971,7 @@ export class GalleryContainer extends React.Component {
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
           {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{ __html: scrollCss }} />)}
           {ssrDisableTransition && <style dangerouslySetInnerHTML={{ __html: ssrDisableTransition }} />}
+          {ssrOpacity && <style dangerouslySetInnerHTML={{__html: ssrOpacity}} />}
         </div>
       </div>
     );
