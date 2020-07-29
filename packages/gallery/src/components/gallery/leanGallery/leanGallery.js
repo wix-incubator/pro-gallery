@@ -41,42 +41,38 @@ export default class LeanGallery extends React.Component {
 
     const itemSize = this.calcItemContainerSize();
     const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? numberOfImagesPerRow : this.state.numberOfColumns;
-    const gridTemplateColumns = numberOfColumns > 0 ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize}px, 1fr))`;
+    const gridTemplateColumns = numberOfColumns > 0 ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize.width}px, 1fr))`;
 
     return {
       gridTemplateColumns,
       gridGap: `${imageMargin}px`,
       ...(cubeImages === false ? {
-        gridAutoRows: '1px',
+        gridAutoRows: 'minmax(max-content, 1px)',
         gridGap: 0,
         columnGap: `${imageMargin}px`,
-        backgroundColor: 'yellow'
       } : {})
     };
   }
 
   calcNumberOfColumns(props) {
     const { galleryWidth } = props.container;
-    const { cubeImages } = props.styles;
 
     if(!galleryWidth) {
       return 0;
     }
 
-    let itemSize = this.calcItemContainerSize();
-    itemSize = cubeImages === false ? this.fixItemSizeOfMasonryVertical(itemSize) : itemSize;
-
+    const itemSize = this.calcItemContainerSize();
     let numOfCols = 1;
     if (props.styles.fixedColumns > 0) {
       numOfCols = props.styles.fixedColumns;
     } else {
       // find the number of columns that makes each column width the closet to the itemSize
-      const numOfColsFloat = galleryWidth / itemSize;
+      const numOfColsFloat = galleryWidth / itemSize.width;
       const roundFuncs = [Math.floor, Math.ceil];
       const diffs = roundFuncs
         .map(func => func(numOfColsFloat)) //round to top, round to bottom
         .map(n => Math.round(galleryWidth / n)) //width of each col
-        .map(w => Math.abs(itemSize - w)); //diff from itemSize
+        .map(w => Math.abs(itemSize.width - w)); //diff from itemSize
       const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the itemSize
       numOfCols = roundFunc(numOfColsFloat) || 1;
     }
@@ -86,11 +82,11 @@ export default class LeanGallery extends React.Component {
   // #endregion
 
   // #region Item container
-  calcItemContainerSize() {
+  calcItemContainerSize(item) {
     const { styles, container } = this.props;
-    const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio } = styles;
+    const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio, cubeImages, titlePlacement, textBoxHeight } = styles;
     let itemSize;
-
+    
     if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.PIXELS && gallerySizePx > 0) {
       itemSize = gallerySizePx;
     } else if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.RATIO && gallerySizeRatio > 0) {
@@ -99,7 +95,22 @@ export default class LeanGallery extends React.Component {
       itemSize = gallerySize;
     }
 
-    return container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
+    const itemWidth = container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
+    let itemHeight = itemWidth;
+
+    if (item && cubeImages === false) {
+      const ratio = get(item, 'width') / get(item, 'height');
+      itemHeight = Math.round(itemHeight / ratio);
+    }
+
+    if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)) {
+      itemHeight += textBoxHeight;
+    }
+
+    return {
+      width: itemWidth,
+      height: itemHeight
+    }
   }
 
   createItemContainerStyle(clickable, item) {
@@ -107,35 +118,19 @@ export default class LeanGallery extends React.Component {
 
     const { imageMargin, cubeImages } = this.props.styles;
 
-    const masonryVerticalStyle = cubeImages === false ? {
-      gridRowEnd: `span ${this.calcMasonryVerticalItemHeight(item)}`,
+    const itemSize = this.calcItemContainerSize(item);
+
+    const noCropStyle = cubeImages === false ? {
+      gridRowEnd: `span ${itemSize.height}`,
       marginBottom: `${imageMargin}px`,
-      // height: this.calcMasonryVerticalItemHeight(item) - imageMargin
-      height: 'auto'
+      height: 'fit-content',
     } : {};
 
     return {
       ...this.createItemContainerBorder(),
-      ...(height ? {height: this.calcItemContainerHeight()} : {height: 'auto', textAlign: 'center'}),
+      ...(height ? {height: itemSize.height} : {height: 'auto', textAlign: 'center'}),
       cursor: clickable ? 'pointer' : 'default',
-      ...masonryVerticalStyle,
-    }
-  }
-  
-  calcItemContainerHeight() {
-    let { height = null } = this.state.itemStyle
-    const { textBoxHeight = 0, titlePlacement, cubeRatio } = this.props.styles;
-
-    if (height === null) {
-      const itemSize = this.calcItemContainerSize();
-      height = itemSize / cubeRatio;
-      return 'auto';
-    }
-
-    if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)) {
-      return height + textBoxHeight;
-    } else {
-      return height;
+      ...noCropStyle,
     }
   }
   
@@ -153,13 +148,6 @@ export default class LeanGallery extends React.Component {
     }
   }
 
-  calcMasonryVerticalItemHeight(item) {
-    const ratio = get(item, 'width') / get(item, 'height');
-    const itemSize = this.fixItemSizeOfMasonryVertical(this.calcItemContainerSize());
-    const height = Math.round(itemSize / ratio);
-
-    return height;
-  }
   // #endregion
 
   // #region Image wrapper
@@ -167,11 +155,8 @@ export default class LeanGallery extends React.Component {
     const { cubeType, cubeImages } = this.props.styles;
 
     if (this.state.itemStyle.width && cubeType !== GALLERY_CONSTS.resizeMethods.FIT) {
-      //image is croped
-      return {
-        ...this.state.itemStyle, 
-        height: cubeImages === false ? this.calcMasonryVerticalItemHeight(item) : this.state.itemStyle.height
-      };
+      const itemSize = this.calcItemContainerSize(item);
+      return  cubeImages === false ? {...itemSize} : {...this.state.itemStyle};
     } else if (!(this.state.itemStyle.width > 0)) {
       return {
         width: '100%',
@@ -214,10 +199,10 @@ export default class LeanGallery extends React.Component {
     const { url, mediaUrl, src } = item;
     const itemUrl = url || mediaUrl || src;
 
-    const itemSize = this.calcItemContainerSize();
-    const width = itemStyle.width || itemSize;
-    let height = itemStyle.height || (itemSize / cubeRatio);
-    height = cubeImages === false ? this.calcMasonryVerticalItemHeight(item) : height;
+    const itemSize = this.calcItemContainerSize(item);
+
+    const width = (cubeImages === true && itemStyle.width) || itemSize.width;
+    const height = (cubeImages === true && itemStyle.height) || (itemSize.height / cubeRatio);
 
     const focalPoint = false;
 
@@ -260,10 +245,6 @@ export default class LeanGallery extends React.Component {
         borderRadius: styles.itemBorderRadius,
       }
     }
-  }
-
-  fixItemSizeOfMasonryVertical(itemSize) {
-    return itemSize * 8 + 200;
   }
   // #endregion
 
@@ -337,8 +318,9 @@ export default class LeanGallery extends React.Component {
           const itemData = {...item, id: item.itemId, idx: itemIdx};
           const itemProps = {...itemData, ...item.metaData, style: this.state.itemStyle, styleParams: styles};
           const imageWrapperStyle = this.createImageWrapperStyle(item);
+          const infoHeight = styles.textBoxHeight;
           const texts = placement => (typeof customInfoRenderer === 'function') && (styles.titlePlacement === placement) && (
-            <div className={`gallery-item-common-info gallery-item-${placement === GALLERY_CONSTS.placements.SHOW_ABOVE ? `top` : `bottom`}-info`} style={getInnerInfoStyle(placement, styles)} >{customInfoRenderer(itemProps, placement)}</div>
+            <div className={`gallery-item-common-info gallery-item-${placement === GALLERY_CONSTS.placements.SHOW_ABOVE ? `top` : `bottom`}-info`} style={getInnerInfoStyle(placement, styles, infoHeight)} >{customInfoRenderer(itemProps, placement)}</div>
           );
 
           return (
