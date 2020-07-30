@@ -8,7 +8,7 @@ export const fixedStyles = {
   groupSize: 3,
   hasThumbnails: false,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   targetItemSize: 0,
   fixedColumns: 0,
   enableScroll: true,
@@ -24,7 +24,6 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    targetItemSize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 5 + 500),
-    modifiedGallerySize: true
+    targetItemSize: Math.round(styles.gallerySize * 5 + 500),
   }
 }

@@ -115,9 +115,7 @@ function getStyleByGalleryType(styles) {
 
   switch (galleryType) {
     case '-1': //empty
-      styleState = {
-        targetItemSize,
-      };
+      styleState = {};
       break;
     case '0': //vertical collage
       styleState = galleryTypes.collage_ver();

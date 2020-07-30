@@ -42,12 +42,6 @@ export const getStyleParamsFromUrl = () => {
       .map(styleParam => styleParam.split('='))
       .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
 
-    if (styleParams.gallerySize > 0) {
-      styleParams.modifiedGallerySize = true;
-    } else {
-      styleParams.gallerySize = defaultStyleParams.gallerySize;
-    }
-    
     return styleParams;
   } catch (e) {
     return {};

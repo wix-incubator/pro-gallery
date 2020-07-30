@@ -60,12 +60,12 @@ export default class Layouter {
         numOfCols = this.styleParams.columnWidths.split(',').length;
       } else {
         // find the number of columns that makes each column width the closet to the targetItemSize
-        const numOfColsFloat = galleryWidth / targetItemSizeize;
+        const numOfColsFloat = galleryWidth / targetItemSize;
         const roundFuncs = [Math.floor, Math.ceil];
         const diffs = roundFuncs
           .map(func => func(numOfColsFloat)) //round to top, round to bottom
           .map(n => Math.round(galleryWidth / n)) //width of each col
-          .map(w => Math.abs(targetItemSizeize - w)); //diff from targetItemSize
+          .map(w => Math.abs(targetItemSize - w)); //diff from targetItemSize
         const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the targetItemSize
         numOfCols = roundFunc(numOfColsFloat) || 1;
       }

@@ -18,7 +18,7 @@ export const fixedStyles = {
   itemBorderRadius: 0,
   itemBorderColor: undefined,
 
-  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   smartCrop: false,
   targetItemSize: 550,
   galleryType: 'Strips',
@@ -40,5 +40,6 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
+    targetItemSize: styles.gallerySize,
   }
 }

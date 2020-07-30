@@ -8,7 +8,7 @@ export const fixedStyles = {
   isVertical: true,
   groupSize: 1,
   groupTypes: '1',
-  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
 
   galleryType: 'Columns',
   oneRow: false,
@@ -27,5 +27,6 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
+    targetItemSize: styles.gallerySize,
   }
 }

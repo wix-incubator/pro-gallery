@@ -33,5 +33,6 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
+    targetItemSize: styles.gallerySize,
   }
 }
