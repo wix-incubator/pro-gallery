@@ -20,7 +20,7 @@ export const fixedStyles = {
 
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
   smartCrop: false,
-  gallerySize: 550,
+  targetItemSize: 550,
   galleryType: 'Strips',
   fixedColumns: 1,
   hasThumbnails: false,

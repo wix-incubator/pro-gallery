@@ -11,7 +11,7 @@ export const fixedStyles = {
   smartCrop: false,
   galleryType: 'Columns',
   fixedColumns: 0,
-  gallerySize: 0,
+  targetItemSize: 0,
   enableScroll: true,
   cropOnlyFill: false,
   isSlider: false,
@@ -26,7 +26,7 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    gallerySize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 8.5 + 150),
+    targetItemSize: styles.modifiedGallerySize ? styles.gallerySize : Math.round(styles.gallerySize * 8.5 + 150),
     modifiedGallerySize: true
   }
 }

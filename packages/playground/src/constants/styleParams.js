@@ -42,10 +42,10 @@ export const getStyleParamsFromUrl = () => {
       .map(styleParam => styleParam.split('='))
       .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
 
-    if (styleParams.gallerySize > 0) {
+    if (styleParams.targetItemSize > 0) {
       styleParams.modifiedGallerySize = true;
     } else {
-      styleParams.gallerySize = defaultStyleParams.gallerySize;
+      styleParams.targetItemSize = defaultStyleParams.gallerySize;
     }
     
     return styleParams;
@@ -133,7 +133,7 @@ const styleParamsByLayout = () => ({
     isVertical: false,
     galleryType: 'Strips',
     groupSize: 1,
-    gallerySize: Infinity,
+    targetItemSize: Infinity,
     groupTypes: '1',
     oneRow: true,
     hasThumbnails: true,
@@ -158,7 +158,7 @@ const styleParamsByLayout = () => ({
     galleryType: 'Strips',
     groupSize: 1,
     groupTypes: '1',
-    gallerySize: Infinity,
+    targetItemSize: Infinity,
     oneRow: true,
     hasThumbnails: false,
     enableScroll: true,
@@ -177,7 +177,7 @@ const styleParamsByLayout = () => ({
     cubeRatio: '100%/100%',
     cubeType: 'fill',
     isVertical: false,
-    gallerySize: 550,
+    targetItemSize: 550,
     galleryType: 'Strips',
     groupSize: 1,
     groupTypes: '1',
@@ -203,7 +203,7 @@ const styleParamsByLayout = () => ({
     galleryType: 'Columns',
     groupSize: 1,
     groupTypes: '1',
-    gallerySize: Infinity,
+    targetItemSize: Infinity,
     oneRow: false,
     fixedColumns: 1,
     hasThumbnails: false,
@@ -226,7 +226,7 @@ const styleParamsByLayout = () => ({
     galleryType: 'Strips',
     groupSize: 1,
     groupTypes: '1',
-    gallerySize: Infinity,
+    targetItemSize: Infinity,
     fixedColumns: 0,
     hasThumbnails: false,
     oneRow: true,
@@ -247,7 +247,7 @@ const styleParamsByLayout = () => ({
     isVertical: false,
     galleryType: 'Strips',
     groupSize: 1,
-    gallerySize: Infinity,
+    targetItemSize: Infinity,
     groupTypes: '1',
     oneRow: true,
     hasThumbnails: false,
@@ -272,7 +272,7 @@ const styleParamsByLayout = () => ({
     isVertical: false,
     galleryType: 'Strips',
     groupSize: 1,
-    gallerySize: Infinity,
+    targetItemSize: Infinity,
     groupTypes: '1',
     oneRow: true,
     hasThumbnails: false,

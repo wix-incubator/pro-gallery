@@ -80,7 +80,7 @@ class Utils {
         isVertical: true,
         minItemSize: 120,
         oneRow: false,
-        gallerySize: 500,
+        targetItemSize: 500,
         collageDensity: 50,
         fixedColumns: 0,
         columnWidths: '',
@@ -171,7 +171,7 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'gallerySize',
+      'targetItemSize',
       convertedStyleParams.rowSize || convertedStyleParams.columnSize,
     );
     this.insertIfDefined(

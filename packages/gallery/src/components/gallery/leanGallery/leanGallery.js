@@ -75,7 +75,7 @@ export default class LeanGallery extends React.Component {
 
   calcItemSize() {
     const { styles, container } = this.props;
-    const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio } = styles;
+    const { gallerySizeType, targetItemSize, gallerySizePx, gallerySizeRatio } = styles;
 
     let itemSize;
 
@@ -84,7 +84,7 @@ export default class LeanGallery extends React.Component {
     } else if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.RATIO && gallerySizeRatio > 0) {
       itemSize = container.width * (gallerySizeRatio / 100);
     } else {
-      itemSize = gallerySize;
+      itemSize = targetItemSize;
     }
 
     return container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
@@ -195,7 +195,7 @@ export default class LeanGallery extends React.Component {
   }
 
   createContainerStyles(clickable) {
-    let { height = null } = this.state.itemStyle;
+    const { height = null } = this.state.itemStyle;
 
     return {
       ...this.createItemBorder(),

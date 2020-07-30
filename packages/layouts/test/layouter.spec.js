@@ -20,7 +20,7 @@ describe('Layouter', () => {
     styleParams = {
       oneRow: false,
       isVertical: false,
-      gallerySize: 200,
+      targetItemSize: 200,
       groupSize: 3,
       groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
       rotatingGroupTypes: '',
@@ -80,7 +80,7 @@ describe('Layouter', () => {
     it('should have items offsets and dimensions calculated correctly', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
-      styleParams.gallerySize = 500;
+      styleParams.targetItemSize = 500;
       styleParams.rotatingGroupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
       styleParams.imageMargin = 0;
 
@@ -126,14 +126,14 @@ describe('Layouter', () => {
   });
 
   describe('Style Params', () => {
-    //gallerySize
-    it('should have taller Strips as gallerySize increases', () => {
+    //targetItemSize
+    it('should have taller Strips as targetItemSize increases', () => {
       const items = getItems(100);
       styleParams.isVertical = false;
 
       let lastGroupHeight = 0;
       for (const size of [100, 200, 300, 400]) {
-        styleParams.gallerySize = size;
+        styleParams.targetItemSize = size;
         gallery = getLayout({ items, container, styleParams });
         const maxGroupHeight = gallery.columns[0].groups.reduce((g, group) => {
           const isLastStrip = group.stripIdx === gallery.strips.length;
@@ -146,15 +146,15 @@ describe('Layouter', () => {
       }
     });
 
-    //gallerySize
-    it('should have all groups in a Columns gallery narrower than gallerySize', () => {
+    //targetItemSize
+    it('should have all groups in a Columns gallery narrower than targetItemSize', () => {
       const items = getItems(100);
       styleParams.isVertical = true;
       styleParams.galleryWidth = 1200;
 
       let lastGroupWidth = 0;
       for (const size of [10, 50, 100, 200, 300, 400]) {
-        styleParams.gallerySize = size;
+        styleParams.targetItemSize = size;
         gallery = getLayout({ items, container, styleParams });
 
         const maxGroupWidth = gallery.columns.reduce((c, column) => {
@@ -317,7 +317,7 @@ describe('Layouter', () => {
       const minItemSizes = [10, 50, 100, 200, 300, 400];
 
       for (const size of minItemSizes) {
-        styleParams.gallerySize = size * 4; //gallerySize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
+        styleParams.targetItemSize = size * 4; //targetItemSize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
         styleParams.minItemSize = size;
         gallery = getLayout({ items, container, styleParams });
 
@@ -343,7 +343,7 @@ describe('Layouter', () => {
       const minItemSizes = [10, 50, 100, 200, 300];
 
       for (const size of minItemSizes) {
-        styleParams.gallerySize = size * 8; //gallerySize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
+        styleParams.targetItemSize = size * 8; //targetItemSize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
         styleParams.minItemSize = size;
         gallery = getLayout({ items, container, styleParams });
 
@@ -369,7 +369,7 @@ describe('Layouter', () => {
     // isVertical
     it('should create vertical layouts if isVertical is true', () => {
       const items = getItems(100);
-      styleParams.gallerySize = 200;
+      styleParams.targetItemSize = 200;
       styleParams.fixedColumns = 0;
       container.galleryWidth = 1000;
 
@@ -537,7 +537,7 @@ describe('Layouter', () => {
       styleParams.groupSize = 3;
       styleParams.collageDensity = 1;
       styleParams.minItemSize = 10;
-      styleParams.gallerySize = 1000;
+      styleParams.targetItemSize = 1000;
 
       for (const chooseBestGroup of [true, false]) {
         styleParams.chooseBestGroup = chooseBestGroup;
@@ -557,7 +557,7 @@ describe('Layouter', () => {
     it('should have spaces between groups equal to imageMargin', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
-      styleParams.gallerySize = 500;
+      styleParams.targetItemSize = 500;
       styleParams.groupSize = 1;
 
       for (const margin of [10, 50, 100, 200]) {
@@ -590,7 +590,7 @@ describe('Layouter', () => {
     it('should have spaces between items in a group equal to imageMargin', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
-      styleParams.gallerySize = 1000;
+      styleParams.targetItemSize = 1000;
       styleParams.groupSize = 3;
       styleParams.groupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
 

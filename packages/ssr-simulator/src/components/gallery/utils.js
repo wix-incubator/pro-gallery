@@ -3,7 +3,7 @@ import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 export const defaultStyleParams = {
   isRTL: false,
   isVertical: 0,
-  gallerySize: 30,
+  targetItemSize: 30,
   minItemSize: 120,
   chooseBestGroup: true,
   groupSize: 3,

@@ -96,7 +96,7 @@ export default {
     title: "Item Size Units",
     description: "Choose which units to use when setting the target size of each item: by layout, relative to width or in pixels (recommended)",
   },
-  gallerySize: {
+  targetItemSize: {
     title: "Item Size (smart)",
     description: "Set the item size between 1 to 100 units. The real size will be determined by the layout.",
   },

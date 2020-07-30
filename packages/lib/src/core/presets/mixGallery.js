@@ -16,7 +16,7 @@ export const fixedStyles = {
   collageDensity: 0.48,
 
   //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  gallerySize: 86,
+  targetItemSize: 86,
   minItemSize: 50,
   chooseBestGroup: true,
   rotatingGroupTypes: '1,3l,1,3r',

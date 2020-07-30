@@ -116,7 +116,7 @@ export default {
       { value: 'px', title: "Fixed size (in pixels)" },
     ],
   },
-  gallerySize: {
+  targetItemSize: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
     max: 100,
