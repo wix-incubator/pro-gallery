@@ -8,7 +8,7 @@ const emptyLayout = {
   cubeType: undefined,
   cubeRatio: undefined,
   isVertical: undefined,
-  targetItemSize: undefined,
+  gallerySize: undefined,
   collageAmount: undefined,
   collageDensity: undefined,
   groupTypes: undefined,
@@ -31,7 +31,7 @@ const emptyLayout = {
 
 function getStyleByGalleryType(styles) {
   //legacy layouts
-  const { galleryType, targetItemSize, gallerySize } = styles;
+  const { galleryType, gallerySize } = styles;
 
   const galleryTypes = {
     collage_ver: () => ({

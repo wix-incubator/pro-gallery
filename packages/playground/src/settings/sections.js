@@ -60,7 +60,7 @@ export const stylesBySection = {
     ],
     [SECTIONS.ADVANCED]: [
         'gallerySizeType',
-        'targetItemSize',
+        'gallerySize',
         'gallerySizePx',
         'gallerySizeRatio',
         'groupSize',

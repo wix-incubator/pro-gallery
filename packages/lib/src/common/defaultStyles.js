@@ -5,7 +5,7 @@ import GALLERY_CONSTS from './constants';
 export default {
   isRTL: false,
   isVertical: false,
-  targetItemSize: 30,
+  gallerySize: 30,
   minItemSize: 120,
   chooseBestGroup: true,
   groupSize: 3,

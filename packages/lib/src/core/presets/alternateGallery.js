@@ -15,8 +15,8 @@ export const fixedStyles = {
   collageDensity: 0.48,
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
 
-  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  targetItemSize: 86,
+  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  gallerySize: 86,
   minItemSize: 50,
   chooseBestGroup: true,
   rotatingGroupTypes: '1,2h,1,2h',

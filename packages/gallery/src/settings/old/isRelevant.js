@@ -48,7 +48,7 @@ export default {
   thumbnailSize: sp => [GALLERY_CONSTS.layout.THUMBNAIL].indexOf(sp.galleryLayout) >= 0,
   gridStyle: sp => ((isLayout(sp, [GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.COLLAGE])) && !oneRow(sp)),
   gallerySizeType: showGallerySize,
-  targetItemSize: sp => showGallerySize(sp) && [GALLERY_CONSTS.gallerySizeType.PIXELS, GALLERY_CONSTS.gallerySizeType.RATIO].indexOf(sp.gallerySizeType) < 0,
+  gallerySize: sp => showGallerySize(sp) && [GALLERY_CONSTS.gallerySizeType.PIXELS, GALLERY_CONSTS.gallerySizeType.RATIO].indexOf(sp.gallerySizeType) < 0,
   gallerySizePx: sp => showGallerySize(sp) && GALLERY_CONSTS.gallerySizeType.PIXELS === sp.gallerySizeType,
   gallerySizeRatio: sp => showGallerySize(sp) && GALLERY_CONSTS.gallerySizeType.RATIO === sp.gallerySizeType,
   numberOfImagesPerRow: sp => ((isLayout(sp, [GALLERY_CONSTS.layout.GRID, GALLERY_CONSTS.layout.COLLAGE])) && !oneRow(sp)) && sp.gridStyle === 1,

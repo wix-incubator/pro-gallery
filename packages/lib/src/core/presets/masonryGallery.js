@@ -8,8 +8,7 @@ export const fixedStyles = {
   groupSize: 1,
   groupTypes: '1',
 
-  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  targetItemSize: 0,
+  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   fixedColumns: 0,
   enableScroll: true,
   isGrid: false,

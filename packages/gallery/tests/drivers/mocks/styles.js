@@ -8,7 +8,7 @@ const styleParams = {
     numberOfImagesPerCol: 2,
     isRTL: false,
     isVertical: false,
-    targetItemSize: 30,
+    gallerySize: 30,
     minItemSize: 120,
     chooseBestGroup: true,
     groupSize: 3,
