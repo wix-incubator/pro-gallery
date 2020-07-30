@@ -26,7 +26,7 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    targetItemSize: Math.round(styles.gallerySize * 8.5 + 150),
+    targetItemSize: styles.targetItemSize || Math.round(styles.gallerySize * 8.5 + 150),
   }
 }
 

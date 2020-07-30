@@ -92,7 +92,7 @@ const handledStyleParams = {
   gallerySizeType: 'smart',
   gallerySizeRatio: 1,
   gallerySizePx: 300,
-  targetItemSize: 30,
+  gallerySize: 30,
   cubeType: 'fill',
   cubeRatio: 1,
   fixedColumns: 0,

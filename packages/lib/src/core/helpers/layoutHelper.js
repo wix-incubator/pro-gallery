@@ -244,19 +244,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   //   usm: {}
   // };
 
-  // Backwards compatibility for masonry layout
-  if (String(processedStyles.galleryLayout) === '1') {
-    if (processedStyles.isVertical) {
-      processedStyles.targetItemSize = Math.round(
-        processedStyles.gallerySize * 8 + 200,
-      );
-    } else {
-      processedStyles.targetItemSize = Math.round(
-        processedStyles.gallerySize * 5 + 200,
-      );
-    }
-  }
-
   if (processedStyles.forceMobileCustomButton) {
     processedStyles.targetItemSize = Math.round(30 * 8.5 + 150);
     processedStyles.titlePlacement = PLACEMENTS.SHOW_BELOW;
