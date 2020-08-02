@@ -30,14 +30,11 @@ export default class ItemHover extends GalleryComponent {
 
   render() {
     const {
-      shouldHover,
       imageDimensions,
       actions,
       idx,
+      itemWasHovered,
     } = this.props;
-    if (!shouldHover) {
-      return null;
-    }
     const hoverClass = this.getHoverClass();
     const { marginLeft, marginTop, width, height, ...restOfDimensions } =
       imageDimensions || {};
@@ -56,7 +53,7 @@ export default class ItemHover extends GalleryComponent {
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
         >
-          {this.props.renderCustomInfo ? (
+          {itemWasHovered && this.props.renderCustomInfo ? (
             <div className="gallery-item-hover-inner">
               {this.props.renderCustomInfo()}
             </div>) : null}
