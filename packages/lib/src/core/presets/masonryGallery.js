@@ -25,7 +25,8 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    gallerySize: styles.gallerySize,
+    gallerySize: styles.modifiedGallerySize ? styles.gallerySize : (styles.isVertical ? Math.round(styles.gallerySize * 8 + 200) : Math.round(styles.gallerySize * 5 + 200)),
+    modifiedGallerySize: true
   }
 }
 
