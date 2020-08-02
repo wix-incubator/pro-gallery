@@ -10,7 +10,7 @@ export default class BaseGallery extends React.Component {
   constructor(props) {
     super();
     this.state ={};
-    blueprintsManager.init({api:{isUsingCustomInfoElements:()=>{debugger; return props.isUsingCustomInfoElements === true}}})
+    blueprintsManager.init({api:{isUsingCustomInfoElements:()=>(props.customHoverRenderer || props.customInfoRenderer || props.customSlideshowInfoRenderer)}})
     this.onNewProps(props)
   }
 
