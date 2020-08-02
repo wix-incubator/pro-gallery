@@ -1,3 +1,9 @@
+## [v2.0.39](https://pro-gallery-2-0-39.surge.sh) (02/08/2020)
+ 
+#### OTHER
+ -   better isUsingCustomElement for blueprints
+
+---
 ## [v2.0.38](https://pro-gallery-2-0-38.surge.sh) (02/08/2020)
  
 #### OTHER
