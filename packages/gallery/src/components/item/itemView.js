@@ -242,16 +242,13 @@ class ItemView extends GalleryComponent {
   shouldHover() { //see if this could be decided in the preset
     const { styleParams } = this.props;
     const { alwaysShowHover, previewHover, hoveringBehaviour } = styleParams;
-    const { NEVER_SHOW, APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
 
-    if (hoveringBehaviour === NEVER_SHOW) {
+    if (hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW) {
       return false;
     } else if (alwaysShowHover === true) {
       return true;
     } else if (isEditMode() && previewHover) {
       return true;
-    } else if (!this.state.itemWasHovered && hoveringBehaviour === APPEARS) {
-      return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
     } else {
@@ -309,8 +306,8 @@ class ItemView extends GalleryComponent {
       <ItemHover
         {...props}
         forceShowHover={this.simulateOverlayHover()}
-        shouldHover={shouldHover}
         imageDimensions={imageDimensions}
+        itemWasHovered={this.state.itemWasHovered}
         key="hover"
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
@@ -590,7 +587,7 @@ class ItemView extends GalleryComponent {
     }
     styles.margin = -styleParams.itemBorderWidth + 'px';
     styles.height = height + 'px';
-    
+
 
     const imageDimensions = this.getImageDimensions();
 
