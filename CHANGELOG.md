@@ -1,3 +1,18 @@
+## [v2.0.39](https://pro-gallery-2-0-39.surge.sh) (02/08/2020)
+ 
+#### OTHER
+ -   better isUsingCustomElement for blueprints
+
+---
+## [v2.0.38](https://pro-gallery-2-0-38.surge.sh) (02/08/2020)
+ 
+#### OTHER
+ -  Created an entry for a non-breaking blueprints-using gallery
+
+#### GALLERY
+ -  leanGallery: update calcItemSize function and added titlePlacement fix for isEligible
+
+---
 ## [v2.0.37](https://pro-gallery-2-0-37.surge.sh) (29/07/2020)
  
 #### GALLERY
