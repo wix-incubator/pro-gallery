@@ -24,7 +24,6 @@ describe('ItemHover', () => {
     sampleItemViewProps = driver.props.itemView(sampleItem);
     Object.assign(sampleItemViewProps, {
       idx: 1,
-      shouldHover: true,
       imageDimensions: {
         height: `calc(100% - 80px)`,
         marginTop: 10,
@@ -38,18 +37,34 @@ describe('ItemHover', () => {
     });
   });
 
-  it('should rendered or not according to "shouldHover" prop', () => {
+  it('should rendered hover inned if "itemWasHovered && renderCustomInfo" props', () => {
     Object.assign(sampleItemViewProps, {
-      shouldHover: false,
+      itemWasHovered: false,
+      renderCustomInfo: undefined,
     });
     driver.mount(ItemHover, sampleItemViewProps);
-    expect(driver.find.hook('item-hover-1').length).to.equal(0);
+    expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
 
     Object.assign(sampleItemViewProps, {
-      shouldHover: true,
+      itemWasHovered: true,
+      renderCustomInfo: undefined,
     });
     driver.mount(ItemHover, sampleItemViewProps);
-    expect(driver.find.hook('item-hover-1').length).to.equal(1);
+    expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
+
+    Object.assign(sampleItemViewProps, {
+      itemWasHovered: false,
+      renderCustomInfo: () => {},
+    });
+    driver.mount(ItemHover, sampleItemViewProps);
+    expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
+
+    Object.assign(sampleItemViewProps, {
+      itemWasHovered: true,
+      renderCustomInfo: () => {},
+    });
+    driver.mount(ItemHover, sampleItemViewProps);
+    expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
   });
 
   it('className should be correct', () => {
