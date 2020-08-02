@@ -310,7 +310,7 @@ class ItemView extends GalleryComponent {
 
   getItemHover(imageDimensions) {
     const { customHoverRenderer, ...props } = this.props;
-    const shouldHover = this.shouldHover() || null;
+    const shouldHover = this.shouldHover();
     return shouldHover && (
       <ItemHover
         {...props}
