@@ -691,8 +691,18 @@ class SlideshowView extends GalleryComponent {
   }
 
   createNavArrows() {
-
-    const { isRTL, oneRow, arrowsColor, isSlideshow, slideshowInfoSize, imageMargin, arrowsSize, arrowsPosition, showArrows } = this.props.styleParams;
+    const {
+      isRTL,
+      oneRow,
+      arrowsColor,
+      isSlideshow,
+      slideshowInfoSize,
+      imageMargin,
+      arrowsSize,
+      arrowsPosition,
+      showArrows
+    } = this.props.styleParams;
+    const {hideLeftArrow, hideRightArrow} = this.state;
 
     const shouldNotRenderNavArrows = !showArrows || this.props.galleryStructure.columns.some(
       column => {
@@ -718,12 +728,12 @@ class SlideshowView extends GalleryComponent {
 
     const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
     const scalePercentage = arrowWidth / arrowOrigWidth;
-    const imageStyle = { transform: `scale(${scalePercentage})` };
+    const svgStyle = { transform: `scale(${scalePercentage})` };
 
-    const svgStyle = {};
+    const svgInternalStyle = {};
     if (utils.isMobile()) {
       if (typeof arrowsColor !== 'undefined') {
-        svgStyle.fill = arrowsColor.value;
+        svgInternalStyle.fill = arrowsColor.value;
       }
     }
 
@@ -740,7 +750,7 @@ class SlideshowView extends GalleryComponent {
     };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
-      oneRow && arrowsPosition
+      oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${arrowsSize + 50 + 10}px`
         : `${imageMargin}px`;
     // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
@@ -751,9 +761,6 @@ class SlideshowView extends GalleryComponent {
     const nextContainerStyle = {
       right: arrowsPos,
     };
-
-
-    const {hideLeftArrow, hideRightArrow} = this.state;
 
     return [
       hideLeftArrow ? null : (
@@ -769,10 +776,10 @@ class SlideshowView extends GalleryComponent {
           data-hook="nav-arrow-back"
           style={{ ...containerStyle, ...prevContainerStyle }}
         >
-          <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
+          <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
             <path
               className="slideshow-arrow"
-              style={svgStyle}
+              style={svgInternalStyle}
               d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
               transform="translate(-133 -225)"
             />
@@ -789,10 +796,10 @@ class SlideshowView extends GalleryComponent {
           data-hook="nav-arrow-next"
           style={{ ...containerStyle, ...nextContainerStyle }}
         >
-          <svg width="23" height="39" viewBox="0 0 23 39" style={imageStyle}>
+          <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
             <path
               className="slideshow-arrow"
-              style={svgStyle}
+              style={svgInternalStyle}
               d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
               transform="translate(-855 -230)"
             />
@@ -868,7 +875,7 @@ class SlideshowView extends GalleryComponent {
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized and needs to be positioned
     const galleryStyleForExternalArrows =
-      this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition
+      this.props.styleParams.oneRow && this.props.styleParams.arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? {
             overflow: 'visible',
             left:
