@@ -17,13 +17,15 @@ export const handledStyleParams = {
   itemBorderRadius: 0,
   imageQuality: 90,
   textBoxHeight: 200,
-  cubeImages: true,
+  // cubeImages: true, // todo: in order to enable Masonry --> 'cubeImages' should be defined here and not it fixedStyleParams
 };
   
 //these params must be set to these exact values in order for the lean gallery to render well
 export const fixedStyleParams = {
   allowLeanGallery: true,
-  galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID],
+  cubeImages: true,
+  galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID],
+  // galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID],
   isVertical: true,
   oneRow: false,
   isRTL: false,

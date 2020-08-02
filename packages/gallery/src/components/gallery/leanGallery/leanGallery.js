@@ -84,9 +84,9 @@ export default class LeanGallery extends React.Component {
   // #region Item container
   calcItemContainerSize(item) {
     const { styles, container } = this.props;
-    const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio, cubeImages, titlePlacement, textBoxHeight } = styles;
+    const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio, cubeImages, titlePlacement, textBoxHeight, cubeRatio, imageMargin } = styles;
     let itemSize;
-    
+
     if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.PIXELS && gallerySizePx > 0) {
       itemSize = gallerySizePx;
     } else if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.RATIO && gallerySizeRatio > 0) {
@@ -96,11 +96,11 @@ export default class LeanGallery extends React.Component {
     }
 
     const itemWidth = container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
-    let itemHeight = itemWidth;
+    let itemHeight = itemWidth / cubeRatio;
 
     if (item && cubeImages === false) {
       const ratio = get(item, 'width') / get(item, 'height');
-      itemHeight = Math.round(itemHeight / ratio);
+      itemHeight = Math.round((itemWidth - imageMargin) / ratio);
     }
 
     if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)) {
@@ -128,7 +128,7 @@ export default class LeanGallery extends React.Component {
 
     return {
       ...this.createItemContainerBorder(),
-      ...(height ? {height: itemSize.height} : {height: 'auto', textAlign: 'center'}),
+      ...(height ? {height: 'auto'} : {height: 'auto', textAlign: 'center'}),
       cursor: clickable ? 'pointer' : 'default',
       ...noCropStyle,
     }
