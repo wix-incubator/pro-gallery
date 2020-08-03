@@ -1,3 +1,14 @@
+## [v2.0.42](https://pro-gallery-2-0-42.surge.sh) (03/08/2020)
+ 
+#### GALLERY
+ -  fix (leanGallery): fix linter error (unknown var)
+ -  leanGallery: fix isEligible to consdier totalItemsCount
+ -  improve: rename gallerySize to targetItemSize for inner calculations
+
+#### OTHER
+ - Merge branch 'master' of github.com:wix/pro-gallery
+
+---
 ## [v2.0.41](https://pro-gallery-2-0-41.surge.sh) (03/08/2020)
  
 #### GALLERY
