@@ -16,7 +16,7 @@ import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pr
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 
-function SideBar({ items , blueprintsManager}) {
+function SideBar({ items, blueprintsManager }) {
   const {
     // preset,
     // setPreset,
@@ -177,9 +177,6 @@ function SideBar({ items , blueprintsManager}) {
               <Form.Item label="Unknown dimension" labelAlign="left">
                 <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({ isUnknownDimensions: e })} />
               </Form.Item>
-              <Form.Item label="Avoid Pro-Gallery self measure" labelAlign="left">
-                <Switch checked={!!gallerySettings.isAvoidGallerySelfMeasure} onChange={e => setGallerySettings({ isAvoidGallerySelfMeasure: e })} />
-              </Form.Item>
               <Form.Item label="Use Blueprints" labelAlign="left">
                 <Switch checked={!!gallerySettings.useBlueprints} onChange={e => setGallerySettings({ useBlueprints: e })} />
               </Form.Item>
@@ -209,22 +206,22 @@ function SideBar({ items , blueprintsManager}) {
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Lean Gallery" key="lean">
-          <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
-                <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e )} />
+                <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
               </Form.Item>
               {
-                isEligibleForLeanGallery({ items, styles: styleParams }) ? 
-                <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
-                :
-                <List
-                  size="small"
-                  header="CAN NOT RENDER LEAN GALLERY"
-                  bordered
-                  dataSource={notEligibleReasons({ items, styles: styleParams })}
-                  renderItem={item => <List.Item>{item}</List.Item>}
-                />      
-              }        
+                isEligibleForLeanGallery({ items, styles: styleParams }) ?
+                  <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
+                  :
+                  <List
+                    size="small"
+                    header="CAN NOT RENDER LEAN GALLERY"
+                    bordered
+                    dataSource={notEligibleReasons({ items, styles: styleParams })}
+                    renderItem={item => <List.Item>{item}</List.Item>}
+                  />
+              }
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">

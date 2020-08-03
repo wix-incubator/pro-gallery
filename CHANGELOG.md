@@ -1,3 +1,70 @@
+## [v2.0.41](https://pro-gallery-2-0-41.surge.sh) (03/08/2020)
+ 
+#### GALLERY
+ -  fixed version 2.0.40: itemHover will be created always (when needed) when there is an overlayAnimation. The inner part of itemHover will be rendered only when needed as well.
+
+---
+## [v2.0.40](https://pro-gallery-2-0-40.surge.sh) (02/08/2020)
+ 
+#### GALLERY
+ -  itemHover will be created always (when needed) when there is an overlayAnimation. The inner part of itemHover will be rendered only on first hover an on.
+
+---
+## [v2.0.39](https://pro-gallery-2-0-39.surge.sh) (02/08/2020)
+ 
+#### OTHER
+ -   better isUsingCustomElement for blueprints
+
+---
+## [v2.0.38](https://pro-gallery-2-0-38.surge.sh) (02/08/2020)
+ 
+#### OTHER
+ -  Created an entry for a non-breaking blueprints-using gallery
+
+#### GALLERY
+ -  leanGallery: update calcItemSize function and added titlePlacement fix for isEligible
+
+---
+## [v2.0.37](https://pro-gallery-2-0-37.surge.sh) (29/07/2020)
+ 
+#### GALLERY
+ -  remove unknown dimensions
+
+---
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### MAIN
+ -  update changelog.md
+ -  update changelog.md
+
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### MAIN
+ -  update changelog.md
+
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
+## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
+ 
+#### GALLERY
+ -  leanGallery: added logic of calcNumberOfColumns
+
+#### OTHER
+ -  utils: disable cache on SSR
+
+---
 ## [v2.0.35](https://pro-gallery-2-0-35.surge.sh) (27/07/2020)
  
 #### PLAYGROUND

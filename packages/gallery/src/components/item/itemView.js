@@ -241,8 +241,9 @@ class ItemView extends GalleryComponent {
 
   shouldHover() { //see if this could be decided in the preset
     const { styleParams } = this.props;
-    const { alwaysShowHover, previewHover, hoveringBehaviour } = styleParams;
+    const { alwaysShowHover, previewHover, hoveringBehaviour, overlayAnimation } = styleParams;
     const { NEVER_SHOW, APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
+    const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
 
     if (hoveringBehaviour === NEVER_SHOW) {
       return false;
@@ -250,7 +251,12 @@ class ItemView extends GalleryComponent {
       return true;
     } else if (isEditMode() && previewHover) {
       return true;
-    } else if (!this.state.itemWasHovered && hoveringBehaviour === APPEARS) {
+    } else if (
+      hoveringBehaviour === APPEARS &&
+      overlayAnimation === NO_EFFECT &&
+      !this.state.itemWasHovered) {
+      //when there is no overlayAnimation, we want to render the itemHover only on first hover and on (and not before)
+      //when there is a specific overlayAnimation, to support the animation we should render the itemHover before any hover activity.
       return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
@@ -298,33 +304,19 @@ class ItemView extends GalleryComponent {
     if (styleParams.itemBorderRadius) {
       dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
     }
-    if (isPrerenderMode()) {
-      const itemContainerDimensions = this.getItemContainerDimensions();
-      dimensions = {...dimensions, ...itemContainerDimensions, transition: 'width 1s, height 1s'};
-    }
     return dimensions;
   }
 
-  getItemContainerDimensions() {
-    const dimensions = {}
-    if (this.itemContainer && window.getComputedStyle) {
-      const height = window.getComputedStyle(this.itemContainer).getPropertyValue("height");
-      const width = window.getComputedStyle(this.itemContainer).getPropertyValue("width");
-      width && (dimensions.width = width);
-      height && (dimensions.height = height);
-    }
-    return dimensions;
-  }
 
   getItemHover(imageDimensions) {
     const { customHoverRenderer, ...props } = this.props;
-    const shouldHover = this.shouldHover() || null;
+    const shouldHover = this.shouldHover();
     return shouldHover && (
       <ItemHover
         {...props}
         forceShowHover={this.simulateOverlayHover()}
-        shouldHover={shouldHover}
         imageDimensions={imageDimensions}
+        itemWasHovered={this.state.itemWasHovered}
         key="hover"
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
@@ -585,13 +577,13 @@ class ItemView extends GalleryComponent {
       height: style.height + style.infoHeight,
     };
 
-    const customElementSsrStyles = (utils.isSSR() && isPrerenderMode()) ? {opacity: 0} : {}
+    const itemContainerStyles = { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams};
 
-    return { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...customElementSsrStyles };
+    return itemContainerStyles;
   }
 
   getItemWrapperStyles() {
-    const { styleParams, style, type ,isUnknownWidth } = this.props;
+    const { styleParams, style, type } = this.props;
     const height = style.height;
     const styles = {};
     if (type === 'text') {
@@ -603,10 +595,8 @@ class ItemView extends GalleryComponent {
         'transparent';
     }
     styles.margin = -styleParams.itemBorderWidth + 'px';
+    styles.height = height + 'px';
 
-    if (!isUnknownWidth) {
-      styles.height = height + 'px';
-    }
 
     const imageDimensions = this.getImageDimensions();
 

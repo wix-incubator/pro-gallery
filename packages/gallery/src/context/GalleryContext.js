@@ -7,23 +7,8 @@ try {
   GalleryContext = null;
 }
 
-const GALLERY_CONTEXT_FIELDS = ['isUnknownWidth'];
-
-export const extractContextFields = fields =>
-  GALLERY_CONTEXT_FIELDS.reduce(
-    (obj, field) => {
-      obj[field] = fields[field];
-      return obj;
-    },
-    {},
-  );
 
 export class GalleryProvider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = extractContextFields(props);
-  }
-
   render() {
     if (GalleryContext) {
       // const value = { ...this.value, ...this.state };

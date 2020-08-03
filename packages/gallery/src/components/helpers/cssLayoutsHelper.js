@@ -79,36 +79,11 @@ const createCssFromLayouts = (domId, layouts, styleParams, widths) => {
 };
 
 export const createCssLayouts = ({
-  isApproximateWidth,
   galleryItems,
   layoutParams,
-  isMobile,
   domId
 }) => {
-  if (isApproximateWidth) {
-    const widths = isMobile ? mobileWidths : desktopWidths;
-    const cssLayouts = widths.map(width => {
-      const _layoutParams = {
-        ...layoutParams,
-        ...{
-          container: { ...layoutParams.container, galleryWidth: width, width },
-        },
-      };
-      return createLayout(_layoutParams);
-    });
-    return createCssFromLayouts(domId, cssLayouts, layoutParams.styleParams, widths);
-  } else {
-    // const chunkSize = 10;
-    // const itemsBatchs = [];
-    // for (let i = 0; i < galleryItems.length; i += chunkSize) {
-    //   itemsBatchs.push(galleryItems.slice(i, i + chunkSize));
-    // }
-    // return galleryItems.map(items =>
-    //   createExactCssForItems(items, layoutParams.styleParams)
-    // );
-    const exactCss = [];
+  const exactCss = [];
     exactCss.push(createExactCssForItems(domId, galleryItems, layoutParams.styleParams));
     return exactCss;
-
-  }
 };

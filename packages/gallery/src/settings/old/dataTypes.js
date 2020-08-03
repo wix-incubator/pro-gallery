@@ -249,10 +249,7 @@ export default {
   },
   arrowsPosition: {
     type: INPUT_TYPES.OPTIONS,
-    options: [
-      { value: 0, title: "On gallery" },
-      { value: 1, title: "Outside gallery" },
-    ],
+    options: createOptions('arrowsPosition')
   },
   overlayAnimation:  {
     type: INPUT_TYPES.OPTIONS,
