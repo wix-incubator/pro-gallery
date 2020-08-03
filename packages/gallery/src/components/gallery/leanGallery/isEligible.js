@@ -5,16 +5,22 @@ import { handledStyleParams, fixedStyleParams } from './consts';
 
 const MAX_ITEMS_COUNT = 25;
 
-export default ({items, styles}) => {
+export default ({items, styles, totalItemsCount = 0}) => {
   styles = formatLeanGalleryStyles(styles);
-
   const allowLeanGallery = !!styles.allowLeanGallery;
 
   if (!allowLeanGallery) {
     return false;
   }
-  if (items.length > MAX_ITEMS_COUNT) {
-    utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`, items.length);
+
+  if (totalItemsCount > items.length) {
+    utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - not all items arrived`, totalItemsCount, items.length );
+    return false;
+  }
+
+  const totalItems = Math.max(items.length, totalItemsCount);
+  if (totalItems > MAX_ITEMS_COUNT) {
+    utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`, totalItems);
     return false;
   }
   for (const item of items) {
