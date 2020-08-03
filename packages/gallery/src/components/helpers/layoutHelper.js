@@ -40,7 +40,7 @@ function getStyleByGalleryType(styles) {
       galleryType: 'Columns',
       groupSize: 3,
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
-      gallerySize: Math.round(gallerySize * 5 + 500),
+      targetItemSize: Math.round(gallerySize * 5 + 500),
       fixedColumns: 0,
     }),
     collage_hor: () => ({
@@ -49,7 +49,7 @@ function getStyleByGalleryType(styles) {
       galleryType: 'Strips',
       groupSize: 3,
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
-      gallerySize: Math.round(gallerySize * 5 + 500),
+      targetItemSize: Math.round(gallerySize * 5 + 500),
       fixedColumns: 0,
     }),
     grid: () => ({
@@ -58,7 +58,7 @@ function getStyleByGalleryType(styles) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: Math.round(gallerySize * 8.5 + 150),
+      targetItemSize: Math.round(gallerySize * 8.5 + 150),
       fixedColumns: 0,
       isGrid: true,
     }),
@@ -68,7 +68,7 @@ function getStyleByGalleryType(styles) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: Math.round(gallerySize * 8 + 200),
+      targetItemSize: Math.round(gallerySize * 8 + 200),
       fixedColumns: 0,
     }),
     masonry_hor: () => ({
@@ -77,7 +77,7 @@ function getStyleByGalleryType(styles) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: Math.round(gallerySize * 5 + 200),
+      targetItemSize: Math.round(gallerySize * 5 + 200),
       fixedColumns: 0,
     }),
     one_col: () => ({
@@ -86,7 +86,7 @@ function getStyleByGalleryType(styles) {
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryWidth(), //'full_width';
+      targetItemSize: () => dimensionsHelper.getGalleryWidth(), //'full_width';
       fixedColumns: 1,
     }),
     one_row: () => ({
@@ -95,7 +95,7 @@ function getStyleByGalleryType(styles) {
       galleryType: 'Strips',
       groupSize: 1,
       groupTypes: '1',
-      gallerySize: () => dimensionsHelper.getGalleryHeight(),
+      targetItemSize: () => dimensionsHelper.getGalleryHeight(),
       fixedColumns: 0,
     }),
     slideshow: () => ({
@@ -103,7 +103,7 @@ function getStyleByGalleryType(styles) {
       cubeImages: true,
       cubeRatio: () => dimensionsHelper.getGalleryRatio(),
       isVertical: true,
-      gallerySize: () => dimensionsHelper.getGalleryWidth(),
+      targetItemSize: () => dimensionsHelper.getGalleryWidth(),
       galleryType: 'Columns',
       groupSize: 1,
       groupTypes: '1',
@@ -115,9 +115,7 @@ function getStyleByGalleryType(styles) {
 
   switch (galleryType) {
     case '-1': //empty
-      styleState = {
-        gallerySize,
-      };
+      styleState = {};
       break;
     case '0': //vertical collage
       styleState = galleryTypes.collage_ver();

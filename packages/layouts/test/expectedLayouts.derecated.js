@@ -40,7 +40,7 @@ describe('Expected Layouts', () => {
     styleParamsOptions = {
       oneRow: [true, false],
       isVertical: [true, false],
-      gallerySize: [100, 500],
+      targetItemSize: [100, 500],
       groupSize: [1, 3],
       groupTypes: ['1,2h,2v,3t,3b,3l,3r,3v,3h', '2h,2v,3t,3v,3h'],
       cubeImages: [true, false],

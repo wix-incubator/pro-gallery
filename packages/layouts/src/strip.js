@@ -9,7 +9,7 @@ export class Strip {
     this.idx = config.idx;
     this.groupsPerStrip = config.groupsPerStrip;
     this.oneRow = config.oneRow;
-    this.gallerySize = config.gallerySize;
+    this.targetItemSize = config.targetItemSize;
     this.container = config.container;
   }
 
@@ -31,7 +31,7 @@ export class Strip {
   }
 
   canRemainIncomplete() {
-    return this.gallerySize * 1.5 < this.height;
+    return this.targetItemSize * 1.5 < this.height;
   }
 
   setWidth(width) {
@@ -62,7 +62,7 @@ export class Strip {
       return false;
     }
 
-    const { groupsPerStrip, oneRow, gallerySize } = this;
+    const { groupsPerStrip, oneRow, targetItemSize } = this;
 
     if (groupsPerStrip > 0) {
       return this.groups.length >= groupsPerStrip;
@@ -75,8 +75,8 @@ export class Strip {
       isStripSmallEnough = false; //onerow layout is one long strip
     } else {
       const withNewGroup =
-        galleryWidth / (this.ratio + newGroup.ratio) - gallerySize; //start a new strip BEFORE adding the current group
-      const withoutNewGroup = galleryWidth / this.ratio - gallerySize; //start a new strip AFTER adding the current group
+        galleryWidth / (this.ratio + newGroup.ratio) - targetItemSize; //start a new strip BEFORE adding the current group
+      const withoutNewGroup = galleryWidth / this.ratio - targetItemSize; //start a new strip AFTER adding the current group
       if (isNaN(withNewGroup) || isNaN(withoutNewGroup)) {
         isStripSmallEnough = false;
       } else if (withoutNewGroup < 0) {

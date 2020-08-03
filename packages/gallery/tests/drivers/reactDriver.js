@@ -42,7 +42,7 @@ class galleryDriver {
       selectedLayout: 0,
       isVertical: false,
       isRTL: false,
-      gallerySize: 320,
+      targetItemSize: 320,
       minItemSize: 120,
       groupSize: 3,
       chooseBestGroup: true,
