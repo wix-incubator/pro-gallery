@@ -55,7 +55,7 @@ describe('groupSize - e2e', () => {
       groupSize: 3,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
+    const page = await driver.grab.partialScreenshot();
     //expect to have groups of 1 despite groupSize = 3 (because of collageDensity)
     expect(page).toMatchImageSnapshot();
   });

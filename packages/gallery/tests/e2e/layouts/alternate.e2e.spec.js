@@ -22,7 +22,7 @@ describe('alternate - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
   it('alternate layout - scrollDirection = horizontal', async () => {
@@ -32,7 +32,7 @@ describe('alternate - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
 
