@@ -1,3 +1,9 @@
+## [v2.0.41](https://pro-gallery-2-0-41.surge.sh) (03/08/2020)
+ 
+#### GALLERY
+ -  fixed version 2.0.40: itemHover will be created always (when needed) when there is an overlayAnimation. The inner part of itemHover will be rendered only when needed as well.
+
+---
 ## [v2.0.40](https://pro-gallery-2-0-40.surge.sh) (02/08/2020)
  
 #### GALLERY
