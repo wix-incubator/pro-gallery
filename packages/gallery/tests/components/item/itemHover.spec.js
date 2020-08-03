@@ -1,4 +1,4 @@
-import { utils } from 'pro-gallery-lib';
+import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { use, expect } from 'chai';
 import spies from 'chai-spies';
 import sinon from 'sinon';
@@ -37,10 +37,14 @@ describe('ItemHover', () => {
     });
   });
 
-  it('should rendered hover inned if "itemWasHovered && renderCustomInfo" props', () => {
+  it('should rendered hover inner only when needed', () => {
     Object.assign(sampleItemViewProps, {
       itemWasHovered: false,
       renderCustomInfo: undefined,
+    });
+    Object.assign(sampleItemViewProps.styleParams, {
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
@@ -49,6 +53,10 @@ describe('ItemHover', () => {
       itemWasHovered: true,
       renderCustomInfo: undefined,
     });
+    Object.assign(sampleItemViewProps.styleParams, {
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
+    });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
 
@@ -56,12 +64,40 @@ describe('ItemHover', () => {
       itemWasHovered: false,
       renderCustomInfo: () => {},
     });
+    Object.assign(sampleItemViewProps.styleParams, {
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
+    });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
 
     Object.assign(sampleItemViewProps, {
+      itemWasHovered: false,
+      renderCustomInfo: () => {},
+    });
+    Object.assign(sampleItemViewProps.styleParams, {
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
+    });
+    driver.mount(ItemHover, sampleItemViewProps);
+    expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
+
+    Object.assign(sampleItemViewProps, {
+      itemWasHovered: false,
+      renderCustomInfo: () => {},
+    });
+    Object.assign(sampleItemViewProps.styleParams, {
+      overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
+    });
+    driver.mount(ItemHover, sampleItemViewProps);
+    expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
+
+    Object.assign(sampleItemViewProps, {
       itemWasHovered: true,
       renderCustomInfo: () => {},
+    });
+    Object.assign(sampleItemViewProps.styleParams, {
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
