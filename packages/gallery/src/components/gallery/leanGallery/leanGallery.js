@@ -86,7 +86,7 @@ export default class LeanGallery extends React.Component {
     const { styles, container } = this.props;
     const { targetItemSize, cubeImages, titlePlacement, textBoxHeight, cubeRatio, imageMargin } = styles;
 
-    const itemWidth = container.width > 0 ? Math.min(itemSize, container.width) : targetItemSize;
+    const itemWidth = container.width > 0 ? Math.min(targetItemSize, container.width) : targetItemSize;
     let itemHeight = itemWidth / cubeRatio;
 
 
