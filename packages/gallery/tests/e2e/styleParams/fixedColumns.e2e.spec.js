@@ -23,7 +23,7 @@ describe('fixedColumns - e2e', () => {
       fixedColumns: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
+    const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
   it('should set fixedColimns of "2"', async () => {

@@ -95,7 +95,17 @@ export default class galleryDriver {
       elemScreenshot: async str => {
         const rootEl = await this.page.$(str);
         return rootEl.screenshot();
-      }
+      },
+      partialScreenshot: async () => {
+        return await this.page.screenshot({
+          clip: {
+            x: 0,
+            y: 0,
+            height: 5000,
+            width: this.windowSize.width
+          }
+        })
+      },
     }
   }
 

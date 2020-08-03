@@ -22,7 +22,7 @@ describe('mix - e2e', () => {
     });
     // await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
   it('mix - scrollDirection = horizontal', async () => {
@@ -32,7 +32,7 @@ describe('mix - e2e', () => {
     });
     // await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
 
