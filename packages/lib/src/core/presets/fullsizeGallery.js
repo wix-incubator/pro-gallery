@@ -15,7 +15,7 @@ export const fixedStyles = {
   groupSize: 1,
   groupTypes: '1',
 
-  //this params were moved from the presets in layoutHelper and were not tested and checked yet.
+  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   smartCrop: false,
   galleryType: 'Strips',
   hasThumbnails: false,
@@ -35,5 +35,6 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
+    targetItemSize: styles.targetItemSize || styles.gallerySize,
   }
 }

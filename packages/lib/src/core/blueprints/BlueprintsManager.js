@@ -32,7 +32,7 @@ export default class BlueprintsManager {
 
     this.updateLastParamsIfNeeded(params, changedParams);
 
-    this.api.onBlueprintReady({blueprint, blueprintChanged});
+    this.api.onBlueprintReady && this.api.onBlueprintReady({blueprint, blueprintChanged});
     return this.cache[params] = this.existingBlueprint = blueprint;
 
   }

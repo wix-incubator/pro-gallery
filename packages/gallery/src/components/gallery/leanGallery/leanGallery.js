@@ -84,19 +84,11 @@ export default class LeanGallery extends React.Component {
   // #region Item container
   calcItemContainerSize(item) {
     const { styles, container } = this.props;
-    const { gallerySizeType, gallerySize, gallerySizePx, gallerySizeRatio, cubeImages, titlePlacement, textBoxHeight, cubeRatio, imageMargin } = styles;
-    let itemSize;
+    const { targetItemSize, cubeImages, titlePlacement, textBoxHeight, cubeRatio, imageMargin } = styles;
 
-    if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.PIXELS && gallerySizePx > 0) {
-      itemSize = gallerySizePx;
-    } else if (gallerySizeType === GALLERY_CONSTS.gallerySizeType.RATIO && gallerySizeRatio > 0) {
-      itemSize = container.width * (gallerySizeRatio / 100);
-    } else {
-      itemSize = gallerySize;
-    }
-
-    const itemWidth = container.width > 0 ? Math.min(itemSize, container.width) : itemSize;
+    const itemWidth = container.width > 0 ? Math.min(targetItemSize, container.width) : targetItemSize;
     let itemHeight = itemWidth / cubeRatio;
+
 
     if (item && cubeImages === false) {
       const ratio = get(item, 'width') / get(item, 'height');

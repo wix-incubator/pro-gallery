@@ -33,7 +33,7 @@ describe('styleParam - arrowsSize', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsSize: 50,
-      arrowsPosition: 1,
+      arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     })
     driver.mount.proGallery(initialProps);
     const arrowContainer = driver.find.selector('.nav-arrows-container');

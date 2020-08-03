@@ -7,7 +7,7 @@ export const fixedStyles = {
   cubeImages: undefined,
   cubeRatio: undefined,
   isVertical: undefined,
-  gallerySize: undefined,
+  targetItemSize: undefined,
   collageAmount: undefined,
   collageDensity: undefined,
   groupTypes: undefined,
@@ -62,7 +62,7 @@ const getStyleBySeed = (seed) => {
     cubeImages: boolFromSeed('cubeImages'),
     cubeRatio: numFromSeed(1, 25, 'cubeRatio') / 5,
     isVertical: boolFromSeed('isVertical'),
-    gallerySize: numFromSeed(300, 800, 'gallerySize'),
+    targetItemSize: numFromSeed(300, 800, 'gallerySize'),
     collageAmount: numFromSeed(5, 10, 'collageAmount') / 10,
     collageDensity:
       (featureManager.supports.spacingCalculation
@@ -108,7 +108,7 @@ const getStyleBySeed = (seed) => {
   style.galleryType = style.isVertical ? 'Columns' : 'Strips';
   style.groupSize = parseInt(style.groupTypes.slice(-1)[0]);
   style.groupTypes = style.groupTypes.join(',');
-  style.minItemSize = style.gallerySize / style.groupSize / 2;
+  style.minItemSize = style.targetItemSize / style.groupSize / 2;
 
   return style;
 }

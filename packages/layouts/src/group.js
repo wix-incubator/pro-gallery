@@ -38,7 +38,7 @@ export class Group {
     this.showAllItems = config.showAllItems;
     this.isLastItems = config.isLastItems;
     this.dummyItems = [];
-    this.gallerySize = config.gallerySize;
+    this.targetItemSize = config.targetItemSize;
 
     this.items = config.items.map(item => {
       item.Group = this;
@@ -82,9 +82,9 @@ export class Group {
 
   resize() {
     if (this.isVertical) {
-      this.resizeToWidth(this.gallerySize);
+      this.resizeToWidth(this.targetItemSize);
     } else {
-      this.resizeToHeight(this.gallerySize);
+      this.resizeToHeight(this.targetItemSize);
     }
     this.setLeft(this.left);
     this.setTop(this.top);
