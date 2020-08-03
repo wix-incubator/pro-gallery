@@ -10,7 +10,7 @@ describe('leanGallery - e2e', () => {
   const fixedLeanGalleryStyleParams = {
     allowLeanGallery: true,
     galleryLayout: GALLERY_CONSTS.layout.GRID,
-    gallerySize: 370,
+    targetItemSize: 370,
     isVertical: true,
     cubeImages: true,
     cubeRatio: 1,

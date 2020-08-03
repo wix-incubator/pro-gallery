@@ -245,7 +245,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   // };
 
   if (processedStyles.forceMobileCustomButton) {
-    processedStyles.gallerySize = Math.round(30 * 8.5 + 150);
+    processedStyles.targetItemSize = Math.round(30 * 8.5 + 150);
     processedStyles.titlePlacement = PLACEMENTS.SHOW_BELOW;
     processedStyles.galleryLayout = 2;
     processedStyles.fixedColumns = 1;
@@ -265,12 +265,12 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
     processedStyles.gallerySizePx > 0
   ) {
-    processedStyles.gallerySize = processedStyles.gallerySizePx;
+    processedStyles.targetItemSize = processedStyles.gallerySizePx;
   } else if (
     processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
     processedStyles.gallerySizeRatio > 0
   ) {
-    processedStyles.gallerySize =
+    processedStyles.targetItemSize =
       ((window && window.innerWidth) || 980) *
       (processedStyles.gallerySizeRatio / 100);
   }
@@ -301,12 +301,12 @@ function getTextBoxRightOrLeftWidth(styleParams, customExternalInfoRendererExist
   if (!shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)) {
     return 0;
   }
-  const {gallerySize, calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent} = styleParams;
+  const {targetItemSize, calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent} = styleParams;
   let width = 0;
   if (calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT) {
     width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
   } else {
-    width = Math.min(gallerySize, textBoxWidth);
+    width = Math.min(targetItemSize, textBoxWidth);
   }
   return width;
 }

@@ -42,16 +42,16 @@ export default class Layouter {
       return false;
     }
 
-    if (!this.styleParams.gallerySize) {
+    if (!this.styleParams.targetItemSize) {
       this.ready = false;
-      this.reason = 'gallerySize is undefined or 0';
+      this.reason = 'targetItemSize is undefined or 0';
       return false;
     }
 
     return true;
   }
 
-  calcNumberOfColumns(galleryWidth, gallerySize) {
+  calcNumberOfColumns(galleryWidth, targetItemSize) {
     let numOfCols = 1;
     if (this.styleParams.isVertical) {
       if (this.styleParams.fixedColumns > 0) {
@@ -59,14 +59,14 @@ export default class Layouter {
       } else if (this.styleParams.columnWidths) {
         numOfCols = this.styleParams.columnWidths.split(',').length;
       } else {
-        // find the number of columns that makes each column width the closet to the gallerySize
-        const numOfColsFloat = galleryWidth / gallerySize;
+        // find the number of columns that makes each column width the closet to the targetItemSize
+        const numOfColsFloat = galleryWidth / targetItemSize;
         const roundFuncs = [Math.floor, Math.ceil];
         const diffs = roundFuncs
           .map(func => func(numOfColsFloat)) //round to top, round to bottom
           .map(n => Math.round(galleryWidth / n)) //width of each col
-          .map(w => Math.abs(gallerySize - w)); //diff from gallerySize
-        const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the gallerySize
+          .map(w => Math.abs(targetItemSize - w)); //diff from targetItemSize
+        const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the targetItemSize
         numOfCols = roundFunc(numOfColsFloat) || 1;
       }
     } else {
@@ -103,7 +103,7 @@ export default class Layouter {
         groupItems: this.groupItems,
         group: this.group,
         strip: this.strip,
-        gallerySize: this.gallerySize,
+        targetItemSize: this.targetItemSize,
         galleryHeight: this.galleryHeight,
         columns: this.columns,
       };
@@ -187,7 +187,7 @@ export default class Layouter {
                 container: this.container,
                 groupsPerStrip: this.styleParams.groupsPerStrip,
                 oneRow: this.styleParams.oneRow,
-                gallerySize: this.gallerySize,
+                targetItemSize: this.targetItemSize,
               });
             }
           }
@@ -207,18 +207,18 @@ export default class Layouter {
       this.strips = [];
 
       if (this.styleParams.forceFullHeight) {
-        this.gallerySize = Math.sqrt(
+        this.targetItemSize = Math.sqrt(
           (this.container.galleryHeight * this.container.galleryWidth) /
             this.srcItems.length,
         );
       } else {
         let gallerySizeVal;
-        if (typeof this.styleParams.gallerySize === 'function') {
-          gallerySizeVal = this.styleParams.gallerySize();
+        if (typeof this.styleParams.targetItemSize === 'function') {
+          gallerySizeVal = this.styleParams.targetItemSize();
         } else {
-          gallerySizeVal = this.styleParams.gallerySize;
+          gallerySizeVal = this.styleParams.targetItemSize;
         }
-        this.gallerySize =
+        this.targetItemSize =
           Math.floor(gallerySizeVal) +
           Math.ceil(
             2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin),
@@ -240,18 +240,18 @@ export default class Layouter {
         container: this.container,
         groupsPerStrip: this.styleParams.groupsPerStrip,
         oneRow: this.styleParams.oneRow,
-        gallerySize: this.gallerySize,
+        targetItemSize: this.targetItemSize,
       });
 
       this.galleryHeight = 0;
 
       this.numOfCols = this.calcNumberOfColumns(
         this.galleryWidth,
-        this.gallerySize,
+        this.targetItemSize,
       );
-      this.gallerySize = this.styleParams.isVertical
+      this.targetItemSize = this.styleParams.isVertical
         ? Math.floor(this.galleryWidth / this.numOfCols)
-        : this.gallerySize;
+        : this.targetItemSize;
 
       const { columnWidths, cubeRatio, externalInfoWidth } = this.styleParams;
 
@@ -282,7 +282,7 @@ export default class Layouter {
             ) || 0;
           colWidth -= infoWidth;
           fixedCubeHeight =
-            fixedCubeHeight || (this.gallerySize - infoWidth) / cubeRatio; //calc the cube height only once
+            fixedCubeHeight || (this.targetItemSize - infoWidth) / cubeRatio; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
         });
@@ -340,7 +340,7 @@ export default class Layouter {
         top: this.galleryHeight,
         items: this.groupItems,
         isLastItems: this.isLastImages,
-        gallerySize: this.gallerySize,
+        targetItemSize: this.targetItemSize,
         showAllItems: this.showAllItems,
         container: this.container,
         styleParams: this.styleParams,
@@ -371,7 +371,7 @@ export default class Layouter {
             container: this.container,
             groupsPerStrip: this.styleParams.groupsPerStrip,
             oneRow: this.styleParams.oneRow,
-            gallerySize: this.gallerySize,
+            targetItemSize: this.targetItemSize,
           });
 
           //reset the group (this group will be rebuilt)
@@ -383,7 +383,7 @@ export default class Layouter {
         //add the group to the (current/new) strip
         this.group.setTop(this.galleryHeight);
         this.strip.ratio += this.group.ratio;
-        // this.strip.height = Math.min(gallerySize, (galleryWidth / this.strip.ratio));
+        // this.strip.height = Math.min(targetItemSize, (galleryWidth / this.strip.ratio));
         this.strip.height = this.galleryWidth / this.strip.ratio;
         this.strip.setWidth(this.galleryWidth);
         this.strip.addGroup(this.group);
@@ -394,8 +394,8 @@ export default class Layouter {
               this.container.galleryHeight +
               (this.styleParams.imageMargin - this.styleParams.galleryMargin);
           } else if (this.strip.canRemainIncomplete()) {
-            //stretching the this.strip to the full width will make it too high - so make it as high as the gallerySize and not stretch
-            this.strip.height = this.gallerySize;
+            //stretching the this.strip to the full width will make it too high - so make it as high as the targetItemSize and not stretch
+            this.strip.height = this.targetItemSize;
             this.strip.markAsIncomplete();
           }
 
