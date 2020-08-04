@@ -38,9 +38,6 @@ export default class ItemHover extends GalleryComponent {
       styleParams,
     } = this.props;
     const hoverClass = this.getHoverClass();
-    const { marginLeft, marginTop, width, height, ...restOfDimensions } =
-      imageDimensions || {};
-    //width and height will be taken from the gallery.scss and not be inline
 
     const { hoveringBehaviour, overlayAnimation } = styleParams;
     const { APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;

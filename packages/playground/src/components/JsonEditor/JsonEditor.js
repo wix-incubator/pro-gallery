@@ -1,8 +1,8 @@
 import React from 'react';
-import {Tooltip, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
-import {settingsManager} from '../../settings/settingsManager';
-import {INPUT_TYPES} from '../../settings/consts';
+import {Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
+import {INPUT_TYPES} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
+import { settingsManager } from '../../constants/settings';
 
 class JsonEditor extends React.Component {
   constructor() {
@@ -197,13 +197,13 @@ class JsonEditor extends React.Component {
 
     const Extra = settings => {
       if (settings.isRelevant(allStyleParams)) {
-        if (settings.isOld) {
-          return null;
-        } else {
-          return <Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
-        }
+        return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
-        return <Tooltip placement="right" title="This param is not relevant in current scope"><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Tooltip>
+        if (settings.missing) {
+          return <Icon type="warning" style={{fontSize: 14, color: 'red'}} />
+        } else {
+          return <Popover placement="right" title="Not Relevant" content={<p>This param is not relevant in current scope: <br/><br/><pre>{settings.isRelevant.toString()}</pre></p>}><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Popover>
+        }
       }
     }
     return (

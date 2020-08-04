@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, defaultStyles, dimensionsHelper, addPresetStyles, utils } from 'pro-gallery-lib';
+import { defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
 import isEligibleForLeanGallery from './leanGallery/isEligible';

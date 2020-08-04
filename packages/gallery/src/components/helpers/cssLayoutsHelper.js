@@ -1,9 +1,8 @@
-import { createLayout } from 'pro-layouts';
 import { cssScrollHelper } from './cssScrollHelper.js';
 
-// const CDN_URL = 'https://static.wixstatic.com/media/';
-const desktopWidths = [480, 768, 1024, 1280, 1440, 1680, 1920, 2560];
-const mobileWidths = [320]; //, 375, 414, 480, 600, 768, 900]; (mobile is currently fixed to 320px)
+// // const CDN_URL = 'https://static.wixstatic.com/media/';
+// const desktopWidths = [480, 768, 1024, 1280, 1440, 1680, 1920, 2560];
+// const mobileWidths = [320]; //, 375, 414, 480, 600, 768, 900]; (mobile is currently fixed to 320px)
 
 const getImageStyle = (item) => ({
   top: item.offset.top,
@@ -57,26 +56,26 @@ const createCssFromLayout = (domId = '', layout, styleParams, width) => {
   return cssStr;
 };
 
-const createCssFromLayouts = (domId, layouts, styleParams, widths) => {
-  const cssStrs = [];
-  layouts.forEach((layout, idx) => {
-    let cssStr = '';
-    if (layout) {
-      const width = widths[idx];
-      const lastWidth = widths[idx - 1];
-      const isFirstMediaQuery = !lastWidth || cssStrs.length === 0;
-      cssStr += isFirstMediaQuery
-        ? ''
-        : `@media only screen and (min-width: ${(lastWidth * 2 + width) /
-            3}px) {`;
-      cssStr += createCssFromLayout(domId, layout, styleParams, width);
-      cssStr += isFirstMediaQuery ? '' : `}`;
-      cssStrs.push(cssStr);
-    }
-  });
+// const createCssFromLayouts = (domId, layouts, styleParams, widths) => {
+//   const cssStrs = [];
+//   layouts.forEach((layout, idx) => {
+//     let cssStr = '';
+//     if (layout) {
+//       const width = widths[idx];
+//       const lastWidth = widths[idx - 1];
+//       const isFirstMediaQuery = !lastWidth || cssStrs.length === 0;
+//       cssStr += isFirstMediaQuery
+//         ? ''
+//         : `@media only screen and (min-width: ${(lastWidth * 2 + width) /
+//             3}px) {`;
+//       cssStr += createCssFromLayout(domId, layout, styleParams, width);
+//       cssStr += isFirstMediaQuery ? '' : `}`;
+//       cssStrs.push(cssStr);
+//     }
+//   });
 
-  return cssStrs;
-};
+//   return cssStrs;
+// };
 
 export const createCssLayouts = ({
   galleryItems,

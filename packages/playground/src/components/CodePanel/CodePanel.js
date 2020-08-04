@@ -5,7 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import s from './CodePanel.module.scss';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {settingsManager} from '../../settings/settingsManager';
+import { galleryOptions } from 'pro-gallery-lib';
 
 function CodePanel() {
 
@@ -25,7 +25,7 @@ function CodePanel() {
   };
 
   const getStyleParams = () => {
-    return Object.entries(settingsManager)
+    return Object.entries(galleryOptions)
       .filter(([key, settings]) => {
         return Boolean(styleParams[key]) && settings.isRelevant && settings.isRelevant(styleParams, {})
       })
