@@ -52,11 +52,13 @@ export class GalleryContainer extends React.Component {
         props,
         initialState,
       );
-      try {
-        this.galleryInitialStateJson = JSON.stringify(this.initialGalleryState);
-      } catch (e) {
-        //todo - report to sentry
-        this.galleryInitialStateJson = null;
+      this.galleryInitialStateJson = null;
+      if (this.initialGalleryState) {
+        try {
+          this.galleryInitialStateJson = JSON.stringify(this.initialGalleryState);
+        } catch (e) {
+          //todo - report to sentry
+        }
       }
     } else {
       try {
@@ -81,7 +83,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = {};
         try {
           const galleryState = this.reCreateGalleryExpensively(props);
-          if (Object.keys(galleryState).length > 0) {
+          if (galleryState && Object.keys(galleryState).length > 0) {
             this.initialGalleryState = galleryState;
           }
         } catch (_e) {
@@ -162,7 +164,7 @@ export class GalleryContainer extends React.Component {
 
     const reCreateGallery = () => {
       const galleryState = this.reCreateGalleryExpensively(nextProps);
-      if (Object.keys(galleryState).length > 0) {
+      if (galleryState && Object.keys(galleryState).length > 0) {
         this.setState(galleryState, () => {
           this.handleNewGalleryStructure();
         });
@@ -287,7 +289,7 @@ export class GalleryContainer extends React.Component {
       };
 
       const newState = this.reCreateGalleryExpensively(params, this.state);
-      if (Object.keys(newState).length > 0) {
+      if (newState && Object.keys(newState).length > 0) {
         this.setState(newState, () => {
           this.handleNewGalleryStructure();
         });
@@ -343,6 +345,9 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick,
       initialGalleryHeight,
     } = this.state;
+    if (!this.layout) {
+      return;
+    }
     const styleParams = this.state.styles;
     const numOfItems = this.items.length;
     const layoutHeight = this.layout.height;
@@ -393,7 +398,12 @@ export class GalleryContainer extends React.Component {
     };
 
     this.layouter = new Layouter(layoutParams);
-    this.layout = this.layouter.createLayout(layoutParams);
+    try {
+      this.layout = this.layouter.createLayout(layoutParams);
+    } catch (error) {
+      console.error('GalleryContainerNew, reCreateGalleryFromState:', error);
+      return;
+    }
     this.galleryStructure = ItemsHelper.convertToGalleryItems(this.layout, {
       thumbnailSize: styles.thumbnailSize,
       sharpParams: styles.sharpParams,
@@ -545,7 +555,12 @@ export class GalleryContainer extends React.Component {
         this.layouter = new Layouter(layoutParams);
       }
 
-      this.layout = this.layouter.createLayout(layoutParams);
+      try {
+        this.layout = this.layouter.createLayout(layoutParams);
+      } catch (error) {
+        console.error('GalleryContainerNew, reCreateGalleryExpensively:', error);
+        return false;
+      }
       const itemConfig = {
         watermark: watermarkData,
         sharpParams: _styles.sharpParams,
@@ -797,7 +812,7 @@ export class GalleryContainer extends React.Component {
         ...this.items.slice(0, this.props.totalItemsCount),
       ),
     });
-    if (Object.keys(galleryState).length > 0) {
+    if (galleryState && Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
         this.handleNewGalleryStructure();
       });
