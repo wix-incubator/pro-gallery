@@ -29,15 +29,15 @@ describe('leanGallery - e2e', () => {
     driver.closeBrowser();
   });
 
-  it('should successfully render leanGallery', async () => {
-    await driver.openPage({
-      ...fixedLeanGalleryStyleParams,
-    });
-    await driver.waitFor.hookToBeVisible('lean-gallery');
-    await driver.waitFor.timer(200);
-    const page = await driver.grab.screenshot();
-    expect(page).toMatchImageSnapshot();
-  });
+  // it('should successfully render leanGallery', async () => {
+  //   await driver.openPage({
+  //     ...fixedLeanGalleryStyleParams,
+  //   });
+  //   await driver.waitFor.hookToBeVisible('lean-gallery');
+  //   await driver.waitFor.timer(200);
+  //   const page = await driver.grab.screenshot();
+  //   expect(page).toMatchImageSnapshot();
+  // });
 
 
   it('should NOT render leanGallery (beacause scrollDirection: HORIZONTAL)', async () => {
