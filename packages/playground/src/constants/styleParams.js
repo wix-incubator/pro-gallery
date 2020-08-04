@@ -1,10 +1,9 @@
-import { defaultStyles } from 'pro-gallery';
-import { galleryOptions } from 'pro-gallery-lib';
+import { defaultStyles, galleryOptions } from 'pro-gallery-lib';
 
 export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl();
   return {
-    ...defaultStyles,
+    ...defaultStyleParams,
     ...savedStyleParams,
   };
 }
@@ -25,7 +24,7 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
   if (typeof value === 'undefined' || !styleParam) {
     return false;
   }
-  if (value === defaultStyles[styleParam]) {
+  if (value === defaultStyleParams[styleParam]) {
     return false;
   }
   if (styleParams && (!galleryOptions[styleParam] || !galleryOptions[styleParam].isRelevant(styleParams))) {
@@ -57,7 +56,13 @@ export const setStyleParamsInUrl = (styleParams) => {
   window.history.replaceState({}, 'Pro Gallery Playground', '?' + urlParams);
 }
 
-// Object.entries(galleryOptions).forEach(([styleParam, settings]) => defaultStyles[styleParam] = settings.default);
+const defaultStyleParams = {...defaultStyles};
+Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
+  if (defaultStyleParams[styleParam] !== settings.default) {
+    console.warn('Style Param default MISMATCH!', styleParam, defaultStyleParams[styleParam], settings.default);
+    defaultStyleParams[styleParam] = settings.default;
+  }
+});
 
 export const galleryLayoutId = {
   empty: -1,
