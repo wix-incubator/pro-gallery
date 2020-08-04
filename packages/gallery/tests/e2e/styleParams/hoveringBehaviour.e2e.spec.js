@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import {toMatchImageSnapshot} from '../../drivers/matchers';
-import { GALLERY_CONSTS } from '../../../src/settings/utils/constants';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
