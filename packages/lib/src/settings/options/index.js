@@ -65,7 +65,16 @@ import imagePlacementAnimation from './imagePlacementAnimation';
 import gallerySizeType from './gallerySizeType';
 import gallerySize from './gallerySize';
 import gallerySizePx from './gallerySizePx';
+import gallerySizeRatio from './gallerySizeRatio';
 import allowContextMenu from './allowContextMenu';
+import galleryLayout from './galleryLayout';
+import scrollDirection from './scrollDirection';
+import isAutoSlideshow from './isAutoSlideshow';
+import loadMoreAmount from './loadMoreAmount';
+import videoSound from './videoSound';
+import allowSlideshowCounter from './allowSlideshowCounter';
+import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
+import hidePlay from './hidePlay';
 
 export default {
     itemClick,    
@@ -135,29 +144,24 @@ export default {
     gallerySizeType,
     gallerySize,
     gallerySizePx,
-    allowContextMenu
+    gallerySizeRatio,
+    allowContextMenu,
+    galleryLayout,
+    scrollDirection,
+    isAutoSlideshow,
+    loadMoreAmount,
+    videoSound,
+    allowSlideshowCounter,
+    playButtonForAutoSlideShow,
+    hidePlay
 }
 
 
 // TODO = add the options:
-/* galleryLayout
+/* 
 allowLeanGallery
-scrollDirection
-isAutoSlideshow
-playButtonForAutoSlideShow
-gallerySizeRatio
 itemOpacity
-allowSlideshowCounter
-loadMoreAmount
 arrowsColor
 imageLoadingColor
 oneColorAnimationColor
-imageQuality
-usmToggle
-usm_a
-usm_r
-usm_t
-hidePlay
-videoSound
-videoSpeed
 */

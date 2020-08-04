@@ -142,17 +142,16 @@ export const stylesBySection = {
         'oneColorAnimationColor',
     ],
     [SECTIONS.IMAGE]: [
-        'imageQuality',
-        'usmToggle',
-        'usm_a',
-        'usm_r',
-        'usm_t',
+        // 'imageQuality',
+        // 'usmToggle',
+        // 'usm_a',
+        // 'usm_r',
+        // 'usm_t',
     ],
     [SECTIONS.VIDEO]: [
         'hidePlay',
         'videoPlay',
         'videoSound',
-        'videoSpeed',
         'videoLoop',
     ],
 }
