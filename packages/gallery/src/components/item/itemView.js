@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isSiteMode, isSEOMode, isPrerenderMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';

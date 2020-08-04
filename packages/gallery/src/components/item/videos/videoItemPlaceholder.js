@@ -1,13 +1,6 @@
-import React from 'react';
 import ImageItem from '../imageItem';
 
-
 class VideoItemPlaceholder extends ImageItem {
-  constructor(props) {
-    super(props)
-  }
-  
-
   render() {
     const {
       videoControls
