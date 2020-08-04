@@ -570,7 +570,6 @@ class SlideshowView extends GalleryComponent {
                 }
                 data-key={thumbnailItem.id}
                 style={itemStyle}
-                onContextMenu={e => this.onContextMenu(e)}
                 onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
               />
             );
@@ -578,12 +577,6 @@ class SlideshowView extends GalleryComponent {
         </div>
       </div>
     );
-  }
-
-  onContextMenu(e) {
-    if (!utils.isDev()) {
-      e.preventDefault(e);
-    }
   }
 
   getCenteredItemIdxByScroll() {
