@@ -1,4 +1,5 @@
-import { gallerySettings, defaultStyles } from 'pro-gallery';
+import { defaultStyles } from 'pro-gallery';
+import { galleryOptions } from 'pro-gallery-lib';
 
 export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl();
@@ -29,7 +30,7 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
   if (value === defaultStyleParams[styleParam]) {
     return false;
   }
-  if (styleParams && (!gallerySettings[styleParam] || !gallerySettings[styleParam].isRelevant(styleParams))) {
+  if (styleParams && (!galleryOptions[styleParam] || !galleryOptions[styleParam].isRelevant(styleParams))) {
     return false;
   }
   return true;
@@ -59,7 +60,7 @@ export const setStyleParamsInUrl = (styleParams) => {
 }
 
 const defaultStyleParams = defaultStyles;
-Object.entries(gallerySettings).forEach(([styleParam, settings]) => defaultStyleParams[styleParam] = settings.default);
+Object.entries(galleryOptions).forEach(([styleParam, settings]) => defaultStyleParams[styleParam] = settings.default);
 
 const styleParamsByLayout = () => ({
   collage: {

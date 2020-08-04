@@ -5,8 +5,8 @@ import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { List, Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
-import { SECTIONS, settingsManager } from '../../settings/settingsManager';
-import { INPUT_TYPES } from '../../settings/consts';
+import { SECTIONS, settingsManager } from '../../constants/settings';
+import { INPUT_TYPES } from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
 import { throttle } from "../../utils/utils";
@@ -96,6 +96,7 @@ function SideBar({ items, blueprintsManager }) {
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
+              showAllStyles={true}
             />
           </Card>
         }
@@ -184,7 +185,7 @@ function SideBar({ items, blueprintsManager }) {
             <Form layout="vertical">
               <Form.Item label="View Mode">
                 <Select defaultValue={gallerySettings.viewMode || GALLERY_CONSTS.viewMode.SITE} onChange={val => setGallerySettings({ viewMode: val })}>
-                  {Object.entries(GALLERY_CONSTS.viewMode).map(([key, val]) => <Select.Option value={key}>{val}</Select.Option>)}
+                  {Object.entries(GALLERY_CONSTS.viewMode).map(([key, val]) => <Select.Option key={key} value={key}>{val}</Select.Option>)}
                 </Select>
               </Form.Item>
             </Form>
