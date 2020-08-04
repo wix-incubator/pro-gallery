@@ -65,7 +65,7 @@ import imagePlacementAnimation from './imagePlacementAnimation';
 import gallerySizeType from './gallerySizeType';
 import gallerySize from './gallerySize';
 import gallerySizePx from './gallerySizePx';
-import RCP from './RCP';
+import allowContextMenu from './allowContextMenu';
 
 export default {
     itemClick,    
@@ -135,8 +135,7 @@ export default {
     gallerySizeType,
     gallerySize,
     gallerySizePx,
-    RCP
-
+    allowContextMenu
 }
 
 

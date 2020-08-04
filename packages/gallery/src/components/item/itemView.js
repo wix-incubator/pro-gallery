@@ -803,7 +803,7 @@ class ItemView extends GalleryComponent {
   };
 
   onContextMenu(e) {
-    if (!utils.isDev() && !this.props.styleParams.RCP) {
+    if (!utils.isDev() && !this.props.styleParams.allowContextMenu) {
       e.preventDefault(e);
     }
   }
