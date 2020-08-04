@@ -22,9 +22,6 @@ const formatValue = (val) => {
 }
 
 export const isValidStyleParam = (styleParam, value, styleParams) => {
-  if (styleParam === 'groupTypes') {
-    debugger;
-  }
   if (typeof value === 'undefined' || !styleParam) {
     return false;
   }
