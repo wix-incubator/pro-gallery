@@ -1,6 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
+import {calcTargetItemSize} from '../helpers/layoutHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.BRICKS,
@@ -33,7 +34,7 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    targetItemSize: styles.targetItemSize || styles.gallerySize,
+    targetItemSize: calcTargetItemSize(styles),
   }
 }
 

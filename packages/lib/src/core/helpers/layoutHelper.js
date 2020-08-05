@@ -12,6 +12,22 @@ import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
 
+export const calcTargetItemSize = (styles, smartCalc = false) => {
+  if (
+    styles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
+    styles.gallerySizePx > 0
+  ) {
+    return styles.gallerySizePx;
+  } else if (
+    styles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
+    styles.gallerySizeRatio > 0
+  ) {
+    return ((window && window.innerWidth) || 980) * (styles.gallerySizeRatio / 100);
+  } else {
+    return smartCalc ? smartCalc : styles.gallerySize;
+  }
+
+}
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
   processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
