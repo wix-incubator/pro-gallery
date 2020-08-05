@@ -207,7 +207,7 @@ class JsonEditor extends React.Component {
       }
     }
     return (
-      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{whiteSpace: 'pre-wrap', margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
+      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{whiteSpace: 'pre-wrap', margin: '-17px -15px', background: '#fff'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
           <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={Extra(settings)}>
             {this.renderEntryEditor(styleParam, settings)}
@@ -215,6 +215,7 @@ class JsonEditor extends React.Component {
               <Divider/>
               <p><b>Key: </b><code>{styleParam}</code></p>
               <p><b>Value: </b><code>{String(settings.value)}</code></p>
+              <p><b>Default: </b><code>{String(settings.default)}</code></p>
               {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
               {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
               {isSingleItem && <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>}
