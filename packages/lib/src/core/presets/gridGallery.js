@@ -1,4 +1,5 @@
 import LAYOUTS from '../../common/constants/layout';
+import {calcTargetItemSize} from '../helpers/layoutHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.GRID,
@@ -26,7 +27,7 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    targetItemSize: styles.targetItemSize || Math.round(styles.gallerySize * 8.5 + 150),
+    targetItemSize: calcTargetItemSize(styles, Math.round(styles.gallerySize * 8.5 + 150)),
   }
 }
 
