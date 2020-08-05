@@ -1,3 +1,12 @@
+## [v2.1.2](https://pro-gallery-2-1-2.surge.sh) (05/08/2020)
+ 
+#### GALLERY
+ -  fix: targetItemSize calculation
+
+#### OTHER
+ -  fix isInfinite
+
+---
 ## [v2.1.1](https://pro-gallery-2-1-1.surge.sh) (04/08/2020)
  
 #### OTHER
