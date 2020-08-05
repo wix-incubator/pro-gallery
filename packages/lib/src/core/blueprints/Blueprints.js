@@ -11,41 +11,43 @@ class Blueprints {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
-    const {dimensions: newDimensionsParams, items: newItemsParams, styles: newStylesParams} =  params
-    const {dimensions: oldDimensionsParams, items: oldItemsParams, styles: oldStylesParams} =  lastParams
-    // getItems,styles and dimesions if not supplied in params;
+    let changedParams = {};
+    try {
+      const {dimensions: newDimensionsParams, items: newItemsParams, styles: newStylesParams} = params;
+      const {dimensions: oldDimensionsParams, items: oldItemsParams, styles: oldStylesParams} = lastParams;
+      // getItems,styles and dimesions if not supplied in params;
 
-    const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newItemsParams, oldItemsParams)
-    const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newStylesParams,oldStylesParams,isUsingCustomInfoElements)
-    const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newDimensionsParams, newStylesParams, oldDimensionsParams, oldStylesParams, {formattedStyles: formattedStyles || existingBlueprint.styles});
+      const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newItemsParams, oldItemsParams)
+      const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newStylesParams,oldStylesParams,isUsingCustomInfoElements)
+      const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newDimensionsParams, newStylesParams, oldDimensionsParams, oldStylesParams, {formattedStyles: formattedStyles || existingBlueprint.styles});
 
-    const changed = itemsChanged || stylesChanged || containerChanged;
-    const changedParams = {itemsChanged , stylesChanged , containerChanged}
+      const changed = itemsChanged || stylesChanged || containerChanged;
+      changedParams = {itemsChanged , stylesChanged , containerChanged};
 
-    if (changed || !existingBlueprint) {
-      if (!existingBlueprint) {
-        existingBlueprint = {};
+      if (changed || !existingBlueprint) {
+        if (!existingBlueprint) {
+          existingBlueprint = {};
+        }
+
+        const structure = this.createStructure({formattedContainer: formattedContainer || existingBlueprint.container, formattedItems: formattedItems || existingBlueprint.items, formattedStyles: formattedStyles || existingBlueprint.styles}, changed);
+
+        // assign changed values w/o replacing the original object;
+        if (formattedStyles) {existingBlueprint.styles = formattedStyles;}
+        if (formattedItems) {existingBlueprint.items = formattedItems;}
+        if (formattedContainer) {existingBlueprint.container = formattedContainer;}
+        existingBlueprint.structure = structure;
+
+        // if its an infinite gallery - let the container loose
+        const isInfinite = existingBlueprint.styles.oneRow && existingBlueprint.styles.enableInfiniteScroll
+        if (isInfinite) {
+          existingBlueprint.container.height = structure.height;
+        }
       }
-
-      const structure = this.createStructure({formattedContainer: formattedContainer || existingBlueprint.container, formattedItems: formattedItems || existingBlueprint.items, formattedStyles: formattedStyles || existingBlueprint.styles}, changed);
-
-      // assign changed values w/o replacing the original object;
-      if (formattedStyles) {existingBlueprint.styles = formattedStyles;}
-      if (formattedItems) {existingBlueprint.items = formattedItems;}
-      if (formattedContainer) {existingBlueprint.container = formattedContainer;}
-      existingBlueprint.structure = structure;
-
-      // if its an infinite gallery - let the container loose
-      const isInfinite = existingBlueprint.styles.oneRow && existingBlueprint.styles.enableInfiniteScroll
-      if (isInfinite) {
-        existingBlueprint.container.height = structure.height;
-      }
-
+    } catch(error) {
+      console.error('Could not create blueprint, error:', error);
     }
-
     // return the existing or the modified existing object
     return {blueprint: existingBlueprint, changedParams};
-
   }
 
     // ------------------ Raw data to Formated data (if needed) ---------------------------- //

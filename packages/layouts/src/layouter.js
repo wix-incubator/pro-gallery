@@ -38,12 +38,12 @@ export default class Layouter {
   verifyGalleryState() {
     if (!this.container.galleryWidth) {
       this.ready = false;
-      throw 'galleryWidth is undefined or 0';
+      throw new Error('galleryWidth is undefined or 0');
     }
 
     if (!this.styleParams.targetItemSize) {
       this.ready = false;
-      throw 'targetItemSize is undefined or 0';
+      throw new Error('targetItemSize is undefined or 0');
     }
   }
 
