@@ -1,3 +1,12 @@
+## [v2.1.1](https://pro-gallery-2-1-1.surge.sh) (04/08/2020)
+ 
+#### OTHER
+ -  improve (settings): move the settings management to the lib and remove the old settings configuration
+
+#### GALLERY
+ -  feature (itemView): add styleParams to block right click
+
+---
 ## [v2.1.0](https://pro-gallery-2-1-0.surge.sh) (04/08/2020)
 
 ---
