@@ -207,19 +207,24 @@ class JsonEditor extends React.Component {
       }
     }
     return (
-      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{whiteSpace: 'pre-wrap', margin: '-17px -15px'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
+      <Collapse accordion={true} bordered={false} onChange={() => {}} style={{whiteSpace: 'pre-wrap', margin: '-17px -15px', background: '#fff'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
           <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={Extra(settings)}>
             {this.renderEntryEditor(styleParam, settings)}
-            {<div>
+            <div>
+              {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
               <Divider/>
               <p><b>Key: </b><code>{styleParam}</code></p>
               <p><b>Value: </b><code>{String(settings.value)}</code></p>
-              {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
+              <p><b>Default: </b><code>{String(settings.default)}</code></p>
               {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
-              {isSingleItem && <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>}
-              {isSingleItem && <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>}
-            </div>}
+              {isSingleItem && (<>
+                <Divider/>
+                <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
+                <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>
+                <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
+              </>)}
+            </div>
           </Collapse.Panel>
         ))}
       </Collapse>

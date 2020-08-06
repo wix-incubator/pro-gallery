@@ -1,5 +1,6 @@
 import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
+import {calcTargetItemSize} from '../helpers/layoutHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.COLLAGE,
@@ -24,6 +25,6 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    targetItemSize: styles.targetItemSize || Math.round(styles.gallerySize * 5 + 500),
+    targetItemSize: calcTargetItemSize(styles, Math.round(styles.gallerySize * 5 + 500)),
   }
 }
