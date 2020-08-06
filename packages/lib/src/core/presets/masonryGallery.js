@@ -25,7 +25,7 @@ export const createStyles = styles => {
   return {
     ...styles,
     ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles,(styles.isVertical ? (styles.gallerySize * 8 + 200) : (styles.gallerySize * 5 + 200))),
+    targetItemSize: calcTargetItemSize(styles, (styles.isVertical ? (styles.gallerySize * 8 + 200) : (styles.gallerySize * 5 + 200))),
   }
 }
 

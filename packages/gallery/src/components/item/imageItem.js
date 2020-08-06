@@ -158,7 +158,7 @@ export default class ImageItem extends GalleryComponent {
       if (shouldRenderHighResImages) {
         const highres = <img
           key={'image_highres-' + id}
-          className={'gallery-item-visible gallery-item gallery-item-hidden gallery-item-preloaded'}
+          className={`gallery-item-visible gallery-item gallery-item-preloaded ${isSEOMode() ? '' : 'gallery-item-hidden'}`}
           data-hook='gallery-item-image-img'
           alt={alt ? alt : 'untitled image'}
           src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES)}
