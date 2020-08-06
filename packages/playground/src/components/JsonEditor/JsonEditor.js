@@ -131,7 +131,7 @@ class JsonEditor extends React.Component {
           <ColorPicker 
             style={{float: 'right'}}
             color={theValue} 
-            colorChanged={val => this.onFieldChanged(key, val)}
+            colorChanged={({value}) => this.onFieldChanged(key, value)}
           />
         );
       case INPUT_TYPES.BUTTON:

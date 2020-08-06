@@ -75,6 +75,7 @@ import videoSound from './videoSound';
 import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
+import overlayBackground from './overlayBackground';
 
 export default {
     itemClick,    
@@ -153,7 +154,8 @@ export default {
     videoSound,
     allowSlideshowCounter,
     playButtonForAutoSlideShow,
-    hidePlay
+    hidePlay,
+    overlayBackground
 }
 
 
