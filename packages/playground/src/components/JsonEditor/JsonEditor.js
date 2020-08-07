@@ -222,8 +222,9 @@ class JsonEditor extends React.Component {
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
                 <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>
-                <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
               </>)}
+              <Divider/>
+              <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
             </div>
           </Collapse.Panel>
         ))}

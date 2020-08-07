@@ -6,6 +6,7 @@ import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hl
 import s from './CodePanel.module.scss';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import { galleryOptions } from 'pro-gallery-lib';
+import { getStyleParamsFromUrl } from '../../constants/styleParams'
 
 function CodePanel() {
 
@@ -25,13 +26,11 @@ function CodePanel() {
   };
 
   const getStyleParams = () => {
-    return Object.entries(galleryOptions)
-      .filter(([key, settings]) => {
-        return Boolean(styleParams[key]) && settings.isRelevant && settings.isRelevant(styleParams, {})
-      })
-      .reduce((acc, [key]) => {
-        const val = typeof styleParams[key] === 'string' ? `'${styleParams[key]}'` : styleParams[key];
-        return acc.concat(`    ${key}: ${val},`);
+    const {galleryLayout} = styleParams;
+    return Object.entries({galleryLayout, ...getStyleParamsFromUrl()})
+      .reduce((acc, [key, value]) => {
+        const val = typeof value === 'string' ? `'${value}'` : value;
+        return acc.concat(`      ${key}: ${val},`);
     }, []).join(`\n`);
   }
 

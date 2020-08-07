@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import {GalleryContext} from './GalleryContext';
-import {getInitialStyleParams} from '../constants/styleParams';
+import {getInitialStyleParams, getStyleParamsFromUrl} from '../constants/styleParams';
 import { addPresetStyles } from 'pro-gallery';
 import {SIDEBAR_WIDTH} from '../constants/consts';
 
@@ -48,10 +48,12 @@ export function useGalleryContext(blueprintsManager) {
 
   const setStyleParams = (newProp, value) => {
 
-    const newContext = {styleParams: {...context.styleParams, [newProp]: value}}
+    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
+    const newContext = {styleParams: {...getStyleParamsFromUrl(), [newProp]: value}}
     if(getGallerySettings().useBlueprints) {
       blueprintsManager.createBlueprint({...newContext})
     }
+    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParams in the context`, newContext.styleParams);
 
     setContext(newContext);
   };
