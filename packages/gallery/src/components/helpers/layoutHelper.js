@@ -1,4 +1,4 @@
-import { dimensionsHelper, processLayouts, NEW_PRESETS, utils } from 'pro-gallery-lib';
+import { getLayoutName, dimensionsHelper, processLayouts, NEW_PRESETS, utils } from 'pro-gallery-lib';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -151,26 +151,6 @@ function getStyleByGalleryType(styles) {
 export const isInPreset = (styleParams, paramToCheck) => {
   const layoutName = getLayoutName(styleParams.galleryLayout) || 'empty';// empty for when there is no layout given
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
-}
-
-const getLayoutName = (galleryLayout) => {
-  const galleyLayoutList = [
-    'empty', // -1
-    'collage', // 0
-    'masonry', // 1
-    'grid', // 2
-    'thumbnails', // 3
-    'slider', // 4
-    'slideshow', // 5
-    'panorama', // 6
-    'column', // 7
-    'magic', // 8
-    'fullsize', // 9
-    'bricks', // 10
-    'alternate', // 11
-    'mix', // 12
-  ];
-  return galleyLayoutList[galleryLayout + 1]
 }
 
 function addLayoutStyles(styles, customExternalInfoRendererExists) {

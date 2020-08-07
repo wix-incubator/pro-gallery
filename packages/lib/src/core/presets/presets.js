@@ -95,4 +95,24 @@ const NEW_PRESETS = {
   empty
 };
 
-export { addPresetStyles, NEW_PRESETS}
+
+const getLayoutName = (galleryLayout) => {
+  const galleyLayoutList = [
+    'empty', // -1
+    'collage', // 0
+    'masonry', // 1
+    'grid', // 2
+    'thumbnails', // 3
+    'slider', // 4
+    'slideshow', // 5
+    'panorama', // 6
+    'column', // 7
+    'magic', // 8
+    'fullsize', // 9
+    'bricks', // 10
+    'alternate', // 11
+    'mix', // 12
+  ];
+  return galleyLayoutList[galleryLayout + 1]
+}
+export { addPresetStyles, NEW_PRESETS, getLayoutName}

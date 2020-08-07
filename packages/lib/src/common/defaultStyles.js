@@ -1,8 +1,8 @@
 import GALLERY_CONSTS from './constants';
-
+import galleryOptions from '../settings/options'
 // this is the one place for the default styles !!!
 
-export default {
+const defaultStyles = {
   isRTL: false,
   isVertical: false,
   gallerySize: 30,
@@ -140,3 +140,12 @@ export default {
   videoSpeed: '1',
   videoLoop: true,
 };
+
+Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
+  if (defaultStyles[styleParam] !== settings.default) {
+    console.warn('Style Param default MISMATCH!', styleParam, defaultStyles[styleParam], settings.default);
+    defaultStyles[styleParam] = settings.default;
+  }
+});
+
+export default defaultStyles
