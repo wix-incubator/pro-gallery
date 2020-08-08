@@ -230,7 +230,7 @@ function SideBar({ items, blueprintsManager }) {
           </Collapse.Panel>
         </Collapse>
 
-        <div style={{ height: 100 }} />
+        <div style={{ height: 120 }} />
 
         <div className={s.code}>
           <CodePanel />

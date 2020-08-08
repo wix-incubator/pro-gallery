@@ -1,5 +1,6 @@
 import React from 'react';
 import {GALLERY_CONSTS, ProGallery, ProBlueprintsGallery} from 'pro-gallery';
+import {utils} from 'pro-gallery-lib';
 // import CLICK_ACTIONS from '../../../common/constants/itemClick';
 import CloseButton from './x';
 
@@ -93,7 +94,8 @@ export default class ExpandableProGallery extends React.Component {
                             galleryLayout: 5,
                             slideshowInfoSize: 0,
                             cubeType:'fit',
-                            scrollSnap: true
+                            scrollSnap: true,
+                            showArrows: !utils.isMobile()
                         }}
                     />
                 </section>}

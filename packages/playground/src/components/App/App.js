@@ -11,6 +11,7 @@ import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-lib'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
+import {utils} from 'pro-gallery-lib';
 
 // import Loader from './loader';
 
@@ -209,12 +210,15 @@ export function App() {
   };
 
   // console.log('Rendering App: ', {styleParams, items, dimensions, showSide, blueprint, blueprintProps})
-
+  const getKeySettings = () => {
+    const {showSide, ...keySettings} = gallerySettings
+    return keySettings;
+  }
   return (
-    <main className={s.main}>
+    <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
-      <SideBarButton className={s.toggleButton} onClick={switchState} isOpen={showSide} />
-      <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0, display: showSide ? 'block' : 'none'}}>
+      <SideBarButton className={s.toggleButton} onClick={switchState} isOpen={showSide}/>
+      <aside className={s.sideBar} style={{width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0}}>
         <div className={s.heading}>
           Pro Gallery Playground <a className={s.version} href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md" target="blank" title="View Changelog on Github">v{pJson.version}</a>
         </div>
@@ -225,9 +229,9 @@ export function App() {
           />
         </Suspense>}
       </aside>
-      <section className={s.gallery} style={{paddingLeft: showSide ? SIDEBAR_WIDTH : 0}}>
+      <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
         {!canRender() ? <div>Waiting for blueprint...</div> : <ExpandableProGallery
-          key={`pro-gallery-${JSON.stringify(gallerySettings)}-${getItems()[0].itemId}`}
+          key={`pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
           viewMode={gallerySettings.viewMode}
