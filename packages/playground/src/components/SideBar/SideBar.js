@@ -65,8 +65,8 @@ function SideBar({ items, blueprintsManager }) {
           size="large"
           style={{ width: '100%', margin: '10px 1px' }}
           dataSource={dataSource}
-          onSelect={(val) => setSearchResult(val)}
-          onSearch={(val) => setSearchTerm(val)}
+          onSelect={setSearchResult}
+          onSearch={setSearchTerm}
           placeholder="Search Style Params"
           value={searchTerm}
         >

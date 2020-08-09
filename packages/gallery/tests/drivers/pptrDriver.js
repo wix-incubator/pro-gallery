@@ -85,7 +85,9 @@ export default class galleryDriver {
   getPageUrl(styleParams) {
     let urlParam = ''
     Object.keys(styleParams).map(sp => urlParam += `${sp}=${styleParams[sp]}&`);
-    return `http://localhost:3000/?${urlParam}isTestEnvironment=true`;
+    const url = `http://localhost:3000/?${urlParam}isTestEnvironment=true`;
+    console.log('Openning URL:', url);
+    return url;
   }
   get grab() {
     return {
