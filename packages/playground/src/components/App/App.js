@@ -33,10 +33,12 @@ const initialItems = {
 };
 
 const galleryReadyEvent = new Event('galleryReady');
+let sideShownOnce = false;
 
 export function App() {
   const {setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
+  sideShownOnce = sideShownOnce || showSide;
 
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
@@ -214,6 +216,7 @@ export function App() {
     const {showSide, ...keySettings} = gallerySettings
     return keySettings;
   }
+  
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -222,7 +225,7 @@ export function App() {
         <div className={s.heading}>
           Pro Gallery Playground <a className={s.version} href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md" target="blank" title="View Changelog on Github">v{pJson.version}</a>
         </div>
-        {showSide && <Suspense fallback={<div>Loading...</div>}>
+        {sideShownOnce && <Suspense fallback={<div>Loading...</div>}>
           <SideBar
             blueprintsManager = {blueprintsManager}
             items={getItems()}
