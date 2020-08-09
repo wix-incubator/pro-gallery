@@ -126,10 +126,10 @@ export function App() {
 
     const infoElement = (<div className={'playground-info'}>
       <div className={'playground-info-title'}>
-        <span>{pgItemProps.title}</span>
+        <p>{pgItemProps.title}</p>
       </div>
       <div className={'playground-info-description'}>
-        <span>{pgItemProps.description}</span>
+        <p>{pgItemProps.description}</p>
       </div>
     </div>);
 

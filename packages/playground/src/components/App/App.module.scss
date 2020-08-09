@@ -124,28 +124,25 @@ input, button, select, optgroup, textarea {
 :global {
   .playground-info {
     text-align: center;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
 
     .playground-info-title {
       font-size: 24px;
       font-weight: 400;
-      color: #7d7777;
+      color: #333;
       padding: 10px;
-      font-family: "HelveticaNeueW01-75Bold",
-      "HelveticaNeueW02-75Bold",
-      "HelveticaNeueW10-75Bold",
-      sans-serif;
+      line-height: 32px;
+
     }
     .playground-info-description {
       font-size: 16px;
       font-weight: 100;
-      color: #bfbfbf;
+      color: #999;
       padding-left: 10px;
       padding-right: 10px;
       padding-bottom: 10px;
-      font-family: "HelveticaNeueW01-45Ligh",
-      "HelveticaNeueW02-45Ligh",
-      "HelveticaNeueW10-45Ligh",
-      sans-serif;
     }
   }
 }
