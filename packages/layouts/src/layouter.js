@@ -38,17 +38,13 @@ export default class Layouter {
   verifyGalleryState() {
     if (!this.container.galleryWidth) {
       this.ready = false;
-      this.reason = 'galleryWidth is undefined or 0';
-      return false;
+      throw new Error('Layouter: cannot create layout, galleryWidth is undefined or 0');
     }
 
     if (!this.styleParams.targetItemSize) {
       this.ready = false;
-      this.reason = 'targetItemSize is undefined or 0';
-      return false;
+      throw new Error('Layouter: cannot create layout, targetItemSize is undefined or 0');
     }
-
-    return true;
   }
 
   calcNumberOfColumns(galleryWidth, targetItemSize) {
@@ -295,9 +291,7 @@ export default class Layouter {
       this.updateParams(layoutParams);
     }
 
-    if (!this.verifyGalleryState()) {
-      return false;
-    }
+    this.verifyGalleryState();
 
     this.prepareLayoutParams();
 

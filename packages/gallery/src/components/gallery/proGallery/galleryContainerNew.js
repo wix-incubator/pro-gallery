@@ -79,13 +79,9 @@ export class GalleryContainer extends React.Component {
       } catch (e) {
         //hydrate phase did not happen - do it all over again
         this.initialGalleryState = {};
-        try {
-          const galleryState = this.reCreateGalleryExpensively(props);
-          if (Object.keys(galleryState).length > 0) {
-            this.initialGalleryState = galleryState;
-          }
-        } catch (_e) {
-          console.warn(_e);
+        const galleryState = this.reCreateGalleryExpensively(props);
+        if (Object.keys(galleryState).length > 0) {
+          this.initialGalleryState = galleryState;
         }
       }
     }
