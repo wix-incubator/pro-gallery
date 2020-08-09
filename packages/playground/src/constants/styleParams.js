@@ -1,5 +1,4 @@
-import { defaultStyles } from 'pro-gallery';
-import { galleryOptions } from 'pro-gallery-lib';
+import { getLayoutName, NEW_PRESETS, defaultStyles, galleryOptions } from 'pro-gallery-lib';
 
 export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl();
