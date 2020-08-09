@@ -7,4 +7,6 @@ export default {
   isRelevant: (styleParams) => styleParams.groupSize > 1,
   type: INPUT_TYPES.NUMBER,
   default: 0.8,
+  min: 0,
+  max: 1,
 }

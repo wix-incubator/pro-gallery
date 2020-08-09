@@ -20,7 +20,7 @@ input, button, select, optgroup, textarea {
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 50;
+    z-index: 1000;
     color: white;
     background-color: #1890ff;
     border-color: #1890ff;
@@ -39,7 +39,8 @@ input, button, select, optgroup, textarea {
     overflow: auto;
     background: #eee;
     border-right: 1px solid #ccc;
-    transition: margin 1s ease;
+    transition: margin .4s ease;
+    z-index: 999;
   }
 
   .gallery {

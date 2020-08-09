@@ -131,7 +131,7 @@ class JsonEditor extends React.Component {
           <ColorPicker 
             style={{float: 'right'}}
             color={theValue} 
-            colorChanged={val => this.onFieldChanged(key, val)}
+            colorChanged={({value}) => this.onFieldChanged(key, value)}
           />
         );
       case INPUT_TYPES.BUTTON:
@@ -222,8 +222,9 @@ class JsonEditor extends React.Component {
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
                 <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>
-                <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
               </>)}
+              <Divider/>
+              <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
             </div>
           </Collapse.Panel>
         ))}

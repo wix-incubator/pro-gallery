@@ -1,8 +1,9 @@
 import {useContext} from 'react';
 import {GalleryContext} from './GalleryContext';
-import {getInitialStyleParams} from '../constants/styleParams';
+import {getInitialStyleParams, getStyleParamsFromUrl} from '../constants/styleParams';
 import { addPresetStyles } from 'pro-gallery';
 import {SIDEBAR_WIDTH} from '../constants/consts';
+import {utils} from 'pro-gallery-lib';
 
 export function useGalleryContext(blueprintsManager) {
   const [context, setContext] = useContext(GalleryContext);
@@ -25,11 +26,13 @@ export function useGalleryContext(blueprintsManager) {
       }
     };
 
-    if(getGallerySettings().useBlueprints) {
-      blueprintsManager.createBlueprint({...newContext})
-    }
-
-    setContext(newContext);
+    if (JSON.stringify(newContext.dimensions) !== JSON.stringify({...context.dimensions})) {
+      if(getGallerySettings().useBlueprints) {
+        blueprintsManager.createBlueprint({...newContext})
+      }
+  
+      setContext(newContext);
+      }
   };
 
   const setPreset = newPreset => {
@@ -48,10 +51,12 @@ export function useGalleryContext(blueprintsManager) {
 
   const setStyleParams = (newProp, value) => {
 
-    const newContext = {styleParams: {...context.styleParams, [newProp]: value}}
+    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
+    const newContext = {styleParams: {...getStyleParamsFromUrl(), [newProp]: value}}
     if(getGallerySettings().useBlueprints) {
       blueprintsManager.createBlueprint({...newContext})
     }
+    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParams in the context`, newContext.styleParams);
 
     setContext(newContext);
   };
@@ -103,7 +108,7 @@ export function useGalleryContext(blueprintsManager) {
 
   const calcGalleryDimensions = () => {
     let dimensions = {};
-    const showSide = !!getGallerySettings().showSide
+    const showSide = !!getGallerySettings().showSide && !utils.isMobile();
     dimensions.width = !showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
     dimensions.height = window.innerHeight;
 

@@ -88,7 +88,7 @@ export const stylesBySection = {
     ],
     [SECTIONS.INFO]: [
         'titlePlacement',
-        'itemOpacity',
+        'overlayBackground',
         'allowSlideshowCounter',
     ],
     [SECTIONS.BEHAVIOR]: [

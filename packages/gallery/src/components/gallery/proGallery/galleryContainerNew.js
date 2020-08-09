@@ -904,6 +904,9 @@ export class GalleryContainer extends React.Component {
     const ssrOpacity =
       this.allowSSROpacity() &&
       '.gallery-item-container { opacity: 0 }';
+    const dynamicStyles = `
+      ${this.props.styles.overlayBackground && `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground}}`}
+    `;
     return (
       <div
         data-key="pro-gallery-inner-container"
@@ -963,11 +966,12 @@ export class GalleryContainer extends React.Component {
             {this.galleryInitialStateJson}
           </div>
         )}
-        <div data-key="items-styles" key="items-styles" style={{ display: 'none' }}>
+        <div data-key="dynamic-styles" key="items-styles" style={{ display: 'none' }}>
           {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
           {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{ __html: scrollCss }} />)}
           {ssrDisableTransition && <style dangerouslySetInnerHTML={{ __html: ssrDisableTransition }} />}
           {ssrOpacity && <style dangerouslySetInnerHTML={{__html: ssrOpacity}} />}
+          {dynamicStyles && <style dangerouslySetInnerHTML={{__html: dynamicStyles}} />}
         </div>
       </div>
     );
