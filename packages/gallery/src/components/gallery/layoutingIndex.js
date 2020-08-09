@@ -44,7 +44,7 @@ export default class BaseGallery extends React.Component {
     if (isEligibleForLeanGallery(galleryProps)) {
       GalleryComponent = LeanGallery;
     } else {
-      if(!this.state.blueprint){
+      if (!this.state.blueprint){
         return null;
       }
       blueprint = this.state.blueprint;

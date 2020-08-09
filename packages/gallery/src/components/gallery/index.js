@@ -14,7 +14,8 @@ export default class BaseGallery extends React.Component {
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     let galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId};
-
+    const shouldRenderLean = isEligibleForLeanGallery(galleryProps);
+    const key = [domId, shouldRenderLean].join('_');
 
     if(this.props.useBlueprints) {
       //
@@ -34,11 +35,11 @@ export default class BaseGallery extends React.Component {
 
     let GalleryComponent = ProGallery;
 
-    if (isEligibleForLeanGallery(galleryProps)) {
+    if (shouldRenderLean) {
       GalleryComponent = LeanGallery;
     }
 
-    return <GalleryComponent {...galleryProps} />
+    return <GalleryComponent key={key} {...galleryProps} />
   }
 }
 
