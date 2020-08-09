@@ -141,11 +141,11 @@ const defaultStyles = {
   videoLoop: true,
 };
 
-Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
+/* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
   if (defaultStyles[styleParam] !== settings.default) {
     console.warn('Style Param default MISMATCH!', styleParam, defaultStyles[styleParam], settings.default);
     // defaultStyles[styleParam] = settings.default;
   }
 });
-
+ */
 export default defaultStyles
