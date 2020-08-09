@@ -32,7 +32,7 @@ describe('gridStyle - e2e', () => {
       numberOfImagesPerRow:2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
+    const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
 })
