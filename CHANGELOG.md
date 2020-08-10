@@ -1,3 +1,14 @@
+## [v2.1.3](https://pro-gallery-2-1-3.surge.sh) (10/08/2020)
+ 
+#### GALLERY
+ - LeanGallery: change the gallery key between lean and pro gallery
+ - Feature (overlayBackground): add support for dynamic styles - overlayBackground
+ - Fixed imageItem: remove gallery-item-hidden class in SEO
+
+#### OTHER
+ - Layouter will throw an error if !galleryWidth or if !targetItemSize.
+
+---
 ## [v2.1.2](https://pro-gallery-2-1-2.surge.sh) (05/08/2020)
  
 #### GALLERY
