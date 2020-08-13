@@ -32,7 +32,7 @@ class VideoScrollHelper {
     this.videoPlay = undefined;
     this.itemClick = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
-
+    this.lastVideoPlayed = -1;
     this.trigger = Object.assign(
       {},
       ...Object.keys(VIDEO_EVENTS).map(key => ({
@@ -42,10 +42,11 @@ class VideoScrollHelper {
   }
 
   //--------------------------updates----------------------------------//
-  updateGalleryStructure({ galleryStructure, scrollBase, videoPlay, itemClick, oneRow }) {
+  updateGalleryStructure({ galleryStructure, scrollBase, videoPlay, videoLoop, itemClick, oneRow }) {
     this.galleryWidth = dimensionsHelper.getGalleryDimensions().galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
+    this.videoLoop = videoLoop;
     this.itemClick = itemClick;
     this.oneRow = oneRow;
     const lastItemCount = this.lastItemCount;
@@ -85,6 +86,14 @@ class VideoScrollHelper {
         //case VIDEO_EVENTS.ended:
         this.videoEnded(eventData.idx);
         break;
+      case GALLERY_CONSTS.events.VIDEO_PLAYED:
+        //case VIDEO_EVENTS.ended:
+        this.videoPlayed(eventData.idx);
+        break;
+      case GALLERY_CONSTS.events.VIDEO_ERROR:
+        //case VIDEO_EVENTS.ended:
+        this.videoErrorReported();
+        break;
       case VIDEO_EVENTS.INIT_SCROLL:
         this.ScrollializePlayState();
         break;
@@ -119,8 +128,7 @@ class VideoScrollHelper {
     this.top = top ? top : this.top;
     this.left = left ? left : this.left;
     if (this.currentPlayingIdx === -1) {
-      this.shouldAutoPlay() &&
-        this.playNextVideoByRating({ top: this.top, left: this.left });
+      this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
     } else {
       if (
         !this.isCurrentVideoStillVisible({ top: this.top, left: this.left })
@@ -131,8 +139,7 @@ class VideoScrollHelper {
           ),
         );
       }
-      this.shouldAutoPlay() &&
-        this.playNextVideoByRating({ top: this.top, left: this.left });
+      this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
     }
   }
 
@@ -142,18 +149,27 @@ class VideoScrollHelper {
     );
     this.stop(indexInVideoItems);
     const scroll = { top: this.top, left: this.left };
-    this.shouldAutoPlay() && this.playNextVideoByRating(scroll);
+    this.autoPlayNextVideoByRating(scroll);
+  }
+
+  videoPlayed(idx) {
+    this.lastVideoPlayed = idx;
+  }
+  videoErrorReported( ) {
+    this.stop();
   }
 
   initializePlayState() {
-    if (this.shouldAutoPlay()) {
-      this.playNextVideoByRating({ top: this.top, left: this.left });
-    }
+      this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
   }
 
   //-------------------------------controls------------------------------------//
 
-  playNextVideoByRating({ top, left }) {
+  autoPlayNextVideoByRating({ top, left }) {
+    if (!this.shouldAutoPlay()) {
+      return;
+    }
+
     const secondBestRating = {
       idx: -1,
       rating: Infinity,
@@ -181,7 +197,15 @@ class VideoScrollHelper {
         return false;
       }
     });
-    this.play(bestRating.idx, secondBestRating.idx);
+    if(!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed){
+      if((secondBestRating.idx >= 0)) {
+        this.play(secondBestRating.idx, bestRating.idx); //play 2nd in line instead. keep best rating for next by the score he got...
+      } else {
+        return; //cant play same video twice.
+      }
+    } else {
+      this.play(bestRating.idx, secondBestRating.idx);
+    }
   }
 
   calculateCurrentItemPlacement() {
@@ -264,6 +288,9 @@ class VideoScrollHelper {
 
   shouldAutoPlay() {
     return this.videoPlay === 'auto';
+  }
+  allowedLoop() {
+    return this.videoLoop === true;
   }
 
   IdxExistsInVideoItems(idx) {

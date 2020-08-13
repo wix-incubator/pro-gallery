@@ -165,8 +165,13 @@ class VideoItem extends GalleryComponent {
         onPause={() => {
           this.setState({ playing: false });
         }}
+        onError={(e) => {
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {...this.props, videoError: e});
+        }}
+        
         playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
         onPlay={() => {
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_PLAYED, this.props);
           this.setState({ playing: true });
         }}
         onReady={() => {
