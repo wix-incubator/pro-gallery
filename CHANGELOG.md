@@ -1,3 +1,9 @@
+## [v2.1.4](https://pro-gallery-2-1-4.surge.sh) (16/08/2020)
+ 
+#### GALLERY
+ -  Protect looping on single video items. listen to errors sent on play.
+
+---
 ## [v2.1.3](https://pro-gallery-2-1-3.surge.sh) (10/08/2020)
  
 #### GALLERY
