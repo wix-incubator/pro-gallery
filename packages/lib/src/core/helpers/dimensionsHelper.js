@@ -69,6 +69,9 @@ class DimensionsHelper {
       if (this.styles.arrowsPosition && this.styles.oneRow) {
         width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
       }
+      if (true) {
+        width -= 200
+      }
       return width;
     });
   }

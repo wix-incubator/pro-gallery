@@ -8,6 +8,8 @@ export const fixedStyles = {
   enableInfiniteScroll: true,
   cubeRatio: '100%/100%',
   cubeImages: true,
+  cubeType: 'fit',
+  slideshowInfoSize: 0,
   oneRow: true,
   hoveringBehaviour: INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,

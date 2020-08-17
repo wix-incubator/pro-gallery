@@ -890,21 +890,24 @@ class SlideshowView extends GalleryComponent {
     }
 
     return (
-      <div
-        id="pro-gallery-container"
-        className={
-          'pro-gallery inline-styles one-row hide-scrollbars ' +
-          (this.props.styleParams.enableScroll ? ' slider ' : '') +
-          (this.props.styleParams.isAccessible ? ' accessible ' : '') +
-          (this.props.styleParams.isRTL ? ' rtl ' : ' ltr ')
-        }
-        style={galleryStyle}
-      >
-        {this.createDebugMsg()}
-        {this.createNavArrows()}
-        {this.createLayout()}
-        {this.createAutoSlideShowPlayButton()}
-        {this.createSlideShowNumbers()}
+      <div style={{display:'flex'}}>
+        <div
+          id="pro-gallery-container"
+          className={
+            'pro-gallery inline-styles one-row hide-scrollbars ' +
+            (this.props.styleParams.enableScroll ? ' slider ' : '') +
+            (this.props.styleParams.isAccessible ? ' accessible ' : '') +
+            (this.props.styleParams.isRTL ? ' rtl ' : ' ltr ')
+          }
+          style={galleryStyle}
+        >
+          {this.createDebugMsg()}
+          {this.createNavArrows()}
+          {this.createLayout()}
+          {this.createAutoSlideShowPlayButton()}
+          {this.createSlideShowNumbers()}
+        </div>
+        {this.getCustomSideBar()}
       </div>
     );
   }
@@ -1113,6 +1116,22 @@ class SlideshowView extends GalleryComponent {
 
     this.shouldCreateSlideShowNumbers =
       isAutoSlideShow && props.styleParams.allowSlideshowCounter;
+  }
+
+  getCustomSideBar() {
+    const customSidebarStyles = {
+      width: 200,
+      height: '100%',
+      boxSizing: 'border-box',
+      padding: 10
+    }
+
+    return (
+      <div style={customSidebarStyles}>
+        <h2>Image Title</h2>
+        <h4>Image description</h4>
+      </div>
+    )
   }
 
   removeArrowsIfNeeded(){
