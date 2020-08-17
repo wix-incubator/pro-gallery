@@ -38,12 +38,16 @@ export default class Layouter {
   verifyGalleryState() {
     if (!this.container.galleryWidth) {
       this.ready = false;
-      throw new Error('Layouter: cannot create layout, galleryWidth is undefined or 0');
+      throw new Error(
+        'Layouter: cannot create layout, galleryWidth is undefined or 0',
+      );
     }
 
     if (!this.styleParams.targetItemSize) {
       this.ready = false;
-      throw new Error('Layouter: cannot create layout, targetItemSize is undefined or 0');
+      throw new Error(
+        'Layouter: cannot create layout, targetItemSize is undefined or 0',
+      );
     }
   }
 
@@ -249,7 +253,12 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, cubeRatio, externalInfoWidth } = this.styleParams;
+      const {
+        columnWidths,
+        cubeRatio,
+        externalInfoWidth,
+        imageMargin,
+      } = this.styleParams;
 
       const columnWidthsArr =
         columnWidths && columnWidths.length > 0
@@ -278,7 +287,9 @@ export default class Layouter {
             ) || 0;
           colWidth -= infoWidth;
           fixedCubeHeight =
-            fixedCubeHeight || (this.targetItemSize - infoWidth) / cubeRatio; //calc the cube height only once
+            fixedCubeHeight ||
+            (this.targetItemSize - infoWidth - imageMargin * 2) / cubeRatio +
+              imageMargin * 2; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
         });
