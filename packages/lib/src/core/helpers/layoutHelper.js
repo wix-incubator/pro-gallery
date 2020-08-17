@@ -50,7 +50,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
             '',
           );
           processedStyles.textDecorationTitle = 'underline';
-        } else {
+        } else if (processedStyles.itemFontSlideshow.style.underline === false) {
           processedStyles.textDecorationTitle = 'none';
         }
       }
@@ -73,7 +73,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
             '',
           );
           processedStyles.textDecorationDesc = 'underline';
-        } else {
+        } else if (processedStyles.itemDescriptionFontSlideshow.style.underline === false){
           processedStyles.textDecorationDesc = 'none';
         }
       }
