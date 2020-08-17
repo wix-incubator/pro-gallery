@@ -36,42 +36,20 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {
       if (!utils.isUndefined(processedStyles.itemFontSlideshow)) {
-        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
-          /^font\s*:\s*/,
-          '',
-        );
-        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
-          /;$/,
-          '',
-        );
-        if (processedStyles.itemFontSlideshow.value.indexOf('underline') > -1) {
-          processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(
-            'underline',
-            '',
-          );
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(/^font\s*:\s*/, '',);
+        processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace(/;$/, '',);
+        if ((processedStyles.itemFontSlideshow.value.indexOf('underline') > -1) || (processedStyles.itemFontSlideshow.style.underline === true)) {
+          processedStyles.itemFontSlideshow.value = processedStyles.itemFontSlideshow.value.replace('underline', '',);
           processedStyles.textDecorationTitle = 'underline';
         } else if (processedStyles.itemFontSlideshow.style.underline === false) {
           processedStyles.textDecorationTitle = 'none';
         }
       }
       if (!utils.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
-        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
-          /^font\s*:\s*/,
-          '',
-        );
-        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
-          /;$/,
-          '',
-        );
-        if (
-          processedStyles.itemDescriptionFontSlideshow.value.indexOf(
-            'underline',
-          ) > -1
-        ) {
-          processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(
-            'underline',
-            '',
-          );
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(/^font\s*:\s*/, '',);
+        processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace(/;$/, '',);
+        if ((processedStyles.itemDescriptionFontSlideshow.value.indexOf('underline',) > -1) || (processedStyles.itemDescriptionFontSlideshow.style.underline === true)) {
+          processedStyles.itemDescriptionFontSlideshow.value = processedStyles.itemDescriptionFontSlideshow.value.replace('underline', '',);
           processedStyles.textDecorationDesc = 'underline';
         } else if (processedStyles.itemDescriptionFontSlideshow.style.underline === false){
           processedStyles.textDecorationDesc = 'none';
@@ -79,40 +57,20 @@ function processLayouts(styles, customExternalInfoRendererExists) {
       }
     } else {
       if (!utils.isUndefined(processedStyles.itemFont)) {
-        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
-          /^font\s*:\s*/,
-          '',
-        );
-        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
-          /;$/,
-          '',
-        );
+        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(/^font\s*:\s*/, '',);
+        processedStyles.itemFont.value = processedStyles.itemFont.value.replace(/;$/, '',);
         if (processedStyles.itemFont.value.indexOf('underline') > -1) {
-          processedStyles.itemFont.value = processedStyles.itemFont.value.replace(
-            'underline',
-            '',
-          );
+          processedStyles.itemFont.value = processedStyles.itemFont.value.replace('underline', '',);
           processedStyles.textDecorationTitle = 'underline';
         } else {
           processedStyles.textDecorationTitle = 'none';
         }
       }
       if (!utils.isUndefined(processedStyles.itemDescriptionFont)) {
-        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
-          /^font\s*:\s*/,
-          '',
-        );
-        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
-          /;$/,
-          '',
-        );
-        if (
-          processedStyles.itemDescriptionFont.value.indexOf('underline') > -1
-        ) {
-          processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(
-            'underline',
-            '',
-          );
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(/^font\s*:\s*/, '',);
+        processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace(/;$/, '',);
+        if (processedStyles.itemDescriptionFont.value.indexOf('underline') > -1) {
+          processedStyles.itemDescriptionFont.value = processedStyles.itemDescriptionFont.value.replace('underline', '',);
           processedStyles.textDecorationDesc = 'underline';
         } else {
           processedStyles.textDecorationDesc = 'none';
