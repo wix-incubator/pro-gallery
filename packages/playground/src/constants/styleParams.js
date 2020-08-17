@@ -9,6 +9,7 @@ export const getInitialStyleParams = () => {
     ...defaultStyleParams,
     ...savedStyleParams,
   };
+  
 }
 
 const formatValue = (val) => {
@@ -60,7 +61,7 @@ export const getStyleParamsFromUrl = () => {
       .map(styleParam => styleParam.split('='))
       .reduce((obj, [styleParam, value]) => Object.assign(obj, {[styleParam]: formatValue(value)}), {});
       
-    styleParams = addPresetStyles(styleParams);
+    styleParams = addPresetStyles({...defaultStyleParams, ...styleParams});
 
     const relevantStyleParams = Object.entries(styleParams)
       .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value, styleParams) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
