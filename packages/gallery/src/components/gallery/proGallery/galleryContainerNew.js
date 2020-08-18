@@ -371,7 +371,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  reCreateGalleryFromState({ items, styles, container, gotFirstScrollEvent }) {
+  reCreateGalleryFromState({ items, styles, container }) {
 
     //update this.items
     this.items = items.map(item => ItemsHelper.convertDtoToLayoutItem(item));

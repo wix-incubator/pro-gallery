@@ -97,7 +97,7 @@ export const stylesBySection = {
         'hoveringBehaviour',
         'itemClick',
         'scrollSnap',
-        'RCP',
+        'allowContextMenu',
     ],
     [SECTIONS.DESIGN]: [
         'arrowsSize',
