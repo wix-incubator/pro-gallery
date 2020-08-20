@@ -70,7 +70,7 @@ class DimensionsHelper {
         width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
       }
       if (true) {
-        width -= 200
+        width -= 300
       }
       return width;
     });

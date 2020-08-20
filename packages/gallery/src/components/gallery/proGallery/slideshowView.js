@@ -6,6 +6,7 @@ import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
 import { GalleryComponent } from '../../galleryComponent';
+import SlideshowSidebar from './slideshowSidebar';
 
 class SlideshowView extends GalleryComponent {
   constructor(props) {
@@ -1119,18 +1120,14 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCustomSideBar() {
-    const customSidebarStyles = {
-      width: 200,
-      height: '100%',
-      boxSizing: 'border-box',
-      padding: 10
-    }
+    console.log('Current = ',this.state.currentIdx);
+    
 
     return (
-      <div style={customSidebarStyles}>
-        <h2>Image Title</h2>
-        <h4>Image description</h4>
-      </div>
+      <SlideshowSidebar
+      {...{...this.props,items: this.props.galleryStructure.galleryItems}}
+      currentIndex={this.state.currentIdx}
+      />
     )
   }
 
