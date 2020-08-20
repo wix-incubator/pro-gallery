@@ -18,6 +18,7 @@ describe('leanGallery - e2e', () => {
     titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     imageInfoType: GALLERY_CONSTS.infoType.DONT_SHOW,
     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+    totalItemsCount: 20, // can be any number below MAX_ITEMS_COUNT = 25; 
   };
 
   beforeEach(async () => {
@@ -29,17 +30,28 @@ describe('leanGallery - e2e', () => {
     driver.closeBrowser();
   });
 
-  // it('should successfully render leanGallery', async () => {
-  //   const p = await driver.openPage({
-  //     ...fixedLeanGalleryStyleParams
-  //   });
-  //   const bodyHTML = await p.evaluate(() => document.body.innerHTML);
-  //   console.log('bodyHTML: ', bodyHTML);
-  //   await driver.waitFor.hookToBeVisible('lean-gallery');
-  //   await driver.waitFor.timer(200);
-  //   const page = await driver.grab.screenshot();
-  //   expect(page).toMatchImageSnapshot();
-  // });
+  it('should successfully render leanGallery', async () => {
+    const p = await driver.openPage({
+      ...fixedLeanGalleryStyleParams,
+    });
+    // const bodyHTML = await p.evaluate(() => document.body.innerHTML);
+    // console.log('bodyHTML: ', bodyHTML);
+    await driver.waitFor.hookToBeVisible('lean-gallery');
+    await driver.waitFor.timer(200);
+    const page = await driver.grab.screenshot();
+    expect(page).toMatchImageSnapshot();
+  });
+
+  it('should NOT render leanGallery (beacause totalItemsCount is INFINITY)', async () => {
+    await driver.openPage({
+      ...fixedLeanGalleryStyleParams,
+      totalItemsCount: 50,
+    });
+    await driver.waitFor.hookToBeVisible('item-container'); // 'item-container' is data-hook that exists in proGallery (and not in leanGallery)
+    await driver.waitFor.timer(200);
+    const page = await driver.grab.screenshot();
+    expect(page).toMatchImageSnapshot();
+  });
 
   it('should NOT render leanGallery (beacause scrollDirection: HORIZONTAL)', async () => {
     await driver.openPage({

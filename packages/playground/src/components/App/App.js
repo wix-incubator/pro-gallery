@@ -2,7 +2,7 @@ import React, {useEffect, Suspense} from 'react';
 // import {SideBar} from '../SideBar';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
-import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
+import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
@@ -109,8 +109,13 @@ export function App() {
 
 
     const getTotalItemsCount = () => {
-    return numberOfItems > 0 ? numberOfItems : Infinity
-  }
+      const totalItemsCountFromUrl = getTotalItemsCountFromUrl(window.location.search);
+      if (totalItemsCountFromUrl) {
+        return totalItemsCountFromUrl;
+      }
+    
+      return numberOfItems > 0 ? numberOfItems : Infinity;
+    }
 
   const getOrInitBlueprint = () => {
     if (blueprint) {
