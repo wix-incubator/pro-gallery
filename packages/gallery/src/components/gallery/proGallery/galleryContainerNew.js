@@ -166,8 +166,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = props => {
-      const { domId, styles, container, items } = props;
-      return { domId, styles, container, items };
+      const { domId, styles, container, items, watermark } = props;
+      return { domId, styles, container, items, watermark };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -273,12 +273,12 @@ export class GalleryContainer extends React.Component {
     };
 
     const debouncedReCreateGallery = utils.debounce(() => {
-      const { items, styles, container, watermarkData } = this.props;
+      const { items, styles, container, watermark } = this.props;
       const params = {
         items,
         styles,
         container,
-        watermarkData,
+        watermark,
         itemsDimensions: this.itemsDimensions,
       };
 
@@ -431,7 +431,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryExpensively(
-    { items, styles, container, watermarkData, itemsDimensions, customInfoRenderer },
+    { items, styles, container, watermark, itemsDimensions, customInfoRenderer, resizeMediaUrl },
     curState,
   ) {
     if (utils.isVerbose()) {
@@ -446,7 +446,7 @@ export class GalleryContainer extends React.Component {
     const stylesWithLayoutStyles = styles && addLayoutStyles(styles, customExternalInfoRendererExists);
 
     const isNew = checkNewGalleryProps(
-      { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
+      { items, styles: stylesWithLayoutStyles, container, watermark, itemsDimensions },
       { ...state, items: this.items },
     );
     const newState = {};
@@ -456,7 +456,7 @@ export class GalleryContainer extends React.Component {
         items,
         styles,
         container,
-        watermarkData,
+        watermark,
       });
     }
 
@@ -544,10 +544,10 @@ export class GalleryContainer extends React.Component {
 
       this.layout = this.layouter.createLayout(layoutParams);
       const itemConfig = {
-        watermark: watermarkData,
+        watermark: watermark,
         sharpParams: _styles.sharpParams,
         thumbnailSize: styles.thumbnailSize,
-        resizeMediaUrl: this.props.resizeMediaUrl,
+        resizeMediaUrl: resizeMediaUrl,
         lastVisibleItemIdx: this.lastVisibleItemIdx,
       };
       const existingLayout = this.galleryStructure || this.layout;
@@ -596,7 +596,7 @@ export class GalleryContainer extends React.Component {
       console.log(
         'PROGALLERY [RENDERS] - reCreateGalleryExpensively',
         { isNew },
-        { items, styles, container, watermarkData },
+        { items, styles, container, watermark },
       );
       console.timeEnd('PROGALLERY [TIME] reCreateGalleryExpensively');
     }
@@ -931,7 +931,7 @@ export class GalleryContainer extends React.Component {
           galleryStructure={this.galleryStructure}
           styleParams={this.state.styles}
           container={this.state.container}
-          watermark={this.props.watermarkData}
+          watermark={this.props.watermark}
           settings={{avoidInlineStyles: true, ...this.props.settings}}
           gotScrollEvent={true}
           scroll={{}} //todo: remove after refactor is 100%
