@@ -96,7 +96,7 @@ export class GalleryContainer extends React.Component {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
+    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0 || this.props.currentIdx > 0) {
       return items;
     }
     let visibleItems = items;
