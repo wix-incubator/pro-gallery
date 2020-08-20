@@ -308,7 +308,8 @@ export default class LeanGallery extends React.Component {
           const linkParams = this.createLinkParams(item);
           const clickable = (linkParams && itemClick === GALLERY_CONSTS.itemClick.LINK) || ([GALLERY_CONSTS.itemClick.EXPAND, GALLERY_CONSTS.itemClick.FULLSCREEN].includes(itemClick)) || this.isMetadataLinkExists(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
-          const itemProps = {...itemData, ...item.metaData, style: this.state.itemStyle, styleParams: styles};
+          const metadata = item.metaData || item.metadata;
+          const itemProps = {...itemData, ...metadata, style: this.state.itemStyle, styleParams: styles};
           const imageWrapperStyle = this.createImageWrapperStyle(item);
           const infoHeight = styles.textBoxHeight;
           const texts = placement => (typeof customInfoRenderer === 'function') && (styles.titlePlacement === placement) && (
