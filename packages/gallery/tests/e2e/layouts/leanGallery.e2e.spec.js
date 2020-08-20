@@ -31,11 +31,9 @@ describe('leanGallery - e2e', () => {
   });
 
   it('should successfully render leanGallery', async () => {
-    const p = await driver.openPage({
+    await driver.openPage({
       ...fixedLeanGalleryStyleParams,
     });
-    // const bodyHTML = await p.evaluate(() => document.body.innerHTML);
-    // console.log('bodyHTML: ', bodyHTML);
     await driver.waitFor.hookToBeVisible('lean-gallery');
     await driver.waitFor.timer(200);
     const page = await driver.grab.screenshot();
