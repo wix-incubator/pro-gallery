@@ -1,3 +1,9 @@
+## [v2.1.6](https://pro-gallery-2-1-6.surge.sh) (19/08/2020)
+ 
+#### GALLERY
+ - : itemView: do not perform e.preventDefault() on item-container 'onKeyDown' (will allow onClick flow on accessible items in the info)
+
+---
 ## [v2.1.5](https://pro-gallery-2-1-5.surge.sh) (18/08/2020)
  
 #### PLAYGROUND

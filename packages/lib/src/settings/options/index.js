@@ -76,6 +76,7 @@ import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
+import allowLeanGallery from './allowLeanGallery';
 
 export default {
     itemClick,    
@@ -155,7 +156,8 @@ export default {
     allowSlideshowCounter,
     playButtonForAutoSlideShow,
     hidePlay,
-    overlayBackground
+    overlayBackground,
+    allowLeanGallery
 }
 
 
