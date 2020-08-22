@@ -90,6 +90,8 @@ export const stylesBySection = {
         'titlePlacement',
         'overlayBackground',
         'allowSlideshowCounter',
+        'slideshowInfoPlacement',
+        'slideshowInfoWidth',
     ],
     [SECTIONS.BEHAVIOR]: [
         'enableInfiniteScroll',

@@ -1,3 +1,5 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
+
 const styleParams = {
     titlePlacement: 'SHOW_ON_HOVER',
     hoveringBehaviour: 'NO_CHANGE',
@@ -122,6 +124,7 @@ const styleParams = {
     videoSound: false,
     videoSpeed: '1',
     videoLoop: true,
+    slideshowInfoPlacement: GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM,
   };
 
 const container = {

@@ -1120,9 +1120,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCustomSideBar() {
-    console.log('Current = ',this.state.currentIdx);
-    
-
     return (
       <SlideshowSidebar
       {...{...this.props,items: this.props.galleryStructure.galleryItems}}

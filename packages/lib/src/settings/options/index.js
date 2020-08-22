@@ -76,6 +76,8 @@ import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
+import slideshowInfoWidth from './slideshowInfoWidth';
+import slideshowInfoPlacement from './slideshowInfoPlacement';
 
 export default {
     itemClick,    
@@ -155,7 +157,9 @@ export default {
     allowSlideshowCounter,
     playButtonForAutoSlideShow,
     hidePlay,
-    overlayBackground
+    overlayBackground,
+    slideshowInfoWidth,
+    slideshowInfoPlacement,
 }
 
 

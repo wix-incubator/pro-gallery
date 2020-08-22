@@ -66,11 +66,13 @@ class DimensionsHelper {
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
       let width = Math.floor(this.container.width) + (this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
-      if (this.styles.arrowsPosition && this.styles.oneRow) {
-        width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
-      }
-      if (true) {
-        width -= 300
+      if ( this.styles.oneRow) {
+        if (this.styles.arrowsPosition) {
+          width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
+        }
+        if (this.styles.slideshowInfoPlacement === 'ON_THE_RIGHT') {
+          width -= this.styles.slideshowInfoWidth;
+        }
       }
       return width;
     });

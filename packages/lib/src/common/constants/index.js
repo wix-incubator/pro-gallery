@@ -48,6 +48,7 @@ import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import watermarkDock from './watermarkDock';
 import imagePlacementAnimations from './imagePlacementAnimations';
+import slideshowInfoPlacement from './slideshowInfoPlacement';
 
 export default {
   arrowsPosition,
@@ -100,4 +101,5 @@ export default {
   viewMode,
   watermarkDock,
   imagePlacementAnimations,
+  slideshowInfoPlacement,
 };

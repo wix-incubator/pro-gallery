@@ -139,6 +139,7 @@ const defaultStyles = {
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,
+  slideshowInfoPlacement: GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
