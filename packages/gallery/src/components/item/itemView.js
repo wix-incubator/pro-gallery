@@ -35,7 +35,7 @@ class ItemView extends GalleryComponent {
     this.onItemClick = this.onItemClick.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
+    this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
@@ -89,14 +89,13 @@ class ItemView extends GalleryComponent {
     }
   }
 
-  onKeyPress(e) {
+  onContainerKeyDown(e) {
     switch (e.keyCode || e.charCode) {
       case 32: //space
       case 13: //enter
-        e.preventDefault();
         e.stopPropagation();
         const clickTarget = 'item-container';
-        this.onItemClick(e, clickTarget) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        this.onItemClick(e, clickTarget, false) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
         }
@@ -120,7 +119,7 @@ class ItemView extends GalleryComponent {
     this.onItemClick(e,clickTarget);
   }
 
-  onItemClick(e,clickTarget) {
+  onItemClick(e,clickTarget, shouldPreventDefault = true) {
     if (utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))) {
       window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
     }
@@ -130,7 +129,9 @@ class ItemView extends GalleryComponent {
       return;
     }
 
-    e.preventDefault();
+    if (shouldPreventDefault) {
+      e.preventDefault();
+    }
 
     if (this.shouldShowHoverOnMobile()) {
       this.handleHoverClickOnMobile(e);
@@ -859,7 +860,7 @@ class ItemView extends GalleryComponent {
         ref={e => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
-        onKeyDown={this.onKeyPress}
+        onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}

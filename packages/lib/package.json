@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "2.1.3",
+  "version": "2.1.5",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "chai": "^4.2.0",
-    "pro-layouts": "2.1.3",
+    "pro-layouts": "2.1.5",
     "yoshi-template-intro": "^4.1.0"
   },
   "publishConfig": {

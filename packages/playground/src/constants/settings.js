@@ -85,6 +85,7 @@ export const stylesBySection = {
         'groupsPerStrip',
         'galleryMargin',
         'floatingImages',
+        'allowLeanGallery',
     ],
     [SECTIONS.INFO]: [
         'titlePlacement',
@@ -99,7 +100,7 @@ export const stylesBySection = {
         'hoveringBehaviour',
         'itemClick',
         'scrollSnap',
-        'RCP',
+        'allowContextMenu',
     ],
     [SECTIONS.DESIGN]: [
         'arrowsSize',

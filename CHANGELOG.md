@@ -1,3 +1,33 @@
+## [v2.1.6](https://pro-gallery-2-1-6.surge.sh) (19/08/2020)
+ 
+#### GALLERY
+ - : itemView: do not perform e.preventDefault() on item-container 'onKeyDown' (will allow onClick flow on accessible items in the info)
+
+---
+## [v2.1.5](https://pro-gallery-2-1-5.surge.sh) (18/08/2020)
+ 
+#### PLAYGROUND
+ -  fix (settings): rename RCP to allowContextMenu
+ -  fix (styleParams): use default style params in context
+ -  fix (sidebar): fix disappearing styleParams after change
+
+#### OTHER
+ -  Fix: Title underline in mobile view
+
+#### GALLERY
+ -  fix (galleryContainer): typo
+ -  fix (galleryContainer): merge dynamic styles and fix background overlay css
+
+#### LAYOUTS
+ -  fix (layouter): fix calculation of cropped items in vertical galleries with large spacing
+
+---
+## [v2.1.4](https://pro-gallery-2-1-4.surge.sh) (16/08/2020)
+ 
+#### GALLERY
+ -  Protect looping on single video items. listen to errors sent on play.
+
+---
 ## [v2.1.3](https://pro-gallery-2-1-3.surge.sh) (10/08/2020)
  
 #### GALLERY
