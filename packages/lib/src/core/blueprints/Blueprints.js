@@ -113,6 +113,7 @@ class Blueprints {
             !existingItem ||
             newItem.itemId !== existingItem.itemId ||
             newItem.mediaUrl !== existingItem.mediaUrl ||
+            newItem.measured !== existingItem.measured ||
             newItem.metaData && existingItem.metaData && newItem.metaData.type !== existingItem.metaData.type;
           if (itemsChanged) {
             reason.items = `items #${idx} id was changed.`;
