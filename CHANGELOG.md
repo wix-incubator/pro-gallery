@@ -1,3 +1,9 @@
+## [v2.1.9](https://pro-gallery-2-1-9.surge.sh) (23/08/2020)
+ 
+#### PLAYGROUND
+ -  Hide the code generator button if the sidebar is hidden
+
+---
 ## [v2.1.8](https://pro-gallery-2-1-8.surge.sh) (23/08/2020)
  
 #### GALLERY
