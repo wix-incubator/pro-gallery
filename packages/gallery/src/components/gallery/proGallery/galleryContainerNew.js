@@ -47,6 +47,7 @@ export class GalleryContainer extends React.Component {
     this.itemsDimensions = {};
     this.preloadedItems = {};
     this.layoutCss = [];
+    this.scrollPos = 0;
     if (utils.isSSR()) {
       this.initialGalleryState = this.reCreateGalleryExpensively(
         props,
