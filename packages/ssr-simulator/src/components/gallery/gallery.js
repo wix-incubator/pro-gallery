@@ -100,7 +100,6 @@ export default class Gallery extends React.PureComponent {
 
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
-    styles.allowLeanGallery = !!(typeof window === 'undefined');
 
     const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
