@@ -149,7 +149,7 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getMoreItemsIfNeeded(0);
+    this.getMoreItemsIfNeeded(this.scrollPos);
     if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
       this.currentHoverChangeEvent.domId = nextProps.domId;
     }
@@ -817,6 +817,7 @@ export class GalleryContainer extends React.Component {
   }
 
   getMoreItemsIfNeeded(scrollPos) {
+    this.scrollPos = scrollPos;
     if (
       this.galleryStructure &&
       this.galleryStructure.galleryItems &&
@@ -832,8 +833,8 @@ export class GalleryContainer extends React.Component {
 
       const galleryEnd = this.galleryStructure[oneRow ? 'width' : 'height'] + (oneRow ? 0 : this.state.container.scrollBase);
       const screenSize = window.screen[oneRow ? 'width' : 'height'];
-      const scrollEnd = scrollPos + screenSize;
-      const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
+      const scrollEnd = this.scrollPos + screenSize;
+      const getItemsDistance = this.scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
       // console.log('[RTL SCROLL] getMoreItemsIfNeeded: ', scrollPos);
 
