@@ -17,7 +17,7 @@ import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
 
-function SideBar({ items, blueprintsManager }) {
+function SideBar({ items, blueprintsManager, visible }) {
   const {
     // preset,
     // setPreset,
@@ -231,7 +231,7 @@ function SideBar({ items, blueprintsManager }) {
           </Collapse.Panel>
         </Collapse>
 
-      {!utils.isMobile() && <>
+      {!utils.isMobile() && !!visible && <>
           <div style={{ height: 120 }} />
 
           <div className={s.code}>

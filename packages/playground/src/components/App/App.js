@@ -232,6 +232,7 @@ export function App() {
         </div>
         {sideShownOnce && <Suspense fallback={<div>Loading...</div>}>
           <SideBar
+            visible={showSide}
             blueprintsManager = {blueprintsManager}
             items={getItems()}
           />
