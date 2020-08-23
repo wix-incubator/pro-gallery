@@ -1,3 +1,12 @@
+## [v2.1.8](https://pro-gallery-2-1-8.surge.sh) (23/08/2020)
+ 
+#### GALLERY
+ -  leanGallery: update tests
+
+#### PLAYGROUND
+ -  enable access to totalItemsCount from URL query param
+
+---
 ## [v2.1.7](https://pro-gallery-2-1-7.surge.sh) (23/08/2020)
  
 #### GALLERY
