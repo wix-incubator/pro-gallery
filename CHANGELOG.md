@@ -1,3 +1,14 @@
+## [v2.1.7](https://pro-gallery-2-1-7.surge.sh) (23/08/2020)
+ 
+#### GALLERY
+ -  (isNew) check if watermark changed
+ -  fix: return all items instead of visible items when there's currentIdx
+ -  fix: fix getMoreItems is not called when dimensions are unknown
+
+#### OTHER
+ -  improve (settings): add allowLeanGallery option settings
+
+---
 ## [v2.1.6](https://pro-gallery-2-1-6.surge.sh) (19/08/2020)
  
 #### GALLERY
