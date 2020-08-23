@@ -93,8 +93,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = props => {
-      const { domId, styles, container, items } = props;
-      return { domId, styles, container, items };
+      const { domId, styles, container, items, watermark } = props;
+      return { domId, styles, container, items, watermark };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -578,7 +578,7 @@ export class GalleryContainer extends React.Component {
           galleryStructure={this.galleryStructure}
           styleParams={this.props.styles}
           container={this.props.container}
-          watermark={this.props.watermarkData}
+          watermark={this.props.watermark}
           settings={this.props.settings}
           scroll={{}} //todo: remove after refactor is 100%
           displayShowMore={displayShowMore}
