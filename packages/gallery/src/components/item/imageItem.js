@@ -115,6 +115,8 @@ export default class ImageItem extends GalleryComponent {
 
     const image = () => {
       const imagesComponents =[]
+      const blockDownloadStyles = utils.isiOS() && !this.props.styleParams.allowDownload ? {color: 'green', '-webkit-user-select': 'none',
+      '-webkit-touch-callout': 'none'} : {};
 
       if (!isHighResImageLoaded){
         let preload = null;
@@ -140,7 +142,7 @@ export default class ImageItem extends GalleryComponent {
               alt=''
               key={'image_preload_blur-' + id}
               src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.LOW_RES)}
-              style={{...imageStyles, ...preloadStyles}}
+              style={{...imageStyles, ...preloadStyles, ...blockDownloadStyles}}
               {...preloadProps}
             />
             break;
@@ -149,7 +151,7 @@ export default class ImageItem extends GalleryComponent {
               alt=''
               key={'image_preload_main_color-' + id}
               src={createUrl(GALLERY_CONSTS.urlSizes.PIXEL, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.LOW_RES)}
-              style={{...restOfDimensions, ...preloadStyles}}
+              style={{...restOfDimensions, ...preloadStyles, ...blockDownloadStyles}}
               {...preloadProps}
             />
             break;
@@ -168,7 +170,7 @@ export default class ImageItem extends GalleryComponent {
           src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES)}
           loading="lazy"
           onLoad={this.handleHighResImageLoad}
-          style={{...restOfDimensions, ...(this.state.isHighResImageLoaded && {opacity: 1})}}
+          style={{...restOfDimensions, ...(this.state.isHighResImageLoaded && {opacity: 1}), ...blockDownloadStyles}}
           {...imageProps}
         />;
 
