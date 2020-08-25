@@ -181,20 +181,20 @@ class SlideshowView extends GalleryComponent {
           if (nextItem === this.props.totalItemsCount) {
             nextItem = 0;
             scrollToItem(nextItem);
-          }}
-        );
+          }
 
-        utils.setStateAndLog(
-          this,
-          'Next Item',
-          {
-            currentIdx: nextItem,
-          },
-          () => {
-            this.onCurrentItemChanged();
-            this.isSliding = false;
-          },
-        );
+          utils.setStateAndLog(
+            this,
+            'Next Item',
+            {
+              currentIdx: nextItem,
+            },
+            () => {
+              this.onCurrentItemChanged();
+              this.isSliding = false;
+            },
+          );
+        });
       } 
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
