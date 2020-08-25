@@ -542,7 +542,6 @@ export class GalleryContainer extends React.Component {
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     const dynamicStyles = `
-      ${!utils.isSSR() ? '' : `#pro-gallery-${this.props.domId} div.pro-gallery-parent-container * { transition: none !important }`}
       ${!this.allowSSROpacity() ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
       ${!this.props.styles.overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
     `;

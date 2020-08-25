@@ -67,10 +67,6 @@ class ItemView extends GalleryComponent {
     this.setState({
       loaded: true
     });
-
-    this.itemLoadedTimeout = setTimeout(() => {
-      this.setState(() => ({ loaded: true }));
-    }, 1500);
   }
 
   isIconTag(tagName) {
@@ -578,7 +574,14 @@ class ItemView extends GalleryComponent {
       height: style.height + style.infoHeight,
     };
 
-    const itemContainerStyles = { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams};
+    const transitionStyles = this.state.loaded ? {
+      transition: 'all .4s ease',
+      transitionProperty: 'top, left, width, height'
+    } : {
+      transition: 'none'
+    };
+
+    const itemContainerStyles = { ...transitionStyles, ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams};
 
     return itemContainerStyles;
   }

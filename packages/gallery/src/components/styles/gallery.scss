@@ -250,7 +250,6 @@
       padding: 0;
       font-family: $font-light;
       font-size: 11px;
-      transition: width .4s ease, height .4s ease;
 
       &.debug {
         &.gallery-group-gone {
@@ -326,8 +325,6 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        transition: all .4s ease;
-        transition-property: top, left, width, height;
 
         &.transparent,
         &.cube-type-fit {
@@ -609,8 +606,6 @@
         overflow-y: inherit;
         border-radius: 0px;
         cursor: pointer;
-        transition: all .4s ease;
-        transition-property: top, left, width, height;
       }
     }
 
