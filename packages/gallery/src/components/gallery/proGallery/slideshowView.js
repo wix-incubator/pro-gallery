@@ -174,18 +174,28 @@ class SlideshowView extends GalleryComponent {
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
-      !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
-      utils.setStateAndLog(
-        this,
-        'Next Item',
-        {
-          currentIdx: nextItem,
-        },
-        () => {
-          this.onCurrentItemChanged();
-          this.isSliding = false;
-        },
-      );
+
+      if (nextItem > -1) {
+        const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
+        scrollToItemPromise.then(() => {
+          if (nextItem === this.props.totalItemsCount) {
+            nextItem = 0;
+            scrollToItem(nextItem);
+          }}
+        );
+
+        utils.setStateAndLog(
+          this,
+          'Next Item',
+          {
+            currentIdx: nextItem,
+          },
+          () => {
+            this.onCurrentItemChanged();
+            this.isSliding = false;
+          },
+        );
+      } 
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
       this.stopAutoSlideshow();
@@ -1117,6 +1127,7 @@ class SlideshowView extends GalleryComponent {
 
   removeArrowsIfNeeded(){
     setTimeout(()=>{
+      // debugger;
       const atStart = this.isScrollStart() || this.isFirstItem();
       const atEnd = this.isScrollEnd() || this.isLastItem();
       const {isRTL} = this.props.styleParams;
