@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, processLayouts, addPresetStyles, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, processLayouts, addPresetStyles, isSEOMode , utils} from 'pro-gallery-lib';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 import './leanGallery.scss';
 
@@ -217,10 +217,12 @@ export default class LeanGallery extends React.Component {
 
   createImageStyle(imageWrapperStyle) {
     const { width = '100%', height = 'auto' } = imageWrapperStyle;
-
+    const blockDownloadStyles = utils.isiOS() && !this.props.styleParams.allowDownload ? {color: 'green', '-webkit-user-select': 'none',
+    '-webkit-touch-callout': 'none'} : {};
     return {
       width,
       height,
+      ...blockDownloadStyles,
       ...this.createImageBorder()
     }
   }

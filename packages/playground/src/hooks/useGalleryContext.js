@@ -5,7 +5,7 @@ import { addPresetStyles } from 'pro-gallery';
 import {SIDEBAR_WIDTH} from '../constants/consts';
 import {utils} from 'pro-gallery-lib';
 
-export function useGalleryContext(blueprintsManager) {
+export function useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServer) {
   const [context, setContext] = useContext(GalleryContext);
 
   const setShowSide = (newShowSide) => {
@@ -15,6 +15,30 @@ export function useGalleryContext(blueprintsManager) {
   //  setDimensions({width: calcGalleryDimensions().width + widthChange});
     setDimensions()
   };
+
+
+  const getBlueprintFromServer = async (params) => {
+      let {styleParams, dimensions} = params;
+
+    dimensions = JSON.stringify(dimensions || context.dimensions || calcGalleryDimensions());
+    const styles = JSON.stringify(styleParams || context.styleParams || getInitialStyleParams());
+    const url = `http://localhost:3000/getBlueprint?useDemoItems=true&dimensions=${dimensions}&styles=${styles}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+      },
+    });
+    const data = await response.json();
+    setBlueprint(data.blueprint);
+  }
+
+  const requestNewBlueprint = (newContext)=> {
+    if(shouldUseBlueprintsFromServer) {
+      getBlueprintFromServer({...context, ...newContext})
+    } else {
+      blueprintsManager.createBlueprint({...newContext})
+    }
+  }
 
   const setDimensions = (config = {}) => {
     const {width, height} = config;
@@ -28,7 +52,7 @@ export function useGalleryContext(blueprintsManager) {
 
     if (JSON.stringify(newContext.dimensions) !== JSON.stringify({...context.dimensions})) {
       if(getGallerySettings().useBlueprints) {
-        blueprintsManager.createBlueprint({...newContext})
+        requestNewBlueprint(newContext);
       }
   
       setContext(newContext);
@@ -42,7 +66,7 @@ export function useGalleryContext(blueprintsManager) {
     };
 
     if(getGallerySettings().useBlueprints) {
-      blueprintsManager.createBlueprint({...newContext})
+      requestNewBlueprint(newContext);
     }
 
     setContext(newContext);
@@ -53,7 +77,7 @@ export function useGalleryContext(blueprintsManager) {
     // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
     const newContext = {styleParams: {...getInitialStyleParams(), ...getStyleParamsFromUrl(), [newProp]: value}}
     if(getGallerySettings().useBlueprints) {
-      blueprintsManager.createBlueprint({...newContext})
+      requestNewBlueprint(newContext);
     }
     // console.log(`[STYLE PARAMS - VALIDATION] settings styleParams in the context`, newContext.styleParams);
 
@@ -65,7 +89,7 @@ export function useGalleryContext(blueprintsManager) {
 
     const newContext = {items};
     if(getGallerySettings().useBlueprints) {
-      blueprintsManager.createBlueprint({...newContext})
+      requestNewBlueprint(newContext);
     }
 
     setContext(newContext);
@@ -133,6 +157,7 @@ export function useGalleryContext(blueprintsManager) {
     setGallerySettings,
     dimensions: context.dimensions || calcGalleryDimensions(),
     setDimensions,
+    getBlueprintFromServer,
   };
 
   return res;

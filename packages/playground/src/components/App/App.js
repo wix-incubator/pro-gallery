@@ -24,7 +24,7 @@ const pJson = require('../../../package.json');
 
 const blueprintsManager = new BlueprintsManager({id: 'playground'});
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
-
+let shouldUseBlueprintsFromServer = false; //USE THIS ONLY FOR LOCAL TESTING WITH THE NODE SERVER;
 const initialItems = {
   mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
   texts: mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
@@ -36,7 +36,7 @@ const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
 
 export function App() {
-  const {setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
+  const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServer);
   const {showSide} = gallerySettings;
   sideShownOnce = sideShownOnce || showSide;
 
@@ -116,14 +116,23 @@ export function App() {
     
       return numberOfItems > 0 ? numberOfItems : Infinity;
     }
+    
 
   const getOrInitBlueprint = () => {
     if (blueprint) {
       return blueprint;
+    } else if (shouldUseBlueprintsFromServer) {
+      const params = {
+        dimensions: getContainer(),
+        styleParams: getStyles(),
+      }
+      getBlueprintFromServer(params);
     } else {
-      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
-      blueprintsManager.init({api: playgroundBlueprintsApi})
-      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      {
+        const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
+        blueprintsManager.init({api: playgroundBlueprintsApi})
+        blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      }
     }
   }
 

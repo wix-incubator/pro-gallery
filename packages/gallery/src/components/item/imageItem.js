@@ -29,12 +29,16 @@ export default class ImageItem extends GalleryComponent {
   }
 
   handleHighResImageLoad({ target }){
-    this.props.actions.setItemLoaded();
-    target.style.opacity = '1';
     this.removeLowResImageTimeoutId = setTimeout((() => {
       this.setState({ isHighResImageLoaded: true});
       this.removeLowResImageTimeoutId = undefined;
     }), BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION);
+    try {
+      target.style.opacity = '1';
+      this.props.actions.setItemLoaded();
+    } catch (e) {
+      console.error('Failed to load high res image', e);
+    }
   }
 
   componentWillUnmount(){
@@ -111,6 +115,8 @@ export default class ImageItem extends GalleryComponent {
 
     const image = () => {
       const imagesComponents =[]
+      const blockDownloadStyles = utils.isiOS() && !this.props.styleParams.allowDownload ? {color: 'green', '-webkit-user-select': 'none',
+      '-webkit-touch-callout': 'none'} : {};
 
       if (!isHighResImageLoaded){
         let preload = null;
@@ -136,7 +142,7 @@ export default class ImageItem extends GalleryComponent {
               alt=''
               key={'image_preload_blur-' + id}
               src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.LOW_RES)}
-              style={{...imageStyles, ...preloadStyles}}
+              style={{...imageStyles, ...preloadStyles, ...blockDownloadStyles}}
               {...preloadProps}
             />
             break;
@@ -145,7 +151,7 @@ export default class ImageItem extends GalleryComponent {
               alt=''
               key={'image_preload_main_color-' + id}
               src={createUrl(GALLERY_CONSTS.urlSizes.PIXEL, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.LOW_RES)}
-              style={{...restOfDimensions, ...preloadStyles}}
+              style={{...restOfDimensions, ...preloadStyles, ...blockDownloadStyles}}
               {...preloadProps}
             />
             break;
@@ -164,7 +170,7 @@ export default class ImageItem extends GalleryComponent {
           src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES)}
           loading="lazy"
           onLoad={this.handleHighResImageLoad}
-          style={restOfDimensions}
+          style={{...restOfDimensions, ...(this.state.isHighResImageLoaded && {opacity: 1}), ...blockDownloadStyles}}
           {...imageProps}
         />;
 
