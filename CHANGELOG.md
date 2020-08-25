@@ -1,3 +1,14 @@
+## [v2.1.10](https://pro-gallery-2-1-10.surge.sh) (25/08/2020)
+ 
+#### GALLERY
+ -  Block download on iOS when not allowed
+ -  fix (galleryContainer): fix 'false' strings in dynamic styles
+ -  Add protection for highres image onLoad not called
+
+#### PLAYGROUND
+ -  blueprints flow: allow requesting blueprints from node server(local only)
+
+---
 ## [v2.1.9](https://pro-gallery-2-1-9.surge.sh) (23/08/2020)
  
 #### PLAYGROUND
