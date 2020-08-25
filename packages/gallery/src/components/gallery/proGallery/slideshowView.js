@@ -178,11 +178,13 @@ class SlideshowView extends GalleryComponent {
       if (nextItem > -1) {
         const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
         scrollToItemPromise.then(() => {
-          if (nextItem === this.props.totalItemsCount) {
-            nextItem = 0;
+          const skipFromSlide = Math.round(this.props.totalItemsCount * 1.5);
+          const skipToSlide = skipFromSlide - this.props.totalItemsCount;
+          if (nextItem >= skipFromSlide) {
+            nextItem = skipToSlide;
             scrollToItem(nextItem);
           }
-
+          
           utils.setStateAndLog(
             this,
             'Next Item',
