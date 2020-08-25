@@ -1127,7 +1127,6 @@ class SlideshowView extends GalleryComponent {
 
   removeArrowsIfNeeded(){
     setTimeout(()=>{
-      // debugger;
       const atStart = this.isScrollStart() || this.isFirstItem();
       const atEnd = this.isScrollEnd() || this.isLastItem();
       const {isRTL} = this.props.styleParams;
