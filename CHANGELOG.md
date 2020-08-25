@@ -1,3 +1,9 @@
+## [v2.1.11](https://pro-gallery-2-1-11.surge.sh) (25/08/2020)
+ 
+#### GALLERY
+ Remove size transitions until item is loaded (looks bad in SSR)
+
+---
 ## [v2.1.10](https://pro-gallery-2-1-10.surge.sh) (25/08/2020)
  
 #### GALLERY
