@@ -181,8 +181,9 @@ class SlideshowView extends GalleryComponent {
           const skipFromSlide = Math.round(this.props.totalItemsCount * 1.5);
           const skipToSlide = skipFromSlide - this.props.totalItemsCount;
           if (nextItem >= skipFromSlide) {
-            nextItem = skipToSlide;
-            scrollToItem(nextItem);
+            // nextItem = skipToSlide;
+            // scrollToItem(nextItem);
+            this.hideSlides = this.props.totalItemsCount;
           }
           
           utils.setStateAndLog(
@@ -244,6 +245,15 @@ class SlideshowView extends GalleryComponent {
       console.log(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
       !isScrollingPastEdge && scrollToGroup(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
       console.log('setting next item: ', this.getCenteredItemIdxByScroll())
+
+      const skipFromSlide = Math.round(this.props.totalItemsCount * 1.5);
+      const skipToSlide = skipFromSlide - this.props.totalItemsCount;
+      if (currentGroup >= skipFromSlide) {
+        // nextItem = skipToSlide;
+        // scrollToItem(nextItem);
+        this.hideSlides = this.props.totalItemsCount;
+      }
+
       utils.setStateAndLog(
         this,
         'Next Item',
@@ -838,6 +848,36 @@ class SlideshowView extends GalleryComponent {
         eventsListener: this.props.actions.eventsListener,
       },
     };
+
+    const renderGroups = (column) => {
+      let marginLeft = 0;
+      const layoutGroupView =  !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
+      if (layoutGroupView) {
+        return layoutGroupView.map((group, groupIdx) => {
+          if (this.hideSlides > 0 && groupIdx < this.hideSlides) {
+            marginLeft += group.width;
+            return null;
+          } else if (this.hideSlides > 0 && groupIdx === this.hideSlides) {
+            marginLeft += group.width;
+            return <div style={{width: marginLeft}}></div>;
+          } else if (group.rendered) {
+            return React.createElement(
+                GroupView,
+                {
+                  allowLoop: this.props.styleParams.slideshowLoop && (this.props.galleryStructure.width > this.props.container.width),
+                  itemsLoveData,
+                  ...group.renderProps(galleryConfig)
+                },
+              ); 
+          } else {
+            return null;
+          }
+        });
+      } else {
+        return null;
+      }
+    }
+
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: column.width,
@@ -848,7 +888,6 @@ class SlideshowView extends GalleryComponent {
           paddingBottom: this.props.styleParams.slideshowInfoSize,
         });
       }
-      const layoutGroupView =  !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
       return (
         <div
           data-hook="gallery-column"
@@ -858,19 +897,7 @@ class SlideshowView extends GalleryComponent {
           style={columnStyle}
         >
           <div className="gallery-horizontal-scroll-inner">
-            {layoutGroupView &&
-              layoutGroupView.map(group =>
-                group.rendered
-                  ? React.createElement(
-                      GroupView,
-                      {
-                        allowLoop: this.props.styleParams.slideshowLoop && (this.props.galleryStructure.width > this.props.container.width),
-                        itemsLoveData,
-                        ...group.renderProps(galleryConfig)
-                      },
-                    )
-                  : false,
-              )}
+            {renderGroups(column)}
           </div>
         </div>
       );
