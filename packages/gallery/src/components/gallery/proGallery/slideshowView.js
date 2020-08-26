@@ -142,6 +142,7 @@ class SlideshowView extends GalleryComponent {
     } else {
       currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
     }
+    this.currentIdx = currentIdx;
     let nextItem = currentIdx + direction;
     if (!this.props.styleParams.slideshowLoop){
       nextItem = Math.min(this.props.galleryStructure.items.length - 1, nextItem);
@@ -174,31 +175,18 @@ class SlideshowView extends GalleryComponent {
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
-
-      if (nextItem > -1) {
-        const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
-        scrollToItemPromise.then(() => {
-          const skipFromSlide = Math.round(this.props.totalItemsCount * 1.5);
-          const skipToSlide = skipFromSlide - this.props.totalItemsCount;
-          if (nextItem >= skipFromSlide) {
-            // nextItem = skipToSlide;
-            // scrollToItem(nextItem);
-            this.hideSlides = this.props.totalItemsCount;
-          }
-          
-          utils.setStateAndLog(
-            this,
-            'Next Item',
-            {
-              currentIdx: nextItem,
-            },
-            () => {
-              this.onCurrentItemChanged();
-              this.isSliding = false;
-            },
-          );
-        });
-      } 
+      !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
+      utils.setStateAndLog(
+        this,
+        'Next Item',
+        {
+          currentIdx: nextItem,
+        },
+        () => {
+          this.onCurrentItemChanged();
+          this.isSliding = false;
+        },
+      );
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
       this.stopAutoSlideshow();
@@ -245,15 +233,6 @@ class SlideshowView extends GalleryComponent {
       console.log(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
       !isScrollingPastEdge && scrollToGroup(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
       console.log('setting next item: ', this.getCenteredItemIdxByScroll())
-
-      const skipFromSlide = Math.round(this.props.totalItemsCount * 1.5);
-      const skipToSlide = skipFromSlide - this.props.totalItemsCount;
-      if (currentGroup >= skipFromSlide) {
-        // nextItem = skipToSlide;
-        // scrollToItem(nextItem);
-        this.hideSlides = this.props.totalItemsCount;
-      }
-
       utils.setStateAndLog(
         this,
         'Next Item',
@@ -850,14 +829,16 @@ class SlideshowView extends GalleryComponent {
     };
 
     const renderGroups = (column) => {
+      const hideSlides = this.currentIdx - galleryConfig.totalItemsCount;
       let marginLeft = 0;
-      const layoutGroupView =  !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
+      const layoutGroupView = !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
+      
       if (layoutGroupView) {
         return layoutGroupView.map((group, groupIdx) => {
-          if (this.hideSlides > 0 && groupIdx < this.hideSlides) {
+          if (hideSlides > 0 && groupIdx < hideSlides) {
             marginLeft += group.width;
             return null;
-          } else if (this.hideSlides > 0 && groupIdx === this.hideSlides) {
+          } else if (hideSlides > 0 && groupIdx === hideSlides) {
             marginLeft += group.width;
             return <div style={{width: marginLeft}}></div>;
           } else if (group.rendered) {
