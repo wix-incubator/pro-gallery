@@ -149,7 +149,6 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getMoreItemsIfNeeded(0);
     if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
       this.currentHoverChangeEvent.domId = nextProps.domId;
     }
