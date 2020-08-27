@@ -225,6 +225,7 @@ class JsonEditor extends React.Component {
               </>)}
               <Divider/>
               <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
+              {/* <ul>{Object.entries(allStyleParams).filter(([key, val]) => typeof(val) !== 'undefined').map(([key, val]) => <li>{key}: {val.toString()}</li>)}</ul> */}
             </div>
           </Collapse.Panel>
         ))}

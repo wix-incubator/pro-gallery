@@ -15,7 +15,7 @@ import s from './SideBar.module.scss';
 import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pro-gallery';
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
-import {utils} from 'pro-gallery-lib';
+import { processLayouts, addPresetStyles, utils } from 'pro-gallery-lib';
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
@@ -31,6 +31,7 @@ function SideBar({ items, blueprintsManager, visible }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const _setStyleParams = throttle(setStyleParams, 1000);
+  const _styleParams = processLayouts(addPresetStyles(styleParams));
   const createSearchString = (styleParam, searchTerm) => {
     let res = [styleParam];
     const props = settingsManager[styleParam];
@@ -55,7 +56,7 @@ function SideBar({ items, blueprintsManager, visible }) {
     setSearchTerm('');
   };
 
-  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const changedStyleParams = Object.entries(_styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, _styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
   return (
@@ -92,8 +93,8 @@ function SideBar({ items, blueprintsManager, visible }) {
           }}>
             <JsonEditor
               onChange={_setStyleParams}
-              allStyleParams={styleParams}
-              styleParams={styleParams}
+              allStyleParams={_styleParams}
+              styleParams={_styleParams}
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
@@ -109,18 +110,18 @@ function SideBar({ items, blueprintsManager, visible }) {
             <Collapse.Panel header={'* Changed Settings'} key="-1">
               <JsonEditor
                 onChange={_setStyleParams}
-                allStyleParams={styleParams}
+                allStyleParams={_styleParams}
                 styleParams={changedStyleParams}
                 showAllStyles={true}
               />
             </Collapse.Panel> : null}
           <Collapse.Panel header={SECTIONS.PRESET} key="1">
-            <LayoutPicker selectedLayout={styleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
+            <LayoutPicker selectedLayout={_styleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
             <Divider />
             <JsonEditor
               onChange={_setStyleParams}
-              allStyleParams={styleParams}
-              styleParams={styleParams}
+              allStyleParams={_styleParams}
+              styleParams={_styleParams}
               section={SECTIONS.PRESET}
               showAllStyles={gallerySettings.showAllStyles}
             />
@@ -132,8 +133,8 @@ function SideBar({ items, blueprintsManager, visible }) {
                   <JsonEditor
                     section={section}
                     onChange={_setStyleParams}
-                    allStyleParams={styleParams}
-                    styleParams={styleParams}
+                    allStyleParams={_styleParams}
+                    styleParams={_styleParams}
                     showAllStyles={gallerySettings.showAllStyles}
                   />
                 </Collapse.Panel>
@@ -203,24 +204,24 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}${getContainerUrlParams(gallerySettings)}&${Object.entries(_styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
-                <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
+                <Switch checked={!!_styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
               </Form.Item>
               {
-                isEligibleForLeanGallery({ items, styles: styleParams }) ?
+                isEligibleForLeanGallery({ items, styles: _styleParams }) ?
                   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
                   :
                   <List
                     size="small"
                     header="CAN NOT RENDER LEAN GALLERY"
                     bordered
-                    dataSource={notEligibleReasons({ items, styles: styleParams })}
+                    dataSource={notEligibleReasons({ items, styles: _styleParams })}
                     renderItem={item => <List.Item>{item}</List.Item>}
                   />
               }
