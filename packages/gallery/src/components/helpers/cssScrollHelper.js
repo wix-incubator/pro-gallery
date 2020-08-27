@@ -77,6 +77,10 @@ class CssScrollHelper {
     if (!(items && items.length)) {
       return [];
     }
+    const scrollAnimation = styleParams.scrollAnimation;
+    if (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) {
+      return [];
+    }
     this.screenSize = styleParams.oneRow
       ? Math.min(window.outerWidth, window.screen.width)
       : Math.min(window.outerHeight, window.screen.height);
@@ -201,7 +205,8 @@ class CssScrollHelper {
       return '';
     }
 
-    const _randomTiming = ((idx % 3) + 1) * 100; //100 - 300
+    const _randomDelay = ((idx % 3) + 1) * 100; //100 - 300
+    const _randomDuration = ((idx % 3) + 1) * 100; //100 - 300
 
     const animationPreparationPadding = this.allPagePadding();
     const animationActivePadding = this.aboveScreenPadding();
@@ -210,12 +215,12 @@ class CssScrollHelper {
     // notice: these 2 animations must have the blurry image
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR) {
       scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
       scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
     }
 
@@ -225,7 +230,7 @@ class CssScrollHelper {
           animationPreparationPadding,
           ' .gallery-item-wrapper',
         ) +
-        `{filter: opacity(0); transition: filter 1.${_randomTiming}s ease-in !important;}`;
+        `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
@@ -240,7 +245,7 @@ class CssScrollHelper {
           ' .gallery-item-wrapper',
         ) +
         `{filter: grayscale(100%); transition: filter 1.${200 +
-        _randomTiming}s ease-in !important;}`;
+        _randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
@@ -260,7 +265,7 @@ class CssScrollHelper {
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
-        `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
+        `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(animationActivePadding, '') +
         `{transform: scale(1) !important;}`;
@@ -269,7 +274,7 @@ class CssScrollHelper {
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
-        `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) !important;}`;
+        `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(animationActivePadding, '') +
         `{transform: scale(1) !important;}`;
@@ -281,7 +286,7 @@ class CssScrollHelper {
           animationPreparationPadding,
           ' .gallery-item-wrapper',
         ) +
-        `{transform: scale(1.1); transition: transform 1.2s cubic-bezier(.13,.78,.53,.92) !important;}`;
+        `{transform: scale(1.1); transition: transform 1.2s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
@@ -305,7 +310,7 @@ class CssScrollHelper {
           ' .gallery-item-wrapper',
         ) +
         `{filter: opacity(0); transition: filter 0.${600 +
-        _randomTiming}s ease-in !important;}`;
+        _randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
