@@ -117,11 +117,11 @@ class SlideshowView extends GalleryComponent {
     const galleryItemIsFocused = activeElement.className && activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
 
-    if (avoidIndividualNavigation && this.props.styleParams.galleryLayout === 0) {
+    if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
       this.nextGroup({direction, isAutoTrigger, scrollDuration}); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if(avoidIndividualNavigation && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerCol) {
-        direction*=this.props.styleParams.numberOfImagesPerCol;
+        direction *= this.props.styleParams.numberOfImagesPerCol;
       }
       this.nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation});
     }
@@ -137,7 +137,7 @@ class SlideshowView extends GalleryComponent {
 
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
     let currentIdx
-    if(avoidIndividualNavigation && !(this.props.styleParams.galleryLayout === 0)) {
+    if(avoidIndividualNavigation && !(this.props.styleParams.groupSize > 1)) {
       currentIdx = this.getCenteredItemIdxByScroll();
     } else {
       currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
@@ -175,18 +175,32 @@ class SlideshowView extends GalleryComponent {
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
-      !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
-      utils.setStateAndLog(
-        this,
-        'Next Item',
-        {
-          currentIdx: nextItem,
-        },
-        () => {
-          this.onCurrentItemChanged();
-          this.isSliding = false;
-        },
-      );
+
+      // !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
+
+      const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
+      scrollToItemPromise.then(() => {
+      if (this.props.styleParams.groupSize === 1) {
+        const skipFromSlide = Math.round(this.props.totalItemsCount * 1.5);
+        const skipToSlide = skipFromSlide - this.props.totalItemsCount;
+        if (nextItem >= skipFromSlide) {
+          nextItem = skipToSlide;
+          scrollToItem(nextItem);
+        }
+      }
+
+        utils.setStateAndLog(
+          this,
+          'Next Item',
+          {
+            currentIdx: nextItem,
+          },
+          () => {
+            this.onCurrentItemChanged();
+            this.isSliding = false;
+          },
+        );
+      });
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
       this.stopAutoSlideshow();
@@ -201,8 +215,8 @@ class SlideshowView extends GalleryComponent {
     }
     this.isSliding = true;
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
-    const currentIdx = this.getCenteredGroupIdxByScroll();
-    let currentGroup = currentIdx + direction;
+    const currentGroupIdx = this.getCenteredGroupIdxByScroll();
+    let currentGroup = currentGroupIdx + direction;
     const  scrollToGroup  = this.props.actions.scrollToGroup;
 
     this.isAutoScrolling = true;
@@ -233,11 +247,12 @@ class SlideshowView extends GalleryComponent {
       console.log(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
       !isScrollingPastEdge && scrollToGroup(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
       console.log('setting next item: ', this.getCenteredItemIdxByScroll())
+      this.currentIdx = this.getCenteredItemIdxByScroll() + direction;
       utils.setStateAndLog(
         this,
         'Next Item',
         {
-          currentIdx: this.getCenteredItemIdxByScroll() + direction,
+          currentIdx: this.currentIdx,
         },
         () => {
           this.onCurrentItemChanged();
@@ -829,16 +844,29 @@ class SlideshowView extends GalleryComponent {
     };
 
     const renderGroups = (column) => {
-      const hideSlides = this.currentIdx - galleryConfig.totalItemsCount;
+      console.log('__ galleryConfig.totalItemsCount: ', galleryConfig.totalItemsCount);
+
+      // console.log('__ numberOfImagesPerCol: ', this.props.styleParams.numberOfImagesPerCol);
+      // this.props.styleParams.numberOfDisplayedItems
+      // const hideSlides = Math.round(this.currentIdx / this.props.styleParams.numberOfImagesPerCol) - galleryConfig.totalItemsCount;
+      // console.log('__ hideSlides: ', hideSlides);
       let marginLeft = 0;
       const layoutGroupView = !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
-      
+      //is there more items than totalItemsCount * 1.5
+      console.log('__ this.currentIdx: ', this.state.currentIdx);
+      // console.log('__ galleryConfig.totalItemsCount: ', galleryConfig.totalItemsCount);
+      const spareItems = this.state.currentIdx - Math.round(galleryConfig.totalItemsCount);
+      const spareGroups = (spareItems > 0 && column.items[spareItems]) ? column.items[spareItems].groupIdx : 0;
+      console.log('__ spareItems: ', spareItems);
       if (layoutGroupView) {
-        return layoutGroupView.map((group, groupIdx) => {
-          if (hideSlides > 0 && groupIdx < hideSlides) {
+        return layoutGroupView.map((group, groupsIdx) => {
+          // console.log('itemIdx: ', itemIdx);
+          if (spareGroups > 0 && spareGroups > groupsIdx) {
+            console.log('a');
             marginLeft += group.width;
             return null;
-          } else if (hideSlides > 0 && groupIdx === hideSlides) {
+          } else if (spareGroups > 0 && spareGroups === groupsIdx) {
+            console.log('b');
             marginLeft += group.width;
             return <div style={{width: marginLeft}}></div>;
           } else if (group.rendered) {
