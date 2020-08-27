@@ -1,4 +1,4 @@
-import { addPresetStyles, getLayoutName, NEW_PRESETS, defaultStyles, galleryOptions } from 'pro-gallery-lib';
+import { processLayouts, addPresetStyles, getLayoutName, NEW_PRESETS, defaultStyles, galleryOptions } from 'pro-gallery-lib';
 
 const defaultStyleParams = defaultStyles;
 Object.entries(galleryOptions).forEach(([styleParam, settings]) => defaultStyleParams[styleParam] = settings.default);
@@ -61,7 +61,7 @@ export const getStyleParamsFromUrl = () => {
       .map(styleParam => styleParam.split('='))
       .reduce((obj, [styleParam, value]) => Object.assign(obj, {[styleParam]: formatValue(value)}), {});
       
-    styleParams = addPresetStyles({...defaultStyleParams, ...styleParams});
+    styleParams = processLayouts(addPresetStyles({...defaultStyleParams, ...styleParams}));
 
     const relevantStyleParams = Object.entries(styleParams)
       .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value, styleParams) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});

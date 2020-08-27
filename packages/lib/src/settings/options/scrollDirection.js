@@ -6,7 +6,7 @@ export default {
   title: 'Scroll Direction',
   isRelevant: () => true,
   type: INPUT_TYPES.OPTIONS,
-  default: GALLERY_CONSTS.scrollDirection.LEFT_TO_RIGHT,
+  default: GALLERY_CONSTS.scrollDirection.VERTICAL,
   options: createOptions('scrollDirection'),
   description: `Toggle between two types of galleries. Vertical and Horizontal. Notice that many options are available only for a specific scroll direction.`,
 }

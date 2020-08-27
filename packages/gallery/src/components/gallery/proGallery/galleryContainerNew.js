@@ -149,7 +149,6 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getMoreItemsIfNeeded(0);
     if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
       this.currentHoverChangeEvent.domId = nextProps.domId;
     }
@@ -414,6 +413,7 @@ export class GalleryContainer extends React.Component {
       });
     }
     this.createCssLayoutsIfNeeded(layoutParams);
+    this.createDynamicStyles();
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
@@ -582,6 +582,7 @@ export class GalleryContainer extends React.Component {
       }
 
       this.createCssLayoutsIfNeeded(layoutParams);
+      this.createDynamicStyles();
 
       const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
       if (shouldUseScrollCss) {
@@ -737,6 +738,14 @@ export class GalleryContainer extends React.Component {
     });
   }
 
+  createDynamicStyles() {
+    const allowSSROpacity = isPrerenderMode() && !!this.props.settings.allowSSROpacity;
+    this.dynamicStyles = `
+      ${!allowSSROpacity ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
+      ${!this.props.styles.overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
+    `.trim();
+  }
+
   toggleLoadMoreItems() {
     this.eventsListener(
       GALLERY_CONSTS.events.LOAD_MORE_CLICKED,
@@ -876,12 +885,6 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
-  allowSSROpacity() {
-    const {settings = {}} = this.props;
-    const {allowSSROpacity = false} = settings;
-    return isPrerenderMode() && allowSSROpacity;
-  }
-
   isVerticalGallery() {
     return !this.state.styles.oneRow
   }
@@ -906,11 +909,8 @@ export class GalleryContainer extends React.Component {
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
       : (() => { });
-    const dynamicStyles = `
-      ${!this.allowSSROpacity() ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
-      ${!this.props.styles.overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
-    `;
-    return (
+
+      return (
       <div
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
@@ -970,9 +970,9 @@ export class GalleryContainer extends React.Component {
           </div>
         )}
         <div data-key="dynamic-styles" key="items-styles" style={{ display: 'none' }}>
-          {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
-          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{ __html: scrollCss }} />)}
-          {dynamicStyles && <style dangerouslySetInnerHTML={{__html: dynamicStyles}} />}
+          {(this.layoutCss || []).filter(Boolean).map((css, idx) => <style id={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
       </div>
     );

@@ -266,6 +266,7 @@ export class GalleryContainer extends React.Component {
       };
 
     this.createCssLayoutsIfNeeded(layoutParams);
+    this.createDynamicStyles();
 
     const newState = {items: loopingItems || items, styles, container, structure}
     return newState;
@@ -389,6 +390,14 @@ export class GalleryContainer extends React.Component {
       top,
       left,
     });
+  }
+
+  createDynamicStyles() {
+    const allowSSROpacity = isPrerenderMode() && !!this.props.settings.allowSSROpacity;
+    this.dynamicStyles = `
+      ${!allowSSROpacity ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
+      ${!this.props.styles.overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
+    `.trim();
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
@@ -518,12 +527,6 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
-  allowSSROpacity() {
-    const {settings = {}} = this.props;
-    const {allowSSROpacity = false} = settings;
-    return isPrerenderMode() && allowSSROpacity;
-  }
-
   render() {
     if (!this.canRender()) {
       return null;
@@ -541,10 +544,6 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
-    const dynamicStyles = `
-      ${!this.allowSSROpacity() ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
-      ${!this.props.styles.overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
-    `;
 
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
@@ -603,9 +602,9 @@ export class GalleryContainer extends React.Component {
           {...this.props.gallery}
         />
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
-          {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
-          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
-          {dynamicStyles && <style dangerouslySetInnerHTML={{__html: dynamicStyles}} />}
+          {(this.layoutCss || []).filter(Boolean).map((css, idx) => <style id={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
       </div>
     );
