@@ -146,7 +146,7 @@ function SideBar({ items, blueprintsManager, visible }) {
       <h3 className={s.title}>Playground Gizmos</h3>
       <div className={s.controls}>
         <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => { }}>
-          <Collapse.Panel header="Media Types" key="media">
+          <Collapse.Panel header="Media" key="media">
             <Form layout="vertical">
               <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
                 <InputNumber min={0} max={100} defaultValue={gallerySettings.numberOfItems || 0} onChange={val => setGallerySettings({ numberOfItems: val })} />
