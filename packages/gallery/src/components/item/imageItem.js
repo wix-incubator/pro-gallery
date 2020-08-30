@@ -115,8 +115,10 @@ export default class ImageItem extends GalleryComponent {
 
     const image = () => {
       const imagesComponents =[]
-      const blockDownloadStyles = utils.isiOS() && !this.props.styleParams.allowDownload ? {color: 'green', '-webkit-user-select': 'none',
-      '-webkit-touch-callout': 'none'} : {};
+      const blockDownloadStyles = utils.isMobile() && !this.props.styleParams.allowContextMenu ? {
+        '-webkit-user-select': 'none',
+        '-webkit-touch-callout': 'none'
+      } : {};
 
       if (!isHighResImageLoaded){
         let preload = null;
