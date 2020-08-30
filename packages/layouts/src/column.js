@@ -8,7 +8,6 @@ export class Column {
     this.left = left;
     this.cubedHeight = cubedHeight;
     this.infoWidth = infoWidth || 0;
-    console.log('Im local');
   }
 
   addGroup(group) {
@@ -28,16 +27,15 @@ export class Column {
   }
 
   get scheme() {
-    console.log('this.groups: ', this.groups);
     return {
       idx: this.idx,
-      items: this.groups.map(group => {
-        console.log('group: ', group);
-        return group.items.map(item => {
-          console.log('item: ', item);
-          return item.scheme
+      items: this.groups
+        .map(group => {
+          return group.items.map(item => {
+            return { ...item.scheme, groupIdx: group.idx };
+          });
         })
-      }).flat(),
+        .flat(),
       groups: this.groups.map(group => group.scheme),
       width: this.width,
       height: this.height,
