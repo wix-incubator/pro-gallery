@@ -29,6 +29,7 @@ export class Column {
   get scheme() {
     return {
       idx: this.idx,
+      groups: this.groups.map(group => group.scheme),
       items: this.groups
         .map(group => {
           return group.items.map(item => {
@@ -36,7 +37,6 @@ export class Column {
           });
         })
         .flat(),
-      groups: this.groups.map(group => group.scheme),
       width: this.width,
       height: this.height,
     };

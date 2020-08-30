@@ -7,6 +7,8 @@ import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
 import { GalleryComponent } from '../../galleryComponent';
 
+const SKIP_SLIDES_MULTIPLIER = 1.5;
+
 class SlideshowView extends GalleryComponent {
   constructor(props) {
     super(props);
@@ -177,14 +179,15 @@ class SlideshowView extends GalleryComponent {
       const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
       
       scrollToItemPromise.then(() => {
-      if (this.props.styleParams.groupSize === 1) {
-        const skipFromSlide = Math.round(this.props.totalItemsCount * 1.5);
-        const skipToSlide = skipFromSlide - this.props.totalItemsCount;
-        if (nextItem >= skipFromSlide) {
-          nextItem = skipToSlide;
-          scrollToItem(nextItem);
+        if (this.props.styleParams.groupSize === 1) {
+          const skipFromSlide = Math.round(this.props.totalItemsCount * SKIP_SLIDES_MULTIPLIER);
+          const skipToSlide = skipFromSlide - this.props.totalItemsCount;
+          
+          if (nextItem >= skipFromSlide) {
+            nextItem = skipToSlide;
+            scrollToItem(nextItem);
+          }
         }
-      }
 
         utils.setStateAndLog(
           this,
@@ -843,11 +846,11 @@ class SlideshowView extends GalleryComponent {
       let marginLeft = 0;
 
       if (layoutGroupView) {
-        return layoutGroupView.map((group, groupsIdx) => {
-          if (spareGroups > 0 && spareGroups > groupsIdx) {
+        return layoutGroupView.map((group, groupIdx) => {
+          if (spareGroups > 0 && spareGroups > groupIdx) {
             marginLeft += group.width;
             return null;
-          } else if (spareGroups > 0 && spareGroups === groupsIdx) {
+          } else if (spareGroups > 0 && spareGroups === groupIdx) {
             marginLeft += group.width;
             return <div style={{width: marginLeft}} key={`margin-left-${marginLeft}`}></div>;
           } else if (group.rendered) {
