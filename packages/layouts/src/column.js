@@ -31,11 +31,7 @@ export class Column {
       idx: this.idx,
       groups: this.groups.map(group => group.scheme),
       items: this.groups
-        .map(group => {
-          return group.items.map(item => {
-            return { ...item.scheme, groupIdx: group.idx };
-          });
-        })
+        .map(group => group.items.map(item => item.scheme))
         .flat(),
       width: this.width,
       height: this.height,
