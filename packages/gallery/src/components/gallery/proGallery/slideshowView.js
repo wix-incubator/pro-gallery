@@ -1116,9 +1116,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   removeArrowsIfNeeded(){
-    if (!isGalleryInViewport(this.props.container)) {
-      return;
-    }
     setTimeout(()=>{
       const atStart = this.isScrollStart() || this.isFirstItem();
       const atEnd = this.isScrollEnd() || this.isLastItem();
@@ -1168,6 +1165,7 @@ class SlideshowView extends GalleryComponent {
       this.setCurrentItemByScroll();
     }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
+    this.removeArrowsIfNeeded();
   }
 
   componentWillUnmount() {
