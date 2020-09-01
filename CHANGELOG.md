@@ -1,3 +1,11 @@
+## [v2.1.14](https://pro-gallery-2-1-14.surge.sh) (01/09/2020)
+ 
+
+
+#### GALLERY
+      -  Fix an issue where blueprints did not get the formFactor for viewModeWrapper and styles were not fitted for mobile view 
+
+---
 ## [v2.1.13](https://pro-gallery-2-1-13.surge.sh) (31/08/2020)
 
 #### GALLERY
