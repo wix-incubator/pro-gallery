@@ -1,3 +1,9 @@
+## [v2.1.13](https://pro-gallery-2-1-13.surge.sh) (31/08/2020)
+
+#### GALLERY
+ -improve dynamic css / animations creation flow
+
+---
 ## [v2.1.12](https://pro-gallery-2-1-12.surge.sh) (26/08/2020)
  
 #### GALLERY

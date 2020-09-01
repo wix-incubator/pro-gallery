@@ -217,7 +217,7 @@ export default class LeanGallery extends React.Component {
 
   createImageStyle(imageWrapperStyle) {
     const { width = '100%', height = 'auto' } = imageWrapperStyle;
-    const blockDownloadStyles = utils.isiOS() && !this.props.styleParams.allowDownload ? {color: 'green', '-webkit-user-select': 'none',
+    const blockDownloadStyles = utils.isiOS() && !this.props.styles.allowContextMenu ? {'-webkit-user-select': 'none',
     '-webkit-touch-callout': 'none'} : {};
     return {
       width,
