@@ -37,8 +37,8 @@ describe('textBoxBorder - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      textBoxBorderWidth: 20,
-      textBoxBorderRadius: 20,
+      // textBoxBorderWidth: 20,
+      // textBoxBorderRadius: 20,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
