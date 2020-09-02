@@ -1,3 +1,9 @@
+## [v2.1.15](https://pro-gallery-2-1-15.surge.sh) (02/09/2020)
+ 
+#### GALLERY
+ -  fix: arrows are not showing for galleries below the page fold
+
+---
 ## [v2.1.14](https://pro-gallery-2-1-14.surge.sh) (01/09/2020)
  
 
