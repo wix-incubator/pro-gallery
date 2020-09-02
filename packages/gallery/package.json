@@ -110,6 +110,9 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/dist"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/drivers/mocks/jest-setup.js"
     ]
   }
 }

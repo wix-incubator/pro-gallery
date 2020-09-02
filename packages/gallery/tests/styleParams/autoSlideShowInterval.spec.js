@@ -13,10 +13,6 @@ describe('styleParam - autoSLideShowInterval', () => {
   let helpers
 
   beforeEach(() => {
-    helpers = require('../../src/components/gallery/proGallery/galleryHelpers.js');
-    sinon.stub(helpers, 'isGalleryInViewport').callsFake(() => {
-      return true;
-    });
     driver = new GalleryDriver();
     initialProps = driver.props.galleryView();
     Object.assign(initialProps.styleParams, {
