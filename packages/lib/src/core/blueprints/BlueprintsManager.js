@@ -1,4 +1,5 @@
 import blueprints from './Blueprints'
+import { viewModeWrapper } from '../../common/window/viewModeWrapper'
 
 export default class BlueprintsManager {
 
@@ -16,6 +17,7 @@ export default class BlueprintsManager {
   init(config) {
     this.api = config.api;
     this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
+    viewModeWrapper.setFormFactor(config.formFactor);
   }
 
   async createBlueprint(params) {

@@ -12,10 +12,6 @@ describe('Slideshow View', () => {
   let helpers;
 
   beforeEach(() => {
-    helpers = require('../../../src/components/gallery/proGallery/galleryHelpers.js');
-    sinon.stub(helpers, 'isGalleryInViewport').callsFake(() => {
-      return true;
-    });
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
     Object.assign(initialGalleryViewProps.styleParams, {
@@ -26,7 +22,6 @@ describe('Slideshow View', () => {
 
   afterEach(() => {
     clock.restore();
-    helpers.isGalleryInViewport.restore();
   });
 
   describe('init of different items', () => {
