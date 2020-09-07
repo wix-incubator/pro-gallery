@@ -413,7 +413,7 @@ export class GalleryContainer extends React.Component {
       });
     }
     this.createCssLayoutsIfNeeded(layoutParams);
-    this.createDynamicStyles();
+    this.createDynamicStyles(styles.overlayBackground);
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
@@ -582,7 +582,7 @@ export class GalleryContainer extends React.Component {
       }
 
       this.createCssLayoutsIfNeeded(layoutParams);
-      this.createDynamicStyles();
+      this.createDynamicStyles(_styles.overlayBackground);
 
       const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
       if (shouldUseScrollCss) {
@@ -738,11 +738,11 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  createDynamicStyles() {
+  createDynamicStyles(overlayBackground) {
     const allowSSROpacity = isPrerenderMode() && !!this.props.settings.allowSSROpacity;
     this.dynamicStyles = `
       ${!allowSSROpacity ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
-      ${!this.props.styles.overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
+      ${!overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${overlayBackground} !important}`}
     `.trim();
   }
 
