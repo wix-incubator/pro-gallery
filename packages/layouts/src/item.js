@@ -399,7 +399,6 @@ export class Item {
       id: this.id,
       idx: this.idx,
       inGroupIdx: this.inGroupIdx,
-      groupIdx: this.groupIdx,
       dto: this.dto,
       type: this.type,
       style: this.style,

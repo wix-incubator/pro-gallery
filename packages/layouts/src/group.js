@@ -42,7 +42,6 @@ export class Group {
 
     this.items = config.items.map(item => {
       item.Group = this;
-      item.groupIdx = this.idx;
       return item;
     });
 
