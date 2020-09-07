@@ -1,3 +1,9 @@
+## [v2.1.17](https://pro-gallery-2-1-17.surge.sh) (07/09/2020)
+ 
+#### GALLERY
+ -  REVERTED changes done in 2.1.16.
+
+---
 ## [v2.1.16](https://pro-gallery-2-1-16.surge.sh) (07/09/2020)
  
 #### GALLERY
