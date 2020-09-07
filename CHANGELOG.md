@@ -1,3 +1,10 @@
+## [v2.1.16](https://pro-gallery-2-1-16.surge.sh) (07/09/2020)
+ 
+#### GALLERY
+ - Refactor infinate loop in slideshow, slider, thumbnails loop.
+ - Fix: slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
+
+---
 ## [v2.1.15](https://pro-gallery-2-1-15.surge.sh) (02/09/2020)
  
 #### GALLERY
