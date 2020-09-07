@@ -9,7 +9,6 @@ export const fixedStyles = {
   isVertical: true,
   groupSize: 1,
   groupTypes: '1',
-  slideshowLoop: false,
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
 
   galleryType: 'Columns',
@@ -22,6 +21,7 @@ export const fixedStyles = {
   isSlider: false,
   isSlideshow: false,
   cropOnlyFill: false,
+  slideshowLoop: false,
 }
 
 export const createStyles = styles => {

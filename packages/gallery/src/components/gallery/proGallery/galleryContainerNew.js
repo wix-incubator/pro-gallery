@@ -798,17 +798,11 @@ export class GalleryContainer extends React.Component {
   }
 
   duplicateGalleryItems() {
-    if (!this.itemsToDuplicate) {
-      this.itemsToDuplicate = this.items;
-    }
-
-    const items = this.items.concat(
-      ...this.itemsToDuplicate.slice(0, this.props.totalItemsCount),
-    );
-
     const galleryState = this.reCreateGalleryExpensively({
       ...this.props,
-      items,
+      items: this.items.concat(
+        ...this.items.slice(0, this.props.totalItemsCount),
+      ),
     });
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {

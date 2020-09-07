@@ -15,7 +15,6 @@ export const fixedStyles = {
   groupSize: 3,
   groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
   collageDensity: 0.48,
-  slideshowLoop: false,
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   targetItemSize: 86,

@@ -21,7 +21,6 @@ export const fixedStyles = {
   isMasonry: false,
   isSlideshow: false,
   minItemSize: 50,
-  slideshowLoop: false,
 }
 
 export const createStyles = styles => {
