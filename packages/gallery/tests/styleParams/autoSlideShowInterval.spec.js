@@ -31,7 +31,7 @@ describe('styleParam - autoSLideShowInterval', () => {
       galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
-    const stub = sinon.stub(SlideshowView.prototype, 'nextItem');
+    const stub = sinon.stub(SlideshowView.prototype, 'next');
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
     driver.mount(SlideshowView, galleryViewProps);
     expect(stub.called).to.equal(false);

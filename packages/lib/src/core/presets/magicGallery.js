@@ -27,6 +27,7 @@ export const fixedStyles = {
   cropOnlyFill: undefined,
   fixedColumns: undefined,
   enableInfiniteScroll: undefined,
+  slideshowLoop: false,
 }
 
 const getStyleBySeed = (seed) => {
