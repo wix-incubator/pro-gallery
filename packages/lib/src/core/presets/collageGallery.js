@@ -19,6 +19,7 @@ export const fixedStyles = {
   isColumns: false,
   isSlideshow: false,
   cropOnlyFill: false,
+  slideshowLoop: false,
 }
 
 export const createStyles = styles => {

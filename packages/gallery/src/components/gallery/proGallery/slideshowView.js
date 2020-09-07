@@ -137,7 +137,7 @@ class SlideshowView extends GalleryComponent {
     this.isSliding = true;
 
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
-    let currentIdx
+    let currentIdx;
     if(avoidIndividualNavigation && !(this.props.styleParams.groupSize > 1)) {
       currentIdx = this.getCenteredItemIdxByScroll();
     } else {
@@ -841,35 +841,19 @@ class SlideshowView extends GalleryComponent {
 
     const renderGroups = (column) => {
       const layoutGroupView = !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
-      const spareItems = this.state.currentIdx - galleryConfig.totalItemsCount;
-      const spareGroups = (spareItems > 0 && column.items[spareItems]) ? column.items[spareItems].groupIdx : 0;
-      let marginLeft = 0;
 
-      if (layoutGroupView) {
-        return layoutGroupView.map((group, groupIdx) => {
-          if (spareGroups > 0 && spareGroups > groupIdx) {
-            marginLeft += group.width;
-            return null;
-          } else if (spareGroups > 0 && spareGroups === groupIdx) {
-            marginLeft += group.width;
-            return <div style={{width: marginLeft}} key={`margin-left-${marginLeft}`}></div>;
-          } else if (group.rendered) {
-            return React.createElement(
-                GroupView,
-                {
-                  allowLoop: this.props.styleParams.slideshowLoop && (this.props.galleryStructure.width > this.props.container.width),
-                  itemsLoveData,
-                  ...group.renderProps(galleryConfig)
-                },
-              ); 
-          } else {
-            return null;
-          }
-        });
-      } else {
-        return null;
+      return ( 
+        layoutGroupView && layoutGroupView.map(group =>
+          group.rendered ? React.createElement(
+            GroupView,
+            {
+              allowLoop: this.props.styleParams.slideshowLoop && (this.props.galleryStructure.width > this.props.container.width),
+              itemsLoveData,
+              ...group.renderProps(galleryConfig)
+            },
+          ) : false,
+        ))
       }
-    }
 
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
