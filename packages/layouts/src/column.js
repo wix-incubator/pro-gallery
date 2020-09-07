@@ -2,6 +2,7 @@ export class Column {
   constructor(idx, width, left, cubedHeight, infoWidth) {
     this.idx = idx;
     this.groups = [];
+    this.items = [];
     this.height = 0;
     this.width = width;
     this.left = left;
@@ -29,6 +30,9 @@ export class Column {
     return {
       idx: this.idx,
       groups: this.groups.map(group => group.scheme),
+      items: this.groups
+        .map(group => group.items.map(item => item.scheme))
+        .flat(),
       width: this.width,
       height: this.height,
     };
