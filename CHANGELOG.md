@@ -1,3 +1,13 @@
+## [v2.1.21](https://pro-gallery-2-1-21.surge.sh) (08/09/2020)
+ 
+#### GALLERY
+ -  fixed createDynamicStyles of overlayBackground (will receive it as an arg), fixed itemHover -> shouldRenderHoverInnerIfExist (when alwaysShowHover, it is true).
+ -  Refactor infinate loop in slideshow, slider, thumbnails loop. Fix slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
+
+ #### MAIN
+ -  REVERT: tests (.travis.yml): run all tests in travis
+
+---
 ## [v2.1.20](https://pro-gallery-2-1-20.surge.sh) (08/09/2020)
  
 #### OTHER
