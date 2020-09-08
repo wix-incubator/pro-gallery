@@ -28,6 +28,7 @@ export const fixedStyles = {
   oneRow: false,
   placeGroupsLtr: false,
   rotatingCropRatios: '',
+  slideshowLoop: false,
 }
 
 export const createStyles = styles => {
