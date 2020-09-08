@@ -32,10 +32,11 @@ export function useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServ
     setBlueprint(data.blueprint);
   }
 
-  const requestNewBlueprint = (newContext)=> {
+  const requestNewBlueprint = (newContext, settingNewItems)=> {
     if(shouldUseBlueprintsFromServer) {
       getBlueprintFromServer({...context, ...newContext})
     } else {
+      if(settingNewItems) {blueprintsManager.resetItemLooping();}
       blueprintsManager.createBlueprint({...newContext})
     }
   }
@@ -89,7 +90,7 @@ export function useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServ
 
     const newContext = {items};
     if(getGallerySettings().useBlueprints) {
-      requestNewBlueprint(newContext);
+      requestNewBlueprint(newContext, true);
     }
 
     setContext(newContext);
