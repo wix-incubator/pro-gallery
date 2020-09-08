@@ -1,7 +1,7 @@
 ## [v2.1.22](https://pro-gallery-2-1-22.surge.sh) (08/09/2020)
  
-#### OTHER
- -  feat : add resetLoop to blueprintsManager
+#### LIB
+ -  Added resettemLooping to blueprintsManager
 
 ---
 ## [v2.1.21](https://pro-gallery-2-1-21.surge.sh) (08/09/2020)
