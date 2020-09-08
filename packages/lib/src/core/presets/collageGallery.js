@@ -9,8 +9,6 @@ export const fixedStyles = {
   groupSize: 3,
   hasThumbnails: false,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  slideshowLoop: false,
-  
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   targetItemSize: 0,
   fixedColumns: 0,
