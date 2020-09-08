@@ -1,3 +1,9 @@
+## [v2.1.19](https://pro-gallery-2-1-19.surge.sh) (08/09/2020)
+ 
+#### GALLERY
+ -  Revereted code. stabilizing PG.
+
+---
 ## [v2.1.18](https://pro-gallery-2-1-18.surge.sh) (07/09/2020)
  
 #### GALLERY
