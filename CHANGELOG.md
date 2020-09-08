@@ -1,3 +1,9 @@
+## [v2.1.20](https://pro-gallery-2-1-20.surge.sh) (08/09/2020)
+ 
+#### OTHER
+ -  temporarily remove test:e2e script
+
+---
 ## [v2.1.19](https://pro-gallery-2-1-19.surge.sh) (08/09/2020)
  
 #### GALLERY
