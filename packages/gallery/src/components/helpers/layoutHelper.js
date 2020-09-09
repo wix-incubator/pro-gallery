@@ -147,12 +147,6 @@ function getStyleByGalleryType(styles) {
   return styleState;
 }
 
-//returns true if the given param is in the current layout preset
-export const isInPreset = (styleParams, paramToCheck) => {
-  const layoutName = getLayoutName(styleParams.galleryLayout) || 'empty';// empty for when there is no layout given
-  return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
-}
-
 function addLayoutStyles(styles, customExternalInfoRendererExists) {
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;

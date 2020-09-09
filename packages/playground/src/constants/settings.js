@@ -85,6 +85,7 @@ export const stylesBySection = {
         'groupsPerStrip',
         'galleryMargin',
         'floatingImages',
+        'smartCrop',
         'allowLeanGallery',
     ],
     [SECTIONS.INFO]: [

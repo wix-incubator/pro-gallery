@@ -1,6 +1,6 @@
 import React from 'react';
 import {Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
-import {INPUT_TYPES} from 'pro-gallery-lib';
+import {INPUT_TYPES, isInPreset} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
 
@@ -221,6 +221,7 @@ class JsonEditor extends React.Component {
               {isSingleItem && (<>
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
+                <p><b>Overriden by current Preset: </b>{isInPreset(allStyleParams.galleryLayout, styleParam) ? 'Yes' : 'No'}</p>
                 <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>
               </>)}
               <Divider/>
