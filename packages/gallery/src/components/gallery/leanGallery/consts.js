@@ -37,7 +37,7 @@ export const fixedStyleParams = {
   rotatingCubeRatio: '',
   boxShadow: 0,
   galleryMargin: 0,
-  floatingImages: 0,
+  scatter: 0,
   placeGroupsLtr: false,
   mobilePanorama: false,
   enableInfiniteScroll: [true, 1],

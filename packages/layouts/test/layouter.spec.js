@@ -35,7 +35,7 @@ describe('Layouter', () => {
       layoutsVersion: 2,
       galleryMargin: 0,
       imageMargin: 10,
-      floatingImages: 0,
+      scatter: 0,
       fixedColumns: 0,
     };
 

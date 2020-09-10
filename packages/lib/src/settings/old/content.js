@@ -144,7 +144,7 @@ export default {
     title: "Gallery Spacing",
     description: "The space from the container to the gallery",
   },
-  floatingImages: {
+  scatter: {
     title: "Scatter",
     description: "Set a random offset to each image, in the boundaries of the margin.",
   },

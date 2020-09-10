@@ -15,7 +15,7 @@ const emptyLayout = {
   oneRow: undefined,
   imageMargin: undefined,
   galleryMargin: undefined,
-  floatingImages: undefined,
+  scatter: undefined,
   chooseBestGroup: undefined,
   smartCrop: undefined,
   hasThumbnails: undefined,
