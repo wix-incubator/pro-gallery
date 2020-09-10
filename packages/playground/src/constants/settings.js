@@ -84,7 +84,7 @@ export const stylesBySection = {
         'rotatingCropRatios',
         'groupsPerStrip',
         'galleryMargin',
-        'floatingImages',
+        'scatter',
         'smartCrop',
         'allowLeanGallery',
     ],

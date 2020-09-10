@@ -1,4 +1,4 @@
-import { getLayoutName, dimensionsHelper, processLayouts, NEW_PRESETS, utils } from 'pro-gallery-lib';
+import { dimensionsHelper, processLayouts, utils } from 'pro-gallery-lib';
 
 const emptyLayout = {
   galleryType: undefined,

@@ -169,7 +169,7 @@ export class Item {
     return offset;
   }
 
-  get transform() {
+  get scatter() {
     if (this.floatingImages > 0) {
       const m = this.imageMargin;
       const g = this.galleryMargin;
@@ -186,19 +186,19 @@ export class Item {
           this.hash + this.offset.right + 'x',
           -1 * spaceLeft,
           spaceRight,
-        ) * this.floatingImages;
+        ) *
+        (this.floatingImages / 100);
       const verticalShift =
         utils.hashToInt(
           this.hash + this.offset.top + 'y',
           -1 * spaceUp,
           spaceDown,
-        ) * this.floatingImages;
+        ) *
+        (this.floatingImages / 100);
 
-      return {
-        transform: `translate3d(${horizontalShift}px, ${verticalShift}px, 0)`,
-      };
+      return { x: horizontalShift, y: verticalShift };
     } else {
-      return {};
+      return { x: 0, y: 0 };
     }
   }
 
@@ -418,7 +418,7 @@ export class Item {
       group: this.group,
       offset: this.offset,
       groupOffset: this._groupOffset,
-      transform: this.transform,
+      scatter: this.scatter,
       orientation: this.orientation,
       isPortrait: this.isPortrait,
       isLandscape: this.isLandscape,
