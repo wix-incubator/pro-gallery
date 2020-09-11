@@ -72,7 +72,6 @@ class GalleryItem {
     this.cubeType = scheme.cropType || RESIZE_METHODS.FILL;
     this.offset = scheme.offset;
     this.group = scheme.group;
-    this.scatter = scheme.scatter;
     this.orientation = scheme.orientation;
     this.visibility = scheme.visibility;
   }
@@ -103,7 +102,6 @@ class GalleryItem {
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
       cubeRatio: this.cubeRatio,
-      scatter: this.scatter,
       offset: this.offset,
       style: {
         ratio: this.ratio,

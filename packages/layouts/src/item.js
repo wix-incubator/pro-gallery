@@ -123,31 +123,27 @@ export class Item {
     return parseInt(pos, 10) >= 0 ? pos : 'auto';
   }
 
-  calcScatter() {
+  calcScatter(offset) {
     if (this.scatter > 0) {
       const m = this.imageMargin;
       const g = this.galleryMargin;
 
-      const spaceLeft = this.offset.left > 0 ? m : g;
+      const spaceLeft = offset.left > 0 ? m : g;
       const spaceRight =
-        this.container.galleryWidth - this.offset.right > 2 * m ? m : g;
-      const spaceUp = this.offset.top > 0 ? m : g;
+        this.container.galleryWidth - offset.right > 2 * m ? m : g;
+      const spaceUp = offset.top > 0 ? m : g;
       const spaceDown =
-        this.container.galleryHeight - this.offset.bottom > 2 * m ? m : g;
+        this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
 
       const horizontalShift =
         utils.hashToInt(
-          this.hash + this.offset.right + 'x',
+          this.hash + offset.right + 'x',
           -1 * spaceLeft,
           spaceRight,
         ) *
         (this.scatter / 100);
       const verticalShift =
-        utils.hashToInt(
-          this.hash + this.offset.top + 'y',
-          -1 * spaceUp,
-          spaceDown,
-        ) *
+        utils.hashToInt(this.hash + offset.top + 'y', -1 * spaceUp, spaceDown) *
         (this.scatter / 100);
 
       return { x: horizontalShift, y: verticalShift };
@@ -197,6 +193,9 @@ export class Item {
             ? this.calcPinOffset(this._group.width, 'left')
             : this._group.width - this.outerWidth) || 0,
     };
+    const { x, y } = this.calcScatter(offset);
+    offset.left += x;
+    offset.top += y;
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
     return offset;
@@ -418,7 +417,6 @@ export class Item {
       group: this.group,
       offset: this.offset,
       groupOffset: this._groupOffset,
-      scatter: this.calcScatter(),
       orientation: this.orientation,
       isPortrait: this.isPortrait,
       isLandscape: this.isLandscape,
