@@ -33,7 +33,7 @@
     "lint:fix": "npm run lint -- --fix",
     "start-with-test": "PORT=9837 yoshi start --with-test",
     "e2e-test": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
-    "test:e2e:report": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js' --reporters default jest-stare"
+    "test:all:report": "jest --reporters default jest-stare"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
