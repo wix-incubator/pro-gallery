@@ -134,7 +134,7 @@ export default class LeanGallery extends React.Component {
       return {
         borderStyle: 'solid',
         borderWidth: styles.itemBorderWidth,
-        borderColor: styles.itemBorderColor.value,
+        borderColor: utils.formatColor(styles.itemBorderColor),
         borderRadius: styles.itemBorderRadius
       };
     }
@@ -235,7 +235,7 @@ export default class LeanGallery extends React.Component {
         boxSizing: 'border-box',
         borderStyle: 'solid',
         borderWidth: styles.itemBorderWidth,
-        borderColor: styles.itemBorderColor.value,
+        borderColor: utils.formatColor(styles.itemBorderColor),
         borderRadius: styles.itemBorderRadius,
       }
     }

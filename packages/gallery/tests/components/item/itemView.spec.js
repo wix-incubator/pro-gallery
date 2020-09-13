@@ -297,7 +297,7 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
           itemEnableShadow: true,
-          itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
+          itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
           itemShadowBlur: 15,
           itemShadowDirection: 0,
           itemShadowSize: 18,
@@ -311,7 +311,7 @@ describe('Item View', () => {
       driver.set.props({
         styleParams: {
           itemEnableShadow: false,
-          itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
+          itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
           itemShadowBlur: 20,
           itemShadowDirection: 135,
           itemShadowSize: 10,
