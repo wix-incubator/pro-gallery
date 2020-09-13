@@ -9,7 +9,8 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import checkNewGalleryProps from '../../helpers/isNew';
-import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js'
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js';
+import {LayoutFixer} from './layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -914,6 +915,7 @@ export class GalleryContainer extends React.Component {
       <div
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
+        id={`pro-gallery-inner-container-${this.props.domId}`}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -974,6 +976,11 @@ export class GalleryContainer extends React.Component {
           {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
+        <LayoutFixer
+          parentId={`pro-gallery-inner-container-${this.props.domId}`}
+          styleParams={this.state.styles}
+          items={this.items}
+        />
       </div>
     );
   }
