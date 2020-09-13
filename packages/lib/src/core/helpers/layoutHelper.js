@@ -242,6 +242,11 @@ function processLayouts(styles, customExternalInfoRendererExists) {
 
   processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(processedStyles, customExternalInfoRendererExists);
 
+  // Handle case of autoplay on ios devices
+  if (processedStyles.videoPlay === 'auto' && processedStyles.itemClick === 'nothing' && utils.isiOS()) {
+    processedStyles.videoPlay = 'onClick';
+  }
+
   return processedStyles;
 }
 
