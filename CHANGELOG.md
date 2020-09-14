@@ -1,3 +1,12 @@
+## [v2.1.24](https://pro-gallery-2-1-24.surge.sh) (14/09/2020)
+ 
+#### GALLERY
+ -  leanGallery: fix mobile settings to apply on gallery
+ -  fix (itemView): use isEditMode as a function
+ -  improve (styleParams): support colors as rgba / hex string (keep legacy {value: ...} support)
+ -  improve (itemView): use item transitions only in edit mode
+
+---
 ## [v2.1.23](https://pro-gallery-2-1-23.surge.sh) (13/09/2020)
  
 #### LIB
