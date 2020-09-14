@@ -940,9 +940,7 @@ export class GalleryContainer extends React.Component {
           styleParams={this.state.styles}
           container={this.state.container}
           watermark={this.props.watermark}
-          settings={{avoidInlineStyles: true, ...this.props.settings}}
-          gotScrollEvent={true}
-          scroll={{}} //todo: remove after refactor is 100%
+          settings={this.props.settings}
           displayShowMore={displayShowMore}
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}
@@ -976,11 +974,11 @@ export class GalleryContainer extends React.Component {
           {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
-        <LayoutFixer
+        {this.props.useLayoutFixer ? <LayoutFixer
           parentId={`pro-gallery-inner-container-${this.props.domId}`}
-          styleParams={this.state.styles}
+          styles={this.state.styles}
           items={this.items}
-        />
+        /> : null }
       </div>
     );
   }

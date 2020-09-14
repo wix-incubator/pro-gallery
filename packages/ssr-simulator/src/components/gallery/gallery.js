@@ -18,7 +18,7 @@ export default class Gallery extends React.PureComponent {
     this.handleResize = this.handleResize.bind(this);
 
     this.state = {
-      knownContainer: container !== UNKNOWN_CONTAINER,
+      knownContainer: (container.width > 0 || container.height > 0) && container !== UNKNOWN_CONTAINER,
       container: container
     };
   }
@@ -101,7 +101,7 @@ export default class Gallery extends React.PureComponent {
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
 
-    const items = utils.mixAndSlice(testItems, 50, styles.seed || 1);
+    const items = testItems.slice(0,50);//utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
       // console.log({eventName, eventData});
