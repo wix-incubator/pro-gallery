@@ -17,7 +17,7 @@ describe('grid - e2e', () => {
   });
   it('grid - scrollDirection = vertical', async () => {
     await driver.openPage({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL
     });
     await driver.waitFor.hookToBeVisible('item-container');

@@ -32,8 +32,7 @@
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "start-with-test": "PORT=9837 yoshi start --with-test",
-    "e2e-test": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
-    "test:all:report": "jest --reporters default jest-stare"
+    "e2e-test": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
@@ -109,6 +108,10 @@
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
+    "reporters": [
+      "default",
+      "<rootDir>/tests/drivers/customReporter.js"
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/dist"
