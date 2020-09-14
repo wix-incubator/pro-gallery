@@ -1,3 +1,9 @@
+## [v2.1.26](https://pro-gallery-2-1-26.surge.sh) (14/09/2020)
+ 
+#### MAIN
+ - : travis: run "test:all" (instead of "test") before running build.
+
+---
 ## [v2.1.25](https://pro-gallery-2-1-25.surge.sh) (14/09/2020)
  
 #### GALLERY + LIB
