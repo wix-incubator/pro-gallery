@@ -1,4 +1,4 @@
-import { getLayoutName, dimensionsHelper, processLayouts, NEW_PRESETS, utils } from 'pro-gallery-lib';
+import { dimensionsHelper, processLayouts, utils } from 'pro-gallery-lib';
 
 const emptyLayout = {
   galleryType: undefined,
@@ -15,7 +15,7 @@ const emptyLayout = {
   oneRow: undefined,
   imageMargin: undefined,
   galleryMargin: undefined,
-  floatingImages: undefined,
+  scatter: undefined,
   chooseBestGroup: undefined,
   smartCrop: undefined,
   hasThumbnails: undefined,
@@ -145,12 +145,6 @@ function getStyleByGalleryType(styles) {
   }
 
   return styleState;
-}
-
-//returns true if the given param is in the current layout preset
-export const isInPreset = (styleParams, paramToCheck) => {
-  const layoutName = getLayoutName(styleParams.galleryLayout) || 'empty';// empty for when there is no layout given
-  return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 }
 
 function addLayoutStyles(styles, customExternalInfoRendererExists) {

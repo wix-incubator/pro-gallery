@@ -183,7 +183,7 @@ export default {
     max: 50,
     units: "px",
   },
-  floatingImages: {
+  scatter: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
     max: 1,

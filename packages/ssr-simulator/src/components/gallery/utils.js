@@ -26,7 +26,7 @@ export const defaultStyleParams = {
   boxShadow: 0,
   imageMargin: 10,
   galleryMargin: 0,
-  floatingImages: 0,
+  scatter: 0,
   gridStyle: 0,
   mobilePanorama: false,
   placeGroupsLtr: false,

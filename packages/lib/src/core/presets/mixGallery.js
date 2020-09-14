@@ -22,7 +22,7 @@ export const fixedStyles = {
   chooseBestGroup: true,
   rotatingGroupTypes: '1,3l,1,3r',
   smartCrop: false,
-  floatingImages: 0,
+  scatter: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,
   oneRow: false,

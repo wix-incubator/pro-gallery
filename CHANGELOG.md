@@ -1,3 +1,12 @@
+## [v2.1.23](https://pro-gallery-2-1-23.surge.sh) (13/09/2020)
+ 
+#### LIB
+ -  Handle case of video autoplay on ios devices
+
+#### ALL
+ -  improve (scatter): refactor scatter to be a part of the layout
+
+---
 ## [v2.1.22](https://pro-gallery-2-1-22.surge.sh) (08/09/2020)
  
 #### LIB

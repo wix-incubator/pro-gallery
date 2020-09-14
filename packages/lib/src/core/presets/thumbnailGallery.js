@@ -28,7 +28,7 @@ export const fixedStyles = {
   isColumns: false,
   isSlideshow: false,
   cropOnlyFill: false,
-  floatingImages: 0,
+  scatter: 0,
   imageMargin: 0,
 }
 

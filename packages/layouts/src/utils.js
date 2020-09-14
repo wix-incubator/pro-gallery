@@ -72,7 +72,7 @@ class Utils {
         smartCrop: false,
         imageMargin: 10,
         galleryMargin: 0,
-        floatingImages: 0,
+        scatter: 0,
         chooseBestGroup: true,
         groupSize: 3,
         groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
@@ -127,7 +127,7 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'floatingImages',
+      'scatter',
       convertedStyleParams.randomSpacings,
     );
     this.insertIfDefined(

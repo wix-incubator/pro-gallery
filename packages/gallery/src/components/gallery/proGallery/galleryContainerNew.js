@@ -413,7 +413,7 @@ export class GalleryContainer extends React.Component {
       });
     }
     this.createCssLayoutsIfNeeded(layoutParams);
-    this.createDynamicStyles(styles.overlayBackground);
+    this.createDynamicStyles(styles);
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
@@ -582,7 +582,7 @@ export class GalleryContainer extends React.Component {
       }
 
       this.createCssLayoutsIfNeeded(layoutParams);
-      this.createDynamicStyles(_styles.overlayBackground);
+      this.createDynamicStyles(_styles);
 
       const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
       if (shouldUseScrollCss) {
@@ -738,7 +738,7 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  createDynamicStyles(overlayBackground) {
+  createDynamicStyles({overlayBackground}) {
     const allowSSROpacity = isPrerenderMode() && !!this.props.settings.allowSSROpacity;
     this.dynamicStyles = `
       ${!allowSSROpacity ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}

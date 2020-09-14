@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 
 export function getContainerStyle(styleParams) {
   return {
@@ -24,7 +24,7 @@ function boxShadow(styleParams) {
     const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
     const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
     _boxShadow = {
-      boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${styleParams.itemShadowOpacityAndColor.value}`,
+      boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${utils.formatColor(styleParams.itemShadowOpacityAndColor)}`,
     };
   }
   return _boxShadow;
@@ -49,7 +49,7 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
     overflow: 'hidden',
     borderRadius: borderRadius,
     borderWidth: borderWidth + 'px',
-    borderColor: borderColor && borderColor.value,
+    borderColor: utils.formatColor(borderColor),
     ...(borderWidth && {
       borderStyle: 'solid',
     }),

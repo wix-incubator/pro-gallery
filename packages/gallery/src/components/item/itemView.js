@@ -574,7 +574,7 @@ class ItemView extends GalleryComponent {
       height: style.height + style.infoHeight,
     };
 
-    const transitionStyles = this.state.loaded ? {
+    const transitionStyles = (this.state.loaded && isEditMode()) ? {
       transition: 'all .4s ease',
       transitionProperty: 'top, left, width, height'
     } : {

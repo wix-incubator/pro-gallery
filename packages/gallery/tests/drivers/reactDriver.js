@@ -77,7 +77,7 @@ class galleryDriver {
       thumbnailSpacings: 0,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       itemEnableShadow: false,
-      itemShadowOpacityAndColor: { value: 'rgba(0, 0, 0, 0.2)' },
+      itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
       itemShadowBlur: 20,
       itemShadowDirection: 135,
       itemShadowSize: 10,

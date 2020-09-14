@@ -266,7 +266,7 @@ export class GalleryContainer extends React.Component {
       };
 
     this.createCssLayoutsIfNeeded(layoutParams);
-    this.createDynamicStyles(styles.overlayBackground);
+    this.createDynamicStyles(styles);
 
     const newState = {items: loopingItems || items, styles, container, structure}
     return newState;
@@ -392,7 +392,7 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  createDynamicStyles(overlayBackground) {
+  createDynamicStyles({overlayBackground}) {
     const allowSSROpacity = isPrerenderMode() && !!this.props.settings.allowSSROpacity;
     this.dynamicStyles = `
       ${!allowSSROpacity ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}

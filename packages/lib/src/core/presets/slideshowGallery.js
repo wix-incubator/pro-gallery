@@ -33,7 +33,7 @@ export const fixedStyles = {
   isSlider: false,
   isSlideshow: true,
   cropOnlyFill: false,
-  floatingImages: 0,
+  scatter: 0,
   imageMargin: 0,
 }
 
