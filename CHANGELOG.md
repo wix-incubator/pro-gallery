@@ -1,3 +1,27 @@
+## [v2.1.26](https://pro-gallery-2-1-26.surge.sh) (14/09/2020)
+ 
+#### MAIN
+ - : travis: run "test:all" (instead of "test") before running build.
+
+---
+## [v2.1.25](https://pro-gallery-2-1-25.surge.sh) (14/09/2020)
+ 
+#### GALLERY + LIB
+ -  leanGallery: fix mobile settings to apply on gallery
+ -  fix (itemView): use isEditMode as a function
+ -  improve (styleParams): support colors as rgba / hex string (keep legacy {value: ...} support)
+ -  improve (itemView): use item transitions only in edit mode
+
+---
+## [v2.1.24](https://pro-gallery-2-1-24.surge.sh) (14/09/2020)
+ 
+#### GALLERY
+ -  leanGallery: fix mobile settings to apply on gallery
+ -  fix (itemView): use isEditMode as a function
+ -  improve (styleParams): support colors as rgba / hex string (keep legacy {value: ...} support)
+ -  improve (itemView): use item transitions only in edit mode
+
+---
 ## [v2.1.23](https://pro-gallery-2-1-23.surge.sh) (13/09/2020)
  
 #### LIB
