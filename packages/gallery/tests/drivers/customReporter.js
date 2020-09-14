@@ -5,7 +5,7 @@ const jestStareProcessor = require("jest-stare");
 
 const exec = cmd => execSync(cmd, { stdio: 'inherit' });
 const formatBranchName = branch => {
-  return branch.replace(/.|_/g,'-').toLowerCase();
+  return branch.replace(/[.]|_/g,'-').toLowerCase();
 }
 
 class DiffsReporter {
