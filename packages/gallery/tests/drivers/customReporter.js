@@ -19,10 +19,8 @@ class DiffsReporter {
       console.log('Not in CI, skipping generating and publishing test report');
       return;
     }
-    console.log('Failed tests ==========> ', results.snapshot.unmatched);
     if (results.numFailedTests && results.snapshot.unmatched) {
       try {
-        console.log('Failed snapshot ==========>');
         jestStareProcessor(results);
         const reportPath = path.resolve(process.cwd(), 'jest-stare');
         const domain = `${formatBranchName(TRAVIS_BRANCH)}.pro-gallery-report.surge.sh/`;
