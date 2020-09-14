@@ -98,17 +98,16 @@ const createLayoutFixer = () => {
 
 }
 
-const useLayoutFixer = () => {
-   return (isPrerenderMode() || typeof window !== 'undefined') 
-}
+console.log('2 isPrerenderMode', isPrerenderMode())
 
-if (useLayoutFixer()) {
+if (isPrerenderMode() && typeof window !== 'undefined') {
     window.requestAnimationFrame(createLayoutFixer);
 }
 
 export const LayoutFixer = (props) => {
-    console.log('[LAYOUT FIXER] rendering', useLayoutFixer(), props);
-    return useLayoutFixer() ? (
+    console.log('[LAYOUT FIXER] rendering', isPrerenderMode(), props);
+    console.log('1 isPrerenderMode', isPrerenderMode())
+    return (isPrerenderMode()) ? (
         <layout-fixer 
             parentId={props.parentId}
             items={JSON.stringify(props.items)}

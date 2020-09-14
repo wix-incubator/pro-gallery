@@ -34,6 +34,7 @@ export default class Gallery extends React.PureComponent {
       };
     }
 
+    console.log('[LAYOUT FIXER] getContainerFromUrl', container);
     return container;
   }
 
@@ -56,6 +57,7 @@ export default class Gallery extends React.PureComponent {
     let shouldUpdateContainer = true;
     const { urlParams: { containerWidth, containerHeight } = {} } = this.props;
     const containerWithWindowDimensions = this.getContainerFromWindowDimensions();
+    console.log('[LAYOUT FIXER] containerWithWindowDimensions', containerWithWindowDimensions);
 
     if (containerWidth !== undefined && containerHeight !== undefined) {
       if (
@@ -66,6 +68,7 @@ export default class Gallery extends React.PureComponent {
       }
     }
 
+    console.log('[LAYOUT FIXER] shouldUpdateContainerOnMount', shouldUpdateContainer);
     return shouldUpdateContainer;
   };
 
@@ -79,6 +82,7 @@ export default class Gallery extends React.PureComponent {
     if (this.shouldUpdateContainerOnMount()) {
       newState.container = this.getContainerFromWindowDimensions();
     }
+    console.log('[LAYOUT FIXER] ssr gallery componentDidMount', newState);
 
     this.setState(newState);
     window.addEventListener('resize', this.handleResize);
@@ -95,6 +99,9 @@ export default class Gallery extends React.PureComponent {
       !knownContainer || this.isSSR()
         ? GALLERY_CONSTS.viewMode.PRERENDER
         : GALLERY_CONSTS.viewMode.SITE;
+    
+    console.log('[LAYOUT FIXER] render', viewMode, knownContainer, this.isSSR());
+    
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
@@ -107,13 +114,6 @@ export default class Gallery extends React.PureComponent {
       // console.log({eventName, eventData});
     };
 
-    typeof window !== 'undefined' &&
-      console.log('[SSR SIMULATOR] Rendering Gallery with params', {
-        items,
-        styles,
-        container
-      });
-
     return (
       <div className={containerClassName}>
         <ProGallery
@@ -121,6 +121,7 @@ export default class Gallery extends React.PureComponent {
           items={items}
           styles={styles}
           useBlueprints={!!urlParams.useBlueprints}
+          useLayoutFixer={!!urlParams.useLayoutFixer}
           container={container}
           viewMode={viewMode}
           eventsListener={eventsListener}

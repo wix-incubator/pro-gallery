@@ -182,6 +182,9 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Use Blueprints" labelAlign="left">
                 <Switch checked={!!gallerySettings.useBlueprints} onChange={e => setGallerySettings({ useBlueprints: e })} />
               </Form.Item>
+              <Form.Item label="Use Layout Fixer" labelAlign="left">
+                <Switch checked={!!gallerySettings.useLayoutFixer} onChange={e => setGallerySettings({ useLayoutFixer: e })} />
+              </Form.Item>
             </Form>
             <Form layout="vertical">
               <Form.Item label="View Mode">
@@ -203,7 +206,7 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&useLayoutFixer=${gallerySettings.useLayoutFixer}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>

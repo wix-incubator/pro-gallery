@@ -51,6 +51,7 @@ class ViewModeWrapper {
   }
 
   isPrerenderMode() {
+    console.log('[LAYOUT FIXER] isPrerenderMode', this._viewMode)
     return this._viewMode === VIEW_MODE.PRERENDER;
   }
 
