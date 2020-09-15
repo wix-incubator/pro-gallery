@@ -566,7 +566,8 @@ class ItemView extends GalleryComponent {
         : 'pointer'
     };
 
-    const layoutStyles = settings.avoidInlineStyles ? {} : {
+    const {avoidInlineStyles = true} = settings;
+    const layoutStyles = avoidInlineStyles ? {} : {
       top: offset.top,
       left: styleParams.isRTL ? 'auto' : offset.left,
       right: !styleParams.isRTL ? 'auto' : offset.left,

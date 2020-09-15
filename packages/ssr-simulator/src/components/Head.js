@@ -24,10 +24,10 @@ const Head = () => {
 
       <link
         rel="stylesheet"
-        href="https://static.parastorage.com/services/pro-gallery-santa-wrapper/1.507.0/viewer.css"
+        href="https://static.parastorage.com/services/pro-gallery-santa-wrapper/1.1254.0/viewer.css"
       />
 
-      <link rel="stylesheet" href="https://localhost:3200/viewer.css" />
+      {/* <link rel="stylesheet" href="https://localhost:3200/viewer.css" /> */}
     </Helmet>
   );
 };
