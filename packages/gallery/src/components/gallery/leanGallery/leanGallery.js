@@ -37,10 +37,10 @@ export default class LeanGallery extends React.Component {
 
   // #region Gallery
   createGalleryStyle() {
-    const { gridStyle, numberOfImagesPerRow, imageMargin, cubeImages } = this.props.styles;
+    const { gridStyle, fixedColumns, imageMargin, cubeImages } = this.props.styles;
 
     const itemSize = this.calcItemContainerSize();
-    const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? numberOfImagesPerRow : this.state.numberOfColumns;
+    const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? fixedColumns : this.state.numberOfColumns;
     const gridTemplateColumns = numberOfColumns > 0 ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize.width}px, 1fr))`;
 
     return {
@@ -61,7 +61,7 @@ export default class LeanGallery extends React.Component {
       return 0;
     }
 
-    const itemSize = this.calcItemContainerSize();
+    const itemSize = this.calcItemContainerSize(undefined, props);
     let numOfCols = 1;
     if (props.styles.fixedColumns > 0) {
       numOfCols = props.styles.fixedColumns;
@@ -82,13 +82,12 @@ export default class LeanGallery extends React.Component {
   // #endregion
 
   // #region Item container
-  calcItemContainerSize(item) {
-    const { styles, container } = this.props;
+  calcItemContainerSize(item, props) {
+    const { styles, container } = props || this.props;
     const { targetItemSize, cubeImages, titlePlacement, textBoxHeight, cubeRatio, imageMargin } = styles;
 
     const itemWidth = container.width > 0 ? Math.min(targetItemSize, container.width) : targetItemSize;
     let itemHeight = itemWidth / cubeRatio;
-
 
     if (item && cubeImages === false) {
       const ratio = get(item, 'width') / get(item, 'height');
@@ -139,7 +138,6 @@ export default class LeanGallery extends React.Component {
       };
     }
   }
-
   // #endregion
 
   // #region Image wrapper
@@ -365,5 +363,6 @@ const get = (item, attr) => {
 }
 
 export const formatLeanGalleryStyles = (styles) => {
-	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+  const customExternalInfoRendererExists = true;
+	return processLayouts(addPresetStyles(styles), customExternalInfoRendererExists); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };

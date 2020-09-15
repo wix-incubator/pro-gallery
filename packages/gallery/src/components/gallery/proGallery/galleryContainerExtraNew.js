@@ -185,11 +185,15 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  isVerticalGallery() {
+    return !this.state.styles.oneRow
+  }
+
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if (isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
+    if (isSEOMode() || isEditMode() || isPreviewMode() || utils.isSSR() || gotFirstScrollEvent || scrollY > 0 || this.props.currentIdx > 0) {
       return items;
     }
     let visibleItems = items;
@@ -211,6 +215,7 @@ export class GalleryContainer extends React.Component {
         visibleItems = items.slice(1);
       }
     } catch (e) {
+      console.error('Could not calculate visible items, returning original items', e);
       visibleItems = items;
     }
     return visibleItems;
