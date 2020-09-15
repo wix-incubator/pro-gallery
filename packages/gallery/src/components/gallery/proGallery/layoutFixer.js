@@ -99,7 +99,13 @@ const createLayoutFixer = () => {
 }
 
 if (typeof window !== 'undefined') {
-    window.requestAnimationFrame(createLayoutFixer);
+    window.requestAnimationFrame(() => {
+        try {
+            createLayoutFixer() 
+        } catch (e) {
+            console.error('Cannot create layout fixer', e);
+        }
+    });
 }
 
 export const LayoutFixer = (props) => {
@@ -110,5 +116,4 @@ export const LayoutFixer = (props) => {
             items={JSON.stringify(props.items)}
             styles={JSON.stringify(props.styles)}
         ></layout-fixer>
-    ) : null;
-}
+    ) : null;}
