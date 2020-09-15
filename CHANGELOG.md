@@ -1,3 +1,9 @@
+## [v2.1.28](https://pro-gallery-2-1-28.surge.sh) (15/09/2020)
+ 
+#### GALLERY
+ -  leanGallery: use processLayouts
+
+---
 ## [v2.1.27](https://pro-gallery-2-1-27.surge.sh) (15/09/2020)
  
 #### GALLERY + LIB
