@@ -35,7 +35,6 @@ export default class BaseGallery extends React.Component {
     let GalleryComponent = ProGallery;
 
     if (isEligibleForLeanGallery(galleryProps)) {
-      galleryProps.styles = formatLeanGalleryStyles(galleryProps.styles);
       GalleryComponent = LeanGallery;
     }
 

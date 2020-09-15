@@ -363,5 +363,6 @@ const get = (item, attr) => {
 }
 
 export const formatLeanGalleryStyles = (styles) => {
-	return processLayouts(addPresetStyles(styles), true); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+  const customExternalInfoRendererExists = true;
+	return processLayouts(addPresetStyles(styles), customExternalInfoRendererExists); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };
