@@ -1,3 +1,9 @@
+## [v2.1.27](https://pro-gallery-2-1-27.surge.sh) (15/09/2020)
+ 
+#### GALLERY + LIB
+ -  use visibale items only for prerender mode.
+
+---
 ## [v2.1.26](https://pro-gallery-2-1-26.surge.sh) (14/09/2020)
  
 #### MAIN
