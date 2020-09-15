@@ -1,3 +1,9 @@
+## [v2.1.29](https://pro-gallery-2-1-29.surge.sh) (15/09/2020)
+ 
+#### GALLERY
+ -  add a layoutFixer for prerenderedMode
+
+---
 ## [v2.1.28](https://pro-gallery-2-1-28.surge.sh) (15/09/2020)
  
 #### GALLERY
