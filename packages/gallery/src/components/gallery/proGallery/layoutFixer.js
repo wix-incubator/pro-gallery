@@ -43,7 +43,7 @@ const createLayoutFixer = () => {
         return;
     }
     window.layoutFixerCreated = true;
-    console.log('[LAYOUT FIXER] createLayoutFixer');
+    //console.log('[LAYOUT FIXER] createLayoutFixer');
     class LayoutFixerElement extends HTMLElement {
         connectedCallback() {
             console.log('[LAYOUT FIXER] connectedCallback');
@@ -93,7 +93,7 @@ const createLayoutFixer = () => {
             }
         }
     }
-    console.log('[LAYOUT FIXER] customElements.define', window, window.customElements);
+    //console.log('[LAYOUT FIXER] customElements.define', window, window.customElements);
     window.customElements.define('layout-fixer', LayoutFixerElement);
 
 }
