@@ -592,7 +592,7 @@ class ItemView extends GalleryComponent {
       transition: 'none'
     };
 
-    const itemContainerStyles = { ...transitionStyles, ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...slideAnimationStyles};
+    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...slideAnimationStyles};
 
     return itemContainerStyles;
   }

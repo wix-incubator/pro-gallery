@@ -216,8 +216,10 @@ class SlideshowView extends GalleryComponent {
           },
         );
 
-        this.props.getMoreItemsIfNeeded(this.props.galleryStructure.galleryItems[nextItem].offset.left)
-        this.props.setGotFirstScrollIfNeeded();
+        if (ignoreScrollPosition) {
+          this.props.getMoreItemsIfNeeded(this.props.galleryStructure.galleryItems[nextItem].offset.left)
+          this.props.setGotFirstScrollIfNeeded();
+        }
 
       });
     } catch (e) {
