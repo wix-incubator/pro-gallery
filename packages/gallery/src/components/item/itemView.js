@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isPreviewMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -575,7 +575,7 @@ class ItemView extends GalleryComponent {
       height: style.height + style.infoHeight,
     };
 
-    const transitionStyles = (this.state.loaded && isEditMode()) ? {
+    const transitionStyles = (this.state.loaded && (isEditMode() || isPreviewMode())) ? {
       transition: 'all .4s ease',
       transitionProperty: 'top, left, width, height'
     } : {
