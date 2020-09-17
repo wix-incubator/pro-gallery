@@ -212,7 +212,7 @@ export class GalleryContainer extends React.Component {
       }
       if(visibleItems.length < 2 && visibleItems.length < items.length) {
         //dont render less then 2 items (otherwise slide show Arrow will be removed)
-        visibleItems = items.slice(1);
+        visibleItems = items.slice(0, 2);
       }
     } catch (e) {
       console.error('Could not calculate visible items, returning original items', e);
