@@ -576,7 +576,6 @@ class ItemView extends GalleryComponent {
       height: style.height + style.infoHeight,
     };
 
-    console.log('[SLIDESHOW FADE]', {currentIdx})
     const slideAnimationStyles = slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ? {
       left: isRTL ? 'auto' : 0,
       right: !isRTL ? 'auto' : 0,
