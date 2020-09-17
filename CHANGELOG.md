@@ -1,3 +1,9 @@
+## [v2.1.30](https://pro-gallery-2-1-30.surge.sh) (17/09/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainer):  item slice
+
+---
 ## [v2.1.29](https://pro-gallery-2-1-29.surge.sh) (15/09/2020)
  
 #### GALLERY
