@@ -40,7 +40,7 @@ class Blueprints {
         // if its an infinite gallery - let the container loose
         const isInfinite = !existingBlueprint.styles.oneRow && existingBlueprint.styles.enableInfiniteScroll
         if (isInfinite) {
-          existingBlueprint.container.height = structure.height;
+          existingBlueprint.container.height = existingBlueprint.container.galleryHeight = structure.height;
         }
       }
     } catch(error) {

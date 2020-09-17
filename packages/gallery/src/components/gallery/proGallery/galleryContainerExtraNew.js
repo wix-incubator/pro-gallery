@@ -7,6 +7,7 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper'
+import {LayoutFixer} from './layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -184,11 +185,15 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  isVerticalGallery() {
+    return !this.state.styles.oneRow
+  }
+
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if (isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
+    if (isSEOMode() || isEditMode() || isPreviewMode() || utils.isSSR() || gotFirstScrollEvent || scrollY > 0 || this.props.currentIdx > 0) {
       return items;
     }
     let visibleItems = items;
@@ -207,9 +212,10 @@ export class GalleryContainer extends React.Component {
       }
       if(visibleItems.length < 2 && visibleItems.length < items.length) {
         //dont render less then 2 items (otherwise slide show Arrow will be removed)
-        visibleItems = items.slice(1);
+        visibleItems = items.slice(0, 2);
       }
     } catch (e) {
+      console.error('Could not calculate visible items, returning original items', e);
       visibleItems = items;
     }
     return visibleItems;
@@ -606,6 +612,11 @@ export class GalleryContainer extends React.Component {
           {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
+        {this.props.useLayoutFixer ? <LayoutFixer
+          parentId={`pro-gallery-inner-container-${this.props.domId}`}
+          styles={this.state.styles}
+          items={this.items}
+        /> : null }
       </div>
     );
   }

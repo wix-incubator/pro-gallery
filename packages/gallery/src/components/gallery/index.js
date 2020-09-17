@@ -3,7 +3,7 @@ import { defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-li
 import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
-import LeanGallery from './leanGallery/leanGallery';
+import LeanGallery, { formatLeanGalleryStyles } from './leanGallery/leanGallery';
 
 export default class BaseGallery extends React.Component {
 
@@ -36,6 +36,7 @@ export default class BaseGallery extends React.Component {
     let GalleryComponent = ProGallery;
 
     if (shouldRenderLean) {
+      galleryProps.styles = formatLeanGalleryStyles(galleryProps.styles);
       GalleryComponent = LeanGallery;
     }
 

@@ -1,3 +1,27 @@
+## [v2.1.30](https://pro-gallery-2-1-30.surge.sh) (17/09/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainer):  item slice
+
+---
+## [v2.1.29](https://pro-gallery-2-1-29.surge.sh) (15/09/2020)
+ 
+#### GALLERY
+ -  add a layoutFixer for prerenderedMode
+
+---
+## [v2.1.28](https://pro-gallery-2-1-28.surge.sh) (15/09/2020)
+ 
+#### GALLERY
+ -  leanGallery: use processLayouts
+
+---
+## [v2.1.27](https://pro-gallery-2-1-27.surge.sh) (15/09/2020)
+ 
+#### GALLERY + LIB
+ -  use visibale items only for prerender mode.
+
+---
 ## [v2.1.26](https://pro-gallery-2-1-26.surge.sh) (14/09/2020)
  
 #### MAIN

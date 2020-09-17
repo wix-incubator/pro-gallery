@@ -9,7 +9,8 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import checkNewGalleryProps from '../../helpers/isNew';
-import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js'
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js';
+import {LayoutFixer} from './layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -96,7 +97,7 @@ export class GalleryContainer extends React.Component {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0 || this.props.currentIdx > 0) {
+    if(isSEOMode() || isEditMode() || isPreviewMode() || utils.isSSR() || gotFirstScrollEvent || scrollY > 0 || this.props.currentIdx > 0) {
       return items;
     }
     let visibleItems = items;
@@ -118,6 +119,7 @@ export class GalleryContainer extends React.Component {
         visibleItems = items.slice(0,2);
       }
     } catch (e) {
+      console.error('Could not calculate visible items, returning original items', e);
       visibleItems = items;
     }
     return visibleItems;
@@ -914,6 +916,7 @@ export class GalleryContainer extends React.Component {
       <div
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
+        id={`pro-gallery-inner-container-${this.props.domId}`}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -938,9 +941,7 @@ export class GalleryContainer extends React.Component {
           styleParams={this.state.styles}
           container={this.state.container}
           watermark={this.props.watermark}
-          settings={{avoidInlineStyles: true, ...this.props.settings}}
-          gotScrollEvent={true}
-          scroll={{}} //todo: remove after refactor is 100%
+          settings={this.props.settings}
           displayShowMore={displayShowMore}
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}
@@ -974,6 +975,11 @@ export class GalleryContainer extends React.Component {
           {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
+        {this.props.useLayoutFixer ? <LayoutFixer
+          parentId={`pro-gallery-inner-container-${this.props.domId}`}
+          styles={this.state.styles}
+          items={this.items}
+        /> : null }
       </div>
     );
   }

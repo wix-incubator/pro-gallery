@@ -257,6 +257,7 @@ export function App() {
           totalItemsCount={getTotalItemsCount()}
           resizeMediaUrl={resizeMediaUrl}
           useBlueprints={gallerySettings.useBlueprints} //Todo - use it react way
+          useLayoutFixer={gallerySettings.useLayoutFixer} //Todo - use it react way
           {...getExternalInfoRenderers()}
           {...blueprintProps}
         />}
