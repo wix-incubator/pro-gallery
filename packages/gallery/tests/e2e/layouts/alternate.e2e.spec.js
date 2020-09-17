@@ -17,7 +17,7 @@ describe('alternate - e2e', () => {
   });
   it('alternate layout - scrollDirection = vertical', async () => {
     await driver.openPage({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      galleryLayout: GALLERY_CONSTS.layout.ALTERNATE,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL
     });
     await driver.waitFor.hookToBeVisible('item-container');
