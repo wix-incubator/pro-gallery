@@ -14,7 +14,7 @@ class DiffsReporter {
     this._options = options;
   }
   onRunComplete(contexts, results) {
-    const { CI, TRAVIS_BRANCH, TRAVIS_COMMIT } = process.env;
+    const { CI, TRAVIS_BRANCH, TRAVIS_COMMIT_MESSAGE } = process.env;
     if (!CI) {
       console.log('Not in CI, skipping generating and publishing test report');
       return;
@@ -23,7 +23,7 @@ class DiffsReporter {
       try {
         jestStareProcessor(results, {
           reportTitle: TRAVIS_BRANCH,
-          reportHeadline: TRAVIS_COMMIT,
+          reportHeadline: TRAVIS_COMMIT_MESSAGE,
           hidePassing: true
         });
         const reportPath = path.resolve(process.cwd(), 'jest-stare');
