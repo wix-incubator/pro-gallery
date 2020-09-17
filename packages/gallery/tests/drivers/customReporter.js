@@ -14,14 +14,18 @@ class DiffsReporter {
     this._options = options;
   }
   onRunComplete(contexts, results) {
-    const { CI, TRAVIS_BRANCH } = process.env;
+    const { CI, TRAVIS_BRANCH, TRAVIS_COMMIT } = process.env;
     if (!CI) {
       console.log('Not in CI, skipping generating and publishing test report');
       return;
     }
     if (results.numFailedTests && results.snapshot.unmatched) {
       try {
-        jestStareProcessor(results);
+        jestStareProcessor(results, {
+          reportTitle: TRAVIS_BRANCH,
+          reportHeadline: TRAVIS_COMMIT,
+          hidePassing: true
+        });
         const reportPath = path.resolve(process.cwd(), 'jest-stare');
         const domain = `${formatBranchName(TRAVIS_BRANCH)}.pro-gallery-report.surge.sh/`;
         console.log(`Publishing test report to ${domain}`);
