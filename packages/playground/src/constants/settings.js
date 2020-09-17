@@ -141,6 +141,7 @@ export const stylesBySection = {
         'imageLoadingColor',
         'imagePlacementAnimation',
         'scrollAnimation',
+        'slideAnimation',
         'oneColorAnimationColor',
     ],
     [SECTIONS.IMAGE]: [

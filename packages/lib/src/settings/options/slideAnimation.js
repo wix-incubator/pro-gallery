@@ -1,0 +1,12 @@
+import { INPUT_TYPES } from '../utils/constants';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import { createOptions } from '../utils/utils';
+
+export default {
+  title: 'Slide Animation',
+  isRelevant: (styleParams) => true,//styleParams.oneRow && styleParams.groupSize === 1,
+  type: INPUT_TYPES.OPTIONS,
+  default: GALLERY_CONSTS.slideAnimations.SCROLL,
+  options: createOptions('slideAnimations'),
+  description: `Choose the slide animation effect to be used when navigating between items in a slideshow`,
+}
