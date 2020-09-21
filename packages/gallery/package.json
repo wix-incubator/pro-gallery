@@ -55,6 +55,7 @@
     "file-loader": "^4.1.0",
     "husky": "^0.13.4",
     "jest-image-snapshot": "^2.11.1",
+    "jest-stare": "^2.2.0",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "match-screenshot": "^1.0.14",
@@ -107,6 +108,10 @@
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
+    "reporters": [
+      "default",
+      "<rootDir>/tests/drivers/customReporter.js"
+    ],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/dist"
