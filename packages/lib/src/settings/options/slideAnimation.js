@@ -4,7 +4,7 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Slide Animation',
-  isRelevant: (styleParams) => true,//styleParams.oneRow && styleParams.groupSize === 1,
+  isRelevant: (styleParams) => styleParams.oneRow && styleParams.groupSize === 1,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.slideAnimations.SCROLL,
   options: createOptions('slideAnimations'),
