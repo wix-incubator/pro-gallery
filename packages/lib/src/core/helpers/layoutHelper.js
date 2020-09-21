@@ -120,7 +120,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
   }
 
-  if (!processedStyles.oneRow || processedStyles.groupSize > 1) {
+  if (!processedStyles.oneRow || processedStyles.groupSize > 1 || !processedStyles.cubeImages) {
     processedStyles.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
   }
 
