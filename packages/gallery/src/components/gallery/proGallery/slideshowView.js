@@ -48,7 +48,7 @@ class SlideshowView extends GalleryComponent {
 
     const {items, totalItemsCount}  = this.props;
 
-    if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE && this.props.styleParams.groupSize === 1) {
+    if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
       return false;
     }
 
@@ -124,7 +124,7 @@ class SlideshowView extends GalleryComponent {
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
     let ignoreScrollPosition = false;
 
-    if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE && this.props.styleParams.groupSize === 1) {
+    if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
       scrollDuration = 0;
       ignoreScrollPosition = true;
     }
