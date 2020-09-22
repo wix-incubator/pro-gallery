@@ -1,6 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../../galleryComponent';
+import ReactPlayer from 'react-player/lazy'
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -24,13 +25,6 @@ class VideoItem extends GalleryComponent {
   }
 
   dynamiclyImportVideoPlayers() {
-    if (!(window && window.ReactPlayer)) {
-      import( /* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
-        window.ReactPlayer = ReactPlayer.default;
-        this.setState({ reactPlayerLoaded: true });
-        this.playVideoIfNeeded();
-      });
-    }
     if (
       //Vimeo player must be loaded by us, problem with requireJS
       !(window && window.Vimeo) &&
@@ -114,10 +108,6 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
-    if (!(window && window.ReactPlayer)) {
-      return null;
-    }
-    const PlayerElement = window.ReactPlayer;
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
 
     const videoDimensionsCss = {
@@ -147,7 +137,7 @@ class VideoItem extends GalleryComponent {
       this.props.videoUrl :
       this.props.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.VIDEO);
     return (
-      <PlayerElement
+      <ReactPlayer
         className={'gallery-item-visible video gallery-item'}
         id={`video-${this.props.id}`}
         width="100%"
