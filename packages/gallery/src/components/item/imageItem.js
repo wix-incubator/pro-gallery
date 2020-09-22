@@ -192,3 +192,4 @@ export default class ImageItem extends GalleryComponent {
     return renderedItem;
   }
 }
+
