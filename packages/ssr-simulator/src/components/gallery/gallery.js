@@ -34,7 +34,6 @@ export default class Gallery extends React.PureComponent {
       };
     }
 
-    console.log('[LAYOUT FIXER] getContainerFromUrl', container);
     return container;
   }
 
@@ -57,7 +56,6 @@ export default class Gallery extends React.PureComponent {
     let shouldUpdateContainer = true;
     const { urlParams: { containerWidth, containerHeight } = {} } = this.props;
     const containerWithWindowDimensions = this.getContainerFromWindowDimensions();
-    console.log('[LAYOUT FIXER] containerWithWindowDimensions', containerWithWindowDimensions);
 
     if (containerWidth !== undefined && containerHeight !== undefined) {
       if (
@@ -68,7 +66,6 @@ export default class Gallery extends React.PureComponent {
       }
     }
 
-    console.log('[LAYOUT FIXER] shouldUpdateContainerOnMount', shouldUpdateContainer);
     return shouldUpdateContainer;
   };
 
@@ -82,7 +79,6 @@ export default class Gallery extends React.PureComponent {
     if (this.shouldUpdateContainerOnMount()) {
       newState.container = this.getContainerFromWindowDimensions();
     }
-    console.log('[LAYOUT FIXER] ssr gallery componentDidMount', newState);
 
     this.setState(newState);
     window.addEventListener('resize', this.handleResize);
@@ -100,7 +96,7 @@ export default class Gallery extends React.PureComponent {
         ? GALLERY_CONSTS.viewMode.PRERENDER
         : GALLERY_CONSTS.viewMode.SITE;
     
-    console.log('[LAYOUT FIXER] render', viewMode, knownContainer, this.isSSR());
+    console.log('[LAYOUT FIXER] render', {viewMode, knownContainer, SSR: this.isSSR()});
     
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';

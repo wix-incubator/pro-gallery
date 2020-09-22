@@ -89,7 +89,8 @@
   },
   "yoshi": {
     "entry": {
-      "main": "./index"
+      "main": "./index",
+      "layoutFixer": "./common/utils/layoutFixer"
     },
     "servers": {
       "cdn": {
