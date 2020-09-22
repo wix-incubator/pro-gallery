@@ -43,20 +43,19 @@ const createLayoutFixer = () => {
         return;
     }
     window.layoutFixerCreated = true;
-    //console.log('[LAYOUT FIXER] createLayoutFixer');
     class LayoutFixerElement extends HTMLElement {
         connectedCallback() {
-            console.log('[LAYOUT FIXER] connectedCallback');
+            // console.log('[LAYOUT FIXER] connectedCallback');
             this.parentId = this.getAttribute('parentid');
             this.parent = this.parentNode;// && document.getElementById(this.parentId)
-            console.log('[LAYOUT FIXER] parent', this.parent);
+            // console.log('[LAYOUT FIXER] parent', this.parent);
 
             this.useLayouter = true
             this.items = JSON.parse(this.getAttribute('items'))
             if (!(this.items && this.items.length > 0)) {
                 this.useLayouter = false
             }
-            console.log('[LAYOUT FIXER] items', this.items.map(item => item.mediaUrl));
+            // console.log('[LAYOUT FIXER] items', this.items.map(item => item.mediaUrl));
 
             this.styleParams = JSON.parse(this.getAttribute('styles'))
             if (!(this.styleParams && typeof this.styleParams === 'object')) {
@@ -70,11 +69,11 @@ const createLayoutFixer = () => {
                     styleParams: this.styleParams,
                     container: this.measures
                 })
-                console.log('[LAYOUT FIXER] layout', this.layout);
+                // console.log('[LAYOUT FIXER] layout', this.layout);
             }
 
             if (typeof this.measures === 'object') {
-                console.log('[LAYOUT FIXER] measures', this.measures);
+                // console.log('[LAYOUT FIXER] measures', this.measures);
                 setAttributes(this.parent, {
                     'data-top': this.measures.top,
                     'data-width': this.measures.width,
@@ -84,7 +83,7 @@ const createLayoutFixer = () => {
 
             if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
                 this.parent.querySelectorAll('.gallery-item-container').forEach((element, idx) => {
-                    console.log('[LAYOUT FIXER] setStyle', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                    // console.log('[LAYOUT FIXER] setStyle', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                     setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
                 })
                 this.parent.querySelectorAll('.gallery-item-wrapper').forEach((element, idx) => {
@@ -93,23 +92,21 @@ const createLayoutFixer = () => {
             }
         }
     }
-    //console.log('[LAYOUT FIXER] customElements.define', window, window.customElements);
+    // console.log('[LAYOUT FIXER] customElements.define', window, window.customElements);
     window.customElements.define('layout-fixer', LayoutFixerElement);
 
 }
 
 if (typeof window !== 'undefined') {
-    window.requestAnimationFrame(() => {
-        try {
-            createLayoutFixer() 
-        } catch (e) {
-            console.error('Cannot create layout fixer', e);
-        }
-    });
+    try {
+        createLayoutFixer() 
+    } catch (e) {
+        console.error('Cannot create layout fixer', e);
+    }
 }
 
 export const LayoutFixer = (props) => {
-    console.log('[LAYOUT FIXER] rendering', isPrerenderMode(), props);
+    // console.log('[LAYOUT FIXER] rendering', isPrerenderMode(), props);
     return (isPrerenderMode()) ? (
         <layout-fixer 
             parentId={props.parentId}
