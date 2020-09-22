@@ -1,3 +1,11 @@
+## [v2.1.31](https://pro-gallery-2-1-31.surge.sh) (22/09/2020)
+ 
+#### GALLERY
+ -  Added 'resizeMediaUrl' func to debouncedReCreateGallery (fix broken images in albums upload)
+ -  tests: added a custom tests reporter
+ -  improve (itemView): use item transitions in preview mode
+
+---
 ## [v2.1.30](https://pro-gallery-2-1-30.surge.sh) (17/09/2020)
  
 #### GALLERY
