@@ -39,6 +39,7 @@ import placements, {
 } from './placements';
 import resizeMethods from './resizeMethods';
 import scrollAnimations from './scrollAnimations';
+import slideAnimations from './slideAnimations';
 import scrollDirection from './scrollDirection';
 import socialNetworks from './socialNetworks';
 import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
@@ -90,6 +91,7 @@ export default {
   isHorizontalPlacement,
   resizeMethods,
   scrollAnimations,
+  slideAnimations,
   scrollDirection,
   socialNetworks,
   textBoxWidthCalculationOptions,

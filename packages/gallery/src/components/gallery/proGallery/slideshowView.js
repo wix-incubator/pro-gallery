@@ -48,6 +48,10 @@ class SlideshowView extends GalleryComponent {
 
     const {items, totalItemsCount}  = this.props;
 
+    if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
+      return false;
+    }
+
     if (this.container) {
       const {scrollLeft, scrollWidth, clientWidth} = this.container;
       if (isRTL) {
@@ -118,6 +122,12 @@ class SlideshowView extends GalleryComponent {
     const activeElement = document.activeElement;
     const galleryItemIsFocused = activeElement.className && activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
+    let ignoreScrollPosition = false;
+
+    if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
+      scrollDuration = 0;
+      ignoreScrollPosition = true;
+    }
 
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
       this.nextGroup({direction, isAutoTrigger, scrollDuration}); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
@@ -125,12 +135,12 @@ class SlideshowView extends GalleryComponent {
       if(avoidIndividualNavigation && this.props.styleParams.isGrid && this.props.styleParams.numberOfImagesPerCol) {
         direction *= this.props.styleParams.numberOfImagesPerCol;
       }
-      this.nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation});
+      this.nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation, ignoreScrollPosition});
     }
     this.removeArrowsIfNeeded();
   }
 
-  nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation}) {
+  nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation, ignoreScrollPosition}) {
     if (this.isSliding) {
       return;
     }
@@ -138,18 +148,22 @@ class SlideshowView extends GalleryComponent {
 
     direction *= (this.props.styleParams.isRTL ? -1 : 1);
     let currentIdx;
-    if(avoidIndividualNavigation && !(this.props.styleParams.groupSize > 1)) {
-      currentIdx = this.getCenteredItemIdxByScroll();
+    if (ignoreScrollPosition) {
+      currentIdx = this.state.currentIdx;
     } else {
-      currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
+      if (avoidIndividualNavigation && !(this.props.styleParams.groupSize > 1)) {
+        currentIdx = this.getCenteredItemIdxByScroll();
+      } else {
+        currentIdx = isAutoTrigger ? this.setCurrentItemByScroll() : this.state.currentIdx;
+      }
     }
 
     let nextItem = currentIdx + direction;
     if (!this.props.styleParams.slideshowLoop){
       nextItem = Math.min(this.props.galleryStructure.items.length - 1, nextItem);
       nextItem = Math.max(0, nextItem);
-
     }
+
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
 
@@ -176,7 +190,8 @@ class SlideshowView extends GalleryComponent {
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
-      const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(nextItem, false, true, scrollDuration, scrollMarginCorrection);
+      const itemToScroll = ignoreScrollPosition ? 0 : nextItem
+      const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(itemToScroll, false, true, scrollDuration, scrollMarginCorrection);
       
       scrollToItemPromise.then(() => {
         if (this.props.styleParams.groupSize === 1) {
@@ -200,6 +215,12 @@ class SlideshowView extends GalleryComponent {
             this.isSliding = false;
           },
         );
+
+        if (ignoreScrollPosition) {
+          this.props.getMoreItemsIfNeeded(this.props.galleryStructure.galleryItems[nextItem].offset.left)
+          this.props.setGotFirstScrollIfNeeded();
+        }
+
       });
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
@@ -1180,6 +1201,7 @@ class SlideshowView extends GalleryComponent {
     }
     if (this.state.currentIdx > 0) {
       this.props.actions.scrollToItem(this.state.currentIdx);
+      this.onCurrentItemChanged();
     } else {
       this.setCurrentItemByScroll();
     }
