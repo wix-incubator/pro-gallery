@@ -7,6 +7,7 @@ import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
+import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
@@ -117,6 +118,10 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
   } else {
     processedStyles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
+  }
+
+  if (!processedStyles.oneRow || processedStyles.groupSize > 1 || !processedStyles.cubeImages) {
+    processedStyles.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
   }
 
   if (processedStyles.imageMargin > 0) {

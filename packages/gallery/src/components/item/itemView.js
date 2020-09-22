@@ -550,7 +550,8 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { offset, style, styleParams, settings = {} } = this.props;
+    const { idx, currentIdx, offset, style, styleParams, settings = {} } = this.props;
+    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } = styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -559,9 +560,9 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
-      cursor: styleParams.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-      (styleParams.itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
+      margin: oneRow ? imageMargin + 'px' : 0,
+      cursor: itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
+      (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
         ? 'default'
         : 'pointer'
     };
@@ -569,20 +570,29 @@ class ItemView extends GalleryComponent {
     const {avoidInlineStyles = true} = settings;
     const layoutStyles = avoidInlineStyles ? {} : {
       top: offset.top,
-      left: styleParams.isRTL ? 'auto' : offset.left,
-      right: !styleParams.isRTL ? 'auto' : offset.left,
+      left: isRTL ? 'auto' : offset.left,
+      right: !isRTL ? 'auto' : offset.left,
       width: style.width + style.infoWidth,
       height: style.height + style.infoHeight,
     };
 
+    const slideAnimationStyles = slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ? {
+      left: isRTL ? 'auto' : 0,
+      right: !isRTL ? 'auto' : 0,
+      opacity: currentIdx === idx ? 1 : 0,
+      pointerEvents: currentIdx === idx ? 'auto' : 'none',
+      transition: currentIdx === idx ? 'none' : 'opacity .8s ease',
+      zIndex: currentIdx === idx ? 0 : 1
+    } : {}
+
     const transitionStyles = (this.state.loaded && (isEditMode() || isPreviewMode())) ? {
       transition: 'all .4s ease',
-      transitionProperty: 'top, left, width, height'
+      transitionProperty: 'top, left, width, height, opacity'
     } : {
       transition: 'none'
     };
 
-    const itemContainerStyles = { ...transitionStyles, ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams};
+    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...slideAnimationStyles};
 
     return itemContainerStyles;
   }

@@ -14,7 +14,7 @@ const styles = {
         left: 0, 
         width: '100vw', 
         height: '100vh',
-        zIndex: 9,
+        zIndex: 9999,
         background: 'white',
         opacity: 0,
         transition: 'opacity 2s ease',
@@ -93,6 +93,7 @@ export default class ExpandableProGallery extends React.Component {
                             ...(this.props.options || this.props.styles),
                             galleryLayout: 5,
                             slideshowInfoSize: 80,
+                            slideAnimation: utils.isMobile() ? 'SCROLL' : 'FADE',
                             cubeType:'fit',
                             scrollSnap: true,
                             showArrows: !utils.isMobile()

@@ -935,6 +935,8 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
+          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+          setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           items={this.items}
           getVisibleItems={this.getVisibleItems}
           itemsLoveData={this.props.itemsLoveData}
