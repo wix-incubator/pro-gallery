@@ -1,3 +1,9 @@
+## [v2.1.34](https://pro-gallery-2-1-34.surge.sh) (23/09/2020)
+ 
+#### GALLERY
+ -  upgrade react-player to ^2.6.0
+
+---
 ## [v2.1.33](https://pro-gallery-2-1-33.surge.sh) (23/09/2020)
  
 #### LIB
