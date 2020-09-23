@@ -8,7 +8,7 @@ export const LayoutFixer = (props) => {
     return (isPrerenderMode) ? (
         <>
             <script dangerouslySetInnerHTML={{__html: `console.log("${logString}")`}}></script>
-            <script src={props.baseUrl + "/layoutFixer.bundle.min.js"}></script>
+            <script src={props.layoutFixerBundleUrl}></script>
             <layout-fixer 
                 parentId={props.parentId}
                 items={JSON.stringify(props.items)}
