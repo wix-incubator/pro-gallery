@@ -18,10 +18,11 @@ export function scrollToItemImp(scrollParams) {
     fixedScroll,
   } = scrollParams;
 
+  console.log('[SLIDESHOW RTL] scrollToItemImp', scrollParams);
   //default = scroll by half the container size
   if (oneRow) {
     from = horizontalElement.scrollLeft;
-    if (isRTL) {
+    if (false) {
       to = from - (itemIdx * galleryWidth) / 2;
     } else {
       to = from + (itemIdx * galleryWidth) / 2;
@@ -41,9 +42,9 @@ export function scrollToItemImp(scrollParams) {
     const item = items.find(itm => itm.idx === itemIdx);
     to = oneRow ? utils.get(item, 'offset.left') : utils.get(item, 'offset.top');
 
-    if (item && isRTL) {
-      to += item.width;
-    }
+    // if (item && isRTL) {
+    //   to += item.width;
+    // }
 
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, item);
@@ -64,18 +65,18 @@ export function scrollToItemImp(scrollParams) {
           to -= diff;
         }
       }
-      if (isRTL) {
+      if (false) {
         to = totalWidth - to;
       }
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
+      console.log('[SLIDESHOW RTL] Scrolling to new position ' + to);
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
     }
   }
   if (oneRow) {
-
     return horizontalCssScrollTo(
       horizontalElement,
       Math.round(from),
@@ -233,6 +234,7 @@ function isWithinPaddingHorizontally({
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = to - from;
 
+  console.log('[SLIDESHOW RTL] horizontalCssScrollTo', change);
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');
@@ -243,7 +245,7 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
     transition: `margin ${duration}ms linear`,
     '-webkit-transition': `margin ${duration}ms linear`,
   }, isRTL ? {
-    marginRight: `${change}px`,
+    marginRight: `${-1 * change}px`,
   } : {
     marginLeft: `${-1 * change}px`,
   });
@@ -259,7 +261,8 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
         marginLeft: 0,
       });
       scroller.style.removeProperty('scroll-snap-type');
-      scroller.scrollLeft = to;
+      console.log('[SLIDESHOW RTL] scoliing to....', to);
+      scroller.scrollLeft = (isRTL ? -1 : 1) * to;
       scroller.setAttribute('data-scrolling', '');
       resolve(to);
     }, duration);

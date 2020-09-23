@@ -292,6 +292,9 @@ export class GalleryContainer extends React.Component {
   }
 
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0, scrollMarginCorrection) {
+
+    console.log('[SLIDESHOW RTL] scrollToItem', itemIdx);
+
     if (itemIdx >= 0) {
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
