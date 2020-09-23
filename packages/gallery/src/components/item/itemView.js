@@ -585,7 +585,7 @@ class ItemView extends GalleryComponent {
       zIndex: currentIdx === idx ? 0 : 1
     } : {}
 
-    const transitionStyles = (this.state.loaded && (isEditMode() || isPreviewMode())) ? {
+    const transitionStyles = (this.state.loaded && isEditMode()) ? {
       transition: 'all .4s ease',
       transitionProperty: 'top, left, width, height, opacity'
     } : {
