@@ -18,8 +18,6 @@ export function scrollToItemImp(scrollParams) {
     fixedScroll,
   } = scrollParams;
 
-  console.log('[SLIDESHOW RTL] scrollToItemImp', scrollParams);
-
   const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
   if (oneRow) {
@@ -58,7 +56,6 @@ export function scrollToItemImp(scrollParams) {
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
       to *= rtlFix;
       from *= rtlFix;
-      console.log('[SLIDESHOW RTL] Scrolling to new position ', from,  to);
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
@@ -222,7 +219,6 @@ function isWithinPaddingHorizontally({
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = (to - from);
 
-  console.log('[SLIDESHOW RTL] horizontalCssScrollTo', change);
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');
@@ -249,7 +245,6 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
         marginLeft: 0,
       });
       scroller.style.removeProperty('scroll-snap-type');
-      console.log('[SLIDESHOW RTL] scoliing to....', to);
       scroller.scrollLeft = to;
       scroller.setAttribute('data-scrolling', '');
       resolve(to);

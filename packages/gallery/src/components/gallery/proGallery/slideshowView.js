@@ -128,8 +128,6 @@ class SlideshowView extends GalleryComponent {
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
     let ignoreScrollPosition = false;
 
-    console.log('[SLIDESHOW RTL] next', direction);
-
     if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
       scrollDuration = 0;
       ignoreScrollPosition = true;
@@ -145,7 +143,6 @@ class SlideshowView extends GalleryComponent {
       this.nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation, ignoreScrollPosition});
     }
     this.removeArrowsIfNeeded();
-    console.log('[SLIDESHOW RTL] next done');
   }
 
   nextItem({direction, isAutoTrigger, scrollDuration, avoidIndividualNavigation, ignoreScrollPosition}) {
@@ -154,7 +151,6 @@ class SlideshowView extends GalleryComponent {
     }
     this.isSliding = true;
 
-    console.log('[SLIDESHOW RTL] nextItem', direction);
 
     let currentIdx;
     if (ignoreScrollPosition) {
@@ -167,7 +163,6 @@ class SlideshowView extends GalleryComponent {
       }
     }
 
-    console.log('[SLIDESHOW RTL] got currentIdx', currentIdx);
 
     let nextItem = currentIdx + direction;
     if (!this.props.styleParams.slideshowLoop){
@@ -175,7 +170,6 @@ class SlideshowView extends GalleryComponent {
       nextItem = Math.max(0, nextItem);
     }
 
-    console.log('[SLIDESHOW RTL] calc nextItem', nextItem);
 
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
@@ -297,7 +291,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   onCurrentItemChanged() {
-    console.log('[SLIDESHOW RTL] onCurrentItemChanged', this.state.currentIdx);
     if (this.lastCurrentItem !== this.state.currentIdx) {
       this.lastCurrentItem = this.state.currentIdx;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
@@ -662,10 +655,8 @@ class SlideshowView extends GalleryComponent {
 
     let centeredGroupIdx;
 
-    console.log('[SLIDESHOW RTL] getCenteredGroupIdxByScroll', scrollLeft);
     const scrollPos = scrollLeft + this.props.container.galleryWidth / 2;
     
-    console.log('[SLIDESHOW RTL] getCenteredGroupIdxByScroll calc', scrollPos);
     if (scrollPos === 0){
       centeredGroupIdx = 0;
     } else {
@@ -1182,7 +1173,6 @@ class SlideshowView extends GalleryComponent {
       const isScrollEnd = this.isScrollEnd();
       const isLastItem = this.isLastItem();
       
-      console.log('[SLIDESHOW RTL] removeArrowsIfNeeded', {isScrollStart,isFirstItem,isScrollEnd,isLastItem});
 
       const atStart = isScrollStart || isFirstItem;
       const atEnd = isScrollEnd || isLastItem;
