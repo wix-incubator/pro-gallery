@@ -46,7 +46,7 @@ class SlideshowView extends GalleryComponent {
 
   isScrollStart() {
 
-    const {slideAnimation, isRTL} = this.props.styleParams;
+    const {slideAnimation} = this.props.styleParams;
 
     if (slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
       return false;
@@ -62,15 +62,20 @@ class SlideshowView extends GalleryComponent {
   isScrollEnd() {
 
     const {items, totalItemsCount}  = this.props;
-    const {slideshowLoop, isRTL} = this.props.styleParams;
+    const {slideshowLoop, slideAnimation} = this.props.styleParams;
 
-    if (slideshowLoop) {
+    if (slideshowLoop || slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
       return false;
     }
 
     if (this.container) {
       const {scrollWidth, clientWidth} = this.container;
-      return (items.length >= totalItemsCount) && (this.getScrollLeft() + clientWidth >= scrollWidth - 1);
+      const scrollLeft = this.getScrollLeft();
+      const allItemsLoaded = (items.length >= totalItemsCount);
+      const visibleLeft = scrollLeft + clientWidth;
+      const visibleScroll = scrollWidth - 1;
+
+      return allItemsLoaded && (visibleLeft >= visibleScroll);
     } else {
       return false;
     }
