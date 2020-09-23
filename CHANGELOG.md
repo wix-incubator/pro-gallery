@@ -1,3 +1,11 @@
+## [v2.1.32](https://pro-gallery-2-1-32.surge.sh) (23/09/2020)
+ 
+#### GALLERY
+ -  fix (itemView): remove animations from preview mode
+ -  feature (slideshow): add support for fade animation is horizontal galleries
+ -  improve (layoutFixer): createLayoutFixer as soon as possible.
+
+---
 ## [v2.1.31](https://pro-gallery-2-1-31.surge.sh) (22/09/2020)
  
 #### GALLERY
