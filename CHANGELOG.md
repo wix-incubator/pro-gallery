@@ -1,3 +1,9 @@
+## [v2.1.33](https://pro-gallery-2-1-33.surge.sh) (23/09/2020)
+ 
+#### LIB
+ -  Add title and description as item changed params
+
+---
 ## [v2.1.32](https://pro-gallery-2-1-32.surge.sh) (23/09/2020)
  
 #### GALLERY
