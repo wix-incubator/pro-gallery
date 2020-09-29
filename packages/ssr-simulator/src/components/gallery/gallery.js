@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, ProGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, LayoutFixer } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
@@ -103,6 +103,7 @@ export default class Gallery extends React.PureComponent {
 
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
+    console.warn({styles});
 
     const items = testItems.slice(0,50);//utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
@@ -110,12 +111,23 @@ export default class Gallery extends React.PureComponent {
       // console.log({eventName, eventData});
     };
 
+    if (typeof nothing !== 'undefined') {
+      import ('./layoutFixer').then(console.warn);
+    }
+
     return (
       <div className={containerClassName}>
+        {!!urlParams.useLayoutFixer ? <LayoutFixer
+          layoutFixerBundleUrl="http://localhost:3001/0.chunk.js"
+          items={items}
+          styles={styles}
+          parentId={"pro-gallery-ssr-simulator"}
+        ></LayoutFixer> : null}
         <ProGallery
           domId="ssr-simulator"
           items={items}
           styles={styles}
+          settings={{avoidInlineStyles: !urlParams.useLayoutFixer}}
           useBlueprints={!!urlParams.useBlueprints}
           useLayoutFixer={!!urlParams.useLayoutFixer}
           container={container}

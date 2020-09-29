@@ -153,7 +153,6 @@ export function formatValue(val) {
 export function getStyleParamsFromUrl(searchString) {
   try {
     const styleParams = searchString
-      .replace('/', '')
       .replace('?', '')
       .split('&')
       .map(styleParam => styleParam.split('='))

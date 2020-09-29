@@ -570,12 +570,10 @@ export default class Layouter {
     try {
       const groupTypes =
         typeof this.styleParams.groupTypes === 'string' &&
-        this.styleParams.groupTypes.length > 0
+          this.styleParams.groupTypes.length > 0
           ? this.styleParams.groupTypes.split(',')
           : this.styleParams.groupTypes;
-      _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
-        return Math.max(curSize, parseInt(groupType));
-      }, 1);
+      _maxGroupSize = groupTypes.length > 1 ? groupTypes.reduce((curSize, groupType) => Math.max(curSize, parseInt(groupType)), 1) : Number(groupTypes);
       _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
     } catch (e) {
       console.error("couldn't calculate max group size - returing 3 (?)", e);

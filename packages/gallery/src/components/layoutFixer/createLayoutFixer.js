@@ -1,5 +1,22 @@
 
 import { createLayout } from 'pro-layouts';
+import { addPresetStyles } from 'pro-gallery-lib';
+import addLayoutStyles from '../helpers/layoutHelper';
+
+const convertDtoToLayoutItem = (dto) => {
+    const isLayoutItem = !!(dto.id && dto.width > 0 && dto.height > 0);
+    if (isLayoutItem) {
+        return dto;
+    } else {
+        const metadata = dto.metadata || dto.metaData;
+        return {
+        id: dto.itemId || dto.photoId,
+        width: metadata.width,
+        height: metadata.height,
+        ...dto,
+        };
+    }
+}
 
 const setAttributes = (node, attributes) =>
     node &&
@@ -43,41 +60,50 @@ const createLayoutFixer = () => {
         return;
     }
     window.layoutFixerCreated = true;
-    //console.log('[LAYOUT FIXER] createLayoutFixer');
+    console.log('[LAYOUT FIXER] createLayoutFixer');
     class LayoutFixerElement extends HTMLElement {
         connectedCallback() {
             if (this.setStylesDone) {
                 return;
             }
-            // console.log('[LAYOUT FIXER] connectedCallback');
+             console.log('[LAYOUT FIXER] connectedCallback');
             this.parentId = this.getAttribute('parentid');
-            this.parent = this.parentNode;// && document.getElementById(this.parentId)
-            // console.log('[LAYOUT FIXER] parent', this.parent);
+            this.parent = document.getElementById(this.parentId)
+             console.log('[LAYOUT FIXER] parent', this.parent);
 
             this.useLayouter = true
-            this.items = JSON.parse(this.getAttribute('items'))
+            this.items = JSON.parse(this.getAttribute('items')).map(convertDtoToLayoutItem);
             if (!(this.items && this.items.length > 0)) {
                 this.useLayouter = false
             }
-            // console.log('[LAYOUT FIXER] items', this.items.map(item => item.mediaUrl));
+             console.log('[LAYOUT FIXER] items', this.items.map(item => item.mediaUrl));
 
-            this.styleParams = JSON.parse(this.getAttribute('styles'))
+            this.styleParams = addLayoutStyles(addPresetStyles(JSON.parse(this.getAttribute('styles'))));
+            
             if (!(this.styleParams && typeof this.styleParams === 'object')) {
                 this.useLayouter = false
             }
 
-            this.measures = this.parent && this.parent.getBoundingClientRect()
+            const {width, height, top} = this.parent && this.parent.getBoundingClientRect();
+            this.measures = {
+                top,
+                width,
+                height,
+                galleryWidth: width,
+                galleryHeight: height,
+                scrollBase: top,
+            };
             if (this.measures && this.useLayouter && typeof createLayout === 'function') {
                 this.layout = createLayout({
                     items: this.items,
                     styleParams: this.styleParams,
                     container: this.measures
                 })
-                // console.log('[LAYOUT FIXER] layout', this.layout);
+                 console.log('[LAYOUT FIXER] layout', this.layout);
             }
 
             if (typeof this.measures === 'object') {
-                // console.log('[LAYOUT FIXER] measures', this.measures);
+                 console.log('[LAYOUT FIXER] measures', this.measures);
                 setAttributes(this.parent, {
                     'data-top': this.measures.top,
                     'data-width': this.measures.width,
@@ -87,18 +113,19 @@ const createLayoutFixer = () => {
 
             if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
                 this.parent.querySelectorAll('.gallery-item-container').forEach((element, idx) => {
-                    // console.log('[LAYOUT FIXER] setStyle', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                    !idx && console.log('[LAYOUT FIXER] set Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                     setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
                 })
                 this.parent.querySelectorAll('.gallery-item-wrapper').forEach((element, idx) => {
+                    !idx && console.log('[LAYOUT FIXER] set Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                     setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
                 })
                 this.setStylesDone = true;
-                console.log('[LAYOUT FIXER] setStyles Done');
+                console.log('[LAYOUT FIXER] Done');
+                console.timeEnd('[LAYOUT FIXER] Done');
             }
         }
     }
-    //console.log('[LAYOUT FIXER] customElements.define', window, window.customElements);
     window.customElements.define('layout-fixer', LayoutFixerElement);
 
 }
