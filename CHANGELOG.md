@@ -1,3 +1,31 @@
+## [v2.1.34](https://pro-gallery-2-1-34.surge.sh) (23/09/2020)
+ 
+#### GALLERY
+ -  upgrade react-player to ^2.6.0
+
+---
+## [v2.1.33](https://pro-gallery-2-1-33.surge.sh) (23/09/2020)
+ 
+#### LIB
+ -  Add title and description as item changed params
+
+---
+## [v2.1.32](https://pro-gallery-2-1-32.surge.sh) (23/09/2020)
+ 
+#### GALLERY
+ -  fix (itemView): remove animations from preview mode
+ -  feature (slideshow): add support for fade animation is horizontal galleries
+ -  improve (layoutFixer): createLayoutFixer as soon as possible.
+
+---
+## [v2.1.31](https://pro-gallery-2-1-31.surge.sh) (22/09/2020)
+ 
+#### GALLERY
+ -  Added 'resizeMediaUrl' func to debouncedReCreateGallery (fix broken images in albums upload)
+ -  tests: added a custom tests reporter
+ -  improve (itemView): use item transitions in preview mode
+
+---
 ## [v2.1.30](https://pro-gallery-2-1-30.surge.sh) (17/09/2020)
  
 #### GALLERY

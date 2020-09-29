@@ -132,7 +132,7 @@ const createLayoutFixer = () => {
 
 if (typeof window !== 'undefined') {
     try {
-        console.log('[LAYOUT FIXER] v2');
+        console.log('[LAYOUT FIXER] start');
         createLayoutFixer()
     } catch (e) {
         console.error('Cannot create layout fixer', e);

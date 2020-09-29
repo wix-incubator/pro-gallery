@@ -274,12 +274,13 @@ export class GalleryContainer extends React.Component {
     };
 
     const debouncedReCreateGallery = utils.debounce(() => {
-      const { items, styles, container, watermark } = this.props;
+      const { items, styles, container, watermark, resizeMediaUrl} = this.props;
       const params = {
         items,
         styles,
         container,
         watermark,
+        resizeMediaUrl,
         itemsDimensions: this.itemsDimensions,
       };
 
