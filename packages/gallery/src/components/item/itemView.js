@@ -919,6 +919,12 @@ class ItemView extends GalleryComponent {
           key={'item-container-link-' + id}
           {...this.getLinkParams()}
           tabIndex={-1}
+          onKeyDown={e => {
+            // Relevant only for Screen-Reader case
+            if (styleParams.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN || styleParams.itemClick === GALLERY_CONSTS.itemClick.EXPAND){
+              this.onContainerKeyDown(e);
+            }
+          }}
         >
           {innerDiv}
         </a>
