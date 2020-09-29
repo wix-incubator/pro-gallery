@@ -103,7 +103,6 @@ export default class Gallery extends React.PureComponent {
 
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
-    console.warn({styles});
 
     const items = testItems.slice(0,50);//utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
@@ -111,9 +110,9 @@ export default class Gallery extends React.PureComponent {
       // console.log({eventName, eventData});
     };
 
-    if (typeof nothing !== 'undefined') {
+    // if (typeof nothing !== 'undefined') {
       import ('./layoutFixer').then(console.warn);
-    }
+    // }
 
     return (
       <div className={containerClassName}>

@@ -1,1 +1,2 @@
-import {createLayoutFixer} from 'pro-gallery';
+import { createLayoutFixer } from 'pro-gallery';
+createLayoutFixer();
