@@ -1,4 +1,4 @@
-
+import { quotes } from './quotes';
 
 const testImages = [{
   metadata: {
@@ -2580,20 +2580,24 @@ const testVideos = [{
   }
 }];
 
-const testTexts = ['pink', 'lightgreen', 'lightsalmon', 'lavender', 'beige', 'lightyellow', 'lightblue', 'lightgray'].map(bgColor => ({
-  itemId: '96858c1s-1f77-4d88-a622-6a24442259df',
-  html: `<div style='width: 300px; height: 200px; background:${bgColor}; text-align: center; padding: 20px;'>
-          <p style="line-height:40px; padding:50px; font-size: 21px;">I am an HTML block</p>
-        </div>`,
-  metadata: {
-    type: "text",
-    height: 200,
-    width: 300,
-    title: `I am an HTML Block`,
-    description: '',
-    backgroundColor: bgColor
-  },
-}));
+const testTexts = ['pink', 'lightgreen', 'lightsalmon', 'lavender', 'beige', 'lightyellow', 'lightblue', 'lightgray'].map(bgColor => {
+  const quote = quotes[~~(quotes.length * Math.random())];
+  return ({
+    itemId: '96858c1s-1f77-4d88-a622-6a24442259df',
+    html: `<div style='width: 300px; height: 200px; background:${bgColor}; text-align: center; padding: 10px;'>
+            <p style="line-height:24px; padding:5px; font-size: 16px;">${quote.quote}</p>
+            <p style="font-weight: bold; line-height:24px; padding:5px; font-size: 14px;">${quote.author}</p>
+          </div>`,
+    metadata: {
+      type: "text",
+      height: 200,
+      width: 300,
+      title: '',
+      description: '',
+      backgroundColor: bgColor
+    },
+})
+});
 
 const testItems = [...testImages, ...testVideos, ...testTexts];
 
