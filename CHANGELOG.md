@@ -4,6 +4,7 @@
  -  Add onKeyDown event to handle case of opening FullScreen with Screen-Reader
  -  fix: slideshow RTL and current idx fixes
  -  upgrade react-player 2
+ 
 
 ---
 ## [v2.1.34](https://pro-gallery-2-1-34.surge.sh) (23/09/2020)
