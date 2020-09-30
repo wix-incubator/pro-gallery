@@ -115,7 +115,6 @@ export const createLayoutFixer = () => {
                     galleryHeight: height,
                     scrollBase: top,
                 };
-                debugger;
                 console.log('[LAYOUT FIXER] measured container', this.measures);
                
                 if (this.measures && this.useLayouter && typeof createLayout === 'function') {
