@@ -36,6 +36,7 @@ class ItemView extends GalleryComponent {
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
+    this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
@@ -95,6 +96,19 @@ class ItemView extends GalleryComponent {
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
         }
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  onAnchorKeyDown(e) {
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.stopPropagation();
+        const clickTarget = 'item-container';
+        this.onItemClick(e, clickTarget, false) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         return false;
       default:
         return true;
@@ -920,10 +934,7 @@ class ItemView extends GalleryComponent {
           {...this.getLinkParams()}
           tabIndex={-1}
           onKeyDown={e => {
-            // Relevant only for Screen-Reader case
-            if (styleParams.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN || styleParams.itemClick === GALLERY_CONSTS.itemClick.EXPAND){
-              this.onContainerKeyDown(e);
-            }
+            this.onAnchorKeyDown(e);
           }}
         >
           {innerDiv}
