@@ -2580,9 +2580,9 @@ const testVideos = [{
   }
 }];
 
-const testTexts = ['pink', 'lightgreen', 'lightsalmon', 'lavender', 'beige', 'lightyellow', 'lightblue', 'lightgray'].map(bgColor => {
-  const quote = quotes[~~(quotes.length * Math.random())];
-  return ({
+const testTexts = quotes.map((quote, idx) => {
+    const bgColor = ['pink', 'lightgreen', 'lightsalmon', 'lavender', 'beige', 'lightyellow', 'lightblue', 'lightgray'][idx % 8];
+    return ({
     itemId: '96858c1s-1f77-4d88-a622-6a24442259df',
     html: `<div style='width: 300px; height: 200px; background:${bgColor}; text-align: center; padding: 10px;'>
             <p style="line-height:24px; padding:5px; font-size: 16px;">${quote.quote}</p>

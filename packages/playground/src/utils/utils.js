@@ -37,7 +37,7 @@ export function mixAndSlice(array, length) {
       // Object.assign(item, array[idx]);
       item.itemId = generateUUID() + '_' + String(result.length);
       item.metadata.title = `Item #${result.length + 1}`;
-      item.metadata.description = `Description #${result.length + 1}: ${createLoremIpsum(rnd(80) + 20)}`;
+      item.metadata.description = '';//`Description #${result.length + 1}: ${createLoremIpsum(rnd(80) + 20)}`;
       // console.log('ITEM CREATED', item, array[idx]);
       result.push(item);
     }
