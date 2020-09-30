@@ -103,6 +103,7 @@ class ItemView extends GalleryComponent {
   }
 
   onAnchorKeyDown(e) {
+    // Similar to "onContainerKeyDown()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
     switch (e.keyCode || e.charCode) {
       case 32: //space
       case 13: //enter
@@ -934,6 +935,10 @@ class ItemView extends GalleryComponent {
           {...this.getLinkParams()}
           tabIndex={-1}
           onKeyDown={e => {
+            /* Relvenat only for Screen-Reader case: 
+            Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event, 
+            so it will not go deeper to the item-container keyDown event.
+            */
             this.onAnchorKeyDown(e);
           }}
         >
