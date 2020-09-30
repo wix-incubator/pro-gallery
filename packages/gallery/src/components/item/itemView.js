@@ -956,3 +956,4 @@ class ItemView extends GalleryComponent {
 }
 
 export default ItemView;
+
