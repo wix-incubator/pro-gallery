@@ -18,9 +18,6 @@ export const quotes = [
         quote: "You miss 100% of the shots you don’t take.", 
         author: "Wayne Gretzky"
     },{
-        quote: "I’ve missed more than 9000 shots in my career. I’ve lost almost 300 games. 26 times I’ve been trusted to take the game winning shot and missed. I’ve failed over and over and over again in my life. And that is why I succeed.", 
-        author: "Michael Jordan"
-    },{
         quote: "The most difficult thing is the decision to act, the rest is merely tenacity.", 
         author: "Amelia Earhart"
     },{
@@ -38,9 +35,6 @@ export const quotes = [
     },{
         quote: "We become what we think about.", 
         author: "Earl Nightingale"
-    },{
-        quote: "Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do, so throw off the bowlines, sail away from safe harbor, catch the trade winds in your sails. Explore, Dream, Discover.", 
-        author: "Mark Twain"
     },{
         quote: "Life is 10% what happens to me and 90% of how I react to it.", 
         author: "Charles Swindoll"
@@ -138,7 +132,6 @@ export const quotes = [
         quote: "Start where you are. Use what you have. Do what you can.", 
         author: "Arthur Ashe"
     },{
-        quote: "When I was 5 years old, my mother always told me that happiness was the key to life. When I went to school, they asked me what I wanted to be when I grew up. I wrote down ‘happy’. They told me I didn’t understand the assignment, and I told them they didn’t understand life.", 
         author: "John Lennon"
     },{
         quote: "Fall seven times and stand up eight.", 
@@ -164,9 +157,6 @@ export const quotes = [
     },{
         quote: "If you’re offered a seat on a rocket ship, don’t ask what seat! Just get on.", 
         author: "Sheryl Sandberg"
-    },{
-        quote: "First, have a definite, clear practical ideal; a goal, an objective. Second, have the necessary means to achieve your ends; wisdom, money, materials, and methods. Third, adjust all your means to that end.", 
-        author: "Aristotle"
     },{
         quote: "If the wind will not serve, take to the oars.", 
         author: "Latin Proverb"
@@ -234,7 +224,7 @@ export const quotes = [
         quote: "Build your own dreams, or someone else will hire you to build theirs.", 
         author: "Farrah Gray"
     },{
-        quote: "The battles that count aren’t the ones for gold medals. The struggles within yourself–the invisible battles inside all of us–that’s where it’s at.", 
+        quote: "The battles that count aren’t the ones for gold medals. The struggles within yourself, the invisible battles inside all of us, that’s where it’s at.", 
         author: "Jesse Owens"
     },{
         quote: "Education costs money. But then so does ignorance.", 

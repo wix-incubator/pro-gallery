@@ -126,20 +126,23 @@ input, button, select, optgroup, textarea {
     text-align: center;
     word-wrap: break-word;
     white-space: pre-wrap;
-    max-width: 100%;
+    width: 100%;
+    padding: 20px;
+    display: block;
 
     .playground-info-title {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 400;
-      color: #333;
-      padding: 10px;
+      letter-spacing: 1px;
+      color: #999;
+      padding: 15px;
       line-height: 32px;
-
+      text-transform: uppercase;
     }
     .playground-info-description {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 100;
-      color: #999;
+      color: #aaa;
       padding-left: 10px;
       padding-right: 10px;
       padding-bottom: 10px;
