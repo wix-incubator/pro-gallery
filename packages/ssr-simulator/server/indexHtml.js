@@ -8,7 +8,8 @@ if (NODE_ENV === 'production') {
   assetManifest = require('../build/asset-manifest.json');
 } else {
   assetManifest = {
-    'main.js': '/main.bundle.js'
+    'main.js': '/main.bundle.js',
+    'layoutFixer.js': '/layoutFixer.bundle.js',
   };
 }
 

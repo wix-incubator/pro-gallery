@@ -3,7 +3,6 @@ import { GALLERY_CONSTS, ProGallery, LayoutFixer } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
-import 'pro-gallery/dist/statics/main.css';
 
 const UNKNOWN_CONTAINER = {
   width: 980,
@@ -96,8 +95,6 @@ export default class Gallery extends React.PureComponent {
         ? GALLERY_CONSTS.viewMode.PRERENDER
         : GALLERY_CONSTS.viewMode.SITE;
     
-    console.log('[LAYOUT FIXER] render', {viewMode, knownContainer, SSR: this.isSSR()});
-    
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
@@ -111,13 +108,13 @@ export default class Gallery extends React.PureComponent {
     };
 
     // if (typeof nothing !== 'undefined') {
-      import ('./layoutFixer').then(console.warn);
+    //   import ('./layoutFixer').then(console.warn);
     // }
 
     return (
       <div className={containerClassName}>
         {!!urlParams.useLayoutFixer ? <LayoutFixer
-          layoutFixerBundleUrl="http://localhost:3001/0.chunk.js"
+          layoutFixerBundleUrl="http://localhost:3001/layoutFixer.bundle.js"
           items={items}
           styles={styles}
           parentId={"pro-gallery-ssr-simulator"}

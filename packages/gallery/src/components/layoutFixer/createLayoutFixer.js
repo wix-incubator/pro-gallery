@@ -63,14 +63,36 @@ export const createLayoutFixer = () => {
         window.layoutFixerCreated = true;
         console.log('[LAYOUT FIXER] createWebComponent');
         class LayoutFixerElement extends HTMLElement {
+            constructor() {
+                super();
+                this.retries = 3;
+                this.connectedCallback = this.connectedCallback.bind(this);
+            }
+
+            retry() {
+                if (this.retries > 0) {
+                    this.retries--;
+                    console.log('[LAYOUT FIXER] retrying...', this.retries);
+                    window.requestAnimationFrame(this.connectedCallback);
+                } else {
+                    console.log('[LAYOUT FIXER] reached retries limit');
+                }
+            }
+
             connectedCallback() {
                 if (this.setStylesDone) {
                     return;
                 }
                 console.log('[LAYOUT FIXER] connectedCallback');
                 this.parentId = this.getAttribute('parentid');
-                this.parent = document.getElementById(this.parentId)
-                console.log('[LAYOUT FIXER] parent', this.parent);
+                this.parent = document.getElementById(this.parentId);
+                if (!this.parent) {
+                    console.log('[LAYOUT FIXER] no parent found', this.parent);
+                    this.retry();
+                    return;
+                } else {
+                    console.log('[LAYOUT FIXER] parent found', this.parent);
+                }
 
                 this.useLayouter = true
                 this.items = JSON.parse(this.getAttribute('items')).map(convertDtoToLayoutItem);
@@ -93,17 +115,19 @@ export const createLayoutFixer = () => {
                     galleryHeight: height,
                     scrollBase: top,
                 };
+                debugger;
+                console.log('[LAYOUT FIXER] measured container', this.measures);
+               
                 if (this.measures && this.useLayouter && typeof createLayout === 'function') {
                     this.layout = createLayout({
                         items: this.items,
                         styleParams: this.styleParams,
                         container: this.measures
                     })
-                    console.log('[LAYOUT FIXER] layout', this.layout);
+                    console.log('[LAYOUT FIXER] created layout', this.layout);
                 }
 
                 if (typeof this.measures === 'object') {
-                    console.log('[LAYOUT FIXER] measures', this.measures);
                     setAttributes(this.parent, {
                         'data-top': this.measures.top,
                         'data-width': this.measures.width,
@@ -113,11 +137,11 @@ export const createLayoutFixer = () => {
 
                 if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
                     this.parent.querySelectorAll('.gallery-item-container').forEach((element, idx) => {
-                        !idx && console.log('[LAYOUT FIXER] set Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                        !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                         setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
                     })
                     this.parent.querySelectorAll('.gallery-item-wrapper').forEach((element, idx) => {
-                        !idx && console.log('[LAYOUT FIXER] set Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                        !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                         setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
                     })
                     this.setStylesDone = true;
@@ -132,7 +156,7 @@ export const createLayoutFixer = () => {
 
     if (typeof window !== 'undefined') {
         try {
-            console.log('[LAYOUT FIXER] start');
+            console.log('[LAYOUT FIXER] start (script is running)');
             createWebComponent()
         } catch (e) {
             console.error('Cannot create layout fixer', e);
