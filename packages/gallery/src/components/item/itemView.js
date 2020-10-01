@@ -596,11 +596,11 @@ class ItemView extends GalleryComponent {
       right: !isRTL ? 'auto' : 0,
       opacity: currentIdx === idx ? 1 : 0,
       pointerEvents: currentIdx === idx ? 'auto' : 'none',
-      transition: currentIdx === idx ? 'none' : 'opacity .8s ease',
+      transition: currentIdx === idx ? 'none' : 'opacity .8s ease .2s',
       zIndex: currentIdx === idx ? 0 : 1
     } : {}
 
-    const transitionStyles = (this.state.loaded && isEditMode()) ? {
+    const transitionStyles = (this.state.loaded && (isEditMode() || isPreviewMode())) ? {
       transition: 'all .4s ease',
       transitionProperty: 'top, left, width, height, opacity'
     } : {

@@ -155,8 +155,9 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <InputNumber min={0} max={gallerySettings.numberOfItems || Infinity} defaultValue={gallerySettings.initialIdx || 0} onChange={val => setGallerySettings({ initialIdx: val })} />
               </Form.Item>
               <Form.Item label="Media Type">
-                <Select defaultValue={gallerySettings.mediaType || 'mixed'} onChange={val => setGallerySettings({ mediaType: val })}>
-                  <Select.Option value="mixed">Images, Videos and Texts</Select.Option>
+                <Select defaultValue={gallerySettings.mediaTypes || 'media'} onChange={val => setGallerySettings({ mediaTypes: val })}>
+                  <Select.Option value="media">Images & Videos</Select.Option>
+                  <Select.Option value="mixed">Images, Videos & Texts</Select.Option>
                   <Select.Option value="images">Images Only</Select.Option>
                   <Select.Option value="videos">Videos Only</Select.Option>
                   <Select.Option value="texts">Texts Only</Select.Option>

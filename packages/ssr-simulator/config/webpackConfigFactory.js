@@ -31,13 +31,15 @@ module.exports = function(envType) {
   config.devtool = IS_DEV ? 'cheap-module-source-map' : 'source-map';
 
   config.entry = IS_DEV
-    ? [
-        'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-        resolvePath('../src/index.js')
-      ]
-    : {
+    ? {
+        0: 'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
         polyfills: resolvePath('../src/polyfills.js'),
-        main: resolvePath('../src/index.js')
+        main: resolvePath('../src/index.js'),
+        layoutFixer: resolvePath('../src/components/gallery/layoutFixer.js')
+    } : {
+        polyfills: resolvePath('../src/polyfills.js'),
+        main: resolvePath('../src/index.js'),
+        layoutFixer: resolvePath('../src/components/gallery/layoutFixer.js')
       };
 
   config.output = IS_DEV

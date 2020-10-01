@@ -27,6 +27,8 @@ const Head = () => {
         href="https://static.parastorage.com/services/pro-gallery-santa-wrapper/1.1254.0/viewer.css"
       />
 
+      <style id="ssr-simulator-css" dangerouslySetInnerHTML={{__html: require('../styles/index.scss')}}  ></style>
+
       {/* <link rel="stylesheet" href="https://localhost:3200/viewer.css" /> */}
     </Helmet>
   );

@@ -209,7 +209,7 @@ export default class Layouter {
       if (this.styleParams.forceFullHeight) {
         this.targetItemSize = Math.sqrt(
           (this.container.galleryHeight * this.container.galleryWidth) /
-            this.srcItems.length,
+          this.srcItems.length,
         );
       } else {
         let gallerySizeVal;
@@ -289,7 +289,7 @@ export default class Layouter {
           fixedCubeHeight =
             fixedCubeHeight ||
             (this.targetItemSize - infoWidth - imageMargin * 2) / cubeRatio +
-              imageMargin * 2; //calc the cube height only once
+            imageMargin * 2; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
         });
@@ -570,12 +570,10 @@ export default class Layouter {
     try {
       const groupTypes =
         typeof this.styleParams.groupTypes === 'string' &&
-        this.styleParams.groupTypes.length > 0
+          this.styleParams.groupTypes.length > 0
           ? this.styleParams.groupTypes.split(',')
           : this.styleParams.groupTypes;
-      _maxGroupSize = groupTypes.reduce((curSize, groupType) => {
-        return Math.max(curSize, parseInt(groupType));
-      }, 1);
+      _maxGroupSize = groupTypes.length > 0 ? groupTypes.reduce((curSize, groupType) => Math.max(curSize, parseInt(groupType)), 1) : Number(groupTypes);
       _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
     } catch (e) {
       console.error("couldn't calculate max group size - returing 3 (?)", e);

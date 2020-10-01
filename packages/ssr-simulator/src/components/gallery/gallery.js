@@ -1,9 +1,8 @@
 import React from 'react';
-import { GALLERY_CONSTS, ProGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, LayoutFixer } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
-import 'pro-gallery/dist/statics/main.css';
 
 const UNKNOWN_CONTAINER = {
   width: 980,
@@ -34,7 +33,6 @@ export default class Gallery extends React.PureComponent {
       };
     }
 
-    console.log('[LAYOUT FIXER] getContainerFromUrl', container);
     return container;
   }
 
@@ -57,7 +55,6 @@ export default class Gallery extends React.PureComponent {
     let shouldUpdateContainer = true;
     const { urlParams: { containerWidth, containerHeight } = {} } = this.props;
     const containerWithWindowDimensions = this.getContainerFromWindowDimensions();
-    console.log('[LAYOUT FIXER] containerWithWindowDimensions', containerWithWindowDimensions);
 
     if (containerWidth !== undefined && containerHeight !== undefined) {
       if (
@@ -68,7 +65,6 @@ export default class Gallery extends React.PureComponent {
       }
     }
 
-    console.log('[LAYOUT FIXER] shouldUpdateContainerOnMount', shouldUpdateContainer);
     return shouldUpdateContainer;
   };
 
@@ -82,7 +78,6 @@ export default class Gallery extends React.PureComponent {
     if (this.shouldUpdateContainerOnMount()) {
       newState.container = this.getContainerFromWindowDimensions();
     }
-    console.log('[LAYOUT FIXER] ssr gallery componentDidMount', newState);
 
     this.setState(newState);
     window.addEventListener('resize', this.handleResize);
@@ -100,8 +95,6 @@ export default class Gallery extends React.PureComponent {
         ? GALLERY_CONSTS.viewMode.PRERENDER
         : GALLERY_CONSTS.viewMode.SITE;
     
-    console.log('[LAYOUT FIXER] render', viewMode, knownContainer, this.isSSR());
-    
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
@@ -114,12 +107,23 @@ export default class Gallery extends React.PureComponent {
       // console.log({eventName, eventData});
     };
 
+    // if (typeof nothing !== 'undefined') {
+    //   import ('./layoutFixer').then(console.warn);
+    // }
+
     return (
       <div className={containerClassName}>
+        {!!urlParams.useLayoutFixer ? <LayoutFixer
+          layoutFixerBundleUrl="http://localhost:3001/layoutFixer.bundle.js"
+          items={items}
+          styles={styles}
+          parentId={"pro-gallery-ssr-simulator"}
+        ></LayoutFixer> : null}
         <ProGallery
           domId="ssr-simulator"
           items={items}
           styles={styles}
+          settings={{avoidInlineStyles: !urlParams.useLayoutFixer}}
           useBlueprints={!!urlParams.useBlueprints}
           useLayoutFixer={!!urlParams.useLayoutFixer}
           container={container}
