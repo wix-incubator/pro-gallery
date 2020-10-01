@@ -32,29 +32,29 @@ const createExactCssForItems = (domId = '', galleryItems, styleParams) => {
   return cssStr;
 };
 
-const createCssFromLayout = (domId = '', layout, styleParams, width) => {
-  let cssStr = '';
-  const layoutWidth = width - styleParams.imageMargin * 2;
-  const getRelativeDimension = val =>
-    Math.round(10000 * (val / layoutWidth)) / 100;
-  layout.items.forEach((item, i) => {
-    const id = createItemId(domId, item);
-    if (i < 50) {
-      const style = getImageStyle(item, styleParams);
-      const Tvw = `top:${getRelativeDimension(style.top)}vw;`;
-      const Wvw = `width:${getRelativeDimension(style.width)}vw;`;
-      const Hvw = `height:${getRelativeDimension(style.height)}vw;`;
-      const iHvw = `height:${getRelativeDimension(style.innerHeight)}vw;`;
-      const Lpc = `left:${getRelativeDimension(style.left)}%;`;
-      const Wpc = `width:${getRelativeDimension(style.width)}%;`;
-      cssStr += `${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
-      cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${iHvw}}`;
-    } else {
-      cssStr += `${id}{display:none;}`;
-    }
-  });
-  return cssStr;
-};
+// const createCssFromLayout = (domId = '', layout, styleParams, width) => {
+//   let cssStr = '';
+//   const layoutWidth = width - styleParams.imageMargin * 2;
+//   const getRelativeDimension = val =>
+//     Math.round(10000 * (val / layoutWidth)) / 100;
+//   layout.items.forEach((item, i) => {
+//     const id = createItemId(domId, item);
+//     if (i < 50) {
+//       const style = getImageStyle(item, styleParams);
+//       const Tvw = `top:${getRelativeDimension(style.top)}vw;`;
+//       const Wvw = `width:${getRelativeDimension(style.width)}vw;`;
+//       const Hvw = `height:${getRelativeDimension(style.height)}vw;`;
+//       const iHvw = `height:${getRelativeDimension(style.innerHeight)}vw;`;
+//       const Lpc = `left:${getRelativeDimension(style.left)}%;`;
+//       const Wpc = `width:${getRelativeDimension(style.width)}%;`;
+//       cssStr += `${id} {${Tvw}${Lpc}${Wpc}${Hvw}}`;
+//       cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${iHvw}}`;
+//     } else {
+//       cssStr += `${id}{display:none;}`;
+//     }
+//   });
+//   return cssStr;
+// };
 
 // const createCssFromLayouts = (domId, layouts, styleParams, widths) => {
 //   const cssStrs = [];

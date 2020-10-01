@@ -7,6 +7,7 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper'
+import {LayoutFixer} from './layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -93,8 +94,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = props => {
-      const { domId, styles, container, items } = props;
-      return { domId, styles, container, items };
+      const { domId, styles, container, items, watermark } = props;
+      return { domId, styles, container, items, watermark };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -184,11 +185,15 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  isVerticalGallery() {
+    return !this.state.styles.oneRow
+  }
+
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if (isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0) {
+    if (isSEOMode() || isEditMode() || isPreviewMode() || utils.isSSR() || gotFirstScrollEvent || scrollY > 0 || this.props.currentIdx > 0) {
       return items;
     }
     let visibleItems = items;
@@ -207,9 +212,10 @@ export class GalleryContainer extends React.Component {
       }
       if(visibleItems.length < 2 && visibleItems.length < items.length) {
         //dont render less then 2 items (otherwise slide show Arrow will be removed)
-        visibleItems = items.slice(1);
+        visibleItems = items.slice(0, 2);
       }
     } catch (e) {
+      console.error('Could not calculate visible items, returning original items', e);
       visibleItems = items;
     }
     return visibleItems;
@@ -266,6 +272,7 @@ export class GalleryContainer extends React.Component {
       };
 
     this.createCssLayoutsIfNeeded(layoutParams);
+    this.createDynamicStyles(styles);
 
     const newState = {items: loopingItems || items, styles, container, structure}
     return newState;
@@ -285,6 +292,8 @@ export class GalleryContainer extends React.Component {
   }
 
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0, scrollMarginCorrection) {
+
+
     if (itemIdx >= 0) {
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
@@ -389,6 +398,14 @@ export class GalleryContainer extends React.Component {
       top,
       left,
     });
+  }
+
+  createDynamicStyles({overlayBackground}) {
+    const allowSSROpacity = isPrerenderMode() && !!this.props.settings.allowSSROpacity;
+    this.dynamicStyles = `
+      ${!allowSSROpacity ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
+      ${!overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${overlayBackground} !important}`}
+    `.trim();
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
@@ -518,12 +535,6 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
-  allowSSROpacity() {
-    const {settings = {}} = this.props;
-    const {allowSSROpacity = false} = settings;
-    return isPrerenderMode() && allowSSROpacity;
-  }
-
   render() {
     if (!this.canRender()) {
       return null;
@@ -541,11 +552,6 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
-    const dynamicStyles = `
-      ${utils.isSSR() && `#pro-gallery-${this.props.domId} div.pro-gallery-parent-container * { transition: none !important }`}
-      ${this.allowSSROpacity() && `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
-      ${this.props.styles.overlayBackground && `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
-    `;
 
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
@@ -572,13 +578,15 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
+          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+          setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           items={this.state.items}
           getVisibleItems={this.getVisibleItems}
           itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={this.props.styles}
           container={this.props.container}
-          watermark={this.props.watermarkData}
+          watermark={this.props.watermark}
           settings={this.props.settings}
           scroll={{}} //todo: remove after refactor is 100%
           displayShowMore={displayShowMore}
@@ -604,10 +612,15 @@ export class GalleryContainer extends React.Component {
           {...this.props.gallery}
         />
         <div data-key="items-styles" key="items-styles" style={{display: 'none'}}>
-          {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{__html: css}}/>)}
-          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{__html: scrollCss}}/>)}
-          {dynamicStyles && <style dangerouslySetInnerHTML={{__html: dynamicStyles}} />}
+          {(this.layoutCss || []).filter(Boolean).map((css, idx) => <style id={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
+        {this.props.useLayoutFixer ? <LayoutFixer
+          parentId={`pro-gallery-inner-container-${this.props.domId}`}
+          styles={this.state.styles}
+          items={this.items}
+        /> : null }
       </div>
     );
   }

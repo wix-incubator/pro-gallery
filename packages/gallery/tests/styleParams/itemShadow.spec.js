@@ -25,7 +25,7 @@ describe('styleParam - overlayAnimation', () => {
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
-      itemShadowOpacityAndColor: { value: 'rgba(0,0,0,.4)' },
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
       itemEnableShadow: true
     })
     driver.mount.proGallery(initialProps);
@@ -43,7 +43,7 @@ describe('styleParam - overlayAnimation', () => {
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
-      itemShadowOpacityAndColor: { value: 'rgba(0,0,0,.4)' },
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
       itemEnableShadow: false
     })
     driver.mount.proGallery(initialProps);
@@ -60,7 +60,7 @@ describe('styleParam - overlayAnimation', () => {
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
-      itemShadowOpacityAndColor: { value: 'rgba(0,0,0,.4)' },
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
       itemEnableShadow: true
     })
     driver.mount.proGallery(initialProps);
@@ -78,7 +78,7 @@ describe('styleParam - overlayAnimation', () => {
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
-      itemShadowOpacityAndColor: { value: 'rgba(0,0,0,.4)' },
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
       itemEnableShadow: true
     })
     driver.mount.proGallery(initialProps);

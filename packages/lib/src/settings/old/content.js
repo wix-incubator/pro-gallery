@@ -144,8 +144,8 @@ export default {
     title: "Gallery Spacing",
     description: "The space from the container to the gallery",
   },
-  floatingImages: {
-    title: "floating Images",
+  scatter: {
+    title: "Scatter",
     description: "Set a random offset to each image, in the boundaries of the margin.",
   },
   collageDensity: {
@@ -160,7 +160,7 @@ export default {
     title: "Load More Behaviour",
     description: "Choose whether clicking the 'load more' button toggle an infinite scroll behaviour or adds a few more items and keep the button at the bottom.",
   },
-  //----------| SETTINGS SECTION |---------//
+  // ----------| SETTINGS SECTION |---------//
   scrollSnap: {
     title: 'Snap Scroll',
     description: "When true, scrolling will snap to the center of the closest item. When false, scrolling will not snap",
@@ -169,7 +169,7 @@ export default {
     title: 'When clicking on an item:',
     description: "",
   },
-  //------------------------ Design ----------------------//
+  // ------------------------ Design ----------------------//
   itemOpacity: {
     title: 'Color Overlay',
     description: "",

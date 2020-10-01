@@ -115,4 +115,11 @@ const getLayoutName = (galleryLayout) => {
   ];
   return galleyLayoutList[galleryLayout + 1]
 }
-export { addPresetStyles, NEW_PRESETS, getLayoutName}
+
+// returns true if the given param is in the current layout preset
+const isInPreset = (galleryLayout, paramToCheck) => {
+  const layoutName = getLayoutName(galleryLayout) || 'empty';// empty for when there is no layout given
+  return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
+}
+
+export { addPresetStyles, NEW_PRESETS, getLayoutName, isInPreset}

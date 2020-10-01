@@ -22,7 +22,7 @@ describe('styleParam - itemBorderColor', () => {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       oneRow: false,
-      itemBorderColor: {value: 'rgba(0,0,0,1)'},
+      itemBorderColor: 'rgba(0,0,0,1)',
     })
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
@@ -35,7 +35,7 @@ describe('styleParam - itemBorderColor', () => {
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       oneRow: false,
-      itemBorderColor: {value: 'rgba(23,110,23,1)'},
+      itemBorderColor: 'rgba(23,110,23,1)',
     })
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);

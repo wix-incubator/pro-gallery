@@ -13,10 +13,6 @@ describe('styleParam - autoSLideShowInterval', () => {
   let helpers
 
   beforeEach(() => {
-    helpers = require('../../src/components/gallery/proGallery/galleryHelpers.js');
-    sinon.stub(helpers, 'isGalleryInViewport').callsFake(() => {
-      return true;
-    });
     driver = new GalleryDriver();
     initialProps = driver.props.galleryView();
     Object.assign(initialProps.styleParams, {
@@ -35,7 +31,7 @@ describe('styleParam - autoSLideShowInterval', () => {
       galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
-    const stub = sinon.stub(SlideshowView.prototype, 'nextItem');
+    const stub = sinon.stub(SlideshowView.prototype, 'next');
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
     driver.mount(SlideshowView, galleryViewProps);
     expect(stub.called).to.equal(false);

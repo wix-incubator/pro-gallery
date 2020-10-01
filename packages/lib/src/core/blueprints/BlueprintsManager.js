@@ -1,4 +1,5 @@
 import blueprints from './Blueprints'
+import { viewModeWrapper } from '../../common/window/viewModeWrapper'
 
 export default class BlueprintsManager {
 
@@ -11,14 +12,16 @@ export default class BlueprintsManager {
     this.api = {};
     this.currentState.totalItemsCount = Infinity;
     this.onBlueprintReady = (() => {});
+    this.loopingItems = false;
   }
 
   init(config) {
     this.api = config.api;
     this.currentState.totalItemsCount = config && config.totalItemsCount || this.currentState.totalItemsCount;
+    viewModeWrapper.setFormFactor(config.formFactor);
   }
 
-  async createBlueprint(params) {
+  async createBlueprint(params = {}) {
 
     this.currentState.totalItemsCount = params.totalItemsCount || this.api.getTotalItemsCount && this.api.getTotalItemsCount()  || this.currentState.totalItemsCount;
     
@@ -51,11 +54,16 @@ export default class BlueprintsManager {
     }
   }
 
+  resetItemLooping() {
+    this.loopingItems = false;
+  }
+
   duplicateGalleryItems() {
       const items = this.currentState.items.concat(
         ...this.currentState.items.slice(0, this.currentState.totalItemsCount),
       );
-        this.createBlueprint({items});
+      this.loopingItems = true;
+      this.createBlueprint({items});
   }
 
 
@@ -108,7 +116,7 @@ export default class BlueprintsManager {
 
     if (shouldFetchItems(items)) {
       // items = ['yonatan - fake items'] // getGalleryDataFromServer(); - worker code to be used here.
-      items = (this.api.fetchItems && await this.api.fetchItems()) || this.currentState.items;
+      items = (!this.loopingItems && this.api.fetchItems && await this.api.fetchItems()) || this.currentState.items;
     }
 
     // TODO - this.loadItemsDimensionsIfNeeded();

@@ -2,7 +2,7 @@ import React, {useEffect, Suspense} from 'react';
 // import {SideBar} from '../SideBar';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
-import {mixAndSlice, isTestingEnvironment} from "../../utils/utils";
+import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
@@ -24,7 +24,7 @@ const pJson = require('../../../package.json');
 
 const blueprintsManager = new BlueprintsManager({id: 'playground'});
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
-
+let shouldUseBlueprintsFromServer = false; //USE THIS ONLY FOR LOCAL TESTING WITH THE NODE SERVER;
 const initialItems = {
   mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
   texts: mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
@@ -36,7 +36,7 @@ const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
 
 export function App() {
-  const {setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
+  const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServer);
   const {showSide} = gallerySettings;
   sideShownOnce = sideShownOnce || showSide;
 
@@ -109,16 +109,30 @@ export function App() {
 
 
     const getTotalItemsCount = () => {
-    return numberOfItems > 0 ? numberOfItems : Infinity
-  }
+      const totalItemsCountFromUrl = getTotalItemsCountFromUrl(window.location.search);
+      if (totalItemsCountFromUrl) {
+        return totalItemsCountFromUrl;
+      }
+    
+      return numberOfItems > 0 ? numberOfItems : Infinity;
+    }
+    
 
   const getOrInitBlueprint = () => {
     if (blueprint) {
       return blueprint;
+    } else if (shouldUseBlueprintsFromServer) {
+      const params = {
+        dimensions: getContainer(),
+        styleParams: getStyles(),
+      }
+      getBlueprintFromServer(params);
     } else {
-      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
-      blueprintsManager.init({api: playgroundBlueprintsApi})
-      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      {
+        const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
+        blueprintsManager.init({api: playgroundBlueprintsApi})
+        blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      }
     }
   }
 
@@ -227,6 +241,7 @@ export function App() {
         </div>
         {sideShownOnce && <Suspense fallback={<div>Loading...</div>}>
           <SideBar
+            visible={showSide}
             blueprintsManager = {blueprintsManager}
             items={getItems()}
           />
@@ -241,7 +256,9 @@ export function App() {
           eventsListener={eventListener}
           totalItemsCount={getTotalItemsCount()}
           resizeMediaUrl={resizeMediaUrl}
-          useBlueprints={gallerySettings.useBlueprints} //Todo - use it react way
+          currentIdx={gallerySettings.initialIdx}
+          useBlueprints={gallerySettings.useBlueprints}
+          useLayoutFixer={gallerySettings.useLayoutFixer}
           {...getExternalInfoRenderers()}
           {...blueprintProps}
         />}

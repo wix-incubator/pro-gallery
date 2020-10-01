@@ -22,12 +22,13 @@ export const fixedStyles = {
   chooseBestGroup: true,
   rotatingGroupTypes: '1,2h,1,2h',
   smartCrop: false,
-  floatingImages: 0,
+  scatter: 0,
   fixedColumns: 1,
   groupsPerStrip: 0,
   oneRow: false,
   placeGroupsLtr: false,
   rotatingCropRatios: '',
+  slideshowLoop: false,
 }
 
 export const createStyles = styles => {

@@ -9,7 +9,8 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import checkNewGalleryProps from '../../helpers/isNew';
-import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js'
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js';
+import {LayoutFixer} from './layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -96,7 +97,7 @@ export class GalleryContainer extends React.Component {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const {galleryHeight, scrollBase, galleryWidth} = container;
-    if(isSEOMode() || utils.isSSR() || gotFirstScrollEvent || !isSiteMode() || scrollY > 0 || this.props.currentIdx > 0) {
+    if(isSEOMode() || isEditMode() || isPreviewMode() || utils.isSSR() || gotFirstScrollEvent || scrollY > 0 || this.props.currentIdx > 0) {
       return items;
     }
     let visibleItems = items;
@@ -118,6 +119,7 @@ export class GalleryContainer extends React.Component {
         visibleItems = items.slice(0,2);
       }
     } catch (e) {
+      console.error('Could not calculate visible items, returning original items', e);
       visibleItems = items;
     }
     return visibleItems;
@@ -149,7 +151,6 @@ export class GalleryContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getMoreItemsIfNeeded(0);
     if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
       this.currentHoverChangeEvent.domId = nextProps.domId;
     }
@@ -167,8 +168,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = props => {
-      const { domId, styles, container, items } = props;
-      return { domId, styles, container, items };
+      const { domId, styles, container, items, watermark } = props;
+      return { domId, styles, container, items, watermark };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -274,12 +275,13 @@ export class GalleryContainer extends React.Component {
     };
 
     const debouncedReCreateGallery = utils.debounce(() => {
-      const { items, styles, container, watermarkData } = this.props;
+      const { items, styles, container, watermark, resizeMediaUrl} = this.props;
       const params = {
         items,
         styles,
         container,
-        watermarkData,
+        watermark,
+        resizeMediaUrl,
         itemsDimensions: this.itemsDimensions,
       };
 
@@ -414,6 +416,7 @@ export class GalleryContainer extends React.Component {
       });
     }
     this.createCssLayoutsIfNeeded(layoutParams);
+    this.createDynamicStyles(styles);
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
@@ -432,7 +435,7 @@ export class GalleryContainer extends React.Component {
   }
 
   reCreateGalleryExpensively(
-    { items, styles, container, watermarkData, itemsDimensions, customInfoRenderer },
+    { items, styles, container, watermark, itemsDimensions, customInfoRenderer, resizeMediaUrl },
     curState,
   ) {
     if (utils.isVerbose()) {
@@ -447,7 +450,7 @@ export class GalleryContainer extends React.Component {
     const stylesWithLayoutStyles = styles && addLayoutStyles(styles, customExternalInfoRendererExists);
 
     const isNew = checkNewGalleryProps(
-      { items, styles: stylesWithLayoutStyles, container, watermarkData, itemsDimensions },
+      { items, styles: stylesWithLayoutStyles, container, watermark, itemsDimensions },
       { ...state, items: this.items },
     );
     const newState = {};
@@ -457,7 +460,7 @@ export class GalleryContainer extends React.Component {
         items,
         styles,
         container,
-        watermarkData,
+        watermark,
       });
     }
 
@@ -545,10 +548,10 @@ export class GalleryContainer extends React.Component {
 
       this.layout = this.layouter.createLayout(layoutParams);
       const itemConfig = {
-        watermark: watermarkData,
+        watermark: watermark,
         sharpParams: _styles.sharpParams,
         thumbnailSize: styles.thumbnailSize,
-        resizeMediaUrl: this.props.resizeMediaUrl,
+        resizeMediaUrl: resizeMediaUrl,
         lastVisibleItemIdx: this.lastVisibleItemIdx,
       };
       const existingLayout = this.galleryStructure || this.layout;
@@ -582,6 +585,7 @@ export class GalleryContainer extends React.Component {
       }
 
       this.createCssLayoutsIfNeeded(layoutParams);
+      this.createDynamicStyles(_styles);
 
       const shouldUseScrollCss = !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent|| this.state.showMoreClickedAtLeastOnce);
       if (shouldUseScrollCss) {
@@ -597,7 +601,7 @@ export class GalleryContainer extends React.Component {
       console.log(
         'PROGALLERY [RENDERS] - reCreateGalleryExpensively',
         { isNew },
-        { items, styles, container, watermarkData },
+        { items, styles, container, watermark },
       );
       console.timeEnd('PROGALLERY [TIME] reCreateGalleryExpensively');
     }
@@ -737,6 +741,14 @@ export class GalleryContainer extends React.Component {
     });
   }
 
+  createDynamicStyles({overlayBackground}) {
+    const allowSSROpacity = isPrerenderMode() && !!this.props.settings.allowSSROpacity;
+    this.dynamicStyles = `
+      ${!allowSSROpacity ? '' : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
+      ${!overlayBackground ? '' : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${overlayBackground} !important}`}
+    `.trim();
+  }
+
   toggleLoadMoreItems() {
     this.eventsListener(
       GALLERY_CONSTS.events.LOAD_MORE_CLICKED,
@@ -789,11 +801,17 @@ export class GalleryContainer extends React.Component {
   }
 
   duplicateGalleryItems() {
+    if (!this.itemsToDuplicate) {
+      this.itemsToDuplicate = this.items;
+    }
+
+    const items = this.items.concat(
+      ...this.itemsToDuplicate.slice(0, this.props.totalItemsCount),
+    );
+
     const galleryState = this.reCreateGalleryExpensively({
       ...this.props,
-      items: this.items.concat(
-        ...this.items.slice(0, this.props.totalItemsCount),
-      ),
+      items,
     });
     if (Object.keys(galleryState).length > 0) {
       this.setState(galleryState, () => {
@@ -870,12 +888,6 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
-  allowSSROpacity() {
-    const {settings = {}} = this.props;
-    const {allowSSROpacity = false} = settings;
-    return isPrerenderMode() && allowSSROpacity;
-  }
-
   isVerticalGallery() {
     return !this.state.styles.oneRow
   }
@@ -900,15 +912,12 @@ export class GalleryContainer extends React.Component {
     const findNeighborItem = this.layouter
       ? this.layouter.findNeighborItem
       : (() => { });
-    const dynamicStyles = `
-      ${utils.isSSR() && `#pro-gallery-${this.props.domId} div.pro-gallery-parent-container * { transition: none !important }`}
-      ${this.allowSSROpacity() && `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`}
-      ${this.props.styles.overlayBackground && `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${this.props.styles.overlayBackground} !important}`}
-    `;
-    return (
+
+      return (
       <div
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
+        id={`pro-gallery-inner-container-${this.props.domId}`}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -926,16 +935,16 @@ export class GalleryContainer extends React.Component {
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
+          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+          setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           items={this.items}
           getVisibleItems={this.getVisibleItems}
           itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={this.state.styles}
           container={this.state.container}
-          watermark={this.props.watermarkData}
-          settings={{avoidInlineStyles: true, ...this.props.settings}}
-          gotScrollEvent={true}
-          scroll={{}} //todo: remove after refactor is 100%
+          watermark={this.props.watermark}
+          settings={this.props.settings}
           displayShowMore={displayShowMore}
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}
@@ -965,10 +974,15 @@ export class GalleryContainer extends React.Component {
           </div>
         )}
         <div data-key="dynamic-styles" key="items-styles" style={{ display: 'none' }}>
-          {this.layoutCss.map((css, idx) => <style data-key={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
-          {(this.scrollCss || []).filter(Boolean).map((scrollCss, idx) => <style key={`scrollCss_${idx}_padded`} dangerouslySetInnerHTML={{ __html: scrollCss }} />)}
-          {dynamicStyles && <style dangerouslySetInnerHTML={{__html: dynamicStyles}} />}
+          {(this.layoutCss || []).filter(Boolean).map((css, idx) => <style id={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
+          {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
+        {this.props.useLayoutFixer ? <LayoutFixer
+          parentId={`pro-gallery-inner-container-${this.props.domId}`}
+          styles={this.state.styles}
+          items={this.items}
+        /> : null }
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isPreviewMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -36,6 +36,7 @@ class ItemView extends GalleryComponent {
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
+    this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
@@ -67,10 +68,6 @@ class ItemView extends GalleryComponent {
     this.setState({
       loaded: true
     });
-
-    this.itemLoadedTimeout = setTimeout(() => {
-      this.setState(() => ({ loaded: true }));
-    }, 1500);
   }
 
   isIconTag(tagName) {
@@ -99,6 +96,20 @@ class ItemView extends GalleryComponent {
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
         }
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  onAnchorKeyDown(e) {
+    // Similar to "onContainerKeyDown()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.stopPropagation();
+        const clickTarget = 'item-container';
+        this.onItemClick(e, clickTarget, false) //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         return false;
       default:
         return true;
@@ -554,7 +565,8 @@ class ItemView extends GalleryComponent {
   }
 
   getItemContainerStyles() {
-    const { offset, style, styleParams, settings = {} } = this.props;
+    const { idx, currentIdx, offset, style, styleParams, settings = {} } = this.props;
+    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } = styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -563,22 +575,39 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin: styleParams.oneRow ? styleParams.imageMargin + 'px' : 0,
-      cursor: styleParams.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-      (styleParams.itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
+      margin: oneRow ? imageMargin + 'px' : 0,
+      cursor: itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
+      (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
         ? 'default'
         : 'pointer'
     };
 
-    const layoutStyles = settings.avoidInlineStyles ? {} : {
+    const {avoidInlineStyles = true} = settings;
+    const layoutStyles = avoidInlineStyles ? {} : {
       top: offset.top,
-      left: styleParams.isRTL ? 'auto' : offset.left,
-      right: !styleParams.isRTL ? 'auto' : offset.left,
+      left: isRTL ? 'auto' : offset.left,
+      right: !isRTL ? 'auto' : offset.left,
       width: style.width + style.infoWidth,
       height: style.height + style.infoHeight,
     };
 
-    const itemContainerStyles = { ...itemStyles, ...layoutStyles, ...containerStyleByStyleParams};
+    const slideAnimationStyles = slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ? {
+      left: isRTL ? 'auto' : 0,
+      right: !isRTL ? 'auto' : 0,
+      opacity: currentIdx === idx ? 1 : 0,
+      pointerEvents: currentIdx === idx ? 'auto' : 'none',
+      transition: currentIdx === idx ? 'none' : 'opacity .8s ease',
+      zIndex: currentIdx === idx ? 0 : 1
+    } : {}
+
+    const transitionStyles = (this.state.loaded && isEditMode()) ? {
+      transition: 'all .4s ease',
+      transitionProperty: 'top, left, width, height, opacity'
+    } : {
+      transition: 'none'
+    };
+
+    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...slideAnimationStyles};
 
     return itemContainerStyles;
   }
@@ -905,6 +934,13 @@ class ItemView extends GalleryComponent {
           key={'item-container-link-' + id}
           {...this.getLinkParams()}
           tabIndex={-1}
+          onKeyDown={e => {
+            /* Relvenat only for Screen-Reader case: 
+            Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event, 
+            so it will not go deeper to the item-container keyDown event.
+            */
+            this.onAnchorKeyDown(e);
+          }}
         >
           {innerDiv}
         </a>
@@ -920,3 +956,4 @@ class ItemView extends GalleryComponent {
 }
 
 export default ItemView;
+

@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "2.1.5",
+  "version": "2.1.33",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.0",
+    "chai": "^4.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "husky": "^4.2.1",
@@ -40,12 +41,11 @@
     "puppeteer": "^1.1.0",
     "velocity": "~0.7.0",
     "yoshi": "^4.1.0",
-    "yoshi-style-dependencies": "^4.1.0"
+    "yoshi-style-dependencies": "^4.1.0",
+    "yoshi-template-intro": "^4.1.0"
   },
   "dependencies": {
-    "chai": "^4.2.0",
-    "pro-layouts": "2.1.5",
-    "yoshi-template-intro": "^4.1.0"
+    "pro-layouts": "2.1.23"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

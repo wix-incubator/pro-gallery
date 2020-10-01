@@ -40,7 +40,7 @@ class Blueprints {
         // if its an infinite gallery - let the container loose
         const isInfinite = !existingBlueprint.styles.oneRow && existingBlueprint.styles.enableInfiniteScroll
         if (isInfinite) {
-          existingBlueprint.container.height = structure.height;
+          existingBlueprint.container.height = existingBlueprint.container.galleryHeight = structure.height;
         }
       }
     } catch(error) {
@@ -103,17 +103,17 @@ class Blueprints {
         reason.items = 'more new items than old items (or vice versa).';
         return true; // more new items than old items (or vice versa)
       }
-      return newItemsParams.reduce((is, newItem, idx) => {
+      return newItemsParams.some((newItem, idx) => {
         // check that all the items are identical
         const existingItem = oldItemsParams[idx];
         try {
           const itemsChanged =
-            is ||
             !newItem ||
             !existingItem ||
             newItem.itemId !== existingItem.itemId ||
             newItem.mediaUrl !== existingItem.mediaUrl ||
-            newItem.metaData && existingItem.metaData && newItem.metaData.type !== existingItem.metaData.type;
+            newItem.measured !== existingItem.measured ||
+            newItem.metaData && existingItem.metaData && (newItem.metaData.type !== existingItem.metaData.type || newItem.metaData.title !== existingItem.metaData.title || newItem.metaData.description !== existingItem.metaData.description);
           if (itemsChanged) {
             reason.items = `items #${idx} id was changed.`;
           }

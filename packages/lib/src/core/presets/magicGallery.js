@@ -13,7 +13,7 @@ export const fixedStyles = {
   groupTypes: undefined,
   oneRow: undefined,// later on in layoutHelper this can be changed if it is false, so not exactly fixed.
   imageMargin: undefined,
-  floatingImages: undefined,
+  scatter: undefined,
   galleryMargin: undefined,
   chooseBestGroup: undefined,
   smartCrop: undefined,
@@ -27,6 +27,7 @@ export const fixedStyles = {
   cropOnlyFill: undefined,
   fixedColumns: undefined,
   enableInfiniteScroll: undefined,
+  slideshowLoop: false,
 }
 
 const getStyleBySeed = (seed) => {
@@ -84,7 +85,7 @@ const getStyleBySeed = (seed) => {
     galleryMargin: featureManager.supports.spacingCalculation
       ? 0
       : numFromSeed(0, 5, 'imageMargin'),
-    floatingImages: 0,
+    scatter: 0,
     chooseBestGroup: boolFromSeed('chooseBestGroup'),
     smartCrop: boolFromSeed('smartCrop'),
     cubeType: 'fill',

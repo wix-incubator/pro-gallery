@@ -17,7 +17,7 @@ import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
 
-function SideBar({ items, blueprintsManager }) {
+function SideBar({ items, blueprintsManager, visible }) {
   const {
     // preset,
     // setPreset,
@@ -146,10 +146,13 @@ function SideBar({ items, blueprintsManager }) {
       <h3 className={s.title}>Playground Gizmos</h3>
       <div className={s.controls}>
         <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => { }}>
-          <Collapse.Panel header="Media Types" key="media">
+          <Collapse.Panel header="Media" key="media">
             <Form layout="vertical">
               <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
                 <InputNumber min={0} max={100} defaultValue={gallerySettings.numberOfItems || 0} onChange={val => setGallerySettings({ numberOfItems: val })} />
+              </Form.Item>
+              <Form.Item label="Initial Item">
+                <InputNumber min={0} max={gallerySettings.numberOfItems || Infinity} defaultValue={gallerySettings.initialIdx || 0} onChange={val => setGallerySettings({ initialIdx: val })} />
               </Form.Item>
               <Form.Item label="Media Type">
                 <Select defaultValue={gallerySettings.mediaType || 'mixed'} onChange={val => setGallerySettings({ mediaType: val })}>
@@ -161,7 +164,7 @@ function SideBar({ items, blueprintsManager }) {
               </Form.Item>
             </Form>
           </Collapse.Panel>
-          <Collapse.Panel header="Gallery Styles" key="styles">
+          <Collapse.Panel header="Styles" key="styles">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Show all Styles" labelAlign="left">
                 <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({ showAllStyles: e })} />
@@ -181,6 +184,9 @@ function SideBar({ items, blueprintsManager }) {
               </Form.Item>
               <Form.Item label="Use Blueprints" labelAlign="left">
                 <Switch checked={!!gallerySettings.useBlueprints} onChange={e => setGallerySettings({ useBlueprints: e })} />
+              </Form.Item>
+              <Form.Item label="Use Layout Fixer" labelAlign="left">
+                <Switch checked={!!gallerySettings.useLayoutFixer} onChange={e => setGallerySettings({ useLayoutFixer: e })} />
               </Form.Item>
             </Form>
             <Form layout="vertical">
@@ -203,7 +209,7 @@ function SideBar({ items, blueprintsManager }) {
                 <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&useLayoutFixer=${gallerySettings.useLayoutFixer}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
@@ -231,7 +237,7 @@ function SideBar({ items, blueprintsManager }) {
           </Collapse.Panel>
         </Collapse>
 
-      {!utils.isMobile() && <>
+      {!utils.isMobile() && !!visible && <>
           <div style={{ height: 120 }} />
 
           <div className={s.code}>

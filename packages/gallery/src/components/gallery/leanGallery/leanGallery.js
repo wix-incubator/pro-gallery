@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, processLayouts, addPresetStyles, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, processLayouts, addPresetStyles, isSEOMode , utils} from 'pro-gallery-lib';
 import {getInnerInfoStyle} from '../../item/itemViewStyleProvider';
 import './leanGallery.scss';
 
@@ -37,10 +37,10 @@ export default class LeanGallery extends React.Component {
 
   // #region Gallery
   createGalleryStyle() {
-    const { gridStyle, numberOfImagesPerRow, imageMargin, cubeImages } = this.props.styles;
+    const { gridStyle, fixedColumns, imageMargin, cubeImages } = this.props.styles;
 
     const itemSize = this.calcItemContainerSize();
-    const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? numberOfImagesPerRow : this.state.numberOfColumns;
+    const numberOfColumns = gridStyle === GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW ? fixedColumns : this.state.numberOfColumns;
     const gridTemplateColumns = numberOfColumns > 0 ? `repeat(${numberOfColumns}, 1fr)` : `repeat(auto-fit, minmax(${itemSize.width}px, 1fr))`;
 
     return {
@@ -61,7 +61,7 @@ export default class LeanGallery extends React.Component {
       return 0;
     }
 
-    const itemSize = this.calcItemContainerSize();
+    const itemSize = this.calcItemContainerSize(undefined, props);
     let numOfCols = 1;
     if (props.styles.fixedColumns > 0) {
       numOfCols = props.styles.fixedColumns;
@@ -82,13 +82,12 @@ export default class LeanGallery extends React.Component {
   // #endregion
 
   // #region Item container
-  calcItemContainerSize(item) {
-    const { styles, container } = this.props;
+  calcItemContainerSize(item, props) {
+    const { styles, container } = props || this.props;
     const { targetItemSize, cubeImages, titlePlacement, textBoxHeight, cubeRatio, imageMargin } = styles;
 
     const itemWidth = container.width > 0 ? Math.min(targetItemSize, container.width) : targetItemSize;
     let itemHeight = itemWidth / cubeRatio;
-
 
     if (item && cubeImages === false) {
       const ratio = get(item, 'width') / get(item, 'height');
@@ -134,12 +133,11 @@ export default class LeanGallery extends React.Component {
       return {
         borderStyle: 'solid',
         borderWidth: styles.itemBorderWidth,
-        borderColor: styles.itemBorderColor.value,
+        borderColor: utils.formatColor(styles.itemBorderColor),
         borderRadius: styles.itemBorderRadius
       };
     }
   }
-
   // #endregion
 
   // #region Image wrapper
@@ -217,10 +215,12 @@ export default class LeanGallery extends React.Component {
 
   createImageStyle(imageWrapperStyle) {
     const { width = '100%', height = 'auto' } = imageWrapperStyle;
-
+    const blockDownloadStyles = utils.isiOS() && !this.props.styles.allowContextMenu ? {'-webkit-user-select': 'none',
+    '-webkit-touch-callout': 'none'} : {};
     return {
       width,
       height,
+      ...blockDownloadStyles,
       ...this.createImageBorder()
     }
   }
@@ -233,7 +233,7 @@ export default class LeanGallery extends React.Component {
         boxSizing: 'border-box',
         borderStyle: 'solid',
         borderWidth: styles.itemBorderWidth,
-        borderColor: styles.itemBorderColor.value,
+        borderColor: utils.formatColor(styles.itemBorderColor),
         borderRadius: styles.itemBorderRadius,
       }
     }
@@ -308,7 +308,8 @@ export default class LeanGallery extends React.Component {
           const linkParams = this.createLinkParams(item);
           const clickable = (linkParams && itemClick === GALLERY_CONSTS.itemClick.LINK) || ([GALLERY_CONSTS.itemClick.EXPAND, GALLERY_CONSTS.itemClick.FULLSCREEN].includes(itemClick)) || this.isMetadataLinkExists(item);
           const itemData = {...item, id: item.itemId, idx: itemIdx};
-          const itemProps = {...itemData, ...item.metaData, style: this.state.itemStyle, styleParams: styles};
+          const metadata = item.metaData || item.metadata;
+          const itemProps = {...itemData, ...metadata, style: this.state.itemStyle, styleParams: styles};
           const imageWrapperStyle = this.createImageWrapperStyle(item);
           const infoHeight = styles.textBoxHeight;
           const texts = placement => (typeof customInfoRenderer === 'function') && (styles.titlePlacement === placement) && (
@@ -362,5 +363,6 @@ const get = (item, attr) => {
 }
 
 export const formatLeanGalleryStyles = (styles) => {
-	return processLayouts(addPresetStyles(styles)); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+  const customExternalInfoRendererExists = true;
+	return processLayouts(addPresetStyles(styles), customExternalInfoRendererExists); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };

@@ -8,6 +8,7 @@ export const fixedStyles = {
   scrollDirection: SCROLL_DIRECTION.VERTICAL,
   groupSize: 1,
   groupTypes: '1',
+  slideshowLoop: false,
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   fixedColumns: 0,

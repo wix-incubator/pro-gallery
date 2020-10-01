@@ -39,7 +39,8 @@ import autoSlideshowInterval from './autoSlideshowInterval';
 import smartCrop from './smartCrop';
 import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
-import floatingImages from './floatingImages';
+import slideAnimation from './slideAnimation';
+import scatter from './scatter';
 import thumbnailSpacings from './thumbnailSpacings';
 import slideshowLoop from './slideshowLoop';
 import arrowsSize from './arrowsSize';
@@ -122,7 +123,8 @@ export default {
     smartCrop,
     minItemSize,
     scrollAnimation,
-    floatingImages,
+    slideAnimation,
+    scatter,
     thumbnailSpacings,
     slideshowLoop,
     arrowsSize,

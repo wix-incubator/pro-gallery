@@ -1,3 +1,214 @@
+## [v2.1.35](https://pro-gallery-2-1-35.surge.sh) (30/09/2020)
+ 
+#### GALLERY
+ -  Add onKeyDown event to handle case of opening FullScreen with Screen-Reader
+ -  fix: slideshow RTL and current idx fixes
+ -  upgrade react-player 2
+ 
+
+---
+## [v2.1.34](https://pro-gallery-2-1-34.surge.sh) (23/09/2020)
+ 
+#### GALLERY
+ -  upgrade react-player to ^2.6.0
+
+---
+## [v2.1.33](https://pro-gallery-2-1-33.surge.sh) (23/09/2020)
+ 
+#### LIB
+ -  Add title and description as item changed params
+
+---
+## [v2.1.32](https://pro-gallery-2-1-32.surge.sh) (23/09/2020)
+ 
+#### GALLERY
+ -  fix (itemView): remove animations from preview mode
+ -  feature (slideshow): add support for fade animation is horizontal galleries
+ -  improve (layoutFixer): createLayoutFixer as soon as possible.
+
+---
+## [v2.1.31](https://pro-gallery-2-1-31.surge.sh) (22/09/2020)
+ 
+#### GALLERY
+ -  Added 'resizeMediaUrl' func to debouncedReCreateGallery (fix broken images in albums upload)
+ -  tests: added a custom tests reporter
+ -  improve (itemView): use item transitions in preview mode
+
+---
+## [v2.1.30](https://pro-gallery-2-1-30.surge.sh) (17/09/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainer):  item slice
+
+---
+## [v2.1.29](https://pro-gallery-2-1-29.surge.sh) (15/09/2020)
+ 
+#### GALLERY
+ -  add a layoutFixer for prerenderedMode
+
+---
+## [v2.1.28](https://pro-gallery-2-1-28.surge.sh) (15/09/2020)
+ 
+#### GALLERY
+ -  leanGallery: use processLayouts
+
+---
+## [v2.1.27](https://pro-gallery-2-1-27.surge.sh) (15/09/2020)
+ 
+#### GALLERY + LIB
+ -  use visibale items only for prerender mode.
+
+---
+## [v2.1.26](https://pro-gallery-2-1-26.surge.sh) (14/09/2020)
+ 
+#### MAIN
+ - : travis: run "test:all" (instead of "test") before running build.
+
+---
+## [v2.1.25](https://pro-gallery-2-1-25.surge.sh) (14/09/2020)
+ 
+#### GALLERY + LIB
+ -  leanGallery: fix mobile settings to apply on gallery
+ -  fix (itemView): use isEditMode as a function
+ -  improve (styleParams): support colors as rgba / hex string (keep legacy {value: ...} support)
+ -  improve (itemView): use item transitions only in edit mode
+
+---
+## [v2.1.24](https://pro-gallery-2-1-24.surge.sh) (14/09/2020)
+ 
+#### GALLERY
+ -  leanGallery: fix mobile settings to apply on gallery
+ -  fix (itemView): use isEditMode as a function
+ -  improve (styleParams): support colors as rgba / hex string (keep legacy {value: ...} support)
+ -  improve (itemView): use item transitions only in edit mode
+
+---
+## [v2.1.23](https://pro-gallery-2-1-23.surge.sh) (13/09/2020)
+ 
+#### LIB
+ -  Handle case of video autoplay on ios devices
+
+#### ALL
+ -  improve (scatter): refactor scatter to be a part of the layout
+
+---
+## [v2.1.22](https://pro-gallery-2-1-22.surge.sh) (08/09/2020)
+ 
+#### LIB
+ -  Added resettemLooping to blueprintsManager
+
+---
+## [v2.1.21](https://pro-gallery-2-1-21.surge.sh) (08/09/2020)
+ 
+#### GALLERY
+ -  fixed createDynamicStyles of overlayBackground (will receive it as an arg), fixed itemHover -> shouldRenderHoverInnerIfExist (when alwaysShowHover, it is true).
+ -  Refactor infinate loop in slideshow, slider, thumbnails loop. Fix slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
+
+ #### MAIN
+ -  REVERT: tests (.travis.yml): run all tests in travis
+
+---
+## [v2.1.20](https://pro-gallery-2-1-20.surge.sh) (08/09/2020)
+ 
+#### OTHER
+ -  temporarily remove test:e2e script
+
+---
+## [v2.1.19](https://pro-gallery-2-1-19.surge.sh) (08/09/2020)
+ 
+#### GALLERY
+ -  Revereted code. stabilizing PG.
+
+---
+## [v2.1.18](https://pro-gallery-2-1-18.surge.sh) (07/09/2020)
+ 
+#### GALLERY
+ -  Refactor infinite loop in slideshow, slider, thumbnails loop. 
+ -  Fix slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
+
+---
+## [v2.1.17](https://pro-gallery-2-1-17.surge.sh) (07/09/2020)
+ 
+#### GALLERY
+ -  REVERTED changes done in 2.1.16.
+
+---
+## [v2.1.16](https://pro-gallery-2-1-16.surge.sh) (07/09/2020)
+ 
+#### GALLERY
+ - Refactor infinate loop in slideshow, slider, thumbnails loop.
+ - Fix: slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
+
+---
+## [v2.1.15](https://pro-gallery-2-1-15.surge.sh) (02/09/2020)
+ 
+#### GALLERY
+ -  fix: arrows are not showing for galleries below the page fold
+
+---
+## [v2.1.14](https://pro-gallery-2-1-14.surge.sh) (01/09/2020)
+ 
+
+
+#### GALLERY
+      -  Fix an issue where blueprints did not get the formFactor for viewModeWrapper and styles were not fitted for mobile view 
+
+---
+## [v2.1.13](https://pro-gallery-2-1-13.surge.sh) (31/08/2020)
+
+#### GALLERY
+ -improve dynamic css / animations creation flow
+
+---
+## [v2.1.12](https://pro-gallery-2-1-12.surge.sh) (26/08/2020)
+ 
+#### GALLERY
+ -  fix: removed getMoreItems call from willRecieveProps
+
+---
+## [v2.1.11](https://pro-gallery-2-1-11.surge.sh) (25/08/2020)
+ 
+#### GALLERY
+ Remove size transitions until item is loaded (looks bad in SSR)
+
+---
+## [v2.1.10](https://pro-gallery-2-1-10.surge.sh) (25/08/2020)
+ 
+#### GALLERY
+ -  Block download on iOS when not allowed
+ -  fix (galleryContainer): fix 'false' strings in dynamic styles
+ -  Add protection for highres image onLoad not called
+
+#### PLAYGROUND
+ -  blueprints flow: allow requesting blueprints from node server(local only)
+
+---
+## [v2.1.9](https://pro-gallery-2-1-9.surge.sh) (23/08/2020)
+ 
+#### PLAYGROUND
+ -  Hide the code generator button if the sidebar is hidden
+
+---
+## [v2.1.8](https://pro-gallery-2-1-8.surge.sh) (23/08/2020)
+ 
+#### GALLERY
+ -  leanGallery: update tests
+
+#### PLAYGROUND
+ -  enable access to totalItemsCount from URL query param
+
+---
+## [v2.1.7](https://pro-gallery-2-1-7.surge.sh) (23/08/2020)
+ 
+#### GALLERY
+ -  (isNew) check if watermark changed
+ -  fix: return all items instead of visible items when there's currentIdx
+ -  fix: fix getMoreItems is not called when dimensions are unknown
+
+#### OTHER
+ -  improve (settings): add allowLeanGallery option settings
+
+---
 ## [v2.1.6](https://pro-gallery-2-1-6.surge.sh) (19/08/2020)
  
 #### GALLERY
