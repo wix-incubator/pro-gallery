@@ -1,3 +1,9 @@
+## [v2.1.37](https://pro-gallery-2-1-37.surge.sh) (01/10/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): export the layoutFixer as a seperate component
+
+---
 ## [v2.1.35](https://pro-gallery-2-1-35.surge.sh) (30/09/2020)
  
 #### GALLERY
