@@ -1,5 +1,5 @@
 import { INPUT_TYPES } from '../utils/constants';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Slidshow side info width',
