@@ -18,15 +18,11 @@ export function scrollToItemImp(scrollParams) {
     fixedScroll,
   } = scrollParams;
 
+  const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
   if (oneRow) {
-    from = horizontalElement.scrollLeft;
-    if (isRTL) {
-      to = from - (itemIdx * galleryWidth) / 2;
-    } else {
-      to = from + (itemIdx * galleryWidth) / 2;
-    }
-    // console.log('[RTL SCROLL] scrollToItemImp: ', from, to);
+    from = horizontalElement.scrollLeft * rtlFix;
+    to = from + (itemIdx * galleryWidth) / 2;
   } else {
     from = top;
     to = top + (itemIdx * galleryHeight) / 2;
@@ -41,10 +37,6 @@ export function scrollToItemImp(scrollParams) {
     const item = items.find(itm => itm.idx === itemIdx);
     to = oneRow ? utils.get(item, 'offset.left') : utils.get(item, 'offset.top');
 
-    if (item && isRTL) {
-      to += item.width;
-    }
-
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, item);
     }
@@ -58,24 +50,18 @@ export function scrollToItemImp(scrollParams) {
       //set scroll to place the item in the middle of the component
       const diff = (galleryWidth - item.width) / 2;
       if (diff > 0) {
-        if (isRTL) {
-          to += diff;
-        } else {
-          to -= diff;
-        }
-      }
-      if (isRTL) {
-        to = totalWidth - to;
+        to -= diff;
       }
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
+      to *= rtlFix;
+      from *= rtlFix;
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
     }
   }
   if (oneRow) {
-
     return horizontalCssScrollTo(
       horizontalElement,
       Math.round(from),
@@ -231,7 +217,7 @@ function isWithinPaddingHorizontally({
 }
 
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
-  const change = to - from;
+  const change = (to - from);
 
   const scrollerInner = scroller.firstChild;
 
@@ -242,7 +228,7 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   Object.assign(scrollerInner.style, {
     transition: `margin ${duration}ms linear`,
     '-webkit-transition': `margin ${duration}ms linear`,
-  }, isRTL ? {
+  }, (isRTL) ? {
     marginRight: `${change}px`,
   } : {
     marginLeft: `${-1 * change}px`,

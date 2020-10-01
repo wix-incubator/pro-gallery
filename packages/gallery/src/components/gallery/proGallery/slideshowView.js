@@ -44,32 +44,41 @@ class SlideshowView extends GalleryComponent {
     return this.state.currentIdx === 0
   }
 
-  isScrollStart(isRTL = this.props.styleParams.isRTL) {
+  isScrollStart() {
 
-    const {items, totalItemsCount}  = this.props;
+    const {slideAnimation} = this.props.styleParams;
 
-    if (this.props.styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
+    if (slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
       return false;
     }
 
     if (this.container) {
-      const {scrollLeft, scrollWidth, clientWidth} = this.container;
-      if (isRTL) {
-        return (items.length >= totalItemsCount) && (scrollLeft + clientWidth >= scrollWidth - 1);
-      } else {
-        return scrollLeft <= 1
-      }
+      return this.getScrollLeft() <= 1
     } else {
       return false;
     }
   }
+  
   isScrollEnd() {
-    const {isRTL, slideshowLoop} = this.props.styleParams;
 
-    if (slideshowLoop) {
+    const {items, totalItemsCount}  = this.props;
+    const {slideshowLoop, slideAnimation} = this.props.styleParams;
+
+    if (slideshowLoop || slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
       return false;
     }
-    return this.isScrollStart(!isRTL); //start and end are reversed by RTL
+
+    if (this.container) {
+      const {scrollWidth, clientWidth} = this.container;
+      const scrollLeft = this.getScrollLeft();
+      const allItemsLoaded = (items.length >= totalItemsCount);
+      const visibleLeft = scrollLeft + clientWidth;
+      const visibleScroll = scrollWidth - 1;
+
+      return allItemsLoaded && (visibleLeft >= visibleScroll);
+    } else {
+      return false;
+    }
   }
 
   isFirstItemFullyVisible(){
@@ -129,6 +138,7 @@ class SlideshowView extends GalleryComponent {
       ignoreScrollPosition = true;
     }
 
+    direction *= (this.props.styleParams.isRTL ? -1 : 1);
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
       this.nextGroup({direction, isAutoTrigger, scrollDuration}); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
@@ -146,7 +156,7 @@ class SlideshowView extends GalleryComponent {
     }
     this.isSliding = true;
 
-    direction *= (this.props.styleParams.isRTL ? -1 : 1);
+
     let currentIdx;
     if (ignoreScrollPosition) {
       currentIdx = this.state.currentIdx;
@@ -158,11 +168,13 @@ class SlideshowView extends GalleryComponent {
       }
     }
 
+
     let nextItem = currentIdx + direction;
     if (!this.props.styleParams.slideshowLoop){
       nextItem = Math.min(this.props.galleryStructure.items.length - 1, nextItem);
       nextItem = Math.max(0, nextItem);
     }
+
 
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
@@ -234,7 +246,6 @@ class SlideshowView extends GalleryComponent {
       return;
     }
     this.isSliding = true;
-    direction *= (this.props.styleParams.isRTL ? -1 : 1);
     const currentGroupIdx = this.getCenteredGroupIdxByScroll();
     let currentGroup = currentGroupIdx + direction;
     const  scrollToGroup  = this.props.actions.scrollToGroup;
@@ -613,15 +624,15 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCenteredItemIdxByScroll() {
-    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
+    const scrollLeft = this.getScrollLeft();
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const items = this.props.galleryStructure.galleryItems;
 
     let centeredIdx;
 
-    const scrollPos = this.props.styleParams.isRTL ?
-    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    scrollLeft + this.props.container.galleryWidth / 2;
+    // const scrollPos = this.props.styleParams.isRTL ?
+    // this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
+    const scrollPos = scrollLeft + this.props.container.galleryWidth / 2;
 
     if (scrollPos === 0){
       centeredIdx = 0;
@@ -643,16 +654,14 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCenteredGroupIdxByScroll() {
-    const scrollLeft = (this.container && this.container.scrollLeft) || 0;
+    const scrollLeft = this.getScrollLeft();
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const groups = this.props.galleryStructure.groups;
 
     let centeredGroupIdx;
 
-    const scrollPos = this.props.styleParams.isRTL ?
-    this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    scrollLeft + this.props.container.galleryWidth / 2;
-
+    const scrollPos = scrollLeft + this.props.container.galleryWidth / 2;
+    
     if (scrollPos === 0){
       centeredGroupIdx = 0;
     } else {
@@ -1118,6 +1127,10 @@ class SlideshowView extends GalleryComponent {
     };
   }
 
+  getScrollLeft() {
+    return this.container ? ((this.props.styleParams.isRTL ? -1 : 1) * this.container.scrollLeft) : 0;
+  }
+
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentWillReceiveProps(props) {
@@ -1157,10 +1170,18 @@ class SlideshowView extends GalleryComponent {
       return;
     }
     setTimeout(()=>{
-      const atStart = this.isScrollStart() || this.isFirstItem();
-      const atEnd = this.isScrollEnd() || this.isLastItem();
       const {isRTL} = this.props.styleParams;
       const { hideLeftArrow, hideRightArrow } = this.state;
+
+      const isScrollStart = this.isScrollStart();
+      const isFirstItem = this.isFirstItem();
+      const isScrollEnd = this.isScrollEnd();
+      const isLastItem = this.isLastItem();
+      
+
+      const atStart = isScrollStart || isFirstItem;
+      const atEnd = isScrollEnd || isLastItem;
+
       const nextHideLeft = (!isRTL && atStart) || (isRTL && atEnd);
       const nextHideRight = (isRTL && atStart) || (!isRTL && atEnd);
       const isNew = !!nextHideLeft !== !!hideLeftArrow || !!nextHideRight !== !!hideRightArrow;
@@ -1171,7 +1192,7 @@ class SlideshowView extends GalleryComponent {
           hideRightArrow: !!nextHideRight
         })
       }
-    },500)
+    }, 50)
   }
   navigationOutHandler() {
     //TODO remove after full refactor release
