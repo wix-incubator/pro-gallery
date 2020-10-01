@@ -937,7 +937,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     return (
-      <div style={{display:'flex'}}>
+      <div>
         <div
           id="pro-gallery-container"
           className={
@@ -954,7 +954,6 @@ class SlideshowView extends GalleryComponent {
           {this.createAutoSlideShowPlayButton()}
           {this.createSlideShowNumbers()}
         </div>
-        {this.getCustomSideBar()}
       </div>
     );
   }
@@ -1265,6 +1264,7 @@ class SlideshowView extends GalleryComponent {
 
     const gallery = this.createGallery();
     const thumbnails = this.getThumbnails();
+    const sideBar = this.getCustomSideBar();
 
     if (utils.isVerbose()) {
       console.timeEnd('Rendering Gallery took ');
@@ -1281,6 +1281,7 @@ class SlideshowView extends GalleryComponent {
         {thumbnails[0]}
         {gallery}
         {thumbnails[1]}
+        {sideBar}
       </div>
     );
   }
