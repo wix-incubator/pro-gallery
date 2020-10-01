@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "2.1.33",
+  "version": "2.1.37",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -45,7 +45,7 @@
     "yoshi-template-intro": "^4.1.0"
   },
   "dependencies": {
-    "pro-layouts": "2.1.23"
+    "pro-layouts": "2.1.37"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
