@@ -1,7 +1,7 @@
 import React, {useEffect, Suspense} from 'react';
 // import {SideBar} from '../SideBar';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
+import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
@@ -26,6 +26,7 @@ const blueprintsManager = new BlueprintsManager({id: 'playground'});
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
 let shouldUseBlueprintsFromServer = false; //USE THIS ONLY FOR LOCAL TESTING WITH THE NODE SERVER;
 const initialItems = {
+  media: mixAndSlice(testMedia, ITEMS_BATCH_SIZE),
   mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
   texts: mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
   videos: mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
@@ -41,7 +42,7 @@ export function App() {
   sideShownOnce = sideShownOnce || showSide;
 
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
-  const {numberOfItems = 0, mediaType = 'mixed'} = gallerySettings || {};
+  const {numberOfItems = 0, mediaTypes = 'media'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
   const switchState = () => {
@@ -89,7 +90,20 @@ export function App() {
   }
 
   const createItems = () => {
-    return mixAndSlice((mediaType === 'images' ? testImages : mediaType === 'videos' ? testVideos : mediaType === 'texts' ? testTexts : testItems), numberOfItems || ITEMS_BATCH_SIZE);
+    const batchSize = numberOfItems || ITEMS_BATCH_SIZE;
+    switch (mediaTypes) {
+      case 'images':
+        return mixAndSlice(testImages, batchSize);
+      case 'videos':
+        return mixAndSlice(testVideos, batchSize);
+      case 'texts':
+        return mixAndSlice(testTexts, batchSize);
+      case 'mixed':
+        return mixAndSlice(testItems, batchSize);
+      case 'media':
+      default:
+        return mixAndSlice(testMedia, batchSize);
+    }
   }
 
   const getItems = () => {
@@ -99,7 +113,7 @@ export function App() {
       return monochromeImages.slice(0,20);
     }
 
-    const theItems = items || initialItems[mediaType];
+    const theItems = items || initialItems[mediaTypes];
     if (numberOfItems > 0) {
       return theItems.slice(0, numberOfItems);
     } else {

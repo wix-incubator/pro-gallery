@@ -1756,9 +1756,11 @@ const monochromeImages = [
   }
 ]
 
-const testItems = [...testImages, ...testVideos, ...testTexts];
+const testMedia = [...testImages, ...testVideos];
+const testItems = [...testMedia, ...testTexts];
 
 export {
+  testMedia,
   testImages,
   testVideos,
   testTexts,

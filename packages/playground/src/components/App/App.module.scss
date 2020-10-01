@@ -129,13 +129,14 @@ input, button, select, optgroup, textarea {
     width: 100%;
     padding: 20px;
     display: block;
+    box-sizing: border-box;
 
     .playground-info-title {
       font-size: 18px;
       font-weight: 400;
       letter-spacing: 1px;
       color: #999;
-      padding: 15px;
+      padding: 5px;
       line-height: 32px;
       text-transform: uppercase;
     }
