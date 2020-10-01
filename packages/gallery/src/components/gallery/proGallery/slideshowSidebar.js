@@ -24,7 +24,7 @@ class SlideshowSidebar extends GalleryComponent {
     
     const item = this.props.items[this.props.currentIndex];
     const { customSlideshowInfoRenderer } = this.props;
-    const slideshowInfo = customSlideshowInfoRenderer
+    const slideshowInfo = customSlideshowInfoRenderer && item
         ? customSlideshowInfoRenderer({...this.props,...item.renderProps(), isMobile: false}) : null;
     if (!this.shouldHaveSideInfo()) {
       return null;

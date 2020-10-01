@@ -81,6 +81,7 @@ class galleryDriver {
       itemShadowBlur: 20,
       itemShadowDirection: 135,
       itemShadowSize: 10,
+      slideshowInfoPlacement: GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM
     };
 
     this.scroll = {
