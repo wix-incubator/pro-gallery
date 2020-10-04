@@ -7,6 +7,8 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper'
+import {LayoutFixer} from './layoutFixer';
+import findNeighborItem from '../../helpers/layoutUtils';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -24,6 +26,7 @@ export class GalleryContainer extends React.Component {
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
+    this.findNeighborItem = this.findNeighborItem.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(this.setPlayingIdxState);
 
     const initialState = {
@@ -534,6 +537,8 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
+  findNeighborItem = (itemIdx, dir) => findNeighborItem(itemIdx, dir,this.state.structure.items) // REFACTOR BLUEPRINTS - this makes the function in the layouter irrelevant (unless the layouter is used as a stand alone with this function, maybe the layouter needs to be split for bundle size as well...)
+
   render() {
     if (!this.canRender()) {
       return null;
@@ -551,11 +556,6 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
-
-    const findNeighborItem = this.layouter
-      ? this.layouter.findNeighborItem
-      : (() => {});
-
     return (
       <div
         data-key="pro-gallery-inner-container"
@@ -601,7 +601,7 @@ export class GalleryContainer extends React.Component {
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           actions={{
             ...this.props.actions,
-            findNeighborItem,
+            findNeighborItem: this.findNeighborItem,
             toggleLoadMoreItems: this.toggleLoadMoreItems,
             eventsListener: this.eventsListener,
             setWixHeight: (() => {}),
