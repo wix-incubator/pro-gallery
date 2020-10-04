@@ -7,7 +7,6 @@ import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper'
-import {LayoutFixer} from './layoutFixer';
 import findNeighborItem from '../../helpers/layoutUtils';
 
 export class GalleryContainer extends React.Component {
