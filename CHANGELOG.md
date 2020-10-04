@@ -1,3 +1,16 @@
+## [v2.1.38](https://pro-gallery-2-1-38.surge.sh) (04/10/2020)
+ 
+#### GALLERY
+ -  added findNeighborItem from the layouter to the gallery
+
+---
+## [v2.1.38](https://pro-gallery-2-1-38.surge.sh) (04/10/2020)
+ 
+#### GALLERY
+ -  fix rebase error
+ -  feat (GalleryContainer): added findNeighborItem from the layouter to the gallery
+
+---
 ## [v2.1.37](https://pro-gallery-2-1-37.surge.sh) (01/10/2020)
  
 #### GALLERY
