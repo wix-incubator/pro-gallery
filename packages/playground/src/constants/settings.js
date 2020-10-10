@@ -143,6 +143,7 @@ export const stylesBySection = {
         'scrollAnimation',
         'slideAnimation',
         'oneColorAnimationColor',
+        'mobileSwipeAnimations',
     ],
     [SECTIONS.IMAGE]: [
         // 'imageQuality',

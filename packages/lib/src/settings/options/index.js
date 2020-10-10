@@ -78,6 +78,7 @@ import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
+import mobileSwipeAnimations from './mobileSwipeAnimations';
 
 export default {
     itemClick,    
@@ -159,7 +160,8 @@ export default {
     playButtonForAutoSlideShow,
     hidePlay,
     overlayBackground,
-    allowLeanGallery
+    allowLeanGallery,
+    mobileSwipeAnimations
 }
 
 

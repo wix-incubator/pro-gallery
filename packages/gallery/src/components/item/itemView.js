@@ -60,6 +60,7 @@ class ItemView extends GalleryComponent {
     );
     this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(this);
     this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(this);
+    this.getMobileAnimations = this.getMobileAnimations.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -564,6 +565,45 @@ class ItemView extends GalleryComponent {
     return !itemDoesntHaveLink;
   }
 
+  getMobileAnimations(){
+    const { idx, currentIdx, animationProgress } = this.props;
+    const { mobileSwipeAnimations } = this.props.styleParams;
+
+    if (!utils.isMobile()) {
+      return {};
+    }
+
+    if (mobileSwipeAnimations === GALLERY_CONSTS.mobileSwipeAnimations.EXPAND) {
+      const scale = 1 - animationProgress;
+      return {
+        transform:  `scale(${Math.max(0.8, scale)})`,
+        transition : 'transform 200ms ease-in'
+      }
+    }
+    if (mobileSwipeAnimations === GALLERY_CONSTS.mobileSwipeAnimations.CAROUSEL) {
+      let scale = 1;
+      let translateY = 0;
+      if (idx === currentIdx + 1 || idx === currentIdx - 1) {
+        scale = animationProgress * 0.2 + 0.8
+        if (idx === currentIdx + 1) {
+          translateY = 50 * animationProgress;
+        } else if(idx === currentIdx - 1){
+          translateY = -50 * animationProgress;
+        }
+      }
+      return {
+        transform:`translateX(${translateY}px) scale(${scale})`,
+        transition : 'transform 200ms ease-in'
+      }
+    }
+    if (mobileSwipeAnimations === GALLERY_CONSTS.mobileSwipeAnimations.FADE) {
+      return {
+        opacity: idx !== currentIdx ? 0 : 1,
+        transition : 'opacity 600ms ease-in'
+      }
+    }
+  }
+
   getItemContainerStyles() {
     const { idx, currentIdx, offset, style, styleParams, settings = {} } = this.props;
     const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } = styleParams;
@@ -633,6 +673,7 @@ class ItemView extends GalleryComponent {
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
+      ...this.getMobileAnimations()
     };
 
     return itemWrapperStyles;

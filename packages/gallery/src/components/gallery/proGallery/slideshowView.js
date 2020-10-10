@@ -15,6 +15,7 @@ class SlideshowView extends GalleryComponent {
 
     this.navigationOutHandler = this.navigationOutHandler.bind(this);
     this.navigationInHandler = this.navigationInHandler.bind(this);
+    this.animateOnScroll = this.animateOnScroll.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
     this.onAutoSlideShowButtonClick = this.onAutoSlideShowButtonClick.bind(
@@ -26,14 +27,15 @@ class SlideshowView extends GalleryComponent {
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(this);
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
-    this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
-    this._next = utils.throttle(this.next.bind(this), 400).bind(this);
+    this._setCurrentItemByScroll = this.setCurrentItemByScroll;
+    this._next = this.next.bind(this);
     this.state = {
       currentIdx: props.currentIdx || 0,
       isInView: true,
       shouldStopAutoSlideShow: false,
       hideLeftArrow: !props.isRTL,
-      hideRightArrow: props.isRTL
+      hideRightArrow: props.isRTL,
+      animationProgress: 0,
     };
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
@@ -867,6 +869,7 @@ class SlideshowView extends GalleryComponent {
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },
+      animationProgress: this.state.animationProgress
     };
 
     const renderGroups = (column) => {
@@ -1210,6 +1213,18 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
   };
 
+  animateOnScroll() {
+    const { galleryWidth } = this.props.container;
+    const { scrollLeft } = this.container;
+    //const percent = scrollLeft - (galleryWidth * (this.state.currentIdx))
+    const percent = (scrollLeft / galleryWidth) - Math.floor(scrollLeft / galleryWidth)
+    //console.log('scrolllllliiinggg ',this.container.scrollLeft,galleryWidth,percent);
+    utils.setStateAndLog(this, 'Animating', {
+      animationProgress: percent,
+    });
+  }
+
+
   componentDidMount() {
     window.addEventListener('gallery_navigation_out', this.navigationOutHandler);
     window.addEventListener('gallery_navigation_in', this.navigationInHandler);
@@ -1219,6 +1234,7 @@ class SlideshowView extends GalleryComponent {
     );
     if (this.container) {
       this.container.addEventListener('scroll', this._setCurrentItemByScroll);
+      this.container.addEventListener('scroll', this.animateOnScroll);
     }
     if (this.state.currentIdx > 0) {
       this.props.actions.scrollToItem(this.state.currentIdx);
