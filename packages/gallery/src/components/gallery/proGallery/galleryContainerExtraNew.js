@@ -56,6 +56,8 @@ export class GalleryContainer extends React.Component {
       ...initialState,
       ...this.initialGalleryState,
     };
+
+    //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
 
   componentDidMount() {
@@ -90,7 +92,7 @@ export class GalleryContainer extends React.Component {
     const reCreateGallery = () => {
       const galleryState = this.propsToState(nextProps);
       if (Object.keys(galleryState).length > 0) {
-        this.setState(galleryState);
+        this.setState(galleryState, this.handleNewGalleryStructure);
       }
     };
 
