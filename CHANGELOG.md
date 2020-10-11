@@ -1,3 +1,9 @@
+## [v2.1.40](https://pro-gallery-2-1-40.surge.sh) (11/10/2020)
+ 
+#### GALLERY
+ -  blueprints - call GALLERY_CHANGED in handleNewGalleryStructure after receiving new props.
+
+---
 ## [v2.1.39](https://pro-gallery-2-1-39.surge.sh) (11/10/2020)
  
 #### LIB
