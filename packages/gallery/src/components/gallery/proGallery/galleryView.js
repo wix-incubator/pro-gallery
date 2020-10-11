@@ -259,6 +259,7 @@ class GalleryView extends GalleryComponent {
             id={'show-more-' + this.props.domId}
             className="show-more"
             onClick={this.showMoreItems}
+            onMouseDown={(e) => e.preventDefault()}
             data-hook="show-more"
             aria-label={buttonText}
             style={btnStyle}
