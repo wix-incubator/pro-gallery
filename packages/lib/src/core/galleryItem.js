@@ -333,7 +333,7 @@ class GalleryItem {
       this.urls.download_url._img = this.urls.download_url.img;
       this.urls.download_url.img = () => {
         const downloadUrl = this.urls.download_url._img();
-        return downloadUrl + (downloadUrl && downloadUrl.indexOf('?') > -1 ? '&' : '?') + `dn=${this.fileName}`;
+        return downloadUrl + (downloadUrl.includes('?') ? '&' : '?') + `dn=${this.fileName}`;
       }
     }
     return this.urls.download_url;
