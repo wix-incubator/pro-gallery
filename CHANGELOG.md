@@ -1,3 +1,9 @@
+## [v2.1.41](https://pro-gallery-2-1-41.surge.sh) (11/10/2020)
+ 
+#### GALLERY
+ -  catch errors on blueprint fail. dont blow up the gallery (wait for next props)
+
+---
 ## [v2.1.40](https://pro-gallery-2-1-40.surge.sh) (11/10/2020)
  
 #### GALLERY
