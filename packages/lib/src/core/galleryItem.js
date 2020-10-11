@@ -331,8 +331,10 @@ class GalleryItem {
     if (!this.urls.download_url) {
       this.urls.download_url = url;
       this.urls.download_url._img = this.urls.download_url.img;
-      this.urls.download_url.img = () =>
-        this.urls.download_url._img() + `?dn=${this.fileName}`;
+      this.urls.download_url.img = () => {
+        const downloadUrl = this.urls.download_url._img();
+        return downloadUrl + (downloadUrl.includes('?') ? '&' : '?') + `dn=${this.fileName}`;
+      }
     }
     return this.urls.download_url;
   }
@@ -502,10 +504,10 @@ class GalleryItem {
 
   get type() {
     switch (
-      this._type ||
-      this.dto.type ||
-      this.metadata.type ||
-      this.dto.media_type
+    this._type ||
+    this.dto.type ||
+    this.metadata.type ||
+    this.dto.media_type
     ) {
       case 'dummy':
         return 'dummy';
