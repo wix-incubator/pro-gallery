@@ -1,3 +1,9 @@
+## [v2.1.39](https://pro-gallery-2-1-39.surge.sh) (11/10/2020)
+ 
+#### LIB
+ -  Gallery Items - allow download links to include queryParams
+
+---
 ## [v2.1.38](https://pro-gallery-2-1-38.surge.sh) (04/10/2020)
  
 #### GALLERY
