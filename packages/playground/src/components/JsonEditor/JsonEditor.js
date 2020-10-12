@@ -101,7 +101,7 @@ class JsonEditor extends React.Component {
                   min={settings.min}
                   max={settings.max}
                   value={theValue}
-                  step={1}
+                  step={settings.step || 1}
                   onChange={val => this.onFieldChanged(key, val)}
                 />
               </Col>
@@ -109,7 +109,7 @@ class JsonEditor extends React.Component {
                 <InputNumber
                   min={settings.min}
                   max={settings.max}
-                  step={1}
+                  step={settings.step || 1}
                   value={theValue}
                   onChange={val => this.onFieldChanged(key, val)}
                   style={{ marginLeft: 5, width: 50 }}

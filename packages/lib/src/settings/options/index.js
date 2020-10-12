@@ -73,6 +73,7 @@ import scrollDirection from './scrollDirection';
 import isAutoSlideshow from './isAutoSlideshow';
 import loadMoreAmount from './loadMoreAmount';
 import videoSound from './videoSound';
+import videoSpeed from './videoSpeed';
 import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
@@ -155,6 +156,7 @@ export default {
     isAutoSlideshow,
     loadMoreAmount,
     videoSound,
+    videoSpeed,
     allowSlideshowCounter,
     playButtonForAutoSlideShow,
     hidePlay,

@@ -154,6 +154,7 @@ export const stylesBySection = {
     [SECTIONS.VIDEO]: [
         'hidePlay',
         'videoPlay',
+        'videoSpeed',
         'videoSound',
         'videoLoop',
     ],
