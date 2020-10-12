@@ -27,7 +27,6 @@ export class GalleryContainer extends React.Component {
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(this.setPlayingIdxState);
-
     const initialState = {
       pgScroll: 0,
       showMoreClickedAtLeastOnce: false,
@@ -62,9 +61,10 @@ export class GalleryContainer extends React.Component {
 
   componentDidMount() {
     this.scrollToItem(this.props.currentIdx, false, true, 0);
+    this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
-
+    
     try {
       if (typeof window.CustomEvent === 'function') {
         this.currentHoverChangeEvent = new CustomEvent('current_hover_change');

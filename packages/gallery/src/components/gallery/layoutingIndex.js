@@ -22,13 +22,9 @@ export default class BaseGallery extends React.Component {
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId}
     if (!isEligibleForLeanGallery(galleryProps)) {
-      try {
         blueprintsManager.createBlueprint(galleryProps).then(blueprint => {
           this.setState({blueprint});
-        });
-      } catch (e) {
-        console.error('Could not breate a blueprints in layoutingIndex ', e)
-      }
+        }).catch((e)=>{console.error('Could not breate a blueprints in layoutingIndex ', e)});
     }
     }
     
