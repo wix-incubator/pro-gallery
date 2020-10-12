@@ -126,7 +126,7 @@ export default class ImageItem extends GalleryComponent {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',
           key: 'gallery-item-image-img-preload',
           'data-hook': 'gallery-item-image-img-preload',
-          loading: "lazy",
+          loading: "eager",
           ...imageProps
         };
         const preloadStyles = isPrerenderMode() ? {
