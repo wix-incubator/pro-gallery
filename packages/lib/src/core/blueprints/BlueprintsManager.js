@@ -33,10 +33,12 @@ export default class BlueprintsManager {
 
     const blueprintChanged = Object.values(changedParams).some(changedParam => !!changedParam);
 
-    this.updateLastParamsIfNeeded(params, changedParams);
+    const blueprintCreated = Object.keys(blueprint).length > 0;
 
-    this.api.onBlueprintReady && this.api.onBlueprintReady({blueprint, blueprintChanged});
-    return this.cache[params] = this.existingBlueprint = blueprint;
+    this.updateLastParamsIfNeeded(params, changedParams, blueprintCreated);
+
+    blueprintCreated && this.api.onBlueprintReady && this.api.onBlueprintReady({blueprint, blueprintChanged});
+    return this.cache[params] = this.existingBlueprint = blueprint; //still returning for awaits... event is !blueprintCreated
 
   }
 
@@ -143,10 +145,12 @@ export default class BlueprintsManager {
   }
 
 
-  updateLastParamsIfNeeded({items,dimensions,styles}, changedParams) {
-    this.currentState.items = changedParams.itemsChanged ? items : this.currentState.items ;
-    this.currentState.dimensions = changedParams.containerChanged ? {...dimensions} : this.currentState.dimensions ;
-    this.currentState.styles = changedParams.stylesChanged ? {...styles} : this.currentState.styles ;
+  updateLastParamsIfNeeded({items,dimensions,styles}, changedParams, blueprintCreated) {
+    if (blueprintCreated) {
+      this.currentState.items = changedParams.itemsChanged ? items : this.currentState.items ;
+      this.currentState.dimensions = changedParams.containerChanged ? {...dimensions} : this.currentState.dimensions ;
+      this.currentState.styles = changedParams.stylesChanged ? {...styles} : this.currentState.styles ;
+    }
   }
 
   eventsListenerWrapper(eventsListenerFunc, originalArgs) {
