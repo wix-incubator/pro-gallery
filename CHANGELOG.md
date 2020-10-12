@@ -1,3 +1,17 @@
+## [v2.1.42](https://pro-gallery-2-1-42.surge.sh) (12/10/2020)
+ 
+#### LIB
+ -  blueprints manager - dont keep params of failed blueprints as baseline
+
+#### GALLERY
+ -  blueprints - add handle gallery structure on mount
+ -  preload blurry images with eager prop instead of lazy
+ -  load-more button: prevent focus on the button onMouseDown
+
+#### PLAYGROUND
+ -  improve (settings): add videoSpeed to playground
+
+---
 ## [v2.1.41](https://pro-gallery-2-1-41.surge.sh) (11/10/2020)
  
 #### GALLERY
