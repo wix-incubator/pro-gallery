@@ -621,6 +621,25 @@ class Utils {
     return isValidColor ? colorStr : defaultColor;
   }
 
+  logPlaygroundLink(styles, useBlueprints = false) {
+    try {
+      if (this.isVerbose()) {
+        const stylesStr = Object.entries(styles)
+          .filter(([key, val]) => (
+              typeof val !== 'object' &&
+              String(key).indexOf('Expand') === -1 && 
+              String(key).indexOf('Color') === -1
+          ))
+          .map(([key, val]) => `${key}=${encodeURI(val)}`)
+          .join('&');
+
+        console.log('Gallery Playground link:', `https://pro-gallery.surge.sh?useBlueprints=${useBlueprints}&${stylesStr}`);
+      }
+    } catch (e) {}
+
+
+  }
+
 }
 
 export default new Utils();

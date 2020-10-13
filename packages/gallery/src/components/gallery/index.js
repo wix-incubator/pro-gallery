@@ -40,11 +40,7 @@ export default class BaseGallery extends React.Component {
       GalleryComponent = LeanGallery;
     }
 
-    try {
-      if (utils.isVerbose()) {
-        console.log('Gallery Playground link:', `https://pro-gallery.surge.sh?useBlueprints=false&${Object.entries(galleryProps.styles).map(keyval => keyval.join('=')).join('&')}`);
-      }
-    } catch (e) {}
+    utils.logPlaygroundLink(galleryProps.styles);
 
     return <GalleryComponent key={key} {...galleryProps} />
   }
