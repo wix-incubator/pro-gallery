@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-lib';
+import { utils, defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
@@ -37,6 +37,12 @@ export default class BaseGallery extends React.Component {
     if (isEligibleForLeanGallery(galleryProps)) {
       GalleryComponent = LeanGallery;
     }
+
+    try {
+      if (utils.isVerbose()) {
+        console.log('Gallery Playground link:', `https://pro-gallery.surge.sh?useBlueprints=true&${Object.entries(galleryProps.styles).map(keyval => keyval.join('=')).join('&')}`);
+      }
+    } catch (e) {}
 
     return <GalleryComponent {...galleryProps} />
   }
