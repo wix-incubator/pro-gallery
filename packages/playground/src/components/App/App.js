@@ -270,6 +270,7 @@ export function App() {
           eventsListener={eventListener}
           totalItemsCount={getTotalItemsCount()}
           resizeMediaUrl={resizeMediaUrl}
+          settings={{avoidInlineStyles: !gallerySettings.useInlineStyles}}
           currentIdx={gallerySettings.initialIdx}
           useBlueprints={gallerySettings.useBlueprints}
           useLayoutFixer={gallerySettings.useLayoutFixer}

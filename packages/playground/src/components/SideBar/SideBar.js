@@ -189,6 +189,9 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Use Layout Fixer" labelAlign="left">
                 <Switch checked={!!gallerySettings.useLayoutFixer} onChange={e => setGallerySettings({ useLayoutFixer: e })} />
               </Form.Item>
+              <Form.Item label="Use Inline Styles" labelAlign="left">
+                <Switch checked={!!gallerySettings.useInlineStyles} onChange={e => setGallerySettings({ useInlineStyles: e })} />
+              </Form.Item>
             </Form>
             <Form layout="vertical">
               <Form.Item label="View Mode">
