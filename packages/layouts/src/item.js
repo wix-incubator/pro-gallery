@@ -393,6 +393,14 @@ export class Item {
     this.orgRatio = r;
   }
 
+  get roundedStyle() {
+    return {
+      ...this.style,
+      width: Math.floor(this.style.width),
+      height: Math.floor(this.style.height),
+    };
+  }
+
   get scheme() {
     return {
       id: this.id,
@@ -400,7 +408,7 @@ export class Item {
       inGroupIdx: this.inGroupIdx,
       dto: this.dto,
       type: this.type,
-      style: this.style,
+      style: this.roundedStyle,
       width: this.width,
       maxWidth: this.maxWidth,
       outerWidth: this.outerWidth,
