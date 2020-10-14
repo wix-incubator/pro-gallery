@@ -1,3 +1,12 @@
+## [v2.1.43](https://pro-gallery-2-1-43.surge.sh) (14/10/2020)
+ 
+#### LAYOUTS
+ -  fix (item): return rounded dimensions (without fractions)
+
+#### GALLERY
+ -  improve (index): add a playground link for debugging
+
+---
 ## [v2.1.42](https://pro-gallery-2-1-42.surge.sh) (12/10/2020)
  
 #### LIB
