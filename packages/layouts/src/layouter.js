@@ -221,7 +221,7 @@ export default class Layouter {
         this.targetItemSize =
           Math.floor(gallerySizeVal) +
           Math.ceil(
-            2 * (this.styleParams.imageMargin - this.styleParams.galleryMargin),
+            (this.styleParams.imageMargin - this.styleParams.galleryMargin),
           );
       }
 
@@ -288,8 +288,8 @@ export default class Layouter {
           colWidth -= infoWidth;
           fixedCubeHeight =
             fixedCubeHeight ||
-            (this.targetItemSize - infoWidth - imageMargin * 2) / cubeRatio +
-            imageMargin * 2; //calc the cube height only once
+            (this.targetItemSize - infoWidth - imageMargin) / cubeRatio +
+            imageMargin; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
         });
@@ -397,7 +397,7 @@ export default class Layouter {
           if (this.styleParams.oneRow) {
             this.strip.height =
               this.container.galleryHeight +
-              (this.styleParams.imageMargin - this.styleParams.galleryMargin);
+              (this.styleParams.imageMargin / 2 - this.styleParams.galleryMargin);
           } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the targetItemSize and not stretch
             this.strip.height = this.targetItemSize;
@@ -466,7 +466,7 @@ export default class Layouter {
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
       this.galleryHeight -
-      (this.styleParams.imageMargin - this.styleParams.galleryMargin) * 2;
+      (this.styleParams.imageMargin / 2 - this.styleParams.galleryMargin) * 2;
 
     this.width = this.lastGroup.left + this.lastGroup.width;
 
