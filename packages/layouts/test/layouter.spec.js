@@ -106,7 +106,7 @@ describe('Layouter', () => {
       const items = getItems();
 
       //old gallries already include the margin compensation
-      const containerA = { galleryWidth: 120, galleryHeight: 210 };
+      const containerA = { galleryWidth: 110, galleryHeight: 205 };
       const layouterA = new Layouter({
         items,
         container: containerA,
@@ -561,7 +561,7 @@ describe('Layouter', () => {
       styleParams.groupSize = 1;
 
       for (const margin of [10, 50, 100, 200]) {
-        styleParams.imageMargin = margin;
+        styleParams.imageMargin = margin * 2;
         gallery = getLayout({ items, container, styleParams });
 
         let lastItem = false;
@@ -595,7 +595,7 @@ describe('Layouter', () => {
       styleParams.groupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
 
       for (const margin of [0, 30, 40, 80]) {
-        styleParams.imageMargin = margin;
+        styleParams.imageMargin = margin * 2;
         gallery = getLayout({ items, container, styleParams });
 
         let marginDiff = 0;
