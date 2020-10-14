@@ -75,6 +75,9 @@ function editChangelogAndUpdateVersion(bump) {
         try {
             if (result.yesno === 'yes' || result.yesno === 'y') {
                 // child.on('exit', function (e, code) {
+                execSync(`rm **/package-lock.json`, {
+                    stdio: 'pipe'
+                });
                 execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
                     stdio: 'pipe'
                 });
