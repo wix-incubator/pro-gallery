@@ -1,3 +1,11 @@
+
+## [v2.1.44](https://pro-gallery-2-1-44.surge.sh) (15/10/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): preload the layout fixer and use opacity:0 always
+ -  fix (galleryhelpers): add try catch to viewport calculation (IE11 issues)
+
+---
 ## [v2.1.43](https://pro-gallery-2-1-43.surge.sh) (14/10/2020)
  
 #### LAYOUTS
