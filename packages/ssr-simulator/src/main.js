@@ -7,6 +7,7 @@ import App from './components/App';
 import { ServerDataProvider } from './state/serverDataContext';
 
 import './styles/index.scss';
+import 'pro-gallery/dist/statics/main.css';
 
 const serverData = window.__SERVER_DATA__;
 
