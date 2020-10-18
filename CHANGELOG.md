@@ -1,3 +1,6 @@
+## [v2.1.47](https://pro-gallery-2-1-47.surge.sh) (18/10/2020)
+
+---
 ## [v2.1.46](https://pro-gallery-2-1-46.surge.sh) (18/10/2020)
  
 #### GALLERY
