@@ -1,7 +1,5 @@
 
 import { createLayout } from 'pro-layouts';
-import { addPresetStyles } from 'pro-gallery-lib';
-import addLayoutStyles from '../helpers/layoutHelper';
 
 export const createLayoutFixer = () => {
     const convertDtoToLayoutItem = (dto) => {
@@ -100,7 +98,7 @@ export const createLayoutFixer = () => {
                     this.useLayouter = false
                 }
 
-                this.styleParams = addLayoutStyles(addPresetStyles(JSON.parse(this.getAttribute('styles'))));
+                this.styleParams = JSON.parse(this.getAttribute('styles'));
                 
                 if (!(this.styleParams && typeof this.styleParams === 'object')) {
                     this.useLayouter = false
@@ -159,7 +157,7 @@ export const createLayoutFixer = () => {
 
     if (typeof window !== 'undefined') {
         try {
-            console.log('[LAYOUT FIXER] start (script is running)');
+            console.log('[LAYOUT FIXER] Start (script is running)');
             createWebComponent()
         } catch (e) {
             console.error('Cannot create layout fixer', e);
