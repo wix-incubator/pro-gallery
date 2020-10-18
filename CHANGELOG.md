@@ -1,3 +1,10 @@
+## [v2.2.0](https://pro-gallery-2-2-0.surge.sh) (18/10/2020)
+ 
+#### GALLERY
+ -  improve (imageMargin): stop dividing the imageMargin by 2 in process styles (styleParams should not be mutable)
+ -  fix (layoutFixer): do not modify receive styles
+
+---
 ## [v2.1.47](https://pro-gallery-2-1-47.surge.sh) (18/10/2020)
 
 ---
