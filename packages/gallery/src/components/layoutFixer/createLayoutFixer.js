@@ -111,8 +111,6 @@ export const createLayoutFixer = () => {
                     top,
                     width,
                     height,
-                    galleryWidth: width,
-                    galleryHeight: height,
                     scrollBase: top,
                 };
                 console.log('[LAYOUT FIXER] measured container', this.measures);
@@ -135,17 +133,23 @@ export const createLayoutFixer = () => {
                 }
 
                 if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
-                    this.parent.querySelectorAll('.gallery-item-container').forEach((element, idx) => {
-                        !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
-                        setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
-                    })
-                    this.parent.querySelectorAll('.gallery-item-wrapper').forEach((element, idx) => {
-                        !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
-                        setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
-                    })
-                    this.setStylesDone = true;
-                    console.log('[LAYOUT FIXER] Done');
-                    console.timeEnd('[LAYOUT FIXER] Done');
+                    const itemContainers = this.parent.querySelectorAll('.gallery-item-container');
+                    const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
+                    if (itemWrappers.length > 0 && itemContainers.length > 0) {
+                        itemContainers.forEach((element, idx) => {
+                            !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                            setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
+                        })
+                        itemWrappers.forEach((element, idx) => {
+                            !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                            setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
+                        })
+                        this.setStylesDone = true;
+                        console.log('[LAYOUT FIXER] Done');
+                        console.timeEnd('[LAYOUT FIXER] Done');
+                    } else {
+                        this.retry();
+                    }
                 }
             }
         }

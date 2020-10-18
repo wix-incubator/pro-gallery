@@ -113,7 +113,7 @@ export default class Gallery extends React.PureComponent {
 
     return (
       <div className={containerClassName}>
-        {!!urlParams.useLayoutFixer ? <LayoutFixer
+        {viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? <LayoutFixer
           layoutFixerBundleUrl="http://localhost:3001/layoutFixer.bundle.js"
           items={items}
           styles={styles}
@@ -125,7 +125,6 @@ export default class Gallery extends React.PureComponent {
           styles={styles}
           settings={{avoidInlineStyles: !urlParams.useLayoutFixer}}
           useBlueprints={!!urlParams.useBlueprints}
-          useLayoutFixer={!!urlParams.useLayoutFixer}
           container={container}
           viewMode={viewMode}
           eventsListener={eventsListener}

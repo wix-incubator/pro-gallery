@@ -1,3 +1,29 @@
+## [v2.1.47](https://pro-gallery-2-1-47.surge.sh) (18/10/2020)
+
+---
+## [v2.1.46](https://pro-gallery-2-1-46.surge.sh) (18/10/2020)
+ 
+#### GALLERY
+ -  fix (layoutFixer): retry if elements do not exist
+
+---
+## [v2.1.45](https://pro-gallery-2-1-45.surge.sh) (18/10/2020)
+ 
+#### LIB
+ -  add urlSize to itemResizer
+
+#### GALLERY
+ -  improve (galleryContainer): add an option to disableSSROpacity
+ -  fix (layoutFixer): measure the container correctly
+
+---
+## [v2.1.44](https://pro-gallery-2-1-44.surge.sh) (15/10/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): preload the layout fixer and use opacity:0 always
+ -  fix (galleryhelpers): add try catch to viewport calculation (IE11 issues)
+
+---
 ## [v2.1.43](https://pro-gallery-2-1-43.surge.sh) (14/10/2020)
  
 #### LAYOUTS
