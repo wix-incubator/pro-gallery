@@ -221,7 +221,7 @@ export default class Layouter {
         this.targetItemSize =
           Math.floor(gallerySizeVal) +
           Math.ceil(
-            (this.styleParams.imageMargin / 2 - this.styleParams.galleryMargin),
+            2 * (this.styleParams.imageMargin / 2 - this.styleParams.galleryMargin),
           );
       }
 

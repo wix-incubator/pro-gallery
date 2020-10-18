@@ -781,13 +781,13 @@ class SlideshowView extends GalleryComponent {
     const containerStyle = {
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
       top: `calc(50% - 50px + ${imageMargin /
-        2}px - ${slideshowSpace / 2}px)`,
+        4}px - ${slideshowSpace / 2}px)`,
     };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
       oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${arrowsSize + 50 + 10}px`
-        : `${(imageMargin / 2)}px`;
+        : `${imageMargin / 2}px`;
     // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
 
     const prevContainerStyle = {
