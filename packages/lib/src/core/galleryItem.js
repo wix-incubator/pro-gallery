@@ -1,7 +1,7 @@
 import utils from '../common/utils/index';
 import { Item } from 'pro-layouts';
 import RESIZE_METHODS from '../common/constants/resizeMethods';
-import { URL_TYPES, URL_SIZES } from '../common/constants/urlTypes';
+import { URL_TYPES } from '../common/constants/urlTypes';
 
 class GalleryItem {
   constructor(config) {
@@ -145,7 +145,7 @@ class GalleryItem {
     return { width, height };
   }
 
-  resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, urlSize) {
+  resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams) {
     const resizeUrl = (item, url, ...args) => {
       let resizedUrl;
       if (typeof this.resizeMediaUrl === 'function') {
@@ -209,7 +209,6 @@ class GalleryItem {
         requiredHeight,
         sharpParams,
         focalPoint,
-        urlSize,
       );
 
     urls[URL_TYPES.LOW_RES] = () =>
@@ -221,7 +220,6 @@ class GalleryItem {
         (thumbSize * requiredHeight) / requiredWidth,
         { ...sharpParams, quality: 30, blur: 30 },
         focalPoint,
-        urlSize,
       );
 
     urls[URL_TYPES.SEO] = () =>
@@ -255,7 +253,6 @@ class GalleryItem {
         this.resizeWidth,
         this.resizeHeight,
         this.sharpParams,
-        URL_SIZES.RESIZED,
       );
     }
     return this.urls.resized_url;
@@ -263,13 +260,9 @@ class GalleryItem {
 
   get pixel_url() {
     if (!this.urls.pixel_url) {
-      this.urls.pixel_url = this.resizedUrl(
-        RESIZE_METHODS.FILL, 
-        1, 
-        1, 
-        {quality: 5},
-        URL_SIZES.PIXEL
-      );
+      this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, {
+        quality: 5,
+      });
     }
     return this.urls.pixel_url;
   }
@@ -281,7 +274,6 @@ class GalleryItem {
         this.thumbnailSize,
         this.thumbnailSize,
         { quality: 70 },
-        URL_SIZES.THUMBNAIL
       );
     }
     return this.urls.thumbnail_url;
@@ -289,13 +281,9 @@ class GalleryItem {
 
   get square_url() {
     if (!this.urls.square_url) {
-      this.urls.square_url = this.resizedUrl(
-        RESIZE_METHODS.FILL,
-        100,
-        100,
-        {quality: 80},
-        URL_SIZES.SQUARE
-      );
+      this.urls.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, {
+        quality: 80,
+      });
     }
     return this.urls.square_url;
   }
@@ -307,7 +295,6 @@ class GalleryItem {
         this.maxWidth,
         this.maxHeight,
         this.sharpParams,
-        URL_SIZES.FULL
       );
     }
     return this.urls.full_url;
@@ -320,7 +307,6 @@ class GalleryItem {
         500,
         500,
         this.sharpParams,
-        URL_SIZES.DOWNLOAD_SAMPLE,
       );
     }
     return this.urls.sample_url;
