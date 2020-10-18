@@ -1,3 +1,25 @@
+## [v2.1.45](https://pro-gallery-2-1-45.surge.sh) (18/10/2020)
+ 
+#### LIB
+ -  add urlSize to itemResizer
+
+#### GALLERY
+ -  Add an option to disableSSROpacity
+ -  layoutFixer - measure the container correctly
+
+---
+## [v2.1.45](https://pro-gallery-2-1-45.surge.sh) (18/10/2020)
+ 
+#### OTHER
+ - Merge pull request #204 from wix/GalleryItem_add_urlSize
+ -  add urlSize to itemResizer
+ -  add urlSize to itemResizer
+
+#### GALLERY
+ -  improve (galleryContainer): add an option to disableSSROpacity
+ -  fix (layoutFixer): measure the container correctly
+
+---
 
 ## [v2.1.44](https://pro-gallery-2-1-44.surge.sh) (15/10/2020)
  
