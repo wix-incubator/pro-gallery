@@ -45,11 +45,11 @@ export default class LeanGallery extends React.Component {
 
     return {
       gridTemplateColumns,
-      gridGap: `${imageMargin}px`,
+      gridGap: `${imageMargin / 2}px`,
       ...(cubeImages === false ? {
         gridAutoRows: 'minmax(max-content, 1px)',
         gridGap: 0,
-        columnGap: `${imageMargin}px`,
+        columnGap: `${imageMargin / 2}px`,
       } : {})
     };
   }
@@ -91,7 +91,7 @@ export default class LeanGallery extends React.Component {
 
     if (item && cubeImages === false) {
       const ratio = get(item, 'width') / get(item, 'height');
-      itemHeight = Math.round((itemWidth - imageMargin) / ratio);
+      itemHeight = Math.round((itemWidth - imageMargin / 2) / ratio);
     }
 
     if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)) {
@@ -113,7 +113,7 @@ export default class LeanGallery extends React.Component {
 
     const noCropStyle = cubeImages === false ? {
       gridRowEnd: `span ${itemSize.height}`,
-      marginBottom: `${imageMargin}px`,
+      marginBottom: `${(imageMargin / 2)}px`,
       height: 'fit-content',
     } : {};
 

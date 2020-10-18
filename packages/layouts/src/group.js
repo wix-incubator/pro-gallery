@@ -141,7 +141,7 @@ export class Group {
         height: this.height,
       };
     }
-    const m = this.imageMargin * 2;
+    const m = this.imageMargin;
 
     switch (this.type) {
       default:
@@ -565,7 +565,7 @@ export class Group {
   }
 
   getItemDimensions(items, idx) {
-    const m = this.imageMargin * 2;
+    const m = this.imageMargin;
     switch (this.type) {
       default:
       case '1':
@@ -615,7 +615,7 @@ export class Group {
   getHeightByWidth(W) {
     let Rg = 1;
     let Rm = 1;
-    const M = this.imageMargin * 2;
+    const M = this.imageMargin;
     const R = this.items.map(item => item.width / item.height);
     switch (this.type) {
       // ---------------------------------
@@ -675,7 +675,7 @@ export class Group {
   getWidthByHeight(H) {
     let Rg = 1;
     let Rm = 1;
-    const M = this.imageMargin * 2;
+    const M = this.imageMargin;
     const R = this.items.map(item => item.width / item.height);
     switch (this.type) {
       // ---------------------------------

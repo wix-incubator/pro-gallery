@@ -128,7 +128,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     if (utils.isMobile()) {
       processedStyles.imageMargin = Math.min(processedStyles.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
     }
-    processedStyles.imageMargin /= 2;
+    // processedStyles.imageMargin /= 2;
   }
 
   if (processedStyles.loadMoreButtonFont && utils.isMobile()) {

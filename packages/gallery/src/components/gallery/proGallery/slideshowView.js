@@ -781,13 +781,13 @@ class SlideshowView extends GalleryComponent {
     const containerStyle = {
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
       top: `calc(50% - 50px + ${imageMargin /
-        2}px - ${slideshowSpace / 2}px)`,
+        4}px - ${slideshowSpace / 2}px)`,
     };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
       oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${arrowsSize + 50 + 10}px`
-        : `${imageMargin}px`;
+        : `${imageMargin / 2}px`;
     // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
 
     const prevContainerStyle = {
@@ -920,7 +920,7 @@ class SlideshowView extends GalleryComponent {
             left:
               this.props.styleParams.arrowsSize +
               40 +
-              this.props.styleParams.imageMargin,
+              this.props.styleParams.imageMargin / 2,
           }
         : {};
 
@@ -1004,13 +1004,13 @@ class SlideshowView extends GalleryComponent {
     } = this.props;
 
     const imageMargin =
-      this.props.styleParams.imageMargin + (this.isFullWidthGallery() ? 50 : 0);
+      this.props.styleParams.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
 
     const side =
       galleryTextAlign === 'right'
-        ? { left: `${imageMargin}px` }
+        ? { left: `${imageMargin / 2}px` }
         : {
-            right: `${(imageMargin + (this.shouldCreateSlideShowNumbers ? this.calcSlideshowCounterWidth() : 0))}px`,
+            right: `${(imageMargin / 2 + (this.shouldCreateSlideShowNumbers ? this.calcSlideshowCounterWidth() : 0))}px`,
           };
     return (
       <button
@@ -1047,16 +1047,16 @@ class SlideshowView extends GalleryComponent {
     } = this.props;
 
     const imageMargin =
-      this.props.styleParams.imageMargin + (this.isFullWidthGallery() ? 50 : 0);
+      this.props.styleParams.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
 
     const leftMargin = this.shouldCreateSlideShowPlayButton
-      ? imageMargin + 25
-      : imageMargin;
+      ? imageMargin / 2 + 25
+      : imageMargin / 2;
 
     const side =
       galleryTextAlign === 'right'
         ? { left: `${leftMargin}px` }
-        : { right: `${imageMargin}px` };
+        : { right: `${imageMargin / 2}px` };
 
     return (
       <div
@@ -1122,7 +1122,7 @@ class SlideshowView extends GalleryComponent {
     return {
       margin:
         -1 *
-        (this.props.styleParams.imageMargin -
+        (this.props.styleParams.imageMargin / 2 -
           this.props.styleParams.galleryMargin),
     };
   }

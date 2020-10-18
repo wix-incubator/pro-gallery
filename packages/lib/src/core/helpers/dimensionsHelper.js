@@ -67,7 +67,7 @@ class DimensionsHelper {
     return this.getOrPutInCache('galleryWidth', () => {
       let width = Math.floor(this.container.width) + (this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
       if (this.styles.arrowsPosition && this.styles.oneRow) {
-        width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
+        width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin / 2);
       }
       return width;
     });
@@ -89,7 +89,7 @@ class DimensionsHelper {
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
       return (
-        Number(this.styles.imageMargin) - Number(this.styles.galleryMargin)
+        Number(this.styles.imageMargin / 2) - Number(this.styles.galleryMargin)
       );
     });
   }

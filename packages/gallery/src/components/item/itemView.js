@@ -575,7 +575,7 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin: oneRow ? imageMargin + 'px' : 0,
+      margin: oneRow ? imageMargin / 2 + 'px' : 0,
       cursor: itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
       (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
         ? 'default'
