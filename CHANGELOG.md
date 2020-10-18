@@ -1,3 +1,9 @@
+## [v2.1.46](https://pro-gallery-2-1-46.surge.sh) (18/10/2020)
+ 
+#### GALLERY
+ -  fix (layoutFixer): retry if elements do not exist
+
+---
 ## [v2.1.45](https://pro-gallery-2-1-45.surge.sh) (18/10/2020)
  
 #### LIB
