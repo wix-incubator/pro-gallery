@@ -3,6 +3,7 @@ import { GALLERY_CONSTS, ProGallery, LayoutFixer } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
+import { addPresetStyles, addLayoutStyles } from 'pro-gallery';
 
 const UNKNOWN_CONTAINER = {
   width: 980,
@@ -116,7 +117,7 @@ export default class Gallery extends React.PureComponent {
         {viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? <LayoutFixer
           layoutFixerBundleUrl="http://localhost:3001/layoutFixer.bundle.js"
           items={items}
-          styles={styles}
+          styles={addLayoutStyles(addPresetStyles(styles))}
           parentId={"pro-gallery-ssr-simulator"}
         ></LayoutFixer> : null}
         <ProGallery
