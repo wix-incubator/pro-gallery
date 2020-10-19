@@ -505,14 +505,14 @@ export class GalleryContainer extends React.Component {
     ) {
       //more items can be fetched from the server
       //TODO - add support for horizontal galleries
-      const { oneRow } = this.state.styles;
+      const { oneRow, isRTL } = this.state.styles;
 
       const galleryEnd = this.galleryStructure[oneRow ? 'width' : 'height'] + (oneRow ? 0 : this.state.container.scrollBase);
       const screenSize = window.screen[oneRow ? 'width' : 'height'];
-      const scrollEnd = scrollPos + screenSize;
+      const scrollEnd = oneRow && isRTL ? (scrollPos - galleryEnd + screenSize) : (scrollPos + screenSize);
       const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
-      if (galleryEnd - scrollEnd < getItemsDistance) {
+      if (galleryEnd < getItemsDistance + scrollEnd) {
         //only when the last item turns visible we should try getting more items
           this.gettingMoreItems = true;
           this.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, this.state.items.length);
