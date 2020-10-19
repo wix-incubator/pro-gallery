@@ -46,7 +46,6 @@ export const createLayoutFixer = () => {
         const { isRTL } = styleParams
         return {
             opacity: 1,
-            transition: 'opacity .8s ease',
             top: item.offset.top + 'px',
             left: isRTL ? 'auto' : item.offset.left + 'px',
             right: !isRTL ? 'auto' : item.offset.left + 'px',
@@ -55,10 +54,11 @@ export const createLayoutFixer = () => {
     }
 
     const createWebComponent = () => {
-        if (window.layoutFixerCreated === true) {
+        if (window.layoutFixer.created) {
             return;
         }
-        window.layoutFixerCreated = true;
+        window.layoutFixer.created = Date.now();
+        window.layoutFixer.createdAfter = window.layoutFixer.created - window.layoutFixer.init;
         console.log('[LAYOUT FIXER] createWebComponent');
         class LayoutFixerElement extends HTMLElement {
             constructor() {
@@ -78,7 +78,7 @@ export const createLayoutFixer = () => {
             }
 
             connectedCallback() {
-                if (window.layoutFixerDone) {
+                if (window.layoutFixer.done) {
                     return;
                 }
                 console.log('[LAYOUT FIXER] connectedCallback');
@@ -111,6 +111,7 @@ export const createLayoutFixer = () => {
                     height,
                     scrollBase: top,
                 };
+                window.layoutFixer.container = this.measures;
                 console.log('[LAYOUT FIXER] measured container', this.measures);
                
                 if (this.measures && this.useLayouter && typeof createLayout === 'function') {
@@ -120,6 +121,7 @@ export const createLayoutFixer = () => {
                         container: this.measures
                     })
                     console.log('[LAYOUT FIXER] created layout', this.layout);
+                    window.layoutFixer.structure = this.layout;
                 }
 
                 if (typeof this.measures === 'object') {
@@ -142,9 +144,9 @@ export const createLayoutFixer = () => {
                             !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                             setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
                         })
-                        window.layoutFixerDone = true;
+                        window.layoutFixer.done = Date.now();
+                        window.layoutFixer.doneAfter = window.layoutFixer.done - window.layoutFixer.created;
                         console.log('[LAYOUT FIXER] Done');
-                        console.timeEnd('[LAYOUT FIXER] Done');
                     } else {
                         this.retry();
                     }
@@ -152,12 +154,12 @@ export const createLayoutFixer = () => {
             }
         }
         window.customElements.define('layout-fixer', LayoutFixerElement);
-
     }
 
     if (typeof window !== 'undefined') {
         try {
             console.log('[LAYOUT FIXER] Start (script is running)');
+            window.layoutFixer = {init: Date.now()};
             createWebComponent()
         } catch (e) {
             console.error('Cannot create layout fixer', e);

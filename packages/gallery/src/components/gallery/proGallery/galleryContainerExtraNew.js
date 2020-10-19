@@ -233,6 +233,13 @@ export class GalleryContainer extends React.Component {
     domId = domId || this.props.domId;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
 
+    if (!utils.isSSR() && window.layoutFixer && !window.layoutFixer.hydrated) {
+      structure = window.layoutFixer.structure;
+      container = window.layoutFixer.container;
+      window.layoutFixer.hydrated = true;
+      console.log('[LAYOUT FIXER] used structure and container from layoutFixer', structure, container);
+    }
+
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, { // TODO use same objects in the memory when the galleryItems are changed
       thumbnailSize: styles.thumbnailSize,
       sharpParams: styles.sharpParams,
@@ -295,8 +302,6 @@ export class GalleryContainer extends React.Component {
   }
 
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0, scrollMarginCorrection) {
-
-
     if (itemIdx >= 0) {
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();

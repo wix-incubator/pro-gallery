@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isPreviewMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, featureManager, window, utils, isPrerenderMode, isEditMode, isPreviewMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -12,7 +12,6 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -571,6 +570,13 @@ class ItemView extends GalleryComponent {
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
 
+    const hideOnSSR = utils.isSSR() && isPrerenderMode() && !this.props.settings.disableSSROpacity;
+
+    const opacityStyles = {
+      opacity: hideOnSSR ? 0 : 1,
+      transition: 'all 8s ease',
+    }
+
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -607,7 +613,7 @@ class ItemView extends GalleryComponent {
       transition: 'none'
     };
 
-    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...slideAnimationStyles};
+    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...opacityStyles, ...slideAnimationStyles};
 
     return itemContainerStyles;
   }
