@@ -1,3 +1,10 @@
+## [v2.2.1](https://pro-gallery-2-2-1.surge.sh) (19/10/2020)
+ 
+#### GALLERY
+ -  fix RTL get more items calculation
+ -  autoSlideshow - stop loop if its turned off, work with RTL
+
+---
 ## [v2.2.0](https://pro-gallery-2-2-0.surge.sh) (18/10/2020)
  
 #### GALLERY
