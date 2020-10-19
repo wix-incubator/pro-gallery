@@ -181,10 +181,6 @@ class SlideshowView extends GalleryComponent {
 
     if (isAutoTrigger) {
       // ---- Called by the Auto Slideshow ---- //
-      if (this.isLastItem()) { // maybe this should be isLastItemFullyVisible now that we have both. product- do we allow autoSlideshow in other layouts ( those that could have more than one item displayed in the galleryWidth)
-        nextItem = 0;
-        scrollDuration = 0;
-      }
     } else {
       // ---- Called by the user (arrows, keys etc.) ---- //
       this.startAutoSlideshowIfNeeded(this.props.styleParams);
@@ -336,7 +332,8 @@ class SlideshowView extends GalleryComponent {
 
   autoScrollToNextItem = () => {
     if (!isEditMode() && (isGalleryInViewport(this.props.container) || isPreviewMode())) {
-      this._next({direction: 1 , isAutoTrigger: true , scrollDuration: 800});
+      const direction = this.props.styleParams.isRTL ? -1 : 1
+      this._next({direction, isAutoTrigger: true , scrollDuration: 800});
     }
   };
 
