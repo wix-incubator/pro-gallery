@@ -78,7 +78,7 @@ export const createLayoutFixer = () => {
             }
 
             connectedCallback() {
-                if (this.setStylesDone) {
+                if (window.layoutFixerDone) {
                     return;
                 }
                 console.log('[LAYOUT FIXER] connectedCallback');
@@ -142,7 +142,7 @@ export const createLayoutFixer = () => {
                             !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                             setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
                         })
-                        this.setStylesDone = true;
+                        window.layoutFixerDone = true;
                         console.log('[LAYOUT FIXER] Done');
                         console.timeEnd('[LAYOUT FIXER] Done');
                     } else {

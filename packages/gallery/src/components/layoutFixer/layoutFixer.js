@@ -1,9 +1,9 @@
 import React from 'react';
-import { isPrerenderMode } from 'pro-gallery-lib';
+import { utils, isPrerenderMode } from 'pro-gallery-lib';
 
 export const LayoutFixer = (props) => {
     // console.log('[LAYOUT FIXER] rendering', isPrerenderMode(), props);
-    return (isPrerenderMode()) ? (
+    return (utils.isSSR() && isPrerenderMode()) ? (
         <>
             <link rel="preload" href={props.layoutFixerBundleUrl} as="script"/>
             <script dangerouslySetInnerHTML={{__html: `console.log("[LAYOUT FIXER] Start (first script loaded)")`}}></script>
