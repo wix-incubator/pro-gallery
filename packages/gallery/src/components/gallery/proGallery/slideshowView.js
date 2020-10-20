@@ -27,8 +27,8 @@ class SlideshowView extends GalleryComponent {
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(this);
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
-    this._setCurrentItemByScroll = this.setCurrentItemByScroll;
-    this._next = this.next.bind(this);
+    this._setCurrentItemByScroll = utils.throttle(this.setCurrentItemByScroll, 600).bind(this);
+    this._next = utils.throttle(this.next.bind(this), 400).bind(this);
     this.state = {
       currentIdx: props.currentIdx || 0,
       isInView: true,
