@@ -217,7 +217,7 @@ class GalleryItem {
         imgUrl,
         resizeMethod,
         thumbSize,
-        (thumbSize * requiredHeight) / requiredWidth,
+        thumbSize,
         { ...sharpParams, quality: 30, blur: 30 },
         focalPoint,
       );

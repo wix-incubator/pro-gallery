@@ -33,6 +33,7 @@ export default class BaseGallery extends React.Component {
   }
 
   render() {
+    debugger;
     const domId = this.props.domId || 'default-dom-id';
     const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
@@ -45,9 +46,24 @@ export default class BaseGallery extends React.Component {
       GalleryComponent = LeanGallery;
     } else {
       if (!this.state.blueprint || Object.keys(this.state.blueprint).length === 0){
-        return null;
+        try {
+          const {layoutFixer} = window;
+          if (typeof window !== 'undefined' && layoutFixer && !layoutFixer.hydrated) {
+            blueprint.structure = layoutFixer.structure;
+            blueprint.container = layoutFixer.container;
+            blueprint.items = layoutFixer.items;
+            layoutFixer.hydrated = true;
+            console.log('[LAYOUT FIXER] used structure and container from layoutFixer', layoutFixer);
+          } else {
+            return null;
+          }
+        } catch (e) {
+          console.log('Failed to get data from the layoutFixer', e);
+          return null;
+        }
+      } else {
+        blueprint = this.state.blueprint;
       }
-      blueprint = this.state.blueprint;
     }
 
     return <GalleryComponent {...galleryProps} { ...blueprint} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, ProGallery, BlueprintsProGallery, LayoutFixer } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, LayoutingProGallery, LayoutFixer } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
@@ -112,7 +112,7 @@ export default class Gallery extends React.PureComponent {
     //   import ('./layoutFixer').then(console.warn);
     // }
 
-    const Gallery = !urlParams.useBlueprints ? ProGallery : BlueprintsProGallery
+    const Gallery = (this.isSSR() || !urlParams.useBlueprints) ? ProGallery : LayoutingProGallery
     return (
       <div className={containerClassName}>
         {urlParams.useLayoutFixer && viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? <LayoutFixer

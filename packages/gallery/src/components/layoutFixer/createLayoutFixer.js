@@ -96,6 +96,8 @@ export const createLayoutFixer = () => {
                 this.items = JSON.parse(this.getAttribute('items')).map(convertDtoToLayoutItem);
                 if (!(this.items && this.items.length > 0)) {
                     this.useLayouter = false
+                } else {
+                    window.layoutFixer.items = this.items;
                 }
 
                 this.styleParams = JSON.parse(this.getAttribute('styles'));
@@ -148,6 +150,7 @@ export const createLayoutFixer = () => {
                         window.layoutFixer.doneAfter = window.layoutFixer.done - window.layoutFixer.created;
                         console.log('[LAYOUT FIXER] Done');
                     } else {
+                        console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
                         this.retry();
                     }
                 }

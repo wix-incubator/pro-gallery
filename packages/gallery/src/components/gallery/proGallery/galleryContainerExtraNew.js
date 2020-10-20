@@ -48,7 +48,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = galleryState;
       }
     } catch (_e) {
-      console.warn(_e);
+      console.warn('Cannot create initial state from props (blueprints)', _e);
     }
 
     this.state = {
@@ -233,12 +233,6 @@ export class GalleryContainer extends React.Component {
     domId = domId || this.props.domId;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
 
-    if (!utils.isSSR() && window.layoutFixer && !window.layoutFixer.hydrated) {
-      structure = window.layoutFixer.structure;
-      container = window.layoutFixer.container;
-      window.layoutFixer.hydrated = true;
-      console.log('[LAYOUT FIXER] used structure and container from layoutFixer', structure, container);
-    }
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, { // TODO use same objects in the memory when the galleryItems are changed
       thumbnailSize: styles.thumbnailSize,
@@ -562,6 +556,7 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
+    debugger;
     return (
       <div
         data-key="pro-gallery-inner-container"
