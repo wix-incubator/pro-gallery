@@ -416,12 +416,13 @@ class ItemView extends GalleryComponent {
   getItemInner() {
     const { styleParams, type } = this.props;
     let itemInner;
-    const {width, height} = this.getImageDimensions();
-    const imageDimensions = {width, height};
+    const imageDimensions = this.getImageDimensions();
+    const {width, height} = imageDimensions;
+    const partialImageDimensions = {width, height};
 
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
-      itemHover = this.getItemHover(imageDimensions);
+      itemHover = this.getItemHover(partialImageDimensions);
     }
 
 
@@ -430,18 +431,18 @@ class ItemView extends GalleryComponent {
           itemInner = <div />;
         break;
       case 'video':
-          itemInner = this.getVideoItem(imageDimensions, itemHover);
+          itemInner = this.getVideoItem(partialImageDimensions, itemHover);
         break;
       case 'text':
-        itemInner = [this.getTextItem(imageDimensions), itemHover];
+        itemInner = [this.getTextItem(partialImageDimensions), itemHover];
         break;
       case 'image':
       case 'picture':
       default:
         if (this.props.isVideoPlaceholder) {
-          itemInner = this.getVideoItem(imageDimensions, itemHover);
+          itemInner = this.getVideoItem(partialImageDimensions, itemHover);
         } else {
-        itemInner = [this.getImageItem(imageDimensions), itemHover];
+        itemInner = [this.getImageItem(partialImageDimensions), itemHover];
         }
     }
 
@@ -639,6 +640,7 @@ class ItemView extends GalleryComponent {
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
+      ...(isPrerenderMode() && {margin: 0})
     };
 
     return itemWrapperStyles;
