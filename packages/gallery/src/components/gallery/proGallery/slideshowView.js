@@ -61,7 +61,7 @@ class SlideshowView extends GalleryComponent {
   
   isScrollEnd() {
 
-    const {items, totalItemsCount}  = this.props;
+    const {items, totalItemsCount, getVisibleItems, galleryStructure, container}  = this.props;
     const {slideshowLoop, slideAnimation} = this.props.styleParams;
 
     if (slideshowLoop || slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
@@ -71,7 +71,8 @@ class SlideshowView extends GalleryComponent {
     if (this.container) {
       const {scrollWidth, clientWidth} = this.container;
       const scrollLeft = this.getScrollLeft();
-      const allItemsLoaded = (items.length >= totalItemsCount);
+      const visibleItemsCountlength = getVisibleItems(galleryStructure.galleryItems, container).length
+      const allItemsLoaded = (visibleItemsCountlength >= totalItemsCount);
       const visibleLeft = scrollLeft + clientWidth;
       const visibleScroll = scrollWidth - 1;
 
@@ -1163,9 +1164,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   removeArrowsIfNeeded(){
-    if (!isGalleryInViewport(this.props.container)) {
-      return;
-    }
     setTimeout(()=>{
       const {isRTL} = this.props.styleParams;
       const { hideLeftArrow, hideRightArrow } = this.state;
