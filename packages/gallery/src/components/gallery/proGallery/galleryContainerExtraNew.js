@@ -556,7 +556,6 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
-    debugger;
     return (
       <div
         data-key="pro-gallery-inner-container"
