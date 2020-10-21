@@ -16,8 +16,22 @@ export default class BaseGallery extends React.Component {
     let galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId};
 
 
-    if(this.props.useBlueprints) {
-      //
+    if (this.props.useBlueprints) {
+      try {
+        const {layoutFixer} = window;
+        if (typeof window !== 'undefined' && layoutFixer && !layoutFixer.hydrated) {
+          galleryProps.structure = layoutFixer.structure;
+          galleryProps.container = layoutFixer.container;
+          galleryProps.items = layoutFixer.items;
+          layoutFixer.hydrated = true;
+          console.log('[LAYOUT FIXER] used structure and container from layoutFixer', layoutFixer);
+        } else {
+          return null;
+        }
+      } catch (e) {
+        console.log('Failed to get data from the layoutFixer', e);
+        return null;
+      }
     } else {
       dimensionsHelper.updateParams({
         domId: galleryProps.domId,
