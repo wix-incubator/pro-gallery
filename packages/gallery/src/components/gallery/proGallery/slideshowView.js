@@ -71,8 +71,8 @@ class SlideshowView extends GalleryComponent {
     if (this.container) {
       const {scrollWidth, clientWidth} = this.container;
       const scrollLeft = this.getScrollLeft();
-      const visibleItemsCountlength = getVisibleItems(galleryStructure.galleryItems, container).length
-      const allItemsLoaded = (visibleItemsCountlength >= totalItemsCount);
+      const visibleItemsCount = getVisibleItems(galleryStructure.galleryItems, container).length
+      const allItemsLoaded = (visibleItemsCount >= totalItemsCount);
       const visibleLeft = scrollLeft + clientWidth;
       const visibleScroll = scrollWidth - 1;
 
