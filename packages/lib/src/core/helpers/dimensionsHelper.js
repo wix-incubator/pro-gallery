@@ -1,5 +1,6 @@
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 class DimensionsHelper {
   constructor() {
@@ -56,7 +57,11 @@ class DimensionsHelper {
             break;
         }
       } else if (this.styles.isSlideshow) {
-        res.galleryHeight -= this.styles.slideshowInfoSize;
+        const infoHeight =
+          this.styles.slideshowInfoPlacement === GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM ? 
+          this.styles.slideshowInfoSize
+          : 0
+        res.galleryHeight -= infoHeight;
       }
       return res;
     });
@@ -71,7 +76,7 @@ class DimensionsHelper {
           width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin);
         }
         if (this.styles.slideshowInfoPlacement === 'ON_THE_RIGHT') {
-          width -= this.styles.slideshowInfoWidth;
+          width -= this.styles.slideshowInfoSize;
         }
       }
       return width;

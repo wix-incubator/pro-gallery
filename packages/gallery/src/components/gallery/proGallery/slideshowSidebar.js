@@ -13,7 +13,7 @@ class SlideshowSidebar extends GalleryComponent {
   render() {
     console.log(this.props.styleParams);
     const customSidebarStyles = {
-      width: this.props.styleParams.slideshowInfoWidth,
+      width: this.props.styleParams.slideshowInfoSize,
       height: '100%',
       padding: '130px 10px 0',
       position: 'absolute',

@@ -736,7 +736,8 @@ class SlideshowView extends GalleryComponent {
       imageMargin,
       arrowsSize,
       arrowsPosition,
-      showArrows
+      showArrows,
+      slideshowInfoPlacement
     } = this.props.styleParams;
     const {hideLeftArrow, hideRightArrow} = this.state;
 
@@ -775,7 +776,7 @@ class SlideshowView extends GalleryComponent {
 
     // nav-arrows-container width is 100. arrowWidth + padding on each side should be 100
     const containerPadding = (100 - arrowWidth) / 2;
-    const slideshowSpace = isSlideshow
+    const slideshowSpace = isSlideshow && slideshowInfoPlacement === GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM
       ? slideshowInfoSize
       : 0;
     // top: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly. 50% is the middle, 50px is half of nav-arrows-container height
@@ -893,7 +894,10 @@ class SlideshowView extends GalleryComponent {
       };
       if (this.props.styleParams.isSlideshow) {
         Object.assign(columnStyle, {
-          paddingBottom: this.props.styleParams.slideshowInfoSize,
+          paddingBottom:
+          this.props.styleParams.slideshowInfoPlacement === GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM ? 
+            this.props.styleParams.slideshowInfoSize
+            : 0,
         });
       }
       return (
@@ -932,7 +936,9 @@ class SlideshowView extends GalleryComponent {
     };
     if (this.props.styleParams.isSlideshow) {
       Object.assign(galleryStyle, {
-        paddingBottom: this.props.styleParams.slideshowInfoSize,
+        paddingBottom: this.props.styleParams.slideshowInfoPlacement === GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM ? 
+            this.props.styleParams.slideshowInfoSize
+            : 0,
       });
     }
 
@@ -1005,7 +1011,10 @@ class SlideshowView extends GalleryComponent {
     const {
       styleParams: { galleryTextAlign, slideshowInfoSize },
     } = this.props;
-
+    const slideShowInfoTop =
+      this.props.styleParams.slideshowInfoPlacement === GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM ? 
+      this.props.styleParams.slideshowInfoSize
+      : 0
     const imageMargin =
       this.props.styleParams.imageMargin + (this.isFullWidthGallery() ? 50 : 0);
 
@@ -1027,7 +1036,7 @@ class SlideshowView extends GalleryComponent {
         aria-pressed={this.state.shouldStopAutoSlideShow}
         tabIndex={0}
         style={{
-          top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
+          top: `calc(100% - ${slideShowInfoTop}px + 3px)`,
           ...side,
         }}
       >
@@ -1049,6 +1058,11 @@ class SlideshowView extends GalleryComponent {
       styleParams: { galleryTextAlign, slideshowInfoSize },
     } = this.props;
 
+    const slideShowInfoTop =
+      this.props.styleParams.slideshowInfoPlacement === GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM ? 
+      this.props.styleParams.slideshowInfoSize
+      : 0
+
     const imageMargin =
       this.props.styleParams.imageMargin + (this.isFullWidthGallery() ? 50 : 0);
 
@@ -1066,7 +1080,7 @@ class SlideshowView extends GalleryComponent {
         className={'auto-slideshow-counter'}
         data-hook="auto-slideshow-counter"
         style={{
-          top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
+          top: `calc(100% - ${slideShowInfoTop}px + 3px)`,
           ...side,
         }}
       >

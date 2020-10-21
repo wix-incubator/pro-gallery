@@ -448,6 +448,7 @@ class ItemView extends GalleryComponent {
 
     if (styleParams.isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props;
+      const { slideshowInfoPlacement } = this.props.styleParams
       const style = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
@@ -468,13 +469,17 @@ class ItemView extends GalleryComponent {
           >
             {itemInner}
           </a>
-          <div
+          {
+            slideshowInfoPlacement === GALLERY_CONSTS.slideshowInfoPlacement.ON_THE_BOTTOM ? (
+              <div
             className="gallery-slideshow-info"
             data-hook="gallery-slideshow-info-buttons"
             style={style}
           >
             {slideshowInfo}
           </div>
+            ) : null
+          }       
         </div>
       );
     }

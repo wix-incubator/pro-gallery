@@ -78,7 +78,6 @@ import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
-import slideshowInfoWidth from './slideshowInfoWidth';
 import slideshowInfoPlacement from './slideshowInfoPlacement';
 
 export default {
@@ -162,7 +161,6 @@ export default {
     hidePlay,
     overlayBackground,
     allowLeanGallery,
-    slideshowInfoWidth,
     slideshowInfoPlacement,
 }
 
