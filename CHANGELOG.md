@@ -1,3 +1,10 @@
+## [v2.2.2](https://pro-gallery-2-2-2.surge.sh) (21/10/2020)
+ 
+#### GALLERY
+ -  fix: fixed isScrollEnd function in slideshow (arrows issue)
+ -  improve (layoutFixer): prevent the layoutFixer from running more than once
+
+---
 ## [v2.2.1](https://pro-gallery-2-2-1.surge.sh) (19/10/2020)
  
 #### GALLERY
