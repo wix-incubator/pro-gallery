@@ -1,3 +1,9 @@
+## [v2.2.3](https://pro-gallery-2-2-3.surge.sh) (22/10/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): fix blick after ssr and pass layoutFixer data to the gallery
+
+---
 ## [v2.2.2](https://pro-gallery-2-2-2.surge.sh) (21/10/2020)
  
 #### GALLERY
