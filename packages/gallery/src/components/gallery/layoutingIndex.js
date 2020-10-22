@@ -37,18 +37,17 @@ export default class BaseGallery extends React.Component {
 
   render() {
     let GalleryComponent = ProGallery;
-    let blueprint = {};
+    const {blueprint} = this.state;
     if (isEligibleForLeanGallery(this.galleryProps)) {
       GalleryComponent = LeanGallery;
+    }
+    
+    if (blueprint || Object.keys(blueprint).length === 0) {
+      return <GalleryComponent {...this.galleryProps} { ...blueprint} />
     } else {
-      if (!this.state.blueprint || Object.keys(this.state.blueprint).length === 0){
-        blueprint = getLayoutFixerData(this.domId);
-      } else {
-        blueprint = this.state.blueprint;
-      }
+      return null;
     }
 
-    return <GalleryComponent {...this.galleryProps} { ...blueprint} />
   }
 }
 
