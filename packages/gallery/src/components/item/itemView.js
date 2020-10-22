@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, featureManager, window, utils, isEditMode, isPreviewMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, featureManager, window, utils, isPrerenderMode, isEditMode, isPreviewMode, isSiteMode, isSEOMode } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -12,7 +12,6 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -417,12 +416,13 @@ class ItemView extends GalleryComponent {
   getItemInner() {
     const { styleParams, type } = this.props;
     let itemInner;
-    const {width, height} = this.getImageDimensions();
-    const imageDimensions = {width, height};
+    const imageDimensions = this.getImageDimensions();
+    const {width, height} = imageDimensions;
+    const partialImageDimensions = {width, height};
 
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
-      itemHover = this.getItemHover(imageDimensions);
+      itemHover = this.getItemHover(partialImageDimensions);
     }
 
 
@@ -431,18 +431,18 @@ class ItemView extends GalleryComponent {
           itemInner = <div />;
         break;
       case 'video':
-          itemInner = this.getVideoItem(imageDimensions, itemHover);
+          itemInner = this.getVideoItem(partialImageDimensions, itemHover);
         break;
       case 'text':
-        itemInner = [this.getTextItem(imageDimensions), itemHover];
+        itemInner = [this.getTextItem(partialImageDimensions), itemHover];
         break;
       case 'image':
       case 'picture':
       default:
         if (this.props.isVideoPlaceholder) {
-          itemInner = this.getVideoItem(imageDimensions, itemHover);
+          itemInner = this.getVideoItem(partialImageDimensions, itemHover);
         } else {
-        itemInner = [this.getImageItem(imageDimensions), itemHover];
+        itemInner = [this.getImageItem(partialImageDimensions), itemHover];
         }
     }
 
@@ -571,6 +571,13 @@ class ItemView extends GalleryComponent {
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
 
+    const hideOnSSR = utils.isSSR() && isPrerenderMode() && !this.props.settings.disableSSROpacity;
+
+    const opacityStyles = {
+      opacity: hideOnSSR ? 0 : 1,
+      transition: 'opacity .1s ease',
+    }
+
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -607,7 +614,7 @@ class ItemView extends GalleryComponent {
       transition: 'none'
     };
 
-    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...slideAnimationStyles};
+    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...opacityStyles, ...slideAnimationStyles};
 
     return itemContainerStyles;
   }
@@ -628,11 +635,12 @@ class ItemView extends GalleryComponent {
     styles.height = height + 'px';
 
 
-    const imageDimensions = this.getImageDimensions();
+    const {margin, ...imageDimensions} = this.getImageDimensions();
 
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
+      ...(!isPrerenderMode() && {margin}) // the margin breaks prerender with grid fit
     };
 
     return itemWrapperStyles;

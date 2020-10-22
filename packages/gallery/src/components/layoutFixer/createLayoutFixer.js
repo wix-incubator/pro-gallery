@@ -46,7 +46,6 @@ export const createLayoutFixer = () => {
         const { isRTL } = styleParams
         return {
             opacity: 1,
-            transition: 'opacity .8s ease',
             top: item.offset.top + 'px',
             left: isRTL ? 'auto' : item.offset.left + 'px',
             right: !isRTL ? 'auto' : item.offset.left + 'px',
@@ -55,16 +54,15 @@ export const createLayoutFixer = () => {
     }
 
     const createWebComponent = () => {
-        if (window.layoutFixerCreated === true) {
-            return;
-        }
-        window.layoutFixerCreated = true;
         console.log('[LAYOUT FIXER] createWebComponent');
         class LayoutFixerElement extends HTMLElement {
             constructor() {
                 super();
                 this.retries = 3;
                 this.connectedCallback = this.connectedCallback.bind(this);
+                if (!window.layoutFixer) {
+                    window.layoutFixer = {};
+                }
             }
 
             retry() {
@@ -78,11 +76,14 @@ export const createLayoutFixer = () => {
             }
 
             connectedCallback() {
-                if (window.layoutFixerDone) {
+                this.domId = this.getAttribute('domId');
+                if (!window.layoutFixer[this.domId]) {
+                    window.layoutFixer[this.domId] = {}
+                } else if (window.layoutFixer[this.domId].done) {
                     return;
                 }
                 console.log('[LAYOUT FIXER] connectedCallback');
-                this.parentId = this.getAttribute('parentid');
+                this.parentId = 'pro-gallery-' + this.domId;
                 this.parent = document.getElementById(this.parentId);
                 if (!this.parent) {
                     console.log('[LAYOUT FIXER] no parent found', this.parent);
@@ -96,12 +97,16 @@ export const createLayoutFixer = () => {
                 this.items = JSON.parse(this.getAttribute('items')).map(convertDtoToLayoutItem);
                 if (!(this.items && this.items.length > 0)) {
                     this.useLayouter = false
+                } else {
+                    window.layoutFixer[this.domId].items = this.items;
                 }
 
                 this.styleParams = JSON.parse(this.getAttribute('styles'));
                 
                 if (!(this.styleParams && typeof this.styleParams === 'object')) {
                     this.useLayouter = false
+                } else {
+                    window.layoutFixer[this.domId].styles = this.styleParams;
                 }
 
                 const {width, height, top} = this.parent && this.parent.getBoundingClientRect();
@@ -111,6 +116,7 @@ export const createLayoutFixer = () => {
                     height,
                     scrollBase: top,
                 };
+                window.layoutFixer[this.domId].container = this.measures;
                 console.log('[LAYOUT FIXER] measured container', this.measures);
                
                 if (this.measures && this.useLayouter && typeof createLayout === 'function') {
@@ -120,16 +126,16 @@ export const createLayoutFixer = () => {
                         container: this.measures
                     })
                     console.log('[LAYOUT FIXER] created layout', this.layout);
+                    window.layoutFixer[this.domId].structure = this.layout;
                 }
 
-                if (typeof this.measures === 'object') {
-                    setAttributes(this.parent, {
-                        'data-top': this.measures.top,
-                        'data-width': this.measures.width,
-                        'data-height': this.measures.height
-                    })
-                }
-
+                // if (typeof this.measures === 'object') {
+                //     setAttributes(this.parent, {
+                //         'data-top': this.measures.top,
+                //         'data-width': this.measures.width,
+                //         'data-height': this.measures.height
+                //     })
+                // }
                 if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
                     const itemContainers = this.parent.querySelectorAll('.gallery-item-container');
                     const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
@@ -142,17 +148,16 @@ export const createLayoutFixer = () => {
                             !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                             setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
                         })
-                        window.layoutFixerDone = true;
+                        window.layoutFixer[this.domId].done = Date.now();
                         console.log('[LAYOUT FIXER] Done');
-                        console.timeEnd('[LAYOUT FIXER] Done');
                     } else {
+                        console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
                         this.retry();
                     }
                 }
             }
         }
         window.customElements.define('layout-fixer', LayoutFixerElement);
-
     }
 
     if (typeof window !== 'undefined') {

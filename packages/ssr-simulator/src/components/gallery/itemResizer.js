@@ -88,6 +88,8 @@ const resizeUrlImp = (
     options.filters = {
       blur: sharpParams.blur
     };
+    //this is a hack to avoid using the imageClientSdk for blurry images. These have to stay EXACTLY the same between SSR and CSR
+    return `${item.mediaUrl}/v1/fit/w_250,h_250,al_c,q_30,blur_30/${item.id}.jpg`;
   }
   if (focalPointObj) {
     options.focalPoint = focalPointObj;

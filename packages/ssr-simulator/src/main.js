@@ -23,5 +23,5 @@ export const main = () => {
         document.getElementById('root')
       );
     });
-  }, 5000);
+  }, 10000);
 };

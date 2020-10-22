@@ -2,6 +2,7 @@ import React from 'react';
 import { utils, defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
+import { getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery from './leanGallery/leanGallery';
 
@@ -16,8 +17,8 @@ export default class BaseGallery extends React.Component {
     let galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId};
 
 
-    if(this.props.useBlueprints) {
-      //
+    if (this.props.useBlueprints) {
+      Object.assign(galleryProps, getLayoutFixerData(domId))
     } else {
       dimensionsHelper.updateParams({
         domId: galleryProps.domId,

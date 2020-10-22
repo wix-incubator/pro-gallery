@@ -109,7 +109,7 @@ export default class ImageItem extends GalleryComponent {
         ? settings.imageProps(id)
         : {};
 
-    const { marginLeft, marginTop, ...restOfDimensions } =
+    const { margin, ...restOfDimensions } =
     imageDimensions || {};
     
 

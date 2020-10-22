@@ -4,25 +4,28 @@ import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery from './leanGallery/leanGallery';
+import { getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
 
 const blueprintsManager = new BlueprintsManager({id: 'layoutingGallery'});
 export default class BaseGallery extends React.Component {
   constructor(props) {
     super();
-    this.state ={};
+    this.domId = props.domId || 'default-dom-id';
+    this.state = {
+      blueprint: getLayoutFixerData(this.domId)
+    };
     blueprintsManager.init({api:{isUsingCustomInfoElements:()=>(props.customHoverRenderer || props.customInfoRenderer || props.customSlideshowInfoRenderer)}})
     this.onNewProps(props)
   }
 
   static propTypes = basePropTypes;
   onNewProps(props) {
-    const domId = props.domId || 'default-dom-id';
     const { styles, options, styleParams, eventsListener, ...otherProps } = props;
     const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
-    const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId}
-    if (!isEligibleForLeanGallery(galleryProps)) {
-        blueprintsManager.createBlueprint(galleryProps).then(blueprint => {
+    this.galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId: this.domId}
+    if (!isEligibleForLeanGallery(this.galleryProps)) {
+        blueprintsManager.createBlueprint(this.galleryProps).then(blueprint => {
           this.setState({blueprint});
         }).catch((e)=>{console.error('Could not breate a blueprints in layoutingIndex ', e)});
     }
@@ -33,24 +36,15 @@ export default class BaseGallery extends React.Component {
   }
 
   render() {
-    const domId = this.props.domId || 'default-dom-id';
-    const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
-    const _eventsListener = (...args) => (typeof eventsListener === 'function') && eventsListener(...args);
-    const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
-    const galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId};
-    
-    let GalleryComponent = ProGallery;
-    let blueprint = {};
-    if (isEligibleForLeanGallery(galleryProps)) {
-      GalleryComponent = LeanGallery;
+    const GalleryComponent = (isEligibleForLeanGallery(this.galleryProps)) ? LeanGallery : ProGallery;
+    const {blueprint} = this.state;
+
+    if (blueprint && Object.keys(blueprint).length > 0) {
+      return <GalleryComponent {...this.galleryProps} { ...blueprint} />
     } else {
-      if (!this.state.blueprint || Object.keys(this.state.blueprint).length === 0){
-        return null;
-      }
-      blueprint = this.state.blueprint;
+      return null;
     }
 
-    return <GalleryComponent {...galleryProps} { ...blueprint} />
   }
 }
 

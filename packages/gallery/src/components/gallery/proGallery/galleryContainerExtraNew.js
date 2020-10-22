@@ -8,6 +8,7 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper'
 import findNeighborItem from '../../helpers/layoutUtils';
+import { LayoutFixer } from '../../layoutFixer/layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = galleryState;
       }
     } catch (_e) {
-      console.warn(_e);
+      console.warn('Cannot create initial state from props (blueprints)', _e);
     }
 
     this.state = {
@@ -233,6 +234,7 @@ export class GalleryContainer extends React.Component {
     domId = domId || this.props.domId;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
 
+
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, { // TODO use same objects in the memory when the galleryItems are changed
       thumbnailSize: styles.thumbnailSize,
       sharpParams: styles.sharpParams,
@@ -295,8 +297,6 @@ export class GalleryContainer extends React.Component {
   }
 
   scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0, scrollMarginCorrection) {
-
-
     if (itemIdx >= 0) {
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
@@ -562,6 +562,12 @@ export class GalleryContainer extends React.Component {
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
       >
+        <LayoutFixer
+          layoutFixerBundleUrl={this.props.layoutFixerBundleUrl}
+          items={this.state.items}
+          styles={this.props.styles}
+          domId={this.props.domId}
+        ></LayoutFixer>
         <ScrollIndicator
           domId={this.props.domId}
           oneRow={this.props.styles.oneRow}

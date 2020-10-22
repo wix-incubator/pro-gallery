@@ -215,9 +215,9 @@ class GalleryItem {
       resizeUrl(
         this,
         imgUrl,
-        resizeMethod,
+        (this.cubeImages ? resizeMethod : RESIZE_METHODS.FIT),
         thumbSize,
-        (thumbSize * requiredHeight) / requiredWidth,
+        thumbSize,
         { ...sharpParams, quality: 30, blur: 30 },
         focalPoint,
       );
