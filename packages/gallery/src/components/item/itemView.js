@@ -575,7 +575,7 @@ class ItemView extends GalleryComponent {
 
     const opacityStyles = {
       opacity: hideOnSSR ? 0 : 1,
-      transition: 'opacity .8s ease',
+      transition: 'opacity .1s ease',
     }
 
     const itemStyles = {
