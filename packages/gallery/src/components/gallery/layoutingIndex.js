@@ -36,12 +36,9 @@ export default class BaseGallery extends React.Component {
   }
 
   render() {
-    let GalleryComponent = ProGallery;
+    const GalleryComponent = (isEligibleForLeanGallery(this.galleryProps)) ? LeanGallery : ProGallery;
     const {blueprint} = this.state;
-    if (isEligibleForLeanGallery(this.galleryProps)) {
-      GalleryComponent = LeanGallery;
-    }
-    
+
     if (blueprint || Object.keys(blueprint).length === 0) {
       return <GalleryComponent {...this.galleryProps} { ...blueprint} />
     } else {
