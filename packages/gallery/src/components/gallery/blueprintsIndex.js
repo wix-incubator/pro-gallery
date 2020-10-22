@@ -2,6 +2,7 @@ import React from 'react';
 import { utils, defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
+import { getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery from './leanGallery/leanGallery';
 
@@ -17,21 +18,7 @@ export default class BaseGallery extends React.Component {
 
 
     if (this.props.useBlueprints) {
-      try {
-        const {layoutFixer} = window;
-        if (typeof window !== 'undefined' && layoutFixer && !layoutFixer.hydrated) {
-          galleryProps.structure = layoutFixer.structure;
-          galleryProps.container = layoutFixer.container;
-          galleryProps.items = layoutFixer.items;
-          layoutFixer.hydrated = true;
-          console.log('[LAYOUT FIXER] used structure and container from layoutFixer', layoutFixer);
-        } else {
-          return null;
-        }
-      } catch (e) {
-        console.log('Failed to get data from the layoutFixer', e);
-        return null;
-      }
+      Object.assign(galleryProps, getLayoutFixerData(domId))
     } else {
       dimensionsHelper.updateParams({
         domId: galleryProps.domId,

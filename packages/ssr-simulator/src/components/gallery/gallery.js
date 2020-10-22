@@ -1,9 +1,8 @@
 import React from 'react';
-import { GALLERY_CONSTS, ProGallery, LayoutingProGallery, LayoutFixer } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, LayoutingProGallery } from 'pro-gallery';
 import { testItems } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
-import { addPresetStyles, addLayoutStyles } from 'pro-gallery';
 
 const UNKNOWN_CONTAINER = {
   width: 980,
@@ -115,12 +114,6 @@ export default class Gallery extends React.PureComponent {
     const Gallery = (this.isSSR() || !urlParams.useBlueprints) ? ProGallery : LayoutingProGallery
     return (
       <div className={containerClassName}>
-        {urlParams.useLayoutFixer && viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? <LayoutFixer
-          layoutFixerBundleUrl="http://localhost:3001/layoutFixer.bundle.js"
-          items={items}
-          styles={addLayoutStyles(addPresetStyles(styles))}
-          parentId={"pro-gallery-ssr-simulator"}
-        ></LayoutFixer> : null}
         <Gallery
           domId="ssr-simulator"
           items={items}
@@ -130,6 +123,7 @@ export default class Gallery extends React.PureComponent {
           viewMode={viewMode}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
+          layoutFixerBundleUrl={urlParams.useLayoutFixer && "http://localhost:3001/layoutFixer.bundle.js"}
         />
       </div>
     );

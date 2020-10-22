@@ -54,17 +54,15 @@ export const createLayoutFixer = () => {
     }
 
     const createWebComponent = () => {
-        if (window.layoutFixer.created) {
-            return;
-        }
-        window.layoutFixer.created = Date.now();
-        window.layoutFixer.createdAfter = window.layoutFixer.created - window.layoutFixer.init;
         console.log('[LAYOUT FIXER] createWebComponent');
         class LayoutFixerElement extends HTMLElement {
             constructor() {
                 super();
                 this.retries = 3;
                 this.connectedCallback = this.connectedCallback.bind(this);
+                if (!window.layoutFixer) {
+                    window.layoutFixer = {};
+                }
             }
 
             retry() {
@@ -78,11 +76,14 @@ export const createLayoutFixer = () => {
             }
 
             connectedCallback() {
-                if (window.layoutFixer.done) {
+                this.domId = this.getAttribute('domId');
+                if (!window.layoutFixer[this.domId]) {
+                    window.layoutFixer[this.domId] = {}
+                } else if (window.layoutFixer[this.domId].done) {
                     return;
                 }
                 console.log('[LAYOUT FIXER] connectedCallback');
-                this.parentId = this.getAttribute('parentid');
+                this.parentId = 'pro-gallery-' + this.domId;
                 this.parent = document.getElementById(this.parentId);
                 if (!this.parent) {
                     console.log('[LAYOUT FIXER] no parent found', this.parent);
@@ -97,13 +98,15 @@ export const createLayoutFixer = () => {
                 if (!(this.items && this.items.length > 0)) {
                     this.useLayouter = false
                 } else {
-                    window.layoutFixer.items = this.items;
+                    window.layoutFixer[this.domId].items = this.items;
                 }
 
                 this.styleParams = JSON.parse(this.getAttribute('styles'));
                 
                 if (!(this.styleParams && typeof this.styleParams === 'object')) {
                     this.useLayouter = false
+                } else {
+                    window.layoutFixer[this.domId].styles = this.styleParams;
                 }
 
                 const {width, height, top} = this.parent && this.parent.getBoundingClientRect();
@@ -113,7 +116,7 @@ export const createLayoutFixer = () => {
                     height,
                     scrollBase: top,
                 };
-                window.layoutFixer.container = this.measures;
+                window.layoutFixer[this.domId].container = this.measures;
                 console.log('[LAYOUT FIXER] measured container', this.measures);
                
                 if (this.measures && this.useLayouter && typeof createLayout === 'function') {
@@ -123,17 +126,16 @@ export const createLayoutFixer = () => {
                         container: this.measures
                     })
                     console.log('[LAYOUT FIXER] created layout', this.layout);
-                    window.layoutFixer.structure = this.layout;
+                    window.layoutFixer[this.domId].structure = this.layout;
                 }
 
-                if (typeof this.measures === 'object') {
-                    setAttributes(this.parent, {
-                        'data-top': this.measures.top,
-                        'data-width': this.measures.width,
-                        'data-height': this.measures.height
-                    })
-                }
-
+                // if (typeof this.measures === 'object') {
+                //     setAttributes(this.parent, {
+                //         'data-top': this.measures.top,
+                //         'data-width': this.measures.width,
+                //         'data-height': this.measures.height
+                //     })
+                // }
                 if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
                     const itemContainers = this.parent.querySelectorAll('.gallery-item-container');
                     const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
@@ -146,8 +148,7 @@ export const createLayoutFixer = () => {
                             !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                             setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
                         })
-                        window.layoutFixer.done = Date.now();
-                        window.layoutFixer.doneAfter = window.layoutFixer.done - window.layoutFixer.created;
+                        window.layoutFixer[this.domId].done = Date.now();
                         console.log('[LAYOUT FIXER] Done');
                     } else {
                         console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
@@ -162,7 +163,6 @@ export const createLayoutFixer = () => {
     if (typeof window !== 'undefined') {
         try {
             console.log('[LAYOUT FIXER] Start (script is running)');
-            window.layoutFixer = {init: Date.now()};
             createWebComponent()
         } catch (e) {
             console.error('Cannot create layout fixer', e);
