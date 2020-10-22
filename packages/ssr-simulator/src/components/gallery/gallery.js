@@ -118,7 +118,7 @@ export default class Gallery extends React.PureComponent {
           domId="ssr-simulator"
           items={items}
           styles={styles}
-          settings={{disableSSROpacity: true, avoidInlineStyles: !urlParams.useLayoutFixer}}
+          settings={{disableSSROpacity: !!urlParams.disableSSROpacity, avoidInlineStyles: !urlParams.useLayoutFixer}}
           container={container}
           viewMode={viewMode}
           eventsListener={eventsListener}
