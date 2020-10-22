@@ -640,7 +640,7 @@ class ItemView extends GalleryComponent {
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
-      ...(!isPrerenderMode() && {margin}) // the margin breaks prerender with grid fit
+      ...(!isPrerenderMode() && margin && {margin}) // the margin breaks prerender with grid fit
     };
 
     return itemWrapperStyles;
