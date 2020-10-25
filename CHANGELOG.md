@@ -1,3 +1,9 @@
+## [v2.2.5](https://pro-gallery-2-2-5.surge.sh) (25/10/2020)
+ 
+#### GALLERY
+ -  fix (layoutFixer): render the layoutFixer in prerenderMode (ssr and csr) to avoid ssr mismatches
+
+---
 ## [v2.2.4](https://pro-gallery-2-2-4.surge.sh) (25/10/2020)
  
 #### OTHER
