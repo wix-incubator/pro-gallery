@@ -1,3 +1,14 @@
+## [v2.2.4](https://pro-gallery-2-2-4.surge.sh) (25/10/2020)
+ 
+#### OTHER
+ -  fix (yoshi): fix the version of ab-translate to avoid trying to import a private module
+ -  fix (yoshi): fixate yoshi's version to ~4.25.0
+
+#### GALLERY
+ -  fix (prerenderMode): re-enable margin in prerender mode and disable only for layoutFixer
+ -  fix (galleryItem): fix videos preload image creation
+
+---
 ## [v2.2.3](https://pro-gallery-2-2-3.surge.sh) (22/10/2020)
  
 #### GALLERY
