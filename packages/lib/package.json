@@ -40,7 +40,7 @@
     "lint-staged": "^10.0.7",
     "puppeteer": "^1.1.0",
     "velocity": "~0.7.0",
-    "yoshi": "^4.1.0",
+    "yoshi": "~4.25.0",
     "yoshi-style-dependencies": "^4.1.0",
     "yoshi-template-intro": "^4.1.0"
   },
