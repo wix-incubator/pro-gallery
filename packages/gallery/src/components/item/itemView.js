@@ -571,12 +571,6 @@ class ItemView extends GalleryComponent {
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
 
-    const hideOnSSR = utils.isSSR() && isPrerenderMode() && !this.props.settings.disableSSROpacity;
-
-    const opacityStyles = {
-      opacity: hideOnSSR ? 0 : 1,
-      transition: 'opacity .1s ease',
-    }
 
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
@@ -590,6 +584,13 @@ class ItemView extends GalleryComponent {
     };
 
     const {avoidInlineStyles = true} = settings;
+
+    const hideOnSSR = utils.isSSR() && isPrerenderMode() && !this.props.settings.disableSSROpacity;
+    const opacityStyles = avoidInlineStyles ? {} : {
+      opacity: hideOnSSR ? 0 : 1,
+      transition: 'opacity .1s ease',
+    }
+
     const layoutStyles = avoidInlineStyles ? {} : {
       top: offset.top,
       left: isRTL ? 'auto' : offset.left,

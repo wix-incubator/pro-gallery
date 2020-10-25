@@ -4,13 +4,13 @@ import addLayoutStyles from '../helpers/layoutHelper';
 
 export const LayoutFixer = (props) => {
     // console.log('[LAYOUT FIXER] rendering', isPrerenderMode(), props);
-    return (
+    return (props.layoutFixerBundleUrl) ? (
         <div 
             id={"layout-fixer-" + props.domId}
             key={"layout-fixer-" + props.domId}
             style={{display:'none'}}
         >
-            {(isPrerenderMode() && props.layoutFixerBundleUrl) ? (
+            {isPrerenderMode() ? (
                 <>
                     <link rel="preload" href={props.layoutFixerBundleUrl} as="script"/>
                     <script dangerouslySetInnerHTML={{__html: `console.log("[LAYOUT FIXER] Start (first script loaded)")`}}></script>
@@ -24,5 +24,5 @@ export const LayoutFixer = (props) => {
                 </>
             ) : null}
         </div>
-    );
+    ) : null;
 }
