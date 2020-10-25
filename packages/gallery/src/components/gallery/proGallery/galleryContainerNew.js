@@ -421,7 +421,7 @@ export class GalleryContainer extends React.Component {
 
   createCssLayoutsIfNeeded(layoutParams) {
     const {settings = {}} = this.props;
-    const {avoidInlineStyles = true} = settings;
+    const {avoidInlineStyles} = settings;
     if (avoidInlineStyles) {
       // inline styles are replacing the layoutCss
       // avoid inline styles === use layout css
