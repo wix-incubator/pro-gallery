@@ -2,7 +2,7 @@
   "private": false,
   "name": "pro-layouts",
   "sideEffects": false,
-  "version": "2.2.0",
+  "version": "2.2.4",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com",
@@ -32,13 +32,13 @@
     "babel-runtime": "^6.22.0"
   },
   "devDependencies": {
+    "ab-translate": "1.1.557",
     "chai": "^4.1.2",
     "deep-freeze": "0.0.1",
     "husky": "^0.13.4",
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "wallaby-webpack": "^3.9.9",
-    "ab-translate": "1.1.557",
     "yoshi": "~4.25.0"
   },
   "resolutions": {

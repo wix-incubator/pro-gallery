@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "sideEffects": [
     "./src/components/styles/gallery.scss",
     "./src/components/gallery/leanGallery/leanGallery.scss"
@@ -37,8 +37,8 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "2.2.3",
-    "pro-layouts": "2.2.0",
+    "pro-gallery-lib": "2.2.4",
+    "pro-layouts": "2.2.4",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -46,6 +46,7 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "ab-translate": "1.1.557",
     "chai": "^4.1.2",
     "chai-enzyme": "^1.0.0-beta.1",
     "chai-spies": "^0.7.1",
@@ -68,7 +69,6 @@
     "sass-loader": "^7.1.0",
     "sinon": "^6.0.0",
     "wallaby-webpack": "^3.9.9",
-    "ab-translate": "1.1.557",
     "yoshi": "~4.25.0",
     "yoshi-style-dependencies": "^4.0.0"
   },
