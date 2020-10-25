@@ -1,3 +1,10 @@
+## [v2.2.6](https://pro-gallery-2-2-6.surge.sh) (25/10/2020)
+ 
+#### GALLERY
+ -  fix (galleryContainer): set the avoidInlineStyles default to false
+ -  fix (layoutFixer): disable any dom effect when the layoutFixer is off
+
+---
 ## [v2.2.5](https://pro-gallery-2-2-5.surge.sh) (25/10/2020)
  
 #### GALLERY
