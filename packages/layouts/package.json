@@ -38,7 +38,11 @@
     "jsdom": "11.2.0",
     "jsdom-global": "3.0.2",
     "wallaby-webpack": "^3.9.9",
+    "ab-translate": "1.1.557",
     "yoshi": "~4.25.0"
+  },
+  "resolutions": {
+    "ab-translate": "1.1.557"
   },
   "babel": {
     "presets": [

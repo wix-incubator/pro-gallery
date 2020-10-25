@@ -68,8 +68,12 @@
     "sass-loader": "^7.1.0",
     "sinon": "^6.0.0",
     "wallaby-webpack": "^3.9.9",
+    "ab-translate": "1.1.557",
     "yoshi": "~4.25.0",
     "yoshi-style-dependencies": "^4.0.0"
+  },
+  "resolutions": {
+    "ab-translate": "1.1.557"
   },
   "babel": {
     "presets": [
