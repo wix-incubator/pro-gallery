@@ -1,5 +1,5 @@
 import React from 'react';
-import { addPresetStyles, utils, isPrerenderMode } from 'pro-gallery-lib';
+import { addPresetStyles, isPrerenderMode } from 'pro-gallery-lib';
 import addLayoutStyles from '../helpers/layoutHelper';
 
 export const LayoutFixer = (props) => {
@@ -10,7 +10,7 @@ export const LayoutFixer = (props) => {
             key={"layout-fixer-" + props.domId}
             style={{display:'none'}}
         >
-            {(utils.isSSR() && props.layoutFixerBundleUrl) ? (
+            {(isPrerenderMode() && props.layoutFixerBundleUrl) ? (
                 <>
                     <link rel="preload" href={props.layoutFixerBundleUrl} as="script"/>
                     <script dangerouslySetInnerHTML={{__html: `console.log("[LAYOUT FIXER] Start (first script loaded)")`}}></script>
