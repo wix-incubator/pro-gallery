@@ -17,12 +17,12 @@ export const createLayoutFixer = () => {
         }
     }
 
-    const setAttributes = (node, attributes) =>
-        node &&
-        attributes &&
-        Object.keys(attributes).forEach((attr) =>
-            node.setAttribute(attr, attributes[attr]),
-        );
+    // const setAttributes = (node, attributes) =>
+    //     node &&
+    //     attributes &&
+    //     Object.keys(attributes).forEach((attr) =>
+    //         node.setAttribute(attr, attributes[attr]),
+    //     );
 
     const setStyle = (node, styleProperties) =>
         node &&
@@ -38,7 +38,8 @@ export const createLayoutFixer = () => {
 
     const getItemWrapperStyle = (item, styleParams) => ({
         width: item.width + 'px',
-        height: item.height + (styleParams.externalInfoHeight || 0) + 'px'
+        height: item.height + (styleParams.externalInfoHeight || 0) + 'px',
+        margin: 0
     })
 
     const getItemContainerStyle = (item, styleParams) => {

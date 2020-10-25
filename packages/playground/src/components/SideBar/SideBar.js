@@ -204,13 +204,13 @@ function SideBar({ items, blueprintsManager, visible }) {
           <Collapse.Panel header="Develop" key="develop">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Local Playground" labelAlign="left">
-                <Button shape="circle" icon="arrow-right" target="_self" href={`http://localhost:3000/${window.location.search}`} />
+                <Button shape="circle" icon="arrow-right" target="_blank" href={`http://localhost:3000/${window.location.search}`} />
               </Form.Item>
               <Form.Item label="Master Playground" labelAlign="left">
-                <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery-master.surge.sh/${window.location.search}`} />
+                <Button shape="circle" icon="arrow-right" target="_blank" href={`https://pro-gallery-master.surge.sh/${window.location.search}`} />
               </Form.Item>
               <Form.Item label="Live Playground" labelAlign="left">
-                <Button shape="circle" icon="arrow-right" target="_self" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
+                <Button shape="circle" icon="arrow-right" target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&useLayoutFixer=${gallerySettings.useLayoutFixer}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />

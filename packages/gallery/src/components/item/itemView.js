@@ -635,12 +635,11 @@ class ItemView extends GalleryComponent {
     styles.height = height + 'px';
 
 
-    const {margin, ...imageDimensions} = this.getImageDimensions();
+    const imageDimensions = this.getImageDimensions();
 
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
-      ...(!isPrerenderMode() && margin && {margin}) // the margin breaks prerender with grid fit
     };
 
     return itemWrapperStyles;
