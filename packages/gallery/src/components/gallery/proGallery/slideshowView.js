@@ -38,6 +38,7 @@ class SlideshowView extends GalleryComponent {
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
     this.shouldCreateSlideShowNumbers = false;
+    this.skipFromSlide = Math.round(this.props.totalItemsCount * SKIP_SLIDES_MULTIPLIER); // Used in infinite loop
   }
 
   isFirstItem() {
@@ -157,7 +158,6 @@ class SlideshowView extends GalleryComponent {
     }
     this.isSliding = true;
 
-
     let currentIdx;
     if (ignoreScrollPosition) {
       currentIdx = this.state.currentIdx;
@@ -169,13 +169,11 @@ class SlideshowView extends GalleryComponent {
       }
     }
 
-
     let nextItem = currentIdx + direction;
     if (!this.props.styleParams.slideshowLoop){
       nextItem = Math.min(this.props.galleryStructure.items.length - 1, nextItem);
       nextItem = Math.max(0, nextItem);
     }
-
 
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
@@ -204,10 +202,9 @@ class SlideshowView extends GalleryComponent {
       
       scrollToItemPromise.then(() => {
         if (this.props.styleParams.groupSize === 1) {
-          const skipFromSlide = Math.round(this.props.totalItemsCount * SKIP_SLIDES_MULTIPLIER);
-          const skipToSlide = skipFromSlide - this.props.totalItemsCount;
-          
-          if (nextItem >= skipFromSlide) {
+          const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
+
+          if (nextItem >= this.skipFromSlide) {
             nextItem = skipToSlide;
             scrollToItem(nextItem);
           }
@@ -869,19 +866,21 @@ class SlideshowView extends GalleryComponent {
 
     const renderGroups = (column) => {
       const layoutGroupView = !!column.galleryGroups.length && getVisibleItems(column.galleryGroups, container);
-
       return ( 
-        layoutGroupView && layoutGroupView.map(group =>
-          group.rendered ? React.createElement(
+        layoutGroupView && layoutGroupView.map(group => {
+          return group.rendered ? React.createElement(
             GroupView,
             {
               allowLoop: this.props.styleParams.slideshowLoop && (this.props.galleryStructure.width > this.props.container.width),
               itemsLoveData,
-              ...group.renderProps(galleryConfig)
+              ...group.renderProps(galleryConfig),
+              ariaHidden: group.idx > this.skipFromSlide
             },
-          ) : false,
-        ))
-      }
+          ) : false;
+          }
+        )
+      )
+    }
 
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {

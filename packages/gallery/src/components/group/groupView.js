@@ -49,7 +49,7 @@ class GroupView extends GalleryComponent {
 
   render() {
     return this.shouldRender() ? (
-      <div key={`group_${this.props.idx}_${this.props.items[0].id}`} data-hook={'group-view'}>
+      <div key={`group_${this.props.idx}_${this.props.items[0].id}`} data-hook={'group-view'} aria-hidden={this.props.ariaHidden}>
         {this.createDom(this.isVisible())}
       </div>
     ) : null;
