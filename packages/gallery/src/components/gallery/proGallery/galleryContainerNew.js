@@ -919,12 +919,6 @@ export class GalleryContainer extends React.Component {
         key="pro-gallery-inner-container"
         id={`pro-gallery-inner-container-${this.props.domId}`}
       >
-        <LayoutFixer
-          layoutFixerBundleUrl={this.props.layoutFixerBundleUrl}
-          items={this.items}
-          styles={this.props.styles}
-          domId={this.props.domId}
-        ></LayoutFixer>
         <ScrollIndicator
           domId={this.props.domId}
           oneRow={this.state.styles.oneRow}
@@ -984,6 +978,12 @@ export class GalleryContainer extends React.Component {
           {(this.scrollCss || []).filter(Boolean).map((css, idx) => <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />)}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{__html: this.dynamicStyles}} />}
         </div>
+        <LayoutFixer
+          layoutFixerBundleUrl={this.props.layoutFixerBundleUrl}
+          items={this.items}
+          styles={this.props.styles}
+          domId={this.props.domId}
+        ></LayoutFixer>
       </div>
     );
   }
