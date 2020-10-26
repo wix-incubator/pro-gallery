@@ -1,5 +1,6 @@
 
-import { createLayout } from 'pro-layouts';
+// import { createLayout } from 'pro-layouts';
+import { BlueprintsManager } from 'pro-gallery-lib';
 
 export const createLayoutFixer = () => {
     const convertDtoToLayoutItem = (dto) => {
@@ -9,10 +10,10 @@ export const createLayoutFixer = () => {
         } else {
             const metadata = dto.metadata || dto.metaData;
             return {
-            id: dto.itemId || dto.photoId,
-            width: metadata.width,
-            height: metadata.height,
-            ...dto,
+                id: dto.itemId || dto.photoId,
+                width: metadata.width,
+                height: metadata.height,
+                ...dto,
             };
         }
     }
@@ -103,14 +104,14 @@ export const createLayoutFixer = () => {
                 }
 
                 this.styleParams = JSON.parse(this.getAttribute('styles'));
-                
+
                 if (!(this.styleParams && typeof this.styleParams === 'object')) {
                     this.useLayouter = false
                 } else {
                     window.layoutFixer[this.domId].styles = this.styleParams;
                 }
 
-                const {width, height, top} = this.parent && this.parent.getBoundingClientRect();
+                const { width, height, top } = this.parent && this.parent.getBoundingClientRect();
                 this.measures = {
                     top,
                     width,
@@ -119,42 +120,38 @@ export const createLayoutFixer = () => {
                 };
                 window.layoutFixer[this.domId].container = this.measures;
                 console.log('[LAYOUT FIXER] measured container', this.measures);
-               
-                if (this.measures && this.useLayouter && typeof createLayout === 'function') {
-                    this.layout = createLayout({
+
+                if (this.measures && this.useLayouter) {
+                    this.blueprintsManager = new BlueprintsManager({ id: 'layoutFixer' });
+                    this.blueprintsManager.createBlueprint({
                         items: this.items,
                         styleParams: this.styleParams,
                         container: this.measures
-                    })
-                    console.log('[LAYOUT FIXER] created layout', this.layout);
-                    window.layoutFixer[this.domId].structure = this.layout;
-                }
+                    }).then(blueprint => {
+                        console.log('[LAYOUT FIXER] created blueprint', blueprint);
+                        Object.assign(window.layoutFixer[this.domId], blueprint);
+                        this.layout = blueprint.structure;
 
-                // if (typeof this.measures === 'object') {
-                //     setAttributes(this.parent, {
-                //         'data-top': this.measures.top,
-                //         'data-width': this.measures.width,
-                //         'data-height': this.measures.height
-                //     })
-                // }
-                if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
-                    const itemContainers = this.parent.querySelectorAll('.gallery-item-container');
-                    const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
-                    if (itemWrappers.length > 0 && itemContainers.length > 0) {
-                        itemContainers.forEach((element, idx) => {
-                            !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
-                            setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
-                        })
-                        itemWrappers.forEach((element, idx) => {
-                            !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
-                            setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
-                        })
-                        window.layoutFixer[this.domId].done = Date.now();
-                        console.log('[LAYOUT FIXER] Done');
-                    } else {
-                        console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
-                        this.retry();
-                    }
+                        if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
+                            const itemContainers = this.parent.querySelectorAll('.gallery-item-container');
+                            const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
+                            if (itemWrappers.length > 0 && itemContainers.length > 0) {
+                                itemContainers.forEach((element, idx) => {
+                                    !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                                    setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
+                                })
+                                itemWrappers.forEach((element, idx) => {
+                                    !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                                    setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
+                                })
+                                window.layoutFixer[this.domId].done = Date.now();
+                                console.log('[LAYOUT FIXER] Done');
+                            } else {
+                                console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
+                                this.retry();
+                            }
+                        }
+                    });
                 }
             }
         }
