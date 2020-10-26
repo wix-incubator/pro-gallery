@@ -164,7 +164,7 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      const shouldRenderHighResImages = !isPrerenderMode() && !utils.isSSR();
+      const shouldRenderHighResImages = !isPrerenderMode();
       const src = createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES);
       const srcKey = shouldRenderHighResImages ? 'src' : 'data-src';
       const highres = <img
@@ -175,7 +175,7 @@ export default class ImageItem extends GalleryComponent {
         alt={alt ? alt : 'untitled image'}
         loading="lazy"
         onLoad={this.handleHighResImageLoad}
-        style={{...restOfDimensions, ...(this.state.isHighResImageLoaded && {opacity: 1}), ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
+        style={{...restOfDimensions, ...({opacity: this.state.isHighResImageLoaded ? 1 : 0}), ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
         {...{[srcKey]: src}}
         {...imageProps}
       />;
