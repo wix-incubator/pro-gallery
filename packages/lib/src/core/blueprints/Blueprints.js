@@ -30,7 +30,6 @@ class Blueprints {
         }
 
         const structure = this.createStructure({formattedContainer: formattedContainer || existingBlueprint.container, formattedItems: formattedItems || existingBlueprint.items, formattedStyles: formattedStyles || existingBlueprint.styles}, changed);
-
         // assign changed values w/o replacing the original object;
         if (formattedStyles) {existingBlueprint.styles = formattedStyles;}
         if (formattedItems) {existingBlueprint.items = formattedItems;}

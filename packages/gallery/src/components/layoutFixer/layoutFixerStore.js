@@ -3,8 +3,12 @@ export const getLayoutFixerData = (domId) => {
     try {
         if (typeof window !== 'undefined') {
             const { layoutFixer } = window;
-            if (layoutFixer && layoutFixer[domId] && !layoutFixer[domId].mounted) {
-                layoutFixer[domId].hydrated = true;
+            if (layoutFixer && layoutFixer[domId] && !layoutFixer[domId].rendered) {
+                if (layoutFixer[domId].mounted) {
+                    layoutFixer[domId].rendered = true;
+                } else {
+                    layoutFixer[domId].hydrated = true;
+                }
                 console.log('[LAYOUT FIXER] used blueprint from layoutFixer', layoutFixer[domId]);
                 const { structure, items, container, styles } = layoutFixer[domId];
                 return { structure, items, container, styles }

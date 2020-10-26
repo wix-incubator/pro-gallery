@@ -14,6 +14,9 @@ export default class BaseGallery extends React.Component {
     super(props);
     this.domId = props.domId || 'default-dom-id';
   }
+  componentDidMount() {
+    setLayoutFixerMounted(this.domId);
+  }
 
   render() {
     const { styles, options, styleParams, eventsListener, ...otherProps } = this.props;
@@ -21,8 +24,9 @@ export default class BaseGallery extends React.Component {
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     let galleryProps = { ...otherProps, styles: _styles, eventsListener: _eventsListener, domId: this.domId};
 
+
     if (this.props.useBlueprints) {
-      galleryProps = Object.assign({}, getLayoutFixerData(this.domId), galleryProps)
+      Object.assign(galleryProps, getLayoutFixerData(this.domId))
     } else {
       dimensionsHelper.updateParams({
         domId: galleryProps.domId,

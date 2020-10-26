@@ -2,7 +2,7 @@
 // import { createLayout } from 'pro-layouts';
 import { BlueprintsManager } from 'pro-gallery-lib';
 
-export const createLayoutFixer = () => {
+export const createLayoutFixer = (resizeMediaUrl) => {
     const convertDtoToLayoutItem = (dto) => {
         const isLayoutItem = !!(dto.id && dto.width > 0 && dto.height > 0);
         if (isLayoutItem) {
@@ -99,16 +99,12 @@ export const createLayoutFixer = () => {
                 this.items = JSON.parse(this.getAttribute('items')).map(convertDtoToLayoutItem);
                 if (!(this.items && this.items.length > 0)) {
                     this.useLayouter = false
-                } else {
-                    window.layoutFixer[this.domId].items = this.items;
                 }
 
                 this.styleParams = JSON.parse(this.getAttribute('styles'));
 
                 if (!(this.styleParams && typeof this.styleParams === 'object')) {
                     this.useLayouter = false
-                } else {
-                    window.layoutFixer[this.domId].styles = this.styleParams;
                 }
 
                 const { width, height, top } = this.parent && this.parent.getBoundingClientRect();
@@ -118,7 +114,6 @@ export const createLayoutFixer = () => {
                     height,
                     scrollBase: top,
                 };
-                window.layoutFixer[this.domId].container = this.measures;
                 console.log('[LAYOUT FIXER] measured container', this.measures);
 
                 if (this.measures && this.useLayouter) {
@@ -135,7 +130,25 @@ export const createLayoutFixer = () => {
                         if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
                             const itemContainers = this.parent.querySelectorAll('.gallery-item-container');
                             const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
+                            const itemHighResImage = this.parent.querySelectorAll('[data-hook=gallery-item-image-img]');
                             if (itemWrappers.length > 0 && itemContainers.length > 0) {
+                                itemHighResImage.forEach(element => {
+                                    const idx = parseInt(element.getAttribute('data-idx'));
+                                    const item = this.items[idx];
+                                    const src = resizeMediaUrl(
+                                        item,
+                                        item.url || item.mediaUrl,
+                                        this.styleParams.cubeImages && this.styleParams.cubeType === 'fit' ? 'fit' : 'fill',
+                                        this.layout.items[idx].width,
+                                        this.layout.items[idx].height,
+                                      );
+                                
+                                    !idx && console.log('[LAYOUT FIXER] set first Image src Style', idx, src);
+                                    if (src) {
+                                        element.setAttribute('src', src);
+                                        setStyle(element, {opacity: 1});
+                                    }
+                                })
                                 itemContainers.forEach((element, idx) => {
                                     !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                                     setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))

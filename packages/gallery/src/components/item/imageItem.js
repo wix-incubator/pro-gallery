@@ -98,6 +98,7 @@ export default class ImageItem extends GalleryComponent {
       imageDimensions,
       createUrl,
       id,
+      idx,
       settings,
       styleParams,
     } = this.props;
@@ -120,6 +121,11 @@ export default class ImageItem extends GalleryComponent {
         '-webkit-touch-callout': 'none'
       } : {};
 
+      const preloadStyles = isPrerenderMode() ? {
+        width: '100%',
+        height: '100%',
+      } : {};
+
       if (!isHighResImageLoaded){
         let preload = null;
         const preloadProps = {
@@ -129,10 +135,6 @@ export default class ImageItem extends GalleryComponent {
           loading: "eager",
           ...imageProps
         };
-        const preloadStyles = isPrerenderMode() ? {
-          width: '100%',
-          height: '100%',
-        } : {};
         switch (styleParams.imageLoadingMode) {
           case GALLERY_CONSTS.loadingMode.BLUR:
             const imageStyles = {
@@ -163,21 +165,22 @@ export default class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !isPrerenderMode() && !utils.isSSR();
-      if (shouldRenderHighResImages) {
-        const highres = <img
-          key={'image_highres-' + id}
-          className={`gallery-item-visible gallery-item gallery-item-preloaded ${isSEOMode() ? '' : 'gallery-item-hidden'}`}
-          data-hook='gallery-item-image-img'
-          alt={alt ? alt : 'untitled image'}
-          src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES)}
-          loading="lazy"
-          onLoad={this.handleHighResImageLoad}
-          style={{...restOfDimensions, ...(this.state.isHighResImageLoaded && {opacity: 1}), ...blockDownloadStyles}}
-          {...imageProps}
-        />;
+      const src = createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES);
+      const srcKey = shouldRenderHighResImages ? 'src' : 'data-src';
+      const highres = <img
+        key={'image_highres-' + id}
+        className={`gallery-item-visible gallery-item gallery-item-preloaded ${isSEOMode() ? '' : 'gallery-item-hidden'}`}
+        data-hook='gallery-item-image-img'
+        data-idx={idx}
+        alt={alt ? alt : 'untitled image'}
+        loading="lazy"
+        onLoad={this.handleHighResImageLoad}
+        style={{...restOfDimensions, ...(this.state.isHighResImageLoaded && {opacity: 1}), ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
+        {...{[srcKey]: src}}
+        {...imageProps}
+      />;
 
-        imagesComponents.push(highres)
-      }
+      imagesComponents.push(highres)
 
       return imagesComponents;
     }

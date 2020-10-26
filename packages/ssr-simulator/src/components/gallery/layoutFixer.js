@@ -1,2 +1,3 @@
 import { createLayoutFixer } from 'pro-gallery';
-createLayoutFixer();
+import { resizeMediaUrl } from './itemResizer';
+createLayoutFixer(resizeMediaUrl);
