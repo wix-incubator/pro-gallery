@@ -1,3 +1,9 @@
+## [v2.2.7](https://pro-gallery-2-2-7.surge.sh) (26/10/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): render high-res images on fix + get blueprint data before first render
+
+---
 ## [v2.2.6](https://pro-gallery-2-2-6.surge.sh) (25/10/2020)
  
 #### GALLERY
