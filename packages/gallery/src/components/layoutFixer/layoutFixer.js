@@ -1,6 +1,5 @@
 import React from 'react';
-import { addPresetStyles, isPrerenderMode } from 'pro-gallery-lib';
-import addLayoutStyles from '../helpers/layoutHelper';
+import { isPrerenderMode } from 'pro-gallery-lib';
 
 export const LayoutFixer = (props) => {
     // console.log('[LAYOUT FIXER] rendering', isPrerenderMode(), props);
@@ -19,7 +18,7 @@ export const LayoutFixer = (props) => {
                     <layout-fixer 
                         domId={props.domId}
                         items={JSON.stringify(props.items)}
-                        styles={JSON.stringify(addLayoutStyles(addPresetStyles(props.styles)))}
+                        styles={JSON.stringify(props.styles)}
                     ></layout-fixer>
                 </>
             ) : null}
