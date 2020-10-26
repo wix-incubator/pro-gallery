@@ -48,7 +48,11 @@ export default class BaseGallery extends React.Component {
 
     utils.logPlaygroundLink(galleryProps.styles);
 
-    return <GalleryComponent {...galleryProps} />
+    if (galleryProps.styles && galleryProps.items && galleryProps.container && galleryProps.structure) {
+      return <GalleryComponent {...galleryProps} />
+    } else {
+      return null;
+    }
   }
 }
 
