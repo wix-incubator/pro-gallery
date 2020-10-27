@@ -174,7 +174,7 @@ export default class ImageItem extends GalleryComponent {
         alt={alt ? alt : 'untitled image'}
         loading="lazy"
         onLoad={this.handleHighResImageLoad}
-        style={{...restOfDimensions, ...({opacity: this.state.isHighResImageLoaded ? 1 : 0}), ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
+        style={{...restOfDimensions, ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
         src={src}
         {...imageProps}
       />;
