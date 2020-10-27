@@ -2,7 +2,7 @@
 // import { createLayout } from 'pro-layouts';
 import { createLayout } from 'pro-layouts';
 
-export const createLayoutFixer = (resizeMediaUrl) => {
+export const createLayoutFixer = (mediaUrlFixer) => {
     const convertDtoToLayoutItem = (dto) => {
         const isLayoutItem = !!(dto.id && dto.width > 0 && dto.height > 0);
         if (isLayoutItem) {
@@ -137,18 +137,10 @@ export const createLayoutFixer = (resizeMediaUrl) => {
                     const itemHighResImage = this.parent.querySelectorAll('[data-hook=gallery-item-image-img]');
 
                     if (itemWrappers.length > 0 && itemContainers.length > 0) {
-                        if (typeof resizeMediaUrl === 'function') {
-                            itemHighResImage.forEach(element => {
-                                const idx = parseInt(element.getAttribute('data-idx'));
-                                const item = this.items[idx];
-                                const src = resizeMediaUrl(
-                                    item,
-                                    item.url || item.mediaUrl,
-                                    this.styleParams.cubeImages && this.styleParams.cubeType === 'fit' ? 'fit' : 'fill',
-                                    this.layout.items[idx].width,
-                                    this.layout.items[idx].height,
-                                );
-                            
+                        if (typeof mediaUrlFixer === 'function') {
+                            itemHighResImage.forEach((element, idx) => {
+                                const mediaUrl = element.getAttribute('data-src');
+                                const src = mediaUrlFixer(mediaUrl, this.layout.items[idx].width, this.layout.items[idx].height)
                                 !idx && console.log('[LAYOUT FIXER] set first Image src Style', idx, src);
                                 if (src) {
                                     element.setAttribute('src', src);

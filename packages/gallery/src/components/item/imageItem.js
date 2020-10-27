@@ -165,7 +165,7 @@ export default class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !isPrerenderMode();
-      const src = shouldRenderHighResImages ? createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES) : '';
+      const src = createUrl(GALLERY_CONSTS.urlSizes.RESIZED, isSEOMode() ? GALLERY_CONSTS.urlTypes.SEO : GALLERY_CONSTS.urlTypes.HIGH_RES);
       const highres = <img
         key={'image_highres-' + id}
         className={`gallery-item-visible gallery-item gallery-item-preloaded ${isSEOMode() ? '' : 'gallery-item-hidden'}`}
@@ -174,8 +174,8 @@ export default class ImageItem extends GalleryComponent {
         alt={alt ? alt : 'untitled image'}
         loading="lazy"
         onLoad={this.handleHighResImageLoad}
-        style={{...restOfDimensions, ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
-        src={src}
+        style={{...restOfDimensions, ...({opacity: shouldRenderHighResImages ? 1 : 0}), ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
+        {...{[shouldRenderHighResImages ? 'src' : 'data-src']: src}}
         {...imageProps}
       />;
 
