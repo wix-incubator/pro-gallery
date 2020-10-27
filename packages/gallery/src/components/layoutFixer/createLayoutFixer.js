@@ -140,11 +140,13 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                         if (typeof mediaUrlFixer === 'function') {
                             itemHighResImage.forEach((element, idx) => {
                                 const mediaUrl = element.getAttribute('data-src');
-                                const src = mediaUrlFixer(mediaUrl, this.layout.items[idx].width, this.layout.items[idx].height)
-                                !idx && console.log('[LAYOUT FIXER] set first Image src Style', idx, src);
-                                if (src) {
-                                    element.setAttribute('src', src);
-                                    setStyle(element, {opacity: 1});
+                                if (mediaUrl && typeof mediaUrl === 'string') {
+                                    const src = mediaUrlFixer(mediaUrl, this.layout.items[idx].width, this.layout.items[idx].height);
+                                    if (src) {
+                                        !idx && console.log('[LAYOUT FIXER] set first Image src Style', idx, src);
+                                        element.setAttribute('src', src);
+                                        setStyle(element, {opacity: 1});
+                                    }
                                 }
                             })
                         }
