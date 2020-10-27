@@ -1,3 +1,13 @@
+## [v2.2.8](https://pro-gallery-2-2-8.surge.sh) (27/10/2020)
+ 
+#### LAYOUTS
+ -  fix (item): round the item's style instead of flooring it
+
+#### GALLERY
+ -  improve (layoutFixer): fix existing media url instead of creating a new one
+ -  improve (imageItem): remove the opacity transition on the high res image
+
+---
 ## [v2.2.7](https://pro-gallery-2-2-7.surge.sh) (26/10/2020)
  
 #### GALLERY
