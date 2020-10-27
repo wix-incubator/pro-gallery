@@ -396,8 +396,8 @@ export class Item {
   get roundedStyle() {
     return {
       ...this.style,
-      width: Math.floor(this.style.width),
-      height: Math.floor(this.style.height),
+      width: Math.round(this.style.width),
+      height: Math.round(this.style.height),
     };
   }
 
