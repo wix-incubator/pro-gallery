@@ -61,6 +61,21 @@ export const stylesBySection = {
         'cubeRatio',
         // 'gallerySliderImageRatio',
 
+        'gallerySizeType',
+        'gallerySize',
+        'gallerySizePx',
+        'gallerySizeRatio',
+
+    ],
+    [SECTIONS.ADVANCED]: [
+        'groupSize',
+        'groupTypes',
+        'rotatingGroupTypes',
+        'rotatingCropRatios',
+        'groupsPerStrip',
+        'galleryMargin',
+        'scatter',
+        'smartCrop',
         'showArrows',
         'slideshowLoop',
         'isAutoSlideshow',
@@ -72,20 +87,6 @@ export const stylesBySection = {
         'thumbnailSize',
         'thumbnailSpacings',
 
-    ],
-    [SECTIONS.ADVANCED]: [
-        'gallerySizeType',
-        'gallerySize',
-        'gallerySizePx',
-        'gallerySizeRatio',
-        'groupSize',
-        'groupTypes',
-        'rotatingGroupTypes',
-        'rotatingCropRatios',
-        'groupsPerStrip',
-        'galleryMargin',
-        'scatter',
-        'smartCrop',
         'allowLeanGallery',
     ],
     [SECTIONS.INFO]: [
