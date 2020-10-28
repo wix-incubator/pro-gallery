@@ -24,8 +24,35 @@ export const createLayoutFixer = (mediaUrlFixer) => {
     //     Object.keys(attributes).forEach((attr) =>
     //         node.setAttribute(attr, attributes[attr]),
     //     );
+    const createCssStr = (element, styleProperties) => {
+        let cssStr = `#${element.getAttribute('id')} {`;
+        Object.entries(styleProperties).forEach(([key, val]) => {
+            cssStr += `${key}: ${val} !important;`;
+        });
+        cssStr += `}`;
+        console.log('[LAYOUT FIXER] created css', cssStr);
+        return cssStr;
+    }
 
-    const setStyle = (node, styleProperties) =>
+    const setCss = (parent, css, domId) => {
+        const styleTag = document.getElementById('layout-fixer-style-' + domId);
+        parent.appendChild(styleTag);
+        styleTag.appendChild(document.createTextNode(css));
+    }
+    
+    const removeStyleTag = (parent, domId, removeCssOnMount, removeCssWithDelay) => {
+        if (removeCssOnMount) {
+            const styleTag = document.getElementById('layout-fixer-css-' + domId);
+            parent.removeChild(styleTag);
+        } else if (removeCssWithDelay) {
+            setTimeout(() => {
+                const styleTag = document.getElementById('layout-fixer-css-' + domId);
+                parent.removeChild(styleTag);
+            }, 5000)
+        }
+    }
+
+    const setStyle = (node, styleProperties) => {
         node &&
         styleProperties &&
         Object.keys(styleProperties).forEach((prop) => {
@@ -36,6 +63,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                 node.style.removeProperty(prop);
             }
         });
+    }
 
     const getItemWrapperStyle = (item, styleParams) => ({
         width: item.width + 'px',
@@ -53,6 +81,14 @@ export const createLayoutFixer = (mediaUrlFixer) => {
             right: !isRTL ? 'auto' : item.offset.left + 'px',
             ...itemWrapperStyles
         }
+    }
+
+    const getQueryParams = () => {
+        const isTrueInQuery = key => location.search.toLowerCase().indexOf(key.toLowerCase() + '=true') >= 0;
+        const keys = ['disableInlineStyles', 'disableSavedBlueprint', 'useCssTag', 'dontSetHighResImage', 'disableAfterMount', 'disableAfterHydrate', 'noRetries', 'removeCssOnMount', 'removeCssWithDelay'];
+        const queryParams = {};
+        keys.forEach(key => queryParams[key] = isTrueInQuery(key));
+        return queryParams;
     }
 
     const createWebComponent = () => {
@@ -78,18 +114,25 @@ export const createLayoutFixer = (mediaUrlFixer) => {
             }
 
             connectedCallback() {
+                const canUse = getQueryParams();
                 this.domId = this.getAttribute('domId');
                 if (!window.layoutFixer[this.domId]) {
-                    window.layoutFixer[this.domId] = {}
+                    window.layoutFixer[this.domId] = {
+                        disableSavedBlueprint: canUse.disableSavedBlueprint
+                    }
                 } else if (window.layoutFixer[this.domId].done) {
                     return;
-                }
+                } else if (window.layoutFixer[this.domId].mounted && canUse['disableAfterMount']) {
+                    return;
+                } else if (window.layoutFixer[this.domId].hydrated && canUse['disableAfterHydrate']) {
+                    return;
+                } 
                 console.log('[LAYOUT FIXER] connectedCallback');
                 this.parentId = 'pro-gallery-' + this.domId;
                 this.parent = document.getElementById(this.parentId);
                 if (!this.parent) {
                     console.log('[LAYOUT FIXER] no parent found', this.parent);
-                    this.retry();
+                    canUse['noRetries'] || this.retry();
                     return;
                 } else {
                     console.log('[LAYOUT FIXER] parent found', this.parent);
@@ -136,8 +179,9 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                     const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
                     const itemHighResImage = this.parent.querySelectorAll('[data-hook=gallery-item-image-img]');
 
+
                     if (itemWrappers.length > 0 && itemContainers.length > 0) {
-                        if (typeof mediaUrlFixer === 'function') {
+                        if (!canUse['dontSetHighResImage'] && typeof mediaUrlFixer === 'function') {
                             itemHighResImage.forEach((element, idx) => {
                                 const mediaUrl = element.getAttribute('data-src');
                                 if (mediaUrl && typeof mediaUrl === 'string') {
@@ -151,21 +195,42 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                             })
                         }
                         
-                        itemContainers.forEach((element, idx) => {
-                            !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
-                            setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
-                        })
+                        if (canUse['useCssTag'] ) {
+                            let cssStr = '';
+                            itemContainers.forEach((element, idx) => {
+                                !idx && console.log('[LAYOUT FIXER] set first Container CSS', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                                cssStr += createCssStr(element, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                            })
+                            
+                            itemWrappers.forEach((element, idx) => {
+                                !idx && console.log('[LAYOUT FIXER] set first Wrapper CSS', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                                cssStr += createCssStr(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                            })
+                            setCss(this.parent, cssStr, this.domId);
+                        } 
                         
-                        itemWrappers.forEach((element, idx) => {
-                            !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
-                            setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
-                        })
+                        if (!canUse.avoidInlineStyles) {
+                            itemContainers.forEach((element, idx) => {
+                                !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                                setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
+                            })
+                            
+                            itemWrappers.forEach((element, idx) => {
+                                !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                                setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
+                            })
+                        }
                         
+    
                         window.layoutFixer[this.domId].done = Date.now();
+                        window.layoutFixer[this.domId].onMount = () => {
+                            console.log('[LAYOUT FIXER] onMount');
+                            removeStyleTag(this.parent, this.domId, canUse('removeCssOnMount'), canUse('removeCssWithDelay'));
+                        }
                         console.log('[LAYOUT FIXER] Done');
                     } else {
                         console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
-                        this.retry();
+                        canUse['noRetries'] || this.retry();
                     }
                 }
             }

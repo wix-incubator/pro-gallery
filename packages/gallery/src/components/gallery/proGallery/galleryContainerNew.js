@@ -980,6 +980,7 @@ export class GalleryContainer extends React.Component {
         </div>
         <LayoutFixer
           layoutFixerBundleUrl={this.props.layoutFixerBundleUrl}
+          layoutFixerScriptType={this.props.layoutFixerScriptType}
           items={this.items}
           styles={this.props.styles}
           domId={this.props.domId}

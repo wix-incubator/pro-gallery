@@ -2,7 +2,7 @@ import React from 'react';
 import { GALLERY_CONSTS, utils, defaultStyles, dimensionsHelper, addPresetStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
-import { getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
+import { setLayoutFixerMounted, getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery from './leanGallery/leanGallery';
 
@@ -13,6 +13,10 @@ export default class BaseGallery extends React.Component {
   constructor(props) {
     super(props);
     this.domId = props.domId || 'default-dom-id';
+  }
+
+  componentDidMount() {
+    setLayoutFixerMounted(this.domId);
   }
 
   render() {

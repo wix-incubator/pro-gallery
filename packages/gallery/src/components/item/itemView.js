@@ -920,6 +920,7 @@ class ItemView extends GalleryComponent {
             data-hook="item-wrapper"
             className={this.getItemWrapperClass()}
             key={'item-wrapper-' + id}
+            id={'item-wrapper-' + id}
             style={this.getItemWrapperStyles()}
             onClick={this.onItemWrapperClick}
           >
