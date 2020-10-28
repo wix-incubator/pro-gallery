@@ -40,6 +40,7 @@ class SlideshowView extends GalleryComponent {
     this.shouldCreateSlideShowNumbers = false;
     this.skipFromSlide = Math.round(this.props.totalItemsCount * SKIP_SLIDES_MULTIPLIER); // Used in infinite loop
   }
+  
 
   isFirstItem() {
     return this.state.currentIdx === 0
