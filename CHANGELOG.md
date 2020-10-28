@@ -1,3 +1,12 @@
+## [v2.2.9](https://pro-gallery-2-2-9.surge.sh) (28/10/2020)
+ 
+#### GALLERY
+ -  Fix: Added 'aria-hidden' to hidden items in slider infinite loop
+
+#### LAYOUTS
+ -  fix (item): return the roundedStyles as a seperate key. roundedStyles cause a blank 1px strip sometimes
+
+---
 ## [v2.2.8](https://pro-gallery-2-2-8.surge.sh) (27/10/2020)
  
 #### LAYOUTS
