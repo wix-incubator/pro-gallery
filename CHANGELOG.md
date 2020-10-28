@@ -1,3 +1,9 @@
+## [v2.2.10](https://pro-gallery-2-2-10.surge.sh) (28/10/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): add url toggles to layoutFixer (to test in production)
+
+---
 ## [v2.2.9](https://pro-gallery-2-2-9.surge.sh) (28/10/2020)
  
 #### GALLERY
