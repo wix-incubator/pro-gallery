@@ -3,6 +3,17 @@
 import { createLayout } from 'pro-layouts';
 
 export const createLayoutFixer = (mediaUrlFixer) => {
+
+    const getQueryParams = () => {
+        const isTrueInQuery = key => location.search.toLowerCase().indexOf(key.toLowerCase() + '=true') >= 0;
+        const keys = ['useLayoutFixer', 'disableInlineStyles', 'disableSavedBlueprint', 'useCssTag', 'dontSetHighResImage', 'enableAfterMount', 'disableAfterHydrate', 'noRetries', 'removeCssOnMount', 'removeCssWithDelay'];
+        const queryParams = {};
+        keys.forEach(key => queryParams[key] = isTrueInQuery(key));
+        return queryParams;
+    }
+
+    const canUse = getQueryParams();
+
     const convertDtoToLayoutItem = (dto) => {
         const isLayoutItem = !!(dto.id && dto.width > 0 && dto.height > 0);
         if (isLayoutItem) {
@@ -30,7 +41,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
             cssStr += `${key}: ${val} !important;`;
         });
         cssStr += `}`;
-        console.log('[LAYOUT FIXER] created css', cssStr);
+        canUse.useLayoutFixer && console.log('[LAYOUT FIXER] created css', cssStr);
         return cssStr;
     }
 
@@ -83,16 +94,8 @@ export const createLayoutFixer = (mediaUrlFixer) => {
         }
     }
 
-    const getQueryParams = () => {
-        const isTrueInQuery = key => location.search.toLowerCase().indexOf(key.toLowerCase() + '=true') >= 0;
-        const keys = ['disableInlineStyles', 'disableSavedBlueprint', 'useCssTag', 'dontSetHighResImage', 'enableAfterMount', 'disableAfterHydrate', 'noRetries', 'removeCssOnMount', 'removeCssWithDelay'];
-        const queryParams = {};
-        keys.forEach(key => queryParams[key] = isTrueInQuery(key));
-        return queryParams;
-    }
-
     const createWebComponent = () => {
-        console.log('[LAYOUT FIXER] createWebComponent');
+        canUse.useLayoutFixer && console.log('[LAYOUT FIXER] createWebComponent');
         class LayoutFixerElement extends HTMLElement {
             constructor() {
                 super();
@@ -106,15 +109,14 @@ export const createLayoutFixer = (mediaUrlFixer) => {
             retry() {
                 if (this.retries > 0) {
                     this.retries--;
-                    console.log('[LAYOUT FIXER] retrying...', this.retries);
+                    canUse.useLayoutFixer && console.log('[LAYOUT FIXER] retrying...', this.retries);
                     window.requestAnimationFrame(this.connectedCallback);
                 } else {
-                    console.log('[LAYOUT FIXER] reached retries limit');
+                    canUse.useLayoutFixer && console.log('[LAYOUT FIXER] reached retries limit');
                 }
             }
 
             connectedCallback() {
-                const canUse = getQueryParams();
                 this.domId = this.getAttribute('domId');
                 if (!window.layoutFixer[this.domId]) {
                     window.layoutFixer[this.domId] = {
@@ -127,15 +129,15 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                 } else if (window.layoutFixer[this.domId].hydrated && canUse.disableAfterHydrate) {
                     return;
                 } 
-                console.log('[LAYOUT FIXER] connectedCallback');
+                canUse.useLayoutFixer && console.log('[LAYOUT FIXER] connectedCallback');
                 this.parentId = 'pro-gallery-' + this.domId;
                 this.parent = document.getElementById(this.parentId);
                 if (!this.parent) {
-                    console.log('[LAYOUT FIXER] no parent found', this.parent);
+                    canUse.useLayoutFixer && console.log('[LAYOUT FIXER] no parent found', this.parent);
                     canUse.noRetries || this.retry();
                     return;
                 } else {
-                    console.log('[LAYOUT FIXER] parent found', this.parent);
+                    canUse.useLayoutFixer && console.log('[LAYOUT FIXER] parent found', this.parent);
                 }
 
                 this.useLayouter = true
@@ -162,7 +164,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                     scrollBase: top,
                 };
                 window.layoutFixer[this.domId].container = this.measures;
-                console.log('[LAYOUT FIXER] measured container', this.measures);
+                canUse.useLayoutFixer && console.log('[LAYOUT FIXER] measured container', this.measures);
 
                 if (this.measures && this.useLayouter && typeof createLayout === 'function') {
                     this.layout = createLayout({
@@ -170,7 +172,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                         styleParams: this.styleParams,
                         container: this.measures
                     })
-                    console.log('[LAYOUT FIXER] created layout', this.layout);
+                    canUse.useLayoutFixer && console.log('[LAYOUT FIXER] created layout', this.layout);
                     window.layoutFixer[this.domId].structure = this.layout;
                 }
 
@@ -187,7 +189,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                                 if (mediaUrl && typeof mediaUrl === 'string') {
                                     const src = mediaUrlFixer(mediaUrl, this.layout.items[idx].width, this.layout.items[idx].height);
                                     if (src) {
-                                        !idx && console.log('[LAYOUT FIXER] set first Image src Style', idx, src);
+                                        !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Image src Style', idx, src);
                                         element.setAttribute('src', src);
                                         setStyle(element, {opacity: 1});
                                     }
@@ -198,12 +200,12 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                         if (canUse.useCssTag) {
                             let cssStr = '';
                             itemContainers.forEach((element, idx) => {
-                                !idx && console.log('[LAYOUT FIXER] set first Container CSS', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                                !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Container CSS', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                                 cssStr += createCssStr(element, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                             })
                             
                             itemWrappers.forEach((element, idx) => {
-                                !idx && console.log('[LAYOUT FIXER] set first Wrapper CSS', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                                !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Wrapper CSS', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                                 cssStr += createCssStr(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                             })
                             setCss(this.parent, cssStr, this.domId);
@@ -211,12 +213,12 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                         
                         if (!canUse.avoidInlineStyles) {
                             itemContainers.forEach((element, idx) => {
-                                !idx && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                                !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                                 setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
                             })
                             
                             itemWrappers.forEach((element, idx) => {
-                                !idx && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                                !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                                 setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
                             })
                         }
@@ -224,12 +226,12 @@ export const createLayoutFixer = (mediaUrlFixer) => {
     
                         window.layoutFixer[this.domId].done = Date.now();
                         window.layoutFixer[this.domId].onMount = () => {
-                            console.log('[LAYOUT FIXER] onMount');
+                            canUse.useLayoutFixer && console.log('[LAYOUT FIXER] onMount');
                             removeStyleTag(this.parent, this.domId, canUse('removeCssOnMount'), canUse('removeCssWithDelay'));
                         }
-                        console.log('[LAYOUT FIXER] Done');
+                        canUse.useLayoutFixer && console.log('[LAYOUT FIXER] Done');
                     } else {
-                        console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
+                        canUse.useLayoutFixer && console.log('[LAYOUT FIXER] Cannot find elements', itemContainers, itemWrappers, this.parent);
                         canUse.noRetries || this.retry();
                     }
                 }
@@ -240,7 +242,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
 
     if (typeof window !== 'undefined') {
         try {
-            console.log('[LAYOUT FIXER] Start (script is running)');
+            canUse.useLayoutFixer && console.log('[LAYOUT FIXER] Start (script is running)');
             createWebComponent()
         } catch (e) {
             console.error('Cannot create layout fixer', e);
