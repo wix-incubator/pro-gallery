@@ -1,3 +1,9 @@
+## [v2.2.12](https://pro-gallery-2-2-12.surge.sh) (01/11/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): hide elements that are not in view in the layoutFixer
+
+---
 ## [v2.2.11](https://pro-gallery-2-2-11.surge.sh) (01/11/2020)
  
 #### GALLERY
