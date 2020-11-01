@@ -1,3 +1,10 @@
+## [v2.2.11](https://pro-gallery-2-2-11.surge.sh) (01/11/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): merge disableAfterMount and add nopreload experiment
+ -  fix (slideshowView): fix prerender mode in horizontal galleries
+
+---
 ## [v2.2.10](https://pro-gallery-2-2-10.surge.sh) (28/10/2020)
  
 #### GALLERY
