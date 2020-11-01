@@ -87,6 +87,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
         const { isRTL } = styleParams
         return {
             opacity: 1,
+            display: 'block',
             top: item.offset.top + 'px',
             left: isRTL ? 'auto' : item.offset.left + 'px',
             right: !isRTL ? 'auto' : item.offset.left + 'px',
@@ -94,6 +95,35 @@ export const createLayoutFixer = (mediaUrlFixer) => {
         }
     }
 
+    const getVisibleItems = (items, styleParams, container) => {
+        const {height, scrollBase, width} = container;
+        const {oneRow, enableInfiniteScroll} = styleParams;
+        let visibleItems = items;
+        try {
+          const windowHeight = window.innerHeight;
+          const isInfinite = !oneRow && enableInfiniteScroll;
+          const galleryBottom = isInfinite ? Infinity : (scrollBase + height);
+          const windowBottom = windowHeight;
+          const maxItemTop = Math.min(galleryBottom, windowBottom) - scrollBase;
+          if (maxItemTop < 0) { //gallery is below the fold
+            visibleItems = [];
+          } else if (!oneRow) {
+            visibleItems = items.filter(item => item.offset.top < maxItemTop);
+          } else {
+            visibleItems = items.filter(item => item.left <= width + 20);
+          }
+          if(visibleItems.length < 2 && visibleItems.length < items.length) {
+            //dont render less then 2 items (otherwise slide show Arrow will be removed)
+            visibleItems = items.slice(0, 2);
+          }
+        } catch (e) {
+          console.error('Could not calculate visible items, returning original items', e);
+          visibleItems = items;
+        }
+        return visibleItems.length;
+      }
+    
+    
     const createWebComponent = () => {
         canUse.useLayoutFixer && console.log('[LAYOUT FIXER] createWebComponent');
         class LayoutFixerElement extends HTMLElement {
@@ -177,6 +207,8 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                 }
 
                 if (this.useLayouter && this.layout && this.layout.items && this.layout.items.length > 0) {
+                    const visibleItems = getVisibleItems(this.layout.items, this.styleParams, this.measures)
+
                     const itemContainers = this.parent.querySelectorAll('.gallery-item-container');
                     const itemWrappers = this.parent.querySelectorAll('.gallery-item-wrapper');
                     const itemHighResImage = this.parent.querySelectorAll('[data-hook=gallery-item-image-img]');
@@ -184,7 +216,10 @@ export const createLayoutFixer = (mediaUrlFixer) => {
 
                     if (itemWrappers.length > 0 && itemContainers.length > 0) {
                         if (!canUse.dontSetHighResImage && typeof mediaUrlFixer === 'function') {
-                            itemHighResImage.forEach((element, idx) => {
+                            itemHighResImage.forEach(element => {
+                                const idx = parseInt(element.getAttribute('data-idx'));
+                                if (idx >= visibleItems) return;
+
                                 const mediaUrl = element.getAttribute('data-src');
                                 if (mediaUrl && typeof mediaUrl === 'string') {
                                     const src = mediaUrlFixer(mediaUrl, this.layout.items[idx].width, this.layout.items[idx].height);
@@ -200,11 +235,13 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                         if (canUse.useCssTag) {
                             let cssStr = '';
                             itemContainers.forEach((element, idx) => {
+                                if (idx >= visibleItems) {return;}
                                 !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Container CSS', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                                 cssStr += createCssStr(element, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                             })
                             
                             itemWrappers.forEach((element, idx) => {
+                                if (idx >= visibleItems) {return;}
                                 !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Wrapper CSS', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                                 cssStr += createCssStr(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
                             })
@@ -213,13 +250,22 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                         
                         if (!canUse.avoidInlineStyles) {
                             itemContainers.forEach((element, idx) => {
-                                !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
-                                setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
+                                if (idx >= visibleItems) {
+                                    canUse.useLayoutFixer && console.log('[LAYOUT FIXER] removed element from dom', idx, visibleItems);
+                                    element.parentElement.remove();
+                                } else {
+                                    !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
+                                    setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
+                                }
                             })
                             
                             itemWrappers.forEach((element, idx) => {
-                                !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
-                                setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
+                                if (idx >= visibleItems) {
+                                    return;
+                                } else {
+                                    !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Wrapper Style', idx, getItemWrapperStyle(this.layout.items[idx], this.styleParams));
+                                    setStyle(element, getItemWrapperStyle(this.layout.items[idx], this.styleParams))
+                                }
                             })
                         }
                         
