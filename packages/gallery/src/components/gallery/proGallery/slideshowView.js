@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, window, utils, isEditMode, isPreviewMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window, utils, isEditMode, isPreviewMode, isPrerenderMode } from 'pro-gallery-lib';
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import { isGalleryInViewport } from './galleryHelpers.js';
@@ -884,7 +884,7 @@ class SlideshowView extends GalleryComponent {
 
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
-        width: column.width,
+        width: isPrerenderMode() ? '100%' : column.width,
         height: container.galleryHeight,
       };
       if (this.props.styleParams.isSlideshow) {
@@ -921,11 +921,19 @@ class SlideshowView extends GalleryComponent {
           }
         : {};
 
-    const galleryStyle = {
+    const galleryDimensions = isPrerenderMode() ? {
+      width: '100%',
+      height: this.props.container.galleryHeight,
+    } : {
       height: this.props.container.galleryHeight,
       width: this.props.container.galleryWidth,
+    };
+
+    const galleryStyle = {
+      ...galleryDimensions,
       ...galleryStyleForExternalArrows,
     };
+
     if (this.props.styleParams.isSlideshow) {
       Object.assign(galleryStyle, {
         paddingBottom: this.props.styleParams.slideshowInfoSize,

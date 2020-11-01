@@ -133,8 +133,18 @@ export function useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServ
   const calcGalleryDimensions = () => {
     let dimensions = {};
     const showSide = !!getGallerySettings().showSide && !utils.isMobile();
-    dimensions.width = !showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-    dimensions.height = window.innerHeight;
+    if (!!getGallerySettings().isUnknownDimensions) {
+      dimensions = !utils.isMobile() ? {
+        width: 500,
+        height: 500,
+      } : {
+        width: 320,
+        height: 500,
+      }
+    } else {
+      dimensions.width = !showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
+      dimensions.height = window.innerHeight;
+    }
 
     return dimensions;
   };
