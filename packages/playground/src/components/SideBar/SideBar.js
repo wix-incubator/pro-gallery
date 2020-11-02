@@ -192,6 +192,9 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Use Inline Styles" labelAlign="left">
                 <Switch checked={!!gallerySettings.useInlineStyles} onChange={e => setGallerySettings({ useInlineStyles: e })} />
               </Form.Item>
+              <Form.Item label="Click to Expand" labelAlign="left">
+                <Switch checked={!!gallerySettings.clickToExpand} onChange={e => setGallerySettings({ clickToExpand: e })} />
+              </Form.Item>
             </Form>
             <Form layout="vertical">
               <Form.Item label="View Mode">

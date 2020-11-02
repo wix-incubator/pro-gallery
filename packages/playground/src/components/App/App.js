@@ -6,7 +6,7 @@ import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../.
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import { GALLERY_CONSTS } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-lib'
@@ -245,6 +245,8 @@ export function App() {
     return keySettings;
   }
   
+  const GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : ProGallery;
+
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -262,7 +264,7 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
-        {!canRender() ? <div>Waiting for blueprint...</div> : <ExpandableProGallery
+        {!canRender() ? <div>Waiting for blueprint...</div> : <GalleryComponent
           key={`pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`}
           domId={'pro-gallery-playground'}
           scrollingElement={window}
