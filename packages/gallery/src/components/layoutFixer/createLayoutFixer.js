@@ -6,7 +6,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
 
     const getQueryParams = () => {
         const isTrueInQuery = key => location.search.toLowerCase().indexOf(key.toLowerCase() + '=true') >= 0;
-        const keys = ['useLayoutFixer', 'disableInlineStyles', 'disableSavedBlueprint', 'useCssTag', 'dontSetHighResImage', 'enableAfterMount', 'disableAfterHydrate', 'noRetries', 'removeCssOnMount', 'removeCssWithDelay'];
+        const keys = ['useLayoutFixer', 'disableInlineStyles', 'dontRemoveHiddenItems', 'disableSavedBlueprint', 'useCssTag', 'dontSetHighResImage', 'enableAfterMount', 'disableAfterHydrate', 'noRetries', 'removeCssOnMount', 'removeCssWithDelay'];
         const queryParams = {};
         keys.forEach(key => queryParams[key] = isTrueInQuery(key));
         return queryParams;
@@ -252,7 +252,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                             itemContainers.forEach((element, idx) => {
                                 if (idx >= visibleItems) {
                                     canUse.useLayoutFixer && console.log('[LAYOUT FIXER] removed element from dom', idx, visibleItems);
-                                    element.parentElement.remove();
+                                    canUse.dontRemoveHiddenItems || element.parentElement.remove();
                                 } else {
                                     !idx && canUse.useLayoutFixer && console.log('[LAYOUT FIXER] set first Container Style', idx, getItemContainerStyle(this.layout.items[idx], this.styleParams));
                                     setStyle(element, getItemContainerStyle(this.layout.items[idx], this.styleParams))
@@ -283,7 +283,9 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                 }
             }
         }
-        window.customElements.define('layout-fixer', LayoutFixerElement);
+        if (!window.layoutFixer) {
+            window.customElements.define('layout-fixer', LayoutFixerElement);
+        }
     }
 
     if (typeof window !== 'undefined') {
