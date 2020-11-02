@@ -1,3 +1,9 @@
+## [v2.2.13](https://pro-gallery-2-2-13.surge.sh) (02/11/2020)
+ 
+#### GALLERY
+ -  fix (layoutFixer): fix the element creation for multiple galleries
+
+---
 ## [v2.2.12](https://pro-gallery-2-2-12.surge.sh) (01/11/2020)
  
 #### GALLERY
