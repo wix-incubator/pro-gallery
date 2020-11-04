@@ -23,7 +23,8 @@ describe('styleParam - slideshowInfoSize', () => {
     const infoContainer = driver.find.selector('.gallery-slideshow-info').at(0);
     const infoStyleMock = {
       height: '250px',
-      bottom: '-250px'
+      bottom: '-250px',
+      transition: 'none'
     }
     expect(infoContainer.props().style).to.deep.equal(infoStyleMock);
     driver.detach.proGallery();

@@ -891,7 +891,7 @@ class ItemView extends GalleryComponent {
     ? { href: url , "data-cancel-link":true }
     : {};
     return linkParams;
-in    }
+    }
   }
 
   composeItem() {
