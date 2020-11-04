@@ -1,3 +1,4 @@
+import { isPrerenderMode } from 'pro-gallery-lib';
 import React from 'react';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -72,7 +73,7 @@ export default class TextItem extends GalleryComponent {
       ...changeBgColor,
     };
     const itemContentStyle = {
-      height: imageDimensions ? imageDimensions.height : 'inherit',
+      height: imageDimensions && !isPrerenderMode() ? imageDimensions.height : 'inherit',
       backgroundColor:
         styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit',
     };

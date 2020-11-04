@@ -40,15 +40,11 @@ export default class BaseGallery extends React.Component {
       const { galleryType, galleryLayout } = galleryProps.styles;
 
       if (galleryType === undefined || galleryLayout !== undefined) {
-          galleryProps = {...galleryProps, styles: addPresetStyles(galleryProps.styles)}
-        }
+        galleryProps = {...galleryProps, styles: addPresetStyles(galleryProps.styles)}
+      }
     }
 
-    let GalleryComponent = ProGallery;
-
-    if (isEligibleForLeanGallery(galleryProps)) {
-      GalleryComponent = LeanGallery;
-    }
+    const GalleryComponent = isEligibleForLeanGallery(galleryProps) ? LeanGallery : ProGallery;
 
     utils.logPlaygroundLink(galleryProps.styles);
 

@@ -418,11 +418,12 @@ class ItemView extends GalleryComponent {
     let itemInner;
     const imageDimensions = this.getImageDimensions();
     const {width, height} = imageDimensions;
-    const partialImageDimensions = {width, height};
+
+    const itemStyles = {width, height};
 
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
-      itemHover = this.getItemHover(partialImageDimensions);
+      itemHover = this.getItemHover(itemStyles);
     }
 
 
@@ -431,26 +432,29 @@ class ItemView extends GalleryComponent {
           itemInner = <div />;
         break;
       case 'video':
-          itemInner = this.getVideoItem(partialImageDimensions, itemHover);
+          itemInner = this.getVideoItem(itemStyles, itemHover);
         break;
       case 'text':
-        itemInner = [this.getTextItem(partialImageDimensions), itemHover];
+        itemInner = [this.getTextItem(itemStyles), itemHover];
         break;
       case 'image':
       case 'picture':
       default:
         if (this.props.isVideoPlaceholder) {
-          itemInner = this.getVideoItem(partialImageDimensions, itemHover);
+          itemInner = this.getVideoItem(itemStyles, itemHover);
         } else {
-        itemInner = [this.getImageItem(partialImageDimensions), itemHover];
+        itemInner = [this.getImageItem(itemStyles), itemHover];
         }
     }
 
     if (styleParams.isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props;
-      const style = {
+      const fadeAnimationStyles = this.getFadeAnimationStyles();
+      const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
+        ...fadeAnimationStyles,
+        transition: 'none'
       };
       const slideshowInfo = customSlideshowInfoRenderer
         ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps()) : null;
@@ -465,13 +469,14 @@ class ItemView extends GalleryComponent {
             key={'item-container-link-' + id}
             {...this.getLinkParams()}
             tabIndex={-1}
+            style={fadeAnimationStyles}
           >
             {itemInner}
           </a>
           <div
             className="gallery-slideshow-info"
             data-hook="gallery-slideshow-info-buttons"
-            style={style}
+            style={infoStyle}
           >
             {slideshowInfo}
           </div>
@@ -600,12 +605,10 @@ class ItemView extends GalleryComponent {
       height: style.height + style.infoHeight,
     };
 
-    const slideAnimationStyles = slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ? {
+    const fadeAnimationStyles = slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ? {
       left: isRTL ? 'auto' : 0,
       right: !isRTL ? 'auto' : 0,
-      opacity: currentIdx === idx ? 1 : 0,
       pointerEvents: currentIdx === idx ? 'auto' : 'none',
-      transition: currentIdx === idx ? 'none' : 'opacity .8s ease .2s',
       zIndex: currentIdx === idx ? 0 : 1
     } : {}
 
@@ -616,7 +619,7 @@ class ItemView extends GalleryComponent {
       transition: 'none'
     };
 
-    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...opacityStyles, ...slideAnimationStyles};
+    const itemContainerStyles = {...itemStyles, ...layoutStyles, ...containerStyleByStyleParams, ...transitionStyles, ...opacityStyles, ...fadeAnimationStyles};
 
     return itemContainerStyles;
   }
@@ -636,16 +639,24 @@ class ItemView extends GalleryComponent {
     styles.margin = -styleParams.itemBorderWidth + 'px';
     styles.height = height + 'px';
 
-
     const imageDimensions = this.getImageDimensions();
 
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
+      ...(!styleParams.isSlideshow && this.getFadeAnimationStyles())
     };
 
     return itemWrapperStyles;
 
+  }
+
+  getFadeAnimationStyles() {
+    const { idx, currentIdx, styleParams } = this.props;
+    return styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ? {
+      transition: currentIdx === idx ? 'none' : 'opacity .8s ease .2s',
+      opacity: currentIdx === idx ? 1 : 0,
+    } : {}
   }
 
   getItemAriaLabel() {
@@ -880,7 +891,7 @@ class ItemView extends GalleryComponent {
     ? { href: url , "data-cancel-link":true }
     : {};
     return linkParams;
-    }
+in    }
   }
 
   composeItem() {
