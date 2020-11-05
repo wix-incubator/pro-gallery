@@ -1,3 +1,10 @@
+## [v2.2.14](https://pro-gallery-2-2-14.surge.sh) (05/11/2020)
+ 
+#### GALLERY
+ -  fix fade animation and thumbnail layout for text item
+ -  add special handling for fadeAnimation for slideshow
+
+---
 ## [v2.2.13](https://pro-gallery-2-2-13.surge.sh) (02/11/2020)
  
 #### GALLERY
