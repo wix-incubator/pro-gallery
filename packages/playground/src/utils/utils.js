@@ -27,17 +27,19 @@ function generateUUID() {
   });
 }
 
-export function mixAndSlice(array, length) {
+export function mixAndSlice(array, length, startIdx = 0, customMetadata = {}) {
   let result = [];
   if (array.length > 0) {
     const rnd = num => Math.floor(Math.random() * num)
     while (result.length < length) {
       const idx = rnd(array.length);
+      const itemIdx = startIdx + result.length + 1;
       let item = cloneDeep(array[idx]);
       // Object.assign(item, array[idx]);
       item.itemId = generateUUID() + '_' + String(result.length);
-      item.metadata.title = `Item #${result.length + 1}`;
-      item.metadata.description = '';//`Description #${result.length + 1}: ${createLoremIpsum(rnd(80) + 20)}`;
+      item.metadata.title = (customMetadata.customTitle || `Item #${itemIdx}`).replace('#', itemIdx);
+      ;
+      item.metadata.description = customMetadata.loremDescription ? createLoremIpsum(rnd(80) + 20) : (customMetadata.customDescription || '').replace('#', itemIdx);//`Description #${result.length + 1}: ${createLoremIpsum(rnd(80) + 20)}`;
       // console.log('ITEM CREATED', item, array[idx]);
       result.push(item);
     }

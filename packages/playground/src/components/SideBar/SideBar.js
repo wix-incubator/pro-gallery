@@ -165,6 +165,19 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Form.Item>
             </Form>
           </Collapse.Panel>
+          <Collapse.Panel header="Title & Description" key="info">
+            <Form layout="vertical">
+              <Form.Item label="Custom Title" help="use the # symbol for the item index">
+                <Input defaultValue={gallerySettings.customTitle || ''} onChange={e => setGallerySettings({ customTitle: e.target.value }) } />
+              </Form.Item>
+              <Form.Item label="Custom Description" help="use the # symbol for the item index">
+                <Input.TextArea defaultValue={gallerySettings.customDescription || ''} rows="4" onChange={e => setGallerySettings({ customDescription: e.target.value })} />
+              </Form.Item>
+              <Form.Item label="Generate Random Description" labelAlign="left">
+                <Switch checked={!!gallerySettings.loremDescription} onChange={e => setGallerySettings({ loremDescription: e })} />
+              </Form.Item>
+            </Form>
+          </Collapse.Panel>
           <Collapse.Panel header="Styles" key="styles">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Show all Styles" labelAlign="left">

@@ -13,7 +13,6 @@ import { BlueprintsManager } from 'pro-gallery-lib'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {utils} from 'pro-gallery-lib';
 
-// import Loader from './loader';
 
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
@@ -25,13 +24,6 @@ const pJson = require('../../../package.json');
 const blueprintsManager = new BlueprintsManager({id: 'playground'});
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
 let shouldUseBlueprintsFromServer = false; //USE THIS ONLY FOR LOCAL TESTING WITH THE NODE SERVER;
-const initialItems = {
-  media: mixAndSlice(testMedia, ITEMS_BATCH_SIZE),
-  mixed: mixAndSlice(testItems, ITEMS_BATCH_SIZE),
-  texts: mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
-  videos: mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
-  images: mixAndSlice(testImages, ITEMS_BATCH_SIZE)
-};
 
 const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
@@ -44,6 +36,16 @@ export function App() {
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaTypes = 'media'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
+
+  const _mixAndSlice = (items, batchSize) => mixAndSlice(items, batchSize, (items || []).length, gallerySettings)
+
+  const initialItems = {
+    media: _mixAndSlice(testMedia, ITEMS_BATCH_SIZE),
+    mixed: _mixAndSlice(testItems, ITEMS_BATCH_SIZE),
+    texts: _mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
+    videos: _mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
+    images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE)
+  };
 
   const switchState = () => {
     setShowSide(!showSide);
@@ -93,16 +95,16 @@ export function App() {
     const batchSize = numberOfItems || ITEMS_BATCH_SIZE;
     switch (mediaTypes) {
       case 'images':
-        return mixAndSlice(testImages, batchSize);
+        return _mixAndSlice(testImages, batchSize);
       case 'videos':
-        return mixAndSlice(testVideos, batchSize);
+        return _mixAndSlice(testVideos, batchSize);
       case 'texts':
-        return mixAndSlice(testTexts, batchSize);
+        return _mixAndSlice(testTexts, batchSize);
       case 'mixed':
-        return mixAndSlice(testItems, batchSize);
+        return _mixAndSlice(testItems, batchSize);
       case 'media':
       default:
-        return mixAndSlice(testMedia, batchSize);
+        return _mixAndSlice(testMedia, batchSize);
     }
   }
 
