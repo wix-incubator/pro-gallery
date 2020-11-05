@@ -469,7 +469,7 @@ class ItemView extends GalleryComponent {
             key={'item-container-link-' + id}
             {...this.getLinkParams()}
             tabIndex={-1}
-            style={fadeAnimationStyles}
+            style={{...fadeAnimationStyles}}
           >
             {itemInner}
           </a>
@@ -654,8 +654,10 @@ class ItemView extends GalleryComponent {
   getFadeAnimationStyles() {
     const { idx, currentIdx, styleParams } = this.props;
     return styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ? {
-      transition: currentIdx === idx ? 'none' : 'opacity .8s ease .2s',
+      transition: currentIdx === idx ? 'none' : 'opacity .8s ease',
       opacity: currentIdx === idx ? 1 : 0,
+      display : 'block'
+      // visibility: currentIdx === idx ? 'visible' : 'hidden',
     } : {}
   }
 

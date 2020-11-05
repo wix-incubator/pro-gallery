@@ -1535,12 +1535,12 @@ const testVideos = [{
 }];
 
 const testTexts = quotes.map((quote, idx) => {
-  const bgColor = ['#ffadad55','#ffd6a555','#fdffb655','#caffbf55','#9bf6ff55','#a0c4ff55','#bdb2ff55','#ffc6ff55','#fffffc55'][idx % 8];
+  const bgColor = ['#ffadad','#ffd6a5','#fdffb6','#caffbf','#9bf6ff','#a0c4ff','#bdb2ff','#ffc6ff','#fffffc'][idx % 8];
   const height = [200, 250, 300][~~(3 * Math.random())];
   const width = [200, 250, 300][~~(3 * Math.random())];
   return ({
     itemId: '96858c1s-1f77-4d88-a622-6a2444' + bgColor.slice(1),
-    html: `<div style='font-family: cursive; color: #115; width: ${width}px; height: ${height}px; background:${bgColor}; text-align: center; padding: 10px;'>
+    html: `<div style='white-space: pre-wrap; font-family: cursive; color: #115; width: ${width}px; height: ${height}px; background:${bgColor}; text-align: center; padding: 10px;'>
             <p style="line-height:24px; padding:10px; color: #0f0066; font-size: 18px;">${quote.quote}</p>
             <p style="font-weight: bold; line-height:26px; color: #09003d; padding:5px; font-size: 21px;">${quote.author}</p>
           </div>`,

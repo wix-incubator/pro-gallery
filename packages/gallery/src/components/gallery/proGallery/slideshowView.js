@@ -6,6 +6,7 @@ import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
 import { GalleryComponent } from '../../galleryComponent';
+import TextItem from '../../item/textItem.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -610,7 +611,13 @@ class SlideshowView extends GalleryComponent {
                 data-key={thumbnailItem.id}
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
-              />
+              >{item.type === 'text' ? <TextItem 
+                {...this.props}
+                {...thumbnailItem.renderProps()}
+                actions={{}}
+                imageDimensions={itemStyle}
+                style={{...thumbnailItem.renderProps().style, ...itemStyle}}
+              /> : null}</div>
             );
           })}
         </div>

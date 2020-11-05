@@ -11,23 +11,20 @@ export default class TextItem extends GalleryComponent {
   }
 
   getTextDimensions() {
-    const { style, styleParams, cubeRatio } = this.props;
+    const { style, styleParams, cubeRatio, imageDimensions } = this.props;
     const isVerticalItem = style.ratio < cubeRatio - 0.01;
     //text dimensions include scaling
     const textHeight =
       (isVerticalItem
         ? style.height / style.maxHeight
         : style.width / style.maxWidth) * style.maxHeight;
-    const marginTop =
-      styleParams.cubeType === 'fit' ? 0 : (style.height - textHeight) / 2;
-    const transform =
-      'translate(0, 0) scale(' +
-      (isVerticalItem
-        ? style.height / style.maxHeight
-        : style.width / style.maxWidth) +
-      ')';
+    const textWidth =
+      (!isVerticalItem
+        ? style.width / style.maxWidth
+        : style.height / style.maxHeight) * style.maxWidth;
+    const translate = styleParams.cubeType === 'fit' ? '0, 0' : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round((style.height - textHeight) / 2)}px`
+    const transform = `translate(${translate}) scale(${(isVerticalItem ? style.height / style.maxHeight : style.width / style.maxWidth)}`;
     return {
-      marginTop,
       width: style.maxWidth + 'px',
       height: style.maxHeight + 'px',
       transformOrigin: '0 0',
