@@ -16,6 +16,7 @@ import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pr
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
+import {StylesList} from './StyleList';
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
@@ -186,6 +187,9 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
               </Form.Item>
+              {/* <Form.Item label="See All Styles" labelAlign="left"> */}
+                <StylesList />
+              {/* </Form.Item> */}
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Benchmarks" key="benchmarks">
@@ -193,6 +197,9 @@ function SideBar({ items, blueprintsManager, visible }) {
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form.Item label="Responsive Preview" labelAlign="left">
+                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => setGallerySettings({ responsivePreview: e })} />
+              </Form.Item>
               <Form.Item label="Unknown dimension" labelAlign="left">
                 <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({ isUnknownDimensions: e })} />
               </Form.Item>
@@ -233,7 +240,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Form.Item>}
             </Form>
           </Collapse.Panel>
-          <Collapse.Panel header="Lean Gallery" key="lean">
+          {/*<Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
                 <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
@@ -254,7 +261,7 @@ function SideBar({ items, blueprintsManager, visible }) {
           </Collapse.Panel>
           <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
-          </Collapse.Panel>
+            </Collapse.Panel>*/}
         </Collapse>
 
       {!utils.isMobile() && !!visible && <>

@@ -1,4 +1,4 @@
-import React, {useEffect, Suspense} from 'react';
+import React, {useEffect, Suspense, useState} from 'react';
 // import {SideBar} from '../SideBar';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
@@ -12,7 +12,7 @@ import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-lib'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {utils} from 'pro-gallery-lib';
-
+import { Resizable } from 're-resizable';
 
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
@@ -36,6 +36,8 @@ export function App() {
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
   const {numberOfItems = 0, mediaTypes = 'media'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
+
+  const [resizedWidth, setResizedWidth] = useState(320);
 
   let totalItems = 0;
   const _mixAndSlice = (items, batchSize) => {
@@ -271,22 +273,57 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
-        {!canRender() ? <div>Waiting for blueprint...</div> : <GalleryComponent
-          key={`pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`}
-          domId={'pro-gallery-playground'}
-          scrollingElement={window}
-          viewMode={gallerySettings.viewMode}
-          eventsListener={eventListener}
-          totalItemsCount={getTotalItemsCount()}
-          resizeMediaUrl={resizeMediaUrl}
-          settings={{avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'}}
-          currentIdx={gallerySettings.initialIdx}
-          useBlueprints={gallerySettings.useBlueprints}
-          useLayoutFixer={gallerySettings.useLayoutFixer}
-          {...getExternalInfoRenderers()}
-          {...blueprintProps}
-        />}
+        {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
+          key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
+          domId: 'pro-gallery-playground',
+          scrollingElement: window,
+          viewMode: gallerySettings.viewMode,
+          eventsListener: eventListener,
+          totalItemsCount: getTotalItemsCount(),
+          resizeMediaUrl: resizeMediaUrl,
+          settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
+          currentIdx: gallerySettings.initialIdx,
+          useBlueprints: gallerySettings.useBlueprints,
+          useLayoutFixer: gallerySettings.useLayoutFixer,
+          ...getExternalInfoRenderers(),
+          ...blueprintProps
+        }, resizedWidth, setResizedWidth, gallerySettings)}
       </section>
     </main>
   );
+}
+
+const addResizable = (Component, props, resizedWidth, setResizedWidth, gallerySettings) => {
+  return gallerySettings.responsivePreview ? (<div style={{
+    background: '#666',
+    width: '100%',
+    height: window.innerHeight + 'px',
+    display: 'table',
+    textAlign: 'center',
+  }}>
+    <div style={{
+      display: 'table-cell',
+      verticalAlign: 'middle',
+    }}>
+      <Resizable style={{
+        display: 'inline-block',
+        textAlign: 'center',
+        background: 'white'
+      }} defaultSize={{
+        width:resizedWidth,
+      }}
+      axis='x'
+      onResizeStop={(...args) => { setResizedWidth(resizedWidth + args[3].width)}}
+      >
+        <Component {...props}
+          container={{
+            ...props.container,
+            width: resizedWidth
+          }}
+        
+        />
+      </Resizable>
+    </div>
+  </div>) :
+  (<Component {...props}/>)
 }
