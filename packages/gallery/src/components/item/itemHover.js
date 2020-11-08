@@ -1,5 +1,5 @@
 import React from 'react';
-import {GALLERY_CONSTS, utils} from 'pro-gallery-lib';
+import {GALLERY_CONSTS, isEditMode, utils} from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 
 export default class ItemHover extends GalleryComponent {
@@ -33,11 +33,14 @@ export default class ItemHover extends GalleryComponent {
       itemWasHovered,
       styleParams,
     } = this.props;
-    const { hoveringBehaviour, overlayAnimation, alwaysShowHover } = styleParams;
+    const { hoveringBehaviour, overlayAnimation, alwaysShowHover, previewHover } = styleParams;
     const { APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
     const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
 
     if (alwaysShowHover) {
+      return true;
+    }
+    if (isEditMode() && previewHover) {
       return true;
     }
     if (hoveringBehaviour === APPEARS && overlayAnimation !== NO_EFFECT) {
