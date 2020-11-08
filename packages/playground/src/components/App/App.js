@@ -37,7 +37,12 @@ export function App() {
   const {numberOfItems = 0, mediaTypes = 'media'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
-  const _mixAndSlice = (items, batchSize) => mixAndSlice(items, batchSize, (items || []).length, gallerySettings)
+  let totalItems = 0;
+  const _mixAndSlice = (items, batchSize) => {
+    const mixedItems = mixAndSlice(items, batchSize, totalItems, gallerySettings);
+    totalItems += mixedItems.length;
+    return mixedItems;
+  }
 
   const initialItems = {
     media: _mixAndSlice(testMedia, ITEMS_BATCH_SIZE),
