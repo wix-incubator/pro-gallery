@@ -23,7 +23,8 @@ export default class TextItem extends GalleryComponent {
         ? style.width / style.maxWidth
         : style.height / style.maxHeight) * style.maxWidth;
     const translate = styleParams.cubeType === 'fit' ? '0, 0' : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round((style.height - textHeight) / 2)}px`
-    const transform = `translate(${translate}) scale(${(isVerticalItem ? style.height / style.maxHeight : style.width / style.maxWidth)}`;
+    const scale = (isVerticalItem ? style.height / style.maxHeight : style.width / style.maxWidth);
+    const transform = `translate(${translate}) scale(${scale})`;
     return {
       width: style.maxWidth + 'px',
       height: style.maxHeight + 'px',
