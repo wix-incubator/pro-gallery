@@ -52,6 +52,7 @@ describe('groupSize - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 1,
+      gridStyle: 1,
       groupSize: 3,
     });
     await driver.waitFor.hookToBeVisible('item-container');

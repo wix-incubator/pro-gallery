@@ -185,14 +185,15 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Show all Styles" labelAlign="left">
                 <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({ showAllStyles: e })} />
               </Form.Item>
-              <Form.Item label="Reset to Default Gallery" labelAlign="left">
-                <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
-              </Form.Item>
               <Form.Item label="Responsive Preview" labelAlign="left">
                 <Switch checked={!!gallerySettings.responsivePreview} onChange={e => setGallerySettings({ responsivePreview: e })} />
               </Form.Item>
-
-              <StylesList />
+              <Form.Item label="Reset to Default Gallery" labelAlign="left">
+                <Button icon="delete" shape="circle" onClick={() => window.location.search = ''} />
+              </Form.Item>
+              <Form.Item label="Full Styles List" labelAlign="left">
+                <StylesList />
+              </Form.Item>
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Benchmarks" key="benchmarks">

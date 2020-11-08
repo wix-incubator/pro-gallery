@@ -60,9 +60,7 @@ function StylesList() {
           }}
 />
       </Modal>
-      <Button type="primary" icon="code" shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
-        Full Styles List 
-      </Button>
+      <Button shape="circle" icon="bars" disabled={modalVisible} onClick={() => set_modalVisible(true)}/>
     </div>
   );
 }

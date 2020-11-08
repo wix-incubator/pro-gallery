@@ -49,6 +49,7 @@ export const stylesBySection = {
         'isRTL',
         'imageMargin',
 
+        'groupSize',
         'collageDensity',
 
         'cubeImages',
@@ -69,7 +70,6 @@ export const stylesBySection = {
         'fixedColumns',
         'groupsPerStrip',
 
-        'groupSize',
         'groupTypes',
         'rotatingGroupTypes',
         'rotatingCropRatios',

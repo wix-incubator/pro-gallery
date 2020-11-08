@@ -21,6 +21,7 @@ describe('fixedColumns - e2e', () => {
       groupSize:1,
       isVertical:true,
       fixedColumns: 1,
+      gridStyle: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.partialScreenshot();
@@ -32,6 +33,7 @@ describe('fixedColumns - e2e', () => {
       groupSize:1,
       isVertical:true,
       fixedColumns: 2,
+      gridStyle: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -43,6 +45,7 @@ describe('fixedColumns - e2e', () => {
       groupSize:1,
       isVertical:true,
       fixedColumns: 3,
+      gridStyle: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

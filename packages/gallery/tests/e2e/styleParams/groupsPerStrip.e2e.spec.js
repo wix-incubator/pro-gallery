@@ -19,6 +19,7 @@ describe('groupsPerStrip - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 3,
+      gridStyle: 1,
       groupSize:1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -29,6 +30,7 @@ describe('groupsPerStrip - e2e', () => {
     await driver.openPage({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 7,
+      gridStyle: 1,
       groupSize:1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
