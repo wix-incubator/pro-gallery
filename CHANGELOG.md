@@ -1,3 +1,12 @@
+## [v2.2.15](https://pro-gallery-2-2-15.surge.sh) (08/11/2020)
+ 
+#### GALLERY
+ -  Fixed condition to preview the hover element.
+
+#### PLAYGROUND
+ -  improve: add scroll animations for horizontal galleries
+
+---
 ## [v2.2.14](https://pro-gallery-2-2-14.surge.sh) (05/11/2020)
  
 #### GALLERY
