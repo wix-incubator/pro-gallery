@@ -27,6 +27,7 @@ let shouldUseBlueprintsFromServer = false; //USE THIS ONLY FOR LOCAL TESTING WIT
 
 const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
+let totalItems = 0;
 
 export function App() {
   const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServer);
@@ -39,10 +40,11 @@ export function App() {
 
   const [resizedWidth, setResizedWidth] = useState(320);
 
-  let totalItems = 0;
-  const _mixAndSlice = (items, batchSize) => {
+  const _mixAndSlice = (items, batchSize, shouldAdd) => {
     const mixedItems = mixAndSlice(items, batchSize, totalItems, gallerySettings);
-    totalItems += mixedItems.length;
+    if (shouldAdd) {
+      totalItems += mixedItems.length;
+    }
     return mixedItems;
   }
 
@@ -102,16 +104,16 @@ export function App() {
     const batchSize = numberOfItems || ITEMS_BATCH_SIZE;
     switch (mediaTypes) {
       case 'images':
-        return _mixAndSlice(testImages, batchSize);
+        return _mixAndSlice(testImages, batchSize, true);
       case 'videos':
-        return _mixAndSlice(testVideos, batchSize);
+        return _mixAndSlice(testVideos, batchSize, true);
       case 'texts':
-        return _mixAndSlice(testTexts, batchSize);
+        return _mixAndSlice(testTexts, batchSize, true);
       case 'mixed':
-        return _mixAndSlice(testItems, batchSize);
+        return _mixAndSlice(testItems, batchSize, true);
       case 'media':
       default:
-        return _mixAndSlice(testMedia, batchSize);
+        return _mixAndSlice(testMedia, batchSize, true);
     }
   }
 

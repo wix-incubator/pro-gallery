@@ -4,7 +4,7 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Responsive Type',
-  isRelevant: (styleParams)  => styleParams.isVertical,
+  isRelevant: (styleParams) => true || styleParams.isVertical,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.gridStyle.FIT_TO_SCREEN,
   options: createOptions('gridStyle'),

@@ -187,9 +187,11 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
               </Form.Item>
-              {/* <Form.Item label="See All Styles" labelAlign="left"> */}
-                <StylesList />
-              {/* </Form.Item> */}
+              <Form.Item label="Responsive Preview" labelAlign="left">
+                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => setGallerySettings({ responsivePreview: e })} />
+              </Form.Item>
+
+              <StylesList />
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Benchmarks" key="benchmarks">
@@ -197,9 +199,6 @@ function SideBar({ items, blueprintsManager, visible }) {
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
-              <Form.Item label="Responsive Preview" labelAlign="left">
-                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => setGallerySettings({ responsivePreview: e })} />
-              </Form.Item>
               <Form.Item label="Unknown dimension" labelAlign="left">
                 <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({ isUnknownDimensions: e })} />
               </Form.Item>

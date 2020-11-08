@@ -46,7 +46,7 @@ function StylesList() {
     return (
     <div>
       <Modal
-        title="ProGallery Options"
+        title="Pro Gallery Styles List"
         centered
         width={window.innerWidth > 600 ? window.innerWidth - 200 : window.innerWidth}
         height={window.innerHeight - 200}
@@ -61,7 +61,7 @@ function StylesList() {
 />
       </Modal>
       <Button type="primary" icon="code" shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
-        See All Styles 
+        Full Styles List 
       </Button>
     </div>
   );
