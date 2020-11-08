@@ -59,6 +59,7 @@ function SideBar({ items, blueprintsManager, visible }) {
   const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
+  const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
   return (
     <>
       <div className="global-search-wrapper" style={{ width: 'calc(100% - 16px)', margin: '0 8px' }}>
@@ -234,12 +235,12 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Live Playground" labelAlign="left">
                 <Button shape="circle" icon="arrow-right" target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
-              {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
+              {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&useLayoutFixer=${gallerySettings.useLayoutFixer}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
-          {/*<Collapse.Panel header="Lean Gallery" key="lean">
+          {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
                 <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
@@ -257,10 +258,10 @@ function SideBar({ items, blueprintsManager, visible }) {
                   />
               }
             </Form>
-          </Collapse.Panel>
-          <Collapse.Panel header="ToDos" key="todos">
+          </Collapse.Panel>}
+          {isDev && <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
-            </Collapse.Panel>*/}
+            </Collapse.Panel>}
         </Collapse>
 
       {!utils.isMobile() && !!visible && <>
