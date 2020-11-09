@@ -186,7 +186,7 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({ showAllStyles: e })} />
               </Form.Item>
               <Form.Item label="Responsive Preview" labelAlign="left">
-                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => setGallerySettings({ responsivePreview: e })} />
+                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => {setGallerySettings({ responsivePreview: e }); window.location.reload()}} />
               </Form.Item>
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" onClick={() => window.location.search = ''} />

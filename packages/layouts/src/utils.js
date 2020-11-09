@@ -34,25 +34,20 @@ class Utils {
     return stripedObj;
   }
 
-  hashToInt(str, min, max) {
-    let int = 0;
+  hashToInt(str, min = 0, max = 100000) {
 
     if (typeof str === 'undefined' || str.length === 0) {
-      return int;
+      return 0;
     }
+
+    min = Math.round(min);
+    max = Math.round(max);
+    str += str.length + min + max;
 
     if (!this._hash2int[str]) {
-      for (let i = 0; i < str.length; i++) {
-        int += str.charCodeAt(i);
-      }
-      this._hash2int[str] = int;
+      this._hash2int[str] = Math.round(Math.random() * (max - min) + min);
     }
-
-    if (typeof min === 'undefined' || typeof max === 'undefined') {
-      return this._hash2int[str];
-    } else {
-      return (this._hash2int[str] % (max - min + 1)) + min;
-    }
+    return this._hash2int[str];
   }
 
   insertIfDefined(obj, field, value) {
