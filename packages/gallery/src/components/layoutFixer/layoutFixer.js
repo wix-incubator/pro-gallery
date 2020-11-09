@@ -14,7 +14,7 @@ export const LayoutFixer = (props) => {
                 <>
                     {(props.layoutFixerScriptType === 'preload') && <link rel="preload" href={props.layoutFixerBundleUrl} as="script"/>}
                     <script dangerouslySetInnerHTML={{__html: `console.log("[LAYOUT FIXER] Start (first script loaded)")`}}></script>
-                    {props.layoutFixerScriptType === 'async' || props.layoutFixerScriptType === 'preload'&& <script async type="module" src={props.layoutFixerBundleUrl}></script>}
+                    {props.layoutFixerScriptType === 'async' || props.layoutFixerScriptType === 'preload' && <script async type="module" src={props.layoutFixerBundleUrl}></script>}
                     {props.layoutFixerScriptType === 'defer' && <script defer src={props.layoutFixerBundleUrl}></script>}
                     {(props.layoutFixerScriptType !== 'async' && props.layoutFixerScriptType !== 'defer' && props.layoutFixerScriptType !== 'preload') && <script src={props.layoutFixerBundleUrl}></script>}
                     <layout-fixer 

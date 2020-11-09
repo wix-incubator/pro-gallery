@@ -1,3 +1,9 @@
+## [v2.2.16](https://pro-gallery-2-2-16.surge.sh) (09/11/2020)
+ 
+#### GALLERY
+ -  improve (layoutFixer): remove default preload option
+
+---
 ## [v2.2.15](https://pro-gallery-2-2-15.surge.sh) (08/11/2020)
  
 #### GALLERY
