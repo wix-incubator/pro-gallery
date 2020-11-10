@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('panorama - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('panorama - scrollDirection = vertical', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.PANORAMA,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL
     });
@@ -26,7 +26,7 @@ describe('panorama - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('panorama - scrollDirection = horizontal', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.PANORAMA,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL
     });

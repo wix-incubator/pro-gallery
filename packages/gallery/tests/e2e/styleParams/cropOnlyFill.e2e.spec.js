@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('cropOnlyFill - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should crop images', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       cubeImages: true,
@@ -27,7 +27,7 @@ describe('cropOnlyFill - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should not crop images', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       cubeImages: true,

@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('arrowsSize - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should set arrowsSize', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       arrowsSize: 150,
       cubeRatio: 16/9,

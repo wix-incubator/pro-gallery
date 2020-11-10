@@ -7,17 +7,17 @@ expect.extend({ toMatchImageSnapshot });
 describe('slideshowInfoSize - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
 
   it('should set "slideshowInfoSize"(400)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize:400,
     });
@@ -27,7 +27,7 @@ describe('slideshowInfoSize - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set "slideshowInfoSize"(250)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize:250,
     });

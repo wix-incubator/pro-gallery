@@ -7,17 +7,17 @@ expect.extend({ toMatchImageSnapshot });
 describe('itemBorder - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
 
   it('should have border-width=10, border-radius=10', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       itemBorderWidth: 10,
       itemBorderRadius: 10,
@@ -29,7 +29,7 @@ describe('itemBorder - e2e', () => {
   });
 
   it('should have border-width=40, border-radius=40', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       itemBorderWidth: 40,
       itemBorderRadius: 40,
@@ -41,7 +41,7 @@ describe('itemBorder - e2e', () => {
   });
 
   it('should not have any border style when "cubeType" is "FIT"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       itemBorderWidth: 40,

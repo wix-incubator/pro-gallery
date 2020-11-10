@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('minItemSize - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('minimum item size of 120', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       minItemSize: 120,
       groupSize:3,
@@ -27,7 +27,7 @@ describe('minItemSize - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('minimum item size of 400', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       minItemSize: 400,
       groupSize: 3,

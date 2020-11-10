@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('fixedColumns - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should set fixedColimns of "1"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupSize:1,
       isVertical:true,
@@ -28,7 +28,7 @@ describe('fixedColumns - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set fixedColimns of "2"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupSize:1,
       isVertical:true,
@@ -40,7 +40,7 @@ describe('fixedColumns - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set fixedColimns of "3"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupSize:1,
       isVertical:true,

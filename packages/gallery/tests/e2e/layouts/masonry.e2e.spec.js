@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('masonry - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('masonry - scrollDirection = vertical', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.MASONRY,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL
     });
@@ -26,7 +26,7 @@ describe('masonry - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('masonry - scrollDirection = horizontal', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.MASONRY,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL
     });
@@ -36,7 +36,7 @@ describe('masonry - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('masonry horizontal orientation', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.MASONRY,
       allowDescription: true,
       itemBorderRadius: 50,

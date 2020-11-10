@@ -7,17 +7,17 @@ expect.extend({ toMatchImageSnapshot });
 describe('chooseBestGroup - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
 
   it('should choose best group', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       chooseBestGroup: true,
     });
@@ -27,7 +27,7 @@ describe('chooseBestGroup - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should not choose best group', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       chooseBestGroup: false,
     });

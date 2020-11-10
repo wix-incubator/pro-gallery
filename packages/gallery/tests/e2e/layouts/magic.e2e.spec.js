@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('magic - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('magic - scrollDirection = vertical, magicLayoutSeed = 1 (vertical)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.MAGIC,
       magicLayoutSeed: 1,
       scrollDirection:GALLERY_CONSTS.scrollDirection.VERTICAL
@@ -28,7 +28,7 @@ describe('magic - e2e', () => {
   });
 
   it('magic - scrollDirection = horizontal, magicLayoutSeed = 1 (vertical)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.MAGIC,
       magicLayoutSeed: 1,
       scrollDirection:GALLERY_CONSTS.scrollDirection.HORIZONTAL
@@ -39,7 +39,7 @@ describe('magic - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   // it('magic - scrollDirection = vertical, magicLayoutSeed = 2 (horizontal)', async () => {
-  //   await driver.openPage({
+  //   await driver.navigate({
   //     galleryLayout: GALLERY_CONSTS.layout.MAGIC,
   //     magicLayoutSeed: 2,
   //     scrollDirection:GALLERY_CONSTS.scrollDirection.VERTICAL
@@ -51,7 +51,7 @@ describe('magic - e2e', () => {
   // });
   //
   // it('magic - scrollDirection = horizontal, magicLayoutSeed = 2 (horizontal)', async () => {
-  //   await driver.openPage({
+  //   await driver.navigate({
   //     galleryLayout: GALLERY_CONSTS.layout.MAGIC,
   //     magicLayoutSeed: 2,
   //     scrollDirection:GALLERY_CONSTS.scrollDirection.HORIZONTAL

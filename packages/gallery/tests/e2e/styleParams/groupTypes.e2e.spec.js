@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('groupTypes - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should set groups of "1,2v,2h"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupTypes: '1,2v,2h'
     });
@@ -25,7 +25,7 @@ describe('groupTypes - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set groups of "1,3v,3b,3t"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupTypes: '1,3v,3b,3t'
     });
@@ -34,7 +34,7 @@ describe('groupTypes - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set groups of "1"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupTypes: '1,'
     });
