@@ -41,7 +41,7 @@ describe('styleParam - imageLoadingMode', () => {
     })
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
     driver.mount.proGallery(initialProps);
-    expect(imageStub.withArgs('pixel','thumb').called).to.be.true;
+    expect(imageStub.withArgs('pixel','img').called).to.be.true;
     imageStub.restore();
     driver.detach.proGallery();
   });
