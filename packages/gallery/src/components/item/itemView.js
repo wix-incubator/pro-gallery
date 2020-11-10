@@ -312,7 +312,7 @@ class ItemView extends GalleryComponent {
         margin: `0 ${imageMarginLeft}px`,
       }
     }
-    if (styleParams.itemBorderRadius) {
+    if (styleParams.itemBorderRadius && styleParams.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND) {
       dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
     }
     return dimensions;
