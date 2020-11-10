@@ -199,7 +199,7 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
-    const scrollAnimation = styleParams.scrollAnimation;
+    const {isRTL, oneRow, scrollAnimation} = styleParams;
 
     if (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) {
       return '';
@@ -213,15 +213,9 @@ class CssScrollHelper {
 
     let scrollAnimationCss = '';
     // notice: these 2 animations must have the blurry image
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ' .image-item') + `{background-size: 1px; background-repeat: repeat;}`;
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
-    }
-
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` img`) + `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` img`) + `{filter: opacity(1) !important;}`;
+    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR || scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR) {
+      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` [data-hook="image-item-overlay"]`) + `{filter: opacity(1); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` [data-hook="image-item-overlay"]`) + `{filter: opacity(0) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.FADE_IN) {
@@ -254,12 +248,14 @@ class CssScrollHelper {
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SLIDE_UP) {
+      const axis = oneRow ? 'X' : 'Y';
+      const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
-        `{transform: translateY(100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+        `{transform: translate${axis}(${direction}100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(animationActivePadding, '') +
-        `{transform: translateY(0) !important;}`;
+        `{transform: translate${axis}(0) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {

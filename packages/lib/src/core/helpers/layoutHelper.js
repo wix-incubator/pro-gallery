@@ -115,7 +115,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (processedStyles.oneRow) {
     // if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
-    processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
+    // processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
   } else {
     processedStyles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
   }
