@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('oneRow - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should render horizontal gallery when "oneRow" is "true"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: true
     });
@@ -26,7 +26,7 @@ describe('oneRow - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should render vertical gallery when "oneRow" is "false"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: false,
     });

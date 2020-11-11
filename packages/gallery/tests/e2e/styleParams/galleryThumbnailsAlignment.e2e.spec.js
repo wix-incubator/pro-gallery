@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('galleryThumbnailsAlignment - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should place thumbnails in the bottom', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.BOTTOM
     });
@@ -25,7 +25,7 @@ describe('galleryThumbnailsAlignment - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should place thumbnails on top', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.TOP
     });
@@ -34,7 +34,7 @@ describe('galleryThumbnailsAlignment - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should place thumbnails on the left', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.LEFT
     });
@@ -43,7 +43,7 @@ describe('galleryThumbnailsAlignment - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should place thumbnails on the right', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.RIGHT
     });

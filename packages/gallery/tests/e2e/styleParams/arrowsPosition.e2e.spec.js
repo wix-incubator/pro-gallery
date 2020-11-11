@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('arrowsPosition - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should have navigation arrows inside the gallery ', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
     });
@@ -25,7 +25,7 @@ describe('arrowsPosition - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should have navigation arrows outside the gallery ', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     });

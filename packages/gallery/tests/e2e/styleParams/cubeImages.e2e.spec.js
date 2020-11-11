@@ -6,17 +6,17 @@ expect.extend({ toMatchImageSnapshot });
 describe('cubeImages - e2e', () => {
   let driver;
   
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   
   it('should fit images inside the containers', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fit',
@@ -27,7 +27,7 @@ describe('cubeImages - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should crop the images and fill the containers', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',
@@ -38,7 +38,7 @@ describe('cubeImages - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should have a "cubeRatio" of "2"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',

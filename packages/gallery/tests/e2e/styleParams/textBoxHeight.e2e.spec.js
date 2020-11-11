@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('textBoxHeight - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should set textBoxHeight', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout:  GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxHeight: 300,

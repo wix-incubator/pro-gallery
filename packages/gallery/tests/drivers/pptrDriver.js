@@ -27,10 +27,8 @@ export default class galleryDriver {
     return this.browser;
   }
 
-  async openPage(styleParams, device) {
-    if (!this.browser) {
-      await this.launchBrowser();
-    }
+  async openPage(device) {
+    await this.launchBrowser()
     const page = await this.browser.newPage();
     switch (device) {
       case 'Android':
@@ -42,13 +40,17 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
+    this.page = page;
+    return page;
+  }
+
+  async navigate(styleParams) {
     const pageUrl = this.getPageUrl(styleParams);
     console.log('Testing page at: ', pageUrl);
-    await page.goto(pageUrl, { waitUntil: 'networkidle2' });
-    this.page = page;
+    await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
     await this.scrollInteraction();
-    await page.waitFor(2500);
-    return page;
+    await this.page.waitFor(500);
+    return this.page;
   }
 
   async scrollInteraction(){
@@ -58,7 +60,7 @@ export default class galleryDriver {
     });
   }
 
-  async closeBrowser() {
+  async closePage() {
     try {
       await this.browser.close();
     } catch (e) {

@@ -7,18 +7,18 @@ expect.extend({ toMatchImageSnapshot });
 describe('imageHoverAnimation - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
 
   Object.values(GALLERY_CONSTS.imageHoverAnimations).forEach( animationType => {
     it(`should have "${animationType}" animation`, async () => {
-      await driver.openPage({
+      await driver.navigate({
         galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
         imageHoverAnimation: animationType,
         hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW

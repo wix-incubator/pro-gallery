@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('textBoxBorder - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should render border-width=2, border-radius=2', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -33,7 +33,7 @@ describe('textBoxBorder - e2e', () => {
   });
 
   it('should have border-width=20, border-radius=20', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -49,7 +49,7 @@ describe('textBoxBorder - e2e', () => {
   });
 
   it('should have border-width=40, border-radius=40', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -65,7 +65,7 @@ describe('textBoxBorder - e2e', () => {
   });
 
   it('should not have any border design', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,

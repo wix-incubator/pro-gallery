@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('hoveringBehaviour - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should show hover container on hover event when "hoveringBehaviour" is "APPEAR', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS
     });
@@ -27,7 +27,7 @@ describe('hoveringBehaviour - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should make hover state disapear on hover (reverse-hover) when "hoveringBehaviour" is "DISAPPEARS', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS
     });
@@ -38,7 +38,7 @@ describe('hoveringBehaviour - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set all items in constant hover state when "hoveringBehaviour" is "NO_CHANGE"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
     });

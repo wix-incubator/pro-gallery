@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('isRTL - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should render a left to right gallery', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
     });
@@ -25,7 +25,7 @@ describe('isRTL - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should render a right to left gallery', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });

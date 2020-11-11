@@ -6,16 +6,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('galleryMargin - e2e', () => {
   let driver;
   
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should set the gallery with a margin of 100px ', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: -1,
       galleryMargin: 100
     });

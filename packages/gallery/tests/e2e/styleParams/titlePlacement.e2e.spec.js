@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('titlePlacement - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should place texts on the bottom of the items', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW
     });
@@ -26,7 +26,7 @@ describe('titlePlacement - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should place texts on top of the items', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE
     });

@@ -6,16 +6,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('imageMargin - e2e', () => {
   let driver;
   
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should create a margin between items ', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       imageMargin: 20
     });
@@ -25,7 +25,7 @@ describe('imageMargin - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should not create a margin between items when "imageMargin" is "0"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       imageMargin: 0
     });

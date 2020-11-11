@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('thumbnailSize - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should set thumbnailSize to 100', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 100
     });
@@ -26,7 +26,7 @@ describe('thumbnailSize - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set thumbnailSize to 300', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300
     });

@@ -20,17 +20,17 @@ describe('leanGallery - e2e', () => {
     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   };
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
 
   it('should successfully render leanGallery', async () => {
-    await driver.openPage({
+    await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 20, // can be any number below MAX_ITEMS_COUNT = 25; 
     });
@@ -41,7 +41,7 @@ describe('leanGallery - e2e', () => {
   });
 
   it('should NOT render leanGallery (beacause totalItemsCount is larger than allowed)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 50,
     });
@@ -52,7 +52,7 @@ describe('leanGallery - e2e', () => {
   });
 
   it('should NOT render leanGallery (beacause totalItemsCount is INFINITY)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       ...fixedLeanGalleryStyleParams,
     });
     await driver.waitFor.hookToBeVisible('item-container'); // 'item-container' is data-hook that exists in proGallery (and not in leanGallery)
@@ -62,7 +62,7 @@ describe('leanGallery - e2e', () => {
   });
 
   it('should NOT render leanGallery (beacause scrollDirection: HORIZONTAL)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 20,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL
@@ -74,7 +74,7 @@ describe('leanGallery - e2e', () => {
   });
 
   it('should NOT render leanGallery (beacause titlePlacement: SHOW_ON_THE_RIGHT)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 20,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT
@@ -86,7 +86,7 @@ describe('leanGallery - e2e', () => {
   });
 
   it('should NOT render leanGallery (beacause imageHoverAnimation: ZOOM_IN)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 20,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN

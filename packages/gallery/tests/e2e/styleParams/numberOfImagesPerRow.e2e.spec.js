@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('numberOfImagesPerRow - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should set 1 images per a row', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       numberOfImagesPerRow:1,
       gridStyle: 1,
@@ -29,7 +29,7 @@ describe('numberOfImagesPerRow - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   // it('should set 2 images per a row', async () => {
-  //   await driver.openPage({
+  //   await driver.navigate({
   //     galleryLayout: 2,
   //     numberOfImagesPerRow:2,
   //     gridStyle: 1,
@@ -42,7 +42,7 @@ describe('numberOfImagesPerRow - e2e', () => {
   //   expect(page).toMatchImageSnapshot();
   // });
   it('should set 3 images per a row', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       numberOfImagesPerRow:3,
       gridStyle: 1,

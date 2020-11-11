@@ -7,17 +7,17 @@ expect.extend({ toMatchImageSnapshot });
 describe('rotatingGroupTypes - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
 
   it('should order groups correctly(groups of 3)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       rotatingGroupTypes: '1,3t,3b,3l,3r',
     });
@@ -27,7 +27,7 @@ describe('rotatingGroupTypes - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should order groups correctly(groups of 2)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       rotatingGroupTypes: '1,2h,2v',
     });
