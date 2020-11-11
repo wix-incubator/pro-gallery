@@ -15,7 +15,7 @@ class VideoScrollHelperWrapper {
             const videoScrollHelperConfig = {
               setPlayingVideos: isEditMode() ? () => { } : this.setPlayingIdxState,
             };
-            import( /* webpackChunkName: "videoScrollHelper" */ './videoScrollHelper.js').then(VideoScrollHelper => {
+            import( /* webpackChunkName: "proGallery_videoScrollHelper" */ './videoScrollHelper.js').then(VideoScrollHelper => {
               Object.assign(this, new VideoScrollHelper.default(videoScrollHelperConfig));
               this.updateGalleryStructure(galleryStructureData);
               this.initializePlayState();

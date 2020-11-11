@@ -76,7 +76,7 @@ class VideoItemWrapper extends ImageItem {
 
   async componentDidMount() {
       try {
-        const VideoItem = await import( /* webpackChunkName: "videoItem" */ './videoItem');
+        const VideoItem = await import( /* webpackChunkName: "proGallery_videoItem" */ './videoItem');
         this.VideoItem = VideoItem.default;
         if(this.shouldPlayVideo()){
           this.setState({VideoItemLoaded: true});
