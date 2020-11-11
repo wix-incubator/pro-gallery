@@ -25,7 +25,7 @@ class VideoItem extends GalleryComponent {
 
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
-      import( /* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
+      import( /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player').then(ReactPlayer => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -37,7 +37,7 @@ class VideoItem extends GalleryComponent {
       this.props.videoUrl &&
       this.props.videoUrl.includes('vimeo.com')
     ) {
-      import( /* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
+      import( /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player').then(Player => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -48,7 +48,7 @@ class VideoItem extends GalleryComponent {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import( /* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
+      import( /* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(Player => {
         window.Hls = Player.default;
         this.setState({ hlsPlayerLoaded: true });
         this.playVideoIfNeeded();
