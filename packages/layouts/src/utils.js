@@ -37,7 +37,7 @@ class Utils {
   hashToInt(str, min, max) {
     let int = 0;
 
-    if (this.isUndefined(str) || str.length === 0) {
+    if (typeof str === 'undefined' || str.length === 0) {
       return int;
     }
 
@@ -48,7 +48,7 @@ class Utils {
       this._hash2int[str] = int;
     }
 
-    if (this.isUndefined(min) || this.isUndefined(max)) {
+    if (typeof min === 'undefined' || typeof max === 'undefined') {
       return this._hash2int[str];
     } else {
       return (this._hash2int[str] % (max - min + 1)) + min;
@@ -56,7 +56,6 @@ class Utils {
   }
 
   hashToRandomInt(str, min = 0, max = 100000) {
-
     if (typeof str === 'undefined' || str.length === 0) {
       return 0;
     }
@@ -221,7 +220,9 @@ class Utils {
     if (container.width >= 0 && !(container.galleryWidth >= 0)) {
       convertedContainer.galleryWidth =
         container.width +
-        ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0)) * 2;
+        ((styleParams.imageMargin / 2 || 0) -
+          (styleParams.galleryMargin || 0)) *
+          2;
       delete convertedContainer.width;
     }
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {
