@@ -1,3 +1,9 @@
+## [v2.2.19](https://pro-gallery-2-2-19.surge.sh) (11/11/2020)
+ 
+#### GALLERY
+ -  fix (videoItem): add namespace webpack chunk names (to avoid react-player imports collisions)
+ 
+---
 ## [v2.2.18](https://pro-gallery-2-2-18.surge.sh) (11/11/2020)
  
 #### LAYOUTS
