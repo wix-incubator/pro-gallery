@@ -1,3 +1,12 @@
+## [v2.2.18](https://pro-gallery-2-2-18.surge.sh) (11/11/2020)
+ 
+#### LAYOUTS
+ -  fix: keep old hashToInt logic for grouping
+
+#### MAIN
+ -  moved CI to travis-ci.com
+
+---
 ## [v2.2.17](https://pro-gallery-2-2-17.surge.sh) (11/11/2020)
  
 #### GALLERY
