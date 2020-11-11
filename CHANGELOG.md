@@ -1,3 +1,23 @@
+## [v2.2.18](https://pro-gallery-2-2-18.surge.sh) (11/11/2020)
+ 
+#### LAYOUTS
+ -  fix: keep old hashToInt logic for grouping
+
+#### MAIN
+ -  moved CI to travis-ci.com
+
+---
+## [v2.2.17](https://pro-gallery-2-2-17.surge.sh) (11/11/2020)
+ 
+#### GALLERY
+ -  fix (slideshowview): load non-visible items before thumbnail navigation
+ -  fix (itemView): remove double borderRadius for attached background
+ -  improve (scrollAnimations): enable and fix scroll animations in horizontal galleries
+
+#### LAYOUTS
+ -  improve: better scatter calculation
+
+---
 ## [v2.2.16](https://pro-gallery-2-2-16.surge.sh) (09/11/2020)
  
 #### GALLERY

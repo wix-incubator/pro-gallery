@@ -34,8 +34,28 @@ class Utils {
     return stripedObj;
   }
 
-  hashToInt(str, min = 0, max = 100000) {
+  hashToInt(str, min, max) {
+    let int = 0;
 
+    if (typeof str === 'undefined' || str.length === 0) {
+      return int;
+    }
+
+    if (!this._hash2int[str]) {
+      for (let i = 0; i < str.length; i++) {
+        int += str.charCodeAt(i);
+      }
+      this._hash2int[str] = int;
+    }
+
+    if (typeof min === 'undefined' || typeof max === 'undefined') {
+      return this._hash2int[str];
+    } else {
+      return (this._hash2int[str] % (max - min + 1)) + min;
+    }
+  }
+
+  hashToRandomInt(str, min = 0, max = 100000) {
     if (typeof str === 'undefined' || str.length === 0) {
       return 0;
     }
@@ -200,7 +220,9 @@ class Utils {
     if (container.width >= 0 && !(container.galleryWidth >= 0)) {
       convertedContainer.galleryWidth =
         container.width +
-        ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0)) * 2;
+        ((styleParams.imageMargin / 2 || 0) -
+          (styleParams.galleryMargin || 0)) *
+          2;
       delete convertedContainer.width;
     }
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {

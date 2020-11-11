@@ -54,7 +54,7 @@ export default class ScrollIndicator extends GalleryComponent {
       const top = target && (target.scrollY || target.scrollTop || target.y);
       let left = target && (target.scrollX || target.scrollLeft || target.x);
       if (this.props.isRTL) {
-        left = this.props.totalWidth - left;
+        left = Math.abs(left); //this.props.totalWidth - left;
       }
       // console.log('[RTL SCROLL] onHorizontalScroll: ', left);
       if (left >= 0) {
