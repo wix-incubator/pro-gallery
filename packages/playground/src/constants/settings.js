@@ -66,6 +66,8 @@ export const stylesBySection = {
 
     ],
     [SECTIONS.ADVANCED]: [
+        'minItemSize',
+        
         'gridStyle',
         'fixedColumns',
         'groupsPerStrip',
