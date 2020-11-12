@@ -6,7 +6,7 @@ import sinon from 'sinon';
 
 describe('styleParam - autoSLideShowInterval', () => {
 
-  let driver;
+  //let driver;
   let galleryViewProps;
   let clock;
   let initialProps;

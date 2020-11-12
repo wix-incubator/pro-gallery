@@ -6,7 +6,7 @@ import { getElementDimensions } from '../utils/utils'
 
 describe('styleParam - enableInfiniteScroll', () => {
 
-  let driver;
+  //let driver;
   const initialProps = {
     container:{
       height:600,

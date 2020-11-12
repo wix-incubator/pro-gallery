@@ -9,7 +9,7 @@ import ItemHover from '../../../src/components/item/itemHover';
 use(spies);
 
 describe('ItemHover', () => {
-  let driver;
+  //let driver;
   let sampleItem;
   let sampleItemViewProps;
   let stub;

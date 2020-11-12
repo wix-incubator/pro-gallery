@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - thumbnailSize', () => {
-  let driver;
+  //let driver;
   const initialProps = {
     container,
     items: images2,

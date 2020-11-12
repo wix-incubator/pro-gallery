@@ -8,7 +8,7 @@ import ItemView from '../../../src/components/item/itemView';
 import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder';
 
 describe('Item View', () => {
-  let driver;
+  //let driver;
   let sampleItemViewProps;
   let sampleItem;
   // let mockEvent;

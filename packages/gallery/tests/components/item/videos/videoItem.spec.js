@@ -7,7 +7,7 @@ import VideoItemWrapper from '../../../../src/components/item/videos/videoItemWr
 import { expect } from 'chai';
 
 describe('Video Item ', () => {
-  let driver;
+  //let driver;
   let sampleItem;
   let sampleItemViewProps;
   let stub;

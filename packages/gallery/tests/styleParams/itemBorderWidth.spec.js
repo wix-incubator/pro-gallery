@@ -6,7 +6,7 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - itemBorderWidth', () => {
 
-  let driver;
+  //let driver;
   const initialProps = {
     container,
     items: images2,

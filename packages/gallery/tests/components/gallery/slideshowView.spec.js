@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 describe('Slideshow View', () => {
-  let driver;
+  //let driver;
   let initialGalleryViewProps;
   let galleryViewProps;
   let clock;

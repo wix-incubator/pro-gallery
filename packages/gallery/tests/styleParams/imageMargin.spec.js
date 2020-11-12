@@ -6,7 +6,7 @@ import {  getElementDimensions } from '../utils/utils';
 
 describe('styleParam - imageMargin', () => {
 
-  let driver;
+  //let driver;
   const initialProps = {
     container,
     items: images2,

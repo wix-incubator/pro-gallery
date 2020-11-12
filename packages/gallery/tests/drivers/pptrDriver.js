@@ -1,11 +1,13 @@
-import puppeteer from 'puppeteer';
+const puppeteer = require('puppeteer');
 
 const devices = require('puppeteer/DeviceDescriptors');
 
-export default class galleryDriver {
-  constructor() {
+class galleryDriver {
+  constructor(page) {
     this.timeout = 60000;
-    jest.setTimeout(40000)
+    this.page = page;
+    //console.log('page ====== ', page);
+    // jest.setTimeout(40000)
     this.browser = {};
     this.windowSize = {
       width: 1920,
@@ -28,7 +30,7 @@ export default class galleryDriver {
   }
 
   async openPage(device) {
-    await this.launchBrowser()
+    //await this.launchBrowser()
     const page = await this.browser.newPage();
     switch (device) {
       case 'Android':
@@ -47,7 +49,7 @@ export default class galleryDriver {
   async navigate(styleParams) {
     const pageUrl = this.getPageUrl(styleParams);
     console.log('Testing page at: ', pageUrl);
-    await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
+    await this.page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: this.timeout });
     await this.scrollInteraction();
     await this.page.waitFor(500);
     return this.page;
@@ -137,3 +139,5 @@ export default class galleryDriver {
     };
   }
 }
+
+module.exports = galleryDriver;

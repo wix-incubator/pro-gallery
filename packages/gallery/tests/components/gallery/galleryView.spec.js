@@ -5,7 +5,7 @@ import GalleryDriver from '../../drivers/reactDriver';
 import GalleryView from '../../../src/components/gallery/proGallery/galleryView';
 
 describe('Gallery View', () => {
-  let driver;
+  //let driver;
   let initialGalleryViewProps;
   let galleryViewProps;
 

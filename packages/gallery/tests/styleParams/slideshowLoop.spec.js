@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - slideshowLoop', () => {
-  let driver;
+  //let driver;
   const initialProps = {
     container: {...container, width:400},
     items: images2.slice(0,2),

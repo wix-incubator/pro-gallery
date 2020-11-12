@@ -7,7 +7,7 @@ import sinon from 'sinon';
 
 describe('styleParam - imageLoadingMode', () => {
 
-  let driver;
+  //let driver;
   let imageStub;
   const initialProps = {
     container,

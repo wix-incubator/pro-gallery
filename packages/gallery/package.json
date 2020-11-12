@@ -112,6 +112,9 @@
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
+    "globalSetup": "<rootDir>/tests/drivers/mocks/setup2.js",
+    "globalTeardown": "<rootDir>/tests/drivers/mocks/teardown2.js",
+    "testEnvironment": "<rootDir>/tests/drivers/mocks/pptrenv2.js",
     "reporters": [
       "default",
       "<rootDir>/tests/drivers/customReporter.js"

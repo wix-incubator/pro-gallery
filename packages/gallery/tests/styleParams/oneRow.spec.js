@@ -5,7 +5,7 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - oneRow', () => {
 
-  let driver;
+  //let driver;
   const initialProps = {
     container,
     items: [...images2, ...images2],

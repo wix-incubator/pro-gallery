@@ -6,7 +6,7 @@ import { styleParams, container, customRenderers } from '../drivers/mocks/styles
 
 describe('styleParam - textBoxWidth', () => {
 
-  let driver;
+  //let driver;
   const initialProps = {
     container,
     items: images2,
