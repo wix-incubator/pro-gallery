@@ -28,23 +28,13 @@
     "posttest": "npm run lint"
   },
   "devDependencies": {
-    "@testing-library/react": "^9.3.0",
-    "ab-translate": "1.1.557",
-    "chai": "^4.2.0",
-    "express": "^4.17.1",
-    "express-session": "^1.17.0",
-    "husky": "^4.2.1",
-    "puppeteer": "^1.1.0",
-    "velocity": "~0.7.0"
+    "chai": "^4.2.0"
   },
   "dependencies": {
     "pro-layouts": "2.2.9"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "resolutions": {
-    "ab-translate": "1.1.557"
   },
   "eslintConfig": {
     "rules": {
