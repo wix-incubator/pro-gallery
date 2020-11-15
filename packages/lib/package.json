@@ -12,24 +12,20 @@
     "url": "git+https://github.com/wix/pro-gallery.git"
   },
   "sideEffects": false,
-  "main": "dist/src/index.js",
-  "module": "dist/es/src/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "watch": "yoshi start",
-    "start": "yoshi start",
-    "build": "yoshi build",
-    "pretest": "yoshi build",
-    "test": "yoshi test",
-    "release": "yoshi release",
+    "watch": "tsc -w",
+    "start": "tsc -w",
+    "build": "tsc && tsc -p tsconfig-esm.json",
+    "pretest": "tsc && tsc -p tsconfig-esm.json",
+    "test": "",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "posttest": "npm run lint"
-  },
-  "lint-staged": {
-    "*.{js,scss,less}": "yoshi lint"
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.0",
@@ -38,12 +34,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "husky": "^4.2.1",
-    "lint-staged": "^10.0.7",
     "puppeteer": "^1.1.0",
-    "velocity": "~0.7.0",
-    "yoshi": "~4.25.0",
-    "yoshi-style-dependencies": "^4.1.0",
-    "yoshi-template-intro": "^4.1.0"
+    "velocity": "~0.7.0"
   },
   "dependencies": {
     "pro-layouts": "2.2.9"
@@ -54,19 +46,7 @@
   "resolutions": {
     "ab-translate": "1.1.557"
   },
-  "yoshi": {
-    "entry": {
-      "main": "./index"
-    },
-    "servers": {
-      "cdn": {
-        "port": 9995
-      }
-    },
-    "exports": "pro-gallery-lib"
-  },
   "eslintConfig": {
-    "extends": "yoshi",
     "rules": {
       "import/no-unresolved": "off",
       "default-case": "off",
