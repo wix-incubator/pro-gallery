@@ -22,13 +22,16 @@
     "start": "tsc -w",
     "build": "tsc && tsc -p tsconfig-esm.json",
     "pretest": "tsc && tsc -p tsconfig-esm.json",
-    "test": "",
+    "test": "mocha --require ts-node/register test/*.spec.*",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "npm run lint -- --fix",
     "posttest": "npm run lint"
   },
   "devDependencies": {
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "typescript": "^4.0.5",
+    "ts-node": "^9.0.0"
   },
   "dependencies": {
     "pro-layouts": "2.2.9"
