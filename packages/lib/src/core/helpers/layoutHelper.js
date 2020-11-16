@@ -10,7 +10,6 @@ import PLACEMENTS, {
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
-import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
 import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import INFO_TYPE from '../../common/constants/infoType';
