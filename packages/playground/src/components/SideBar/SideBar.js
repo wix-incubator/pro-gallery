@@ -16,6 +16,7 @@ import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pr
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
+import {StylesList} from './StyleList';
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
@@ -58,6 +59,7 @@ function SideBar({ items, blueprintsManager, visible }) {
   const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
+  const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
   return (
     <>
       <div className="global-search-wrapper" style={{ width: 'calc(100% - 16px)', margin: '0 8px' }}>
@@ -183,8 +185,14 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Show all Styles" labelAlign="left">
                 <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({ showAllStyles: e })} />
               </Form.Item>
+              <Form.Item label="Responsive Preview" labelAlign="left">
+                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => {setGallerySettings({ responsivePreview: e }); window.location.reload()}} />
+              </Form.Item>
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
-                <Button icon="delete" shape="circle" size="large" onClick={() => window.location.search = ''} />
+                <Button icon="delete" shape="circle" onClick={() => window.location.search = ''} />
+              </Form.Item>
+              <Form.Item label="Full Styles List" labelAlign="left">
+                <StylesList />
               </Form.Item>
             </Form>
           </Collapse.Panel>
@@ -228,12 +236,12 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Live Playground" labelAlign="left">
                 <Button shape="circle" icon="arrow-right" target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
-              {(window.location.hostname.indexOf('localhost') >= 0) && <Form.Item label="Simulate Local SSR" labelAlign="left">
+              {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&useLayoutFixer=${gallerySettings.useLayoutFixer}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
-          <Collapse.Panel header="Lean Gallery" key="lean">
+          {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
                 <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
@@ -251,10 +259,10 @@ function SideBar({ items, blueprintsManager, visible }) {
                   />
               }
             </Form>
-          </Collapse.Panel>
-          <Collapse.Panel header="ToDos" key="todos">
+          </Collapse.Panel>}
+          {isDev && <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
-          </Collapse.Panel>
+            </Collapse.Panel>}
         </Collapse>
 
       {!utils.isMobile() && !!visible && <>

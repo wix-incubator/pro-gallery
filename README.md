@@ -11,7 +11,7 @@ Blazing fast & beautiful galleries built with React. [Try it out now.](https://p
  - Supports images, videos, and HTML
 
 [![NPM Version](https://img.shields.io/npm/v/pro-gallery.svg?style=flat)](https://www.npmjs.com/package/pro-gallery)
-[![Build Status](https://travis-ci.org/wix/pro-gallery.svg?branch=master)](https://travis-ci.org/wix/pro-gallery)
+[![Build Status](https://travis-ci.org/wix/pro-gallery.svg?branch=master)](https://travis-ci.com/wix/pro-gallery)
 
 
 ## Gettings Started

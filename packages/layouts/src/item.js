@@ -135,16 +135,37 @@ export class Item {
       const spaceDown =
         this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
 
-      const horizontalShift =
-        utils.hashToInt(
-          this.hash + offset.right + 'x',
-          -1 * spaceLeft,
-          spaceRight,
-        ) *
-        (this.scatter / 100);
-      const verticalShift =
-        utils.hashToInt(this.hash + offset.top + 'y', -1 * spaceUp, spaceDown) *
-        (this.scatter / 100);
+      const minShift = 0.4 * (this.scatter / 100);
+
+      let horizontalShift = utils.hashToRandomInt(
+        this.hash + offset.right + 'x',
+        -spaceLeft,
+        spaceRight,
+      );
+
+      horizontalShift *= this.scatter / 100;
+      horizontalShift *= 1 - minShift;
+
+      horizontalShift +=
+        (horizontalShift > 0 ? minShift * spaceRight : minShift * spaceLeft) *
+        Math.sign(horizontalShift);
+
+      horizontalShift = Math.round(horizontalShift);
+
+      let verticalShift = utils.hashToRandomInt(
+        this.hash + offset.right + 'y',
+        -spaceUp,
+        spaceDown,
+      );
+
+      verticalShift *= this.scatter / 100;
+      verticalShift *= 1 - minShift;
+
+      verticalShift +=
+        (verticalShift > 0 ? minShift * spaceDown : minShift * spaceUp) *
+        Math.sign(verticalShift);
+
+      verticalShift = Math.round(verticalShift);
 
       return { x: horizontalShift, y: verticalShift };
     } else {
@@ -193,11 +214,17 @@ export class Item {
             ? this.calcPinOffset(this._group.width, 'left')
             : this._group.width - this.outerWidth) || 0,
     };
-    const { x, y } = this.calcScatter(offset);
-    offset.left += x;
-    offset.top += y;
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
+
+    if (this.scatter > 0) {
+      const { x, y } = this.calcScatter(offset);
+      offset.left += x;
+      offset.top += y;
+      offset.right = offset.left + this.width;
+      offset.bottom = offset.top + this.height;
+    }
+
     return offset;
   }
 

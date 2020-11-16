@@ -1,4 +1,4 @@
-import React, {useEffect, Suspense} from 'react';
+import React, {useEffect, Suspense, useState} from 'react';
 // import {SideBar} from '../SideBar';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
@@ -6,13 +6,13 @@ import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../.
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import { GALLERY_CONSTS, ProGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, ProBlueprintsGallery } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-lib'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {utils} from 'pro-gallery-lib';
-
+import { Resizable } from 're-resizable';
 
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
@@ -27,6 +27,7 @@ let shouldUseBlueprintsFromServer = false; //USE THIS ONLY FOR LOCAL TESTING WIT
 
 const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
+let totalItems = 0;
 
 export function App() {
   const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServer);
@@ -37,7 +38,15 @@ export function App() {
   const {numberOfItems = 0, mediaTypes = 'media'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
-  const _mixAndSlice = (items, batchSize) => mixAndSlice(items, batchSize, (items || []).length, gallerySettings)
+  const [resizedDims, setResizedDims] = useState({width: 320, height: 500});
+
+  const _mixAndSlice = (items, batchSize, shouldAdd) => {
+    const mixedItems = mixAndSlice(items, batchSize, totalItems, gallerySettings);
+    if (shouldAdd) {
+      totalItems += mixedItems.length;
+    }
+    return mixedItems;
+  }
 
   const initialItems = {
     media: _mixAndSlice(testMedia, ITEMS_BATCH_SIZE),
@@ -95,16 +104,16 @@ export function App() {
     const batchSize = numberOfItems || ITEMS_BATCH_SIZE;
     switch (mediaTypes) {
       case 'images':
-        return _mixAndSlice(testImages, batchSize);
+        return _mixAndSlice(testImages, batchSize, true);
       case 'videos':
-        return _mixAndSlice(testVideos, batchSize);
+        return _mixAndSlice(testVideos, batchSize, true);
       case 'texts':
-        return _mixAndSlice(testTexts, batchSize);
+        return _mixAndSlice(testTexts, batchSize, true);
       case 'mixed':
-        return _mixAndSlice(testItems, batchSize);
+        return _mixAndSlice(testItems, batchSize, true);
       case 'media':
       default:
-        return _mixAndSlice(testMedia, batchSize);
+        return _mixAndSlice(testMedia, batchSize, true);
     }
   }
 
@@ -204,24 +213,20 @@ export function App() {
   }
 
   const getContainer = () => {
-    return {scrollBase: 0, ...dimensions};
+    return {scrollBase: 0, ...dimensions, ...(gallerySettings.responsivePreview && resizedDims)};
   }
 
   const getStyles = () => {
     return styleParams;
   }
 
-
-
-
-    const canRender = ()=> {
-      if (!gallerySettings.useBlueprints || blueprint) {
-        return true;
-      } else {
-        return false;
-      }
+  const canRender = ()=> {
+    if (!gallerySettings.useBlueprints || blueprint) {
+      return true;
+    } else {
+      return false;
     }
-
+  }
 
   useEffect(() => {
     window.addEventListener('resize', setDimensions);
@@ -247,7 +252,7 @@ export function App() {
     return keySettings;
   }
   
-  const GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : ProGallery;
+  const GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
 
   return (
     <main id="sidebar_main" className={s.main}>
@@ -266,22 +271,74 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
-        {!canRender() ? <div>Waiting for blueprint...</div> : <GalleryComponent
-          key={`pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`}
-          domId={'pro-gallery-playground'}
-          scrollingElement={window}
-          viewMode={gallerySettings.viewMode}
-          eventsListener={eventListener}
-          totalItemsCount={getTotalItemsCount()}
-          resizeMediaUrl={resizeMediaUrl}
-          settings={{avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'}}
-          currentIdx={gallerySettings.initialIdx}
-          useBlueprints={gallerySettings.useBlueprints}
-          useLayoutFixer={gallerySettings.useLayoutFixer}
-          {...getExternalInfoRenderers()}
-          {...blueprintProps}
-        />}
+        {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
+          key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
+          domId: 'pro-gallery-playground',
+          scrollingElement: () => (gallerySettings.responsivePreview ? document.getElementById('resizable') : window),
+          viewMode: gallerySettings.viewMode,
+          eventsListener: eventListener,
+          totalItemsCount: getTotalItemsCount(),
+          resizeMediaUrl: resizeMediaUrl,
+          settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
+          currentIdx: gallerySettings.initialIdx,
+          useBlueprints: gallerySettings.useBlueprints,
+          useLayoutFixer: gallerySettings.useLayoutFixer,
+          ...getExternalInfoRenderers(),
+          ...blueprintProps
+        }, resizedDims, dims => {setDimensions(dims); setResizedDims(dims)}, gallerySettings)}
       </section>
     </main>
   );
+}
+
+const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
+  return gallerySettings.responsivePreview ? (<div style={{
+    background: '#666',
+    width: '100%',
+    height: window.innerHeight + 'px',
+    display: 'block',
+    textAlign: 'center',
+    overflow: 'visible'
+  }}>
+    <div style={{
+      display: 'inline-block',
+      // margin: `${(window.innerHeight - resizedDims.height) / 2}px auto`,
+      margin: `${window.innerHeight  / 2}px auto`,
+      transform: 'translate(0, -50%)',
+      overflow: 'visible'
+    }}>
+      <Resizable id="resizable" style={{
+        display: 'block',
+        textAlign: 'center',
+        background: 'white',
+        border: '6px solid black',
+        borderRadius: '6px',
+        overflowY: 'scroll'
+      }} defaultSize={{
+        width:resizedDims.width,
+        height:resizedDims.height,
+      }}
+      onResizeStop={(...args) => { 
+        // console.log('args', args[3], resizedDims, resizedDims.width + args[3].width);
+        setResizedDims({width: (resizedDims.width + args[3].width), height: resizedDims.height + args[3].height});
+        // console.log('args', args[3], resizedDims);
+      }}
+      >
+    <div style={{
+      height: 'auto',
+      overflow: 'visible'
+    }}>
+        <Component {...props}
+          container={{
+            ...props.container,
+            width: resizedDims.width,
+            height: resizedDims.height
+          }}
+        
+        />
+      </div>
+      </Resizable>
+    </div>
+  </div>) :
+  (<Component {...props}/>)
 }

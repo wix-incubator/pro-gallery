@@ -1,5 +1,5 @@
 import React from 'react';
-import {Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
+import {Alert, Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
 import {INPUT_TYPES, isInPreset} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
@@ -206,6 +206,7 @@ class JsonEditor extends React.Component {
         }
       }
     }
+    const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
     return (
       <Collapse accordion={true} bordered={false} onChange={() => {}} style={{whiteSpace: 'pre-wrap', margin: '-17px -15px', background: '#fff'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
         {Object.entries(json).map(([styleParam, settings]) => (
@@ -213,19 +214,23 @@ class JsonEditor extends React.Component {
             {this.renderEntryEditor(styleParam, settings)}
             <div>
               {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
-              <Divider/>
-              <p><b>Key: </b><code>{styleParam}</code></p>
-              <p><b>Value: </b><code>{String(settings.value)}</code></p>
-              <p><b>Default: </b><code>{String(settings.default)}</code></p>
-              {!!settings.alert && (<><Divider/><p>{settings.alert}</p></>)}
-              {isSingleItem && (<>
+              {isDev && <>
+                <Divider/>
+                <p><b>Key: </b><code>{styleParam}</code></p>
+                <p><b>Value: </b><code>{String(settings.value)}</code></p>
+                <p><b>Default: </b><code>{String(settings.default)}</code></p>
+              </>}
+              {!!settings.alert && (<><Divider/><Alert message={settings.alert} type="warning"/></>)}
+              {!!isSingleItem && (<>
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
                 <p><b>Overriden by current Preset: </b>{isInPreset(allStyleParams.galleryLayout, styleParam) ? 'Yes' : 'No'}</p>
                 <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>
               </>)}
-              <Divider/>
-              <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
+              {isDev && <>
+                <Divider/>
+                <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
+              </>}
             </div>
           </Collapse.Panel>
         ))}

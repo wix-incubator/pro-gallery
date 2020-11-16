@@ -7,18 +7,19 @@ expect.extend({ toMatchImageSnapshot });
 describe('groupsPerStrip - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should have 3 groups per strip', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 3,
+      gridStyle: 1,
       groupSize:1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -26,9 +27,10 @@ describe('groupsPerStrip - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should have 7 groups per strip', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 7,
+      gridStyle: 1,
       groupSize:1,
     });
     await driver.waitFor.hookToBeVisible('item-container');

@@ -2,7 +2,10 @@ import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Groups per Row',
-  isRelevant: (styleParams) => !styleParams.oneRow && !styleParams.isVertical,
+  isRelevant: (styleParams) =>
+    !styleParams.oneRow &&
+    !styleParams.isVertical &&
+    styleParams.gridStyle === 1,
   type: INPUT_TYPES.NUMBER,
   default: 0,
   min: 0,

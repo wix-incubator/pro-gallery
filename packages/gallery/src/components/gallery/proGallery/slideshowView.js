@@ -341,20 +341,14 @@ class SlideshowView extends GalleryComponent {
 
     this.props.actions.eventsListener(GALLERY_CONSTS.events.THUMBNAIL_CLICKED, this.props);
 
-    this.isAutoScrolling = true;
-    this.startAutoSlideshowIfNeeded(this.props.styleParams);
-    utils.setStateAndLog(
-      this,
-      'Scroll to Item',
-      {
-        currentIdx: itemIdx,
-      },
-      () => {
-        this.onCurrentItemChanged();
-      },
-    );
+    this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
-    this.props.actions.scrollToItem(itemIdx, false, true, scrollDuration, 0);
+    this.next({
+      direction: itemIdx - this.state.currentIdx, 
+      isAutoTrigger: false, 
+      scrollDuration, 
+      isKeyboardNavigation: false
+    });
   }
 
   handleSlideshowKeyPress(e) {

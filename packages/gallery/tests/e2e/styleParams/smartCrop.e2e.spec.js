@@ -7,17 +7,17 @@ expect.extend({ toMatchImageSnapshot });
 describe('smartCrop - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
 
   it('should crop according to original image ratio', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       smartCrop: true,
       cubeImages: true,
@@ -30,7 +30,7 @@ describe('smartCrop - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should not use smart crop', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       smartCrop: false,
       cubeImages: true,

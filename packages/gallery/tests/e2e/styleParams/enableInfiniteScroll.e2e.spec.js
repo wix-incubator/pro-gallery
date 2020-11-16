@@ -6,16 +6,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('enableInfiniteScroll - e2e', () => {
   let driver;
   
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('should have "Load More" button when "enableInfiniteScroll" is "false"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       enableInfiniteScroll: false
     });
@@ -24,7 +24,7 @@ describe('enableInfiniteScroll - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should not have "Load More" button when "enableInfiniteScroll" is "true"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
       enableInfiniteScroll: true
     });

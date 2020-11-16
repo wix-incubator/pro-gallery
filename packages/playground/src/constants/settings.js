@@ -43,17 +43,13 @@ export const stylesBySection = {
         'galleryLayout',
     ],
     [SECTIONS.LAYOUT]: [
-        'allowLeanGallery',
+        // 'allowLeanGallery',
         'scrollDirection',
         'isVertical',
         'isRTL',
         'imageMargin',
 
-        'gridStyle',
-        'fixedColumns',
-        'numberOfImagesPerRow',
-        'numberOfImagesPerCol',
-
+        'groupSize',
         'collageDensity',
 
         'cubeImages',
@@ -66,38 +62,47 @@ export const stylesBySection = {
         'gallerySizePx',
         'gallerySizeRatio',
 
+        'showArrows',
+
     ],
     [SECTIONS.ADVANCED]: [
-        'groupSize',
+        'gridStyle',
+        'fixedColumns',
+        'groupsPerStrip',
+
         'groupTypes',
         'rotatingGroupTypes',
         'rotatingCropRatios',
-        'groupsPerStrip',
         'galleryMargin',
         'scatter',
         'smartCrop',
-        'showArrows',
-        'slideshowLoop',
-        'isAutoSlideshow',
-        'autoSlideshowInterval',
-        'slideshowInfoSize',
-        'playButtonForAutoSlideShow',
-
+        
         'galleryThumbnailsAlignment',
         'thumbnailSize',
         'thumbnailSpacings',
-
-        'allowLeanGallery',
     ],
     [SECTIONS.INFO]: [
         'titlePlacement',
-        'overlayBackground',
+
+        'imageInfoType',
+
+        'textBoxHeight',
+        'calculateTextBoxWidthMode',
+        'textBoxWidthPercent',
+        'textBoxWidth',
+        'textImageSpace',
+
         'allowSlideshowCounter',
+        'slideshowInfoSize',
     ],
     [SECTIONS.BEHAVIOR]: [
+        'hoveringBehaviour',
         'enableInfiniteScroll',
         'loadMoreAmount',
-        'hoveringBehaviour',
+        'slideshowLoop',
+        'isAutoSlideshow',
+        'autoSlideshowInterval',
+        'playButtonForAutoSlideShow',
         'itemClick',
         'scrollSnap',
         'allowContextMenu',
@@ -107,14 +112,11 @@ export const stylesBySection = {
         'arrowsColor',
         'arrowsPosition',
 
+        'overlayBackground',
+
         // 'itemIconColorSlideshow',
         // 'itemIconColor',
         // 'textBoxFillColor',
-        'textBoxHeight',
-        'calculateTextBoxWidthMode',
-        'textBoxWidthPercent',
-        'textBoxWidth',
-        'textImageSpace',
         'textBoxBorderRadius',
         'textBoxBorderWidth',
         'textBoxBorderColor',
@@ -125,7 +127,6 @@ export const stylesBySection = {
         // 'loadMoreButtonBorderWidth',
         // 'loadMoreButtonBorderColor',
         // 'loadMoreButtonBorderRadius',
-        'imageInfoType',
         'itemBorderWidth',
         'itemBorderColor',
         'itemBorderRadius',

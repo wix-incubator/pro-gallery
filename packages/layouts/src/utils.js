@@ -55,6 +55,21 @@ class Utils {
     }
   }
 
+  hashToRandomInt(str, min = 0, max = 100000) {
+    if (typeof str === 'undefined' || str.length === 0) {
+      return 0;
+    }
+
+    min = Math.round(min);
+    max = Math.round(max);
+    str += str.length + min + max;
+
+    if (!this._hash2int[str]) {
+      this._hash2int[str] = Math.round(Math.random() * (max - min) + min);
+    }
+    return this._hash2int[str];
+  }
+
   insertIfDefined(obj, field, value) {
     if (typeof value !== 'undefined') {
       obj[field] = value;
@@ -205,7 +220,9 @@ class Utils {
     if (container.width >= 0 && !(container.galleryWidth >= 0)) {
       convertedContainer.galleryWidth =
         container.width +
-        ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0)) * 2;
+        ((styleParams.imageMargin / 2 || 0) -
+          (styleParams.galleryMargin || 0)) *
+          2;
       delete convertedContainer.width;
     }
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {

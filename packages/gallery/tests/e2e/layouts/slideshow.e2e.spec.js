@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('slideshow - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll( async() => {
+    await driver.closePage();
   });
   it('slideshow - scrollDirection = vertical', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL
     });
@@ -26,7 +26,7 @@ describe('slideshow - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('slideshow - scrollDirection = horizontal', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL
     });
