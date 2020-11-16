@@ -1,6 +1,7 @@
 language: node_js
 dist: trusty
 sudo: required
+install: true
 jobs:
   include:
     - stage: Build
@@ -18,7 +19,7 @@ jobs:
         use: shared
       name: "Unit Tests"
       script: npm run test || travis_terminate 1;
-      
+
     - stage: Tests
       workspaces:
         use: shared
