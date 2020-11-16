@@ -6,4 +6,4 @@ export default {
   isRelevant: (styleParams) => styleParams.oneRow,
   type: INPUT_TYPES.BOOLEAN,
   default: false,
-}
+};

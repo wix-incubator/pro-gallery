@@ -28,22 +28,21 @@
     "posttest": "npm run lint"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
     "chai": "^4.2.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "mocha": "^8.2.1",
-    "typescript": "^4.0.5",
-    "ts-node": "^9.0.0"
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
   },
   "dependencies": {
     "pro-layouts": "2.2.9"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "eslintConfig": {
-    "rules": {
-      "import/no-unresolved": "off",
-      "default-case": "off",
-      "prettier/prettier": "off"
-    }
   }
 }

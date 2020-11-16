@@ -7,4 +7,4 @@ export default {
   default: 4,
   description: `Set the spacing between thumbnails.
   `,
-}
+};

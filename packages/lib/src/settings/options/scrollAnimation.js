@@ -9,4 +9,4 @@ export default {
   options: createOptions('scrollAnimations'),
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
-}
+};

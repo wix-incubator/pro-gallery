@@ -1,6 +1,3 @@
-import utils from '../../common/utils';
-import window from '../../common/window/windowWrapper';
-
 class DimensionsHelper {
   constructor() {
     this.styles = {};
@@ -31,11 +28,14 @@ class DimensionsHelper {
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
         galleryHeight: Math.ceil(this.getGalleryHeight()),
-        scrollBase: this.container.scrollBase ? Math.ceil(this.container.scrollBase) : 0,
+        scrollBase: this.container.scrollBase
+          ? Math.ceil(this.container.scrollBase)
+          : 0,
         height: Math.ceil(this.container.height),
         width: Math.ceil(this.container.width),
       };
-      if (this.container.externalScrollBase) { //if was provided from the wrapper
+      if (this.container.externalScrollBase) {
+        //if was provided from the wrapper
         res.scrollBase += this.container.externalScrollBase;
       }
       if (this.styles.hasThumbnails) {
@@ -62,12 +62,12 @@ class DimensionsHelper {
     });
   }
 
-
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
-      let width = Math.floor(this.container.width) + (this.getDimensionFix() * 2); //add margins to width and then remove them in css negative margins
+      let width = Math.floor(this.container.width) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
       if (this.styles.arrowsPosition && this.styles.oneRow) {
-        width -= 2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin / 2);
+        width -=
+          2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin / 2);
       }
       return width;
     });
@@ -79,9 +79,8 @@ class DimensionsHelper {
       const dimensionFix = () =>
         this.styles.oneRow ? this.getDimensionFix() : 0;
       const res = Math.floor(
-        (this.container.height > 0 ? this.container.height : 0) +
-        dimensionFix(),
-      )
+        (this.container.height > 0 ? this.container.height : 0) + dimensionFix()
+      );
       return res;
     });
   }

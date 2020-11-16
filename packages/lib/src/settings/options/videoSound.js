@@ -6,4 +6,4 @@ export default {
   type: INPUT_TYPES.BOOLEAN,
   default: false,
   description: `Videos are muted in gallery view by default. Enable to play videos with sound. In Expand Mode, the video will always play with the sound on.`,
-}
+};

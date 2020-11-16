@@ -9,4 +9,4 @@ export default {
   options: createOptions('videoPlay'),
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.videoPlay.HOVER,
-}
+};

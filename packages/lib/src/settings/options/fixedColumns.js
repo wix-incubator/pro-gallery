@@ -7,4 +7,4 @@ export default {
   isRelevant: (styleParams) => !styleParams.oneRow && styleParams.isVertical,
   type: INPUT_TYPES.NUMBER,
   default: 0,
-}
+};

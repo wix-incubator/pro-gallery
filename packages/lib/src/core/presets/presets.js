@@ -1,22 +1,57 @@
 import LAYOUTS from '../../common/constants/layout';
 
-import { fixedStyles as alternate, createStyles as alternateStyles} from './alternateGallery';
-import { fixedStyles as bricks, createStyles as bricksStyles} from './bricksGallery';
-import { fixedStyles as collage, createStyles as collageStyles} from './collageGallery';
-import { fixedStyles as fullsize, createStyles as fullsizeStyles} from './fullsizeGallery';
-import { fixedStyles as column, createStyles as columnStyles} from './columnGallery';
-import { fixedStyles as grid, createStyles as gridStyles} from './gridGallery';
-import { fixedStyles as magic, createStyles as magicStyles} from './magicGallery';
-import { fixedStyles as masonry, createStyles as masonryStyles} from './masonryGallery';
-import { fixedStyles as mix, createStyles as mixStyles} from './mixGallery';
-import { fixedStyles as panorama, createStyles as panoramaStyles} from './panoramaGallery';
-import { fixedStyles as slider, createStyles as sliderStyles} from './sliderGallery';
-import { fixedStyles as slideshow, createStyles as slideshowStyles} from './slideshowGallery';
-import { fixedStyles as thumbnails, createStyles as thumbnailsStyles} from './thumbnailGallery';
-import { fixedStyles as empty, createStyles as emptyStyles} from './emptyGallery';
+import {
+  fixedStyles as alternate,
+  createStyles as alternateStyles,
+} from './alternateGallery';
+import {
+  fixedStyles as bricks,
+  createStyles as bricksStyles,
+} from './bricksGallery';
+import {
+  fixedStyles as collage,
+  createStyles as collageStyles,
+} from './collageGallery';
+import {
+  fixedStyles as fullsize,
+  createStyles as fullsizeStyles,
+} from './fullsizeGallery';
+import {
+  fixedStyles as column,
+  createStyles as columnStyles,
+} from './columnGallery';
+import { fixedStyles as grid, createStyles as gridStyles } from './gridGallery';
+import {
+  fixedStyles as magic,
+  createStyles as magicStyles,
+} from './magicGallery';
+import {
+  fixedStyles as masonry,
+  createStyles as masonryStyles,
+} from './masonryGallery';
+import { fixedStyles as mix, createStyles as mixStyles } from './mixGallery';
+import {
+  fixedStyles as panorama,
+  createStyles as panoramaStyles,
+} from './panoramaGallery';
+import {
+  fixedStyles as slider,
+  createStyles as sliderStyles,
+} from './sliderGallery';
+import {
+  fixedStyles as slideshow,
+  createStyles as slideshowStyles,
+} from './slideshowGallery';
+import {
+  fixedStyles as thumbnails,
+  createStyles as thumbnailsStyles,
+} from './thumbnailGallery';
+import {
+  fixedStyles as empty,
+  createStyles as emptyStyles,
+} from './emptyGallery';
 
-
-const addPresetStyles = styles => {
+const addPresetStyles = (styles) => {
   const galleryType = styles.galleryType;
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
@@ -39,44 +74,44 @@ const addPresetStyles = styles => {
       case '7': // slideshow
         return slideshowStyles(styles);
       case '0': // vertical collage
-        default:
+      default:
         return collageStyles(styles);
-      }
+    }
   } else {
     // new layouts
-  switch (styles.galleryLayout) {
+    switch (styles.galleryLayout) {
       case LAYOUTS.MASONRY:
-          return masonryStyles(styles);
+        return masonryStyles(styles);
       case LAYOUTS.GRID:
-          return gridStyles(styles);
+        return gridStyles(styles);
       case LAYOUTS.THUMBNAIL:
-          return thumbnailsStyles(styles);
+        return thumbnailsStyles(styles);
       case LAYOUTS.SLIDER:
-          return sliderStyles(styles);
+        return sliderStyles(styles);
       case LAYOUTS.SLIDESHOW:
-          return slideshowStyles(styles);
+        return slideshowStyles(styles);
       case LAYOUTS.PANORAMA:
-          return panoramaStyles(styles);
+        return panoramaStyles(styles);
       case LAYOUTS.COLUMN:
-          return columnStyles(styles);
+        return columnStyles(styles);
       case LAYOUTS.MAGIC:
-          return magicStyles(styles);
+        return magicStyles(styles);
       case LAYOUTS.FULLSIZE:
-          return fullsizeStyles(styles);
+        return fullsizeStyles(styles);
       case LAYOUTS.BRICKS:
-          return bricksStyles(styles);
+        return bricksStyles(styles);
       case LAYOUTS.MIX:
-          return mixStyles(styles);
+        return mixStyles(styles);
       case LAYOUTS.ALTERNATE:
-          return alternateStyles(styles);
+        return alternateStyles(styles);
       case LAYOUTS.EMPTY:
-          return emptyStyles(styles);
+        return emptyStyles(styles);
       case LAYOUTS.COLLAGE:
       default:
-          return collageStyles(styles);
+        return collageStyles(styles);
     }
   }
-}
+};
 
 const NEW_PRESETS = {
   alternate,
@@ -92,9 +127,8 @@ const NEW_PRESETS = {
   slider,
   slideshow,
   thumbnails,
-  empty
+  empty,
 };
-
 
 const getLayoutName = (galleryLayout) => {
   const galleyLayoutList = [
@@ -113,13 +147,13 @@ const getLayoutName = (galleryLayout) => {
     'alternate', // 11
     'mix', // 12
   ];
-  return galleyLayoutList[galleryLayout + 1]
-}
+  return galleyLayoutList[galleryLayout + 1];
+};
 
 // returns true if the given param is in the current layout preset
 const isInPreset = (galleryLayout, paramToCheck) => {
-  const layoutName = getLayoutName(galleryLayout) || 'empty';// empty for when there is no layout given
+  const layoutName = getLayoutName(galleryLayout) || 'empty'; // empty for when there is no layout given
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
-}
+};
 
-export { addPresetStyles, NEW_PRESETS, getLayoutName, isInPreset}
+export { addPresetStyles, NEW_PRESETS, getLayoutName, isInPreset };

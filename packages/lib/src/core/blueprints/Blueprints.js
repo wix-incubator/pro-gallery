@@ -3,55 +3,103 @@ import defaultStyles from '../../common/defaultStyles';
 import { addPresetStyles } from '../presets/presets';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
-import processLayouts from '../helpers/layoutHelper.js'
+import processLayouts from '../helpers/layoutHelper.js';
 
 class Blueprints {
-
-  createBlueprint(params, lastParams, existingBlueprint, blueprintManagerId, isUsingCustomInfoElements) {
+  createBlueprint(
+    params,
+    lastParams,
+    existingBlueprint,
+    blueprintManagerId,
+    isUsingCustomInfoElements
+  ) {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
     let changedParams = {};
     try {
-      const {dimensions: newDimensionsParams, items: newItemsParams, styles: newStylesParams} = params;
-      const {dimensions: oldDimensionsParams, items: oldItemsParams, styles: oldStylesParams} = lastParams;
+      const {
+        dimensions: newDimensionsParams,
+        items: newItemsParams,
+        styles: newStylesParams,
+      } = params;
+      const {
+        dimensions: oldDimensionsParams,
+        items: oldItemsParams,
+        styles: oldStylesParams,
+      } = lastParams;
       // getItems,styles and dimesions if not supplied in params;
 
-      const {formattedItems, changed: itemsChanged} = this.formatItemsIfNeeded(newItemsParams, oldItemsParams)
-      const {formattedStyles, changed: stylesChanged} = this.formatStylesIfNeeded(newStylesParams,oldStylesParams,isUsingCustomInfoElements)
-      const {formattedContainer, changed: containerChanged} = this.formatContainerIfNeeded(newDimensionsParams, newStylesParams, oldDimensionsParams, oldStylesParams, {formattedStyles: formattedStyles || existingBlueprint.styles});
+      const {
+        formattedItems,
+        changed: itemsChanged,
+      } = this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
+      const {
+        formattedStyles,
+        changed: stylesChanged,
+      } = this.formatStylesIfNeeded(
+        newStylesParams,
+        oldStylesParams,
+        isUsingCustomInfoElements
+      );
+      const {
+        formattedContainer,
+        changed: containerChanged,
+      } = this.formatContainerIfNeeded(
+        newDimensionsParams,
+        newStylesParams,
+        oldDimensionsParams,
+        oldStylesParams,
+        { formattedStyles: formattedStyles || existingBlueprint.styles }
+      );
 
       const changed = itemsChanged || stylesChanged || containerChanged;
-      changedParams = {itemsChanged , stylesChanged , containerChanged};
+      changedParams = { itemsChanged, stylesChanged, containerChanged };
 
       if (changed || !existingBlueprint) {
         if (!existingBlueprint) {
           existingBlueprint = {};
         }
 
-        const structure = this.createStructure({formattedContainer: formattedContainer || existingBlueprint.container, formattedItems: formattedItems || existingBlueprint.items, formattedStyles: formattedStyles || existingBlueprint.styles}, changed);
+        const structure = this.createStructure(
+          {
+            formattedContainer:
+              formattedContainer || existingBlueprint.container,
+            formattedItems: formattedItems || existingBlueprint.items,
+            formattedStyles: formattedStyles || existingBlueprint.styles,
+          },
+          changed
+        );
 
         // assign changed values w/o replacing the original object;
-        if (formattedStyles) {existingBlueprint.styles = formattedStyles;}
-        if (formattedItems) {existingBlueprint.items = formattedItems;}
-        if (formattedContainer) {existingBlueprint.container = formattedContainer;}
+        if (formattedStyles) {
+          existingBlueprint.styles = formattedStyles;
+        }
+        if (formattedItems) {
+          existingBlueprint.items = formattedItems;
+        }
+        if (formattedContainer) {
+          existingBlueprint.container = formattedContainer;
+        }
         existingBlueprint.structure = structure;
 
         // if its an infinite gallery - let the container loose
-        const isInfinite = !existingBlueprint.styles.oneRow && existingBlueprint.styles.enableInfiniteScroll
+        const isInfinite =
+          !existingBlueprint.styles.oneRow &&
+          existingBlueprint.styles.enableInfiniteScroll;
         if (isInfinite) {
-          existingBlueprint.container.height = existingBlueprint.container.galleryHeight = structure.height;
+          existingBlueprint.container.height = existingBlueprint.container.galleryHeight =
+            structure.height;
         }
       }
-    } catch(error) {
+    } catch (error) {
       console.error('Could not create blueprint, error:', error);
     }
     // return the existing or the modified existing object
-    return {blueprint: existingBlueprint, changedParams};
+    return { blueprint: existingBlueprint, changedParams };
   }
 
-    // ------------------ Raw data to Formated data (if needed) ---------------------------- //
-
+  // ------------------ Raw data to Formated data (if needed) ---------------------------- //
 
   formatItemsIfNeeded(items, lastItems) {
     const reason = {
@@ -113,7 +161,12 @@ class Blueprints {
             newItem.itemId !== existingItem.itemId ||
             newItem.mediaUrl !== existingItem.mediaUrl ||
             newItem.measured !== existingItem.measured ||
-            newItem.metaData && existingItem.metaData && (newItem.metaData.type !== existingItem.metaData.type || newItem.metaData.title !== existingItem.metaData.title || newItem.metaData.description !== existingItem.metaData.description);
+            (newItem.metaData &&
+              existingItem.metaData &&
+              (newItem.metaData.type !== existingItem.metaData.type ||
+                newItem.metaData.title !== existingItem.metaData.title ||
+                newItem.metaData.description !==
+                  existingItem.metaData.description));
           if (itemsChanged) {
             reason.items = `items #${idx} id was changed.`;
           }
@@ -125,32 +178,28 @@ class Blueprints {
       }, false);
     };
 
-
     const oldItemsParams = lastItems;
     let changed = false;
     let formattedItems;
-    if (itemsWereAdded(items, oldItemsParams))
-    {
+    if (itemsWereAdded(items, oldItemsParams)) {
       formattedItems = oldItemsParams.concat(
-      items.slice(oldItemsParams.length).map(item => {
-        return ItemsHelper.convertDtoToLayoutItem(item);
-      }),
+        items.slice(oldItemsParams.length).map((item) => {
+          return ItemsHelper.convertDtoToLayoutItem(item);
+        })
       );
       this.gettingMoreItems = false; // probably finished getting more items       //TODO - what is this and how we keep it alive if needed?
       changed = true;
     } else if (itemsHaveChanged(items, oldItemsParams)) {
-      formattedItems = items.map(item =>
-      Object.assign(ItemsHelper.convertDtoToLayoutItem(item)),
+      formattedItems = items.map((item) =>
+        Object.assign(ItemsHelper.convertDtoToLayoutItem(item))
       );
       this.gettingMoreItems = false; // probably finished getting more items
       changed = true;
     }
-    return {formattedItems, changed};
+    return { formattedItems, changed };
   }
 
   formatStylesIfNeeded(styles, lastStyles, isUsingCustomInfoElements) {
-
-
     const reason = {
       styles: '',
     };
@@ -166,11 +215,13 @@ class Blueprints {
       }
       try {
         const oldStylesSorted = {};
-        Object.keys(oldStylesParams).sort() // sort by keys alphabetically
-        .forEach(key => oldStylesSorted[key] = oldStylesParams[key]);
+        Object.keys(oldStylesParams)
+          .sort() // sort by keys alphabetically
+          .forEach((key) => (oldStylesSorted[key] = oldStylesParams[key]));
         const newStylesSorted = {};
-        Object.keys(newStylesParams).sort() // sort by keys alphabetically
-        .forEach(key => newStylesSorted[key] = newStylesParams[key]);
+        Object.keys(newStylesParams)
+          .sort() // sort by keys alphabetically
+          .forEach((key) => (newStylesSorted[key] = newStylesParams[key]));
         const wasChanged =
           JSON.stringify(newStylesSorted) !== JSON.stringify(oldStylesSorted);
         if (wasChanged) {
@@ -183,14 +234,15 @@ class Blueprints {
       }
     };
 
-
-
     const oldStylesParams = lastStyles;
     let changed = false;
     let formattedStyles;
-    if (stylesHaveChanged(styles,oldStylesParams)) {
-      styles = {...defaultStyles, ...styles}
-      formattedStyles = processLayouts(addPresetStyles(styles), isUsingCustomInfoElements); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+    if (stylesHaveChanged(styles, oldStylesParams)) {
+      styles = { ...defaultStyles, ...styles };
+      formattedStyles = processLayouts(
+        addPresetStyles(styles),
+        isUsingCustomInfoElements
+      ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 
       const selectedLayoutVars = [
         'galleryLayout',
@@ -202,22 +254,30 @@ class Blueprints {
         'enableInfiniteScroll',
       ];
       formattedStyles.selectedLayout = selectedLayoutVars
-      .map(key => String(formattedStyles[key]))
-      .join('|');
+        .map((key) => String(formattedStyles[key]))
+        .join('|');
       formattedStyles.layoutsVersion = 2;
       changed = true;
-
     }
 
-    return {formattedStyles, changed}
+    return { formattedStyles, changed };
   }
 
-  formatContainerIfNeeded(dimensions, styles, lastDimensions, lastStyles, {formattedStyles}) {
-
+  formatContainerIfNeeded(
+    dimensions,
+    styles,
+    lastDimensions,
+    lastStyles,
+    { formattedStyles }
+  ) {
     const reason = {
       dimensions: '',
     };
-    const dimensionsHaveChanged = ({newDimensionsParams, oldDimensionsParams, oldStylesParams}) => {
+    const dimensionsHaveChanged = ({
+      newDimensionsParams,
+      oldDimensionsParams,
+      oldStylesParams,
+    }) => {
       if (!oldStylesParams || !oldDimensionsParams) {
         reason.dimensions = 'no old dimensions or styles. ';
         return true; // no old dimensions or styles (style may change dimensions)
@@ -231,7 +291,7 @@ class Blueprints {
           !oldStylesParams.oneRow && oldStylesParams.enableInfiniteScroll
             ? false
             : !!newDimensionsParams.height &&
-            newDimensionsParams.height !== oldDimensionsParams.height,
+              newDimensionsParams.height !== oldDimensionsParams.height,
         width:
           !oldDimensionsParams ||
           (!!newDimensionsParams.width &&
@@ -248,12 +308,17 @@ class Blueprints {
       }, false);
     };
 
-
     const oldDimensionsParams = lastDimensions;
     let changed = false;
     const oldStylesParams = lastStyles;
     let formattedContainer;
-    if(dimensionsHaveChanged({newDimensionsParams: dimensions, oldDimensionsParams, oldStylesParams})){
+    if (
+      dimensionsHaveChanged({
+        newDimensionsParams: dimensions,
+        oldDimensionsParams,
+        oldStylesParams,
+      })
+    ) {
       dimensionsHelper.updateParams({
         styles: formattedStyles,
         container: dimensions,
@@ -262,39 +327,33 @@ class Blueprints {
       formattedContainer = Object.assign(
         {},
         dimensions,
-        dimensionsHelper.getGalleryDimensions(),
+        dimensionsHelper.getGalleryDimensions()
       );
-
-  }
-  return {formattedContainer, changed}
-}
-
-
-
-  createStructure({formattedContainer, formattedStyles, formattedItems}) {
-
-
-      const layoutParams = {
-        items: formattedItems,
-        container: formattedContainer,
-        styleParams: formattedStyles,
-          options: {
-          showAllItems: true,
-          skipVisibilitiesCalc: true,
-          useLayoutStore: false,
-        },
-      };
-
-      // if (this.layouter && addingItems) {
-      //   layoutParams.options.useExistingLayout = true;
-      // } else {
-        layoutParams.options.createLayoutOnInit = false; // TODO - what does this do?
-        this.layouter = new Layouter(layoutParams); // TODO - no need for "this."
-      // }
-
-      return this.layouter.createLayout(layoutParams);
+    }
+    return { formattedContainer, changed };
   }
 
+  createStructure({ formattedContainer, formattedStyles, formattedItems }) {
+    const layoutParams = {
+      items: formattedItems,
+      container: formattedContainer,
+      styleParams: formattedStyles,
+      options: {
+        showAllItems: true,
+        skipVisibilitiesCalc: true,
+        useLayoutStore: false,
+      },
+    };
+
+    // if (this.layouter && addingItems) {
+    //   layoutParams.options.useExistingLayout = true;
+    // } else {
+    layoutParams.options.createLayoutOnInit = false; // TODO - what does this do?
+    this.layouter = new Layouter(layoutParams); // TODO - no need for "this."
+    // }
+
+    return this.layouter.createLayout(layoutParams);
+  }
 }
 const blueprints = new Blueprints();
 export default blueprints;

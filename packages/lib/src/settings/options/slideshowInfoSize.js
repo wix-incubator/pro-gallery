@@ -6,4 +6,4 @@ export default {
   isRelevant: () => true,
   type: INPUT_TYPES.NUMBER,
   default: 200,
-}
+};

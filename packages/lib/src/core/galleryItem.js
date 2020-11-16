@@ -153,7 +153,7 @@ class GalleryItem {
           const str = String(utils.hashCode(JSON.stringify({ url, ...args })));
           if (!this._cachedUrls[str]) {
             this._cachedUrls[str] = String(
-              this.resizeMediaUrl(item, url, ...args) || '',
+              this.resizeMediaUrl(item, url, ...args) || ''
             );
           }
           resizedUrl = this._cachedUrls[str];
@@ -181,7 +181,7 @@ class GalleryItem {
         {},
         ...Object.values(URL_TYPES).map((value) => ({
           [value]: () => '',
-        })),
+        }))
       );
     } else if (this.isVideo || this.isVideoPlaceholder) {
       imgUrl = this.poster;
@@ -195,7 +195,7 @@ class GalleryItem {
             this.url,
             RESIZE_METHODS.VIDEO,
             requiredWidth,
-            requiredHeight,
+            requiredHeight
           );
       }
     }
@@ -208,18 +208,20 @@ class GalleryItem {
         requiredWidth,
         requiredHeight,
         sharpParams,
-        focalPoint,
+        focalPoint
       );
 
     urls[URL_TYPES.LOW_RES] = () =>
       resizeUrl(
         this,
         imgUrl,
-        (this.cubeImages && resizeMethod !== RESIZE_METHODS.FIT ? RESIZE_METHODS.FILL : RESIZE_METHODS.FIT),
+        this.cubeImages && resizeMethod !== RESIZE_METHODS.FIT
+          ? RESIZE_METHODS.FILL
+          : RESIZE_METHODS.FIT,
         thumbSize,
         thumbSize,
         { ...sharpParams, quality: 30, blur: 30 },
-        focalPoint,
+        focalPoint
       );
 
     urls[URL_TYPES.SEO] = () =>
@@ -252,7 +254,7 @@ class GalleryItem {
         this.cubeType,
         this.resizeWidth,
         this.resizeHeight,
-        this.sharpParams,
+        this.sharpParams
       );
     }
     return this.urls.resized_url;
@@ -273,7 +275,7 @@ class GalleryItem {
         RESIZE_METHODS.FILL,
         this.thumbnailSize,
         this.thumbnailSize,
-        { quality: 70 },
+        { quality: 70 }
       );
     }
     return this.urls.thumbnail_url;
@@ -294,7 +296,7 @@ class GalleryItem {
         RESIZE_METHODS.FULL,
         this.maxWidth,
         this.maxHeight,
-        this.sharpParams,
+        this.sharpParams
       );
     }
     return this.urls.full_url;
@@ -306,7 +308,7 @@ class GalleryItem {
         RESIZE_METHODS.FIT,
         500,
         500,
-        this.sharpParams,
+        this.sharpParams
       );
     }
     return this.urls.sample_url;
@@ -333,8 +335,12 @@ class GalleryItem {
       this.urls.download_url._img = this.urls.download_url.img;
       this.urls.download_url.img = () => {
         const downloadUrl = this.urls.download_url._img();
-        return downloadUrl + (downloadUrl.includes('?') ? '&' : '?') + `dn=${this.fileName}`;
-      }
+        return (
+          downloadUrl +
+          (downloadUrl.includes('?') ? '&' : '?') +
+          `dn=${this.fileName}`
+        );
+      };
     }
     return this.urls.download_url;
   }
@@ -504,10 +510,10 @@ class GalleryItem {
 
   get type() {
     switch (
-    this._type ||
-    this.dto.type ||
-    this.metadata.type ||
-    this.dto.media_type
+      this._type ||
+      this.dto.type ||
+      this.metadata.type ||
+      this.dto.media_type
     ) {
       case 'dummy':
         return 'dummy';

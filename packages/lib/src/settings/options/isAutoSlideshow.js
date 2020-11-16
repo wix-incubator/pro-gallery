@@ -6,4 +6,4 @@ export default {
   type: INPUT_TYPES.BOOLEAN,
   default: false,
   description: `When set to true, the gallery will change the current item automatically after a specified interval`,
-}
+};
