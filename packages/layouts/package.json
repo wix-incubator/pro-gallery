@@ -2,7 +2,7 @@
   "private": false,
   "name": "pro-layouts",
   "sideEffects": false,
-  "version": "2.2.18",
+  "version": "2.2.21",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -25,7 +25,6 @@
     "lint": "eslint 'src/**/*.{js,jsx,json,ts}'",
     "lint:fix": "npm run lint -- --fix"
   },
-  "dependencies": {},
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
