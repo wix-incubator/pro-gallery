@@ -72,7 +72,6 @@ export function scrollToItemImp(scrollParams) {
     );
   } else {
     return (new Promise(resolve => {
-      scrollingElement.vertical().scrollTo(0, to);
       resolve(to);
     }));
   }
@@ -163,7 +162,6 @@ export function scrollToGroupImp(scrollParams) {
     );
   } else {
     return (new Promise(resolve => {
-      scrollingElement.vertical().scrollTo(0, to);
       resolve(to);
     }));
   }
