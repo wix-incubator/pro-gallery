@@ -20,8 +20,6 @@ jobs:
             - packages/ssr-simulator/build
 
     - stage: Tests
-      workspaces:
-        use: shared
       name: "Unit Tests"
       script: npm run test || travis_terminate 1;
 
