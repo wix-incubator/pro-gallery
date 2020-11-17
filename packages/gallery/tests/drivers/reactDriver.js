@@ -107,10 +107,6 @@ class galleryDriver {
       gotScrollEvent: true,
     };
 
-    this.settings = {
-      forceImagePreload: true
-    }
-
     this.galleryStructure = ItemsHelper.convertToGalleryItems(
       new Layouter(this.layoutParams),
     );
@@ -137,7 +133,6 @@ class galleryDriver {
       actions: this.actions,
       layoutParams: this.layoutParams,
       galleryStructure: this.galleryStructure,
-      settings: this.settings,
       galleryConfig: this.galleryConfig,
       state: str => this.wrapper.state(str),
       instance: () => this.wrapper.instance(),
@@ -165,6 +160,11 @@ class galleryDriver {
       this.wrapper = mount(<ProGallery {...props} />, { attachTo: document.getElementById('testing-container') });
     }
     return res;
+  }
+  get trigger() {
+    return {
+      scroll: () => document.dispatchEvent(new CustomEvent('scroll'))
+    }
   }
   get detach(){
     return {
