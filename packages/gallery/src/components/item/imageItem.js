@@ -135,7 +135,7 @@ export default class ImageItem extends GalleryComponent {
       createUrl,
       id,
       idx,
-      settings,
+      settings = {},
       styleParams,
       gotFirstScrollEvent
     } = this.props;
