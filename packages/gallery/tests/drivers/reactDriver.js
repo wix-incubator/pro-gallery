@@ -107,6 +107,10 @@ class galleryDriver {
       gotScrollEvent: true,
     };
 
+    this.settings = {
+      forceImagePreload: true
+    }
+
     this.galleryStructure = ItemsHelper.convertToGalleryItems(
       new Layouter(this.layoutParams),
     );
@@ -116,6 +120,7 @@ class galleryDriver {
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions,
+      settings: this.get.settings,
     };
 
     this.customHoverRenderer = () => {};
@@ -132,6 +137,7 @@ class galleryDriver {
       actions: this.actions,
       layoutParams: this.layoutParams,
       galleryStructure: this.galleryStructure,
+      settings: this.settings,
       galleryConfig: this.galleryConfig,
       state: str => this.wrapper.state(str),
       instance: () => this.wrapper.instance(),
