@@ -12,7 +12,12 @@ jobs:
       workspaces:
         create:
           name: shared
-          paths: .
+          paths:
+            - packages/gallery/dist
+            - packages/layouts/dist
+            - packages/lib/dist
+            - packages/playground/build
+            - packages/ssr-simulator/build
 
     - stage: Tests
       workspaces:
