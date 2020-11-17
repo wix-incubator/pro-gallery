@@ -1,3 +1,9 @@
+## [v2.2.21](https://pro-gallery-2-2-21.surge.sh) (17/11/2020)
+ 
+#### LAYOUTS
+ -  removed yoshi from layouts.
+
+---
 ## [v2.2.20](https://pro-gallery-2-2-20.surge.sh) (17/11/2020)
  
 #### LIB
