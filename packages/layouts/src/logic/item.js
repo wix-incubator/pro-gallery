@@ -140,7 +140,7 @@ export class Item {
       let horizontalShift = utils.hashToRandomInt(
         this.hash + offset.right + 'x',
         -spaceLeft,
-        spaceRight,
+        spaceRight
       );
 
       horizontalShift *= this.scatter / 100;
@@ -155,7 +155,7 @@ export class Item {
       let verticalShift = utils.hashToRandomInt(
         this.hash + offset.right + 'y',
         -spaceUp,
-        spaceDown,
+        spaceDown
       );
 
       verticalShift *= this.scatter / 100;
@@ -356,7 +356,7 @@ export class Item {
         }
       }
       if (this.dynamicCropRatios) {
-        const dynamicCropRatio = this.dynamicCropRatios.map(r => {
+        const dynamicCropRatio = this.dynamicCropRatios.map((r) => {
           if (r.type === '%') {
             const dim =
               this.container[r.dim] +

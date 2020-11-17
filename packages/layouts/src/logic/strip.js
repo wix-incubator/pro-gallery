@@ -112,7 +112,7 @@ export class Strip {
   get scheme() {
     return {
       idx: this.idx,
-      groups: this.groups.map(group => group.scheme),
+      groups: this.groups.map((group) => group.scheme),
       width: this.width,
       height: this.height,
       ratio: this.ratio,

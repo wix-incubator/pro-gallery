@@ -100,111 +100,111 @@ class Utils {
         fixedColumns: 0,
         columnWidths: '',
       },
-      styleParams,
+      styleParams
     );
 
     this.insertIfDefined(
       convertedStyleParams,
       'cubeImages',
-      convertedStyleParams.cropItems,
+      convertedStyleParams.cropItems
     );
     this.insertIfDefined(
       convertedStyleParams,
       'cubeType',
-      convertedStyleParams.cropType,
+      convertedStyleParams.cropType
     );
     this.insertIfDefined(
       convertedStyleParams,
       'cubeRatio',
-      convertedStyleParams.cropRatio,
+      convertedStyleParams.cropRatio
     );
     this.insertIfDefined(
       convertedStyleParams,
       'rotatingCropRatios',
       Array.isArray(convertedStyleParams.rotatingCropRatios)
         ? convertedStyleParams.rotatingCropRatios.join(',')
-        : undefined,
+        : undefined
     );
     this.insertIfDefined(
       convertedStyleParams,
       'smartCrop',
-      convertedStyleParams.smartCrop,
+      convertedStyleParams.smartCrop
     );
     this.insertIfDefined(
       convertedStyleParams,
       'imageMargin',
-      convertedStyleParams.itemSpacing,
+      convertedStyleParams.itemSpacing
     );
     this.insertIfDefined(
       convertedStyleParams,
       'galleryMargin',
-      convertedStyleParams.layoutSpacing,
+      convertedStyleParams.layoutSpacing
     );
     this.insertIfDefined(
       convertedStyleParams,
       'scatter',
-      convertedStyleParams.randomSpacings,
+      convertedStyleParams.randomSpacings
     );
     this.insertIfDefined(
       convertedStyleParams,
       'chooseBestGroup',
-      convertedStyleParams.smartGrouping,
+      convertedStyleParams.smartGrouping
     );
     this.insertIfDefined(
       convertedStyleParams,
       'groupSize',
-      convertedStyleParams.itemsPerGroup,
+      convertedStyleParams.itemsPerGroup
     );
     this.insertIfDefined(
       convertedStyleParams,
       'groupTypes',
       Array.isArray(convertedStyleParams.allowedGroupTypes)
         ? convertedStyleParams.allowedGroupTypes.join(',')
-        : undefined,
+        : undefined
     );
     this.insertIfDefined(
       convertedStyleParams,
       'rotatingGroupTypes',
       Array.isArray(convertedStyleParams.rotatingGroupTypes)
         ? convertedStyleParams.rotatingGroupTypes.join(',')
-        : undefined,
+        : undefined
     );
     this.insertIfDefined(
       convertedStyleParams,
       'isVertical',
-      convertedStyleParams.isColumnsLayout,
+      convertedStyleParams.isColumnsLayout
     );
     this.insertIfDefined(
       convertedStyleParams,
       'minItemSize',
-      convertedStyleParams.minItemSize,
+      convertedStyleParams.minItemSize
     );
     this.insertIfDefined(
       convertedStyleParams,
       'oneRow',
-      convertedStyleParams.isVerticalScroll,
+      convertedStyleParams.isVerticalScroll
     );
     this.insertIfDefined(
       convertedStyleParams,
       'targetItemSize',
-      convertedStyleParams.rowSize || convertedStyleParams.columnSize,
+      convertedStyleParams.rowSize || convertedStyleParams.columnSize
     );
     this.insertIfDefined(
       convertedStyleParams,
       'collageDensity',
-      convertedStyleParams.collageDensity,
+      convertedStyleParams.collageDensity
     );
     this.insertIfDefined(
       convertedStyleParams,
       'fixedColumns',
-      convertedStyleParams.fixedColumns,
+      convertedStyleParams.fixedColumns
     );
     this.insertIfDefined(
       convertedStyleParams,
       'columnWidths',
       Array.isArray(convertedStyleParams.columnWidths)
         ? convertedStyleParams.columnWidths.join(',')
-        : undefined,
+        : undefined
     );
 
     return convertedStyleParams;

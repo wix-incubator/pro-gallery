@@ -40,7 +40,7 @@ export class Group {
     this.dummyItems = [];
     this.targetItemSize = config.targetItemSize;
 
-    this.items = config.items.map(item => {
+    this.items = config.items.map((item) => {
       item.Group = this;
       return item;
     });
@@ -252,7 +252,7 @@ export class Group {
         //map the group to l=landscape and p=portrait
         //create a string to state the images group's type
         const ratios = this.items
-          .map(item => item.orientation.slice(0, 1))
+          .map((item) => item.orientation.slice(0, 1))
           .join('');
         optionalTypes = (isV
           ? GROUP_TYPES_BY_RATIOS_V
@@ -276,7 +276,9 @@ export class Group {
         const groupTypesArr = this.groupTypes.split(',');
 
         if (groupTypesArr.length > 1) {
-          groupTypes = groupTypes.filter(gt => groupTypesArr.indexOf(gt) >= 0);
+          groupTypes = groupTypes.filter(
+            (gt) => groupTypesArr.indexOf(gt) >= 0
+          );
 
           if (groupTypes.length === 0) {
             //there is no match between required group types and the optional ones - use
@@ -303,7 +305,7 @@ export class Group {
         // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
 
         groupTypes = groupTypes.filter(
-          groupType => targetGroupSizes.indexOf(parseInt(groupType)) >= 0,
+          (groupType) => targetGroupSizes.indexOf(parseInt(groupType)) >= 0
         );
 
         if (groupTypes.length === 0) {
@@ -616,7 +618,7 @@ export class Group {
     let Rg = 1;
     let Rm = 1;
     const M = this.imageMargin;
-    const R = this.items.map(item => item.width / item.height);
+    const R = this.items.map((item) => item.width / item.height);
     switch (this.type) {
       // ---------------------------------
       // GENERAL FORMULA:
@@ -676,7 +678,7 @@ export class Group {
     let Rg = 1;
     let Rm = 1;
     const M = this.imageMargin;
-    const R = this.items.map(item => item.width / item.height);
+    const R = this.items.map((item) => item.width / item.height);
     switch (this.type) {
       // ---------------------------------
       // GENERAL FORMULA:
@@ -797,7 +799,7 @@ export class Group {
   }
 
   get realItems() {
-    return this._items.filter(item => item.type !== 'dummy');
+    return this._items.filter((item) => item.type !== 'dummy');
   }
 
   get isWithinMinItemSize() {
@@ -821,7 +823,7 @@ export class Group {
       stripIdx: this.stripIdx,
       inStripIdx: this.inStripIdx,
       isLastGroup: this.isLastGroup,
-      items: this.items.map(item => item.scheme),
+      items: this.items.map((item) => item.scheme),
       type: this.type,
       width: this.width,
       height: this.height,

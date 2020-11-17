@@ -1,4 +1,4 @@
-import Layouter from '../src/layouter.js';
+import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
