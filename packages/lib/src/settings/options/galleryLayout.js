@@ -9,4 +9,4 @@ export default {
   type: INPUT_TYPES.OPTIONS,
   options: createOptions('layout'),
   default: GALLERY_CONSTS.layout.EMPTY,
-}
+};

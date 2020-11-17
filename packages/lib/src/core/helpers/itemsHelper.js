@@ -9,9 +9,10 @@ export class ItemsHelper {
       return dto;
     } else {
       const dtoMetadata = dto.metadata || dto.metaData;
-      const metadata = (typeof dtoMetadata === 'object')
-        ? dtoMetadata
-        : utils.parseStringObject(dtoMetadata) || {};
+      const metadata =
+        typeof dtoMetadata === 'object'
+          ? dtoMetadata
+          : utils.parseStringObject(dtoMetadata) || {};
       return {
         id: dto.itemId || dto.photoId,
         width: metadata.width,
@@ -24,7 +25,7 @@ export class ItemsHelper {
   static convertToGalleryItems(
     galleryStructure,
     itemConfig = {},
-    existingItems = [],
+    existingItems = []
   ) {
     galleryStructure.galleryItems = [];
     for (let c = 0; c < galleryStructure.columns.length; c++) {
@@ -66,7 +67,7 @@ export class ItemsHelper {
   static convertExistingStructureToGalleryItems(
     existingStructure,
     galleryStructure,
-    itemConfig = {},
+    itemConfig = {}
   ) {
     // console.log('convertToGalleryItems', existingStructure.galleryItems);
     // console.count('convertToGalleryItems');
@@ -101,8 +102,8 @@ export class ItemsHelper {
                   scheme: item,
                   dto: item.dto,
                 },
-                itemConfig,
-              ),
+                itemConfig
+              )
             );
             existingStructure.galleryItems[item.idx] = groupItems[i];
           } else {

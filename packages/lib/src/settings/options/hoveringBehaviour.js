@@ -10,4 +10,4 @@ export default {
   options: createOptions('infoBehaviourOnHover'),
   description: `Determines whether the info appears or disappears or always shown or never shown on when hovering over items.
   `,
-}
+};

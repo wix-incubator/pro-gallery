@@ -2,11 +2,14 @@ import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import PLACEMENTS, { hasVerticalPlacement, hasHoverPlacement, hasHorizontalPlacement } from '../../common/constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover'
+import PLACEMENTS, {
+  hasVerticalPlacement,
+  hasHoverPlacement,
+  hasHorizontalPlacement,
+} from '../../common/constants/placements';
+import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
-import SCROLL_ANIMATIONS from '../../common/constants/scrollAnimations';
 import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import INFO_TYPE from '../../common/constants/infoType';
@@ -23,29 +26,41 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
     styles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
     styles.gallerySizeRatio > 0
   ) {
-    return ((window && window.innerWidth) || 980) * (styles.gallerySizeRatio / 100);
+    return (
+      ((window && window.innerWidth) || 980) * (styles.gallerySizeRatio / 100)
+    );
   } else {
     return smartCalc ? smartCalc : styles.gallerySize;
   }
-
-}
+};
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
   processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
-  processedStyles.oneRow = processedStyles.oneRow || processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
+  processedStyles.oneRow =
+    processedStyles.oneRow ||
+    processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
   const setTextUnderline = (itemFontStyleParam, textDecorationType) => {
     /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
     textDecorationType: textDecorationTitle / textDecorationDesc */
-    processedStyles[itemFontStyleParam].value = processedStyles[itemFontStyleParam].value.replace(/^font\s*:\s*/, '',);
-    processedStyles[itemFontStyleParam].value = processedStyles[itemFontStyleParam].value.replace(/;$/, '',);
-    if ((processedStyles[itemFontStyleParam].value.indexOf('underline') > -1) || (processedStyles[itemFontStyleParam].style.underline === true)) {
-      processedStyles[itemFontStyleParam].value = processedStyles[itemFontStyleParam].value.replace('underline', '',);
+    processedStyles[itemFontStyleParam].value = processedStyles[
+      itemFontStyleParam
+    ].value.replace(/^font\s*:\s*/, '');
+    processedStyles[itemFontStyleParam].value = processedStyles[
+      itemFontStyleParam
+    ].value.replace(/;$/, '');
+    if (
+      processedStyles[itemFontStyleParam].value.indexOf('underline') > -1 ||
+      processedStyles[itemFontStyleParam].style.underline === true
+    ) {
+      processedStyles[itemFontStyleParam].value = processedStyles[
+        itemFontStyleParam
+      ].value.replace('underline', '');
       processedStyles[textDecorationType] = 'underline';
     } else if (processedStyles[itemFontStyleParam].style.underline === false) {
       processedStyles[textDecorationType] = 'none';
     }
-  }
+  };
 
   if (utils.isMobile()) {
     if (processedStyles.isSlideshowFont) {
@@ -77,13 +92,18 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   // to_wrapper
-  if (!hasHoverPlacement(processedStyles.titlePlacement) &&
+  if (
+    !hasHoverPlacement(processedStyles.titlePlacement) &&
     processedStyles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
-    ) {
+  ) {
     processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
 
-  if (processedStyles.imageLoadingMode === LOADING_MODE.COLOR && processedStyles.imageLoadingWithColorMode === LOADING_WITH_COLOR_MODE.MAIN_COLOR) {
+  if (
+    processedStyles.imageLoadingMode === LOADING_MODE.COLOR &&
+    processedStyles.imageLoadingWithColorMode ===
+      LOADING_WITH_COLOR_MODE.MAIN_COLOR
+  ) {
     processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
   }
 
@@ -107,7 +127,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
       processedStyles.galleryMargin = Math.max(
         processedStyles.galleryMargin,
         (processedStyles.itemShadowSize || 0) +
-        (processedStyles.itemShadowBlur || 0),
+          (processedStyles.itemShadowBlur || 0)
       );
     }
   }
@@ -120,7 +140,11 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
   }
 
-  if (!processedStyles.oneRow || processedStyles.groupSize > 1 || !processedStyles.cubeImages) {
+  if (
+    !processedStyles.oneRow ||
+    processedStyles.groupSize > 1 ||
+    !processedStyles.cubeImages
+  ) {
     processedStyles.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
   }
 
@@ -134,16 +158,16 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
     processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
       /^font\s*:\s*/,
-      '',
+      ''
     );
     processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
       /;$/,
-      '',
+      ''
     );
     if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > -1) {
       processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
         'underline',
-        '',
+        ''
       );
       processedStyles.textDecorationLoadMore = 'underline';
     } else {
@@ -239,16 +263,26 @@ function processLayouts(styles, customExternalInfoRendererExists) {
       (processedStyles.gallerySizeRatio / 100);
   }
 
-  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(processedStyles, customExternalInfoRendererExists);
+  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(
+    processedStyles,
+    customExternalInfoRendererExists
+  );
   processedStyles.externalInfoHeight = getHeightFromStyleParams(
     processedStyles,
     processedStyles.textBoxHeight
   );
 
-  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(processedStyles, customExternalInfoRendererExists);
+  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(
+    processedStyles,
+    customExternalInfoRendererExists
+  );
 
   // Handle case of autoplay on ios devices
-  if (processedStyles.videoPlay === 'auto' && processedStyles.itemClick === 'nothing' && utils.isiOS()) {
+  if (
+    processedStyles.videoPlay === 'auto' &&
+    processedStyles.itemClick === 'nothing' &&
+    utils.isiOS()
+  ) {
     processedStyles.videoPlay = 'onClick';
   }
 
@@ -257,7 +291,9 @@ function processLayouts(styles, customExternalInfoRendererExists) {
 
 function getHeightFromStyleParams(styleParams, textBoxHeight) {
   let additionalHeight = textBoxHeight;
-  if (textBoxHeight > 0 && hasVerticalPlacement(styleParams.titlePlacement) &&
+  if (
+    textBoxHeight > 0 &&
+    hasVerticalPlacement(styleParams.titlePlacement) &&
     styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
   ) {
     additionalHeight += styleParams.textImageSpace;
@@ -266,13 +302,25 @@ function getHeightFromStyleParams(styleParams, textBoxHeight) {
   return additionalHeight;
 }
 
-function getTextBoxRightOrLeftWidth(styleParams, customExternalInfoRendererExists) {
-  if (!shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)) {
+function getTextBoxRightOrLeftWidth(
+  styleParams,
+  customExternalInfoRendererExists
+) {
+  if (
+    !shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)
+  ) {
     return 0;
   }
-  const {targetItemSize, calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent} = styleParams;
+  const {
+    targetItemSize,
+    calculateTextBoxWidthMode,
+    textBoxWidth,
+    textBoxWidthPercent,
+  } = styleParams;
   let width = 0;
-  if (calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT) {
+  if (
+    calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT
+  ) {
     width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
   } else {
     width = Math.min(targetItemSize, textBoxWidth);
@@ -280,29 +328,40 @@ function getTextBoxRightOrLeftWidth(styleParams, customExternalInfoRendererExist
   return width;
 }
 
-function shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists) {
-  const {
-    oneRow,
-    isVertical,
-    groupSize,
-    titlePlacement,
-  } = styleParams;
+function shouldShowTextRightOrLeft(
+  styleParams,
+  customExternalInfoRendererExists
+) {
+  const { oneRow, isVertical, groupSize, titlePlacement } = styleParams;
 
   const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
 
-  return (allowedByLayoutConfig &&
+  return (
+    allowedByLayoutConfig &&
     hasHorizontalPlacement(titlePlacement) &&
-    customExternalInfoRendererExists)
+    customExternalInfoRendererExists
+  );
 }
 
-function getTextBoxAboveOrBelowHeight(styleParams, customExternalInfoRendererExists) {
-  if (!shouldShowTextBoxAboveOrBelow(styleParams, customExternalInfoRendererExists)) {
+function getTextBoxAboveOrBelowHeight(
+  styleParams,
+  customExternalInfoRendererExists
+) {
+  if (
+    !shouldShowTextBoxAboveOrBelow(
+      styleParams,
+      customExternalInfoRendererExists
+    )
+  ) {
     return 0;
   }
   return styleParams.textBoxHeight;
 }
 
-function shouldShowTextBoxAboveOrBelow(styleParams, customExternalInfoRendererExists) {
+function shouldShowTextBoxAboveOrBelow(
+  styleParams,
+  customExternalInfoRendererExists
+) {
   return (
     hasVerticalPlacement(styleParams.titlePlacement) &&
     customExternalInfoRendererExists
@@ -314,9 +373,7 @@ function isSlideshowFont(styles) {
   if (galleryLayout === LAYOUTS.SLIDESHOW) {
     return true;
   }
-  if (
-    hasVerticalPlacement(styles.titlePlacement)
-  ) {
+  if (hasVerticalPlacement(styles.titlePlacement)) {
     if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
       return true;
     } else if (galleryLayout === 1 && styles.isVertical) {

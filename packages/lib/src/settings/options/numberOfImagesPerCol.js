@@ -6,4 +6,4 @@ export default {
   type: INPUT_TYPES.NUMBER,
   isRelevant: (styleParams) => styleParams.oneRow,
   default: 1,
-}
+};

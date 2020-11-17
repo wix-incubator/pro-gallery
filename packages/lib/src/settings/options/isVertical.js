@@ -9,4 +9,4 @@ export default {
   options: createOptions('isVertical'),
   type: INPUT_TYPES.OPTIONS,
   default: false,
-}
+};

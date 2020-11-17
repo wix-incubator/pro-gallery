@@ -80,4 +80,3 @@ export { isFormFactorTablet };
 export { isFormFactorDesktop };
 export { isFormFactorTouch };
 export { isPrerenderMode };
-

@@ -9,4 +9,4 @@ export default {
   default: GALLERY_CONSTS.slideAnimations.SCROLL,
   options: createOptions('slideAnimations'),
   description: `Choose the slide animation effect to be used when navigating between items in a slideshow`,
-}
+};

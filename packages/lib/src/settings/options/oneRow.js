@@ -7,4 +7,4 @@ export default {
   isRelevant: () => true,
   type: INPUT_TYPES.BOOLEAN,
   default: false,
-}
+};

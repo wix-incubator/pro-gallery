@@ -1,7 +1,17 @@
-import {INPUT_TYPES, GALLERY_CONSTS} from './consts';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import { INPUT_TYPES } from '../utils/constants';
 
-const formatTitle = title => title.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.substr(1).toLowerCase()).join(' ');
-const createOptions = constName => Object.entries(GALLERY_CONSTS[constName]).map(([title, value]) => ({ value, title: formatTitle(title) }));
+const formatTitle = (title) =>
+  title
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map((word) => word[0].toUpperCase() + word.substr(1).toLowerCase())
+    .join(' ');
+const createOptions = (constName) =>
+  Object.entries(GALLERY_CONSTS[constName]).map(([title, value]) => ({
+    value,
+    title: formatTitle(title),
+  }));
 
 export default {
   allowLeanGallery: {
@@ -22,7 +32,7 @@ export default {
 
   galleryLayout: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('layout')
+    options: createOptions('layout'),
   },
   slideshowLoop: {
     type: INPUT_TYPES.BOOLEAN,
@@ -46,37 +56,47 @@ export default {
   scrollDirection: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: 0, title: "Vertical" },
-      { value: 1, title: "Horizontal" }
+      { value: 0, title: 'Vertical' },
+      { value: 1, title: 'Horizontal' },
     ],
-    alert: 'should be "oneRow" instead of "scrollDirection" - but the clientlib and renderer uses both parameters\n Also if "oneRow" - "isVertical" should be set to false - maybe add it to not relevant',
+    alert:
+      'should be "oneRow" instead of "scrollDirection" - but the clientlib and renderer uses both parameters\n Also if "oneRow" - "isVertical" should be set to false - maybe add it to not relevant',
   },
   isVertical: {
     type: INPUT_TYPES.OPTIONS,
-    options: [{ value: false, title: "Rows" }, { value: true, title: "Columns" }],
+    options: [
+      { value: false, title: 'Rows' },
+      { value: true, title: 'Columns' },
+    ],
   },
   isRTL: {
     type: INPUT_TYPES.OPTIONS,
-    options: [{ value: false, title: "Left to Right" }, { value: true, title: "Right to Left" }],
+    options: [
+      { value: false, title: 'Left to Right' },
+      { value: true, title: 'Right to Left' },
+    ],
   },
   allowSlideshowCounter: {
     type: INPUT_TYPES.BOOLEAN,
   },
   titlePlacement: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('placements')
+    options: createOptions('placements'),
   },
   hoveringBehaviour: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('infoBehaviourOnHover')
+    options: createOptions('infoBehaviourOnHover'),
   },
   cubeImages: {
     type: INPUT_TYPES.BOOLEAN,
   },
   cubeType: {
     type: INPUT_TYPES.OPTIONS,
-    options: [{ value: GALLERY_CONSTS.cubeType.CROP, title: "Crop" }, { value: GALLERY_CONSTS.cubeType.FIT, title: "Fit" }],
-    alert: " this sets cubeType, cubeImages -> check proGalleryStyleBuilder",
+    options: [
+      { value: GALLERY_CONSTS.cubeType.CROP, title: 'Crop' },
+      { value: GALLERY_CONSTS.cubeType.FIT, title: 'Fit' },
+    ],
+    alert: ' this sets cubeType, cubeImages -> check proGalleryStyleBuilder',
   },
   cubeRatio: {
     type: INPUT_TYPES.TEXT,
@@ -84,17 +104,18 @@ export default {
   gallerySliderImageRatio: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: 16 / 9, title: "16:9" },
-      { value: 4 / 3, title: "4:3" },
-      { value: 1, title: "1:1" },
-      { value: 3 / 4, title: "3:4" },
-      { value: 9 / 16, title: "9:16" }
+      { value: 16 / 9, title: '16:9' },
+      { value: 4 / 3, title: '4:3' },
+      { value: 1, title: '1:1' },
+      { value: 3 / 4, title: '3:4' },
+      { value: 9 / 16, title: '9:16' },
     ],
-    alert: 'is "cubeRatio" is undefined (a value that is only in wixers) that this is set to a default value of 16/9',
+    alert:
+      'is "cubeRatio" is undefined (a value that is only in wixers) that this is set to a default value of 16/9',
   },
   galleryThumbnailsAlignment: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('thumbnailsAlignment')
+    options: createOptions('thumbnailsAlignment'),
   },
   thumbnailSize: {
     type: INPUT_TYPES.NUMBER,
@@ -104,16 +125,16 @@ export default {
   gridStyle: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: 0, title: "Fit To Screen" },
-      { value: 1, title: "Set Items Per Row" }
+      { value: 0, title: 'Fit To Screen' },
+      { value: 1, title: 'Set Items Per Row' },
     ],
   },
   gallerySizeType: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: 'smart', title: "Adjust to Layout" },
-      { value: 'ratio', title: "Adjust to Container Width" },
-      { value: 'px', title: "Fixed size (in pixels)" },
+      { value: 'smart', title: 'Adjust to Layout' },
+      { value: 'ratio', title: 'Adjust to Container Width' },
+      { value: 'px', title: 'Fixed size (in pixels)' },
     ],
   },
   gallerySize: {
@@ -154,31 +175,31 @@ export default {
   groupTypes: {
     type: INPUT_TYPES.MULTISELECT,
     repeat: false,
-    options: createOptions('groupTypes')
+    options: createOptions('groupTypes'),
   },
   rotatingGroupTypes: {
     type: INPUT_TYPES.MULTISELECT,
     repeat: true,
-    options: createOptions('groupTypes')
+    options: createOptions('groupTypes'),
   },
   thumbnailSpacings: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
     max: 30,
-    units: "px",
+    units: 'px',
     alert: 'Should be set as / 2',
   },
   imageMargin: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
     max: 300,
-    units: "px",
+    units: 'px',
   },
   galleryMargin: {
     type: INPUT_TYPES.NUMBER,
     min: 0,
     max: 50,
-    units: "px",
+    units: 'px',
   },
   scatter: {
     type: INPUT_TYPES.NUMBER,
@@ -197,14 +218,14 @@ export default {
   },
   loadMoreAmount: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('loadMoreAmount')
+    options: createOptions('loadMoreAmount'),
   },
   //----------| SETTINGS SECTION |---------//
   scrollSnap: {
     type: INPUT_TYPES.BOOLEAN,
   },
   itemClick: {
-    options: createOptions('itemClick')
+    options: createOptions('itemClick'),
   },
   watermarkOpacity: {
     type: INPUT_TYPES.NUMBER,
@@ -228,7 +249,8 @@ export default {
   //------------------------ Design ----------------------//
   itemOpacity: {
     type: INPUT_TYPES.COLOR_PICKER,
-    alert: 'implement! - this is a colorPickerSlider component - I think only to set opacity',
+    alert:
+      'implement! - this is a colorPickerSlider component - I think only to set opacity',
   },
   itemIconColorSlideshow: {
     type: INPUT_TYPES.COLOR_PICKER,
@@ -249,15 +271,15 @@ export default {
   },
   arrowsPosition: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('arrowsPosition')
+    options: createOptions('arrowsPosition'),
   },
-  overlayAnimation:  {
+  overlayAnimation: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('overlayAnimations')
+    options: createOptions('overlayAnimations'),
   },
   imageHoverAnimation: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('imageHoverAnimations')
+    options: createOptions('imageHoverAnimations'),
   },
   itemFont: {
     type: INPUT_TYPES.FONT_PICKER,
@@ -296,7 +318,7 @@ export default {
   },
   calculateTextBoxWidthMode: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('textBoxWidthCalculationOptions')
+    options: createOptions('textBoxWidthCalculationOptions'),
   },
   textBoxHeight: {
     type: INPUT_TYPES.NUMBER,
@@ -357,7 +379,7 @@ export default {
   },
   imageInfoType: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('infoType')
+    options: createOptions('infoType'),
   },
   itemBorderWidth: {
     type: INPUT_TYPES.NUMBER,
@@ -402,7 +424,7 @@ export default {
   },
   imageLoadingMode: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('loadingMode')
+    options: createOptions('loadingMode'),
   },
   imageLoadingColor: {
     type: INPUT_TYPES.COLOR_PICKER,
@@ -410,11 +432,11 @@ export default {
   },
   expandAnimation: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('expandAnimations')
+    options: createOptions('expandAnimations'),
   },
   scrollAnimation: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('scrollAnimations')
+    options: createOptions('scrollAnimations'),
   },
   oneColorAnimationColor: {
     type: INPUT_TYPES.COLOR_PICKER,
@@ -426,15 +448,15 @@ export default {
   expandInfoPosition: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: 0, title: "Side" },
-      { value: 1, title: "Bottom" },
+      { value: 0, title: 'Side' },
+      { value: 1, title: 'Bottom' },
     ],
   },
   defaultShowInfoExpand: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: 0, title: "When clicking info icon" },
-      { value: 1, title: "Always" },
+      { value: 0, title: 'When clicking info icon' },
+      { value: 1, title: 'Always' },
     ],
     alert: '"showInfoExpandButton" property is set accordingly',
   },
@@ -471,9 +493,9 @@ export default {
   galleryAlignExpand: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: 'left', title: "left" },
-      { value: 'center', title: "center" },
-      { value: 'right', title: "right" },
+      { value: 'left', title: 'left' },
+      { value: 'center', title: 'center' },
+      { value: 'right', title: 'right' },
     ],
     alert: '"galleryAlignExpandIcons" property is being accordingly set',
   },
@@ -507,7 +529,8 @@ export default {
     type: INPUT_TYPES.NUMBER,
     min: 30,
     max: 100,
-    alert: 'doesn\'t influence - this builds "sharpParams" object - as "imageQuality" property',
+    alert:
+      'doesn\'t influence - this builds "sharpParams" object - as "imageQuality" property',
   },
   usmToggle: {
     type: INPUT_TYPES.BOOLEAN,
@@ -517,7 +540,8 @@ export default {
     min: 0,
     max: 500,
     units: '%',
-    alert: 'inside "sharpParams" object as "usm_a" property + percentage - should be divided by 100',
+    alert:
+      'inside "sharpParams" object as "usm_a" property + percentage - should be divided by 100',
   },
   usm_r: {
     type: INPUT_TYPES.NUMBER,
@@ -532,14 +556,15 @@ export default {
     min: 0,
     max: 255,
     units: 'lv',
-    alert: 'inside "sharpParams" object as "usm_t" property + percentage - should be divided by 255',
+    alert:
+      'inside "sharpParams" object as "usm_t" property + percentage - should be divided by 255',
   },
   hidePlay: {
     type: INPUT_TYPES.BOOLEAN,
   },
   videoPlay: {
     type: INPUT_TYPES.OPTIONS,
-    options: createOptions('videoPlay')
+    options: createOptions('videoPlay'),
   },
   videoSound: {
     type: INPUT_TYPES.BOOLEAN,
@@ -547,17 +572,17 @@ export default {
   videoSpeed: {
     type: INPUT_TYPES.OPTIONS,
     options: [
-      { value: '0.25', title: ".25x"   },
-      { value: '0.5', title: ".50x"},
-      { value: '1', title: "Normal"   },
-      { value: '1.25', title: "1.25x"   },
-      { value: '1.5', title: "1.50x"},
-      { value: '2', title: "2.00x"   },
+      { value: '0.25', title: '.25x' },
+      { value: '0.5', title: '.50x' },
+      { value: '1', title: 'Normal' },
+      { value: '1.25', title: '1.25x' },
+      { value: '1.5', title: '1.50x' },
+      { value: '2', title: '2.00x' },
     ],
   },
   videoLoop: {
     type: INPUT_TYPES.BOOLEAN,
-  }
+  },
 };
 
 // store and mobile
