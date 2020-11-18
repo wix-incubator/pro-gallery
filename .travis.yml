@@ -20,10 +20,6 @@ jobs:
             - packages/ssr-simulator/build
 
     - stage: Tests
-      name: "Unit Tests"
-      script: npm run test || travis_terminate 1;
-
-    - stage: Tests
       workspaces:
         use: shared
       name: "E2E Tests"
