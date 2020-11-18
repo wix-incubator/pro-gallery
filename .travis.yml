@@ -14,11 +14,8 @@ jobs:
         create:
           name: production_build
           paths:
-            - packages/gallery/dist
-            - packages/layouts/dist
-            - packages/lib/dist
-            - packages/playground/build
-            - packages/ssr-simulator/build
+            - packages/*/dist
+            - packages/*/build
 
     - stage: Build
       name: "Development"
@@ -30,18 +27,15 @@ jobs:
         create:
           name: dev_build
           paths:
-            - packages/gallery/dist
-            - packages/layouts/dist
-            - packages/lib/dist
-            - packages/playground/build
-            - packages/ssr-simulator/build
+            - packages/*/dist
+            - packages/*/build
     
     - stage: Tests
       workspaces:
         use: dev_build
       name: “Unit Tests”
-      script: npm run test || travis_terminate 1;
-      
+      script: npm run test:ci || travis_terminate 1;
+
     - stage: Tests
       workspaces:
         use: dev_build
