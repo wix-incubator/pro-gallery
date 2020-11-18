@@ -5,13 +5,30 @@ install: true
 jobs:
   include:
     - stage: Build
+      name: "Production"
       script:
         - npm install    || travis_terminate 1;
         - npm run lint    || travis_terminate 1;
         - npm run build   || travis_terminate 1;
       workspaces:
         create:
-          name: shared
+          name: production_build
+          paths:
+            - packages/gallery/dist
+            - packages/layouts/dist
+            - packages/lib/dist
+            - packages/playground/build
+            - packages/ssr-simulator/build
+
+    - stage: Build
+      name: "Development"
+      script:
+        - npm install    || travis_terminate 1;
+        - npm run lint    || travis_terminate 1;
+        - npm run build:dev   || travis_terminate 1;
+      workspaces:
+        create:
+          name: dev_build
           paths:
             - packages/gallery/dist
             - packages/layouts/dist
@@ -21,19 +38,19 @@ jobs:
 
     - stage: Tests
       workspaces:
-        use: shared
+        use: dev_build
       name: "Unit Tests"
       script: npm run test || travis_terminate 1;
 
     - stage: Tests
       workspaces:
-        use: shared
+        use: dev_build
       name: "E2E Tests"
       script: npm run test:e2e || travis_terminate 1;
 
     - stage: Deploy
       workspaces:
-        use: shared
+        use: production_build
       script:
         - npm run publish || travis_terminate 1;
         - npm run deploy  || travis_terminate 1;
