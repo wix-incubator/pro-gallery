@@ -7,7 +7,6 @@ import layoutsStore from './layoutsStore.js';
 
 export default class Layouter {
   constructor(layoutParams) {
-    console.log('Layouter - Liiiiiinnnnnkkkeddddd');
     this.ready = false;
     this.pointer = 0;
     this.layoutItems = [];

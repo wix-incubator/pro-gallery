@@ -8,7 +8,6 @@ import {
 
 class Utils {
   constructor() {
-    console.log('Libs - Liiiiiinnnnnkkkeddddd');
     this._cache = {};
     this._hash2int = {};
     this._params = {};
