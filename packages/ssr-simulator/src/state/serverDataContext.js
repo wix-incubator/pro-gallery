@@ -2,10 +2,10 @@ import React, { useContext, useMemo } from 'react';
 
 const ServerDataContext = React.createContext();
 
-export const ServerDataProvider = props => {
+export const ServerDataProvider = (props) => {
   const value = useMemo(() => {
     return {
-      data: props.value
+      data: props.value,
     };
   }, [props.value]);
 
@@ -16,7 +16,7 @@ export const ServerDataProvider = props => {
   );
 };
 
-export const useServerData = fn => {
+export const useServerData = (fn) => {
   const context = useContext(ServerDataContext);
 
   if (!context) {

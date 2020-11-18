@@ -6,7 +6,7 @@ import * as utils from './utils';
 
 const UNKNOWN_CONTAINER = {
   width: 980,
-  height: 500
+  height: 500,
 };
 export default class Gallery extends React.PureComponent {
   constructor(props) {
@@ -17,8 +17,10 @@ export default class Gallery extends React.PureComponent {
     this.handleResize = this.handleResize.bind(this);
 
     this.state = {
-      knownContainer: (container.width > 0 || container.height > 0) && container !== UNKNOWN_CONTAINER,
-      container: container
+      knownContainer:
+        (container.width > 0 || container.height > 0) &&
+        container !== UNKNOWN_CONTAINER,
+      container: container,
     };
   }
 
@@ -29,7 +31,7 @@ export default class Gallery extends React.PureComponent {
     if (containerWidth !== undefined && containerHeight !== undefined) {
       container = {
         width: containerWidth,
-        height: containerHeight
+        height: containerHeight,
       };
     }
 
@@ -39,7 +41,7 @@ export default class Gallery extends React.PureComponent {
   getContainerFromWindowDimensions() {
     return {
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     };
   }
 
@@ -47,7 +49,7 @@ export default class Gallery extends React.PureComponent {
     const container = this.getContainerFromWindowDimensions();
 
     this.setState({
-      container
+      container,
     });
   };
 
@@ -94,14 +96,14 @@ export default class Gallery extends React.PureComponent {
       !knownContainer || this.isSSR()
         ? GALLERY_CONSTS.viewMode.PRERENDER
         : GALLERY_CONSTS.viewMode.SITE;
-    
+
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
 
-    const items = testItems.slice(0,50);//utils.mixAndSlice(testItems, 50, styles.seed || 1);
+    const items = testItems.slice(0, 50); //utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
       // console.log({eventName, eventData});
@@ -111,20 +113,29 @@ export default class Gallery extends React.PureComponent {
     //   import ('./layoutFixer').then(console.warn);
     // }
 
-    const Gallery = (this.isSSR() || !urlParams.useBlueprints) ? ProGallery : ProBlueprintsGallery
+    const Gallery =
+      this.isSSR() || !urlParams.useBlueprints
+        ? ProGallery
+        : ProBlueprintsGallery;
     return (
       <div className={containerClassName}>
         <Gallery
           domId="ssr-simulator"
           items={items}
           styles={styles}
-          settings={{disableSSROpacity: !!urlParams.disableSSROpacity, avoidInlineStyles: !urlParams.useLayoutFixer}}
+          settings={{
+            disableSSROpacity: !!urlParams.disableSSROpacity,
+            avoidInlineStyles: !urlParams.useLayoutFixer,
+          }}
           container={container}
           viewMode={viewMode}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
           useBlueprints={true}
-          layoutFixerBundleUrl={urlParams.useLayoutFixer && "http://localhost:3001/layoutFixer.bundle.js"}
+          layoutFixerBundleUrl={
+            urlParams.useLayoutFixer &&
+            'http://localhost:3001/layoutFixer.bundle.js'
+          }
         />
       </div>
     );

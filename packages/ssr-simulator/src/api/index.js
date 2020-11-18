@@ -3,7 +3,7 @@ import { todosApi } from './todosApi';
 
 export function apiFactory(http) {
   return {
-    todos: todosApi(http)
+    todos: todosApi(http),
   };
 }
 
