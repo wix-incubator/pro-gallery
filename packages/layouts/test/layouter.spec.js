@@ -1,10 +1,10 @@
-import Layouter from '../src/layouter.js';
+import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
 
-const getItems = count => deepFreeze(testImages.slice(0, count));
-const getGroupCount = layout =>
+const getItems = (count) => deepFreeze(testImages.slice(0, count));
+const getGroupCount = (layout) =>
   layout.columns.reduce((count, column) => count + column.length, 0);
 
 describe('Layouter', () => {
@@ -13,7 +13,7 @@ describe('Layouter', () => {
   let container = {};
   let styleParams = {};
 
-  const getLayout = layoutParams => layouter.createLayout(layoutParams);
+  const getLayout = (layoutParams) => layouter.createLayout(layoutParams);
 
   beforeEach(() => {
     const items = getItems();
@@ -70,8 +70,8 @@ describe('Layouter', () => {
         const items = getItems(size);
         gallery = getLayout({ items, container, styleParams });
 
-        const galleryItemIds = gallery.items.map(item => item.id);
-        const itemIds = items.map(item => item.id || item.photoId);
+        const galleryItemIds = gallery.items.map((item) => item.id);
+        const itemIds = items.map((item) => item.id || item.photoId);
 
         expect(galleryItemIds).to.deep.equal(itemIds);
       }
@@ -86,13 +86,13 @@ describe('Layouter', () => {
 
       gallery = getLayout({ items, container, styleParams });
 
-      gallery.groups.forEach(group => {
-        group.items.forEach(item => {
+      gallery.groups.forEach((group) => {
+        group.items.forEach((item) => {
           const widthDiff = Math.abs(
-            item.offset.right - item.offset.left - item.width,
+            item.offset.right - item.offset.left - item.width
           );
           const heightDiff = Math.abs(
-            item.offset.bottom - item.offset.top - item.height,
+            item.offset.bottom - item.offset.top - item.height
           );
           expect(widthDiff).to.be.below(1);
           expect(heightDiff).to.be.below(1);
@@ -201,7 +201,7 @@ describe('Layouter', () => {
               }, true)
             );
           },
-          true,
+          true
         );
 
         expect(isCroppedCorrectly).to.be.true;
@@ -226,7 +226,7 @@ describe('Layouter', () => {
       const itemCount = 100;
       const items = getItems(itemCount);
       const collageAmounts = Array.from({ length: 11 }, (_, i) => i).map(
-        i => i / 10,
+        (i) => i / 10
       );
       let lastGroupCount = itemCount;
       styleParams.layoutsVersion = 1;
@@ -248,7 +248,7 @@ describe('Layouter', () => {
       const items = getItems(itemCount);
 
       const collageDensities = Array.from({ length: 11 }, (_, i) => i).map(
-        i => i / 10,
+        (i) => i / 10
       );
       let lastGroupCount = itemCount;
 
@@ -356,7 +356,7 @@ describe('Layouter', () => {
                 group.items.reduce((i, item) => {
                   const maxDimension = Math.max(item.width, item.height);
                   return Math.min(i, maxDimension);
-                }, styleParams.minItemSize),
+                }, styleParams.minItemSize)
               );
             }, styleParams.minItemSize)
           );
@@ -421,7 +421,7 @@ describe('Layouter', () => {
         const isWithinTypes = gallery.columns[0].groups.reduce(
           (g, group, idx) => {
             const rotatingGroupTypes = styleParams.rotatingGroupTypes.split(
-              ',',
+              ','
             );
             const expectedType =
               rotatingGroupTypes[idx % rotatingGroupTypes.length];
@@ -430,7 +430,7 @@ describe('Layouter', () => {
             const isType = expectedType === groupType;
             return g && isType;
           },
-          true,
+          true
         );
 
         expect(isWithinTypes).to.be.true;
@@ -464,7 +464,7 @@ describe('Layouter', () => {
             }, true)
           );
         },
-        true,
+        true
       );
 
       expect(isOriginalDimensions).to.be.true;
@@ -488,7 +488,7 @@ describe('Layouter', () => {
             }, true)
           );
         },
-        true,
+        true
       );
 
       expect(isCroppedCorrectly).to.be.true;
@@ -524,7 +524,7 @@ describe('Layouter', () => {
             }, true)
           );
         },
-        true,
+        true
       );
 
       expect(isCroppedCorrectly).to.be.true;
@@ -606,11 +606,11 @@ describe('Layouter', () => {
               let realMargin;
               if (lastItem.offset.top < item.offset.top) {
                 realMargin = Math.round(
-                  item.offset.top - lastItem.offset.bottom,
+                  item.offset.top - lastItem.offset.bottom
                 );
               } else {
                 realMargin = Math.round(
-                  item.offset.left - lastItem.offset.right,
+                  item.offset.left - lastItem.offset.right
                 );
               }
               marginDiff = Math.abs(realMargin - margin * 2);
@@ -633,7 +633,7 @@ describe('Layouter', () => {
       gallery = getLayout({ items, container, styleParams });
       gallery.groups.forEach((group, g) => {
         expect(group.type).to.equal(
-          rotatingGroupTypesArr[g % rotatingGroupTypesArr.length],
+          rotatingGroupTypesArr[g % rotatingGroupTypesArr.length]
         ); //first group idx is 1
       }, true);
     });
@@ -664,7 +664,7 @@ describe('Layouter', () => {
 
       gallery = getLayout({ items, container, styleParams });
 
-      gallery.items.forEach(item => {
+      gallery.items.forEach((item) => {
         expect(item.cropRatio).to.equal(item.ratio);
       });
     });
@@ -683,7 +683,7 @@ describe('Layouter', () => {
       gallery = getLayout({ items, container, styleParams });
       gallery.items.forEach((item, i) => {
         const ratio = Number(
-          rotatingCropRatiosArr[i % rotatingCropRatiosArr.length],
+          rotatingCropRatiosArr[i % rotatingCropRatiosArr.length]
         );
         const { width, height } = item;
         const itemRatio = width / height;
@@ -703,7 +703,7 @@ describe('Layouter', () => {
     styleParams.isVertical = true;
 
     gallery = getLayout({ items, container, styleParams });
-    gallery.items.forEach(item => {
+    gallery.items.forEach((item) => {
       const { width, height } = item;
       const itemRatio = width / height;
       expect(ratio - itemRatio).to.be.below(0.1);
@@ -720,7 +720,7 @@ describe('Layouter', () => {
     styleParams.isVertical = true;
 
     gallery = getLayout({ items, container, styleParams });
-    gallery.items.forEach(item => {
+    gallery.items.forEach((item) => {
       const { width, height } = item;
       const itemRatio = width / height;
       expect(itemRatio - ratio).to.be.below(0.1);

@@ -579,6 +579,7 @@ export class GalleryContainer extends React.Component {
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+          gotFirstScrollEvent={this.state.gotFirstScrollEvent}
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           items={this.state.items}
           getVisibleItems={this.getVisibleItems}
@@ -588,7 +589,6 @@ export class GalleryContainer extends React.Component {
           container={this.props.container}
           watermark={this.props.watermark}
           settings={this.props.settings}
-          scroll={{}} //todo: remove after refactor is 100%
           displayShowMore={displayShowMore}
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}

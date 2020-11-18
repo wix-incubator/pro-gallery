@@ -1,7 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import {calcTargetItemSize} from '../helpers/layoutHelper';
+import { calcTargetItemSize } from '../helpers/layoutHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDESHOW,
@@ -35,12 +35,12 @@ export const fixedStyles = {
   cropOnlyFill: false,
   scatter: 0,
   imageMargin: 0,
-}
+};
 
-export const createStyles = styles => {
+export const createStyles = (styles) => {
   return {
     ...styles,
     ...fixedStyles,
     targetItemSize: calcTargetItemSize(styles),
-  }
-}
+  };
+};

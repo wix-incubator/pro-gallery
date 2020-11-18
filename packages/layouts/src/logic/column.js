@@ -15,7 +15,7 @@ export class Column {
 
   addGroups(groups) {
     this.groups = this.groups.concat(groups);
-    groups.forEach(group => {
+    groups.forEach((group) => {
       group.columnIdx = this.idx;
       group.Column = this;
     });
@@ -28,7 +28,7 @@ export class Column {
   get scheme() {
     return {
       idx: this.idx,
-      groups: this.groups.map(group => group.scheme),
+      groups: this.groups.map((group) => group.scheme),
       width: this.width,
       height: this.height,
     };

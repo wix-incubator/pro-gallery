@@ -9,4 +9,4 @@ export default {
   step: 0.1,
   default: 1,
   description: `The multiplier of the video play speed. x1 is the mormal speed, x2 is double the speed, x0.5 is half the speed etc.`,
-}
+};

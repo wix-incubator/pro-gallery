@@ -7,4 +7,4 @@ export default {
   isRelevant: (sp) => GALLERY_CONSTS.hasHoverPlacement(sp.titlePlacement),
   type: INPUT_TYPES.COLOR_PICKER,
   default: 'rgba(8, 8 ,8, 0.75)',
-}
+};

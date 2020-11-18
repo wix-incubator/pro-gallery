@@ -2,14 +2,13 @@
   "private": false,
   "name": "pro-layouts",
   "sideEffects": false,
-  "version": "2.2.18",
+  "version": "2.2.22",
   "author": {
     "name": "Guy Sopher",
-    "email": "guysopher@gmail.com",
-    "url": ""
+    "email": "guysopher@gmail.com"
   },
-  "main": "dist/src/index.js",
-  "module": "dist/es/src/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wix/pro-gallery.git"
@@ -18,53 +17,25 @@
     "dist"
   ],
   "scripts": {
-    "watch": "PORT=8293 yoshi start --no-server",
-    "start": "PORT=8293 yoshi start --no-server",
-    "build": "yoshi build",
-    "lint": "yoshi lint",
-    "precommit": "yoshi lint",
-    "pretest": "yoshi build",
-    "test": "yoshi test",
-    "posttest": "yoshi lint",
-    "release": "yoshi release"
-  },
-  "dependencies": {
-    "babel-runtime": "^6.22.0"
+    "watch": "tsc -w",
+    "start": "tsc -w",
+    "build": "tsc && tsc -p tsconfig-esm.json",
+    "test": "mocha --require ts-node/register test/*.spec.*",
+    "posttest": "npm run lint",
+    "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
-    "ab-translate": "1.1.557",
-    "chai": "^4.1.2",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "chai": "^4.2.0",
     "deep-freeze": "0.0.1",
-    "husky": "^0.13.4",
-    "jsdom": "11.2.0",
-    "jsdom-global": "3.0.2",
-    "wallaby-webpack": "^3.9.9",
-    "yoshi": "~4.25.0"
-  },
-  "resolutions": {
-    "ab-translate": "1.1.557"
-  },
-  "babel": {
-    "presets": [
-      "yoshi"
-    ]
-  },
-  "yoshi": {
-    "entry": {
-      "main": "./index.js"
-    },
-    "servers": {
-      "cdn": {
-        "port": 4662
-      }
-    }
-  },
-  "eslintConfig": {
-    "extends": "yoshi",
-    "rules": {
-      "no-mixed-operators": 0,
-      "no-loop-func": 0
-    }
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "mocha": "^8.2.1",
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

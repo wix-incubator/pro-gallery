@@ -9,4 +9,4 @@ export default {
   default: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
   options: createOptions('layoutDirection'),
   description: `Set the direction of the gallery layout (right to left or left to right)`,
-}
+};

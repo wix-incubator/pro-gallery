@@ -1,7 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import {calcTargetItemSize} from '../helpers/layoutHelper';
+import { calcTargetItemSize } from '../helpers/layoutHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.FULLSIZE,
@@ -30,12 +30,12 @@ export const fixedStyles = {
   cropOnlyFill: false,
   scatter: 0,
   imageMargin: 0,
-}
+};
 
-export const createStyles = styles => {
+export const createStyles = (styles) => {
   return {
     ...styles,
     ...fixedStyles,
     targetItemSize: calcTargetItemSize(styles),
-  }
-}
+  };
+};

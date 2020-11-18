@@ -9,4 +9,4 @@ export default {
   options: createOptions('loadingMode'),
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.loadingMode.BLUR,
-}
+};

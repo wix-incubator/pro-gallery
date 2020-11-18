@@ -1,3 +1,21 @@
+## [v2.2.22](https://pro-gallery-2-2-22.surge.sh) (18/11/2020)
+ 
+#### GALLERY
+ -  feature (imageItem): avoid using preload image until first scroll event
+
+---
+## [v2.2.21](https://pro-gallery-2-2-21.surge.sh) (17/11/2020)
+ 
+#### LAYOUTS
+ -  removed yoshi from layouts.
+
+---
+## [v2.2.20](https://pro-gallery-2-2-20.surge.sh) (17/11/2020)
+ 
+#### LIB
+ - removed yoshi from lib.
+
+---
 ## [v2.2.19](https://pro-gallery-2-2-19.surge.sh) (11/11/2020)
  
 #### GALLERY

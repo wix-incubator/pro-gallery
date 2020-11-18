@@ -9,4 +9,4 @@ export default {
   type: INPUT_TYPES.MULTIREPEAT,
   options: createOptions('groupTypes'),
   default: '',
-}
+};

@@ -160,6 +160,11 @@ class galleryDriver {
     }
     return res;
   }
+  get trigger() {
+    return {
+      scroll: () => document.dispatchEvent(new CustomEvent('scroll'))
+    }
+  }
   get detach(){
     return {
       proGallery: () => {

@@ -132,7 +132,7 @@ export const defaultStyleParams = {
   usm_t: 0,
   videoSound: false,
   videoSpeed: '1',
-  videoLoop: true
+  videoLoop: true,
 };
 
 export function formatValue(val) {
@@ -155,7 +155,7 @@ export function getStyleParamsFromUrl(searchString) {
     const styleParams = searchString
       .replace('?', '')
       .split('&')
-      .map(styleParam => styleParam.split('='))
+      .map((styleParam) => styleParam.split('='))
       .reduce(
         (obj, [styleParam, value]) =>
           Object.assign(obj, { [styleParam]: formatValue(value) }),
@@ -168,7 +168,7 @@ export function getStyleParamsFromUrl(searchString) {
 }
 
 export function mixAndSlice(array, length, seed) {
-  const numFromId = id => Number(id.replace(/\D/g, '')) % Number(seed || 1);
+  const numFromId = (id) => Number(id.replace(/\D/g, '')) % Number(seed || 1);
 
   return array
     .sort((itm1, itm2) => numFromId(itm1.itemId) - numFromId(itm2.itemId))
@@ -177,7 +177,7 @@ export function mixAndSlice(array, length, seed) {
       ...item,
       metadata: {
         ...item.metadata,
-        title: `Item #${idx}`
-      }
+        title: `Item #${idx}`,
+      },
     }));
 }

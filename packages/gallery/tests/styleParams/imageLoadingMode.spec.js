@@ -27,6 +27,7 @@ describe('styleParam - imageLoadingMode', () => {
       imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
     })
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
+    initialProps.settings = {forceImagePreload: true}
     driver.mount.proGallery(initialProps);
     expect(imageStub.withArgs('resized','thumb').called).to.be.true;
     imageStub.restore();
@@ -39,6 +40,7 @@ describe('styleParam - imageLoadingMode', () => {
       oneRow: false,
       imageLoadingMode: GALLERY_CONSTS.loadingMode.MAIN_COLOR,
     })
+    initialProps.settings = {forceImagePreload: true}
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
     driver.mount.proGallery(initialProps);
     expect(imageStub.withArgs('pixel','img').called).to.be.true;
@@ -52,6 +54,7 @@ describe('styleParam - imageLoadingMode', () => {
       oneRow: false,
       imageLoadingMode: GALLERY_CONSTS.loadingMode.COLOR,
     })
+    initialProps.settings = {forceImagePreload: true}
     driver.mount.proGallery(initialProps);
     const items = driver.find.selector('.load-with-color').length;
     expect(items).to.be.above(0);

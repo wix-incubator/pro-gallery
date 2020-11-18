@@ -9,4 +9,4 @@ export default {
   default: GALLERY_CONSTS.scrollDirection.VERTICAL,
   options: createOptions('scrollDirection'),
   description: `Toggle between two types of galleries. Vertical and Horizontal. Notice that many options are available only for a specific scroll direction.`,
-}
+};

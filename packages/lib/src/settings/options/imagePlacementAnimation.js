@@ -4,9 +4,9 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Image Placement Animation',
-  isRelevant: ()  => true,
+  isRelevant: () => true,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.imagePlacementAnimations.NO_EFFECT,
   options: createOptions('imagePlacementAnimations'),
   description: `Choose an effect that happens to the image when placed/replaced on the gallery.`,
-}
+};

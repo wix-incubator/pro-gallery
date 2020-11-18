@@ -9,4 +9,4 @@ export default {
   default: GALLERY_CONSTS.gallerySizeType.SMART,
   options: createOptions('gallerySizeType'),
   isRelevant: () => true,
-}
+};

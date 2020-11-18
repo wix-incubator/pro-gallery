@@ -6,4 +6,4 @@ export default {
   type: INPUT_TYPES.BOOLEAN,
   default: false,
   description: `Show videos without a play button. Notice that using this option will display videos without any indication that they are playable`,
-}
+};

@@ -6,4 +6,4 @@ export default {
   type: INPUT_TYPES.BOOLEAN,
   default: false,
   description: `Show a play/pause button to toggle the slides transitions in auto slide`,
-}
+};
