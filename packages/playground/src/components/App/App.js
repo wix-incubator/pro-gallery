@@ -248,8 +248,8 @@ export function App() {
 
   // console.log('Rendering App: ', {styleParams, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const {showSide, ...keySettings} = gallerySettings
-    return keySettings;
+    const { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
   
   const GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);

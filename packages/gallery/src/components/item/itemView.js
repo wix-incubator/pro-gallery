@@ -345,6 +345,7 @@ class ItemView extends GalleryComponent {
 
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
+      'gotFirstScrollEvent',
       'alt',
       'title',
       'description',
