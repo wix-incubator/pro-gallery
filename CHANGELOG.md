@@ -1,3 +1,9 @@
+## [v2.2.22](https://pro-gallery-2-2-22.surge.sh) (18/11/2020)
+ 
+#### GALLERY
+ -  feature (imageItem): avoid using preload image until first scroll event
+
+---
 ## [v2.2.21](https://pro-gallery-2-2-21.surge.sh) (17/11/2020)
  
 #### LAYOUTS
