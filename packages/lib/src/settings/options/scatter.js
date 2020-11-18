@@ -10,7 +10,4 @@ export default {
   default: 0,
   description: `Set a random offset to each image, in the boundaries of the margin.
   `,
-}
-
-       
-       
+};

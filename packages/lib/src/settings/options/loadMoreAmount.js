@@ -9,4 +9,4 @@ export default {
   default: GALLERY_CONSTS.loadMoreAmount.LEFT_TO_RIGHT,
   options: createOptions('loadMoreAmount'),
   description: `Choose whether clicking the 'load more' button toggle an infinite scroll behaviour or adds a few more items and keep the button at the bottom.`,
-}
+};

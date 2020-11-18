@@ -6,4 +6,4 @@ export default {
   isRelevant: (styleParams) => styleParams.cubeImages,
   type: INPUT_TYPES.TEXT,
   default: '',
-}
+};

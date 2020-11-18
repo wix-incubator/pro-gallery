@@ -6,4 +6,4 @@ export default {
   type: INPUT_TYPES.BOOLEAN,
   default: false,
   description: `Allow rendering CSS gallery for supported galleries`,
-}
+};

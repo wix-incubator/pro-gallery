@@ -7,4 +7,4 @@ export default {
   type: INPUT_TYPES.NUMBER,
   isRelevant: (styleParams) => styleParams.groupSize > 1,
   default: 120,
-}
+};

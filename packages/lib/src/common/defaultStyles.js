@@ -1,5 +1,4 @@
 import GALLERY_CONSTS from './constants';
-import galleryOptions from '../settings/options'
 // this is the one place for the default styles !!!
 
 const defaultStyles = {
@@ -149,4 +148,4 @@ const defaultStyles = {
   }
 });
  */
-export default defaultStyles
+export default defaultStyles;

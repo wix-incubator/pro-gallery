@@ -4,8 +4,8 @@ export function todosApi(http) {
       return http.get('/api/todos');
     },
 
-    create: newTodo => {
+    create: (newTodo) => {
       return http.post('/api/todos', newTodo);
-    }
+    },
   };
 }

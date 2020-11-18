@@ -11,7 +11,7 @@ export const fixedStyles = {
   collageAmount: undefined,
   collageDensity: undefined,
   groupTypes: undefined,
-  oneRow: undefined,// later on in layoutHelper this can be changed if it is false, so not exactly fixed.
+  oneRow: undefined, // later on in layoutHelper this can be changed if it is false, so not exactly fixed.
   imageMargin: undefined,
   scatter: undefined,
   galleryMargin: undefined,
@@ -28,7 +28,7 @@ export const fixedStyles = {
   fixedColumns: undefined,
   enableInfiniteScroll: undefined,
   slideshowLoop: false,
-}
+};
 
 const getStyleBySeed = (seed) => {
   if (!seed > 0) {
@@ -36,7 +36,7 @@ const getStyleBySeed = (seed) => {
   }
   seed = Math.floor(seed);
 
-  const strToSeed = str => {
+  const strToSeed = (str) => {
     str = String(str);
     let total = 0;
     for (let s = 0; s < str.length; s++) {
@@ -55,7 +55,7 @@ const getStyleBySeed = (seed) => {
     return (mergeSeeds(seed, seed2) % range) + min;
   };
 
-  const boolFromSeed = strSeed => {
+  const boolFromSeed = (strSeed) => {
     return !!numFromSeed(0, 1, strSeed);
   };
 
@@ -70,9 +70,9 @@ const getStyleBySeed = (seed) => {
         ? numFromSeed(1, 100, 'collageDensity')
         : numFromSeed(5, 10, 'collageDensity')) / 100,
     groupTypes: ['1'].concat(
-      ('2h,2v,3t,3b,3l,3r,3h,3v').split(',').filter((type, i) =>
-        boolFromSeed('groupTypes' + i),
-      ),
+      '2h,2v,3t,3b,3l,3r,3h,3v'
+        .split(',')
+        .filter((type, i) => boolFromSeed('groupTypes' + i))
     ),
     oneRow: boolFromSeed('oneRow'),
     imageMargin: numFromSeed(
@@ -80,7 +80,7 @@ const getStyleBySeed = (seed) => {
       featureManager.supports.spacingCalculation
         ? numFromSeed(300, 800, 'gallerySize') / 5
         : 5,
-      'imageMargin',
+      'imageMargin'
     ),
     galleryMargin: featureManager.supports.spacingCalculation
       ? 0
@@ -112,12 +112,12 @@ const getStyleBySeed = (seed) => {
   style.minItemSize = style.targetItemSize / style.groupSize / 2;
 
   return style;
-}
+};
 
-export const createStyles = styles => {
+export const createStyles = (styles) => {
   return {
     ...styles,
     ...fixedStyles,
-    ...getStyleBySeed(styles.magicLayoutSeed)
-  }
-}
+    ...getStyleBySeed(styles.magicLayoutSeed),
+  };
+};

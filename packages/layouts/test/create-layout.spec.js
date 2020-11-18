@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import createLayout from '../src/create-layout';
-import Layouter from '../src/layouter';
+import createLayout from '../src/logic/create-layout';
+import Layouter from '../src/logic/layouter';
 
 const getLayoutParams = () => ({
   styleParams: { oneRow: true },

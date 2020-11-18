@@ -1,6 +1,6 @@
 import * as imageSdk from 'image-client-api/dist/imageClientSDK';
 
-const getWixFilename = url =>
+const getWixFilename = (url) =>
   url.replace('https://static.wixstatic.com/media/', '');
 
 const allowWebp = (item, sharpParams, requiredWidth) => {
@@ -55,7 +55,7 @@ const resizeUrlImp = (
     sharpParams.usm = {
       usm_a: 0,
       usm_r: 0,
-      usm_t: 0
+      usm_t: 0,
     };
   }
 
@@ -86,7 +86,7 @@ const resizeUrlImp = (
   }
   if (sharpParams.blur > 0) {
     options.filters = {
-      blur: sharpParams.blur
+      blur: sharpParams.blur,
     };
     //this is a hack to avoid using the imageClientSdk for blurry images. These have to stay EXACTLY the same between SSR and CSR
     return `${item.mediaUrl}/v1/fit/w_250,h_250,al_c,q_30,blur_30/${item.id}.jpg`;
@@ -98,7 +98,7 @@ const resizeUrlImp = (
     options.unsharpMask = {
       radius: parseFloat(sharpParams.usm.usm_r),
       amount: parseFloat(sharpParams.usm.usm_a),
-      threshold: parseFloat(sharpParams.usm.usm_t)
+      threshold: parseFloat(sharpParams.usm.usm_t),
     };
   }
 

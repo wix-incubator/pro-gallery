@@ -25,7 +25,7 @@ export default class Layouter {
     this.styleParams = utils.convertStyleParams(layoutParams.styleParams);
     this.container = utils.convertContainer(
       layoutParams.container,
-      this.styleParams,
+      this.styleParams
     );
 
     const options = layoutParams.options || {};
@@ -39,14 +39,14 @@ export default class Layouter {
     if (!this.container.galleryWidth) {
       this.ready = false;
       throw new Error(
-        'Layouter: cannot create layout, galleryWidth is undefined or 0',
+        'Layouter: cannot create layout, galleryWidth is undefined or 0'
       );
     }
 
     if (!this.styleParams.targetItemSize) {
       this.ready = false;
       throw new Error(
-        'Layouter: cannot create layout, targetItemSize is undefined or 0',
+        'Layouter: cannot create layout, targetItemSize is undefined or 0'
       );
     }
   }
@@ -63,9 +63,9 @@ export default class Layouter {
         const numOfColsFloat = galleryWidth / targetItemSize;
         const roundFuncs = [Math.floor, Math.ceil];
         const diffs = roundFuncs
-          .map(func => func(numOfColsFloat)) //round to top, round to bottom
-          .map(n => Math.round(galleryWidth / n)) //width of each col
-          .map(w => Math.abs(targetItemSize - w)); //diff from targetItemSize
+          .map((func) => func(numOfColsFloat)) //round to top, round to bottom
+          .map((n) => Math.round(galleryWidth / n)) //width of each col
+          .map((w) => Math.abs(targetItemSize - w)); //diff from targetItemSize
         const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the targetItemSize
         numOfCols = roundFunc(numOfColsFloat) || 1;
       }
@@ -119,7 +119,7 @@ export default class Layouter {
           //---------------------| COLUMNS GALLERY |----------------------//
           //remove items from the last 3 groups;
           const lastGroups = this.groups.slice(-3);
-          lastGroups.forEach(group => {
+          lastGroups.forEach((group) => {
             const column = this.columns[group.columnIdx];
             if (column) {
               column.height -= group.totalHeight;
@@ -137,7 +137,7 @@ export default class Layouter {
           if (this.styleParams.oneRow) {
             //remove items from the last group:
             const lastGroups = this.groups.slice(-1);
-            lastGroups.forEach(group => {
+            lastGroups.forEach((group) => {
               const column = this.columns[0];
               if (column) {
                 column.groups.splice(-1, 1);
@@ -163,11 +163,11 @@ export default class Layouter {
             //remove items from the last 2 strips;
             const lastStrips = this.strips.slice(-2);
             if (lastStrips) {
-              lastStrips.forEach(lastStrip => {
+              lastStrips.forEach((lastStrip) => {
                 if (lastStrip) {
                   this.strips.splice(-1, 1);
                   const groups = lastStrip.groups;
-                  groups.forEach(group => {
+                  groups.forEach((group) => {
                     this.groups.splice(-1, 1);
                     group.items.forEach(() => {
                       this.layoutItems.splice(-1, 1);
@@ -179,7 +179,7 @@ export default class Layouter {
               });
               this.galleryHeight = this.strips.reduce(
                 (totalHeight, strip) => (totalHeight += strip.height),
-                0,
+                0
               );
               // this.strip = this.strips[this.strips.length - 1];
               this.strip = new Strip({
@@ -209,7 +209,7 @@ export default class Layouter {
       if (this.styleParams.forceFullHeight) {
         this.targetItemSize = Math.sqrt(
           (this.container.galleryHeight * this.container.galleryWidth) /
-          this.srcItems.length,
+            this.srcItems.length
         );
       } else {
         let gallerySizeVal;
@@ -221,7 +221,9 @@ export default class Layouter {
         this.targetItemSize =
           Math.floor(gallerySizeVal) +
           Math.ceil(
-            2 * (this.styleParams.imageMargin / 2 - this.styleParams.galleryMargin),
+            2 *
+              (this.styleParams.imageMargin / 2 -
+                this.styleParams.galleryMargin)
           );
       }
 
@@ -247,7 +249,7 @@ export default class Layouter {
 
       this.numOfCols = this.calcNumberOfColumns(
         this.galleryWidth,
-        this.targetItemSize,
+        this.targetItemSize
       );
       this.targetItemSize = this.styleParams.isVertical
         ? Math.floor(this.galleryWidth / this.numOfCols)
@@ -283,13 +285,13 @@ export default class Layouter {
             Math.round(
               externalInfoWidth > 1 // integer represent size in pixels, floats size in percentage
                 ? externalInfoWidth
-                : externalInfoWidth * colWidth,
+                : externalInfoWidth * colWidth
             ) || 0;
           colWidth -= infoWidth;
           fixedCubeHeight =
             fixedCubeHeight ||
             (this.targetItemSize - infoWidth - imageMargin) / cubeRatio +
-            imageMargin; //calc the cube height only once
+              imageMargin; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
         });
@@ -397,7 +399,8 @@ export default class Layouter {
           if (this.styleParams.oneRow) {
             this.strip.height =
               this.container.galleryHeight +
-              (this.styleParams.imageMargin / 2 - this.styleParams.galleryMargin);
+              (this.styleParams.imageMargin / 2 -
+                this.styleParams.galleryMargin);
           } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the targetItemSize and not stretch
             this.strip.height = this.targetItemSize;
@@ -415,7 +418,7 @@ export default class Layouter {
         //find the shortest column
         const minCol = this.findShortestColumn(
           this.columns,
-          this.groups.length - 1,
+          this.groups.length - 1
         );
 
         //resize the group and images
@@ -447,13 +450,13 @@ export default class Layouter {
 
     if (this.styleParams.forceFullHeight) {
       const stretchRatio = this.container.galleryHeight / this.galleryHeight;
-      this.items.map(item => {
+      this.items.map((item) => {
         item.cubeImages = true;
         item.cubeRatio = item.ratio = item.width / (item.height * stretchRatio);
         item.height *= stretchRatio;
         return item;
       });
-      this.groups.map(group => {
+      this.groups.map((group) => {
         group.height *= stretchRatio;
         group.setTop(group.top * stretchRatio);
         group.resizeItems();
@@ -505,11 +508,11 @@ export default class Layouter {
       let distance;
 
       // each(slice(this.layoutItems, itemIdx - 50, itemIdx + 50), (item) => {
-      this.layoutItems.forEach(item => {
+      this.layoutItems.forEach((item) => {
         itemY = item.offset.top + item.height / 2;
         itemX = item.offset.left + item.width / 2;
         distance = Math.sqrt(
-          Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2),
+          Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2)
         );
         if (
           (minDistance === null || (distance > 0 && distance < minDistance)) &&
@@ -527,7 +530,7 @@ export default class Layouter {
         neighborItem = findClosestItem(
           currentItem.offset.left + currentItem.width / 2,
           currentItem.offset.top,
-          (curX, curY, itmX, itmY) => itmY < curY,
+          (curX, curY, itmX, itmY) => itmY < curY
         );
         break;
 
@@ -535,7 +538,7 @@ export default class Layouter {
         neighborItem = findClosestItem(
           currentItem.offset.left,
           currentItem.offset.top + currentItem.height / 2,
-          (curX, curY, itmX) => itmX < curX,
+          (curX, curY, itmX) => itmX < curX
         );
         break;
 
@@ -543,7 +546,7 @@ export default class Layouter {
         neighborItem = findClosestItem(
           currentItem.offset.left + currentItem.width / 2,
           currentItem.offset.bottom,
-          (curX, curY, itmX, itmY) => itmY > curY,
+          (curX, curY, itmX, itmY) => itmY > curY
         );
         break;
 
@@ -552,7 +555,7 @@ export default class Layouter {
         neighborItem = findClosestItem(
           currentItem.offset.right,
           currentItem.offset.top + currentItem.height / 2,
-          (curX, curY, itmX) => itmX > curX,
+          (curX, curY, itmX) => itmX > curX
         );
         break;
     }
@@ -570,10 +573,16 @@ export default class Layouter {
     try {
       const groupTypes =
         typeof this.styleParams.groupTypes === 'string' &&
-          this.styleParams.groupTypes.length > 0
+        this.styleParams.groupTypes.length > 0
           ? this.styleParams.groupTypes.split(',')
           : this.styleParams.groupTypes;
-      _maxGroupSize = groupTypes.length > 0 ? groupTypes.reduce((curSize, groupType) => Math.max(curSize, parseInt(groupType)), 1) : Number(groupTypes);
+      _maxGroupSize =
+        groupTypes.length > 0
+          ? groupTypes.reduce(
+              (curSize, groupType) => Math.max(curSize, parseInt(groupType)),
+              1
+            )
+          : Number(groupTypes);
       _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
     } catch (e) {
       console.error("couldn't calculate max group size - returing 3 (?)", e);
@@ -606,10 +615,10 @@ export default class Layouter {
 
   get scheme() {
     return {
-      items: this.items.map(item => item.scheme),
-      groups: this.groups.map(group => group.scheme),
-      strips: this.strips.map(strip => strip.scheme),
-      columns: this.columns.map(column => column.scheme),
+      items: this.items.map((item) => item.scheme),
+      groups: this.groups.map((group) => group.scheme),
+      strips: this.strips.map((strip) => strip.scheme),
+      columns: this.columns.map((column) => column.scheme),
       height: this.height,
       width: this.width,
     };

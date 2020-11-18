@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "2.2.18",
+  "version": "2.2.21",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -12,65 +12,36 @@
     "url": "git+https://github.com/wix/pro-gallery.git"
   },
   "sideEffects": false,
-  "main": "dist/src/index.js",
-  "module": "dist/es/src/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "watch": "yoshi start",
-    "start": "yoshi start",
-    "build": "yoshi build",
-    "pretest": "yoshi build",
-    "test": "yoshi test",
-    "release": "yoshi release",
-    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "watch": "tsc -w",
+    "start": "tsc -w",
+    "build": "tsc && tsc -p tsconfig-esm.json",
+    "test": "mocha --require ts-node/register test/*.spec.*",
+    "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix",
     "posttest": "npm run lint"
   },
-  "lint-staged": {
-    "*.{js,scss,less}": "yoshi lint"
-  },
   "devDependencies": {
-    "@testing-library/react": "^9.3.0",
-    "ab-translate": "1.1.557",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
     "chai": "^4.2.0",
-    "express": "^4.17.1",
-    "express-session": "^1.17.0",
-    "husky": "^4.2.1",
-    "lint-staged": "^10.0.7",
-    "puppeteer": "^1.1.0",
-    "velocity": "~0.7.0",
-    "yoshi": "~4.25.0",
-    "yoshi-style-dependencies": "^4.1.0",
-    "yoshi-template-intro": "^4.1.0"
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "mocha": "^8.2.1",
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
   },
   "dependencies": {
-    "pro-layouts": "2.2.18"
+    "pro-layouts": "2.2.21"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "resolutions": {
-    "ab-translate": "1.1.557"
-  },
-  "yoshi": {
-    "entry": {
-      "main": "./index"
-    },
-    "servers": {
-      "cdn": {
-        "port": 9995
-      }
-    },
-    "exports": "pro-gallery-lib"
-  },
-  "eslintConfig": {
-    "extends": "yoshi",
-    "rules": {
-      "import/no-unresolved": "off",
-      "default-case": "off",
-      "prettier/prettier": "off"
-    }
   }
 }
