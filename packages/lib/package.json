@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "2.2.21",
+  "version": "2.2.22",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -39,7 +39,7 @@
     "typescript": "^4.0.5"
   },
   "dependencies": {
-    "pro-layouts": "2.2.21"
+    "pro-layouts": "2.2.22"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
