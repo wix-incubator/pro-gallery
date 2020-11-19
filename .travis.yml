@@ -2,6 +2,8 @@ language: node_js
 dist: trusty
 sudo: required
 install: true
+cache:
+  npm: false
 jobs:
   include:
     - stage: Build
