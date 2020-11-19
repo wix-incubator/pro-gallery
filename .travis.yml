@@ -35,7 +35,7 @@ jobs:
         use: dev_build
       name: “Unit Tests”
       script:
-        - npm run test:gallery || travis_terminate 1;
+        - npm run test:ci || travis_terminate 1;
 
     - stage: Tests
       workspaces:
