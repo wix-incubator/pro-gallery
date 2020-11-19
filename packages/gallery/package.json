@@ -26,7 +26,7 @@
     "build": "yoshi build",
     "precommit": " ",
     "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
-    "test:gallery": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "test:gallery": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js'",
     "posttest": "yoshi lint",
     "release": "yoshi release",
     "lint": "eslint 'src/**/*.{js,jsx}'",
