@@ -30,11 +30,11 @@ jobs:
             - packages/*/dist
             - packages/*/build
     
-    # - stage: Tests
-    #   workspaces:
-    #     use: dev_build
-    #   name: “Unit Tests”
-    #   script: npm run test:ci || travis_terminate 1;
+    - stage: Tests
+      workspaces:
+        use: dev_build
+      name: “Unit Tests”
+      script: npm run test:gallery || travis_terminate 1;
 
     - stage: Tests
       workspaces:
