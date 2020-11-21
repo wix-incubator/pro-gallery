@@ -3,7 +3,8 @@ dist: trusty
 sudo: required
 install: true
 cache:
-  npm: false
+  directories:
+    - "node_modules"
 jobs:
   include:
     - stage: Build
