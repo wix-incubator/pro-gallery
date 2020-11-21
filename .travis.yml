@@ -2,9 +2,6 @@ language: node_js
 dist: trusty
 sudo: required
 install: true
-cache:
-  directories:
-    - "node_modules"
 jobs:
   include:
     - stage: Build
