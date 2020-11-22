@@ -25,6 +25,7 @@
     "start": "PORT=9837 yoshi start",
     "build": "yoshi build",
     "precommit": " ",
+    "pretest": "yoshi build",
     "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
     "posttest": "yoshi lint",
     "release": "yoshi release",
