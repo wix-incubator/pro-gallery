@@ -35,7 +35,6 @@ jobs:
         use: dev_build
       name: “Unit Tests”
       script:
-        - npm run build:dev   || travis_terminate 1;
         - npm run test:ci || travis_terminate 1;
 
     - stage: Tests
@@ -43,7 +42,6 @@ jobs:
         use: dev_build
       name: "E2E Tests - layouts"
       script:
-        - npm run build:dev   || travis_terminate 1;
         - npm run test:e2e:layouts:ci || travis_terminate 1;
 
     - stage: Tests
@@ -51,7 +49,6 @@ jobs:
         use: dev_build
       name: "E2E Tests - styleParams"
       script:
-        - npm run build:dev   || travis_terminate 1;
         - npm run test:e2e:styleParams:ci || travis_terminate 1;
 
     - stage: Deploy
