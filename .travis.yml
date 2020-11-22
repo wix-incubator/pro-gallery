@@ -13,9 +13,9 @@ jobs:
       workspaces:
         create:
           name: production_build
-          paths:
-            - packages/*/dist
-            - packages/*/build
+          paths: .
+            # - packages/*/dist
+            # - packages/*/build
 
     - stage: Build
       name: "Development"
@@ -26,9 +26,9 @@ jobs:
       workspaces:
         create:
           name: dev_build
-          paths:
-            - packages/*/dist
-            - packages/*/build
+          paths: .
+            # - packages/*/dist
+            # - packages/*/build
     
     - stage: Tests
       workspaces:
