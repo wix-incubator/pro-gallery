@@ -217,44 +217,33 @@ function isWithinPaddingHorizontally({
 }
 
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
-  const change = (to - from);
-  if (!(change > 0)) {
-    return;
-  }
+  return new Promise(resolve => {
+    const change = Math.abs(to - from);
 
-  const scrollerInner = scroller.firstChild;
+    if (!(change > 0)) {
+      resolve(to);
+    }
 
-  // step 1: scroll to the next image + apply a fix with the margin so no movement will show
-  // step 2: set the transition animation and the margin to 0
-  scroller.setAttribute('data-scrolling', 'true');
-  Object.assign(scroller.style, {
-    'scroll-snap-type': 'none'
-  })
-  window.requestAnimationFrame(() => {
+    const marginDir = `margin-${isRTL ? 'right' : 'left'}`;
+    const scrollerInner = scroller.firstChild;
+
+    scroller.setAttribute('data-scrolling', 'true');
+    Object.assign(scroller.style, {
+      'scroll-snap-type': 'none'
+    })
+
     Object.assign(scrollerInner.style, {
-    transition: `none`,
-    '-webkit-transition': `none`,
-    }, (isRTL) ? {
-      'margin-right': `${-1 * change}px`,
-    } : {
-      'margin-left': `${change}px`,
+      transition: `none`,
+      [marginDir]: `${change}px`,
     });
 
     scroller.scrollLeft = to;
 
-    window.requestAnimationFrame(() => {
-      Object.assign(scrollerInner.style, {
-        transition: `margin ${duration}ms linear`,
-        '-webkit-transition': `margin ${duration}ms linear`,
-      }, isRTL ? {
-        'margin-right': 0,
-      } : {
-        'margin-left': 0,
-      });
-    })
-  })
+    Object.assign(scrollerInner.style, {
+      transition: `margin ${duration}ms ease`,
+      [marginDir]: 0,
+    });
 
-  return new Promise(resolve => {
     setTimeout(() => {
       scroller.style.removeProperty('scroll-snap-type');
       scroller.setAttribute('data-scrolling', '');
