@@ -112,7 +112,7 @@ export default class ScrollIndicator extends GalleryComponent {
     this.initScrollListener();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let didChange = false;
     for (const prop of ['domId','oneRow','isRTL','totalWidth','scrollBase']) {
       if (nextProps[prop] !== this.props[prop]) {

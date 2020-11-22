@@ -67,7 +67,7 @@ class VideoItem extends GalleryComponent {
     return this.isHLSVideo() && utils.isiOS();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.playing) {
       this.setState({ playedOnce: true });
     }

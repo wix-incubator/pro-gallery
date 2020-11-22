@@ -1140,7 +1140,7 @@ class SlideshowView extends GalleryComponent {
 
   //-----------------------------------------| REACT |--------------------------------------------//
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     if (props.items) {
       this.ItemsForSlideshowLoopThumbnails = false;
     }
