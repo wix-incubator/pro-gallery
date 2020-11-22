@@ -130,7 +130,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   //__________________________________end of slide show loop functions__________________________
-  next({direction, isAutoTrigger, scrollDuration = 400, isKeyboardNavigation = false}) {
+  next({direction, isAutoTrigger, scrollDuration, isKeyboardNavigation = false}) {
     const activeElement = document.activeElement;
     const galleryItemIsFocused = activeElement.className && activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation = (!isKeyboardNavigation || !(this.props.styleParams.isAccessible && galleryItemIsFocused));
@@ -198,8 +198,9 @@ class SlideshowView extends GalleryComponent {
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
+      const _scrollDuration = scrollDuration || this.props.styleParams.scrollDuration || 400;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem
-      const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(itemToScroll, false, true, scrollDuration, scrollMarginCorrection);
+      const scrollToItemPromise = !isScrollingPastEdge && scrollToItem(itemToScroll, false, true, _scrollDuration, scrollMarginCorrection);
       
       scrollToItemPromise.then(() => {
         if (this.props.styleParams.groupSize === 1) {
@@ -236,7 +237,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  nextGroup({direction, isAutoTrigger, scrollDuration = 400}) {
+  nextGroup({direction, isAutoTrigger, scrollDuration}) {
     if (this.isSliding) {
       return;
     }
@@ -270,8 +271,9 @@ class SlideshowView extends GalleryComponent {
       ((direction >= 1 && this.isLastItemFullyVisible()) ||
       (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
+      const _scrollDuration = scrollDuration || this.props.styleParams.scrollDuration || 400;
 
-      !isScrollingPastEdge && scrollToGroup(currentGroup, false, true, scrollDuration, scrollMarginCorrection);
+      !isScrollingPastEdge && scrollToGroup(currentGroup, false, true, _scrollDuration, scrollMarginCorrection);
       utils.setStateAndLog(
         this,
         'Next Item',
@@ -332,11 +334,11 @@ class SlideshowView extends GalleryComponent {
   autoScrollToNextItem = () => {
     if (!isEditMode() && (isGalleryInViewport(this.props.container) || isPreviewMode())) {
       const direction = this.props.styleParams.isRTL ? -1 : 1
-      this._next({direction, isAutoTrigger: true , scrollDuration: 800});
+      this._next({direction, isAutoTrigger: true});
     }
   };
 
-  scrollToThumbnail(itemIdx, scrollDuration = 400) {
+  scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
     this.props.actions.eventsListener(GALLERY_CONSTS.events.THUMBNAIL_CLICKED, this.props);
