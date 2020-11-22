@@ -204,7 +204,7 @@ export default class ImageItem extends GalleryComponent {
         data-hook='gallery-item-image-img'
         data-idx={idx}
         alt={alt ? alt : 'untitled image'}
-        loading="lazy"
+        loading="auto"
         onLoad={this.handleHighResImageLoad}
         style={{...restOfDimensions, ...({opacity: shouldRenderHighResImages ? 1 : 0}), ...blockDownloadStyles, ...(!shouldRenderHighResImages && preloadStyles)}}
         {...{[shouldRenderHighResImages ? 'src' : 'data-src']: src}}
