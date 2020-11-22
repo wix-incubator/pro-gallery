@@ -13,9 +13,9 @@ jobs:
       workspaces:
         create:
           name: production_build
-          paths: .
-            # - packages/*/dist
-            # - packages/*/build
+          paths:
+            - packages/*/dist
+            - packages/*/build
 
     - stage: Build
       name: "Development"
@@ -26,30 +26,30 @@ jobs:
       workspaces:
         create:
           name: dev_build
-          paths: .
-            # - packages/*/dist
-            # - packages/*/build
+          paths:
+            - packages/*/dist
+            - packages/*/build
     
     - stage: Tests
       workspaces:
         use: dev_build
       name: “Unit Tests”
       script:
-        - npm run test:gallery || travis_terminate 1;
+        - npm run test:ci || travis_terminate 1;
 
-    # - stage: Tests
-    #   workspaces:
-    #     use: dev_build
-    #   name: "E2E Tests - layouts"
-    #   script:
-    #     - npm run test:e2e:layouts:ci || travis_terminate 1;
+    - stage: Tests
+      workspaces:
+        use: dev_build
+      name: "E2E Tests - layouts"
+      script:
+        - npm run test:e2e:layouts:ci || travis_terminate 1;
 
-    # - stage: Tests
-    #   workspaces:
-    #     use: dev_build
-    #   name: "E2E Tests - styleParams"
-    #   script:
-    #     - npm run test:e2e:styleParams:ci || travis_terminate 1;
+    - stage: Tests
+      workspaces:
+        use: dev_build
+      name: "E2E Tests - styleParams"
+      script:
+        - npm run test:e2e:styleParams:ci || travis_terminate 1;
 
     - stage: Deploy
       workspaces:

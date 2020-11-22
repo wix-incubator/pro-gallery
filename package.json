@@ -24,7 +24,6 @@
     "test:e2e:layouts:ci": "npm run link-packages && start-server-and-test start-playground:ci http-get://localhost:3000 'lerna run e2e-layouts'",
     "test:e2e:styleParams:ci": "npm run link-packages && start-server-and-test start-playground:ci http-get://localhost:3000 'lerna run e2e-styleParams'",
     "test:all": "npm run test && npm run test:e2e",
-    "test:gallery": "lerna run test:gallery",
     "patch": "npm run lint && npm run test:all && node scripts/releaseVersion --patch",
     "minor": "npm run lint && npm run test:all && node scripts/releaseVersion --minor",
     "major": "npm run lint && npm run test:all && node scripts/releaseVersion --major"
