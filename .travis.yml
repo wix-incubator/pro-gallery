@@ -36,7 +36,6 @@ jobs:
       name: “Unit Tests”
       script:
         - npm run test:ci || travis_terminate 1;
-        - npm run build   || travis_terminate 1;
 
     - stage: Tests
       workspaces:
@@ -44,7 +43,6 @@ jobs:
       name: "E2E Tests - layouts"
       script:
         - npm run test:e2e:layouts:ci || travis_terminate 1;
-        - npm run build   || travis_terminate 1;
 
     - stage: Tests
       workspaces:
@@ -52,7 +50,6 @@ jobs:
       name: "E2E Tests - styleParams"
       script:
         - npm run test:e2e:styleParams:ci || travis_terminate 1;
-        - npm run build   || travis_terminate 1;
 
     - stage: Deploy
       workspaces:
