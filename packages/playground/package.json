@@ -27,7 +27,7 @@
     "babel-preset-react-app": "^9.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
     "css-loader": "^2.1.1",
-    "eslint": "^5.16.0",
+    "eslint": "^7.13.0",
     "eslint-config-react-app": "^4.0.1",
     "eslint-loader": "^2.2.1",
     "eslint-plugin-flowtype": "^2.50.1",
