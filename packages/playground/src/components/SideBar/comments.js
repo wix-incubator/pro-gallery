@@ -1,6 +1,6 @@
-export default
+
 // eslint-disable-next-line no-sparse-arrays
-['setting that now we save in "appSettings" storage but can be converted to styleParams \n'+
+const comments = ['setting that now we save in "appSettings" storage but can be converted to styleParams \n'+
 'watermarkOpacity\n'+
 'watermarkSize\n'+
 'watermarkDock\n'
@@ -39,3 +39,5 @@ export default
 'm_slideshowLoop - defined but I don\'t see where we use it\n'+
 'm_playButtonForAutoSlideShow - defined but I don\'t see where we use it\n'+
 'mobileSwipeAnimation\n'];
+
+export default comments;
