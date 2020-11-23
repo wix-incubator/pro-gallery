@@ -334,7 +334,7 @@ class SlideshowView extends GalleryComponent {
   autoScrollToNextItem = () => {
     if (!isEditMode() && (isGalleryInViewport(this.props.container) || isPreviewMode())) {
       const direction = this.props.styleParams.isRTL ? -1 : 1
-      this._next({direction, isAutoTrigger: true});
+      this._next({direction, isAutoTrigger: true, scrollDuration: 800});
     }
   };
 
