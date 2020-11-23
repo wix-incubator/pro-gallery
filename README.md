@@ -40,6 +40,7 @@ import 'pro-gallery/dist/statics/main.css';
   container={container}
   scrollingElement={() => document.getElementById('gallery') || window}
   eventsListener={(eName, eData) => console.log({eName, eData})}
+  resizeMediaUrl={(item, url, resizeMethod, width, height) => `https://...`}
 />
 ```
 
@@ -133,6 +134,10 @@ The most important events are:
 | `NEED_MORE_ITEMS`  | Fired whenever the gallery is scrolled near its last item. If you are using a pagination server, this is the event that should trigger the next page and re-render the gallery with new items. |
 
 The full list of the gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/gallery/src/common/constants/events.js).
+
+### Media URL Resizer
+If you want to use a server-side resizing service (e.g. cloudinary), you can pass a resizing function. This function receives the `item` and required dimensions and should return the resize url. Notice that this function will be called several times for each item so it should be fast.
+An example can be found [here](https://github.com/wix/pro-gallery/blob/a3d858fc275135e73b233392c3eb927bd47bd8d0/packages%2Fplayground%2Fsrc%2Futils%2FitemResizer.js)
 
 ### Custom Renderers
 The Gallery supports custom renderers both for the Hover Element (appears when hovering over an item) and the Info Element (appears below / above an item).

@@ -56,6 +56,7 @@ const defaultStyles = {
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   scrollDirection: 0,
+  scrollDuration: 400,
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
   arrowsSize: 23,

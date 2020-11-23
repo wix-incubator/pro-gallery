@@ -99,6 +99,7 @@ export const stylesBySection = {
         'hoveringBehaviour',
         'enableInfiniteScroll',
         'loadMoreAmount',
+        'scrollDuration',
         'slideshowLoop',
         'isAutoSlideshow',
         'autoSlideshowInterval',

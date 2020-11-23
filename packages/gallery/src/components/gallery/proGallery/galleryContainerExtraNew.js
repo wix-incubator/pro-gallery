@@ -82,7 +82,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
       this.currentHoverChangeEvent.domId = nextProps.domId;
     }

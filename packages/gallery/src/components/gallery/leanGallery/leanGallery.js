@@ -25,7 +25,7 @@ export default class LeanGallery extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.container.galleryWidth !== nextProps.container.galleryWidth) {
       this.measureIfNeeded();
       this.setState({

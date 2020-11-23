@@ -31,7 +31,7 @@ export default class BaseGallery extends React.Component {
     }
     }
     
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     this.onNewProps(newProps);
   }
 
