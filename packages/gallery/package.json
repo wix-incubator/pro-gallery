@@ -25,7 +25,6 @@
     "start": "PORT=9837 yoshi start",
     "build": "yoshi build",
     "precommit": " ",
-    "pretest": "yoshi build",
     "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
     "posttest": "yoshi lint",
     "release": "yoshi release",
@@ -35,7 +34,6 @@
     "e2e-test": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
     "e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
-    "test:gallery:unit": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",

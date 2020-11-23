@@ -10,6 +10,7 @@ jobs:
         - npm install    || travis_terminate 1;
         - npm run lint    || travis_terminate 1;
         - npm run build   || travis_terminate 1;
+        - npm run test:ci || travis_terminate 1;
       workspaces:
         create:
           name: production_build
@@ -30,26 +31,26 @@ jobs:
             - packages/*/dist
             - packages/*/build
     
+    # - stage: Tests
+    #   workspaces:
+    #     use: dev_build
+    #   name: “Unit Tests”
+    #   script:
+    #     - npm run test:ci || travis_terminate 1;
+
     - stage: Tests
       workspaces:
         use: dev_build
-      name: “Unit Tests”
+      name: "E2E Tests - layouts"
       script:
-        - npm run test:gallery || travis_terminate 1;
+        - npm run test:e2e:layouts:ci || travis_terminate 1;
 
-    # - stage: Tests
-    #   workspaces:
-    #     use: dev_build
-    #   name: "E2E Tests - layouts"
-    #   script:
-    #     - npm run test:e2e:layouts:ci || travis_terminate 1;
-
-    # - stage: Tests
-    #   workspaces:
-    #     use: dev_build
-    #   name: "E2E Tests - styleParams"
-    #   script:
-    #     - npm run test:e2e:styleParams:ci || travis_terminate 1;
+    - stage: Tests
+      workspaces:
+        use: dev_build
+      name: "E2E Tests - styleParams"
+      script:
+        - npm run test:e2e:styleParams:ci || travis_terminate 1;
 
     - stage: Deploy
       workspaces:
