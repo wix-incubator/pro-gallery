@@ -153,11 +153,9 @@ export function App() {
       }
       getBlueprintFromServer(params);
     } else {
-      {
-        const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
-        blueprintsManager.init({api: playgroundBlueprintsApi})
-        blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
-      }
+      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
+      blueprintsManager.init({api: playgroundBlueprintsApi})
+      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
 

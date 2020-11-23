@@ -56,8 +56,7 @@
     "css-loader": "^2.1.1",
     "dotenv": "^6.0.0",
     "error-overlay-webpack-plugin": "^0.4.1",
-    "eslint": "^5.16.0",
-    "eslint-config-react-app": "^4.0.1",
+    "eslint": "^7.14.0",
     "eslint-loader": "^2.2.1",
     "eslint-plugin-flowtype": "^2.50.1",
     "eslint-plugin-import": "^2.18.2",
@@ -101,5 +100,8 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "eslint-config-react-app": "^6.0.0"
   }
 }
