@@ -33,7 +33,7 @@
     "start-with-test": "PORT=9837 yoshi start --with-test",
     "e2e-test": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
-    "e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
+    "e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
