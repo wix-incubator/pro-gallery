@@ -1,6 +1,6 @@
 {
   "name": "pro-playground",
-  "version": "2.2.22",
+  "version": "2.2.23",
   "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",
@@ -9,8 +9,8 @@
     "image-client-api": "^1.3130.0",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.24.0",
-    "pro-gallery": "2.2.22",
-    "pro-gallery-lib": "2.2.22",
+    "pro-gallery": "2.2.23",
+    "pro-gallery-lib": "2.2.23",
     "pro-layouts": "2.2.22",
     "re-resizable": "^6.8.0",
     "react": "^16.8.6",
