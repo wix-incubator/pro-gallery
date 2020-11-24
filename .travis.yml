@@ -1,68 +1,14 @@
 language: node_js
 dist: trusty
 sudo: required
-install: true
-jobs:
-  include:
-    - stage: Build
-      name: "Production"
-      script:
-        - npm install    || travis_terminate 1;
-        - npm run lint    || travis_terminate 1;
-        - npm run build   || travis_terminate 1;
-      workspaces:
-        create:
-          name: production_build
-          paths:
-            - packages/*/dist
-            - packages/*/build
-
-    - stage: Build
-      name: "Development"
-      script:
-        - npm install    || travis_terminate 1;
-        - npm run lint    || travis_terminate 1;
-        - npm run build:dev   || travis_terminate 1;
-      workspaces:
-        create:
-          name: dev_build
-          paths:
-            - packages/*/dist
-            - packages/*/build
-    
-    - stage: Tests
-      workspaces:
-        use: dev_build
-      name: “Unit Tests”
-      script:
-        - npm run ci:test-unit || travis_terminate 1;
-
-    - stage: Tests
-      workspaces:
-        use: dev_build
-      name: "E2E Tests - layouts"
-      script:
-        - npm run ci:test-e2e-layouts || travis_terminate 1;
-
-    - stage: Tests
-      workspaces:
-        use: dev_build
-      name: "E2E Tests - styleParams"
-      script:
-        - npm run ci:test-e2e-styleParams || travis_terminate 1;
-    - stage: Tests
-      workspaces:
-        use: dev_build
-      name: "E2E Tests - integration"
-      script:
-        - npm run ci:test-e2e-integration || travis_terminate 1;
-
-    - stage: Deploy
-      workspaces:
-        use: production_build
-      script:
-        - npm run publish || travis_terminate 1;
-        - npm run deploy  || travis_terminate 1;
+install:
+- npm install
+script:
+- npm run lint    || travis_terminate 1;
+- npm run test:all    || travis_terminate 1;
+- npm run build   || travis_terminate 1;
+- npm run publish || travis_terminate 1;
+- npm run deploy  || travis_terminate 1;
 notifications:
   email:
     recipients:
