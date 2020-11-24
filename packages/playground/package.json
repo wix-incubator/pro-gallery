@@ -2,6 +2,15 @@
   "name": "pro-playground",
   "version": "2.2.26",
   "private": true,
+  "scripts": {
+    "watch": "sleep 10 && node scripts/start.js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "deploy": "node scripts/build.js && gh-pages-with-token -d build",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
+    "start-playground": "node scripts/start.js"
+  },
   "dependencies": {
     "@babel/core": "7.4.3",
     "antd": "^3.20.7",
@@ -63,14 +72,6 @@
   },
   "resolutions": {
     "css-animation": "1.5.0"
-  },
-  "scripts": {
-    "watch": "sleep 10 && node scripts/start.js",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": " ",
-    "deploy": "node scripts/build.js && gh-pages-with-token -d build",
-    "start-playground": "node scripts/start.js"
   },
   "eslintConfig": {
     "extends": "react-app"
