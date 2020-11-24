@@ -1,9 +1,3 @@
-## [v2.2.25](https://pro-gallery-2-2-25.surge.sh) (24/11/2020)
- 
-#### GALLERY
- -  removed yoshi from packages/gallery.
-
----
 ## [v2.2.24](https://pro-gallery-2-2-24.surge.sh) (23/11/2020)
  
 #### GALLERY
