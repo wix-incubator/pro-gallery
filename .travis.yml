@@ -53,7 +53,7 @@ jobs:
     - stage: Tests
       workspaces:
         use: dev_build
-      name: "E2E Tests - styleParams"
+      name: "E2E Tests - integration"
       script:
         - npm run ci:test-e2e-integration || travis_terminate 1;
 
