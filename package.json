@@ -23,7 +23,7 @@
     "ci:test-unit": "npm run link-packages && lerna run --parallel test",
     "ci:test-e2e-layouts": "npm run link-packages && start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-layouts'",
     "ci:test-e2e-styleParams": "npm run link-packages && start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-styleParams'",
-    "ci:test-e2e-integration": "pm run link-packages && start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-integration'",
+    "ci:test-e2e-integration": "npm run link-packages && start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-integration'",
     "test:all": "npm run test && npm run test:e2e",
     "patch": "npm run lint && npm run test:all && node scripts/releaseVersion --patch",
     "minor": "npm run lint && npm run test:all && node scripts/releaseVersion --minor",
