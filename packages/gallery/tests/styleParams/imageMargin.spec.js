@@ -1,17 +1,16 @@
-import GalleryDriver from '../drivers/reactDriver'
+import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
-import {  getElementDimensions } from '../utils/utils';
+import { getElementDimensions } from '../utils/utils';
 
 describe('styleParam - imageMargin', () => {
-
   let driver;
   const initialProps = {
     container,
     items: images2,
-    styles: styleParams
-  }
+    styles: styleParams,
+  };
 
   beforeEach(() => {
     driver = new GalleryDriver();
@@ -22,11 +21,11 @@ describe('styleParam - imageMargin', () => {
       galleryLayout: 7,
       imageMargin: 10,
       oneRow: true,
-      scrollDirection: 1
-    })
-    driver.mount.proGallery(initialProps)
+      scrollDirection: 1,
+    });
+    driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
-    expect(item.prop('style').margin).to.eq('5px')
+    expect(item.prop('style').margin).to.eq('5px');
     driver.detach.proGallery();
   });
 
@@ -38,11 +37,11 @@ describe('styleParam - imageMargin', () => {
       oneRow: false,
       gallerySizeType: 'px',
       gallerySizePx: 390,
-      isVertical: true
-    })
+      isVertical: true,
+    });
     driver.mount.proGallery(initialProps);
     //get the middle image in the second row to test
-    let prevDims = {top: -1, left: 0, width: 0, height: 0};
+    let prevDims = { top: -1, left: 0, width: 0, height: 0 };
     for (let i = 0; i < initialProps.items.length; i++) {
       const item = driver.find.hook('item-container').at(i);
       const dims = getElementDimensions(item);
@@ -53,6 +52,5 @@ describe('styleParam - imageMargin', () => {
       prevDims = dims;
     }
     driver.detach.proGallery();
-  })
-})
-
+  });
+});

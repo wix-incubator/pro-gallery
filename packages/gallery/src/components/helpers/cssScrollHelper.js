@@ -32,7 +32,7 @@ class CssScrollHelper {
     this.allPagePadding = () => [Infinity, Infinity];
     this.inScreenPadding = () => [0, 0];
     this.aboveScreenPadding = () => [0, Infinity];
-    this.justBelowScreenPadding = itemHeight => [
+    this.justBelowScreenPadding = (itemHeight) => [
       Infinity,
       -1 * (itemHeight + this.screenSize),
     ];
@@ -40,8 +40,8 @@ class CssScrollHelper {
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
 
-    this.highResPadding = () => ([5120, Infinity]);
-    this.lowResPadding = () => ([10240, Infinity]);
+    this.highResPadding = () => [5120, Infinity];
+    this.lowResPadding = () => [10240, Infinity];
   }
 
   getSellectorDomId({ id, idx }) {
@@ -50,12 +50,10 @@ class CssScrollHelper {
   }
 
   buildScrollClassName(domId, idx, val) {
-    const shortId = String(domId)
-      .replace(/[\W]+/g, '')
-      .slice(-8);
-    return `${this.pgScrollClassName}_${shortId}_${val}-${this.pgScrollSteps[
-      idx
-    ] + Number(val)}`;
+    const shortId = String(domId).replace(/[\W]+/g, '').slice(-8);
+    return `${this.pgScrollClassName}_${shortId}_${val}-${
+      this.pgScrollSteps[idx] + Number(val)
+    }`;
   }
 
   calcScrollClasses(domId, scrollTop) {
@@ -66,8 +64,8 @@ class CssScrollHelper {
           this.buildScrollClassName(
             domId,
             idx,
-            Math.floor(scrollTop / step) * step,
-          ),
+            Math.floor(scrollTop / step) * step
+          )
         )
         .join(' ')
     );
@@ -78,7 +76,10 @@ class CssScrollHelper {
       return [];
     }
     const scrollAnimation = styleParams.scrollAnimation;
-    if (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) {
+    if (
+      !scrollAnimation ||
+      scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
+    ) {
       return [];
     }
     this.screenSize = styleParams.oneRow
@@ -95,14 +96,13 @@ class CssScrollHelper {
     this.minHeight = 0 - maxStep;
     this.maxHeight =
       (Math.ceil(
-        ((styleParams.oneRow ? right : top) + this.screenSize) / maxStep,
+        ((styleParams.oneRow ? right : top) + this.screenSize) / maxStep
       ) +
         1) *
       maxStep;
-    return items
-      .map(item =>
-        this.calcScrollCssForItem({ domId, item, styleParams }),
-      )
+    return items.map((item) =>
+      this.calcScrollCssForItem({ domId, item, styleParams })
+    );
   }
 
   shouldCalcScrollCss({ type }) {
@@ -149,7 +149,7 @@ class CssScrollHelper {
             '\npadding[0] =',
             padding[0],
             '\npadding[1] =',
-            padding[1],
+            padding[1]
           );
           break;
         }
@@ -157,8 +157,8 @@ class CssScrollHelper {
           `.${this.buildScrollClassName(
             domId,
             largestDividerIdx,
-            from,
-          )} ~ div #${sellectorDomId} ${suffix}`,
+            from
+          )} ~ div #${sellectorDomId} ${suffix}`
         );
         from += this.pgScrollSteps[largestDividerIdx];
         // console.count('pgScroll class created');
@@ -199,9 +199,12 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
-    const {isRTL, oneRow, scrollAnimation} = styleParams;
+    const { isRTL, oneRow, scrollAnimation } = styleParams;
 
-    if (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) {
+    if (
+      !scrollAnimation ||
+      scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
+    ) {
       return '';
     }
 
@@ -213,22 +216,34 @@ class CssScrollHelper {
 
     let scrollAnimationCss = '';
     // notice: these 2 animations must have the blurry image
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR || scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR) {
-      scrollAnimationCss += createScrollSelectors(animationPreparationPadding, ` [data-hook="image-item-overlay"]`) + `{filter: opacity(1); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
-      scrollAnimationCss += createScrollSelectors(animationActivePadding, ` [data-hook="image-item-overlay"]`) + `{filter: opacity(0) !important;}`;
+    if (
+      scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR ||
+      scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR
+    ) {
+      scrollAnimationCss +=
+        createScrollSelectors(
+          animationPreparationPadding,
+          ` [data-hook="image-item-overlay"]`
+        ) +
+        `{filter: opacity(1); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
+      scrollAnimationCss +=
+        createScrollSelectors(
+          animationActivePadding,
+          ` [data-hook="image-item-overlay"]`
+        ) + `{filter: opacity(0) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.FADE_IN) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) +
         `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) + `{filter: opacity(1) !important;}`;
     }
 
@@ -236,14 +251,15 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) +
-        `{filter: grayscale(100%); transition: filter 1.${200 +
-        _randomDuration}s ease-in !important;}`;
+        `{filter: grayscale(100%); transition: filter 1.${
+          200 + _randomDuration
+        }s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) + `{filter: grayscale(0) !important;}`;
     }
 
@@ -280,20 +296,20 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) +
         `{transform: scale(1.1); transition: transform 1.2s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor =
         styleParams.oneColorAnimationColor &&
-          styleParams.oneColorAnimationColor.value
+        styleParams.oneColorAnimationColor.value
           ? styleParams.oneColorAnimationColor.value
           : 'transparent';
 
@@ -303,14 +319,15 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) +
-        `{filter: opacity(0); transition: filter 0.${600 +
-        _randomDuration}s ease-in !important;}`;
+        `{filter: opacity(0); transition: filter 0.${
+          600 + _randomDuration
+        }s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper',
+          ' .gallery-item-wrapper'
         ) + `{filter: opacity(1) !important;}`;
     }
 

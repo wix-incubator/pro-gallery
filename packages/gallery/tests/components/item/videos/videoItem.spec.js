@@ -21,7 +21,7 @@ describe('Video Item ', () => {
       onMount: () => {},
       onUnmount: () => {},
       loadingStatus: {},
-      imageDimensions: {}
+      imageDimensions: {},
     });
   });
 
@@ -34,10 +34,10 @@ describe('Video Item ', () => {
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
     expect(
-      driver.find.hook('video_container-video-player-element').length,
+      driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0,
+      0
     );
 
     Object.assign(sampleItemViewProps.styleParams, {
@@ -46,10 +46,10 @@ describe('Video Item ', () => {
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
     expect(
-      driver.find.hook('video_container-video-player-element').length,
+      driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0,
+      0
     );
     stub.restore();
 
@@ -61,10 +61,10 @@ describe('Video Item ', () => {
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
     expect(
-      driver.find.hook('video_container-video-player-element').length,
+      driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0,
+      0
     );
     Object.assign(sampleItemViewProps.styleParams, {
       itemClick: 'nothing',
@@ -72,10 +72,10 @@ describe('Video Item ', () => {
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
     expect(
-      driver.find.hook('video_container-video-player-element').length,
+      driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0,
+      0
     );
     stub.restore();
 
@@ -87,10 +87,10 @@ describe('Video Item ', () => {
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
     expect(
-      driver.find.hook('video_container-video-player-element').length,
+      driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0,
+      0
     );
     Object.assign(sampleItemViewProps.styleParams, {
       videoPlay: 'auto',
@@ -98,10 +98,10 @@ describe('Video Item ', () => {
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
     expect(
-      driver.find.hook('video_container-video-player-element').length,
+      driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0,
+      0
     );
     stub.restore();
   });
@@ -112,24 +112,33 @@ describe('Video Item ', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.selector('ReactPlayer').props().url).equal(
-      sampleItemViewProps.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.VIDEO),
+      sampleItemViewProps.createUrl(
+        GALLERY_CONSTS.urlSizes.RESIZED,
+        GALLERY_CONSTS.urlTypes.VIDEO
+      )
     );
     expect(
-      driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
+      driver.find.selector('ReactPlayer').props().config.file.attributes.poster
     ).equal(
-      sampleItemViewProps.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.HIGH_RES),
+      sampleItemViewProps.createUrl(
+        GALLERY_CONSTS.urlSizes.RESIZED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      )
     );
     Object.assign(sampleItemViewProps, {
       videoUrl: 'https://www.youtube.com/watch?v=2J5GzHoKl1Q',
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.selector('ReactPlayer').props().url).equal(
-      'https://www.youtube.com/watch?v=2J5GzHoKl1Q',
+      'https://www.youtube.com/watch?v=2J5GzHoKl1Q'
     );
     expect(
-      driver.find.selector('ReactPlayer').props().config.file.attributes.poster,
+      driver.find.selector('ReactPlayer').props().config.file.attributes.poster
     ).equal(
-      sampleItemViewProps.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.HIGH_RES),
+      sampleItemViewProps.createUrl(
+        GALLERY_CONSTS.urlSizes.RESIZED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      )
     );
   });
 

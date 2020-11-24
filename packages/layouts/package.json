@@ -21,7 +21,6 @@
     "start": "tsc -w",
     "build": "tsc && tsc -p tsconfig-esm.json",
     "test": "mocha --require ts-node/register test/*.spec.*",
-    "posttest": "npm run lint",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },

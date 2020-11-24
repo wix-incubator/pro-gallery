@@ -3,7 +3,7 @@ import React from 'react';
 import { GalleryComponent } from '../galleryComponent';
 
 export default class TextItem extends GalleryComponent {
-  constructor(props){
+  constructor(props) {
     super(props);
     if (typeof this.props.actions.setItemLoaded === 'function') {
       this.props.actions.setItemLoaded();
@@ -11,7 +11,7 @@ export default class TextItem extends GalleryComponent {
   }
 
   getTextDimensions() {
-    const { style, styleParams, cubeRatio, imageDimensions } = this.props;
+    const { style, styleParams, cubeRatio } = this.props;
     const isVerticalItem = style.ratio < cubeRatio - 0.01;
     //text dimensions include scaling
     const textHeight =
@@ -22,8 +22,15 @@ export default class TextItem extends GalleryComponent {
       (!isVerticalItem
         ? style.width / style.maxWidth
         : style.height / style.maxHeight) * style.maxWidth;
-    const translate = styleParams.cubeType === 'fit' ? '0, 0' : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round((style.height - textHeight) / 2)}px`
-    const scale = (isVerticalItem ? style.height / style.maxHeight : style.width / style.maxWidth);
+    const translate =
+      styleParams.cubeType === 'fit'
+        ? '0, 0'
+        : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round(
+            (style.height - textHeight) / 2
+          )}px`;
+    const scale = isVerticalItem
+      ? style.height / style.maxHeight
+      : style.width / style.maxWidth;
     const transform = `translate(${translate}) scale(${scale})`;
     return {
       width: style.maxWidth + 'px',
@@ -61,9 +68,7 @@ export default class TextItem extends GalleryComponent {
     const changeBgColor = {
       style: Object.assign(
         dimensions,
-        styleParams.cubeType === 'fit'
-          ? { backgroundColor: style.bgColor }
-          : {},
+        styleParams.cubeType === 'fit' ? { backgroundColor: style.bgColor } : {}
       ),
     };
     const attributes = {
@@ -71,7 +76,10 @@ export default class TextItem extends GalleryComponent {
       ...changeBgColor,
     };
     const itemContentStyle = {
-      height: imageDimensions && !isPrerenderMode() ? imageDimensions.height : 'inherit',
+      height:
+        imageDimensions && !isPrerenderMode()
+          ? imageDimensions.height
+          : 'inherit',
       backgroundColor:
         styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit',
     };

@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -12,13 +12,13 @@ describe('numberOfImagesPerCol - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should set 1 images per a column', async () => {
     await driver.navigate({
       galleryLayout: 2,
-      numberOfImagesPerCol:1,
+      numberOfImagesPerCol: 1,
       oneRow: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
@@ -30,7 +30,7 @@ describe('numberOfImagesPerCol - e2e', () => {
   it('should set 2 images per a column', async () => {
     await driver.navigate({
       galleryLayout: 2,
-      numberOfImagesPerCol:2,
+      numberOfImagesPerCol: 2,
       oneRow: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
@@ -42,7 +42,7 @@ describe('numberOfImagesPerCol - e2e', () => {
   it('should set 3 images per a column', async () => {
     await driver.navigate({
       galleryLayout: 2,
-      numberOfImagesPerCol:3,
+      numberOfImagesPerCol: 3,
       oneRow: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
@@ -51,4 +51,4 @@ describe('numberOfImagesPerCol - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

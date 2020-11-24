@@ -48,7 +48,7 @@ export default class ScrollIndicator extends GalleryComponent {
     const { oneRow } = this.props;
     const scrollingElement = this.props.scrollingElement;
     //Horizontal Scroll
-    this.onHorizontalScroll = e => {
+    this.onHorizontalScroll = (e) => {
       this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
@@ -76,7 +76,7 @@ export default class ScrollIndicator extends GalleryComponent {
       //
     }
     //Vertical Scroll
-    this.onVerticalScroll = e => {
+    this.onVerticalScroll = (e) => {
       this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
@@ -114,7 +114,13 @@ export default class ScrollIndicator extends GalleryComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     let didChange = false;
-    for (const prop of ['domId','oneRow','isRTL','totalWidth','scrollBase']) {
+    for (const prop of [
+      'domId',
+      'oneRow',
+      'isRTL',
+      'totalWidth',
+      'scrollBase',
+    ]) {
       if (nextProps[prop] !== this.props[prop]) {
         didChange = true;
         break;
@@ -124,7 +130,6 @@ export default class ScrollIndicator extends GalleryComponent {
     if (didChange) {
       this.initScrollListener();
     }
-
   }
 
   render() {
@@ -142,7 +147,7 @@ export default class ScrollIndicator extends GalleryComponent {
         data-scroll-top={this.state.scrollTop}
         className={cssScrollHelper.calcScrollClasses(
           domId,
-          scrollTopWithoutBase,
+          scrollTopWithoutBase
         )}
         style={{ display: 'none' }}
       />

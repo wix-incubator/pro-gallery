@@ -1,17 +1,16 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-import GalleryDriver from '../drivers/reactDriver'
+import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - isRTL', () => {
-
   let driver;
   const initialProps = {
     container,
     items: images2,
-    styles: styleParams
-  }
+    styles: styleParams,
+  };
 
   beforeEach(() => {
     driver = new GalleryDriver();
@@ -21,7 +20,7 @@ describe('styleParam - isRTL', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
-    })
+    });
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.false;
@@ -31,7 +30,7 @@ describe('styleParam - isRTL', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
-    })
+    });
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
@@ -61,7 +60,7 @@ describe('styleParam - isRTL', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
-    })
+    });
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
@@ -72,10 +71,10 @@ describe('styleParam - isRTL', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
-    })
+    });
     driver.mount.proGallery(initialProps);
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
-})
+});

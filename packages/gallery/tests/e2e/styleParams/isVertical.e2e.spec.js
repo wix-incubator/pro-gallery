@@ -1,17 +1,17 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('isVertical - e2e', () => {
   let driver;
-  
+
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should render a gallery with vertical orientation when "isVertical" is "true"', async () => {
@@ -32,4 +32,4 @@ describe('isVertical - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

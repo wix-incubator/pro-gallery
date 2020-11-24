@@ -1,5 +1,5 @@
 import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
-import GalleryDriver from '../../drivers/reactDriver'
+import GalleryDriver from '../../drivers/reactDriver';
 import SlideshowView from '../../../src/components/gallery/proGallery/slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -9,7 +9,6 @@ describe('Slideshow View', () => {
   let initialGalleryViewProps;
   let galleryViewProps;
   let clock;
-  let helpers;
 
   beforeEach(() => {
     driver = new GalleryDriver();
@@ -193,7 +192,7 @@ describe('Slideshow View', () => {
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.find.hook('gallery-thumbnails').length).to.equal(1);
       expect(driver.find.hook('gallery-thumbnails-column').length).to.not.equal(
-        0,
+        0
       );
     });
   });
@@ -222,6 +221,5 @@ describe('Slideshow View', () => {
       stub.restore();
       viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
     });
-
   });
 });

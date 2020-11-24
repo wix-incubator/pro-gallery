@@ -1,6 +1,5 @@
-
-// eslint-disable-next-line no-sparse-arrays
-const comments = ['setting that now we save in "appSettings" storage but can be converted to styleParams \n'+
+const comment =
+['setting that now we save in "appSettings" storage but can be converted to styleParams \n'+
 'watermarkOpacity\n'+
 'watermarkSize\n'+
 'watermarkDock\n'
@@ -26,7 +25,6 @@ const comments = ['setting that now we save in "appSettings" storage but can be 
 'groupsPerStrip - wixers\n'+
 'placeGroupsLtr - wixers\n'+
 'galleryType - check that all layout define this property\n',
-,
 '--> Mobile: \n'+
 '*) in mobile the default are deferent\n'+
 '*) context.isMobile - itemClick option is responsive to mobile \n'+
@@ -40,4 +38,4 @@ const comments = ['setting that now we save in "appSettings" storage but can be 
 'm_playButtonForAutoSlideShow - defined but I don\'t see where we use it\n'+
 'mobileSwipeAnimation\n'];
 
-export default comments;
+export default comment;

@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -12,14 +12,14 @@ describe('fixedColumns - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should set fixedColimns of "1"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      groupSize:1,
-      isVertical:true,
+      groupSize: 1,
+      isVertical: true,
       fixedColumns: 1,
       gridStyle: 1,
     });
@@ -30,8 +30,8 @@ describe('fixedColumns - e2e', () => {
   it('should set fixedColimns of "2"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      groupSize:1,
-      isVertical:true,
+      groupSize: 1,
+      isVertical: true,
       fixedColumns: 2,
       gridStyle: 1,
     });
@@ -42,8 +42,8 @@ describe('fixedColumns - e2e', () => {
   it('should set fixedColimns of "3"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      groupSize:1,
-      isVertical:true,
+      groupSize: 1,
+      isVertical: true,
       fixedColumns: 3,
       gridStyle: 1,
     });
@@ -51,4 +51,4 @@ describe('fixedColumns - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

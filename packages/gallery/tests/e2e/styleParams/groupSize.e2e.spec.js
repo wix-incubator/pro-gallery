@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -12,7 +12,7 @@ describe('groupSize - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should have max group size of 3 (groupSize=3)', async () => {
@@ -60,4 +60,4 @@ describe('groupSize - e2e', () => {
     //expect to have groups of 1 despite groupSize = 3 (because of collageDensity)
     expect(page).toMatchImageSnapshot();
   });
-})
+});
