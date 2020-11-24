@@ -17,7 +17,7 @@ describe('collageDensity - e2e', () => {
   });
   it('should have collageDensity of 0', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
       collageDensity: 0,
     });
     await driver.waitFor.hookToBeVisible('item-container');
