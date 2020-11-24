@@ -87,4 +87,37 @@ describe('styleParam - overlayAnimation', () => {
     expect(margin).to.equal('30px');
     driver.detach.proGallery();
   });
+
+  it('should set box-shadow of "20px 3px 20px rgba(0,0,0,0.3)" to the items', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemEnableShadow: true,
+      itemShadowDirection: 100,
+      itemShadowSize: 20,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
+    })
+
+    driver.mount.proGallery(initialProps);
+    const item = driver.find.hook('item-container').at(0);
+    expect(item.props().style.boxShadow).to.equal('20px 3px 20px rgba(0,0,0,.4)');
+    driver.detach.proGallery();
+  });
+
+  it('should set box-shadow of "8px -6px 5px rgba(0,0,0,.4)" to the items', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemEnableShadow: true,
+      itemShadowDirection: 50,
+      itemShadowSize: 10,
+      itemShadowBlur: 5,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
+    })
+
+    driver.mount.proGallery(initialProps);
+    const item = driver.find.hook('item-container').at(0);
+    expect(item.props().style.boxShadow).to.equal('8px -6px 5px rgba(0,0,0,.4)');
+    driver.detach.proGallery();
+  });
 })
