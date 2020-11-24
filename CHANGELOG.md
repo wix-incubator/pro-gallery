@@ -1,3 +1,12 @@
+## [v2.2.27](https://pro-gallery-2-2-27.surge.sh) (24/11/2020)
+ 
+#### MAIN
+ -  improve: separate Travis ci build to stages
+
+#### PLAYGROUND
+ -  added lint script.
+
+---
 ## [v2.2.26](https://pro-gallery-2-2-26.surge.sh) (24/11/2020)
  
 #### GALLERY
