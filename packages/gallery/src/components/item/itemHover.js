@@ -1,5 +1,5 @@
 import React from 'react';
-import {GALLERY_CONSTS, isEditMode, utils} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, isEditMode, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 
 export default class ItemHover extends GalleryComponent {
@@ -8,7 +8,7 @@ export default class ItemHover extends GalleryComponent {
     const hoverClass = ['gallery-item-hover'];
 
     hoverClass.push(
-      'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled'),
+      'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled')
     );
 
     if (utils.isUndefined(styleParams.itemOpacity)) {
@@ -29,11 +29,13 @@ export default class ItemHover extends GalleryComponent {
   }
 
   shouldRenderHoverInnerIfExist() {
+    const { itemWasHovered, styleParams } = this.props;
     const {
-      itemWasHovered,
-      styleParams,
-    } = this.props;
-    const { hoveringBehaviour, overlayAnimation, alwaysShowHover, previewHover } = styleParams;
+      hoveringBehaviour,
+      overlayAnimation,
+      alwaysShowHover,
+      previewHover,
+    } = styleParams;
     const { APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
     const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
 
@@ -53,12 +55,7 @@ export default class ItemHover extends GalleryComponent {
   }
 
   render() {
-    const {
-      imageDimensions,
-      actions,
-      idx,
-      renderCustomInfo,
-    } = this.props;
+    const { imageDimensions, actions, idx, renderCustomInfo } = this.props;
     const hoverClass = this.getHoverClass();
 
     return (
@@ -67,17 +64,20 @@ export default class ItemHover extends GalleryComponent {
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
         aria-hidden={true}
-        style={imageDimensions && imageDimensions.borderRadius ? {borderRadius: imageDimensions.borderRadius} : {}}
+        style={
+          imageDimensions && imageDimensions.borderRadius
+            ? { borderRadius: imageDimensions.borderRadius }
+            : {}
+        }
       >
         <div
-          style={{height: '100%'}}
+          style={{ height: '100%' }}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
         >
           {this.shouldRenderHoverInnerIfExist() && renderCustomInfo ? (
-            <div className="gallery-item-hover-inner">
-              {renderCustomInfo()}
-            </div>) : null}
+            <div className="gallery-item-hover-inner">{renderCustomInfo()}</div>
+          ) : null}
         </div>
       </div>
     );

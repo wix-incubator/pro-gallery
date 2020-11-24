@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "2.2.22",
+  "version": "2.2.25",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -23,8 +23,7 @@
     "build": "tsc && tsc -p tsconfig-esm.json",
     "test": "mocha --require ts-node/register test/*.spec.*",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
-    "lint:fix": "npm run lint -- --fix",
-    "posttest": "npm run lint"
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.7.0",
@@ -39,7 +38,7 @@
     "typescript": "^4.0.5"
   },
   "dependencies": {
-    "pro-layouts": "2.2.22"
+    "pro-layouts": "2.2.25"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

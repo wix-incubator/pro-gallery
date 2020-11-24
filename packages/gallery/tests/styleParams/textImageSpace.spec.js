@@ -1,18 +1,21 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-import GalleryDriver from '../drivers/reactDriver'
+import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container, customRenderers } from '../drivers/mocks/styles';
+import {
+  styleParams,
+  container,
+  customRenderers,
+} from '../drivers/mocks/styles';
 
 describe('styleParam - textImageSpace', () => {
-
   let driver;
   const initialProps = {
     container,
     items: images2,
     styles: styleParams,
     ...customRenderers,
-  }
+  };
 
   beforeEach(() => {
     driver = new GalleryDriver();
@@ -26,9 +29,12 @@ describe('styleParam - textImageSpace', () => {
       textImageSpace: 20,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-    })
+    });
     driver.mount.proGallery(initialProps);
-    const item = driver.find.selector('.gallery-item-bottom-info').at(0).parent();
+    const item = driver.find
+      .selector('.gallery-item-bottom-info')
+      .at(0)
+      .parent();
     // expect marginTop to equal textImageSpace value.
     expect(item.props().style.marginTop).to.eq(20);
     driver.detach.proGallery();
@@ -41,7 +47,7 @@ describe('styleParam - textImageSpace', () => {
       textImageSpace: 20,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-    })
+    });
     driver.mount.proGallery(initialProps);
     const item = driver.find.selector('.gallery-item-top-info').at(0).parent();
     // expect marginBottom to equal textImageSpace value.
@@ -56,11 +62,11 @@ describe('styleParam - textImageSpace', () => {
       textImageSpace: 20,
       oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-    })
+    });
     driver.mount.proGallery(initialProps);
     const item = driver.find.selector('.gallery-item-top-info').at(0).parent();
     // expect marginBottom to be undefined.
     expect(item.props().style.marginBottom).to.eq(undefined);
     driver.detach.proGallery();
   });
-})
+});

@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -12,7 +12,7 @@ describe('groupsPerStrip - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should have 3 groups per strip', async () => {
@@ -20,7 +20,7 @@ describe('groupsPerStrip - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 3,
       gridStyle: 1,
-      groupSize:1,
+      groupSize: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -31,11 +31,11 @@ describe('groupsPerStrip - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 7,
       gridStyle: 1,
-      groupSize:1,
+      groupSize: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
 
     expect(page).toMatchImageSnapshot();
   });
-})
+});

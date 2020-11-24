@@ -35,14 +35,21 @@ class VideoScrollHelper {
     this.lastVideoPlayed = -1;
     this.trigger = Object.assign(
       {},
-      ...Object.keys(VIDEO_EVENTS).map(key => ({
-        [key]: args => this.handleEvent({ eventName: key, eventData: args }),
-      })),
+      ...Object.keys(VIDEO_EVENTS).map((key) => ({
+        [key]: (args) => this.handleEvent({ eventName: key, eventData: args }),
+      }))
     );
   }
 
   //--------------------------updates----------------------------------//
-  updateGalleryStructure({ galleryStructure, scrollBase, videoPlay, videoLoop, itemClick, oneRow }) {
+  updateGalleryStructure({
+    galleryStructure,
+    scrollBase,
+    videoPlay,
+    videoLoop,
+    itemClick,
+    oneRow,
+  }) {
     this.galleryWidth = dimensionsHelper.getGalleryDimensions().galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
@@ -57,10 +64,15 @@ class VideoScrollHelper {
     } else {
       const newItems = galleryStructure.galleryItems.slice(
         lastItemCount, //make sure this is the right way
-        newItemCount,
+        newItemCount
       );
-      newItems.forEach(item => {
-        if (item.type === 'video' || (item.type === 'image' && (item.id.includes('_placeholder') || item.isVideoPlaceholder))) { // either video or a placeholder for video files (both need to be included in the list)
+      newItems.forEach((item) => {
+        if (
+          item.type === 'video' ||
+          (item.type === 'image' &&
+            (item.id.includes('_placeholder') || item.isVideoPlaceholder))
+        ) {
+          // either video or a placeholder for video files (both need to be included in the list)
           this.videoItems.push({ ...item, videoPlayRating: item.idx });
         }
       });
@@ -135,8 +147,8 @@ class VideoScrollHelper {
       ) {
         this.stop(
           this.videoItems.findIndex(
-            item => item.idx === this.currentPlayingIdx,
-          ),
+            (item) => item.idx === this.currentPlayingIdx
+          )
         );
       }
       this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
@@ -145,7 +157,7 @@ class VideoScrollHelper {
 
   videoEnded(idx) {
     const indexInVideoItems = this.videoItems.findIndex(
-      item => item.idx === idx,
+      (item) => item.idx === idx
     );
     this.stop(indexInVideoItems);
     const scroll = { top: this.top, left: this.left };
@@ -155,12 +167,12 @@ class VideoScrollHelper {
   videoPlayed(idx) {
     this.lastVideoPlayed = idx;
   }
-  videoErrorReported( ) {
+  videoErrorReported() {
     this.stop();
   }
 
   initializePlayState() {
-      this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
+    this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
   }
 
   //-------------------------------controls------------------------------------//
@@ -178,7 +190,7 @@ class VideoScrollHelper {
       idx: -1,
       rating: Infinity,
     };
-    this.videoItems.some(item => {
+    this.videoItems.some((item) => {
       if (this.isVisible(item, { top, left })) {
         if (item.videoPlayRating <= bestRating.rating) {
           secondBestRating.idx = bestRating.idx;
@@ -197,8 +209,8 @@ class VideoScrollHelper {
         return false;
       }
     });
-    if(!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed){
-      if((secondBestRating.idx >= 0)) {
+    if (!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed) {
+      if (secondBestRating.idx >= 0) {
         this.play(secondBestRating.idx, bestRating.idx); //play 2nd in line instead. keep best rating for next by the score he got...
       } else {
         return; //cant play same video twice.
@@ -210,7 +222,7 @@ class VideoScrollHelper {
 
   calculateCurrentItemPlacement() {
     return this.videoItems.findIndex(
-      item => item.idx === this.currentPlayingIdx,
+      (item) => item.idx === this.currentPlayingIdx
     );
   }
 
@@ -279,7 +291,7 @@ class VideoScrollHelper {
         target,
         left: item.offset.left,
         right: item.offset.left + item.style.width,
-        screenWidth: this.galleryWidth || window && window.innerWidth,
+        screenWidth: this.galleryWidth || (window && window.innerWidth),
         padding: videoPlayHorizontalTolerance,
       });
     }
@@ -294,7 +306,7 @@ class VideoScrollHelper {
   }
 
   IdxExistsInVideoItems(idx) {
-    return this.videoItems.some(item => item.idx === idx);
+    return this.videoItems.some((item) => item.idx === idx);
   }
 }
 

@@ -29,13 +29,15 @@ export function scrollToItemImp(scrollParams) {
   }
 
   if (fixedScroll !== true) {
-      //scroll to specific item
+    //scroll to specific item
     if (utils.isVerbose()) {
       console.log('Scrolling to items #' + itemIdx);
     }
 
-    const item = items.find(itm => itm.idx === itemIdx);
-    to = oneRow ? utils.get(item, 'offset.left') : utils.get(item, 'offset.top');
+    const item = items.find((itm) => itm.idx === itemIdx);
+    to = oneRow
+      ? utils.get(item, 'offset.left')
+      : utils.get(item, 'offset.top');
 
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, item);
@@ -43,7 +45,7 @@ export function scrollToItemImp(scrollParams) {
 
     if (!(to >= 0)) {
       utils.isVerbose() && console.warn('Position not found, not scrolling');
-      return new Promise(res => res());
+      return new Promise((res) => res());
     }
 
     if (oneRow) {
@@ -68,13 +70,13 @@ export function scrollToItemImp(scrollParams) {
       Math.round(to),
       durationInMS,
       isRTL,
-      true,
+      true
     );
   } else {
-    return (new Promise(resolve => {
+    return new Promise((resolve) => {
       scrollingElement.vertical().scrollTo(0, to);
       resolve(to);
-    }));
+    });
   }
 }
 export function scrollToGroupImp(scrollParams) {
@@ -110,12 +112,12 @@ export function scrollToGroupImp(scrollParams) {
   }
 
   if (fixedScroll !== true) {
-      //scroll to specific group
+    //scroll to specific group
     if (utils.isVerbose()) {
       console.log('Scrolling to groups #' + groupIdx);
     }
 
-    const group = groups.find(grp => grp.idx === groupIdx);
+    const group = groups.find((grp) => grp.idx === groupIdx);
     to = oneRow ? utils.get(group, 'left') : utils.get(group, 'top');
 
     if (group && isRTL) {
@@ -128,7 +130,7 @@ export function scrollToGroupImp(scrollParams) {
 
     if (!(to >= 0)) {
       utils.isVerbose() && console.warn('Position not found, not scrolling');
-      return new Promise(res => res());
+      return new Promise((res) => res());
     }
 
     if (oneRow) {
@@ -152,20 +154,19 @@ export function scrollToGroupImp(scrollParams) {
     }
   }
   if (oneRow) {
-
     return horizontalCssScrollTo(
       horizontalElement,
       Math.round(from),
       Math.round(to),
       durationInMS,
       isRTL,
-      true,
+      true
     );
   } else {
-    return (new Promise(resolve => {
+    return new Promise((resolve) => {
       scrollingElement.vertical().scrollTo(0, to);
       resolve(to);
-    }));
+    });
   }
 }
 
@@ -217,33 +218,45 @@ function isWithinPaddingHorizontally({
 }
 
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
-  const change = (to - from);
+  const change = to - from;
 
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');
   Object.assign(scroller.style, {
-    'scroll-snap-type': 'none'
-  })
-  Object.assign(scrollerInner.style, {
-    transition: `margin ${duration}ms linear`,
-    '-webkit-transition': `margin ${duration}ms linear`,
-  }, (isRTL) ? {
-    marginRight: `${change}px`,
-  } : {
-    marginLeft: `${-1 * change}px`,
+    'scroll-snap-type': 'none',
   });
+  Object.assign(
+    scrollerInner.style,
+    {
+      transition: `margin ${duration}ms linear`,
+      '-webkit-transition': `margin ${duration}ms linear`,
+    },
+    isRTL
+      ? {
+          marginRight: `${change}px`,
+        }
+      : {
+          marginLeft: `${-1 * change}px`,
+        }
+  );
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      Object.assign(scrollerInner.style, {
-        transition: `none`,
-        '-webkit-transition': `none`,
-      }, isRTL ? {
-        marginRight: 0,
-      } : {
-        marginLeft: 0,
-      });
+      Object.assign(
+        scrollerInner.style,
+        {
+          transition: `none`,
+          '-webkit-transition': `none`,
+        },
+        isRTL
+          ? {
+              marginRight: 0,
+            }
+          : {
+              marginLeft: 0,
+            }
+      );
       scroller.style.removeProperty('scroll-snap-type');
       scroller.scrollLeft = to;
       scroller.setAttribute('data-scrolling', '');
@@ -252,7 +265,4 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   });
 }
 
-export {
-  isWithinPaddingHorizontally,
-  isWithinPaddingVertically,
-};
+export { isWithinPaddingHorizontally, isWithinPaddingVertically };

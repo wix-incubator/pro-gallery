@@ -5,13 +5,12 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - enableScroll', () => {
-
   let driver;
   const initialProps = {
     container,
     items: images2,
     styles: styleParams,
-  }
+  };
 
   beforeEach(() => {
     driver = new GalleryDriver();
@@ -21,7 +20,7 @@ describe('styleParam - enableScroll', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: true,
-      scrollDirection:1,
+      scrollDirection: 1,
       enableScroll: true,
     });
     driver.mount.proGallery(initialProps);
@@ -33,7 +32,7 @@ describe('styleParam - enableScroll', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: true,
-      scrollDirection:1,
+      scrollDirection: 1,
       enableScroll: false,
     });
 
@@ -42,4 +41,4 @@ describe('styleParam - enableScroll', () => {
     expect(galleryContainer.hasClass('slider')).to.be.false;
     driver.detach.proGallery();
   });
-})
+});

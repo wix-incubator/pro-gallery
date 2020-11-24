@@ -25,7 +25,9 @@ class VideoItem extends GalleryComponent {
 
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
-      import( /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player').then(ReactPlayer => {
+      import(
+        /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player'
+      ).then((ReactPlayer) => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -37,7 +39,9 @@ class VideoItem extends GalleryComponent {
       this.props.videoUrl &&
       this.props.videoUrl.includes('vimeo.com')
     ) {
-      import( /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player').then(Player => {
+      import(
+        /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player'
+      ).then((Player) => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -48,19 +52,25 @@ class VideoItem extends GalleryComponent {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import( /* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(Player => {
-        window.Hls = Player.default;
-        this.setState({ hlsPlayerLoaded: true });
-        this.playVideoIfNeeded();
-      });
+      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
+        (Player) => {
+          window.Hls = Player.default;
+          this.setState({ hlsPlayerLoaded: true });
+          this.playVideoIfNeeded();
+        }
+      );
     }
   }
 
   isHLSVideo() {
-    return this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
+    return (
+      this.props.videoUrl &&
+      (this.props.videoUrl.includes('/hls') ||
+        this.props.videoUrl.includes('.m3u8'))
+    );
   }
   shouldUseHlsPlayer() {
-    return this.isHLSVideo() && !utils.isiOS()
+    return this.isHLSVideo() && !utils.isiOS();
   }
 
   shouldForceVideoForHLS() {
@@ -73,7 +83,6 @@ class VideoItem extends GalleryComponent {
     }
 
     this.playVideoIfNeeded(nextProps);
-
   }
 
   componentDidUpdate(prevProps) {
@@ -81,7 +90,7 @@ class VideoItem extends GalleryComponent {
       this.fixIFrameTabIndexIfNeeded();
     }
 
-    if (prevProps.type === 'image' && this.props.type === "video") {
+    if (prevProps.type === 'image' && this.props.type === 'video') {
       this.dynamiclyImportVideoPlayers();
     }
 
@@ -100,15 +109,25 @@ class VideoItem extends GalleryComponent {
     try {
       const { playingVideoIdx } = props;
       if (playingVideoIdx === this.props.idx && !this.isPlaying) {
-        this.videoElement = this.videoElement || window.document.querySelector(`#video-${this.props.id} video`);
+        this.videoElement =
+          this.videoElement ||
+          window.document.querySelector(`#video-${this.props.id} video`);
         if (this.videoElement) {
           this.isPlaying = true;
           this.videoElement.play();
-          utils.isVerbose() && console.log('[VIDEO] Playing video #' + this.props.idx, this.videoElement)
+          utils.isVerbose() &&
+            console.log(
+              '[VIDEO] Playing video #' + this.props.idx,
+              this.videoElement
+            );
         }
       }
     } catch (e) {
-      console.error('[VIDEO] Could not play video #' + this.props.idx, this.videoElement, e);
+      console.error(
+        '[VIDEO] Could not play video #' + this.props.idx,
+        this.videoElement,
+        e
+      );
     }
   }
   //-----------------------------------------| UTILS |--------------------------------------------//
@@ -143,9 +162,12 @@ class VideoItem extends GalleryComponent {
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
     }
-    const url = this.props.videoUrl ?
-      this.props.videoUrl :
-      this.props.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.VIDEO);
+    const url = this.props.videoUrl
+      ? this.props.videoUrl
+      : this.props.createUrl(
+          GALLERY_CONSTS.urlSizes.RESIZED,
+          GALLERY_CONSTS.urlTypes.VIDEO
+        );
     return (
       <PlayerElement
         className={'gallery-item-visible video gallery-item'}
@@ -155,23 +177,31 @@ class VideoItem extends GalleryComponent {
         url={url}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.styleParams.videoLoop}
-        ref={player => (this.video = player)}
+        ref={(player) => (this.video = player)}
         volume={this.props.styleParams.videoSound ? 0.8 : 0}
         playing={this.props.playing}
         onEnded={() => {
           this.setState({ playing: false });
-          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ENDED, this.props);
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.VIDEO_ENDED,
+            this.props
+          );
         }}
         onPause={() => {
           this.setState({ playing: false });
         }}
         onError={(e) => {
-          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {...this.props, videoError: e});
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {
+            ...this.props,
+            videoError: e,
+          });
         }}
-        
         playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
         onPlay={() => {
-          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_PLAYED, this.props);
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.VIDEO_PLAYED,
+            this.props
+          );
           this.setState({ playing: true });
         }}
         onReady={() => {
@@ -187,21 +217,19 @@ class VideoItem extends GalleryComponent {
               preload: 'metadata',
               poster: this.props.createUrl(
                 GALLERY_CONSTS.urlSizes.RESIZED,
-                GALLERY_CONSTS.urlTypes.HIGH_RES,
+                GALLERY_CONSTS.urlTypes.HIGH_RES
               ),
               style: videoDimensionsCss,
               type: 'video/mp4',
             },
-              forceHLS: this.shouldUseHlsPlayer(),
-              forceVideo: this.shouldForceVideoForHLS(),
+            forceHLS: this.shouldUseHlsPlayer(),
+            forceVideo: this.shouldForceVideoForHLS(),
           },
         }}
         key={'video-' + this.props.id}
       />
     );
   }
-
-
 
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
@@ -234,41 +262,41 @@ class VideoItem extends GalleryComponent {
     }
     const videoPreloader = (
       <div
-      className="pro-circle-preloader"
+        className="pro-circle-preloader"
         key={'video-preloader-' + this.props.idx}
       />
     );
+    // eslint-disable-next-line no-unused-vars
     const { marginLeft, marginTop, ...restOfDimensions } =
-    this.props.imageDimensions || {};
-    const video =
-      (
-        <div
-          className={baseClassName + ' animated fadeIn '}
-          data-hook="video_container-video-player-element"
-          key={'video_container-' + this.props.id}
-          style={
-            utils.deviceHasMemoryIssues() || this.state.ready
-              ? {backgroundColor: 'black'}
-              : {
-                  backgroundImage: `url(${this.props.createUrl(
-                    GALLERY_CONSTS.urlSizes.RESIZED,
-                    GALLERY_CONSTS.urlTypes.HIGH_RES,
-                  )})`,
-                  ...restOfDimensions,
-                }
-          }
-        >
-          {this.createPlayerElement()}
-          {this.props.videoControls}
-          {videoPreloader}
-        </div>
-      );
+      this.props.imageDimensions || {};
+    const video = (
+      <div
+        className={baseClassName + ' animated fadeIn '}
+        data-hook="video_container-video-player-element"
+        key={'video_container-' + this.props.id}
+        style={
+          utils.deviceHasMemoryIssues() || this.state.ready
+            ? { backgroundColor: 'black' }
+            : {
+                backgroundImage: `url(${this.props.createUrl(
+                  GALLERY_CONSTS.urlSizes.RESIZED,
+                  GALLERY_CONSTS.urlTypes.HIGH_RES
+                )})`,
+                ...restOfDimensions,
+              }
+        }
+      >
+        {this.createPlayerElement()}
+        {this.props.videoControls}
+        {videoPreloader}
+      </div>
+    );
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {[video, hover]}
       </div>
-    )
+    );
   }
 }
 

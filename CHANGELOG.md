@@ -1,3 +1,22 @@
+## [v2.2.26](https://pro-gallery-2-2-26.surge.sh) (24/11/2020)
+ 
+#### GALLERY
+ -  removed yoshi from packages/gallery.
+
+---
+## [v2.2.24](https://pro-gallery-2-2-24.surge.sh) (23/11/2020)
+ 
+#### GALLERY
+ -  fix (slideshowView): pin  autoSlideshow scroll duration to 800ms
+
+---
+## [v2.2.23](https://pro-gallery-2-2-23.surge.sh) (23/11/2020)
+ 
+#### GALLERY
+ -  improve (slideshowView): add support for scrollDuration param
+ -  fix: add UNSAFE to componentWillReceiveProps
+
+---
 ## [v2.2.22](https://pro-gallery-2-2-22.surge.sh) (18/11/2020)
  
 #### GALLERY

@@ -12,7 +12,7 @@ describe('Image Item', () => {
     imageItemsProps = galleryDriver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
       styleParams: { cubeType: 'fit', cubeImages: true },
-      imageDimensions: { borderRadius: null},
+      imageDimensions: { borderRadius: null },
     });
   });
 

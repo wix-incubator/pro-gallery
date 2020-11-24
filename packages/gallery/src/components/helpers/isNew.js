@@ -1,4 +1,7 @@
-export default ({ items, styles, container, watermark, itemsDimensions }, state) => {
+export default (
+  { items, styles, container, watermark, itemsDimensions },
+  state
+) => {
   const reason = {
     items: '',
     itemsMetadata: '',
@@ -7,7 +10,7 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
     container: '',
   };
 
-  const watermarkHaveChanged = newWatermark => {
+  const watermarkHaveChanged = (newWatermark) => {
     const oldWatermark = state.container;
     if (newWatermark) {
       if (!oldWatermark) {
@@ -16,7 +19,8 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
       } else {
         try {
           const wasChanged =
-          JSON.stringify(Object.entries(oldWatermark).sort()) !== JSON.stringify(Object.entries(newWatermark).sort());
+            JSON.stringify(Object.entries(oldWatermark).sort()) !==
+            JSON.stringify(Object.entries(newWatermark).sort());
           if (wasChanged) {
             reason.watermark = 'watermark changed.';
           }
@@ -24,13 +28,13 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
         } catch (e) {
           console.error('Could not compare watermarks', e);
           return false;
+        }
       }
     }
-  }
-  return false;
-  }
+    return false;
+  };
 
-  const containerHadChanged = _container => {
+  const containerHadChanged = (_container) => {
     if (!state.styles || !state.container) {
       reason.container = 'no old container or styles. ';
       return true; //no old container or styles (style may change container)
@@ -43,12 +47,10 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
       height:
         !state.styles.oneRow && state.styles.enableInfiniteScroll
           ? false
-          : !!_container.height &&
-          _container.height !== state.container.height,
+          : !!_container.height && _container.height !== state.container.height,
       width:
         !state.container ||
-        (!!_container.width &&
-          _container.width !== state.container.width),
+        (!!_container.width && _container.width !== state.container.width),
       scrollBase:
         !!_container.scrollBase &&
         _container.scrollBase !== state.container.scrollBase,
@@ -61,7 +63,7 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
     }, false);
   };
 
-  const stylesHaveChanged = _styles => {
+  const stylesHaveChanged = (_styles) => {
     if (!_styles) {
       reason.styles = 'no new styles.';
       return false; //no new styles - use old styles
@@ -72,7 +74,8 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
     }
     try {
       const wasChanged =
-      JSON.stringify(Object.entries(_styles).sort()) !== JSON.stringify(Object.entries(state.styles).sort());
+        JSON.stringify(Object.entries(_styles).sort()) !==
+        JSON.stringify(Object.entries(state.styles).sort());
       if (wasChanged) {
         reason.styles = 'styles were changed.';
       }
@@ -83,7 +86,7 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
     }
   };
 
-  const itemsWereAdded = _items => {
+  const itemsWereAdded = (_items) => {
     const existingItems = state.items;
     if (_items === state.items) {
       reason.itemsAdded = 'items are the same object.';
@@ -112,7 +115,7 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
     return idsNotChanged;
   };
 
-  const itemsHaveChanged = newItems => {
+  const itemsHaveChanged = (newItems) => {
     const existingItems = state.items;
     if (newItems === state.items) {
       reason.items = 'items are the same object.';
@@ -139,8 +142,10 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
           !newItem ||
           !existingItem ||
           newItem.itemId !== existingItem.itemId ||
-          newItem.mediaUrl !== existingItem.mediaUrl || 
-          newItem.metaData && existingItem.metaData && newItem.metaData.type !== existingItem.metaData.type;
+          newItem.mediaUrl !== existingItem.mediaUrl ||
+          (newItem.metaData &&
+            existingItem.metaData &&
+            newItem.metaData.type !== existingItem.metaData.type);
         if (itemsChanged) {
           reason.items = `items #${idx} id was changed.`;
         }
@@ -152,7 +157,7 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
     }, false);
   };
 
-  const itemsMetadataWasChanged = newItems => {
+  const itemsMetadataWasChanged = (newItems) => {
     const existingItems = state.items;
 
     if (!newItems) {
@@ -171,7 +176,7 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
         const itemsChanged =
           is ||
           JSON.stringify(newItem.metaData) !==
-          JSON.stringify(existingItem.metaData);
+            JSON.stringify(existingItem.metaData);
         if (itemsChanged) {
           reason.itemsMetadata = `item #${idx} data was changed.`;
         }
@@ -195,7 +200,7 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
 
   _isNew.str = Object.entries(_isNew)
     .map(([key, is]) => (is ? key : ''))
-    .filter(str => !!str)
+    .filter((str) => !!str)
     .join('|');
   _isNew.any = _isNew.str.length > 0;
   _isNew.reason = reason;
@@ -207,4 +212,4 @@ export default ({ items, styles, container, watermark, itemsDimensions }, state)
   // }
 
   return _isNew;
-}
+};

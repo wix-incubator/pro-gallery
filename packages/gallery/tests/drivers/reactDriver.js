@@ -1,5 +1,11 @@
 import { Layouter } from 'pro-layouts';
-import { GALLERY_CONSTS, GalleryItem, ItemsHelper, window, utils } from 'pro-gallery-lib';
+import {
+  GALLERY_CONSTS,
+  GalleryItem,
+  ItemsHelper,
+  window,
+  utils,
+} from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainerNew'; //import GalleryContainer before the connect (without redux)
@@ -7,11 +13,10 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import ProGallery from '../../src/components/gallery';
 
-
 configure({ adapter: new Adapter() });
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 class galleryDriver {
@@ -92,12 +97,12 @@ class galleryDriver {
     this.items = [...testImages];
 
     this.actions = {
-      toggleLoadMoreItems: (() => {}),
-      eventsListener: (() => {}),
-      onItemClick: (() => {}),
-      pauseAllVideos: (() => {}),
-      setWixHeight: (() => {}),
-      scrollToItem: (() => new Promise(res => res())),
+      toggleLoadMoreItems: () => {},
+      eventsListener: () => {},
+      onItemClick: () => {},
+      pauseAllVideos: () => {},
+      setWixHeight: () => {},
+      scrollToItem: () => new Promise((res) => res()),
     };
 
     this.layoutParams = {
@@ -108,7 +113,7 @@ class galleryDriver {
     };
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(
-      new Layouter(this.layoutParams),
+      new Layouter(this.layoutParams)
     );
 
     this.galleryConfig = {
@@ -133,9 +138,9 @@ class galleryDriver {
       layoutParams: this.layoutParams,
       galleryStructure: this.galleryStructure,
       galleryConfig: this.galleryConfig,
-      state: str => this.wrapper.state(str),
+      state: (str) => this.wrapper.state(str),
       instance: () => this.wrapper.instance(),
-      props: str => this.wrapper.props(str),
+      props: (str) => this.wrapper.props(str),
       node: () => this.wrapper.getNode(),
       wrapper: () => this.wrapper,
     };
@@ -146,35 +151,37 @@ class galleryDriver {
       this.wrapper = mount(<Component {...props} />);
       return this;
     };
-    res.galleryContainer = props => {
+    res.galleryContainer = (props) => {
       const defaultProps = this.props.galleryContainer();
       props = Object.assign(defaultProps, props || {});
       this.wrapper = mount(<GalleryContainer actions={{}} {...props} />);
       return this;
     };
-    res.proGallery = props => {
+    res.proGallery = (props) => {
       const div = document.createElement('div');
       div.setAttribute('id', 'testing-container');
       document.body.appendChild(div);
-      this.wrapper = mount(<ProGallery {...props} />, { attachTo: document.getElementById('testing-container') });
-    }
+      this.wrapper = mount(<ProGallery {...props} />, {
+        attachTo: document.getElementById('testing-container'),
+      });
+    };
     return res;
   }
   get trigger() {
     return {
-      scroll: () => document.dispatchEvent(new CustomEvent('scroll'))
-    }
+      scroll: () => document.dispatchEvent(new CustomEvent('scroll')),
+    };
   }
-  get detach(){
+  get detach() {
     return {
       proGallery: () => {
         this.wrapper.detach();
         const div = document.getElementById('testing-container');
         if (div) {
-            document.body.removeChild(div);
+          document.body.removeChild(div);
         }
-      }
-    }
+      },
+    };
   }
 
   get shallow() {
@@ -198,16 +205,16 @@ class galleryDriver {
 
   get find() {
     return {
-      hook: str => {
+      hook: (str) => {
         return this.wrapper.find({ 'data-hook': str });
       },
-      id: str => {
+      id: (str) => {
         return this.wrapper.find(`#${str}`);
       },
-      class: str => {
+      class: (str) => {
         return this.wrapper.find(`.${str}`);
       },
-      selector: str => {
+      selector: (str) => {
         return this.wrapper.find(str);
       },
     };
@@ -218,7 +225,7 @@ class galleryDriver {
   }
 
   async update(ms) {
-    await sleep(ms)
+    await sleep(ms);
     this.wrapper.update();
   }
 
@@ -242,7 +249,7 @@ class galleryDriver {
         };
       },
 
-      galleryView: galleryViewProps => {
+      galleryView: (galleryViewProps) => {
         if (typeof galleryViewProps === 'undefined') {
           galleryViewProps = {
             totalItemsCount: 100,
@@ -267,7 +274,7 @@ class galleryDriver {
         };
 
         const galleryStructure = ItemsHelper.convertToGalleryItems(
-          new Layouter(layoutParams),
+          new Layouter(layoutParams)
         );
 
         return {
@@ -277,7 +284,7 @@ class galleryDriver {
           galleryStructure,
           scroll: galleryViewProps.scroll,
           container: galleryViewProps.container,
-          getVisibleItems: (items,) => items,
+          getVisibleItems: (items) => items,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
           itemsLoveData: galleryViewProps.itemsLoveData,
@@ -285,7 +292,8 @@ class galleryDriver {
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
           customHoverRenderer: galleryViewProps.customHoverRenderer,
           customInfoRenderer: galleryViewProps.customInfoRenderer,
-          customSlideshowInfoRenderer: galleryViewProps.customSlideshowInfoRenderer,
+          customSlideshowInfoRenderer:
+            galleryViewProps.customSlideshowInfoRenderer,
         };
       },
 
@@ -295,7 +303,7 @@ class galleryDriver {
           rendered: true,
           visible: true,
           items: galleryViewProps.items.map(
-            item => new GalleryItem({ dto: item }),
+            (item) => new GalleryItem({ dto: item })
           ),
         });
       },
@@ -323,7 +331,7 @@ class galleryDriver {
         const galleryItem = new GalleryItem({ dto: itemDto });
         const itemViewPropsObj = Object.assign(
           galleryItem.renderProps(newGalleryConfig),
-          { config: newGalleryConfig, visible: true },
+          { config: newGalleryConfig, visible: true }
         );
         return Object.assign(itemViewPropsObj, {
           actions: {
@@ -338,4 +346,3 @@ class galleryDriver {
 }
 
 export default galleryDriver;
-
