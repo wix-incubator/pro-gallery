@@ -31,7 +31,7 @@ class CssScrollHelper {
     //padding: [above images, below image]
     this.allPagePadding = () => [Infinity, Infinity];
     this.inScreenPadding = () => [0, 0];
-    this.aboveScreenPadding = () => [0, Infinity];
+    this.aboveScreenPadding = () => [-250, Infinity];
     this.justBelowScreenPadding = itemHeight => [
       Infinity,
       -1 * (itemHeight + this.screenSize),
@@ -199,14 +199,15 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
-    const {isRTL, oneRow, scrollAnimation} = styleParams;
+    const {isRTL, oneRow, scrollAnimation, scrollDuration} = styleParams;
 
     if (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) {
       return '';
     }
 
-    const _randomDelay = ((idx % 3) + 1) * 100; //100 - 300
-    const _randomDuration = ((idx % 3) + 1) * 100; //100 - 300
+    const oneRowDelay = oneRow ? scrollDuration + 1500 : 0;
+    const _randomDelay = ((idx % 4) + 1) * 100 + oneRowDelay; //100 - 400
+    const _randomDuration = ((idx % 6) + 1) * 100; //100 - 600
 
     const animationPreparationPadding = this.allPagePadding();
     const animationActivePadding = this.aboveScreenPadding();
@@ -252,7 +253,7 @@ class CssScrollHelper {
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
-        `{transform: translate${axis}(${direction}100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
+        `{transform: translate${axis}(${direction}100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(animationActivePadding, '') +
         `{transform: translate${axis}(0) !important;}`;
@@ -305,8 +306,7 @@ class CssScrollHelper {
           animationPreparationPadding,
           ' .gallery-item-wrapper',
         ) +
-        `{filter: opacity(0); transition: filter 0.${600 +
-        _randomDuration}s ease-in !important;}`;
+        `{filter: opacity(0); transition: filter 0.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
