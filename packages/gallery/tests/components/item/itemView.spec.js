@@ -25,7 +25,6 @@ describe('Item View', () => {
     expect(driver.find.hook('item-wrapper').length).to.equal(1);
   });
 
-
   describe('item loaded setItemLoaded', () => {
     it('should set states when called', () => {
       const spy = sinon.spy(ItemView.prototype, 'setItemLoaded');
@@ -69,7 +68,8 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
-      expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED)).to.be.true;
+      expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED)).to.be
+        .true;
       stub.restore();
     });
 
@@ -348,7 +348,7 @@ describe('Item View', () => {
       });
       driver.mount(ItemView, sampleItemViewProps);
       expect(
-        driver.find.hook('item-wrapper').hasClass('cube-type-foo'),
+        driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(true);
       driver.set.props({
         styleParams: {
@@ -356,7 +356,7 @@ describe('Item View', () => {
         },
       });
       expect(
-        driver.find.hook('item-wrapper').hasClass('cube-type-foo'),
+        driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(false);
     });
     it('should toggle overflowY visible/inherit test2', () => {

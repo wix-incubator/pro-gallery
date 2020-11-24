@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -12,12 +12,12 @@ describe('textBoxHeight - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should set textBoxHeight', async () => {
     await driver.navigate({
-      galleryLayout:  GALLERY_CONSTS.layout.GRID,
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxHeight: 300,
     });
@@ -26,4 +26,4 @@ describe('textBoxHeight - e2e', () => {
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

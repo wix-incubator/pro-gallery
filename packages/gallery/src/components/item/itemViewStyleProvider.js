@@ -2,16 +2,16 @@ import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 
 export function getContainerStyle(styleParams) {
   return {
-    ...((styleParams.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND ||
-      GALLERY_CONSTS.hasHoverPlacement(styleParams.titlePlacement)) &&
-      {
-        ...getBorderStyle(
-          styleParams.itemBorderRadius,
-          styleParams.itemBorderWidth,
-          styleParams.itemBorderColor,
-        ),
-        ...boxShadow(styleParams),
-      }),
+    ...((styleParams.imageInfoType ===
+      GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND ||
+      GALLERY_CONSTS.hasHoverPlacement(styleParams.titlePlacement)) && {
+      ...getBorderStyle(
+        styleParams.itemBorderRadius,
+        styleParams.itemBorderWidth,
+        styleParams.itemBorderColor
+      ),
+      ...boxShadow(styleParams),
+    }),
   };
 }
 
@@ -24,7 +24,9 @@ function boxShadow(styleParams) {
     const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
     const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
     _boxShadow = {
-      boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${utils.formatColor(styleParams.itemShadowOpacityAndColor)}`,
+      boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${utils.formatColor(
+        styleParams.itemShadowOpacityAndColor
+      )}`,
     };
   }
   return _boxShadow;
@@ -32,13 +34,14 @@ function boxShadow(styleParams) {
 
 export function getImageStyle(styleParams) {
   return {
-    ...(!(GALLERY_CONSTS.hasHoverPlacement(styleParams.titlePlacement)) &&
+    ...(!GALLERY_CONSTS.hasHoverPlacement(styleParams.titlePlacement) &&
       (styleParams.imageInfoType === GALLERY_CONSTS.infoType.NO_BACKGROUND ||
-        styleParams.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND) && {
+        styleParams.imageInfoType ===
+          GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND) && {
         ...getBorderStyle(
           styleParams.itemBorderRadius,
           styleParams.itemBorderWidth,
-          styleParams.itemBorderColor,
+          styleParams.itemBorderColor
         ),
       }),
   };
@@ -56,24 +59,31 @@ function getBorderStyle(borderRadius, borderWidth, borderColor) {
   };
 }
 
-export function getOuterInfoStyle(placement, styleParams, mediaHeight, textBoxHeight) {
+export function getOuterInfoStyle(
+  placement,
+  styleParams,
+  mediaHeight,
+  textBoxHeight
+) {
   const styles = {
-    ...((GALLERY_CONSTS.hasHorizontalPlacement(placement)) && {
+    ...(GALLERY_CONSTS.hasHorizontalPlacement(placement) && {
       height: mediaHeight,
       float: GALLERY_CONSTS.isRightPlacement(placement) ? 'right' : 'left',
     }),
-    ...((GALLERY_CONSTS.hasVerticalPlacement(placement)) && {
+    ...(GALLERY_CONSTS.hasVerticalPlacement(placement) && {
       height: textBoxHeight,
-      boxSizing: 'content-box'
-    })
+      boxSizing: 'content-box',
+    }),
   };
-  if (styleParams.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND) {
+  if (
+    styleParams.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND
+  ) {
     return {
       ...styles,
       ...getBorderStyle(
         styleParams.textBoxBorderRadius,
         styleParams.textBoxBorderWidth,
-        styleParams.textBoxBorderColor,
+        styleParams.textBoxBorderColor
       ),
       ...(GALLERY_CONSTS.hasAbovePlacement(placement) && {
         marginBottom: styleParams.textImageSpace,
@@ -90,20 +100,27 @@ function getInnerInfoStylesAboveOrBelow(styleParams, infoHeight) {
   return {
     width: '100%',
     height: infoHeight,
-  }
+  };
 }
 
 function getInnerInfoStylesRightOrLeft(styleParams, infoWidth) {
   return {
     height: '100%',
     width: infoWidth,
-  }
+  };
 }
 
-export function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth) {
+export function getInnerInfoStyle(
+  placement,
+  styleParams,
+  infoHeight,
+  infoWidth
+) {
   const commonStyles = {
-    ...((styleParams.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND ||
-      styleParams.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND) &&
+    ...((styleParams.imageInfoType ===
+      GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND ||
+      styleParams.imageInfoType ===
+        GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND) &&
       styleParams.textBoxFillColor &&
       styleParams.textBoxFillColor.value && {
         backgroundColor: styleParams.textBoxFillColor.value,
@@ -117,7 +134,9 @@ export function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth)
 
   return {
     ...commonStyles,
-    ...(infoAboveOrBelow && getInnerInfoStylesAboveOrBelow(styleParams, infoHeight)),
-    ...(infoRightOrLeft && getInnerInfoStylesRightOrLeft(styleParams, infoWidth))
+    ...(infoAboveOrBelow &&
+      getInnerInfoStylesAboveOrBelow(styleParams, infoHeight)),
+    ...(infoRightOrLeft &&
+      getInnerInfoStylesRightOrLeft(styleParams, infoWidth)),
   };
 }

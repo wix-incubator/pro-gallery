@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -12,7 +12,7 @@ describe('arrowsPosition - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should have navigation arrows inside the gallery ', async () => {
@@ -33,4 +33,4 @@ describe('arrowsPosition - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

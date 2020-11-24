@@ -5,7 +5,7 @@ import { handledStyleParams, fixedStyleParams } from './consts';
 
 const MAX_ITEMS_COUNT = 25;
 
-export default ({items, styles, totalItemsCount = 0}) => {
+export default ({ items, styles, totalItemsCount = 0 }) => {
   styles = formatLeanGalleryStyles(styles);
   const allowLeanGallery = !!styles.allowLeanGallery;
 
@@ -14,34 +14,52 @@ export default ({items, styles, totalItemsCount = 0}) => {
   }
 
   if (totalItemsCount > items.length) {
-    utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - not all items arrived`, totalItemsCount, items.length );
+    utils.isVerbose() &&
+      console.log(
+        `[LEAN GALLERY] NOT ALLOWED - not all items arrived`,
+        totalItemsCount,
+        items.length
+      );
     return false;
   }
 
   const totalItems = Math.max(items.length, totalItemsCount);
   if (totalItems > MAX_ITEMS_COUNT) {
-    utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`, totalItems);
+    utils.isVerbose() &&
+      console.log(
+        `[LEAN GALLERY] NOT ALLOWED - more than ${MAX_ITEMS_COUNT} items`,
+        totalItems
+      );
     return false;
   }
   for (const item of items) {
     if (!isImage(item)) {
-      utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - an item that is not an image`, item);
+      utils.isVerbose() &&
+        console.log(
+          `[LEAN GALLERY] NOT ALLOWED - an item that is not an image`,
+          item
+        );
       return false;
     }
   }
   for (const [styleParam, value] of Object.entries(styles)) {
     if (!isValidStyleParam(styleParam, value, styles)) {
-      utils.isVerbose() && console.log(`[LEAN GALLERY] NOT ALLOWED - invalid styleParam`, styleParam, value);
+      utils.isVerbose() &&
+        console.log(
+          `[LEAN GALLERY] NOT ALLOWED - invalid styleParam`,
+          styleParam,
+          value
+        );
       return false;
     }
   }
 
   utils.isVerbose() && console.log(`[LEAN GALLERY] ALLOWED!`, styles);
   return true;
-}
+};
 
-export const notEligibleReasons = ({items, styles}) => {
-  const s = {...styles, ...NEW_PRESETS.grid, allowLeanGallery: true};
+export const notEligibleReasons = ({ items, styles }) => {
+  const s = { ...styles, ...NEW_PRESETS.grid, allowLeanGallery: true };
   const res = [];
   if (String(styles.galleryLayout) !== '2') {
     res.push('not a Grid layout');
@@ -65,17 +83,17 @@ export const notEligibleReasons = ({items, styles}) => {
   }
 
   return res;
-}
+};
 
 //#region Helper Functions
-const isImage = item => {
+const isImage = (item) => {
   const meta = item.metadata || item.metaData;
   const isImageItem = !!(
     (!meta.type || meta.type === 'image') &&
     (item.url || item.mediaUrl || item.src)
   );
   return isImageItem;
-}
+};
 
 const isValidStyleParam = (styleParam, value, allStyles) => {
   if (typeof handledStyleParams[styleParam] !== 'undefined') return true;
@@ -91,5 +109,5 @@ const isValidStyleParam = (styleParam, value, allStyles) => {
     }
   }
   return true;
-}
+};
 //#endregion

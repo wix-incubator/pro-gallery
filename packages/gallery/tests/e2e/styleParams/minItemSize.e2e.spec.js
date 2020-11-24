@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -12,14 +12,14 @@ describe('minItemSize - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('minimum item size of 120', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       minItemSize: 120,
-      groupSize:3,
+      groupSize: 3,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -37,4 +37,4 @@ describe('minItemSize - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

@@ -22,7 +22,7 @@ class GalleryView extends GalleryComponent {
 
   handleArrowKeys(e) {
     const activeItemIdx = window.document.activeElement.getAttribute(
-      'data-idx',
+      'data-idx'
     );
 
     if (activeItemIdx) {
@@ -40,13 +40,19 @@ class GalleryView extends GalleryComponent {
           newIdx = findNeighborItem(idx, 'up');
           break;
         case 37: //left
-          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'right' : 'left');
+          newIdx = findNeighborItem(
+            idx,
+            this.props.styleParams.isRTL ? 'right' : 'left'
+          );
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
           break;
         case 39: //right
-          newIdx = findNeighborItem(idx, this.props.styleParams.isRTL ? 'left' : 'right');
+          newIdx = findNeighborItem(
+            idx,
+            this.props.styleParams.isRTL ? 'left' : 'right'
+          );
           break;
       }
 
@@ -82,7 +88,7 @@ class GalleryView extends GalleryComponent {
   lastVisibleItemIdx() {
     //the item must be visible and above the show more button
     return this.lastVisibleItemIdxInHeight(
-      this.props.container.galleryHeight - 100,
+      this.props.container.galleryHeight - 100
     );
   }
   showMoreItems() {
@@ -99,7 +105,7 @@ class GalleryView extends GalleryComponent {
           },
           () => {
             this.props.actions.toggleLoadMoreItems();
-          },
+          }
         );
       } catch (e) {
         console.warn('Cannot find item to focus', e);
@@ -110,19 +116,27 @@ class GalleryView extends GalleryComponent {
   }
 
   createGallery(showMore) {
-    const { itemsLoveData, styleParams, container, galleryStructure, getVisibleItems } = this.props;
+    const {
+      itemsLoveData,
+      styleParams,
+      container,
+      galleryStructure,
+      getVisibleItems,
+    } = this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
 
     let galleryHeight;
     if (showMore) {
-      galleryHeight =
-        container.galleryHeight - showMoreContainerHeight;
+      galleryHeight = container.galleryHeight - showMoreContainerHeight;
     } else {
       galleryHeight = galleryStructure.height + 'px';
     }
-    const galleryStructureItems = getVisibleItems(galleryStructure.galleryItems, container);
+    const galleryStructureItems = getVisibleItems(
+      galleryStructure.galleryItems,
+      container
+    );
     const layout = galleryStructureItems.map((item, index) =>
       React.createElement(
         itemView,
@@ -131,8 +145,8 @@ class GalleryView extends GalleryComponent {
           ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
-        }),
-      ),
+        })
+      )
     );
 
     return (
@@ -140,9 +154,7 @@ class GalleryView extends GalleryComponent {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles ' +
-          (styleParams.oneRow
-            ? ' one-row slider hide-scrollbars '
-            : '') +
+          (styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') +
           (styleParams.isAccessible ? ' accessible ' : '') +
           (styleParams.isRTL ? ' rtl ' : ' ltr ')
         }
@@ -236,7 +248,11 @@ class GalleryView extends GalleryComponent {
 
   createShowMoreButton() {
     if (typeof this.props.customLoadMoreRenderer === 'function') {
-      return (<div onClick={this.showMoreItems}>{this.props.customLoadMoreRenderer(this.props)}</div>)
+      return (
+        <div onClick={this.showMoreItems}>
+          {this.props.customLoadMoreRenderer(this.props)}
+        </div>
+      );
     }
     const { styleParams } = this.props;
     let showMoreButton = false;
@@ -282,18 +298,18 @@ class GalleryView extends GalleryComponent {
       console.time('Rendering Gallery took ');
       console.log(
         '[DEBUG_RENDER] GalleryView styleParams',
-        this.props.styleParams,
+        this.props.styleParams
       );
       console.log(
         '[DEBUG_RENDER] GalleryView props changed',
-        utils.printableObjectsDiff(this.lastProps || {}, this.props),
+        utils.printableObjectsDiff(this.lastProps || {}, this.props)
       );
-      this.lastProps = {...this.props};
+      this.lastProps = { ...this.props };
       console.log(
         '[DEBUG_RENDER] GalleryView state changed',
-        utils.printableObjectsDiff(this.lastState || {}, this.state),
+        utils.printableObjectsDiff(this.lastState || {}, this.state)
       );
-      this.lastState = {...this.state};
+      this.lastState = { ...this.state };
       this.renderCount = (this.renderCount || 0) + 1;
     }
 

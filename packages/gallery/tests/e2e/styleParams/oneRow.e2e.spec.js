@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -12,13 +12,13 @@ describe('oneRow - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
   it('should render horizontal gallery when "oneRow" is "true"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true
+      oneRow: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -35,4 +35,4 @@ describe('oneRow - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

@@ -22,6 +22,7 @@
     "esModuleInterop": true,
     "jsx": "react",
     "strict": true,
+    "noImplicitAny": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,

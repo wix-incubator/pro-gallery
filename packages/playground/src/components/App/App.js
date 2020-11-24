@@ -138,10 +138,10 @@ export function App() {
       if (totalItemsCountFromUrl) {
         return totalItemsCountFromUrl;
       }
-    
+
       return numberOfItems > 0 ? numberOfItems : Infinity;
     }
-    
+
 
   const getOrInitBlueprint = () => {
     if (blueprint) {
@@ -153,11 +153,9 @@ export function App() {
       }
       getBlueprintFromServer(params);
     } else {
-      {
-        const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
-        blueprintsManager.init({api: playgroundBlueprintsApi})
-        blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
-      }
+      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
+      blueprintsManager.init({api: playgroundBlueprintsApi})
+      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
 
@@ -251,7 +249,7 @@ export function App() {
     const { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
     return { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
-  
+
   const GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
 
   return (
@@ -318,7 +316,7 @@ const addResizable = (Component, props, resizedDims, setResizedDims, gallerySett
         width:resizedDims.width,
         height:resizedDims.height,
       }}
-      onResizeStop={(...args) => { 
+      onResizeStop={(...args) => {
         // console.log('args', args[3], resizedDims, resizedDims.width + args[3].width);
         setResizedDims({width: (resizedDims.width + args[3].width), height: resizedDims.height + args[3].height});
         // console.log('args', args[3], resizedDims);
@@ -334,7 +332,7 @@ const addResizable = (Component, props, resizedDims, setResizedDims, gallerySett
             width: resizedDims.width,
             height: resizedDims.height
           }}
-        
+
         />
       </div>
       </Resizable>

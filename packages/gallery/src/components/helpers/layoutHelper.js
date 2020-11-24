@@ -151,7 +151,10 @@ function addLayoutStyles(styles, customExternalInfoRendererExists) {
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
 
-  if (!utils.isUndefined(galleryLayoutV1) && utils.isUndefined(galleryLayoutV2)) {
+  if (
+    !utils.isUndefined(galleryLayoutV1) &&
+    utils.isUndefined(galleryLayoutV2)
+  ) {
     //legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
     styles = Object.assign(styles, getStyleByGalleryType(styles)); //legacy layouts
@@ -166,7 +169,7 @@ function addLayoutStyles(styles, customExternalInfoRendererExists) {
       'enableInfiniteScroll',
     ];
     styles.selectedLayout = selectedLayoutVars
-      .map(key => String(styles[key]))
+      .map((key) => String(styles[key]))
       .join('|');
   } else {
     //new layouts
@@ -185,7 +188,7 @@ function addLayoutStyles(styles, customExternalInfoRendererExists) {
       'enableInfiniteScroll',
     ];
     styles.selectedLayout = selectedLayoutVars
-      .map(key => String(styles[key]))
+      .map((key) => String(styles[key]))
       .join('|');
     styles.layoutsVersion = 2;
     styles.selectedLayoutV2 = galleryLayoutV2;
@@ -193,7 +196,10 @@ function addLayoutStyles(styles, customExternalInfoRendererExists) {
       console.log('new selected layout', styles.selectedLayout);
     }
   }
-  styles = Object.assign(styles, processLayouts(styles, customExternalInfoRendererExists));
+  styles = Object.assign(
+    styles,
+    processLayouts(styles, customExternalInfoRendererExists)
+  );
   return styles;
 }
 

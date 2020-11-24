@@ -1,5 +1,4 @@
-export default
-// eslint-disable-next-line no-sparse-arrays
+const comment =
 ['setting that now we save in "appSettings" storage but can be converted to styleParams \n'+
 'watermarkOpacity\n'+
 'watermarkSize\n'+
@@ -26,7 +25,6 @@ export default
 'groupsPerStrip - wixers\n'+
 'placeGroupsLtr - wixers\n'+
 'galleryType - check that all layout define this property\n',
-,
 '--> Mobile: \n'+
 '*) in mobile the default are deferent\n'+
 '*) context.isMobile - itemClick option is responsive to mobile \n'+
@@ -39,3 +37,5 @@ export default
 'm_slideshowLoop - defined but I don\'t see where we use it\n'+
 'm_playButtonForAutoSlideShow - defined but I don\'t see where we use it\n'+
 'mobileSwipeAnimation\n'];
+
+export default comment;

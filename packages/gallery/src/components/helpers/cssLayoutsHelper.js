@@ -14,16 +14,18 @@ const getImageStyle = (item) => ({
 
 const createItemId = (domId, item) => {
   return `#pro-gallery-${domId} #${cssScrollHelper.getSellectorDomId(item)}`;
-}
+};
 const createExactCssForItems = (domId = '', galleryItems, styleParams) => {
-  const {isRTL} = styleParams;
+  const { isRTL } = styleParams;
 
   let cssStr = '';
-  galleryItems.forEach(item => {
+  galleryItems.forEach((item) => {
     const id = createItemId(domId, item);
     const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px;`;
-    const L = isRTL ? `right:${style.left}px;left:auto;` : `left:${style.left}px;`;
+    const L = isRTL
+      ? `right:${style.left}px;left:auto;`
+      : `left:${style.left}px;`;
     const W = `width:${style.width}px;`;
     const H = `height:${style.height}px;`;
     cssStr += `${id} {${T}${L}${W}${H}}`;
@@ -77,12 +79,10 @@ const createExactCssForItems = (domId = '', galleryItems, styleParams) => {
 //   return cssStrs;
 // };
 
-export const createCssLayouts = ({
-  galleryItems,
-  layoutParams,
-  domId
-}) => {
+export const createCssLayouts = ({ galleryItems, layoutParams, domId }) => {
   const exactCss = [];
-    exactCss.push(createExactCssForItems(domId, galleryItems, layoutParams.styleParams));
-    return exactCss;
+  exactCss.push(
+    createExactCssForItems(domId, galleryItems, layoutParams.styleParams)
+  );
+  return exactCss;
 };

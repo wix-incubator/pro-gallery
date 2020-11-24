@@ -1,29 +1,29 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('cubeImages - e2e', () => {
   let driver;
-  
+
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
-  
+
   it('should fit images inside the containers', async () => {
     await driver.navigate({
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fit',
-      cubeRatio: 1
+      cubeRatio: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container'); 
+    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
   it('should crop the images and fill the containers', async () => {
@@ -31,7 +31,7 @@ describe('cubeImages - e2e', () => {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',
-      cubeRatio: 1
+      cubeRatio: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
@@ -42,10 +42,10 @@ describe('cubeImages - e2e', () => {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',
-      cubeRatio: 2
+      cubeRatio: 2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

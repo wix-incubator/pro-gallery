@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -25,14 +25,14 @@ describe('leanGallery - e2e', () => {
     await driver.openPage();
   });
 
-  afterAll( async() => {
+  afterAll(async () => {
     await driver.closePage();
   });
 
   it('should successfully render leanGallery', async () => {
     await driver.navigate({
       ...fixedLeanGalleryStyleParams,
-      totalItemsCount: 20, // can be any number below MAX_ITEMS_COUNT = 25; 
+      totalItemsCount: 20, // can be any number below MAX_ITEMS_COUNT = 25;
     });
     await driver.waitFor.hookToBeVisible('lean-gallery');
     await driver.waitFor.timer(200);
@@ -65,7 +65,7 @@ describe('leanGallery - e2e', () => {
     await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 20,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container'); // 'item-container' is data-hook that exists in proGallery (and not in leanGallery)
     await driver.waitFor.timer(200);
@@ -77,7 +77,7 @@ describe('leanGallery - e2e', () => {
     await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 20,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
     });
     await driver.waitFor.hookToBeVisible('item-container'); // 'item-container' is data-hook that exists in proGallery (and not in leanGallery)
     await driver.waitFor.timer(200);
@@ -89,11 +89,11 @@ describe('leanGallery - e2e', () => {
     await driver.navigate({
       ...fixedLeanGalleryStyleParams,
       totalItemsCount: 20,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN
+      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
     });
     await driver.waitFor.hookToBeVisible('item-container'); // 'item-container' is data-hook that exists in proGallery (and not in leanGallery)
     await driver.waitFor.timer(200);
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-})
+});
