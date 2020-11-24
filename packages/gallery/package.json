@@ -27,7 +27,10 @@
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
     "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
-    "e2e-test": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
+    "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
+    "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
+    "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
+    "test:e2e-integration": "jest --testPathPattern='.*/e2e/integration/.*.e2e.spec.js'",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },
