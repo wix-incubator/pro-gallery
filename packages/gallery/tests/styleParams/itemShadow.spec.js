@@ -94,12 +94,15 @@ describe('styleParam - overlayAnimation', () => {
       itemEnableShadow: true,
       itemShadowDirection: 100,
       itemShadowSize: 20,
+      itemShadowBlur: 20,
       itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
-    })
+    });
 
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.boxShadow).to.equal('20px 3px 20px rgba(0,0,0,.4)');
+    expect(item.props().style.boxShadow).to.equal(
+      '20px 3px 20px rgba(0,0,0,.4)'
+    );
     driver.detach.proGallery();
   });
 
@@ -112,11 +115,13 @@ describe('styleParam - overlayAnimation', () => {
       itemShadowSize: 10,
       itemShadowBlur: 5,
       itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
-    })
+    });
 
     driver.mount.proGallery(initialProps);
     const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.boxShadow).to.equal('8px -6px 5px rgba(0,0,0,.4)');
+    expect(item.props().style.boxShadow).to.equal(
+      '8px -6px 5px rgba(0,0,0,.4)'
+    );
     driver.detach.proGallery();
   });
-})
+});
