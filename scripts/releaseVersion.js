@@ -123,7 +123,7 @@ function writeToChangelog(str) {
 }
 
 function writeVersion(version) {
-    const writeCommand = `> ${VERSION_LOGGER} && echo "try {console.debug('Pro Gallery Version: ${version}'); } catch (e) {}" >> ${VERSION_LOGGER}`;
+    const writeCommand = `> ${VERSION_LOGGER} && echo "try {console.debug('Pro Gallery Version: ${version}');\\n// eslint-disable-next-line no-empty\\n} catch (e) {}" >> ${VERSION_LOGGER}`;
     execSync(writeCommand);
 }
 
