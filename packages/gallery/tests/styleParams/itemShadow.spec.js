@@ -87,7 +87,7 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
 
-  it('should set box-shadow of "20px 3px 20px rgba(0,0,0,0.3)" to the items', () => {
+  it('should set box-shadow of "20px 3px 20px rgba(0,0,0,0.4)" to the items', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
