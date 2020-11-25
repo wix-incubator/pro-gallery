@@ -1,3 +1,9 @@
+## [v2.2.28](https://pro-gallery-2-2-28.surge.sh) (25/11/2020)
+ 
+#### GALLERY
+ -  improve (galleryContainer): allow using getVisibleItems in ssr
+
+---
 ## [v2.2.27](https://pro-gallery-2-2-27.surge.sh) (24/11/2020)
  
 #### MAIN
