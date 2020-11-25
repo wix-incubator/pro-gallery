@@ -63,7 +63,7 @@ describe('itemShadow - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-   
+
   it('should not have any box-shadow in "oneRow" gallery', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
