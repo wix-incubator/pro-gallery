@@ -223,16 +223,17 @@ export class GalleryContainer extends React.Component {
     const scrollY = window.scrollY;
     const { galleryHeight, scrollBase, galleryWidth } = container;
     if (
+      (utils.isSSR() && !this.props.settings.renderVisibleItemsInSsr) ||
       isSEOMode() ||
       isEditMode() ||
       isPreviewMode() ||
-      utils.isSSR() ||
       gotFirstScrollEvent ||
       scrollY > 0 ||
       this.props.currentIdx > 0
     ) {
       return items;
     }
+
     let visibleItems = items;
     try {
       const windowHeight = window.innerHeight;

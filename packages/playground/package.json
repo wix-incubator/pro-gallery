@@ -1,7 +1,16 @@
 {
   "name": "pro-playground",
-  "version": "2.2.26",
+  "version": "2.2.28",
   "private": true,
+  "scripts": {
+    "watch": "sleep 10 && node scripts/start.js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "deploy": "node scripts/build.js && gh-pages-with-token -d build",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
+    "start-playground": "node scripts/start.js"
+  },
   "dependencies": {
     "@babel/core": "7.4.3",
     "antd": "^3.20.7",
@@ -9,7 +18,7 @@
     "image-client-api": "^1.3130.0",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.24.0",
-    "pro-gallery": "2.2.26",
+    "pro-gallery": "2.2.28",
     "pro-gallery-lib": "2.2.25",
     "pro-layouts": "2.2.25",
     "re-resizable": "^6.8.0",
@@ -63,14 +72,6 @@
   },
   "resolutions": {
     "css-animation": "1.5.0"
-  },
-  "scripts": {
-    "watch": "sleep 10 && node scripts/start.js",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": " ",
-    "deploy": "node scripts/build.js && gh-pages-with-token -d build",
-    "start-playground": "node scripts/start.js"
   },
   "eslintConfig": {
     "extends": "react-app"
