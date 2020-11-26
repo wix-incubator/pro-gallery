@@ -31,5 +31,4 @@ describe('itemShadow - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-
 });

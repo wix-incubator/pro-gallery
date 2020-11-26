@@ -104,5 +104,5 @@ describe('styleParam - overlayAnimation', () => {
       '20px 3px 20px rgba(0,0,0,.4)'
     );
     driver.detach.proGallery();
-  }); 
+  });
 });
