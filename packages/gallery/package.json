@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "2.2.27",
+  "version": "2.2.28",
   "sideEffects": [
     "./src/components/styles/gallery.scss",
     "./src/components/gallery/leanGallery/leanGallery.scss"
@@ -65,7 +65,8 @@
     "react-dom": "^16.8.6",
     "sass": "^1.29.0",
     "sinon": "^6.0.0",
-    "ts-jest": "^26.4.4"
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
