@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  GALLERY_CONSTS,
-  utils,
-  isSEOMode,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 
 const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
@@ -226,7 +222,7 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      const shouldRenderHighResImages = !this.props.isPrerenderMode
+      const shouldRenderHighResImages = !this.props.isPrerenderMode;
       const src = createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,
         isSEOMode()

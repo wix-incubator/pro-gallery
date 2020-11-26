@@ -695,9 +695,9 @@ class ItemView extends GalleryComponent {
     };
 
     const { avoidInlineStyles } = settings;
-    
+
     const hideOnSSR =
-    this.props.isPrerenderMode && !this.props.settings.disableSSROpacity;
+      this.props.isPrerenderMode && !this.props.settings.disableSSROpacity;
     const opacityStyles = avoidInlineStyles
       ? {}
       : {
