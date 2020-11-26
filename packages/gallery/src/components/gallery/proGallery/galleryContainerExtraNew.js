@@ -298,6 +298,7 @@ export class GalleryContainer extends React.Component {
     if (shouldUseScrollCss) {
       this.getScrollCss({
         domId: domId,
+        container: container,
         items: this.galleryStructure.galleryItems,
         styleParams: styles,
       });
@@ -517,12 +518,14 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCss({ domId, items, styleParams }) {
+  getScrollCss({ domId, items, container, styleParams }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
+      container, 
       styleParams,
       domId,
     });
+    console.log('SCROLL CSS: getScrollCss', this.scrollCss)
   }
 
   toggleLoadMoreItems() {
@@ -536,6 +539,7 @@ export class GalleryContainer extends React.Component {
     if (!this.state.showMoreClickedAtLeastOnce) {
       this.getScrollCss({
         domId: this.props.domId,
+        container: this.props.container,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
       });
@@ -567,6 +571,7 @@ export class GalleryContainer extends React.Component {
     if (!this.state.gotFirstScrollEvent) {
       this.getScrollCss({
         domId: this.props.domId,
+        container: this.props.container,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
       });
@@ -665,6 +670,8 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
+
+    console.log('SCROLL CSS: render', this.scrollCss)
     return (
       <div
         data-key="pro-gallery-inner-container"

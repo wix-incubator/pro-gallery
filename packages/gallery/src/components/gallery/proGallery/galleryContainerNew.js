@@ -465,6 +465,7 @@ export class GalleryContainer extends React.Component {
     if (shouldUseScrollCss) {
       this.getScrollCss({
         domId: this.props.domId,
+        container: this.props.container,
         items: this.galleryStructure.galleryItems,
         styleParams: styles,
       });
@@ -668,6 +669,7 @@ export class GalleryContainer extends React.Component {
       if (shouldUseScrollCss) {
         this.getScrollCss({
           domId: this.props.domId,
+          container: this.props.container,
           items: this.galleryStructure.galleryItems,
           styleParams: _styles,
         });
@@ -838,9 +840,10 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCss({ domId, items, styleParams }) {
+  getScrollCss({ domId, items, container, styleParams }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
+      container, 
       styleParams,
       domId,
     });
@@ -874,6 +877,7 @@ export class GalleryContainer extends React.Component {
     if (!this.state.showMoreClickedAtLeastOnce) {
       this.getScrollCss({
         domId: this.props.domId,
+        container: this.props.container,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
       });
@@ -905,6 +909,7 @@ export class GalleryContainer extends React.Component {
     if (!this.state.gotFirstScrollEvent) {
       this.getScrollCss({
         domId: this.props.domId,
+        container: this.props.container,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
       });

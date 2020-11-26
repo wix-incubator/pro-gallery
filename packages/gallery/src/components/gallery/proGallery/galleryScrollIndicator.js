@@ -146,8 +146,8 @@ export default class ScrollIndicator extends GalleryComponent {
         data-scroll-base={verticalScrollBase}
         data-scroll-top={this.state.scrollTop}
         className={cssScrollHelper.calcScrollClasses(
+          scrollTopWithoutBase,
           domId,
-          scrollTopWithoutBase
         )}
         style={{ display: 'none' }}
       />
