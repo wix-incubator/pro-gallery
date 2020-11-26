@@ -87,7 +87,7 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
 
-  it('should set box-shadow of "20px 3px 20px rgba(0,0,0,0.4)" to the items', () => {
+  it('should set the correct box-shadow style to the items', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -104,24 +104,5 @@ describe('styleParam - overlayAnimation', () => {
       '20px 3px 20px rgba(0,0,0,.4)'
     );
     driver.detach.proGallery();
-  });
-
-  it('should set box-shadow of "8px -6px 5px rgba(0,0,0,.4)" to the items', () => {
-    Object.assign(initialProps.styles, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemEnableShadow: true,
-      itemShadowDirection: 50,
-      itemShadowSize: 10,
-      itemShadowBlur: 5,
-      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
-    });
-
-    driver.mount.proGallery(initialProps);
-    const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.boxShadow).to.equal(
-      '8px -6px 5px rgba(0,0,0,.4)'
-    );
-    driver.detach.proGallery();
-  });
+  }); 
 });
