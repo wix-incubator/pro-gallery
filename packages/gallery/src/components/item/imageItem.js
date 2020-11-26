@@ -3,7 +3,6 @@ import {
   GALLERY_CONSTS,
   utils,
   isSEOMode,
-  isPrerenderMode,
 } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -166,7 +165,7 @@ export default class ImageItem extends GalleryComponent {
             }
           : {};
 
-      const preloadStyles = isPrerenderMode()
+      const preloadStyles = this.props.isPrerenderMode
         ? {
             width: '100%',
             height: '100%',
@@ -227,7 +226,7 @@ export default class ImageItem extends GalleryComponent {
         imagesComponents.push(preload);
       }
 
-      const shouldRenderHighResImages = !isPrerenderMode();
+      const shouldRenderHighResImages = !this.props.isPrerenderMode
       const src = createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,
         isSEOMode()

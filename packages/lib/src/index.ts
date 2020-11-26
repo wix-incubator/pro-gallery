@@ -23,7 +23,6 @@ export { isFormFactorMobile } from './common/window/viewModeWrapper';
 export { isFormFactorTablet } from './common/window/viewModeWrapper';
 export { isFormFactorDesktop } from './common/window/viewModeWrapper';
 export { isFormFactorTouch } from './common/window/viewModeWrapper';
-export { isPrerenderMode } from './common/window/viewModeWrapper';
 
 export { default as galleryOptions } from './settings/options';
 export { INPUT_TYPES } from './settings/utils/constants';

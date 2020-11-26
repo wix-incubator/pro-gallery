@@ -48,7 +48,7 @@ export default class BaseGallery extends React.Component {
     if (this.props.useBlueprints) {
       if (
         !galleryProps.structure ||
-        galleryProps.viewMode === GALLERY_CONSTS.viewMode.PRERENDER
+        galleryProps.isPrerenderMode
       ) {
         Object.assign(galleryProps, getLayoutFixerData(this.domId));
       }
