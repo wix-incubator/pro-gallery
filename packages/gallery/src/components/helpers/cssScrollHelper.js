@@ -45,6 +45,8 @@ class CssScrollHelper {
 
   createSelectorsRange(suffix, from, to, css) {
     let scrollClasses = [];
+    to = Math.round(to);
+    from = Math.round(from);
     while (from < to) {
       const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
       scrollClasses.push(
@@ -80,7 +82,7 @@ class CssScrollHelper {
     const sellectorDomId = this.getSellectorDomId(item);
 
 
-    return (range, animation, animationCss, suffix) => {
+    return (range, suffix, animationCss, animation) => {
       const [start, stop] = range;
         // start:  the distance from the bottom of the screen to start the animation
         // stop:  the distance from the bottom of the screen to end the animation
@@ -88,11 +90,12 @@ class CssScrollHelper {
         // from: the animation start value
         // to: the animation end value
       const iterations = 50;
-      const step = Math.round((stop - start) / iterations);
 
       const createAnimationStep = idx => {
-        const step = (((to - from) / iterations)) * idx + from;
-        return animationCss.replace('#', step);
+        const ease = t => t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t
+        let step = ((to - from) * ease(idx / iterations)) + from;
+        // step *= ease(idx / iterations) * (idx / iterations);
+        return animationCss.replace('#', step));
       }
       //fade into the screen
 
@@ -100,6 +103,10 @@ class CssScrollHelper {
       const animationStart = imageStart - containerSize + start;
       const animationEnd = animationStart + imageSize + stop;
 
+      console.log(`SCROLL CSS: ranges for item #${item.idx}`)
+      console.log(`SCROLL CSS: ${createAnimationStep(0)}: 0-${animationStart}`)
+      console.log(`SCROLL CSS: ${createAnimationStep(0)}-${createAnimationStep(iterations)}: ${animationStart}-${animationEnd}`)
+      console.log(`SCROLL CSS: ${createAnimationStep(iterations)}: ${animationEnd}-${animationEnd + document.body.scrollHeight}`)
       const scrollClasses = [
       //first batch: animation start value until the range start:
         ...this.createSelectorsRange(suffix, 0, animationStart, createAnimationStep(0)),
@@ -107,7 +114,7 @@ class CssScrollHelper {
           .map((i, idx) => animationStart + idx * (animationEnd - animationStart) / iterations)
           .map((i, idx) => this.createSelectorsRange(suffix, i, i + ((animationEnd - animationStart) / iterations), createAnimationStep(idx)))
           .flat(1),
-        ...this.createSelectorsRange(suffix, animationEnd, animationEnd + document.outerHeight, createAnimationStep(iterations)),
+        ...this.createSelectorsRange(suffix, animationEnd, animationEnd + document.body.scrollHeight, createAnimationStep(iterations)),
       ]
 
 
@@ -189,9 +196,37 @@ class CssScrollHelper {
       return '';
     }
 
-    // return createScrollSelectors([150, 800], [0, 1], 'opacity: #;', `#${this.getSellectorDomId(item)} .gallery-item-wrapper`);
-    return createScrollSelectors([0, 100], [100, 0], 'transform: translateY(#px);', `#${this.getSellectorDomId(item)}`);
 
+    const {NO_EFFECT, FADE_IN, GRAYSCALE, SLIDE_UP, EXPAND, SHRINK, ZOOM_OUT, ONE_COLOR, MAIN_COLOR, BLUR } = GALLERY_CONSTS.scrollAnimations;
+
+    switch (scrollAnimation) {
+      case FADE_IN:
+        const r = Math.round(Math.random() * 100);
+        return createScrollSelectors([r + 50, r + 200], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'opacity: #;', [0, 1]);
+      case SLIDE_UP:
+        const r = Math.round(Math.random() * 100);
+        return createScrollSelectors([r + 50, r + 100], `#${this.getSellectorDomId(item)}`, 'transform: translateY(#px);', [100, 0]);
+      case GRAYSCALE:
+        const r = Math.round(Math.random() * 100);
+        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-content`, 'filter: grayscale(#%);', [100, 0]);
+      case EXPAND:
+        const r = Math.round(Math.random() * 100);
+        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)}`, 'transform: scale(#);', [1, 0.95]);
+      case ZOOM_OUT:
+        const r = Math.round(Math.random() * 100);
+        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'transform: scale(#);', [1, 1.15);
+      case SHRINK:
+        const r = Math.round(Math.random() * 100);
+        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'transform: scale(#);', [1.15, 1]);
+  }
+    // FADE
+    
+    // SLIDE
+    return createScrollSelectors([0, 100], `#${this.getSellectorDomId(item)}`, 'transform: translateY(#px);', [100, 0]);
+  
+    // GRAYSCALE
+    // const r = Math.round(Math.random() * 100);
+    // return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-content`, 'filter: grayscale(#%);', [100, 0]);
 
     const _randomDelay = ((idx % 3) + 1) * 100; //100 - 300
     const _randomDuration = ((idx % 3) + 1) * 100; //100 - 300
