@@ -55,6 +55,7 @@ const defaultStyles = {
   videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
+  animationDirection: GALLERY_CONSTS.animationDirection.IN,
   scrollDirection: 0,
   scrollDuration: 400,
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,

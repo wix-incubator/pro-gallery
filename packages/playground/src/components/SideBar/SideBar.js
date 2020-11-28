@@ -106,7 +106,7 @@ function SideBar({ items, blueprintsManager, visible }) {
       </div>
       <h3 className={s.title}>Gallery Settings</h3>
       <div className={s.controls}>
-        <Collapse accordion={true} bordered={true} defaultActiveKey={[1]} onChange={() => { }} expandIconPosition={'right'}>
+        <Collapse accordion={true} bordered={true} onChange={() => { }} expandIconPosition={'right'}>
           {didChangeStyleParams ?
             <Collapse.Panel header={'* Changed Settings'} key="-1">
               <JsonEditor
@@ -147,7 +147,7 @@ function SideBar({ items, blueprintsManager, visible }) {
       </div>
       <h3 className={s.title}>Playground Gizmos</h3>
       <div className={s.controls}>
-        <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => { }}>
+        <Collapse accordion={true} defaultActiveKey={['Animations']} bordered={true} onChange={() => { }}>
           <Collapse.Panel header="Media" key="media">
             <Form layout="vertical">
               <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
@@ -193,6 +193,38 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Form.Item>
               <Form.Item label="Full Styles List" labelAlign="left">
                 <StylesList />
+              </Form.Item>
+            </Form>
+          </Collapse.Panel>
+          <Collapse.Panel header="Animations" key="Animations">
+            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+              <Form layout="vertical">
+                <Form.Item label="Animation Direction">
+                  <Select defaultValue={styleParams.animationDirection} onChange={val => _setStyleParams('animationDirection', val)}>
+                    {Object.entries(GALLERY_CONSTS.animationDirection).map(([key, val]) => <Select.Option key={key} value={key}>{val}</Select.Option>)}
+                  </Select>
+                </Form.Item>
+              </Form>
+              <Form.Item label="Iterations" labelAlign="left">
+                <InputNumber min={1} max={100} defaultValue={gallerySettings.animation_iterations || 1} onChange={val => setGallerySettings({ animation_iterations: val })} />
+              </Form.Item>
+              <Form.Item label="Animate In Start" labelAlign="left">
+                <InputNumber min={-500} max={500} defaultValue={gallerySettings.animation_range_start || 0} onChange={val => setGallerySettings({ animation_range_start: val })} />
+              </Form.Item>
+              <Form.Item label="Animate In Stop" labelAlign="left">
+                <InputNumber min={-500} max={500} defaultValue={gallerySettings.animation_range_stop || 100} onChange={val => setGallerySettings({ animation_range_stop: val })} />
+              </Form.Item>
+              <Form.Item label="Random range" labelAlign="left">
+                <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_random || 100} onChange={val => setGallerySettings({ animation_random: val })} />
+              </Form.Item>
+              {/* <Form.Item label="SLIDE_IN Gap" labelAlign="left">
+                <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_slide_gap || 0} onChange={val => setGallerySettings({ animation_slide_gap: val })} />
+              </Form.Item>
+              <Form.Item label="ZOOM scale" labelAlign="left">
+                <InputNumber min={0} max={100} defaultValue={gallerySettings.animation_zoom_scale || 0} onChange={val => setGallerySettings({ animation_zoom_scale: val })} />
+              </Form.Item> */}
+              <Form.Item label="Transition Duration (ms)" labelAlign="left">
+                <InputNumber min={1} max={4000} defaultValue={gallerySettings.animation_transition_duration || 1} onChange={val => setGallerySettings({ animation_transition_duration: val })} />
               </Form.Item>
             </Form>
           </Collapse.Panel>

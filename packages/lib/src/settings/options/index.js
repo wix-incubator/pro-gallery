@@ -70,6 +70,7 @@ import gallerySizeRatio from './gallerySizeRatio';
 import allowContextMenu from './allowContextMenu';
 import galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
+import animationDirection from './animationDirection';
 import scrollDuration from './scrollDuration';
 import isAutoSlideshow from './isAutoSlideshow';
 import loadMoreAmount from './loadMoreAmount';
@@ -154,6 +155,7 @@ export default {
   allowContextMenu,
   galleryLayout,
   scrollDirection,
+  animationDirection,
   scrollDuration,
   isAutoSlideshow,
   loadMoreAmount,
