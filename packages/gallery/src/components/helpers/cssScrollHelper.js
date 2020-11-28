@@ -44,6 +44,8 @@ class CssScrollHelper {
   }
 
   createSelectorsRange(suffix, from, to) {
+    if (to < 0) return [];
+    from = Math.max(0, from);
     let scrollClasses = [];
     to = Math.round(to);
     from = Math.round(from);
@@ -95,7 +97,12 @@ class CssScrollHelper {
 
       const transitionCss = `transition: ${animationCss.split(':')[0]} ${2 / iterations}s linear`; 
 
+      const animationPadding = 1000;
       const animationDuration = stop - start;
+
+      const cssAnimationStart = imageStart - containerSize - animationPadding;
+      const cssAnimationEnd = imageStart + imageSize + animationPadding;
+      
       const entryAnimationStart = imageStart - containerSize + start;
       const entryAnimationEnd = entryAnimationStart + animationDuration;
 
@@ -117,7 +124,7 @@ class CssScrollHelper {
 
       //first batch: animation start value until the range start:
       addScrollClass(`${transitionCss}; ${animationCss.replace('#', enterTo)}`, [suffix]);
-      addScrollClass(createAnimationStep(0), this.createSelectorsRange(suffix, 0, entryAnimationStart));
+      addScrollClass(createAnimationStep(0), this.createSelectorsRange(suffix, cssAnimationStart, entryAnimationStart));
       addScrollClasses(Array.from({length: iterations})
           .map((i, idx) => entryAnimationStart + idx * (entryAnimationEnd - entryAnimationStart) / iterations)
           .map((i, idx) => ({[createAnimationStep(idx)]: this.createSelectorsRange(suffix, i, i + ((entryAnimationEnd - entryAnimationStart) / iterations))}))
@@ -127,7 +134,7 @@ class CssScrollHelper {
           .map((i, idx) => exitAnimationStart + idx * (exitAnimationEnd - exitAnimationStart) / iterations)
           .map((i, idx) => ({[createAnimationStep(iterations - idx, true)]: this.createSelectorsRange(suffix, i, i + ((exitAnimationEnd - exitAnimationStart) / iterations))}))
           .reduce((obj, item) => ({...obj, ...item}),{}));
-      addScrollClass(createAnimationStep(0, true), this.createSelectorsRange(suffix, exitAnimationEnd, exitAnimationEnd + document.body.scrollHeight));
+      addScrollClass(createAnimationStep(0, true), this.createSelectorsRange(suffix, exitAnimationEnd, cssAnimationEnd));
 
       const fullCss = Object.entries(scrollClasses)
       .map(([css, selectors]) => `${selectors.join(', ')} {${css}}`)
@@ -360,7 +367,6 @@ class CssScrollHelper {
     const res = items.map((item) =>
       this.calcScrollCssForItem({ item, container, styleParams })
     );
-    debugger;
     return res;
   }
 
