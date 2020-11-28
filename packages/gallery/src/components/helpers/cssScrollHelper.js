@@ -82,6 +82,11 @@ class CssScrollHelper {
       if (this.settings.animation_range_start && this.settings.animation_range_stop) {
         range = [this.settings.animation_range_start, this.settings.animation_range_stop];
       }
+      if (this.settings.animation_random) {
+        const r = Math.round(Math.random() * this.settings.animation_random);
+        range[0] += r;
+        range[1] += r;
+      }
       const [start, stop] = range;
         // start:  the distance from the bottom of the screen to start the animation
         // stop:  the distance from the bottom of the screen to end the animation
