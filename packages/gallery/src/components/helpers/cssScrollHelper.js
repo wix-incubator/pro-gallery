@@ -95,13 +95,13 @@ class CssScrollHelper {
         return animationCss.replace('#', step);
       }
 
-      const transitionCss = `transition: ${animationCss.split(':')[0]} ${2 / iterations}s linear`; 
+      const transitionCss = `transition: ${animationCss.split(':')[0]} ${2 / iterations}s linear !important`; 
 
       const animationPadding = 1000;
       const animationDuration = stop - start;
 
-      const cssAnimationStart = imageStart - containerSize - animationPadding;
-      const cssAnimationEnd = imageStart + imageSize + animationPadding;
+      const cssAnimationStart = imageStart - containerSize;
+      const cssAnimationEnd = imageStart + imageSize;
       
       const entryAnimationStart = imageStart - containerSize + start;
       const entryAnimationEnd = entryAnimationStart + animationDuration;
@@ -124,6 +124,7 @@ class CssScrollHelper {
 
       //first batch: animation start value until the range start:
       addScrollClass(`${transitionCss}; ${animationCss.replace('#', enterTo)}`, [suffix]);
+      addScrollClass(createAnimationStep(0) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationStart - animationPadding, cssAnimationStart));
       addScrollClass(createAnimationStep(0), this.createSelectorsRange(suffix, cssAnimationStart, entryAnimationStart));
       addScrollClasses(Array.from({length: iterations})
           .map((i, idx) => entryAnimationStart + idx * (entryAnimationEnd - entryAnimationStart) / iterations)
@@ -135,6 +136,7 @@ class CssScrollHelper {
           .map((i, idx) => ({[createAnimationStep(iterations - idx, true)]: this.createSelectorsRange(suffix, i, i + ((exitAnimationEnd - exitAnimationStart) / iterations))}))
           .reduce((obj, item) => ({...obj, ...item}),{}));
       addScrollClass(createAnimationStep(0, true), this.createSelectorsRange(suffix, exitAnimationEnd, cssAnimationEnd));
+      addScrollClass(createAnimationStep(0, true) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationEnd, cssAnimationEnd + animationPadding));
 
       const fullCss = Object.entries(scrollClasses)
       .map(([css, selectors]) => `${selectors.join(', ')} {${css}}`)
@@ -163,7 +165,7 @@ class CssScrollHelper {
         return createScrollSelectors([r + 50, r + 150], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'opacity: #;', [0, 1]);
       case SLIDE_UP:
         const r = Math.round(Math.random() * 100);
-        return createScrollSelectors([r + 10, r + 70], `#${this.getSellectorDomId(item)} > div`, 'transform: translateY(#px);', [50, 0], [-50, 0]);
+        return createScrollSelectors([r + 10, r + 70], `#${this.getSellectorDomId(item)}`, 'transform: translateY(#px);', [50, 0], [-50, 0]);
       case GRAYSCALE:
         const r = Math.round(Math.random() * 100);
         return createScrollSelectors([r + 150, r + 250], `#${this.getSellectorDomId(item)} .gallery-item-content`, 'filter: grayscale(#%);', [100, 0]);
