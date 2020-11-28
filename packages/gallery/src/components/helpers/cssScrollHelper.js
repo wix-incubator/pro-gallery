@@ -84,7 +84,7 @@ class CssScrollHelper {
       const [exitFrom, exitTo] = exitAnimation || animation;
         // from: the animation start value
         // to: the animation end value
-      const iterations = 4;
+      const iterations = 10;
 
       const createAnimationStep = (idx, isExit) => {
         const [to, from] = isExit ? [exitTo, exitFrom] : [enterTo, enterFrom]
@@ -95,7 +95,7 @@ class CssScrollHelper {
         return animationCss.replace('#', step);
       }
 
-      const transitionCss = `transition: ${animationCss.split(':')[0]} ${2 / iterations}s linear !important`; 
+      const transitionCss = `transition: ${animationCss.split(':')[0]} ${0.4}s linear !important`; 
 
       const animationPadding = 1000;
       const animationDuration = stop - start;
