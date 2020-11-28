@@ -174,7 +174,7 @@ class CssScrollHelper {
         return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} > div`, 'transform: scale(#);', [1, 0.95]);
       case ZOOM_OUT:
         const r = Math.round(Math.random() * 100);
-        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'transform: scale(#);', [1, 1.15);
+        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'transform: scale(#);', [1, 1.15]s);
       case SHRINK:
         const r = Math.round(Math.random() * 100);
         return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'transform: scale(#);', [1.15, 1]);
