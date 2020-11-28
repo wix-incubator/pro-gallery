@@ -43,7 +43,7 @@ class CssScrollHelper {
     );
   }
 
-  createSelectorsRange(suffix, from, to, css) {
+  createSelectorsRange(suffix, from, to) {
     let scrollClasses = [];
     to = Math.round(to);
     from = Math.round(from);
@@ -53,7 +53,7 @@ class CssScrollHelper {
         `.${this.buildScrollClassName(
           largestDividerIdx,
           from
-        )} ~ div ${suffix} {${css}}`
+        )} ~ div ${suffix}`
       );
       from += this.pgScrollSteps[largestDividerIdx];
       // console.count('pgScroll class created');
@@ -85,7 +85,6 @@ class CssScrollHelper {
       const iterations = 4;
 
       const createAnimationStep = (idx, isExit) => {
-        if (idx === iterations) return null;
         const [to, from] = isExit ? [exitTo, exitFrom] : [enterTo, enterFrom]
         const ease = t => t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t
         let step = ((to - from) * ease(idx / iterations)) + from;
@@ -93,9 +92,8 @@ class CssScrollHelper {
         item.idx === 0 && console.log('SCROLL CSS createAnimationStep',{idx, step, res: animationCss.replace('#', step)});
         return animationCss.replace('#', step);
       }
-      //fade into the screen
 
-      const transitionCss = `transition: ${animationCss.split(':')[0]} .2s linear`; 
+      const transitionCss = `transition: ${animationCss.split(':')[0]} ${2 / iterations}s linear`; 
 
       const animationDuration = stop - start;
       const entryAnimationStart = imageStart - containerSize + start;
@@ -104,41 +102,38 @@ class CssScrollHelper {
       const exitAnimationStart = imageStart + imageSize - stop;
       const exitAnimationEnd = exitAnimationStart + animationDuration;
 
-      console.log(`SCROLL CSS: ranges for item #${item.idx}`, {
-        entryAnimationStart,
-        entryAnimationEnd,
-        exitAnimationStart,
-        exitAnimationEnd,
-      })
-      console.log(`SCROLL CSS: createClasses`, {
-        ...Array.from({length: iterations})
-          .map((i, idx) => entryAnimationStart + idx * (entryAnimationEnd - entryAnimationStart) / iterations)
-          .map((i, idx) => this.createSelectorsRange(suffix, i, i + ((entryAnimationEnd - entryAnimationStart) / iterations), createAnimationStep(idx)))
-          .flat(1),
-      })
-      const scrollClasses = [
+      const scrollClasses = {};
+      const addScrollClass = (key, val) => {
+        scrollClasses[key] = [
+          ...(scrollClasses[key] || []),
+          ...val
+        ]
+      };
+      const addScrollClasses = (classesObj) => {
+        for (let [key, val] of Object.entries(classesObj)) {
+          addScrollClass(key, val);
+        }
+      };
+
       //first batch: animation start value until the range start:
-        `${suffix} {${transitionCss}; ${animationCss.replace('#', enterTo)}};`,
-        ...this.createSelectorsRange(suffix, 0, entryAnimationStart, createAnimationStep(0)),
-        ...Array.from({length: iterations})
+      addScrollClass(`${transitionCss}; ${animationCss.replace('#', enterTo)}`, [suffix]);
+      addScrollClass(createAnimationStep(0), this.createSelectorsRange(suffix, 0, entryAnimationStart));
+      addScrollClasses(Array.from({length: iterations})
           .map((i, idx) => entryAnimationStart + idx * (entryAnimationEnd - entryAnimationStart) / iterations)
-          .map((i, idx) => this.createSelectorsRange(suffix, i, i + ((entryAnimationEnd - entryAnimationStart) / iterations), createAnimationStep(idx)))
-          .flat(1),
-        ...this.createSelectorsRange(suffix, entryAnimationEnd, exitAnimationStart, createAnimationStep(iterations)),
-        ...Array.from({length: iterations})
+          .map((i, idx) => ({[createAnimationStep(idx)]: this.createSelectorsRange(suffix, i, i + ((entryAnimationEnd - entryAnimationStart) / iterations))}))
+          .reduce((obj, item) => ({...obj, ...item}),{}));
+      addScrollClass(createAnimationStep(iterations), this.createSelectorsRange(suffix, entryAnimationEnd, exitAnimationStart));
+      addScrollClasses(Array.from({length: iterations})
           .map((i, idx) => exitAnimationStart + idx * (exitAnimationEnd - exitAnimationStart) / iterations)
-          .map((i, idx) => this.createSelectorsRange(suffix, i, i + ((exitAnimationEnd - exitAnimationStart) / iterations), createAnimationStep(iterations - idx, true)))
-          .flat(1),
-        ...this.createSelectorsRange(suffix, exitAnimationEnd, exitAnimationEnd + document.body.scrollHeight, createAnimationStep(0, true)),
-      ]
+          .map((i, idx) => ({[createAnimationStep(iterations - idx, true)]: this.createSelectorsRange(suffix, i, i + ((exitAnimationEnd - exitAnimationStart) / iterations))}))
+          .reduce((obj, item) => ({...obj, ...item}),{}));
+      addScrollClass(createAnimationStep(0, true), this.createSelectorsRange(suffix, exitAnimationEnd, exitAnimationEnd + document.body.scrollHeight));
 
+      const fullCss = Object.entries(scrollClasses)
+      .map(([css, selectors]) => `${selectors.join(', ')} {${css}}`)
+      .join(' ');
 
-      // if (utils.isVerbose()) {
-      //   console.log(
-      //     `CSS SCROLL - item #${item.idx} display range is: (${from} - ${to})`,
-      //   );
-      // }
-      return scrollClasses.join(' ');
+      return fullCss;
     };
   }
 
@@ -161,13 +156,13 @@ class CssScrollHelper {
         return createScrollSelectors([r + 50, r + 150], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'opacity: #;', [0, 1]);
       case SLIDE_UP:
         const r = Math.round(Math.random() * 100);
-        return createScrollSelectors([r + 10, r + 70], `#${this.getSellectorDomId(item)}`, 'transform: translateY(#px);', [20, 0], [-20, 0]);
+        return createScrollSelectors([r + 10, r + 70], `#${this.getSellectorDomId(item)} > div`, 'transform: translateY(#px);', [50, 0], [-50, 0]);
       case GRAYSCALE:
         const r = Math.round(Math.random() * 100);
-        return createScrollSelectors([r + 20, r + 50], `#${this.getSellectorDomId(item)} .gallery-item-content`, 'filter: grayscale(#%);', [100, 0]);
+        return createScrollSelectors([r + 150, r + 250], `#${this.getSellectorDomId(item)} .gallery-item-content`, 'filter: grayscale(#%);', [100, 0]);
       case EXPAND:
         const r = Math.round(Math.random() * 100);
-        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)}`, 'transform: scale(#);', [1, 0.95]);
+        return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} > div`, 'transform: scale(#);', [1, 0.95]);
       case ZOOM_OUT:
         const r = Math.round(Math.random() * 100);
         return createScrollSelectors([r, r + 100], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'transform: scale(#);', [1, 1.15);
