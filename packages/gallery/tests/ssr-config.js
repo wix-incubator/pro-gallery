@@ -1,1 +1,1 @@
-process.env.TEST_ENVIRONMENT = "ssr";
+process.env.TEST_ENVIRONMENT = 'ssr';
