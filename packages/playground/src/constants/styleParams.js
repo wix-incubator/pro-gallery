@@ -1,7 +1,16 @@
-import { addPresetStyles, getLayoutName, NEW_PRESETS, defaultStyles, galleryOptions } from 'pro-gallery-lib';
+import {
+  addPresetStyles,
+  getLayoutName,
+  NEW_PRESETS,
+  defaultStyles,
+  galleryOptions,
+} from 'pro-gallery-lib';
 
 const defaultStyleParams = defaultStyles;
-Object.entries(galleryOptions).forEach(([styleParam, settings]) => defaultStyleParams[styleParam] = settings.default);
+Object.entries(galleryOptions).forEach(
+  ([styleParam, settings]) =>
+    (defaultStyleParams[styleParam] = settings.default)
+);
 
 export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl();
@@ -9,8 +18,7 @@ export const getInitialStyleParams = () => {
     ...defaultStyleParams,
     ...savedStyleParams,
   };
-  
-}
+};
 
 const formatValue = (val) => {
   if (String(val) === 'true') {
@@ -22,7 +30,7 @@ const formatValue = (val) => {
   } else {
     return String(val);
   }
-}
+};
 
 export const isValidStyleParam = (styleParam, value, styleParams) => {
   if (!styleParam) {
@@ -37,7 +45,7 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the default: ${value}`);
     return false;
   }
-  styleParams = {...defaultStyles, ...styleParams};
+  styleParams = { ...defaultStyles, ...styleParams };
   const preset = NEW_PRESETS[getLayoutName(styleParams.galleryLayout)];
   if (styleParam !== 'galleryLayout' && value === preset[styleParam]) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the preset: ${value}`, preset, getLayoutName(styleParams.galleryLayout));
@@ -52,35 +60,50 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
     return false;
   }
   return true;
-}
+};
 
 export const getStyleParamsFromUrl = () => {
   try {
     let styleParams = window.location.search
-      .replace('?', '').split('&')
-      .map(styleParam => styleParam.split('='))
-      .reduce((obj, [styleParam, value]) => Object.assign(obj, {[styleParam]: formatValue(value)}), {});
-      
-    styleParams = addPresetStyles({...defaultStyleParams, ...styleParams});
+      .replace('?', '')
+      .split('&')
+      .map((styleParam) => styleParam.split('='))
+      .reduce(
+        (obj, [styleParam, value]) =>
+          Object.assign(obj, { [styleParam]: formatValue(value) }),
+        {}
+      );
 
-    const relevantStyleParams = Object.entries(styleParams)
-      .reduce((obj, [styleParam, value]) => isValidStyleParam(styleParam, value, styleParams) ? Object.assign(obj, {[styleParam]: formatValue(value)}) : obj, {});
+    styleParams = addPresetStyles({ ...defaultStyleParams, ...styleParams });
+
+    const relevantStyleParams = Object.entries(styleParams).reduce(
+      (obj, [styleParam, value]) =>
+        isValidStyleParam(styleParam, value, styleParams)
+          ? Object.assign(obj, { [styleParam]: formatValue(value) })
+          : obj,
+      {}
+    );
 
     // console.log(`[STYLE PARAMS - VALIDATION] getting styleParams from the url`, relevantStyleParams);
     return relevantStyleParams;
   } catch (e) {
-    console.error('Cannot getStyleParamsFromUrl', e)
+    console.error('Cannot getStyleParamsFromUrl', e);
     return {};
   }
-}
+};
 
 export const setStyleParamsInUrl = (styleParams) => {
   // console.log(`[STYLE PARAMS - VALIDATION] setting styleParams in the url`, styleParams);
-  const urlParams = Object
-    .entries(styleParams)
-    .reduce((arr, [styleParam, value]) => isValidStyleParam(styleParam, value, styleParams) ? arr.concat(`${styleParam}=${value}`) : arr, [])
-    .join('&')
+  const urlParams = Object.entries(styleParams)
+    .reduce(
+      (arr, [styleParam, value]) =>
+        isValidStyleParam(styleParam, value, styleParams)
+          ? arr.concat(`${styleParam}=${value}`)
+          : arr,
+      []
+    )
+    .join('&');
   //window.location.search = '?' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')
   // window.location.hash = '#' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => styleParam && arr.concat(`${styleParam}=${value}`), []).join('&')
   window.history.replaceState({}, 'Pro Gallery Playground', '?' + urlParams);
-}
+};
