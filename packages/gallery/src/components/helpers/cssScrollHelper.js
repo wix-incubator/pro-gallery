@@ -14,7 +14,11 @@ class CssScrollHelper {
     this.scrollCss = [];
     this.scrollCssProps = [];
 
-    this.settings = JSON.parse(localStorage.gallerySettings);
+    try {
+      this.settings = JSON.parse(localStorage.gallerySettings);
+    } catch (e) {
+      this.settings = {}
+    }
   }
 
   getSellectorDomId({ id, idx }) {
