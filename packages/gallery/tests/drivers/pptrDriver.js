@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 
+const config = require('../environment-setup.js')
 const devices = require('puppeteer/DeviceDescriptors');
 
 export default class galleryDriver {
@@ -91,7 +92,8 @@ export default class galleryDriver {
     Object.keys(styleParams).map(
       (sp) => (urlParam += `${sp}=${styleParams[sp]}&`)
     );
-    const url = `http://localhost:3000/?${urlParam}isTestEnvironment=true`;
+    const localhost = config.baseUrl;;
+    const url = `${localhost}/?${urlParam}isTestEnvironment=true`;
     console.log('Openning URL:', url);
     return url;
   }
