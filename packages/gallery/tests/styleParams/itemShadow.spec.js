@@ -86,4 +86,23 @@ describe('styleParam - overlayAnimation', () => {
     expect(margin).to.equal('30px');
     driver.detach.proGallery();
   });
+
+  it('should set the correct box-shadow style to the items', () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemEnableShadow: true,
+      itemShadowDirection: 100,
+      itemShadowSize: 20,
+      itemShadowBlur: 20,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
+    });
+
+    driver.mount.proGallery(initialProps);
+    const item = driver.find.hook('item-container').at(0);
+    expect(item.props().style.boxShadow).to.equal(
+      '20px 3px 20px rgba(0,0,0,.4)'
+    );
+    driver.detach.proGallery();
+  });
 });
