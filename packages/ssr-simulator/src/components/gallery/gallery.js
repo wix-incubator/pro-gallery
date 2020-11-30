@@ -114,7 +114,6 @@ export default class Gallery extends React.PureComponent {
     // if (typeof nothing !== 'undefined') {
     //   import ('./layoutFixer').then(console.warn);
     // }
-    debugger
     const Gallery =
       this.isSSR() || !urlParams.useBlueprints
         ? ProGallery
