@@ -83,7 +83,7 @@ class CssScrollHelper {
 
       console.log('CSS SCROLL: settinngs', this.settings);
 
-      const transitionCss = `transition: ${animationCss.split(':')[0]} ${transitionDuration}ms ${iterations > 1 ? 'linear' : 'ease'} !important`; 
+      const transitionCss = `transition: ${animationCss.split(':')[0]} ${transitionDuration}ms ease !important`; 
 
       const animationPadding = 1000;
       const animationDuration = stop - start;
@@ -102,9 +102,8 @@ class CssScrollHelper {
         if (isExit) {
           idx = iterations - idx;
         }
-        const ease = t => t;//t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t
+        const ease = t => t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t
         let step = ((to - from) * ease(idx / iterations)) + from;
-        // step *= ease(idx / iterations) * (idx / iterations);
         item.idx === 0 && console.log('SCROLL CSS createAnimationStep',{idx, step, res: animationCss.replace('#', step)});
         return animationCss.replace('#', step);
       }
