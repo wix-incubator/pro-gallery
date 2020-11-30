@@ -57,6 +57,13 @@ jobs:
       script:
         - npm run ci:test-e2e-integration || travis_terminate 1;
 
+    - stage: Tests
+      workspaces:
+        use: dev_build
+      name: "E2E Tests - ssr"
+      script:
+        - npm run ci:test-e2e-ssr || travis_terminate 1;
+
     - stage: Deploy
       workspaces:
         use: production_build

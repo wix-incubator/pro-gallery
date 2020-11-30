@@ -1,3 +1,11 @@
+## [v2.3.0](https://pro-gallery-2-3-0.surge.sh) (30/11/2020)
+ 
+#### GALLERY
+ -  prerender changed from viewMode to prop (isPrerenderMode boolean)
+
+
+
+---
 ## [v2.2.28](https://pro-gallery-2-2-28.surge.sh) (25/11/2020)
  
 #### GALLERY

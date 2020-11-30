@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "2.2.28",
+  "version": "2.3.0",
   "sideEffects": [
     "./src/components/styles/gallery.scss",
     "./src/components/gallery/leanGallery/leanGallery.scss"
@@ -27,18 +27,18 @@
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
     "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
-    "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
     "test:e2e-integration": "jest --testPathPattern='.*/e2e/integration/.*.e2e.spec.js'",
+    "test:e2e-ssr": "jest --setupFiles=./tests/ssr-config.js --testPathPattern='.*/e2e/ssr/.*.e2e.spec.js'",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "2.2.25",
-    "pro-layouts": "2.2.25",
+    "pro-gallery-lib": "2.3.0",
+    "pro-layouts": "2.3.0",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -86,7 +86,8 @@
       "<rootDir>/target"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/tests/drivers/mocks/jest-setup.js"
+      "<rootDir>/tests/drivers/mocks/jest-setup.js",
+      "<rootDir>/tests/environment-setup.js"
     ]
   }
 }
