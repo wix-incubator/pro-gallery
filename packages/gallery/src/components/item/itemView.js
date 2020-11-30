@@ -4,7 +4,6 @@ import {
   featureManager,
   window,
   utils,
-  isPrerenderMode,
   isEditMode,
   isPreviewMode,
   isSiteMode,
@@ -407,6 +406,7 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'createUrl',
       'settings',
+      'isPrerenderMode',
     ]);
 
     return (
@@ -450,6 +450,7 @@ class ItemView extends GalleryComponent {
       'style',
       'html',
       'cubeRatio',
+      'isPrerenderMode',
     ]);
 
     return (
@@ -696,7 +697,7 @@ class ItemView extends GalleryComponent {
     const { avoidInlineStyles } = settings;
 
     const hideOnSSR =
-      isPrerenderMode() && !this.props.settings.disableSSROpacity;
+      this.props.isPrerenderMode && !this.props.settings.disableSSROpacity;
     const opacityStyles = avoidInlineStyles
       ? {}
       : {
