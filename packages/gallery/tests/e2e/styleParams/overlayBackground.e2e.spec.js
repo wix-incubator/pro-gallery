@@ -16,10 +16,10 @@ describe('overlayBackground - e2e', () => {
     await driver.closePage();
   });
 
-  it('should set the correct "overlayBackground"', async () => {
+  it('should set the correct "overlayBackground" ("red")', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayBackground: 'rgba(0,0,0,.5)',
+      overlayBackground: 'rgba(255,0,0,.5)',
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });
     await driver.waitFor.hookToBeVisible('item-container');
