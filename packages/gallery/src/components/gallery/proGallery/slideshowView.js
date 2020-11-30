@@ -5,7 +5,6 @@ import {
   utils,
   isEditMode,
   isPreviewMode,
-  isPrerenderMode,
 } from 'pro-gallery-lib';
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
@@ -950,6 +949,7 @@ class SlideshowView extends GalleryComponent {
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
+      isPrerenderMode: this.props.isPrerenderMode,
       totalWidth: this.props.galleryStructure.width,
       actions: {
         eventsListener: this.props.actions.eventsListener,
@@ -980,7 +980,7 @@ class SlideshowView extends GalleryComponent {
 
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
-        width: isPrerenderMode() ? '100%' : column.width,
+        width: this.props.isPrerenderMode ? '100%' : column.width,
         height: container.galleryHeight,
       };
       if (this.props.styleParams.isSlideshow) {
@@ -1021,7 +1021,7 @@ class SlideshowView extends GalleryComponent {
           }
         : {};
 
-    const galleryDimensions = isPrerenderMode()
+    const galleryDimensions = this.props.isPrerenderMode
       ? {
           width: '100%',
           height: this.props.container.galleryHeight,

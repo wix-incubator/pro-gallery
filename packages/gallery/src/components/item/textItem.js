@@ -1,4 +1,3 @@
-import { isPrerenderMode } from 'pro-gallery-lib';
 import React from 'react';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -77,7 +76,7 @@ export default class TextItem extends GalleryComponent {
     };
     const itemContentStyle = {
       height:
-        imageDimensions && !isPrerenderMode()
+        imageDimensions && !this.props.isPrerenderMode
           ? imageDimensions.height
           : 'inherit',
       backgroundColor:

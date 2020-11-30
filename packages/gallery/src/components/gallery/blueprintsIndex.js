@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  GALLERY_CONSTS,
   utils,
   defaultStyles,
   dimensionsHelper,
@@ -46,10 +45,7 @@ export default class BaseGallery extends React.Component {
     };
 
     if (this.props.useBlueprints) {
-      if (
-        !galleryProps.structure ||
-        galleryProps.viewMode === GALLERY_CONSTS.viewMode.PRERENDER
-      ) {
+      if (!galleryProps.structure || galleryProps.isPrerenderMode) {
         Object.assign(galleryProps, getLayoutFixerData(this.domId));
       }
     } else {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { isPrerenderMode } from 'pro-gallery-lib';
 
 export const LayoutFixer = (props) => {
   // console.log('[LAYOUT FIXER] rendering', isPrerenderMode(), props);
@@ -10,7 +9,7 @@ export const LayoutFixer = (props) => {
       style={{ display: 'none' }}
     >
       <style id={'layout-fixer-style-' + props.domId}></style>
-      {isPrerenderMode() ? (
+      {props.isPrerenderMode ? (
         <>
           {props.layoutFixerScriptType === 'preload' && (
             <link rel="preload" href={props.layoutFixerBundleUrl} as="script" />

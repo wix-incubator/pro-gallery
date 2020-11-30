@@ -198,6 +198,7 @@ class GalleryView extends GalleryComponent {
       playingVideoIdx: this.props.playingVideoIdx,
       nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
+      isPrerenderMode: this.props.isPrerenderMode,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },

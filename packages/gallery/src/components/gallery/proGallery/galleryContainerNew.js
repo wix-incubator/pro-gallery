@@ -6,7 +6,6 @@ import {
   window,
   utils,
   isEditMode,
-  isPrerenderMode,
   isSEOMode,
   isPreviewMode,
   isSiteMode,
@@ -851,7 +850,7 @@ export class GalleryContainer extends React.Component {
 
   createDynamicStyles({ overlayBackground }) {
     const useSSROpacity =
-      isPrerenderMode() && !this.props.settings.disableSSROpacity;
+      this.props.isPrerenderMode && !this.props.settings.disableSSROpacity;
     this.dynamicStyles = `
       ${
         !useSSROpacity
