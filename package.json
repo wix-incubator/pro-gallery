@@ -32,7 +32,24 @@
     "test:all": "npm run test && npm run test:e2e",
     "patch": "npm run lint && npm run test:all && node scripts/releaseVersion --patch",
     "minor": "npm run lint && npm run test:all && node scripts/releaseVersion --minor",
-    "major": "npm run lint && npm run test:all && node scripts/releaseVersion --major"
+    "major": "npm run lint && npm run test:all && node scripts/releaseVersion --major",
+    "precommit:layouts": "cd packages/layouts && npm run lint:fix",
+    "precommit:lib": "cd packages/lib && npm run lint:fix",
+    "precommit:gallery": "cd packages/gallery && npm run lint:fix",
+    "precommit:playground": "cd packages/playground && npm run lint:fix",
+    "precommit:ssr-simulator": "cd packages/ssr-simulator && npm run lint:fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/layouts/{src,test}/**/*.{js,ts}": "npm run precommit:layouts",
+    "packages/lib/{src,test}/**/*.{js,ts}": "npm run precommit:lib",
+    "packages/gallery/{src,tests}/**/*.{js,ts}": "npm run precommit:gallery",
+    "packages/playground/src/**/*.{js,ts}": "npm run precommit:playground",
+    "packages/ssr-simulator/src/**/*.{js,ts}": "npm run precommit:ssr-simulator"
   },
   "repository": {
     "type": "git",
@@ -47,8 +64,10 @@
   "devDependencies": {
     "chalk": "^2.4.2",
     "gh-pages": "2.0.1",
+    "husky": "^4.3.0",
     "lerna": "^3.13.3",
     "lerna-packages": "0.0.1",
+    "lint-staged": "^10.5.2",
     "lodash": "^4.17.4",
     "prettier": "^2.1.2",
     "prompt": "^1.0.0",

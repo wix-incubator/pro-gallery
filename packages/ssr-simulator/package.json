@@ -1,6 +1,6 @@
 {
   "name": "ssr-simulator",
-  "version": "2.2.27",
+  "version": "2.2.28",
   "private": true,
   "engines": {
     "node": ">=10.15"
@@ -13,24 +13,11 @@
     "test": " ",
     "start:prod": "node scripts/startProd.js",
     "lint": "eslint src/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{js,json,css,md}\"",
     "docker:build": "docker build --rm -t cullenjett/react-ssr-boilerplate .",
     "docker:start": "docker run --rm -it -p 3000:3000 cullenjett/react-ssr-boilerplate",
     "docker": "npm run docker:build && npm run docker:start"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "npm run lint"
-    ],
-    "*.{js,json,css,md}": [
-      "npm run format",
-      "git add"
-    ]
   },
   "dependencies": {
     "@babel/core": "7.4.3",
@@ -43,7 +30,7 @@
     "@babel/runtime": "^7.5.5",
     "@testing-library/react": "^9.1.4",
     "autoprefixer": "^9.6.1",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "babel-plugin-dynamic-import-node": "^2.3.0",
@@ -57,21 +44,19 @@
     "dotenv": "^6.0.0",
     "error-overlay-webpack-plugin": "^0.4.1",
     "eslint": "^7.14.0",
-    "eslint-loader": "^2.2.1",
-    "eslint-plugin-flowtype": "^2.50.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-react-hooks": "^1.5.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.17.1",
     "fs-extra": "^8.1.0",
     "helmet": "^3.20.1",
-    "husky": "^3.0.5",
     "image-client-api": "^1.3130.0",
     "import-glob-loader": "^1.1.0",
     "isomorphic-unfetch": "^3.0.0",
     "jest": "^24.8.0",
-    "lint-staged": "^9.2.5",
     "lodash": "^4.17.15",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.8.0",
@@ -81,7 +66,7 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
-    "pro-gallery": "2.2.27",
+    "pro-gallery": "2.2.28",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dev-utils": "^9.0.1",
