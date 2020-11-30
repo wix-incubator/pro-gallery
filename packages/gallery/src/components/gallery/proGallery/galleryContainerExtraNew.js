@@ -5,7 +5,6 @@ import {
   window,
   utils,
   isEditMode,
-  isPrerenderMode,
   isSEOMode,
   isPreviewMode,
   isSiteMode,
@@ -273,6 +272,7 @@ export class GalleryContainer extends React.Component {
     container,
     domId,
     resizeMediaUrl,
+    isPrerenderMode,
   }) {
     items = items || this.props.items;
     styles = styles || this.props.styles;
@@ -332,7 +332,7 @@ export class GalleryContainer extends React.Component {
     };
 
     this.createCssLayoutsIfNeeded(layoutParams);
-    this.createDynamicStyles(styles);
+    this.createDynamicStyles(styles, isPrerenderMode);
 
     const newState = {
       items: loopingItems || items,
@@ -491,9 +491,9 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  createDynamicStyles({ overlayBackground }) {
+  createDynamicStyles({ overlayBackground }, isPrerenderMode) {
     const useSSROpacity =
-      isPrerenderMode() && !this.props.settings.disableSSROpacity;
+      isPrerenderMode && !this.props.settings.disableSSROpacity;
     this.dynamicStyles = `
       ${
         !useSSROpacity
@@ -683,6 +683,7 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           isInDisplay={this.props.isInDisplay}
+          isPrerenderMode={this.props.isPrerenderMode}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
@@ -748,6 +749,7 @@ export class GalleryContainer extends React.Component {
           items={this.state.items}
           styles={this.props.styles}
           domId={this.props.domId}
+          isPrerenderMode={this.props.isPrerenderMode}
         ></LayoutFixer>
       </div>
     );

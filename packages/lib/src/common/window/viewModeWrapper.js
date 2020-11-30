@@ -6,7 +6,6 @@ class ViewModeWrapper {
     this.setViewMode = this.setViewMode.bind(this);
     this.isSiteMode = this.isSiteMode.bind(this);
     this.isEditMode = this.isEditMode.bind(this);
-    this.isPrerenderMode = this.isPrerenderMode.bind(this);
     this.isPreviewMode = this.isPreviewMode.bind(this);
     this.isSEOMode = this.isSEOMode.bind(this);
     this.setFormFactor = this.setFormFactor.bind(this);
@@ -50,10 +49,6 @@ class ViewModeWrapper {
     return this._viewMode === VIEW_MODE.PREVIEW;
   }
 
-  isPrerenderMode() {
-    return this._viewMode === VIEW_MODE.PRERENDER;
-  }
-
   isSEOMode() {
     return this._viewMode === VIEW_MODE.SEO;
   }
@@ -68,7 +63,6 @@ const isFormFactorMobile = viewModeWrapper.isFormFactorMobile;
 const isFormFactorTablet = viewModeWrapper.isFormFactorTablet;
 const isFormFactorDesktop = viewModeWrapper.isFormFactorDesktop;
 const isFormFactorTouch = viewModeWrapper.isFormFactorTouch;
-const isPrerenderMode = viewModeWrapper.isPrerenderMode;
 
 export { viewModeWrapper };
 export { isSiteMode };
@@ -79,4 +73,3 @@ export { isFormFactorMobile };
 export { isFormFactorTablet };
 export { isFormFactorDesktop };
 export { isFormFactorTouch };
-export { isPrerenderMode };
