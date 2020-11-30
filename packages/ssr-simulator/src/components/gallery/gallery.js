@@ -1,6 +1,6 @@
 import React from 'react';
 import { GALLERY_CONSTS, ProGallery, ProBlueprintsGallery } from 'pro-gallery';
-import { testItems } from './images';
+import { testItems, monochromeImages } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
 
@@ -103,7 +103,9 @@ export default class Gallery extends React.PureComponent {
     const hasUrlStyles = Object.keys(urlParams).length > 0;
     const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
 
-    const items = testItems.slice(0, 50); //utils.mixAndSlice(testItems, 50, styles.seed || 1);
+    const items = urlParams.isTestEnvironment ?
+      monochromeImages.slice(0, 20) :
+      testItems.slice(0, 50); //utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
       // console.log({eventName, eventData});
@@ -112,7 +114,6 @@ export default class Gallery extends React.PureComponent {
     // if (typeof nothing !== 'undefined') {
     //   import ('./layoutFixer').then(console.warn);
     // }
-
     const Gallery =
       this.isSSR() || !urlParams.useBlueprints
         ? ProGallery
