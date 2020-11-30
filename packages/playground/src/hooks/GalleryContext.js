@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 const GalleryContext = React.createContext([{}, () => {}]);
 
-const GalleryProvider = props => {
+const GalleryProvider = (props) => {
   const [viewport, setViewport] = useState({});
 
-  const setContext = x => {
-    return setViewport({...viewport, ...x});
+  const setContext = (x) => {
+    return setViewport({ ...viewport, ...x });
   };
   return (
     <GalleryContext.Provider value={[viewport, setContext]}>
@@ -15,4 +15,4 @@ const GalleryProvider = props => {
   );
 };
 
-export {GalleryContext, GalleryProvider};
+export { GalleryContext, GalleryProvider };
