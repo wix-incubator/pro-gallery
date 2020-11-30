@@ -243,7 +243,7 @@ export default class ImageItem extends GalleryComponent {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           alt={alt ? alt : 'untitled image'}
-          loading="lazy"
+          // loading={"lazy"}
           onLoad={this.handleHighResImageLoad}
           style={{
             ...restOfDimensions,

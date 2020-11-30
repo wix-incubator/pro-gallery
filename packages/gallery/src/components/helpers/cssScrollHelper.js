@@ -49,27 +49,6 @@ class CssScrollHelper {
     );
   }
 
-  createSelectorsRange(suffix, from, to) {
-    if (to < 0) return [];
-    from = Math.max(0, from);
-    let scrollClasses = [];
-    to = Math.round(to);
-    from = Math.round(from);
-    while (from < to) {
-      const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
-      scrollClasses.push(
-        `.${this.buildScrollClassName(
-          largestDividerIdx,
-          from
-        )} ~ div ${suffix}`
-      );
-      from += this.pgScrollSteps[largestDividerIdx];
-      // console.count('pgScroll class created');
-    }
-    console.log('CSS SCROLL - scrollClasses: ', scrollClasses)
-    return scrollClasses;
-  }
-
   createScrollSelectorsFunction({ item, container, styleParams }) {
     const imageStart = (styleParams.oneRow
       ? item.offset.left
@@ -83,7 +62,7 @@ class CssScrollHelper {
       : Math.min(container.height, window.innerHeight) + container.scrollBase;
 
     return (range, suffix, animationCss, animation, exitAnimation) => {
-      if (this.settings.animation_range_start && this.settings.animation_range_stop) {
+      if (this.settings.animation_range_start >= 0 && this.settings.animation_range_stop > 0) {
         range = [this.settings.animation_range_start, this.settings.animation_range_stop];
       }
       if (this.settings.animation_random) {
@@ -103,16 +82,8 @@ class CssScrollHelper {
       const transitionDuration = (this.settings.animation_transition_duration || 400);
 
       console.log('CSS SCROLL: settinngs', this.settings);
-      const createAnimationStep = (idx, isExit) => {
-        const [to, from] = isExit ? [exitTo, exitFrom] : [enterTo, enterFrom]
-        const ease = t => t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t
-        let step = ((to - from) * ease(idx / iterations)) + from;
-        // step *= ease(idx / iterations) * (idx / iterations);
-        item.idx === 0 && console.log('SCROLL CSS createAnimationStep',{idx, step, res: animationCss.replace('#', step)});
-        return animationCss.replace('#', step);
-      }
 
-      const transitionCss = `transition: ${animationCss.split(':')[0]} ${transitionDuration}ms linear !important`; 
+      const transitionCss = `transition: ${animationCss.split(':')[0]} ${transitionDuration}ms ${iterations > 1 ? 'linear' : 'ease'} !important`; 
 
       const animationPadding = 1000;
       const animationDuration = stop - start;
@@ -126,12 +97,69 @@ class CssScrollHelper {
       const exitAnimationStart = imageStart + imageSize - stop;
       const exitAnimationEnd = exitAnimationStart + animationDuration;
 
+      const createAnimationStep = (idx, isExit) => {
+        const [to, from] = isExit ? [exitTo, exitFrom] : [enterTo, enterFrom];
+        if (isExit) {
+          idx = iterations - idx;
+        }
+        const ease = t => t;//t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t
+        let step = ((to - from) * ease(idx / iterations)) + from;
+        // step *= ease(idx / iterations) * (idx / iterations);
+        item.idx === 0 && console.log('SCROLL CSS createAnimationStep',{idx, step, res: animationCss.replace('#', step)});
+        return animationCss.replace('#', step);
+      }
+
+      const createSelectorsRange = (from, to) => {
+        if (to < 0) return [];
+        from = Math.max(0, from);
+        let scrollClasses = [];
+        to = Math.round(to);
+        from = Math.round(from);
+        while (from < to) {
+          const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
+          scrollClasses.push(
+            `.${this.buildScrollClassName(
+              largestDividerIdx,
+              from
+            )} ~ div ${suffix}`
+          );
+          from += this.pgScrollSteps[largestDividerIdx];
+          // console.count('pgScroll class created');
+        }
+        return scrollClasses;
+      }
+    
+      const createAnimationRange = (start, end, isExit) => {
+        return Array.from({length: iterations})
+        .map((i, idx) => start + idx * (end - start) / iterations)
+        .map((i, idx) => ({[createAnimationStep(idx, isExit)]: createSelectorsRange(i, i + ((end - start) / iterations))}))
+        .reduce((obj, item) => ({...obj, ...item}),{})
+      }
+
       const scrollClasses = {};
+      const scrollClassesLog = {};
       const addScrollClass = (key, val) => {
         scrollClasses[key] = [
           ...(scrollClasses[key] || []),
           ...val
         ]
+        scrollClassesLog[key] = scrollClasses[key].map(val => (String(val).match(/\d+-\d+/) || [])[0]).reduce((str, range) => {
+          if (!range) return str;
+          const [from, to] = range.split('-');
+          const lastRange = str[str.length - 1];
+          const lastTo = lastRange && lastRange.split('-').splice(-1)[0];
+          if (from === lastTo) {
+            return [
+              ...str.slice(0, str.length - 1),
+              lastRange.replace(lastTo, to)
+            ];
+          } else {
+            return [
+              ...str,
+              (`${from}-${to}`)
+            ];
+          }
+        }, []).join(', ');
       };
       const addScrollClasses = (classesObj) => {
         for (let [key, val] of Object.entries(classesObj)) {
@@ -140,47 +168,40 @@ class CssScrollHelper {
       };
 
       //first batch: animation start value until the range start:
+      addScrollClass(`${transitionCss}; ${animationCss.replace('#', enterTo)}`, [suffix]);
+
       if (styleParams.animationDirection === 'BOTH') {
 
-        addScrollClass(`${transitionCss}; ${animationCss.replace('#', enterTo)}`, [suffix]);
-        addScrollClass(createAnimationStep(0) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationStart - animationPadding, cssAnimationStart));
-        addScrollClass(createAnimationStep(0), this.createSelectorsRange(suffix, cssAnimationStart, entryAnimationStart));
-        addScrollClasses(Array.from({length: iterations})
-          .map((i, idx) => entryAnimationStart + idx * (entryAnimationEnd - entryAnimationStart) / iterations)
-          .map((i, idx) => ({[createAnimationStep(idx)]: this.createSelectorsRange(suffix, i, i + ((entryAnimationEnd - entryAnimationStart) / iterations))}))
-          .reduce((obj, item) => ({...obj, ...item}),{}));
-        addScrollClass(createAnimationStep(iterations), this.createSelectorsRange(suffix, entryAnimationEnd, exitAnimationStart));
-        addScrollClasses(Array.from({length: iterations})
-        .map((i, idx) => exitAnimationStart + idx * (exitAnimationEnd - exitAnimationStart) / iterations)
-        .map((i, idx) => ({[createAnimationStep(iterations - idx, true)]: this.createSelectorsRange(suffix, i, i + ((exitAnimationEnd - exitAnimationStart) / iterations))}))
-        .reduce((obj, item) => ({...obj, ...item}),{}));
-        addScrollClass(createAnimationStep(0, true), this.createSelectorsRange(suffix, exitAnimationEnd, cssAnimationEnd));
-        addScrollClass(createAnimationStep(0, true) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationEnd, cssAnimationEnd + animationPadding));
+        addScrollClass(createAnimationStep(0) + 'transtion: none !important;', createSelectorsRange(cssAnimationStart - animationPadding, cssAnimationStart));
+        addScrollClass(createAnimationStep(0), createSelectorsRange(cssAnimationStart, entryAnimationStart));
+        addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd));
+        addScrollClass(createAnimationStep(iterations), createSelectorsRange(entryAnimationEnd, exitAnimationStart));
+        addScrollClasses(createAnimationRange(exitAnimationStart, exitAnimationEnd, true));
+        addScrollClass(createAnimationStep(iterations, true), createSelectorsRange(exitAnimationEnd, cssAnimationEnd));
+        addScrollClass(createAnimationStep(iterations, true) + 'transtion: none !important;', createSelectorsRange(cssAnimationEnd, cssAnimationEnd + animationPadding));
+
       } else if (styleParams.animationDirection === 'IN') {
-        addScrollClass(`${transitionCss}; ${animationCss.replace('#', enterTo)}`, [suffix]);
-        addScrollClass(createAnimationStep(0) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationStart - animationPadding, cssAnimationStart));
-        addScrollClass(createAnimationStep(0), this.createSelectorsRange(suffix, cssAnimationStart, entryAnimationStart));
-        addScrollClasses(Array.from({length: iterations})
-          .map((i, idx) => entryAnimationStart + idx * (entryAnimationEnd - entryAnimationStart) / iterations)
-          .map((i, idx) => ({[createAnimationStep(idx)]: this.createSelectorsRange(suffix, i, i + ((entryAnimationEnd - entryAnimationStart) / iterations))}))
-          .reduce((obj, item) => ({...obj, ...item}),{}));
-        addScrollClass(createAnimationStep(iterations), this.createSelectorsRange(suffix, entryAnimationEnd, cssAnimationEnd));
-        addScrollClass(createAnimationStep(0, true) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationEnd, cssAnimationEnd + animationPadding));
+
+        addScrollClass(createAnimationStep(0) + 'transtion: none !important;', createSelectorsRange(cssAnimationStart - animationPadding, cssAnimationStart));
+        addScrollClass(createAnimationStep(0), createSelectorsRange(cssAnimationStart, entryAnimationStart));
+        addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd));
+        addScrollClass(createAnimationStep(iterations), createSelectorsRange(entryAnimationEnd, cssAnimationEnd));
+        addScrollClass(createAnimationStep(iterations) + 'transtion: none !important;', createSelectorsRange(cssAnimationEnd, cssAnimationEnd + animationPadding));
+
       } else if (styleParams.animationDirection === 'OUT') {
-        addScrollClass(`${transitionCss}; ${animationCss.replace('#', enterTo)}`, [suffix]);
-        addScrollClass(createAnimationStep(iterations) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationStart - animationPadding, cssAnimationStart));
-        addScrollClass(createAnimationStep(iterations), this.createSelectorsRange(suffix, cssAnimationStart, exitAnimationStart));
-        addScrollClasses(Array.from({length: iterations})
-        .map((i, idx) => exitAnimationStart + idx * (exitAnimationEnd - exitAnimationStart) / iterations)
-        .map((i, idx) => ({[createAnimationStep(iterations - idx, true)]: this.createSelectorsRange(suffix, i, i + ((exitAnimationEnd - exitAnimationStart) / iterations))}))
-        .reduce((obj, item) => ({...obj, ...item}),{}));
-        addScrollClass(createAnimationStep(0, true), this.createSelectorsRange(suffix, exitAnimationEnd, cssAnimationEnd));
-        addScrollClass(createAnimationStep(0, true) + 'transtion: none !important;', this.createSelectorsRange(suffix, cssAnimationEnd, cssAnimationEnd + animationPadding));
+
+        addScrollClass(createAnimationStep(iterations) + 'transtion: none !important;', createSelectorsRange(cssAnimationStart - animationPadding, cssAnimationStart));
+        addScrollClass(createAnimationStep(iterations), createSelectorsRange(cssAnimationStart, exitAnimationStart));
+        addScrollClasses(createAnimationRange(exitAnimationStart, exitAnimationEnd, true));
+        addScrollClass(createAnimationStep(iterations, true), createSelectorsRange(exitAnimationEnd, cssAnimationEnd));
+        addScrollClass(createAnimationStep(iterations, true) + 'transtion: none !important;', createSelectorsRange(cssAnimationEnd, cssAnimationEnd + animationPadding));
       }
 
       const fullCss = Object.entries(scrollClasses)
       .map(([css, selectors]) => `${selectors.join(', ')} {${css}}`)
       .join(' ');
+
+      console.log('SCROLL CLASSES #' + item.idx, scrollClassesLog);
 
       return fullCss;
     };
@@ -205,8 +226,14 @@ class CssScrollHelper {
         const r = Math.round(Math.random() * randomRange);
         return createScrollSelectors([r + 50, r + 150], `#${this.getSellectorDomId(item)} .gallery-item-wrapper`, 'opacity: #;', [0, 1]);
       case SLIDE_UP:
+        const rtlFix = (oneRow && isRTL) ? -1 : 1;
+        const slideGap = rtlFix * (this.settings.animation_slide_gap || 50);
         const r = Math.round(Math.random() * randomRange);
-        return createScrollSelectors([r + 10, r + 70], `#${this.getSellectorDomId(item)}`, 'transform: translateY(#px);', [50, 0], [-50, 0]);
+        if (oneRow) {
+          return createScrollSelectors([r + 10, r + 70], `#${this.getSellectorDomId(item)} > div`, `transform: translateX(#px);`, [slideGap, 0], [-1 * slideGap, 0]) + ` #${this.getSellectorDomId(item)} {overflow: visible !important;}`;
+        } else {
+          return createScrollSelectors([r + 10, r + 70], `#${this.getSellectorDomId(item)}`, `transform: translateY(#px);`, [slideGap, 0], [-1 * slideGap, 0]);
+        }
       case GRAYSCALE:
         const r = Math.round(Math.random() * randomRange);
         return createScrollSelectors([r + 150, r + 250], `#${this.getSellectorDomId(item)} .gallery-item-content`, 'filter: grayscale(#%);', [100, 0]);
@@ -223,7 +250,7 @@ class CssScrollHelper {
     // FADE
     
     // SLIDE
-    return createScrollSelectors([0, 100], `#${this.getSellectorDomId(item)}`, 'transform: translateY(#px);', [100, 0]);
+    // return createScrollSelectors([0, 100], `#${this.getSellectorDomId(item)}`, 'transform: translateY(#px);', [100, 0]);
   
     // GRAYSCALE
     // const r = Math.round(Math.random() * 100);

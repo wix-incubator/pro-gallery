@@ -217,6 +217,9 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Random range" labelAlign="left">
                 <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_random >= 0 ? gallerySettings.animation_random : 100} onChange={val => setGallerySettings({ animation_random: val })} />
               </Form.Item>
+              <Form.Item label="SLIDE animation gap" labelAlign="left">
+                <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_slide_gap >= 0 ? gallerySettings.animation_slide_gap : 50} onChange={val => setGallerySettings({ animation_slide_gap: val })} />
+              </Form.Item>
               {/* <Form.Item label="SLIDE_IN Gap" labelAlign="left">
                 <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_slide_gap || 0} onChange={val => setGallerySettings({ animation_slide_gap: val })} />
               </Form.Item>

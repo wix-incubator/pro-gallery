@@ -1,4 +1,4 @@
-import { utils } from 'pro-gallery-lib';
+import { window, utils } from 'pro-gallery-lib';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -218,7 +218,12 @@ function isWithinPaddingHorizontally({
 }
 
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
-  const change = to - from;
+  const change = (to - from);
+
+  if (change === 0) {
+    return new Promise(resolve => resolve(to));
+  }
+  const marginProp = `margin-${isRTL ? 'right' : 'left'}`;
 
   const scrollerInner = scroller.firstChild;
 
@@ -230,32 +235,26 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
     scrollerInner.style,
     {
       transition: `margin ${duration}ms linear`,
-      '-webkit-transition': `margin ${duration}ms linear`,
+      [marginProp]: `-${Math.abs(change)}px`,
     },
-    isRTL
-      ? {
-          marginRight: `${change}px`,
-        }
-      : {
-          marginLeft: `${-1 * change}px`,
-        }
   );
+
+  const intervals = 10;
+  const scrollTransitionEvent = new CustomEvent('scrollTransition', {detail: (change / intervals)})
+  const scrollTransitionInterval = setInterval(() => {
+    window.dispatchEvent(scrollTransitionEvent);
+  }, Math.round(duration / intervals));
 
   return new Promise((resolve) => {
     setTimeout(() => {
+      clearInterval(scrollTransitionInterval)
+
       Object.assign(
         scrollerInner.style,
         {
           transition: `none`,
-          '-webkit-transition': `none`,
+          [marginProp]: 0,
         },
-        isRTL
-          ? {
-              marginRight: 0,
-            }
-          : {
-              marginLeft: 0,
-            }
       );
       scroller.style.removeProperty('scroll-snap-type');
       scroller.scrollLeft = to;

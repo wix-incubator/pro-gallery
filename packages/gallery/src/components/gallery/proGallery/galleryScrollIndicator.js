@@ -48,6 +48,17 @@ export default class ScrollIndicator extends GalleryComponent {
     const { oneRow } = this.props;
     const scrollingElement = this.props.scrollingElement;
     //Horizontal Scroll
+    this.onHorizontalScrollTransition = ({detail}) => {
+      const step = Math.round(detail);
+      if (step >= 0) {
+        if (oneRow) {
+          this.setState({
+            scrollTop: this.state.scrollTop + step, //todo use both scrollTop and scrollLeft
+            scrollLeft: this.state.scrollLeft + step,
+          });
+        }
+      }
+    };
     this.onHorizontalScroll = (e) => {
       this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
@@ -68,10 +79,12 @@ export default class ScrollIndicator extends GalleryComponent {
         }
       }
     };
+
     try {
       scrollingElement
         .horizontal()
         .addEventListener('scroll', this.onHorizontalScroll);
+      window.addEventListener('scrollTransition', this.onHorizontalScrollTransition);
     } catch (e) {
       //
     }
