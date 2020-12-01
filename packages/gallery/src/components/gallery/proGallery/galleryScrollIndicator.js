@@ -45,7 +45,6 @@ export default class ScrollIndicator extends GalleryComponent {
     }
 
     this.scrollEventListenerSet = true;
-    const { oneRow } = this.props;
     const scrollingElement = this.props.scrollingElement;
     //Horizontal Scroll
     this.onHorizontalScrollTransition = ({detail}) => {
@@ -69,7 +68,7 @@ export default class ScrollIndicator extends GalleryComponent {
       }
       // console.log('[RTL SCROLL] onHorizontalScroll: ', left);
       if (left >= 0) {
-        if (oneRow) {
+        if (this.props.oneRow) {
           this.setState({
             scrollTop: left, //todo use both scrollTop and scrollLeft
             scrollLeft: left,
@@ -99,7 +98,7 @@ export default class ScrollIndicator extends GalleryComponent {
       }
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
-        if (!oneRow) {
+        if (!this.props.oneRow) {
           this.setState({
             scrollTop: top,
           });
