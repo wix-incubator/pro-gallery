@@ -50,7 +50,7 @@ const defaultStyles = {
   titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   galleryTextAlign: 'center',
   scrollSnap: false,
-  itemClick: GALLERY_CONSTS.itemClick.EXPAND,
+  itemClick: GALLERY_CONSTS.itemClick.NOTHING,
   fullscreen: true,
   videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
