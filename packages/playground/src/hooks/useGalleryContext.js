@@ -10,7 +10,6 @@ import { utils } from 'pro-gallery-lib';
 
 export function useGalleryContext(
   blueprintsManager,
-  shouldUseBlueprintsFromServer
 ) {
   const [context, setContext] = useContext(GalleryContext);
 
@@ -23,25 +22,34 @@ export function useGalleryContext(
   };
 
   const getBlueprintFromServer = async (params) => {
-    let { styleParams, dimensions } = params;
+    let { items, styleParams, dimensions } = params;
 
-    dimensions = JSON.stringify(
-      dimensions || context.dimensions || calcGalleryDimensions()
-    );
-    const styles = JSON.stringify(
-      styleParams || context.styleParams || getInitialStyleParams()
-    );
-    const url = `http://localhost:3000/getBlueprint?useDemoItems=true&dimensions=${dimensions}&styles=${styles}`;
+    dimensions = dimensions || context.dimensions || calcGalleryDimensions();
+    const styles = styleParams || context.styleParams || getInitialStyleParams();
+    const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
     const response = await fetch(url, {
-      method: 'GET',
-      headers: {},
+      method: 'POST',
+      mode: 'no-cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'include', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
+        items,
+        styles,
+        dimensions
+      }) // body data type must match "Content-Type" header
     });
     const data = await response.json();
-    setBlueprint(data.blueprint);
+    setBlueprint(data);
   };
 
   const requestNewBlueprint = (newContext, settingNewItems) => {
-    if (shouldUseBlueprintsFromServer) {
+    if (getGallerySettings().shouldUseBlueprintsFromServer) {
       getBlueprintFromServer({ ...context, ...newContext });
     } else {
       if (settingNewItems) {

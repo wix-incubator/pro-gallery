@@ -207,6 +207,9 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Use Blueprints" labelAlign="left">
                 <Switch checked={!!gallerySettings.useBlueprints} onChange={e => setGallerySettings({ useBlueprints: e })} />
               </Form.Item>
+              <Form.Item label="Use Server Blueprints" labelAlign="left">
+                <Switch checked={!!gallerySettings.shouldUseBlueprintsFromServer} onChange={e => setGallerySettings({ shouldUseBlueprintsFromServer: e })} />
+              </Form.Item>
               <Form.Item label="Use Layout Fixer" labelAlign="left">
                 <Switch checked={!!gallerySettings.useLayoutFixer} onChange={e => setGallerySettings({ useLayoutFixer: e })} />
               </Form.Item>
