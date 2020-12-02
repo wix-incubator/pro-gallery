@@ -16,7 +16,7 @@ describe('gallerySizeType - e2e', () => {
     await driver.closePage();
   });
 
-  it('should set the target size of each item in pixels', async () => {
+  it('when "gallerySizeType" set to "PIXELS" the width of each item should be close to the "gallerySizePx" destination', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       gallerySizeType: GALLERY_CONSTS.gallerySizeType.PIXELS,
@@ -27,18 +27,7 @@ describe('gallerySizeType - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('should set the item size between 1 to 100 units', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      gallerySizeType: GALLERY_CONSTS.gallerySizeType.SMART,
-      gallerySize: 10,
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
-  });
-
-  it('should set the item size relative to width', async () => {
+  it('when "gallerySizeType" set to "RATIO" the width of each item should be relative to the gallery width "("gallerySizeRatio" = percentage)"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       gallerySizeType: GALLERY_CONSTS.gallerySizeType.RATIO,
