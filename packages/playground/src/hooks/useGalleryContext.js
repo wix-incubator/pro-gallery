@@ -27,11 +27,12 @@ export function useGalleryContext(
     dimensions = dimensions || context.dimensions || calcGalleryDimensions();
     const styles = styleParams || context.styleParams || getInitialStyleParams();
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
+
     const response = await fetch(url, {
       method: 'POST',
-      mode: 'no-cors', // no-cors, *cors, same-origin
+      mode: 'cors', // no-cors, *cors, same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'include', // include, *same-origin, omit
+      credentials: 'omit', // include, *same-origin, omit
       headers: {
         'Content-Type': 'application/json'
         // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -45,7 +46,7 @@ export function useGalleryContext(
       }) // body data type must match "Content-Type" header
     });
     const data = await response.json();
-    setBlueprint(data);
+    setBlueprint(data.blueprint);
   };
 
   const requestNewBlueprint = (newContext, settingNewItems) => {
