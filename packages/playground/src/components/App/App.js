@@ -23,14 +23,13 @@ const pJson = require('../../../package.json');
 
 const blueprintsManager = new BlueprintsManager({id: 'playground'});
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
-let shouldUseBlueprintsFromServer = false; //USE THIS ONLY FOR LOCAL TESTING WITH THE NODE SERVER;
 
 const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
 let totalItems = 0;
 
 export function App() {
-  const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServer);
+  const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
   sideShownOnce = sideShownOnce || showSide;
 
@@ -146,10 +145,11 @@ export function App() {
   const getOrInitBlueprint = () => {
     if (blueprint) {
       return blueprint;
-    } else if (shouldUseBlueprintsFromServer) {
+    } else if (gallerySettings.shouldUseBlueprintsFromServer) {
       const params = {
         dimensions: getContainer(),
         styleParams: getStyles(),
+        items: getItems()
       }
       getBlueprintFromServer(params);
     } else {
