@@ -28,17 +28,16 @@ export function useGalleryContext(
     const styles = styleParams || context.styleParams || getInitialStyleParams();
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
+    if (!items || !dimensions || !styles) {
+      return;
+    }
+    
     const response = await fetch(url, {
       method: 'POST',
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       credentials: 'omit', // include, *same-origin, omit
       headers: {
         'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({
         items,
         styles,
