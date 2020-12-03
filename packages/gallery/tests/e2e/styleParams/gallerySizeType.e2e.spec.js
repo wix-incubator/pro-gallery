@@ -27,7 +27,7 @@ describe('gallerySizeType - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('when "gallerySizeType" set to "RATIO" the width of each item should be relative to the gallery width "("gallerySizeRatio" = percentage)"', async () => {
+  it('when "gallerySizeType" set to "RATIO" the width of each item should be relative to the gallery width. ("gallerySizeRatio" represents the target width of each item in percentage)', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       gallerySizeType: GALLERY_CONSTS.gallerySizeType.RATIO,
