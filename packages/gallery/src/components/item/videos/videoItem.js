@@ -216,7 +216,7 @@ class VideoItem extends GalleryComponent {
               muted: !this.props.styleParams.videoSound,
               preload: 'metadata',
               poster: this.props.createUrl(
-                GALLERY_CONSTS.urlSizes.RESIZED,
+                GALLERY_CONSTS.urlSizes.SCALED,
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               ),
               style: videoDimensionsCss,
@@ -252,7 +252,7 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const hover = this.props.hover;
+    const { videoPlaceholder, hover } = this.props;
 
     let baseClassName =
       'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
@@ -294,7 +294,7 @@ class VideoItem extends GalleryComponent {
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
-        {[video, hover]}
+        {[video, videoPlaceholder, hover]}
       </div>
     );
   }

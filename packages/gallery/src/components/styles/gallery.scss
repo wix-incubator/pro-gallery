@@ -447,6 +447,12 @@ div.pro-gallery {
             i {
               display: none;
             }
+
+            ~ .image-item {
+              pointer-events: none;
+              opacity: 0;
+              transition: opacity .4s ease .1s;
+            }
           }
 
           button,

@@ -25,23 +25,23 @@ const videoControls = [
 class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
-    this.shouldPlayVideo = this.shouldPlayVideo.bind(this);
+    this.mightPlayVideo = this.mightPlayVideo.bind(this);
     this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(
       this
     );
     this.state = { VideoItemLoaded: false };
   }
 
-  shouldPlayVideo() {
+  mightPlayVideo() {
     const { videoPlay, itemClick } = this.props.styleParams;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    if (
-      this.props.idx === this.props.playingVideoIdx ||
-      this.props.idx === this.props.nextVideoIdx
-    ) {
+    // if (
+    //   this.props.idx === this.props.playingVideoIdx ||
+    //   this.props.idx === this.props.nextVideoIdx
+    // ) {
       if (videoPlay === 'hover' || videoPlay === 'auto') {
         return true;
       } else if (itemClick === 'nothing') {
@@ -49,7 +49,7 @@ class VideoItemWrapper extends ImageItem {
       } else if (itemClick === 'link' && !hasLink) {
         return true;
       }
-    }
+    // }
     return false;
   }
 
@@ -84,7 +84,7 @@ class VideoItemWrapper extends ImageItem {
         /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
       );
       this.VideoItem = VideoItem.default;
-      if (this.shouldPlayVideo()) {
+      if (this.mightPlayVideo()) {
         this.setState({ VideoItemLoaded: true });
       }
     } catch (e) {
@@ -99,12 +99,13 @@ class VideoItemWrapper extends ImageItem {
     const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
 
     const VideoItem = this.VideoItem;
-    if (!this.shouldPlayVideo() || !VideoItem) {
+    if (!this.mightPlayVideo() || !VideoItem) {
       return [videoPlaceholder, hover];
     }
     return (
       <VideoItem
         {...this.props}
+        videoPlaceholder={videoPlaceholder}
         videoControls={showVideoControls && videoControls}
       />
     );
