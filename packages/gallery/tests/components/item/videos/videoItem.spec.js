@@ -109,6 +109,7 @@ describe('Video Item ', () => {
   it('source should have right src', async () => {
     Object.assign(sampleItemViewProps, {
       videoUrl: '',
+      playedOnce: true,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.selector('ReactPlayer').props().url).equal(

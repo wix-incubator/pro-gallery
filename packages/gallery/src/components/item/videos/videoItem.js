@@ -11,7 +11,7 @@ class VideoItem extends GalleryComponent {
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
 
     this.state = {
-      playedOnce: false,
+      playedOnce: props.playedOnce,
       playing: false,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
