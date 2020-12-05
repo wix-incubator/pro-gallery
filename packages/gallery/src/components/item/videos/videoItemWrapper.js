@@ -42,13 +42,13 @@ class VideoItemWrapper extends ImageItem {
     //   this.props.idx === this.props.playingVideoIdx ||
     //   this.props.idx === this.props.nextVideoIdx
     // ) {
-      if (videoPlay === 'hover' || videoPlay === 'auto') {
-        return true;
-      } else if (itemClick === 'nothing') {
-        return true;
-      } else if (itemClick === 'link' && !hasLink) {
-        return true;
-      }
+    if (videoPlay === 'hover' || videoPlay === 'auto') {
+      return true;
+    } else if (itemClick === 'nothing') {
+      return true;
+    } else if (itemClick === 'link' && !hasLink) {
+      return true;
+    }
     // }
     return false;
   }
