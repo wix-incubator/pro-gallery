@@ -260,6 +260,9 @@ class VideoItem extends GalleryComponent {
     if (this.state.playing) {
       baseClassName += ' playing';
     }
+    if (this.state.playedOnce) {
+      baseClassName += ' playedOnce';
+    }
     const videoPreloader = (
       <div
         className="pro-circle-preloader"
@@ -291,6 +294,7 @@ class VideoItem extends GalleryComponent {
         {videoPreloader}
       </div>
     ) : null;
+
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>

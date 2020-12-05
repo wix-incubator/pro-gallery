@@ -447,11 +447,13 @@ div.pro-gallery {
             i {
               display: none;
             }
+          }
 
+          &.playedOnce {
             ~ .image-item {
               pointer-events: none;
               opacity: 0;
-              transition: opacity .4s ease .1s;
+              transition: opacity .8s ease .2s;
             }
           }
 
