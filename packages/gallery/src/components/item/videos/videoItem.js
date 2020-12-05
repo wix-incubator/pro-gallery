@@ -295,7 +295,6 @@ class VideoItem extends GalleryComponent {
       </div>
     ) : null;
 
-
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {[video, videoPlaceholder, hover]}
