@@ -269,7 +269,7 @@ class VideoItem extends GalleryComponent {
     // eslint-disable-next-line no-unused-vars
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
-    const video = (
+    const video = this.state.playedOnce ? (
       <div
         className={baseClassName + ' animated fadeIn '}
         data-hook="video_container-video-player-element"
@@ -290,7 +290,7 @@ class VideoItem extends GalleryComponent {
         {this.props.videoControls}
         {videoPreloader}
       </div>
-    );
+    ) : null;
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
