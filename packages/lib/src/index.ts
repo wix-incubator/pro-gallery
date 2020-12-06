@@ -1,6 +1,7 @@
 export { default as GALLERY_CONSTS } from './common/constants';
 export { default as GalleryItem } from './core/galleryItem';
 export { default as BlueprintsManager } from './core/blueprints/BlueprintsManager';
+export { default as Blueprints } from './core/blueprints/Blueprints';
 export { default as defaultStyles } from './common/defaultStyles';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
