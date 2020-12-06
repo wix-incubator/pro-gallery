@@ -262,10 +262,15 @@ export default class Layouter {
         imageMargin,
       } = this.styleParams;
 
-      const columnWidthsArr =
-        columnWidths && columnWidths.length > 0
-          ? columnWidths.split(',')
-          : false;
+      let columnWidthsArr = false;
+      if (columnWidths && columnWidths.length > 0) {
+        columnWidthsArr = columnWidths.split(',').map(Number);
+        const columnMultiplier =
+          this.galleryWidth / columnWidthsArr.reduce((a, b) => a + b, 0);
+        columnWidthsArr = columnWidthsArr.map((col) =>
+          Math.round((col *= columnMultiplier))
+        );
+      }
 
       let totalLeft = 0;
       let remainderWidth = this.galleryWidth;
