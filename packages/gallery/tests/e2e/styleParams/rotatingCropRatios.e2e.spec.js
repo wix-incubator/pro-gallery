@@ -16,7 +16,7 @@ describe('rotatingCropRatios - e2e', () => {
     await driver.closePage();
   });
 
-  it('should create a gallery with the correct types of crop ratios', async () => {
+  it('should create a gallery with crop ratios of 1,2,3', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       cubeImages: true,
