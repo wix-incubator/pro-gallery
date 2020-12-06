@@ -181,7 +181,7 @@ function SideBar({ items, blueprintsManager, visible }) {
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Styles" key="styles">
-            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
+          <Form layout="vertical">
               <Form.Item label="Show all Styles" labelAlign="left">
                 <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({ showAllStyles: e })} />
               </Form.Item>
