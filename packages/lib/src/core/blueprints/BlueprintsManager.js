@@ -37,13 +37,13 @@ export default class BlueprintsManager {
 
     const _createBlueprint =
       this.api.createBlueprintImp || blueprints.createBlueprint;
-    const { blueprint, changedParams } = _createBlueprint(
+    const { blueprint, changedParams } = _createBlueprint({
       params,
-      this.currentState,
-      this.existingBlueprint,
-      this.id,
-      this.currentState.isUsingCustomInfoElements
-    );
+      lastParams: this.currentState,
+      existingBlueprint: this.existingBlueprint,
+      blueprintManagerId: this.id,
+      isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
+    });
 
     const blueprintChanged = Object.values(changedParams).some(
       (changedParam) => !!changedParam
