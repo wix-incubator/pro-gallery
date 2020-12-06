@@ -205,19 +205,19 @@ function SideBar({ items, blueprintsManager, visible }) {
                   </Select>
                 </Form.Item>
               </Form>
-              <Form.Item label="Iterations" labelAlign="left">
+              <Form.Item label="Iterations" labelAlign="left" help="The number of steps of the animations (try 1 or 10)">
                 <InputNumber min={1} max={100} defaultValue={gallerySettings.animation_iterations || 1} onChange={val => setGallerySettings({ animation_iterations: val })} />
               </Form.Item>
-              <Form.Item label="Animate In Start" labelAlign="left">
+              <Form.Item label="Animate In Start (px)" labelAlign="left" help="The position in pixels to START the animation (0 = the screen bottom)">
                 <InputNumber min={-500} max={500} defaultValue={gallerySettings.animation_range_start || 0} onChange={val => setGallerySettings({ animation_range_start: val })} />
               </Form.Item>
-              <Form.Item label="Animate In Stop" labelAlign="left">
+              <Form.Item label="Animate In Stop (px)" labelAlign="left" help="The position in pixels to END the animation (100 = 100px from the screen bottom)">
                 <InputNumber min={-500} max={500} defaultValue={gallerySettings.animation_range_stop >= -500 ? gallerySettings.animation_range_stop : 100} onChange={val => setGallerySettings({ animation_range_stop: val })} />
               </Form.Item>
-              <Form.Item label="Random range" labelAlign="left">
+              <Form.Item label="Random range (px)" labelAlign="left" help="Add a random number of pixels of the start and the end of the animation range">
                 <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_random >= 0 ? gallerySettings.animation_random : 100} onChange={val => setGallerySettings({ animation_random: val })} />
               </Form.Item>
-              <Form.Item label="SLIDE animation gap" labelAlign="left">
+              <Form.Item label="SLIDE animation gap (px)" labelAlign="left" help="The distance of the slide animation distance between images">
                 <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_slide_gap >= 0 ? gallerySettings.animation_slide_gap : 50} onChange={val => setGallerySettings({ animation_slide_gap: val })} />
               </Form.Item>
               {/* <Form.Item label="SLIDE_IN Gap" labelAlign="left">
