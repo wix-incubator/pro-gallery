@@ -37,7 +37,7 @@ export default class BlueprintsManager {
 
     const _createBlueprint =
       this.api.createBlueprintImp || blueprints.createBlueprint;
-    const { blueprint, changedParams } = _createBlueprint({
+    const { blueprint, changedParams } = await _createBlueprint({
       params,
       lastParams: this.currentState,
       existingBlueprint: this.existingBlueprint,
