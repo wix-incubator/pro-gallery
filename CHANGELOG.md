@@ -1,3 +1,22 @@
+## [v2.3.2](https://pro-gallery-2-3-2.surge.sh) (07/12/2020)
+ 
+#### OTHER
+ -  correct export for blueprints
+ -  exporting blueprint and allowing for passing a createBlueprintsImp
+ -  delete old settings
+
+#### LAYOUTS
+ -  feature: add (and fix) the columnsWidths feature to the playground
+
+#### MAIN
+ -  delete tests script before patch/minor/major
+
+#### PLAYGROUND
+ -  fix: do not create blueprint if one param is missing
+ -  fix: fix request for blueprint on server - when cors is disables credentials must be omitted
+ -  feature: add the option to use blueprints server
+
+---
 ## [v2.3.1](https://pro-gallery-2-3-1.surge.sh) (02/12/2020)
  
 #### GALLERY
