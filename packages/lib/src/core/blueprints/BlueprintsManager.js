@@ -35,8 +35,13 @@ export default class BlueprintsManager {
 
     params = { ...params, ...(await this.completeParams(params)) };
 
-    const _createBlueprint =
-      this.api.createBlueprintImp || blueprints.createBlueprint;
+    const _createBlueprint = async (args) => {
+      if (this.api.createBlueprintImp) {
+        return await this.api.createBlueprintImp(args);
+      } else {
+        return await blueprints.createBlueprint(args);
+      }
+    };
     const { blueprint, changedParams } = await _createBlueprint({
       params,
       lastParams: this.currentState,
