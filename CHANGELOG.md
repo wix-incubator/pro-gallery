@@ -1,5 +1,11 @@
-## [v2.3.2](https://pro-gallery-2-3-2.surge.sh) (07/12/2020)
+## [v2.3.3](https://pro-gallery-2-3-3.surge.sh) (07/12/2020)
  
+#### OTHER
+ -  fix wrap createBlueprints function
+
+---
+## [v2.3.2]--broken(https://pro-gallery-2-3-2.surge.sh) (07/12/2020)
+
 #### OTHER
  -  correct export for blueprints
  -  exporting blueprint and allowing for passing a createBlueprintsImp
