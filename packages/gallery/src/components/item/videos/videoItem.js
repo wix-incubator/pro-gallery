@@ -260,7 +260,7 @@ class VideoItem extends GalleryComponent {
     if (this.state.playing) {
       baseClassName += ' playing';
     }
-    if (this.state.playedOnce) {
+    if (this.state.playedOnce && this.state.ready) {
       baseClassName += ' playedOnce';
     }
     const videoPreloader = (

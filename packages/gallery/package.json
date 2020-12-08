@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "start": "tsc -w",
+    "start": "tsc -w && npm run css-watch",
     "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
