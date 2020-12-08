@@ -11,7 +11,8 @@ class VideoItem extends GalleryComponent {
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
 
     this.state = {
-      playedOnce: props.playedOnce,
+      playedOnce: false,
+      loadVideo: props.loadVideo,
       playing: false,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
@@ -79,7 +80,7 @@ class VideoItem extends GalleryComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.playing) {
-      this.setState({ playedOnce: true });
+      this.setState({ loadVideo: true });
     }
 
     this.playVideoIfNeeded(nextProps);
@@ -197,6 +198,11 @@ class VideoItem extends GalleryComponent {
           });
         }}
         playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
+        onProgress={() => {
+          if (!this.state.playedOnce) {
+            this.setState({ playedOnce: true });
+          }
+        }}
         onPlay={() => {
           this.props.actions.eventsListener(
             GALLERY_CONSTS.events.VIDEO_PLAYED,
@@ -205,7 +211,7 @@ class VideoItem extends GalleryComponent {
           this.setState({ playing: true });
         }}
         onReady={() => {
-          this.playVideoIfNeeded();
+          // this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
@@ -272,7 +278,7 @@ class VideoItem extends GalleryComponent {
     // eslint-disable-next-line no-unused-vars
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
-    const video = this.state.playedOnce ? (
+    const video = this.state.loadVideo ? (
       <div
         className={baseClassName + ' animated fadeIn '}
         data-hook="video_container-video-player-element"
