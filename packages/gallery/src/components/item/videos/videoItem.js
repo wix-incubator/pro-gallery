@@ -22,6 +22,7 @@ class VideoItem extends GalleryComponent {
 
   componentDidMount() {
     this.dynamiclyImportVideoPlayers();
+    this.setState({ loadVideo: true });
   }
 
   dynamiclyImportVideoPlayers() {
@@ -211,7 +212,7 @@ class VideoItem extends GalleryComponent {
           this.setState({ playing: true });
         }}
         onReady={() => {
-          // this.playVideoIfNeeded();
+          this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
