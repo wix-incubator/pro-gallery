@@ -1,3 +1,9 @@
+## [v2.3.4](https://pro-gallery-2-3-4.surge.sh) (08/12/2020) 
+
+#### LEAN_GALLERY
+ -  Initial commit for new lean-gallery pacakge
+
+---
 ## [v2.3.3](https://pro-gallery-2-3-3.surge.sh) (07/12/2020)
  
 #### OTHER
