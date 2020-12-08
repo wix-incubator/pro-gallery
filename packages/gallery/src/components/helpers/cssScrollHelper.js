@@ -72,6 +72,7 @@ class CssScrollHelper {
   }
 
   calcScrollCss({ domId, items, styleParams }) {
+    utils.isVerbose() && console.time('CSS Scroll');
     if (!(items && items.length)) {
       return [];
     }
@@ -100,9 +101,13 @@ class CssScrollHelper {
       ) +
         1) *
       maxStep;
-    return items.map((item) =>
+
+    const cssScroll = items.map((item) =>
       this.calcScrollCssForItem({ domId, item, styleParams })
     );
+    utils.isVerbose() && console.timeEnd('CSS Scroll');
+
+    return cssScroll;
   }
 
   shouldCalcScrollCss({ type }) {
