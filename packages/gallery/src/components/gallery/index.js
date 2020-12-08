@@ -7,6 +7,7 @@ import {
 } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
+// import { LeanGallery, formatLeanGalleryStyles, isEligibleForLeanGallery } from 'lean-gallery';
 import isEligibleForLeanGallery from './leanGallery/isEligible';
 import LeanGallery, {
   formatLeanGalleryStyles,
