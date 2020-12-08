@@ -16,7 +16,7 @@ describe('gallerySizeType - e2e', () => {
     await driver.closePage();
   });
 
-  it('when "gallerySizeType" set to "PIXELS" the width of each item should be close to the "gallerySizePx" destination', async () => {
+  it('when "gallerySizeType" set to "PIXELS" the width of each item or group should be approximately the value given to "gallerySizePx"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       gallerySizeType: GALLERY_CONSTS.gallerySizeType.PIXELS,
@@ -27,7 +27,7 @@ describe('gallerySizeType - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('when "gallerySizeType" set to "RATIO" the width of each item should be relative to the gallery width. ("gallerySizeRatio" represents the target width of each item in percentage)', async () => {
+  it('when "gallerySizeType" set to "RATIO" the width of each item or group should be approximately the value given to "gallerySizeRatio" in percentage (from the gallery total width).', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       gallerySizeType: GALLERY_CONSTS.gallerySizeType.RATIO,
