@@ -4,8 +4,7 @@
   "name": "pro-gallery",
   "version": "2.3.4",
   "sideEffects": [
-    "./src/components/styles/gallery.scss",
-    "./src/components/gallery/leanGallery/leanGallery.scss"
+    "./src/components/styles/gallery.scss"
   ],
   "repository": {
     "type": "git",
@@ -40,6 +39,7 @@
     "hls.js": "^0.14.12",
     "pro-gallery-lib": "2.3.3",
     "pro-layouts": "2.3.2",
+    "lean-gallery": "2.3.3",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {

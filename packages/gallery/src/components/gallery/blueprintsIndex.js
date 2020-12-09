@@ -11,9 +11,7 @@ import {
   setLayoutFixerMounted,
   getLayoutFixerData,
 } from '../layoutFixer/layoutFixerStore';
-// import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
-import isEligibleForLeanGallery from './leanGallery/isEligible';
-import LeanGallery from './leanGallery/leanGallery';
+import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
 
 export default class BaseGallery extends React.Component {
   static propTypes = basePropTypes;

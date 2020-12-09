@@ -7,11 +7,11 @@ import {
 } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
-// import { LeanGallery, formatLeanGalleryStyles, isEligibleForLeanGallery } from 'lean-gallery';
-import isEligibleForLeanGallery from './leanGallery/isEligible';
-import LeanGallery, {
+import {
+  LeanGallery,
   formatLeanGalleryStyles,
-} from './leanGallery/leanGallery';
+  isEligibleForLeanGallery,
+} from 'lean-gallery';
 
 export default class BaseGallery extends React.Component {
   static propTypes = basePropTypes;

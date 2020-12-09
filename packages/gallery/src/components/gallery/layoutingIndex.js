@@ -2,9 +2,7 @@ import React from 'react';
 import { defaultStyles, BlueprintsManager } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
-// import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
-import isEligibleForLeanGallery from './leanGallery/isEligible';
-import LeanGallery from './leanGallery/leanGallery';
+import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
 
 import { getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
 
