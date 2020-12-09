@@ -22,7 +22,6 @@ class VideoItem extends GalleryComponent {
 
   componentDidMount() {
     this.dynamiclyImportVideoPlayers();
-    this.setState({ loadVideo: true });
   }
 
   dynamiclyImportVideoPlayers() {
