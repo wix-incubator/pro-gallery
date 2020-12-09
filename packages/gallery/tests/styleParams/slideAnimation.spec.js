@@ -9,12 +9,12 @@ describe('styleParam - slideAnimation', () => {
     items: images2,
     styles: styleParams,
   };
-  const nextAnimationStylesMock = {
+  const nextFadeAnimationStylesMock = {
     transition: 'opacity .8s ease',
     opacity: 0,
     display: 'block',
   };
-  const currentAnimationStylesMock = {
+  const currentFadeAnimationStylesMock = {
     transition: 'none',
     opacity: 1,
     display: 'block',
@@ -36,7 +36,7 @@ describe('styleParam - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       const item = driver.find.selector('.gallery-item-wrapper a').at(0);
-      expect(item.props().style).toEqual(currentAnimationStylesMock);
+      expect(item.props().style).toEqual(currentFadeAnimationStylesMock);
     });
     it('should set the correct "Fade" animation styles to the next item. (before navigating)', () => {
       Object.assign(initialProps.styles, {
@@ -45,7 +45,7 @@ describe('styleParam - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       const item = driver.find.selector('.gallery-item-wrapper a').at(1);
-      expect(item.props().style).toEqual(nextAnimationStylesMock);
+      expect(item.props().style).toEqual(nextFadeAnimationStylesMock);
     });
     it('should set to the previous item the correct "Fade" animation styles. (after navigating)', async () => {
       Object.assign(initialProps.styles, {
@@ -57,7 +57,7 @@ describe('styleParam - slideAnimation', () => {
       button.simulate('click');
       await driver.update(400);
       const item = driver.find.selector('.gallery-item-wrapper a').at(0);
-      expect(item.props().style).toEqual(nextAnimationStylesMock);
+      expect(item.props().style).toEqual(nextFadeAnimationStylesMock);
     });
     it('should not have animation styles when slideAnimations is "Scroll"', async () => {
       Object.assign(initialProps.styles, {
@@ -86,7 +86,7 @@ describe('styleParam - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       const item = driver.find.hook('item-wrapper').at(0);
-      expect(item.props().style).toMatchObject(currentAnimationStylesMock);
+      expect(item.props().style).toMatchObject(currentFadeAnimationStylesMock);
     });
     it('should set the correct "Fade" animation styles to the next item. (before navigating)', () => {
       Object.assign(initialProps.styles, {
@@ -95,7 +95,7 @@ describe('styleParam - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       const item = driver.find.hook('item-wrapper').at(1);
-      expect(item.props().style).toMatchObject(nextAnimationStylesMock);
+      expect(item.props().style).toMatchObject(nextFadeAnimationStylesMock);
     });
 
     it('should set to the previous item the correct "Fade" animation styles. (after navigating)', async () => {
@@ -108,7 +108,7 @@ describe('styleParam - slideAnimation', () => {
       button.simulate('click');
       await driver.update(400);
       const item = driver.find.hook('item-wrapper').at(0);
-      expect(item.props().style).toMatchObject(nextAnimationStylesMock);
+      expect(item.props().style).toMatchObject(nextFadeAnimationStylesMock);
     });
 
     it('should not have animation styles when slideAnimations is "Scroll"', () => {
@@ -118,7 +118,9 @@ describe('styleParam - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       const item = driver.find.hook('item-wrapper').at(0);
-      expect(item.props().style).not.toMatchObject(currentAnimationStylesMock);
+      expect(item.props().style).not.toMatchObject(
+        currentFadeAnimationStylesMock
+      );
     });
   });
 });
