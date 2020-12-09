@@ -12,7 +12,7 @@ class VideoItem extends GalleryComponent {
 
     this.state = {
       playedOnce: false,
-      loadVideo: props.loadVideo,
+      loadVideo: props.loadVideo || props.playing,
       playing: false,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
@@ -134,7 +134,13 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
-    if (!(window && window.ReactPlayer)) {
+    if (
+      !(
+        window &&
+        window.ReactPlayer &&
+        (this.state.loadVideo || this.props.playing)
+      )
+    ) {
       return null;
     }
     const PlayerElement = window.ReactPlayer;
@@ -269,18 +275,12 @@ class VideoItem extends GalleryComponent {
     if (this.state.playedOnce && this.state.ready) {
       baseClassName += ' playedOnce';
     }
-    const videoPreloader = (
-      <div
-        className="pro-circle-preloader"
-        key={'video-preloader-' + this.props.idx}
-      />
-    );
     // eslint-disable-next-line no-unused-vars
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
-    const video = this.state.loadVideo ? (
+    const video = (
       <div
-        className={baseClassName + ' animated fadeIn '}
+        className={baseClassName}
         data-hook="video_container-video-player-element"
         key={'video_container-' + this.props.id}
         style={
@@ -297,9 +297,8 @@ class VideoItem extends GalleryComponent {
       >
         {this.createPlayerElement()}
         {this.props.videoControls}
-        {videoPreloader}
       </div>
-    ) : null;
+    );
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
