@@ -6,7 +6,6 @@ import {
   isSEOMode,
   utils,
 } from 'pro-gallery-lib';
-import './leanGallery.scss';
 
 export default class LeanGallery extends React.Component {
   constructor() {

@@ -12,9 +12,8 @@ import comments from './comments';
 import { throttle } from "../../utils/utils";
 import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
-import { GALLERY_CONSTS, notEligibleReasons, isEligibleForLeanGallery } from 'pro-gallery';
-// import { GALLERY_CONSTS } from 'pro-gallery';
-// import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
+import { GALLERY_CONSTS } from 'pro-gallery';
+import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
 
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
