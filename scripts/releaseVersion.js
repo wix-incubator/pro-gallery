@@ -23,6 +23,7 @@ const PROJECTS = {
     LAYOUTS: 'layouts',
     FULLSCREEN: 'fullscreen',
     PLAYGROUND: 'playground',
+    LEAN_GALLERY: 'lean-gallery',
 };
 const CHANGELOG = 'changelog.md';
 const VERSION_LOGGER = 'packages/gallery/src/versionLogger.js';
