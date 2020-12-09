@@ -17,6 +17,10 @@ import { Resizable } from 're-resizable';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
+// Initial setup for lean-gallery use in the playground
+// import { LeanGallery } from 'lean-gallery';
+// import 'lean-gallery/dist/styles/leanGallery.css';
+
 const SideBar = React.lazy(() => import('../SideBar'));
 
 const pJson = require('../../../package.json');

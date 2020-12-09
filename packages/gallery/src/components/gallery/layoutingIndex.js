@@ -2,7 +2,6 @@ import React from 'react';
 import { defaultStyles, BlueprintsManager } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
-import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
 
 import { getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
 
@@ -43,16 +42,15 @@ export default class BaseGallery extends React.Component {
       eventsListener: _eventsListener,
       domId: this.domId,
     };
-    if (!isEligibleForLeanGallery(this.galleryProps)) {
-      blueprintsManager
-        .createBlueprint(this.galleryProps)
-        .then((blueprint) => {
-          this.setState({ blueprint });
-        })
-        .catch((e) => {
-          console.error('Could not breate a blueprints in layoutingIndex ', e);
-        });
-    }
+
+    blueprintsManager
+      .createBlueprint(this.galleryProps)
+      .then((blueprint) => {
+        this.setState({ blueprint });
+      })
+      .catch((e) => {
+        console.error('Could not breate a blueprints in layoutingIndex ', e);
+      });
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {
@@ -60,13 +58,10 @@ export default class BaseGallery extends React.Component {
   }
 
   render() {
-    const GalleryComponent = isEligibleForLeanGallery(this.galleryProps)
-      ? LeanGallery
-      : ProGallery;
     const { blueprint } = this.state;
 
     if (blueprint && Object.keys(blueprint).length > 0) {
-      return <GalleryComponent {...this.galleryProps} {...blueprint} />;
+      return <ProGallery {...this.galleryProps} {...blueprint} />;
     } else {
       return null;
     }
