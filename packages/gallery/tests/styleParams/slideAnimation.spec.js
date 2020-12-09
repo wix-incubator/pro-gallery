@@ -36,13 +36,9 @@ describe('styleParam - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       const currentItem = driver.find.selector('.gallery-item-wrapper a').at(0);
-      const notCurrentItem = driver.find
-        .selector('.gallery-item-wrapper a')
-        .at(1);
+      const nextItem = driver.find.selector('.gallery-item-wrapper a').at(1);
       expect(currentItem.props().style).toEqual(currentFadeAnimationStylesMock);
-      expect(notCurrentItem.props().style).toEqual(
-        notCurrentFadeAnimationStylesMock
-      );
+      expect(nextItem.props().style).toEqual(notCurrentFadeAnimationStylesMock);
       const button = driver.find.hook('nav-arrow-next');
       button.simulate('click');
       await driver.update(400);
@@ -76,11 +72,11 @@ describe('styleParam - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       const currentItem = driver.find.hook('item-wrapper').at(0);
-      const notCurrentItem = driver.find.hook('item-wrapper').at(1);
+      const nextItem = driver.find.hook('item-wrapper').at(1);
       expect(currentItem.props().style).toMatchObject(
         currentFadeAnimationStylesMock
       );
-      expect(notCurrentItem.props().style).toMatchObject(
+      expect(nextItem.props().style).toMatchObject(
         notCurrentFadeAnimationStylesMock
       );
       const button = driver.find.hook('nav-arrow-next');
