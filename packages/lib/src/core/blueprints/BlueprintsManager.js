@@ -35,13 +35,20 @@ export default class BlueprintsManager {
 
     params = { ...params, ...(await this.completeParams(params)) };
 
-    const { blueprint, changedParams } = blueprints.createBlueprint(
+    const _createBlueprint = async (args) => {
+      if (this.api.createBlueprintImp) {
+        return await this.api.createBlueprintImp(args);
+      } else {
+        return await blueprints.createBlueprint(args);
+      }
+    };
+    const { blueprint, changedParams } = await _createBlueprint({
       params,
-      this.currentState,
-      this.existingBlueprint,
-      this.id,
-      this.currentState.isUsingCustomInfoElements
-    );
+      lastParams: this.currentState,
+      existingBlueprint: this.existingBlueprint,
+      blueprintManagerId: this.id,
+      isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
+    });
 
     const blueprintChanged = Object.values(changedParams).some(
       (changedParam) => !!changedParam

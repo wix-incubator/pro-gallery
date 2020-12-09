@@ -1,3 +1,4 @@
+// If css is not wirking -> remove :global as in gallery.scss 
 :global {
   div.lean-gallery-gallery {
     display: grid;
@@ -27,5 +28,4 @@
       }
     }
   }
-
 }

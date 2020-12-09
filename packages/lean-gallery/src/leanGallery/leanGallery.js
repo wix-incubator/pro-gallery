@@ -6,8 +6,6 @@ import {
   isSEOMode,
   utils,
 } from 'pro-gallery-lib';
-import { getInnerInfoStyle } from '../../item/itemViewStyleProvider';
-//import './leanGallery.scss';
 
 export default class LeanGallery extends React.Component {
   constructor() {
@@ -473,3 +471,43 @@ export const formatLeanGalleryStyles = (styles) => {
     customExternalInfoRendererExists
   ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };
+
+function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth) {
+  const commonStyles = {
+    ...((styleParams.imageInfoType ===
+      GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND ||
+      styleParams.imageInfoType ===
+        GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND) &&
+      styleParams.textBoxFillColor &&
+      styleParams.textBoxFillColor.value && {
+        backgroundColor: styleParams.textBoxFillColor.value,
+      }),
+    overflow: 'hidden',
+    boxSizing: 'border-box',
+  };
+
+  const infoAboveOrBelow = GALLERY_CONSTS.hasVerticalPlacement(placement);
+  const infoRightOrLeft = GALLERY_CONSTS.hasHorizontalPlacement(placement);
+
+  return {
+    ...commonStyles,
+    ...(infoAboveOrBelow &&
+      getInnerInfoStylesAboveOrBelow(styleParams, infoHeight)),
+    ...(infoRightOrLeft &&
+      getInnerInfoStylesRightOrLeft(styleParams, infoWidth)),
+  };
+}
+
+function getInnerInfoStylesAboveOrBelow(styleParams, infoHeight) {
+  return {
+    width: '100%',
+    height: infoHeight,
+  };
+}
+
+function getInnerInfoStylesRightOrLeft(styleParams, infoWidth) {
+  return {
+    height: '100%',
+    width: infoWidth,
+  };
+}

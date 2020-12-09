@@ -7,10 +7,6 @@ import {
 } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
-import isEligibleForLeanGallery from './leanGallery/isEligible';
-import LeanGallery, {
-  formatLeanGalleryStyles,
-} from './leanGallery/leanGallery';
 
 export default class BaseGallery extends React.Component {
   static propTypes = basePropTypes;
@@ -32,8 +28,6 @@ export default class BaseGallery extends React.Component {
       eventsListener: _eventsListener,
       domId,
     };
-    const shouldRenderLean = isEligibleForLeanGallery(galleryProps);
-    const key = [domId, shouldRenderLean].join('_');
 
     if (this.props.useBlueprints) {
       //
@@ -54,15 +48,8 @@ export default class BaseGallery extends React.Component {
       }
     }
 
-    let GalleryComponent = ProGallery;
-
-    if (shouldRenderLean) {
-      galleryProps.styles = formatLeanGalleryStyles(galleryProps.styles);
-      GalleryComponent = LeanGallery;
-    }
-
     utils.logPlaygroundLink(galleryProps.styles);
 
-    return <GalleryComponent key={key} {...galleryProps} />;
+    return <ProGallery {...galleryProps} />;
   }
 }

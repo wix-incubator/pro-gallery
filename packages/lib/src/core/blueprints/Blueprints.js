@@ -6,13 +6,13 @@ import { ItemsHelper } from '../helpers/itemsHelper';
 import processLayouts from '../helpers/layoutHelper.js';
 
 class Blueprints {
-  createBlueprint(
+  createBlueprint({
     params,
     lastParams,
     existingBlueprint,
     blueprintManagerId,
-    isUsingCustomInfoElements
-  ) {
+    isUsingCustomInfoElements,
+  }) {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
@@ -96,7 +96,7 @@ class Blueprints {
       console.error('Could not create blueprint, error:', error);
     }
     // return the existing or the modified existing object
-    return { blueprint: existingBlueprint, changedParams };
+    return { blueprint: existingBlueprint, changedParams, blueprintManagerId };
   }
 
   // ------------------ Raw data to Formated data (if needed) ---------------------------- //
