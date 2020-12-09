@@ -1,3 +1,9 @@
+## [v2.3.5](https://pro-gallery-2-3-5.surge.sh) (09/12/2020)
+ 
+#### GALLERY
+ -  Remove leanGallery usage and imports from Gallery package
+
+---
 ## [v2.3.4](https://pro-gallery-2-3-4.surge.sh) (08/12/2020) 
 
 #### LEAN_GALLERY
