@@ -4,8 +4,7 @@
   "name": "pro-gallery",
   "version": "2.3.4",
   "sideEffects": [
-    "./src/components/styles/gallery.scss",
-    "./src/components/gallery/leanGallery/leanGallery.scss"
+    "./src/components/styles/gallery.scss"
   ],
   "repository": {
     "type": "git",
