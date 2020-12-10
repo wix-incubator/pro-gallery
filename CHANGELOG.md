@@ -1,3 +1,9 @@
+## [v2.3.6](https://pro-gallery-2-3-6.surge.sh) (10/12/2020)
+ 
+#### GALLERY
+ -  improve (video): improve video loading flow for smoother play start
+
+---
 ## [v2.3.5](https://pro-gallery-2-3-5.surge.sh) (09/12/2020)
  
 #### GALLERY
