@@ -144,10 +144,6 @@ export function useGalleryContext(
       return context.gallerySettings;
     } else {
       try {
-        console.log(
-          'Getting gallerySettings from localStorage',
-          localStorage.gallerySettings
-        );
         return JSON.parse(localStorage.gallerySettings) || {};
       } catch (e) {
         // console.error('Could not get gallerySettings', e);

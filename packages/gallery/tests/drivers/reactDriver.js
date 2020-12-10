@@ -208,6 +208,9 @@ class galleryDriver {
       hook: (str) => {
         return this.wrapper.find({ 'data-hook': str });
       },
+      tag: (str) => {
+        return this.wrapper.find(`${str}`);
+      },
       id: (str) => {
         return this.wrapper.find(`#${str}`);
       },
