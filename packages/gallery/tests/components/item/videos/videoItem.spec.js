@@ -36,6 +36,7 @@ describe('Video Item ', () => {
     expect(
       driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
+    expect(driver.find.tag('video').length).to.equal(0);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
@@ -48,6 +49,7 @@ describe('Video Item ', () => {
     expect(
       driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
+    expect(driver.find.tag('video').length).to.equal(0);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
@@ -63,6 +65,7 @@ describe('Video Item ', () => {
     expect(
       driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
+    expect(driver.find.tag('video').length).to.equal(0);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
@@ -74,6 +77,7 @@ describe('Video Item ', () => {
     expect(
       driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
+    expect(driver.find.tag('video').length).to.equal(0);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
@@ -89,6 +93,7 @@ describe('Video Item ', () => {
     expect(
       driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
+    expect(driver.find.tag('video').length).to.equal(0);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
@@ -100,6 +105,7 @@ describe('Video Item ', () => {
     expect(
       driver.find.hook('video_container-video-player-element').length
     ).to.equal(1);
+    expect(driver.find.tag('video').length).to.equal(0);
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
@@ -109,6 +115,7 @@ describe('Video Item ', () => {
   it('source should have right src', async () => {
     Object.assign(sampleItemViewProps, {
       videoUrl: '',
+      loadVideo: true,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     expect(driver.find.selector('ReactPlayer').props().url).equal(
