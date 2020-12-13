@@ -1,3 +1,15 @@
+## [v2.3.7](https://pro-gallery-2-3-7.surge.sh) (13/12/2020)
+ 
+#### GALLERY
+ -  loadMoreButton mobile styles will be set via Wix dynamic css, as the rest of font & color styles.
+
+#### OTHER
+ - reverted video changes in 2.3.6
+
+#### PLAYGROUND
+ -  fix (settings): remove itemClick from playground and fix isRelevant for loopImages
+
+---
 ## [v2.3.6](https://pro-gallery-2-3-6.surge.sh) (10/12/2020)
  
 #### GALLERY
