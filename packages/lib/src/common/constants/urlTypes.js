@@ -1,6 +1,5 @@
 export const URL_SIZES = {
   RESIZED: 'resized',
-  SCALED: 'scaled',
   PIXEL: 'pixel',
   THUMBNAIL: 'thumbnail',
   SQUARE: 'square',

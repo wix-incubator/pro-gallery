@@ -12,7 +12,6 @@ class VideoItem extends GalleryComponent {
 
     this.state = {
       playedOnce: false,
-      loadVideo: props.loadVideo || props.playing,
       playing: false,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
@@ -80,7 +79,7 @@ class VideoItem extends GalleryComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.playing) {
-      this.setState({ loadVideo: true });
+      this.setState({ playedOnce: true });
     }
 
     this.playVideoIfNeeded(nextProps);
@@ -134,13 +133,7 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
-    if (
-      !(
-        window &&
-        window.ReactPlayer &&
-        (this.state.loadVideo || this.props.playing)
-      )
-    ) {
+    if (!(window && window.ReactPlayer)) {
       return null;
     }
     const PlayerElement = window.ReactPlayer;
@@ -204,11 +197,6 @@ class VideoItem extends GalleryComponent {
           });
         }}
         playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
-        onProgress={() => {
-          if (!this.state.playedOnce) {
-            this.setState({ playedOnce: true });
-          }
-        }}
         onPlay={() => {
           this.props.actions.eventsListener(
             GALLERY_CONSTS.events.VIDEO_PLAYED,
@@ -228,7 +216,7 @@ class VideoItem extends GalleryComponent {
               muted: !this.props.styleParams.videoSound,
               preload: 'metadata',
               poster: this.props.createUrl(
-                GALLERY_CONSTS.urlSizes.SCALED,
+                GALLERY_CONSTS.urlSizes.RESIZED,
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               ),
               style: videoDimensionsCss,
@@ -264,7 +252,7 @@ class VideoItem extends GalleryComponent {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const { videoPlaceholder, hover } = this.props;
+    const hover = this.props.hover;
 
     let baseClassName =
       'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
@@ -272,15 +260,18 @@ class VideoItem extends GalleryComponent {
     if (this.state.playing) {
       baseClassName += ' playing';
     }
-    if (this.state.playedOnce && this.state.ready) {
-      baseClassName += ' playedOnce';
-    }
+    const videoPreloader = (
+      <div
+        className="pro-circle-preloader"
+        key={'video-preloader-' + this.props.idx}
+      />
+    );
     // eslint-disable-next-line no-unused-vars
     const { marginLeft, marginTop, ...restOfDimensions } =
       this.props.imageDimensions || {};
     const video = (
       <div
-        className={baseClassName}
+        className={baseClassName + ' animated fadeIn '}
         data-hook="video_container-video-player-element"
         key={'video_container-' + this.props.id}
         style={
@@ -297,12 +288,13 @@ class VideoItem extends GalleryComponent {
       >
         {this.createPlayerElement()}
         {this.props.videoControls}
+        {videoPreloader}
       </div>
     );
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
-        {[video, videoPlaceholder, hover]}
+        {[video, hover]}
       </div>
     );
   }
