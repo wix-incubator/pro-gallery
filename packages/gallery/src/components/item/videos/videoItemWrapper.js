@@ -25,31 +25,31 @@ const videoControls = [
 class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
-    this.mightPlayVideo = this.mightPlayVideo.bind(this);
+    this.shouldPlayVideo = this.shouldPlayVideo.bind(this);
     this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(
       this
     );
     this.state = { VideoItemLoaded: false };
   }
 
-  mightPlayVideo() {
+  shouldPlayVideo() {
     const { videoPlay, itemClick } = this.props.styleParams;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    // if (
-    //   this.props.idx === this.props.playingVideoIdx ||
-    //   this.props.idx === this.props.nextVideoIdx
-    // ) {
-    if (videoPlay === 'hover' || videoPlay === 'auto') {
-      return true;
-    } else if (itemClick === 'nothing') {
-      return true;
-    } else if (itemClick === 'link' && !hasLink) {
-      return true;
+    if (
+      this.props.idx === this.props.playingVideoIdx ||
+      this.props.idx === this.props.nextVideoIdx
+    ) {
+      if (videoPlay === 'hover' || videoPlay === 'auto') {
+        return true;
+      } else if (itemClick === 'nothing') {
+        return true;
+      } else if (itemClick === 'link' && !hasLink) {
+        return true;
+      }
     }
-    // }
     return false;
   }
 
@@ -84,7 +84,7 @@ class VideoItemWrapper extends ImageItem {
         /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
       );
       this.VideoItem = VideoItem.default;
-      if (this.mightPlayVideo()) {
+      if (this.shouldPlayVideo()) {
         this.setState({ VideoItemLoaded: true });
       }
     } catch (e) {
@@ -99,13 +99,12 @@ class VideoItemWrapper extends ImageItem {
     const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
 
     const VideoItem = this.VideoItem;
-    if (!this.mightPlayVideo() || !VideoItem) {
+    if (!this.shouldPlayVideo() || !VideoItem) {
       return [videoPlaceholder, hover];
     }
     return (
       <VideoItem
         {...this.props}
-        videoPlaceholder={videoPlaceholder}
         videoControls={showVideoControls && videoControls}
       />
     );
