@@ -219,34 +219,6 @@ class GalleryView extends GalleryComponent {
     );
   }
 
-  returnButtonStyle(styleParams) {
-    const btnStyle = {};
-    if (utils.isMobile()) {
-      if (typeof styleParams.loadMoreButtonFont !== 'undefined') {
-        btnStyle.font = styleParams.loadMoreButtonFont.value;
-        btnStyle.textDecoration = styleParams.textDecorationLoadMore;
-      }
-      if (typeof styleParams.loadMoreButtonFontColor !== 'undefined') {
-        btnStyle.color = styleParams.loadMoreButtonFontColor.value;
-        btnStyle.textDecorationColor =
-          styleParams.loadMoreButtonFontColor.value;
-      }
-      if (typeof styleParams.loadMoreButtonColor !== 'undefined') {
-        btnStyle.background = styleParams.loadMoreButtonColor.value;
-      }
-      if (typeof styleParams.loadMoreButtonBorderColor !== 'undefined') {
-        btnStyle.borderColor = styleParams.loadMoreButtonBorderColor.value;
-      }
-      if (typeof styleParams.loadMoreButtonBorderRadius !== 'undefined') {
-        btnStyle.borderRadius = styleParams.loadMoreButtonBorderRadius;
-      }
-      if (typeof styleParams.loadMoreButtonBorderWidth !== 'undefined') {
-        btnStyle.borderWidth = styleParams.loadMoreButtonBorderWidth;
-      }
-    }
-    return btnStyle;
-  }
-
   createShowMoreButton() {
     if (typeof this.props.customLoadMoreRenderer === 'function') {
       return (
@@ -261,7 +233,6 @@ class GalleryView extends GalleryComponent {
     const shouldShowButton =
       buttonState &&
       this.props.galleryStructure.height > this.props.container.height;
-    const btnStyle = this.returnButtonStyle(styleParams);
 
     if (shouldShowButton) {
       const buttonText = styleParams.loadMoreButtonText || 'Load More';
@@ -280,7 +251,6 @@ class GalleryView extends GalleryComponent {
             onMouseDown={(e) => e.preventDefault()}
             data-hook="show-more"
             aria-label={buttonText}
-            style={btnStyle}
           >
             {buttonText}
           </button>
