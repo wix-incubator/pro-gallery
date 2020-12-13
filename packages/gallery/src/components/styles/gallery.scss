@@ -449,6 +449,14 @@ div.pro-gallery {
             }
           }
 
+          &.playedOnce {
+            ~ .image-item {
+              pointer-events: none;
+              opacity: 0;
+              transition: opacity .2s ease;
+            }
+          }
+
           button,
           i {
             display: inline-block;
