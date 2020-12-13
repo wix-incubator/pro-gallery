@@ -48,7 +48,8 @@ export const stylesBySection = {
 
     'groupSize',
     'collageDensity',
-
+    'minItemSize',
+    
     'cubeImages',
     'cubeType',
     'cubeRatio',
@@ -101,7 +102,6 @@ export const stylesBySection = {
     'isAutoSlideshow',
     'autoSlideshowInterval',
     'playButtonForAutoSlideShow',
-    'itemClick',
     'scrollSnap',
     'allowContextMenu',
   ],

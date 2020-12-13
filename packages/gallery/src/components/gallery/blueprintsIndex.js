@@ -11,9 +11,6 @@ import {
   setLayoutFixerMounted,
   getLayoutFixerData,
 } from '../layoutFixer/layoutFixerStore';
-// import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
-import isEligibleForLeanGallery from './leanGallery/isEligible';
-import LeanGallery from './leanGallery/leanGallery';
 
 export default class BaseGallery extends React.Component {
   static propTypes = basePropTypes;
@@ -66,10 +63,6 @@ export default class BaseGallery extends React.Component {
       }
     }
 
-    const GalleryComponent = isEligibleForLeanGallery(galleryProps)
-      ? LeanGallery
-      : ProGallery;
-
     utils.logPlaygroundLink(galleryProps.styles);
 
     if (
@@ -78,7 +71,7 @@ export default class BaseGallery extends React.Component {
       galleryProps.container &&
       galleryProps.structure
     ) {
-      return <GalleryComponent {...galleryProps} />;
+      return <ProGallery {...galleryProps} />;
     } else {
       return null;
     }
