@@ -56,8 +56,6 @@ export default class Layouter {
     if (this.styleParams.isVertical) {
       if (this.styleParams.fixedColumns > 0) {
         numOfCols = this.styleParams.fixedColumns;
-      } else if (this.styleParams.columnWidths) {
-        numOfCols = this.styleParams.columnWidths.split(',').length;
       } else {
         // find the number of columns that makes each column width the closet to the targetItemSize
         const numOfColsFloat = galleryWidth / targetItemSize;
@@ -265,6 +263,10 @@ export default class Layouter {
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
         columnWidthsArr = columnWidths.split(',').map(Number);
+        while (columnWidthsArr.length < this.numOfCols) {
+          columnWidthsArr.push(...columnWidthsArr);
+        }
+        columnWidthsArr = columnWidthsArr.slice(0, this.numOfCols);
         const columnMultiplier =
           this.galleryWidth / columnWidthsArr.reduce((a, b) => a + b, 0);
         columnWidthsArr = columnWidthsArr.map((col) =>
