@@ -1131,6 +1131,7 @@ export class GalleryContainer extends React.Component {
           items={this.items}
           styles={this.props.styles}
           domId={this.props.domId}
+          isPrerenderMode={this.props.isPrerenderMode}
         ></LayoutFixer>
       </div>
     );
