@@ -38,10 +38,6 @@ class VideoItemWrapper extends ImageItem {
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    // if (
-    //   this.props.idx === this.props.playingVideoIdx ||
-    //   this.props.idx === this.props.nextVideoIdx
-    // ) {
     if (videoPlay === 'hover' || videoPlay === 'auto') {
       return true;
     } else if (itemClick === 'nothing') {

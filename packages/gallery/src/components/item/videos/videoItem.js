@@ -82,15 +82,6 @@ class VideoItem extends GalleryComponent {
     if (nextProps.playing || nextProps.firstUserInteractionExecuted) {
       this.setState({ loadVideo: true });
     }
-    // if(nextProps.playing && !this.state.url){
-    //   const url = this.props.videoUrl
-    //   ? this.props.videoUrl
-    //   : this.props.createUrl(
-    //       GALLERY_CONSTS.urlSizes.RESIZED,
-    //       GALLERY_CONSTS.urlTypes.VIDEO
-    //     );
-    //     this.setState({url})
-    // }
 
     this.playVideoIfNeeded(nextProps);
   }
