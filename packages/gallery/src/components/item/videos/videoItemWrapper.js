@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils } from 'pro-gallery-lib';
+import { utils, isEditMode } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -53,7 +53,7 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoItemPlaceholder(showVideoControls) {
+  createVideoItemPlaceholder() {
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -73,22 +73,23 @@ class VideoItemWrapper extends ImageItem {
         imageDimensions={this.props.imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
-        videoControls={showVideoControls && videoControls}
       />
     );
   }
 
   async componentDidMount() {
-    try {
-      const VideoItem = await import(
-        /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
-      );
-      this.VideoItem = VideoItem.default;
-      if (this.mightPlayVideo()) {
-        this.setState({ VideoItemLoaded: true });
+    if (!isEditMode()) {
+      try {
+        const VideoItem = await import(
+          /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
+        );
+        this.VideoItem = VideoItem.default;
+        if (this.mightPlayVideo()) {
+          this.setState({ VideoItemLoaded: true });
+        }
+      } catch (e) {
+        console.error('Failed to fetch VideoItem');
       }
-    } catch (e) {
-      console.error('Failed to fetch VideoItem');
     }
   }
 
@@ -96,7 +97,7 @@ class VideoItemWrapper extends ImageItem {
     const hover = this.props.hover;
     const showVideoControls =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
+    const videoPlaceholder = this.createVideoItemPlaceholder();
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
