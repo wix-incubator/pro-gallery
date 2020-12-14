@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "2.3.7",
+  "version": "2.3.8",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -37,8 +37,8 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "2.3.7",
-    "pro-layouts": "2.3.2",
+    "pro-gallery-lib": "2.3.8",
+    "pro-layouts": "2.3.8",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
