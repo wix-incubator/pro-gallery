@@ -17,9 +17,8 @@ import { Resizable } from 're-resizable';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
-// Initial setup for 'leanGallery' usage in the playground
-// import { LeanGallery } from 'lean-gallery';
-// import 'lean-gallery/dist/styles/leanGallery.css';
+import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
+import 'lean-gallery/dist/styles/leanGallery.css';
 
 const SideBar = React.lazy(() => import('../SideBar'));
 
@@ -254,8 +253,20 @@ export function App() {
     return { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
-  const GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
+  let GalleryComponent;
 
+  const shouldRenderLeanGallery = isEligibleForLeanGallery({
+    items: getItems(),
+    styles: styleParams,
+    totalItemsCount: getTotalItemsCount()
+  });
+
+  if(!shouldRenderLeanGallery) {
+    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
+  } else {
+    GalleryComponent = LeanGallery;
+  };
+  
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}

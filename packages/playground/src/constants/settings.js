@@ -49,7 +49,7 @@ export const stylesBySection = {
     'groupSize',
     'collageDensity',
     'minItemSize',
-    
+
     'cubeImages',
     'cubeType',
     'cubeRatio',
@@ -60,7 +60,6 @@ export const stylesBySection = {
     'gallerySizePx',
     'gallerySizeRatio',
 
-    'showArrows',
   ],
   [SECTIONS.ADVANCED]: [
     'gridStyle',
@@ -106,6 +105,7 @@ export const stylesBySection = {
     'allowContextMenu',
   ],
   [SECTIONS.DESIGN]: [
+    'showArrows',
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
