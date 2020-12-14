@@ -1,3 +1,12 @@
+## [v2.3.8](https://pro-gallery-2-3-8.surge.sh) (14/12/2020)
+ 
+#### LAYOUTS
+ -  fix (layouter): fix columnsWidth logic when more columns are defined
+
+#### GALLERY
+ -  loadMoreButton mobile styles will be set via Wix dynamic css, as the rest of font & color styles.
+
+---
 ## [v2.3.7](https://pro-gallery-2-3-7.surge.sh) (13/12/2020)
  
 #### GALLERY
