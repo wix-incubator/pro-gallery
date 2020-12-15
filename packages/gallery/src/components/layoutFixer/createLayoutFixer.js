@@ -1,7 +1,5 @@
 // import { createLayout } from 'pro-layouts';
-import { createLayout } from 'pro-layouts';
-
-export const createLayoutFixer = (mediaUrlFixer) => {
+export const createLayoutFixer = (mediaUrlFixer, createLayout) => {
   const getQueryParams = () => {
     const isTrueInQuery = (key) =>
       location.search.toLowerCase().indexOf(key.toLowerCase() + '=true') >= 0;
@@ -167,7 +165,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
         }
       }
 
-      connectedCallback() {
+      async connectedCallback() {
         this.domId = this.getAttribute('domId');
         if (!window.layoutFixer[this.domId]) {
           window.layoutFixer[this.domId] = {
@@ -235,7 +233,7 @@ export const createLayoutFixer = (mediaUrlFixer) => {
           this.useLayouter &&
           typeof createLayout === 'function'
         ) {
-          this.layout = createLayout({
+          this.layout = await createLayout({
             items: this.items,
             styleParams: this.styleParams,
             container: this.measures,
@@ -277,12 +275,9 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                 if (idx >= visibleItems) return;
 
                 const mediaUrl = element.getAttribute('data-src');
+                const { width, height } = this.layout.items[idx];
                 if (mediaUrl && typeof mediaUrl === 'string') {
-                  const src = mediaUrlFixer(
-                    mediaUrl,
-                    this.layout.items[idx].width,
-                    this.layout.items[idx].height
-                  );
+                  const src = mediaUrlFixer(mediaUrl, width, height);
                   if (src) {
                     !idx &&
                       canUse.useLayoutFixer &&
@@ -292,7 +287,11 @@ export const createLayoutFixer = (mediaUrlFixer) => {
                         src
                       );
                     element.setAttribute('src', src);
-                    setStyle(element, { opacity: 1 });
+                    setStyle(element, {
+                      opacity: 1,
+                      width: width + 'px',
+                      height: height + 'px',
+                    });
                   }
                 }
               });
