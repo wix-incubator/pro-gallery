@@ -199,14 +199,12 @@ function SideBar({ items, blueprintsManager, visible }) {
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Animations" key="Animations">
-            <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form layout="vertical">
                 <Form.Item label="Animation Direction">
                   <Select defaultValue={styleParams.animationDirection} onChange={val => _setStyleParams('animationDirection', val)}>
                     {Object.entries(GALLERY_CONSTS.animationDirection).map(([key, val]) => <Select.Option key={key} value={key}>{val}</Select.Option>)}
                   </Select>
                 </Form.Item>
-              </Form>
               <Form.Item label="Iterations" labelAlign="left" help="The number of steps of the animations (try 1 or 10)">
                 <InputNumber min={1} max={100} defaultValue={gallerySettings.animation_iterations || 1} onChange={val => setGallerySettings({ animation_iterations: val })} />
               </Form.Item>

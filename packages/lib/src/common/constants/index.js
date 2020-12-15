@@ -103,5 +103,5 @@ export default {
   viewMode,
   watermarkDock,
   imagePlacementAnimations,
-  animationDirection
+  animationDirection,
 };

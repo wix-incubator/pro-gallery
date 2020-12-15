@@ -11,7 +11,8 @@ export default class ScrollIndicator extends GalleryComponent {
       scrollTop: 0,
       scrollLeft: 0,
     };
-    this.debouncedOnScroll = utils.debounce(props.onScroll, 50);
+    // this.debouncedOnScroll = utils.debounce(props.onScroll, 50);
+    this.debouncedOnScroll = props.onScroll;
   }
 
   removeScrollListener() {
@@ -161,8 +162,8 @@ export default class ScrollIndicator extends GalleryComponent {
           scrollTopWithoutBase,
           domId,
         )}
-        style={{ display: 'none' }}
-      />
+        style={{ position: 'fixed', top: 0, right: 0, background: 'white', zIndex: 99999, padding: 10, border: '1px solid blue' }}
+      >{this.state.scrollTop}</div>
     );
   }
 }

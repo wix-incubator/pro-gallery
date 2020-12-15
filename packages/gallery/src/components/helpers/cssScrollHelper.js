@@ -55,8 +55,8 @@ class CssScrollHelper {
   }
 
   createScrollSelectorsFunction({ item, container, styleParams }) {
-    const imageStart = styleParams.oneRow ? item.offset.left : item.offset.top;
-    const imageSize = styleParams.oneRow ? item.width : item.height;
+    const imageStart = Math.round(styleParams.oneRow ? item.offset.left : item.offset.top);
+    const imageSize = Math.round(styleParams.oneRow ? item.width : item.height);
 
     const containerSize = styleParams.oneRow
       ? Math.min(container.width, window.innerWidth)
@@ -64,15 +64,15 @@ class CssScrollHelper {
 
     return (range, suffix, animationCss, animation, exitAnimation) => {
       if (
-        this.settings.animation_range_start >= 0 &&
-        this.settings.animation_range_stop > 0
+        typeof this.settings.animation_range_start !== 'undefined' &&
+        typeof this.settings.animation_range_stop !== 'undefined'
       ) {
         range = [
           this.settings.animation_range_start,
           this.settings.animation_range_stop,
         ];
       }
-      if (this.settings.animation_random) {
+      if (this.settings.animation_random > 0) {
         const r = Math.round(Math.random() * this.settings.animation_random);
         range[0] += r;
         range[1] += r;
@@ -96,16 +96,27 @@ class CssScrollHelper {
       } ${transitionDuration}ms ease !important`;
 
       const animationPadding = 1000;
-      const animationDuration = stop - start;
+      const animationDuration = Math.round(stop - start);
 
-      const cssAnimationStart = imageStart - containerSize;
-      const cssAnimationEnd = imageStart + imageSize;
+      const entryAnimationStart = Math.round(imageStart - containerSize + start);
+      const entryAnimationEnd = Math.round(entryAnimationStart + animationDuration);
 
-      const entryAnimationStart = imageStart - containerSize + start;
-      const entryAnimationEnd = entryAnimationStart + animationDuration;
+      const exitAnimationStart = Math.round(imageStart + imageSize - stop);
+      const exitAnimationEnd = Math.round(exitAnimationStart + animationDuration);
 
-      const exitAnimationStart = imageStart + imageSize - stop;
-      const exitAnimationEnd = exitAnimationStart + animationDuration;
+      console.log('CSS SCROLL: bounds #' + item.idx, {
+        start,
+        stop,
+        imageStart,
+        imageSize,
+        containerSize,
+        animationPadding,
+        animationDuration,
+        entryAnimationStart,
+        entryAnimationEnd,
+        exitAnimationStart,
+        exitAnimationEnd,
+      });
 
       const createAnimationStep = (idx, isExit) => {
         const [to, from] = isExit ? [exitTo, exitFrom] : [enterTo, enterFrom];
@@ -194,13 +205,9 @@ class CssScrollHelper {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
           createSelectorsRange(
-            cssAnimationStart - animationPadding,
-            cssAnimationStart
+            entryAnimationStart - animationPadding,
+            entryAnimationStart
           )
-        );
-        addScrollClass(
-          createAnimationStep(0),
-          createSelectorsRange(cssAnimationStart, entryAnimationStart)
         );
         addScrollClasses(
           createAnimationRange(entryAnimationStart, entryAnimationEnd)
@@ -213,66 +220,46 @@ class CssScrollHelper {
           createAnimationRange(exitAnimationStart, exitAnimationEnd, true)
         );
         addScrollClass(
-          createAnimationStep(iterations, true),
-          createSelectorsRange(exitAnimationEnd, cssAnimationEnd)
-        );
-        addScrollClass(
           createAnimationStep(iterations, true) + 'transtion: none !important;',
           createSelectorsRange(
-            cssAnimationEnd,
-            cssAnimationEnd + animationPadding
+            exitAnimationEnd,
+            exitAnimationEnd + animationPadding
           )
         );
       } else if (styleParams.animationDirection === 'IN') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
           createSelectorsRange(
-            cssAnimationStart - animationPadding,
-            cssAnimationStart
+            entryAnimationStart - animationPadding,
+            entryAnimationStart
           )
-        );
-        addScrollClass(
-          createAnimationStep(0),
-          createSelectorsRange(cssAnimationStart, entryAnimationStart)
         );
         addScrollClasses(
           createAnimationRange(entryAnimationStart, entryAnimationEnd)
         );
         addScrollClass(
-          createAnimationStep(iterations),
-          createSelectorsRange(entryAnimationEnd, cssAnimationEnd)
-        );
-        addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
           createSelectorsRange(
-            cssAnimationEnd,
-            cssAnimationEnd + animationPadding
+            entryAnimationEnd,
+            entryAnimationEnd + animationPadding
           )
         );
       } else if (styleParams.animationDirection === 'OUT') {
         addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
           createSelectorsRange(
-            cssAnimationStart - animationPadding,
-            cssAnimationStart
+            exitAnimationStart - animationPadding,
+            exitAnimationStart
           )
-        );
-        addScrollClass(
-          createAnimationStep(iterations),
-          createSelectorsRange(cssAnimationStart, exitAnimationStart)
         );
         addScrollClasses(
           createAnimationRange(exitAnimationStart, exitAnimationEnd, true)
         );
         addScrollClass(
-          createAnimationStep(iterations, true),
-          createSelectorsRange(exitAnimationEnd, cssAnimationEnd)
-        );
-        addScrollClass(
           createAnimationStep(iterations, true) + 'transtion: none !important;',
           createSelectorsRange(
-            cssAnimationEnd,
-            cssAnimationEnd + animationPadding
+            exitAnimationEnd,
+            exitAnimationEnd + animationPadding
           )
         );
       }
