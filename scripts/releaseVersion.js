@@ -76,7 +76,7 @@ function editChangelogAndUpdateVersion(bump) {
         try {
             if (result.yesno === 'yes' || result.yesno === 'y') {
                 // child.on('exit', function (e, code) {
-                execSync(`rm **/package-lock.json || true`, { // do not fail if file does not exist
+                execSync(`rm packages/*/package-lock.json || true`, { // do not fail if file does not exist
                     stdio: 'pipe'
                 });
                 execSync(`git commit -am "[main] update ${CHANGELOG}"`, {

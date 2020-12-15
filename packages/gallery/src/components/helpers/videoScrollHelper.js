@@ -17,7 +17,6 @@ class VideoScrollHelper {
     this.scrollBase = 0;
     this.videoItems = [];
     this.currentPlayingIdx = -1;
-    this.nextInLineIdx = -1;
     this.lastItemCount = 0;
     this.playing = false;
     this.updateGalleryStructure = this.updateGalleryStructure.bind(this);
@@ -116,7 +115,7 @@ class VideoScrollHelper {
   itemHovered(idx) {
     if (this.videoPlay !== 'hover') return;
     if (this.IdxExistsInVideoItems(idx)) {
-      this.play(idx, -1);
+      this.play(idx);
     } else {
       //do nothing
     }
@@ -129,7 +128,7 @@ class VideoScrollHelper {
       if (this.currentPlayingIdx === idx) {
         this.stop();
       } else {
-        this.play(idx, -1);
+        this.play(idx);
       }
     } else {
       //do nothing
@@ -209,14 +208,18 @@ class VideoScrollHelper {
         return false;
       }
     });
-    if (!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed) {
-      if (secondBestRating.idx >= 0) {
-        this.play(secondBestRating.idx, bestRating.idx); //play 2nd in line instead. keep best rating for next by the score he got...
+    if (bestRating.idx >= 0) {
+      if (!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed) {
+        if (secondBestRating.idx >= 0) {
+          this.play(secondBestRating.idx); //play 2nd in line instead. keep best rating for next by the score he got...
+        } else {
+          return; //cant play same video twice.
+        }
       } else {
-        return; //cant play same video twice.
+        this.play(bestRating.idx);
       }
     } else {
-      this.play(bestRating.idx, secondBestRating.idx);
+      this.lastVideoPlayed = -2; //if there are no videos to play. we can reset this mechanism so that one-video galleries can keep playing the same video
     }
   }
 
@@ -226,8 +229,7 @@ class VideoScrollHelper {
     );
   }
 
-  play(idx, nextIdx) {
-    this.setNextInLineIdx(nextIdx);
+  play(idx) {
     this.setPlayingIdx(idx);
     this.playing = true;
   }
@@ -241,7 +243,7 @@ class VideoScrollHelper {
   }
 
   onPlayingIdxChange() {
-    this.setPlayingVideos(this.currentPlayingIdx, this.nextInLineIdx);
+    this.setPlayingVideos(this.currentPlayingIdx);
   }
   //-------------------------------get/set----------------------------------------//
 
@@ -252,12 +254,6 @@ class VideoScrollHelper {
     }
   }
 
-  setNextInLineIdx(idx) {
-    if (this.nextInLineIdx !== idx) {
-      this.nextInLineIdx = idx;
-      this.onPlayingIdxChange();
-    }
-  }
   //-----------------------------Utils--------------------------------------------//
 
   isCurrentVideoStillVisible({ top, left }) {
