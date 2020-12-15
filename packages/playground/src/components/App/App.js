@@ -71,7 +71,7 @@ export function App() {
         setGalleryReady();
         break;
       case GALLERY_EVENTS.GALLERY_CHANGE: //TODO split to an event named "PARTIALY_GROW_GALLERY_PRETTY_PLEASE"
-        if(gallerySettings.useBlueprints && eventData.updatedHeight){
+        if(eventData.updatedHeight){
           setDimensions({height: eventData.updatedHeight});
         }
         break;
