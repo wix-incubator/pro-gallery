@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils } from 'pro-gallery-lib';
+// import { utils } from 'pro-gallery-lib';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper';
 import { GalleryComponent } from '../../galleryComponent';
 
@@ -47,8 +47,9 @@ export default class ScrollIndicator extends GalleryComponent {
 
     this.scrollEventListenerSet = true;
     const scrollingElement = this.props.scrollingElement;
+    const { oneRow } = this.props;
     //Horizontal Scroll
-    this.onHorizontalScrollTransition = ({detail}) => {
+    this.onHorizontalScrollTransition = ({ detail }) => {
       const step = Math.round(detail);
       if (step >= 0) {
         if (oneRow) {
@@ -84,7 +85,10 @@ export default class ScrollIndicator extends GalleryComponent {
       scrollingElement
         .horizontal()
         .addEventListener('scroll', this.onHorizontalScroll);
-      window.addEventListener('scrollTransition', this.onHorizontalScrollTransition);
+      window.addEventListener(
+        'scrollTransition',
+        this.onHorizontalScrollTransition
+      );
     } catch (e) {
       //
     }
@@ -160,10 +164,20 @@ export default class ScrollIndicator extends GalleryComponent {
         data-scroll-top={this.state.scrollTop}
         className={cssScrollHelper.calcScrollClasses(
           scrollTopWithoutBase,
-          domId,
+          domId
         )}
-        style={{ position: 'fixed', top: 0, right: 0, background: 'white', zIndex: 99999, padding: 10, border: '1px solid blue' }}
-      >{this.state.scrollTop}</div>
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          background: 'white',
+          zIndex: 99999,
+          padding: 10,
+          border: '1px solid blue',
+        }}
+      >
+        {this.state.scrollTop}
+      </div>
     );
   }
 }
