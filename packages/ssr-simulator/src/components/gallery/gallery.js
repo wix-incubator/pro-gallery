@@ -130,6 +130,7 @@ export default class Gallery extends React.PureComponent {
           }}
           container={container}
           viewMode={viewMode}
+          isPrerenderMode={true}
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
           useBlueprints={true}

@@ -1,3 +1,15 @@
+## [v2.3.10](https://pro-gallery-2-3-10.surge.sh) (15/12/2020)
+ 
+#### GALLERY
+ -  videos will load after first interaction. fix streched posters
+
+---
+## [v2.3.9](https://pro-gallery-2-3-9.surge.sh) (14/12/2020)
+ 
+#### GALLERY
+ -  fix (layoutFixer): make the createLayout async (to be remote)
+
+---
 ## [v2.3.8](https://pro-gallery-2-3-8.surge.sh) (14/12/2020)
  
 #### LAYOUTS

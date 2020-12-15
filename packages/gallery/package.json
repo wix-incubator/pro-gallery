@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "2.3.8",
+  "version": "2.3.10",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "start": "tsc -w & npm run css-watch",
+    "start": "tsc -w && npm run css-watch",
     "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
@@ -37,7 +37,7 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "2.3.8",
+    "pro-gallery-lib": "2.3.10",
     "pro-layouts": "2.3.8",
     "react-player": "^2.6.2"
   },
