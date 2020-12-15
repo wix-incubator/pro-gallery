@@ -47,7 +47,6 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick: false,
       gotFirstScrollEvent: false,
       playingVideoIdx: -1,
-      nextVideoIdx: -1,
       viewComponent: null,
     };
 
@@ -823,10 +822,9 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  setPlayingIdxState(playingVideoIdx, nextVideoIdx) {
+  setPlayingIdxState(playingVideoIdx) {
     this.setState({
       playingVideoIdx,
-      nextVideoIdx,
     });
   }
 
@@ -1077,7 +1075,6 @@ export class GalleryContainer extends React.Component {
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
-          nextVideoIdx={this.state.nextVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           actions={{

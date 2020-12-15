@@ -46,8 +46,8 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick: false,
       gotFirstScrollEvent: false,
       playingVideoIdx: -1,
-      nextVideoIdx: -1,
       viewComponent: null,
+      firstUserInteractionExecuted: false,
     };
 
     this.state = initialState;
@@ -477,10 +477,9 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  setPlayingIdxState(playingVideoIdx, nextVideoIdx) {
+  setPlayingIdxState(playingVideoIdx) {
     this.setState({
       playingVideoIdx,
-      nextVideoIdx,
     });
   }
 
@@ -584,6 +583,15 @@ export class GalleryContainer extends React.Component {
     if (eventName === GALLERY_CONSTS.events.HOVER_SET) {
       this.currentHoverChangeEvent.currentHoverIdx = eventData;
       window.dispatchEvent(this.currentHoverChangeEvent);
+    }
+    if (!this.state.firstUserInteractionExecuted) {
+      switch (eventName) {
+        case GALLERY_CONSTS.events.HOVER_SET:
+        case GALLERY_CONSTS.events.LOAD_MORE_CLICKED:
+        case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
+          this.setState({ firstUserInteractionExecuted: true });
+          break;
+      }
     }
     if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData, event);
@@ -706,9 +714,9 @@ export class GalleryContainer extends React.Component {
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
-          nextVideoIdx={this.state.nextVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
+          firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

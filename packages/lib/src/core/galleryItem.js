@@ -260,6 +260,21 @@ class GalleryItem {
     return this.urls.resized_url;
   }
 
+  get scaled_url() {
+    if (!this.urls.scaled_url) {
+      const orgRatio = this.maxWidth / this.maxHeight;
+      const resizedRatio = this.resizeWidth / this.resizeHeight;
+      const isOrgWider = resizedRatio < orgRatio;
+      this.urls.scaled_url = this.resizedUrl(
+        RESIZE_METHODS.FILL,
+        isOrgWider ? orgRatio * this.resizeHeight : this.resizeWidth,
+        isOrgWider ? this.resizeHeight : this.resizeWidth / orgRatio,
+        this.sharpParams
+      );
+    }
+    return this.urls.scaled_url;
+  }
+
   get pixel_url() {
     if (!this.urls.pixel_url) {
       this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, {

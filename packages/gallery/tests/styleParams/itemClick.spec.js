@@ -128,9 +128,7 @@ describe('styleParam - itemClick', () => {
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');
       await driver.update(100);
-      expect(
-        driver.find.hook('video_container-video-player-element').length
-      ).to.eq(1);
+      expect(driver.find.tag('video').length).to.eq(1);
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "expand"', async () => {
@@ -145,9 +143,7 @@ describe('styleParam - itemClick', () => {
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');
-      expect(
-        driver.find.hook('video_container-video-player-element').length
-      ).to.eq(0);
+      expect(driver.find.tag('video').length).to.eq(0);
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
@@ -162,9 +158,7 @@ describe('styleParam - itemClick', () => {
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');
-      expect(
-        driver.find.hook('video_container-video-player-element').length
-      ).to.eq(0);
+      expect(driver.find.tag('video').length).to.eq(0);
 
       driver.detach.proGallery();
     });
@@ -180,9 +174,7 @@ describe('styleParam - itemClick', () => {
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');
-      expect(
-        driver.find.hook('video_container-video-player-element').length
-      ).to.eq(0);
+      expect(driver.find.tag('video').length).to.eq(0);
 
       driver.detach.proGallery();
     });
