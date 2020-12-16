@@ -1,3 +1,6 @@
+## [v2.4.0](https://pro-gallery-2-4-0.surge.sh) (16/12/2020)
+-  bump node version
+---
 ## [v2.3.11](https://pro-gallery-2-3-11.surge.sh) (16/12/2020)
  
 #### GALLERY
