@@ -1,3 +1,9 @@
+## [v2.4.1](https://pro-gallery-2-4-1.surge.sh) (17/12/2020)
+ 
+#### GALLERY
+ -  improve (prerender): render highres image on prerender and set a prerender class
+
+---
 ## [v2.4.0](https://pro-gallery-2-4-0.surge.sh) (16/12/2020)
 -  bump node version
 ---
