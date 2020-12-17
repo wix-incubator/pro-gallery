@@ -196,9 +196,9 @@ class GalleryView extends GalleryComponent {
       domId: this.props.domId,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
-      nextVideoIdx: this.props.nextVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
+      firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },

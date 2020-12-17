@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils } from 'pro-gallery-lib';
+import { utils, isEditMode } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -25,35 +25,31 @@ const videoControls = [
 class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
-    this.shouldPlayVideo = this.shouldPlayVideo.bind(this);
+    this.mightPlayVideo = this.mightPlayVideo.bind(this);
     this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(
       this
     );
     this.state = { VideoItemLoaded: false };
   }
 
-  shouldPlayVideo() {
+  mightPlayVideo() {
     const { videoPlay, itemClick } = this.props.styleParams;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    if (
-      this.props.idx === this.props.playingVideoIdx ||
-      this.props.idx === this.props.nextVideoIdx
-    ) {
-      if (videoPlay === 'hover' || videoPlay === 'auto') {
-        return true;
-      } else if (itemClick === 'nothing') {
-        return true;
-      } else if (itemClick === 'link' && !hasLink) {
-        return true;
-      }
+    if (videoPlay === 'hover' || videoPlay === 'auto') {
+      return true;
+    } else if (itemClick === 'nothing') {
+      return true;
+    } else if (itemClick === 'link' && !hasLink) {
+      return true;
     }
+    // }
     return false;
   }
 
-  createVideoItemPlaceholder(showVideoControls) {
+  createVideoItemPlaceholder() {
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -73,22 +69,23 @@ class VideoItemWrapper extends ImageItem {
         imageDimensions={this.props.imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
-        videoControls={showVideoControls && videoControls}
       />
     );
   }
 
   async componentDidMount() {
-    try {
-      const VideoItem = await import(
-        /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
-      );
-      this.VideoItem = VideoItem.default;
-      if (this.shouldPlayVideo()) {
-        this.setState({ VideoItemLoaded: true });
+    if (!isEditMode()) {
+      try {
+        const VideoItem = await import(
+          /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
+        );
+        this.VideoItem = VideoItem.default;
+        if (this.mightPlayVideo()) {
+          this.setState({ VideoItemLoaded: true });
+        }
+      } catch (e) {
+        console.error('Failed to fetch VideoItem');
       }
-    } catch (e) {
-      console.error('Failed to fetch VideoItem');
     }
   }
 
@@ -96,15 +93,16 @@ class VideoItemWrapper extends ImageItem {
     const hover = this.props.hover;
     const showVideoControls =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
+    const videoPlaceholder = this.createVideoItemPlaceholder();
 
     const VideoItem = this.VideoItem;
-    if (!this.shouldPlayVideo() || !VideoItem) {
+    if (!this.mightPlayVideo() || !VideoItem) {
       return [videoPlaceholder, hover];
     }
     return (
       <VideoItem
         {...this.props}
+        videoPlaceholder={videoPlaceholder}
         videoControls={showVideoControls && videoControls}
       />
     );

@@ -17,7 +17,6 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
-import { LayoutFixer } from '../../layoutFixer/layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -46,8 +45,8 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick: false,
       gotFirstScrollEvent: false,
       playingVideoIdx: -1,
-      nextVideoIdx: -1,
       viewComponent: null,
+      firstUserInteractionExecuted: false,
     };
 
     this.state = initialState;
@@ -477,10 +476,9 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  setPlayingIdxState(playingVideoIdx, nextVideoIdx) {
+  setPlayingIdxState(playingVideoIdx) {
     this.setState({
       playingVideoIdx,
-      nextVideoIdx,
     });
   }
 
@@ -585,6 +583,15 @@ export class GalleryContainer extends React.Component {
       this.currentHoverChangeEvent.currentHoverIdx = eventData;
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
+    if (!this.state.firstUserInteractionExecuted) {
+      switch (eventName) {
+        case GALLERY_CONSTS.events.HOVER_SET:
+        case GALLERY_CONSTS.events.LOAD_MORE_CLICKED:
+        case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
+          this.setState({ firstUserInteractionExecuted: true });
+          break;
+      }
+    }
     if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData, event);
     }
@@ -669,6 +676,7 @@ export class GalleryContainer extends React.Component {
       <div
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
+        className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -705,10 +713,11 @@ export class GalleryContainer extends React.Component {
           customInfoRenderer={this.props.customInfoRenderer}
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
+          customNavArrowsRenderer={this.props.customNavArrowsRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
-          nextVideoIdx={this.state.nextVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
+          firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
@@ -743,14 +752,6 @@ export class GalleryContainer extends React.Component {
             <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
           )}
         </div>
-        <LayoutFixer
-          layoutFixerBundleUrl={this.props.layoutFixerBundleUrl}
-          layoutFixerScriptType={this.props.layoutFixerScriptType}
-          items={this.state.items}
-          styles={this.props.styles}
-          domId={this.props.domId}
-          isPrerenderMode={this.props.isPrerenderMode}
-        ></LayoutFixer>
       </div>
     );
   }
