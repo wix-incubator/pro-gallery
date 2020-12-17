@@ -17,7 +17,6 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
-import { LayoutFixer } from '../../layoutFixer/layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -677,6 +676,7 @@ export class GalleryContainer extends React.Component {
       <div
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
+        className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -713,6 +713,7 @@ export class GalleryContainer extends React.Component {
           customInfoRenderer={this.props.customInfoRenderer}
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
+          customNavArrowsRenderer={this.props.customNavArrowsRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
@@ -751,14 +752,6 @@ export class GalleryContainer extends React.Component {
             <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
           )}
         </div>
-        <LayoutFixer
-          layoutFixerBundleUrl={this.props.layoutFixerBundleUrl}
-          layoutFixerScriptType={this.props.layoutFixerScriptType}
-          items={this.state.items}
-          styles={this.props.styles}
-          domId={this.props.domId}
-          isPrerenderMode={this.props.isPrerenderMode}
-        ></LayoutFixer>
       </div>
     );
   }

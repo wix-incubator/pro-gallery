@@ -20,7 +20,6 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import checkNewGalleryProps from '../../helpers/isNew';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper.js';
-import { LayoutFixer } from '../../layoutFixer/layoutFixer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -1039,6 +1038,7 @@ export class GalleryContainer extends React.Component {
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
         id={`pro-gallery-inner-container-${this.props.domId}`}
+        className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -1117,14 +1117,6 @@ export class GalleryContainer extends React.Component {
             <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
           )}
         </div>
-        <LayoutFixer
-          layoutFixerBundleUrl={this.props.layoutFixerBundleUrl}
-          layoutFixerScriptType={this.props.layoutFixerScriptType}
-          items={this.items}
-          styles={this.props.styles}
-          domId={this.props.domId}
-          isPrerenderMode={this.props.isPrerenderMode}
-        ></LayoutFixer>
       </div>
     );
   }

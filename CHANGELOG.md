@@ -1,3 +1,19 @@
+## [v2.4.0](https://pro-gallery-2-4-0.surge.sh) (16/12/2020)
+-  bump node version
+---
+## [v2.3.11](https://pro-gallery-2-3-11.surge.sh) (16/12/2020)
+ 
+#### GALLERY
+ -  feature (slideshowView): add the option to pass navArrows render function
+
+#### OTHER
+ -  fix (layoutFixer): use react class instead of function
+ - This reverts commit 7f6bd4ccd42d37b0c15291b7f818e36c6e3a6953.
+ -  bump node version in .nvmrc files
+ -  fix (loadMoreAmount): fix functionality in the playground
+ -  fix (layoutFixer): use react class instead of function
+
+---
 ## [v2.3.10](https://pro-gallery-2-3-10.surge.sh) (15/12/2020)
  
 #### GALLERY
