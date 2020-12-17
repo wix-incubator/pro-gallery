@@ -14,8 +14,14 @@ class JsonEditor extends React.Component {
   }
 
   onFieldChanged(key, value) {
-    console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${value}`);
-    this.props.onChange(key, value);
+    
+    if(key === 'enableInfiniteScroll') {
+      console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${!value}`);
+      this.props.onChange(key, !value);
+    } else { 
+      console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${value}`);
+      this.props.onChange(key, value);
+    }
   }
 
   formatValue(val) {
@@ -31,16 +37,15 @@ class JsonEditor extends React.Component {
   }
 
   renderEntryEditor(key, settings) {
-
     const theValue = settings.value;
-
+     
     switch (settings.type) {
       case INPUT_TYPES.BOOLEAN:
         return (
           <Switch
           checkedChildren={<Icon type="check" />}
           unCheckedChildren={<Icon type="close" />}
-          checked={theValue}
+          checked={key === 'enableInfiniteScroll'  ? !theValue : theValue }
           onChange={e => this.onFieldChanged(key, e)}
           />
           //     <Checkbox
