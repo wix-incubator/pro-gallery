@@ -4,6 +4,8 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Texts Placement',
+  isRelevantDescription:
+    'set a Vertical scrolled gallery, set "Layout Orientation" to "Columns", set "Max Group Size" to "1".',
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&

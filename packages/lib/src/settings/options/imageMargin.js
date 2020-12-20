@@ -5,6 +5,7 @@ export default {
   description: `Set the margin between items.
     This option is not relevant to some layouts: Slideshow, Thumbnails.`,
   isRelevant: () => true,
+  isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.NUMBER,
   default: 10,
 };

@@ -5,6 +5,8 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Load More Behaviour',
   isRelevant: (sp) => !sp.oneRow && !sp.enableInfiniteScroll,
+  isRelevantDescription:
+    'set a Vertical scrolled gallery, set "Enable load more button" to "true".',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.loadMoreAmount.ALL,
   options: createOptions('loadMoreAmount'),

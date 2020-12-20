@@ -6,6 +6,8 @@ export default {
     !styleParams.oneRow &&
     !styleParams.isVertical &&
     styleParams.gridStyle === 1,
+  isRelevantDescription:
+    'set a Vertical scrolled gallery, set "Layout Orientation" to "Rows", set "Responsive Type" to "Set Items Per Row".',
   type: INPUT_TYPES.NUMBER,
   default: 0,
   min: 0,

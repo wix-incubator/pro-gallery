@@ -3,6 +3,8 @@ import { INPUT_TYPES } from '../utils/constants';
 export default {
   title: 'Navigation Arrows Size',
   isRelevant: (styleParams) => styleParams.oneRow && styleParams.showArrows,
+  isRelevantDescription:
+    'set a Horizontal scrolled gallery, set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.NUMBER,
   min: 8,
   max: 80,

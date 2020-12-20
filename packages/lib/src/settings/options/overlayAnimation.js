@@ -4,6 +4,8 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Overlay Hover Animation',
+  isRelevantDescription:
+    '"Overlay Hover Animation" must not be set to "No Change" or "Never Show".',
   isRelevant: (styleParams) =>
     styleParams.hoveringBehaviour !==
       GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE &&
