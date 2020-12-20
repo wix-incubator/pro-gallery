@@ -6,7 +6,7 @@ export default {
   title: 'Navigation Arrows Position',
   isRelevant: (styleParams) => styleParams.oneRow && styleParams.showArrows,
   isRelevantDescription:
-    'set a Horizontal scrolled gallery, set "Show Navigation Arrows" to "true".',
+    'Set a Horizontal scrolled gallery, set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
   options: createOptions('arrowsPosition'),

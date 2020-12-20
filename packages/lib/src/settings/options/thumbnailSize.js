@@ -3,7 +3,7 @@ import { INPUT_TYPES } from '../utils/constants';
 export default {
   title: 'Thumbnail Size',
   isRelevant: (styleParams) => styleParams.hasThumbnails,
-  isRelevantDescription: 'set "Slider Thumbnails" to "true".',
+  isRelevantDescription: 'Set "Slider Thumbnails" to "true".',
   type: INPUT_TYPES.NUMBER,
   default: 120,
   min: 80,

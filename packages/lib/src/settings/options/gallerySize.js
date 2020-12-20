@@ -5,6 +5,6 @@ export default {
   description: `Set the item size between 1 to 100 units. The real size will be determined by the layout.`,
   isRelevant: (sp) =>
     sp.gallerySizeType === GALLERY_CONSTS.gallerySizeType.SMART,
-  isRelevantDescription: 'set "Item Size Units" to "Smart".',
+  isRelevantDescription: 'Set "Item Size Units" to "Smart".',
   default: 30,
 };

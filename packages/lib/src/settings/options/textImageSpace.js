@@ -6,7 +6,7 @@ const { SHOW_ABOVE, SHOW_BELOW } = GALLERY_CONSTS.placements;
 export default {
   title: 'Text Space From Image',
   isRelevantDescription:
-    'set "Choose info layout" to "Separated Background", set "Texts Placement" to "Show Above" or "Show Below".',
+    'Set "Choose info layout" to "Separated Background", set "Texts Placement" to "Show Above" or "Show Below".',
   isRelevant: (styleParams) =>
     styleParams.imageInfoType ===
       GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND &&

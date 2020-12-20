@@ -5,7 +5,7 @@ export default {
   title: 'Text Box Width (percent)',
   description: `Set the text box width in percent from the column width when on the right side or on the left side.`,
   isRelevantDescription:
-    'set a Vertical scrolled gallery, set "Layout Orientation" to "Columns", set "Max Group Size" to "1", set "Texts Placement" to "Show Below" or "Show Above", set "Text Box Width Units" to "Percent".',
+    'Set a Vertical scrolled gallery, set "Layout Orientation" to "Columns", set "Max Group Size" to "1", set "Texts Placement" to "Show Below" or "Show Above", set "Text Box Width Units" to "Percent".',
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&

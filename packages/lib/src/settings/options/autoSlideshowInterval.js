@@ -9,6 +9,6 @@ export default {
     styleParams.isAutoSlideshow && styleParams.oneRow,
   type: INPUT_TYPES.NUMBER,
   isRelevantDescription:
-    'set a Horizontal scrolled gallery, set "Auto Slide" to "true".',
+    'Set a Horizontal scrolled gallery, set "Auto Slide" to "true".',
   default: 4,
 };
