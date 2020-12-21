@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Gallery Preset',
   description: `Choose from several preset of galleries`,
-  isRelevantDescription: 'Always relevant',
+  isRelevantDescription: 'Always relevant.',
   isRelevant: () => true,
   type: INPUT_TYPES.OPTIONS,
   options: createOptions('layout'),

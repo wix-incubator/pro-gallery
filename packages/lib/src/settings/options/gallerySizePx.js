@@ -7,6 +7,6 @@ export default {
   type: INPUT_TYPES.NUMBER,
   isRelevant: (sp) =>
     sp.gallerySizeType === GALLERY_CONSTS.gallerySizeType.PIXELS,
-  isRelevantDescription: 'Set "Item Size Units" to "Pixels"',
+  isRelevantDescription: 'Set "Item Size Units" to "Pixels".',
   default: 500,
 };

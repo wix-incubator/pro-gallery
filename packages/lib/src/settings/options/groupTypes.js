@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Allowed Group Types',
   isRelevant: (styleParams) => styleParams.groupSize > 1,
-  isRelevantDescription: 'Set "Max Group Size" to be greater than 1',
+  isRelevantDescription: 'Set "Max Group Size" to be greater than 1.',
   type: INPUT_TYPES.MULTISELECT,
   default: Object.keys(GALLERY_CONSTS.groupTypes).toString(),
   options: createOptions('groupTypes'),

@@ -6,6 +6,6 @@ export default {
   type: INPUT_TYPES.NUMBER,
   isRelevant: (styleParams) => styleParams.oneRow,
   isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal")',
+    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
   default: 1,
 };

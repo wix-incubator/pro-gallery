@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Text alignment',
   isRelevant: () => true,
-  isRelevantDescription: 'Always relevant',
+  isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.galleryTextAlign.CENTER,
   options: createOptions('galleryTextAlign'),

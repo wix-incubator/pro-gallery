@@ -6,7 +6,7 @@ export default {
   title: 'Responsive Type',
   isRelevant: (styleParams) => !styleParams.oneRow,
   isRelevantDescription:
-    'Set a Vertical gallery ("Scroll Direction" as "Vertical")',
+    'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.gridStyle.FIT_TO_SCREEN,
   options: createOptions('gridStyle'),

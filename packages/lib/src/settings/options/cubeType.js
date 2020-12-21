@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Crop Type',
   isRelevant: (styleParams) => styleParams.cubeImages,
-  isRelevantDescription: 'Set "Crop Images" to "true"',
+  isRelevantDescription: 'Set "Crop Images" to "true".',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.cubeType.CROP,
   options: createOptions('cubeType'),

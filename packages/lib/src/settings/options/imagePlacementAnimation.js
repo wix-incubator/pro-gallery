@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Image Placement Animation',
   isRelevant: () => true,
-  isRelevantDescription: 'Always relevant',
+  isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.imagePlacementAnimations.NO_EFFECT,
   options: createOptions('imagePlacementAnimations'),

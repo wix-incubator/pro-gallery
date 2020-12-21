@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Scroll Direction',
   isRelevant: () => true,
-  isRelevantDescription: 'Always relevant',
+  isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.scrollDirection.VERTICAL,
   options: createOptions('scrollDirection'),

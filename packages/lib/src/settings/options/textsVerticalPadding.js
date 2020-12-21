@@ -4,7 +4,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 export default {
   title: 'Text vertical padding',
   isRelevantDescription:
-    'Set "Texts Placement" to anything but "Show On Hover"',
+    'Set "Texts Placement" to anything but "Show On Hover".',
   isRelevant: (styleParams) =>
     styleParams.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   type: INPUT_TYPES.NUMBER,

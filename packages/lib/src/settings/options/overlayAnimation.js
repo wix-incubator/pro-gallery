@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Overlay Hover Animation',
   isRelevantDescription:
-    'Set "Hover Effect" to anything but "No Change" or "Never Show"',
+    'Set "Hover Effect" to anything but "No Change" or "Never Show".',
   isRelevant: (styleParams) =>
     styleParams.hoveringBehaviour !==
       GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE &&

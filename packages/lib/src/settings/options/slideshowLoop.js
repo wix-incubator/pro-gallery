@@ -5,7 +5,7 @@ export default {
   description: `Choose if you want the items to loop when you reach the last item in a sliding gallery`,
   isRelevant: (styleParams) => styleParams.oneRow,
   isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal")',
+    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
   type: INPUT_TYPES.BOOLEAN,
   default: false,
 };

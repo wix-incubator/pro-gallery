@@ -6,7 +6,7 @@ export default {
   title: 'Scroll Animation',
   description: `Choose the type of animation to be used when items appear while scrolling verticaly through the gallery`,
   isRelevantDescription:
-    'Set a Vertical gallery ("Scroll Direction" as "Vertical") or set "Slide Animation" to "Scroll"',
+    'Set a Vertical gallery ("Scroll Direction" as "Vertical") or set "Slide Animation" to "Scroll".',
   isRelevant: (sp) =>
     !sp.oneRow || sp.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL,
   options: createOptions('scrollAnimations'),
