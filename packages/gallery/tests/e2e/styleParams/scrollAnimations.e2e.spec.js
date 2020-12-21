@@ -15,35 +15,42 @@ describe('scrollAnimations - e2e', () => {
 
   Object.keys(GALLERY_CONSTS.scrollAnimations).forEach((animationKey) => {
     if (animationKey !== 'NO_EFFECT') {
-      it(`should create style tag with animation for each item (plus two extra styles tags)`, async () => {
+      it(`should create animation style tags ${animationKey} for each item`, async () => {
         await driver.navigate({
           galleryLayout: GALLERY_CONSTS.layout.GRID,
           scrollAnimation: GALLERY_CONSTS.scrollAnimations[animationKey],
         });
         await driver.waitFor.hookToBeVisible('item-container');
-        const children = await driver.page.evaluate(() => {
-          return Array.from(
-            document.querySelector('div[data-key="dynamic-styles"]').children
-          ).length;
+        const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
+          const styleTags = Array.from(
+            document.querySelectorAll('div[data-key="dynamic-styles"] style')
+          );
+          const AnimationStyleTags = styleTags.filter((styleTag) =>
+            styleTag.id.includes('scrollCss')
+          );
+          return AnimationStyleTags.length;
         });
-        // the default e2e images is always 20 so we should get 20 style tags plus two extra styles tags
-        expect(children).toEqual(22);
+        // the default e2e images is always 20 so we should get 20 animation style tags
+        expect(numberOfAnimationStyleTags).toEqual(20);
       });
     }
   });
 
-  it(`should not create animation style tags when scrollAnimation is NO_EFFECT`, async () => {
+  it(`should not create animation style tags to the items when scrollAnimation is NO_EFFECT`, async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const children = await driver.page.evaluate(() => {
-      return Array.from(
-        document.querySelector('div[data-key="dynamic-styles"]').children
-      ).length;
+    const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
+      const styleTags = Array.from(
+        document.querySelectorAll('div[data-key="dynamic-styles"] style')
+      );
+      const AnimationStyleTags = styleTags.filter((styleTag) =>
+        styleTag.id.includes('scrollCss')
+      );
+      return AnimationStyleTags.length;
     });
-    // should create two style tags for layout and hover element
-    expect(children).toEqual(2);
+    expect(numberOfAnimationStyleTags).toEqual(0);
   });
 });
