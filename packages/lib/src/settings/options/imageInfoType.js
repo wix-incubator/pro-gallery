@@ -7,7 +7,7 @@ export default {
   description: `Choose the layout you want for your texts, you can choose to separate the texts and the items
   so you can style them separately.`,
   isRelevantDescription:
-    'Set "Max Group Size" to "1", set "Layout Orientation" to "Columns" and Set "Texts Placement" to anything but "Show On Hover".',
+    'Set "Max Group Size" to "1", set "Layout Orientation" to "Columns" and set "Texts Placement" to anything but "Show On Hover".',
   isRelevant: (styleParams) =>
     styleParams.groupSize === 1 &&
     styleParams.isVertical &&
