@@ -4,7 +4,8 @@ export default {
   title: 'Show Navigation Arrows',
   description: `Choose if you want to have navigation arrows in a sliding gallery`,
   isRelevant: (styleParams) => styleParams.oneRow,
-  isRelevantDescription: 'Set a Horizontal scrolled gallery.',
+  isRelevantDescription:
+    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal")',
   type: INPUT_TYPES.BOOLEAN,
   default: true,
 };

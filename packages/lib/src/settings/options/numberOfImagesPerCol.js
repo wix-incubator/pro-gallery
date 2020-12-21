@@ -5,6 +5,7 @@ export default {
   description: `This option sets the number of images per a column. This option is currently supported only by Grid layout`,
   type: INPUT_TYPES.NUMBER,
   isRelevant: (styleParams) => styleParams.oneRow,
-  isRelevantDescription: 'Set a Horizontal scrolled gallery.',
+  isRelevantDescription:
+    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal")',
   default: 1,
 };

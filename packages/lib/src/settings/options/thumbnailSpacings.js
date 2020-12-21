@@ -4,7 +4,7 @@ export default {
   title: 'Thumbnails Spacings',
   isRelevant: (styleParams) => styleParams.oneRow && styleParams.hasThumbnails,
   isRelevantDescription:
-    'Set Horizontal scrolled gallery, set "Slider Thumbnails" to "true".',
+    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Gallery preset" to "Thumbnail"',
   type: INPUT_TYPES.NUMBER,
   default: 4,
   description: `Set the spacing between thumbnails.

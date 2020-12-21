@@ -3,7 +3,7 @@ import { INPUT_TYPES } from '../utils/constants';
 export default {
   title: 'Images Per Row',
   isRelevantDescription:
-    'Set a Vertical scrolled gallery, set "Layout Orientation" to "Column", set "Max Group Size" to be "1".',
+    'Set a Vertical gallery ("Scroll Direction" as "Vertical") and set "Layout Orientation" to "Column" and set "Max Group Size" to be "1"',
   isRelevant: (styleParams) =>
     !styleParams.oneRow &&
     styleParams.isVertical &&

@@ -6,6 +6,6 @@ export default {
   try to get as close as possible`,
   type: INPUT_TYPES.NUMBER,
   isRelevant: (styleParams) => styleParams.groupSize > 1,
-  isRelevantDescription: 'Set "Max Group Size" to be Greater than "1".',
+  isRelevantDescription: 'Set "Max Group Size" to be greater than "1"',
   default: 120,
 };

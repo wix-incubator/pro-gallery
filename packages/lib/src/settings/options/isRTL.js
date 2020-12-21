@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Layout Direction',
   isRelevant: () => true,
-  isRelevantDescription: 'Always relevant.',
+  isRelevantDescription: 'Always relevant',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
   options: createOptions('layoutDirection'),

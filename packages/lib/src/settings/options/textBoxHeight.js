@@ -5,7 +5,7 @@ export default {
   title: 'Text Box Height (pixels)',
   description: `Set the text box Height when the texts are above or below the item`,
   isRelevantDescription:
-    'Set a Vertical scrolled gallery, set "Layout Orientation" to "Columns", set "Max Group Size" to "1", set "Texts Placement" to "Show Below" or "Show Above".',
+    'Set a Vertical gallery ("Scroll Direction" as "Vertical") and set "Layout Orientation" to "Columns" and set "Max Group Size" to "1" and set "Texts Placement" to "Show Below" or "Show Above".',
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&
