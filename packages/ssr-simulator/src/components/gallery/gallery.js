@@ -134,10 +134,6 @@ export default class Gallery extends React.PureComponent {
           eventsListener={eventsListener}
           resizeMediaUrl={resizeMediaUrl}
           useBlueprints={true}
-          layoutFixerBundleUrl={
-            urlParams.useLayoutFixer &&
-            'http://localhost:3001/layoutFixer.bundle.js'
-          }
         />
       </div>
     );

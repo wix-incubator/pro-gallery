@@ -9,7 +9,6 @@ if (NODE_ENV === 'production') {
 } else {
   assetManifest = {
     'main.js': '/main.bundle.js',
-    'layoutFixer.js': '/layoutFixer.bundle.js',
   };
 }
 
