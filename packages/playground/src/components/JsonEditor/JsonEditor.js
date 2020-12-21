@@ -207,7 +207,7 @@ class JsonEditor extends React.Component {
         if (settings.missing) {
           return <Icon type="warning" style={{fontSize: 14, color: 'red'}} />
         } else {
-          return <Popover placement="right" title="Not Relevant" content={<p>This param is not relevant in current scope: <br/><br/><pre>{settings.isRelevant.toString()}</pre></p>}><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Popover>
+          return <Popover placement="right" title="Not Relevant" content={<p>This param is not relevant in current scope: <br/><br/><pre>{settings.isRelevantDescription}</pre></p>}><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Popover>
         }
       }
     }

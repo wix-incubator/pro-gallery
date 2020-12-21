@@ -8,6 +8,8 @@ export default {
   isRelevant: (styleParams) =>
     styleParams.cubeImages &&
     styleParams.cubeType === GALLERY_CONSTS.cubeType.FIT,
+  isRelevantDescription:
+    'Set "Crop Images" to "true" and set "Crop Type" to "Fit".',
   type: INPUT_TYPES.BOOLEAN,
   default: false,
 };

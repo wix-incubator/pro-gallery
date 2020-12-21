@@ -5,6 +5,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 export default {
   title: 'Click Action',
   isRelevant: () => true,
+  isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.itemClick.NOTHING,
   options: createOptions('itemClick'),
