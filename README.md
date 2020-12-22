@@ -41,6 +41,7 @@ import 'pro-gallery/dist/statics/main.css';
   scrollingElement={() => document.getElementById('gallery') || window}
   eventsListener={(eName, eData) => console.log({eName, eData})}
   resizeMediaUrl={(item, url, resizeMethod, width, height) => `https://...`}
+  isPrerenderMode={isPrerenderMode}
 />
 ```
 
@@ -139,6 +140,10 @@ The full list of the gallery events is [here](https://github.com/wix/pro-gallery
 If you want to use a server-side resizing service (e.g. cloudinary), you can pass a resizing function. This function receives the `item` and required dimensions and should return the resize url. Notice that this function will be called several times for each item so it should be fast.
 An example can be found [here](https://github.com/wix/pro-gallery/blob/a3d858fc275135e73b233392c3eb927bd47bd8d0/packages%2Fplayground%2Fsrc%2Futils%2FitemResizer.js)
 
+### Prerender Mode
+The prerender mode is a special middle phase for situations where the gallery is rendered in a responsive layout in SSR - *without the real container measurements*. This render will not be accurate until the client will "fix" the layout (since the server cannot measure the size of the container).
+When passing the gallery a "fake" container measurements, you'll need to pass this parameter as true to let the gallery know it should only prepare the html, but wait for the real measurements before showing the gallery
+
 ### Custom Renderers
 The Gallery supports custom renderers both for the Hover Element (appears when hovering over an item) and the Info Element (appears below / above an item).
 To replace the default rendering of these elements, pass a function that will receive the props of an item and that in turn should return a JSX element. For example:
@@ -147,6 +152,8 @@ To replace the default rendering of these elements, pass a function that will re
   {...otherProps}
   customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
   customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+  customImageRenderer={imageProps => <img {...imageProps} />}
   customLoadMoreRenderer={galleryProps => <button>Load More</button>}
+  customNavArrowsRenderer={direction => <button>{direction}</button>}
 />
 ```

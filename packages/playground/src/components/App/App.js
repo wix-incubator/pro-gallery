@@ -71,7 +71,7 @@ export function App() {
         setGalleryReady();
         break;
       case GALLERY_EVENTS.GALLERY_CHANGE: //TODO split to an event named "PARTIALY_GROW_GALLERY_PRETTY_PLEASE"
-        if(gallerySettings.useBlueprints && eventData.updatedHeight){
+        if(eventData.updatedHeight){
           setDimensions({height: eventData.updatedHeight});
         }
         break;
@@ -205,11 +205,45 @@ export function App() {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
 
+  const customImageRenderer = (props) => {
+    const originalSource = (src) => {
+      if (src.indexOf('.png') > 0) {
+        return <source srcSet={src.replace('webp', 'png')} type="image/png" />;
+      } else if (src.indexOf('.jpg') > 0) {
+        return <source srcSet={src.replace('webp', 'jpg')} type="image/jpg" />;
+      } else if (src.indexOf('.jpeg') > 0) {
+        return <source srcSet={src.replace('webp', 'jpeg')} type="image/jpeg" />;
+      } else {
+        return null;
+      }
+    };
+  
+    const webpSource = (src) => {
+      return (
+        <source
+          srcSet={src.replace(/(jpg|jpeg|png)$/, 'webp')}
+          type="image/webp"
+        />
+      );
+    };
+  
+    return (
+      <picture
+        key={`picture_${props.id}`}
+      >
+        {webpSource(props.src)}
+        {originalSource(props.src)}
+        <img alt={props.alt} {...props} />
+      </picture>
+    );
+  };
+  
   const getExternalInfoRenderers = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
       customSlideshowInfoRenderer: slideshowInfoElement,
+      customImageRenderer: customImageRenderer,
     };
   }
 

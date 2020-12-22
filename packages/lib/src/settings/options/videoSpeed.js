@@ -3,6 +3,7 @@ import { INPUT_TYPES } from '../utils/constants';
 export default {
   title: 'Video Play Speed',
   isRelevant: () => true,
+  isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.NUMBER,
   min: 0.1,
   max: 10,

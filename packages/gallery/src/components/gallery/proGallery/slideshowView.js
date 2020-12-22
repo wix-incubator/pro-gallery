@@ -877,6 +877,8 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
+    const arrowRenderer = this.props.customNavArrowsRenderer;
+
     return [
       hideLeftArrow ? null : (
         <button
@@ -891,14 +893,18 @@ class SlideshowView extends GalleryComponent {
           data-hook="nav-arrow-back"
           style={{ ...containerStyle, ...prevContainerStyle }}
         >
-          <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-            <path
-              className="slideshow-arrow"
-              style={svgInternalStyle}
-              d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
-              transform="translate(-133 -225)"
-            />
-          </svg>
+          {arrowRenderer ? (
+            arrowRenderer('left')
+          ) : (
+            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
+              <path
+                className="slideshow-arrow"
+                style={svgInternalStyle}
+                d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
+                transform="translate(-133 -225)"
+              />
+            </svg>
+          )}
         </button>
       ),
       hideRightArrow ? null : (
@@ -911,14 +917,18 @@ class SlideshowView extends GalleryComponent {
           data-hook="nav-arrow-next"
           style={{ ...containerStyle, ...nextContainerStyle }}
         >
-          <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-            <path
-              className="slideshow-arrow"
-              style={svgInternalStyle}
-              d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
-              transform="translate(-855 -230)"
-            />
-          </svg>
+          {arrowRenderer ? (
+            arrowRenderer('right')
+          ) : (
+            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
+              <path
+                className="slideshow-arrow"
+                style={svgInternalStyle}
+                d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
+                transform="translate(-855 -230)"
+              />
+            </svg>
+          )}
         </button>
       ),
     ];
@@ -943,14 +953,15 @@ class SlideshowView extends GalleryComponent {
       currentIdx: this.state.currentIdx,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
+      customImageRenderer: this.props.customImageRenderer,
       customSlideshowInfoRenderer: this.props.customSlideshowInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
       domId: this.props.domId,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
-      nextVideoIdx: this.props.nextVideoIdx,
       isPrerenderMode: this.props.isPrerenderMode,
       totalWidth: this.props.galleryStructure.width,
+      firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },

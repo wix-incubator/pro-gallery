@@ -3,15 +3,13 @@ import { defaultStyles, BlueprintsManager } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
 
-import { getLayoutFixerData } from '../layoutFixer/layoutFixerStore';
-
 const blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
 export default class BaseGallery extends React.Component {
   constructor(props) {
     super();
     this.domId = props.domId || 'default-dom-id';
     this.state = {
-      blueprint: getLayoutFixerData(this.domId),
+      blueprint: null,
     };
     blueprintsManager.init({
       api: {

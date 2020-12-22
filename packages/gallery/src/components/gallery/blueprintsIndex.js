@@ -7,10 +7,6 @@ import {
 } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
-import {
-  setLayoutFixerMounted,
-  getLayoutFixerData,
-} from '../layoutFixer/layoutFixerStore';
 
 export default class BaseGallery extends React.Component {
   static propTypes = basePropTypes;
@@ -18,10 +14,6 @@ export default class BaseGallery extends React.Component {
   constructor(props) {
     super(props);
     this.domId = props.domId || 'default-dom-id';
-  }
-
-  componentDidMount() {
-    setLayoutFixerMounted(this.domId);
   }
 
   render() {
@@ -42,11 +34,7 @@ export default class BaseGallery extends React.Component {
       domId: this.domId,
     };
 
-    if (this.props.useBlueprints) {
-      if (!galleryProps.structure || galleryProps.isPrerenderMode) {
-        Object.assign(galleryProps, getLayoutFixerData(this.domId));
-      }
-    } else {
+    if (!this.props.useBlueprints) {
       dimensionsHelper.updateParams({
         domId: galleryProps.domId,
         container: galleryProps.container,

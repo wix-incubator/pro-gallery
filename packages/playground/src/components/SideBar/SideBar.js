@@ -245,9 +245,6 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Use Server Blueprints" labelAlign="left">
                 <Switch checked={!!gallerySettings.shouldUseBlueprintsFromServer} onChange={e => setGallerySettings({ shouldUseBlueprintsFromServer: e })} />
               </Form.Item>
-              <Form.Item label="Use Layout Fixer" labelAlign="left">
-                <Switch checked={!!gallerySettings.useLayoutFixer} onChange={e => setGallerySettings({ useLayoutFixer: e })} />
-              </Form.Item>
               <Form.Item label="Use Inline Styles" labelAlign="left">
                 <Switch checked={!!gallerySettings.useInlineStyles} onChange={e => setGallerySettings({ useInlineStyles: e })} />
               </Form.Item>
@@ -275,7 +272,7 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Button shape="circle" icon="arrow-right" target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&useLayoutFixer=${gallerySettings.useLayoutFixer}${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
