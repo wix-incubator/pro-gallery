@@ -1,3 +1,9 @@
+## [v2.4.3](https://pro-gallery-2-4-3.surge.sh) (22/12/2020)
+ 
+#### GALLERY
+ -  feature (imageItem): add the option to pass a customImageRenderer as a prop
+
+---
 ## [v2.4.2](https://pro-gallery-2-4-2.surge.sh) (21/12/2020)
  
 #### OTHER
