@@ -15,7 +15,7 @@ describe('scrollAnimations - e2e', () => {
 
   Object.keys(GALLERY_CONSTS.scrollAnimations).forEach((animationKey) => {
     if (animationKey !== 'NO_EFFECT') {
-      it(`should create animation style tags ${animationKey} for each item`, async () => {
+      it(`should create ${animationKey} animation style tags for each item`, async () => {
         await driver.navigate({
           galleryLayout: GALLERY_CONSTS.layout.GRID,
           scrollAnimation: GALLERY_CONSTS.scrollAnimations[animationKey],
@@ -36,7 +36,7 @@ describe('scrollAnimations - e2e', () => {
     }
   });
 
-  it(`should not create animation style tags to the items when scrollAnimation is NO_EFFECT`, async () => {
+  it(`should not create animation style tags when scrollAnimation is NO_EFFECT`, async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
