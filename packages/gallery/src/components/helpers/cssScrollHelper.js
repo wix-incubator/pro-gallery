@@ -55,7 +55,9 @@ class CssScrollHelper {
   }
 
   createScrollSelectorsFunction({ item, container, styleParams }) {
-    const imageStart = Math.round(styleParams.oneRow ? item.offset.left : item.offset.top);
+    const imageStart = Math.round(
+      styleParams.oneRow ? item.offset.left : item.offset.top
+    );
     const imageSize = Math.round(styleParams.oneRow ? item.width : item.height);
 
     const containerSize = styleParams.oneRow
@@ -98,11 +100,17 @@ class CssScrollHelper {
       const animationPadding = 1000;
       const animationDuration = Math.round(stop - start);
 
-      const entryAnimationStart = Math.round(imageStart - containerSize + start);
-      const entryAnimationEnd = Math.round(entryAnimationStart + animationDuration);
+      const entryAnimationStart = Math.round(
+        imageStart - containerSize + start
+      );
+      const entryAnimationEnd = Math.round(
+        entryAnimationStart + animationDuration
+      );
 
       const exitAnimationStart = Math.round(imageStart + imageSize - stop);
-      const exitAnimationEnd = Math.round(exitAnimationStart + animationDuration);
+      const exitAnimationEnd = Math.round(
+        exitAnimationStart + animationDuration
+      );
 
       console.log('CSS SCROLL: bounds #' + item.idx, {
         start,

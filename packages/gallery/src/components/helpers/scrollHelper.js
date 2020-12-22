@@ -218,10 +218,10 @@ function isWithinPaddingHorizontally({
 }
 
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
-  const change = (to - from);
+  const change = to - from;
 
   if (change === 0) {
-    return new Promise(resolve => resolve(to));
+    return new Promise((resolve) => resolve(to));
   }
   const marginProp = `margin-${isRTL ? 'right' : 'left'}`;
 
@@ -231,31 +231,27 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   Object.assign(scroller.style, {
     'scroll-snap-type': 'none',
   });
-  Object.assign(
-    scrollerInner.style,
-    {
-      transition: `margin ${duration}ms linear`,
-      [marginProp]: `-${Math.abs(change)}px`,
-    },
-  );
+  Object.assign(scrollerInner.style, {
+    transition: `margin ${duration}ms linear`,
+    [marginProp]: `-${Math.abs(change)}px`,
+  });
 
   const intervals = 10;
-  const scrollTransitionEvent = new CustomEvent('scrollTransition', {detail: (change / intervals)})
+  const scrollTransitionEvent = new CustomEvent('scrollTransition', {
+    detail: change / intervals,
+  });
   const scrollTransitionInterval = setInterval(() => {
     window.dispatchEvent(scrollTransitionEvent);
   }, Math.round(duration / intervals));
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      clearInterval(scrollTransitionInterval)
+      clearInterval(scrollTransitionInterval);
 
-      Object.assign(
-        scrollerInner.style,
-        {
-          transition: `none`,
-          [marginProp]: 0,
-        },
-      );
+      Object.assign(scrollerInner.style, {
+        transition: `none`,
+        [marginProp]: 0,
+      });
       scroller.style.removeProperty('scroll-snap-type');
       scroller.scrollLeft = to;
       scroller.setAttribute('data-scrolling', '');
