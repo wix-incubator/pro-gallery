@@ -133,6 +133,7 @@ export default class ImageItem extends GalleryComponent {
             position: 'absolute',
             top: 0,
             left: 0,
+            opacity: 0,
           }}
         ></div>
       )

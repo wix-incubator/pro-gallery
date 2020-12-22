@@ -82,6 +82,7 @@ import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
+import oneColorAnimationColor from './oneColorAnimationColor';
 
 export default {
   itemClick,
@@ -168,6 +169,7 @@ export default {
   hidePlay,
   overlayBackground,
   allowLeanGallery,
+  oneColorAnimationColor,
 };
 
 // TODO = add the options:

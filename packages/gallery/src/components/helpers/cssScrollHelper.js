@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-redeclare */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
@@ -88,29 +89,18 @@ class CssScrollHelper {
       // from: the animation start value
       // to: the animation end value
       const iterations = this.settings.animation_iterations || 10;
-      const transitionDuration =
-        this.settings.animation_transition_duration || 400;
+      const transitionDuration = this.settings.animation_transition_duration || 400;
 
-      console.log('CSS SCROLL: settinngs', this.settings);
-
-      const transitionCss = `transition: ${
-        animationCss.split(':')[0]
-      } ${transitionDuration}ms ease !important`;
+      const transitionCss = `transition: ${animationCss.split(':')[0]} ${transitionDuration}ms ease !important`;
 
       const animationPadding = 1000;
       const animationDuration = Math.round(stop - start);
 
-      const entryAnimationStart = Math.round(
-        imageStart - containerSize + start
-      );
-      const entryAnimationEnd = Math.round(
-        entryAnimationStart + animationDuration
-      );
+      const entryAnimationStart = Math.round(imageStart - containerSize + start);
+      const entryAnimationEnd = Math.round(entryAnimationStart + animationDuration);
 
       const exitAnimationStart = Math.round(imageStart + imageSize - stop);
-      const exitAnimationEnd = Math.round(
-        exitAnimationStart + animationDuration
-      );
+      const exitAnimationEnd = Math.round(exitAnimationStart + animationDuration);
 
       console.log('CSS SCROLL: bounds #' + item.idx, {
         start,
@@ -164,6 +154,9 @@ class CssScrollHelper {
       };
 
       const createAnimationRange = (start, end, isExit) => {
+        if (end < 0 || end <= start) {
+          return {}
+        }
         return Array.from({ length: iterations })
           .map((i, idx) => start + (idx * (end - start)) / iterations)
           .map((i, idx) => ({
@@ -212,10 +205,7 @@ class CssScrollHelper {
       if (styleParams.animationDirection === 'BOTH') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
-          createSelectorsRange(
-            entryAnimationStart - animationPadding,
-            entryAnimationStart
-          )
+          createSelectorsRange(entryAnimationStart - animationPadding, entryAnimationStart)
         );
         addScrollClasses(
           createAnimationRange(entryAnimationStart, entryAnimationEnd)
@@ -229,46 +219,33 @@ class CssScrollHelper {
         );
         addScrollClass(
           createAnimationStep(iterations, true) + 'transtion: none !important;',
-          createSelectorsRange(
-            exitAnimationEnd,
-            exitAnimationEnd + animationPadding
-          )
+          createSelectorsRange(exitAnimationEnd, exitAnimationEnd + animationPadding )
         );
+
       } else if (styleParams.animationDirection === 'IN') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
-          createSelectorsRange(
-            entryAnimationStart - animationPadding,
-            entryAnimationStart
-          )
+          createSelectorsRange(entryAnimationStart - animationPadding, entryAnimationStart)
         );
         addScrollClasses(
           createAnimationRange(entryAnimationStart, entryAnimationEnd)
         );
         addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
-          createSelectorsRange(
-            entryAnimationEnd,
-            entryAnimationEnd + animationPadding
-          )
+          createSelectorsRange(entryAnimationEnd, entryAnimationEnd + animationPadding)
         );
+
       } else if (styleParams.animationDirection === 'OUT') {
         addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
-          createSelectorsRange(
-            exitAnimationStart - animationPadding,
-            exitAnimationStart
-          )
+          createSelectorsRange(exitAnimationStart - animationPadding, exitAnimationStart)
         );
         addScrollClasses(
           createAnimationRange(exitAnimationStart, exitAnimationEnd, true)
         );
         addScrollClass(
           createAnimationStep(iterations, true) + 'transtion: none !important;',
-          createSelectorsRange(
-            exitAnimationEnd,
-            exitAnimationEnd + animationPadding
-          )
+          createSelectorsRange(exitAnimationEnd, exitAnimationEnd + animationPadding)
         );
       }
 
@@ -288,7 +265,12 @@ class CssScrollHelper {
     styleParams,
     createScrollSelectors,
   }) {
-    const { isRTL, oneRow, scrollAnimation } = styleParams;
+    const {
+      isRTL,
+      oneRow,
+      scrollAnimation,
+      oneColorAnimationColor,
+    } = styleParams;
 
     if (
       !scrollAnimation ||
@@ -311,70 +293,87 @@ class CssScrollHelper {
     } = GALLERY_CONSTS.scrollAnimations;
 
     const randomRange = this.settings.animation_random;
+    const domId = this.getSellectorDomId(item);
+
     switch (scrollAnimation) {
       case FADE_IN:
-        const r = Math.round(Math.random() * randomRange);
         return createScrollSelectors(
-          [r + 50, r + 150],
-          `#${this.getSellectorDomId(item)} .gallery-item-wrapper`,
+          [50, 150],
+          `#${domId} .gallery-item-wrapper`,
           'opacity: #;',
           [0, 1]
         );
       case SLIDE_UP:
         const rtlFix = oneRow && isRTL ? -1 : 1;
         const slideGap = rtlFix * (this.settings.animation_slide_gap || 50);
-        const r = Math.round(Math.random() * randomRange);
         if (oneRow) {
           return (
             createScrollSelectors(
-              [r + 10, r + 70],
-              `#${this.getSellectorDomId(item)} > div`,
+              [10, 70],
+              `#${domId} > div`,
               `transform: translateX(#px);`,
               [slideGap, 0],
               [-1 * slideGap, 0]
-            ) +
-            ` #${this.getSellectorDomId(item)} {overflow: visible !important;}`
+            ) + ` #${domId} {overflow: visible !important;}`
           );
         } else {
           return createScrollSelectors(
-            [r + 10, r + 70],
-            `#${this.getSellectorDomId(item)}`,
+            [10, 70],
+            `#${domId}`,
             `transform: translateY(#px);`,
             [slideGap, 0],
             [-1 * slideGap, 0]
           );
         }
       case GRAYSCALE:
-        const r = Math.round(Math.random() * randomRange);
         return createScrollSelectors(
-          [r + 150, r + 250],
-          `#${this.getSellectorDomId(item)} .gallery-item-content`,
+          [150, 250],
+          `#${domId} .gallery-item-content`,
           'filter: grayscale(#%);',
           [100, 0]
         );
       case EXPAND:
-        const r = Math.round(Math.random() * randomRange);
         return createScrollSelectors(
-          [r, r + 100],
-          `#${this.getSellectorDomId(item)} > div`,
-          'transform: scale(#);',
-          [1, 0.95]
-        );
-      case ZOOM_OUT:
-        const r = Math.round(Math.random() * randomRange);
-        return createScrollSelectors(
-          [r, r + 100],
-          `#${this.getSellectorDomId(item)} .gallery-item-wrapper`,
+          [0, 100],
+          `#${domId} > div`,
           'transform: scale(#);',
           [1, 1.15]
         );
-      case SHRINK:
-        const r = Math.round(Math.random() * randomRange);
+      case ZOOM_OUT:
         return createScrollSelectors(
-          [r, r + 100],
-          `#${this.getSellectorDomId(item)} .gallery-item-wrapper`,
+          [0, 100],
+          `#${domId} .gallery-item-wrapper`,
           'transform: scale(#);',
           [1.15, 1]
+        );
+      case SHRINK:
+        return createScrollSelectors(
+          [0, 100],
+          `#${domId} .gallery-item-wrapper`,
+          'transform: scale(#);',
+          [1, 0.95]
+        );
+      case ONE_COLOR:
+        const bgColor =
+          oneColorAnimationColor?.value ||
+          oneColorAnimationColor ||
+          'transparent';
+        return (
+          createScrollSelectors(
+            [0, 100],
+            `#${domId} .gallery-item-wrapper>div`,
+            `opacity :#;`,
+            [0, 1]
+          ) +
+          ` #${domId} .gallery-item-wrapper {background-color: ${bgColor} !important;}`
+        );
+      case MAIN_COLOR:
+      case BLUR:
+        return createScrollSelectors(
+          [0, 100],
+          `#${domId} div[data-hook="image-item-overlay"]`,
+          'opacity :# !important;',
+          [1, 0]
         );
     }
     // FADE
@@ -485,15 +484,11 @@ class CssScrollHelper {
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR) {
-      const oneColorAnimationColor =
-        styleParams.oneColorAnimationColor &&
-        styleParams.oneColorAnimationColor.value
-          ? styleParams.oneColorAnimationColor.value
-          : 'transparent';
+      const bgColor = oneColorAnimationColor?.value || 'transparent';
 
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
-        `{background-color: ${oneColorAnimationColor};}`;
+        `{background-color: ${bgColor};}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
