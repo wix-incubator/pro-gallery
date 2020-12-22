@@ -415,6 +415,7 @@ class ItemView extends GalleryComponent {
         key="imageItem"
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
+        customImageRenderer={this.props.customImageRenderer}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
