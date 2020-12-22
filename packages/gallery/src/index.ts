@@ -1,8 +1,6 @@
 export { default as ProGallery } from './components/gallery/index';
 export { default as ProBlueprintsGallery } from './components/gallery/blueprintsIndex';
 export { default as LayoutingProGallery } from './components/gallery/layoutingIndex';
-export { LayoutFixer } from './components/layoutFixer/layoutFixer';
-export { createLayoutFixer } from './components/layoutFixer/createLayoutFixer';
 export { cssScrollHelper } from './components/helpers/cssScrollHelper';
 export { default as addLayoutStyles } from './components/helpers/layoutHelper';
 

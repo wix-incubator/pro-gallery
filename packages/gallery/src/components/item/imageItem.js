@@ -3,6 +3,15 @@ import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 
 const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
+
+const Picture = (imageProps) => {
+  if (typeof Picture.customImageRenderer === 'function') {
+    return Picture.customImageRenderer(imageProps);
+  } else {
+    return <img {...imageProps} />;
+  }
+};
+
 export default class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
@@ -18,6 +27,7 @@ export default class ImageItem extends GalleryComponent {
 
     this.removeLowResImageTimeoutId = undefined;
     this.handleHighResImageLoad = this.handleHighResImageLoad.bind(this);
+    Picture.customImageRenderer = this.props.customImageRenderer;
   }
 
   componentDidMount() {
@@ -183,7 +193,7 @@ export default class ImageItem extends GalleryComponent {
         switch (styleParams.imageLoadingMode) {
           case GALLERY_CONSTS.loadingMode.BLUR:
             preload = (
-              <img
+              <Picture
                 alt=""
                 key={'image_preload_blur-' + id}
                 src={createUrl(
@@ -201,7 +211,7 @@ export default class ImageItem extends GalleryComponent {
             break;
           case GALLERY_CONSTS.loadingMode.MAIN_COLOR:
             preload = (
-              <img
+              <Picture
                 alt=""
                 key={'image_preload_main_color-' + id}
                 src={createUrl(
@@ -230,7 +240,7 @@ export default class ImageItem extends GalleryComponent {
           : GALLERY_CONSTS.urlTypes.HIGH_RES
       );
       const highres = (
-        <img
+        <Picture
           key={'image_highres-' + id}
           className={`gallery-item-visible gallery-item gallery-item-preloaded ${
             isSEOMode() ? '' : 'gallery-item-hidden'
