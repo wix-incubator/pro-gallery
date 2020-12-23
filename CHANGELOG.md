@@ -1,3 +1,20 @@
+## [v2.4.3](https://pro-gallery-2-4-3.surge.sh) (22/12/2020)
+ 
+#### GALLERY
+ -  feature (imageItem): add the option to pass a customImageRenderer as a prop
+
+---
+## [v2.4.2](https://pro-gallery-2-4-2.surge.sh) (21/12/2020)
+ 
+#### OTHER
+ -  improve: added description to isRelevant in settings
+ -  improve: add docs for the isPrerenderMode to the readme
+ -  improve: update enableInfinitScroll settings and changed behavior in the playground
+
+#### GALLERY
+ -  improve (layoutFixer): remove deprecated layoutFixer code
+
+---
 ## [v2.4.1](https://pro-gallery-2-4-1.surge.sh) (17/12/2020)
  
 #### GALLERY
