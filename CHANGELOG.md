@@ -1,3 +1,9 @@
+## [v2.4.4](https://pro-gallery-2-4-4.surge.sh) (23/12/2020)
+ 
+#### GALLERY
+ -  fix: video play button doesn't show when needed
+
+---
 ## [v2.4.3](https://pro-gallery-2-4-3.surge.sh) (22/12/2020)
  
 #### GALLERY
