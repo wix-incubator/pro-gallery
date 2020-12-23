@@ -335,9 +335,9 @@ class CssScrollHelper {
       case EXPAND:
         return createScrollSelectors(
           [0, 100],
-          `#${domId} > div`,
+          `#${domId} .gallery-item-wrapper`,
           'transform: scale(#);',
-          [1, 1.15]
+          [0.95, 1]
         );
       case ZOOM_OUT:
         return createScrollSelectors(
@@ -349,9 +349,9 @@ class CssScrollHelper {
       case SHRINK:
         return createScrollSelectors(
           [0, 100],
-          `#${domId} .gallery-item-wrapper`,
+          `#${domId}`,
           'transform: scale(#);',
-          [1, 0.95]
+          [1.02, 1]
         );
       case ONE_COLOR:
         const bgColor =
@@ -367,8 +367,14 @@ class CssScrollHelper {
           ) +
           ` #${domId} .gallery-item-wrapper {background-color: ${bgColor} !important;}`
         );
-      case MAIN_COLOR:
       case BLUR:
+        return createScrollSelectors(
+          [0, 100],
+          `#${domId} .gallery-item-content`,
+          'filter: blur(#px);',
+          [30, 0]
+        );
+      case MAIN_COLOR:
         return createScrollSelectors(
           [0, 100],
           `#${domId} div[data-hook="image-item-overlay"]`,
