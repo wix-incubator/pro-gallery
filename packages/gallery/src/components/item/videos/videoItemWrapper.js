@@ -69,7 +69,9 @@ class VideoItemWrapper extends ImageItem {
         imageDimensions={this.props.imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
-        videoControls={showVideoControls && videoControls}
+        videoControls={
+          showVideoControls && !this.mightPlayVideo() && videoControls
+        }
       />
     );
   }
