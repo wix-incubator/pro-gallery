@@ -1,3 +1,9 @@
+## [v2.4.5](https://pro-gallery-2-4-5.surge.sh) (23/12/2020)
+ 
+#### GALLERY
+ -  fix: remove extra play button in placeholder
+
+---
 ## [v2.4.4](https://pro-gallery-2-4-4.surge.sh) (23/12/2020)
  
 #### GALLERY
