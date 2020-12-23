@@ -49,7 +49,7 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoItemPlaceholder() {
+  createVideoItemPlaceholder(showVideoControls) {
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -69,6 +69,7 @@ class VideoItemWrapper extends ImageItem {
         imageDimensions={this.props.imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
+        videoControls={showVideoControls && videoControls}
       />
     );
   }
@@ -93,7 +94,7 @@ class VideoItemWrapper extends ImageItem {
     const hover = this.props.hover;
     const showVideoControls =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoItemPlaceholder();
+    const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
