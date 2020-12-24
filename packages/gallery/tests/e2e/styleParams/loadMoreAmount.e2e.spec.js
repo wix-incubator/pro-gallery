@@ -15,7 +15,7 @@ describe('loadMoreAmount - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('Should increase the height of the gallery container to fit all of the items', async () => {
+  it('Should increase the height of the gallery container to fit all items', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       enableInfiniteScroll: false,
@@ -39,6 +39,7 @@ describe('loadMoreAmount - e2e', () => {
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
     await driver.actions.click('show-more');
+    await driver.scrollInteraction();
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
