@@ -148,4 +148,10 @@ input, button, select, optgroup, textarea {
       padding-bottom: 10px;
     }
   }
+  button.show-more {
+    padding: 11px 50px !important; 
+    border-radius: 15px !important;
+    line-height: 0;
+    height: 60px;
+  }
 }
