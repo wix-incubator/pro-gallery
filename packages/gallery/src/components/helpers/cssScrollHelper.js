@@ -375,7 +375,6 @@ class CssScrollHelper {
           [30, 0]
         );
       case MAIN_COLOR:
-        debugger;
         const pixel = item.createUrl('pixel', 'img');
         return createScrollSelectors(
           [0, 100],
