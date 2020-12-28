@@ -1,4 +1,4 @@
-import { window, utils } from 'pro-gallery-lib';
+import { utils } from 'pro-gallery-lib';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -241,7 +241,7 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
     detail: change / intervals,
   });
   const scrollTransitionInterval = setInterval(() => {
-    window.dispatchEvent(scrollTransitionEvent);
+    scroller.dispatchEvent(scrollTransitionEvent);
   }, Math.round(duration / intervals));
 
   return new Promise((resolve) => {
