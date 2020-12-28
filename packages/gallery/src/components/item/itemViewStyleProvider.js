@@ -127,6 +127,10 @@ export function getInnerInfoStyle(
       }),
     overflow: 'hidden',
     boxSizing: 'border-box',
+    cursor:
+      styleParams.itemClick === GALLERY_CONSTS.itemClick.NOTHING
+        ? 'default'
+        : 'pointer',
   };
 
   const infoAboveOrBelow = GALLERY_CONSTS.hasVerticalPlacement(placement);
