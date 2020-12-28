@@ -1,4 +1,4 @@
-import { window, utils } from 'pro-gallery-lib';
+import { utils } from 'pro-gallery-lib';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
