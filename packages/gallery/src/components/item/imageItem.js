@@ -101,45 +101,6 @@ export default class ImageItem extends GalleryComponent {
     );
   }
 
-  getImageAnimationOverlay() {
-    const { imageDimensions, styleParams, createUrl, id } = this.props;
-
-    let imageAnimationUrl = null;
-    switch (styleParams.scrollAnimation) {
-      case GALLERY_CONSTS.scrollAnimations.BLUR:
-        imageAnimationUrl = createUrl(
-          GALLERY_CONSTS.urlSizes.RESIZED,
-          GALLERY_CONSTS.urlTypes.LOW_RES
-        );
-        break;
-      case GALLERY_CONSTS.scrollAnimations.MAIN_COLOR:
-        imageAnimationUrl = createUrl(
-          GALLERY_CONSTS.urlSizes.PIXEL,
-          GALLERY_CONSTS.urlTypes.HIGH_RES
-        );
-        break;
-    }
-
-    return (
-      imageAnimationUrl && (
-        <div
-          key={'image_container-overlay-' + id}
-          data-hook={'image-item-overlay'}
-          style={{
-            ...imageDimensions,
-            backgroundImage: `url(${imageAnimationUrl})`,
-            backgroundSize: 'cover',
-            pointerEvents: 'none',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            opacity: 0,
-          }}
-        ></div>
-      )
-    );
-  }
-
   getImageElement() {
     const {
       alt,
@@ -273,11 +234,9 @@ export default class ImageItem extends GalleryComponent {
   render() {
     const imageRenderer = this.getImageElement();
     const imageContainerClassNames = this.getImageContainerClassNames();
-    const animationOverlay = this.getImageAnimationOverlay();
     const renderedItem = this.getImageContainer(
       imageRenderer,
-      imageContainerClassNames,
-      animationOverlay
+      imageContainerClassNames
     );
     return renderedItem;
   }

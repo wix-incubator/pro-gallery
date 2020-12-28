@@ -375,12 +375,15 @@ class CssScrollHelper {
           [30, 0]
         );
       case MAIN_COLOR:
+        debugger;
+        const pixel = item.createUrl('pixel', 'img');
         return createScrollSelectors(
           [0, 100],
-          `#${domId} div[data-hook="image-item-overlay"]`,
-          'opacity :# !important;',
-          [1, 0]
-        );
+          `#${domId} .gallery-item-wrapper>div`,
+          `opacity :#;`,
+          [0, 1]
+        ) +
+        ` #${domId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
     }
     // FADE
 
