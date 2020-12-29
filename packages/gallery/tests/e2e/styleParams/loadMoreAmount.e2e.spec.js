@@ -23,8 +23,8 @@ describe('loadMoreAmount - e2e', () => {
       loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.waitFor.timer(200);
     await driver.actions.click('show-more');
+    await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
