@@ -207,26 +207,34 @@ export function App() {
 
   const customImageRenderer = (props) => {
     const originalSource = (src) => {
-      if (src.indexOf('.png') > 0) {
-        return <source srcSet={src.replace('webp', 'png')} type="image/png" />;
-      } else if (src.indexOf('.jpg') > 0) {
-        return <source srcSet={src.replace('webp', 'jpg')} type="image/jpg" />;
-      } else if (src.indexOf('.jpeg') > 0) {
-        return <source srcSet={src.replace('webp', 'jpeg')} type="image/jpeg" />;
+      if (src.indexOf('.webp') > 0) {
+        if (src.indexOf('.png') > 0) {
+          return <source srcSet={src.replace('webp', 'png')} type="image/png" />;
+        } else if (src.indexOf('.jpg') > 0) {
+          return <source srcSet={src.replace('webp', 'jpg')} type="image/jpg" />;
+        } else if (src.indexOf('.jpeg') > 0) {
+          return (
+            <source srcSet={src.replace('webp', 'jpeg')} type="image/jpeg" />
+          );
+        } else {
+          return null;
+        }
       } else {
         return null;
       }
     };
-  
+
     const webpSource = (src) => {
-      return (
-        <source
-          srcSet={src.replace(/(jpg|jpeg|png)$/, 'webp')}
-          type="image/webp"
-        />
-      );
+      if (src.indexOf(/\.\w{3,4}\/v\d\/\w*\//) > 0) { // only change resized urls
+        return (
+          <source
+            srcSet={src.replace(/(jpg|jpeg|png)$/, 'webp')}
+            type="image/webp"
+          />
+        );
+      }
     };
-  
+
     return (
       <picture
         key={`picture_${props.id}`}
