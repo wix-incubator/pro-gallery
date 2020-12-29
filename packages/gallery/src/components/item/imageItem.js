@@ -40,13 +40,12 @@ export default class ImageItem extends GalleryComponent {
     }
   }
 
-  handleHighResImageLoad({ target }) {
+  handleHighResImageLoad() {
     this.removeLowResImageTimeoutId = setTimeout(() => {
       this.setState({ isHighResImageLoaded: true });
       this.removeLowResImageTimeoutId = undefined;
     }, BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION);
     try {
-      target.style.opacity = '1';
       this.props.actions.setItemLoaded();
     } catch (e) {
       console.error('Failed to load high res image', e);
@@ -242,9 +241,7 @@ export default class ImageItem extends GalleryComponent {
       const highres = (
         <Picture
           key={'image_highres-' + id}
-          className={`gallery-item-visible gallery-item gallery-item-preloaded ${
-            isSEOMode() ? '' : 'gallery-item-hidden'
-          }`}
+          className={`gallery-item-visible gallery-item`}
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
@@ -253,7 +250,6 @@ export default class ImageItem extends GalleryComponent {
           onLoad={this.handleHighResImageLoad}
           style={{
             ...restOfDimensions,
-            ...{ opacity: shouldRenderHighResImages ? 1 : 0 },
             ...blockDownloadStyles,
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
