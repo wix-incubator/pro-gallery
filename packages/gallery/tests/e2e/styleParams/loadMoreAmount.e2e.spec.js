@@ -19,12 +19,11 @@ describe('loadMoreAmount - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       enableInfiniteScroll: false,
-      gridStyle: GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW,
       loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.click('show-more');
-    await driver.waitFor.timer(400);
+    await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
