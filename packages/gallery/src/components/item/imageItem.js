@@ -241,7 +241,7 @@ export default class ImageItem extends GalleryComponent {
       const highres = (
         <Picture
           key={'image_highres-' + id}
-          className={`gallery-item-visible gallery-item`}
+          className={`gallery-item-visible gallery-item gallery-item-preloaded`}
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}

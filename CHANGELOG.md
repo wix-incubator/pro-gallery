@@ -1,3 +1,10 @@
+## [v2.4.6](https://pro-gallery-2-4-6.surge.sh) (29/12/2020)
+ 
+#### GALLERY
+ -  fix (imageItem): remove opacity:0 when image is not loaded
+ -  improve (horizontalScroll): dispatch an event to the scrollIndicator while scrolling horizontally
+
+---
 ## [v2.4.5](https://pro-gallery-2-4-5.surge.sh) (23/12/2020)
  
 #### GALLERY
