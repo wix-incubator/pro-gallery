@@ -24,7 +24,7 @@ describe('loadMoreAmount - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.click('show-more');
-    await driver.waitFor.timer(200);
+    await driver.waitFor.timer(400);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
