@@ -523,12 +523,16 @@ export class GalleryContainer extends React.Component {
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
-    this.layoutCss = createCssLayouts({
-      layoutParams,
-      isMobile: utils.isMobile(),
-      domId: this.props.domId,
-      galleryItems: this.galleryStructure.galleryItems,
-    });
+    const { settings = {} } = this.props;
+    const { avoidInlineStyles } = settings;
+    if (avoidInlineStyles) {
+      this.layoutCss = createCssLayouts({
+        layoutParams,
+        isMobile: utils.isMobile(),
+        domId: this.props.domId,
+        galleryItems: this.galleryStructure.galleryItems,
+      });
+    }
   }
 
   getScrollCss({ domId, items, styleParams }) {
