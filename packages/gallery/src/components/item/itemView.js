@@ -524,7 +524,7 @@ class ItemView extends GalleryComponent {
             key={'item-container-link-' + id}
             {...this.getLinkParams()}
             tabIndex={-1}
-            style={{ ...fadeAnimationStyles }}
+            style={{ ...fadeAnimationStyles, ...imageDimensions }}
           >
             {itemInner}
           </a>
@@ -717,15 +717,27 @@ class ItemView extends GalleryComponent {
           height: style.height + style.infoHeight,
         };
 
-    const fadeAnimationStyles =
-      slideAnimation === GALLERY_CONSTS.slideAnimations.FADE
-        ? {
-            left: isRTL ? 'auto' : 0,
-            right: !isRTL ? 'auto' : 0,
-            pointerEvents: currentIdx === idx ? 'auto' : 'none',
-            zIndex: currentIdx === idx ? 0 : 1,
-          }
-        : {};
+    let fadeAnimationStyles;
+    switch (slideAnimation) {
+      case GALLERY_CONSTS.slideAnimations.FADE:
+        fadeAnimationStyles = {
+          left: isRTL ? 'auto' : 0,
+          right: !isRTL ? 'auto' : 0,
+          pointerEvents: currentIdx === idx ? 'auto' : 'none',
+          zIndex: currentIdx === idx ? 0 : 1,
+        };
+        break;
+      case GALLERY_CONSTS.slideAnimations.DECK:
+        fadeAnimationStyles = {
+          left: isRTL ? 'auto' : 0,
+          right: !isRTL ? 'auto' : 0,
+          pointerEvents: currentIdx === idx ? 'auto' : 'none',
+          zIndex: Math.sign(currentIdx - idx),
+        };
+        break;
+      default:
+        fadeAnimationStyles = {};
+    }
 
     const transitionStyles =
       this.state.loaded && (isEditMode() || isPreviewMode())
@@ -776,15 +788,48 @@ class ItemView extends GalleryComponent {
   }
 
   getFadeAnimationStyles() {
-    const { idx, currentIdx, styleParams } = this.props;
-    return styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE
-      ? {
+    const { idx, currentIdx, styleParams, container } = this.props;
+    switch (styleParams.slideAnimation) {
+      case GALLERY_CONSTS.slideAnimations.FADE:
+        return {
           transition: currentIdx === idx ? 'none' : 'opacity .8s ease',
           opacity: currentIdx === idx ? 1 : 0,
           display: 'block',
-          // visibility: currentIdx === idx ? 'visible' : 'hidden',
+        };
+      case GALLERY_CONSTS.slideAnimations.DECK: {
+        const rtlFix = styleParams.isRTL ? -1 : 1;
+        const baseStyles = {
+          position: 'absolute',
+          display: 'block',
+        };
+        if (currentIdx < idx) {
+          //the slides behind the deck
+          return {
+            ...baseStyles,
+            transition: 'opacity .2s ease .8s',
+            zIndex: -1,
+            opacity: 0,
+          };
+        } else if (currentIdx === idx) {
+          return {
+            ...baseStyles,
+            zIndex: 0,
+            transition: 'transform .8s ease',
+            transform: `translateX(0)`,
+          };
+        } else if (currentIdx > idx) {
+          return {
+            ...baseStyles,
+            zIndex: 1,
+            transition: 'transform .8s ease',
+            transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
+          };
         }
-      : {};
+        break;
+      }
+      default:
+        return {};
+    }
   }
 
   getItemAriaLabel() {
