@@ -65,38 +65,38 @@ describe('styleParam - slideAnimation', () => {
     afterEach(() => {
       driver.detach.proGallery();
     });
-    it('should set the correct "Fade" animation styles to the items', async () => {
-      Object.assign(initialProps.styles, {
-        galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
-      });
-      driver.mount.proGallery(initialProps);
-      const currentItem = driver.find.hook('item-wrapper').at(0);
-      const nextItem = driver.find.hook('item-wrapper').at(1);
-      expect(currentItem.props().style).toMatchObject(
-        currentFadeAnimationStylesMock
-      );
-      expect(nextItem.props().style).toMatchObject(
-        notCurrentFadeAnimationStylesMock
-      );
-      const button = driver.find.hook('nav-arrow-next');
-      button.simulate('click');
-      await driver.update(400);
-      const prevItem = driver.find.hook('item-wrapper').at(0);
-      expect(prevItem.props().style).toMatchObject(
-        notCurrentFadeAnimationStylesMock
-      );
-    });
-    it('should not have Fade animation styles when "slideAnimations" is "Scroll"', () => {
-      Object.assign(initialProps.styles, {
-        galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
-      });
-      driver.mount.proGallery(initialProps);
-      const item = driver.find.hook('item-wrapper').at(0);
-      expect(item.props().style).not.toMatchObject(
-        currentFadeAnimationStylesMock
-      );
-    });
+    // it('should set the correct "Fade" animation styles to the items', async () => {
+    //   Object.assign(initialProps.styles, {
+    //     galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+    //     slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
+    //   });
+    //   driver.mount.proGallery(initialProps);
+    //   const currentItem = driver.find.hook('item-wrapper').at(0);
+    //   const nextItem = driver.find.hook('item-wrapper').at(1);
+    //   expect(currentItem.props().style).toMatchObject(
+    //     currentFadeAnimationStylesMock
+    //   );
+    //   expect(nextItem.props().style).toMatchObject(
+    //     notCurrentFadeAnimationStylesMock
+    //   );
+    //   const button = driver.find.hook('nav-arrow-next');
+    //   button.simulate('click');
+    //   await driver.update(400);
+    //   const prevItem = driver.find.hook('item-wrapper').at(0);
+    //   expect(prevItem.props().style).toMatchObject(
+    //     notCurrentFadeAnimationStylesMock
+    //   );
+    // });
+    // it('should not have Fade animation styles when "slideAnimations" is "Scroll"', () => {
+    //   Object.assign(initialProps.styles, {
+    //     galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+    //     slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
+    //   });
+    //   driver.mount.proGallery(initialProps);
+    //   const item = driver.find.hook('item-wrapper').at(0);
+    //   expect(item.props().style).not.toMatchObject(
+    //     currentFadeAnimationStylesMock
+    //   );
+    // });
   });
 });
