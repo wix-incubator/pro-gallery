@@ -503,11 +503,11 @@ class ItemView extends GalleryComponent {
 
     if (styleParams.isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props;
-      const fadeAnimationStyles = this.getFadeAnimationStyles();
+      const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
-        ...fadeAnimationStyles,
+        ...slideAnimationStyles,
         transition: 'none',
       };
       const slideshowInfo = customSlideshowInfoRenderer
@@ -524,7 +524,7 @@ class ItemView extends GalleryComponent {
             key={'item-container-link-' + id}
             {...this.getLinkParams()}
             tabIndex={-1}
-            style={{ ...fadeAnimationStyles, ...imageDimensions }}
+            style={{ ...slideAnimationStyles, width, height }}
           >
             {itemInner}
           </a>
@@ -717,10 +717,10 @@ class ItemView extends GalleryComponent {
           height: style.height + style.infoHeight,
         };
 
-    let fadeAnimationStyles;
+    let slideAnimationStyles;
     switch (slideAnimation) {
       case GALLERY_CONSTS.slideAnimations.FADE:
-        fadeAnimationStyles = {
+        slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
           pointerEvents: currentIdx === idx ? 'auto' : 'none',
@@ -728,7 +728,7 @@ class ItemView extends GalleryComponent {
         };
         break;
       case GALLERY_CONSTS.slideAnimations.DECK:
-        fadeAnimationStyles = {
+        slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
           pointerEvents: currentIdx === idx ? 'auto' : 'none',
@@ -736,7 +736,7 @@ class ItemView extends GalleryComponent {
         };
         break;
       default:
-        fadeAnimationStyles = {};
+        slideAnimationStyles = {};
     }
 
     const transitionStyles =
@@ -755,7 +755,7 @@ class ItemView extends GalleryComponent {
       ...containerStyleByStyleParams,
       ...transitionStyles,
       ...opacityStyles,
-      ...fadeAnimationStyles,
+      ...slideAnimationStyles,
     };
 
     return itemContainerStyles;
@@ -781,32 +781,33 @@ class ItemView extends GalleryComponent {
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
-      ...(!styleParams.isSlideshow && this.getFadeAnimationStyles()),
+      ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
     };
 
     return itemWrapperStyles;
   }
 
-  getFadeAnimationStyles() {
+  getSlideAnimationStyles() {
     const { idx, currentIdx, styleParams, container } = this.props;
-    switch (styleParams.slideAnimation) {
+    const { isRTL, scrollDuration, slideAnimation } = styleParams;
+    const baseStyles = {
+      position: 'absolute',
+      display: 'block',
+    };
+    switch (slideAnimation) {
       case GALLERY_CONSTS.slideAnimations.FADE:
         return {
-          transition: currentIdx === idx ? 'none' : 'opacity .8s ease',
+          ...baseStyles,
+          transition: currentIdx === idx ? 'none' : `opacity ${scrollDuration}ms ease`,
           opacity: currentIdx === idx ? 1 : 0,
-          display: 'block',
         };
       case GALLERY_CONSTS.slideAnimations.DECK: {
-        const rtlFix = styleParams.isRTL ? -1 : 1;
-        const baseStyles = {
-          position: 'absolute',
-          display: 'block',
-        };
+        const rtlFix = isRTL ? -1 : 1;
         if (currentIdx < idx) {
           //the slides behind the deck
           return {
             ...baseStyles,
-            transition: 'opacity .2s ease .8s',
+            transition: `opacity .2s ease ${scrollDuration}ms`,
             zIndex: -1,
             opacity: 0,
           };
@@ -814,14 +815,14 @@ class ItemView extends GalleryComponent {
           return {
             ...baseStyles,
             zIndex: 0,
-            transition: 'transform .8s ease',
+            transition: `transform ${scrollDuration}ms ease`,
             transform: `translateX(0)`,
           };
         } else if (currentIdx > idx) {
           return {
             ...baseStyles,
             zIndex: 1,
-            transition: 'transform .8s ease',
+            transition: `transform ${scrollDuration}ms ease`,
             transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
           };
         }
