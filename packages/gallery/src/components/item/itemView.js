@@ -802,7 +802,7 @@ class ItemView extends GalleryComponent {
           opacity: currentIdx === idx ? 1 : 0,
         };
       case GALLERY_CONSTS.slideAnimations.DECK: {
-        const rtlFix = isRTL ? -1 : 1;
+        const rtlFix = isRTL ? 1 : -1;
         if (currentIdx < idx) {
           //the slides behind the deck
           return {
