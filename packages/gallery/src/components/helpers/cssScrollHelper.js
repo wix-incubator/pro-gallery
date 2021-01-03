@@ -272,29 +272,44 @@ class CssScrollHelper {
       const axis = oneRow ? 'X' : 'Y';
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
-        createScrollSelectors(animationPreparationPadding, '') +
+        createScrollSelectors(
+          animationPreparationPadding,
+          ' .gallery-item-wrapper'
+        ) +
         `{transform: translate${axis}(${direction}100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
-        `{transform: translate${axis}(0) !important;}`;
+        createScrollSelectors(
+          animationActivePadding,
+          ' .gallery-item-wrapper'
+        ) + `{transform: translate${axis}(0) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {
       scrollAnimationCss +=
-        createScrollSelectors(animationPreparationPadding, '') +
+        createScrollSelectors(
+          animationPreparationPadding,
+          ' .gallery-item-wrapper'
+        ) +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
-        `{transform: scale(1) !important;}`;
+        createScrollSelectors(
+          animationActivePadding,
+          ' .gallery-item-wrapper'
+        ) + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SHRINK) {
       scrollAnimationCss +=
-        createScrollSelectors(animationPreparationPadding, '') +
+        createScrollSelectors(
+          animationPreparationPadding,
+          ' .gallery-item-wrapper'
+        ) +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
-        `{transform: scale(1) !important;}`;
+        createScrollSelectors(
+          animationActivePadding,
+          ' .gallery-item-wrapper'
+        ) + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ZOOM_OUT) {
