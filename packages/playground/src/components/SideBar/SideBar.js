@@ -198,39 +198,6 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Form.Item>
             </Form>
           </Collapse.Panel>
-          <Collapse.Panel header="Animations" key="Animations">
-              <Form layout="vertical">
-                <Form.Item label="Animation Direction">
-                  <Select defaultValue={styleParams.animationDirection} onChange={val => _setStyleParams('animationDirection', val)}>
-                    {Object.entries(GALLERY_CONSTS.animationDirection).map(([key, val]) => <Select.Option key={key} value={key}>{val}</Select.Option>)}
-                  </Select>
-                </Form.Item>
-              <Form.Item label="Iterations" labelAlign="left" help="The number of steps of the animations (try 1 or 10)">
-                <InputNumber min={1} max={100} defaultValue={gallerySettings.animation_iterations || 1} onChange={val => setGallerySettings({ animation_iterations: val })} />
-              </Form.Item>
-              <Form.Item label="Animate In Start (px)" labelAlign="left" help="The position in pixels to START the animation (0 = the screen bottom)">
-                <InputNumber min={-500} max={500} defaultValue={gallerySettings.animation_range_start || 0} onChange={val => setGallerySettings({ animation_range_start: val })} />
-              </Form.Item>
-              <Form.Item label="Animate In Stop (px)" labelAlign="left" help="The position in pixels to END the animation (100 = 100px from the screen bottom)">
-                <InputNumber min={-500} max={500} defaultValue={gallerySettings.animation_range_stop >= -500 ? gallerySettings.animation_range_stop : 100} onChange={val => setGallerySettings({ animation_range_stop: val })} />
-              </Form.Item>
-              <Form.Item label="Random range (px)" labelAlign="left" help="Add a random number of pixels of the start and the end of the animation range">
-                <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_random >= 0 ? gallerySettings.animation_random : 100} onChange={val => setGallerySettings({ animation_random: val })} />
-              </Form.Item>
-              <Form.Item label="SLIDE animation gap (px)" labelAlign="left" help="The distance of the slide animation distance between images">
-                <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_slide_gap >= 0 ? gallerySettings.animation_slide_gap : 50} onChange={val => setGallerySettings({ animation_slide_gap: val })} />
-              </Form.Item>
-              {/* <Form.Item label="SLIDE_IN Gap" labelAlign="left">
-                <InputNumber min={0} max={500} defaultValue={gallerySettings.animation_slide_gap || 0} onChange={val => setGallerySettings({ animation_slide_gap: val })} />
-              </Form.Item>
-              <Form.Item label="ZOOM scale" labelAlign="left">
-                <InputNumber min={0} max={100} defaultValue={gallerySettings.animation_zoom_scale || 0} onChange={val => setGallerySettings({ animation_zoom_scale: val })} />
-              </Form.Item> */}
-              <Form.Item label="Transition Duration (ms)" labelAlign="left">
-                <InputNumber min={1} max={4000} defaultValue={gallerySettings.animation_transition_duration || 1} onChange={val => setGallerySettings({ animation_transition_duration: val })} />
-              </Form.Item>
-            </Form>
-          </Collapse.Panel>
           <Collapse.Panel header="Benchmarks" key="benchmarks">
             <Benchmarks />
           </Collapse.Panel>
@@ -241,9 +208,6 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Form.Item>
               <Form.Item label="Use Blueprints" labelAlign="left">
                 <Switch checked={!!gallerySettings.useBlueprints} onChange={e => setGallerySettings({ useBlueprints: e })} />
-              </Form.Item>
-              <Form.Item label="Use Server Blueprints" labelAlign="left">
-                <Switch checked={!!gallerySettings.shouldUseBlueprintsFromServer} onChange={e => setGallerySettings({ shouldUseBlueprintsFromServer: e })} />
               </Form.Item>
               <Form.Item label="Use Inline Styles" labelAlign="left">
                 <Switch checked={!!gallerySettings.useInlineStyles} onChange={e => setGallerySettings({ useInlineStyles: e })} />
