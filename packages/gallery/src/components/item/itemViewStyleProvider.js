@@ -110,13 +110,13 @@ function getInnerInfoStylesRightOrLeft(styleParams, infoWidth) {
   };
 }
 
-export function getInnerInfoStyle(
+export function getInnerInfoStyle({
   placement,
   styleParams,
   infoHeight,
   infoWidth,
-  itemDoesntHaveLink
-) {
+  itemDoesntHaveLink,
+}) {
   const commonStyles = {
     ...((styleParams.imageInfoType ===
       GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND ||
