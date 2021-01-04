@@ -611,7 +611,7 @@ class ItemView extends GalleryComponent {
       this.getCustomInfoRendererProps(),
       placement
     );
-
+    const itemDoesntHaveLink = !this.itemHasLink();
     info = (
       <div
         style={getOuterInfoStyle(
@@ -626,7 +626,8 @@ class ItemView extends GalleryComponent {
             placement,
             styleParams,
             infoHeight,
-            infoWidth
+            infoWidth,
+            itemDoesntHaveLink
           )}
           className={'gallery-item-common-info ' + elementName}
           aria-hidden={true}
