@@ -427,11 +427,6 @@ div.pro-gallery {
           }
         }
 
-        &.gallery-item-hidden {
-          opacity: 0;
-          transition: opacity .5s ease .1s;
-        }
-
         &.gallery-item-video {
           overflow: hidden;
           text-align: center; //for grid crop

@@ -220,6 +220,10 @@ function isWithinPaddingHorizontally({
 function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const change = to - from;
 
+  if (change === 0) {
+    return new Promise((resolve) => resolve(to));
+  }
+
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');
@@ -241,8 +245,17 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
         }
   );
 
+  const intervals = 10;
+  const scrollTransitionEvent = new CustomEvent('scrollTransition', {
+    detail: change / intervals,
+  });
+  const scrollTransitionInterval = setInterval(() => {
+    scroller.dispatchEvent(scrollTransitionEvent);
+  }, Math.round(duration / intervals));
+
   return new Promise((resolve) => {
     setTimeout(() => {
+      clearInterval(scrollTransitionInterval);
       Object.assign(
         scrollerInner.style,
         {

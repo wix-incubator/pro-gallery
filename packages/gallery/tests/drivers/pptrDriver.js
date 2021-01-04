@@ -47,7 +47,6 @@ export default class galleryDriver {
 
   async navigate(styleParams) {
     const pageUrl = this.getPageUrl(styleParams);
-    console.log('Testing page at: ', pageUrl);
     await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
     await this.scrollInteraction();
     await this.page.waitFor(500);
@@ -94,7 +93,6 @@ export default class galleryDriver {
     );
     const localhost = config.baseUrl;
     const url = `${localhost}/?${urlParam}isTestEnvironment=true`;
-    console.log('Openning URL:', url);
     return url;
   }
   get grab() {

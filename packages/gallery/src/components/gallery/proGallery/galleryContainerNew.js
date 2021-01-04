@@ -854,7 +854,7 @@ export class GalleryContainer extends React.Component {
       ${
         !overlayBackground
           ? ''
-          : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${overlayBackground} !important}`
+          : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background: ${overlayBackground} !important}`
       }
     `.trim();
   }
@@ -1073,6 +1073,7 @@ export class GalleryContainer extends React.Component {
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
+          customNavArrowsRenderer={this.props.customNavArrowsRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
