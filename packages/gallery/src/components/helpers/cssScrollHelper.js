@@ -272,6 +272,8 @@ class CssScrollHelper {
       const axis = oneRow ? 'X' : 'Y';
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
+        createScrollSelectors(animationPreparationPadding, '') +
+        '{overflow: visible !important;}' +
         createScrollSelectors(
           animationPreparationPadding,
           ' .gallery-item-wrapper'
