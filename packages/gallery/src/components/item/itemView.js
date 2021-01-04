@@ -789,7 +789,7 @@ class ItemView extends GalleryComponent {
 
   getSlideAnimationStyles() {
     const { idx, currentIdx, styleParams, container } = this.props;
-    const { isRTL, scrollDuration, slideAnimation } = styleParams;
+    const { isRTL, slideAnimation } = styleParams;
     const baseStyles = {
       position: 'absolute',
       display: 'block',
@@ -798,7 +798,7 @@ class ItemView extends GalleryComponent {
       case GALLERY_CONSTS.slideAnimations.FADE:
         return {
           ...baseStyles,
-          transition: currentIdx === idx ? 'none' : `opacity ${scrollDuration}ms ease`,
+          transition: currentIdx === idx ? 'none' : `opacity 600ms ease`,
           opacity: currentIdx === idx ? 1 : 0,
         };
       case GALLERY_CONSTS.slideAnimations.DECK: {
@@ -807,7 +807,7 @@ class ItemView extends GalleryComponent {
           //the slides behind the deck
           return {
             ...baseStyles,
-            transition: `opacity .2s ease ${scrollDuration}ms`,
+            transition: `opacity .2s ease 600ms`,
             zIndex: -1,
             opacity: 0,
           };
@@ -815,14 +815,14 @@ class ItemView extends GalleryComponent {
           return {
             ...baseStyles,
             zIndex: 0,
-            transition: `transform ${scrollDuration}ms ease`,
+            transition: `transform 600ms ease`,
             transform: `translateX(0)`,
           };
         } else if (currentIdx > idx) {
           return {
             ...baseStyles,
             zIndex: 1,
-            transition: `transform ${scrollDuration}ms ease`,
+            transition: `transform 600ms ease`,
             transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
           };
         }
