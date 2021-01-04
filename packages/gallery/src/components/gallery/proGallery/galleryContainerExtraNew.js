@@ -14,7 +14,6 @@ import SlideshowView from './slideshowView';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
-import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 
@@ -295,12 +294,12 @@ export class GalleryContainer extends React.Component {
         this.state.gotFirstScrollEvent ||
         this.state.showMoreClickedAtLeastOnce);
     if (shouldUseScrollCss) {
-      this.getScrollCss({
-        domId: domId,
-        container: container,
-        items: this.galleryStructure.galleryItems,
-        styleParams: styles,
-      });
+      // this.getScrollCss({
+      //   domId: domId,
+      //   container: container,
+      //   items: this.galleryStructure.galleryItems,
+      //   styleParams: styles,
+      // });
     }
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
@@ -516,15 +515,15 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  getScrollCss({ domId, items, container, styleParams }) {
-    this.scrollCss = cssScrollHelper.calcScrollCss({
-      items,
-      container,
-      styleParams,
-      domId,
-    });
-    console.log('SCROLL CSS: getScrollCss', this.scrollCss);
-  }
+  // getScrollCss({ domId, items, container, styleParams }) {
+    // this.scrollCss = cssScrollHelper.calcScrollCss({
+    //   items,
+    //   container,
+    //   styleParams,
+    //   domId,
+    // });
+    // console.log('SCROLL CSS: getScrollCss', this.scrollCss);
+  // }
 
   toggleLoadMoreItems() {
     this.eventsListener(
@@ -535,12 +534,12 @@ export class GalleryContainer extends React.Component {
     const needToHandleShowMoreClick = true;
     //before clicking "load more" at the first time
     if (!this.state.showMoreClickedAtLeastOnce) {
-      this.getScrollCss({
-        domId: this.props.domId,
-        container: this.props.container,
-        items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
-      });
+      // this.getScrollCss({
+      //   domId: this.props.domId,
+      //   container: this.props.container,
+      //   items: this.galleryStructure.galleryItems,
+      //   styleParams: this.state.styles,
+      // });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
         {
@@ -567,12 +566,12 @@ export class GalleryContainer extends React.Component {
 
   setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
-      this.getScrollCss({
-        domId: this.props.domId,
-        container: this.props.container,
-        items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
-      });
+      // this.getScrollCss({
+      //   domId: this.props.domId,
+      //   container: this.props.container,
+      //   items: this.galleryStructure.galleryItems,
+      //   styleParams: this.state.styles,
+      // });
       this.setState({
         gotFirstScrollEvent: true,
       });
@@ -749,7 +748,7 @@ export class GalleryContainer extends React.Component {
               dangerouslySetInnerHTML={{ __html: css }}
             />
           ))}
-          {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
+          {(this.props.scrollCss || []).filter(Boolean).map((css, idx) => (
             <style
               id={`scrollCss_${idx}`}
               key={`scrollCss_${idx}`}

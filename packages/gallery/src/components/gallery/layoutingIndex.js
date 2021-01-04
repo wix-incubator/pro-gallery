@@ -44,6 +44,7 @@ export default class BaseGallery extends React.Component {
     blueprintsManager
       .createBlueprint(this.galleryProps)
       .then((blueprint) => {
+        console.log({blueprint});
         this.setState({ blueprint });
       })
       .catch((e) => {

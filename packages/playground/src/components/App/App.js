@@ -146,19 +146,21 @@ export function App() {
 
 
   const getOrInitBlueprint = () => {
+    const params = {
+      domId: 'pro-gallery-playground',
+      totalItemsCount: getTotalItemsCount(),
+      dimensions: getContainer(),
+      styleParams: getStyles(),
+      items: getItems(),
+    }
     if (blueprint) {
       return blueprint;
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {
-      const params = {
-        dimensions: getContainer(),
-        styleParams: getStyles(),
-        items: getItems()
-      }
       getBlueprintFromServer(params);
     } else {
       const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
       blueprintsManager.init({api: playgroundBlueprintsApi})
-      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      blueprintsManager.createBlueprint(params, true);
     }
   }
 
