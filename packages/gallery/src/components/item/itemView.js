@@ -14,6 +14,7 @@ import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
+import { ScrollAnimations } from './scrollAnimations';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,
@@ -1121,6 +1122,14 @@ class ItemView extends GalleryComponent {
           }}
         >
           {innerDiv}
+          {this.props.scrollAnimationCss ? (
+            <ScrollAnimations
+              idx={idx}
+              css={this.props.scrollAnimationCss[idx]}
+            />
+          ) : (
+            <div>NO CSS</div>
+          )}
         </a>
       );
     }
