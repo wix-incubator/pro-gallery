@@ -1,7 +1,7 @@
 import { INPUT_TYPES } from '../utils/constants';
 
 export default {
-  title: 'Scatter Items',
+  title: 'Randomly Scatter Items',
   isRelevant: () => true,
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.NUMBER,

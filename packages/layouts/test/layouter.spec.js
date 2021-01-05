@@ -36,6 +36,7 @@ describe('Layouter', () => {
       galleryMargin: 0,
       imageMargin: 10,
       scatter: 0,
+      rotatingScatter: '',
       fixedColumns: 0,
     };
 
