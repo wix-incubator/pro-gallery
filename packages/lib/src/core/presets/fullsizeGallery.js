@@ -29,6 +29,7 @@ export const fixedStyles = {
   isSlideshow: false,
   cropOnlyFill: false,
   scatter: 0,
+  rotatingScatter: '',
   imageMargin: 0,
 };
 

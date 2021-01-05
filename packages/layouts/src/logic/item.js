@@ -231,7 +231,7 @@ export class Item {
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
 
-    if (this.scatter > 0 || this.rotatingScatter.length > 0) {
+    if (this.scatter > 0 || this.rotatingScatter?.length > 0) {
       const { x, y } = this.calcScatter(offset);
       offset.left += x;
       offset.top += y;
