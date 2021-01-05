@@ -16,9 +16,6 @@ class Blueprints {
   }) {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
-
-    debugger;
-    
     let changedParams = {};
     try {
       const {
@@ -85,15 +82,15 @@ class Blueprints {
           existingBlueprint.container = formattedContainer;
         }
         existingBlueprint.structure = structure;
-        
-        existingBlueprint.scrollCss = this.createCssAnimations({
+
+        debugger;
+        existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
           items: structure.items,
           container: existingBlueprint.container,
           styleParams: existingBlueprint.styles,
           domId: params.domId,
         });
-
-;
+        console.log({existingBlueprint});
 
         // if its an infinite gallery - let the container loose
         const isInfinite =
