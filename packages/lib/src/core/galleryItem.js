@@ -163,7 +163,7 @@ class GalleryItem {
           }
           resizedUrl = this._cachedUrls[str];
         } catch (e) {
-          console.error('Cannot create url', e, item, args)
+          console.error('Cannot create url', e, item, args);
           resizedUrl = String(url);
         }
       } else {
