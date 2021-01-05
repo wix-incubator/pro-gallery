@@ -145,19 +145,25 @@ class GalleryItem {
     return { width, height };
   }
 
-  resizedUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams) {
+  resizedUrl(
+    resizeMethod,
+    requiredWidth,
+    requiredHeight,
+    sharpParams,
+    createMultipleUrls
+  ) {
     const resizeUrl = (item, url, ...args) => {
       let resizedUrl;
       if (typeof this.resizeMediaUrl === 'function') {
         try {
           const str = String(utils.hashCode(JSON.stringify({ url, ...args })));
           if (!this._cachedUrls[str]) {
-            this._cachedUrls[str] = String(
-              this.resizeMediaUrl(item, url, ...args) || ''
-            );
+            this._cachedUrls[str] =
+              this.resizeMediaUrl(item, url, ...args, createMultipleUrls) || '';
           }
           resizedUrl = this._cachedUrls[str];
         } catch (e) {
+          console.error('Cannot create url', e, item, args)
           resizedUrl = String(url);
         }
       } else {
@@ -258,6 +264,19 @@ class GalleryItem {
       );
     }
     return this.urls.resized_url;
+  }
+
+  get multi_url() {
+    if (!this.urls.multi_url) {
+      this.urls.multi_url = this.resizedUrl(
+        this.cubeType,
+        this.resizeWidth,
+        this.resizeHeight,
+        this.sharpParams,
+        true
+      );
+    }
+    return this.urls.multi_url;
   }
 
   get scaled_url() {

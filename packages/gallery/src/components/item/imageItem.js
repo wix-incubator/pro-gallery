@@ -232,12 +232,16 @@ export default class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src = createUrl(
-        GALLERY_CONSTS.urlSizes.RESIZED,
-        isSEOMode()
-          ? GALLERY_CONSTS.urlTypes.SEO
-          : GALLERY_CONSTS.urlTypes.HIGH_RES
-      );
+      const src = isSEOMode()
+        ? createUrl(
+            GALLERY_CONSTS.urlSizes.RESIZED,
+            GALLERY_CONSTS.urlTypes.SEO
+          )
+        : createUrl(
+            GALLERY_CONSTS.urlSizes.MULTI,
+            GALLERY_CONSTS.urlTypes.HIGH_RES
+          );
+
       const highres = (
         <Picture
           key={'image_highres-' + id}

@@ -1,27 +1,50 @@
-import * as imageSdk from 'image-client-api/dist/imageClientSDK';
 
-const getWixFilename = (url) =>
-  url.replace('https://static.wixstatic.com/media/', '');
+const WIX_MEDIA_PREFIX = 'https://static.wixstatic.com/media/';
+const WIX_MEDIA_DOMAIN = '//static.wixstatic.com';
 
-const resizeUrlImp = (
+const isWixMediaUrl = (url) => url.indexOf(WIX_MEDIA_DOMAIN) >= 0;
+
+const resizeUrlImp_manual = (
   item,
   originalUrl,
   resizeMethod,
   requiredWidth,
   requiredHeight,
   sharpParams,
-  faces,
-  allowWatermark,
-  focalPoint
+  focalPoint,
+  useWebp = false,
+  devicePixelRatio = 1
 ) => {
-  // assign default parameters
-  originalUrl = originalUrl || '';
+
+  requiredWidth = Math.ceil(requiredWidth * devicePixelRatio);
+  requiredHeight = Math.ceil(requiredHeight * devicePixelRatio);
+
+  const requiredRatio = requiredWidth / requiredHeight;
+
+  // assign sharp default parameters
   sharpParams = sharpParams || {};
 
   // calc default quality
-  if (sharpParams.quality > 0) {
-    //don't allow quality above 90 till we have proper UI indication
-    sharpParams.quality = Math.min(90, sharpParams.quality);
+  if (!sharpParams.quality) {
+    sharpParams.quality = 90;
+  }
+
+  // don't allow quality above 90 till we have proper UI indication
+  sharpParams.quality = Math.min(90, sharpParams.quality);
+
+  if (sharpParams.allowUsm === true) {
+    sharpParams.usm.usm_a = Math.min(
+      5,
+      Math.max(0, sharpParams.usm.usm_a || 0),
+    );
+    sharpParams.usm.usm_r = Math.min(
+      128,
+      Math.max(0, sharpParams.usm.usm_r || 0),
+    ); // should be max 500 - but it's returning a 404
+    sharpParams.usm.usm_t = Math.min(
+      1,
+      Math.max(0, sharpParams.usm.usm_t || 0),
+    );
   }
 
   const focalPointObj = { x: 50, y: 50 };
@@ -30,89 +53,103 @@ const resizeUrlImp = (
     focalPointObj.y = Math.round(focalPoint[1] * 100);
   }
 
-  if (sharpParams.allowUsm === true && sharpParams.usm) {
-    sharpParams.usm.usm_a = Math.min(
-      5,
-      Math.max(0, sharpParams.usm.usm_a || 0)
-    );
-    sharpParams.usm.usm_r = Math.min(
-      128,
-      Math.max(0, sharpParams.usm.usm_r || 0)
-    ); //should be max 500 - but it's returning a 404
-    sharpParams.usm.usm_t = Math.min(
-      1,
-      Math.max(0, sharpParams.usm.usm_t || 0)
-    );
+  const isExternalUrl = (url) => {
+    return /(^https?)|(^data)|(^blob)/.test(url);
+  };
+
+
+  const prefixUrlIfNeeded = (originalUrl) => {
+    if (isExternalUrl(originalUrl)) {
+      return originalUrl;
+    } else {
+      return WIX_MEDIA_PREFIX + originalUrl;
+    }
+  };
+
+  if (isExternalUrl(originalUrl) && !isWixMediaUrl(originalUrl)) {
+    return originalUrl;
+  } else if (!focalPoint) {
+    // todo remove when supporting focal point
+    let retUrl = prefixUrlIfNeeded(originalUrl) + '/v1/' + resizeMethod + '/';
+    retUrl += 'w_' + requiredWidth;
+    retUrl += ',h_' + requiredHeight;
+    if (resizeMethod === 'fill') {
+      retUrl += `,fp_0.${focalPointObj.x}_0.${focalPointObj.y}`;
+    }
+    // retUrl += ',al_' + (faces ? 'fs' : 'c');
+    retUrl += ',q_' + sharpParams.quality;
+    if (sharpParams.blur) {
+      retUrl += ',blur_' + sharpParams.blur;
+    }
+
+    retUrl +=
+      sharpParams.usm && sharpParams.usm.usm_r
+        ? ',usm_' +
+        sharpParams.usm.usm_r.toFixed(2) +
+        '_' +
+        sharpParams.usm.usm_a.toFixed(2) +
+        '_' +
+        sharpParams.usm.usm_t.toFixed(2)
+        : '';
+    // Important to use this as the last param
+    retUrl += '/' + originalUrl;
+
+    return retUrl;
   } else {
-    sharpParams.usm = {
-      usm_a: 0,
-      usm_r: 0,
-      usm_t: 0,
-    };
-  }
+    let scale;
+    let x;
+    let y;
+    let orgW;
+    let orgH;
 
-  let resizer = () => {};
-  if (resizeMethod === 'fit') {
-    // function getScaleToFitImageURL(relativeUrl, sourceWidth, sourceHeight, targetWidth, targetHeight, options) {
-    resizer = imageSdk.getScaleToFitImageURL;
-  } else {
-    // function getScaleToFillImageURL(relativeUrl, sourceWidth, sourceHeight, targetWidth, targetHeight, options) {
-    resizer = imageSdk.getScaleToFillImageURL;
-  }
+    // find the scale
+    if (item.ratio > requiredRatio) {
+      // wide image (relative to required ratio
+      scale = requiredHeight / item.maxHeight;
+      orgW = Math.floor(requiredHeight * item.ratio);
+      y = 0;
+      x = Math.round(orgW * focalPoint[0] - requiredWidth / 2);
+      x = Math.min(orgW - requiredWidth, x);
+      x = Math.max(0, x);
+    } else {
+      // narrow image
 
-  /**
-   * the transform options
-   * @typedef  {object}   ImageTransformOptions
-   * @property {boolean}  [progressive]               image transform progressive
-   * @property {number}   [quality]                   image transform quality
-   * @property {string}   [watermark]                 image watermark id
-   * @property {object}   [unsharpMask]               unsharpMask filter
-   * @property {number}   [unsharpMask.radius]        unsharpMask radius
-   * @property {number}   [unsharpMask.amount]        unsharpMask amount
-   * @property {number}   [unsharpMask.threshold]     unsharpMask threshold
-   */
+      scale = requiredWidth / item.maxWidth;
+      orgH = Math.floor(requiredWidth / item.ratio);
+      x = 0;
+      y = Math.round(orgH * focalPoint[1] - requiredHeight / 2);
+      y = Math.min(orgH - requiredHeight, y);
+      y = Math.max(0, y);
+    }
 
-  const options = {};
-  if (sharpParams.quality > 0) {
-    options.quality = sharpParams.quality;
-  }
-  if (sharpParams.blur > 0) {
-    options.filters = {
-      blur: sharpParams.blur,
-    };
-  }
-  if (focalPointObj) {
-    options.focalPoint = focalPointObj;
-  }
-  if (sharpParams && sharpParams.usm) {
-    options.unsharpMask = {
-      radius: parseFloat(sharpParams.usm.usm_r),
-      amount: parseFloat(sharpParams.usm.usm_a),
-      threshold: parseFloat(sharpParams.usm.usm_t),
-    };
-  }
+    // make sure scale is not lower than needed
+    // scale must be higher to prevent cases that there will be white margins (or 404)
+    scale = Math.ceil(scale * 100) / 100;
 
-  const retUrl = resizer(
-    getWixFilename(originalUrl),
-    item.maxWidth,
-    item.maxHeight,
-    requiredWidth,
-    requiredHeight,
-    options
-  );
+    let retUrl = prefixUrlIfNeeded(originalUrl) + '/v1/crop/';
+    retUrl += 'w_' + requiredWidth;
+    retUrl += ',h_' + requiredHeight;
+    retUrl += ',x_' + x;
+    retUrl += ',y_' + y;
+    retUrl += ',scl_' + scale.toFixed(2);
+    retUrl += ',q_' + sharpParams.quality;
+    if (sharpParams.blur) {
+      retUrl += ',blur_' + sharpParams.blur;
+    }
+    retUrl +=
+      sharpParams.usm && sharpParams.usm.usm_r
+        ? ',usm_' +
+        sharpParams.usm.usm_r.toFixed(2) +
+        '_' +
+        sharpParams.usm.usm_a.toFixed(2) +
+        '_' +
+        sharpParams.usm.usm_t.toFixed(2)
+        : '';
+    // Important to use this as the last param
+    retUrl += '/' + useWebp ? (originalUrl.split('.')[0] + '.webp') : originalUrl;
 
-  /*
-      console.log('USING THE CLIENT IMAGE SDK! Resized the image: ', retUrl, 'Previuos url was: ', resizeUrlImp_manual(originalUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, faces, allowWatermark, focalPoint), 'parameters were: ', {
-        originalUrl,
-        resizeMethod,
-        orgWidth: item.maxWidth,
-        orgHeight: item.maxHeight,
-        requiredWidth,
-        requiredHeight,
-        options
-      });
- 		*/
-  return retUrl;
+    return retUrl;
+  }
 };
 
 const resizeMediaUrl = (
@@ -122,13 +159,19 @@ const resizeMediaUrl = (
   requiredWidth,
   requiredHeight,
   sharpParams,
-  faces = false,
-  allowWatermark = false,
   focalPoint,
-  forceManual
+  createMultiple = false
 ) => {
-  requiredWidth = Math.ceil(requiredWidth);
-  requiredHeight = Math.ceil(requiredHeight);
+
+  const params = [
+    item,
+    originalUrl,
+    resizeMethod,
+    requiredWidth,
+    requiredHeight,
+    sharpParams,
+    focalPoint,
+  ];
 
   if (resizeMethod === 'video') {
     return originalUrl;
@@ -137,18 +180,20 @@ const resizeMediaUrl = (
     requiredHeight >= item.maxHeight
   ) {
     return item.url;
+  } else if (createMultiple) {
+    return {
+      webp: {
+        x1: resizeUrlImp_manual(...params, true, 1),
+        x2: resizeUrlImp_manual(...params, true, 2),
+      },
+      original: {
+        type: originalUrl.match(/[^\.]\w*$/)[0],
+        x1: resizeUrlImp_manual(...params, false, 1),
+        x2: resizeUrlImp_manual(...params, false, 2),
+      }
+    };
   } else {
-    return resizeUrlImp(
-      item,
-      originalUrl,
-      resizeMethod,
-      requiredWidth,
-      requiredHeight,
-      sharpParams,
-      faces,
-      allowWatermark,
-      focalPoint
-    );
+    return resizeUrlImp_manual(...params);
   }
 };
 
