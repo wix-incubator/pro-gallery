@@ -187,7 +187,7 @@ const resizeMediaUrl = (
         x2: resizeUrlImp_manual(...params, true, 2),
       },
       original: {
-        type: originalUrl.match(/[^\.]\w*$/)[0],
+        type: originalUrl.match(/[^.]\w*$/)[0],
         x1: resizeUrlImp_manual(...params, false, 1),
         x2: resizeUrlImp_manual(...params, false, 2),
       }
