@@ -6,7 +6,6 @@ export const fixedStyles = {
   rotatingGroupTypes: '1,2v,2v',
   cubeImages: true,
   cubeRatio: '50%/100%',
-  groupsPerStrip: 3,
   imageMargin: 0,
   gridStyle: 1,
   scrollDirection: 1,
