@@ -11,7 +11,7 @@ const resizeUrlImp_manual = (
   requiredWidth,
   requiredHeight,
   sharpParams,
-  focalPoint,
+  focalPoint = [0.5, 0.5],
   useWebp = false,
   devicePixelRatio = 1
 ) => {
@@ -68,33 +68,6 @@ const resizeUrlImp_manual = (
 
   if (isExternalUrl(originalUrl) && !isWixMediaUrl(originalUrl)) {
     return originalUrl;
-  } else if (!focalPoint) {
-    // todo remove when supporting focal point
-    let retUrl = prefixUrlIfNeeded(originalUrl) + '/v1/' + resizeMethod + '/';
-    retUrl += 'w_' + requiredWidth;
-    retUrl += ',h_' + requiredHeight;
-    if (resizeMethod === 'fill') {
-      retUrl += `,fp_0.${focalPointObj.x}_0.${focalPointObj.y}`;
-    }
-    // retUrl += ',al_' + (faces ? 'fs' : 'c');
-    retUrl += ',q_' + sharpParams.quality;
-    if (sharpParams.blur) {
-      retUrl += ',blur_' + sharpParams.blur;
-    }
-
-    retUrl +=
-      sharpParams.usm && sharpParams.usm.usm_r
-        ? ',usm_' +
-        sharpParams.usm.usm_r.toFixed(2) +
-        '_' +
-        sharpParams.usm.usm_a.toFixed(2) +
-        '_' +
-        sharpParams.usm.usm_t.toFixed(2)
-        : '';
-    // Important to use this as the last param
-    retUrl += '/' + originalUrl;
-
-    return retUrl;
   } else {
     let scale;
     let x;
@@ -147,7 +120,7 @@ const resizeUrlImp_manual = (
         : '';
     // Important to use this as the last param
     retUrl +=
-    '/' + (useWebp ? originalUrl.replace(/[^.]\w*$/, 'webp') : originalUrl).match(/[^/]\w*$/)[1];
+    '/' + (useWebp ? originalUrl.replace(/[^.]\w*$/, 'webp') : originalUrl).match(/[^\/][\w\.]*$/)[0];
 
     return retUrl;
   }
