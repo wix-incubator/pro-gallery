@@ -1,3 +1,24 @@
+## [v2.4.8](https://pro-gallery-2-4-8.surge.sh) (07/01/2021)
+ 
+#### OTHER
+ - Added new designed presets
+ - Added rotatingScatter
+ - Added alternate placement
+
+#### LAYOUTS
+ -  fix (strip): do not allow incomplete strips with fixed groups per row
+
+---
+## [v2.4.7](https://pro-gallery-2-4-7.surge.sh) (04/01/2021)
+ 
+#### GALLERY
+ -  fix: jumpy animations with scrollSnap in slider
+ -  fix (galleryContainer): add the customNavArrowsRenderer to the non-blueprints flow
+ -  fix (galleryContainer): do not create layoutCss if avoidingInlineStyles
+ -  feature (overlayBackgroundGradient): add the option to set the gradient of the overlay
+ -  improve (galleryContainer): allow gradient overlay background
+
+---
 ## [v2.4.6](https://pro-gallery-2-4-6.surge.sh) (29/12/2020)
  
 #### GALLERY

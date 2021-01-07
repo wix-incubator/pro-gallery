@@ -41,6 +41,7 @@ export const fixedStyleParams = {
   boxShadow: 0,
   galleryMargin: 0,
   scatter: 0,
+  rotatingScatter: '',
   placeGroupsLtr: false,
   mobilePanorama: false,
   enableInfiniteScroll: [true, 1],
