@@ -1,3 +1,14 @@
+## [v2.4.8](https://pro-gallery-2-4-8.surge.sh) (07/01/2021)
+ 
+#### OTHER
+ - Added new designed presets
+ - Added rotatingScatter
+ - Added alternate placement
+
+#### LAYOUTS
+ -  fix (strip): do not allow incomplete strips with fixed groups per row
+
+---
 ## [v2.4.7](https://pro-gallery-2-4-7.surge.sh) (04/01/2021)
  
 #### GALLERY
