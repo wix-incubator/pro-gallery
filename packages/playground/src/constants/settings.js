@@ -72,6 +72,7 @@ export const stylesBySection = {
     'columnWidths',
     'galleryMargin',
     'scatter',
+    'rotatingScatter',
     'smartCrop',
 
     'galleryThumbnailsAlignment',

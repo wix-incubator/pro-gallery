@@ -24,6 +24,7 @@ export const fixedStyles = {
   rotatingGroupTypes: '2h',
   smartCrop: false,
   scatter: 0,
+  rotatingScatter: '',
   fixedColumns: 1,
   groupsPerStrip: 0,
   oneRow: false,

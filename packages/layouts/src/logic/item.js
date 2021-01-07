@@ -31,6 +31,7 @@ export class Item {
       this.imageMargin = styleParams.imageMargin;
       this.galleryMargin = styleParams.galleryMargin;
       this.scatter = styleParams.scatter;
+      this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
     }
 
@@ -124,17 +125,30 @@ export class Item {
   }
 
   calcScatter(offset) {
-    if (this.scatter > 0) {
-      const m = this.imageMargin / 2;
-      const g = this.galleryMargin;
+    const m = this.imageMargin / 2;
+    const g = this.galleryMargin;
 
-      const spaceLeft = offset.left > 0 ? m : g;
-      const spaceRight =
-        this.container.galleryWidth - offset.right > 2 * m ? m : g;
-      const spaceUp = offset.top > 0 ? m : g;
-      const spaceDown =
-        this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
+    const spaceLeft = offset.left > 0 ? m : g;
+    const spaceRight =
+      this.container.galleryWidth - offset.right > 2 * m ? m : g;
+    const spaceUp = offset.top > 0 ? m : g;
+    const spaceDown =
+      this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
 
+    if (this.rotatingScatter.length > 0) {
+      try {
+        const scatterArr = this.rotatingScatter.split(',');
+        const [x, y] = scatterArr[this.idx % scatterArr.length]
+          .split('/')
+          .map((dim) => parseInt(dim))
+          .map((dim) => dim / 100);
+        let horizontalShift = x * (x > 0 ? spaceRight : spaceLeft);
+        let verticalShift = y * (y > 0 ? spaceDown : spaceUp);
+        return { x: horizontalShift, y: verticalShift };
+      } catch (e) {
+        console.error('Cannot calculate rotating scatter', e);
+      }
+    } else if (this.scatter > 0) {
       const minShift = 0.4 * (this.scatter / 100);
 
       let horizontalShift = utils.hashToRandomInt(
@@ -217,7 +231,7 @@ export class Item {
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
 
-    if (this.scatter > 0) {
+    if (this.scatter > 0 || this.rotatingScatter?.length > 0) {
       const { x, y } = this.calcScatter(offset);
       offset.left += x;
       offset.top += y;
