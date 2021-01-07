@@ -147,8 +147,8 @@ class VideoItem extends GalleryComponent {
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
 
     const videoDimensionsCss = {
-      width: isWiderThenContainer ? '100%' : 'auto',
-      height: isWiderThenContainer ? 'auto' : '100%',
+      width: isWiderThenContainer ? 'calc(100% + 1px)' : 'auto',
+      height: isWiderThenContainer ? 'auto' : 'calc(100% + 1px)',
     };
 
     if (
