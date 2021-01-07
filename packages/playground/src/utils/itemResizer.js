@@ -147,7 +147,7 @@ const resizeUrlImp_manual = (
         : '';
     // Important to use this as the last param
     retUrl +=
-    '/' + useWebp ? (originalUrl.replace(/[^\.]\w*$/)[0], 'webp') : originalUrl;
+    '/' + (useWebp ? originalUrl.replace(/[^.]\w*$/, 'webp') : originalUrl).match(/[^/]\w*$/)[1];
 
     return retUrl;
   }
