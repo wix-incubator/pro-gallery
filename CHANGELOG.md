@@ -1,3 +1,9 @@
+## [v2.4.9](https://pro-gallery-2-4-9.surge.sh) (07/01/2021)
+ 
+#### GALLERY
+ -  fix: black stripes in videos in grid fill
+
+---
 ## [v2.4.8](https://pro-gallery-2-4-8.surge.sh) (07/01/2021)
  
 #### OTHER
