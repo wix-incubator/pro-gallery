@@ -31,7 +31,11 @@ export class Strip {
   }
 
   canRemainIncomplete() {
-    return this.targetItemSize * 1.5 < this.height;
+    if (this.groupsPerStrip > 0) {
+      return false;
+    } else {
+      return this.targetItemSize * 1.5 < this.height;
+    }
   }
 
   setWidth(width) {
