@@ -612,7 +612,7 @@ class ItemView extends GalleryComponent {
       placement
     );
     const itemDoesntHaveLink = !this.itemHasLink();
-    const innerInfoStyles = {
+    const innerInfoParams = {
       placement,
       styleParams,
       infoHeight,
@@ -629,7 +629,7 @@ class ItemView extends GalleryComponent {
         )}
       >
         <div
-          style={getInnerInfoStyle(innerInfoStyles)}
+          style={getInnerInfoStyle(innerInfoParams)}
           className={'gallery-item-common-info ' + elementName}
           aria-hidden={true}
           onClick={this.onItemInfoClick}
