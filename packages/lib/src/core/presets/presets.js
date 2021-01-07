@@ -51,13 +51,27 @@ import {
   createStyles as emptyStyles,
 } from './emptyGallery';
 
+// Designed Presets
+import {
+  fixedStyles as designedPreset_1,
+  createStyles as designedPreset_1Styles,
+} from './designedPresets/designedPreset_1';
+import {
+  fixedStyles as designedPreset_2,
+  createStyles as designedPreset_2Styles,
+} from './designedPresets/designedPreset_2';
+import {
+  fixedStyles as designedPreset_3,
+  createStyles as designedPreset_3Styles,
+} from './designedPresets/designedPreset_3';
+
 const addPresetStyles = (styles) => {
   const galleryType = styles.galleryType;
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
-
   if (galleryLayoutV1 !== undefined && galleryLayoutV2 === undefined) {
     // legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
+
     switch (galleryType) {
       case '1': // horizontal collage
         return collageStyles(styles);
@@ -106,6 +120,13 @@ const addPresetStyles = (styles) => {
         return alternateStyles(styles);
       case LAYOUTS.EMPTY:
         return emptyStyles(styles);
+      // Designed Presets
+      case LAYOUTS.DESIGNED_PRESET_1:
+        return designedPreset_1Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET_2:
+        return designedPreset_2Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET_3:
+        return designedPreset_3Styles(styles);
       case LAYOUTS.COLLAGE:
       default:
         return collageStyles(styles);
@@ -128,6 +149,10 @@ const NEW_PRESETS = {
   slideshow,
   thumbnails,
   empty,
+  // Designed Presets
+  designedPreset_1,
+  designedPreset_2,
+  designedPreset_3,
 };
 
 const getLayoutName = (galleryLayout) => {
@@ -145,7 +170,10 @@ const getLayoutName = (galleryLayout) => {
     'fullsize', // 9
     'bricks', // 10
     'alternate', // 11
-    'mix', // 12
+    'mix', // 12,
+    'designedPreset_1', // 13
+    'designedPreset_2', // 14
+    'designedPreset_3', // 15
   ];
   return galleyLayoutList[galleryLayout + 1];
 };
