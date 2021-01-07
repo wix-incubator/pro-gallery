@@ -115,7 +115,7 @@ export function getInnerInfoStyle({
   styleParams,
   infoHeight,
   infoWidth,
-  itemDoesntHaveLink,
+  itemHasLink,
 }) {
   const commonStyles = {
     ...((styleParams.imageInfoType ===
@@ -130,8 +130,7 @@ export function getInnerInfoStyle({
     boxSizing: 'border-box',
     cursor:
       styleParams.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-      (styleParams.itemClick === GALLERY_CONSTS.itemClick.LINK &&
-        itemDoesntHaveLink)
+      (styleParams.itemClick === GALLERY_CONSTS.itemClick.LINK && !itemHasLink)
         ? 'default'
         : 'pointer',
   };

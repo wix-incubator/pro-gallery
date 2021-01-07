@@ -623,13 +623,12 @@ class ItemView extends GalleryComponent {
       this.getCustomInfoRendererProps(),
       placement
     );
-    const itemDoesntHaveLink = !this.itemHasLink();
     const innerInfoParams = {
       placement,
       styleParams,
       infoHeight,
       infoWidth,
-      itemDoesntHaveLink,
+      itemHasLink: this.itemHasLink(),
     };
     info = (
       <div
@@ -695,7 +694,7 @@ class ItemView extends GalleryComponent {
     } = styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
-    const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+    const itemHasLink = this.itemHasLink(); //when itemClick is 'link' and link was added to this specific item
 
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
@@ -704,7 +703,7 @@ class ItemView extends GalleryComponent {
       margin: oneRow ? imageMargin / 2 + 'px' : 0,
       cursor:
         itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-        (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
+        (itemClick === GALLERY_CONSTS.itemClick.LINK && !itemHasLink)
           ? 'default'
           : 'pointer',
     };
