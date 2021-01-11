@@ -1088,12 +1088,10 @@ class ItemView extends GalleryComponent {
             ...(!this.props.styleParams.isSlideshow &&
               getImageStyle(this.props.styleParams)),
             ...(GALLERY_CONSTS.hasRightPlacement(
-              this.props.styleParams.titlePlacement,
-              this.props.idx
+              this.props.styleParams.titlePlacement
             ) && { float: 'left' }),
             ...(GALLERY_CONSTS.hasLeftPlacement(
-              this.props.styleParams.titlePlacement,
-              this.props.idx
+              this.props.styleParams.titlePlacement
             ) && { float: 'right' }),
           }}
         >
