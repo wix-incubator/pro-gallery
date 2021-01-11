@@ -52,18 +52,46 @@ import {
 } from './emptyGallery';
 
 // Designed Presets
+// 1
 import {
   fixedStyles as designedPreset_1,
   createStyles as designedPreset_1Styles,
 } from './designedPresets/designedPreset_1';
+// 2
 import {
   fixedStyles as designedPreset_2,
   createStyles as designedPreset_2Styles,
 } from './designedPresets/designedPreset_2';
+// 3
 import {
   fixedStyles as designedPreset_3,
   createStyles as designedPreset_3Styles,
 } from './designedPresets/designedPreset_3';
+// 4
+import {
+  fixedStyles as designedPreset_4,
+  createStyles as designedPreset_4Styles,
+} from './designedPresets/designedPreset_4';
+// 5
+import {
+  fixedStyles as designedPreset_5,
+  createStyles as designedPreset_5Styles,
+} from './designedPresets/designedPreset_5';
+// 6
+import {
+  fixedStyles as designedPreset_6,
+  createStyles as designedPreset_6Styles,
+} from './designedPresets/designedPreset_6';
+// 7
+import {
+  fixedStyles as designedPreset_7,
+  createStyles as designedPreset_7Styles,
+} from './designedPresets/designedPreset_7';
+// 8
+import {
+  fixedStyles as designedPreset_8,
+  createStyles as designedPreset_8Styles,
+} from './designedPresets/designedPreset_8';
 
 const addPresetStyles = (styles) => {
   const galleryType = styles.galleryType;
@@ -127,6 +155,16 @@ const addPresetStyles = (styles) => {
         return designedPreset_2Styles(styles);
       case LAYOUTS.DESIGNED_PRESET_3:
         return designedPreset_3Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET_4:
+        return designedPreset_4Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET_5:
+        return designedPreset_5Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET_6:
+        return designedPreset_6Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET_7:
+        return designedPreset_7Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET_8:
+        return designedPreset_8Styles(styles);
       case LAYOUTS.COLLAGE:
       default:
         return collageStyles(styles);
@@ -153,6 +191,11 @@ const NEW_PRESETS = {
   designedPreset_1,
   designedPreset_2,
   designedPreset_3,
+  designedPreset_4,
+  designedPreset_5,
+  designedPreset_6,
+  designedPreset_7,
+  designedPreset_8,
 };
 
 const getLayoutName = (galleryLayout) => {
@@ -174,6 +217,11 @@ const getLayoutName = (galleryLayout) => {
     'designedPreset_1', // 13
     'designedPreset_2', // 14
     'designedPreset_3', // 15
+    'designedPreset_4', // 16
+    'designedPreset_5', // 17
+    'designedPreset_6', // 18
+    'designedPreset_7', // 19
+    'designedPreset_8', // 20
   ];
   return galleyLayoutList[galleryLayout + 1];
 };
