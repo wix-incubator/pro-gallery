@@ -4,6 +4,8 @@ import {
   NEW_PRESETS,
   defaultStyles,
   galleryOptions,
+  DESIGNED_PRESETS_STYLES,
+  getDesignedPresetName,
 } from 'pro-gallery-lib';
 
 const defaultStyleParams = defaultStyles;
@@ -33,6 +35,11 @@ const formatValue = (val) => {
 };
 
 export const isValidStyleParam = (styleParam, value, styleParams) => {
+  if(styleParam === 'designedPreset') {
+    debugger;
+    // return false;
+  }
+  // debugger;
   if (!styleParam) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} is undefined`);
     return false;
@@ -47,10 +54,33 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
   }
   styleParams = { ...defaultStyles, ...styleParams };
   const preset = NEW_PRESETS[getLayoutName(styleParams.galleryLayout)];
+  // debugger;
+  // add a new condition if preset is one of the designed presets
+  if (preset.galleryLayout === 13) {
+    const designedPresetStyles = DESIGNED_PRESETS_STYLES[getDesignedPresetName(styleParams.designedPreset)];
+  //   // debugger;
+
+  //   // if (value === designedPresetStyles[styleParam]) {
+  //   //   // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the preset: ${value}`, preset, getLayoutName(styleParams.galleryLayout));
+  //   //   return false;
+  //   // }
+
+  //   // return false;
+  //   return true;
+    debugger;
+    if (designedPresetStyles[styleParam] === value) {
+      // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the preset: ${value}`, preset, getLayoutName(styleParams.galleryLayout));
+      return false;
+    } else {
+      debugger;
+    }
+  } 
+
   if (styleParam !== 'galleryLayout' && value === preset[styleParam]) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the preset: ${value}`, preset, getLayoutName(styleParams.galleryLayout));
     return false;
   }
+
   if (!galleryOptions[styleParam]) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} has not galleryOptions`);
     return false;
@@ -59,6 +89,7 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is not relevant`, galleryOptions[styleParam].isRelevant.toString(), styleParams);
     return false;
   }
+  debugger;
   return true;
 };
 
@@ -93,7 +124,8 @@ export const getStyleParamsFromUrl = () => {
 };
 
 export const setStyleParamsInUrl = (styleParams) => {
-  // console.log(`[STYLE PARAMS - VALIDATION] setting styleParams in the url`, styleParams);
+  // debugger;
+  console.log(`[STYLE PARAMS - VALIDATION] setting styleParams in the url`, styleParams);
   const urlParams = Object.entries(styleParams)
     .reduce(
       (arr, [styleParam, value]) =>
@@ -103,6 +135,8 @@ export const setStyleParamsInUrl = (styleParams) => {
       []
     )
     .join('&');
+  console.log(`urlParams`, urlParams);
+  
   //window.location.search = '?' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')
   // window.location.hash = '#' + Object.entries(styleParams).reduce((arr, [styleParam, value]) => styleParam && arr.concat(`${styleParam}=${value}`), []).join('&')
   window.history.replaceState({}, 'Pro Gallery Playground', '?' + urlParams);

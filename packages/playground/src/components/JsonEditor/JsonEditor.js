@@ -234,7 +234,7 @@ class JsonEditor extends React.Component {
               </>)}
               {isDev && <>
                 <Divider/>
-                <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
+                <div><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></div>
               </>}
             </div>
           </Collapse.Panel>

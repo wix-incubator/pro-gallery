@@ -1,4 +1,5 @@
 import LAYOUTS from '../../common/constants/layout';
+import DESIGNED_PRESETS from '../../common/constants/designedPreset';
 
 import {
   fixedStyles as alternate,
@@ -50,6 +51,10 @@ import {
   fixedStyles as empty,
   createStyles as emptyStyles,
 } from './emptyGallery';
+import {
+  fixedStyles as designedPreset,
+  // createStyles as designedPresetStyles,
+} from './designedPresetGallery';
 
 // Designed Presets
 import {
@@ -69,9 +74,9 @@ const addPresetStyles = (styles) => {
   const galleryType = styles.galleryType;
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
+
   if (galleryLayoutV1 !== undefined && galleryLayoutV2 === undefined) {
     // legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
-
     switch (galleryType) {
       case '1': // horizontal collage
         return collageStyles(styles);
@@ -120,13 +125,20 @@ const addPresetStyles = (styles) => {
         return alternateStyles(styles);
       case LAYOUTS.EMPTY:
         return emptyStyles(styles);
-      // Designed Presets
-      case LAYOUTS.DESIGNED_PRESET_1:
-        return designedPreset_1Styles(styles);
-      case LAYOUTS.DESIGNED_PRESET_2:
-        return designedPreset_2Styles(styles);
-      case LAYOUTS.DESIGNED_PRESET_3:
-        return designedPreset_3Styles(styles);
+      case LAYOUTS.DESIGNED_PRESET:
+        // eslint-disable-next-line no-debugger
+        debugger;
+        switch (styles.designedPreset) {
+          case DESIGNED_PRESETS.DESIGNED_PRESET_1:
+            return designedPreset_1Styles(styles);
+          case DESIGNED_PRESETS.DESIGNED_PRESET_2:
+            return designedPreset_2Styles(styles);
+          case DESIGNED_PRESETS.DESIGNED_PRESET_3:
+            return designedPreset_3Styles(styles);
+          case -1:
+          default:
+            return emptyStyles(styles);
+        }
       case LAYOUTS.COLLAGE:
       default:
         return collageStyles(styles);
@@ -149,10 +161,11 @@ const NEW_PRESETS = {
   slideshow,
   thumbnails,
   empty,
+  designedPreset,
   // Designed Presets
-  designedPreset_1,
-  designedPreset_2,
-  designedPreset_3,
+  // designedPreset_1,
+  // designedPreset_2,
+  // designedPreset_3,
 };
 
 const getLayoutName = (galleryLayout) => {
@@ -171,11 +184,24 @@ const getLayoutName = (galleryLayout) => {
     'bricks', // 10
     'alternate', // 11
     'mix', // 12,
-    'designedPreset_1', // 13
-    'designedPreset_2', // 14
-    'designedPreset_3', // 15
+    'designedPreset', // 13
   ];
   return galleyLayoutList[galleryLayout + 1];
+};
+
+const DESIGNED_PRESETS_STYLES = {
+  designedPreset_1,
+  designedPreset_2,
+  designedPreset_3,
+};
+
+const getDesignedPresetName = (designedPreset) => {
+  const galleyLayoutList = [
+    'designedPreset_1', // 1
+    'designedPreset_2', // 2
+    'designedPreset_3', // 3
+  ];
+  return galleyLayoutList[designedPreset - 1];
 };
 
 // returns true if the given param is in the current layout preset
@@ -184,4 +210,11 @@ const isInPreset = (galleryLayout, paramToCheck) => {
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 };
 
-export { addPresetStyles, NEW_PRESETS, getLayoutName, isInPreset };
+export {
+  addPresetStyles,
+  NEW_PRESETS,
+  getLayoutName,
+  isInPreset,
+  DESIGNED_PRESETS_STYLES,
+  getDesignedPresetName,
+};

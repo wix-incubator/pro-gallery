@@ -83,6 +83,7 @@ import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import overlayBackgroundGradient from './overlayBackgroundGradient';
 import allowLeanGallery from './allowLeanGallery';
+import designedPreset from './designedPreset';
 
 export default {
   itemClick,
@@ -170,6 +171,7 @@ export default {
   overlayBackground,
   overlayBackgroundGradient,
   allowLeanGallery,
+  designedPreset,
 };
 
 // TODO = add the options:

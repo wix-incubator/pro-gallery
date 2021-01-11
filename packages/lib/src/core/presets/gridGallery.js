@@ -22,6 +22,11 @@ export const fixedStyles = {
   isMasonry: false,
   isSlideshow: false,
   minItemSize: 50,
+  //
+  // cubeRatio: 1,
+  // scrollDirection: 0,
+  // gridStyle: 0,
+  // imageMargin: 10,
 };
 
 export const createStyles = (styles) => {

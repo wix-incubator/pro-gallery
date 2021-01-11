@@ -14,6 +14,7 @@ export const INPUT_TYPES = {
 
 export const SECTIONS = {
   PRESET: 'Presets',
+  DESIGNED_PRESET: 'Designed Presets',
   LAYOUT: 'Layout Customization',
   ADVANCED: 'Advanced Layout Options',
   BEHAVIOR: 'Behavior',
@@ -39,6 +40,7 @@ export const SECTIONS_ORDER = {
 
 export const stylesBySection = {
   [SECTIONS.PRESET]: ['galleryLayout'],
+  [SECTIONS.DESIGNED_PRESET]: ['designedPreset'],
   [SECTIONS.LAYOUT]: [
     // 'allowLeanGallery',
     'scrollDirection',

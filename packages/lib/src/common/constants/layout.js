@@ -13,10 +13,11 @@ const LAYOUTS = {
   BRICKS: 10,
   MIX: 11,
   ALTERNATE: 12,
-  // Designed Presets
-  DESIGNED_PRESET_1: 13,
-  DESIGNED_PRESET_2: 14,
-  DESIGNED_PRESET_3: 15,
+  DESIGNED_PRESET: 13,
+  // // Designed Presets
+  // DESIGNED_PRESET_1: 1,
+  // DESIGNED_PRESET_2: 2,
+  // DESIGNED_PRESET_3: 3,
 };
 
 export default LAYOUTS;

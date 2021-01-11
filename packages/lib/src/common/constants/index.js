@@ -50,6 +50,7 @@ import viewMode from './viewMode';
 import watermarkDock from './watermarkDock';
 import imagePlacementAnimations from './imagePlacementAnimations';
 import overlayBackgroundGradient from './overlayBackgroundGradient';
+import designedPreset from './designedPreset';
 
 export default {
   arrowsPosition,
@@ -104,4 +105,5 @@ export default {
   watermarkDock,
   imagePlacementAnimations,
   overlayBackgroundGradient,
+  designedPreset,
 };

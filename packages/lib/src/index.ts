@@ -11,6 +11,8 @@ export { addPresetStyles } from './core/presets/presets';
 export { NEW_PRESETS } from './core/presets/presets';
 export { getLayoutName } from './core/presets/presets';
 export { isInPreset } from './core/presets/presets';
+export { DESIGNED_PRESETS_STYLES } from './core/presets/presets';
+export { getDesignedPresetName } from './core/presets/presets';
 
 export { default as window } from './common/window/windowWrapper';
 export { default as utils } from './common/utils/index';
