@@ -142,6 +142,7 @@ const defaultStyles = {
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,
+  playgroundUrl: '', // Relevant only for Wixers usage in Wix editor
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {

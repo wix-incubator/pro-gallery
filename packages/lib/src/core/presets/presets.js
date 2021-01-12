@@ -1,5 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
+import getStyleParamsFromUrl from '../helpers/playgroundUrlHelper';
 
+//#region Imports Layouts
 import {
   fixedStyles as alternate,
   createStyles as alternateStyles,
@@ -92,8 +94,14 @@ import {
   fixedStyles as designedPreset_8,
   createStyles as designedPreset_8Styles,
 } from './designedPresets/designedPreset_8';
+//#endregion Imports
 
 const addPresetStyles = (styles) => {
+  // Relevant only for Wixers usage in Wix editor
+  if (styles.playgroundUrl !== '') {
+    return getStyleParamsFromUrl(styles.playgroundUrl, styles);
+  }
+
   const galleryType = styles.galleryType;
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
