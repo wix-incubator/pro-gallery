@@ -15,12 +15,9 @@ const formatValue = (val) => {
   }
 };
 
-export const getStyleParamsFromUrl = (fullUrl, styles) => {
+export const getStyleParamsFromString = (string, styles) => {
   try {
-    const queryParams = fullUrl.split('?').pop();
-
-    const styleParamsFromUrl = queryParams
-      .replace('?', '')
+    const styleParamsFromString = string
       .split('&')
       .map((styleParam) => styleParam.split('='))
       .reduce(
@@ -31,7 +28,7 @@ export const getStyleParamsFromUrl = (fullUrl, styles) => {
 
     const styleParams = {
       ...styles,
-      ...styleParamsFromUrl,
+      ...styleParamsFromString,
       // targetItemSize: calcTargetItemSize(styles),
     };
 
@@ -41,4 +38,4 @@ export const getStyleParamsFromUrl = (fullUrl, styles) => {
   }
 };
 
-export default getStyleParamsFromUrl;
+export default getStyleParamsFromString;
