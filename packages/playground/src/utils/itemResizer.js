@@ -11,7 +11,7 @@ const resizeUrlImp_manual = (
   requiredWidth,
   requiredHeight,
   sharpParams,
-  focalPoint = [0.5, 0.5],
+  focalPoint,
   useWebp = false,
   devicePixelRatio = 1
 ) => {
@@ -51,6 +51,8 @@ const resizeUrlImp_manual = (
   if (focalPoint && focalPoint[0] >= 0 && focalPoint[1] >= 0) {
     focalPointObj.x = Math.round(focalPoint[0] * 100);
     focalPointObj.y = Math.round(focalPoint[1] * 100);
+  } else {
+    focalPoint = [0.5, 0.5];
   }
 
   const isExternalUrl = (url) => {
