@@ -1,4 +1,5 @@
 const LAYOUTS = {
+  DESIGNED_PRESET: -2,
   EMPTY: -1,
   COLLAGE: 0,
   MASONRY: 1,
@@ -13,10 +14,6 @@ const LAYOUTS = {
   BRICKS: 10,
   MIX: 11,
   ALTERNATE: 12,
-  // Designed Presets
-  DESIGNED_PRESET_1: 13,
-  DESIGNED_PRESET_2: 14,
-  DESIGNED_PRESET_3: 15,
 };
 
 export default LAYOUTS;
