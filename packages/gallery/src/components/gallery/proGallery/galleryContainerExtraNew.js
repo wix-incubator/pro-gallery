@@ -489,37 +489,21 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  createDynamicStyles(
-    { overlayBackground, overlayBackgroundGradient },
-    isPrerenderMode
-  ) {
-    const useSSROpacity = () =>
-      (isPrerenderMode && !this.props.settings.disableSSROpacity) || '';
-    const createBackground = () => {
-      if (overlayBackgroundGradient && overlayBackgroundGradient !== 'NONE') {
-        const deg = {
-          TOP: 180,
-          LEFT: 90,
-          RIGHT: 270,
-          BOTTOM: 0,
-        }[overlayBackgroundGradient];
-        return `linear-gradient(${deg}deg,rgba(0,0,0,0),${overlayBackground})`;
-      } else {
-        return overlayBackground;
-      }
-    };
+  createDynamicStyles({ overlayBackground }, isPrerenderMode) {
+    const useSSROpacity =
+      isPrerenderMode && !this.props.settings.disableSSROpacity;
     this.dynamicStyles = `
       ${
-        useSSROpacity() &&
-        `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`
-      }${
-      !overlayBackground
-        ? ''
-        : `#pro-gallery-${
-            this.props.domId
-          } .gallery-item-hover::before { background: ${createBackground()} !important}`
-    }
-  `.trim();
+        !useSSROpacity
+          ? ''
+          : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`
+      }
+      ${
+        !overlayBackground
+          ? ''
+          : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background: ${overlayBackground} !important}`
+      }
+    `.trim();
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
