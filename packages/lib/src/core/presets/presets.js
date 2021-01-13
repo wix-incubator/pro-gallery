@@ -1,5 +1,4 @@
 import LAYOUTS from '../../common/constants/layout';
-import getStyleParamsFromString from '../helpers/stringStyleParamsHelper';
 
 //#region Imports Layouts
 import {
@@ -52,6 +51,7 @@ import {
   fixedStyles as empty,
   createStyles as emptyStyles,
 } from './emptyGallery';
+import { createStyles as designedPresetStyles } from './designedPresetGallery';
 //#endregion Imports
 
 const addPresetStyles = (styles) => {
@@ -110,7 +110,7 @@ const addPresetStyles = (styles) => {
       case LAYOUTS.EMPTY:
         return emptyStyles(styles);
       case LAYOUTS.DESIGNED_PRESET:
-        return getStyleParamsFromString(styles.stringStyleParams, styles);
+        return designedPresetStyles(styles);
       case LAYOUTS.COLLAGE:
       default:
         return collageStyles(styles);

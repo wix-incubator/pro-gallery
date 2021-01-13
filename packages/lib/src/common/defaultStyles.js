@@ -142,7 +142,7 @@ const defaultStyles = {
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,
-  stringStyleParams: '',
+  jsonStyleParams: '',
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
