@@ -83,7 +83,7 @@ const resizeUrlImp_manual = (
       scale = requiredHeight / item.maxHeight;
       orgW = Math.floor(requiredHeight * item.ratio);
       y = 0;
-      x = Math.round(orgW * focalPoint[0] - requiredWidth / 2);
+      x = Math.round(orgW * focalPointObj.x- requiredWidth / 2);
       x = Math.min(orgW - requiredWidth, x);
       x = Math.max(0, x);
     } else {
@@ -92,7 +92,7 @@ const resizeUrlImp_manual = (
       scale = requiredWidth / item.maxWidth;
       orgH = Math.floor(requiredWidth / item.ratio);
       x = 0;
-      y = Math.round(orgH * focalPoint[1] - requiredHeight / 2);
+      y = Math.round(orgH * focalPointObj.y- requiredHeight / 2);
       y = Math.min(orgH - requiredHeight, y);
       y = Math.max(0, y);
     }
