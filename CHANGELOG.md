@@ -1,3 +1,9 @@
+## [v2.4.10](https://pro-gallery-2-4-10.surge.sh) (13/01/2021)
+ 
+#### GALLERY
+ -  Presets: Handle designed presets with new 'jsonStyleParams'
+
+---
 ## [v2.4.9](https://pro-gallery-2-4-9.surge.sh) (07/01/2021)
  
 #### GALLERY
