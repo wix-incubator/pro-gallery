@@ -264,7 +264,6 @@ export class GalleryContainer extends React.Component {
   }
 
   propsToState({
-    loopingItems,
     items,
     styles,
     structure,
@@ -334,7 +333,7 @@ export class GalleryContainer extends React.Component {
     this.createDynamicStyles(styles, isPrerenderMode);
 
     const newState = {
-      items: loopingItems || items,
+      items,
       styles,
       container,
       structure,
