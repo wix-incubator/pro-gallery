@@ -1,3 +1,10 @@
+## [v2.4.11](https://pro-gallery-2-4-11.surge.sh) (14/01/2021)
+ 
+#### GALLERY
+ -  layoutingIndex fix: allow looping on items using the blueprintsManager
+ -  feature (overlayBackgroundGradient): add the option to set the gradient of the overlay
+
+---
 ## [v2.4.10](https://pro-gallery-2-4-10.surge.sh) (13/01/2021)
  
 #### GALLERY
