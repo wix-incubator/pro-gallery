@@ -8,15 +8,15 @@ import {
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
 
-const blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
 export default class BaseGallery extends React.Component {
   constructor(props) {
     super();
+    this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.domId = props.domId || 'default-dom-id';
     this.state = {
-      blueprint: null,
+      blueprint: this.blueprintsManager.existingBlueprint || null,
     };
-    blueprintsManager.init({
+    this.blueprintsManager.init({
       api: {
         isUsingCustomInfoElements: () =>
           props.customHoverRenderer ||
@@ -54,7 +54,7 @@ export default class BaseGallery extends React.Component {
     const _eventsListener = (...args) => {
       const [eventName, value] = args;
       if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
-        blueprintsManager.getMoreItems(value);
+        this.blueprintsManager.getMoreItems(value);
       } else {
         typeof eventsListener === 'function' && eventsListener(...args);
       }
@@ -67,7 +67,7 @@ export default class BaseGallery extends React.Component {
       domId: this.domId,
     };
 
-    blueprintsManager.createBlueprint(this.galleryProps).catch((e) => {
+    this.blueprintsManager.createBlueprint(this.galleryProps).catch((e) => {
       console.error(
         'Could not breate a blueprints in layoutingIndex from given props',
         e

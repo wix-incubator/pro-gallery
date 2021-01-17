@@ -288,7 +288,10 @@ class Blueprints {
       }
       const dimensionsHaveChanged = {
         height:
-          !oldStylesParams.oneRow && oldStylesParams.enableInfiniteScroll
+          !oldStylesParams.oneRow &&
+          oldStylesParams.enableInfiniteScroll &&
+          !styles.oneRow &&
+          styles.enableInfiniteScroll
             ? false
             : !!newDimensionsParams.height &&
               newDimensionsParams.height !== oldDimensionsParams.height,
