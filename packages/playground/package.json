@@ -1,6 +1,6 @@
 {
   "name": "pro-playground",
-  "version": "2.4.11",
+  "version": "2.4.12",
   "private": true,
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
@@ -19,8 +19,8 @@
     "lean-gallery": "2.4.8",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.24.0",
-    "pro-gallery": "2.4.11",
-    "pro-gallery-lib": "2.4.11",
+    "pro-gallery": "2.4.12",
+    "pro-gallery-lib": "2.4.12",
     "pro-layouts": "2.4.8",
     "re-resizable": "^6.8.0",
     "react": "^16.8.6",
