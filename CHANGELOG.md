@@ -1,3 +1,9 @@
+## [v2.4.12](https://pro-gallery-2-4-12.surge.sh) (14/01/2021)
+ 
+#### GALLERY
+ -  fix blueprints: height change between layouts
+
+---
 ## [v2.4.11](https://pro-gallery-2-4-11.surge.sh) (14/01/2021)
  
 #### GALLERY
