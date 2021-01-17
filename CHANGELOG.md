@@ -1,3 +1,9 @@
+## [v2.4.13](https://pro-gallery-2-4-13.surge.sh) (17/01/2021)
+ 
+#### GALLERY
+ -  (galleryContainerNew): in debouncedReCreateGallery, call reCreateGalleryExpensively with the correct params.
+
+---
 ## [v2.4.12](https://pro-gallery-2-4-12.surge.sh) (14/01/2021)
  
 #### GALLERY
