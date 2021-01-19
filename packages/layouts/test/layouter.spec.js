@@ -670,21 +670,21 @@ describe('Layouter', () => {
       });
     });
 
-    // rotatingCropRatios
-    it('should crop items according to rotatingCropRatios if defined', () => {
+    // repeatingCropRatios
+    it('should crop items according to repeatingCropRatios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
+      styleParams.repeatingCropRatios = '2,1.5,1.2,0.5,1';
       styleParams.cubeRatio = '1';
       styleParams.cubeImages = true;
       styleParams.smartCrop = false;
       styleParams.isVertical = true;
 
-      const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
+      const repeatingCropRatiosArr = styleParams.repeatingCropRatios.split(',');
 
       gallery = getLayout({ items, container, styleParams });
       gallery.items.forEach((item, i) => {
         const ratio = Number(
-          rotatingCropRatiosArr[i % rotatingCropRatiosArr.length]
+          repeatingCropRatiosArr[i % repeatingCropRatiosArr.length]
         );
         const { width, height } = item;
         const itemRatio = width / height;

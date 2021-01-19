@@ -68,7 +68,7 @@ export const stylesBySection = {
 
     'groupTypes',
     'rotatingGroupTypes',
-    'rotatingCropRatios',
+    'repeatingCropRatios',
     'columnWidths',
     'galleryMargin',
     'scatter',

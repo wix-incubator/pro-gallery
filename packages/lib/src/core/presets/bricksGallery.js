@@ -29,7 +29,7 @@ export const fixedStyles = {
   groupsPerStrip: 0,
   oneRow: false,
   placeGroupsLtr: false,
-  rotatingCropRatios: '0.707,1.414,1.414,0.707',
+  repeatingCropRatios: '0.707,1.414,1.414,0.707',
 };
 
 export const createStyles = (styles) => {

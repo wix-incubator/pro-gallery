@@ -25,7 +25,7 @@ export class Item {
       this.cubeType = styleParams.cubeType;
       this.cubeImages = styleParams.cubeImages;
       this._cubeRatio = styleParams.cubeRatio;
-      this.rotatingCropRatios = styleParams.rotatingCropRatios;
+      this.repeatingCropRatios = styleParams.repeatingCropRatios;
       this.smartCrop = styleParams.smartCrop;
       this.cropOnlyFill = styleParams.cropOnlyFill;
       this.imageMargin = styleParams.imageMargin;
@@ -330,8 +330,11 @@ export class Item {
     let ratio;
     if (this.rotatingCropRatio) {
       ratio = this.rotatingCropRatio;
-    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
-      const cropRatiosArr = String(this.rotatingCropRatios).split(',');
+    } else if (
+      this.repeatingCropRatios &&
+      this.repeatingCropRatios.length > 0
+    ) {
+      const cropRatiosArr = String(this.repeatingCropRatios).split(',');
       ratio = this.rotatingCropRatio =
         cropRatiosArr[this.idx % cropRatiosArr.length];
     }

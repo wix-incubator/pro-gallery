@@ -83,7 +83,7 @@ class Utils {
         cubeImages: false,
         cubeType: 'fill',
         cubeRatio: 1,
-        rotatingCropRatios: '',
+        repeatingCropRatios: '',
         smartCrop: false,
         imageMargin: 10,
         galleryMargin: 0,
@@ -121,9 +121,9 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'rotatingCropRatios',
-      Array.isArray(convertedStyleParams.rotatingCropRatios)
-        ? convertedStyleParams.rotatingCropRatios.join(',')
+      'repeatingCropRatios',
+      Array.isArray(convertedStyleParams.repeatingCropRatios)
+        ? convertedStyleParams.repeatingCropRatios.join(',')
         : undefined
     );
     this.insertIfDefined(

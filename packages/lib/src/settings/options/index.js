@@ -34,7 +34,7 @@ import scrollSnap from './scrollSnap';
 import itemBorderWidth from './itemBorderWidth';
 import itemBorderRadius from './itemBorderRadius';
 import itemBorderColor from './itemBorderColor';
-import rotatingCropRatios from './rotatingCropRatios';
+import repeatingCropRatios from './repeatingCropRatios';
 import columnWidths from './columnWidths';
 import autoSlideshowInterval from './autoSlideshowInterval';
 import smartCrop from './smartCrop';
@@ -120,7 +120,7 @@ export default {
   itemBorderWidth,
   itemBorderRadius,
   itemBorderColor,
-  rotatingCropRatios,
+  repeatingCropRatios,
   columnWidths,
   autoSlideshowInterval,
   smartCrop,

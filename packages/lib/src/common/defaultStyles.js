@@ -16,7 +16,7 @@ const defaultStyles = {
   cubeRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingCropRatios: '',
+  repeatingCropRatios: '',
   columnWidths: '',
   gallerySliderImageRatio: 16 / 9,
   fixedColumns: 0,

@@ -28,7 +28,7 @@ export const fixedStyles = {
   groupsPerStrip: 0,
   oneRow: false,
   placeGroupsLtr: false,
-  rotatingCropRatios: '',
+  repeatingCropRatios: '',
   slideshowLoop: false,
 };
 

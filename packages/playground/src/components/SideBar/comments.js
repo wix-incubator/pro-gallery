@@ -17,7 +17,7 @@ const comment =
 'chooseBestGroup - wixers\n'+
 'groupTypes - wixers\n'+
 'rotatingGroupTypes - wixers\n'+
-'rotatingCropRatios - wixers\n'+
+'repeatingCropRatios - wixers\n'+
 'cubeImages - wixers\n'+
 'smartCrop - wixers\n'+
 'cubeRatio - wixers\n'+

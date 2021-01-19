@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('rotatingCropRatios - e2e', () => {
+describe('repeatingCropRatios - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -20,7 +20,7 @@ describe('rotatingCropRatios - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       cubeImages: true,
-      rotatingCropRatios: '1,2,3',
+      repeatingCropRatios: '1,2,3',
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
