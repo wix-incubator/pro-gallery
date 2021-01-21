@@ -134,7 +134,7 @@ The most important events are:
 | `ITEM_ACTION_TRIGGERED`  | Fired whenever one of the items is clicked or tapped and the gallery cannot handle the action itself (e.g. open an expanded view). |
 | `NEED_MORE_ITEMS`  | Fired whenever the gallery is scrolled near its last item. If you are using a pagination server, this is the event that should trigger the next page and re-render the gallery with new items. |
 
-The full list of the gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/gallery/src/common/constants/events.js).
+The full list of the gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/lib/src/common/constants/events.js).
 
 ### Media URL Resizer
 If you want to use a server-side resizing service (e.g. cloudinary), you can pass a resizing function. This function receives the `item` and required dimensions and should return the resize url. Notice that this function will be called several times for each item so it should be fast.
