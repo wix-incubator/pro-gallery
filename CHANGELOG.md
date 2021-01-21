@@ -1,3 +1,28 @@
+## [v2.4.13](https://pro-gallery-2-4-13.surge.sh) (17/01/2021)
+ 
+#### GALLERY
+ -  (galleryContainerNew): in debouncedReCreateGallery, call reCreateGalleryExpensively with the correct params.
+
+---
+## [v2.4.12](https://pro-gallery-2-4-12.surge.sh) (14/01/2021)
+ 
+#### GALLERY
+ -  fix blueprints: height change between layouts
+
+---
+## [v2.4.11](https://pro-gallery-2-4-11.surge.sh) (14/01/2021)
+ 
+#### GALLERY
+ -  layoutingIndex fix: allow looping on items using the blueprintsManager
+ -  feature (overlayBackgroundGradient): add the option to set the gradient of the overlay
+
+---
+## [v2.4.10](https://pro-gallery-2-4-10.surge.sh) (13/01/2021)
+ 
+#### GALLERY
+ -  Presets: Handle designed presets with new 'jsonStyleParams'
+
+---
 ## [v2.4.9](https://pro-gallery-2-4-9.surge.sh) (07/01/2021)
  
 #### GALLERY

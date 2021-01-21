@@ -81,7 +81,6 @@ import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
-import overlayBackgroundGradient from './overlayBackgroundGradient';
 import allowLeanGallery from './allowLeanGallery';
 
 export default {
@@ -168,7 +167,6 @@ export default {
   playButtonForAutoSlideShow,
   hidePlay,
   overlayBackground,
-  overlayBackgroundGradient,
   allowLeanGallery,
 };
 

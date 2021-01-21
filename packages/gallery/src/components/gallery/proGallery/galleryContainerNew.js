@@ -312,23 +312,13 @@ export class GalleryContainer extends React.Component {
     };
 
     const debouncedReCreateGallery = utils.debounce(() => {
-      const {
-        items,
-        styles,
-        container,
-        watermark,
-        resizeMediaUrl,
-      } = this.props;
-      const params = {
-        items,
-        styles,
-        container,
-        watermark,
-        resizeMediaUrl,
-        itemsDimensions: this.itemsDimensions,
-      };
-
-      const newState = this.reCreateGalleryExpensively(params, this.state);
+      const newState = this.reCreateGalleryExpensively(
+        {
+          ...this.props,
+          itemsDimensions: this.itemsDimensions,
+        },
+        this.state
+      );
       if (Object.keys(newState).length > 0) {
         this.setState(newState, () => {
           this.handleNewGalleryStructure();

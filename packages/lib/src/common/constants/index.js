@@ -49,7 +49,6 @@ import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import watermarkDock from './watermarkDock';
 import imagePlacementAnimations from './imagePlacementAnimations';
-import overlayBackgroundGradient from './overlayBackgroundGradient';
 
 export default {
   arrowsPosition,
@@ -103,5 +102,4 @@ export default {
   viewMode,
   watermarkDock,
   imagePlacementAnimations,
-  overlayBackgroundGradient,
 };
