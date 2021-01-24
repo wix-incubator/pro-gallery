@@ -201,7 +201,9 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
-    console.log('handleNewGalleryStructure', onGalleryChangeData);
+    if (utils.isVerbose()) {
+      console.log('handleNewGalleryStructure', onGalleryChangeData);
+    }
     this.eventsListener(
       GALLERY_CONSTS.events.GALLERY_CHANGE,
       onGalleryChangeData
