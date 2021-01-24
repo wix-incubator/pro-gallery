@@ -300,7 +300,7 @@ export class GalleryContainer extends React.Component {
         domId: domId,
         items: this.galleryStructure.galleryItems,
         styleParams: styles,
-        container: this.props.container,
+        container: container,
       });
     }
     const scrollHelperNewGalleryStructure = {
@@ -543,7 +543,7 @@ export class GalleryContainer extends React.Component {
         domId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
-        container: this.props.container,
+        container: this.state.container,
       });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
@@ -575,7 +575,7 @@ export class GalleryContainer extends React.Component {
         domId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
-        container: this.props.container,
+        container: this.state.container,
       });
       this.setState({
         gotFirstScrollEvent: true,
