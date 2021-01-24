@@ -1,3 +1,13 @@
+## [v2.4.14](https://pro-gallery-2-4-14.surge.sh) (24/01/2021)
+ 
+#### GALLERY
+ -  fix: use galleryWidth when calculating cssScroll for horizontal animations
+ -  fix: wrap console.log
+
+#### OTHER
+ - Update README.md
+
+---
 ## [v2.4.13](https://pro-gallery-2-4-13.surge.sh) (17/01/2021)
  
 #### GALLERY
