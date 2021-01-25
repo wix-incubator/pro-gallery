@@ -23,6 +23,7 @@ export const fixedStyles = {
   rotatingGroupTypes: '1,2h,1,2h',
   smartCrop: false,
   scatter: 0,
+  rotatingScatter: '',
   fixedColumns: 1,
   groupsPerStrip: 0,
   oneRow: false,

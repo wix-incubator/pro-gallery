@@ -71,7 +71,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams }) {
+  calcScrollCss({ domId, items, styleParams, container }) {
     utils.isVerbose() && console.time('CSS Scroll');
     if (!(items && items.length)) {
       return [];
@@ -84,7 +84,7 @@ class CssScrollHelper {
       return [];
     }
     this.screenSize = styleParams.oneRow
-      ? Math.min(window.outerWidth, window.screen.width)
+      ? Math.min(window.outerWidth, window.screen.width, container.galleryWidth)
       : Math.min(window.outerHeight, window.screen.height);
     if (!styleParams.oneRow && utils.isMobile()) {
       this.screenSize += 50;

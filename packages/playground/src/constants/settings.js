@@ -72,6 +72,7 @@ export const stylesBySection = {
     'columnWidths',
     'galleryMargin',
     'scatter',
+    'rotatingScatter',
     'smartCrop',
 
     'galleryThumbnailsAlignment',
@@ -111,7 +112,6 @@ export const stylesBySection = {
     'arrowsPosition',
 
     'overlayBackground',
-    'overlayBackgroundGradient',
 
     // 'itemIconColorSlideshow',
     // 'itemIconColor',

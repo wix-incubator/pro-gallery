@@ -1,27 +1,47 @@
 import React from 'react';
-import { defaultStyles, BlueprintsManager } from 'pro-gallery-lib';
+import {
+  defaultStyles,
+  BlueprintsManager,
+  GALLERY_CONSTS,
+  utils,
+} from 'pro-gallery-lib';
 import ProGallery from './proGallery/proBlueprintsGallery';
 import basePropTypes from './proGallery/propTypes';
 
-const blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
 export default class BaseGallery extends React.Component {
   constructor(props) {
     super();
+    this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.domId = props.domId || 'default-dom-id';
     this.state = {
-      blueprint: null,
+      blueprint: this.blueprintsManager.existingBlueprint || null,
     };
-    blueprintsManager.init({
+    this.blueprintsManager.init({
       api: {
         isUsingCustomInfoElements: () =>
           props.customHoverRenderer ||
           props.customInfoRenderer ||
           props.customSlideshowInfoRenderer,
+        fetchMoreItems: (from) => {
+          typeof props.eventsListener === 'function' &&
+            props.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, from);
+        },
+        onBlueprintReady: ({ blueprint, blueprintChanged }) => {
+          if (blueprintChanged) {
+            this.setBlueprint(blueprint);
+          } else {
+            if (utils.isVerbose()) {
+              console.count('>>> Blueprint not changed, not setting it');
+            }
+          }
+        },
       },
     });
     this.onNewProps(props);
   }
-
+  setBlueprint(blueprint) {
+    this.setState({ blueprint });
+  }
   static propTypes = basePropTypes;
   onNewProps(props) {
     const {
@@ -31,8 +51,14 @@ export default class BaseGallery extends React.Component {
       eventsListener,
       ...otherProps
     } = props;
-    const _eventsListener = (...args) =>
-      typeof eventsListener === 'function' && eventsListener(...args);
+    const _eventsListener = (...args) => {
+      const [eventName, value] = args;
+      if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
+        this.blueprintsManager.getMoreItems(value);
+      } else {
+        typeof eventsListener === 'function' && eventsListener(...args);
+      }
+    };
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
     this.galleryProps = {
       ...otherProps,
@@ -41,14 +67,12 @@ export default class BaseGallery extends React.Component {
       domId: this.domId,
     };
 
-    blueprintsManager
-      .createBlueprint(this.galleryProps)
-      .then((blueprint) => {
-        this.setState({ blueprint });
-      })
-      .catch((e) => {
-        console.error('Could not breate a blueprints in layoutingIndex ', e);
-      });
+    this.blueprintsManager.createBlueprint(this.galleryProps).catch((e) => {
+      console.error(
+        'Could not breate a blueprints in layoutingIndex from given props',
+        e
+      );
+    });
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {

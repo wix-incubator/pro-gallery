@@ -42,6 +42,7 @@ import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
 import slideAnimation from './slideAnimation';
 import scatter from './scatter';
+import rotatingScatter from './rotatingScatter';
 import thumbnailSpacings from './thumbnailSpacings';
 import slideshowLoop from './slideshowLoop';
 import arrowsSize from './arrowsSize';
@@ -80,7 +81,6 @@ import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
-import overlayBackgroundGradient from './overlayBackgroundGradient';
 import allowLeanGallery from './allowLeanGallery';
 
 export default {
@@ -128,6 +128,7 @@ export default {
   scrollAnimation,
   slideAnimation,
   scatter,
+  rotatingScatter,
   thumbnailSpacings,
   slideshowLoop,
   arrowsSize,
@@ -166,7 +167,6 @@ export default {
   playButtonForAutoSlideShow,
   hidePlay,
   overlayBackground,
-  overlayBackgroundGradient,
   allowLeanGallery,
 };
 

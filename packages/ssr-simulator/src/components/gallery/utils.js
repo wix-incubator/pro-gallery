@@ -27,6 +27,7 @@ export const defaultStyleParams = {
   imageMargin: 10,
   galleryMargin: 0,
   scatter: 0,
+  rotatingScatter: '',
   gridStyle: 0,
   mobilePanorama: false,
   placeGroupsLtr: false,

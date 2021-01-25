@@ -1,4 +1,5 @@
 const LAYOUTS = {
+  DESIGNED_PRESET: -2,
   EMPTY: -1,
   COLLAGE: 0,
   MASONRY: 1,

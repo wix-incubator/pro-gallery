@@ -544,7 +544,10 @@ class ItemView extends GalleryComponent {
 
   getRightInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasRightPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasRightPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
@@ -557,7 +560,10 @@ class ItemView extends GalleryComponent {
 
   getLeftInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasLeftPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasLeftPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT,
@@ -570,7 +576,10 @@ class ItemView extends GalleryComponent {
 
   getBottomInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasBelowPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasBelowPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -583,7 +592,10 @@ class ItemView extends GalleryComponent {
 
   getTopInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasAbovePlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasAbovePlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ABOVE,
@@ -1076,10 +1088,12 @@ class ItemView extends GalleryComponent {
             ...(!this.props.styleParams.isSlideshow &&
               getImageStyle(this.props.styleParams)),
             ...(GALLERY_CONSTS.hasRightPlacement(
-              this.props.styleParams.titlePlacement
+              this.props.styleParams.titlePlacement,
+              this.props.idx
             ) && { float: 'left' }),
             ...(GALLERY_CONSTS.hasLeftPlacement(
-              this.props.styleParams.titlePlacement
+              this.props.styleParams.titlePlacement,
+              this.props.idx
             ) && { float: 'right' }),
           }}
         >

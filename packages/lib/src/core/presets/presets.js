@@ -1,5 +1,6 @@
 import LAYOUTS from '../../common/constants/layout';
 
+//#region Imports Layouts
 import {
   fixedStyles as alternate,
   createStyles as alternateStyles,
@@ -50,14 +51,16 @@ import {
   fixedStyles as empty,
   createStyles as emptyStyles,
 } from './emptyGallery';
+import { createStyles as designedPresetStyles } from './designedPresetGallery';
+//#endregion Imports
 
 const addPresetStyles = (styles) => {
   const galleryType = styles.galleryType;
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
-
   if (galleryLayoutV1 !== undefined && galleryLayoutV2 === undefined) {
     // legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
+
     switch (galleryType) {
       case '1': // horizontal collage
         return collageStyles(styles);
@@ -106,6 +109,8 @@ const addPresetStyles = (styles) => {
         return alternateStyles(styles);
       case LAYOUTS.EMPTY:
         return emptyStyles(styles);
+      case LAYOUTS.DESIGNED_PRESET:
+        return designedPresetStyles(styles);
       case LAYOUTS.COLLAGE:
       default:
         return collageStyles(styles);
@@ -145,7 +150,7 @@ const getLayoutName = (galleryLayout) => {
     'fullsize', // 9
     'bricks', // 10
     'alternate', // 11
-    'mix', // 12
+    'mix', // 12,
   ];
   return galleyLayoutList[galleryLayout + 1];
 };

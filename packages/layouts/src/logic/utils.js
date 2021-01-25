@@ -88,6 +88,7 @@ class Utils {
         imageMargin: 10,
         galleryMargin: 0,
         scatter: 0,
+        rotatingScatter: '',
         chooseBestGroup: true,
         groupSize: 3,
         groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',

@@ -201,7 +201,9 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
-    console.log('handleNewGalleryStructure', onGalleryChangeData);
+    if (utils.isVerbose()) {
+      console.log('handleNewGalleryStructure', onGalleryChangeData);
+    }
     this.eventsListener(
       GALLERY_CONSTS.events.GALLERY_CHANGE,
       onGalleryChangeData
@@ -264,7 +266,6 @@ export class GalleryContainer extends React.Component {
   }
 
   propsToState({
-    loopingItems,
     items,
     styles,
     structure,
@@ -299,6 +300,7 @@ export class GalleryContainer extends React.Component {
         domId: domId,
         items: this.galleryStructure.galleryItems,
         styleParams: styles,
+        container: container,
       });
     }
     const scrollHelperNewGalleryStructure = {
@@ -334,7 +336,7 @@ export class GalleryContainer extends React.Component {
     this.createDynamicStyles(styles, isPrerenderMode);
 
     const newState = {
-      items: loopingItems || items,
+      items,
       styles,
       container,
       structure,
@@ -489,37 +491,21 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  createDynamicStyles(
-    { overlayBackground, overlayBackgroundGradient },
-    isPrerenderMode
-  ) {
-    const useSSROpacity = () =>
-      (isPrerenderMode && !this.props.settings.disableSSROpacity) || '';
-    const createBackground = () => {
-      if (overlayBackgroundGradient && overlayBackgroundGradient !== 'NONE') {
-        const deg = {
-          TOP: 180,
-          LEFT: 90,
-          RIGHT: 270,
-          BOTTOM: 0,
-        }[overlayBackgroundGradient];
-        return `linear-gradient(${deg}deg,rgba(0,0,0,0),${overlayBackground})`;
-      } else {
-        return overlayBackground;
-      }
-    };
+  createDynamicStyles({ overlayBackground }, isPrerenderMode) {
+    const useSSROpacity =
+      isPrerenderMode && !this.props.settings.disableSSROpacity;
     this.dynamicStyles = `
       ${
-        useSSROpacity() &&
-        `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`
-      }${
-      !overlayBackground
-        ? ''
-        : `#pro-gallery-${
-            this.props.domId
-          } .gallery-item-hover::before { background: ${createBackground()} !important}`
-    }
-  `.trim();
+        !useSSROpacity
+          ? ''
+          : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`
+      }
+      ${
+        !overlayBackground
+          ? ''
+          : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background: ${overlayBackground} !important}`
+      }
+    `.trim();
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
@@ -535,11 +521,12 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getScrollCss({ domId, items, styleParams }) {
+  getScrollCss({ domId, items, styleParams, container }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
       styleParams,
       domId,
+      container,
     });
   }
 
@@ -556,6 +543,7 @@ export class GalleryContainer extends React.Component {
         domId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
+        container: this.state.container,
       });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
@@ -587,6 +575,7 @@ export class GalleryContainer extends React.Component {
         domId: this.props.domId,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
+        container: this.state.container,
       });
       this.setState({
         gotFirstScrollEvent: true,
