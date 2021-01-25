@@ -1,3 +1,9 @@
+## [v2.4.15](https://pro-gallery-2-4-15.surge.sh) (25/01/2021)
+ 
+#### GALLERY
+ -  improve: pass gallery item on CURRENT_ITEM_CHANGED event 
+
+---
 ## [v2.4.14](https://pro-gallery-2-4-14.surge.sh) (24/01/2021)
  
 #### GALLERY
