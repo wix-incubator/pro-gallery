@@ -1,10 +1,8 @@
-// @ts-check
-
 import React, { useEffect, useState } from 'react';
-import { List, Avatar, Icon } from 'antd';
+import { List, Avatar, Button } from 'antd';
 import { LikeOutline } from '@ant-design/icons';
 
-import { getAll } from '../../data';
+import { getAll, like } from '../../data';
 
 const baseUrl = window.location.href.split('?')[0];
 
@@ -15,14 +13,28 @@ function CommunityPresets() {
     getAll().then((data) => {
       setItems(
         data.map((item) => ({
+          id: item.id,
           href: `${baseUrl}?${item.url}`,
           title: item.title,
           avatar: 'https://avatars.githubusercontent.com/u/2863693?s=120&v=4',
           description: item.description,
+          likes: item.likes || 0
         }))
       );
     });
-  });
+  }, []);
+
+  const onClickLike = itemToLike => {
+    const newItem = {
+      ...itemToLike,
+      likes: ++itemToLike.likes
+    };
+    const newItems = items.map(item => {
+      return Object.is(item, itemToLike) ? newItem : item
+    });
+    setItems(newItems);
+    like(newItem);
+  }
 
   return (
     <List
@@ -36,9 +48,7 @@ function CommunityPresets() {
         <List.Item
           key={item.title}
           actions={[
-            <button>
-              <Icon type={LikeOutline.name} />
-            </button>,
+            <Button onClick={() => onClickLike(item)} icon={LikeOutline.name}>{item.likes}</Button>
           ]}
         >
           <List.Item.Meta
