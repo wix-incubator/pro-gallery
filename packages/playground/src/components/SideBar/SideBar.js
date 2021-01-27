@@ -19,6 +19,7 @@ import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
 import {StylesList} from './StyleList';
+import {Community} from "./community";
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
@@ -242,6 +243,9 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
+          </Collapse.Panel>
+          <Collapse.Panel header="Community" key="community">
+            <Community/>
           </Collapse.Panel>
           {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>

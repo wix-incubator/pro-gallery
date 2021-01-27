@@ -16,7 +16,7 @@
     "antd": "^3.20.7",
     "css-animation": "1.5.0",
     "image-client-api": "^1.3130.0",
-    "lean-gallery": "2.4.8",
+    "lean-gallery": "^2.4.8",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.24.0",
     "pro-gallery": "2.4.15",
