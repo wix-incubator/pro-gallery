@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Button, Form, Input} from 'antd';
+import { getAll } from '../../data';
 
 function Community() {
 
     const [layoutTitle, set_layoutTitle] = React.useState('');
     const [layoutDescription, set_layoutDescription] = React.useState('');
     const [tags, set_tags] = React.useState('');
+
+    useEffect(() => {
+      getAll().then(console.log);
+    }, []);
+
     return (
         <div>
             <section>
