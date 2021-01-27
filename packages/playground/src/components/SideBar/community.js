@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {Button, Form, Input} from 'antd';
-import { getAll } from '../../data';
+import {getAll, save} from '../../data';
 
 function Community() {
 
@@ -9,7 +9,7 @@ function Community() {
     const [tags, set_tags] = React.useState('');
 
     useEffect(() => {
-      getAll().then(console.log);
+        getAll().then(console.log);
     }, []);
 
     return (
@@ -27,11 +27,11 @@ function Community() {
                                help="tag your beautiful layout so you can inspire others. Commas separated values, please.">
                         <Input onChange={e => set_tags(e.target.value)}/>
                     </Form.Item>
-                    <Button type="text" onClick={() => console.log({
+                    <Button type="text" onClick={() => save({
                         url: window.location.search,
+                        description: layoutDescription,
                         title: layoutTitle,
-                        tags: tags,
-                        description: layoutDescription
+                        tags: tags
                     })}>Submit</Button>
                 </Form>
             </section>

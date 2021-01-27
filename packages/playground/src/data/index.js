@@ -19,6 +19,6 @@ export async function getAll() {
   return snapshot.docs.map(doc => doc.data());
 }
 
-export async function save({url, description}) {
-  return db.collection('links').add({url, description});
+export async function save({url, description, title, tags}) {
+  return db.collection('links').add({url, description, title, tags});
 }
