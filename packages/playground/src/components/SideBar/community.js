@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import {Button, Form, Input} from 'antd';
 import { getAll } from '../../data';
+import { CommunityPresets } from './community-presets';
 
 function Community() {
 
@@ -37,6 +38,7 @@ function Community() {
             </section>
             <section>
                 <h3>Browse the community's layouts</h3>
+                <CommunityPresets />
             </section>
         </div>
     );
