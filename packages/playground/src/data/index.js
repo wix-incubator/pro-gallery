@@ -1,14 +1,14 @@
 import firebase from 'firebase';
 
 var firebaseConfig = {
-  apiKey: 'AIzaSyBZeE7IHYVBRuL4fqpVvJYOSjjDwiYwtIE',
-  authDomain: 'progallery-playground.firebaseapp.com',
-  projectId: 'progallery-playground',
-  storageBucket: 'progallery-playground.appspot.com',
-  messagingSenderId: '4858526434',
-  appId: '1:4858526434:web:8cf532cad96bc75bb7fcbb',
+  apiKey: "AIzaSyBgUOru_pID5v9t779i1mxBLgB1rrhyDLY",
+  authDomain: "progallery-community-project.firebaseapp.com",
+  projectId: "progallery-community-project",
+  storageBucket: "progallery-community-project.appspot.com",
+  messagingSenderId: "407176837125",
+  appId: "1:407176837125:web:454aa88529cc69c642446c",
+  measurementId: "G-J9PW6ZQX66"
 };
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
