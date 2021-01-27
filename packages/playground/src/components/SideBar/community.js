@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import {Button, Form, Input} from 'antd';
-import { getAll, save } from '../../data';
-import { CommunityPresets } from './community-presets';
+import React, {useEffect} from 'react';
+import {Button, Form, Input, message} from 'antd';
+import {getAll, save} from '../../data';
+import {CommunityPresets} from './community-presets';
 
 function Community() {
     const initialLayoutItem = {title: '', description: '', tags: ''}
@@ -32,6 +32,8 @@ function Community() {
                         save({
                             url: window.location.search,
                             ...layoutItem
+                        }).then((res) => {
+                            message.success('You have successfully shared your layout with the community', 6);
                         })
                         set_layoutItem(initialLayoutItem)
                     }}>Submit</Button>
