@@ -19,7 +19,7 @@ import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
 import {StylesList} from './StyleList';
-import {Community} from "./community";
+import {Community} from "../Community/community";
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
