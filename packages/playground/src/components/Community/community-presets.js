@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Card, List, Avatar, Button } from 'antd';
-import { RightCircleOutline, LikeOutline } from '@ant-design/icons';
+import { Icon, Card, List, Avatar, Button } from 'antd';
+import { StarOutline, RightCircleOutline, ArrowUpOutline, ArrowDownOutline, StarFill } from '@ant-design/icons';
 import { GalleryPreview } from './galleryPreview';
 import { getAll, like } from '../../data';
 
@@ -25,17 +25,26 @@ function CommunityPresets() {
     });
   }, []);
 
-  const onClickLike = itemToLike => {
+  const onClickLike = (itemToLike, diff = 1) => {
+    const curDiff = Number(localStorage.getItem('vote_' + itemToLike.id));
+    if (curDiff === diff)
+      return;
+    localStorage.setItem('vote_' + itemToLike.id, diff);
+    if (-curDiff === diff)
+      diff *= 2;
+    
     const newItem = {
       ...itemToLike,
-      likes: ++itemToLike.likes
+      likes: itemToLike.likes + diff
     };
-    const newItems = items.map(item => {
-      return Object.is(item, itemToLike) ? newItem : item
-    });
+    const newItems = items.map(item => Object.is(item, itemToLike) ? newItem : item);
     setItems(newItems);
     like(newItem);
   }
+
+  const isLiked = item => !!(localStorage.getItem('vote_' + item.id));
+  const isUpvoted = item => Number(localStorage.getItem('vote_' + item.id)) > 0;
+  const isDownvoted = item => Number(localStorage.getItem('vote_' + item.id)) < 0;
 
   return items
     .sort((item1, item2) => item2.likes - item1.likes)
@@ -43,8 +52,9 @@ function CommunityPresets() {
       <Card
         cover={<GalleryPreview item={item} />}
         actions={[
-          <Button type="link" size="large" onClick={() => onClickLike(item)} icon={LikeOutline.name}> Like ({item.likes})</Button>,
-          <Button type="link" size="large" href={item.href} icon={RightCircleOutline.name}>Load Layout</Button>
+          <Button type="link" disabled={isDownvoted(item)} size="large" onClick={() => onClickLike(item, -1)} icon={ArrowDownOutline.name}></Button>,
+          <Button type="link" disabled={isUpvoted(item)} size="large" onClick={() => onClickLike(item, 1)} icon={ArrowUpOutline.name}></Button>,
+          <Button type="link" size="large"><Icon type="star" theme={isLiked(item) ? 'filled' : 'outlined'}/>  {item.likes}</Button>,
         ]}
         style={{
           margin: '20px 0',
@@ -53,6 +63,7 @@ function CommunityPresets() {
         }}
       >
         <Card.Meta
+          href={item.href}
           title={item.title}
           description={item.description}
         />

@@ -7,7 +7,10 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 
 export const GalleryPreview = (item) => {
     return (
-        <div style={{ 
+        <a 
+        key={item.href}
+        href={item.href}
+        style={{ 
             width: 736, 
             overflow: 'hidden', 
             height: 700, 
@@ -20,6 +23,6 @@ export const GalleryPreview = (item) => {
                 container={{ width: 736, height: 700 }}
                 resizeMediaUrl={resizeMediaUrl}
             ></ProGallery>
-        </div>
+        </a>
     )
 }
