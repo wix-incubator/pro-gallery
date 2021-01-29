@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { LayoutPicker } from "../LayoutPicker";
 import { JsonEditor } from "../JsonEditor";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
@@ -19,6 +19,8 @@ import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
 import {StylesList} from './StyleList';
+
+const Community = React.lazy(() => import('../Community'));
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
@@ -242,6 +244,11 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
+          </Collapse.Panel>
+          <Collapse.Panel header="Community" key="community">
+          <Suspense fallback={<div>Loading...</div>}>
+            <Community/>
+          </Suspense>
           </Collapse.Panel>
           {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
