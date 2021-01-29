@@ -7,22 +7,21 @@ import { resizeMediaUrl } from '../../utils/itemResizer';
 
 export const GalleryPreview = (item) => {
     return (
-        <a 
-        key={item.href}
-        href={item.href}
-        style={{ 
-            width: 736, 
-            overflow: 'hidden', 
-            height: 700, 
-            zoom: 0.5,
-            pointerEvents: 'none'
-        }}>
+        <div
+            key={item.href}
+            style={{
+                width: 736,
+                overflow: 'hidden',
+                height: 700,
+                zoom: 0.5,
+                pointerEvents: 'none'
+            }}>
             <ProGallery
                 items={mixAndSlice(testImages, 50)}
                 options={item.options}
                 container={{ width: 736, height: 700 }}
                 resizeMediaUrl={resizeMediaUrl}
             ></ProGallery>
-        </a>
+        </div>
     )
 }

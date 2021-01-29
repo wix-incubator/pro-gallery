@@ -24,8 +24,6 @@ const Community = React.lazy(() => import('../Community'));
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
-    // preset,
-    // setPreset,
     gallerySettings,
     setGallerySettings,
     setStyleParams,
@@ -110,7 +108,7 @@ function SideBar({ items, blueprintsManager, visible }) {
       </div>
       <h3 className={s.title}>Gallery Settings</h3>
       <div className={s.controls}>
-        <Collapse accordion={true} bordered={true} defaultActiveKey={[1]} onChange={() => { }} expandIconPosition={'right'}>
+        <Collapse accordion={true} bordered={true} defaultActiveKey={[]} onChange={() => { }} expandIconPosition={'right'}>
           {didChangeStyleParams ?
             <Collapse.Panel header={'* Changed Settings'} key="-1">
               <JsonEditor

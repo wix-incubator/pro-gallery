@@ -51,7 +51,7 @@ function CommunityPresets() {
     .sort((item1, item2) => item2.likes - item1.likes)
     .map(item => (
       <Card
-        cover={<GalleryPreview item={item} />}
+        cover={<a href={item.href}><GalleryPreview item={item} /></a>}
         actions={[
           <Button type="link" disabled={isDownvoted(item)} size="large" onClick={() => onClickLike(item, -1)} icon={ArrowDownOutline.name}></Button>,
           <Button type="link" disabled={isUpvoted(item)} size="large" onClick={() => onClickLike(item, 1)} icon={ArrowUpOutline.name}></Button>,
@@ -64,8 +64,7 @@ function CommunityPresets() {
         }}
       >
         <Card.Meta
-          href={item.href}
-          title={item.title}
+          title={<a href={item.href}>{item.title}</a>}
           description={item.description}
         />
       </Card>
