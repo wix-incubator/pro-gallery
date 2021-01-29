@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Icon, Card, List, Avatar, Button } from 'antd';
-import { StarOutline, RightCircleOutline, ArrowUpOutline, ArrowDownOutline, StarFill } from '@ant-design/icons';
+import { Icon, Card, Button } from 'antd';
+import { ArrowUpOutline, ArrowDownOutline } from '@ant-design/icons';
 import { GalleryPreview } from './galleryPreview';
 import { getAll, like } from '../../data';
 
@@ -47,6 +47,7 @@ function CommunityPresets() {
   const isDownvoted = item => Number(localStorage.getItem('vote_' + item.id)) < 0;
 
   return items
+    .filter(item => item.likes > -5)
     .sort((item1, item2) => item2.likes - item1.likes)
     .map(item => (
       <Card
