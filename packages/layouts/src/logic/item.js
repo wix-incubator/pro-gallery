@@ -152,7 +152,7 @@ export class Item {
       const minShift = 0.4 * (this.scatter / 100);
 
       let horizontalShift = utils.hashToRandomInt(
-        this.id + offset.right + 'x',
+        this.seed + offset.right + 'x',
         -spaceLeft,
         spaceRight
       );
@@ -167,7 +167,7 @@ export class Item {
       horizontalShift = Math.round(horizontalShift);
 
       let verticalShift = utils.hashToRandomInt(
-        this.id + offset.right + 'y',
+        this.seed + offset.right + 'y',
         -spaceUp,
         spaceDown
       );
