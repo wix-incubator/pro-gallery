@@ -2,10 +2,11 @@ import React from 'react';
 
 import { ProGallery } from 'pro-gallery';
 import { testImages } from '../App/images';
-import { mixAndSlice } from "../../utils/utils";
+
 import { resizeMediaUrl } from '../../utils/itemResizer';
 
-export const GalleryPreview = (item) => {
+export const GalleryPreview = ({item}) => {
+
     return (
         <div
             key={item.href}
@@ -17,7 +18,7 @@ export const GalleryPreview = (item) => {
                 pointerEvents: 'none'
             }}>
             <ProGallery
-                items={mixAndSlice(testImages, 50)}
+                items={(window.playgroundItems || testImages).slice(0, 20)}
                 options={item.options}
                 container={{ width: 736, height: 700 }}
                 resizeMediaUrl={resizeMediaUrl}

@@ -308,6 +308,8 @@ export function App() {
   } else {
     GalleryComponent = LeanGallery;
   };
+
+  window.playgroundItems = getItems();
   
   return (
     <main id="sidebar_main" className={s.main}>

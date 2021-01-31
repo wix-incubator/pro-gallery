@@ -137,7 +137,7 @@ export const defaultStyleParams = {
 };
 
 export function formatValue(val) {
-  if (Number(val) === parseInt(val)) {
+  if (!isNaN(Number(val))) {
     return Number(val);
   } else if (val === 'true') {
     return true;

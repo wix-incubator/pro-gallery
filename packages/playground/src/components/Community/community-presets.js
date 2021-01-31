@@ -3,6 +3,7 @@ import { Icon, Card, Button } from 'antd';
 import { ArrowUpOutline, ArrowDownOutline } from '@ant-design/icons';
 import { GalleryPreview } from './galleryPreview';
 import { getAll, like } from '../../data';
+import { formatValue } from "../../utils/utils";
 
 const baseUrl = window.location.href.split('?')[0];
 
@@ -19,7 +20,7 @@ function CommunityPresets() {
           avatar: 'https://avatars.githubusercontent.com/u/2863693?s=120&v=4',
           description: item.description,
           likes: item.likes || 0,
-          options: item.url.split('&').map((params) => params.split('=')).reduce((options, [key, val]) => ({ ...options, [key]: val }), {})
+          options: item.url.replace('?','').split('&').map((params) => params.split('=')).reduce((options, [key, val]) => ({ ...options, [key]: formatValue(val) }), {})
         }))
       );
     });
