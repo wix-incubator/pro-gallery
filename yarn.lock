@@ -23,6 +23,13 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
+"@babel/runtime@^7.2.0":
+  version "7.12.5"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
+  integrity sha1-QQ5+SHRB4bNgwpvnFdhw2bmFiC4=
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@evocateur/libnpmaccess@^3.1.2":
   version "3.1.2"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@evocateur/libnpmaccess/-/libnpmaccess-3.1.2.tgz#ecf7f6ce6b004e9f942b098d92200be4a4b1c845"
@@ -3037,6 +3044,13 @@ inquirer@^6.2.0:
     strip-ansi "^5.1.0"
     through "^2.3.6"
 
+invariant@^2.2.4:
+  version "2.2.4"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
+  integrity sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY=
+  dependencies:
+    loose-envify "^1.0.0"
+
 ip@1.1.5:
   version "1.1.5"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -3626,7 +3640,7 @@ log-update@^4.0.0:
     slice-ansi "^4.0.0"
     wrap-ansi "^6.2.0"
 
-loose-envify@^1.4.0:
+loose-envify@^1.0.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha1-ce5R+nvkyuwaY4OffmgtgTLTDK8=
@@ -4692,7 +4706,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.7.2:
+prop-types@^15.5.7, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -4822,6 +4836,15 @@ react-player@^2.6.2:
     memoize-one "^5.1.1"
     prop-types "^15.7.2"
     react-fast-compare "^3.0.1"
+
+react-sortable-hoc@^1.11.0:
+  version "1.11.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-sortable-hoc/-/react-sortable-hoc-1.11.0.tgz#fe4022362bbafc4b836f5104b9676608a40a278f"
+  integrity sha1-/kAiNiu6/EuDb1EEuWdmCKQKJ48=
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    invariant "^2.2.4"
+    prop-types "^15.5.7"
 
 read-cmd-shim@^1.0.1:
   version "1.0.5"
@@ -4964,6 +4987,11 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+regenerator-runtime@^0.13.4:
+  version "0.13.7"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
+  integrity sha1-ysLazIoepnX+qrrriugziYrkb1U=
 
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"
