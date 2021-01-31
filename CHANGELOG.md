@@ -1,3 +1,10 @@
+## [v2.4.16](https://pro-gallery-2-4-16.surge.sh) (31/01/2021)
+ 
+#### GALLERY
+ -  Handle oneRow styleParam with designedPreset selected
+ -  improve (item): allow setting an external seed
+
+---
 ## [v2.4.15](https://pro-gallery-2-4-15.surge.sh) (25/01/2021)
  
 #### GALLERY
