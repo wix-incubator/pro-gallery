@@ -40,6 +40,9 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.oneRow ||
     processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
+  const isDesignedPreset =
+    processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
+
   const setTextUnderline = (itemFontStyleParam, textDecorationType) => {
     /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
     textDecorationType: textDecorationTitle / textDecorationDesc */
@@ -83,11 +86,11 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (
     (!processedStyles.isVertical ||
       processedStyles.groupSize > 1 ||
-      processedStyles.oneRow === true) &&
+      (processedStyles.oneRow === true && !isDesignedPreset)) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
-    // all horizontal layouts that are not slider or columns
+    // Dont allow titlePlacement to be above / below / left / right
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
