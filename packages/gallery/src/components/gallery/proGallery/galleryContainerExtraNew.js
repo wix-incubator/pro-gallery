@@ -724,6 +724,7 @@ export class GalleryContainer extends React.Component {
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           customNavArrowsRenderer={this.props.customNavArrowsRenderer}
           customImageRenderer={this.props.customImageRenderer}
+          itemWrapperHOC={this.props.itemWrapperHOC}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}

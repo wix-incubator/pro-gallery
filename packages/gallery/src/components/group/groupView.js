@@ -1,5 +1,5 @@
 import React from 'react';
-import itemView from '../item/itemView.js';
+import ItemView from '../item/itemView.js';
 import { GalleryComponent } from '../galleryComponent';
 
 class GroupView extends GalleryComponent {
@@ -11,12 +11,14 @@ class GroupView extends GalleryComponent {
   }
 
   createDom(visible) {
-    return this.props.items.map((item) =>
-      React.createElement(itemView, {
-        ...item.renderProps({ ...this.props.galleryConfig, visible }),
-        ...this.props.itemsLoveData[item.id],
-      })
-    );
+    return this.props.items.map((item) => (
+      <ItemView
+        {...{
+          ...item.renderProps({ ...this.props.galleryConfig, visible }),
+          ...this.props.itemsLoveData[item.id],
+        }}
+      />
+    ));
   }
 
   shouldRender() {

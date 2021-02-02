@@ -1,7 +1,7 @@
 import React from 'react';
 import { window, utils } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
-import itemView from '../../item/itemView.js';
+import ItemView from '../../item/itemView.js';
 import { GalleryComponent } from '../../galleryComponent';
 
 class GalleryView extends GalleryComponent {
@@ -122,6 +122,7 @@ class GalleryView extends GalleryComponent {
       container,
       galleryStructure,
       getVisibleItems,
+      itemWrapperHOC,
     } = this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
@@ -137,17 +138,23 @@ class GalleryView extends GalleryComponent {
       galleryStructure.galleryItems,
       container
     );
-    const layout = galleryStructureItems.map((item, index) =>
-      React.createElement(
-        itemView,
-        item.renderProps({
-          ...galleryConfig,
-          ...itemsLoveData[item.id],
-          visible: item.isVisible,
-          key: `itemView-${item.id}-${index}`,
-        })
-      )
-    );
+    const layout = galleryStructureItems.map((item, index) => {
+      const ItemComponent = (
+        <ItemView
+          {...item.renderProps({
+            ...galleryConfig,
+            ...itemsLoveData[item.id],
+            visible: item.isVisible,
+            key: `itemView-${item.id}-${index}`,
+          })}
+        />
+      );
+      if (typeof itemWrapperHOC === 'function') {
+        return itemWrapperHOC(ItemComponent);
+      } else {
+        return ItemComponent;
+      }
+    });
 
     return (
       <div
