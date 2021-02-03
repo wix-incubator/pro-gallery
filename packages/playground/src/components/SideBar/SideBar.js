@@ -14,11 +14,12 @@ import { isValidStyleParam } from "../../constants/styleParams";
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS } from 'pro-gallery';
 import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
+import { handledStyleParams } from 'lean-gallery/dist/esm/leanGallery/consts';
 
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
-import {utils} from 'pro-gallery-lib';
-import {StylesList} from './StyleList';
+import { utils } from 'pro-gallery-lib';
+import { StylesList } from './StyleList';
 
 const Community = React.lazy(() => import('../Community'));
 
@@ -58,7 +59,9 @@ function SideBar({ items, blueprintsManager, visible }) {
     setSearchTerm('');
   };
 
-  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const changedStyleParams = Object.entries(styleParams)
+    .filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams))
+    .reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
   const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
@@ -98,6 +101,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               onChange={_setStyleParams}
               allStyleParams={styleParams}
               styleParams={styleParams}
+              galleryRenderer={gallerySettings.galleryRenderer}
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
@@ -114,6 +118,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               <JsonEditor
                 onChange={_setStyleParams}
                 allStyleParams={styleParams}
+                galleryRenderer={gallerySettings.galleryRenderer}
                 styleParams={changedStyleParams}
                 showAllStyles={true}
               />
@@ -124,6 +129,7 @@ function SideBar({ items, blueprintsManager, visible }) {
             <JsonEditor
               onChange={_setStyleParams}
               allStyleParams={styleParams}
+              galleryRenderer={gallerySettings.galleryRenderer}
               styleParams={styleParams}
               section={SECTIONS.PRESET}
               showAllStyles={gallerySettings.showAllStyles}
@@ -137,6 +143,7 @@ function SideBar({ items, blueprintsManager, visible }) {
                     section={section}
                     onChange={_setStyleParams}
                     allStyleParams={styleParams}
+                    galleryRenderer={gallerySettings.galleryRenderer}
                     styleParams={styleParams}
                     showAllStyles={gallerySettings.showAllStyles}
                   />
@@ -172,7 +179,7 @@ function SideBar({ items, blueprintsManager, visible }) {
           <Collapse.Panel header="Title & Description" key="info">
             <Form layout="vertical">
               <Form.Item label="Custom Title" help="use the # symbol for the item index">
-                <Input defaultValue={gallerySettings.customTitle || ''} onChange={e => setGallerySettings({ customTitle: e.target.value }) } />
+                <Input defaultValue={gallerySettings.customTitle || ''} onChange={e => setGallerySettings({ customTitle: e.target.value })} />
               </Form.Item>
               <Form.Item label="Custom Description" help="use the # symbol for the item index">
                 <Input.TextArea defaultValue={gallerySettings.customDescription || ''} rows="4" onChange={e => setGallerySettings({ customDescription: e.target.value })} />
@@ -188,7 +195,7 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Switch checked={!!gallerySettings.showAllStyles} onChange={e => setGallerySettings({ showAllStyles: e })} />
               </Form.Item>
               <Form.Item label="Responsive Preview" labelAlign="left">
-                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => {setGallerySettings({ responsivePreview: e }); window.location.reload()}} />
+                <Switch checked={!!gallerySettings.responsivePreview} onChange={e => { setGallerySettings({ responsivePreview: e }); window.location.reload() }} />
               </Form.Item>
               <Form.Item label="Reset to Default Gallery" labelAlign="left">
                 <Button icon="delete" shape="circle" onClick={() => window.location.search = ''} />
@@ -202,6 +209,20 @@ function SideBar({ items, blueprintsManager, visible }) {
             <Benchmarks />
           </Collapse.Panel>
           <Collapse.Panel header="Simulators" key="simulators">
+            <Form layout="vertical">
+              <Form.Item label="Gallery Renderer">
+                <Select defaultValue={gallerySettings.galleryRenderer || 'pro'} onChange={val => setGallerySettings({ galleryRenderer: val })}>
+                  {['pro', 'lean', 'sortable'].map((val) => <Select.Option key={val} value={val}>{val.toUpperCase()}</Select.Option>)}
+                </Select>
+              </Form.Item>
+            </Form>
+            <Form layout="vertical">
+              <Form.Item label="View Mode">
+                <Select defaultValue={gallerySettings.viewMode || GALLERY_CONSTS.viewMode.SITE} onChange={val => setGallerySettings({ viewMode: val })}>
+                  {Object.entries(GALLERY_CONSTS.viewMode).map(([key, val]) => <Select.Option key={key} value={key}>{val}</Select.Option>)}
+                </Select>
+              </Form.Item>
+            </Form>
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Unknown dimension" labelAlign="left">
                 <Switch checked={!!gallerySettings.isUnknownDimensions} onChange={e => setGallerySettings({ isUnknownDimensions: e })} />
@@ -217,13 +238,6 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Form.Item>
               <Form.Item label="Click to Expand" labelAlign="left">
                 <Switch checked={!!gallerySettings.clickToExpand} onChange={e => setGallerySettings({ clickToExpand: e })} />
-              </Form.Item>
-            </Form>
-            <Form layout="vertical">
-              <Form.Item label="View Mode">
-                <Select defaultValue={gallerySettings.viewMode || GALLERY_CONSTS.viewMode.SITE} onChange={val => setGallerySettings({ viewMode: val })}>
-                  {Object.entries(GALLERY_CONSTS.viewMode).map(([key, val]) => <Select.Option key={key} value={key}>{val}</Select.Option>)}
-                </Select>
               </Form.Item>
             </Form>
           </Collapse.Panel>
@@ -244,9 +258,9 @@ function SideBar({ items, blueprintsManager, visible }) {
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Community" key="community">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Community/>
-          </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Community />
+            </Suspense>
           </Collapse.Panel>
           {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
@@ -269,10 +283,10 @@ function SideBar({ items, blueprintsManager, visible }) {
           </Collapse.Panel>}
           {isDev && <Collapse.Panel header="ToDos" key="todos">
             {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
-            </Collapse.Panel>}
+          </Collapse.Panel>}
         </Collapse>
 
-      {!utils.isMobile() && !!visible && <>
+        {!utils.isMobile() && !!visible && <>
           <div style={{ height: 120 }} />
 
           <div className={s.code}>
@@ -280,7 +294,7 @@ function SideBar({ items, blueprintsManager, visible }) {
             <a className={s.report} target="_blank" rel="noreferrer" href="https://github.com/wix/pro-gallery/issues">report an issue</a>
           </div>
         </>
-      }
+        }
       </div>
     </>
   );

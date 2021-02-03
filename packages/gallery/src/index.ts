@@ -7,3 +7,10 @@ export { default as addLayoutStyles } from './components/helpers/layoutHelper';
 export { GALLERY_CONSTS } from 'pro-gallery-lib';
 export { addPresetStyles } from 'pro-gallery-lib';
 export { defaultStyles } from 'pro-gallery-lib';
+
+export { default as LeanGallery } from './components/leanGallery/leanGallery';
+export { default as isEligibleForLeanGallery } from './components/leanGallery/isEligible';
+export { notEligibleReasons } from './components/leanGallery/isEligible';
+export { formatLeanGalleryStyles } from './components/leanGallery/leanGallery';
+
+export { default as SortableGallery } from './components/gallery/index';

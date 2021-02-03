@@ -3,6 +3,7 @@ import {Alert, Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, Inp
 import {INPUT_TYPES, isInPreset} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
+import { handledStyleParams } from 'lean-gallery/dist/esm/leanGallery/consts';
 
 class JsonEditor extends React.Component {
   constructor() {
@@ -182,7 +183,9 @@ class JsonEditor extends React.Component {
     ([key, settings]) => 
       (!section || settings.section === section) && 
       (!subSection || settings.subSection === subSection) && 
-      (this.props.showAllStyles || settings.isRelevant(allStyleParams, context))
+      (this.props.showAllStyles || settings.isRelevant(allStyleParams, context)) &&
+      (this.props.galleryRenderer !== 'lean' || handledStyleParams[key])
+
 
     const activeKey = styleParam ? {activeKey: 'collapse' + styleParam} : {defaultActiveKey: []};
 

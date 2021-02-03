@@ -17,7 +17,8 @@ import { Resizable } from 're-resizable';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
-import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
+import { LeanGallery } from 'lean-gallery';
+import { SortableGallery } from './sortableGallery';
 import 'lean-gallery/dist/styles/leanGallery.css';
 
 const SideBar = React.lazy(() => import('../SideBar'));
@@ -297,16 +298,12 @@ export function App() {
 
   let GalleryComponent;
 
-  const shouldRenderLeanGallery = isEligibleForLeanGallery({
-    items: getItems(),
-    styles: styleParams,
-    totalItemsCount: getTotalItemsCount()
-  });
-
-  if(!shouldRenderLeanGallery) {
+  if(!gallerySettings.galleryRenderer || !gallerySettings.galleryRenderer === 'pro') {
     GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
-  } else {
+  } else if (gallerySettings.galleryRenderer === 'lean') {
     GalleryComponent = LeanGallery;
+  } else if (gallerySettings.galleryRenderer === 'sortable') {
+    GalleryComponent = SortableGallery;
   };
 
   window.playgroundItems = getItems();
