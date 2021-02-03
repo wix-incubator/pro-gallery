@@ -1,0 +1,157 @@
+body {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+input, button, select, optgroup, textarea {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+
+  .toggleButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    color: white;
+    background-color: #1890ff;
+    border-color: #1890ff;
+    &:hover {
+      background-color: #40a9ff;
+      border-color: #40a9ff;
+      cursor: pointer;
+    }
+  }
+
+  .sideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: auto;
+    background: #eee;
+    border-right: 1px solid #ccc;
+    transition: margin .4s ease;
+    z-index: 999;
+  }
+
+  .gallery {
+    transition: padding .3s ease;
+  }
+
+  .fullscreen {
+    position: fixed;
+    top: 0;
+    left: auto;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    transition: opacity 1s ease;
+  }
+
+  .heading {
+    overflow: auto;
+    height: 53px;
+    line-height: 51px;
+    z-index: 1;
+    width: 100%;
+    padding-left: 60px;
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 -10px 20px 0 rgba(0, 0, 0, 0.2);
+    color: #333;
+    background: #fff;
+    font-variant-caps: all-petite-caps;
+
+    .version {
+      font-variant-caps: initial;
+      color: #666;
+      font-size: 12px;
+      float: right;
+      padding-right: 16px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+  }
+
+  .codePanel {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    right: 0;
+    width: 600px;
+    transition: all .3s ease;
+    margin-right: -594px;
+    background-color: #313f53;
+
+    &.show {
+      margin-right: 0;
+    }
+
+    &:hover:not(.show) {
+      margin-right: -588px;
+    }
+
+    .codeTab {
+      position: absolute;
+      width: 64px;
+      height: 48px;
+      top: 24px;
+      left: -48px;
+      background-color: #313f53;
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      border-top-left-radius: 24px;
+      border-bottom-left-radius: 24px;
+    }
+  }
+}
+
+:global {
+  .playground-info {
+    text-align: center;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    width: 100%;
+    padding: 20px;
+    display: block;
+    box-sizing: border-box;
+
+    .playground-info-title {
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #999;
+      padding: 5px;
+      line-height: 32px;
+    }
+    .playground-info-description {
+      font-size: 18px;
+      font-weight: 100;
+      color: #aaa;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 10px;
+    }
+  }
+  button.show-more {
+    padding: 11px 50px !important; 
+    border-radius: 15px !important;
+    line-height: 0;
+    height: 60px;
+  }
+}
