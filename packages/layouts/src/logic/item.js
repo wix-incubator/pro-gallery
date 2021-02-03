@@ -152,7 +152,7 @@ export class Item {
       const minShift = 0.4 * (this.scatter / 100);
 
       let horizontalShift = utils.hashToRandomInt(
-        this.hash + offset.right + 'x',
+        this.seed + offset.right + 'x',
         -spaceLeft,
         spaceRight
       );
@@ -167,7 +167,7 @@ export class Item {
       horizontalShift = Math.round(horizontalShift);
 
       let verticalShift = utils.hashToRandomInt(
-        this.hash + offset.right + 'y',
+        this.seed + offset.right + 'y',
         -spaceUp,
         spaceDown
       );
@@ -252,6 +252,10 @@ export class Item {
 
   get hash() {
     return this.dto.hash || this.dto.mediaUrl || this.dto.id;
+  }
+
+  get seed() {
+    return this.dto.seed || utils.hashToInt(this.hash);
   }
 
   get maxWidth() {

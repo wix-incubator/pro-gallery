@@ -1,6 +1,35 @@
-## [v2.4.12](https://pro-gallery-2-4-12.surge.sh) (17/01/2021)
+## [v2.4.16](https://pro-gallery-2-4-16.surge.sh) (31/01/2021)
  
+#### GALLERY
+ -  Handle oneRow styleParam with designedPreset selected
+ -  improve (item): allow setting an external seed
+
+---
+## [v2.4.15](https://pro-gallery-2-4-15.surge.sh) (25/01/2021)
+ 
+#### GALLERY
+ -  improve: pass gallery item on CURRENT_ITEM_CHANGED event 
+
+---
+## [v2.4.14](https://pro-gallery-2-4-14.surge.sh) (24/01/2021)
+ 
+#### GALLERY
+ -  fix: use galleryWidth when calculating cssScroll for horizontal animations
+ -  fix: wrap console.log
+
 #### OTHER
+ - Update README.md
+
+---
+## [v2.4.13](https://pro-gallery-2-4-13.surge.sh) (17/01/2021)
+ 
+#### GALLERY
+ -  (galleryContainerNew): in debouncedReCreateGallery, call reCreateGalleryExpensively with the correct params.
+
+---
+## [v2.4.12](https://pro-gallery-2-4-12.surge.sh) (14/01/2021)
+ 
+#### GALLERY
  -  fix blueprints: height change between layouts
 
 ---

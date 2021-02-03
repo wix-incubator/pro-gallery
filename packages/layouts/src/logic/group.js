@@ -1,5 +1,4 @@
 import { Item } from './item.js';
-import { utils } from './utils';
 
 const GROUP_TYPES_BY_RATIOS_V = {
   lll: '1,2h',
@@ -327,7 +326,7 @@ export class Group {
     let seed;
     if (this.isVertical) {
       //vertical galleries random is not relevant (previous group is in another column)
-      seed = utils.hashToInt(this.items[0].hash) % numOfOptions;
+      seed = this.items[0].seed % numOfOptions;
     } else {
       seed = (this.inStripIdx + this.stripIdx) % numOfOptions;
     }
