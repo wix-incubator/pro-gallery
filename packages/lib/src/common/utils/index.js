@@ -621,7 +621,7 @@ class Utils {
     return isValidColor ? colorStr : defaultColor;
   }
 
-  logPlaygroundLink(styles, useBlueprints = false) {
+  logPlaygroundLink(styles) {
     try {
       if (this.isVerbose()) {
         const stylesStr = Object.entries(styles)
@@ -636,7 +636,7 @@ class Utils {
 
         console.log(
           'Gallery Playground link:',
-          `https://pro-gallery.surge.sh?useBlueprints=${useBlueprints}&${stylesStr}`
+          `https://pro-gallery.surge.sh?${stylesStr}`
         );
       }
       // eslint-disable-next-line no-empty

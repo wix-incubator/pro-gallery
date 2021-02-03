@@ -59,7 +59,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = galleryState;
       }
     } catch (_e) {
-      console.warn('Cannot create initial state from props (blueprints)', _e);
+      console.warn('Cannot create initial state from props', _e);
     }
 
     this.state = {

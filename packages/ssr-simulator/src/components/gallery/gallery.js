@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, ProGallery, ProBlueprintsGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import { testItems, monochromeImages } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
@@ -117,7 +117,7 @@ export default class Gallery extends React.PureComponent {
     const Gallery =
       this.isSSR() || !urlParams.useBlueprints
         ? ProGallery
-        : ProBlueprintsGallery;
+        : ProGalleryRenderer;
     return (
       <div className={containerClassName}>
         <Gallery
