@@ -1,7 +1,7 @@
 import '../../../common/utils/polyfills';
 import React from 'react';
 import { viewModeWrapper, utils } from 'pro-gallery-lib';
-import Gallery from './galleryContainerNew.js';
+import Gallery from './galleryContainer.js';
 import { GalleryComponent } from '../../galleryComponent';
 
 import '../../../versionLogger';

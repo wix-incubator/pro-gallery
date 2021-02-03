@@ -5,7 +5,7 @@ import {
   dimensionsHelper,
   addPresetStyles,
 } from 'pro-gallery-lib';
-import ProGallery from './proGallery/proBlueprintsGallery';
+import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
 
 export default class BaseGallery extends React.Component {
