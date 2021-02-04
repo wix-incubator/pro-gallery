@@ -1,3 +1,9 @@
+## [v2.4.17](https://pro-gallery-2-4-17.surge.sh) (04/02/2021)
+ 
+#### GALLERY
+ -  blueprints - use formatted styles for height change check
+
+---
 ## [v2.4.16](https://pro-gallery-2-4-16.surge.sh) (31/01/2021)
  
 #### GALLERY
