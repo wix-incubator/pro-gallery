@@ -47,7 +47,6 @@ class Blueprints {
         changed: containerChanged,
       } = this.formatContainerIfNeeded(
         newDimensionsParams,
-        newStylesParams,
         oldDimensionsParams,
         oldStylesParams,
         { formattedStyles: formattedStyles || existingBlueprint.styles }
@@ -265,7 +264,6 @@ class Blueprints {
 
   formatContainerIfNeeded(
     dimensions,
-    styles,
     lastDimensions,
     lastStyles,
     { formattedStyles }
@@ -288,10 +286,7 @@ class Blueprints {
       }
       const dimensionsHaveChanged = {
         height:
-          !oldStylesParams.oneRow &&
-          oldStylesParams.enableInfiniteScroll &&
-          !styles.oneRow &&
-          styles.enableInfiniteScroll
+          !formattedStyles.oneRow && formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
             ? false
             : !!newDimensionsParams.height &&
               newDimensionsParams.height !== oldDimensionsParams.height,
