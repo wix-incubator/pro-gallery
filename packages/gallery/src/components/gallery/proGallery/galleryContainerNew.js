@@ -1066,6 +1066,7 @@ export class GalleryContainer extends React.Component {
           domId={this.props.domId}
           currentIdx={this.props.currentIdx || 0}
           customHoverRenderer={this.props.customHoverRenderer}
+          customImageRenderer={this.props.customImageRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customNavArrowsRenderer={this.props.customNavArrowsRenderer}
