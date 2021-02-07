@@ -81,6 +81,7 @@ class GalleryItem {
       className: 'image',
       key: this.key,
       idx: this.idx,
+      index: this.idx,
       photoId: this.photoId,
       id: this.id,
       hash: this.id,

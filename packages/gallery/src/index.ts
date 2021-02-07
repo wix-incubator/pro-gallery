@@ -11,6 +11,7 @@ export { defaultStyles } from 'pro-gallery-lib';
 export { default as LeanGallery } from './components/leanGallery/leanGallery';
 export { default as isEligibleForLeanGallery } from './components/leanGallery/isEligible';
 export { notEligibleReasons } from './components/leanGallery/isEligible';
-export { formatLeanGalleryStyles } from './components/leanGallery/leanGallery';
+export { fixedStyleParams } from './components/leanGallery/consts';
+export { handledStyleParams } from './components/leanGallery/consts';
 
 export { default as SortableGallery } from './components/gallery/index';

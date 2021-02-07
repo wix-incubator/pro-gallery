@@ -139,8 +139,15 @@ class GalleryView extends GalleryComponent {
       container
     );
     const layout = galleryStructureItems.map((item, index) => {
-      const ItemComponent = (
-        <ItemView
+      let ItemComponent;
+      if (typeof itemWrapperHOC === 'function') {
+        console.log('Wrapping items!', itemWrapperHOC);
+        ItemComponent = itemWrapperHOC(ItemView);
+      } else {
+        ItemComponent = ItemView;
+      }
+      return (
+        <ItemComponent
           {...item.renderProps({
             ...galleryConfig,
             ...itemsLoveData[item.id],
@@ -149,11 +156,6 @@ class GalleryView extends GalleryComponent {
           })}
         />
       );
-      if (typeof itemWrapperHOC === 'function') {
-        return itemWrapperHOC(ItemComponent);
-      } else {
-        return ItemComponent;
-      }
     });
 
     return (

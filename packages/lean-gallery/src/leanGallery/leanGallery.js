@@ -6,6 +6,7 @@ import {
   isSEOMode,
   utils,
 } from 'pro-gallery-lib';
+import { fixedStyleParams } from './consts';
 
 export default class LeanGallery extends React.Component {
   constructor() {
@@ -17,6 +18,7 @@ export default class LeanGallery extends React.Component {
     this.state = {
       itemStyle: {},
       numberOfColumns: 0,
+      styles: { ...this.props.styles, ...fixedStyleParams },
     };
   }
 
@@ -38,6 +40,9 @@ export default class LeanGallery extends React.Component {
         numberOfColumns: this.calcNumberOfColumns(nextProps),
       });
     }
+    this.setState({
+      styles: { ...nextProps.styles, ...fixedStyleParams },
+    });
   }
   // #endregion
 

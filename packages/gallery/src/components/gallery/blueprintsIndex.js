@@ -53,13 +53,14 @@ export default class BaseGallery extends React.Component {
 
     utils.logPlaygroundLink(galleryProps.styles);
 
+    const MemoProGallery = React.memo(ProGallery);
     if (
       galleryProps.styles &&
       galleryProps.items &&
       galleryProps.container &&
       galleryProps.structure
     ) {
-      return <ProGallery {...galleryProps} />;
+      return <MemoProGallery {...galleryProps} />;
     } else {
       return null;
     }

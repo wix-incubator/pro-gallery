@@ -18,7 +18,7 @@ import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
 import { LeanGallery } from 'lean-gallery';
-import { SortableGallery } from './sortableGallery';
+import SortableGallery from './sortableGallery';
 import 'lean-gallery/dist/styles/leanGallery.css';
 
 const SideBar = React.lazy(() => import('../SideBar'));
@@ -308,6 +308,7 @@ export function App() {
 
   window.playgroundItems = getItems();
   
+  console.log('Rendering Playground')
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -337,6 +338,7 @@ export function App() {
           currentIdx: gallerySettings.initialIdx,
           useBlueprints: gallerySettings.useBlueprints,
           useLayoutFixer: gallerySettings.useLayoutFixer,
+          blueprintsManager,
           ...getExternalInfoRenderers(),
           ...blueprintProps
         }, resizedDims, dims => {setDimensions(dims); setResizedDims(dims)}, gallerySettings)}

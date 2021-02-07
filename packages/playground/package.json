@@ -14,6 +14,7 @@
   "dependencies": {
     "@babel/core": "7.4.3",
     "antd": "^3.20.7",
+    "array-move": "^3.0.1",
     "css-animation": "1.5.0",
     "firebase": "^8.2.4",
     "image-client-api": "^1.3130.0",
@@ -27,6 +28,7 @@
     "react": "^16.8.6",
     "react-color": "^2.17.3",
     "react-dom": "^16.8.6",
+    "react-sortable-hoc": "^1.11.0",
     "react-syntax-highlighter": "^10.3.0"
   },
   "devDependencies": {

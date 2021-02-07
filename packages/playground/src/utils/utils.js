@@ -51,7 +51,7 @@ export function mixAndSlice(array, length, startIdx = 0, customMetadata = {}) {
       const itemIdx = startIdx + result.length + 1;
       let item = cloneDeep(array[idx]);
       // Object.assign(item, array[idx]);
-      item.itemId = generateUUID() + '_' + String(result.length);
+      item.itemId = generateUUID();
       item.metadata.title = (
         customMetadata.customTitle || `Item ${itemIdx}`
       ).replace('#', itemIdx);
