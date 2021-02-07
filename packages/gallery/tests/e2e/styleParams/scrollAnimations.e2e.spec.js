@@ -23,7 +23,7 @@ describe('scrollAnimations - e2e', () => {
         await driver.waitFor.hookToBeVisible('item-container');
         const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
           const styleTags = Array.from(
-            document.querySelectorAll('div[data-key="dynamic-styles"] style')
+            document.querySelectorAll('div[data-key="items-styles"] style')
           );
           const AnimationStyleTags = styleTags.filter((styleTag) =>
             styleTag.id.includes('scrollCss')
@@ -44,7 +44,7 @@ describe('scrollAnimations - e2e', () => {
     await driver.waitFor.hookToBeVisible('item-container');
     const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
       const styleTags = Array.from(
-        document.querySelectorAll('div[data-key="dynamic-styles"] style')
+        document.querySelectorAll('div[data-key="items-styles"] style')
       );
       const AnimationStyleTags = styleTags.filter((styleTag) =>
         styleTag.id.includes('scrollCss')

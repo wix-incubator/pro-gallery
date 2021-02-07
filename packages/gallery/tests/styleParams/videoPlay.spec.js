@@ -21,7 +21,7 @@ describe('styleParam - videoPlay', () => {
       galleyLayout: GALLERY_CONSTS.layout.GRID,
     });
     driver.mount.proGallery(initialProps);
-      await driver.update();
+    await driver.update();
     const galleryVideoItems = driver.find.hook(
       'video_container-video-player-element'
     );

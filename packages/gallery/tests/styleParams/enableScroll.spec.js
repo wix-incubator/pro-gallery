@@ -11,7 +11,6 @@ describe('styleParam - enableScroll', () => {
     items: images2,
     styles: styleParams,
   };
-  
   beforeEach(() => {
     driver = new GalleryDriver();
   });
