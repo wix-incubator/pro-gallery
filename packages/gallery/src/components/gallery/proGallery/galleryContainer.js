@@ -22,7 +22,7 @@ export class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
     if (utils.isVerbose()) {
-      console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
+      console.count('[OOISSR] galleryContainer constructor', window.isMock);
     }
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
