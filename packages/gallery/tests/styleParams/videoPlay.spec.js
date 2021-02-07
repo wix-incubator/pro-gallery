@@ -21,7 +21,7 @@ describe('styleParam - videoPlay', () => {
       galleyLayout: GALLERY_CONSTS.layout.GRID,
     });
     driver.mount.proGallery(initialProps);
-    await driver.update(100);
+      await driver.update();
     const galleryVideoItems = driver.find.hook(
       'video_container-video-player-element'
     );
@@ -40,7 +40,7 @@ describe('styleParam - videoPlay', () => {
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
-      await driver.update(100);
+      await driver.update();
       const galleryVideoItems = driver.find.tag('video');
       expect(galleryVideoItems).to.have.lengthOf(0);
       driver.detach.proGallery();
@@ -51,7 +51,7 @@ describe('styleParam - videoPlay', () => {
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
-      await driver.update(100);
+      await driver.update();
       const itemContainer = driver.find.hook('item-container').at(0);
       itemContainer.simulate('mouseover');
       const videoItem = driver.find.tag('video');
@@ -71,7 +71,7 @@ describe('styleParam - videoPlay', () => {
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
-      await driver.update(100);
+      await driver.update();
       const galleryVideoItems = driver.find.tag('video');
       expect(galleryVideoItems).to.have.lengthOf(0);
       driver.detach.proGallery();
@@ -83,7 +83,7 @@ describe('styleParam - videoPlay', () => {
         itemClick: GALLERY_CONSTS.itemClick.NOTHING,
       });
       driver.mount.proGallery(initialProps);
-      await driver.update(100);
+      await driver.update();
       const itemContainer = driver.find.hook('item-wrapper').at(0);
       itemContainer.simulate('click');
       const videoItem = driver.find.tag('video');

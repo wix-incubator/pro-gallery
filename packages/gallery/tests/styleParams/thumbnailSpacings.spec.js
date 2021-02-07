@@ -16,22 +16,24 @@ describe('styleParam - thumbnailSpacings', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set "thumbnailSpacing" of "10"', () => {
+  it('should set "thumbnailSpacing" of "10"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSpacings: 10,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.selector('.thumbnailItem').at(0);
     expect(item.props().style.margin).to.eq(10);
     driver.detach.proGallery();
   });
-  it('should set "thumbnailSpacing" of "30"', () => {
+  it('should set "thumbnailSpacing" of "30"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSpacings: 30,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.selector('.thumbnailItem').at(0);
     expect(item.props().style.margin).to.eq(30);
     driver.detach.proGallery();

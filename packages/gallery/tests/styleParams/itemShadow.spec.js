@@ -16,7 +16,7 @@ describe('styleParam - overlayAnimation', () => {
     driver = new GalleryDriver();
   });
 
-  it('should have box shadow when "itemEnableShadow" is "true"', () => {
+  it('should have box shadow when "itemEnableShadow" is "true"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -28,13 +28,14 @@ describe('styleParam - overlayAnimation', () => {
       itemEnableShadow: true,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { boxShadow } = item.props().style;
     const boxShadowMock = '7px 7px 20px rgba(0,0,0,.4)';
     expect(boxShadow).to.equal(boxShadowMock);
     driver.detach.proGallery();
   });
-  it('should not have box shadow when "itemEnableShadow" is "false"', () => {
+  it('should not have box shadow when "itemEnableShadow" is "false"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -46,12 +47,13 @@ describe('styleParam - overlayAnimation', () => {
       itemEnableShadow: false,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { boxShadow } = item.props().style;
     expect(boxShadow).to.equal(undefined);
     driver.detach.proGallery();
   });
-  it('should not have box shadow in a "oneRow" gallery', () => {
+  it('should not have box shadow in a "oneRow" gallery', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
@@ -63,13 +65,14 @@ describe('styleParam - overlayAnimation', () => {
       itemEnableShadow: true,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { boxShadow } = item.props().style;
     expect(boxShadow).to.equal(undefined);
     driver.detach.proGallery();
   });
 
-  it('should set the right "galleryMargin"', () => {
+  it('should set the right "galleryMargin"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -81,13 +84,14 @@ describe('styleParam - overlayAnimation', () => {
       itemEnableShadow: true,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.selector('#pro-gallery-margin-container');
     const { margin } = item.props().style;
     expect(margin).to.equal('30px');
     driver.detach.proGallery();
   });
 
-  it('should set the correct box-shadow style to the items', () => {
+  it('should set the correct box-shadow style to the items', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -99,6 +103,7 @@ describe('styleParam - overlayAnimation', () => {
     });
 
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0);
     expect(item.props().style.boxShadow).to.equal(
       '20px 3px 20px rgba(0,0,0,.4)'

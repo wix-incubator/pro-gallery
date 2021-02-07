@@ -23,6 +23,7 @@ describe('styleParam - galleryMargin', () => {
       scrollDirection: 0,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const marginContainer = driver.find
       .selector('#pro-gallery-margin-container')
       .getDOMNode();
@@ -38,6 +39,7 @@ describe('styleParam - galleryMargin', () => {
       oneRow: true,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find
       .selector('.pro-gallery-parent-container')
       .getDOMNode();

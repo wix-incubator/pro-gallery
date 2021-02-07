@@ -227,7 +227,7 @@ class galleryDriver {
     return this.wrapper.text();
   }
 
-  async update(ms) {
+  async update(ms = 0) {
     await sleep(ms);
     this.wrapper.update();
   }

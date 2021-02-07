@@ -21,7 +21,7 @@ describe('styleParam - textBoxWidth', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set "textBoxWidth" of "250"(manual)', () => {
+  it('should set "textBoxWidth" of "250"(manual)', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
@@ -32,6 +32,7 @@ describe('styleParam - textBoxWidth', () => {
       textBoxWidth: 250,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textBox = driver.find.selector('.gallery-item-common-info').at(0);
     const { width } = textBox.props().style;
     expect(width).to.eq(250);

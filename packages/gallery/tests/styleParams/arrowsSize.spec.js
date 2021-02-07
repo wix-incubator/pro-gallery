@@ -16,25 +16,27 @@ describe('styleParam - arrowsSize', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set the correct arrowsSize', () => {
+  it('should set the correct arrowsSize', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsSize: 50,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const arrowImage = driver.find.selector('.nav-arrows-container svg');
     const { transform } = arrowImage.props().style;
     const arrowFinalSize = initialProps.styles.arrowsSize / 23;
     expect(transform).to.eq(`scale(${arrowFinalSize})`);
     driver.detach.proGallery();
   });
-  it('should set the position of arrows according to arrowsSize', () => {
+  it('should set the position of arrows according to arrowsSize', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsSize: 50,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const arrowContainer = driver.find.selector('.nav-arrows-container');
     const { right } = arrowContainer.props().style;
     const arrowPosition = initialProps.styles.arrowsSize + 50 + 10;
