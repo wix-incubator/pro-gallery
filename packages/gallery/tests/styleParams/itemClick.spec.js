@@ -16,38 +16,42 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should set the correct role for each "itemClick" value', () => {
-    it('expect "role" to be "link" when "itemClick" is "link"', () => {
+    it('expect "role" to be "link" when "itemClick" is "link"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('link');
       driver.detach.proGallery();
     });
-    it('expect "role" to be "button" when "itemClick" is "expand"', () => {
+    it('expect "role" to be "button" when "itemClick" is "expand"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('button');
       driver.detach.proGallery();
     });
-    it('expect "role" to be "button" when "itemClick" is "fullscreen"', () => {
+    it('expect "role" to be "button" when "itemClick" is "fullscreen"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'fullscreen',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('button');
       driver.detach.proGallery();
     });
-    it('expect "role" to be "" when "itemClick" is "nothing"', () => {
+    it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'nothing',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('');
       driver.detach.proGallery();
@@ -55,38 +59,42 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should set className "clickable" when "itemClick" is "expand/fullscreen/link"', () => {
-    it('expect item to have className "clickable" when "itemClick" is "link"', () => {
+    it('expect item to have className "clickable" when "itemClick" is "link"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
-    it('expect item to have className "clickable" when "itemClick" is "expand"', () => {
+    it('expect item to have className "clickable" when "itemClick" is "expand"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
-    it('expect item to have className "clickable" when "itemClick" is "fullscreen"', () => {
+    it('expect item to have className "clickable" when "itemClick" is "fullscreen"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'fullscreen',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
-    it('expect item to not have className "clickable" when "itemClick" is "nothing"', () => {
+    it('expect item to not have className "clickable" when "itemClick" is "nothing"', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'nothing',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.false;
       driver.detach.proGallery();
@@ -94,20 +102,22 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should set href link only when "itemClick" is set to "link"', () => {
-    it('check href when itemClick = link', () => {
+    it('check href when itemClick = link', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.selector('#pro-gallery-container a').at(0);
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
     });
-    it('check href when itemClick = expand', () => {
+    it('check href when itemClick = expand', async () => {
       Object.assign(initialProps.styles, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       const item = driver.find.selector('#pro-gallery-container a').at(0);
       expect(item.props().href).to.be.undefined;
       driver.detach.proGallery();
@@ -124,11 +134,12 @@ describe('styleParam - itemClick', () => {
         videoPlay: 'onClick',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');
       await driver.update(100);
-      expect(driver.find.tag('video').length).to.eq(1);
+      expect(driver.find.tag('video').length).to.eq(2); //all videos load after the first interaction (2 in the items array)
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "expand"', async () => {
@@ -140,6 +151,7 @@ describe('styleParam - itemClick', () => {
         videoPlay: 'onClick',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');
@@ -155,6 +167,7 @@ describe('styleParam - itemClick', () => {
         videoPlay: 'onClick',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');
@@ -171,6 +184,7 @@ describe('styleParam - itemClick', () => {
         videoPlay: 'onClick',
       });
       driver.mount.proGallery(initialProps);
+      await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
       item.simulate('click');

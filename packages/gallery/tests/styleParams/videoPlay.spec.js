@@ -55,7 +55,7 @@ describe('styleParam - videoPlay', () => {
       const itemContainer = driver.find.hook('item-container').at(0);
       itemContainer.simulate('mouseover');
       const videoItem = driver.find.tag('video');
-      expect(videoItem).to.have.lengthOf(1);
+      expect(videoItem).to.have.lengthOf(2);
       driver.detach.proGallery();
     });
   });
@@ -87,7 +87,7 @@ describe('styleParam - videoPlay', () => {
       const itemContainer = driver.find.hook('item-wrapper').at(0);
       itemContainer.simulate('click');
       const videoItem = driver.find.tag('video');
-      expect(videoItem).to.have.lengthOf(1);
+      expect(videoItem).to.have.lengthOf(2);
       driver.detach.proGallery();
     });
   });

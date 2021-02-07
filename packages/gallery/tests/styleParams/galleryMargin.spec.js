@@ -15,7 +15,7 @@ describe('styleParam - galleryMargin', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set the gallery with a margin of 20px', () => {
+  it('should set the gallery with a margin of 20px', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       galleryMargin: 20,
@@ -31,7 +31,7 @@ describe('styleParam - galleryMargin', () => {
     expect(margin).to.eq('20px');
     driver.detach.proGallery();
   });
-  it('should set the gallery with a margin of (galleryMargin - (imageMargin / 2)) in a oneRow gallery', () => {
+  it('should set the gallery with a margin of (galleryMargin - (imageMargin / 2)) in a oneRow gallery', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       imageMargin: 10,
