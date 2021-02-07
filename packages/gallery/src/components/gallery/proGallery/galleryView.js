@@ -141,7 +141,6 @@ class GalleryView extends GalleryComponent {
     const layout = galleryStructureItems.map((item, index) => {
       let ItemComponent;
       if (typeof itemWrapperHOC === 'function') {
-        console.log('Wrapping items!', itemWrapperHOC);
         ItemComponent = itemWrapperHOC(ItemView);
       } else {
         ItemComponent = ItemView;

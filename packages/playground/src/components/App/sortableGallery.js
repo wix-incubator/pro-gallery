@@ -34,9 +34,9 @@ export default class SortableGallery extends React.Component {
             case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
             case GALLERY_EVENTS.ITEM_LOADED:
             case GALLERY_EVENTS.HOVER_SET:
-                if (eventData >= 0) {
-                    console.log('Rendering Hover', eventData)
-                    this.replaceTarget = eventData
+                if (eventData >= 0 && this.sorting) {
+                        this.moveTarget = eventData
+                        console.log('Rendering, moveTarget is: ' + this.moveTarget);
                 }
                 break;
             case GALLERY_EVENTS.ITEM_CREATED:
@@ -49,19 +49,27 @@ export default class SortableGallery extends React.Component {
         }
     }
 
+    onSortStart = ({index}) => {
+        this.sorting = true;
+        this.moveSource = index
+        console.log('Rendering, moveSource is: ' + this.moveSource);
+    };
+
     onSortEnd = async ({ oldIndex, newIndex }) => {
 
         if (oldIndex === newIndex) {
             return;
         }
 
-        newIndex = this.replaceTarget;
+        newIndex = this.moveTarget;
 
         console.log('Rendering items, Replacing ' + oldIndex + ' with ' + newIndex);
 
         this.setState(({items}) => ({
             items: arrayMove(items, oldIndex, newIndex),
         }));
+
+        this.sorting = false;
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -89,6 +97,7 @@ export default class SortableGallery extends React.Component {
             ...this.props,
             items: this.state.items,
             eventsListener: this.eventsListener,
+            onSortStart: this.onSortStart,
             onSortEnd: this.onSortEnd,
             key: `sortable-pro-gallery-${this.props.domId}`,
             domId: `sortable-pro-gallery-${this.props.domId}`,
