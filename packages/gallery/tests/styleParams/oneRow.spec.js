@@ -15,35 +15,38 @@ describe('styleParam - oneRow', () => {
     driver = new GalleryDriver();
   });
 
-  it('should render element "#gallery-horizontal-scroll" when "oneRow" is "true"', () => {
+  it('should render element "#gallery-horizontal-scroll" when "oneRow" is "true"', async () => {
     Object.assign(initialProps.styles, {
       oneRow: true,
       scrollDirection: null, // make sure scroll direction doesnt change oneRow
       galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const elem = driver.find.selector('#gallery-horizontal-scroll');
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should render element "#pro-gallery-margin-container" when "oneRow" is "false"', () => {
+  it('should render element "#pro-gallery-margin-container" when "oneRow" is "false"', async () => {
     Object.assign(initialProps.styles, {
       oneRow: false,
       scrollDirection: null, // make sure scroll direction doesnt change oneRow
       galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const elem = driver.find.selector('#pro-gallery-margin-container');
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should set margin on items to "0px" when oneRow is false(vertical)', () => {
+  it('should set margin on items to "0px" when oneRow is false(vertical)', async () => {
     Object.assign(initialProps.styles, {
       oneRow: false,
       scrollDirection: null, // make sure scroll direction doesnt change oneRow
       galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0).getDOMNode();
     const { margin } = getComputedStyle(item);
 

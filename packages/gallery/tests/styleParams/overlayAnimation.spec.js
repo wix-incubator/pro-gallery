@@ -16,42 +16,46 @@ describe('styleParam - overlayAnimation', () => {
     driver = new GalleryDriver();
   });
 
-  it('should have overlay animation class - "EXPAND"', () => {
+  it('should have overlay animation class - "EXPAND"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.EXPAND,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.hover-animation-expand');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "FADE IN"', () => {
+  it('should have overlay animation class - "FADE IN"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.FADE_IN,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.hover-animation-fade-in');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "SLIDE UP"', () => {
+  it('should have overlay animation class - "SLIDE UP"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.hover-animation-slide-up');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "SLIDE RIGHT"', () => {
+  it('should have overlay animation class - "SLIDE RIGHT"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.hover-animation-slide-right');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();

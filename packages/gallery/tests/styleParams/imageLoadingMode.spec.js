@@ -18,7 +18,7 @@ describe('styleParam - imageLoadingMode', () => {
     driver = new GalleryDriver();
   });
 
-  it('should preload blury image', () => {
+  it('should preload blury image', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -28,11 +28,12 @@ describe('styleParam - imageLoadingMode', () => {
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
     initialProps.settings = { forceImagePreload: true };
     driver.mount.proGallery(initialProps);
+    await driver.update();
     expect(imageStub.withArgs('resized', 'thumb').called).to.be.true;
     imageStub.restore();
     driver.detach.proGallery();
   });
-  it('should preload pixel image (MAIN_COLOR)', () => {
+  it('should preload pixel image (MAIN_COLOR)', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -42,11 +43,12 @@ describe('styleParam - imageLoadingMode', () => {
     initialProps.settings = { forceImagePreload: true };
     imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
     driver.mount.proGallery(initialProps);
+    await driver.update();
     expect(imageStub.withArgs('pixel', 'img').called).to.be.true;
     imageStub.restore();
     driver.detach.proGallery();
   });
-  it('should preload color background (MAIN_COLOR)', () => {
+  it('should preload color background (MAIN_COLOR)', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -55,6 +57,7 @@ describe('styleParam - imageLoadingMode', () => {
     });
     initialProps.settings = { forceImagePreload: true };
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.load-with-color').length;
     expect(items).to.be.above(0);
     driver.detach.proGallery();

@@ -19,7 +19,7 @@ describe('styleParam - textBoxBorderColor', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
   });
-  it('should set border-color to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', () => {
+  it('should set border-color to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
@@ -29,6 +29,7 @@ describe('styleParam - textBoxBorderColor', () => {
       textBoxBorderColor: { value: 'rgba(0,0,0,0)' },
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textsStyles = driver.find
       .selector('.gallery-item-bottom-info')
       .at(0)
@@ -36,7 +37,7 @@ describe('styleParam - textBoxBorderColor', () => {
     expect(textsStyles.props().style.borderColor).to.eq('rgba(0,0,0,0)');
     driver.detach.proGallery();
   });
-  it('should not set border-color to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', () => {
+  it('should not set border-color to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
@@ -46,6 +47,7 @@ describe('styleParam - textBoxBorderColor', () => {
       textBoxBorderColor: { value: 'rgba(0,0,0,0)' },
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textsStyles = driver.find
       .selector('.gallery-item-bottom-info')
       .at(0)

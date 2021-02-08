@@ -8,7 +8,7 @@ import {
 } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
-import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainerNew'; //import GalleryContainer before the connect (without redux)
+import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainer'; //import GalleryContainer before the connect (without redux)
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import ProGallery from '../../src/components/gallery';
@@ -227,7 +227,7 @@ class galleryDriver {
     return this.wrapper.text();
   }
 
-  async update(ms) {
+  async update(ms = 0) {
     await sleep(ms);
     this.wrapper.update();
   }

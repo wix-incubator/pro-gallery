@@ -21,7 +21,7 @@ describe('styleParam - textBoxBorderWidth', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set border-width to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', () => {
+  it('should set border-width to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
@@ -31,6 +31,7 @@ describe('styleParam - textBoxBorderWidth', () => {
       textBoxBorderWidth: 10,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textsStyles = driver.find
       .selector('.gallery-item-bottom-info')
       .at(0)
@@ -38,7 +39,7 @@ describe('styleParam - textBoxBorderWidth', () => {
     expect(textsStyles.props().style.borderWidth).to.eq('10px');
     driver.detach.proGallery();
   });
-  it('should not set border-width to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', () => {
+  it('should not set border-width to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
@@ -48,6 +49,7 @@ describe('styleParam - textBoxBorderWidth', () => {
       textBoxBorderWidth: 10,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textsStyles = driver.find
       .selector('.gallery-item-bottom-info')
       .at(0)
