@@ -1,3 +1,9 @@
+## [v3.0.0](https://pro-gallery-3-0-0.surge.sh) (08/02/2021)
+ 
+#### V3
+ -  Version 3 introduces blueprints and a clear split between logic and UI. Read more in the [Readme](https://github.com/wix/pro-gallery#version-3).
+
+---
 ## [v2.4.17](https://pro-gallery-2-4-17.surge.sh) (04/02/2021)
  
 #### GALLERY
