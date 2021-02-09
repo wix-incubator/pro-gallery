@@ -76,32 +76,41 @@ const resizeUrlImp_manual = (
     let y;
     let orgW;
     let orgH;
+    let method;
 
-    // find the scale
     if (item.ratio > requiredRatio) {
-      // wide image (relative to required ratio
       scale = requiredHeight / item.maxHeight;
-      orgW = Math.floor(requiredHeight * item.ratio);
-      y = 0;
-      x = Math.round(orgW * focalPointObj.x- requiredWidth / 2);
-      x = Math.min(orgW - requiredWidth, x);
-      x = Math.max(0, x);
     } else {
-      // narrow image
-
       scale = requiredWidth / item.maxWidth;
-      orgH = Math.floor(requiredWidth / item.ratio);
+    }
+
+    if (resizeMethod === 'fit') {
+      method = 'fit';
       x = 0;
-      y = Math.round(orgH * focalPointObj.y- requiredHeight / 2);
-      y = Math.min(orgH - requiredHeight, y);
-      y = Math.max(0, y);
+      y = 0;
+    } else {
+      method = 'crop';
+      if (item.ratio > requiredRatio) {
+        orgW = Math.floor(requiredHeight * item.ratio);
+        y = 0;
+        x = Math.round(orgW * focalPointObj.x- requiredWidth / 2);
+        x = Math.min(orgW - requiredWidth, x);
+        x = Math.max(0, x);
+      } else {
+        orgH = Math.floor(requiredWidth / item.ratio);
+        x = 0;
+        y = Math.round(orgH * focalPointObj.y- requiredHeight / 2);
+        y = Math.min(orgH - requiredHeight, y);
+        y = Math.max(0, y);
+      }
     }
 
     // make sure scale is not lower than needed
     // scale must be higher to prevent cases that there will be white margins (or 404)
     scale = Math.ceil(scale * 100) / 100;
 
-    let retUrl = prefixUrlIfNeeded(originalUrl) + '/v1/crop/';
+    let retUrl = prefixUrlIfNeeded(originalUrl) + '/v1/';
+    retUrl += method + '/';
     retUrl += 'w_' + requiredWidth;
     retUrl += ',h_' + requiredHeight;
     retUrl += ',x_' + x;
