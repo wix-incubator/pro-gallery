@@ -14,29 +14,31 @@ describe('styleParam - thumbnailSize', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
   });
-  it('should "thumbnailSize" of "300"', () => {
+  it('should "thumbnailSize" of "300"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
     const { height } = thumbnailItem.props().style;
     expect(height).to.eq(300);
     driver.detach.proGallery();
   });
-  it('should "thumbnailSize" of "150"', () => {
+  it('should "thumbnailSize" of "150"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 150,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
     const { height } = thumbnailItem.props().style;
     expect(height).to.eq(150);
     driver.detach.proGallery();
   });
-  it('should set the gallery height for thumbnailSize=300', () => {
+  it('should set the gallery height for thumbnailSize=300', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
@@ -44,6 +46,7 @@ describe('styleParam - thumbnailSize', () => {
       galleryThumbnailsAlignment: 'bottom',
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { height } = galleryContainer.props().style;
     // expect to galleryContainer height without the thumbnails to be container.height - thumbnails and margins
@@ -51,7 +54,7 @@ describe('styleParam - thumbnailSize', () => {
     driver.detach.proGallery();
   });
 
-  it('should set the gallery width for thumbnailSize=300', () => {
+  it('should set the gallery width for thumbnailSize=300', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
@@ -59,6 +62,7 @@ describe('styleParam - thumbnailSize', () => {
       galleryThumbnailsAlignment: 'left',
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { width } = galleryContainer.props().style;
     // expect to galleryContainer width without the thumbnails to be container.width - thumbnails and margins

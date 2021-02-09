@@ -6,7 +6,7 @@ import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../.
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import { GALLERY_CONSTS, ProGallery, ProBlueprintsGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-lib'
@@ -322,10 +322,12 @@ export function App() {
   });
 
   if(!shouldRenderLeanGallery) {
-    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
+    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
   } else {
     GalleryComponent = LeanGallery;
   };
+
+  window.playgroundItems = getItems();
   
   return (
     <main id="sidebar_main" className={s.main}>

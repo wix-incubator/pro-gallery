@@ -1,3 +1,22 @@
+## [v3.0.0](https://pro-gallery-3-0-0.surge.sh) (08/02/2021)
+ 
+#### V3
+ -  Version 3 introduces blueprints and a clear split between logic and UI. Read more in the [Readme](https://github.com/wix/pro-gallery#version-3).
+
+---
+## [v2.4.17](https://pro-gallery-2-4-17.surge.sh) (04/02/2021)
+ 
+#### GALLERY
+ -  blueprints - use formatted styles for height change check
+
+---
+## [v2.4.16](https://pro-gallery-2-4-16.surge.sh) (31/01/2021)
+ 
+#### GALLERY
+ -  Handle oneRow styleParam with designedPreset selected
+ -  improve (item): allow setting an external seed
+
+---
 ## [v2.4.15](https://pro-gallery-2-4-15.surge.sh) (25/01/2021)
  
 #### GALLERY

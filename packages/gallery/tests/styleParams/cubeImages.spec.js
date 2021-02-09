@@ -16,25 +16,27 @@ describe('styleParam - cubeImages', () => {
     driver = new GalleryDriver();
   });
 
-  it('should allow to "cubeType" to set class to "itemWrapper"', () => {
+  it('should allow to "cubeType" to set class to "itemWrapper"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const itemWrappers = driver.find.selector('.cube-type-fill');
     //expect to find items that have "cube-type-fill" class
     expect(itemWrappers.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should not allow to "cubeType" to set class to "itemWrapper"', () => {
+  it('should not allow to "cubeType" to set class to "itemWrapper"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const itemWrappers = driver.find.selector('.cube-type-fill');
     //expect to not find items with "cube-type-fill" class
     expect(itemWrappers.length).to.eq(0);
