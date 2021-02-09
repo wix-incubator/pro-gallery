@@ -117,6 +117,7 @@ const resizeUrlImp_manual = (
     retUrl += ',y_' + y;
     retUrl += ',scl_' + scale.toFixed(2);
     retUrl += ',q_' + sharpParams.quality;
+    
     if (sharpParams.blur) {
       retUrl += ',blur_' + sharpParams.blur;
     }
