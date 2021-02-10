@@ -47,12 +47,13 @@ const resizeUrlImp_manual = (
     );
   }
 
-  const focalPointObj = { x: 50, y: 50 };
+  let focalPointObj = {};
   if (focalPoint && focalPoint[0] >= 0 && focalPoint[1] >= 0) {
     focalPointObj.x = Math.round(focalPoint[0] * 100);
     focalPointObj.y = Math.round(focalPoint[1] * 100);
   } else {
     focalPoint = [0.5, 0.5];
+    focalPointObj = { x: 50, y: 50 };
   }
 
   const isExternalUrl = (url) => {
@@ -94,13 +95,13 @@ const resizeUrlImp_manual = (
       if (item.ratio > requiredRatio) {
         orgW = Math.floor(requiredHeight * item.ratio);
         y = 0;
-        x = Math.round(orgW * focalPointObj.x- requiredWidth / 2);
+        x = Math.round(orgW * focalPointObj.x - requiredWidth / 2);
         x = Math.min(orgW - requiredWidth, x);
         x = Math.max(0, x);
       } else {
         orgH = Math.floor(requiredWidth / item.ratio);
         x = 0;
-        y = Math.round(orgH * focalPointObj.y- requiredHeight / 2);
+        y = Math.round(orgH * focalPointObj.y - requiredHeight / 2);
         y = Math.min(orgH - requiredHeight, y);
         y = Math.max(0, y);
       }
