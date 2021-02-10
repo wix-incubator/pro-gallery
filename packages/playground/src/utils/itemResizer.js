@@ -83,6 +83,7 @@ const resizeUrlImp_manual = (
     } else {
       scale = requiredWidth / item.maxWidth;
     }
+    scale = (Math.ceil(scale * 100) / 100).toFixed(2);
 
     if (resizeMethod === 'fit') {
       method = 'fit';
@@ -105,17 +106,13 @@ const resizeUrlImp_manual = (
       }
     }
 
-    // make sure scale is not lower than needed
-    // scale must be higher to prevent cases that there will be white margins (or 404)
-    scale = Math.ceil(scale * 100) / 100;
-
     let retUrl = prefixUrlIfNeeded(originalUrl) + '/v1/';
     retUrl += method + '/';
     retUrl += 'w_' + requiredWidth;
     retUrl += ',h_' + requiredHeight;
     retUrl += ',x_' + x;
     retUrl += ',y_' + y;
-    retUrl += ',scl_' + scale.toFixed(2);
+    retUrl += ',scl_' + scale;
     retUrl += ',q_' + sharpParams.quality;
     
     if (sharpParams.blur) {
