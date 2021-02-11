@@ -77,7 +77,7 @@
     "semver": "^6.3.0"
   },
   "dependencies": {
-    "pro-gallery": "^2.4.15",
+    "pro-gallery": "^3.0.0",
     "start-server-and-test": "^1.10.6"
   }
 }

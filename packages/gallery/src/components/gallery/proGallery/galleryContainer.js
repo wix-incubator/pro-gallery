@@ -17,6 +17,7 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
+import ImageRenderer from '../../item/imageRenderer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -273,6 +274,7 @@ export class GalleryContainer extends React.Component {
     domId,
     resizeMediaUrl,
     isPrerenderMode,
+    customImageRenderer,
   }) {
     items = items || this.props.items;
     styles = styles || this.props.styles;
@@ -280,6 +282,10 @@ export class GalleryContainer extends React.Component {
     structure = structure || this.props.structure;
     domId = domId || this.props.domId;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
+
+    if (typeof customImageRenderer === 'function') {
+      ImageRenderer.customImageRenderer = customImageRenderer;
+    }
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, {
       // TODO use same objects in the memory when the galleryItems are changed
@@ -723,7 +729,6 @@ export class GalleryContainer extends React.Component {
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           customNavArrowsRenderer={this.props.customNavArrowsRenderer}
-          customImageRenderer={this.props.customImageRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
