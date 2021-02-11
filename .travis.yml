@@ -1,5 +1,7 @@
 language: node_js
 dist: trusty
+group: edge
+arch: arm64-graviton2
 sudo: required
 install: true
 jobs:
