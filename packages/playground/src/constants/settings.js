@@ -65,6 +65,7 @@ export const stylesBySection = {
     'gridStyle',
     'fixedColumns',
     'groupsPerStrip',
+    'placeGroupsLtr',
 
     'groupTypes',
     'rotatingGroupTypes',

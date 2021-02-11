@@ -82,6 +82,7 @@ import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
+import placeGroupsLtr from './placeGroupsLtr';
 
 export default {
   itemClick,
@@ -168,6 +169,7 @@ export default {
   hidePlay,
   overlayBackground,
   allowLeanGallery,
+  placeGroupsLtr,
 };
 
 // TODO = add the options:
