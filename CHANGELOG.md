@@ -1,3 +1,9 @@
+## [v3.0.1](https://pro-gallery-3-0-1.surge.sh) (11/02/2021)
+
+#### GALLERY
+ -  allow for picture element with url object for different device pixel ratio
+
+---
 ## [v3.0.0](https://pro-gallery-3-0-0.surge.sh) (08/02/2021)
  
 #### V3
