@@ -435,6 +435,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   handleSlideshowKeyPress(e) {
+    e.stopPropagation();
     switch (e.charCode || e.keyCode) {
       case 38: //up
       case 37: //left
@@ -1274,6 +1275,18 @@ class SlideshowView extends GalleryComponent {
     if (this.props.isInDisplay !== props.isInDisplay) {
       this.setState({ isInView: props.isInDisplay }, () =>
         this.startAutoSlideshowIfNeeded(props.styleParams)
+      );
+    }
+    if (this.props.currentIdx !== props.currentIdx) {
+      utils.setStateAndLog(
+        this,
+        'Next Item',
+        {
+          currentIdx: props.currentIdx,
+        },
+        () => {
+          this.onCurrentItemChanged();
+        }
       );
     }
     if (isEditMode() || isPreviewMode()) {
