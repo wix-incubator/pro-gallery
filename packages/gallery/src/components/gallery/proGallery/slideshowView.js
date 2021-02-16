@@ -15,7 +15,7 @@ import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
-
+// dummy
 class SlideshowView extends GalleryComponent {
   constructor(props) {
     super(props);
