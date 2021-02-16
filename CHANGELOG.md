@@ -1,3 +1,12 @@
+## [v3.0.2](https://pro-gallery-3-0-2.surge.sh) (16/02/2021)
+ 
+#### GALLERY
+ -  fix: set currentIdx on prop.currentIdx change
+
+#### PLAYGROUND
+ -  improve: add the placeGroupsLtr params to the sidebar
+
+---
 ## [v3.0.1](https://pro-gallery-3-0-1.surge.sh) (11/02/2021)
 
 #### GALLERY
