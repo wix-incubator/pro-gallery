@@ -1,5 +1,5 @@
 ## [v3.0.2](https://pro-gallery-3-0-2.surge.sh) (16/02/2021)
- 
+
 #### GALLERY
  -  fix: set currentIdx on prop.currentIdx change
 
