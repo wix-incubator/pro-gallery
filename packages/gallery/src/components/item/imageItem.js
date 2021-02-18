@@ -242,7 +242,6 @@ export default class ImageItem extends GalleryComponent {
           data-idx={idx}
           src={src}
           alt={alt ? alt : 'untitled image'}
-          loading="lazy"
           onLoad={this.handleHighResImageLoad}
           style={{
             ...restOfDimensions,
