@@ -1,3 +1,11 @@
+## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
+ 
+#### GALLERY
+ -  Fix: Remove arrows in prerenderMode
+ -  Fix: Arrow are not showing before first scroll in slider galleries in preview mode
+ -  Improve (imageItem): remove native lazy loading of images
+
+---
 ## [v3.0.3](https://pro-gallery-3-0-3.surge.sh) (17/02/2021)
 
 ## [v3.0.2](https://pro-gallery-3-0-2.surge.sh) (16/02/2021)
