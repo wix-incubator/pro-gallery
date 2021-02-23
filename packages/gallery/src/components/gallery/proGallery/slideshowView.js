@@ -827,8 +827,8 @@ class SlideshowView extends GalleryComponent {
       showArrows,
     } = this.props.styleParams;
     const { hideLeftArrow, hideRightArrow } = this.state;
+
     const shouldNotRenderNavArrows =
-      this.props.isPrerenderMode ||
       !showArrows ||
       this.props.galleryStructure.columns.some((column) => {
         const allRenderedGroups =
