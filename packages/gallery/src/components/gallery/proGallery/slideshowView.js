@@ -89,6 +89,9 @@ class SlideshowView extends GalleryComponent {
     }
 
     if (this.container) {
+      /* 'scrollWidth' is not reliable before first scroll (= it is equal to 'clientWidth' size).
+        'scrollWidth' will get his real value just after scrolling.
+      */
       const { scrollWidth, clientWidth } = this.container;
       const scrollLeft = this.getScrollLeft();
       const visibleItemsCount = getVisibleItems(

@@ -227,7 +227,6 @@ export class GalleryContainer extends React.Component {
       (utils.isSSR() && !this.props.settings.renderVisibleItemsInSsr) ||
       isSEOMode() ||
       isEditMode() ||
-      isPreviewMode() ||
       gotFirstScrollEvent ||
       scrollY > 0 ||
       this.props.currentIdx > 0
