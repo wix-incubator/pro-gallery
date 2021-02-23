@@ -1,3 +1,9 @@
+## [v3.0.7](https://pro-gallery-3-0-7.surge.sh) (23/02/2021)
+ 
+#### GALLERY
+ -  fix: prevented additional scrolling on prop change
+
+---
 ## [v3.0.6](https://pro-gallery-3-0-6.surge.sh) (23/02/2021)
  
 #### GALLERY
