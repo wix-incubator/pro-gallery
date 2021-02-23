@@ -1,3 +1,9 @@
+## [v3.0.6](https://pro-gallery-3-0-6.surge.sh) (23/02/2021)
+ 
+#### GALLERY
+ -  fix: make the slideshow info full width in fit layout
+
+---
 ## [v3.0.5](https://pro-gallery-3-0-5.surge.sh) (23/02/2021)
 
 ## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
