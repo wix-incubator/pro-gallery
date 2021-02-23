@@ -28,18 +28,18 @@ describe('loadMoreAmount - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('Should increase the height of the gallery container to show the next section of the gallery', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      enableInfiniteScroll: false,
-      gridStyle: GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW,
-      loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.PARTIAL,
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    await driver.waitFor.timer(200);
-    await driver.actions.click('show-more');
-    await driver.scrollInteraction();
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
-  });
+  // it('Should increase the height of the gallery container to show the next section of the gallery', async () => {
+  //   await driver.navigate({
+  //     galleryLayout: GALLERY_CONSTS.layout.GRID,
+  //     enableInfiniteScroll: false,
+  //     gridStyle: GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW,
+  //     loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.PARTIAL,
+  //   });
+  //   await driver.waitFor.hookToBeVisible('item-container');
+  //   await driver.waitFor.timer(200);
+  //   await driver.actions.click('show-more');
+  //   await driver.scrollInteraction();
+  //   const page = await driver.grab.elemScreenshot('.pro-gallery');
+  //   expect(page).toMatchImageSnapshot();
+  // });
 });
