@@ -36,6 +36,9 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
+    this.setCurrentSlideshowViewIdx = this.setCurrentSlideshowViewIdx.bind(
+      this
+    );
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -108,7 +111,10 @@ export class GalleryContainer extends React.Component {
     if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
       this.currentHoverChangeEvent.domId = nextProps.domId;
     }
-    if (this.props.currentIdx !== nextProps.currentIdx) {
+    if (
+      this.props.currentIdx !== nextProps.currentIdx &&
+      nextProps.currentIdx !== this.currentSlideshowViewIdx
+    ) {
       this.scrollToItem(nextProps.currentIdx, false, true, 0);
     }
 
@@ -588,6 +594,10 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  setCurrentSlideshowViewIdx(idx) {
+    this.currentSlideshowViewIdx = idx;
+  }
+
   eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
@@ -596,6 +606,9 @@ export class GalleryContainer extends React.Component {
     if (eventName === GALLERY_CONSTS.events.HOVER_SET) {
       this.currentHoverChangeEvent.currentHoverIdx = eventData;
       window.dispatchEvent(this.currentHoverChangeEvent);
+    }
+    if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
+      this.setCurrentSlideshowViewIdx(eventData.galleryItem.idx);
     }
     if (!this.state.firstUserInteractionExecuted) {
       switch (eventName) {
