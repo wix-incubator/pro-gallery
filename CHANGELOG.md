@@ -1,6 +1,27 @@
 ## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
  
 #### GALLERY
+ -  remove arrows in prerenderMode
+ -  Fix: Arrow are not showing before first scroll in slider galleries in preview mode
+ -  remove arrows in prerenderMode
+ -  improve (imageItem): remove native lazy loading of images:
+ -  added ItemView to index.ts exports
+
+#### OTHER
+ - v3.0.4
+ - This reverts commit 7bc2929d8f5a783e1570a07dd912125fb8b8530e.
+ - This reverts commit 69fd324c3a281d8007cd9f03be2fad4a24f9c0d6.
+ - causeshorizontal galleries and animations to be jumpy
+ - It should not hurt performance as the fist load does not render these items
+
+#### MAIN
+ -  update changelog.md
+ -  update changelog
+
+---
+## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
+ 
+#### GALLERY
  -  Fix: Remove arrows in prerenderMode
  -  Fix: Arrow are not showing before first scroll in slider galleries in preview mode
  -  Improve (imageItem): remove native lazy loading of images
