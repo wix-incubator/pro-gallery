@@ -471,9 +471,17 @@ class ItemView extends GalleryComponent {
     const { styleParams, type } = this.props;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
-    const { width, height } = imageDimensions;
+    const { width, height, margin } = imageDimensions;
 
     const itemStyles = { width, height };
+    const marginVal =
+      margin && Number(margin.replace('0 ', '').replace('px', ''));
+    const fitInfoStyles = marginVal
+      ? {
+          width: `calc(100% + ${marginVal * 2}px)`,
+          margin: `0 -${marginVal}px`,
+        }
+      : {};
 
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
@@ -506,6 +514,7 @@ class ItemView extends GalleryComponent {
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
+        ...fitInfoStyles,
         ...fadeAnimationStyles,
         transition: 'none',
       };
