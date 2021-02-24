@@ -608,7 +608,7 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
-      this.setCurrentSlideshowViewIdx(eventData.galleryItem.idx);
+      this.setCurrentSlideshowViewIdx(eventData.idx);
     }
     if (!this.state.firstUserInteractionExecuted) {
       switch (eventName) {

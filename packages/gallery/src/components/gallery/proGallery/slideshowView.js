@@ -377,14 +377,18 @@ class SlideshowView extends GalleryComponent {
     if (this.lastCurrentItem !== this.state.currentIdx) {
       this.lastCurrentItem = this.state.currentIdx;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
+      const currentGalleryItem = this.props.galleryStructure.galleryItems[
+        this.state.currentIdx
+      ];
+      const item = this.props.items[this.state.currentIdx];
+      item.idx = this.state.currentIdx;
+      item.resizedImageSrc = currentGalleryItem.createUrl(
+        GALLERY_CONSTS.urlSizes.RESIZED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      );
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED,
-        {
-          ...this.props.items[this.state.currentIdx],
-          galleryItem: this.props.galleryStructure.galleryItems[
-            this.state.currentIdx
-          ],
-        }
+        item
       );
     }
     this.removeArrowsIfNeeded();
