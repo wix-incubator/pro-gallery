@@ -1,3 +1,9 @@
+## [v3.0.8](https://pro-gallery-3-0-8.surge.sh) (24/02/2021)
+ 
+#### GALLERY
+ -  fix: dont send functions with eventData on CURRENT_ITEM_CHANGED
+
+---
 ## [v3.0.7](https://pro-gallery-3-0-7.surge.sh) (23/02/2021)
  
 #### GALLERY
