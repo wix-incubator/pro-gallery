@@ -1,4 +1,4 @@
-## [v3.0.8](https://pro-gallery-3-0-8.surge.sh) (02/03/2021)
+## [v3.0.9](https://pro-gallery-3-0-9.surge.sh) (02/03/2021)
  
 #### GALLERY
  -  fix: check if item is not undefined in onCurrentItemChange
