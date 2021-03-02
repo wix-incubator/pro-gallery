@@ -1,7 +1,9 @@
-## [v3.0.8](https://pro-gallery-3-0-8.surge.sh) (24/02/2021)
+## [v3.0.8](https://pro-gallery-3-0-8.surge.sh) (02/03/2021)
  
 #### GALLERY
- -  fix: dont send functions with eventData on CURRENT_ITEM_CHANGED
+ -  fix: check if item is not undefined in onCurrentItemChange
+ -  fix: dont send functions with eventData on CURREnT_ITEM_CHANGED
+ -  added tslib
 
 ---
 ## [v3.0.7](https://pro-gallery-3-0-7.surge.sh) (23/02/2021)
