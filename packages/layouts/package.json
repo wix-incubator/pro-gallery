@@ -2,7 +2,7 @@
   "private": false,
   "name": "pro-layouts",
   "sideEffects": false,
-  "version": "3.0.0",
+  "version": "3.0.9",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -35,12 +35,10 @@
     "mocha": "^8.2.1",
     "prettier": "^2.1.2",
     "ts-node": "^9.0.0",
-    "typescript": "4.1.2",
-    "tslib": "^2.1.0"
+    "tslib": "^2.1.0",
+    "typescript": "4.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "dependencies": {
   }
 }
