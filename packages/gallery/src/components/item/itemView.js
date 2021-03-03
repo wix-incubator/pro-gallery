@@ -1078,6 +1078,8 @@ class ItemView extends GalleryComponent {
         ref={(e) => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
+        onFocus={this.onMouseOver}
+        onBlur={this.onMouseOut}
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
