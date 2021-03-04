@@ -608,7 +608,13 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
+      const { oneRow, slideAnimation } = this.state.styles;
       this.setCurrentSlideshowViewIdx(eventData.idx);
+      if (oneRow && slideAnimation === 'FADE') {
+        this.onGalleryScroll({
+          left: this.galleryStructure.items[eventData.idx].offset.lef,
+        });
+      }
     }
     if (!this.state.firstUserInteractionExecuted) {
       switch (eventName) {
