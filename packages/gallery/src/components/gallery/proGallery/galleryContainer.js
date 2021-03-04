@@ -612,7 +612,7 @@ export class GalleryContainer extends React.Component {
       this.setCurrentSlideshowViewIdx(eventData.idx);
       if (oneRow && slideAnimation === 'FADE') {
         this.onGalleryScroll({
-          left: this.galleryStructure.items[eventData.idx].offset.lef,
+          left: this.galleryStructure.items[eventData.idx].offset.left,
         });
       }
     }
