@@ -66,6 +66,8 @@ class ItemView extends GalleryComponent {
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this
     );
@@ -105,6 +107,21 @@ class ItemView extends GalleryComponent {
 
   onMouseOut() {
     if (!utils.isMobile()) {
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
+    }
+  }
+
+  onFocus() {
+    if (this.props.styleParams.isAccessible) {
+      this.props.actions.eventsListener(
+        GALLERY_CONSTS.events.HOVER_SET,
+        this.props.idx
+      );
+    }
+  }
+
+  onBlur() {
+    if (this.props.styleParams.isAccessible) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
   }
@@ -1078,8 +1095,8 @@ class ItemView extends GalleryComponent {
         ref={(e) => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
-        onFocus={this.onMouseOver}
-        onBlur={this.onMouseOut}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
