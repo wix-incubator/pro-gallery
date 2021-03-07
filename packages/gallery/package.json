@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "3.0.8",
+  "version": "3.0.10",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -37,8 +37,8 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "3.0.2",
-    "pro-layouts": "3.0.0",
+    "pro-gallery-lib": "3.0.10",
+    "pro-layouts": "3.0.9",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -66,8 +66,8 @@
     "sass": "^1.29.0",
     "sinon": "^6.0.0",
     "ts-jest": "^26.4.4",
-    "typescript": "4.1.2",
-    "tslib": "^2.1.0"
+    "tslib": "^2.1.0",
+    "typescript": "4.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
