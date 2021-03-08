@@ -1,4 +1,4 @@
-import { Group } from 'pro-layouts';
+// import { Group } from 'pro-layouts';
 import utils from '../common/utils/index';
 
 class GalleryGroup {
@@ -16,8 +16,8 @@ class GalleryGroup {
 
     if (config.scheme) {
       this.processScheme(config.scheme);
-    } else {
-      this.processScheme(new Group({ dto: config.dto }).scheme);
+    // } else {
+    //   this.processScheme(new Group({ dto: config.dto }).scheme); //BADDDD
     }
 
     if (config.items) {

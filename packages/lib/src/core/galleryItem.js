@@ -1,5 +1,5 @@
 import utils from '../common/utils/index';
-import { Item } from 'pro-layouts';
+// import { Item } from 'pro-layouts';
 import RESIZE_METHODS from '../common/constants/resizeMethods';
 import { URL_TYPES } from '../common/constants/urlTypes';
 
@@ -27,10 +27,10 @@ class GalleryItem {
 
     if (config.scheme) {
       this.processScheme(config.scheme);
-    } else {
-      const dto = {};
-      Object.assign(dto, this.dto, this.metadata);
-      this.processScheme(new Item({ dto }).scheme);
+    // } else {
+    //   const dto = {};
+    //   Object.assign(dto, this.dto, this.metadata);
+    //   this.processScheme(new Item({ dto }).scheme);
     }
 
     if (this.dto) {
