@@ -605,6 +605,10 @@ export class GalleryContainer extends React.Component {
     this.currentSlideshowViewIdx = idx;
   }
 
+  simulateScrollToItem(item) {
+    item?.offset && this.onGalleryScroll(item.offset);
+  }
+
   eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
@@ -617,11 +621,7 @@ export class GalleryContainer extends React.Component {
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
       this.setCurrentSlideshowViewIdx(eventData.idx);
       if (this.state.isScrollLessGallery) {
-        const itemOffset =
-          this.galleryStructure.items[eventData.idx].offset.left || 1;
-        this.onGalleryScroll({
-          left: itemOffset,
-        });
+        this.simulateScrollToItem(this.galleryStructure.items[eventData.idx]);
       }
     }
     if (!this.state.firstUserInteractionExecuted) {
