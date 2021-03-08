@@ -888,7 +888,7 @@ class SlideshowView extends GalleryComponent {
               />
             </svg>
           );
-        } else if (position === 'rigth') {
+        } else if (position === 'right') {
           return (
             <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
               <path

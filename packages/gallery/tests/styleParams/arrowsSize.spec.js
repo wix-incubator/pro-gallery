@@ -39,7 +39,7 @@ describe('styleParam - arrowsSize', () => {
     await driver.update();
     const arrowContainer = driver.find.selector('.nav-arrows-container');
     const { right } = arrowContainer.props().style;
-    const arrowPosition = initialProps.styles.arrowsSize + 50 + 10;
+    const arrowPosition = initialProps.styles.arrowsSize + 100 / 2 + 10;
     expect(right).to.eq(`-${arrowPosition}px`);
     driver.detach.proGallery();
   });
