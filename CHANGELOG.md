@@ -1,3 +1,12 @@
+## [v3.0.10](https://pro-gallery-3-0-10.surge.sh) (04/03/2021)
+ 
+#### LIB
+ -  blueprints feat, recalc container if styles changed
+
+#### GALLERY
+ -  fix support uppercase in color hex
+
+---
 ## [v3.0.9](https://pro-gallery-3-0-9.surge.sh) (02/03/2021)
  
 #### GALLERY

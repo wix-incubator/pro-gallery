@@ -49,7 +49,8 @@ class Blueprints {
         newDimensionsParams,
         oldDimensionsParams,
         oldStylesParams,
-        { formattedStyles: formattedStyles || existingBlueprint.styles }
+        formattedStyles || existingBlueprint.styles,
+        stylesChanged
       );
 
       const changed = itemsChanged || stylesChanged || containerChanged;
@@ -266,7 +267,8 @@ class Blueprints {
     dimensions,
     lastDimensions,
     lastStyles,
-    { formattedStyles }
+    formattedStyles,
+    stylesChanged
   ) {
     const reason = {
       dimensions: '',
@@ -311,6 +313,7 @@ class Blueprints {
     const oldStylesParams = lastStyles;
     let formattedContainer;
     if (
+      stylesChanged || // If styles changed they could affect the container and a new container must be created (slideshow,thumbs,shadow,borders...etc)
       dimensionsHaveChanged({
         newDimensionsParams: dimensions,
         oldDimensionsParams,
