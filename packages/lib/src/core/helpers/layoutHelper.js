@@ -15,6 +15,7 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
+import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -133,6 +134,10 @@ function processLayouts(styles, customExternalInfoRendererExists) {
           (processedStyles.itemShadowBlur || 0)
       );
     }
+  }
+
+  if (processedStyles.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
+    processedStyles.arrowsPadding = 0;
   }
 
   if (processedStyles.oneRow) {

@@ -62,6 +62,7 @@ const defaultStyles = {
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
   arrowsSize: 23,
+  arrowsPadding: 0,
   watermarkOpacity: 40,
   watermarkSize: 40,
   useWatermark: true,
