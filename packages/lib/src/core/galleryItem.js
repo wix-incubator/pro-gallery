@@ -27,10 +27,10 @@ class GalleryItem {
 
     if (config.scheme) {
       this.processScheme(config.scheme);
-    // } else {
-    //   const dto = {};
-    //   Object.assign(dto, this.dto, this.metadata);
-    //   this.processScheme(new Item({ dto }).scheme);
+      // } else {
+      //   const dto = {};
+      //   Object.assign(dto, this.dto, this.metadata);
+      //   this.processScheme(new Item({ dto }).scheme);
     }
 
     if (this.dto) {

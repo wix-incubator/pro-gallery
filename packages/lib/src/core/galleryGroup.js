@@ -16,8 +16,8 @@ class GalleryGroup {
 
     if (config.scheme) {
       this.processScheme(config.scheme);
-    // } else {
-    //   this.processScheme(new Group({ dto: config.dto }).scheme); //BADDDD
+      // } else {
+      //   this.processScheme(new Group({ dto: config.dto }).scheme); //BADDDD
     }
 
     if (config.items) {
