@@ -1,3 +1,12 @@
+## [v3.0.11](https://pro-gallery-3-0-11.surge.sh) (08/03/2021)
+ 
+#### GALLERY
+ -  fixed nav arrows when there is customNavArrowsRenderer.
+
+ #### LIB
+ -  added arrowsPadding SP (relevant only when arrowsPosition is ON_GALLERY)
+
+---
 ## [v3.0.10](https://pro-gallery-3-0-10.surge.sh) (04/03/2021)
  
 #### LIB
