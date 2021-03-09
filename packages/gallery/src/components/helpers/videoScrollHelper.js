@@ -136,8 +136,8 @@ class VideoScrollHelper {
   }
 
   onScroll({ top, left }) {
-    this.top = top ? top : this.top;
-    this.left = left ? left : this.left;
+    this.top = top >= 0 ? top : this.top;
+    this.left = left >= 0 ? left : this.left;
     if (this.currentPlayingIdx === -1) {
       this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
     } else {
