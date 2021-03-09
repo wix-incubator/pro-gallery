@@ -1,3 +1,9 @@
+## [v3.0.13](https://pro-gallery-3-0-13.surge.sh) (09/03/2021)
+ 
+#### GALLERY
+ -  feat : Support hover on focus and key navigation 
+
+---
 ## [v3.0.12](https://pro-gallery-3-0-12.surge.sh) (09/03/2021)
  
 #### GALLERY
