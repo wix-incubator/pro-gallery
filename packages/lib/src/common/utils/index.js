@@ -615,7 +615,7 @@ class Utils {
       return defaultColor;
     }
     const colorStr = color.value ? color.value : color;
-    const colorRegex = /(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
+    const colorRegex = /(?:#|0x)(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
     const regexRes = colorRegex.exec(colorStr);
     const isValidColor = regexRes && regexRes[0];
     return isValidColor ? colorStr : defaultColor;
