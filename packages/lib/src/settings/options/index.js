@@ -83,6 +83,7 @@ import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
 import placeGroupsLtr from './placeGroupsLtr';
+import videoControls from './videoControls';
 
 export default {
   itemClick,
@@ -170,6 +171,7 @@ export default {
   overlayBackground,
   allowLeanGallery,
   placeGroupsLtr,
+  videoControls,
 };
 
 // TODO = add the options:
