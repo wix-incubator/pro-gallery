@@ -1096,7 +1096,7 @@ class ItemView extends GalleryComponent {
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
         onFocus={this.onFocus}
-        onBlur={this.onBlur}
+        onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
