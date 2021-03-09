@@ -1,3 +1,9 @@
+## [v3.0.12](https://pro-gallery-3-0-12.surge.sh) (09/03/2021)
+ 
+#### GALLERY
+ -  fix: videos autoPlay for slideAnimation
+
+---
 ## [v3.0.11](https://pro-gallery-3-0-11.surge.sh) (08/03/2021)
  
 #### GALLERY
