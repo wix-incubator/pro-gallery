@@ -39,6 +39,7 @@ export class GalleryContainer extends React.Component {
     this.setCurrentSlideshowViewIdx = this.setCurrentSlideshowViewIdx.bind(
       this
     );
+    this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -51,6 +52,7 @@ export class GalleryContainer extends React.Component {
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
+      isScrollLessGallery: this.getIsScrollLessGallery(this.props.styles),
     };
 
     this.state = initialState;
@@ -224,6 +226,10 @@ export class GalleryContainer extends React.Component {
   isVerticalGallery() {
     return !this.state.styles.oneRow;
   }
+  getIsScrollLessGallery(styles) {
+    const { oneRow, slideAnimation } = styles;
+    return oneRow && slideAnimation === GALLERY_CONSTS.slideAnimations.FADE;
+  }
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
@@ -351,6 +357,7 @@ export class GalleryContainer extends React.Component {
       styles,
       container,
       structure,
+      isScrollLessGallery: this.getIsScrollLessGallery(styles),
     };
     return newState;
   }
@@ -598,6 +605,10 @@ export class GalleryContainer extends React.Component {
     this.currentSlideshowViewIdx = idx;
   }
 
+  simulateScrollToItem(item) {
+    item?.offset && this.onGalleryScroll(item.offset);
+  }
+
   eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
@@ -609,6 +620,9 @@ export class GalleryContainer extends React.Component {
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
       this.setCurrentSlideshowViewIdx(eventData.idx);
+      if (this.state.isScrollLessGallery) {
+        this.simulateScrollToItem(this.galleryStructure.items[eventData.idx]);
+      }
     }
     if (!this.state.firstUserInteractionExecuted) {
       switch (eventName) {

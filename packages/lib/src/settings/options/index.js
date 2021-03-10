@@ -45,6 +45,7 @@ import scatter from './scatter';
 import rotatingScatter from './rotatingScatter';
 import thumbnailSpacings from './thumbnailSpacings';
 import slideshowLoop from './slideshowLoop';
+import arrowsPadding from './arrowsPadding';
 import arrowsSize from './arrowsSize';
 import slideshowInfoSize from './slideshowInfoSize';
 import textBoxHeight from './textBoxHeight';
@@ -133,6 +134,7 @@ export default {
   rotatingScatter,
   thumbnailSpacings,
   slideshowLoop,
+  arrowsPadding,
   arrowsSize,
   slideshowInfoSize,
   textBoxHeight,
@@ -175,7 +177,7 @@ export default {
 };
 
 // TODO = add the options:
-/* 
+/*
 allowLeanGallery
 itemOpacity
 arrowsColor

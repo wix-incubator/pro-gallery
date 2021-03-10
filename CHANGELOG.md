@@ -1,3 +1,27 @@
+## [v3.0.12](https://pro-gallery-3-0-12.surge.sh) (09/03/2021)
+ 
+#### GALLERY
+ -  fix: videos autoPlay for slideAnimation
+
+---
+## [v3.0.11](https://pro-gallery-3-0-11.surge.sh) (08/03/2021)
+ 
+#### GALLERY
+ -  fixed nav arrows when there is customNavArrowsRenderer.
+
+ #### LIB
+ -  added arrowsPadding SP (relevant only when arrowsPosition is ON_GALLERY)
+
+---
+## [v3.0.10](https://pro-gallery-3-0-10.surge.sh) (04/03/2021)
+ 
+#### LIB
+ -  blueprints feat, recalc container if styles changed
+
+#### GALLERY
+ -  fix support uppercase in color hex
+
+---
 ## [v3.0.9](https://pro-gallery-3-0-9.surge.sh) (02/03/2021)
  
 #### GALLERY
