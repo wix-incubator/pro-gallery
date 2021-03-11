@@ -2,7 +2,7 @@ import GalleryDriver from '../drivers/reactDriver';
 import { videoItems } from '../drivers/mocks/items';
 import VideoItem from '../../src/components/item/videos/videoItem';
 
-describe('styleParam - videoControls', () => {
+describe('styleParam - showVideoControls', () => {
   let driver;
   let sampleItem;
   let sampleItemViewProps;
@@ -13,12 +13,12 @@ describe('styleParam - videoControls', () => {
     sampleItemViewProps = driver.props.itemView(sampleItem);
   });
 
-  it('should have video with controls when videoControls=true', async () => {
+  it('should have video with controls when showVideoControls=true', async () => {
     Object.assign(sampleItemViewProps, {
       loadVideo: true,
     });
     Object.assign(sampleItemViewProps.styleParams, {
-      videoControls: true,
+      showVideoControls: true,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     await driver.update(200);
@@ -27,12 +27,12 @@ describe('styleParam - videoControls', () => {
     expect(playerProps.controls).toBe(true);
   });
 
-  it('should not have video with controls when videoControls=false', async () => {
+  it('should not have video with controls when showVideoControls=false', async () => {
     Object.assign(sampleItemViewProps, {
       loadVideo: true,
     });
     Object.assign(sampleItemViewProps.styleParams, {
-      videoControls: false,
+      showVideoControls: false,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     await driver.update(200);

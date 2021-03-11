@@ -144,7 +144,7 @@ const defaultStyles = {
   videoSpeed: '1',
   videoLoop: true,
   jsonStyleParams: '',
-  videoControls: false,
+  showVideoControls: false,
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {

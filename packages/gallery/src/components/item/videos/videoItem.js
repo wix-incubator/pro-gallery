@@ -223,7 +223,7 @@ class VideoItem extends GalleryComponent {
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
         }}
-        controls={this.props.styleParams.videoControls}
+        controls={this.props.styleParams.showVideoControls}
         config={{
           file: {
             attributes: {
