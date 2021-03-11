@@ -85,6 +85,7 @@ import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
 import placeGroupsLtr from './placeGroupsLtr';
 import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
+import showVideoControls from './showVideoControls';
 
 export default {
   itemClick,
@@ -173,6 +174,7 @@ export default {
   overlayBackground,
   allowLeanGallery,
   placeGroupsLtr,
+  showVideoControls,
   pauseAutoSlideshowOnHover,
 };
 

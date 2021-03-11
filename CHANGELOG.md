@@ -1,3 +1,9 @@
+## [v3.0.14](https://pro-gallery-3-0-14.surge.sh) (11/03/2021)
+ 
+#### OTHER
+ -  added new styleParam - showVideoControls
+
+---
 ## [v3.0.13](https://pro-gallery-3-0-13.surge.sh) (09/03/2021)
  
 #### GALLERY
