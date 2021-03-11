@@ -76,6 +76,7 @@ const styleParams = {
   addToCartButtonText: '',
   slideshowInfoSize: 200,
   playButtonForAutoSlideShow: false,
+  pauseAutoSlideshowOnHover: true,
   allowSlideshowCounter: false,
   galleryThumbnailsAlignment: 'bottom',
   thumbnailSize: 250,

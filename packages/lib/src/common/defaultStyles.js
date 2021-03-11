@@ -88,6 +88,7 @@ const defaultStyles = {
   addToCartButtonText: '',
   slideshowInfoSize: 200,
   playButtonForAutoSlideShow: false,
+  pauseAutoSlideshowOnHover: true,
   allowSlideshowCounter: false,
   hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
   thumbnailSize: 120,

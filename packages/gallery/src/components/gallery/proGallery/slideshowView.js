@@ -33,6 +33,9 @@ class SlideshowView extends GalleryComponent {
     this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(
       this
     );
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.shouldHandlePauseMode = this.shouldHandlePauseMode.bind(this);
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
     this._setCurrentItemByScroll = utils
       .throttle(this.setCurrentItemByScroll, 600)
@@ -1421,6 +1424,30 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
+  shouldHandlePauseMode() {
+    // styleParam = true && !shouldStopAutoSlideShow
+    return (
+      !this.state.shouldStopAutoSlideShow &&
+      this.props.styleParams.pauseAutoSlideshowOnHover
+    );
+  }
+
+  onMouseEnter() {
+    const shouldHandlePauseMode = this.shouldHandlePauseMode();
+    if (shouldHandlePauseMode) {
+      console.log('stop auto slide show');
+      this.stopAutoSlideshow();
+    }
+  }
+
+  onMouseLeave() {
+    const shouldHandlePauseMode = this.shouldHandlePauseMode();
+    if (shouldHandlePauseMode) {
+      console.log('play auto slide show');
+      this.startAutoSlideshowIfNeeded(this.props.styleParams);
+    }
+  }
+
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -1444,6 +1471,8 @@ class SlideshowView extends GalleryComponent {
         onKeyDown={this.handleSlideshowKeyPress}
         role="region"
         aria-label={this.props.proGalleryRegionLabel}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
       >
         {thumbnails[0]}
         {gallery}
