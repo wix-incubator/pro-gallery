@@ -20,7 +20,7 @@ const removeResizeParams = (originalUrl) => {
   const isResizePrevented = originalUrl.indexOf('preventResize') >= 0;
   if (isResizePrevented) return originalUrl;
   originalUrl = originalUrl.replace(WIX_MEDIA_PREFIX, '');
-  const resizingParamerterRegex = /(\/v\d\/(fill|fit|crop)\/(((w|h|x|y|scl|al|q)_[cf\d]*)\,?)*){1,}/;
+  const resizingParamerterRegex = /(\/v\d\/(fill|fit|crop)\/(((w|h|x|y|scl|al|q)_[cf\d]*),?)*){1,}/;
   const resizingParametersPosition = resizingParamerterRegex.exec(originalUrl);
   if (resizingParametersPosition && resizingParametersPosition.index > 0) {
     return originalUrl.substr(0, resizingParametersPosition.index);
@@ -238,7 +238,7 @@ const resizeMediaUrl = (
   } else if (createMultiple) {
     return [
       {
-        type: originalUrl.match(/[^\.]\w*$/)[0],
+        type: originalUrl.match(/[^.]\w*$/)[0],
         url: createResizedImageUrl({
           ...params,
           useWebp: false,
