@@ -1,10 +1,23 @@
 import React from 'react';
 
-const ImageRenderer = (imageProps) => {
+const ImageRenderer = (props) => {
   if (typeof ImageRenderer.customImageRenderer === 'function') {
-    return ImageRenderer.customImageRenderer(imageProps);
-  } else {
-    return <img {...imageProps} />;
+    return ImageRenderer.customImageRenderer(props);
+  } else if (typeof props.src === 'string') {
+    return (
+      <picture id={`picture_${props.id}`} key={`picture_${props.id}`}>
+        <img alt={props.alt} {...props} />
+      </picture>
+    );
+  } else if (typeof props.src === 'object') {
+    return (
+      <picture id={`multi_picture_${props.id}`} key={`multi_picture_${props.id}`}>
+        {props.src.map((src) => (
+          <source srcSet={src.dpr || src.url} type={`image/${src.type}`} />
+        ))}
+        <img alt={props.alt} {...props} src={props.src[0].url} />
+      </picture>
+    );
   }
 };
 
