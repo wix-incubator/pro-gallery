@@ -1,16 +1,9 @@
 import React from 'react';
 import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
+import ImageRenderer from './imageRenderer';
 
 const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
-
-const Picture = (imageProps) => {
-  if (typeof Picture.customImageRenderer === 'function') {
-    return Picture.customImageRenderer(imageProps);
-  } else {
-    return <img {...imageProps} />;
-  }
-};
 
 export default class ImageItem extends GalleryComponent {
   constructor(props) {
@@ -27,7 +20,6 @@ export default class ImageItem extends GalleryComponent {
 
     this.removeLowResImageTimeoutId = undefined;
     this.handleHighResImageLoad = this.handleHighResImageLoad.bind(this);
-    Picture.customImageRenderer = this.props.customImageRenderer;
   }
 
   componentDidMount() {
@@ -192,7 +184,7 @@ export default class ImageItem extends GalleryComponent {
         switch (styleParams.imageLoadingMode) {
           case GALLERY_CONSTS.loadingMode.BLUR:
             preload = (
-              <Picture
+              <ImageRenderer
                 alt=""
                 key={'image_preload_blur-' + id}
                 src={createUrl(
@@ -210,7 +202,7 @@ export default class ImageItem extends GalleryComponent {
             break;
           case GALLERY_CONSTS.loadingMode.MAIN_COLOR:
             preload = (
-              <Picture
+              <ImageRenderer
                 alt=""
                 key={'image_preload_main_color-' + id}
                 src={createUrl(
@@ -232,21 +224,24 @@ export default class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src = createUrl(
-        GALLERY_CONSTS.urlSizes.RESIZED,
-        isSEOMode()
-          ? GALLERY_CONSTS.urlTypes.SEO
-          : GALLERY_CONSTS.urlTypes.HIGH_RES
-      );
+      const src = isSEOMode()
+        ? createUrl(
+            GALLERY_CONSTS.urlSizes.RESIZED,
+            GALLERY_CONSTS.urlTypes.SEO
+          )
+        : createUrl(
+            GALLERY_CONSTS.urlSizes.MULTI,
+            GALLERY_CONSTS.urlTypes.HIGH_RES
+          );
+
       const highres = (
-        <Picture
+        <ImageRenderer
           key={'image_highres-' + id}
           className={`gallery-item-visible gallery-item gallery-item-preloaded`}
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
           alt={alt ? alt : 'untitled image'}
-          loading="lazy"
           onLoad={this.handleHighResImageLoad}
           style={{
             ...restOfDimensions,

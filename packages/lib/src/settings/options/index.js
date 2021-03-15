@@ -42,8 +42,10 @@ import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
 import slideAnimation from './slideAnimation';
 import scatter from './scatter';
+import rotatingScatter from './rotatingScatter';
 import thumbnailSpacings from './thumbnailSpacings';
 import slideshowLoop from './slideshowLoop';
+import arrowsPadding from './arrowsPadding';
 import arrowsSize from './arrowsSize';
 import slideshowInfoSize from './slideshowInfoSize';
 import textBoxHeight from './textBoxHeight';
@@ -80,8 +82,9 @@ import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
-import overlayBackgroundGradient from './overlayBackgroundGradient';
 import allowLeanGallery from './allowLeanGallery';
+import placeGroupsLtr from './placeGroupsLtr';
+import showVideoControls from './showVideoControls';
 
 export default {
   itemClick,
@@ -128,8 +131,10 @@ export default {
   scrollAnimation,
   slideAnimation,
   scatter,
+  rotatingScatter,
   thumbnailSpacings,
   slideshowLoop,
+  arrowsPadding,
   arrowsSize,
   slideshowInfoSize,
   textBoxHeight,
@@ -166,12 +171,13 @@ export default {
   playButtonForAutoSlideShow,
   hidePlay,
   overlayBackground,
-  overlayBackgroundGradient,
   allowLeanGallery,
+  placeGroupsLtr,
+  showVideoControls,
 };
 
 // TODO = add the options:
-/* 
+/*
 allowLeanGallery
 itemOpacity
 arrowsColor

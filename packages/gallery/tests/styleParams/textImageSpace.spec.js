@@ -21,7 +21,7 @@ describe('styleParam - textImageSpace', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set spacing between the image and the texts (texts below items and separated background)', () => {
+  it('should set spacing between the image and the texts (texts below items and separated background)', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -31,6 +31,7 @@ describe('styleParam - textImageSpace', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find
       .selector('.gallery-item-bottom-info')
       .at(0)
@@ -39,7 +40,7 @@ describe('styleParam - textImageSpace', () => {
     expect(item.props().style.marginTop).to.eq(20);
     driver.detach.proGallery();
   });
-  it('should set spacing between the image and the texts (texts above items and separated background)', () => {
+  it('should set spacing between the image and the texts (texts above items and separated background)', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
@@ -49,12 +50,13 @@ describe('styleParam - textImageSpace', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.selector('.gallery-item-top-info').at(0).parent();
     // expect marginBottom to equal textImageSpace value.
     expect(item.props().style.marginBottom).to.eq(20);
     driver.detach.proGallery();
   });
-  it('should not set when "imageInfoType" is not "SEPARATED_BACKGROUND"', () => {
+  it('should not set when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
@@ -64,6 +66,7 @@ describe('styleParam - textImageSpace', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.selector('.gallery-item-top-info').at(0).parent();
     // expect marginBottom to be undefined.
     expect(item.props().style.marginBottom).to.eq(undefined);

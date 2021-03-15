@@ -27,6 +27,7 @@ export const defaultStyleParams = {
   imageMargin: 10,
   galleryMargin: 0,
   scatter: 0,
+  rotatingScatter: '',
   gridStyle: 0,
   mobilePanorama: false,
   placeGroupsLtr: false,
@@ -136,7 +137,7 @@ export const defaultStyleParams = {
 };
 
 export function formatValue(val) {
-  if (Number(val) === parseInt(val)) {
+  if (!isNaN(Number(val))) {
     return Number(val);
   } else if (val === 'true') {
     return true;

@@ -4,29 +4,39 @@ const PLACEMENTS = {
   SHOW_ABOVE: 'SHOW_ABOVE',
   SHOW_ON_THE_RIGHT: 'SHOW_ON_THE_RIGHT',
   SHOW_ON_THE_LEFT: 'SHOW_ON_THE_LEFT',
+  ALTERNATE_HORIZONTAL: 'ALTERNATE_HORIZONTAL',
+  ALTERNATE_VERTICAL: 'ALTERNATE_VERTICAL',
 };
 
-const hasAbovePlacement = (placement) =>
-  String(placement).indexOf(PLACEMENTS.SHOW_ABOVE) >= 0;
-const hasBelowPlacement = (placement) =>
-  String(placement).indexOf(PLACEMENTS.SHOW_BELOW) >= 0;
 const hasHoverPlacement = (placement) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_HOVER) >= 0;
-const hasRightPlacement = (placement) =>
-  String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_RIGHT) >= 0;
-const hasLeftPlacement = (placement) =>
-  String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_LEFT) >= 0;
+const hasAbovePlacement = (placement, idx) =>
+  String(placement).indexOf(PLACEMENTS.SHOW_ABOVE) >= 0 ||
+  (idx % 2 === 0 &&
+    String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0);
+const hasBelowPlacement = (placement, idx) =>
+  String(placement).indexOf(PLACEMENTS.SHOW_BELOW) >= 0 ||
+  (idx % 2 === 1 &&
+    String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0);
+const hasRightPlacement = (placement, idx) =>
+  String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_RIGHT) >= 0 ||
+  (idx % 2 === 0 &&
+    String(placement).indexOf(PLACEMENTS.ALTERNATE_HORIZONTAL) >= 0);
+const hasLeftPlacement = (placement, idx) =>
+  String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_LEFT) >= 0 ||
+  (idx % 2 === 1 &&
+    String(placement).indexOf(PLACEMENTS.ALTERNATE_HORIZONTAL) >= 0);
 const hasVerticalPlacement = (placement) =>
-  hasAbovePlacement(placement) || hasBelowPlacement(placement);
+  hasAbovePlacement(placement, 0) || hasBelowPlacement(placement, 1);
 const hasHorizontalPlacement = (placement) =>
-  hasRightPlacement(placement) || hasLeftPlacement(placement);
+  hasRightPlacement(placement, 0) || hasLeftPlacement(placement, 1);
 
 const isVerticalPlacement = (placement) =>
-  (hasAbovePlacement(placement) || hasBelowPlacement(placement)) &&
+  hasVerticalPlacement(placement) &&
   !hasHorizontalPlacement(placement) &&
   !hasHoverPlacement(placement);
 const isHorizontalPlacement = (placement) =>
-  (hasRightPlacement(placement) || hasLeftPlacement(placement)) &&
+  hasHorizontalPlacement(placement) &&
   !hasVerticalPlacement(placement) &&
   !hasHoverPlacement(placement);
 const isAbovePlacement = (placement) =>

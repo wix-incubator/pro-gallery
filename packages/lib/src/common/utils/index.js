@@ -615,13 +615,13 @@ class Utils {
       return defaultColor;
     }
     const colorStr = color.value ? color.value : color;
-    const colorRegex = /(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
+    const colorRegex = /(?:#|0x)(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
     const regexRes = colorRegex.exec(colorStr);
     const isValidColor = regexRes && regexRes[0];
     return isValidColor ? colorStr : defaultColor;
   }
 
-  logPlaygroundLink(styles, useBlueprints = false) {
+  logPlaygroundLink(styles) {
     try {
       if (this.isVerbose()) {
         const stylesStr = Object.entries(styles)
@@ -636,7 +636,7 @@ class Utils {
 
         console.log(
           'Gallery Playground link:',
-          `https://pro-gallery.surge.sh?useBlueprints=${useBlueprints}&${stylesStr}`
+          `https://pro-gallery.surge.sh?${stylesStr}`
         );
       }
       // eslint-disable-next-line no-empty

@@ -1,5 +1,20 @@
 import cloneDeep from 'lodash.clonedeep';
 
+export function formatValue(val) {
+  if (!isNaN(Number(val))) {
+    return Number(val);
+  } else if (val === 'true') {
+    return true;
+  } else if (val === 'false') {
+    return false;
+  }
+  if (val === 'undefined') {
+    return undefined;
+  } else {
+    return String(val);
+  }
+}
+
 export function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,

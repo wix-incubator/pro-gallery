@@ -66,6 +66,8 @@ class ItemView extends GalleryComponent {
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
       this
     );
@@ -105,6 +107,21 @@ class ItemView extends GalleryComponent {
 
   onMouseOut() {
     if (!utils.isMobile()) {
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
+    }
+  }
+
+  onFocus() {
+    if (this.props.styleParams.isAccessible) {
+      this.props.actions.eventsListener(
+        GALLERY_CONSTS.events.HOVER_SET,
+        this.props.idx
+      );
+    }
+  }
+
+  onBlur() {
+    if (this.props.styleParams.isAccessible) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
   }
@@ -415,7 +432,6 @@ class ItemView extends GalleryComponent {
         key="imageItem"
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
-        customImageRenderer={this.props.customImageRenderer}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
@@ -472,9 +488,17 @@ class ItemView extends GalleryComponent {
     const { styleParams, type } = this.props;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
-    const { width, height } = imageDimensions;
+    const { width, height, margin } = imageDimensions;
 
     const itemStyles = { width, height };
+    const marginVal =
+      margin && Number(margin.replace('0 ', '').replace('px', ''));
+    const fitInfoStyles = marginVal
+      ? {
+          width: `calc(100% + ${marginVal * 2}px)`,
+          margin: `0 -${marginVal}px`,
+        }
+      : {};
 
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
@@ -507,6 +531,7 @@ class ItemView extends GalleryComponent {
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
+        ...fitInfoStyles,
         ...slideAnimationStyles,
         transition: 'none',
       };
@@ -544,7 +569,10 @@ class ItemView extends GalleryComponent {
 
   getRightInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasRightPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasRightPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
@@ -557,7 +585,10 @@ class ItemView extends GalleryComponent {
 
   getLeftInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasLeftPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasLeftPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT,
@@ -570,7 +601,10 @@ class ItemView extends GalleryComponent {
 
   getBottomInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasBelowPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasBelowPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -583,7 +617,10 @@ class ItemView extends GalleryComponent {
 
   getTopInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasAbovePlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasAbovePlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ABOVE,
@@ -1104,6 +1141,8 @@ class ItemView extends GalleryComponent {
         ref={(e) => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
@@ -1122,10 +1161,12 @@ class ItemView extends GalleryComponent {
             ...(!this.props.styleParams.isSlideshow &&
               getImageStyle(this.props.styleParams)),
             ...(GALLERY_CONSTS.hasRightPlacement(
-              this.props.styleParams.titlePlacement
+              this.props.styleParams.titlePlacement,
+              this.props.idx
             ) && { float: 'left' }),
             ...(GALLERY_CONSTS.hasLeftPlacement(
-              this.props.styleParams.titlePlacement
+              this.props.styleParams.titlePlacement,
+              this.props.idx
             ) && { float: 'right' }),
           }}
         >

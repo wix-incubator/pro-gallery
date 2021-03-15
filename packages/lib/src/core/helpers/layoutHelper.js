@@ -15,6 +15,7 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
+import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -39,6 +40,9 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   processedStyles.oneRow =
     processedStyles.oneRow ||
     processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
+
+  const isDesignedPreset =
+    processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
 
   const setTextUnderline = (itemFontStyleParam, textDecorationType) => {
     /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
@@ -83,11 +87,11 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (
     (!processedStyles.isVertical ||
       processedStyles.groupSize > 1 ||
-      processedStyles.oneRow === true) &&
+      (processedStyles.oneRow === true && !isDesignedPreset)) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
-    // all horizontal layouts that are not slider or columns
+    // Dont allow titlePlacement to be above / below / left / right
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
@@ -130,6 +134,10 @@ function processLayouts(styles, customExternalInfoRendererExists) {
           (processedStyles.itemShadowBlur || 0)
       );
     }
+  }
+
+  if (processedStyles.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
+    processedStyles.arrowsPadding = 0;
   }
 
   if (processedStyles.oneRow) {

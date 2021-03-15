@@ -21,6 +21,7 @@ describe('styleParam - slideshowLoop', () => {
       slideshowLoop: true,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     driver.find.hook('nav-arrow-next').simulate('click');
     await driver.update(500);
     expect(driver.find.hook('nav-arrow-next')).to.have.lengthOf(1);
@@ -32,6 +33,7 @@ describe('styleParam - slideshowLoop', () => {
       slideshowLoop: false,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     driver.find.hook('nav-arrow-next').simulate('click');
     await driver.update(500);
     expect(driver.find.hook('nav-arrow-next')).to.have.lengthOf(0);

@@ -193,7 +193,6 @@ class GalleryView extends GalleryComponent {
       currentIdx: this.state.currentIdx,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
-      customImageRenderer: this.props.customImageRenderer,
       domId: this.props.domId,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,

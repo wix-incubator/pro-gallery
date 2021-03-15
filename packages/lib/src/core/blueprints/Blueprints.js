@@ -47,10 +47,10 @@ class Blueprints {
         changed: containerChanged,
       } = this.formatContainerIfNeeded(
         newDimensionsParams,
-        newStylesParams,
         oldDimensionsParams,
         oldStylesParams,
-        { formattedStyles: formattedStyles || existingBlueprint.styles }
+        formattedStyles || existingBlueprint.styles,
+        stylesChanged
       );
 
       const changed = itemsChanged || stylesChanged || containerChanged;
@@ -265,10 +265,10 @@ class Blueprints {
 
   formatContainerIfNeeded(
     dimensions,
-    styles,
     lastDimensions,
     lastStyles,
-    { formattedStyles }
+    formattedStyles,
+    stylesChanged
   ) {
     const reason = {
       dimensions: '',
@@ -288,7 +288,7 @@ class Blueprints {
       }
       const dimensionsHaveChanged = {
         height:
-          !oldStylesParams.oneRow && oldStylesParams.enableInfiniteScroll
+          !formattedStyles.oneRow && formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
             ? false
             : !!newDimensionsParams.height &&
               newDimensionsParams.height !== oldDimensionsParams.height,
@@ -313,6 +313,7 @@ class Blueprints {
     const oldStylesParams = lastStyles;
     let formattedContainer;
     if (
+      stylesChanged || // If styles changed they could affect the container and a new container must be created (slideshow,thumbs,shadow,borders...etc)
       dimensionsHaveChanged({
         newDimensionsParams: dimensions,
         oldDimensionsParams,

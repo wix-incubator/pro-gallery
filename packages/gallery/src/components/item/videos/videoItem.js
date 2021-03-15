@@ -146,9 +146,10 @@ class VideoItem extends GalleryComponent {
     const PlayerElement = window.ReactPlayer;
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
 
+    // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
     const videoDimensionsCss = {
-      width: isWiderThenContainer ? '100%' : 'auto',
-      height: isWiderThenContainer ? 'auto' : '100%',
+      width: isWiderThenContainer ? 'calc(100% + 1px)' : 'auto',
+      height: isWiderThenContainer ? 'auto' : 'calc(100% + 1px)',
     };
 
     if (
@@ -222,9 +223,12 @@ class VideoItem extends GalleryComponent {
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
         }}
+        controls={this.props.styleParams.showVideoControls}
         config={{
           file: {
             attributes: {
+              controlsList: 'nodownload',
+              disablepictureinpicture: 'true',
               muted: !this.props.styleParams.videoSound,
               preload: 'metadata',
               poster: this.props.createUrl(

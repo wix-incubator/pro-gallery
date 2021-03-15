@@ -1,3 +1,194 @@
+## [v3.0.14](https://pro-gallery-3-0-14.surge.sh) (11/03/2021)
+ 
+#### OTHER
+ -  added new styleParam - showVideoControls
+
+---
+## [v3.0.13](https://pro-gallery-3-0-13.surge.sh) (09/03/2021)
+ 
+#### GALLERY
+ -  feat : Support hover on focus and key navigation 
+
+---
+## [v3.0.12](https://pro-gallery-3-0-12.surge.sh) (09/03/2021)
+ 
+#### GALLERY
+ -  fix: videos autoPlay for slideAnimation
+
+---
+## [v3.0.11](https://pro-gallery-3-0-11.surge.sh) (08/03/2021)
+ 
+#### GALLERY
+ -  fixed nav arrows when there is customNavArrowsRenderer.
+
+ #### LIB
+ -  added arrowsPadding SP (relevant only when arrowsPosition is ON_GALLERY)
+
+---
+## [v3.0.10](https://pro-gallery-3-0-10.surge.sh) (04/03/2021)
+ 
+#### LIB
+ -  blueprints feat, recalc container if styles changed
+
+#### GALLERY
+ -  fix support uppercase in color hex
+
+---
+## [v3.0.9](https://pro-gallery-3-0-9.surge.sh) (02/03/2021)
+ 
+#### GALLERY
+ -  fix: check if item is not undefined in onCurrentItemChange
+ -  fix: dont send functions with eventData on CURREnT_ITEM_CHANGED
+ -  added tslib
+
+---
+## [v3.0.7](https://pro-gallery-3-0-7.surge.sh) (23/02/2021)
+ 
+#### GALLERY
+ -  fix: prevented additional scrolling on prop change
+
+---
+## [v3.0.6](https://pro-gallery-3-0-6.surge.sh) (23/02/2021)
+ 
+#### GALLERY
+ -  fix: make the slideshow info full width in fit layout
+
+---
+## [v3.0.5](https://pro-gallery-3-0-5.surge.sh) (23/02/2021)
+
+## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
+ 
+#### GALLERY
+ -  remove arrows in prerenderMode
+ -  Fix: Arrow are not showing before first scroll in slider galleries in preview mode
+ -  remove arrows in prerenderMode
+ -  improve (imageItem): remove native lazy loading of images:
+ -  added ItemView to index.ts exports
+
+#### OTHER
+ - v3.0.4
+ - This reverts commit 7bc2929d8f5a783e1570a07dd912125fb8b8530e.
+ - This reverts commit 69fd324c3a281d8007cd9f03be2fad4a24f9c0d6.
+ - causeshorizontal galleries and animations to be jumpy
+ - It should not hurt performance as the fist load does not render these items
+
+#### MAIN
+ -  update changelog.md
+ -  update changelog
+
+---
+## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
+ 
+#### GALLERY
+ -  Fix: Remove arrows in prerenderMode
+ -  Fix: Arrow are not showing before first scroll in slider galleries in preview mode
+ -  Improve (imageItem): remove native lazy loading of images
+
+---
+## [v3.0.3](https://pro-gallery-3-0-3.surge.sh) (17/02/2021)
+
+## [v3.0.2](https://pro-gallery-3-0-2.surge.sh) (16/02/2021)
+ 
+#### GALLERY
+ -  fix: set currentIdx on prop.currentIdx change
+
+#### PLAYGROUND
+ -  improve: add the placeGroupsLtr params to the sidebar
+
+---
+## [v3.0.1](https://pro-gallery-3-0-1.surge.sh) (11/02/2021)
+
+#### GALLERY
+ -  allow for picture element with url object for different device pixel ratio
+
+---
+## [v3.0.0](https://pro-gallery-3-0-0.surge.sh) (08/02/2021)
+ 
+#### V3
+ -  Version 3 introduces blueprints and a clear split between logic and UI. Read more in the [Readme](https://github.com/wix/pro-gallery#version-3).
+
+---
+## [v2.4.17](https://pro-gallery-2-4-17.surge.sh) (04/02/2021)
+ 
+#### GALLERY
+ -  blueprints - use formatted styles for height change check
+
+---
+## [v2.4.16](https://pro-gallery-2-4-16.surge.sh) (31/01/2021)
+ 
+#### GALLERY
+ -  Handle oneRow styleParam with designedPreset selected
+ -  improve (item): allow setting an external seed
+
+---
+## [v2.4.15](https://pro-gallery-2-4-15.surge.sh) (25/01/2021)
+ 
+#### GALLERY
+ -  improve: pass gallery item on CURRENT_ITEM_CHANGED event 
+
+---
+## [v2.4.14](https://pro-gallery-2-4-14.surge.sh) (24/01/2021)
+ 
+#### GALLERY
+ -  fix: use galleryWidth when calculating cssScroll for horizontal animations
+ -  fix: wrap console.log
+
+#### OTHER
+ - Update README.md
+
+---
+## [v2.4.13](https://pro-gallery-2-4-13.surge.sh) (17/01/2021)
+ 
+#### GALLERY
+ -  (galleryContainerNew): in debouncedReCreateGallery, call reCreateGalleryExpensively with the correct params.
+
+---
+## [v2.4.12](https://pro-gallery-2-4-12.surge.sh) (14/01/2021)
+ 
+#### GALLERY
+ -  fix blueprints: height change between layouts
+
+---
+## [v2.4.11](https://pro-gallery-2-4-11.surge.sh) (14/01/2021)
+ 
+#### GALLERY
+ -  layoutingIndex fix: allow looping on items using the blueprintsManager
+ -  feature (overlayBackgroundGradient): add the option to set the gradient of the overlay
+
+---
+## [v2.4.10](https://pro-gallery-2-4-10.surge.sh) (13/01/2021)
+ 
+#### GALLERY
+ -  Presets: Handle designed presets with new 'jsonStyleParams'
+
+---
+## [v2.4.9](https://pro-gallery-2-4-9.surge.sh) (07/01/2021)
+ 
+#### GALLERY
+ -  fix: black stripes in videos in grid fill
+
+---
+## [v2.4.8](https://pro-gallery-2-4-8.surge.sh) (07/01/2021)
+ 
+#### OTHER
+ - Added new designed presets
+ - Added rotatingScatter
+ - Added alternate placement
+
+#### LAYOUTS
+ -  fix (strip): do not allow incomplete strips with fixed groups per row
+
+---
+## [v2.4.7](https://pro-gallery-2-4-7.surge.sh) (04/01/2021)
+ 
+#### GALLERY
+ -  fix: jumpy animations with scrollSnap in slider
+ -  fix (galleryContainer): add the customNavArrowsRenderer to the non-blueprints flow
+ -  fix (galleryContainer): do not create layoutCss if avoidingInlineStyles
+ -  feature (overlayBackgroundGradient): add the option to set the gradient of the overlay
+ -  improve (galleryContainer): allow gradient overlay background
+
+---
 ## [v2.4.6](https://pro-gallery-2-4-6.surge.sh) (29/12/2020)
  
 #### GALLERY

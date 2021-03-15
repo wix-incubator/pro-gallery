@@ -16,7 +16,7 @@ describe('styleParam - itemBorderRadius', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set border-radius of 10 to items', () => {
+  it('should set border-radius of 10 to items', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -24,11 +24,12 @@ describe('styleParam - itemBorderRadius', () => {
       itemBorderRadius: 10,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0);
     expect(item.props().style.borderRadius).to.eq(10);
     driver.detach.proGallery();
   });
-  it('should set border-radius of 40 to items', () => {
+  it('should set border-radius of 40 to items', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -36,11 +37,12 @@ describe('styleParam - itemBorderRadius', () => {
       itemBorderRadius: 40,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0);
     expect(item.props().style.borderRadius).to.eq(40);
     driver.detach.proGallery();
   });
-  it('should not set border-radius to when "cubeType" is "fit"', () => {
+  it('should not set border-radius to when "cubeType" is "fit"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
@@ -49,6 +51,7 @@ describe('styleParam - itemBorderRadius', () => {
       oneRow: false,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const item = driver.find.hook('item-container').at(0);
     expect(item.props().style.borderRadius).to.eq(0);
     driver.detach.proGallery();

@@ -6,7 +6,7 @@ import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../.
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import { GALLERY_CONSTS, ProGallery, ProBlueprintsGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-lib'
@@ -235,15 +235,33 @@ export function App() {
       }
     };
 
-    return (
-      <picture
-        key={`picture_${props.id}`}
-      >
-        {webpSource(props.src)}
-        {originalSource(props.src)}
-        <img alt={props.alt} {...props} />
-      </picture>
-    );
+    if (typeof props.src === 'string') {
+      return (
+        <picture
+          key={`picture_${props.id}`}
+          >
+          {webpSource(props.src)}
+          {originalSource(props.src)}
+          <img alt={props.alt} {...props} />
+        </picture>
+      );
+    } else if  (typeof props.src === 'object') {
+      return (
+        <picture
+          key={`picture_${props.id}`}
+          >
+            <source
+            srcSet={`${props.src.webp.x1} 1x, ${props.src.webp.x2} 2x`}
+            type="image/webp"
+          />
+            <source
+            srcSet={`${props.src.original.x1} 1x, ${props.src.original.x2} 2x`}
+            type={`image/${props.src.original.type}`}
+          />
+          <img alt={props.alt} {...props} src={props.src.original.x1}/>
+        </picture>
+      );
+    };  
   };
   
   const getExternalInfoRenderers = () => {
@@ -304,10 +322,12 @@ export function App() {
   });
 
   if(!shouldRenderLeanGallery) {
-    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
+    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
   } else {
     GalleryComponent = LeanGallery;
   };
+
+  window.playgroundItems = getItems();
   
   return (
     <main id="sidebar_main" className={s.main}>

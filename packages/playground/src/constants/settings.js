@@ -65,6 +65,7 @@ export const stylesBySection = {
     'gridStyle',
     'fixedColumns',
     'groupsPerStrip',
+    'placeGroupsLtr',
 
     'groupTypes',
     'rotatingGroupTypes',
@@ -72,6 +73,7 @@ export const stylesBySection = {
     'columnWidths',
     'galleryMargin',
     'scatter',
+    'rotatingScatter',
     'smartCrop',
 
     'galleryThumbnailsAlignment',
@@ -111,7 +113,6 @@ export const stylesBySection = {
     'arrowsPosition',
 
     'overlayBackground',
-    'overlayBackgroundGradient',
 
     // 'itemIconColorSlideshow',
     // 'itemIconColor',
