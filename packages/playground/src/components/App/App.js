@@ -204,72 +204,12 @@ export function App() {
   const slideshowInfoElement = (pgItemProps) => {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
-
-  const customImageRenderer = (props) => {
-    const originalSource = (src) => {
-      if (src.indexOf('.webp') > 0) {
-        if (src.indexOf('.png') > 0) {
-          return <source srcSet={src.replace('webp', 'png')} type="image/png" />;
-        } else if (src.indexOf('.jpg') > 0) {
-          return <source srcSet={src.replace('webp', 'jpg')} type="image/jpg" />;
-        } else if (src.indexOf('.jpeg') > 0) {
-          return (
-            <source srcSet={src.replace('webp', 'jpeg')} type="image/jpeg" />
-          );
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const webpSource = (src) => {
-      if (src.indexOf(/\.\w{3,4}\/v\d\/\w*\//) > 0) { // only change resized urls
-        return (
-          <source
-            srcSet={src.replace(/(jpg|jpeg|png)$/, 'webp')}
-            type="image/webp"
-          />
-        );
-      }
-    };
-
-    if (typeof props.src === 'string') {
-      return (
-        <picture
-          key={`picture_${props.id}`}
-          >
-          {webpSource(props.src)}
-          {originalSource(props.src)}
-          <img alt={props.alt} {...props} />
-        </picture>
-      );
-    } else if  (typeof props.src === 'object') {
-      return (
-        <picture
-          key={`picture_${props.id}`}
-          >
-            <source
-            srcSet={`${props.src.webp.x1} 1x, ${props.src.webp.x2} 2x`}
-            type="image/webp"
-          />
-            <source
-            srcSet={`${props.src.original.x1} 1x, ${props.src.original.x2} 2x`}
-            type={`image/${props.src.original.type}`}
-          />
-          <img alt={props.alt} {...props} src={props.src.original.x1}/>
-        </picture>
-      );
-    };  
-  };
   
   const getExternalInfoRenderers = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
       customSlideshowInfoRenderer: slideshowInfoElement,
-      customImageRenderer: customImageRenderer,
     };
   }
 
