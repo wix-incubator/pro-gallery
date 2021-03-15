@@ -40,6 +40,8 @@ export class GalleryContainer extends React.Component {
       this
     );
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -53,12 +55,17 @@ export class GalleryContainer extends React.Component {
       viewComponent: null,
       firstUserInteractionExecuted: false,
       isScrollLessGallery: this.getIsScrollLessGallery(this.props.styles),
+      isGalleryContainerInHover: false,
     };
 
     this.state = initialState;
     this.layoutCss = [];
 
     this.initialGalleryState = {};
+    this.pauseAutoSlideshowOnHover =
+      this.props.styles.pauseAutoSlideshowOnHover &&
+      this.props.styles.isAutoSlideshow;
+
     try {
       const galleryState = this.propsToState(props);
       if (Object.keys(galleryState).length > 0) {
@@ -691,6 +698,18 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
+  onMouseEnter() {
+    if (this.pauseAutoSlideshowOnHover) {
+      this.setState({ isGalleryContainerInHover: true });
+    }
+  }
+
+  onMouseLeave() {
+    if (this.pauseAutoSlideshowOnHover) {
+      this.setState({ isGalleryContainerInHover: false });
+    }
+  }
+
   findNeighborItem = (itemIdx, dir) =>
     findNeighborItem(itemIdx, dir, this.state.structure.items); // REFACTOR BLUEPRINTS - this makes the function in the layouter irrelevant (unless the layouter is used as a stand alone with this function, maybe the layouter needs to be split for bundle size as well...)
 
@@ -718,6 +737,8 @@ export class GalleryContainer extends React.Component {
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -759,6 +780,7 @@ export class GalleryContainer extends React.Component {
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
+          isGalleryContainerInHover={this.state.isGalleryContainerInHover}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
