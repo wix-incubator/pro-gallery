@@ -20,5 +20,4 @@ const ImageRenderer = (props) => {
   }
 };
 
-
 export default ImageRenderer;
