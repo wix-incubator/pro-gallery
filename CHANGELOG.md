@@ -1,3 +1,30 @@
+## [v3.0.14](https://pro-gallery-3-0-14.surge.sh) (11/03/2021)
+ 
+#### OTHER
+ -  added new styleParam - showVideoControls
+
+---
+## [v3.0.13](https://pro-gallery-3-0-13.surge.sh) (09/03/2021)
+ 
+#### GALLERY
+ -  feat : Support hover on focus and key navigation 
+
+---
+## [v3.0.12](https://pro-gallery-3-0-12.surge.sh) (09/03/2021)
+ 
+#### GALLERY
+ -  fix: videos autoPlay for slideAnimation
+
+---
+## [v3.0.11](https://pro-gallery-3-0-11.surge.sh) (08/03/2021)
+ 
+#### GALLERY
+ -  fixed nav arrows when there is customNavArrowsRenderer.
+
+ #### LIB
+ -  added arrowsPadding SP (relevant only when arrowsPosition is ON_GALLERY)
+
+---
 ## [v3.0.10](https://pro-gallery-3-0-10.surge.sh) (04/03/2021)
  
 #### LIB

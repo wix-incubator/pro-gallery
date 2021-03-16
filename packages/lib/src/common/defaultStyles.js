@@ -62,6 +62,7 @@ const defaultStyles = {
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
   arrowsSize: 23,
+  arrowsPadding: 0,
   watermarkOpacity: 40,
   watermarkSize: 40,
   useWatermark: true,
@@ -143,6 +144,7 @@ const defaultStyles = {
   videoSpeed: '1',
   videoLoop: true,
   jsonStyleParams: '',
+  showVideoControls: false,
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {

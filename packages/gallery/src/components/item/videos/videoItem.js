@@ -223,9 +223,12 @@ class VideoItem extends GalleryComponent {
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
         }}
+        controls={this.props.styleParams.showVideoControls}
         config={{
           file: {
             attributes: {
+              controlsList: 'nodownload',
+              disablepictureinpicture: 'true',
               muted: !this.props.styleParams.videoSound,
               preload: 'metadata',
               poster: this.props.createUrl(

@@ -832,6 +832,7 @@ class SlideshowView extends GalleryComponent {
       slideshowInfoSize,
       imageMargin,
       arrowsSize,
+      arrowsPadding,
       arrowsPosition,
       showArrows,
     } = this.props.styleParams;
@@ -856,33 +857,70 @@ class SlideshowView extends GalleryComponent {
       return null;
     }
 
-    const arrowWidth = this.props.styleParams.arrowsSize;
+    const { customNavArrowsRenderer } = this.props;
+    let arrowRenderer, navArrowsContainerSize;
 
-    const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
-    const scalePercentage = arrowWidth / arrowOrigWidth;
-    const svgStyle = { transform: `scale(${scalePercentage})` };
+    if (customNavArrowsRenderer) {
+      arrowRenderer = customNavArrowsRenderer;
+      navArrowsContainerSize = arrowsSize;
+    } else {
+      const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
+      const scalePercentage = arrowsSize / arrowOrigWidth;
+      const svgStyle = { transform: `scale(${scalePercentage})` };
 
-    const svgInternalStyle = {};
-    if (utils.isMobile()) {
-      if (typeof arrowsColor !== 'undefined') {
-        svgInternalStyle.fill = arrowsColor.value;
+      const svgInternalStyle = {};
+      if (utils.isMobile()) {
+        if (typeof arrowsColor !== 'undefined') {
+          svgInternalStyle.fill = arrowsColor.value;
+        }
       }
+      navArrowsContainerSize = 100;
+
+      arrowRenderer = (position) => {
+        if (position === 'left') {
+          return (
+            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
+              <path
+                className="slideshow-arrow"
+                style={svgInternalStyle}
+                d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
+                transform="translate(-133 -225)"
+              />
+            </svg>
+          );
+        } else if (position === 'right') {
+          return (
+            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
+              <path
+                className="slideshow-arrow"
+                style={svgInternalStyle}
+                d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
+                transform="translate(-855 -230)"
+              />
+            </svg>
+          );
+        }
+      };
     }
 
-    // nav-arrows-container width is 100. arrowWidth + padding on each side should be 100
-    const containerPadding = (100 - arrowWidth) / 2;
+    const containerPadding = (navArrowsContainerSize - arrowsSize) / 2;
     const slideshowSpace = isSlideshow ? slideshowInfoSize : 0;
-    // top: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly. 50% is the middle, 50px is half of nav-arrows-container height
+
     const containerStyle = {
+      width: `${navArrowsContainerSize}px`,
+      height: `${navArrowsContainerSize}px`,
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
-      top: `calc(50% - 50px + ${imageMargin / 4}px - ${slideshowSpace / 2}px)`,
+      top: `calc(50% - ${navArrowsContainerSize / 2}px + ${
+        imageMargin / 4
+      }px - ${slideshowSpace / 2}px)`,
     };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
       oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
-        ? `-${arrowsSize + 50 + 10}px`
-        : `${imageMargin / 2}px`;
+        ? `-${arrowsSize + navArrowsContainerSize / 2 + 10}px`
+        : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
     // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+    // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
     const prevContainerStyle = {
       left: arrowsPos,
@@ -890,8 +928,6 @@ class SlideshowView extends GalleryComponent {
     const nextContainerStyle = {
       right: arrowsPos,
     };
-
-    const arrowRenderer = this.props.customNavArrowsRenderer;
 
     return [
       hideLeftArrow ? null : (
@@ -907,18 +943,7 @@ class SlideshowView extends GalleryComponent {
           data-hook="nav-arrow-back"
           style={{ ...containerStyle, ...prevContainerStyle }}
         >
-          {arrowRenderer ? (
-            arrowRenderer('left')
-          ) : (
-            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-              <path
-                className="slideshow-arrow"
-                style={svgInternalStyle}
-                d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
-                transform="translate(-133 -225)"
-              />
-            </svg>
-          )}
+          {arrowRenderer('left')}
         </button>
       ),
       hideRightArrow ? null : (
@@ -931,18 +956,7 @@ class SlideshowView extends GalleryComponent {
           data-hook="nav-arrow-next"
           style={{ ...containerStyle, ...nextContainerStyle }}
         >
-          {arrowRenderer ? (
-            arrowRenderer('right')
-          ) : (
-            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-              <path
-                className="slideshow-arrow"
-                style={svgInternalStyle}
-                d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
-                transform="translate(-855 -230)"
-              />
-            </svg>
-          )}
+          {arrowRenderer('right')}
         </button>
       ),
     ];

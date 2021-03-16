@@ -45,6 +45,7 @@ import scatter from './scatter';
 import rotatingScatter from './rotatingScatter';
 import thumbnailSpacings from './thumbnailSpacings';
 import slideshowLoop from './slideshowLoop';
+import arrowsPadding from './arrowsPadding';
 import arrowsSize from './arrowsSize';
 import slideshowInfoSize from './slideshowInfoSize';
 import textBoxHeight from './textBoxHeight';
@@ -83,6 +84,7 @@ import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
 import placeGroupsLtr from './placeGroupsLtr';
+import showVideoControls from './showVideoControls';
 
 export default {
   itemClick,
@@ -132,6 +134,7 @@ export default {
   rotatingScatter,
   thumbnailSpacings,
   slideshowLoop,
+  arrowsPadding,
   arrowsSize,
   slideshowInfoSize,
   textBoxHeight,
@@ -170,10 +173,11 @@ export default {
   overlayBackground,
   allowLeanGallery,
   placeGroupsLtr,
+  showVideoControls,
 };
 
 // TODO = add the options:
-/* 
+/*
 allowLeanGallery
 itemOpacity
 arrowsColor
