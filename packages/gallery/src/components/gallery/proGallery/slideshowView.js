@@ -61,7 +61,7 @@ class SlideshowView extends GalleryComponent {
   isScrollStart() {
     const { slideAnimation } = this.props.styleParams;
 
-    if (slideAnimation === GALLERY_CONSTS.slideAnimations.FADE) {
+    if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL) {
       return false;
     }
 
@@ -83,7 +83,8 @@ class SlideshowView extends GalleryComponent {
 
     if (
       slideshowLoop ||
-      slideAnimation === GALLERY_CONSTS.slideAnimations.FADE
+      slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
+      slideAnimation === GALLERY_CONSTS.slideAnimations.DECK
     ) {
       return false;
     }
@@ -172,8 +173,8 @@ class SlideshowView extends GalleryComponent {
     let ignoreScrollPosition = false;
 
     if (
-      this.props.styleParams.slideAnimation ===
-      GALLERY_CONSTS.slideAnimations.FADE
+      this.props.styleParams.slideAnimation !==
+      GALLERY_CONSTS.slideAnimations.SCROLL
     ) {
       scrollDuration = 0;
       ignoreScrollPosition = true;

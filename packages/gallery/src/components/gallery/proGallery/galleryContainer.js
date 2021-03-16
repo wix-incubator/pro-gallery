@@ -233,7 +233,7 @@ export class GalleryContainer extends React.Component {
   }
   getIsScrollLessGallery(styles) {
     const { oneRow, slideAnimation } = styles;
-    return oneRow && slideAnimation === GALLERY_CONSTS.slideAnimations.FADE;
+    return oneRow && slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL;
   }
 
   getVisibleItems(items, container) {
