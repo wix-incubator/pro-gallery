@@ -1,6 +1,6 @@
 {
   "name": "ssr-simulator",
-  "version": "3.0.14",
+  "version": "3.1.0",
   "private": true,
   "engines": {
     "node": ">=10.15"
@@ -67,7 +67,7 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
-    "pro-gallery": "3.0.14",
+    "pro-gallery": "3.1.0",
     "pro-layouts": "3.0.9",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
