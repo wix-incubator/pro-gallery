@@ -1,3 +1,11 @@
+## [v3.1.0](https://pro-gallery-3-1-0.surge.sh) (16/03/2021)
+ 
+#### GALLERY
+ -  feature: add Deck animation for slideshow galleries
+ -  improve (imageRenderer): add a multi url picture element support
+ -  feature: new styleParam - showVideoControls
+
+---
 ## [v3.0.14](https://pro-gallery-3-0-14.surge.sh) (11/03/2021)
  
 #### OTHER
