@@ -1,3 +1,9 @@
+## [v3.1.1](https://pro-gallery-3-1-1.surge.sh) (17/03/2021)
+ 
+#### GALLERY
+ -  allow SSR with the v3 ProGallery
+
+---
 ## [v3.1.0](https://pro-gallery-3-1-0.surge.sh) (16/03/2021)
  
 #### GALLERY
