@@ -17,6 +17,8 @@ const ImageRenderer = (props) => {
         <img alt={props.alt} {...props} src={props.src[0].url} />
       </picture>
     );
+  } else {
+    return null;
   }
 };
 
