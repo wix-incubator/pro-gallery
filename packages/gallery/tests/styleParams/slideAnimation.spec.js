@@ -10,14 +10,16 @@ describe('styleParam - slideAnimation', () => {
     styles: styleParams,
   };
   const notCurrentFadeAnimationStylesMock = {
-    transition: 'opacity .8s ease',
+    transition: 'opacity .4s ease',
     opacity: 0,
     display: 'block',
+    transitionDelay: '',
   };
   const currentFadeAnimationStylesMock = {
-    transition: 'none',
+    transition: 'opacity .4s ease',
     opacity: 1,
     display: 'block',
+    transitionDelay: '.4s',
   };
 
   describe('Slideshow', () => {
