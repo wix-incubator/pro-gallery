@@ -42,7 +42,9 @@ export class GalleryContainer extends React.Component {
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.pauseAutoSlideshowOnHover = this.pauseAutoSlideshowOnHover.bind(this);
+    this.shouldPauseAutoSlideshowOnHover = this.shouldPauseAutoSlideshowOnHover.bind(
+      this
+    );
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -696,7 +698,7 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
-  pauseAutoSlideshowOnHover() {
+  shouldPauseAutoSlideshowOnHover() {
     return (
       this.state.styles.pauseAutoSlideshowOnHover &&
       this.state.styles.isAutoSlideshow
@@ -704,15 +706,15 @@ export class GalleryContainer extends React.Component {
   }
 
   onMouseEnter() {
-    const pauseAutoSlideshowOnHover = this.pauseAutoSlideshowOnHover();
-    if (pauseAutoSlideshowOnHover) {
+    const shouldPauseAutoSlideshowOnHover = this.shouldPauseAutoSlideshowOnHover();
+    if (shouldPauseAutoSlideshowOnHover) {
       this.setState({ isGalleryContainerInHover: true });
     }
   }
 
   onMouseLeave() {
-    const pauseAutoSlideshowOnHover = this.pauseAutoSlideshowOnHover();
-    if (pauseAutoSlideshowOnHover) {
+    const shouldPauseAutoSlideshowOnHover = this.shouldPauseAutoSlideshowOnHover();
+    if (shouldPauseAutoSlideshowOnHover) {
       this.setState({ isGalleryContainerInHover: false });
     }
   }
