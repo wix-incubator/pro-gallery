@@ -835,8 +835,7 @@ class ItemView extends GalleryComponent {
       case GALLERY_CONSTS.slideAnimations.FADE:
         return {
           ...baseStyles,
-          transition: `opacity 300ms ease`,
-          transitionDelay: currentIdx === idx ? '300ms' : '',
+          transition: `opacity 600ms ease`,
           opacity: currentIdx === idx ? 1 : 0,
         };
       case GALLERY_CONSTS.slideAnimations.DECK: {
