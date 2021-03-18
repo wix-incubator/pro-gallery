@@ -816,8 +816,8 @@ class ItemView extends GalleryComponent {
     const { idx, currentIdx, styleParams } = this.props;
     return styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE
       ? {
-          transition: 'opacity .4s ease',
-          transitionDelay: currentIdx === idx ? '.4s' : '',
+          transition: 'opacity .3s ease',
+          transitionDelay: currentIdx === idx ? '.3s' : '',
           opacity: currentIdx === idx ? 1 : 0,
           display: 'block',
           // visibility: currentIdx === idx ? 'visible' : 'hidden',
