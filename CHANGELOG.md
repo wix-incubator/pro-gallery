@@ -1,3 +1,9 @@
+## [v3.1.2](https://pro-gallery-3-1-2.surge.sh) (21/03/2021)
+ 
+#### GALLERY
+ -  fix: use transition for next item in FADE slide animation
+
+---
 ## [v3.1.1](https://pro-gallery-3-1-1.surge.sh) (17/03/2021)
  
 #### GALLERY
