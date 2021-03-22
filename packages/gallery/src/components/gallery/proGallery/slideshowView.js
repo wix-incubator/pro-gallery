@@ -42,7 +42,7 @@ class SlideshowView extends GalleryComponent {
       currentIdx: props.currentIdx || 0,
       isInView: true,
       shouldStopAutoSlideShow: false,
-      isGalleryContainerInHover: props.isGalleryContainerInHover,
+      shouldStopAutoSlideshowOnHover: props.isGalleryInHover,
       hideLeftArrow: !props.isRTL,
       hideRightArrow: props.isRTL,
     };
@@ -410,11 +410,11 @@ class SlideshowView extends GalleryComponent {
         isAutoSlideshow &&
         autoSlideshowInterval > 0 &&
         this.state.isInView &&
-        !this.state.shouldStopAutoSlideShow
+        !this.state.shouldStopAutoSlideShow &&
+        !this.state.shouldStopAutoSlideshowOnHover
       )
     )
       return;
-    if (this.state.isGalleryContainerInHover) return;
     this.autoSlideshowInterval = setInterval(
       this.autoScrollToNextItem.bind(this),
       autoSlideshowInterval * 1000
@@ -1307,10 +1307,12 @@ class SlideshowView extends GalleryComponent {
       );
     }
     if (
-      this.props.isGalleryContainerInHover !== props.isGalleryContainerInHover
+      props.styleParams.pauseAutoSlideshowOnHover &&
+      props.styleParams.isAutoSlideshow &&
+      this.props.isGalleryInHover !== props.isGalleryInHover
     ) {
       this.setState(
-        { isGalleryContainerInHover: props.isGalleryContainerInHover },
+        { shouldStopAutoSlideshowOnHover: props.isGalleryInHover },
         () => this.startAutoSlideshowIfNeeded(props.styleParams)
       );
     }

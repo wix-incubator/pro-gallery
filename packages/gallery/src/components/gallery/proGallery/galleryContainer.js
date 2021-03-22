@@ -42,9 +42,6 @@ export class GalleryContainer extends React.Component {
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.shouldPauseAutoSlideshowOnHover = this.shouldPauseAutoSlideshowOnHover.bind(
-      this
-    );
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -58,7 +55,7 @@ export class GalleryContainer extends React.Component {
       viewComponent: null,
       firstUserInteractionExecuted: false,
       isScrollLessGallery: this.getIsScrollLessGallery(this.props.styles),
-      isGalleryContainerInHover: false,
+      isInHover: false,
     };
 
     this.state = initialState;
@@ -698,25 +695,12 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
-  shouldPauseAutoSlideshowOnHover() {
-    return (
-      this.state.styles.pauseAutoSlideshowOnHover &&
-      this.state.styles.isAutoSlideshow
-    );
-  }
-
   onMouseEnter() {
-    const shouldPauseAutoSlideshowOnHover = this.shouldPauseAutoSlideshowOnHover();
-    if (shouldPauseAutoSlideshowOnHover) {
-      this.setState({ isGalleryContainerInHover: true });
-    }
+    this.setState({ isInHover: true });
   }
 
   onMouseLeave() {
-    const shouldPauseAutoSlideshowOnHover = this.shouldPauseAutoSlideshowOnHover();
-    if (shouldPauseAutoSlideshowOnHover) {
-      this.setState({ isGalleryContainerInHover: false });
-    }
+    this.setState({ isInHover: false });
   }
 
   findNeighborItem = (itemIdx, dir) =>
@@ -789,7 +773,7 @@ export class GalleryContainer extends React.Component {
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
-          isGalleryContainerInHover={this.state.isGalleryContainerInHover}
+          isGalleryInHover={this.state.isInHover}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
