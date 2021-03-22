@@ -19,7 +19,7 @@ describe('styleParam - pauseAutoSlideshowOnHover', () => {
   afterEach(() => {
     clock.restore();
   });
-  it('shuld not auto slide when Hovering over the gallery', () => {
+  it('should not auto slide when Hovering over the gallery', () => {
     Object.assign(initialProps.styleParams, {
       oneRow: true,
       isAutoSlideshow: true,
@@ -30,7 +30,7 @@ describe('styleParam - pauseAutoSlideshowOnHover', () => {
     galleryViewProps = driver.props.galleryView(initialProps);
     const stub = sinon.stub(SlideshowView.prototype, 'next');
     driver.mount(SlideshowView, galleryViewProps);
-    driver.set.props({ isGalleryContainerInHover: true });
+    driver.set.props({ isGalleryInHover: true });
     clock.tick(1200);
     expect(stub.called).to.equal(false);
     stub.restore();

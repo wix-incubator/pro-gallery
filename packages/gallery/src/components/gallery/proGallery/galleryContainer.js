@@ -62,7 +62,6 @@ export class GalleryContainer extends React.Component {
     this.layoutCss = [];
 
     this.initialGalleryState = {};
-
     try {
       const galleryState = this.propsToState(props);
       if (Object.keys(galleryState).length > 0) {
