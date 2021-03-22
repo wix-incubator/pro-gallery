@@ -1328,6 +1328,9 @@ class SlideshowView extends GalleryComponent {
         }
       );
     }
+    if (this.props.totalItemsCount !== props.totalItemsCount) {
+      this.removeArrowsIfNeeded();
+    }
     if (isEditMode() || isPreviewMode()) {
       if (
         //check that the change is related to the slideshow settings
