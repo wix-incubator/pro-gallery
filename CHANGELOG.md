@@ -1,3 +1,9 @@
+## [v3.1.3](https://pro-gallery-3-1-3.surge.sh) (22/03/2021)
+ 
+#### GALLERY
+ -  slideshowView: if totalItemsCount changed, check if arrows status (hide/show) needs to be updated.
+
+---
 ## [v3.1.2](https://pro-gallery-3-1-2.surge.sh) (21/03/2021)
  
 #### GALLERY
