@@ -1,5 +1,5 @@
 ## [v3.1.4](https://pro-gallery-3-1-4.surge.sh) (24/03/2021)
- 
+  
 #### GALLERY
  -  feat : added  new SP PauseAutoSlideshowOnHover 
 
