@@ -105,6 +105,7 @@ export const stylesBySection = {
     'playButtonForAutoSlideShow',
     'scrollSnap',
     'allowContextMenu',
+    'pauseAutoSlideshowOnHover',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',

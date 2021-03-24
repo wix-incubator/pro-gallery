@@ -84,6 +84,7 @@ import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
 import placeGroupsLtr from './placeGroupsLtr';
+import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
 import showVideoControls from './showVideoControls';
 
 export default {
@@ -174,6 +175,7 @@ export default {
   allowLeanGallery,
   placeGroupsLtr,
   showVideoControls,
+  pauseAutoSlideshowOnHover,
 };
 
 // TODO = add the options:

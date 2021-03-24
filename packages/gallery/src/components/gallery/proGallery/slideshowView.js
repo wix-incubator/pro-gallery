@@ -29,6 +29,10 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded = this.startAutoSlideshowIfNeeded.bind(
       this
     );
+    this.blockAutoSlideshowIfNeeded = this.blockAutoSlideshowIfNeeded.bind(
+      this
+    );
+    this.shouldStartAutoSlideshow = this.shouldStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(
       this
@@ -41,9 +45,10 @@ class SlideshowView extends GalleryComponent {
     this.state = {
       currentIdx: props.currentIdx || 0,
       isInView: true,
-      shouldStopAutoSlideShow: false,
+      pauseAutoSlideshowClicked: false,
       hideLeftArrow: !props.isRTL,
       hideRightArrow: props.isRTL,
+      shouldBlockAutoSlideshow: false,
     };
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
@@ -400,23 +405,23 @@ class SlideshowView extends GalleryComponent {
     clearInterval(this.autoSlideshowInterval);
   }
 
-  startAutoSlideshowIfNeeded(styleParams) {
-    const { isAutoSlideshow, autoSlideshowInterval, oneRow } = styleParams;
-    this.stopAutoSlideshow();
-    if (!oneRow) return;
-    if (
-      !(
-        isAutoSlideshow &&
-        autoSlideshowInterval > 0 &&
-        this.state.isInView &&
-        !this.state.shouldStopAutoSlideShow
-      )
-    )
-      return;
-    this.autoSlideshowInterval = setInterval(
-      this.autoScrollToNextItem.bind(this),
-      autoSlideshowInterval * 1000
+  shouldStartAutoSlideshow(styleParams) {
+    const { isAutoSlideshow, autoSlideshowInterval } = styleParams;
+    return (
+      isAutoSlideshow &&
+      autoSlideshowInterval > 0 &&
+      !this.state.shouldBlockAutoSlideshow
     );
+  }
+
+  startAutoSlideshowIfNeeded(styleParams) {
+    this.stopAutoSlideshow();
+    if (this.shouldStartAutoSlideshow(styleParams)) {
+      this.autoSlideshowInterval = setInterval(
+        this.autoScrollToNextItem.bind(this),
+        styleParams.autoSlideshowInterval * 1000
+      );
+    }
   }
 
   autoScrollToNextItem = () => {
@@ -1102,11 +1107,10 @@ class SlideshowView extends GalleryComponent {
   }
 
   onAutoSlideShowButtonClick() {
-    const currShouldStopAutoSlideShow = this.state.shouldStopAutoSlideShow;
     this.setState(
-      { shouldStopAutoSlideShow: !currShouldStopAutoSlideShow },
+      { pauseAutoSlideshowClicked: !this.state.pauseAutoSlideshowClicked },
       () => {
-        this.startAutoSlideshowIfNeeded(this.props.styleParams);
+        this.blockAutoSlideshowIfNeeded(this.props);
       }
     );
   }
@@ -1177,14 +1181,14 @@ class SlideshowView extends GalleryComponent {
         onKeyDown={this.onAutoSlideshowAutoPlayKeyPress}
         data-hook="auto-slideshow-button"
         title={'slideshow auto play'}
-        aria-pressed={this.state.shouldStopAutoSlideShow}
+        aria-pressed={this.state.pauseAutoSlideshowClicked}
         tabIndex={0}
         style={{
           top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
           ...side,
         }}
       >
-        {this.state.shouldStopAutoSlideShow ? (
+        {this.state.pauseAutoSlideshowClicked ? (
           <PlayIcon width="10px" height="100%" />
         ) : (
           <PauseIcon width="10px" height="100%" />
@@ -1295,14 +1299,42 @@ class SlideshowView extends GalleryComponent {
 
   //-----------------------------------------| REACT |--------------------------------------------//
 
+  blockAutoSlideshowIfNeeded(props = this.props) {
+    const { isGalleryInHover } = props;
+    const {
+      pauseAutoSlideshowClicked,
+      shouldBlockAutoSlideshow,
+      isInView,
+    } = this.state;
+    let should = false;
+    if (!isInView || pauseAutoSlideshowClicked) {
+      should = true;
+    } else if (
+      isGalleryInHover &&
+      props.styleParams.pauseAutoSlideshowOnHover
+    ) {
+      should = true;
+    }
+    if (shouldBlockAutoSlideshow !== should) {
+      this.setState({ shouldBlockAutoSlideshow: should }, () => {
+        this.startAutoSlideshowIfNeeded(props.styleParams);
+      });
+    } else {
+      return;
+    }
+  }
+
   UNSAFE_componentWillReceiveProps(props) {
     if (props.items) {
       this.ItemsForSlideshowLoopThumbnails = false;
     }
     if (this.props.isInDisplay !== props.isInDisplay) {
       this.setState({ isInView: props.isInDisplay }, () =>
-        this.startAutoSlideshowIfNeeded(props.styleParams)
+        this.blockAutoSlideshowIfNeeded(props)
       );
+    }
+    if (this.props.isGalleryInHover !== props.isGalleryInHover) {
+      this.blockAutoSlideshowIfNeeded(props);
     }
     if (this.props.currentIdx !== props.currentIdx) {
       utils.setStateAndLog(
