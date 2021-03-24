@@ -42,10 +42,10 @@ class SlideshowView extends GalleryComponent {
       currentIdx: props.currentIdx || 0,
       isInView: true,
       shouldStopAutoSlideShow: false,
-      shouldStopAutoSlideshowOnHover: props.isGalleryInHover,
       hideLeftArrow: !props.isRTL,
       hideRightArrow: props.isRTL,
     };
+    this.shouldStopAutoSlideshowOnHover = props.isGalleryInHover;
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
     this.shouldCreateSlideShowNumbers = false;
@@ -411,7 +411,7 @@ class SlideshowView extends GalleryComponent {
         autoSlideshowInterval > 0 &&
         this.state.isInView &&
         !this.state.shouldStopAutoSlideShow &&
-        !this.state.shouldStopAutoSlideshowOnHover
+        !this.shouldStopAutoSlideshowOnHover
       )
     )
       return;
@@ -1311,10 +1311,8 @@ class SlideshowView extends GalleryComponent {
       props.styleParams.isAutoSlideshow &&
       this.props.isGalleryInHover !== props.isGalleryInHover
     ) {
-      this.setState(
-        { shouldStopAutoSlideshowOnHover: props.isGalleryInHover },
-        () => this.startAutoSlideshowIfNeeded(props.styleParams)
-      );
+      this.shouldStopAutoSlideshowOnHover = props.isGalleryInHover;
+      this.startAutoSlideshowIfNeeded(props.styleParams);
     }
     if (this.props.currentIdx !== props.currentIdx) {
       utils.setStateAndLog(
