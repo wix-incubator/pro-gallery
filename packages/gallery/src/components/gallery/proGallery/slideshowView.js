@@ -1110,7 +1110,7 @@ class SlideshowView extends GalleryComponent {
     this.setState(
       { pauseAutoSlideshowClicked: !this.state.pauseAutoSlideshowClicked },
       () => {
-        this.blockAutoSlideshowIfNeeded();
+        this.blockAutoSlideshowIfNeeded(this.props);
       }
     );
   }
