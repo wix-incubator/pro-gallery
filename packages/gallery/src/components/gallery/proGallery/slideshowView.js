@@ -29,6 +29,7 @@ class SlideshowView extends GalleryComponent {
     this.startAutoSlideshowIfNeeded = this.startAutoSlideshowIfNeeded.bind(
       this
     );
+    this.shouldStartAutoSlideshow = this.shouldStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(
       this
@@ -45,7 +46,7 @@ class SlideshowView extends GalleryComponent {
       hideLeftArrow: !props.isRTL,
       hideRightArrow: props.isRTL,
     };
-    this.shouldStopAutoSlideshowOnHover = props.isGalleryInHover;
+    this.shouldStopAutoSlideshowOnHover = false;
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
     this.shouldCreateSlideShowNumbers = false;
@@ -401,24 +402,25 @@ class SlideshowView extends GalleryComponent {
     clearInterval(this.autoSlideshowInterval);
   }
 
-  startAutoSlideshowIfNeeded(styleParams) {
-    const { isAutoSlideshow, autoSlideshowInterval, oneRow } = styleParams;
-    this.stopAutoSlideshow();
-    if (!oneRow) return;
-    if (
-      !(
-        isAutoSlideshow &&
-        autoSlideshowInterval > 0 &&
-        this.state.isInView &&
-        !this.state.shouldStopAutoSlideShow &&
-        !this.shouldStopAutoSlideshowOnHover
-      )
-    )
-      return;
-    this.autoSlideshowInterval = setInterval(
-      this.autoScrollToNextItem.bind(this),
-      autoSlideshowInterval * 1000
+  shouldStartAutoSlideshow(styleParams) {
+    const { isAutoSlideshow, autoSlideshowInterval } = styleParams;
+    return (
+      isAutoSlideshow &&
+      autoSlideshowInterval > 0 &&
+      this.state.isInView &&
+      !this.state.shouldStopAutoSlideShow &&
+      !this.shouldStopAutoSlideshowOnHover
     );
+  }
+
+  startAutoSlideshowIfNeeded(styleParams) {
+    this.stopAutoSlideshow();
+    if (this.shouldStartAutoSlideshow(styleParams)) {
+      this.autoSlideshowInterval = setInterval(
+        this.autoScrollToNextItem.bind(this),
+        styleParams.autoSlideshowInterval * 1000
+      );
+    }
   }
 
   autoScrollToNextItem = () => {
