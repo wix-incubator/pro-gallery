@@ -63,7 +63,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-safe-parser": "^4.0.1",
     "react-app-polyfill": "^1.0.1",
-    "react-dev-utils": "^9.0.1",
+    "react-dev-utils": "^11.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^1.0.0",
     "url-loader": "^2.1.0",
