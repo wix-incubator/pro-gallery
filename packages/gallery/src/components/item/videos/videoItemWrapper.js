@@ -5,22 +5,24 @@ import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
-const videoControls = [
-  <i
-    key="play-triangle"
-    data-hook="play-triangle"
-    className={'gallery-item-video-play-triangle play-triangle '}
-  >
-    <PlayTriangle />
-  </i>,
-  <i
-    key="play-bg"
-    data-hook="play-background"
-    className={'gallery-item-video-play-background play-background '}
-  >
-    <PlayBackground />
-  </i>,
-];
+const videoControls = (
+  <div>
+    <i
+      key="play-triangle"
+      data-hook="play-triangle"
+      className={'gallery-item-video-play-triangle play-triangle '}
+    >
+      <PlayTriangle />
+    </i>
+    <i
+      key="play-bg"
+      data-hook="play-background"
+      className={'gallery-item-video-play-background play-background '}
+    >
+      <PlayBackground />
+    </i>
+  </div>
+);
 
 class VideoItemWrapper extends ImageItem {
   constructor(props) {
@@ -100,7 +102,12 @@ class VideoItemWrapper extends ImageItem {
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
-      return [videoPlaceholder, hover];
+      return (
+        <div>
+          {videoPlaceholder}
+          {hover}
+        </div>
+      );
     }
     return (
       <VideoItem
