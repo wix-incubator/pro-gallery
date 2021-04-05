@@ -1,3 +1,11 @@
+## [v3.1.5](https://pro-gallery-3-1-5.surge.sh) (05/04/2021)
+ 
+#### GALLERY
+ -  replaced render return array with div in videoItemWrapper
+ -  Fix: video play queue in changing galleries 
+
+
+---
 ## [v3.1.4](https://pro-gallery-3-1-4.surge.sh) (24/03/2021)
 
 #### GALLERY
