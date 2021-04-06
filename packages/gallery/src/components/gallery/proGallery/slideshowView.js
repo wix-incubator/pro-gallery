@@ -880,7 +880,7 @@ class SlideshowView extends GalleryComponent {
           svgInternalStyle.fill = arrowsColor.value;
         }
       }
-      navArrowsContainerSize = 100;
+      navArrowsContainerSize = arrowsSize * 3;
 
       arrowRenderer = (position) => {
         if (position === 'left') {
