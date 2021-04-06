@@ -1,3 +1,9 @@
+## [v3.1.6](https://pro-gallery-3-1-6.surge.sh) (06/04/2021)
+ 
+#### GALLERY
+ -  improve (slideshowView): make the arrowSize container responsive
+
+---
 ## [v3.1.5](https://pro-gallery-3-1-5.surge.sh) (05/04/2021)
  
 #### GALLERY
