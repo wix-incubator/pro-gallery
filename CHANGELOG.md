@@ -1,3 +1,9 @@
+## [v3.1.7](https://pro-gallery-3-1-7.surge.sh) (07/04/2021)
+ 
+#### LIB
+ -  blueprints: added handling text item changes in itemsChanged.
+
+---
 ## [v3.1.6](https://pro-gallery-3-1-6.surge.sh) (06/04/2021)
  
 #### GALLERY
