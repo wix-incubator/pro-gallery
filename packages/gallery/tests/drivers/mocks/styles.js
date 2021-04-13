@@ -52,6 +52,7 @@ const styleParams = {
   scrollSnap: false,
   fullscreen: true,
   arrowsPosition: 0,
+  arrowsVerticalPosition: 'ITEM_CENTER',
   arrowsSize: 23,
   watermarkOpacity: 40,
   watermarkSize: 40,

@@ -840,6 +840,9 @@ class SlideshowView extends GalleryComponent {
       arrowsSize,
       arrowsPadding,
       arrowsPosition,
+      arrowsVerticalPosition,
+      titlePlacement,
+      textBoxHeight,
       showArrows,
     } = this.props.styleParams;
     const { hideLeftArrow, hideRightArrow } = this.state;
@@ -880,7 +883,7 @@ class SlideshowView extends GalleryComponent {
           svgInternalStyle.fill = arrowsColor.value;
         }
       }
-      navArrowsContainerSize = 100;
+      navArrowsContainerSize = arrowsSize * 3;
 
       arrowRenderer = (position) => {
         if (position === 'left') {
@@ -909,8 +912,20 @@ class SlideshowView extends GalleryComponent {
       };
     }
 
+    const { galleryHeight } = this.props.container;
     const containerPadding = (navArrowsContainerSize - arrowsSize) / 2;
-    const slideshowSpace = isSlideshow ? slideshowInfoSize : 0;
+    const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
+    const imageHeight = isSlideshow
+      ? galleryHeight
+      : galleryHeight - infoHeight;
+    const infoSpace =
+      isSlideshow || GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)
+        ? {
+            [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
+            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight,
+            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight,
+          }[arrowsVerticalPosition]
+        : 0;
 
     const containerStyle = {
       width: `${navArrowsContainerSize}px`,
@@ -918,7 +933,7 @@ class SlideshowView extends GalleryComponent {
       padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
       top: `calc(50% - ${navArrowsContainerSize / 2}px + ${
         imageMargin / 4
-      }px - ${slideshowSpace / 2}px)`,
+      }px - ${infoSpace / 2}px)`,
     };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =

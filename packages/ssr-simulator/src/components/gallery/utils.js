@@ -58,6 +58,7 @@ export const defaultStyleParams = {
   scrollDirection: 0,
   overlayAnimation: Consts.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
+  arrowsVerticalPosition: Consts.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
   watermarkOpacity: 40,
   watermarkSize: 40,

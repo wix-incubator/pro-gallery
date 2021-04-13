@@ -1,4 +1,5 @@
 import arrowsPosition from './arrowsPosition';
+import arrowsVerticalPosition from './arrowsVerticalPosition';
 import cubeType from './cubeType';
 import dimensions from './dimensions';
 import events from './events';
@@ -52,6 +53,7 @@ import imagePlacementAnimations from './imagePlacementAnimations';
 
 export default {
   arrowsPosition,
+  arrowsVerticalPosition,
   cubeType,
   dimensions,
   events,

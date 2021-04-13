@@ -61,6 +61,7 @@ const defaultStyles = {
   scrollDuration: 400,
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
+  arrowsVerticalPosition: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
   arrowsPadding: 0,
   watermarkOpacity: 40,

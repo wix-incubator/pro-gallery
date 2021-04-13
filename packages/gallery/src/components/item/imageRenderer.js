@@ -14,7 +14,11 @@ const ImageRenderer = (props) => {
         {props.src.map((src) => (
           <source srcSet={src.dpr || src.url} type={`image/${src.type}`} />
         ))}
-        <img alt={props.alt} {...props} src={props.src[0].url} />
+        <img
+          alt={props.alt}
+          {...props}
+          src={props.src[props.src.length - 1].url}
+        />
       </picture>
     );
   } else {
