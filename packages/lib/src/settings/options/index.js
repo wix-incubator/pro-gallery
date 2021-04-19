@@ -57,6 +57,7 @@ import groupsPerStrip from './groupsPerStrip';
 import fixedColumns from './fixedColumns';
 import rotatingGroupTypes from './rotatingGroupTypes';
 import arrowsPosition from './arrowsPosition';
+import arrowsVerticalPosition from './arrowsVerticalPosition';
 import itemShadowSize from './itemShadowSize';
 import itemShadowBlur from './itemShadowBlur';
 import itemShadowDirection from './itemShadowDirection';
@@ -147,6 +148,7 @@ export default {
   fixedColumns,
   rotatingGroupTypes,
   arrowsPosition,
+  arrowsVerticalPosition,
   itemShadowSize,
   itemShadowBlur,
   itemShadowDirection,
