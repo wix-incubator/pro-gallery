@@ -1,3 +1,11 @@
+## [v3.1.8](https://pro-gallery-3-1-8.surge.sh) (19/04/2021)
+ 
+#### GALLERY
+ -  fix: first video is playing when initial currentIdx is not 0 
+ -  fix (imageRenderer): use the original file type as the default surl for images
+ -  feature: add  arrowsVerticalPosition param to control to position of the arrows in slideshow galleries
+
+---
 ## [v3.1.7](https://pro-gallery-3-1-7.surge.sh) (07/04/2021)
  
 #### LIB
