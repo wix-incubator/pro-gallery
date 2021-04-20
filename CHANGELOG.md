@@ -1,3 +1,9 @@
+## [v3.1.9](https://pro-gallery-3-1-9.surge.sh) (20/04/2021)
+ 
+#### OTHER
+ -  feat: A11Y added new events ITEM_FOCUSED and ITEM_LOST_FOCUS
+
+---
 ## [v3.1.8](https://pro-gallery-3-1-8.surge.sh) (19/04/2021)
  
 #### GALLERY
