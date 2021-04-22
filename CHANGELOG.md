@@ -1,3 +1,9 @@
+## [v3.1.10](https://pro-gallery-3-1-10.surge.sh) (22/04/2021)
+
+#### OTHER
+ -  fix (galleryItems): poster is the prioritized poster {url, width, height} and not only the poster url
+
+---
 ## [v3.1.9](https://pro-gallery-3-1-9.surge.sh) (20/04/2021)
  
 #### OTHER
