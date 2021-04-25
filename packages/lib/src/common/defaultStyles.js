@@ -147,6 +147,7 @@ const defaultStyles = {
   videoLoop: true,
   jsonStyleParams: '',
   showVideoControls: false,
+  shouldIndexDirectShareLinkInSEO: true,
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
