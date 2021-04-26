@@ -20,8 +20,6 @@ describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
       styleParams: {
         itemClick: GALLERY_CONSTS.itemClick.EXPAND,
         shouldIndexDirectShareLinkInSEO: false,
-        isSlideshow: false,
-        galleryLayout: GALLERY_CONSTS.layout.GRID,
       },
     });
     driver.mount(ItemView, sampleItemViewProps);
@@ -35,8 +33,6 @@ describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
       styleParams: {
         itemClick: GALLERY_CONSTS.itemClick.EXPAND,
         shouldIndexDirectShareLinkInSEO: true,
-        isSlideshow: false,
-        galleryLayout: GALLERY_CONSTS.layout.GRID,
       },
     });
     driver.mount(ItemView, sampleItemViewProps);
