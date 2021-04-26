@@ -125,6 +125,7 @@ const styleParams = {
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,
+  shouldIndexDirectShareLinkInSEO: true,
 };
 
 const container = {
