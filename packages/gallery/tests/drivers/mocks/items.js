@@ -424,6 +424,8 @@ const images = [
 
 const images2 = [
   {
+    directShareLink:
+      'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
     directLink: {
       url:
         'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
@@ -458,6 +460,8 @@ const images2 = [
     width: 3000,
   },
   {
+    directShareLink:
+      'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
     directLink: {
       url:
         'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
@@ -492,6 +496,8 @@ const images2 = [
     width: 3000,
   },
   {
+    directShareLink:
+      'https://static.wixstatic.com/media/8bb438_a2049532d1b7487ba542f55efbc55c7c.jpg',
     directLink: {
       url:
         'https://static.wixstatic.com/media/8bb438_a2049532d1b7487ba542f55efbc55c7c.jpg',
@@ -524,6 +530,8 @@ const images2 = [
     width: 3000,
   },
   {
+    directShareLink:
+      'https://static.wixstatic.com/media/8bb438_e78b371c75ce42de8719dccfc97298a4.jpg',
     directLink: {
       url:
         'https://static.wixstatic.com/media/8bb438_e78b371c75ce42de8719dccfc97298a4.jpg',
@@ -556,6 +564,8 @@ const images2 = [
     width: 3000,
   },
   {
+    directShareLink:
+      'https://video.wixstatic.com/video/0d72ac_31569a98fd8d436f98ae9c827c216443/1080p/mp4/file.mp4',
     directLink: {
       url:
         'https://video.wixstatic.com/video/0d72ac_31569a98fd8d436f98ae9c827c216443/1080p/mp4/file.mp4',
@@ -627,6 +637,8 @@ const images2 = [
     },
   },
   {
+    directShareLink:
+      'https://video.wixstatic.com/video/0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dc/1080p/mp4/file.mp4',
     itemId: '5f51db65-4104-447b-b675-94657671a73f',
     url:
       'https://video.wixstatic.com/video/0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dc/1080p/mp4/file.mp4',
