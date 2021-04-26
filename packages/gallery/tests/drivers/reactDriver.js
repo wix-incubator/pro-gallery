@@ -86,7 +86,7 @@ class galleryDriver {
       itemShadowBlur: 20,
       itemShadowDirection: 135,
       itemShadowSize: 10,
-      // shouldIndexDirectShareLinkInSEO: true,
+      shouldIndexDirectShareLinkInSEO: true,
     };
 
     this.scroll = {
