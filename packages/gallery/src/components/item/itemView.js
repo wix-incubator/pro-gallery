@@ -671,7 +671,6 @@ class ItemView extends GalleryComponent {
             infoWidth
           )}
           className={'gallery-item-common-info ' + elementName}
-          aria-hidden={true}
           onClick={this.onItemInfoClick}
         >
           {itemExternalInfo}
