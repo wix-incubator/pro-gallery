@@ -1,7 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { images2 } from '../drivers/mocks/items';
+import { itemsWithDirectShareLink } from '../drivers/mocks/items';
 import ItemView from '../../src/components/item/itemView';
 
 describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
@@ -12,7 +12,7 @@ describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     // sample image with directShareLink
-    sampleItem = images2[0];
+    sampleItem = itemsWithDirectShareLink[0];
     sampleItemViewProps = driver.props.itemView(sampleItem);
   });
   it('should use "rel" attribute for preventing seo indexing', async () => {
