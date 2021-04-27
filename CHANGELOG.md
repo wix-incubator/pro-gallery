@@ -1,3 +1,9 @@
+## [v3.1.11](https://pro-gallery-3-1-11.surge.sh) (27/04/2021)
+ 
+#### GALLERY
+ -  fix: remove aria-hidden to make info element accessible
+
+---
 ## [v3.1.10](https://pro-gallery-3-1-10.surge.sh) (22/04/2021)
 
 #### OTHER
