@@ -15,7 +15,7 @@ describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
     sampleItem = itemsWithDirectShareLink[0];
     sampleItemViewProps = driver.props.itemView(sampleItem);
   });
-  it('should use "rel" attribute for preventing seo indexing', async () => {
+  it('should use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
     Object.assign(sampleItemViewProps, {
       styleParams: {
         itemClick: GALLERY_CONSTS.itemClick.EXPAND,
@@ -28,10 +28,36 @@ describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
     expect(linkProps).to.include({ rel: 'nofollow' });
   });
 
-  it('should not use "rel" attribute for preventing seo indexing', async () => {
+  it('should not use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
     Object.assign(sampleItemViewProps, {
       styleParams: {
         itemClick: GALLERY_CONSTS.itemClick.EXPAND,
+        shouldIndexDirectShareLinkInSEO: true,
+      },
+    });
+    driver.mount(ItemView, sampleItemViewProps);
+    await driver.update();
+    const linkProps = driver.find.selector('a').props();
+    expect(linkProps).to.not.include({ rel: 'nofollow' });
+  });
+
+  it('should use "rel" attribute for preventing seo indexing - itemClick = fullscreen', async () => {
+    Object.assign(sampleItemViewProps, {
+      styleParams: {
+        itemClick: GALLERY_CONSTS.itemClick.FULLSCREEN,
+        shouldIndexDirectShareLinkInSEO: false,
+      },
+    });
+    driver.mount(ItemView, sampleItemViewProps);
+    await driver.update();
+    const linkProps = driver.find.selector('a').props();
+    expect(linkProps).to.include({ rel: 'nofollow' });
+  });
+
+  it('should not use "rel" attribute for preventing seo indexing - itemClick = fullscreen', async () => {
+    Object.assign(sampleItemViewProps, {
+      styleParams: {
+        itemClick: GALLERY_CONSTS.itemClick.FULLSCREEN,
         shouldIndexDirectShareLinkInSEO: true,
       },
     });
