@@ -422,80 +422,26 @@ const images = [
   },
 ];
 
-const itemsWithDirectShareLink = [
-  {
-    directShareLink:
-      'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-    directLink: {
-      url:
-        'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-      target: '_blank',
-    },
-    height: 2000,
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    mediaUrl:
-      'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-    metaData: {
-      description: 'Describe your image here.',
-      fileName: '002cd4_769319a2d138444cb19990885128f2c7_',
-      height: 2000,
-      link: {
-        data: {
-          url:
-            'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-          target: '_blank',
-          type: 'ExternalLink',
-        },
-        target: '_blank',
-        type: 'wix',
-      },
-      name: '8bb438_ac2af14459894a6cbce641b7d8af9dc9~mv2_d_3000_2000_s_2.jpg',
-      sourceName: 'private',
-      tags: [],
-      title: "I'm an image title",
-      width: 3000,
-    },
-    orderIndex: 4,
-    secure: false,
-    width: 3000,
-  },
-  {
-    directShareLink:
-      'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
-    directLink: {
-      url:
-        'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
-      target: '_blank',
-    },
-    height: 2000,
-    itemId: '87dc373b35ff17641e86a23b58635f89',
-    mediaUrl:
-      'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
-    metaData: {
-      description: 'Describe your image here.',
-      fileName: '87dc373b35ff17641e86a23b58635f89',
-      height: 2000,
-      link: {
-        data: {
-          url:
-            'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
-          target: '_blank',
-          type: 'ExternalLink',
-        },
-        target: '_blank',
-        type: 'wix',
-      },
-      name: '8bb438_ac2af14459894a6cbce641b7d8af9dc9~mv2_d_3000_2000_s_2.jpg',
-      sourceName: 'private',
-      tags: [],
-      title: "I'm an image title",
-      width: 3000,
-    },
-    orderIndex: 4,
-    secure: false,
-    width: 3000,
-  },
+const shareLinks = [
+  'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+  'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
 ];
+const itemsWithDirectShareLink = shareLinks.map((shareLink) => ({
+  directShareLink: shareLink,
+  metadata: {
+    height: 3737,
+    lastModified: 1445857821,
+    name: '860df034014674abd7a2e73abe0b851b',
+    size: 5655675,
+    width: 5600,
+    description: 'DescriptionOfImage2',
+  },
+  orderIndex: 2,
+  itemId: '860df034014674abd7a2e73abe0b851b',
+  url:
+    'https://static.wixstatic.com/media/8bb438_ff062a651e174cf5926fe5c088be1099.jpg',
+}));
+
 const images2 = [
   {
     directLink: {
