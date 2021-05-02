@@ -1,3 +1,16 @@
+## [v3.1.12](https://pro-gallery-3-1-12.surge.sh) (02/05/2021)
+ 
+#### GALLERY
+ -  improve: changed 'ITEM_FOCUS' and 'ITEM_LOST_FOCUS' parameters
+ -  base ts behaviour
+
+#### OTHER
+ - v3.1.11
+
+#### MAIN
+ -  update changelog.md
+
+---
 ## [v3.1.11](https://pro-gallery-3-1-11.surge.sh) (27/04/2021)
  
 #### GALLERY
