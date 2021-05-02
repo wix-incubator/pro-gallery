@@ -6,34 +6,32 @@ import ItemView from '../../src/components/item/itemView';
 
 describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
   let driver;
-  let sampleItemViewProps;
-  let sampleItem;
-
-  beforeEach(() => {
-    driver = new GalleryDriver();
-    // sample image with directShareLink
-    sampleItem = itemsWithDirectShareLink[0];
-    sampleItemViewProps = driver.props.itemView(sampleItem);
-  });
 
   function getSampleItemViewProps(styleParams) {
+    driver = new GalleryDriver();
+    const sampleItem = itemsWithDirectShareLink[0];
+    const sampleItemViewProps = driver.props.itemView(sampleItem);
     return Object.assign(sampleItemViewProps, {
       styleParams
     });
   }
-  it('should use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
-    const sample = getSampleItemViewProps({shouldIndexDirectShareLinkInSEO: false, itemClick: GALLERY_CONSTS.itemClick.EXPAND })
+
+  async function mountUpdateAndGetLinkProps(sample) {
     driver.mount(ItemView, sample);
     await driver.update();
     const linkProps = driver.find.selector('a').props();
+    return linkProps
+  }
+
+  it('should use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
+    const sample = getSampleItemViewProps({shouldIndexDirectShareLinkInSEO: false, itemClick: GALLERY_CONSTS.itemClick.EXPAND })
+    const linkProps = await mountUpdateAndGetLinkProps(sample)
     expect(linkProps).to.include({ rel: 'nofollow' });
   });
 
   it('should not use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
     const sample = getSampleItemViewProps({shouldIndexDirectShareLinkInSEO: true})
-    driver.mount(ItemView, sample);
-    await driver.update();
-    const linkProps = driver.find.selector('a').props();
+    const linkProps = await mountUpdateAndGetLinkProps(sample)
     expect(linkProps).to.not.include({ rel: 'nofollow' });
   });
 
@@ -42,9 +40,7 @@ describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
         itemClick: GALLERY_CONSTS.itemClick.FULLSCREEN,
         shouldIndexDirectShareLinkInSEO: false,
       })
-    driver.mount(ItemView, sample);
-    await driver.update();
-    const linkProps = driver.find.selector('a').props();
+    const linkProps = await mountUpdateAndGetLinkProps(sample)
     expect(linkProps).to.include({ rel: 'nofollow' });
   });
 
@@ -53,9 +49,7 @@ describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
       {itemClick: GALLERY_CONSTS.itemClick.FULLSCREEN,
         shouldIndexDirectShareLinkInSEO: true,
       })
-    driver.mount(ItemView, sample);
-    await driver.update();
-    const linkProps = driver.find.selector('a').props();
+    const linkProps = await mountUpdateAndGetLinkProps(sample)
     expect(linkProps).to.not.include({ rel: 'nofollow' });
   });
 });
