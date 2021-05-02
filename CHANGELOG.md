@@ -18,7 +18,7 @@
  
 #### GALLERY
  -  improve: changed 'ITEM_FOCUS' and 'ITEM_LOST_FOCUS' parameters
- -  base ts behavior
+ -  base ts behaviour
 
 #### OTHER
  - v3.1.11
