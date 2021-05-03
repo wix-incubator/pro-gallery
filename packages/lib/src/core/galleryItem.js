@@ -224,7 +224,7 @@ class GalleryItem {
         this.cubeImages && resizeMethod !== RESIZE_METHODS.FIT
           ? RESIZE_METHODS.FILL
           : RESIZE_METHODS.FIT,
-        thumbSize,
+        thumbSize * this.ratio,
         thumbSize,
         { ...sharpParams, quality: 30, blur: 30 },
         focalPoint
