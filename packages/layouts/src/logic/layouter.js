@@ -603,13 +603,7 @@ export default class Layouter {
   }
 
   get isLastImages() {
-    if (this.styleParams.layoutsVersion > 1) {
-      //layouts version 2+
-      return !this.srcItems[this.pointer + 1];
-    } else {
-      //Backwards compatibility
-      return !this.srcItems[this.pointer + 3];
-    }
+    return !this.srcItems[this.pointer + 1];
   }
 
   get imagesLeft() {

@@ -57,7 +57,6 @@ export class Group {
       this.rotatingGroupTypes = String(styleParams.rotatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this.chooseBestGroup = styleParams.chooseBestGroup;
-      this.layoutsVersion = styleParams.layoutsVersion;
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
@@ -289,7 +288,7 @@ export class Group {
       }
 
       //---------| Calc collage density
-      if (this.layoutsVersion > 1 && this.collageDensity >= 0) {
+      if (this.collageDensity >= 0) {
         //th new calculation of the collage amount
 
         const collageDensity = this.collageDensity;
@@ -329,11 +328,6 @@ export class Group {
       seed = this.items[0].seed % numOfOptions;
     } else {
       seed = (this.inStripIdx + this.stripIdx) % numOfOptions;
-    }
-
-    if (this.layoutsVersion === 1 && this.collageAmount >= 0) {
-      //backwards compatibility
-      seed += (this.collageAmount - 0.5) * numOfOptions;
     }
 
     return Math.round(Math.min(Math.max(0, seed), numOfOptions - 1));

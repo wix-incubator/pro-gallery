@@ -10,12 +10,10 @@ export const handledStyleParams = {
   cubeType: 'fill',
   cubeRatio: 1,
   fixedColumns: 0,
-  borderRadius: 0,
   imageMargin: 10,
   gridStyle: 0,
   itemBorderWidth: 0,
   itemBorderRadius: 0,
-  imageQuality: 90,
   textBoxHeight: 200,
   // cubeImages: true, // todo: in order to enable Masonry --> 'cubeImages' should be defined here and not it fixedStyleParams
 };
@@ -38,12 +36,10 @@ export const fixedStyleParams = {
   rotatingGroupTypes: '',
   smartCrop: false,
   rotatingCubeRatio: '',
-  boxShadow: 0,
   galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   placeGroupsLtr: false,
-  mobilePanorama: false,
   enableInfiniteScroll: [true, 1],
   itemEnableShadow: false,
   itemClick: [

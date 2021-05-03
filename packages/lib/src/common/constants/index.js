@@ -4,7 +4,6 @@ import cubeType from './cubeType';
 import dimensions from './dimensions';
 import events from './events';
 import expandAnimations from './expandAnimations';
-import expandInfoPositions from './expandInfoPositions';
 import formFactor from './formFactor';
 import gallerySizeType from './gallerySizeType';
 import galleryTextAlign from './galleryTextAlign.js';
@@ -58,7 +57,6 @@ export default {
   dimensions,
   events,
   expandAnimations,
-  expandInfoPositions,
   formFactor,
   gallerySizeType,
   galleryTextAlign,
