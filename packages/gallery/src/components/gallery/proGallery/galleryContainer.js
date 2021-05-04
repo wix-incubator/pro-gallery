@@ -239,7 +239,7 @@ export class GalleryContainer extends React.Component {
     const scrollY = window.scrollY;
     const { galleryHeight, scrollBase, galleryWidth } = container;
     if (
-      (utils.isSSR() && !this.props.settings.renderVisibleItemsInSsr) ||
+      utils.isSSR() ||
       isSEOMode() ||
       isEditMode() ||
       gotFirstScrollEvent ||

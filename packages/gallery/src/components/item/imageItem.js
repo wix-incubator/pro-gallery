@@ -169,10 +169,7 @@ export default class ImageItem extends GalleryComponent {
           }
         : {};
 
-      if (
-        !isHighResImageLoaded &&
-        (gotFirstScrollEvent || settings.forceImagePreload)
-      ) {
+      if (!isHighResImageLoaded && gotFirstScrollEvent) {
         let preload = null;
         const preloadProps = {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',
