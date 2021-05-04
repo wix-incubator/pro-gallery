@@ -54,7 +54,6 @@ export const defaultStyleParams = {
   arrowsPosition: 0,
   arrowsVerticalPosition: Consts.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
-  watermarkDock: Consts.watermarkDock.RIGHT_DOWN,
   loadMoreAmount: Consts.loadMoreAmount.ALL,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
