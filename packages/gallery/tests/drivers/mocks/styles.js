@@ -29,7 +29,6 @@ const styleParams = {
   rotatingScatter: '',
   gridStyle: 0,
   placeGroupsLtr: false,
-  viewMode: 'preview',
   showArrows: true,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,

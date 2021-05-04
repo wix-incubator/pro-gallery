@@ -58,7 +58,6 @@ const defaultStyles = {
   arrowsVerticalPosition: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
   arrowsPadding: 0,
-  watermarkDock: GALLERY_CONSTS.watermarkDock.RIGHT_DOWN,
   loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
