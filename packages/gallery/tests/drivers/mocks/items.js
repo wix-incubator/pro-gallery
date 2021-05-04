@@ -422,6 +422,26 @@ const images = [
   },
 ];
 
+const shareLinks = [
+  'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+  'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
+];
+const itemsWithDirectShareLink = shareLinks.map((shareLink) => ({
+  directShareLink: shareLink,
+  metadata: {
+    height: 3737,
+    lastModified: 1445857821,
+    name: '860df034014674abd7a2e73abe0b851b',
+    size: 5655675,
+    width: 5600,
+    description: 'DescriptionOfImage2',
+  },
+  orderIndex: 2,
+  itemId: '860df034014674abd7a2e73abe0b851b',
+  url:
+    'https://static.wixstatic.com/media/8bb438_ff062a651e174cf5926fe5c088be1099.jpg',
+}));
+
 const images2 = [
   {
     directLink: {
@@ -836,4 +856,4 @@ const textItems = [
   },
 }));
 
-export { images, images2, videoItems, textItems };
+export { images, images2, videoItems, textItems, itemsWithDirectShareLink };

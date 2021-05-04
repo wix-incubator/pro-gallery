@@ -1124,8 +1124,10 @@ class ItemView extends GalleryComponent {
       // place share link as the navigation item
       const url = directShareLink;
       const shouldUseDirectShareLink = !!url;
+      const shouldUseNofollow = !styleParams.shouldIndexDirectShareLinkInSEO;
+      const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
       const linkParams = shouldUseDirectShareLink
-        ? { href: url, 'data-cancel-link': true }
+        ? { href: url, 'data-cancel-link': true, ...seoLinkParams }
         : {};
       return linkParams;
     }
