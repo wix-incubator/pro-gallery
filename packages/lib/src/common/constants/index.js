@@ -4,7 +4,6 @@ import cubeType from './cubeType';
 import dimensions from './dimensions';
 import events from './events';
 import expandAnimations from './expandAnimations';
-import expandInfoPositions from './expandInfoPositions';
 import formFactor from './formFactor';
 import gallerySizeType from './gallerySizeType';
 import galleryTextAlign from './galleryTextAlign.js';
@@ -48,7 +47,6 @@ import thumbnailsAlignment from './thumbnailsAlignment';
 import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
 import videoPlay from './videoPlay';
 import viewMode from './viewMode';
-import watermarkDock from './watermarkDock';
 import imagePlacementAnimations from './imagePlacementAnimations';
 
 export default {
@@ -58,7 +56,6 @@ export default {
   dimensions,
   events,
   expandAnimations,
-  expandInfoPositions,
   formFactor,
   gallerySizeType,
   galleryTextAlign,
@@ -102,6 +99,5 @@ export default {
   urlTypes,
   videoPlay,
   viewMode,
-  watermarkDock,
   imagePlacementAnimations,
 };

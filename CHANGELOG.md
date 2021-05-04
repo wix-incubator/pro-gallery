@@ -1,3 +1,34 @@
+## [v3.1.12](https://pro-gallery-3-1-12.surge.sh) (02/05/2021)
+ 
+#### GALLERY
+ -  improve: changed 'ITEM_FOCUS' and 'ITEM_LOST_FOCUS' parameters
+ -  base ts behavior
+
+#### OTHER
+ - v3.1.11
+
+#### MAIN
+ -  update changelog.md
+
+---
+## [v3.1.11](https://pro-gallery-3-1-11.surge.sh) (27/04/2021)
+ 
+#### GALLERY
+ -  fix: remove aria-hidden to make info element accessible
+
+---
+## [v3.1.10](https://pro-gallery-3-1-10.surge.sh) (22/04/2021)
+
+#### OTHER
+ -  fix (galleryItems): poster is the prioritized poster {url, width, height} and not only the poster url
+
+---
+## [v3.1.9](https://pro-gallery-3-1-9.surge.sh) (20/04/2021)
+ 
+#### OTHER
+ -  feat: A11Y added new events ITEM_FOCUSED and ITEM_LOST_FOCUS
+
+---
 ## [v3.1.8](https://pro-gallery-3-1-8.surge.sh) (19/04/2021)
  
 #### GALLERY

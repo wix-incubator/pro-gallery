@@ -34,9 +34,9 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
     return smartCalc ? smartCalc : styles.gallerySize;
   }
 };
+
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
-  processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
   processedStyles.oneRow =
     processedStyles.oneRow ||
     processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
@@ -67,7 +67,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   };
 
   if (utils.isMobile()) {
-    if (processedStyles.isSlideshowFont) {
+    if (isSlideshowFont(processedStyles)) {
       if (!utils.isUndefined(processedStyles.itemFontSlideshow)) {
         setTextUnderline('itemFontSlideshow', 'textDecorationTitle');
       }

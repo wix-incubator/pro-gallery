@@ -118,12 +118,20 @@ class ItemView extends GalleryComponent {
         this.props.idx
       );
     }
+    this.props.actions.eventsListener(
+      GALLERY_CONSTS.events.ITEM_FOCUSED,
+      this.props
+    );
   }
 
   onBlur() {
     if (this.props.styleParams.isAccessible) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
+    this.props.actions.eventsListener(
+      GALLERY_CONSTS.events.ITEM_LOST_FOCUS,
+      this.props
+    );
   }
 
   onContainerKeyDown(e) {
@@ -666,7 +674,6 @@ class ItemView extends GalleryComponent {
             infoWidth
           )}
           className={'gallery-item-common-info ' + elementName}
-          aria-hidden={true}
           onClick={this.onItemInfoClick}
         >
           {itemExternalInfo}

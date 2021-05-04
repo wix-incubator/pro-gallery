@@ -53,7 +53,6 @@ export const stylesBySection = {
     'cubeImages',
     'cubeType',
     'cubeRatio',
-    // 'gallerySliderImageRatio',
 
     'gallerySizeType',
     'gallerySize',
@@ -126,9 +125,7 @@ export const stylesBySection = {
     // 'loadMoreButtonFont',
     // 'loadMoreButtonFontColor',
     // 'loadMoreButtonColor',
-    // 'loadMoreButtonBorderWidth',
     // 'loadMoreButtonBorderColor',
-    // 'loadMoreButtonBorderRadius',
     'itemBorderWidth',
     'itemBorderColor',
     'itemBorderRadius',

@@ -21,19 +21,14 @@ const styleParams = {
   cropOnlyFill: false,
   smartCrop: false,
   rotatingCubeRatio: '',
-  gallerySliderImageRatio: 16 / 9,
   fixedColumns: 0,
   groupsPerStrip: 0,
-  borderRadius: 0,
-  boxShadow: 0,
   imageMargin: 10,
   galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   gridStyle: 0,
-  mobilePanorama: false,
   placeGroupsLtr: false,
-  viewMode: 'preview',
   showArrows: true,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
@@ -47,34 +42,22 @@ const styleParams = {
   isAutoSlideshow: false,
   slideshowLoop: false,
   autoSlideshowInterval: 4,
-  bottomInfoHeight: 0,
   galleryTextAlign: 'center',
   scrollSnap: false,
   fullscreen: true,
   arrowsPosition: 0,
   arrowsVerticalPosition: 'ITEM_CENTER',
   arrowsSize: 23,
-  watermarkOpacity: 40,
-  watermarkSize: 40,
-  useWatermark: true,
-  defaultShowInfoExpand: 1,
-  allowLinkExpand: true,
-  expandInfoPosition: 0,
-  allowFullscreenExpand: true,
-  fullscreenLoop: false,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
   // titleFontExpand: font_5
   // titleColorExpand: color-5
   // descriptionFontExpand: font_8
   // descriptionColorExpand: color-5,
-  galleryAlignExpand: 'left',
   // addToCartBackColorExpand: color-5,
   // addToCartFontExpand: font-8
   // addToCartColorExpand: color-1
-  addToCartBorderWidth: 1,
   //addToCartBorderColor: color-5,
-  addToCartButtonText: '',
   slideshowInfoSize: 200,
   playButtonForAutoSlideShow: false,
   pauseAutoSlideshowOnHover: true,
@@ -104,9 +87,7 @@ const styleParams = {
   //loadMoreButtonFont: font_8
   // loadMoreButtonFontColor: color-5
   // loadMoreButtonColor: startWithOpacity: '1', startWithColor: 'color-1'
-  loadMoreButtonBorderWidth: 1,
   // loadMoreButtonBorderColor:  startWithColor: 'color-5'
-  loadMoreButtonBorderRadius: 0,
   itemBorderWidth: 0,
   // itemBorderColor: 'color-5'
   itemBorderRadius: 0,
@@ -117,11 +98,6 @@ const styleParams = {
   itemShadowSize: 10,
   // imageLoadingColor: startWithColor: 'color-3'
   // oneColorAnimationColor: startWithColor: 'color-1',
-  imageQuality: 90,
-  usmToggle: false,
-  usm_a: 0,
-  usm_r: 0,
-  usm_t: 0,
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,

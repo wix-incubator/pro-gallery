@@ -32,7 +32,6 @@ describe('Layouter', () => {
       collageAmount: 0.9,
       collageDensity: 0.9,
       minItemSize: 20,
-      layoutsVersion: 2,
       galleryMargin: 0,
       imageMargin: 10,
       scatter: 0,
@@ -230,7 +229,6 @@ describe('Layouter', () => {
         (i) => i / 10
       );
       let lastGroupCount = itemCount;
-      styleParams.layoutsVersion = 1;
 
       for (const collageAmount of collageAmounts) {
         styleParams.collageAmount = collageAmount;

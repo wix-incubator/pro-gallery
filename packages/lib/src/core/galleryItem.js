@@ -190,7 +190,7 @@ class GalleryItem {
         }))
       );
     } else if (this.isVideo || this.isVideoPlaceholder) {
-      imgUrl = this.poster;
+      imgUrl = this.poster?.url;
 
       if (utils.isExternalUrl(this.url)) {
         urls[URL_TYPES.VIDEO] = () => this.url;
@@ -519,9 +519,9 @@ class GalleryItem {
   get poster() {
     return (
       this.metadata.poster ||
-      (this.metadata.customPoster && this.metadata.customPoster.url) ||
+      (this.metadata.customPoster && this.metadata.customPoster) ||
       (this.metadata.posters
-        ? this.metadata.posters[this.metadata.posters.length - 1].url
+        ? this.metadata.posters[this.metadata.posters.length - 1]
         : null)
     );
   }
