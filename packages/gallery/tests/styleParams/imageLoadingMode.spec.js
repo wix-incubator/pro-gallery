@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { testImages } from '../drivers/mocks/images-mock';
 import ItemView from '../../src/components/item/itemView';
 
-describe.only('styleParam - imageLoadingMode', () => {
+describe('styleParam - imageLoadingMode', () => {
   let driver;
 
   function getSampleItemViewProps(imageLoadingMode, createUrlStub = () => {}) {
