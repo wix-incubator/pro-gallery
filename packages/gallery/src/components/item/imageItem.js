@@ -3,8 +3,6 @@ import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 
-const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
-
 export default class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
@@ -33,10 +31,8 @@ export default class ImageItem extends GalleryComponent {
   }
 
   handleHighResImageLoad() {
-    this.removeLowResImageTimeoutId = setTimeout(() => {
-      this.setState({ isHighResImageLoaded: true });
-      this.removeLowResImageTimeoutId = undefined;
-    }, BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION);
+    this.setState({ isHighResImageLoaded: true });
+    this.removeLowResImageTimeoutId = undefined;
     try {
       this.props.actions.setItemLoaded();
     } catch (e) {
