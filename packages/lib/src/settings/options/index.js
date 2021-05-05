@@ -184,7 +184,6 @@ export default {
 
 // TODO = add the options:
 /*
-allowLeanGallery
 itemOpacity
 arrowsColor
 imageLoadingColor

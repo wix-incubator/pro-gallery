@@ -3,7 +3,6 @@ import arrowsVerticalPosition from './arrowsVerticalPosition';
 import cubeType from './cubeType';
 import dimensions from './dimensions';
 import events from './events';
-import expandAnimations from './expandAnimations';
 import formFactor from './formFactor';
 import gallerySizeType from './gallerySizeType';
 import galleryTextAlign from './galleryTextAlign.js';
@@ -55,7 +54,6 @@ export default {
   cubeType,
   dimensions,
   events,
-  expandAnimations,
   formFactor,
   gallerySizeType,
   galleryTextAlign,
