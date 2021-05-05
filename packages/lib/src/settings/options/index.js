@@ -87,6 +87,7 @@ import allowLeanGallery from './allowLeanGallery';
 import placeGroupsLtr from './placeGroupsLtr';
 import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
 import showVideoControls from './showVideoControls';
+import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 
 export default {
   itemClick,
@@ -178,6 +179,7 @@ export default {
   placeGroupsLtr,
   showVideoControls,
   pauseAutoSlideshowOnHover,
+  shouldIndexDirectShareLinkInSEO,
 };
 
 // TODO = add the options:

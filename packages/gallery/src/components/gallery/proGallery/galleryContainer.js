@@ -131,8 +131,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = (props) => {
-      const { domId, styles, container, items, watermark } = props;
-      return { domId, styles, container, items, watermark };
+      const { domId, styles, container, items, watermark, isInDisplay } = props;
+      return { domId, styles, container, items, watermark, isInDisplay };
     };
 
     if (this.reCreateGalleryTimer) {

@@ -1,3 +1,12 @@
+## [v3.1.13](https://pro-gallery-3-1-13.surge.sh) (04/05/2021)
+ 
+#### GALLERY
+ -  feat: added shouldIndexDirectShareLinkInSEO styleParam
+ -  added isInDisplay to getSignificantProps 
+ 
+
+
+---
 ## [v3.1.12](https://pro-gallery-3-1-12.surge.sh) (02/05/2021)
  
 #### GALLERY
