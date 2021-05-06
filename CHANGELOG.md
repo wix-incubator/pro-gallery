@@ -1,3 +1,10 @@
+## [v3.1.14](https://pro-gallery-3-1-14.surge.sh) (06/05/2021)
+ 
+#### GALLERY
+ -  improve (events): remove depracated events
+ -  fix: delete undefined function - ScrollializePlayState
+
+---
 ## [v3.1.13](https://pro-gallery-3-1-13.surge.sh) (04/05/2021)
  
 #### GALLERY
