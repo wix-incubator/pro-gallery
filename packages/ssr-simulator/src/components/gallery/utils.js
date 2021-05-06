@@ -105,7 +105,6 @@ export const defaultStyleParams = {
   itemShadowSize: 10,
   imageLoadingMode: Consts.loadingMode.BLUR,
   // imageLoadingColor: startWithColor: 'color-3'
-  expandAnimation: Consts.expandAnimations.NO_EFFECT,
   // oneColorAnimationColor: startWithColor: 'color-1',
   videoSound: false,
   videoSpeed: '1',

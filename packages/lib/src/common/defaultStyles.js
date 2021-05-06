@@ -115,7 +115,6 @@ const defaultStyles = {
   itemShadowSize: 10,
   imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
   // imageLoadingColor: startWithColor: 'color-3'
-  expandAnimation: GALLERY_CONSTS.expandAnimations.NO_EFFECT,
   // oneColorAnimationColor: startWithColor: 'color-1',
   videoSound: false,
   videoSpeed: '1',
