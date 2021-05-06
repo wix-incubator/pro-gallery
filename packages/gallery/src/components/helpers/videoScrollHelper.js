@@ -99,7 +99,6 @@ class VideoScrollHelper {
         this.videoErrorReported();
         break;
       case VIDEO_EVENTS.INIT_SCROLL:
-        this.ScrollializePlayState();
         break;
       default:
     }
