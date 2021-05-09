@@ -1,53 +1,65 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, GalleryItem } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { images2 } from '../drivers/mocks/items';
+import { styleParams, container } from '../drivers/mocks/styles';
 import sinon from 'sinon';
-import { testImages } from '../drivers/mocks/images-mock';
-import ItemView from '../../src/components/item/itemView';
 
 describe('styleParam - imageLoadingMode', () => {
   let driver;
+  let imageStub;
+  const initialProps = {
+    container,
+    items: images2.slice(0, 1),
+    styles: styleParams,
+  };
 
-  function getSampleItemViewProps(imageLoadingMode, createUrlStub = () => {}) {
+  beforeEach(() => {
     driver = new GalleryDriver();
-    const sampleItem = testImages[0];
-    const sampleItemViewProps = driver.props.itemView(sampleItem);
-    return Object.assign(sampleItemViewProps, {
-      gotFirstScrollEvent: true,
-      styleParams: {
-        imageLoadingMode,
-      },
-      createUrl: createUrlStub,
-    });
-  }
-
-  async function mountAndUpdate(props) {
-    driver.mount(ItemView, props);
-    await driver.update();
-  }
+  });
 
   it('should preload blury image', async () => {
-    const createUrlStub = sinon.stub();
-    const props = getSampleItemViewProps(
-      GALLERY_CONSTS.loadingMode.BLUR,
-      createUrlStub
-    );
-    await mountAndUpdate(props);
-    expect(createUrlStub.withArgs('resized', 'thumb').called).to.be.true;
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      oneRow: false,
+      imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
+    });
+    imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
+    initialProps.settings = { forceImagePreload: true };
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    expect(imageStub.withArgs('resized', 'thumb').called).to.be.true;
+    imageStub.restore();
+    driver.detach.proGallery();
   });
   it('should preload pixel image (MAIN_COLOR)', async () => {
-    const createUrlStub = sinon.stub();
-    const props = getSampleItemViewProps(
-      GALLERY_CONSTS.loadingMode.MAIN_COLOR,
-      createUrlStub
-    );
-    await mountAndUpdate(props);
-    expect(createUrlStub.withArgs('pixel', 'img').called).to.be.true;
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      oneRow: false,
+      imageLoadingMode: GALLERY_CONSTS.loadingMode.MAIN_COLOR,
+    });
+    initialProps.settings = { forceImagePreload: true };
+    imageStub = sinon.stub(GalleryItem.prototype, 'createUrl');
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    expect(imageStub.withArgs('pixel', 'img').called).to.be.true;
+    imageStub.restore();
+    driver.detach.proGallery();
   });
-  it('should preload color background (COLOR)', async () => {
-    const props = getSampleItemViewProps(GALLERY_CONSTS.loadingMode.COLOR);
-    await mountAndUpdate(props);
-    const item = driver.find.selector('.load-with-color').length;
-    expect(item).to.be.equal(1);
+  it('should preload color background (MAIN_COLOR)', async () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      oneRow: false,
+      imageLoadingMode: GALLERY_CONSTS.loadingMode.COLOR,
+    });
+    initialProps.settings = { forceImagePreload: true };
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const items = driver.find.selector('.load-with-color').length;
+    expect(items).to.be.above(0);
+    driver.detach.proGallery();
   });
 });
