@@ -42,6 +42,8 @@ export class GalleryContainer extends React.Component {
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -56,6 +58,7 @@ export class GalleryContainer extends React.Component {
       firstUserInteractionExecuted: false,
       isScrollLessGallery: this.getIsScrollLessGallery(this.props.styles),
       isInHover: false,
+      isInFocus: false,
     };
 
     this.state = initialState;
@@ -702,6 +705,14 @@ export class GalleryContainer extends React.Component {
     this.setState({ isInHover: false });
   }
 
+  onFocus() {
+    this.setState({ isInFocus: true });
+  }
+
+  onBlur() {
+    this.setState({ isInFocus: false });
+  }
+
   findNeighborItem = (itemIdx, dir) =>
     findNeighborItem(itemIdx, dir, this.state.structure.items); // REFACTOR BLUEPRINTS - this makes the function in the layouter irrelevant (unless the layouter is used as a stand alone with this function, maybe the layouter needs to be split for bundle size as well...)
 
@@ -731,6 +742,8 @@ export class GalleryContainer extends React.Component {
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -773,6 +786,7 @@ export class GalleryContainer extends React.Component {
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
+          isGalleryInFocus={this.state.isInFocus}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

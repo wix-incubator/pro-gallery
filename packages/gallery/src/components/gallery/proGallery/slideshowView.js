@@ -1315,7 +1315,7 @@ class SlideshowView extends GalleryComponent {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   blockAutoSlideshowIfNeeded(props = this.props) {
-    const { isGalleryInHover } = props;
+    const { isGalleryInHover, isGalleryInFocus } = props;
     const {
       pauseAutoSlideshowClicked,
       shouldBlockAutoSlideshow,
@@ -1325,8 +1325,16 @@ class SlideshowView extends GalleryComponent {
     if (!isInView || pauseAutoSlideshowClicked) {
       should = true;
     } else if (
+      !isGalleryInFocus &&
       isGalleryInHover &&
       props.styleParams.pauseAutoSlideshowOnHover
+    ) {
+      should = true;
+    } else if (
+      !isGalleryInHover &&
+      isGalleryInFocus &&
+      props.styleParams.pauseAutoSlideshowOnHover &&
+      this.props.styleParams.isAccessible
     ) {
       should = true;
     }
@@ -1348,7 +1356,10 @@ class SlideshowView extends GalleryComponent {
         this.blockAutoSlideshowIfNeeded(props)
       );
     }
-    if (this.props.isGalleryInHover !== props.isGalleryInHover) {
+    if (
+      this.props.isGalleryInHover !== props.isGalleryInHover ||
+      this.props.isGalleryInFocus !== props.isGalleryInFocus
+    ) {
       this.blockAutoSlideshowIfNeeded(props);
     }
     if (this.props.currentIdx !== props.currentIdx) {
