@@ -1493,8 +1493,6 @@ class SlideshowView extends GalleryComponent {
         className={this.getClassNames()}
         style={this.getStyles()}
         onKeyDown={this.handleSlideshowKeyPress}
-        role="region"
-        aria-label={this.props.proGalleryRegionLabel}
       >
         {thumbnails[0]}
         {gallery}

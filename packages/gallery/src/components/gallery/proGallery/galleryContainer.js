@@ -641,6 +641,17 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  getAccessabilityAriaProperties() {
+    return {
+      role: this.props.galleryAccessibilityRole,
+      ['aria-label']: this.props.proGalleryAriaLabel,
+      ['aria-roledescription']:
+        this.props.galleryAccessibilityRole === 'application'
+          ? 'gallery application'
+          : 'region',
+    };
+  }
+
   getMoreItemsIfNeeded(scrollPos) {
     if (
       this.galleryStructure &&
@@ -731,6 +742,7 @@ export class GalleryContainer extends React.Component {
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
+        {...this.getAccessabilityAriaProperties()}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -770,7 +782,6 @@ export class GalleryContainer extends React.Component {
           customNavArrowsRenderer={this.props.customNavArrowsRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
-          proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
           actions={{
