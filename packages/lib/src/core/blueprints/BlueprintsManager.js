@@ -60,7 +60,7 @@ export default class BlueprintsManager {
     blueprintCreated &&
       this.api.onBlueprintReady &&
       this.api.onBlueprintReady({ blueprint, blueprintChanged });
-    return (this.cache[params] = this.existingBlueprint = blueprint); //still returning for awaits... event is !blueprintCreated
+    return (this.cache[params] = this.existingBlueprint = blueprint); // still returning for awaits... event is !blueprintCreated
   }
 
   async getMoreItems(currentItemLength) {
