@@ -1,20 +1,52 @@
 import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
-import basePropTypes from './proGallery/propTypes';
 
-export default class BaseGallery extends React.Component {
-  constructor(props) {
-    super();
+interface IProps {
+  domId: string;
+  totalItemsCount: any;
+  items: any;
+  options: any;
+  styleParams: any;
+  scrollingElement: any;
+  eventsListener: any;
+  currentIdx: any;
+  container: any;
+  dimensions: any;
+  isInDisplay: any;
+  itemsLoveData: any;
+  viewMode: any;
+  resizeMediaUrl: any;
+  customHoverRenderer: any;
+  customInfoRenderer: any;
+  customSlideshowInfoRenderer: any;
+  customImageRenderer: any;
+  customNavArrowsRenderer: any;
+  customLoadMoreRenderer: any;
+  actions: any;
+  allowSSR: any;
+  formFactor: any;
+  proGalleryRegionLabel: any;
+  isPrerenderMode: any;
+  settings: any;
+  watermark: any;
+}
+
+interface IState {
+  blueprint: any;
+}
+
+export default class BaseGallery extends React.Component<IProps, IState> {
+  private blueprintsManager: any;
+  private galleryProps: any;
+
+  constructor(props: IProps) {
+    super(props);
+    this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
-    this.domId = props.domId || 'default-dom-id';
-    this.isUsingCustomInfoElements =
-      props.customHoverRenderer ||
-      props.customInfoRenderer ||
-      props.customSlideshowInfoRenderer;
     this.blueprintsManager.init({
       api: {
-        isUsingCustomInfoElements: () => this.isUsingCustomInfoElements,
+        isUsingCustomInfoElements: this.isUsingCustomInfoElements,
         fetchMoreItems: (from) => {
           typeof props.eventsListener === 'function' &&
             props.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, from);
@@ -34,10 +66,10 @@ export default class BaseGallery extends React.Component {
         },
       },
     });
+    this.onNewProps(props, true);
     this.state = {
       blueprint: this.blueprintsManager.createInitialBlueprint(props) || null,
     };
-    this.onNewProps(props, 'constructor');
   }
 
   setBlueprint(blueprint, initialBlueprint) {
@@ -48,7 +80,14 @@ export default class BaseGallery extends React.Component {
     }
   }
 
-  static propTypes = basePropTypes;
+  isUsingCustomInfoElements() {
+    return (
+      !!this.galleryProps.customHoverRenderer ||
+      !!this.galleryProps.customInfoRenderer ||
+      !!this.galleryProps.customSlideshowInfoRenderer
+    );
+  }
+
   onNewProps(props, calledByConstructor) {
     const { eventsListener, ...otherProps } = props;
     const _eventsListener = (...args) => {
@@ -62,7 +101,7 @@ export default class BaseGallery extends React.Component {
     this.galleryProps = {
       ...otherProps,
       eventsListener: _eventsListener,
-      domId: this.domId,
+      domId: props.domId || 'default-dom-id',
     };
     if (calledByConstructor) {
       // the blueprint will be initiated with the state
@@ -75,7 +114,7 @@ export default class BaseGallery extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {
-    this.onNewProps(newProps);
+    this.onNewProps(newProps, false);
   }
 
   render() {
