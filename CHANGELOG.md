@@ -1,3 +1,32 @@
+## [v3.1.15](https://pro-gallery-3-1-15.surge.sh) (11/05/2021)
+ 
+#### OTHER
+ - eslint fixes
+ - Adding log
+ -  upgrade to node 14.16.1 (#317)
+ -  added start-nir script to start with only esm with ES2017. (#316)
+ - start script will run 2 scripts at the same time (using concurrently):
+ - css-watch: to watch css changes.
+ - code-watch: to watch code changes (ts/js).
+ - * fixed test file and removed unused an incorrect wallaby.js
+ - This reverts commit eeb06c16d3c50112cc7a51f97f31565822e18e81.
+ - * fixed test file and removed unused an incorrect wallaby.js
+ - Docs - Copy pasted code now works out of the box (#309)
+ - * Using real items avaiable online.
+ - * new readme
+
+#### GALLERY
+ -  start script will run 2 scripts at the same time (using concurrently): css-watch and code-watch. (#312)
+ -  removed not relevant settings (renderVisibleItemsInSsr, forceImagePreload)
+ -  renderVisibleItemsInSsr is always false, forceImagePreload is always false.
+ -  removed not relevant settings (#306) (#313)
+ -  removed not relevant settings (#306)
+ -  renderVisibleItemsInSsr is always false, forceImagePreload is always false.
+
+#### MAIN
+ -  update changelog.md - v3.1.14
+
+---
 ## [v3.1.14](https://pro-gallery-3-1-14.surge.sh) (06/05/2021)
  
 #### GALLERY
