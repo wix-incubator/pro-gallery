@@ -9,8 +9,9 @@ export default class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
-    this.getImageContainerClassNames =
-      this.getImageContainerClassNames.bind(this);
+    this.getImageContainerClassNames = this.getImageContainerClassNames.bind(
+      this
+    );
     this.getImageElement = this.getImageElement.bind(this);
 
     this.state = {

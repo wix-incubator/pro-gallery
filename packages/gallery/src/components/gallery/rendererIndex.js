@@ -12,8 +12,13 @@ export default class BaseGallery extends React.Component {
   }
 
   render() {
-    const { styles, options, styleParams, eventsListener, ...otherProps } =
-      this.props;
+    const {
+      styles,
+      options,
+      styleParams,
+      eventsListener,
+      ...otherProps
+    } = this.props;
     const _eventsListener = (...args) =>
       typeof eventsListener === 'function' && eventsListener(...args);
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams }; //TODOVER3 can we remove the default styles?? blueprints should take care of it

@@ -23,16 +23,20 @@ class SlideshowView extends GalleryComponent {
     this.navigationInHandler = this.navigationInHandler.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
-    this.onAutoSlideShowButtonClick =
-      this.onAutoSlideShowButtonClick.bind(this);
-    this.startAutoSlideshowIfNeeded =
-      this.startAutoSlideshowIfNeeded.bind(this);
-    this.blockAutoSlideshowIfNeeded =
-      this.blockAutoSlideshowIfNeeded.bind(this);
+    this.onAutoSlideShowButtonClick = this.onAutoSlideShowButtonClick.bind(
+      this
+    );
+    this.startAutoSlideshowIfNeeded = this.startAutoSlideshowIfNeeded.bind(
+      this
+    );
+    this.blockAutoSlideshowIfNeeded = this.blockAutoSlideshowIfNeeded.bind(
+      this
+    );
     this.shouldStartAutoSlideshow = this.shouldStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
-    this.onAutoSlideshowAutoPlayKeyPress =
-      this.onAutoSlideshowAutoPlayKeyPress.bind(this);
+    this.onAutoSlideshowAutoPlayKeyPress = this.onAutoSlideshowAutoPlayKeyPress.bind(
+      this
+    );
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
     this._setCurrentItemByScroll = utils
       .throttle(this.setCurrentItemByScroll, 600)
@@ -73,8 +77,12 @@ class SlideshowView extends GalleryComponent {
   }
 
   isScrollEnd() {
-    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
-      this.props;
+    const {
+      totalItemsCount,
+      getVisibleItems,
+      galleryStructure,
+      container,
+    } = this.props;
     const { slideshowLoop, slideAnimation } = this.props.styleParams;
 
     if (
@@ -375,8 +383,9 @@ class SlideshowView extends GalleryComponent {
     if (this.lastCurrentItem !== this.state.currentIdx) {
       this.lastCurrentItem = this.state.currentIdx;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
-      const currentGalleryItem =
-        this.props.galleryStructure.galleryItems[this.state.currentIdx];
+      const currentGalleryItem = this.props.galleryStructure.galleryItems[
+        this.state.currentIdx
+      ];
       const item = this.props.items[this.state.currentIdx];
       if (item) {
         item.idx = this.state.currentIdx;
@@ -975,8 +984,12 @@ class SlideshowView extends GalleryComponent {
   }
 
   createLayout() {
-    const { itemsLoveData, getVisibleItems, galleryStructure, container } =
-      this.props;
+    const {
+      itemsLoveData,
+      getVisibleItems,
+      galleryStructure,
+      container,
+    } = this.props;
 
     const galleryConfig = {
       scrollingElement: this.props.scrollingElement,
@@ -1242,8 +1255,8 @@ class SlideshowView extends GalleryComponent {
 
   getThumbnails() {
     const hasThumbnails = this.props.styleParams.hasThumbnails;
-    const thumbnailsPosition =
-      this.props.styleParams.galleryThumbnailsAlignment;
+    const thumbnailsPosition = this.props.styleParams
+      .galleryThumbnailsAlignment;
 
     const thumbnailsGallery = hasThumbnails
       ? this.createThumbnails(thumbnailsPosition)
@@ -1303,8 +1316,11 @@ class SlideshowView extends GalleryComponent {
 
   blockAutoSlideshowIfNeeded(props = this.props) {
     const { isGalleryInHover } = props;
-    const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView } =
-      this.state;
+    const {
+      pauseAutoSlideshowClicked,
+      shouldBlockAutoSlideshow,
+      isInView,
+    } = this.state;
     let should = false;
     if (!isInView || pauseAutoSlideshowClicked) {
       should = true;

@@ -21,8 +21,9 @@ class GalleryView extends GalleryComponent {
   }
 
   handleArrowKeys(e) {
-    const activeItemIdx =
-      window.document.activeElement.getAttribute('data-idx');
+    const activeItemIdx = window.document.activeElement.getAttribute(
+      'data-idx'
+    );
 
     if (activeItemIdx) {
       const findNeighborItem =

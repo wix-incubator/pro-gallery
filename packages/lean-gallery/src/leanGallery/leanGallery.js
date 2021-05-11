@@ -43,8 +43,12 @@ export default class LeanGallery extends React.Component {
 
   // #region Gallery
   createGalleryStyle() {
-    const { gridStyle, fixedColumns, imageMargin, cubeImages } =
-      this.props.styles;
+    const {
+      gridStyle,
+      fixedColumns,
+      imageMargin,
+      cubeImages,
+    } = this.props.styles;
 
     const itemSize = this.calcItemContainerSize();
     const numberOfColumns =

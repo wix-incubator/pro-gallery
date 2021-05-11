@@ -3,7 +3,19 @@ import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 class CssScrollHelper {
   constructor() {
     this.pgScrollSteps = [
-      40960, 20480, 10240, 5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10,
+      40960,
+      20480,
+      10240,
+      5120,
+      2560,
+      1280,
+      640,
+      320,
+      160,
+      80,
+      40,
+      20,
+      10,
     ];
     this.pgScrollClassName = 'pgscl';
 

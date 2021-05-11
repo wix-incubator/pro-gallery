@@ -252,9 +252,9 @@ export class Group {
         const ratios = this.items
           .map((item) => item.orientation.slice(0, 1))
           .join('');
-        optionalTypes = (
-          isV ? GROUP_TYPES_BY_RATIOS_V : GROUP_TYPES_BY_RATIOS_H
-        )[ratios];
+        optionalTypes = (isV
+          ? GROUP_TYPES_BY_RATIOS_V
+          : GROUP_TYPES_BY_RATIOS_H)[ratios];
       } else if (this.items.length === 3 || forcedGroupSize === 3) {
         optionalTypes = isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v';
       }

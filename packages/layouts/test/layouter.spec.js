@@ -419,8 +419,9 @@ describe('Layouter', () => {
 
         const isWithinTypes = gallery.columns[0].groups.reduce(
           (g, group, idx) => {
-            const rotatingGroupTypes =
-              styleParams.rotatingGroupTypes.split(',');
+            const rotatingGroupTypes = styleParams.rotatingGroupTypes.split(
+              ','
+            );
             const expectedType =
               rotatingGroupTypes[idx % rotatingGroupTypes.length];
             const groupType = group.type;

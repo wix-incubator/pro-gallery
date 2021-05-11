@@ -149,8 +149,9 @@ export default class BlueprintsManager {
 
   // ------------------ Get all the needed raw data ---------------------------- //
   async completeParams(params) {
-    let { dimensions, items, styles, domId } =
-      this.alignParamNamingOptions(params);
+    let { dimensions, items, styles, domId } = this.alignParamNamingOptions(
+      params
+    );
     dimensions = await this.fetchDimensionsIfNeeded(dimensions);
     items = await this.fetchItemsIfNeeded(items);
     styles = await this.fetchStylesIfNeeded(styles); // can be async... TODO

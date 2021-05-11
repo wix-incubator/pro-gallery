@@ -30,22 +30,28 @@ class Blueprints {
       } = lastParams;
       // getItems,styles and dimesions if not supplied in params;
 
-      const { formattedItems, changed: itemsChanged } =
-        this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
-      const { formattedStyles, changed: stylesChanged } =
-        this.formatStylesIfNeeded(
-          newStylesParams,
-          oldStylesParams,
-          isUsingCustomInfoElements
-        );
-      const { formattedContainer, changed: containerChanged } =
-        this.formatContainerIfNeeded(
-          newDimensionsParams,
-          oldDimensionsParams,
-          oldStylesParams,
-          formattedStyles || existingBlueprint.styles,
-          stylesChanged
-        );
+      const {
+        formattedItems,
+        changed: itemsChanged,
+      } = this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
+      const {
+        formattedStyles,
+        changed: stylesChanged,
+      } = this.formatStylesIfNeeded(
+        newStylesParams,
+        oldStylesParams,
+        isUsingCustomInfoElements
+      );
+      const {
+        formattedContainer,
+        changed: containerChanged,
+      } = this.formatContainerIfNeeded(
+        newDimensionsParams,
+        oldDimensionsParams,
+        oldStylesParams,
+        formattedStyles || existingBlueprint.styles,
+        stylesChanged
+      );
 
       const changed = itemsChanged || stylesChanged || containerChanged;
       changedParams = { itemsChanged, stylesChanged, containerChanged };
@@ -82,8 +88,8 @@ class Blueprints {
           !existingBlueprint.styles.oneRow &&
           existingBlueprint.styles.enableInfiniteScroll;
         if (isInfinite) {
-          existingBlueprint.container.height =
-            existingBlueprint.container.galleryHeight = structure.height;
+          existingBlueprint.container.height = existingBlueprint.container.galleryHeight =
+            structure.height;
         }
       }
     } catch (error) {

@@ -36,8 +36,9 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
-    this.setCurrentSlideshowViewIdx =
-      this.setCurrentSlideshowViewIdx.bind(this);
+    this.setCurrentSlideshowViewIdx = this.setCurrentSlideshowViewIdx.bind(
+      this
+    );
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -89,8 +90,9 @@ export class GalleryContainer extends React.Component {
         this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
       } else {
         //IE (new CustomEvent is not supported in IE)
-        this.currentHoverChangeEvent =
-          window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+        this.currentHoverChangeEvent = window.document.createEvent(
+          'CustomEvent'
+        ); // MUST be 'CustomEvent'
         this.currentHoverChangeEvent.initCustomEvent(
           'current_hover_change',
           false,
@@ -183,8 +185,11 @@ export class GalleryContainer extends React.Component {
 
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
-    const { container, needToHandleShowMoreClick, initialGalleryHeight } =
-      this.state;
+    const {
+      container,
+      needToHandleShowMoreClick,
+      initialGalleryHeight,
+    } = this.state;
     const styleParams = this.props.styles;
     const numOfItems = this.state.items.length;
     const layoutHeight = this.props.structure.height;
