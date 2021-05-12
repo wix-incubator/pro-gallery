@@ -19,7 +19,6 @@ export const fixedStyles = {
   isColumns: false,
   isSlideshow: false,
   cropOnlyFill: false,
-  oneRow: false,
 };
 
 export const createStyles = (styles) => {

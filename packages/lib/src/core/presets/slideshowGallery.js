@@ -9,7 +9,6 @@ export const fixedStyles = {
   enableInfiniteScroll: true,
   cubeRatio: '100%/100%',
   cubeImages: true,
-  oneRow: true,
   hoveringBehaviour: INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   galleryMargin: 0,

@@ -3,7 +3,9 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Thumbnails Position',
-  isRelevant: (styleParams) => styleParams.oneRow && styleParams.hasThumbnails,
+  isRelevant: (styleParams) =>
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    styleParams.hasThumbnails,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Gallery preset" to "Thumbnail".',
   type: INPUT_TYPES.TEXT,

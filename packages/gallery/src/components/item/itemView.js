@@ -68,15 +68,12 @@ class ItemView extends GalleryComponent {
     this.onMouseOut = this.onMouseOut.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
-      this
-    );
-    this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(
-      this
-    );
-    this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(
-      this
-    );
+    this.changeActiveElementIfNeeded =
+      this.changeActiveElementIfNeeded.bind(this);
+    this.checkIfCurrentHoverChanged =
+      this.checkIfCurrentHoverChanged.bind(this);
+    this.getCustomInfoRendererProps =
+      this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -716,13 +713,8 @@ class ItemView extends GalleryComponent {
       styleParams,
       settings = {},
     } = this.props;
-    const {
-      oneRow,
-      imageMargin,
-      itemClick,
-      isRTL,
-      slideAnimation,
-    } = styleParams;
+    const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
+      styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -731,7 +723,10 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin: oneRow ? imageMargin / 2 + 'px' : 0,
+      margin:
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? imageMargin / 2 + 'px'
+          : 0,
       cursor:
         itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
         (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)

@@ -1,4 +1,5 @@
 import { INPUT_TYPES } from '../utils/constants';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Number Of Columns',
@@ -7,7 +8,7 @@ export default {
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical"), set "Layout Orientation" to "columns" and set "Responsive Type" to "Set Items Per Row".',
   isRelevant: (styleParams) =>
-    !styleParams.oneRow &&
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     styleParams.isVertical &&
     styleParams.gridStyle === 1,
   type: INPUT_TYPES.NUMBER,

@@ -4,7 +4,10 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Slide Animation',
-  isRelevant: (sp) => sp.oneRow && sp.groupSize === 1 && sp.cubeImages,
+  isRelevant: (sp) =>
+    sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    sp.groupSize === 1 &&
+    sp.cubeImages,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Max Group Size" to "1" and set "Crop Images" to true.',
   type: INPUT_TYPES.OPTIONS,

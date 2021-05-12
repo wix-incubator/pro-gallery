@@ -4,6 +4,8 @@ import { addPresetStyles } from '../presets/presets';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import processLayouts from '../helpers/layoutHelper.js';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import { stylesMigrator } from '../helpers/stylesMigrator';
 
 class Blueprints {
   createBlueprint({
@@ -30,28 +32,22 @@ class Blueprints {
       } = lastParams;
       // getItems,styles and dimesions if not supplied in params;
 
-      const {
-        formattedItems,
-        changed: itemsChanged,
-      } = this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
-      const {
-        formattedStyles,
-        changed: stylesChanged,
-      } = this.formatStylesIfNeeded(
-        newStylesParams,
-        oldStylesParams,
-        isUsingCustomInfoElements
-      );
-      const {
-        formattedContainer,
-        changed: containerChanged,
-      } = this.formatContainerIfNeeded(
-        newDimensionsParams,
-        oldDimensionsParams,
-        oldStylesParams,
-        formattedStyles || existingBlueprint.styles,
-        stylesChanged
-      );
+      const { formattedItems, changed: itemsChanged } =
+        this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
+      const { formattedStyles, changed: stylesChanged } =
+        this.formatStylesIfNeeded(
+          newStylesParams,
+          oldStylesParams,
+          isUsingCustomInfoElements
+        );
+      const { formattedContainer, changed: containerChanged } =
+        this.formatContainerIfNeeded(
+          newDimensionsParams,
+          oldDimensionsParams,
+          oldStylesParams,
+          formattedStyles || existingBlueprint.styles,
+          stylesChanged
+        );
 
       const changed = itemsChanged || stylesChanged || containerChanged;
       changedParams = { itemsChanged, stylesChanged, containerChanged };
@@ -85,11 +81,12 @@ class Blueprints {
 
         // if its an infinite gallery - let the container loose
         const isInfinite =
-          !existingBlueprint.styles.oneRow &&
+          existingBlueprint.styles.scrollDirection ===
+            GALLERY_CONSTS.scrollDirection.VERTICAL &&
           existingBlueprint.styles.enableInfiniteScroll;
         if (isInfinite) {
-          existingBlueprint.container.height = existingBlueprint.container.galleryHeight =
-            structure.height;
+          existingBlueprint.container.height =
+            existingBlueprint.container.galleryHeight = structure.height;
         }
       }
     } catch (error) {
@@ -251,7 +248,7 @@ class Blueprints {
     if (stylesHaveChanged(styles, oldStylesParams)) {
       styles = { ...defaultStyles, ...styles };
       formattedStyles = processLayouts(
-        addPresetStyles(styles),
+        addPresetStyles(stylesMigrator(styles)),
         isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
@@ -285,7 +282,9 @@ class Blueprints {
       }
       const dimensionsHaveChanged = {
         height:
-          !formattedStyles.oneRow && formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
+          formattedStyles.scrollDirection ===
+            GALLERY_CONSTS.scrollDirection.VERTICAL &&
+          formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
             ? false
             : !!newDimensionsParams.height &&
               newDimensionsParams.height !== oldDimensionsParams.height,
