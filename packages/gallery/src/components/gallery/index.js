@@ -6,7 +6,6 @@ import basePropTypes from './proGallery/propTypes';
 export default class BaseGallery extends React.Component {
   constructor(props) {
     super();
-    console.log('BaseGallery');
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.domId = props.domId || 'default-dom-id';
     this.isUsingCustomInfoElements =
