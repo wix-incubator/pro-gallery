@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { window, utils } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
@@ -307,3 +308,4 @@ class GalleryView extends GalleryComponent {
 }
 
 export default GalleryView;
+/* eslint-enable prettier/prettier */

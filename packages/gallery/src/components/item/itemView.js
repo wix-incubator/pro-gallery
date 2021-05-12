@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -1222,3 +1223,4 @@ class ItemView extends GalleryComponent {
 }
 
 export default ItemView;
+/* eslint-enable prettier/prettier */

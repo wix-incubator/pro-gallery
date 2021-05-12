@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { utils, defaultStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
@@ -38,3 +39,4 @@ export default class BaseGallery extends React.Component {
     }
   }
 }
+/* eslint-enable prettier/prettier */

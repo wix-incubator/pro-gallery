@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { utils, isEditMode } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
@@ -119,3 +120,4 @@ class VideoItemWrapper extends ImageItem {
 }
 
 export default VideoItemWrapper;
+/* eslint-enable prettier/prettier */

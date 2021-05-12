@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
@@ -268,3 +269,4 @@ export default class ImageItem extends GalleryComponent {
     return renderedItem;
   }
 }
+/* eslint-enable prettier/prettier */

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const images = [
   {
     metadata: {
@@ -796,3 +797,4 @@ const textItems = [
 }));
 
 export { images, images2, videoItems, textItems, itemsWithDirectShareLink };
+/* eslint-enable prettier/prettier */
