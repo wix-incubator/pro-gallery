@@ -28,9 +28,8 @@ class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(
-      this
-    );
+    this.createVideoItemPlaceholder =
+      this.createVideoItemPlaceholder.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 

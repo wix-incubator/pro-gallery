@@ -253,12 +253,8 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const {
-        columnWidths,
-        cubeRatio,
-        externalInfoWidth,
-        imageMargin,
-      } = this.styleParams;
+      const { columnWidths, cubeRatio, externalInfoWidth, imageMargin } =
+        this.styleParams;
 
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
