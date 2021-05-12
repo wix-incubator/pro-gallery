@@ -1,3 +1,9 @@
+## [v3.1.17](https://pro-gallery-3-1-17.surge.sh) (12/05/2021)
+ 
+#### GALLERY
+ -  fix: remove setTimeout in imageItem - transparent images bug
+
+---
 ## [v3.1.16](https://pro-gallery-3-1-16.surge.sh) (11/05/2021)
 
  #### MAIN
