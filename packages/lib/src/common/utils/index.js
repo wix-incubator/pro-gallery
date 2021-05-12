@@ -641,8 +641,9 @@ class Utils {
           `https://pro-gallery.surge.sh?${stylesStr}`
         );
       }
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 
