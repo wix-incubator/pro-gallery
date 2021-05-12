@@ -68,15 +68,12 @@ class ItemView extends GalleryComponent {
     this.onMouseOut = this.onMouseOut.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
-      this
-    );
-    this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(
-      this
-    );
-    this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(
-      this
-    );
+    this.changeActiveElementIfNeeded =
+      this.changeActiveElementIfNeeded.bind(this);
+    this.checkIfCurrentHoverChanged =
+      this.checkIfCurrentHoverChanged.bind(this);
+    this.getCustomInfoRendererProps =
+      this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -716,13 +713,8 @@ class ItemView extends GalleryComponent {
       styleParams,
       settings = {},
     } = this.props;
-    const {
-      oneRow,
-      imageMargin,
-      itemClick,
-      isRTL,
-      slideAnimation,
-    } = styleParams;
+    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } =
+      styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -1046,8 +1038,9 @@ class ItemView extends GalleryComponent {
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     window.addEventListener(
