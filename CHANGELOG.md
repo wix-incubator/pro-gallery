@@ -1,3 +1,15 @@
+## [v3.1.16](https://pro-gallery-3-1-16.surge.sh) (11/05/2021)
+
+ #### MAIN
+ - improve: upgrade to node 14.16.1
+
+#### GALLERY
+ - improve: removed not relevant settings (renderVisibleItemsInSsr, forceImagePreload)
+ 
+---
+## [v3.1.15](https://pro-gallery-3-1-15.surge.sh) (11/05/2021)
+
+---
 ## [v3.1.14](https://pro-gallery-3-1-14.surge.sh) (06/05/2021)
  
 #### GALLERY

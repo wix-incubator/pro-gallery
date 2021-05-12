@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { window, utils } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
@@ -21,9 +22,8 @@ class GalleryView extends GalleryComponent {
   }
 
   handleArrowKeys(e) {
-    const activeItemIdx = window.document.activeElement.getAttribute(
-      'data-idx'
-    );
+    const activeItemIdx =
+      window.document.activeElement.getAttribute('data-idx');
 
     if (activeItemIdx) {
       const findNeighborItem =
@@ -308,3 +308,4 @@ class GalleryView extends GalleryComponent {
 }
 
 export default GalleryView;
+/* eslint-enable prettier/prettier */
