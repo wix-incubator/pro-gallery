@@ -1038,8 +1038,9 @@ class ItemView extends GalleryComponent {
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
+      } catch (e) {
+        console.error('failed initializeTouchEvents', e);
+      }
     }
 
     window.addEventListener(
