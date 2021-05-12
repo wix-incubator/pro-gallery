@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -507,3 +508,4 @@ function getInnerInfoStylesRightOrLeft(styleParams, infoWidth) {
     width: infoWidth,
   };
 }
+/* eslint-enable */
