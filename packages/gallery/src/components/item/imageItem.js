@@ -7,16 +7,14 @@ export default class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
-    this.getImageContainerClassNames = this.getImageContainerClassNames.bind(
-      this
-    );
+    this.getImageContainerClassNames =
+      this.getImageContainerClassNames.bind(this);
     this.getImageElement = this.getImageElement.bind(this);
 
     this.state = {
       isHighResImageLoaded: false,
     };
 
-    this.removeLowResImageTimeoutId = undefined;
     this.handleHighResImageLoad = this.handleHighResImageLoad.bind(this);
   }
 
@@ -32,17 +30,10 @@ export default class ImageItem extends GalleryComponent {
 
   handleHighResImageLoad() {
     this.setState({ isHighResImageLoaded: true });
-    this.removeLowResImageTimeoutId = undefined;
     try {
       this.props.actions.setItemLoaded();
     } catch (e) {
       console.error('Failed to load high res image', e);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.removeLowResImageTimeoutId !== undefined) {
-      clearTimeout(this.removeLowResImageTimeoutId);
     }
   }
 
