@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
@@ -388,3 +389,4 @@ function isSlideshowFont(styles) {
 }
 
 export default processLayouts;
+/* eslint-enable prettier/prettier */

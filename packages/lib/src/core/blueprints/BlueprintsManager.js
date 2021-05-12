@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import blueprints from './Blueprints';
 import { viewModeWrapper } from '../../common/window/viewModeWrapper';
 
@@ -253,3 +254,4 @@ export default class BlueprintsManager {
     this.getMoreItems(currentItemLength);
   }
 }
+/* eslint-enable prettier/prettier */

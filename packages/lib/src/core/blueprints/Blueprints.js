@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Layouter } from 'pro-layouts';
 import defaultStyles from '../../common/defaultStyles';
 import { addPresetStyles } from '../presets/presets';
@@ -349,3 +350,4 @@ class Blueprints {
 }
 const blueprints = new Blueprints();
 export default blueprints;
+/* eslint-enable prettier/prettier */

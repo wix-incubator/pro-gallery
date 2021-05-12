@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as lodash from './lodash';
 import window from '../window/windowWrapper';
 import {
@@ -646,3 +647,4 @@ class Utils {
 }
 
 export default new Utils();
+/* eslint-enable prettier/prettier */
