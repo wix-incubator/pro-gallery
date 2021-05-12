@@ -29,7 +29,6 @@ const styleParams = {
   rotatingScatter: '',
   gridStyle: 0,
   placeGroupsLtr: false,
-  viewMode: 'preview',
   showArrows: true,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
@@ -102,6 +101,7 @@ const styleParams = {
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,
+  shouldIndexDirectShareLinkInSEO: true,
 };
 
 const container = {

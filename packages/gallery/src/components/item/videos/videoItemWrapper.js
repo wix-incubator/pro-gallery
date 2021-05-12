@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { utils, isEditMode } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
@@ -28,9 +29,8 @@ class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(
-      this
-    );
+    this.createVideoItemPlaceholder =
+      this.createVideoItemPlaceholder.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 
@@ -120,3 +120,4 @@ class VideoItemWrapper extends ImageItem {
 }
 
 export default VideoItemWrapper;
+/* eslint-enable prettier/prettier */

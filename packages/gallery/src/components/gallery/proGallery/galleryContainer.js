@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -36,9 +37,8 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
-    this.setCurrentSlideshowViewIdx = this.setCurrentSlideshowViewIdx.bind(
-      this
-    );
+    this.setCurrentSlideshowViewIdx =
+      this.setCurrentSlideshowViewIdx.bind(this);
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -90,9 +90,8 @@ export class GalleryContainer extends React.Component {
         this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
       } else {
         //IE (new CustomEvent is not supported in IE)
-        this.currentHoverChangeEvent = window.document.createEvent(
-          'CustomEvent'
-        ); // MUST be 'CustomEvent'
+        this.currentHoverChangeEvent =
+          window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
         this.currentHoverChangeEvent.initCustomEvent(
           'current_hover_change',
           false,
@@ -131,8 +130,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = (props) => {
-      const { domId, styles, container, items, watermark } = props;
-      return { domId, styles, container, items, watermark };
+      const { domId, styles, container, items, watermark, isInDisplay } = props;
+      return { domId, styles, container, items, watermark, isInDisplay };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -185,11 +184,8 @@ export class GalleryContainer extends React.Component {
 
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
-    const {
-      container,
-      needToHandleShowMoreClick,
-      initialGalleryHeight,
-    } = this.state;
+    const { container, needToHandleShowMoreClick, initialGalleryHeight } =
+      this.state;
     const styleParams = this.props.styles;
     const numOfItems = this.state.items.length;
     const layoutHeight = this.props.structure.height;
@@ -239,7 +235,7 @@ export class GalleryContainer extends React.Component {
     const scrollY = window.scrollY;
     const { galleryHeight, scrollBase, galleryWidth } = container;
     if (
-      (utils.isSSR() && !this.props.settings.renderVisibleItemsInSsr) ||
+      utils.isSSR() ||
       isSEOMode() ||
       isEditMode() ||
       gotFirstScrollEvent ||
@@ -813,3 +809,4 @@ export class GalleryContainer extends React.Component {
 }
 
 export default GalleryContainer;
+/* eslint-enable prettier/prettier */

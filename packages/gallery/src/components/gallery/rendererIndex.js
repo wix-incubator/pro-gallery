@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { utils, defaultStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
@@ -12,13 +13,8 @@ export default class BaseGallery extends React.Component {
   }
 
   render() {
-    const {
-      styles,
-      options,
-      styleParams,
-      eventsListener,
-      ...otherProps
-    } = this.props;
+    const { styles, options, styleParams, eventsListener, ...otherProps } =
+      this.props;
     const _eventsListener = (...args) =>
       typeof eventsListener === 'function' && eventsListener(...args);
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams }; //TODOVER3 can we remove the default styles?? blueprints should take care of it
@@ -43,3 +39,4 @@ export default class BaseGallery extends React.Component {
     }
   }
 }
+/* eslint-enable prettier/prettier */

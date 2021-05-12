@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import blueprints from './Blueprints';
 import { viewModeWrapper } from '../../common/window/viewModeWrapper';
 
@@ -60,7 +61,7 @@ export default class BlueprintsManager {
     blueprintCreated &&
       this.api.onBlueprintReady &&
       this.api.onBlueprintReady({ blueprint, blueprintChanged });
-    return (this.cache[params] = this.existingBlueprint = blueprint); //still returning for awaits... event is !blueprintCreated
+    return (this.cache[params] = this.existingBlueprint = blueprint); // still returning for awaits... event is !blueprintCreated
   }
 
   async getMoreItems(currentItemLength) {
@@ -149,9 +150,8 @@ export default class BlueprintsManager {
 
   // ------------------ Get all the needed raw data ---------------------------- //
   async completeParams(params) {
-    let { dimensions, items, styles, domId } = this.alignParamNamingOptions(
-      params
-    );
+    let { dimensions, items, styles, domId } =
+      this.alignParamNamingOptions(params);
     dimensions = await this.fetchDimensionsIfNeeded(dimensions);
     items = await this.fetchItemsIfNeeded(items);
     styles = await this.fetchStylesIfNeeded(styles); // can be async... TODO
@@ -254,3 +254,4 @@ export default class BlueprintsManager {
     this.getMoreItems(currentItemLength);
   }
 }
+/* eslint-enable prettier/prettier */

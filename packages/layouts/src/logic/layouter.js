@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { utils } from './utils';
 import { Item } from './item.js';
 import { Group } from './group.js';
@@ -253,12 +254,8 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const {
-        columnWidths,
-        cubeRatio,
-        externalInfoWidth,
-        imageMargin,
-      } = this.styleParams;
+      const { columnWidths, cubeRatio, externalInfoWidth, imageMargin } =
+        this.styleParams;
 
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
@@ -625,3 +622,4 @@ export default class Layouter {
     };
   }
 }
+/* eslint-enable prettier/prettier */

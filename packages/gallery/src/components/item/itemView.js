@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -68,15 +69,12 @@ class ItemView extends GalleryComponent {
     this.onMouseOut = this.onMouseOut.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
-      this
-    );
-    this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(
-      this
-    );
-    this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(
-      this
-    );
+    this.changeActiveElementIfNeeded =
+      this.changeActiveElementIfNeeded.bind(this);
+    this.checkIfCurrentHoverChanged =
+      this.checkIfCurrentHoverChanged.bind(this);
+    this.getCustomInfoRendererProps =
+      this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -716,13 +714,8 @@ class ItemView extends GalleryComponent {
       styleParams,
       settings = {},
     } = this.props;
-    const {
-      oneRow,
-      imageMargin,
-      itemClick,
-      isRTL,
-      slideAnimation,
-    } = styleParams;
+    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } =
+      styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -1124,8 +1117,10 @@ class ItemView extends GalleryComponent {
       // place share link as the navigation item
       const url = directShareLink;
       const shouldUseDirectShareLink = !!url;
+      const shouldUseNofollow = !styleParams.shouldIndexDirectShareLinkInSEO;
+      const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
       const linkParams = shouldUseDirectShareLink
-        ? { href: url, 'data-cancel-link': true }
+        ? { href: url, 'data-cancel-link': true, ...seoLinkParams }
         : {};
       return linkParams;
     }
@@ -1228,3 +1223,4 @@ class ItemView extends GalleryComponent {
 }
 
 export default ItemView;
+/* eslint-enable prettier/prettier */

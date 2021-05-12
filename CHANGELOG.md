@@ -1,3 +1,31 @@
+## [v3.1.16](https://pro-gallery-3-1-16.surge.sh) (11/05/2021)
+
+ #### MAIN
+ - improve: upgrade to node 14.16.1
+
+#### GALLERY
+ - improve: removed not relevant settings (renderVisibleItemsInSsr, forceImagePreload)
+ 
+---
+## [v3.1.15](https://pro-gallery-3-1-15.surge.sh) (11/05/2021)
+
+---
+## [v3.1.14](https://pro-gallery-3-1-14.surge.sh) (06/05/2021)
+ 
+#### GALLERY
+ -  improve (events): remove depracated events
+ -  fix: delete undefined function - ScrollializePlayState
+
+---
+## [v3.1.13](https://pro-gallery-3-1-13.surge.sh) (04/05/2021)
+ 
+#### GALLERY
+ -  feat: added shouldIndexDirectShareLinkInSEO styleParam
+ -  added isInDisplay to getSignificantProps 
+ 
+
+
+---
 ## [v3.1.12](https://pro-gallery-3-1-12.surge.sh) (02/05/2021)
  
 #### GALLERY

@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "3.1.12",
+  "version": "3.1.16",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -21,9 +21,10 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "start": "tsc -w && npm run css-watch",
     "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
+    "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
+    "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
     "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
     "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
@@ -37,8 +38,8 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "3.1.10",
-    "pro-layouts": "3.0.9",
+    "pro-gallery-lib": "3.1.15",
+    "pro-layouts": "3.1.15",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -50,6 +51,7 @@
     "@typescript-eslint/parser": "^4.8.1",
     "chai": "^4.1.2",
     "chai-spies": "^0.7.1",
+    "concurrently": "^6.1.0",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-15.4": "^1.0.4",
     "enzyme-adapter-react-16": "^1.7.1",
