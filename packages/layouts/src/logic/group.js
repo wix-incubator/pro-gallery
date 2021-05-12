@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Item } from './item.js';
 
 const GROUP_TYPES_BY_RATIOS_V = {
@@ -833,3 +834,4 @@ export class Group {
     };
   }
 }
+/* eslint-enable prettier/prettier */

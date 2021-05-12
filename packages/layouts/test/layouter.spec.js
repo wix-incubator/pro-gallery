@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
@@ -794,3 +796,4 @@ describe('Layouter', () => {
     });
   });
 });
+/* eslint-enable prettier/prettier */

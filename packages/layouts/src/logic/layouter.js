@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { utils } from './utils';
 import { Item } from './item.js';
 import { Group } from './group.js';
@@ -621,3 +622,4 @@ export default class Layouter {
     };
   }
 }
+/* eslint-enable prettier/prettier */
