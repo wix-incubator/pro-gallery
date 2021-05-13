@@ -1,4 +1,4 @@
-import utils from '../common/utils/index';
+import utils from '../../common/utils/index';
 
 export function stylesMigrator(styles, GALLERY_CONSTS) {
   function consolidateOneRow(styles) {
