@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
@@ -164,19 +165,13 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
-    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
-      /^font\s*:\s*/,
-      ''
-    );
-    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
-      /;$/,
-      ''
-    );
+    processedStyles.loadMoreButtonFont.value =
+      processedStyles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
+    processedStyles.loadMoreButtonFont.value =
+      processedStyles.loadMoreButtonFont.value.replace(/;$/, '');
     if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > -1) {
-      processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
-        'underline',
-        ''
-      );
+      processedStyles.loadMoreButtonFont.value =
+        processedStyles.loadMoreButtonFont.value.replace('underline', '');
       processedStyles.textDecorationLoadMore = 'underline';
     } else {
       processedStyles.textDecorationLoadMore = 'none';
@@ -394,3 +389,4 @@ function isSlideshowFont(styles) {
 }
 
 export default processLayouts;
+/* eslint-enable prettier/prettier */

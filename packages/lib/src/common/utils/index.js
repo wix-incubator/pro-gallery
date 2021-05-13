@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as lodash from './lodash';
 import window from '../window/windowWrapper';
 import {
@@ -615,7 +616,8 @@ class Utils {
       return defaultColor;
     }
     const colorStr = color.value ? color.value : color;
-    const colorRegex = /(?:#|0x)(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
+    const colorRegex =
+      /(?:#|0x)(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
     const regexRes = colorRegex.exec(colorStr);
     const isValidColor = regexRes && regexRes[0];
     return isValidColor ? colorStr : defaultColor;
@@ -639,9 +641,11 @@ class Utils {
           `https://pro-gallery.surge.sh?${stylesStr}`
         );
       }
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 
 export default new Utils();
+/* eslint-enable prettier/prettier */

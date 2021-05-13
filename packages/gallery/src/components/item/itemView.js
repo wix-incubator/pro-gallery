@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -1041,8 +1042,9 @@ class ItemView extends GalleryComponent {
     if (utils.isMobile()) {
       try {
         React.initializeTouchEvents(true);
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
+      } catch (e) {
+        console.error(e)
+      }
     }
 
     window.addEventListener(
@@ -1225,3 +1227,4 @@ class ItemView extends GalleryComponent {
 }
 
 export default ItemView;
+/* eslint-enable prettier/prettier */

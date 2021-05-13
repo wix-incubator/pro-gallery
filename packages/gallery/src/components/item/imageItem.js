@@ -1,24 +1,21 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 
-const BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION = 1000;
-
 export default class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
-    this.getImageContainerClassNames = this.getImageContainerClassNames.bind(
-      this
-    );
+    this.getImageContainerClassNames =
+      this.getImageContainerClassNames.bind(this);
     this.getImageElement = this.getImageElement.bind(this);
 
     this.state = {
       isHighResImageLoaded: false,
     };
 
-    this.removeLowResImageTimeoutId = undefined;
     this.handleHighResImageLoad = this.handleHighResImageLoad.bind(this);
   }
 
@@ -33,20 +30,11 @@ export default class ImageItem extends GalleryComponent {
   }
 
   handleHighResImageLoad() {
-    this.removeLowResImageTimeoutId = setTimeout(() => {
-      this.setState({ isHighResImageLoaded: true });
-      this.removeLowResImageTimeoutId = undefined;
-    }, BLURRY_IMAGE_REMOVAL_ANIMATION_DURATION);
+    this.setState({ isHighResImageLoaded: true });
     try {
       this.props.actions.setItemLoaded();
     } catch (e) {
       console.error('Failed to load high res image', e);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.removeLowResImageTimeoutId !== undefined) {
-      clearTimeout(this.removeLowResImageTimeoutId);
     }
   }
 
@@ -269,3 +257,4 @@ export default class ImageItem extends GalleryComponent {
     return renderedItem;
   }
 }
+/* eslint-enable prettier/prettier */

@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
@@ -419,9 +421,8 @@ describe('Layouter', () => {
 
         const isWithinTypes = gallery.columns[0].groups.reduce(
           (g, group, idx) => {
-            const rotatingGroupTypes = styleParams.rotatingGroupTypes.split(
-              ','
-            );
+            const rotatingGroupTypes =
+              styleParams.rotatingGroupTypes.split(',');
             const expectedType =
               rotatingGroupTypes[idx % rotatingGroupTypes.length];
             const groupType = group.type;
@@ -795,3 +796,4 @@ describe('Layouter', () => {
     });
   });
 });
+/* eslint-enable prettier/prettier */

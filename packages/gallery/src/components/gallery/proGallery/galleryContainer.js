@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -828,3 +829,4 @@ export class GalleryContainer extends React.Component {
 }
 
 export default GalleryContainer;
+/* eslint-enable prettier/prettier */
