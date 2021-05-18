@@ -7,6 +7,7 @@ function stylesMigrator(styles, GALLERY_CONSTS) {
     // styles.oneRow =
     //   styles.oneRow ||
     //   styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+
     styles.scrollDirection === styles.oneRow
       ? styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
       : styles.scrollDirection;
