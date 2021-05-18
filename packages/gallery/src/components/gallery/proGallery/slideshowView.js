@@ -24,6 +24,8 @@ class SlideshowView extends GalleryComponent {
     this.navigationInHandler = this.navigationInHandler.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.onAutoSlideShowButtonClick =
       this.onAutoSlideShowButtonClick.bind(this);
     this.startAutoSlideshowIfNeeded =
@@ -46,6 +48,7 @@ class SlideshowView extends GalleryComponent {
       hideLeftArrow: !props.isRTL,
       hideRightArrow: props.isRTL,
       shouldBlockAutoSlideshow: false,
+      isInFocus: false,
     };
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
@@ -460,6 +463,11 @@ class SlideshowView extends GalleryComponent {
         e.preventDefault();
         this._next({ direction: 1, isKeyboardNavigation: true });
         return false;
+      case 27: // esc
+      if(this.props.galleryContainerRef) {
+        this.props.galleryContainerRef.focus();
+      }
+      return false;
     }
     return true; //continue handling the original keyboard event
   }
@@ -1303,25 +1311,42 @@ class SlideshowView extends GalleryComponent {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   blockAutoSlideshowIfNeeded(props = this.props) {
-    const { isGalleryInHover } = props;
-    const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView } =
+    const { isGalleryInHover, styleParams } = props;
+    const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView,isInFocus } =
       this.state;
     let should = false;
     if (!isInView || pauseAutoSlideshowClicked) {
       should = true;
     } else if (
-      isGalleryInHover &&
-      props.styleParams.pauseAutoSlideshowOnHover
+      styleParams.pauseAutoSlideshowOnHover
     ) {
-      should = true;
+      should = isGalleryInHover || isInFocus && styleParams.isAccessible;
     }
     if (shouldBlockAutoSlideshow !== should) {
       this.setState({ shouldBlockAutoSlideshow: should }, () => {
-        this.startAutoSlideshowIfNeeded(props.styleParams);
+        this.startAutoSlideshowIfNeeded(styleParams);
       });
     } else {
       return;
     }
+  }
+
+  onFocus(){
+    this.setState(
+      { isInFocus: true },
+      () => {
+        this.blockAutoSlideshowIfNeeded(this.props);
+      }
+    );
+  }
+
+  onBlur(){
+    this.setState(
+      { isInFocus: false },
+      () => {
+        this.blockAutoSlideshowIfNeeded(this.props);
+      }
+    );
   }
 
   UNSAFE_componentWillReceiveProps(props) {
@@ -1480,6 +1505,8 @@ class SlideshowView extends GalleryComponent {
         onKeyDown={this.handleSlideshowKeyPress}
         role="region"
         aria-label={this.props.proGalleryRegionLabel}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
       >
         {thumbnails[0]}
         {gallery}
