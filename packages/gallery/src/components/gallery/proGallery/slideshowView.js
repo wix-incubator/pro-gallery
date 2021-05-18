@@ -1312,15 +1312,22 @@ class SlideshowView extends GalleryComponent {
 
   blockAutoSlideshowIfNeeded(props = this.props) {
     const { isGalleryInHover, styleParams } = props;
-    const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView,isInFocus } =
+    const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView, isInFocus } =
       this.state;
     let should = false;
     if (!isInView || pauseAutoSlideshowClicked) {
       should = true;
     } else if (
+      isGalleryInHover &&
       styleParams.pauseAutoSlideshowOnHover
     ) {
-      should = isGalleryInHover || isInFocus && styleParams.isAccessible;
+      should = true;
+    } else if (
+      isInFocus &&
+      styleParams.pauseAutoSlideshowOnHover &&
+      styleParams.isAccessible
+    ) {
+      should = true;
     }
     if (shouldBlockAutoSlideshow !== should) {
       this.setState({ shouldBlockAutoSlideshow: should }, () => {
