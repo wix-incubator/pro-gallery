@@ -5,6 +5,7 @@ import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
+import { GALLERY_CONSTS } from 'pro-gallery-lib'
 
 const videoControls = (
   <div>
@@ -29,8 +30,8 @@ class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoItemPlaceholder =
-      this.createVideoItemPlaceholder.bind(this);
+    this.createVideoPlaceholderIfNeeded =
+      this.createVideoPlaceholderIfNeeded.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 
@@ -51,7 +52,8 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoItemPlaceholder(showVideoControls) {
+  createVideoPlaceholderIfNeeded(showVideoControls) {
+    const {styleParams, isSingleItemHorizontalDisplay} = this.props;
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -63,8 +65,11 @@ class VideoItemWrapper extends ImageItem {
       'settings',
       'actions',
     ]);
+    const shouldCreatePlaceHoler =
+      isSingleItemHorizontalDisplay && 
+      styleParams.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
 
-    return (
+    return shouldCreatePlaceHoler ? null : (
       <VideoItemPlaceholder
         {...props}
         key="videoPlaceholder"
@@ -98,7 +103,7 @@ class VideoItemWrapper extends ImageItem {
     const hover = this.props.hover;
     const showVideoControls =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
+    const videoPlaceholder = this.createVideoPlaceholderIfNeeded(showVideoControls);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {

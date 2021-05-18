@@ -998,6 +998,7 @@ class SlideshowView extends GalleryComponent {
       isPrerenderMode: this.props.isPrerenderMode,
       totalWidth: this.props.galleryStructure.width,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
+      isSingleItemHorizontalDisplay: this.props.isSingleItemHorizontalDisplay,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },
