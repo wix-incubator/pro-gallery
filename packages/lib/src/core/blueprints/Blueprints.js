@@ -6,7 +6,6 @@ import dimensionsHelper from '../helpers/dimensionsHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import processLayouts from '../helpers/layoutHelper.js';
 import { default as GALLERY_CONSTS } from '../../common/constants';
-import { stylesMigrator } from '../helpers/stylesMigrator';
 
 class Blueprints {
   createBlueprint({
@@ -249,7 +248,7 @@ class Blueprints {
     if (stylesHaveChanged(styles, oldStylesParams)) {
       styles = { ...defaultStyles, ...styles };
       formattedStyles = processLayouts(
-        addPresetStyles(stylesMigrator(styles, GALLERY_CONSTS)),
+        addPresetStyles(styles),
         isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;

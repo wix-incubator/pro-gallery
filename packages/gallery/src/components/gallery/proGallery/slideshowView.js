@@ -480,7 +480,7 @@ class SlideshowView extends GalleryComponent {
 
     let width = this.props.styleParams.thumbnailSize;
     let height = this.props.styleParams.thumbnailSize;
-    let oneRow;
+    let horizontalThumbnails;
     let numOfThumbnails;
     let numOfWholeThumbnails;
 
@@ -493,7 +493,7 @@ class SlideshowView extends GalleryComponent {
         height =
           this.props.styleParams.thumbnailSize +
           this.props.styleParams.thumbnailSpacings;
-        oneRow = true;
+        horizontalThumbnails = true;
         numOfThumbnails = Math.ceil(
           width / this.props.styleParams.thumbnailSize
         );
@@ -511,7 +511,7 @@ class SlideshowView extends GalleryComponent {
         width =
           this.props.styleParams.thumbnailSize +
           2 * this.props.styleParams.thumbnailSpacings;
-        oneRow = false;
+        horizontalThumbnails = false;
         numOfThumbnails = Math.ceil(
           height / this.props.styleParams.thumbnailSize
         );
@@ -647,7 +647,7 @@ class SlideshowView extends GalleryComponent {
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
-          (oneRow ? ' one-row hide-scrollbars ' : '') +
+          (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
           (this.props.styleParams.isRTL ? ' rtl ' : ' ltr ') +
           (this.props.styleParams.isAccessible ? ' accessible ' : '')
         }
@@ -680,7 +680,7 @@ class SlideshowView extends GalleryComponent {
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               )})`,
             };
-            const thumbnailOffset = oneRow
+            const thumbnailOffset = horizontalThumbnails
               ? {
                   [this.props.styleParams.isRTL ? 'right' : 'left']:
                     thumbnailSize * idx + 2 * idx * thumbnailSpacings,

@@ -1,4 +1,5 @@
 import LAYOUTS from '../../common/constants/layout';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 //#region Imports Layouts
 import {
@@ -52,9 +53,12 @@ import {
   createStyles as emptyStyles,
 } from './emptyGallery';
 import { createStyles as designedPresetStyles } from './designedPresetGallery';
+import { stylesMigrator } from '../helpers/stylesMigrator';
+
 //#endregion Imports
 
 const addPresetStyles = (styles) => {
+  styles = stylesMigrator(styles, GALLERY_CONSTS);
   const galleryType = styles.galleryType;
   const galleryLayoutV1 = styles.galleryType;
   const galleryLayoutV2 = styles.galleryLayout;
