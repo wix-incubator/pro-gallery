@@ -53,7 +53,7 @@ import {
   createStyles as emptyStyles,
 } from './emptyGallery';
 import { createStyles as designedPresetStyles } from './designedPresetGallery';
-import { stylesMigrator } from '../helpers/stylesMigrator';
+import stylesMigrator from '../helpers/stylesMigrator';
 
 //#endregion Imports
 
