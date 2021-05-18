@@ -1,3 +1,6 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { stylesMigrator } from 'pro-gallery-lib';
+
 class Utils {
   constructor() {
     this._hash2int = {};
@@ -95,7 +98,7 @@ class Utils {
         rotatingGroupTypes: '',
         isVertical: true,
         minItemSize: 120,
-        oneRow: false,
+        scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
         targetItemSize: 500,
         collageDensity: 50,
         fixedColumns: 0,
@@ -208,7 +211,7 @@ class Utils {
         : undefined
     );
 
-    return convertedStyleParams;
+    return stylesMigrator(convertedStyleParams, GALLERY_CONSTS);
   }
 
   convertContainer(container, styleParams) {
@@ -232,7 +235,10 @@ class Utils {
         ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0));
       delete convertedContainer.height;
     }
-    if (styleParams.externalInfoHeight >= 0 && styleParams.oneRow) {
+    if (
+      styleParams.externalInfoHeight >= 0 &&
+      styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+    ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }
 
