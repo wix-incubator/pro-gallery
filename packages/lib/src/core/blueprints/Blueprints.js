@@ -249,7 +249,7 @@ class Blueprints {
     if (stylesHaveChanged(styles, oldStylesParams)) {
       styles = { ...defaultStyles, ...styles };
       formattedStyles = processLayouts(
-        addPresetStyles(stylesMigrator(styles)),
+        addPresetStyles(stylesMigrator(styles, GALLERY_CONSTS)),
         isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;

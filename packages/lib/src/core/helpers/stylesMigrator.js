@@ -15,6 +15,7 @@ export function stylesMigrator(styles, GALLERY_CONSTS) {
       styles.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
     }
     delete styles.oneRow;
+    return styles;
   }
   styles = consolidateOneRow(styles);
   return styles;
