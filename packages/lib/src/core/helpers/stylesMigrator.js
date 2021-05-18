@@ -1,6 +1,6 @@
 import utils from '../../common/utils/index';
 
-export function stylesMigrator(styles, GALLERY_CONSTS) {
+function stylesMigrator(styles, GALLERY_CONSTS) {
   function consolidateOneRow(styles) {
     // we consolidated oneRow and the scrollDirection SPs into one, scrollDirection
     // This commented code was removed from processStyles:
@@ -20,3 +20,5 @@ export function stylesMigrator(styles, GALLERY_CONSTS) {
   styles = consolidateOneRow(styles);
   return styles;
 }
+
+export default stylesMigrator;
