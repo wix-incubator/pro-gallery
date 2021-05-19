@@ -726,6 +726,8 @@ export class GalleryContainer extends React.Component {
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
+        ref={e => this.galleryContainerRef = e}
+        tabIndex={-1}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -768,6 +770,7 @@ export class GalleryContainer extends React.Component {
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
+          galleryContainerRef={this.galleryContainerRef}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
