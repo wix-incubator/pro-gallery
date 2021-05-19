@@ -7,15 +7,19 @@ function stylesMigrator(styles, GALLERY_CONSTS) {
     // styles.oneRow =
     //   styles.oneRow ||
     //   styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    if (!utils.isUndefined(styles.oneRow)) {
+      console.warn(
+        'Pro Gallery Styles: oneRow is deprecated. use scrollDirection instead'
+      );
+      styles.scrollDirection === styles.oneRow
+        ? styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        : styles.scrollDirection;
 
-    styles.scrollDirection === styles.oneRow
-      ? styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-      : styles.scrollDirection;
-
-    if (utils.isUndefined(styles.scrollDirection)) {
-      styles.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
+      if (utils.isUndefined(styles.scrollDirection)) {
+        styles.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
+      }
+      delete styles.oneRow;
     }
-    delete styles.oneRow;
     return styles;
   }
   styles = consolidateOneRow(styles);
