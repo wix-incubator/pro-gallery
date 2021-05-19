@@ -6,6 +6,7 @@ import {
   isPreviewMode,
   isFormFactorMobile,
 } from '../window/viewModeWrapper';
+import GALLERY_CONSTS from '../constants'
 
 class Utils {
   constructor() {
@@ -646,7 +647,7 @@ class Utils {
     }
   }
   isSingleItemHorizontalDisplay(styles) {
-    return styles.oneRow &&
+    return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       styles.groupSize === 1 &&
       styles.cubeImages &&
       styles.cubeRatio === '100%/100%';
