@@ -19,6 +19,7 @@ describe('oneRow - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: true,
+      scrollDirection: undefined, //oneRow is converted to scrollDirection only if there is no scrollDirection.
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -29,6 +30,7 @@ describe('oneRow - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       oneRow: false,
+      scrollDirection: undefined, //oneRow is converted to scrollDirection only if there is no scrollDirection.
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
