@@ -1,3 +1,9 @@
+## [v3.1.18](https://pro-gallery-3-1-18.surge.sh) (19/05/2021)
+ 
+#### GALLERY
+ -  feat: A11Y pause auto slide on accessibility focus
+
+---
 ## [v3.1.17](https://pro-gallery-3-1-17.surge.sh) (12/05/2021)
  
 #### GALLERY
