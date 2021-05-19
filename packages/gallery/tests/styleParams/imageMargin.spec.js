@@ -17,7 +17,7 @@ describe('styleParam - imageMargin', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set use CSS property "margin" to create the spacing when gallery is "oneRow"', async () => {
+  it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 7,
       imageMargin: 10,

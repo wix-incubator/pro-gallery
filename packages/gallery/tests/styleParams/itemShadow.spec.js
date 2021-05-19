@@ -51,7 +51,7 @@ describe('styleParam - overlayAnimation', () => {
     expect(boxShadow).to.equal(undefined);
     driver.detach.proGallery();
   });
-  it('should not have box shadow in a "oneRow" gallery', async () => {
+  it('should not have box shadow in a horizontal gallery', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,

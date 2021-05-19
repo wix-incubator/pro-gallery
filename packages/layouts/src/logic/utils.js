@@ -185,7 +185,7 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'oneRow',
+      'oneRow', //isVerticalScroll is converted into oneRow so both will be later converted into scrllDirection by styleMigrator.
       convertedStyleParams.isVerticalScroll
     );
     this.insertIfDefined(

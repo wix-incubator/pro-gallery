@@ -49,7 +49,7 @@ describe('styleParam - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button in a "oneRow" gallery when "enableInfiniteScroll" is false', async () => {
+  it('should not render "Show More" button in a horizontal gallery when "enableInfiniteScroll" is false', async () => {
     // make sure to give the right params to make a horizontal gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
