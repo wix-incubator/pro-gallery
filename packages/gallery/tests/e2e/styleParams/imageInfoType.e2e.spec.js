@@ -22,7 +22,7 @@ describe('imageInfoType - e2e', () => {
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
+      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -37,7 +37,7 @@ describe('imageInfoType - e2e', () => {
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
+      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -52,7 +52,7 @@ describe('imageInfoType - e2e', () => {
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
+      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -67,7 +67,7 @@ describe('imageInfoType - e2e', () => {
       itemBorderWidth: 5,
       textBoxBorderWidth: 5,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
+      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');

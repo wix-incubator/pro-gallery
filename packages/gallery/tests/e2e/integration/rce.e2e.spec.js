@@ -21,7 +21,7 @@ describe('RCE Integration test', () => {
       gallerySizeType: 'px',
       gallerySizePx: 300,
       galleryMargin: 0,
-      oneRow: false,
+      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       cubeRatio: 1,
       galleryThumbnailsAlignment: 'bottom',
       isVertical: false,
@@ -55,7 +55,7 @@ describe('RCE Integration test', () => {
       gallerySizeType: 'px',
       gallerySizePx: 300,
       galleryMargin: 0,
-      oneRow: false,
+      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       cubeRatio: 1,
       galleryThumbnailsAlignment: 'bottom',
       isVertical: false,

@@ -18,7 +18,7 @@ describe('oneRow - e2e', () => {
   it('should render horizontal gallery when "oneRow" is "true"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: undefined, //oneRow is converted to scrollDirection only if there is no scrollDirection.
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -29,7 +29,7 @@ describe('oneRow - e2e', () => {
   it('should render vertical gallery when "oneRow" is "false"', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: false,
+      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: undefined, //oneRow is converted to scrollDirection only if there is no scrollDirection.
     });
     await driver.waitFor.hookToBeVisible('item-container');
