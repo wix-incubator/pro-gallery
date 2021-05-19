@@ -14,12 +14,12 @@ function stylesMigrator(styles, GALLERY_CONSTS) {
       styles.scrollDirection === styles.oneRow
         ? styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
         : styles.scrollDirection;
-
-      if (utils.isUndefined(styles.scrollDirection)) {
-        styles.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
-      }
-      delete styles.oneRow;
     }
+
+    if (utils.isUndefined(styles.scrollDirection)) {
+      styles.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
+    }
+    delete styles.oneRow;
     return styles;
   }
   styles = consolidateOneRow(styles);
