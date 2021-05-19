@@ -26,7 +26,6 @@ import VideoItemWrapper from './videos/videoItemWrapper';
 class ItemView extends GalleryComponent {
   constructor(props) {
     super(props);
-    console.log('constructor ===> ',props);
     this.props.actions.eventsListener(
       GALLERY_CONSTS.events.ITEM_CREATED,
       this.props
@@ -1060,7 +1059,6 @@ class ItemView extends GalleryComponent {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('update ===> ',this.props);
     this.changeActiveElementIfNeeded(prevProps);
   }
 

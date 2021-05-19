@@ -645,6 +645,12 @@ class Utils {
       console.error(e)
     }
   }
+  isSingleItemHorizontalDisplay(styles) {
+    return styles.oneRow &&
+      styles.groupSize === 1 &&
+      styles.cubeImages &&
+      styles.cubeRatio === '100%/100%';
+  }
 }
 
 export default new Utils();

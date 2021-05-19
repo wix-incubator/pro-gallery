@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, isEditMode } from 'pro-gallery-lib';
+import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
-import { GALLERY_CONSTS } from 'pro-gallery-lib'
 
 const videoControls = (
   <div>
@@ -53,7 +52,7 @@ class VideoItemWrapper extends ImageItem {
   }
 
   createVideoPlaceholderIfNeeded(showVideoControls) {
-    const {styleParams, isSingleItemHorizontalDisplay} = this.props;
+    const {styleParams} = this.props;
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -66,7 +65,7 @@ class VideoItemWrapper extends ImageItem {
       'actions',
     ]);
     const shouldCreatePlaceHoler =
-      isSingleItemHorizontalDisplay && 
+      utils.isSingleItemHorizontalDisplay(styleParams) && 
       styleParams.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
 
     return shouldCreatePlaceHoler ? null : (

@@ -42,7 +42,6 @@ export class GalleryContainer extends React.Component {
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.getIsSingleItemHorizontalDisplay = this.getIsSingleItemHorizontalDisplay.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -57,7 +56,6 @@ export class GalleryContainer extends React.Component {
       firstUserInteractionExecuted: false,
       isScrollLessGallery: this.getIsScrollLessGallery(this.props.styles),
       isInHover: false,
-      isSingleItemHorizontalDisplay: this.getIsSingleItemHorizontalDisplay(this.props.styles),
     };
 
     this.state = initialState;
@@ -358,16 +356,10 @@ export class GalleryContainer extends React.Component {
       container,
       structure,
       isScrollLessGallery: this.getIsScrollLessGallery(styles),
-      isSingleItemHorizontalDisplay: this.getIsSingleItemHorizontalDisplay(styles),
     };
     return newState;
   }
-  getIsSingleItemHorizontalDisplay(styles) {
-    return styles.oneRow &&
-      styles.groupSize === 1 &&
-      styles.cubeImages &&
-      styles.cubeRatio === '100%/100%';
-  }
+
   getScrollingElement() {
     const horizontal = () =>
       window.document.querySelector(
@@ -776,7 +768,6 @@ export class GalleryContainer extends React.Component {
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
-          isSingleItemHorizontalDisplay={this.state.isSingleItemHorizontalDisplay}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
