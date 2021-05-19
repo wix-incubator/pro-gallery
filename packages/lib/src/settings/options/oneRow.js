@@ -10,5 +10,5 @@ export default {
   },
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.BOOLEAN,
-  default: false,
+  default: undefined, //This value is deprecated and the default for it is now undefined
 };
