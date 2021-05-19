@@ -16,6 +16,15 @@ import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
+
+function getDirection(code) {
+  const reverse = [33, 37, 38]
+  const direct = [32, 34, 39, 40]
+  if(reverse.includes(code)) return -1
+  else if (direct.includes(code)) return 1
+  throw new Error(`no direction is defined for charCode: ${code}`)
+}
+
 class SlideshowView extends GalleryComponent {
   constructor(props) {
     super(props);
@@ -449,27 +458,18 @@ class SlideshowView extends GalleryComponent {
 
   handleSlideshowKeyPress(e) {
     e.stopPropagation();
-    switch (e.charCode || e.keyCode) {
-      case 38: //up
-      case 37: //left
-      case 33: //page up
-        e.preventDefault();
-        this._next({ direction: -1, isKeyboardNavigation: true });
-        return false;
-      case 39: //right
-      case 40: //down
-      case 32: //space
-      case 34: //page down
-        e.preventDefault();
-        this._next({ direction: 1, isKeyboardNavigation: true });
-        return false;
-      case 27: // esc
-      if(this.props.galleryContainerRef) {
-        this.props.galleryContainerRef.focus();
-      }
+    const nextKeys = [32, 33, 34, 37, 38, 39, 40]
+    const code = e.charCode || e.keyCode
+
+    if(nextKeys.includes(code)) {
+      e.preventDefault();
+      this._next({ direction: getDirection(code), isKeyboardNavigation: true });
+      return false;
+    } else if (code === 27 && this.props.galleryContainerRef) {
+      this.props.galleryContainerRef.focus()
       return false;
     }
-    return true; //continue handling the original keyboard event
+    return true
   }
 
   createThumbnails(thumbnailPosition) {
