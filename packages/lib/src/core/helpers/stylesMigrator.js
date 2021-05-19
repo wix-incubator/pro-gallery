@@ -11,8 +11,8 @@ function stylesMigrator(styles, GALLERY_CONSTS) {
       console.warn(
         'Pro Gallery Styles: oneRow is deprecated. use scrollDirection instead'
       );
-      styles.scrollDirection === styles.oneRow
-        ? styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+      styles.scrollDirection = styles.oneRow
+        ? GALLERY_CONSTS.scrollDirection.HORIZONTAL
         : styles.scrollDirection;
     }
 
@@ -22,7 +22,7 @@ function stylesMigrator(styles, GALLERY_CONSTS) {
     delete styles.oneRow;
     return styles;
   }
-  styles = consolidateOneRow(styles);
+  consolidateOneRow(styles);
   return styles;
 }
 
