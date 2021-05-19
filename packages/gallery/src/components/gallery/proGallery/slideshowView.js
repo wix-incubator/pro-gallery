@@ -231,7 +231,7 @@ class SlideshowView extends GalleryComponent {
         avoidIndividualNavigation &&
         !(this.props.styleParams.groupSize > 1)
       ) {
-        currentIdx = this.getCenteredItemIdxByScroll();
+        currentIdx = this.getCenteredItemIdxByScroll(); 
       } else {
         currentIdx = isAutoTrigger
           ? this.setCurrentItemByScroll()
@@ -459,6 +459,8 @@ class SlideshowView extends GalleryComponent {
   handleSlideshowKeyPress(e) {
     e.stopPropagation();
     const nextKeys = [32, 33, 34, 37, 38, 39, 40]
+    // key code -> 32=space, 37=left, 38=up, 39=right, 40=down
+    // charCode -> , 33=page up, 34=page down
     const code = e.charCode || e.keyCode
 
     if (nextKeys.includes(code)) {
