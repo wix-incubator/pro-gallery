@@ -2,7 +2,6 @@
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
-import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
   hasVerticalPlacement,
   hasHoverPlacement,
