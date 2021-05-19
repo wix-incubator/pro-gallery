@@ -20,7 +20,6 @@ describe('styleParam - overlayAnimation', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
@@ -39,7 +38,6 @@ describe('styleParam - overlayAnimation', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
@@ -57,7 +55,6 @@ describe('styleParam - overlayAnimation', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
-      oneRow: true,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
@@ -76,7 +73,6 @@ describe('styleParam - overlayAnimation', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,

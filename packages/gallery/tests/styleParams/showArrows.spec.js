@@ -18,7 +18,7 @@ describe('styleParam - showArrows', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: true,
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       showArrows: true,
     });
     driver.mount.proGallery(initialProps);
@@ -31,7 +31,7 @@ describe('styleParam - showArrows', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: true,
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       showArrows: false,
     });
     driver.mount.proGallery(initialProps);
