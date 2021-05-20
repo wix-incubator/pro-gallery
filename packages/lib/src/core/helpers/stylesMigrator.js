@@ -3,10 +3,7 @@ import utils from '../../common/utils/index';
 function stylesMigrator(styles, GALLERY_CONSTS) {
   function consolidateOneRow(styles) {
     // we consolidated oneRow and the scrollDirection SPs into one, scrollDirection
-    // This commented code was removed from processStyles:
-    // styles.oneRow =
-    //   styles.oneRow ||
-    //   styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+
     if (!utils.isUndefined(styles.oneRow)) {
       console.warn(
         'Pro Gallery Styles: oneRow is deprecated. use scrollDirection instead'
@@ -19,7 +16,16 @@ function stylesMigrator(styles, GALLERY_CONSTS) {
     if (utils.isUndefined(styles.scrollDirection)) {
       styles.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
     }
-    delete styles.oneRow;
+
+    // we keep the oneRow as its an API outgoing from the gallery in events
+    // delete styles.oneRow;
+
+    // This code was removed from processStyles:
+    styles.oneRow =
+      styles.oneRow ||
+      styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    // end of removed lines from processStyles
+
     return styles;
   }
   consolidateOneRow(styles);
