@@ -445,7 +445,7 @@ class Utils {
       return String(v);
     };
 
-    const getInnerDiff = (_obj1, _obj2, _prefix, depth = 1) => {
+    const getInnerDiff = (_obj1 = {}, _obj2 = {}, _prefix, depth = 1) => {
       if (depth > 3) {
         return {};
       }
