@@ -64,11 +64,11 @@ class VideoItemWrapper extends ImageItem {
       'settings',
       'actions',
     ]);
-    const shouldCreatePlaceHoler =
+    const shouldCreatePlaceHolder =
       utils.isSingleItemHorizontalDisplay(styleParams) && 
       styleParams.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
 
-    return shouldCreatePlaceHoler ? null : (
+    return shouldCreatePlaceHolder ? null : (
       <VideoItemPlaceholder
         {...props}
         key="videoPlaceholder"
