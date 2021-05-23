@@ -8,7 +8,7 @@ import { GalleryComponent } from '../../galleryComponent';
 class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.handleArrowKeys = this.handleArrowKeys.bind(this);
+    this.handleKeys = this.handleKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
@@ -21,7 +21,7 @@ class GalleryView extends GalleryComponent {
     };
   }
 
-  handleArrowKeys(e) {
+  handleKeys(e) {
     const activeItemIdx =
       window.document.activeElement.getAttribute('data-idx');
 
@@ -53,6 +53,13 @@ class GalleryView extends GalleryComponent {
             idx,
             this.props.styleParams.isRTL ? 'left' : 'right'
           );
+          break;
+        case 27: //esc
+          if (this.props.galleryContainerRef) {
+            e.stopPropagation();
+            this.props.galleryContainerRef.focus();
+            return false;
+          }
           break;
       }
 
@@ -163,7 +170,7 @@ class GalleryView extends GalleryComponent {
           overflowX: 'hidden',
           //  width: this.props.container.galleryWidth,
         }}
-        onKeyDown={this.handleArrowKeys}
+        onKeyDown={this.handleKeys}
       >
         <div
           id="pro-gallery-margin-container"

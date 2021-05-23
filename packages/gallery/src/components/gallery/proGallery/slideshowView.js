@@ -1326,7 +1326,6 @@ class SlideshowView extends GalleryComponent {
       should = true;
     } else if (
       isInFocus &&
-      styleParams.pauseAutoSlideshowOnHover &&
       styleParams.isAccessible
     ) {
       should = true;
