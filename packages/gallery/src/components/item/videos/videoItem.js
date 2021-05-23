@@ -149,7 +149,7 @@ class VideoItem extends GalleryComponent {
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
     const videoDimensionsCss = {
       width: isWiderThenContainer ? 'calc(100% + 1px)' : 'auto',
-      height: isWiderThenContainer ? 'auto' : 'calc(100% + 1px)',
+      height: isWiderThenContainer ? '100%' : 'calc(100% + 1px)',
     };
 
     if (
