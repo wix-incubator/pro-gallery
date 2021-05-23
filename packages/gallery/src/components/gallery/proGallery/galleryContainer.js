@@ -350,6 +350,7 @@ export class GalleryContainer extends React.Component {
 
     this.createCssLayoutsIfNeeded(layoutParams);
     this.createDynamicStyles(styles, isPrerenderMode);
+
     const newState = {
       items,
       styles,
