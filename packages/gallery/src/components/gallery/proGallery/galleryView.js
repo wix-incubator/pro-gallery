@@ -57,7 +57,7 @@ class GalleryView extends GalleryComponent {
         case 27: //esc
           if (this.props.galleryContainerRef) {
             e.stopPropagation();
-            this.props.galleryContainerRef.focus();
+            this.props.actions.focusGalleryContainer();
             return false;
           }
           break;

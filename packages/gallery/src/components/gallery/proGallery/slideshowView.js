@@ -468,7 +468,7 @@ class SlideshowView extends GalleryComponent {
       this._next({ direction: getDirection(code), isKeyboardNavigation: true });
       return false;
     } else if (code === 27 && this.props.galleryContainerRef) {
-      this.props.galleryContainerRef.focus()
+      this.props.actions.focusGalleryContainer();
       return false;
     }
     return true
