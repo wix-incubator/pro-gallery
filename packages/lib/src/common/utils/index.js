@@ -6,6 +6,7 @@ import {
   isPreviewMode,
   isFormFactorMobile,
 } from '../window/viewModeWrapper';
+import GALLERY_CONSTS from '../constants'
 
 class Utils {
   constructor() {
@@ -641,8 +642,15 @@ class Utils {
           `https://pro-gallery.surge.sh?${stylesStr}`
         );
       }
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  isSingleItemHorizontalDisplay(styles) {
+    return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      styles.groupSize === 1 &&
+      styles.cubeImages &&
+      styles.cubeRatio === '100%/100%';
   }
 }
 
