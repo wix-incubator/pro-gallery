@@ -549,7 +549,9 @@ export class GalleryContainer extends React.Component {
   }
 
   focusGalleryContainer(){
-    this.galleryContainerRef.focus();
+    if(this.galleryContainerRef){
+      this.galleryContainerRef.focus();
+    }
   }
 
   toggleLoadMoreItems() {
@@ -776,7 +778,6 @@ export class GalleryContainer extends React.Component {
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
-          galleryContainerRef={this.galleryContainerRef}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

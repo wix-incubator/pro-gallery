@@ -55,12 +55,9 @@ class GalleryView extends GalleryComponent {
           );
           break;
         case 27: //esc
-          if (this.props.galleryContainerRef) {
-            e.stopPropagation();
-            this.props.actions.focusGalleryContainer();
-            return false;
-          }
-          break;
+          e.stopPropagation();
+          this.props.actions.focusGalleryContainer();
+          return false;
       }
 
       //if nextIdx is below the lastVisibleItemIdx (higher idx), we will ignore the findNeighborItem answer and stay on the same item
