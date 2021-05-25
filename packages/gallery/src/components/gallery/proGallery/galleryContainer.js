@@ -722,6 +722,8 @@ export class GalleryContainer extends React.Component {
       ? SlideshowView
       : GalleryView;
 
+    const getAriaAttributes = this.getAriaAttributes();
+    
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
@@ -783,7 +785,7 @@ export class GalleryContainer extends React.Component {
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
           galleryContainerRef={this.galleryContainerRef}
-          getAriaAttributes={this.getAriaAttributes}
+          getAriaAttributes={getAriaAttributes}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

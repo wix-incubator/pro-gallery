@@ -296,7 +296,7 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        {...this.props.getAriaAttributes()}
+        {...this.props.getAriaAttributes}
       >
         {screenLogs}
         {gallery}
