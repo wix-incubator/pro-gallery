@@ -157,6 +157,8 @@ export default class ImageItem extends GalleryComponent {
           }
         : {};
 
+      const loadingStyles = {visibility: hidden};
+
       if (!isHighResImageLoaded && gotFirstScrollEvent) {
         let preload = null;
         const preloadProps = {
@@ -232,6 +234,7 @@ export default class ImageItem extends GalleryComponent {
             ...restOfDimensions,
             ...blockDownloadStyles,
             ...(!shouldRenderHighResImages && preloadStyles),
+            ...(!isHighResImageLoaded && loadingStyles),
           }}
           {...imageProps}
         />
