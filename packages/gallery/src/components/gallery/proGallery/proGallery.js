@@ -44,10 +44,7 @@ export default class ProGallery extends GalleryComponent {
       settings: this.props.settings || {},
       offsetTop: this.props.offsetTop,
       itemsLoveData: this.props.itemsLoveData || {},
-      proGalleryRole: this.props.proGalleryRole || 'region',
-      proGalleryAriaLabel:
-        this.props.proGalleryRegionLabel ||
-        'You can navigate the gallery with keyboard arrow keys.',
+      proGalleryRegionLabel: this.props.proGalleryRegionLabel,
     };
   }
 

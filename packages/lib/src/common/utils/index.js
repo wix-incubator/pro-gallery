@@ -654,17 +654,18 @@ class Utils {
   }
 
   getAriaAttributes(props) {
-    const { proGalleryRole, proGalleryAriaLabel } = props;
+    console.log(props);
+    const { proGalleryRole, proGalleryRegionLabel } = props;
+    const proGalleyRegion =
+      proGalleryRegionLabel ||
+      'You can navigate the gallery with keyboard arrow keys.';
     return {
       role: proGalleryRole,
-      ['aria-label']: proGalleryAriaLabel,
+      ['aria-label']: proGalleyRegion,
       ['aria-roledescription']:
-        proGalleryRole === 'application'
-          ? 'gallery application'
-          : 'region',
+        proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
   }
-  
 }
 
 export default new Utils();
