@@ -652,6 +652,19 @@ class Utils {
       styles.cubeImages &&
       styles.cubeRatio === '100%/100%';
   }
+
+  getAriaAttributes(props) {
+    const { proGalleryRole, proGalleryAriaLabel } = props;
+    return {
+      role: proGalleryRole,
+      ['aria-label']: proGalleryAriaLabel,
+      ['aria-roledescription']:
+        proGalleryRole === 'application'
+          ? 'gallery application'
+          : 'region',
+    };
+  }
+  
 }
 
 export default new Utils();
