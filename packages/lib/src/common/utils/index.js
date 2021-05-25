@@ -654,14 +654,11 @@ class Utils {
   }
 
   getAriaAttributes(props) {
-    console.log(props);
     const { proGalleryRole, proGalleryRegionLabel } = props;
-    const proGalleyRegion =
-      proGalleryRegionLabel ||
-      'You can navigate the gallery with keyboard arrow keys.';
     return {
       role: proGalleryRole,
-      ['aria-label']: proGalleyRegion,
+      ['aria-label']: proGalleryRegionLabel ||
+      'You can navigate the gallery with keyboard arrow keys.',
       ['aria-roledescription']:
         proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
