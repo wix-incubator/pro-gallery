@@ -36,7 +36,6 @@ export class GalleryContainer extends React.Component {
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
-    this.getAriaAttributes = this.getAriaAttributes.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
     this.setCurrentSlideshowViewIdx =
       this.setCurrentSlideshowViewIdx.bind(this);
@@ -638,17 +637,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getAriaAttributes() {
-    return {
-      role: this.props.proGalleryRole,
-      ['aria-label']: this.props.proGalleryAriaLabel,
-      ['aria-roledescription']:
-        this.props.proGalleryRole === 'application'
-          ? 'gallery application'
-          : 'region',
-    };
-  }
-
   getMoreItemsIfNeeded(scrollPos) {
     if (
       this.galleryStructure &&
@@ -721,9 +709,7 @@ export class GalleryContainer extends React.Component {
     const ViewComponent = this.props.styles.oneRow
       ? SlideshowView
       : GalleryView;
-
-    const getAriaAttributes = this.getAriaAttributes();
-    
+ 
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
@@ -782,10 +768,11 @@ export class GalleryContainer extends React.Component {
           customNavArrowsRenderer={this.props.customNavArrowsRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
+          proGalleryAriaLabel={this.props.proGalleryAriaLabel}
+          proGalleryRole={this.props.proGalleryRole}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
           galleryContainerRef={this.galleryContainerRef}
-          getAriaAttributes={getAriaAttributes}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
