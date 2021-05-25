@@ -709,7 +709,7 @@ export class GalleryContainer extends React.Component {
     const ViewComponent = this.props.styles.oneRow
       ? SlideshowView
       : GalleryView;
- 
+
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
