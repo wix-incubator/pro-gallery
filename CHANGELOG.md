@@ -1,3 +1,15 @@
+## [v3.1.20](https://pro-gallery-3-1-20.surge.sh) (23/05/2021)
+ 
+#### GALLERY
+ -  improve: render video placeholder when needed
+
+---
+## [v3.1.19](https://pro-gallery-3-1-19.surge.sh) (20/05/2021)
+ 
+#### GALLERY
+ -  fix video center alignment when in a tall container
+
+---
 ## [v3.1.18](https://pro-gallery-3-1-18.surge.sh) (19/05/2021)
  
 #### GALLERY
