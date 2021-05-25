@@ -157,7 +157,7 @@ export default class ImageItem extends GalleryComponent {
           }
         : {};
 
-      const loadingStyles = {visibility: hidden};
+      const loadingStyles = {visibility: 'hidden'};
 
       if (!isHighResImageLoaded && gotFirstScrollEvent) {
         let preload = null;
