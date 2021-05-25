@@ -23,7 +23,6 @@ describe('textBoxBorder - e2e', () => {
       textBoxBorderWidth: 2,
       textBoxBorderRadius: 2,
       textBoxBorderColor: 'rgba(24, 144, 255, 1)',
-      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -39,7 +38,6 @@ describe('textBoxBorder - e2e', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 20,
       textBoxBorderRadius: 20,
-      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -55,7 +53,6 @@ describe('textBoxBorder - e2e', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 40,
       textBoxBorderRadius: 40,
-      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -71,7 +68,6 @@ describe('textBoxBorder - e2e', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 40,
       textBoxBorderRadius: 40,
-      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');

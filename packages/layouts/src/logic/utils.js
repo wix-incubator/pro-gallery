@@ -1,5 +1,4 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-import { stylesMigrator } from 'pro-gallery-lib';
 
 class Utils {
   constructor() {
@@ -185,11 +184,6 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'oneRow', //isVerticalScroll is converted into oneRow so both will be later converted into scrllDirection by styleMigrator.
-      convertedStyleParams.isVerticalScroll
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
       'targetItemSize',
       convertedStyleParams.rowSize || convertedStyleParams.columnSize
     );
@@ -211,7 +205,7 @@ class Utils {
         : undefined
     );
 
-    return stylesMigrator(convertedStyleParams, GALLERY_CONSTS);
+    return convertedStyleParams;
   }
 
   convertContainer(container, styleParams) {

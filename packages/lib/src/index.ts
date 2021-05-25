@@ -1,5 +1,4 @@
 export { default as GALLERY_CONSTS } from './common/constants';
-export { default as stylesMigrator } from './core/helpers/stylesMigrator';
 export { default as GalleryItem } from './core/galleryItem';
 export { default as BlueprintsManager } from './core/blueprints/BlueprintsManager';
 export { default as blueprints } from './core/blueprints/Blueprints';

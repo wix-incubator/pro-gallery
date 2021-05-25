@@ -1,6 +1,7 @@
 // import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -21,7 +22,7 @@ describe('RCE Integration test', () => {
       gallerySizeType: 'px',
       gallerySizePx: 300,
       galleryMargin: 0,
-      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       cubeRatio: 1,
       galleryThumbnailsAlignment: 'bottom',
       isVertical: false,
@@ -55,7 +56,7 @@ describe('RCE Integration test', () => {
       gallerySizeType: 'px',
       gallerySizePx: 300,
       galleryMargin: 0,
-      oneRow: false, // deprecated but left here to make sure we are not breaking for those who still use it
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       cubeRatio: 1,
       galleryThumbnailsAlignment: 'bottom',
       isVertical: false,
