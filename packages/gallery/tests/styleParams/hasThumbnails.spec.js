@@ -16,7 +16,7 @@ describe('styleParam - hasThumbnails', () => {
     driver = new GalleryDriver();
   });
 
-  it('should render thumbnails element when "hasThumbnails" and "oneRow" are "true"', async () => {
+  it('should render thumbnails element when "hasThumbnails" and the gallery is horizontal"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       onRow: true,
@@ -29,7 +29,7 @@ describe('styleParam - hasThumbnails', () => {
     expect(thumbnails).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should not render thumbnails element when "hasThumbnails" is "true" and oneRow is "false"', async () => {
+  it('should not render thumbnails element when "hasThumbnails" is "true" and the gallery is vertical', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       onRow: false,

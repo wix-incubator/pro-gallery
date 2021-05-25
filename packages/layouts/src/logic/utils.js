@@ -1,3 +1,5 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
+
 class Utils {
   constructor() {
     this._hash2int = {};
@@ -95,7 +97,7 @@ class Utils {
         rotatingGroupTypes: '',
         isVertical: true,
         minItemSize: 120,
-        oneRow: false,
+        scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
         targetItemSize: 500,
         collageDensity: 50,
         fixedColumns: 0,
@@ -182,11 +184,6 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'oneRow',
-      convertedStyleParams.isVerticalScroll
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
       'targetItemSize',
       convertedStyleParams.rowSize || convertedStyleParams.columnSize
     );
@@ -232,7 +229,10 @@ class Utils {
         ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0));
       delete convertedContainer.height;
     }
-    if (styleParams.externalInfoHeight >= 0 && styleParams.oneRow) {
+    if (
+      styleParams.externalInfoHeight >= 0 &&
+      styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+    ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }
 

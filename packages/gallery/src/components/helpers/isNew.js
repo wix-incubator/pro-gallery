@@ -1,3 +1,4 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 export default (
   { items, styles, container, watermark, itemsDimensions },
   state
@@ -45,7 +46,9 @@ export default (
     }
     const containerHasChanged = {
       height:
-        !state.styles.oneRow && state.styles.enableInfiniteScroll
+        state.styles.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.VERTICAL &&
+        state.styles.enableInfiniteScroll
           ? false
           : !!_container.height && _container.height !== state.container.height,
       width:

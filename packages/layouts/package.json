@@ -40,5 +40,8 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "pro-gallery-lib": "^3.1.17"
   }
 }

@@ -70,7 +70,8 @@ class DimensionsHelper {
       if (
         this.styles.arrowsPosition ===
           GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY &&
-        this.styles.oneRow
+        this.styles.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.HORIZONTAL
       ) {
         width -=
           2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin / 2);
@@ -81,9 +82,12 @@ class DimensionsHelper {
 
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
-      //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
+      //const offsetTop = this.styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL ? this.container.offsetTop : 0;
       const dimensionFix = () =>
-        this.styles.oneRow ? this.getDimensionFix() : 0;
+        this.styles.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? this.getDimensionFix()
+          : 0;
       const res = Math.floor(
         (this.container.height > 0 ? this.container.height : 0) + dimensionFix()
       );

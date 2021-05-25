@@ -2,7 +2,6 @@
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
-import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
   hasVerticalPlacement,
   hasHoverPlacement,
@@ -17,6 +16,7 @@ import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -38,9 +38,6 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
 
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
-  processedStyles.oneRow =
-    processedStyles.oneRow ||
-    processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
   const isDesignedPreset =
     processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
@@ -88,7 +85,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (
     (!processedStyles.isVertical ||
       processedStyles.groupSize > 1 ||
-      (processedStyles.oneRow === true && !isDesignedPreset)) &&
+      (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !isDesignedPreset)) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
@@ -125,7 +122,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (processedStyles.itemEnableShadow) {
-    if (processedStyles.oneRow) {
+    if (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       processedStyles.itemEnableShadow = false;
     } else {
       // add galleryMargin to allow the shadow to be seen
@@ -141,8 +138,8 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.arrowsPadding = 0;
   }
 
-  if (processedStyles.oneRow) {
-    // if oneRow is true, use horizontal layouts only
+  if (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    // in horizontal galleries allow only horizontal orientation
     processedStyles.isVertical = false;
     // processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
   } else {
@@ -150,7 +147,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (
-    !processedStyles.oneRow ||
+    processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
     processedStyles.groupSize > 1 ||
     !processedStyles.cubeImages
   ) {
@@ -179,7 +176,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (
-    (processedStyles.isGrid && !processedStyles.oneRow) ||
+    (processedStyles.isGrid && processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) ||
     (featureManager.supports.fixedColumnsInMasonry &&
       processedStyles.isMasonry &&
       processedStyles.isVertical)
@@ -203,7 +200,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (
     !utils.isUndefined(processedStyles.numberOfImagesPerCol) &&
     processedStyles.isGrid &&
-    processedStyles.oneRow
+    processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
   ) {
     processedStyles.fixedColumns = 0;
     switch (processedStyles.numberOfImagesPerCol) {
@@ -335,9 +332,9 @@ function shouldShowTextRightOrLeft(
   styleParams,
   customExternalInfoRendererExists
 ) {
-  const { oneRow, isVertical, groupSize, titlePlacement } = styleParams;
+  const { scrollDirection, isVertical, groupSize, titlePlacement } = styleParams;
 
-  const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
+  const allowedByLayoutConfig = scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && isVertical && groupSize === 1;
 
   return (
     allowedByLayoutConfig &&

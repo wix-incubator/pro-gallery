@@ -20,7 +20,6 @@ describe('styleParam - itemBorderWidth', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemBorderWidth: 10,
     });
     driver.mount.proGallery(initialProps);
@@ -33,7 +32,6 @@ describe('styleParam - itemBorderWidth', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemBorderWidth: 40,
     });
     driver.mount.proGallery(initialProps);
@@ -48,7 +46,6 @@ describe('styleParam - itemBorderWidth', () => {
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       itemBorderWidth: 40,
-      oneRow: false,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
