@@ -653,12 +653,11 @@ class Utils {
       styles.cubeRatio === '100%/100%';
   }
 
-  getAriaAttributes(props) {
-    const { proGalleryRole, proGalleryRegionLabel } = props;
+  getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
     return {
       role: proGalleryRole,
       ['aria-label']: proGalleryRegionLabel ||
-      'You can navigate the gallery with keyboard arrow keys.',
+        'You can navigate the gallery with keyboard arrow keys.',
       ['aria-roledescription']:
         proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
