@@ -776,6 +776,7 @@ export class GalleryContainer extends React.Component {
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
+          proGalleryRole={this.props.proGalleryRole}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
           actions={{

@@ -300,8 +300,7 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        role="region"
-        aria-label={this.props.proGalleryRegionLabel}
+        {...utils.getAriaAttributes(this.props)}
       >
         {screenLogs}
         {gallery}
