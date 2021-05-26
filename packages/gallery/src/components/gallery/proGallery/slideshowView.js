@@ -467,8 +467,8 @@ class SlideshowView extends GalleryComponent {
       e.preventDefault();
       this._next({ direction: getDirection(code), isKeyboardNavigation: true });
       return false;
-    } else if (code === 27 && this.props.galleryContainerRef) {
-      this.props.galleryContainerRef.focus()
+    } else if (code === 27) {
+      this.props.actions.focusGalleryContainer();
       return false;
     }
     return true
@@ -1326,7 +1326,6 @@ class SlideshowView extends GalleryComponent {
       should = true;
     } else if (
       isInFocus &&
-      styleParams.pauseAutoSlideshowOnHover &&
       styleParams.isAccessible
     ) {
       should = true;
