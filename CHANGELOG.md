@@ -1,3 +1,9 @@
+## [v3.1.22](https://pro-gallery-3-1-22.surge.sh) (27/05/2021)
+ 
+#### GALLERY
+ -  improve: added class indication for loaded image
+
+---
 ## [v3.1.21](https://pro-gallery-3-1-21.surge.sh) (26/05/2021)
 
 #### GALLERY
