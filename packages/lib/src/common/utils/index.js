@@ -6,6 +6,7 @@ import {
   isPreviewMode,
   isFormFactorMobile,
 } from '../window/viewModeWrapper';
+import GALLERY_CONSTS from '../constants'
 
 class Utils {
   constructor() {
@@ -644,6 +645,22 @@ class Utils {
     } catch (e) {
       console.error(e)
     }
+  }
+  isSingleItemHorizontalDisplay(styles) {
+    return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      styles.groupSize === 1 &&
+      styles.cubeImages &&
+      styles.cubeRatio === '100%/100%';
+  }
+
+  getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
+    return {
+      role: proGalleryRole,
+      ['aria-label']: proGalleryRegionLabel ||
+        'You can navigate the gallery with keyboard arrow keys.',
+      ['aria-roledescription']:
+        proGalleryRole === 'application' ? 'gallery application' : 'region',
+    };
   }
 }
 

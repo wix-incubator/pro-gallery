@@ -8,7 +8,7 @@ import { GalleryComponent } from '../../galleryComponent';
 class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.handleArrowKeys = this.handleArrowKeys.bind(this);
+    this.handleKeys = this.handleKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
@@ -21,7 +21,7 @@ class GalleryView extends GalleryComponent {
     };
   }
 
-  handleArrowKeys(e) {
+  handleKeys(e) {
     const activeItemIdx =
       window.document.activeElement.getAttribute('data-idx');
 
@@ -54,6 +54,10 @@ class GalleryView extends GalleryComponent {
             this.props.styleParams.isRTL ? 'left' : 'right'
           );
           break;
+        case 27: //esc
+          e.stopPropagation();
+          this.props.actions.focusGalleryContainer();
+          return false;
       }
 
       //if nextIdx is below the lastVisibleItemIdx (higher idx), we will ignore the findNeighborItem answer and stay on the same item
@@ -163,7 +167,7 @@ class GalleryView extends GalleryComponent {
           overflowX: 'hidden',
           //  width: this.props.container.galleryWidth,
         }}
-        onKeyDown={this.handleArrowKeys}
+        onKeyDown={this.handleKeys}
       >
         <div
           id="pro-gallery-margin-container"
@@ -296,8 +300,7 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        role="region"
-        aria-label={this.props.proGalleryRegionLabel}
+        {...utils.getAriaAttributes(this.props)}
       >
         {screenLogs}
         {gallery}
