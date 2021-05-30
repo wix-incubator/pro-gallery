@@ -6,7 +6,7 @@ import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
-const videoControls = (
+const videoPlayButton = (
   <div>
     <i
       key="play-triangle"
@@ -51,7 +51,7 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoPlaceholderIfNeeded(showVideoControls) {
+  createVideoPlaceholderIfNeeded(showVideoPlayButton) {
     const {styleParams} = this.props;
     const props = utils.pick(this.props, [
       'alt',
@@ -75,8 +75,8 @@ class VideoItemWrapper extends ImageItem {
         imageDimensions={this.props.imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
-        videoControls={
-          showVideoControls && !this.mightPlayVideo() && videoControls
+        videoPlayButton={
+          showVideoPlayButton && !this.mightPlayVideo() && videoPlayButton
         }
       />
     );
@@ -100,9 +100,9 @@ class VideoItemWrapper extends ImageItem {
 
   render() {
     const hover = this.props.hover;
-    const showVideoControls =
+    const showVideoPlayButton =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoPlaceholderIfNeeded(showVideoControls);
+    const videoPlaceholder = this.createVideoPlaceholderIfNeeded(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
@@ -117,7 +117,7 @@ class VideoItemWrapper extends ImageItem {
       <VideoItem
         {...this.props}
         videoPlaceholder={videoPlaceholder}
-        videoControls={showVideoControls && videoControls}
+        videoPlayButton={showVideoPlayButton && videoPlayButton}
       />
     );
   }

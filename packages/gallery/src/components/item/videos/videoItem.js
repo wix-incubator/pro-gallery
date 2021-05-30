@@ -205,7 +205,7 @@ class VideoItem extends GalleryComponent {
           });
         }}
         playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
-        onProgress={() => {
+        onStart={() => {
           if (!this.state.playedOnce) {
             this.setState({ playedOnce: true });
           }
@@ -300,7 +300,7 @@ class VideoItem extends GalleryComponent {
         }
       >
         {this.createPlayerElement()}
-        {this.props.videoControls}
+        {this.props.videoPlayButton}
       </div>
     );
 
