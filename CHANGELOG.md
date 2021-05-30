@@ -1,3 +1,9 @@
+## [v3.1.23](https://pro-gallery-3-1-23.surge.sh) (30/05/2021)
+ 
+#### GALLERY
+ -  fix: Video item - youtube button appears under the play button
+
+---
 ## [v3.1.22](https://pro-gallery-3-1-22.surge.sh) (27/05/2021)
  
 #### GALLERY
