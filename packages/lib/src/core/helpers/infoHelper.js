@@ -160,23 +160,12 @@ function getTextBoxAboveOrBelowHeight(
   customExternalInfoRendererExists
 ) {
   if (
-    !shouldShowTextBoxAboveOrBelow(
-      titlePlacement,
-      customExternalInfoRendererExists
-    )
+    hasVerticalPlacement(titlePlacement) &&
+    customExternalInfoRendererExists
   ) {
-    return 0;
+    return textBoxHeight;
   }
-  return textBoxHeight;
-}
-
-function shouldShowTextBoxAboveOrBelow(
-  titlePlacement,
-  customExternalInfoRendererExists
-) {
-  return (
-    hasVerticalPlacement(titlePlacement) && customExternalInfoRendererExists
-  );
+  return 0;
 }
 
 export default addCalculatedInfoStyles;
