@@ -2,19 +2,15 @@
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
+import { addCalculatedInfoStyles } from './infoHelper';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
   hasVerticalPlacement,
-  hasHoverPlacement,
-  hasHorizontalPlacement,
 } from '../../common/constants/placements';
-import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
-import INFO_TYPE from '../../common/constants/infoType';
-import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 
@@ -41,9 +37,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   processedStyles.oneRow =
     processedStyles.oneRow ||
     processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
-
-  const isDesignedPreset =
-    processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
 
   const setTextUnderline = (itemFontStyleParam, textDecorationType) => {
     /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
@@ -85,24 +78,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     }
   }
 
-  if (
-    (!processedStyles.isVertical ||
-      processedStyles.groupSize > 1 ||
-      (processedStyles.oneRow === true && !isDesignedPreset)) &&
-    !processedStyles.isSlider &&
-    !processedStyles.isColumns
-  ) {
-    // Dont allow titlePlacement to be above / below / left / right
-    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
-  }
 
-  // to_wrapper
-  if (
-    !hasHoverPlacement(processedStyles.titlePlacement) &&
-    processedStyles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
-  ) {
-    processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
-  }
 
   if (
     processedStyles.imageLoadingMode === LOADING_MODE.COLOR &&
@@ -266,19 +242,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
       (processedStyles.gallerySizeRatio / 100);
   }
 
-  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(
-    processedStyles,
-    customExternalInfoRendererExists
-  );
-  processedStyles.externalInfoHeight = getHeightFromStyleParams(
-    processedStyles,
-    processedStyles.textBoxHeight
-  );
-
-  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(
-    processedStyles,
-    customExternalInfoRendererExists
-  );
+  addCalculatedInfoStyles(processedStyles, customExternalInfoRendererExists)
 
   // Handle case of autoplay on ios devices
   if (
@@ -290,85 +254,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   return processedStyles;
-}
-
-function getHeightFromStyleParams(styleParams, textBoxHeight) {
-  let additionalHeight = textBoxHeight;
-  if (
-    textBoxHeight > 0 &&
-    hasVerticalPlacement(styleParams.titlePlacement) &&
-    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
-  ) {
-    additionalHeight += styleParams.textImageSpace;
-    additionalHeight += styleParams.textBoxBorderWidth * 2;
-  }
-  return additionalHeight;
-}
-
-function getTextBoxRightOrLeftWidth(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  if (
-    !shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)
-  ) {
-    return 0;
-  }
-  const {
-    targetItemSize,
-    calculateTextBoxWidthMode,
-    textBoxWidth,
-    textBoxWidthPercent,
-  } = styleParams;
-  let width = 0;
-  if (
-    calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT
-  ) {
-    width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
-  } else {
-    width = Math.min(targetItemSize, textBoxWidth);
-  }
-  return width;
-}
-
-function shouldShowTextRightOrLeft(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  const { oneRow, isVertical, groupSize, titlePlacement } = styleParams;
-
-  const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
-
-  return (
-    allowedByLayoutConfig &&
-    hasHorizontalPlacement(titlePlacement) &&
-    customExternalInfoRendererExists
-  );
-}
-
-function getTextBoxAboveOrBelowHeight(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  if (
-    !shouldShowTextBoxAboveOrBelow(
-      styleParams,
-      customExternalInfoRendererExists
-    )
-  ) {
-    return 0;
-  }
-  return styleParams.textBoxHeight;
-}
-
-function shouldShowTextBoxAboveOrBelow(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  return (
-    hasVerticalPlacement(styleParams.titlePlacement) &&
-    customExternalInfoRendererExists
-  );
 }
 
 function isSlideshowFont(styles) {
