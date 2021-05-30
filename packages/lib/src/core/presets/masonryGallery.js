@@ -1,6 +1,10 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import { calcTargetItemSize } from '../helpers/layoutHelper';
+import {
+  calcTargetItemSize,
+  calcNumberOfImagesPerRow,
+} from '../helpers/layoutHelper';
+import { featureManager } from './versionsHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.MASONRY,
@@ -32,5 +36,7 @@ export const createStyles = (styles) => {
         ? styles.gallerySize * 8 + 200
         : styles.gallerySize * 5 + 200
     ),
+    ...(featureManager.supports.fixedColumnsInMasonry &&
+      calcNumberOfImagesPerRow({ ...styles, ...fixedStyles })),
   };
 };

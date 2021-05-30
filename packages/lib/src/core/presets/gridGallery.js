@@ -1,5 +1,9 @@
 import LAYOUTS from '../../common/constants/layout';
-import { calcTargetItemSize } from '../helpers/layoutHelper';
+import {
+  calcTargetItemSize,
+  processNumberOfImagesPerRow,
+  processNumberOfImagesPerCol,
+} from '../helpers/layoutHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.GRID,
@@ -32,5 +36,7 @@ export const createStyles = (styles) => {
       styles,
       Math.round(styles.gallerySize * 8.5 + 150)
     ),
+    ...processNumberOfImagesPerRow({ ...styles, ...fixedStyles }),
+    ...processNumberOfImagesPerCol({ ...styles, ...fixedStyles }),
   };
 };
