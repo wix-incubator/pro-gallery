@@ -2,7 +2,7 @@
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
-import { addCalculatedInfoStyles } from './infoHelper';
+import addCalculatedInfoStyles from './infoHelper';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
   hasVerticalPlacement,
