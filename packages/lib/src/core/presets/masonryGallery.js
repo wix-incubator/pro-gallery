@@ -4,7 +4,7 @@ import {
   calcTargetItemSize,
   calcNumberOfImagesPerRow,
 } from '../helpers/layoutHelper';
-import { featureManager } from './versionsHelper';
+import { featureManager } from '../helpers/versionsHelper';
 
 export const fixedStyles = {
   galleryLayout: LAYOUTS.MASONRY,
