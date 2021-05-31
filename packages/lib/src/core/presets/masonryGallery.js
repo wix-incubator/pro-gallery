@@ -2,7 +2,7 @@ import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import {
   calcTargetItemSize,
-  calcNumberOfImagesPerRow,
+  processNumberOfImagesPerRow,
 } from '../helpers/layoutHelper';
 import { featureManager } from '../helpers/versionsHelper';
 
@@ -37,6 +37,6 @@ export const createStyles = (styles) => {
         : styles.gallerySize * 5 + 200
     ),
     ...(featureManager.supports.fixedColumnsInMasonry &&
-      calcNumberOfImagesPerRow({ ...styles, ...fixedStyles })),
+      processNumberOfImagesPerRow({ ...styles, ...fixedStyles })),
   };
 };
