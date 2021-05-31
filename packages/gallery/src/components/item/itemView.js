@@ -714,7 +714,7 @@ class ItemView extends GalleryComponent {
       styleParams,
       settings = {},
     } = this.props;
-    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } =
+    const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
       styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
@@ -724,7 +724,10 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin: oneRow ? imageMargin / 2 + 'px' : 0,
+      margin:
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? imageMargin / 2 + 'px'
+          : 0,
       cursor:
         itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
         (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)

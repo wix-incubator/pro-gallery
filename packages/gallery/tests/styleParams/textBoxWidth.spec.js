@@ -25,7 +25,6 @@ describe('styleParam - textBoxWidth', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       calculateTextBoxWidthMode:
         GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,

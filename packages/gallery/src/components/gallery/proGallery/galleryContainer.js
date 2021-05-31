@@ -224,11 +224,18 @@ export class GalleryContainer extends React.Component {
   }
 
   isVerticalGallery() {
-    return !this.state.styles.oneRow;
+    return (
+      this.state.styles.scrollDirection ===
+      GALLERY_CONSTS.scrollDirection.VERTICAL
+    );
   }
+
   getIsScrollLessGallery(styles) {
-    const { oneRow, slideAnimation } = styles;
-    return oneRow && slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL;
+    const { scrollDirection, slideAnimation } = styles;
+    return (
+      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL
+    );
   }
 
   getVisibleItems(items, container) {
@@ -326,7 +333,7 @@ export class GalleryContainer extends React.Component {
       videoPlay: styles.videoPlay,
       videoLoop: styles.videoLoop,
       itemClick: styles.itemClick,
-      oneRow: styles.oneRow,
+      scrollDirection: styles.scrollDirection,
       cb: this.setPlayingIdxState,
     };
 
@@ -389,7 +396,7 @@ export class GalleryContainer extends React.Component {
         const scrollParams = {
           scrollMarginCorrection,
           isRTL: this.state.styles.isRTL,
-          oneRow: this.state.styles.oneRow,
+          scrollDirection: this.state.styles.scrollDirection,
           galleryWidth: this.state.container.galleryWidth,
           galleryHeight: this.state.container.galleryHeight,
           top: 0,
@@ -439,7 +446,7 @@ export class GalleryContainer extends React.Component {
         const scrollParams = {
           scrollMarginCorrection,
           isRTL: this.state.styles.isRTL,
-          oneRow: this.state.styles.oneRow,
+          scrollDirection: this.state.styles.scrollDirection,
           galleryWidth: this.state.container.galleryWidth,
           galleryHeight: this.state.container.galleryHeight,
           top: 0,
@@ -481,8 +488,8 @@ export class GalleryContainer extends React.Component {
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
     const { enableInfiniteScroll } = this.props.styles; //TODO - props or "raw" styles
     const { showMoreClickedAtLeastOnce } = this.state;
-    const { oneRow, loadMoreAmount } = _styles;
-    if (oneRow) {
+    const { scrollDirection, loadMoreAmount } = _styles;
+    if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       return 'horizontal';
     } else if (!enableInfiniteScroll) {
       //vertical gallery with showMore button enabled
@@ -656,14 +663,25 @@ export class GalleryContainer extends React.Component {
     ) {
       //more items can be fetched from the server
       //TODO - add support for horizontal galleries
-      const { oneRow, isRTL } = this.state.styles;
+      const { scrollDirection, isRTL } = this.state.styles;
 
       const galleryEnd =
-        this.galleryStructure[oneRow ? 'width' : 'height'] +
-        (oneRow ? 0 : this.state.container.scrollBase);
-      const screenSize = window.screen[oneRow ? 'width' : 'height'];
+        this.galleryStructure[
+          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+            ? 'width'
+            : 'height'
+        ] +
+        (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? 0
+          : this.state.container.scrollBase);
+      const screenSize =
+        window.screen[
+          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+            ? 'width'
+            : 'height'
+        ];
       const scrollEnd =
-        oneRow && isRTL
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && isRTL
           ? scrollPos - galleryEnd + screenSize
           : scrollPos + screenSize;
       const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
@@ -713,9 +731,11 @@ export class GalleryContainer extends React.Component {
       return null;
     }
 
-    const ViewComponent = this.props.styles.oneRow
-      ? SlideshowView
-      : GalleryView;
+    const ViewComponent =
+      this.props.styles.scrollDirection ===
+      GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? SlideshowView
+        : GalleryView;
 
     if (utils.isVerbose()) {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
@@ -739,7 +759,7 @@ export class GalleryContainer extends React.Component {
       >
         <ScrollIndicator
           domId={this.props.domId}
-          oneRow={this.props.styles.oneRow}
+          scrollDirection={this.props.styles.scrollDirection}
           isRTL={this.props.styles.isRTL}
           totalWidth={this.galleryStructure.width}
           scrollBase={this.props.container.scrollBase}

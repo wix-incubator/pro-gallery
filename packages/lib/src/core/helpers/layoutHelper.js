@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
-import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
   hasVerticalPlacement,
   hasHoverPlacement,
@@ -16,6 +15,7 @@ import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -38,7 +38,7 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
 export const processNumberOfImagesPerRow = (styles) => {
   //This will be used in the masonry and grid presets
   if (
-    !styles.oneRow || //relevant for grid, in Masonry its fixed to !oneRow
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
       styles.isVertical //relevant for masonry, in grid its fixed to true.
   ) {
     const res = {}
@@ -62,7 +62,7 @@ export const processNumberOfImagesPerCol = (styles) => {
     //This will be used in the grid preset
   if (
     !utils.isUndefined(styles.numberOfImagesPerCol) &&
-    styles.oneRow
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
   ) {
     const res = {}
     res.fixedColumns = 0;
@@ -96,9 +96,6 @@ export const processNumberOfImagesPerCol = (styles) => {
 
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
-  processedStyles.oneRow =
-    processedStyles.oneRow ||
-    processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
   const isDesignedPreset =
     processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
@@ -146,7 +143,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (
     (!processedStyles.isVertical ||
       processedStyles.groupSize > 1 ||
-      (processedStyles.oneRow === true && !isDesignedPreset)) &&
+      (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !isDesignedPreset)) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
@@ -183,7 +180,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (processedStyles.itemEnableShadow) {
-    if (processedStyles.oneRow) {
+    if (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       processedStyles.itemEnableShadow = false;
     } else {
       // add galleryMargin to allow the shadow to be seen
@@ -199,8 +196,8 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.arrowsPadding = 0;
   }
 
-  if (processedStyles.oneRow) {
-    // if oneRow is true, use horizontal layouts only
+  if (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    // in horizontal galleries allow only horizontal orientation
     processedStyles.isVertical = false;
     // processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
   } else {
@@ -208,7 +205,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (
-    !processedStyles.oneRow ||
+    processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
     processedStyles.groupSize > 1 ||
     !processedStyles.cubeImages
   ) {
@@ -235,7 +232,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
       processedStyles.textDecorationLoadMore = 'none';
     }
   }
-
 
 
   // returned to the statics because it was the definition of the object.
@@ -344,9 +340,9 @@ function shouldShowTextRightOrLeft(
   styleParams,
   customExternalInfoRendererExists
 ) {
-  const { oneRow, isVertical, groupSize, titlePlacement } = styleParams;
+  const { scrollDirection, isVertical, groupSize, titlePlacement } = styleParams;
 
-  const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
+  const allowedByLayoutConfig = scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && isVertical && groupSize === 1;
 
   return (
     allowedByLayoutConfig &&

@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('styleParam - imageMargin', () => {
   let driver;
@@ -16,12 +17,11 @@ describe('styleParam - imageMargin', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set use CSS property "margin" to create the spacing when gallery is "oneRow"', async () => {
+  it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 7,
       imageMargin: 10,
-      oneRow: true,
-      scrollDirection: 1,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -35,7 +35,7 @@ describe('styleParam - imageMargin', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       imageMargin: 25,
-      oneRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       gallerySizeType: 'px',
       gallerySizePx: 390,
       isVertical: true,

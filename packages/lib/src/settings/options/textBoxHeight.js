@@ -9,7 +9,7 @@ export default {
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&
-    !styleParams.oneRow &&
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     GALLERY_CONSTS.hasVerticalPlacement(styleParams.titlePlacement),
   type: INPUT_TYPES.NUMBER,
   default: 200,

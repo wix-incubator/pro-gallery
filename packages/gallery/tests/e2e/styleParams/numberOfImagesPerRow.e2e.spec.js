@@ -20,7 +20,6 @@ describe('numberOfImagesPerRow - e2e', () => {
       galleryLayout: 2,
       numberOfImagesPerRow: 1,
       gridStyle: 1,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -33,7 +32,6 @@ describe('numberOfImagesPerRow - e2e', () => {
   //     galleryLayout: 2,
   //     numberOfImagesPerRow:2,
   //     gridStyle: 1,
-  //     oneRow: false,
   //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   //   });
   //   await driver.waitFor.hookToBeVisible('item-container');
@@ -46,7 +44,6 @@ describe('numberOfImagesPerRow - e2e', () => {
       galleryLayout: 2,
       numberOfImagesPerRow: 3,
       gridStyle: 1,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');

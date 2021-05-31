@@ -7,7 +7,6 @@ export const fixedStyles = {
   galleryLayout: LAYOUTS.SLIDER,
   enableInfiniteScroll: true,
   cubeImages: true,
-  oneRow: true,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   isVertical: false,
   groupSize: 1,
