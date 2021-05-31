@@ -1,3 +1,22 @@
+## [v3.1.23](https://pro-gallery-3-1-23.surge.sh) (30/05/2021)
+ 
+#### GALLERY
+ -  fix: Video item - youtube button appears under the play button
+
+---
+## [v3.1.22](https://pro-gallery-3-1-22.surge.sh) (27/05/2021)
+ 
+#### GALLERY
+ -  improve: added class indication for loaded image
+
+---
+## [v3.1.21](https://pro-gallery-3-1-21.surge.sh) (26/05/2021)
+
+#### GALLERY
+ -  improve: handle application region Modes
+ -  improve: remove unnecessary check from blockAutoSlideShow + added listener to ESC keyCode  
+
+---
 ## [v3.1.20](https://pro-gallery-3-1-20.surge.sh) (23/05/2021)
  
 #### GALLERY

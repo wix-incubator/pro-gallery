@@ -652,6 +652,16 @@ class Utils {
       styles.cubeImages &&
       styles.cubeRatio === '100%/100%';
   }
+
+  getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
+    return {
+      role: proGalleryRole,
+      ['aria-label']: proGalleryRegionLabel ||
+        'You can navigate the gallery with keyboard arrow keys.',
+      ['aria-roledescription']:
+        proGalleryRole === 'application' ? 'gallery application' : 'region',
+    };
+  }
 }
 
 export default new Utils();

@@ -40,6 +40,7 @@ export default class ImageItem extends GalleryComponent {
 
   getImageContainerClassNames() {
     const { styleParams } = this.props;
+    const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
       'gallery-item-content',
@@ -51,7 +52,7 @@ export default class ImageItem extends GalleryComponent {
         ? 'grid-fit'
         : '',
       styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR
-        ? 'load-with-color'
+        ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
 
