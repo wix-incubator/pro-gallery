@@ -2,45 +2,45 @@ import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 
-interface IProps {
-  domId: string;
-  totalItemsCount: any;
-  items: any;
-  options: any;
-  styleParams: any;
-  scrollingElement: any;
-  eventsListener: any;
-  currentIdx: any;
-  container: any;
-  dimensions: any;
-  isInDisplay: any;
-  itemsLoveData: any;
-  viewMode: any;
-  resizeMediaUrl: any;
-  customHoverRenderer: any;
-  customInfoRenderer: any;
-  customSlideshowInfoRenderer: any;
-  customImageRenderer: any;
-  customNavArrowsRenderer: any;
-  customLoadMoreRenderer: any;
-  actions: any;
-  allowSSR: any;
-  formFactor: any;
-  proGalleryRegionLabel: any;
-  isPrerenderMode: any;
-  settings: any;
-  watermark: any;
+interface IGalleryProps {
+  domId?: string;
+  totalItemsCount: number;
+  currentIdx?: number;
+  [key: string]: any;
+  // items: any;
+  // styles: any;
+  // scrollingElement: any;
+  // eventsListener: any;
+  // container: any;
+  // dimensions: any;
+  // isInDisplay: any;
+  // itemsLoveData: any;
+  // viewMode: any;
+  // resizeMediaUrl: any;
+  // customHoverRenderer: any;
+  // customInfoRenderer: any;
+  // customSlideshowInfoRenderer: any;
+  // customImageRenderer: any;
+  // customNavArrowsRenderer: any;
+  // customLoadMoreRenderer: any;
+  // actions: any;
+  // allowSSR: any;
+  // formFactor: any;
+  // proGalleryRegionLabel: any;
+  // isPrerenderMode: any;
+  // settings: any;
+  // watermark: any;
 }
 
 interface IState {
   blueprint: any;
 }
 
-export default class BaseGallery extends React.Component<IProps, IState> {
+export default class BaseGallery extends React.Component<IGalleryProps, IState> {
   private blueprintsManager: any;
   private galleryProps: any;
 
-  constructor(props: IProps) {
+  constructor(props: IGalleryProps) {
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
