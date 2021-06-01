@@ -34,7 +34,7 @@ import 'pro-gallery/dist/statics/main.css';
   items={items}
   options={options}
   container={container}
-  scrollingElement={() => document.getElementById('gallery') || window}
+  scrollingElement={window}
   eventsListener={(eName, eData) => console.log({eName, eData})}
 />
 ```

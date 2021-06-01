@@ -1,18 +1,20 @@
 import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
+import { IDimensions } from '../../common/interfaces/Dimensions';
+import { IScrollingElement } from '../../common/interfaces/ScrollingElement';
 
 interface IGalleryProps {
   domId?: string;
   totalItemsCount: number;
   currentIdx?: number;
+  dimensions: IDimensions;
+  isPrerenderMode?: boolean;
+  scrollingElement?: IScrollingElement | Window;
   [key: string]: any;
   // items: any;
   // styles: any;
-  // scrollingElement: any;
   // eventsListener: any;
-  // container: any;
-  // dimensions: any;
   // isInDisplay: any;
   // itemsLoveData: any;
   // viewMode: any;
@@ -27,7 +29,6 @@ interface IGalleryProps {
   // allowSSR: any;
   // formFactor: any;
   // proGalleryRegionLabel: any;
-  // isPrerenderMode: any;
   // settings: any;
   // watermark: any;
 }
