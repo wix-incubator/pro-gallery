@@ -64,6 +64,7 @@ class ItemView extends GalleryComponent {
     this.getItemContainerClass = this.getItemContainerClass.bind(this);
     this.getItemWrapperClass = this.getItemWrapperClass.bind(this);
     this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
+    this.onAnchorFocus = this.onAnchorFocus.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
@@ -982,6 +983,25 @@ class ItemView extends GalleryComponent {
     return tabIndex;
   }
 
+  onAnchorFocus() {
+    if (
+      (isSiteMode() || isSEOMode()) &&
+      !utils.isMobile() &&
+      window.document &&
+      window.document.activeElement 
+      ) {
+        /* Relevant only for Screen-Reader cases:
+         When we navigate on the accessibility tree, screen readers stops and focuses on the <a> tag,
+         so it will not go deeper to the item-container keyDown event */
+        const activeElement = window.document.activeElement;
+        if (activeElement === this.itemAnchor) {
+        this.itemContainer.focus();
+      } else {
+        return;
+      }
+    }
+  }
+
   changeActiveElementIfNeeded(prevProps) {
     try {
       if (
@@ -1040,7 +1060,7 @@ class ItemView extends GalleryComponent {
       try {
         React.initializeTouchEvents(true);
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
 
@@ -1200,6 +1220,7 @@ class ItemView extends GalleryComponent {
           data-id={photoId}
           data-idx={idx}
           key={'item-container-link-' + id}
+          onFocus={this.onAnchorFocus}
           {...this.getLinkParams()}
           tabIndex={-1}
           onKeyDown={(e) => {
