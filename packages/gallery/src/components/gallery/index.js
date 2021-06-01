@@ -6,15 +6,11 @@ import basePropTypes from './proGallery/propTypes';
 export default class BaseGallery extends React.Component {
   constructor(props) {
     super();
+    this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
-    this.domId = props.domId || 'default-dom-id';
-    this.isUsingCustomInfoElements =
-      props.customHoverRenderer ||
-      props.customInfoRenderer ||
-      props.customSlideshowInfoRenderer;
     this.blueprintsManager.init({
       api: {
-        isUsingCustomInfoElements: () => this.isUsingCustomInfoElements,
+        isUsingCustomInfoElements: this.isUsingCustomInfoElements,
         fetchMoreItems: (from) => {
           typeof props.eventsListener === 'function' &&
             props.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, from);
@@ -34,10 +30,10 @@ export default class BaseGallery extends React.Component {
         },
       },
     });
+    this.onNewProps(props, true);
     this.state = {
       blueprint: this.blueprintsManager.createInitialBlueprint(props) || null,
     };
-    this.onNewProps(props, 'constructor');
   }
 
   setBlueprint(blueprint, initialBlueprint) {
@@ -49,6 +45,15 @@ export default class BaseGallery extends React.Component {
   }
 
   static propTypes = basePropTypes;
+
+  isUsingCustomInfoElements() {
+    return (
+      !!this.galleryProps.customHoverRenderer ||
+      !!this.galleryProps.customInfoRenderer ||
+      !!this.galleryProps.customSlideshowInfoRenderer
+    );
+  }
+
   onNewProps(props, calledByConstructor) {
     const { eventsListener, ...otherProps } = props;
     const _eventsListener = (...args) => {
@@ -62,7 +67,7 @@ export default class BaseGallery extends React.Component {
     this.galleryProps = {
       ...otherProps,
       eventsListener: _eventsListener,
-      domId: this.domId,
+      domId: props.domId || 'default-dom-id',
     };
     if (calledByConstructor) {
       // the blueprint will be initiated with the state
@@ -75,7 +80,7 @@ export default class BaseGallery extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {
-    this.onNewProps(newProps);
+    this.onNewProps(newProps, false);
   }
 
   render() {
