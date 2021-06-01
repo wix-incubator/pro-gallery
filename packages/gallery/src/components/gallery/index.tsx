@@ -44,6 +44,7 @@ export default class BaseGallery extends React.Component<IGalleryProps, IState> 
   constructor(props: IGalleryProps) {
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
+    this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.blueprintsManager.init({
       api: {
