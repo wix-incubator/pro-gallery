@@ -779,7 +779,7 @@ export class GalleryContainer extends React.Component {
           proGalleryRole={this.props.proGalleryRole}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
-          shouldUseGeneralExperimentForNewFeature={this.props.shouldUseGeneralExperimentForNewFeature}
+          shouldUseExperimentalFeature={this.props.shouldUseExperimentalFeature}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
