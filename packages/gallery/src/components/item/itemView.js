@@ -988,7 +988,8 @@ class ItemView extends GalleryComponent {
       (isSiteMode() || isSEOMode()) &&
       !utils.isMobile() &&
       window.document &&
-      window.document.activeElement 
+      window.document.activeElement &&
+      this.props.shouldUseGeneralExperimentForNewFeature
       ) {
         /* Relevant only for Screen-Reader cases:
          When we navigate on the accessibility tree, screen readers stops and focuses on the <a> tag,
