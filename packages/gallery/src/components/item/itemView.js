@@ -359,24 +359,34 @@ class ItemView extends GalleryComponent {
     const isGridFit = styleParams.cubeImages && styleParams.cubeType === 'fit';
 
     let dimensions = {};
+    const { height, width, maxWidth, maxHeight } = style;
+    const shouldUseMaxDims = maxHeight < height && maxWidth < width && !styleParams.strechSmallImages;
 
     if (!isGridFit) {
       dimensions = {
         width: style.width,
         height: style.height,
       };
+    } else if (shouldUseMaxDims) {
+      const marginTop = (height - maxHeight) / 2;
+      const marginLeft = (width - maxWidth) / 2;
+      dimensions = {
+        height: maxHeight,
+        width: maxWidth,
+        margin: `${marginTop}px ${marginLeft}px`,
+      };
     } else if (isGridFit && isLandscape) {
       dimensions = {
         //landscape
-        height: style.height - 2 * imageMarginTop,
-        width: style.width,
+        height: height - 2 * imageMarginTop,
+        width: width,
         margin: `${imageMarginTop}px 0`,
       };
     } else if (isGridFit && !isLandscape) {
       dimensions = {
         //portrait
-        width: style.width - 2 * imageMarginLeft,
-        height: style.height,
+        width: width - 2 * imageMarginLeft,
+        height: height,
         margin: `0 ${imageMarginLeft}px`,
       };
     }

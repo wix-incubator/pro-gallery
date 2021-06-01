@@ -122,6 +122,7 @@ const defaultStyles = {
   jsonStyleParams: '',
   showVideoControls: false,
   shouldIndexDirectShareLinkInSEO: true,
+  strechSmallImages: true,
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {

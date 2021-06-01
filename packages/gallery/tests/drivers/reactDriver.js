@@ -87,6 +87,7 @@ class galleryDriver {
       itemShadowDirection: 135,
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
+      strechSmallImages: true,
     };
 
     this.scroll = {
