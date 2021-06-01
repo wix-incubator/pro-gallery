@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
-import { featureManager } from './versionsHelper';
 import PLACEMENTS, {
   hasVerticalPlacement,
   hasHoverPlacement,
@@ -35,6 +34,65 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
     return smartCalc ? smartCalc : styles.gallerySize;
   }
 };
+
+export const processNumberOfImagesPerRow = (styles) => {
+  //This will be used in the masonry and grid presets
+  if (
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+      styles.isVertical //relevant for masonry, in grid its fixed to true.
+  ) {
+    const res = {}
+
+    res.fixedColumns =
+      String(styles.gridStyle) === '1'
+        ? Number(styles.numberOfImagesPerRow)
+        : 0;
+    res.groupTypes = '1';
+    res.groupSize = 1;
+    res.collageAmount = 0;
+    res.collageDensity = 0;
+    // }
+    return res;
+  } else {
+    return {};
+  }
+}
+
+export const processNumberOfImagesPerCol = (styles) => {
+    //This will be used in the grid preset
+  if (
+    !utils.isUndefined(styles.numberOfImagesPerCol) &&
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+  ) {
+    const res = {}
+    res.fixedColumns = 0;
+    switch (styles.numberOfImagesPerCol) {
+      case 1:
+      default:
+        res.groupTypes = '1';
+        res.groupSize = 1;
+        res.collageAmount = 0;
+        res.collageDensity = 0;
+        break;
+      case 2:
+        res.groupTypes = '2v';
+        res.groupSize = 2;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
+        break;
+      case 3:
+        res.groupTypes = '3v';
+        res.groupSize = 3;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
+        break;
+    }
+    return res
+  } else {
+    return {};
+  }
+
+}
 
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
@@ -175,56 +233,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     }
   }
 
-  if (
-    (processedStyles.isGrid && processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) ||
-    (featureManager.supports.fixedColumnsInMasonry &&
-      processedStyles.isMasonry &&
-      processedStyles.isVertical)
-  ) {
-    // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
-    // If toggle is for Items per row, fill the fixedColumns with the number of items
-    // If toggle is responsive, make fixedColumns to be 0 or undefined;
-    // Show the new controls only on Vertical scroll (one ow is false)
-    processedStyles.fixedColumns =
-      String(processedStyles.gridStyle) === '1'
-        ? Number(processedStyles.numberOfImagesPerRow)
-        : 0;
-    processedStyles.groupTypes = '1';
-    processedStyles.groupSize = 1;
-    processedStyles.collageAmount = 0;
-    processedStyles.collageDensity = 0;
-    // }
-  }
-
-  // TODO this needs to split, need to leave the wixStyles assign in the statics section
-  if (
-    !utils.isUndefined(processedStyles.numberOfImagesPerCol) &&
-    processedStyles.isGrid &&
-    processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-  ) {
-    processedStyles.fixedColumns = 0;
-    switch (processedStyles.numberOfImagesPerCol) {
-      case 1:
-      default:
-        processedStyles.groupTypes = '1';
-        processedStyles.groupSize = 1;
-        processedStyles.collageAmount = 0;
-        processedStyles.collageDensity = 0;
-        break;
-      case 2:
-        processedStyles.groupTypes = '2v';
-        processedStyles.groupSize = 2;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
-        break;
-      case 3:
-        processedStyles.groupTypes = '3v';
-        processedStyles.groupSize = 3;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
-        break;
-    }
-  }
 
   // returned to the statics because it was the definition of the object.
   // processedStyles.sharpParams = {
