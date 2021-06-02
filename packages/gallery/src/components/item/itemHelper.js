@@ -20,7 +20,11 @@ export function onAnchorFocus({
   }
 }
 
-export function changeActiveElementIfNeeded({ prevProps, thisProps }) {
+export function changeActiveElementIfNeeded({
+  prevProps,
+  currentProps,
+  itemContainer,
+}) {
   try {
     if (
       shouldChangeActiveElement() &&
@@ -31,14 +35,14 @@ export function changeActiveElementIfNeeded({ prevProps, thisProps }) {
       //check if focus is on 'gallery-item-container' in current gallery
       const isThisGalleryItemInFocus = () =>
         !!window.document.querySelector(
-          `#pro-gallery-${thisProps.domId} #${String(activeElement.id)}`
+          `#pro-gallery-${currentProps.domId} #${String(activeElement.id)}`
         );
       const isGalleryItemInFocus = () =>
         String(activeElement.className).indexOf('gallery-item-container') >= 0;
       //check if focus is on 'load-more' in current gallery
       const isThisGalleryShowMoreInFocus = () =>
         !!window.document.querySelector(
-          `#pro-gallery-${thisProps.domId} #${String(activeElement.id)}`
+          `#pro-gallery-${currentProps.domId} #${String(activeElement.id)}`
         );
       const isShowMoreInFocus = () =>
         String(activeElement.className).indexOf('show-more') >= 0;
@@ -48,17 +52,18 @@ export function changeActiveElementIfNeeded({ prevProps, thisProps }) {
         (isShowMoreInFocus() && isThisGalleryShowMoreInFocus())
       ) {
         if (
-          thisProps.thumbnailHighlightId !== prevProps.thumbnailHighlightId &&
-          thisProps.thumbnailHighlightId === thisProps.id
+          currentProps.thumbnailHighlightId !==
+            prevProps.thumbnailHighlightId &&
+          currentProps.thumbnailHighlightId === currentProps.id
         ) {
           // if the highlighted thumbnail changed and it is the same as this itemview's
-          thisProps.itemContainer.focus();
+          itemContainer.focus();
         } else if (
-          thisProps.currentIdx !== prevProps.currentIdx &&
-          thisProps.currentIdx === thisProps.idx
+          currentProps.currentIdx !== prevProps.currentIdx &&
+          currentProps.currentIdx === currentProps.idx
         ) {
           //check if currentIdx has changed to the current item
-          thisProps.itemContainer.focus();
+          itemContainer.focus();
         }
       }
     }

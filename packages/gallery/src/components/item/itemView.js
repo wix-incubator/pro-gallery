@@ -1011,14 +1011,14 @@ class ItemView extends GalleryComponent {
         thumbnailHighlightId: prevProps.thumbnailHighlightId,
         currentIdx: prevProps.currentIdx
       },
-      thisProps:{
+      currentProps:{
         domId: this.props.domId,
         thumbnailHighlightId: this.props.thumbnailHighlightId,
         id: this.props.id,
         currentIdx: this.props.currentIdx,
-        idx: this.props.idx,
-        itemContainer: this.itemContainer   
-      }
+        idx: this.props.idx,   
+      },
+      itemContainer: this.itemContainer  
     });
   }
 
