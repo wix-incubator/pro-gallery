@@ -1,11 +1,21 @@
 import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
-import basePropTypes from './proGallery/propTypes';
 
-export default class BaseGallery extends React.Component {
-  constructor(props) {
-    super();
+interface IGalleryProps {
+  [key: string]: any;
+}
+
+interface IState {
+  blueprint: any;
+}
+
+export default class BaseGallery extends React.Component<IGalleryProps, IState> {
+  private blueprintsManager: any;
+  private galleryProps: any;
+
+  constructor(props: IGalleryProps) {
+    super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.blueprintsManager.init({
@@ -43,8 +53,6 @@ export default class BaseGallery extends React.Component {
       this.setState({ blueprint });
     }
   }
-
-  static propTypes = basePropTypes;
 
   isUsingCustomInfoElements() {
     return (
