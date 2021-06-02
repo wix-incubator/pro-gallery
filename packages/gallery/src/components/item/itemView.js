@@ -367,7 +367,7 @@ class ItemView extends GalleryComponent {
         width: style.width,
         height: style.height,
       };
-    } else if (shouldUseMaxDims) {
+    } else if (isGridFit && shouldUseMaxDims) {
       const marginTop = (height - maxHeight) / 2;
       const marginLeft = (width - maxWidth) / 2;
       dimensions = {
