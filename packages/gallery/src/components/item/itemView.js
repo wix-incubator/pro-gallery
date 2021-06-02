@@ -997,8 +997,6 @@ class ItemView extends GalleryComponent {
         const activeElement = window.document.activeElement;
         if (activeElement === this.itemAnchor) {
         this.itemContainer.focus();
-      } else {
-        return;
       }
     }
   }
@@ -1061,7 +1059,7 @@ class ItemView extends GalleryComponent {
       try {
         React.initializeTouchEvents(true);
       } catch (e) {
-        console.error(e);
+        console.error(e)
       }
     }
 
