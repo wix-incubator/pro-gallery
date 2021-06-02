@@ -5,7 +5,6 @@ import enableInfiniteScroll from './enableInfiniteScroll';
 import cubeType from './cubeType';
 import cubeImages from './cubeImages';
 import cubeRatio from './cubeRatio';
-import oneRow from './oneRow';
 import titlePlacement from './titlePlacement';
 import galleryMargin from './galleryMargin';
 import isVertical from './isVertical';
@@ -97,7 +96,6 @@ export default {
   cubeType,
   cubeImages,
   cubeRatio,
-  oneRow,
   titlePlacement,
   galleryMargin,
   isVertical,

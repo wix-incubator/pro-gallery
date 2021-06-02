@@ -2,7 +2,7 @@ import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import { IDimensions } from '../../common/interfaces/Dimensions';
-import { IScrollingElement } from '../../common/interfaces/ScrollingElement';
+// import { IScrollingElement } from '../../common/interfaces/ScrollingElement';
 
 interface IGalleryProps {
   domId?: string;
@@ -10,7 +10,7 @@ interface IGalleryProps {
   currentIdx?: number;
   dimensions: IDimensions;
   isPrerenderMode?: boolean;
-  scrollingElement?: IScrollingElement | Window;
+  // scrollingElement?: IScrollingElement | Window;
   [key: string]: any;
   // items: any;
   // styles: any;
@@ -43,7 +43,6 @@ export default class BaseGallery extends React.Component<IGalleryProps, IState> 
 
   constructor(props: IGalleryProps) {
     super(props);
-    this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.blueprintsManager.init({

@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
+//dummy
 import { Layouter } from 'pro-layouts';
 import defaultStyles from '../../common/defaultStyles';
 import { addPresetStyles } from '../presets/presets';
 import dimensionsHelper from '../helpers/dimensionsHelper';
 import { ItemsHelper } from '../helpers/itemsHelper';
 import processLayouts from '../helpers/layoutHelper.js';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 class Blueprints {
   createBlueprint({
@@ -80,7 +82,8 @@ class Blueprints {
 
         // if its an infinite gallery - let the container loose
         const isInfinite =
-          !existingBlueprint.styles.oneRow &&
+          existingBlueprint.styles.scrollDirection ===
+            GALLERY_CONSTS.scrollDirection.VERTICAL &&
           existingBlueprint.styles.enableInfiniteScroll;
         if (isInfinite) {
           existingBlueprint.container.height =
@@ -280,7 +283,9 @@ class Blueprints {
       }
       const dimensionsHaveChanged = {
         height:
-          !formattedStyles.oneRow && formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
+          formattedStyles.scrollDirection ===
+            GALLERY_CONSTS.scrollDirection.VERTICAL &&
+          formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
             ? false
             : !!newDimensionsParams.height &&
               newDimensionsParams.height !== oldDimensionsParams.height,

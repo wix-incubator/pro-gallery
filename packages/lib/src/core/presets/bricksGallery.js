@@ -27,7 +27,6 @@ export const fixedStyles = {
   rotatingScatter: '',
   fixedColumns: 1,
   groupsPerStrip: 0,
-  oneRow: false,
   placeGroupsLtr: false,
   rotatingCropRatios: '0.707,1.414,1.414,0.707',
 };

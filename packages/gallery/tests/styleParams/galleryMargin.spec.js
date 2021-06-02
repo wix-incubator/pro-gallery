@@ -2,6 +2,7 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('styleParam - galleryMargin', () => {
   let driver;
@@ -15,12 +16,11 @@ describe('styleParam - galleryMargin', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set the gallery with a margin of 20px', async () => {
+  it('should set the gallery with a margin of 20px in a vertical gallery', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       galleryMargin: 20,
-      oneRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -31,12 +31,12 @@ describe('styleParam - galleryMargin', () => {
     expect(margin).to.eq('20px');
     driver.detach.proGallery();
   });
-  it('should set the gallery with a margin of (galleryMargin - (imageMargin / 2)) in a oneRow gallery', async () => {
+  it('should set the gallery with a margin of (galleryMargin - (imageMargin / 2)) in a horizontal gallery', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       imageMargin: 10,
       galleryMargin: 20,
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

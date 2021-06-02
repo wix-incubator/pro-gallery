@@ -25,9 +25,8 @@ export const fixedStyleParams = {
   galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID],
   // galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID],
   isVertical: true,
-  oneRow: false,
   isRTL: false,
-  scrollDirection: [0, undefined],
+  scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   groupSize: 1,
   hoveringBehaviour: [
     GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,

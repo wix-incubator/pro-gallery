@@ -1,8 +1,10 @@
 import { INPUT_TYPES } from '../utils/constants';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Scroll Duration',
-  isRelevant: ({ oneRow }) => !!oneRow,
+  isRelevant: (sp) =>
+    sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
   type: INPUT_TYPES.NUMBER,
