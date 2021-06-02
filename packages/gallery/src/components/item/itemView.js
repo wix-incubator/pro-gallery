@@ -361,7 +361,6 @@ class ItemView extends GalleryComponent {
     let dimensions = {};
     const { height, width, maxWidth, maxHeight } = style;
     const shouldUseMaxDims = maxHeight < height && maxWidth < width && !styleParams.strechSmallImages;
-
     if (!isGridFit) {
       dimensions = {
         width: style.width,
