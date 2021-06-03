@@ -12,5 +12,5 @@ export default {
     sp.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL,
   options: createOptions('slideTransition'),
   type: INPUT_TYPES.OPTIONS,
-  default: GALLERY_CONSTS.slideTransition.linear,
+  default: GALLERY_CONSTS.slideTransition.ease,
 };

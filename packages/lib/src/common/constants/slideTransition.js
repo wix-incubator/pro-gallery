@@ -1,5 +1,5 @@
 const SLIDE_TRANSITION = {
-  linear: 'linear',
+  ease: 'ease',
   easeInSine: 'cubic-bezier(0.12, 0, 0.39, 0)',
   easeOutSine: 'cubic-bezier(0.61, 1, 0.88, 1)',
   easeInOutSine: 'cubic-bezier(0.37, 0, 0.63, 1)',
