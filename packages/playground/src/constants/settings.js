@@ -58,6 +58,7 @@ export const stylesBySection = {
     'gallerySize',
     'gallerySizePx',
     'gallerySizeRatio',
+    'strechSmallImages'
 
   ],
   [SECTIONS.ADVANCED]: [
