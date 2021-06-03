@@ -122,6 +122,7 @@ const defaultStyles = {
   jsonStyleParams: '',
   showVideoControls: false,
   shouldIndexDirectShareLinkInSEO: true,
+  slideTransition: GALLERY_CONSTS.slideTransition.linear,
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
