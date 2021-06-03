@@ -102,6 +102,7 @@ const styleParams = {
   videoSpeed: '1',
   videoLoop: true,
   shouldIndexDirectShareLinkInSEO: true,
+  slideTransition: 'linear',
 };
 
 const container = {
