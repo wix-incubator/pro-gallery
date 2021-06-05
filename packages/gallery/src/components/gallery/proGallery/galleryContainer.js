@@ -727,7 +727,7 @@ export class GalleryContainer extends React.Component {
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        ref={(e) => this.galleryContainerRef = e}
+        ref={e => this.galleryContainerRef = e}
         tabIndex={-1}
       >
         <ScrollIndicator
