@@ -1012,7 +1012,6 @@ class ItemView extends GalleryComponent {
         currentIdx: prevProps.currentIdx
       },
       currentProps:{
-        domId: this.props.domId,
         thumbnailHighlightId: this.props.thumbnailHighlightId,
         id: this.props.id,
         currentIdx: this.props.currentIdx,
@@ -1163,8 +1162,8 @@ class ItemView extends GalleryComponent {
           onFocus={() => {
             onAnchorFocus({
               itemAnchor: this.itemAnchor,
-              shouldUseExperimentalFeature:
-                this.props.shouldUseExperimentalFeature,
+              enableExperimentalFeatures:
+                this.props.enableExperimentalFeatures,
               itemContainer: this.itemContainer,
             });
           }}

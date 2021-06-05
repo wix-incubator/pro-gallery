@@ -203,7 +203,7 @@ class GalleryView extends GalleryComponent {
       noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
-      shouldUseExperimentalFeature: this.props.shouldUseExperimentalFeature,
+      enableExperimentalFeatures: this.props.enableExperimentalFeatures,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },

@@ -4,12 +4,17 @@ function shouldChangeActiveElement() {
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
 }
 
+function isThisGalleryElementInFocus(className) {
+  const activeElement = window.document.activeElement;
+  return String(activeElement.className).includes(className);
+}
+
 export function onAnchorFocus({
   itemContainer,
-  shouldUseExperimentalFeature,
+  enableExperimentalFeatures,
   itemAnchor,
 }) {
-  if (shouldChangeActiveElement() && shouldUseExperimentalFeature) {
+  if (shouldChangeActiveElement() && enableExperimentalFeatures) {
     /* Relevant only for Screen-Reader cases:
          When we navigate on the accessibility tree, screen readers stops and focuses on the <a> tag,
          so it will not go deeper to the item-container keyDown event */
@@ -30,27 +35,12 @@ export function changeActiveElementIfNeeded({
       shouldChangeActiveElement() &&
       window.document.activeElement.className
     ) {
-      const activeElement = window.document.activeElement;
+      const isGalleryItemInFocus = isThisGalleryElementInFocus(
+        'gallery-item-container'
+      );
+      const isShowMoreInFocus = isThisGalleryElementInFocus('show-more');
 
-      //check if focus is on 'gallery-item-container' in current gallery
-      const isThisGalleryItemInFocus = () =>
-        !!window.document.querySelector(
-          `#pro-gallery-${currentProps.domId} #${String(activeElement.id)}`
-        );
-      const isGalleryItemInFocus = () =>
-        String(activeElement.className).indexOf('gallery-item-container') >= 0;
-      //check if focus is on 'load-more' in current gallery
-      const isThisGalleryShowMoreInFocus = () =>
-        !!window.document.querySelector(
-          `#pro-gallery-${currentProps.domId} #${String(activeElement.id)}`
-        );
-      const isShowMoreInFocus = () =>
-        String(activeElement.className).indexOf('show-more') >= 0;
-
-      if (
-        (isGalleryItemInFocus() && isThisGalleryItemInFocus()) ||
-        (isShowMoreInFocus() && isThisGalleryShowMoreInFocus())
-      ) {
+      if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
           currentProps.thumbnailHighlightId !==
             prevProps.thumbnailHighlightId &&
