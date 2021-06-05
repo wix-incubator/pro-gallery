@@ -662,6 +662,12 @@ class Utils {
         proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
   }
+
+  focusGalleryElement(element){
+    if(element) {
+      element.focus()
+    }
+  }
 }
 
 export default new Utils();

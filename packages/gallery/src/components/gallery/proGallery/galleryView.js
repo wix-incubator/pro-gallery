@@ -47,6 +47,11 @@ class GalleryView extends GalleryComponent {
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
+          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.currentIdx){
+            e.stopPropagation();
+            utils.focusGalleryElement(this.props.outOfViewComponent)
+            return false;
+          }
           break;
         case 39: //right
           newIdx = findNeighborItem(
@@ -56,7 +61,7 @@ class GalleryView extends GalleryComponent {
           break;
         case 27: //esc
           e.stopPropagation();
-          this.props.actions.focusGalleryContainer();
+          utils.focusGalleryElement(this.props.galleryContainerRef)
           return false;
       }
 

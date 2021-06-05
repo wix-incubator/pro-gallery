@@ -465,7 +465,19 @@ class SlideshowView extends GalleryComponent {
 
     if (nextKeys.includes(code)) {
       e.preventDefault();
-      this._next({ direction: getDirection(code), isKeyboardNavigation: true });
+      const activeItemIdx = window.document.activeElement.getAttribute('data-idx');
+
+      const shouldOutOfGallery =
+        activeItemIdx &&
+        (this.props.totalItemsCount - 1) === Number(activeItemIdx) &&
+        code === 40 &&
+        Number(activeItemIdx) === this.state.currentIdx;
+
+      if (shouldOutOfGallery) {
+        utils.focusGalleryElement(this.props.outOfViewComponent);     
+      } else {
+        this._next({ direction: getDirection(code), isKeyboardNavigation: true });
+      }
       return false;
     } else if (code === 27) {
       this.props.actions.focusGalleryContainer();

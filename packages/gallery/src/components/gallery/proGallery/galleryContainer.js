@@ -37,7 +37,6 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
-    this.focusGalleryContainer = this.focusGalleryContainer.bind(this);
     this.setCurrentSlideshowViewIdx =
       this.setCurrentSlideshowViewIdx.bind(this);
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
@@ -548,12 +547,6 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  focusGalleryContainer(){
-    if(this.galleryContainerRef){
-      this.galleryContainerRef.focus();
-    }
-  }
-
   toggleLoadMoreItems() {
     this.eventsListener(
       GALLERY_CONSTS.events.LOAD_MORE_CLICKED,
@@ -734,7 +727,7 @@ export class GalleryContainer extends React.Component {
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        ref={e => this.galleryContainerRef = e}
+        ref={(e) => this.galleryContainerRef = e}
         tabIndex={-1}
       >
         <ScrollIndicator
@@ -779,6 +772,8 @@ export class GalleryContainer extends React.Component {
           proGalleryRole={this.props.proGalleryRole}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
+          galleryContainerRef={this.galleryContainerRef}
+          outOfViewComponent={this.outOfViewComponent}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
@@ -787,7 +782,6 @@ export class GalleryContainer extends React.Component {
             setWixHeight: () => {},
             scrollToItem: this.scrollToItem,
             scrollToGroup: this.scrollToGroup,
-            focusGalleryContainer: this.focusGalleryContainer,
           }}
           {...this.props.gallery}
         />
@@ -814,6 +808,11 @@ export class GalleryContainer extends React.Component {
             <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
           )}
         </div>
+        {this.props.proGalleryRole === 'application' && (
+          <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only">
+            out of gallery
+          </span>
+        )}
       </div>
     );
   }
