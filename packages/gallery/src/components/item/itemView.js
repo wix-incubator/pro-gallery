@@ -361,21 +361,21 @@ class ItemView extends GalleryComponent {
     let dimensions = {};
     const { height, width, maxWidth, maxHeight } = style;
     const shouldUseMaxDims = maxHeight < height && maxWidth < width && styleParams.useMaxDimensions;
-    if (!isGridFit) {
+    if (shouldUseMaxDims) {
+      const marginTop = (height - maxHeight) / 2;
+      const marginLeft = (width - maxWidth) / 2;
+      dimensions = {
+        height: maxHeight,
+        width: maxWidth,
+        margin: `${marginTop}px ${marginLeft}px`,
+      };
+    } else if (!isGridFit) {
       dimensions = {
         width: style.width,
         height: style.height,
       };
     } else {
-      if (shouldUseMaxDims) {
-        const marginTop = (height - maxHeight) / 2;
-        const marginLeft = (width - maxWidth) / 2;
-        dimensions = {
-          height: maxHeight,
-          width: maxWidth,
-          margin: `${marginTop}px ${marginLeft}px`,
-        };
-      } else if(isLandscape) {
+      if(isLandscape) {
         dimensions = {
           //landscape
           height: height - 2 * imageMarginTop,
