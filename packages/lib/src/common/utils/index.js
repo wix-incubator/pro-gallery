@@ -655,7 +655,7 @@ class Utils {
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
     return {
-      role: proGalleryRole,
+      role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel ||
         'You can navigate the gallery with keyboard arrow keys.',
       ['aria-roledescription']:
