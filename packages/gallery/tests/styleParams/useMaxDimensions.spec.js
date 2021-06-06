@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { itemsWithDirectShareLink } from '../drivers/mocks/items';
 import ItemView from '../../src/components/item/itemView';
 
-describe('styleParam - strechSmallImages', () => {
+describe('styleParam - useMaxDimensions', () => {
   let driver;
 
   function getSampleItemViewProps(styleParams) {
@@ -34,7 +34,7 @@ describe('styleParam - strechSmallImages', () => {
   }
   it('should use original dimensions (maxHeight and maxWidth)', async () => {
     const sample = getSampleItemViewProps({
-      strechSmallImages: false,
+      useMaxDimensions: true,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       itemClick: GALLERY_CONSTS.itemClick.EXPAND,
@@ -44,7 +44,7 @@ describe('styleParam - strechSmallImages', () => {
   });
   it('should not use original dimensions (maxHeight and maxWidth)', async () => {
     const sample = getSampleItemViewProps({
-      strechSmallImages: true,
+      useMaxDimensions: false,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       itemClick: GALLERY_CONSTS.itemClick.EXPAND,

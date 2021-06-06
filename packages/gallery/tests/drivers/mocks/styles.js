@@ -102,7 +102,7 @@ const styleParams = {
   videoSpeed: '1',
   videoLoop: true,
   shouldIndexDirectShareLinkInSEO: true,
-  strechSmallImages: true,
+  useMaxDimensions: false,
 };
 
 const container = {

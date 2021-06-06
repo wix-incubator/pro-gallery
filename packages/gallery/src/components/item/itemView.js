@@ -360,35 +360,38 @@ class ItemView extends GalleryComponent {
 
     let dimensions = {};
     const { height, width, maxWidth, maxHeight } = style;
-    const shouldUseMaxDims = maxHeight < height && maxWidth < width && !styleParams.strechSmallImages;
+    const shouldUseMaxDims = maxHeight < height && maxWidth < width && styleParams.useMaxDimensions;
     if (!isGridFit) {
       dimensions = {
         width: style.width,
         height: style.height,
       };
-    } else if (isGridFit && shouldUseMaxDims) {
-      const marginTop = (height - maxHeight) / 2;
-      const marginLeft = (width - maxWidth) / 2;
-      dimensions = {
-        height: maxHeight,
-        width: maxWidth,
-        margin: `${marginTop}px ${marginLeft}px`,
-      };
-    } else if (isGridFit && isLandscape) {
-      dimensions = {
-        //landscape
-        height: height - 2 * imageMarginTop,
-        width: width,
-        margin: `${imageMarginTop}px 0`,
-      };
-    } else if (isGridFit && !isLandscape) {
-      dimensions = {
-        //portrait
-        width: width - 2 * imageMarginLeft,
-        height: height,
-        margin: `0 ${imageMarginLeft}px`,
-      };
+    } else {
+      if (shouldUseMaxDims) {
+        const marginTop = (height - maxHeight) / 2;
+        const marginLeft = (width - maxWidth) / 2;
+        dimensions = {
+          height: maxHeight,
+          width: maxWidth,
+          margin: `${marginTop}px ${marginLeft}px`,
+        };
+      } else if(isLandscape) {
+        dimensions = {
+          //landscape
+          height: height - 2 * imageMarginTop,
+          width: width,
+          margin: `${imageMarginTop}px 0`,
+        };
+      } else if(!isLandscape) {
+        dimensions = {
+          //portrait
+          width: width - 2 * imageMarginLeft,
+          height: height,
+          margin: `0 ${imageMarginLeft}px`,
+        };
+      }
     }
+
     if (
       styleParams.itemBorderRadius &&
       styleParams.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND
