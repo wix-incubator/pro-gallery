@@ -10,5 +10,5 @@ export default {
     styleParams.cubeType === GALLERY_CONSTS.cubeType.FIT,
   isRelevantDescription: 'Set "Crop Images" to "true" and "Crop Type" to "fit"',
   type: INPUT_TYPES.BOOLEAN,
-  default: true,
+  default: false,
 };
