@@ -467,13 +467,13 @@ class SlideshowView extends GalleryComponent {
       e.preventDefault();
       const activeItemIdx = window.document.activeElement.getAttribute('data-idx');
 
-      const shouldOutOfGallery =
+      const shouldFocusOutOfViewComponent =
         activeItemIdx &&
         (this.props.totalItemsCount - 1) === Number(activeItemIdx) &&
         code === 40 &&
         Number(activeItemIdx) === this.state.currentIdx;
 
-      if (shouldOutOfGallery) {
+      if (shouldFocusOutOfViewComponent) {
         utils.focusGalleryElement(this.props.outOfViewComponent);     
       } else {
         this._next({ direction: getDirection(code), isKeyboardNavigation: true });
