@@ -1007,17 +1007,9 @@ class ItemView extends GalleryComponent {
 
   componentDidUpdate(prevProps) {
     changeActiveElementIfNeeded({
-      prevProps:{
-        thumbnailHighlightId: prevProps.thumbnailHighlightId,
-        currentIdx: prevProps.currentIdx
-      },
-      currentProps:{
-        thumbnailHighlightId: this.props.thumbnailHighlightId,
-        id: this.props.id,
-        currentIdx: this.props.currentIdx,
-        idx: this.props.idx,   
-      },
-      itemContainer: this.itemContainer  
+      prevProps,
+      currentProps: this.props,
+      itemContainer: this.itemContainer
     });
   }
 
