@@ -35,8 +35,6 @@ describe('styleParam - useMaxDimensions', () => {
   it('should use original dimensions (maxHeight and maxWidth)', async () => {
     const sample = getSampleItemViewProps({
       useMaxDimensions: true,
-      cubeImages: true,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
       itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     });
     const styles = await mountUpdateAndItemStyle(sample);
@@ -45,8 +43,6 @@ describe('styleParam - useMaxDimensions', () => {
   it('should not use original dimensions (maxHeight and maxWidth)', async () => {
     const sample = getSampleItemViewProps({
       useMaxDimensions: false,
-      cubeImages: true,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
       itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     });
     const styles = await mountUpdateAndItemStyle(sample);
