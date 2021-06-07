@@ -458,34 +458,37 @@ class SlideshowView extends GalleryComponent {
 
   handleSlideshowKeyPress(e) {
     e.stopPropagation();
-    const nextKeys = [32, 33, 34, 37, 38, 39, 40]
+    const relevantKeys = [32, 33, 34, 37, 38, 39, 40, 27];
     // key code -> 32=space, 37=left, 38=up, 39=right, 40=down
     // charCode -> , 33=page up, 34=page down
     const code = e.charCode || e.keyCode
 
-    if (nextKeys.includes(code)) {
+    if (relevantKeys.includes(code)) {
       e.preventDefault();
       const activeItemIdx = window.document.activeElement.getAttribute('data-idx');
 
-      const shouldFocusOutOfViewComponent =
-        activeItemIdx &&
+      const shouldFocusOutOfViewComponent = activeItemIdx &&
         (this.props.totalItemsCount - 1) === Number(activeItemIdx) &&
-        code === 40 &&
         Number(activeItemIdx) === this.state.currentIdx;
 
-      if (shouldFocusOutOfViewComponent) {
-        utils.focusGalleryElement(this.props.outOfViewComponent);     
-      } else {
-        this._next({ direction: getDirection(code), isKeyboardNavigation: true });
+      switch (code) {
+        case 40: // down
+          if (shouldFocusOutOfViewComponent) {
+            utils.focusGalleryElement(this.props.outOfViewComponent);
+            return false;
+          }
+          break;
+        case 27: // esc
+          utils.focusGalleryElement(this.props.galleryContainerRef);
+          return false;
+        default:
+          break;
       }
-      return false;
-    } else if (code === 27) {
-      this.props.actions.focusGalleryContainer();
+      this._next({ direction: getDirection(code), isKeyboardNavigation: true });
       return false;
     }
-    return true
+    return true;
   }
-
   createThumbnails(thumbnailPosition) {
     let items = this.props.items;
     let currentIdx = this.state.currentIdx;
