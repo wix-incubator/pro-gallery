@@ -809,7 +809,7 @@ export class GalleryContainer extends React.Component {
           )}
         </div>
         {this.props.proGalleryRole === 'application' && (
-          <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only">
+          <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only out-of-gallery">
             out of gallery
           </span>
         )}
