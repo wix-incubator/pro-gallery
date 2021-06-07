@@ -7,12 +7,12 @@ import {
   utils,
   isEditMode,
   isPreviewMode,
-  isSiteMode,
   isSEOMode,
 } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
+import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
 import {
@@ -69,8 +69,6 @@ class ItemView extends GalleryComponent {
     this.onMouseOut = this.onMouseOut.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.changeActiveElementIfNeeded =
-      this.changeActiveElementIfNeeded.bind(this);
     this.checkIfCurrentHoverChanged =
       this.checkIfCurrentHoverChanged.bind(this);
     this.getCustomInfoRendererProps =
@@ -982,57 +980,6 @@ class ItemView extends GalleryComponent {
     return tabIndex;
   }
 
-  changeActiveElementIfNeeded(prevProps) {
-    try {
-      if (
-        (isSiteMode() || isSEOMode()) &&
-        !utils.isMobile() &&
-        window.document &&
-        window.document.activeElement &&
-        window.document.activeElement.className
-      ) {
-        const activeElement = window.document.activeElement;
-
-        //check if focus is on 'gallery-item-container' in current gallery
-        const isThisGalleryItemInFocus = () =>
-          !!window.document.querySelector(
-            `#pro-gallery-${this.props.domId} #${String(activeElement.id)}`
-          );
-        const isGalleryItemInFocus = () =>
-          String(activeElement.className).indexOf('gallery-item-container') >=
-          0;
-        //check if focus is on 'load-more' in current gallery
-        const isThisGalleryShowMoreInFocus = () =>
-          !!window.document.querySelector(
-            `#pro-gallery-${this.props.domId} #${String(activeElement.id)}`
-          );
-        const isShowMoreInFocus = () =>
-          String(activeElement.className).indexOf('show-more') >= 0;
-
-        if (
-          (isGalleryItemInFocus() && isThisGalleryItemInFocus()) ||
-          (isShowMoreInFocus() && isThisGalleryShowMoreInFocus())
-        ) {
-          if (
-            this.props.thumbnailHighlightId !==
-              prevProps.thumbnailHighlightId &&
-            this.props.thumbnailHighlightId === this.props.id
-          ) {
-            // if the highlighted thumbnail changed and it is the same as this itemview's
-            this.itemContainer.focus();
-          } else if (
-            this.props.currentIdx !== prevProps.currentIdx &&
-            this.props.currentIdx === this.props.idx
-          ) {
-            //check if currentIdx has changed to the current item
-            this.itemContainer.focus();
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Could not set focus to active element', e);
-    }
-  }
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
@@ -1059,7 +1006,11 @@ class ItemView extends GalleryComponent {
   }
 
   componentDidUpdate(prevProps) {
-    this.changeActiveElementIfNeeded(prevProps);
+    changeActiveElementIfNeeded({
+      prevProps,
+      currentProps: this.props,
+      itemContainer: this.itemContainer
+    });
   }
 
   checkIfCurrentHoverChanged(e) {
@@ -1200,6 +1151,14 @@ class ItemView extends GalleryComponent {
           data-id={photoId}
           data-idx={idx}
           key={'item-container-link-' + id}
+          onFocus={() => {
+            onAnchorFocus({
+              itemAnchor: this.itemAnchor,
+              enableExperimentalFeatures:
+                this.props.enableExperimentalFeatures,
+              itemContainer: this.itemContainer,
+            });
+          }}
           {...this.getLinkParams()}
           tabIndex={-1}
           onKeyDown={(e) => {
