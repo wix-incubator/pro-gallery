@@ -2,7 +2,7 @@
 
 #### GALLERY
  -  fix: focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded
- -  improve: small gallery/index refactor
+ -  improve: small gallery/index refactor.
  -  fix: added default value to the aria role
 
 ---
