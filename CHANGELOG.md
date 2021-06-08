@@ -1,3 +1,11 @@
+## [v3.1.24](https://pro-gallery-3-1-24.surge.sh) (08/06/2021)
+
+#### GALLERY
+ -  fix: focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded
+ -  improve: small gallery/index refactor.
+ -  fix: added default value to the aria role
+
+---
 ## [v3.1.23](https://pro-gallery-3-1-23.surge.sh) (30/05/2021)
  
 #### GALLERY
