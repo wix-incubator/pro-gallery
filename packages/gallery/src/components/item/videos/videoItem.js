@@ -1,6 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../../galleryComponent';
+import getStyle from './getStyle';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -147,34 +148,10 @@ class VideoItem extends GalleryComponent {
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
-    let videoDimensionsCss = {};
-    if (
+    const isCrop =
       this.props.styleParams.cubeImages &&
-      this.props.styleParams.cubeType === 'fill'
-    ) {
-      //grid crop mode
-      videoDimensionsCss.height = isWiderThenContainer
-        ? 'calc(100% + 1px)'
-        : 'auto';
-      videoDimensionsCss.width = isWiderThenContainer
-        ? 'auto'
-        : 'calc(100% + 1px)';
-      videoDimensionsCss.position = 'absolute';
-      videoDimensionsCss.margin = 'auto';
-      videoDimensionsCss.minHeight = '100%';
-      videoDimensionsCss.minWidth = '100%';
-      videoDimensionsCss.left = '-100%';
-      videoDimensionsCss.right = '-100%';
-      videoDimensionsCss.top = '-100%';
-      videoDimensionsCss.bottom = '-100%';
-    } else {
-      videoDimensionsCss.width = isWiderThenContainer
-        ? 'calc(100% + 1px)'
-        : 'auto';
-      videoDimensionsCss.height = isWiderThenContainer
-        ? '100%'
-        : 'calc(100% + 1px)';
-    }
+      this.props.styleParams.cubeType === 'fill';
+
     const url = this.props.videoUrl
       ? this.props.videoUrl
       : this.props.createUrl(
@@ -240,7 +217,7 @@ class VideoItem extends GalleryComponent {
                 GALLERY_CONSTS.urlSizes.SCALED,
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               ),
-              style: videoDimensionsCss,
+              style: getStyle(isCrop, isWiderThenContainer),
               type: 'video/mp4',
             },
             forceHLS: this.shouldUseHlsPlayer(),
