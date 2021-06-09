@@ -19,6 +19,7 @@ export default class BaseGallery extends React.Component<IGalleryProps, IState> 
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.blueprintsManager.init({
+      formFactor: props.formFactor,
       api: {
         isUsingCustomInfoElements: this.isUsingCustomInfoElements,
         fetchMoreItems: (from) => {
