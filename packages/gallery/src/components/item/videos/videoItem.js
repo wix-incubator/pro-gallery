@@ -147,20 +147,18 @@ class VideoItem extends GalleryComponent {
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
-    const videoDimensionsCss = {
-      width: isWiderThenContainer ? 'calc(100% + 1px)' : 'auto',
-      height: isWiderThenContainer ? '100%' : 'calc(100% + 1px)',
-    };
-
+    let videoDimensionsCss = {};
     if (
       this.props.styleParams.cubeImages &&
       this.props.styleParams.cubeType === 'fill'
     ) {
       //grid crop mode
-      [videoDimensionsCss.width, videoDimensionsCss.height] = [
-        videoDimensionsCss.height,
-        videoDimensionsCss.width,
-      ];
+      videoDimensionsCss.height = isWiderThenContainer
+        ? 'calc(100% + 1px)'
+        : 'auto';
+      videoDimensionsCss.width = isWiderThenContainer
+        ? 'auto'
+        : 'calc(100% + 1px)';
       videoDimensionsCss.position = 'absolute';
       videoDimensionsCss.margin = 'auto';
       videoDimensionsCss.minHeight = '100%';
@@ -169,6 +167,13 @@ class VideoItem extends GalleryComponent {
       videoDimensionsCss.right = '-100%';
       videoDimensionsCss.top = '-100%';
       videoDimensionsCss.bottom = '-100%';
+    } else {
+      videoDimensionsCss.width = isWiderThenContainer
+        ? 'calc(100% + 1px)'
+        : 'auto';
+      videoDimensionsCss.height = isWiderThenContainer
+        ? '100%'
+        : 'calc(100% + 1px)';
     }
     const url = this.props.videoUrl
       ? this.props.videoUrl
