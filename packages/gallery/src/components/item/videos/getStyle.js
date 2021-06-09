@@ -2,11 +2,9 @@ module.exports = getStyle;
 
 function getStyle(isCrop, isWiderThenContainer) {
   const CALC = 'calc(100% + 1px)';
-  return isCrop
-    ? getCrop(isWiderThenContainer)
-    : getNonCrop(isWiderThenContainer);
+  return isCrop ? getCrop() : getNonCrop();
 
-  function getCrop(isWiderThenContainer) {
+  function getCrop() {
     return {
       height: isWiderThenContainer ? CALC : 'auto',
       width: isWiderThenContainer ? 'auto' : CALC,
@@ -21,7 +19,7 @@ function getStyle(isCrop, isWiderThenContainer) {
     };
   }
 
-  function getNonCrop(isWiderThenContainer) {
+  function getNonCrop() {
     return {
       width: isWiderThenContainer ? CALC : 'auto',
       height: isWiderThenContainer ? '100%' : CALC,
