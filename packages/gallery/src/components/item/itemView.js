@@ -347,6 +347,7 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getImageDimensions() {
+    // dummy commit
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
     const { styleParams, cubeRatio, style } = this.props;
     const isLandscape = style.ratio >= cubeRatio; //relative to container size
