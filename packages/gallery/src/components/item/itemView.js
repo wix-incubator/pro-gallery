@@ -346,48 +346,32 @@ class ItemView extends GalleryComponent {
 
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
-  getImageDimensions() {
+  getImageDimensions(itemProps) {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    const { styleParams, cubeRatio, style } = this.props;
+    const { styleParams, cubeRatio, style } = itemProps;
     const { height: requiredHeight, width: requiredWidth, maxWidth, maxHeight, ratio } = style;
-    // const { height, width, maxWidth, maxHeight, ratio } = style;
-    const { useMaxDimensions } = styleParams;
-    // const shouldUseMaxDims = maxHeight < height && maxWidth < width && useMaxDimensions;
-
-    // const height = Math.min(requiredHeight, useMaxDimensions ? maxHeight : Infinity)
-    // const width = Math.min(requiredWidth, useMaxDimensions ? maxWidth : Infinity)
-    // const marginLeft = (requiredWidth - width) / 2;
-    // const marginTop = (requiredHeight - height) / 2;
-
-    const isGridFit = styleParams.cubeImages && styleParams.cubeType === 'fit';
-
+    const { useMaxDimensions, itemBorderRadius, imageInfoType } = styleParams;
     let dimensions = {};
-    if (isGridFit) {
-      const imageMarginLeft = Math.round(
-        Math.max(0,(requiredHeight * ratio - requiredWidth) / -2)
-      );
-      const imageMarginTop = Math.round(
-        Math.max(0,(requiredWidth / ratio - requiredHeight) / -2)
-      );
-
-      dimensions = {
-        height: requiredHeight - 2 * imageMarginTop,
-        width: requiredWidth - 2 * imageMarginLeft,
-        margin: `${imageMarginTop}px ${imageMarginLeft}px`,
-      };
+   
+    const _height = Math.min(requiredHeight, useMaxDimensions ? maxHeight : Infinity)
+    const _width = Math.min(requiredWidth, useMaxDimensions ? maxWidth : Infinity)
+    const imageMarginLeft = Math.round(
+      Math.max(0,( requiredWidth - _height * ratio) / 2)
+    );
+    const imageMarginTop = Math.round(
+      Math.max(0,( requiredHeight - _width / ratio) / 2)
+    );  
+    dimensions = {
+      height: requiredHeight - 2 * imageMarginTop,
+      width: requiredWidth - 2 * imageMarginLeft,
+      margin: `${imageMarginTop}px ${imageMarginLeft}px`,
+    };
       
-    } else {
-      dimensions = {
-        width: requiredWidth,
-        height: requiredHeight,
-      };
-    }
-
     if (
-      styleParams.itemBorderRadius &&
-      styleParams.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND
+        itemBorderRadius &&
+        imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND
     ) {
-      dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
+      dimensions.borderRadius = itemBorderRadius + 'px';
     }
     return dimensions;
   }
@@ -496,7 +480,7 @@ class ItemView extends GalleryComponent {
   getItemInner() {
     const { styleParams, type } = this.props;
     let itemInner;
-    const imageDimensions = this.getImageDimensions();
+    const imageDimensions = this.getImageDimensions(this.props);
     const { width, height, margin } = imageDimensions;
 
     const itemStyles = { width, height };
@@ -796,6 +780,7 @@ class ItemView extends GalleryComponent {
       ...transitionStyles,
       ...opacityStyles,
       ...slideAnimationStyles,
+      border: '1px solid red'
     };
 
     return itemContainerStyles;
@@ -816,12 +801,13 @@ class ItemView extends GalleryComponent {
     styles.margin = -styleParams.itemBorderWidth + 'px';
     styles.height = height + 'px';
 
-    const imageDimensions = this.getImageDimensions();
+    const imageDimensions = this.getImageDimensions(this.props);
 
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
       ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
+      border: '1px solid black'
     };
 
     return itemWrapperStyles;
