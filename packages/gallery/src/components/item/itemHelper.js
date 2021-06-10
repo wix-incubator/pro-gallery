@@ -1,4 +1,5 @@
 import { window, utils, isSiteMode, isSEOMode } from 'pro-gallery-lib';
+import {GALLERY_CONSTS} from 'pro-gallery-lib';
 
 function shouldChangeActiveElement() {
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
@@ -60,4 +61,33 @@ export function changeActiveElementIfNeeded({
   } catch (e) {
     console.error('Could not set focus to active element', e);
   }
+}
+export function getImageDimensions(itemProps) {
+  //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
+  const { styleParams, style } = itemProps;
+  const { height: requiredHeight, width: requiredWidth, maxWidth, maxHeight, ratio } = style;
+  const { useMaxDimensions, itemBorderRadius, imageInfoType, cubeType, cubeImages, cubeRatio } = styleParams;
+  let dimensions = {};
+  ratio = cubeImages && cubeType === GALLERY_CONSTS.cubeType.CROP ? Number(cubeRatio) : ratio
+  const _height = Math.min(requiredHeight, useMaxDimensions ? maxHeight : Infinity, useMaxDimensions ? maxWidth / ratio : Infinity)
+  const _width = Math.min(requiredWidth, useMaxDimensions ? maxWidth : Infinity, useMaxDimensions ? maxHeight * ratio : Infinity)
+  const imageMarginLeft = Math.round(
+    Math.max(0,( requiredWidth - _height * ratio) / 2)
+  );
+  const imageMarginTop = Math.round(
+    Math.max(0,( requiredHeight - _width / ratio) / 2)
+  );
+  dimensions = {
+    height: requiredHeight - 2 * imageMarginTop,
+    width: requiredWidth - 2 * imageMarginLeft,
+    margin: `${imageMarginTop}px ${imageMarginLeft}px`,
+  };
+    
+  if (
+      itemBorderRadius &&
+      imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND
+  ) {
+    dimensions.borderRadius = itemBorderRadius + 'px';
+  }
+  return dimensions;
 }
