@@ -1409,7 +1409,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_31569a98fd8d436f98ae9c827c216443f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_31569a98fd8d436f98ae9c827c216443f000.jpg',
+    },
     duration: 14914,
   }
 }, {
@@ -1419,7 +1423,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_3e5c5b13a90749a6a02c845e8d1fa4dcf000.jpg',
+    },
     duration: 44878,
   }
 }, {
@@ -1429,7 +1437,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_8cebf3ded81a496cb5a1dde4d3ebf0dbf000.jpg',
+    },
     duration: 24290,
   }
 }, {
@@ -1439,7 +1451,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_11bbc686975e49caa89013d03e05d554f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_11bbc686975e49caa89013d03e05d554f000.jpg',
+    },
     duration: 767,
   }
 }, {
@@ -1449,7 +1465,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_ec7acce34f9a48e4adcca80aa7f46827f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_ec7acce34f9a48e4adcca80aa7f46827f000.jpg',
+    },
     duration: 15048,
   }
 }, {
@@ -1459,7 +1479,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_8473aaf089cf4f78ad4e037c9340db47f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_8473aaf089cf4f78ad4e037c9340db47f000.jpg',
+    },
     duration: 56656,
   }
 }, {
@@ -1469,7 +1493,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_648a202922414ffa836f639dee9ef389f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_648a202922414ffa836f639dee9ef389f000.jpg',
+    },
     duration: 55221,
   }
 }, {
@@ -1479,7 +1507,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f000.jpg',
+    },
     duration: 25480,
   }
 }, {
@@ -1489,7 +1521,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_5a0019a04722461aa11b9aaad3b68ce0f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_5a0019a04722461aa11b9aaad3b68ce0f000.jpg',
+    },
     duration: 15415,
   }
 }, {
@@ -1499,7 +1535,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_f70ffc53e8a147dcbe2acebb2a5f1021f000.jpg',
+    },
     duration: 26993,
   }
 }, {
@@ -1509,7 +1549,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_f60ba42798594ad09b4fa5207967a4ccf000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_f60ba42798594ad09b4fa5207967a4ccf000.jpg',
+    },
     duration: 25959,
   }
 }, {
@@ -1519,7 +1563,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f000.jpg',
+    },
     duration: 16766,
   }
 }, {
@@ -1529,7 +1577,11 @@ const testVideos = [{
     width: 1920,
     height: 1080,
     type: 'video',
-    poster: 'https://static.wixstatic.com/media/0d72ac_3ba52f5159984d78935ad4f950e9aef8f000.jpg',
+    poster: {
+      width: 1920, 
+      height: 1080, 
+      url: 'https://static.wixstatic.com/media/0d72ac_3ba52f5159984d78935ad4f950e9aef8f000.jpg',
+    },
     duration: 7974,
   }
 }];
