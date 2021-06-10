@@ -347,50 +347,40 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getImageDimensions() {
-    // dummy commit
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
     const { styleParams, cubeRatio, style } = this.props;
-    const isLandscape = style.ratio >= cubeRatio; //relative to container size
-    const imageMarginLeft = Math.round(
-      (style.height * style.ratio - style.width) / -2
-    );
-    const imageMarginTop = Math.round(
-      (style.width / style.ratio - style.height) / -2
-    );
+    const { height: requiredHeight, width: requiredWidth, maxWidth, maxHeight, ratio } = style;
+    // const { height, width, maxWidth, maxHeight, ratio } = style;
+    const { useMaxDimensions } = styleParams;
+    // const shouldUseMaxDims = maxHeight < height && maxWidth < width && useMaxDimensions;
+
+    // const height = Math.min(requiredHeight, useMaxDimensions ? maxHeight : Infinity)
+    // const width = Math.min(requiredWidth, useMaxDimensions ? maxWidth : Infinity)
+    // const marginLeft = (requiredWidth - width) / 2;
+    // const marginTop = (requiredHeight - height) / 2;
+
     const isGridFit = styleParams.cubeImages && styleParams.cubeType === 'fit';
 
     let dimensions = {};
-    const { height, width, maxWidth, maxHeight } = style;
-    const shouldUseMaxDims = maxHeight < height && maxWidth < width && styleParams.useMaxDimensions;
-    if (shouldUseMaxDims) {
-      const marginTop = (height - maxHeight) / 2;
-      const marginLeft = (width - maxWidth) / 2;
+    if (isGridFit) {
+      const imageMarginLeft = Math.round(
+        Math.max(0,(requiredHeight * ratio - requiredWidth) / -2)
+      );
+      const imageMarginTop = Math.round(
+        Math.max(0,(requiredWidth / ratio - requiredHeight) / -2)
+      );
+
       dimensions = {
-        height: maxHeight,
-        width: maxWidth,
-        margin: `${marginTop}px ${marginLeft}px`,
+        height: requiredHeight - 2 * imageMarginTop,
+        width: requiredWidth - 2 * imageMarginLeft,
+        margin: `${imageMarginTop}px ${imageMarginLeft}px`,
       };
-    } else if (!isGridFit) {
-      dimensions = {
-        width: style.width,
-        height: style.height,
-      };
+      
     } else {
-      if(isLandscape) {
-        dimensions = {
-          //landscape
-          height: height - 2 * imageMarginTop,
-          width: width,
-          margin: `${imageMarginTop}px 0`,
-        };
-      } else if(!isLandscape) {
-        dimensions = {
-          //portrait
-          width: width - 2 * imageMarginLeft,
-          height: height,
-          margin: `0 ${imageMarginLeft}px`,
-        };
-      }
+      dimensions = {
+        width: requiredWidth,
+        height: requiredHeight,
+      };
     }
 
     if (
