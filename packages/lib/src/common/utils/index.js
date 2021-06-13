@@ -664,9 +664,7 @@ class Utils {
   }
 
   focusGalleryElement(element){
-    if(element) {
-      element.focus()
-    }
+      element.focus();
   }
 }
 
