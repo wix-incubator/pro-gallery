@@ -78,12 +78,11 @@ export function getImageDimensions(itemProps) {
     imageInfoType,
     cubeType,
     cubeImages,
-    cubeRatio,
   } = styleParams;
   let dimensions = {};
   ratio =
     cubeImages && cubeType === GALLERY_CONSTS.cubeType.CROP
-      ? Number(cubeRatio)
+      ? Number(itemProps.cubeRatio)
       : ratio;
   const _height = Math.min(
     requiredHeight,
