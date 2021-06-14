@@ -657,10 +657,14 @@ class Utils {
     return {
       role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel ||
-        'You can navigate the gallery with keyboard arrow keys.',
+        'Press the Enter key and then use the arrow keys to navigate the gallery items',
       ['aria-roledescription']:
         proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
+  }
+  
+  focusGalleryElement(element){
+    element.focus();
   }
 }
 
