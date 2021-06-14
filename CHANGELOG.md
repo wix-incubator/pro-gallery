@@ -1,3 +1,12 @@
+## [v3.1.25](https://pro-gallery-3-1-25.surge.sh) (13/06/2021)
+ 
+#### GALLERY
+ -  fix: add formFactor to main flow 
+
+#### PLAYGROUND
+ -  fix: correct poster objects
+
+---
 ## [v3.1.24](https://pro-gallery-3-1-24.surge.sh) (08/06/2021)
 
 #### GALLERY
