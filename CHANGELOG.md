@@ -1,3 +1,9 @@
+## [v3.1.26](https://pro-gallery-3-1-26.surge.sh) (15/06/2021)
+ 
+#### gallery
+ -  feat: A11Y added an option to focus outside the gallery when we are in application mode
+
+---
 ## [v3.1.25](https://pro-gallery-3-1-25.surge.sh) (13/06/2021)
  
 #### GALLERY
