@@ -341,31 +341,29 @@ export class Item {
     );
     const isGridFit = this.cubeImages && this.cubeType === 'fit';
 
-    let dimensions = {};
 
-    if (!isGridFit) {
-      dimensions = {
-        width: this.width,
-        height: this.height,
-      };
-    } else if (isGridFit && isLandscape) {
-      dimensions = {
-        //landscape
-        height: this.height - 2 * imageMarginTop,
-        width: this.width,
-        marginTop: imageMarginTop,
-        marginLeft: 0,
-      };
-    } else if (isGridFit && !isLandscape) {
-      dimensions = {
-        //portrait
-        width: this.width - 2 * imageMarginLeft,
-        height: this.height,
-        marginLeft: imageMarginLeft,
-        marginTop: 0,
-      };
+    if(isGridFit) {
+      if(isLandscape) {
+        return {
+          height: this.height - 2 * imageMarginTop,
+          width: this.width,
+          marginTop: imageMarginTop,
+          marginLeft: 0,
+        }
+      }
+
+      return {
+          width: this.width - 2 * imageMarginLeft,
+          height: this.height,
+          marginLeft: imageMarginLeft,
+          marginTop: 0,
+        }
     }
-    return dimensions;
+
+    return {
+      width: this.width,
+      height: this.height
+    }
   }
 
   get cubeRatio() {
