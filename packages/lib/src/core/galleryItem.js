@@ -139,12 +139,6 @@ class GalleryItem {
     };
   }
 
-  getHighestMp4Resolution(qualities) {
-    const mp4s = qualities.filter((video) => video.formats[0] === 'mp4');
-    const { width, height } = mp4s.sort((a, b) => b.width - a.width)[0];
-    return { width, height };
-  }
-
   resizedUrl(
     resizeMethod,
     requiredWidth,
@@ -423,6 +417,10 @@ class GalleryItem {
     if (this.isText) {
       bg =
         this.metadata &&
+        this.metadata.textStyle &&
+        this.metadata.textStyle.backgroundColor;
+      bg =
+        this.metadata &&
         ((this.metadata.textStyle && this.metadata.textStyle.backgroundColor) ||
           this.metadata.backgroundColor);
     } else {
@@ -491,6 +489,7 @@ class GalleryItem {
   }
 
   get html() {
+    // return this.metadata.html;
     return (
       this.dto.html || this.dto.text || this.metadata.html || this.metadata.text
     );
