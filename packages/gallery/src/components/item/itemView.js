@@ -986,7 +986,7 @@ class ItemView extends GalleryComponent {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
-    if (utils.isMobile()) {
+    if (utils.isMobile() && typeof React.initializeTouchEvents === 'function') {
       try {
         React.initializeTouchEvents(true);
       } catch (e) {
