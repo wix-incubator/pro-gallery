@@ -330,6 +330,44 @@ export class Item {
     this.imageMargin = m;
   }
 
+  get dimensions() {
+    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
+    const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
+    const imageMarginLeft = Math.round(
+      (this.height * this.ratio - this.width) / -2
+    );
+    const imageMarginTop = Math.round(
+      (this.width / this.ratio - this.height) / -2
+    );
+    const isGridFit = this.cubeImages && this.cubeType === 'fit';
+
+    let dimensions = {};
+
+    if (!isGridFit) {
+      dimensions = {
+        width: this.width,
+        height: this.height,
+      };
+    } else if (isGridFit && isLandscape) {
+      dimensions = {
+        //landscape
+        height: this.height - 2 * imageMarginTop,
+        width: this.width,
+        marginTop: imageMarginTop,
+        marginLeft: 0,
+      };
+    } else if (isGridFit && !isLandscape) {
+      dimensions = {
+        //portrait
+        width: this.width - 2 * imageMarginLeft,
+        height: this.height,
+        marginLeft: imageMarginLeft,
+        marginTop: 0,
+      };
+    }
+    return dimensions;
+  }
+
   get cubeRatio() {
     let ratio;
     if (this.rotatingCropRatio) {
@@ -461,6 +499,7 @@ export class Item {
       infoWidth: this.infoWidth,
       margins: this.margins,
       ratio: this.ratio,
+      dimensions: this.dimensions,
       cropRatio: this.cubeRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
