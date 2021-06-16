@@ -438,6 +438,10 @@ export class Item {
     this.orgRatio = r;
   }
 
+  get containerRatio() {
+    return this.width / this.height;
+  }
+
   get roundedStyle() {
     return {
       ...this.style,
@@ -462,6 +466,7 @@ export class Item {
       margins: this.margins,
       ratio: this.ratio,
       cropRatio: this.cubeRatio,
+      containerRatio: this.containerRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
       height: this.height,
