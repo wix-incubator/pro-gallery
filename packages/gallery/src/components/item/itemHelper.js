@@ -79,12 +79,11 @@ export function getImageDimensions(itemProps) {
     cubeType,
     cubeImages,
   } = styleParams;
+
   let dimensions = {};
-  // ratio = requiredWidth / requiredHeight;
-  ratio =
-    cubeImages && cubeType === GALLERY_CONSTS.cubeType.CROP
-      ? Number(itemProps.containerRatio)
-      : ratio;
+  const isFit = cubeImages && cubeType === GALLERY_CONSTS.cubeType.FIT;
+  const isCrop = cubeImages && cubeType === GALLERY_CONSTS.cubeType.CROP;
+  ratio = isCrop ? Number(itemProps.containerRatio) : ratio;
   const _height = Math.min(
     requiredHeight,
     useMaxDimensions ? maxHeight : Infinity,
@@ -101,10 +100,13 @@ export function getImageDimensions(itemProps) {
   const imageMarginTop = Math.round(
     Math.max(0, (requiredHeight - _width / ratio) / 2)
   );
+  const isFitMargin = !isFit ? -styleParams.itemBorderWidth : 0;
   dimensions = {
     height: requiredHeight - 2 * imageMarginTop,
     width: requiredWidth - 2 * imageMarginLeft,
-    margin: `${imageMarginTop}px ${imageMarginLeft}px`,
+    margin: `${imageMarginTop + isFitMargin}px ${
+      imageMarginLeft + isFitMargin
+    }px`,
   };
 
   if (
