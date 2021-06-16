@@ -1,3 +1,26 @@
+## [v3.1.26](https://pro-gallery-3-1-26.surge.sh) (15/06/2021)
+ 
+#### gallery
+ -  feat: A11Y added an option to focus outside the gallery when we are in application mode
+
+---
+## [v3.1.25](https://pro-gallery-3-1-25.surge.sh) (13/06/2021)
+ 
+#### GALLERY
+ -  fix: add formFactor to main flow 
+
+#### PLAYGROUND
+ -  fix: correct poster objects
+
+---
+## [v3.1.24](https://pro-gallery-3-1-24.surge.sh) (08/06/2021)
+
+#### GALLERY
+ -  fix: focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded
+ -  fix: added default value to the aria role
+ -  improve: small gallery/index refactor.
+
+---
 ## [v3.1.23](https://pro-gallery-3-1-23.surge.sh) (30/05/2021)
  
 #### GALLERY
