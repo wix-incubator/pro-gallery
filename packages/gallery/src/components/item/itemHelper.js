@@ -100,12 +100,12 @@ export function getImageDimensions(itemProps) {
   const imageMarginTop = Math.round(
     Math.max(0, (requiredHeight - _width / ratio) / 2)
   );
-  const isFitMargin = !isFit ? -styleParams.itemBorderWidth : 0;
+  const isFitMargin = !isFit ? styleParams.itemBorderWidth : 0;
   dimensions = {
     height: requiredHeight - 2 * imageMarginTop,
     width: requiredWidth - 2 * imageMarginLeft,
-    margin: `${imageMarginTop + isFitMargin}px ${
-      imageMarginLeft + isFitMargin
+    margin: `${imageMarginTop - isFitMargin}px ${
+      imageMarginLeft - isFitMargin
     }px`,
   };
 

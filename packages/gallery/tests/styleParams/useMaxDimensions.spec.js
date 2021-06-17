@@ -1,4 +1,3 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { itemsWithDirectShareLink } from '../drivers/mocks/items';
@@ -16,13 +15,14 @@ describe('styleParam - useMaxDimensions', () => {
       style: {
         maxWidth: 100,
         maxHeight: 100,
-        ratio: 1.92,
+        ratio: 1,
         orientation: 'landscape',
-        width: 1920,
-        cubedWidth: 1920,
+        width: 1000,
+        cubedWidth: 1000,
         height: 1000,
         cubedHeight: 1000,
       },
+      containerRatio: 1,
     });
   }
 
@@ -35,7 +35,6 @@ describe('styleParam - useMaxDimensions', () => {
   it('should use original dimensions (maxHeight and maxWidth)', async () => {
     const sample = getSampleItemViewProps({
       useMaxDimensions: true,
-      itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     });
     const styles = await mountUpdateAndItemStyle(sample);
     expect(styles).to.include({ width: 100, height: 100 });
@@ -43,9 +42,8 @@ describe('styleParam - useMaxDimensions', () => {
   it('should not use original dimensions (maxHeight and maxWidth)', async () => {
     const sample = getSampleItemViewProps({
       useMaxDimensions: false,
-      itemClick: GALLERY_CONSTS.itemClick.EXPAND,
     });
     const styles = await mountUpdateAndItemStyle(sample);
-    expect(styles).to.include({ width: 1920, height: 1000 });
+    expect(styles).to.include({ width: 1000, height: 1000 });
   });
 });
