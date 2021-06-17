@@ -811,7 +811,7 @@ export class GalleryContainer extends React.Component {
         </div>
           {this.props.proGalleryRole === 'application' && (
             <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only out-of-view-component">
-              {this.props.translations.Accessibility_Left_Gallery}
+              {this.props.translations?.Accessibility_Left_Gallery}
             </span>
           )}
       </div>
