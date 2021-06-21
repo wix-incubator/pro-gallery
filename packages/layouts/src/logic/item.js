@@ -347,7 +347,7 @@ export class Item {
     }
 
     if (!ratio) {
-      ratio = this._cubeRatio || this.ratio;
+      ratio = this.containerRatio || this._cubeRatio || this.ratio;
     }
 
     if (this.dynamicCropRatios !== null && typeof ratio === 'string') {
@@ -425,6 +425,10 @@ export class Item {
 
   get isLandscape() {
     return this.orientation === 'landscape';
+  }
+
+  get containerRatio() {
+    return this.style.cubedWidth / this.style.cubedHeight;
   }
 
   get ratio() {
