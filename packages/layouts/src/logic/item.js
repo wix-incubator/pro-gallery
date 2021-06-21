@@ -347,7 +347,7 @@ export class Item {
     }
 
     if (!ratio) {
-      ratio = this.containerRatio || this._cubeRatio || this.ratio;
+      ratio = this._cubeRatio || this.ratio;
     }
 
     if (this.dynamicCropRatios !== null && typeof ratio === 'string') {
@@ -428,7 +428,7 @@ export class Item {
   }
 
   get containerRatio() {
-    return this.style.cubedWidth / this.style.cubedHeight;
+    return this.width / this.height;
   }
 
   get ratio() {
@@ -466,6 +466,7 @@ export class Item {
       margins: this.margins,
       ratio: this.ratio,
       cropRatio: this.cubeRatio,
+      containerRatio: this.containerRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
       height: this.height,

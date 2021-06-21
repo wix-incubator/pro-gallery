@@ -153,6 +153,7 @@ describe('Item View', () => {
           height: 1000,
           cubedHeight: 1000,
         },
+        containerRatio: 1.92,
       });
       driver.mount(ItemView, sampleItemViewProps);
       //IMPORTANT use deep when trying to compare objects
@@ -177,9 +178,11 @@ describe('Item View', () => {
           height: 1000,
           cubedHeight: 1000,
         },
+        containerRatio: 1.92,
       });
       expect(driver.get.instance().getImageDimensions()).to.deep.equal({
         width: 1920,
+
         height: 1000,
       });
 
@@ -199,6 +202,7 @@ describe('Item View', () => {
           height: 1000,
           cubedHeight: 1000,
         },
+        containerRatio: 1.92,
       });
       //IMPORTANT notice marginTop is -0. if it was just 0 it wouldnt deep equal the -0 that returns from the function (the value is devided by -2 in the function)
       let testObject = driver.get.instance().getImageDimensions();
@@ -221,6 +225,7 @@ describe('Item View', () => {
           height: 1000,
           cubedHeight: 1000,
         },
+        containerRatio: 1,
       });
       testObject = driver.get.instance().getImageDimensions();
       expect(testObject.width).to.equal(1000);

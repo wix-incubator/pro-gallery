@@ -346,13 +346,13 @@ class ItemView extends GalleryComponent {
 
   getImageDimensions() {
     //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    const { styleParams, cubeRatio, style } = this.props;
-    const isLandscape = style.ratio >= cubeRatio; //relative to container size
+    const { styleParams, cubeRatio, style, containerRatio } = this.props;
+    const isLandscape = containerRatio >= cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
-      (style.height * style.ratio - style.width) / -2
+      (style.height * containerRatio - style.width) / -2
     );
     const imageMarginTop = Math.round(
-      (style.width / style.ratio - style.height) / -2
+      (style.width / containerRatio - style.height) / -2
     );
     const isGridFit = styleParams.cubeImages && styleParams.cubeType === 'fit';
 
