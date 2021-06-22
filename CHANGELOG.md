@@ -1,3 +1,10 @@
+## [v3.1.27](https://pro-gallery-3-1-27.surge.sh) (22/06/2021)
+
+#### GALLERY
+ -  fix: dont initializeTouchEvents if its undefined(desktop mobile sim)
+ -  fix: accessibility translation
+
+---
 ## [v3.1.26](https://pro-gallery-3-1-26.surge.sh) (15/06/2021)
  
 #### gallery
