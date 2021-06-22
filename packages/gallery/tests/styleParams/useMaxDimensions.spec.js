@@ -22,7 +22,7 @@ describe('styleParam - useMaxDimensions', () => {
         height: 1000,
         cubedHeight: 1000,
       },
-      containerRatio: 1,
+      requiredRatio: 1,
     });
   }
 

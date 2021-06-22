@@ -438,7 +438,10 @@ export class Item {
     this.orgRatio = r;
   }
 
-  get containerRatio() {
+  get requiredRatio() {
+    if (this.cubeImages && this.cubeType === 'fit') {
+      return this.ratio;
+    }
     return this.width / this.height;
   }
 
@@ -466,7 +469,7 @@ export class Item {
       margins: this.margins,
       ratio: this.ratio,
       cropRatio: this.cubeRatio,
-      containerRatio: this.containerRatio,
+      requiredRatio: this.requiredRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
       height: this.height,

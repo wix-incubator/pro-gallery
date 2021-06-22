@@ -64,13 +64,12 @@ export function changeActiveElementIfNeeded({
 }
 export function getImageDimensions(itemProps) {
   //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-  const { styleParams, style } = itemProps;
+  const { styleParams, style, requiredRatio } = itemProps;
   let {
     height: requiredHeight,
     width: requiredWidth,
     maxWidth,
     maxHeight,
-    ratio,
   } = style;
   const {
     useMaxDimensions,
@@ -82,23 +81,21 @@ export function getImageDimensions(itemProps) {
 
   let dimensions = {};
   const isFit = cubeImages && cubeType === GALLERY_CONSTS.cubeType.FIT;
-  const isCrop = cubeImages && cubeType === GALLERY_CONSTS.cubeType.CROP;
-  ratio = isCrop ? Number(itemProps.containerRatio) : ratio;
   const _height = Math.min(
     requiredHeight,
     useMaxDimensions ? maxHeight : Infinity,
-    useMaxDimensions ? maxWidth / ratio : Infinity
+    useMaxDimensions ? maxWidth / requiredRatio : Infinity
   );
   const _width = Math.min(
     requiredWidth,
     useMaxDimensions ? maxWidth : Infinity,
-    useMaxDimensions ? maxHeight * ratio : Infinity
+    useMaxDimensions ? maxHeight * requiredRatio : Infinity
   );
   const imageMarginLeft = Math.round(
-    Math.max(0, (requiredWidth - _height * ratio) / 2)
+    Math.max(0, (requiredWidth - _height * requiredRatio) / 2)
   );
   const imageMarginTop = Math.round(
-    Math.max(0, (requiredHeight - _width / ratio) / 2)
+    Math.max(0, (requiredHeight - _width / requiredRatio) / 2)
   );
   const isFitMargin = !isFit ? styleParams.itemBorderWidth : 0;
   dimensions = {
