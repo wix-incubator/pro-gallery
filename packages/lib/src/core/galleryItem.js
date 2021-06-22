@@ -69,7 +69,7 @@ class GalleryItem {
     this.ratio = scheme.ratio;
     this.cubeRatio = scheme.cropRatio;
     this.cubeImages = scheme.isCropped;
-    this.containerRatio = scheme.containerRatio;
+    this.requiredRatio = scheme.requiredRatio;
     this.cubeType = scheme.cropType || RESIZE_METHODS.FILL;
     this.offset = scheme.offset;
     this.group = scheme.group;
@@ -103,7 +103,7 @@ class GalleryItem {
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
       cubeRatio: this.cubeRatio,
-      containerRatio: this.containerRatio,
+      requiredRatio: this.requiredRatio,
       offset: this.offset,
       style: {
         ratio: this.ratio,
