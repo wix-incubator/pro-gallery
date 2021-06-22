@@ -33,7 +33,7 @@
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
     "test:e2e-integration": "jest --testPathPattern='.*/e2e/integration/.*.e2e.spec.js'",
     "test:e2e-ssr": "jest --setupFiles=./tests/ssr-config.js --testPathPattern='.*/e2e/ssr/.*.e2e.spec.js'",
-    "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts}\"",
+    "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
