@@ -415,10 +415,10 @@ class GalleryItem {
   get bgColor() {
     let bg;
     if (this.isText) {
-      bg =
-        this.metadata &&
-        this.metadata.textStyle &&
-        this.metadata.textStyle.backgroundColor;
+      // bg =
+      //   this.metadata &&
+      //   this.metadata.textStyle &&
+      //   this.metadata.textStyle.backgroundColor;
       bg =
         this.metadata &&
         ((this.metadata.textStyle && this.metadata.textStyle.backgroundColor) ||
