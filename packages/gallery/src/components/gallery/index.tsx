@@ -1,20 +1,26 @@
 import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
+// import { Dimensions } from '../../common/interfaces/Dimensions';
 
-interface IGalleryProps {
+interface GalleryProps {
+  domId?: string;
+  // dimensions: Dimensions;
   [key: string]: any;
 }
 
-interface IState {
+interface GalleryState {
   blueprint: any;
 }
 
-export default class BaseGallery extends React.Component<IGalleryProps, IState> {
+export default class BaseGallery extends React.Component<
+  GalleryProps,
+  GalleryState
+> {
   private blueprintsManager: any;
   private galleryProps: any;
 
-  constructor(props: IGalleryProps) {
+  constructor(props: GalleryProps) {
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });

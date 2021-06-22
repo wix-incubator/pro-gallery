@@ -49,7 +49,7 @@
   "lint-staged": {
     "packages/layouts/{src,test}/**/*.{js,ts}": "npm run precommit:layouts",
     "packages/lib/{src,test}/**/*.{js,ts}": "npm run precommit:lib",
-    "packages/gallery/{src,tests}/**/*.{js,ts}": "npm run precommit:gallery",
+    "packages/gallery/{src,tests}/**/*.{js,ts,tsx}": "npm run precommit:gallery",
     "packages/playground/src/**/*.{js,ts}": "npm run precommit:playground",
     "packages/ssr-simulator/src/**/*.{js,ts}": "npm run precommit:ssr-simulator",
     "packages/lean-gallery/src/**/*.{js,ts}": "npm run precommit:lean-gallery"
