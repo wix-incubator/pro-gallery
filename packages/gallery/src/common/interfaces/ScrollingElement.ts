@@ -1,4 +1,4 @@
-export interface IScrollingElement {
+export interface ScrollingElement {
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject

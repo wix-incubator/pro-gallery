@@ -1,17 +1,17 @@
 import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
-import { IDimensions } from '../../common/interfaces/Dimensions';
-import { IScrollingElement } from '../../common/interfaces/ScrollingElement';
+// import { Dimensions } from '../../common/interfaces/Dimensions';
+// import { ScrollingElement } from '../../common/interfaces/ScrollingElement';
 // import { PhotoItem, VideoItem, TextItem } from '../../common/interfaces/Item';
 
 interface IGalleryProps {
   domId?: string;
-  totalItemsCount: number;
-  currentIdx?: number;
-  dimensions: IDimensions;
-  isPrerenderMode?: boolean;
-  scrollingElement?: IScrollingElement | Window | HTMLElement;
+  // totalItemsCount: number;
+  // dimensions: Dimensions;
+  // currentIdx?: number;
+  // isPrerenderMode?: boolean;
+  // scrollingElement?: ScrollingElement | Window | HTMLElement;
   // items: (PhotoItem | VideoItem | TextItem)[];
   [key: string]: any;
   // styles: any;
