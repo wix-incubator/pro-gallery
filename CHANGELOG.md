@@ -1,3 +1,9 @@
+## [v3.1.28](https://pro-gallery-3-1-28.surge.sh) (22/06/2021)
+ 
+#### LAYOUTS
+ -  improve: add dimensions to item scheme
+
+---
 ## [v3.1.27](https://pro-gallery-3-1-27.surge.sh) (22/06/2021)
 
 #### GALLERY
