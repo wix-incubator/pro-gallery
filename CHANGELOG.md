@@ -1,3 +1,12 @@
+## [v3.1.29](https://pro-gallery-3-1-29.surge.sh) (23/06/2021)
+ 
+#### LIB
+ -  galleryItem: url '' when not defined
+
+#### GALLERY
+ -  fix (videoItem): grid cropped video styles (black margins) 
+
+---
 ## [v3.1.28](https://pro-gallery-3-1-28.surge.sh) (22/06/2021)
  
 #### LAYOUTS
