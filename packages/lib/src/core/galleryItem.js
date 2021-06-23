@@ -483,7 +483,7 @@ class GalleryItem {
   }
 
   get fileType() {
-    return this.url.split('.').pop();
+    return this.url ? this.url.split('.').pop() : '';
   }
 
   get mediaUrl() {
