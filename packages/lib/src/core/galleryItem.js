@@ -478,12 +478,16 @@ class GalleryItem {
   get url() {
     // todo :change from mediaUrl
     return (
-      this.dto.file_url || this.dto.mediaUrl || this.dto.url || this.dto.src
+      this.dto.file_url ||
+      this.dto.mediaUrl ||
+      this.dto.url ||
+      this.dto.src ||
+      ''
     );
   }
 
   get fileType() {
-    return this.url ? this.url.split('.').pop() : '';
+    return this.url.split('.').pop();
   }
 
   get mediaUrl() {
