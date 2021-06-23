@@ -1,34 +1,36 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, isEditMode } from 'pro-gallery-lib';
+import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
-const videoControls = [
-  <i
-    key="play-triangle"
-    data-hook="play-triangle"
-    className={'gallery-item-video-play-triangle play-triangle '}
-  >
-    <PlayTriangle />
-  </i>,
-  <i
-    key="play-bg"
-    data-hook="play-background"
-    className={'gallery-item-video-play-background play-background '}
-  >
-    <PlayBackground />
-  </i>,
-];
+const videoPlayButton = (
+  <div>
+    <i
+      key="play-triangle"
+      data-hook="play-triangle"
+      className={'gallery-item-video-play-triangle play-triangle '}
+    >
+      <PlayTriangle />
+    </i>
+    <i
+      key="play-bg"
+      data-hook="play-background"
+      className={'gallery-item-video-play-background play-background '}
+    >
+      <PlayBackground />
+    </i>
+  </div>
+);
 
 class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoItemPlaceholder = this.createVideoItemPlaceholder.bind(
-      this
-    );
+    this.createVideoPlaceholderIfNeeded =
+      this.createVideoPlaceholderIfNeeded.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 
@@ -49,7 +51,8 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoItemPlaceholder(showVideoControls) {
+  createVideoPlaceholderIfNeeded(showVideoPlayButton) {
+    const {styleParams} = this.props;
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -61,16 +64,19 @@ class VideoItemWrapper extends ImageItem {
       'settings',
       'actions',
     ]);
+    const shouldCreatePlaceHolder =
+      utils.isSingleItemHorizontalDisplay(styleParams) && 
+      styleParams.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
 
-    return (
+    return shouldCreatePlaceHolder ? null : (
       <VideoItemPlaceholder
         {...props}
         key="videoPlaceholder"
         imageDimensions={this.props.imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
-        videoControls={
-          showVideoControls && !this.mightPlayVideo() && videoControls
+        videoPlayButton={
+          showVideoPlayButton && !this.mightPlayVideo() && videoPlayButton
         }
       />
     );
@@ -94,22 +100,28 @@ class VideoItemWrapper extends ImageItem {
 
   render() {
     const hover = this.props.hover;
-    const showVideoControls =
+    const showVideoPlayButton =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
+    const videoPlaceholder = this.createVideoPlaceholderIfNeeded(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
-      return [videoPlaceholder, hover];
+      return (
+        <div>
+          {videoPlaceholder}
+          {hover}
+        </div>
+      );
     }
     return (
       <VideoItem
         {...this.props}
         videoPlaceholder={videoPlaceholder}
-        videoControls={showVideoControls && videoControls}
+        videoPlayButton={showVideoPlayButton && videoPlayButton}
       />
     );
   }
 }
 
 export default VideoItemWrapper;
+/* eslint-enable prettier/prettier */

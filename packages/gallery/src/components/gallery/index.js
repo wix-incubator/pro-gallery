@@ -1,55 +1,96 @@
 import React from 'react';
-import {
-  utils,
-  defaultStyles,
-  dimensionsHelper,
-  addPresetStyles,
-} from 'pro-gallery-lib';
+import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import basePropTypes from './proGallery/propTypes';
 
 export default class BaseGallery extends React.Component {
-  static propTypes = basePropTypes;
-  render() {
-    const domId = this.props.domId || 'default-dom-id';
-    const {
-      styles,
-      options,
-      styleParams,
-      eventsListener,
-      ...otherProps
-    } = this.props;
-    const _eventsListener = (...args) =>
-      typeof eventsListener === 'function' && eventsListener(...args);
-    const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams };
-    let galleryProps = {
-      ...otherProps,
-      styles: _styles,
-      eventsListener: _eventsListener,
-      domId,
+  constructor(props) {
+    super();
+    this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
+    this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
+    this.blueprintsManager.init({
+      formFactor: props.formFactor,
+      api: {
+        isUsingCustomInfoElements: this.isUsingCustomInfoElements,
+        fetchMoreItems: (from) => {
+          typeof props.eventsListener === 'function' &&
+            props.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, from);
+        },
+        onBlueprintReady: ({
+          blueprint,
+          blueprintChanged,
+          initialBlueprint,
+        }) => {
+          if (blueprintChanged) {
+            this.setBlueprint(blueprint, initialBlueprint);
+          } else {
+            if (utils.isVerbose()) {
+              console.count('>>> Blueprint not changed, not setting it');
+            }
+          }
+        },
+      },
+    });
+    this.onNewProps(props, true);
+    this.state = {
+      blueprint: this.blueprintsManager.createInitialBlueprint(props) || null,
     };
+  }
 
-    if (this.props.useBlueprints) {
-      //
+  setBlueprint(blueprint, initialBlueprint) {
+    if (initialBlueprint) {
+      // the blueprint from the initial blueprint flow will be set in the constructor
     } else {
-      dimensionsHelper.updateParams({
-        domId: galleryProps.domId,
-        container: galleryProps.container,
-        styles: galleryProps.styles,
-      });
-
-      const { galleryType, galleryLayout } = galleryProps.styles;
-
-      if (galleryType === undefined || galleryLayout !== undefined) {
-        galleryProps = {
-          ...galleryProps,
-          styles: addPresetStyles(galleryProps.styles),
-        };
-      }
+      this.setState({ blueprint });
     }
+  }
 
-    utils.logPlaygroundLink(galleryProps.styles);
+  static propTypes = basePropTypes;
 
-    return <ProGallery {...galleryProps} />;
+  isUsingCustomInfoElements() {
+    return (
+      !!this.galleryProps.customHoverRenderer ||
+      !!this.galleryProps.customInfoRenderer ||
+      !!this.galleryProps.customSlideshowInfoRenderer
+    );
+  }
+
+  onNewProps(props, calledByConstructor) {
+    const { eventsListener, ...otherProps } = props;
+    const _eventsListener = (...args) => {
+      const [eventName, value] = args;
+      if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
+        this.blueprintsManager.getMoreItems(value);
+      } else {
+        typeof eventsListener === 'function' && eventsListener(...args);
+      }
+    };
+    this.galleryProps = {
+      ...otherProps,
+      eventsListener: _eventsListener,
+      domId: props.domId || 'default-dom-id',
+    };
+    if (calledByConstructor) {
+      // the blueprint will be initiated with the state
+    } else {
+      this.blueprintsManager.createBlueprint(this.galleryProps).catch((e) => {
+        //TODOVER3 check totalItemsCount
+        console.error('Could not create a blueprint from the new props', e);
+      });
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(newProps) {
+    this.onNewProps(newProps, false);
+  }
+
+  render() {
+    const { blueprint } = this.state;
+
+    if (blueprint && Object.keys(blueprint).length > 0) {
+      return <ProGallery {...this.galleryProps} {...blueprint} />;
+    } else {
+      return null;
+    }
   }
 }

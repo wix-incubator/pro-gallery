@@ -16,7 +16,7 @@ describe('styleParam - hasThumbnails', () => {
     driver = new GalleryDriver();
   });
 
-  it('should render thumbnails element when "hasThumbnails" and "oneRow" are "true"', () => {
+  it('should render thumbnails element when "hasThumbnails" and "oneRow" are "true"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       onRow: true,
@@ -24,11 +24,12 @@ describe('styleParam - hasThumbnails', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const thumbnails = driver.find.hook('gallery-thumbnails');
     expect(thumbnails).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should not render thumbnails element when "hasThumbnails" is "true" and oneRow is "false"', () => {
+  it('should not render thumbnails element when "hasThumbnails" is "true" and oneRow is "false"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       onRow: false,
@@ -36,11 +37,12 @@ describe('styleParam - hasThumbnails', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const thumbnails = driver.find.hook('gallery-thumbnails');
     expect(thumbnails).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should not render thumbnails element when "hasThumbnails" is "false"', () => {
+  it('should not render thumbnails element when "hasThumbnails" is "false"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       onRow: true,
@@ -48,6 +50,7 @@ describe('styleParam - hasThumbnails', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const thumbnails = driver.find.hook('gallery-thumbnails');
     expect(thumbnails).to.have.lengthOf(0);
     driver.detach.proGallery();

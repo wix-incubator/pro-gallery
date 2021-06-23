@@ -20,7 +20,7 @@ describe('styleParam - enableInfiniteScroll', () => {
     driver = new GalleryDriver();
   });
 
-  it('should render "Show More" button when "enableInfiniteScroll" is "false"', () => {
+  it('should render "Show More" button when "enableInfiniteScroll" is "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
@@ -29,12 +29,13 @@ describe('styleParam - enableInfiniteScroll', () => {
       enableInfiniteScroll: false,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const showMoreBtn = driver.find.hook('show-more');
     //expect to have "Show more" button
     expect(showMoreBtn).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button when "enableInfiniteScroll" is "true"', () => {
+  it('should not render "Show More" button when "enableInfiniteScroll" is "true"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
@@ -43,12 +44,13 @@ describe('styleParam - enableInfiniteScroll', () => {
       enableInfiniteScroll: true,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const showMoreBtn = driver.find.hook('show-more');
     //expect to not have "Show more" button
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button in a "oneRow" gallery when "enableInfiniteScroll" is false', () => {
+  it('should not render "Show More" button in a "oneRow" gallery when "enableInfiniteScroll" is false', async () => {
     // make sure to give the right params to make a horizontal gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
@@ -57,12 +59,13 @@ describe('styleParam - enableInfiniteScroll', () => {
       enableInfiniteScroll: false,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const showMoreBtn = driver.find.hook('show-more');
     //expect to not have "Show more" button
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should set the gallery height (container.height - show-more-container" height) when "enableInfiniteScroll" "false"', () => {
+  it('should set the gallery height (container.height - show-more-container" height) when "enableInfiniteScroll" "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
@@ -71,6 +74,7 @@ describe('styleParam - enableInfiniteScroll', () => {
       enableInfiniteScroll: false,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const galleryHeight = getElementDimensions(galleryContainer).height;
 
@@ -78,7 +82,7 @@ describe('styleParam - enableInfiniteScroll', () => {
     expect(galleryHeight).to.eq(initialProps.container.height - 138); //138 is the height given to "show-more-container"
     driver.detach.proGallery();
   });
-  it('should set the gallery height as given in container.height (ProGallery props)', () => {
+  it('should set the gallery height as given in container.height (ProGallery props)', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
@@ -87,6 +91,7 @@ describe('styleParam - enableInfiniteScroll', () => {
       enableInfiniteScroll: true,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const galleryHeight = getElementDimensions(galleryContainer).height;
 

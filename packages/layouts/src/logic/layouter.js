@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { utils } from './utils';
 import { Item } from './item.js';
 import { Group } from './group.js';
@@ -253,12 +254,8 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const {
-        columnWidths,
-        cubeRatio,
-        externalInfoWidth,
-        imageMargin,
-      } = this.styleParams;
+      const { columnWidths, cubeRatio, externalInfoWidth, imageMargin } =
+        this.styleParams;
 
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
@@ -603,13 +600,7 @@ export default class Layouter {
   }
 
   get isLastImages() {
-    if (this.styleParams.layoutsVersion > 1) {
-      //layouts version 2+
-      return !this.srcItems[this.pointer + 1];
-    } else {
-      //Backwards compatibility
-      return !this.srcItems[this.pointer + 3];
-    }
+    return !this.srcItems[this.pointer + 1];
   }
 
   get imagesLeft() {
@@ -631,3 +622,4 @@ export default class Layouter {
     };
   }
 }
+/* eslint-enable prettier/prettier */

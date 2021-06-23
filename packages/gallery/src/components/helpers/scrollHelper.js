@@ -240,6 +240,7 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   const scrollTransitionEvent = new CustomEvent('scrollTransition', {
     detail: change / intervals,
   });
+
   const scrollTransitionInterval = setInterval(() => {
     scroller.dispatchEvent(scrollTransitionEvent);
   }, Math.round(duration / intervals));

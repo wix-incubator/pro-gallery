@@ -1,9 +1,9 @@
+/* eslint-disable prettier/prettier */
 import blueprints from './Blueprints';
 import { viewModeWrapper } from '../../common/window/viewModeWrapper';
 
 export default class BlueprintsManager {
   constructor({ id }) {
-    // this.eventsCB = config && config.eventsCB;
     this.id = id + `'s blueprintsManager`;
     this.currentState = {};
     this.existingBlueprint = {};
@@ -61,7 +61,7 @@ export default class BlueprintsManager {
     blueprintCreated &&
       this.api.onBlueprintReady &&
       this.api.onBlueprintReady({ blueprint, blueprintChanged });
-    return (this.cache[params] = this.existingBlueprint = blueprint); //still returning for awaits... event is !blueprintCreated
+    return (this.cache[params] = this.existingBlueprint = blueprint); // still returning for awaits... event is !blueprintCreated
   }
 
   async getMoreItems(currentItemLength) {
@@ -82,6 +82,64 @@ export default class BlueprintsManager {
     this.loopingItems = false;
   }
 
+  createInitialBlueprint(params) {
+    this.currentState.totalItemsCount =
+      params.totalItemsCount ||
+      (this.api.getTotalItemsCount && this.api.getTotalItemsCount()) ||
+      this.currentState.totalItemsCount;
+
+    this.currentState.isUsingCustomInfoElements =
+      params.isUsingCustomInfoElements ||
+      (this.api.isUsingCustomInfoElements &&
+        this.api.isUsingCustomInfoElements()) ||
+      this.currentState.isUsingCustomInfoElements;
+
+    params = this.alignParamNamingOptions(params);
+
+    const { blueprint, changedParams } = blueprints.createBlueprint({
+      params,
+      lastParams: this.currentState,
+      existingBlueprint: this.existingBlueprint,
+      blueprintManagerId: this.id,
+      isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
+    });
+
+    const blueprintChanged = Object.values(changedParams).some(
+      (changedParam) => !!changedParam
+    );
+
+    const blueprintCreated = Object.keys(blueprint).length > 0;
+
+    this.updateLastParamsIfNeeded(params, changedParams, blueprintCreated);
+
+    blueprintCreated &&
+      this.api.onBlueprintReady &&
+      this.api.onBlueprintReady({
+        blueprint,
+        blueprintChanged,
+        initialBlueprint: true,
+      });
+    return (
+      blueprintCreated &&
+      (this.cache[params] = this.existingBlueprint = blueprint)
+    );
+  }
+
+  createSingleBlueprint(params = {}) {
+    let { isUsingCustomInfoElements } = params;
+    params = this.alignParamNamingOptions(params);
+
+    const { blueprint } = blueprints.createBlueprint({
+      params,
+      lastParams: {},
+      existingBlueprint: {},
+      blueprintManagerId: this.id + '_singleBlueprint',
+      isUsingCustomInfoElements,
+    });
+
+    return blueprint;
+  }
+
   duplicateGalleryItems() {
     const items = this.currentState.items.concat(
       ...this.currentState.items.slice(0, this.currentState.totalItemsCount)
@@ -92,14 +150,20 @@ export default class BlueprintsManager {
 
   // ------------------ Get all the needed raw data ---------------------------- //
   async completeParams(params) {
+    let { dimensions, items, styles, domId } =
+      this.alignParamNamingOptions(params);
+    dimensions = await this.fetchDimensionsIfNeeded(dimensions);
+    items = await this.fetchItemsIfNeeded(items);
+    styles = await this.fetchStylesIfNeeded(styles); // can be async... TODO
+    return { dimensions, items, styles, domId };
+  }
+
+  alignParamNamingOptions(params) {
     let { dimensions, container, items, styles, styleParams, options, domId } =
       params || {};
 
     styles = { ...options, ...styles, ...styleParams };
     dimensions = { ...dimensions, ...container };
-    dimensions = await this.fetchDimensionsIfNeeded(dimensions);
-    items = await this.fetchItemsIfNeeded(items);
-    styles = await this.fetchStylesIfNeeded(styles); // can be async... TODO
 
     return { dimensions, items, styles, domId };
   }
@@ -186,12 +250,8 @@ export default class BlueprintsManager {
     }
   }
 
-  eventsListenerWrapper(eventsListenerFunc, originalArgs) {
-    const eventHandledInternaly = this.internalEventHandler(...originalArgs);
-    !eventHandledInternaly && eventsListenerFunc(...originalArgs);
-  }
-
   needMoreItems(currentItemLength) {
     this.getMoreItems(currentItemLength);
   }
 }
+/* eslint-enable prettier/prettier */

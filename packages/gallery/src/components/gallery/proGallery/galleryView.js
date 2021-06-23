@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { window, utils } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
@@ -7,7 +8,7 @@ import { GalleryComponent } from '../../galleryComponent';
 class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.handleArrowKeys = this.handleArrowKeys.bind(this);
+    this.handleKeys = this.handleKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
@@ -20,10 +21,9 @@ class GalleryView extends GalleryComponent {
     };
   }
 
-  handleArrowKeys(e) {
-    const activeItemIdx = window.document.activeElement.getAttribute(
-      'data-idx'
-    );
+  handleKeys(e) {
+    const activeItemIdx =
+      window.document.activeElement.getAttribute('data-idx');
 
     if (activeItemIdx) {
       const findNeighborItem =
@@ -47,6 +47,13 @@ class GalleryView extends GalleryComponent {
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
+          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.currentIdx){
+            // If we are on the last item in the gallery and we pressed the down arrow
+            // we want to move the focus to the out0fGallery element
+            e.stopPropagation();
+            utils.focusGalleryElement(this.props.outOfViewComponent)
+            return false;
+          }
           break;
         case 39: //right
           newIdx = findNeighborItem(
@@ -54,6 +61,10 @@ class GalleryView extends GalleryComponent {
             this.props.styleParams.isRTL ? 'left' : 'right'
           );
           break;
+        case 27: //esc
+          e.stopPropagation();
+          utils.focusGalleryElement(this.props.galleryContainerRef);
+          return false;
       }
 
       //if nextIdx is below the lastVisibleItemIdx (higher idx), we will ignore the findNeighborItem answer and stay on the same item
@@ -163,7 +174,7 @@ class GalleryView extends GalleryComponent {
           overflowX: 'hidden',
           //  width: this.props.container.galleryWidth,
         }}
-        onKeyDown={this.handleArrowKeys}
+        onKeyDown={this.handleKeys}
       >
         <div
           id="pro-gallery-margin-container"
@@ -194,13 +205,13 @@ class GalleryView extends GalleryComponent {
       currentIdx: this.state.currentIdx,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
-      customImageRenderer: this.props.customImageRenderer,
       domId: this.props.domId,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
+      enableExperimentalFeatures: this.props.enableExperimentalFeatures,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },
@@ -298,8 +309,7 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        role="region"
-        aria-label={this.props.proGalleryRegionLabel}
+        {...utils.getAriaAttributes(this.props)}
       >
         {screenLogs}
         {gallery}
@@ -310,3 +320,4 @@ class GalleryView extends GalleryComponent {
 }
 
 export default GalleryView;
+/* eslint-enable prettier/prettier */

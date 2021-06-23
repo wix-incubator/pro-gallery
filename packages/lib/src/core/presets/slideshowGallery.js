@@ -1,6 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
+import ARROWS_VERTICAL_POSITION from '../../common/constants/arrowsVerticalPosition';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
 export const fixedStyles = {
@@ -15,6 +16,7 @@ export const fixedStyles = {
   isVertical: false,
   groupSize: 1,
   groupTypes: '1',
+  arrowsVerticalPosition: ARROWS_VERTICAL_POSITION.IMAGE_CENTER,
   itemBorderWidth: 0,
   itemBorderRadius: 0,
   itemBorderColor: undefined,
@@ -34,6 +36,7 @@ export const fixedStyles = {
   isSlideshow: true,
   cropOnlyFill: false,
   scatter: 0,
+  rotatingScatter: '',
   imageMargin: 0,
 };
 

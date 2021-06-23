@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { GalleryComponent } from '../galleryComponent';
 
@@ -53,14 +54,8 @@ export default class TextItem extends GalleryComponent {
   }
 
   render() {
-    const {
-      id,
-      styleParams,
-      html,
-      style,
-      actions,
-      imageDimensions,
-    } = this.props;
+    const { id, styleParams, html, style, actions, imageDimensions } =
+      this.props;
     const processedHtml = this.processInnerhtml(html);
     const dimensions = this.getTextDimensions();
     const htmlParam = { dangerouslySetInnerHTML: { __html: processedHtml } };
@@ -103,3 +98,4 @@ export default class TextItem extends GalleryComponent {
     );
   }
 }
+/* eslint-enable prettier/prettier */

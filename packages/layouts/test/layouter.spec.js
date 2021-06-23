@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
@@ -32,10 +34,10 @@ describe('Layouter', () => {
       collageAmount: 0.9,
       collageDensity: 0.9,
       minItemSize: 20,
-      layoutsVersion: 2,
       galleryMargin: 0,
       imageMargin: 10,
       scatter: 0,
+      rotatingScatter: '',
       fixedColumns: 0,
     };
 
@@ -229,7 +231,6 @@ describe('Layouter', () => {
         (i) => i / 10
       );
       let lastGroupCount = itemCount;
-      styleParams.layoutsVersion = 1;
 
       for (const collageAmount of collageAmounts) {
         styleParams.collageAmount = collageAmount;
@@ -420,9 +421,8 @@ describe('Layouter', () => {
 
         const isWithinTypes = gallery.columns[0].groups.reduce(
           (g, group, idx) => {
-            const rotatingGroupTypes = styleParams.rotatingGroupTypes.split(
-              ','
-            );
+            const rotatingGroupTypes =
+              styleParams.rotatingGroupTypes.split(',');
             const expectedType =
               rotatingGroupTypes[idx % rotatingGroupTypes.length];
             const groupType = group.type;
@@ -796,3 +796,4 @@ describe('Layouter', () => {
     });
   });
 });
+/* eslint-enable prettier/prettier */

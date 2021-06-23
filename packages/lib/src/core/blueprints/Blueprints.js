@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+//dummy
 import { Layouter } from 'pro-layouts';
 import defaultStyles from '../../common/defaultStyles';
 import { addPresetStyles } from '../presets/presets';
@@ -30,28 +32,22 @@ class Blueprints {
       } = lastParams;
       // getItems,styles and dimesions if not supplied in params;
 
-      const {
-        formattedItems,
-        changed: itemsChanged,
-      } = this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
-      const {
-        formattedStyles,
-        changed: stylesChanged,
-      } = this.formatStylesIfNeeded(
-        newStylesParams,
-        oldStylesParams,
-        isUsingCustomInfoElements
-      );
-      const {
-        formattedContainer,
-        changed: containerChanged,
-      } = this.formatContainerIfNeeded(
-        newDimensionsParams,
-        newStylesParams,
-        oldDimensionsParams,
-        oldStylesParams,
-        { formattedStyles: formattedStyles || existingBlueprint.styles }
-      );
+      const { formattedItems, changed: itemsChanged } =
+        this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
+      const { formattedStyles, changed: stylesChanged } =
+        this.formatStylesIfNeeded(
+          newStylesParams,
+          oldStylesParams,
+          isUsingCustomInfoElements
+        );
+      const { formattedContainer, changed: containerChanged } =
+        this.formatContainerIfNeeded(
+          newDimensionsParams,
+          oldDimensionsParams,
+          oldStylesParams,
+          formattedStyles || existingBlueprint.styles,
+          stylesChanged
+        );
 
       const changed = itemsChanged || stylesChanged || containerChanged;
       changedParams = { itemsChanged, stylesChanged, containerChanged };
@@ -96,8 +92,8 @@ class Blueprints {
           !existingBlueprint.styles.oneRow &&
           existingBlueprint.styles.enableInfiniteScroll;
         if (isInfinite) {
-          existingBlueprint.container.height = existingBlueprint.container.galleryHeight =
-            structure.height;
+          existingBlueprint.container.height =
+            existingBlueprint.container.galleryHeight = structure.height;
         }
       }
     } catch (error) {
@@ -174,7 +170,18 @@ class Blueprints {
               (newItem.metaData.type !== existingItem.metaData.type ||
                 newItem.metaData.title !== existingItem.metaData.title ||
                 newItem.metaData.description !==
-                  existingItem.metaData.description));
+                  existingItem.metaData.description)) ||
+            (newItem.metaData &&
+              newItem.metaData.type === 'text' &&
+              existingItem.metaData &&
+              existingItem.metaData.type === 'text' &&
+              (newItem.metaData.width !== existingItem.metaData.width ||
+                newItem.metaData.height !== existingItem.metaData.height ||
+                newItem.metaData.html !== existingItem.metaData.html ||
+                newItem.metaData.textStyle !==
+                  existingItem.metaData.textStyle ||
+                newItem.metaData.editorHtml !==
+                  existingItem.metaData.editorHtml));
           if (itemsChanged) {
             reason.items = `items #${idx} id was changed.`;
           }
@@ -251,20 +258,6 @@ class Blueprints {
         addPresetStyles(styles),
         isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
-
-      const selectedLayoutVars = [
-        'galleryLayout',
-        'galleryThumbnailsAlignment',
-        'magicLayoutSeed',
-        'cubeType',
-        'isVertical',
-        'scrollDirection',
-        'enableInfiniteScroll',
-      ];
-      formattedStyles.selectedLayout = selectedLayoutVars
-        .map((key) => String(formattedStyles[key]))
-        .join('|');
-      formattedStyles.layoutsVersion = 2;
       changed = true;
     }
 
@@ -273,10 +266,10 @@ class Blueprints {
 
   formatContainerIfNeeded(
     dimensions,
-    styles,
     lastDimensions,
     lastStyles,
-    { formattedStyles }
+    formattedStyles,
+    stylesChanged
   ) {
     const reason = {
       dimensions: '',
@@ -296,7 +289,7 @@ class Blueprints {
       }
       const dimensionsHaveChanged = {
         height:
-          !oldStylesParams.oneRow && oldStylesParams.enableInfiniteScroll
+          !formattedStyles.oneRow && formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
             ? false
             : !!newDimensionsParams.height &&
               newDimensionsParams.height !== oldDimensionsParams.height,
@@ -321,6 +314,7 @@ class Blueprints {
     const oldStylesParams = lastStyles;
     let formattedContainer;
     if (
+      stylesChanged || // If styles changed they could affect the container and a new container must be created (slideshow,thumbs,shadow,borders...etc)
       dimensionsHaveChanged({
         newDimensionsParams: dimensions,
         oldDimensionsParams,
@@ -374,3 +368,4 @@ class Blueprints {
 }
 const blueprints = new Blueprints();
 export default blueprints;
+/* eslint-enable prettier/prettier */

@@ -46,12 +46,8 @@ export default class ScrollIndicator extends GalleryComponent {
     }
 
     this.scrollEventListenerSet = true;
-    const {
-      isRTL,
-      setGotFirstScrollIfNeeded,
-      scrollingElement,
-      oneRow,
-    } = this.props;
+    const { isRTL, setGotFirstScrollIfNeeded, scrollingElement, oneRow } =
+      this.props;
     //Horizontal Scroll
     this.onHorizontalScrollTransition = ({ detail }) => {
       const step = Math.round(detail);
@@ -89,10 +85,13 @@ export default class ScrollIndicator extends GalleryComponent {
       scrollingElement
         .horizontal()
         .addEventListener('scroll', this.onHorizontalScroll);
-      window.addEventListener(
-        'scrollTransition',
-        this.onHorizontalScrollTransition
-      );
+
+      scrollingElement
+        .horizontal()
+        .addEventListener(
+          'scrollTransition',
+          this.onHorizontalScrollTransition
+        );
     } catch (e) {
       //
     }

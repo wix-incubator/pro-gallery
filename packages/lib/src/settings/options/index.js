@@ -42,8 +42,10 @@ import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
 import slideAnimation from './slideAnimation';
 import scatter from './scatter';
+import rotatingScatter from './rotatingScatter';
 import thumbnailSpacings from './thumbnailSpacings';
 import slideshowLoop from './slideshowLoop';
+import arrowsPadding from './arrowsPadding';
 import arrowsSize from './arrowsSize';
 import slideshowInfoSize from './slideshowInfoSize';
 import textBoxHeight from './textBoxHeight';
@@ -55,6 +57,7 @@ import groupsPerStrip from './groupsPerStrip';
 import fixedColumns from './fixedColumns';
 import rotatingGroupTypes from './rotatingGroupTypes';
 import arrowsPosition from './arrowsPosition';
+import arrowsVerticalPosition from './arrowsVerticalPosition';
 import itemShadowSize from './itemShadowSize';
 import itemShadowBlur from './itemShadowBlur';
 import itemShadowDirection from './itemShadowDirection';
@@ -83,6 +86,10 @@ import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
 import oneColorAnimationColor from './oneColorAnimationColor';
+import placeGroupsLtr from './placeGroupsLtr';
+import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
+import showVideoControls from './showVideoControls';
+import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 
 export default {
   itemClick,
@@ -129,8 +136,10 @@ export default {
   scrollAnimation,
   slideAnimation,
   scatter,
+  rotatingScatter,
   thumbnailSpacings,
   slideshowLoop,
+  arrowsPadding,
   arrowsSize,
   slideshowInfoSize,
   textBoxHeight,
@@ -142,6 +151,7 @@ export default {
   fixedColumns,
   rotatingGroupTypes,
   arrowsPosition,
+  arrowsVerticalPosition,
   itemShadowSize,
   itemShadowBlur,
   itemShadowDirection,
@@ -170,13 +180,8 @@ export default {
   overlayBackground,
   allowLeanGallery,
   oneColorAnimationColor,
+  placeGroupsLtr,
+  showVideoControls,
+  pauseAutoSlideshowOnHover,
+  shouldIndexDirectShareLinkInSEO,
 };
-
-// TODO = add the options:
-/* 
-allowLeanGallery
-itemOpacity
-arrowsColor
-imageLoadingColor
-oneColorAnimationColor
-*/

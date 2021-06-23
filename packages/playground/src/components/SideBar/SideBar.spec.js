@@ -5,7 +5,7 @@ import { stylesList } from '../../constants/settings.js';
 
 describe('styleParams - general', () => {
 
-  it.only('should contain all style params in the sections list', () => {
+  it('should contain all style params in the sections list', () => {
     const missingOptions = stylesList.filter(sp => !galleryOptions[sp]).join(',');
     expect(missingOptions).to.equal('');
   });

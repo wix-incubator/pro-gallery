@@ -104,13 +104,11 @@ body.pro-gallery {
   left: auto;
   z-index: 1;
   position: absolute;
-  width: 100px;
-  height: 100px;
   display: flex;
   text-align: center;
   cursor: pointer;
   opacity: 0.9;
-  font-size: 40px;
+  //font-size: 40px;
   align-items: center;
   background: transparent;
   border: none;
@@ -427,11 +425,6 @@ div.pro-gallery {
           }
         }
 
-        &.gallery-item-hidden {
-          opacity: 0;
-          transition: opacity .5s ease .1s;
-        }
-
         &.gallery-item-video {
           overflow: hidden;
           text-align: center; //for grid crop
@@ -703,6 +696,19 @@ div.pro-gallery {
     direction: ltr;
   }
 
+}
+
+.sr-only {
+  &.out-of-view-component{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: circle(0%);
+    border: 0;
+  }
 }
 
 .screen-logs {

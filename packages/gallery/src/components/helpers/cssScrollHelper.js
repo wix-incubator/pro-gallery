@@ -1,21 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 
 class CssScrollHelper {
   constructor() {
     this.pgScrollSteps = [
-      40960,
-      20480,
-      10240,
-      5120,
-      2560,
-      1280,
-      640,
-      320,
-      160,
-      80,
-      40,
-      20,
-      10,
+      40960, 20480, 10240, 5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10,
     ];
     this.pgScrollClassName = 'pgscl';
 
@@ -71,7 +60,8 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams }) {
+  calcScrollCss({ domId, items, styleParams, container }) {
+    utils.isVerbose() && console.time('CSS Scroll');
     if (!(items && items.length)) {
       return [];
     }
@@ -83,7 +73,7 @@ class CssScrollHelper {
       return [];
     }
     this.screenSize = styleParams.oneRow
-      ? Math.min(window.outerWidth, window.screen.width)
+      ? Math.min(window.outerWidth, window.screen.width, container.galleryWidth)
       : Math.min(window.outerHeight, window.screen.height);
     if (!styleParams.oneRow && utils.isMobile()) {
       this.screenSize += 50;
@@ -268,27 +258,31 @@ class CssScrollHelper {
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
+        '{overflow: visible !important;}' +
+        createScrollSelectors(animationPreparationPadding, ' > div') +
         `{transform: translate${axis}(${direction}100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
+        createScrollSelectors(animationActivePadding, ' > div') +
         `{transform: translate${axis}(0) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {
       scrollAnimationCss +=
-        createScrollSelectors(animationPreparationPadding, '') +
+        createScrollSelectors(animationPreparationPadding, ' > div') +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
+        createScrollSelectors(animationActivePadding, ' > div') +
         `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
+        '{overflow: visible !important;}' +
+        createScrollSelectors(animationPreparationPadding, ' > div') +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
+        createScrollSelectors(animationActivePadding, ' > div') +
         `{transform: scale(1) !important;}`;
     }
 
@@ -344,3 +338,4 @@ export const cssScrollHelper = new CssScrollHelper();
 // pgScrollSteps = [2560, 1280, 640, 320, 160, 80, 40, 20]; -> 2502 / 354 = 7 classes per item
 // pgScrollSteps = [5120, 2560, 1280, 640, 320, 160, 80, 40, 20]; -> 2502 / 354 = 7 classes per item
 // pgScrollSteps = [5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10]; -> 2772 / 354 = 7.8 classes per item
+/* eslint-enable prettier/prettier */

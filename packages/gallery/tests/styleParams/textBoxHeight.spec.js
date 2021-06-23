@@ -21,7 +21,7 @@ describe('styleParam - textBoxHeight', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set "textBoxHeight" of "250"', () => {
+  it('should set "textBoxHeight" of "250"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -30,6 +30,7 @@ describe('styleParam - textBoxHeight', () => {
       textBoxHeight: 250,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textBox = driver.find.selector('.gallery-item-common-info').at(0);
     const { height } = textBox.props().style;
     expect(height).to.eq(250);

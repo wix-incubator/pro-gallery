@@ -16,40 +16,43 @@ describe('styleParam - cubeType', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set class "cube-type-fit" to "item-wrapper"(hook) when "cubeType" is "fit"', () => {
+  it('should set class "cube-type-fit" to "item-wrapper"(hook) when "cubeType" is "fit"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.cube-type-fit');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should set class "cube-type-fill" to "item-wrapper"(hook) when "cubeType" is "fill"', () => {
+  it('should set class "cube-type-fill" to "item-wrapper"(hook) when "cubeType" is "fill"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.cube-type-fill');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should set class "grid-fit" to "image-item"(hook) when "cubeType" is "fit"', () => {
+  it('should set class "grid-fit" to "image-item"(hook) when "cubeType" is "fit"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.grid-fit');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should set "backgroundColor" to "transparent" on text items when "cubeType" is "fill"', () => {
+  it('should set "backgroundColor" to "transparent" on text items when "cubeType" is "fill"', async () => {
     initialProps.items = textItems;
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
@@ -57,12 +60,13 @@ describe('styleParam - cubeType', () => {
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textItem = driver.find.hook('item-wrapper').at(0);
     const { backgroundColor } = textItem.props().style;
     expect(backgroundColor).to.eq('transparent');
     driver.detach.proGallery();
   });
-  it('should set "backgroundColor" to "inherit" on text items when "cubeType" is "fit"', () => {
+  it('should set "backgroundColor" to "inherit" on text items when "cubeType" is "fit"', async () => {
     initialProps.items = textItems;
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
@@ -70,6 +74,7 @@ describe('styleParam - cubeType', () => {
       cubeType: GALLERY_CONSTS.cubeType.FIT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const textItem = driver.find.hook('item-wrapper').at(0);
     const { backgroundColor } = textItem.props().style;
     expect(backgroundColor).to.eq('inherit');

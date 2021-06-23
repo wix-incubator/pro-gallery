@@ -32,17 +32,83 @@ yarn add pro-gallery
 ```jsx
 import { ProGallery } from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
+export default function Gallery() {
+	// Add your images here...
+	const items = [
+		{ // Image item:
+			itemId: 'sample-id',
+			mediaUrl: 'https://i.picsum.photos/id/674/200/300.jpg?hmac=kS3VQkm7AuZdYJGUABZGmnNj_3KtZ6Twgb5Qb9ITssY',
+			metaData: {
+				type: 'image',
+				height: 200,
+				width: 100,
+				title: 'sample-title',
+				description: 'sample-description',
+				focalPoint: [0, 0],
+				link: {
+					url: 'http://example.com',
+					target: '_blank'
+				},
+			}
+		},
+		{ // Another Image item:
+			itemId: 'differentItem',
+			mediaUrl: 'https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk',
+			metaData: {
+				type: 'image',
+				height: 200,
+				width: 100,
+				title: 'sample-title',
+				description: 'sample-description',
+				focalPoint: [0, 0],
+				link: {
+					url: 'http://example.com',
+					target: '_blank'
+				},
+			}
+		},
+		{ // HTML item:
+			itemId: 'htmlItem',
+			html: "<div style='width: 300px; height: 200px; background:pink;'>I am a text block</div>",
+			metadata: {
+				type: "text",
+				height: 200,
+				width: 300,
+				title: 'sample-title',
+				description: 'sample-description',
+				backgroundColor: 'pink'
+			},
 
-<ProGallery
-  domId={domId}
-  items={items}
-  options={options}
-  container={container}
-  scrollingElement={() => document.getElementById('gallery') || window}
-  eventsListener={(eName, eData) => console.log({eName, eData})}
-  resizeMediaUrl={(item, url, resizeMethod, width, height) => `https://...`}
-  isPrerenderMode={isPrerenderMode}
-/>
+		},
+	]
+
+	// The options of the gallery (from the playground current state)
+	const options = {
+		galleryLayout: -1,
+	};
+
+	// The size of the gallery container. The images will fit themselves in it
+	const container = {
+		width: window.innerWidth,
+		height: window.innerHeight
+	};
+
+	// The eventsListener will notify you anytime something has happened in the gallery.
+	const eventsListener = (eventName, eventData) => console.log({eventName, eventData}); 
+
+	// The scrollingElement is usually the window, if you are scrolling inside another element, suplly it here
+	const scrollingElement = window;
+
+	return (
+		<ProGallery
+			items={items}
+			options={options}
+			container={container}
+			eventsListener={eventsListener}
+			scrollingElement={scrollingElement}
+		/>
+	);
+}
 ```
 
 To see more options and a real usage example, use the [playground source code](https://github.com/wix/pro-gallery/blob/master/packages/playground/src/components/App/App.js) as reference.
@@ -51,60 +117,6 @@ To see more options and a real usage example, use the [playground source code](h
 The gallery has A LOT of options, so to make it all easier, we created the [Playground](https://pro-gallery.surge.sh). Each option is expandable in the sidebar, and has all the info you need about using it.
 Notice that you can click on `Generate Gallery Code` anytime to get the code for the gallery layout you created.
 
-### Items
-For the code you generated to work you need to do just one more thing - provide it with a list of objects, each containing at least an id, dto, and metadata:
-```jsx
-const items = [
-  { // Image item:
-    itemId: 'sample-id',
-    mediaUrl: 'sample-image-url',
-    metaData: {
-      type: 'image',
-      height: 200,
-      width: 100,
-      title: 'sample-title',
-      description: 'sample-description',
-      focalPoint: [0, 0],
-      link: {
-        url: 'http://example.com',
-        target: '_blank'
-      },
-    }
-  },
-  { // Video item:
-    itemId: 'sample-id',
-    mediaUrl: 'sample-video-url',
-    metaData: {
-      type: 'video',
-      height: 200,
-      width: 100,
-  		poster: 'sample-image-url',
-      title: 'sample-title',
-      description: 'sample-description',
-      focalPoint: [0, 0],
-      link: {
-        url: 'http://example.com',
-        target: '_blank'
-      },
-    }
-  },
-  { // HTML item:
-    itemId: 'sample-id',
-    html: "<div style='width: 300px; height: 200px; background:pink;'>I am a text block</div>",
-    metadata: {
-      type: "text",
-      height: 200,
-      width: 300,
-      title: 'sample-title',
-      description: 'sample-description',
-      backgroundColor: 'pink'
-    },
-
-  },
-  {...},
-  {...}
-]
-```
 
 ### Container
 An object containing the width and height (in pixels) of the gallery.
@@ -134,7 +146,7 @@ The most important events are:
 | `ITEM_ACTION_TRIGGERED`  | Fired whenever one of the items is clicked or tapped and the gallery cannot handle the action itself (e.g. open an expanded view). |
 | `NEED_MORE_ITEMS`  | Fired whenever the gallery is scrolled near its last item. If you are using a pagination server, this is the event that should trigger the next page and re-render the gallery with new items. |
 
-The full list of the gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/gallery/src/common/constants/events.js).
+The full list of the gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/lib/src/common/constants/events.js).
 
 ### Media URL Resizer
 If you want to use a server-side resizing service (e.g. cloudinary), you can pass a resizing function. This function receives the `item` and required dimensions and should return the resize url. Notice that this function will be called several times for each item so it should be fast.
@@ -157,3 +169,25 @@ To replace the default rendering of these elements, pass a function that will re
   customNavArrowsRenderer={direction => <button>{direction}</button>}
 />
 ```
+
+## Version 3
+Version 3 introduces a clear separation between logic and rendering in the pro-gallery.
+
+The `ProGalleryRenderer` is a new export of the pro-gallery.
+It will expect a ready gallery Blueprint spread into the props it receives.
+
+### Blueprint
+We call the result of all the calculations that the `ProGalleryRenderer` needs a Blueprint.
+
+To create a Blueprint we need :
+- Styles
+- Items
+- Container
+- totalItemsCount
+
+The result is an object containing the processed styles, items,container and structure to be passed to the ProGalleryRenderer as props.
+
+### Benefits of splitting
+With the code that calculates the blueprint split from the rendering components we can create the blueprint for the gallery wherever we want and only import the rendering code (smaller) in the main thread. The blueprint itself can be calculated in a web worker or even in a server.
+
+To learn how to use the Blueprints and the BlueprintsManager go to the [pro-gallery-lib readme](https://github.com/wix/pro-gallery/tree/master/packages/lib).

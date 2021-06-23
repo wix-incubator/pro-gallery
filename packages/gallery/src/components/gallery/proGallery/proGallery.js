@@ -1,7 +1,7 @@
 import '../../../common/utils/polyfills';
 import React from 'react';
 import { viewModeWrapper, utils } from 'pro-gallery-lib';
-import Gallery from './galleryContainerNew.js';
+import Gallery from './galleryContainer.js';
 import { GalleryComponent } from '../../galleryComponent';
 
 import '../../../versionLogger';
@@ -44,9 +44,7 @@ export default class ProGallery extends GalleryComponent {
       settings: this.props.settings || {},
       offsetTop: this.props.offsetTop,
       itemsLoveData: this.props.itemsLoveData || {},
-      proGalleryRegionLabel:
-        this.props.proGalleryRegionLabel ||
-        'Gallery. you can navigate the gallery with keyboard arrow keys.',
+      proGalleryRegionLabel: this.props.proGalleryRegionLabel,
     };
   }
 

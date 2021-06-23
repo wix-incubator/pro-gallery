@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import * as lodash from './lodash';
 import window from '../window/windowWrapper';
 import {
@@ -5,6 +6,7 @@ import {
   isPreviewMode,
   isFormFactorMobile,
 } from '../window/viewModeWrapper';
+import GALLERY_CONSTS from '../constants'
 
 class Utils {
   constructor() {
@@ -615,13 +617,14 @@ class Utils {
       return defaultColor;
     }
     const colorStr = color.value ? color.value : color;
-    const colorRegex = /(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
+    const colorRegex =
+      /(?:#|0x)(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
     const regexRes = colorRegex.exec(colorStr);
     const isValidColor = regexRes && regexRes[0];
     return isValidColor ? colorStr : defaultColor;
   }
 
-  logPlaygroundLink(styles, useBlueprints = false) {
+  logPlaygroundLink(styles) {
     try {
       if (this.isVerbose()) {
         const stylesStr = Object.entries(styles)
@@ -636,12 +639,34 @@ class Utils {
 
         console.log(
           'Gallery Playground link:',
-          `https://pro-gallery.surge.sh?useBlueprints=${useBlueprints}&${stylesStr}`
+          `https://pro-gallery.surge.sh?${stylesStr}`
         );
       }
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  isSingleItemHorizontalDisplay(styles) {
+    return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      styles.groupSize === 1 &&
+      styles.cubeImages &&
+      styles.cubeRatio === '100%/100%';
+  }
+
+  getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
+    return {
+      role: proGalleryRole || 'region',
+      ['aria-label']: proGalleryRegionLabel ||
+        'Press the Enter key and then use the arrow keys to navigate the gallery items',
+      ['aria-roledescription']:
+        proGalleryRole === 'application' ? 'gallery application' : 'region',
+    };
+  }
+  
+  focusGalleryElement(element){
+    element.focus();
   }
 }
 
 export default new Utils();
+/* eslint-enable prettier/prettier */

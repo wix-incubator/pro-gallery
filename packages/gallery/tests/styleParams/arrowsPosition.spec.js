@@ -16,7 +16,7 @@ describe('styleParam - arrowsPosition', () => {
     driver = new GalleryDriver();
   });
 
-  it('should calculate gallery width accroding to "arrowsPosition" ("OUTSIDE_GALLERY")', () => {
+  it('should calculate gallery width accroding to "arrowsPosition" ("OUTSIDE_GALLERY")', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
@@ -24,6 +24,8 @@ describe('styleParam - arrowsPosition', () => {
       imageMargin: 0, // fixed in slideshow
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
+
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { width } = galleryContainer.props().style;
     const newWidth =
@@ -33,7 +35,7 @@ describe('styleParam - arrowsPosition', () => {
     expect(width).to.eq(newWidth);
     driver.detach.proGallery();
   });
-  it('should have original container width (arrowsPosition = "OUTSIDE_GALLERY")', () => {
+  it('should have original container width (arrowsPosition = "OUTSIDE_GALLERY")', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
@@ -41,6 +43,7 @@ describe('styleParam - arrowsPosition', () => {
       imageMargin: 0, // fixed in slideshow
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { width } = galleryContainer.props().style;
 

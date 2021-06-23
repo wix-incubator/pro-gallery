@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -17,12 +18,13 @@ import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
+import ImageRenderer from '../../item/imageRenderer';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
     if (utils.isVerbose()) {
-      console.count('[OOISSR] galleryContainerNew constructor', window.isMock);
+      console.count('[OOISSR] galleryContainer constructor', window.isMock);
     }
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
@@ -35,6 +37,11 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
+    this.setCurrentSlideshowViewIdx =
+      this.setCurrentSlideshowViewIdx.bind(this);
+    this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
@@ -47,6 +54,8 @@ export class GalleryContainer extends React.Component {
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
+      isScrollLessGallery: this.getIsScrollLessGallery(this.props.styles),
+      isInHover: false,
     };
 
     this.state = initialState;
@@ -59,7 +68,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = galleryState;
       }
     } catch (_e) {
-      console.warn('Cannot create initial state from props (blueprints)', _e);
+      console.warn('Cannot create initial state from props', _e);
     }
 
     this.state = {
@@ -81,9 +90,8 @@ export class GalleryContainer extends React.Component {
         this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
       } else {
         //IE (new CustomEvent is not supported in IE)
-        this.currentHoverChangeEvent = window.document.createEvent(
-          'CustomEvent'
-        ); // MUST be 'CustomEvent'
+        this.currentHoverChangeEvent =
+          window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
         this.currentHoverChangeEvent.initCustomEvent(
           'current_hover_change',
           false,
@@ -107,7 +115,10 @@ export class GalleryContainer extends React.Component {
     if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
       this.currentHoverChangeEvent.domId = nextProps.domId;
     }
-    if (this.props.currentIdx !== nextProps.currentIdx) {
+    if (
+      this.props.currentIdx !== nextProps.currentIdx &&
+      nextProps.currentIdx !== this.currentSlideshowViewIdx
+    ) {
       this.scrollToItem(nextProps.currentIdx, false, true, 0);
     }
 
@@ -119,8 +130,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = (props) => {
-      const { domId, styles, container, items, watermark } = props;
-      return { domId, styles, container, items, watermark };
+      const { domId, styles, container, items, watermark, isInDisplay } = props;
+      return { domId, styles, container, items, watermark, isInDisplay };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -173,11 +184,8 @@ export class GalleryContainer extends React.Component {
 
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
-    const {
-      container,
-      needToHandleShowMoreClick,
-      initialGalleryHeight,
-    } = this.state;
+    const { container, needToHandleShowMoreClick, initialGalleryHeight } =
+      this.state;
     const styleParams = this.props.styles;
     const numOfItems = this.state.items.length;
     const layoutHeight = this.props.structure.height;
@@ -201,7 +209,9 @@ export class GalleryContainer extends React.Component {
       isInfinite,
       updatedHeight,
     };
-    console.log('handleNewGalleryStructure', onGalleryChangeData);
+    if (utils.isVerbose()) {
+      console.log('handleNewGalleryStructure', onGalleryChangeData);
+    }
     this.eventsListener(
       GALLERY_CONSTS.events.GALLERY_CHANGE,
       onGalleryChangeData
@@ -215,16 +225,19 @@ export class GalleryContainer extends React.Component {
   isVerticalGallery() {
     return !this.state.styles.oneRow;
   }
+  getIsScrollLessGallery(styles) {
+    const { oneRow, slideAnimation } = styles;
+    return oneRow && slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL;
+  }
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
     const { galleryHeight, scrollBase, galleryWidth } = container;
     if (
-      (utils.isSSR() && !this.props.settings.renderVisibleItemsInSsr) ||
+      utils.isSSR() ||
       isSEOMode() ||
       isEditMode() ||
-      isPreviewMode() ||
       gotFirstScrollEvent ||
       scrollY > 0 ||
       this.props.currentIdx > 0
@@ -264,7 +277,6 @@ export class GalleryContainer extends React.Component {
   }
 
   propsToState({
-    loopingItems,
     items,
     styles,
     structure,
@@ -272,6 +284,7 @@ export class GalleryContainer extends React.Component {
     domId,
     resizeMediaUrl,
     isPrerenderMode,
+    customImageRenderer,
   }) {
     items = items || this.props.items;
     styles = styles || this.props.styles;
@@ -279,6 +292,10 @@ export class GalleryContainer extends React.Component {
     structure = structure || this.props.structure;
     domId = domId || this.props.domId;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
+
+    if (typeof customImageRenderer === 'function') {
+      ImageRenderer.customImageRenderer = customImageRenderer;
+    }
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, {
       // TODO use same objects in the memory when the galleryItems are changed
@@ -297,9 +314,9 @@ export class GalleryContainer extends React.Component {
     if (shouldUseScrollCss) {
       this.getScrollCss({
         domId: domId,
-        container: container,
         items: this.galleryStructure.galleryItems,
         styleParams: styles,
+        container: container,
       });
     }
     const scrollHelperNewGalleryStructure = {
@@ -335,10 +352,11 @@ export class GalleryContainer extends React.Component {
     this.createDynamicStyles(styles, isPrerenderMode);
 
     const newState = {
-      items: loopingItems || items,
+      items,
       styles,
       container,
       structure,
+      isScrollLessGallery: this.getIsScrollLessGallery(styles),
     };
     return newState;
   }
@@ -502,18 +520,22 @@ export class GalleryContainer extends React.Component {
       ${
         !overlayBackground
           ? ''
-          : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background-color: ${overlayBackground} !important}`
+          : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background: ${overlayBackground} !important}`
       }
     `.trim();
   }
 
   createCssLayoutsIfNeeded(layoutParams) {
-    this.layoutCss = createCssLayouts({
-      layoutParams,
-      isMobile: utils.isMobile(),
-      domId: this.props.domId,
-      galleryItems: this.galleryStructure.galleryItems,
-    });
+    const { settings = {} } = this.props;
+    const { avoidInlineStyles } = settings;
+    if (avoidInlineStyles) {
+      this.layoutCss = createCssLayouts({
+        layoutParams,
+        isMobile: utils.isMobile(),
+        domId: this.props.domId,
+        galleryItems: this.galleryStructure.galleryItems,
+      });
+    }
   }
 
   getScrollCss({ domId, items, container, styleParams }) {
@@ -539,9 +561,9 @@ export class GalleryContainer extends React.Component {
     if (!this.state.showMoreClickedAtLeastOnce) {
       this.getScrollCss({
         domId: this.props.domId,
-        container: this.props.container,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
+        container: this.state.container,
       });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
@@ -571,14 +593,22 @@ export class GalleryContainer extends React.Component {
     if (!this.state.gotFirstScrollEvent) {
       this.getScrollCss({
         domId: this.props.domId,
-        container: this.props.container,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
+        container: this.state.container,
       });
       this.setState({
         gotFirstScrollEvent: true,
       });
     }
+  }
+
+  setCurrentSlideshowViewIdx(idx) {
+    this.currentSlideshowViewIdx = idx;
+  }
+
+  simulateScrollToItem(item) {
+    item?.offset && this.onGalleryScroll(item.offset);
   }
 
   eventsListener(eventName, eventData, event) {
@@ -589,6 +619,12 @@ export class GalleryContainer extends React.Component {
     if (eventName === GALLERY_CONSTS.events.HOVER_SET) {
       this.currentHoverChangeEvent.currentHoverIdx = eventData;
       window.dispatchEvent(this.currentHoverChangeEvent);
+    }
+    if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
+      this.setCurrentSlideshowViewIdx(eventData.idx);
+      if (this.state.isScrollLessGallery) {
+        this.simulateScrollToItem(this.galleryStructure.items[eventData.idx]);
+      }
     }
     if (!this.state.firstUserInteractionExecuted) {
       switch (eventName) {
@@ -657,6 +693,14 @@ export class GalleryContainer extends React.Component {
     return can;
   }
 
+  onMouseEnter() {
+    this.setState({ isInHover: true });
+  }
+
+  onMouseLeave() {
+    this.setState({ isInHover: false });
+  }
+
   findNeighborItem = (itemIdx, dir) =>
     findNeighborItem(itemIdx, dir, this.state.structure.items); // REFACTOR BLUEPRINTS - this makes the function in the layouter irrelevant (unless the layouter is used as a stand alone with this function, maybe the layouter needs to be split for bundle size as well...)
 
@@ -686,6 +730,10 @@ export class GalleryContainer extends React.Component {
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+        ref={e => this.galleryContainerRef = e}
+        tabIndex={-1}
       >
         <ScrollIndicator
           domId={this.props.domId}
@@ -724,11 +772,15 @@ export class GalleryContainer extends React.Component {
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
           customLoadMoreRenderer={this.props.customLoadMoreRenderer}
           customNavArrowsRenderer={this.props.customNavArrowsRenderer}
-          customImageRenderer={this.props.customImageRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
+          proGalleryRole={this.props.proGalleryRole}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
+          isGalleryInHover={this.state.isInHover}
+          enableExperimentalFeatures={this.props.enableExperimentalFeatures}
+          galleryContainerRef={this.galleryContainerRef}
+          outOfViewComponent={this.outOfViewComponent}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,
@@ -763,9 +815,15 @@ export class GalleryContainer extends React.Component {
             <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
           )}
         </div>
+          {this.props.proGalleryRole === 'application' && (
+            <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only out-of-view-component">
+              {this.props.translations?.Accessibility_Left_Gallery}
+            </span>
+          )}
       </div>
     );
   }
 }
 
 export default GalleryContainer;
+/* eslint-enable prettier/prettier */

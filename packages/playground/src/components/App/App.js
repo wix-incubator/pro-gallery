@@ -6,7 +6,7 @@ import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../.
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { resizeMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
-import { GALLERY_CONSTS, ProGallery, ProBlueprintsGallery } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-lib'
@@ -206,54 +206,12 @@ export function App() {
   const slideshowInfoElement = (pgItemProps) => {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
-
-  const customImageRenderer = (props) => {
-    const originalSource = (src) => {
-      if (src.indexOf('.webp') > 0) {
-        if (src.indexOf('.png') > 0) {
-          return <source srcSet={src.replace('webp', 'png')} type="image/png" />;
-        } else if (src.indexOf('.jpg') > 0) {
-          return <source srcSet={src.replace('webp', 'jpg')} type="image/jpg" />;
-        } else if (src.indexOf('.jpeg') > 0) {
-          return (
-            <source srcSet={src.replace('webp', 'jpeg')} type="image/jpeg" />
-          );
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    };
-
-    const webpSource = (src) => {
-      if (src.indexOf(/\.\w{3,4}\/v\d\/\w*\//) > 0) { // only change resized urls
-        return (
-          <source
-            srcSet={src.replace(/(jpg|jpeg|png)$/, 'webp')}
-            type="image/webp"
-          />
-        );
-      }
-    };
-
-    return (
-      <picture
-        key={`picture_${props.id}`}
-      >
-        {webpSource(props.src)}
-        {originalSource(props.src)}
-        <img alt={props.alt} {...props} />
-      </picture>
-    );
-  };
   
   const getExternalInfoRenderers = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
       customSlideshowInfoRenderer: slideshowInfoElement,
-      customImageRenderer: customImageRenderer,
     };
   }
 
@@ -306,10 +264,12 @@ export function App() {
   });
 
   if(!shouldRenderLeanGallery) {
-    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProBlueprintsGallery : ProGallery);
+    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
   } else {
     GalleryComponent = LeanGallery;
   };
+
+  window.playgroundItems = getItems();
   
   return (
     <main id="sidebar_main" className={s.main}>

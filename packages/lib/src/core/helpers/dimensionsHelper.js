@@ -1,3 +1,5 @@
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
+
 class DimensionsHelper {
   constructor() {
     this.styles = {};
@@ -65,7 +67,11 @@ class DimensionsHelper {
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
       let width = Math.floor(this.container.width) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
-      if (this.styles.arrowsPosition && this.styles.oneRow) {
+      if (
+        this.styles.arrowsPosition ===
+          GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY &&
+        this.styles.oneRow
+      ) {
         width -=
           2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin / 2);
       }

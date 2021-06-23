@@ -17,7 +17,7 @@ class VideoScrollHelper {
     this.scrollBase = 0;
     this.videoItems = [];
     this.currentPlayingIdx = -1;
-    this.lastItemCount = 0;
+    this.currentItemCount = 0;
     this.playing = false;
     this.updateGalleryStructure = this.updateGalleryStructure.bind(this);
     this.initializePlayState = this.initializePlayState.bind(this);
@@ -26,12 +26,11 @@ class VideoScrollHelper {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.isVisible = this.isVisible.bind(this);
-    this.top = 0;
-    this.left = 0;
     this.videoPlay = undefined;
     this.itemClick = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
     this.lastVideoPlayed = -1;
+    this.videoRatingMap = new Map();
     this.trigger = Object.assign(
       {},
       ...Object.keys(VIDEO_EVENTS).map((key) => ({
@@ -55,27 +54,21 @@ class VideoScrollHelper {
     this.videoLoop = videoLoop;
     this.itemClick = itemClick;
     this.oneRow = oneRow;
-    const lastItemCount = this.lastItemCount;
-    const newItemCount = galleryStructure.galleryItems.length;
-    this.lastItemCount = newItemCount;
-    if (lastItemCount === newItemCount) {
-      return;
-    } else {
-      const newItems = galleryStructure.galleryItems.slice(
-        lastItemCount, //make sure this is the right way
-        newItemCount
-      );
-      newItems.forEach((item) => {
-        if (
-          item.type === 'video' ||
-          (item.type === 'image' &&
-            (item.id.includes('_placeholder') || item.isVideoPlaceholder))
-        ) {
-          // either video or a placeholder for video files (both need to be included in the list)
-          this.videoItems.push({ ...item, videoPlayRating: item.idx });
+    this.currentItemCount = galleryStructure.galleryItems.length;
+    this.videoItems = [];
+    galleryStructure.galleryItems.forEach((item) => {
+      if (
+        item.type === 'video' ||
+        (item.type === 'image' &&
+          (item.id.includes('_placeholder') || item.isVideoPlaceholder))
+      ) {
+        // either video or a placeholder for video files (both need to be included in the list)
+        if (!this.videoRatingMap.has(item.id)) {
+          this.videoRatingMap.set(item.id, item.idx);
         }
-      });
-    }
+        this.videoItems.push(item);
+      }
+    });
   }
 
   //--------------------------triggers--------------------------------//
@@ -106,7 +99,6 @@ class VideoScrollHelper {
         this.videoErrorReported();
         break;
       case VIDEO_EVENTS.INIT_SCROLL:
-        this.ScrollializePlayState();
         break;
       default:
     }
@@ -136,8 +128,8 @@ class VideoScrollHelper {
   }
 
   onScroll({ top, left }) {
-    this.top = top ? top : this.top;
-    this.left = left ? left : this.left;
+    this.top = top >= 0 ? top : this.top;
+    this.left = left >= 0 ? left : this.left;
     if (this.currentPlayingIdx === -1) {
       this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
     } else {
@@ -191,14 +183,15 @@ class VideoScrollHelper {
     };
     this.videoItems.some((item) => {
       if (this.isVisible(item, { top, left })) {
-        if (item.videoPlayRating <= bestRating.rating) {
+        const itemRating = this.videoRatingMap.get(item.id);
+        if (itemRating <= bestRating.rating) {
           secondBestRating.idx = bestRating.idx;
           secondBestRating.rating = bestRating.rating;
           bestRating.idx = item.idx;
-          bestRating.rating = item.videoPlayRating;
-        } else if (item.videoPlayRating <= secondBestRating.rating) {
+          bestRating.rating = itemRating;
+        } else if (itemRating <= secondBestRating.rating) {
           secondBestRating.idx = item.idx;
-          secondBestRating.rating = item.videoPlayRating;
+          secondBestRating.rating = itemRating;
         }
         return false;
       } else {
@@ -236,7 +229,10 @@ class VideoScrollHelper {
 
   stop(indexInVideoItems) {
     if (indexInVideoItems >= 0) {
-      this.videoItems[indexInVideoItems].videoPlayRating += 1337;
+      const newRating =
+        this.videoRatingMap.get(this.videoItems[indexInVideoItems].id) +
+        this.currentItemCount;
+      this.videoRatingMap.set(this.videoItems[indexInVideoItems].id, newRating);
     }
     this.setPlayingIdx(-1);
     this.playing = false;

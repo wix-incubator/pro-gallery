@@ -18,20 +18,16 @@ const defaultStyles = {
   smartCrop: false,
   rotatingCropRatios: '',
   columnWidths: '',
-  gallerySliderImageRatio: 16 / 9,
   fixedColumns: 0,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 1,
   groupsPerStrip: 0,
-  borderRadius: 0,
-  boxShadow: 0,
   imageMargin: 10,
   galleryMargin: 0,
   scatter: 0,
+  rotatingScatter: '',
   gridStyle: 0,
-  mobilePanorama: false,
   placeGroupsLtr: false,
-  viewMode: 'preview',
   oneRow: false,
   showArrows: true,
   enableInfiniteScroll: true,
@@ -47,7 +43,6 @@ const defaultStyles = {
   isAutoSlideshow: false,
   slideshowLoop: false,
   autoSlideshowInterval: 4,
-  bottomInfoHeight: 0,
   titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   galleryTextAlign: 'center',
   scrollSnap: false,
@@ -61,32 +56,23 @@ const defaultStyles = {
   scrollDuration: 400,
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
+  arrowsVerticalPosition: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
-  watermarkOpacity: 40,
-  watermarkSize: 40,
-  useWatermark: true,
-  watermarkDock: GALLERY_CONSTS.watermarkDock.RIGHT_DOWN,
+  arrowsPadding: 0,
   loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
-  defaultShowInfoExpand: 1,
-  allowLinkExpand: true,
-  expandInfoPosition: 0,
-  allowFullscreenExpand: true,
-  fullscreenLoop: false,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
   // titleFontExpand: font_5
   // titleColorExpand: color-5
   // descriptionFontExpand: font_8
   // descriptionColorExpand: color-5,
-  galleryAlignExpand: 'left',
   // addToCartBackColorExpand: color-5,
   // addToCartFontExpand: font-8
   // addToCartColorExpand: color-1
-  addToCartBorderWidth: 1,
   // addToCartBorderColor: color-5,
-  addToCartButtonText: '',
   slideshowInfoSize: 200,
   playButtonForAutoSlideShow: false,
+  pauseAutoSlideshowOnHover: true,
   allowSlideshowCounter: false,
   hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
   thumbnailSize: 120,
@@ -118,9 +104,7 @@ const defaultStyles = {
   // loadMoreButtonFont: font_8
   // loadMoreButtonFontColor: color-5
   // loadMoreButtonColor: startWithOpacity: '1', startWithColor: 'color-1'
-  loadMoreButtonBorderWidth: 1,
   // loadMoreButtonBorderColor:  startWithColor: 'color-5'
-  loadMoreButtonBorderRadius: 0,
   imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
   itemBorderWidth: 0,
   // itemBorderColor: 'color-5'
@@ -132,16 +116,13 @@ const defaultStyles = {
   itemShadowSize: 10,
   imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
   // imageLoadingColor: startWithColor: 'color-3'
-  expandAnimation: GALLERY_CONSTS.expandAnimations.NO_EFFECT,
   // oneColorAnimationColor: startWithColor: 'color-1',
-  imageQuality: 90,
-  usmToggle: false,
-  usm_a: 0,
-  usm_r: 0,
-  usm_t: 0,
   videoSound: false,
   videoSpeed: '1',
   videoLoop: true,
+  jsonStyleParams: '',
+  showVideoControls: false,
+  shouldIndexDirectShareLinkInSEO: true,
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {

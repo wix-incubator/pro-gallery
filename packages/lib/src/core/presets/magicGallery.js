@@ -86,6 +86,7 @@ const getStyleBySeed = (seed) => {
       ? 0
       : numFromSeed(0, 5, 'imageMargin'),
     scatter: 0,
+    rotatingScatter: '',
     chooseBestGroup: boolFromSeed('chooseBestGroup'),
     smartCrop: boolFromSeed('smartCrop'),
     cubeType: 'fill',

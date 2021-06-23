@@ -31,6 +31,7 @@ export class Item {
       this.imageMargin = styleParams.imageMargin;
       this.galleryMargin = styleParams.galleryMargin;
       this.scatter = styleParams.scatter;
+      this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
     }
 
@@ -124,21 +125,34 @@ export class Item {
   }
 
   calcScatter(offset) {
-    if (this.scatter > 0) {
-      const m = this.imageMargin / 2;
-      const g = this.galleryMargin;
+    const m = this.imageMargin / 2;
+    const g = this.galleryMargin;
 
-      const spaceLeft = offset.left > 0 ? m : g;
-      const spaceRight =
-        this.container.galleryWidth - offset.right > 2 * m ? m : g;
-      const spaceUp = offset.top > 0 ? m : g;
-      const spaceDown =
-        this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
+    const spaceLeft = offset.left > 0 ? m : g;
+    const spaceRight =
+      this.container.galleryWidth - offset.right > 2 * m ? m : g;
+    const spaceUp = offset.top > 0 ? m : g;
+    const spaceDown =
+      this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
 
+    if (this.rotatingScatter.length > 0) {
+      try {
+        const scatterArr = this.rotatingScatter.split(',');
+        const [x, y] = scatterArr[this.idx % scatterArr.length]
+          .split('/')
+          .map((dim) => parseInt(dim))
+          .map((dim) => dim / 100);
+        let horizontalShift = x * (x > 0 ? spaceRight : spaceLeft);
+        let verticalShift = y * (y > 0 ? spaceDown : spaceUp);
+        return { x: horizontalShift, y: verticalShift };
+      } catch (e) {
+        console.error('Cannot calculate rotating scatter', e);
+      }
+    } else if (this.scatter > 0) {
       const minShift = 0.4 * (this.scatter / 100);
 
       let horizontalShift = utils.hashToRandomInt(
-        this.hash + offset.right + 'x',
+        this.seed + offset.right + 'x',
         -spaceLeft,
         spaceRight
       );
@@ -153,7 +167,7 @@ export class Item {
       horizontalShift = Math.round(horizontalShift);
 
       let verticalShift = utils.hashToRandomInt(
-        this.hash + offset.right + 'y',
+        this.seed + offset.right + 'y',
         -spaceUp,
         spaceDown
       );
@@ -217,7 +231,7 @@ export class Item {
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
 
-    if (this.scatter > 0) {
+    if (this.scatter > 0 || this.rotatingScatter?.length > 0) {
       const { x, y } = this.calcScatter(offset);
       offset.left += x;
       offset.top += y;
@@ -238,6 +252,10 @@ export class Item {
 
   get hash() {
     return this.dto.hash || this.dto.mediaUrl || this.dto.id;
+  }
+
+  get seed() {
+    return this.dto.seed || utils.hashToInt(this.hash);
   }
 
   get maxWidth() {
@@ -310,6 +328,39 @@ export class Item {
   }
   set margins(m) {
     this.imageMargin = m;
+  }
+
+  get dimensions() {
+    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
+    const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
+    const imageMarginLeft = Math.round(
+      (this.height * this.ratio - this.width) / -2
+    );
+    const imageMarginTop = Math.round(
+      (this.width / this.ratio - this.height) / -2
+    );
+    const isGridFit = this.cubeImages && this.cubeType === 'fit';
+
+    if (isGridFit) {
+      return isLandscape
+        ? {
+            height: this.height - 2 * imageMarginTop,
+            width: this.width,
+            marginTop: imageMarginTop,
+            marginLeft: 0,
+          }
+        : {
+            width: this.width - 2 * imageMarginLeft,
+            height: this.height,
+            marginLeft: imageMarginLeft,
+            marginTop: 0,
+          };
+    }
+
+    return {
+      width: this.width,
+      height: this.height,
+    };
   }
 
   get cubeRatio() {
@@ -443,6 +494,7 @@ export class Item {
       infoWidth: this.infoWidth,
       margins: this.margins,
       ratio: this.ratio,
+      dimensions: this.dimensions,
       cropRatio: this.cubeRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,

@@ -21,7 +21,7 @@ describe('styleParam - titlePlacement', () => {
     driver = new GalleryDriver();
   });
 
-  it('should place texts below images when "titlePlacement" is "SHOW_BELOW"', () => {
+  it('should place texts below images when "titlePlacement" is "SHOW_BELOW"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
@@ -29,11 +29,12 @@ describe('styleParam - titlePlacement', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.gallery-item-bottom-info');
     expect(items).to.have.lengthOf(6);
     driver.detach.proGallery();
   });
-  it('should place texts above images when "titlePlacement" is "SHOW_ABOVE"', () => {
+  it('should place texts above images when "titlePlacement" is "SHOW_ABOVE"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
@@ -41,11 +42,12 @@ describe('styleParam - titlePlacement', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.gallery-item-top-info');
     expect(items).to.have.lengthOf(6);
     driver.detach.proGallery();
   });
-  it('should render hover when "titlePlacement" is "SHOW_ON_HOVER"', () => {
+  it('should render hover when "titlePlacement" is "SHOW_ON_HOVER"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
@@ -53,6 +55,7 @@ describe('styleParam - titlePlacement', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const items = driver.find.selector('.gallery-item-hover');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();

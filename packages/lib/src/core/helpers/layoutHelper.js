@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import { featureManager } from './versionsHelper';
@@ -15,6 +16,7 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
+import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -33,12 +35,15 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
     return smartCalc ? smartCalc : styles.gallerySize;
   }
 };
+
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
-  processedStyles.isSlideshowFont = isSlideshowFont(processedStyles);
   processedStyles.oneRow =
     processedStyles.oneRow ||
     processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
+
+  const isDesignedPreset =
+    processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
 
   const setTextUnderline = (itemFontStyleParam, textDecorationType) => {
     /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
@@ -63,7 +68,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   };
 
   if (utils.isMobile()) {
-    if (processedStyles.isSlideshowFont) {
+    if (isSlideshowFont(processedStyles)) {
       if (!utils.isUndefined(processedStyles.itemFontSlideshow)) {
         setTextUnderline('itemFontSlideshow', 'textDecorationTitle');
       }
@@ -83,11 +88,11 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (
     (!processedStyles.isVertical ||
       processedStyles.groupSize > 1 ||
-      processedStyles.oneRow === true) &&
+      (processedStyles.oneRow === true && !isDesignedPreset)) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
-    // all horizontal layouts that are not slider or columns
+    // Dont allow titlePlacement to be above / below / left / right
     processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
@@ -132,6 +137,10 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     }
   }
 
+  if (processedStyles.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
+    processedStyles.arrowsPadding = 0;
+  }
+
   if (processedStyles.oneRow) {
     // if oneRow is true, use horizontal layouts only
     processedStyles.isVertical = false;
@@ -156,19 +165,13 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
-    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
-      /^font\s*:\s*/,
-      ''
-    );
-    processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
-      /;$/,
-      ''
-    );
+    processedStyles.loadMoreButtonFont.value =
+      processedStyles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
+    processedStyles.loadMoreButtonFont.value =
+      processedStyles.loadMoreButtonFont.value.replace(/;$/, '');
     if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > -1) {
-      processedStyles.loadMoreButtonFont.value = processedStyles.loadMoreButtonFont.value.replace(
-        'underline',
-        ''
-      );
+      processedStyles.loadMoreButtonFont.value =
+        processedStyles.loadMoreButtonFont.value.replace('underline', '');
       processedStyles.textDecorationLoadMore = 'underline';
     } else {
       processedStyles.textDecorationLoadMore = 'none';
@@ -386,3 +389,4 @@ function isSlideshowFont(styles) {
 }
 
 export default processLayouts;
+/* eslint-enable prettier/prettier */

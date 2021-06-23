@@ -2,7 +2,7 @@ import ImageItem from '../imageItem';
 
 class VideoItemPlaceholder extends ImageItem {
   render() {
-    const { videoControls } = this.props;
+    const { videoPlayButton } = this.props;
 
     const VideoPlaceholderContainerClassnames =
       this.getImageContainerClassNames() + ' video-item gallery-item-video';
@@ -10,7 +10,7 @@ class VideoItemPlaceholder extends ImageItem {
     const renderedItem = this.getImageContainer(
       videoPlaceholderImageRenderer,
       VideoPlaceholderContainerClassnames,
-      videoControls
+      videoPlayButton
     );
 
     return renderedItem;

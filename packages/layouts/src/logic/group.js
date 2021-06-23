@@ -1,5 +1,5 @@
+/* eslint-disable prettier/prettier */
 import { Item } from './item.js';
-import { utils } from './utils';
 
 const GROUP_TYPES_BY_RATIOS_V = {
   lll: '1,2h',
@@ -58,7 +58,6 @@ export class Group {
       this.rotatingGroupTypes = String(styleParams.rotatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this.chooseBestGroup = styleParams.chooseBestGroup;
-      this.layoutsVersion = styleParams.layoutsVersion;
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
@@ -254,9 +253,9 @@ export class Group {
         const ratios = this.items
           .map((item) => item.orientation.slice(0, 1))
           .join('');
-        optionalTypes = (isV
-          ? GROUP_TYPES_BY_RATIOS_V
-          : GROUP_TYPES_BY_RATIOS_H)[ratios];
+        optionalTypes = (
+          isV ? GROUP_TYPES_BY_RATIOS_V : GROUP_TYPES_BY_RATIOS_H
+        )[ratios];
       } else if (this.items.length === 3 || forcedGroupSize === 3) {
         optionalTypes = isV ? '1,2h,3l,3r,3h' : '1,2v,3t,3b,3v';
       }
@@ -290,7 +289,7 @@ export class Group {
       }
 
       //---------| Calc collage density
-      if (this.layoutsVersion > 1 && this.collageDensity >= 0) {
+      if (this.collageDensity >= 0) {
         //th new calculation of the collage amount
 
         const collageDensity = this.collageDensity;
@@ -327,14 +326,9 @@ export class Group {
     let seed;
     if (this.isVertical) {
       //vertical galleries random is not relevant (previous group is in another column)
-      seed = utils.hashToInt(this.items[0].hash) % numOfOptions;
+      seed = this.items[0].seed % numOfOptions;
     } else {
       seed = (this.inStripIdx + this.stripIdx) % numOfOptions;
-    }
-
-    if (this.layoutsVersion === 1 && this.collageAmount >= 0) {
-      //backwards compatibility
-      seed += (this.collageAmount - 0.5) * numOfOptions;
     }
 
     return Math.round(Math.min(Math.max(0, seed), numOfOptions - 1));
@@ -840,3 +834,4 @@ export class Group {
     };
   }
 }
+/* eslint-enable prettier/prettier */

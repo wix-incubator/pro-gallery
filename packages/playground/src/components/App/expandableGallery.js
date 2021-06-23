@@ -1,5 +1,5 @@
 import React from 'react';
-import {GALLERY_CONSTS, ProGallery, ProBlueprintsGallery} from 'pro-gallery';
+import {GALLERY_CONSTS, ProGallery, ProGalleryRenderer} from 'pro-gallery';
 import {utils} from 'pro-gallery-lib';
 // import CLICK_ACTIONS from '../../../common/constants/itemClick';
 import CloseButton from './x';
@@ -67,7 +67,7 @@ export default class ExpandableProGallery extends React.Component {
     }
 
     render() {
-        const Gallery = this.props.useBlueprints ? ProBlueprintsGallery : ProGallery;
+        const Gallery = this.props.useBlueprints ? ProGalleryRenderer : ProGallery;
         return (
             <>
                 <section style={{...styles.gallery, display: (this.state.fullscreenIdx < 0 ? 'block' : 'none')}}>

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -6,12 +7,12 @@ import {
   utils,
   isEditMode,
   isPreviewMode,
-  isSiteMode,
   isSEOMode,
 } from 'pro-gallery-lib';
 import ImageItem from './imageItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
+import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import { GalleryComponent } from '../galleryComponent';
 import { ScrollAnimations } from './scrollAnimations';
@@ -67,15 +68,12 @@ class ItemView extends GalleryComponent {
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
-    this.changeActiveElementIfNeeded = this.changeActiveElementIfNeeded.bind(
-      this
-    );
-    this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(
-      this
-    );
-    this.getCustomInfoRendererProps = this.getCustomInfoRendererProps.bind(
-      this
-    );
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.checkIfCurrentHoverChanged =
+      this.checkIfCurrentHoverChanged.bind(this);
+    this.getCustomInfoRendererProps =
+      this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -108,6 +106,29 @@ class ItemView extends GalleryComponent {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
+  }
+
+  onFocus() {
+    if (this.props.styleParams.isAccessible) {
+      this.props.actions.eventsListener(
+        GALLERY_CONSTS.events.HOVER_SET,
+        this.props.idx
+      );
+    }
+    this.props.actions.eventsListener(
+      GALLERY_CONSTS.events.ITEM_FOCUSED,
+      this.props
+    );
+  }
+
+  onBlur() {
+    if (this.props.styleParams.isAccessible) {
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
+    }
+    this.props.actions.eventsListener(
+      GALLERY_CONSTS.events.ITEM_LOST_FOCUS,
+      this.props
+    );
   }
 
   onContainerKeyDown(e) {
@@ -416,7 +437,6 @@ class ItemView extends GalleryComponent {
         key="imageItem"
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
-        customImageRenderer={this.props.customImageRenderer}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
@@ -473,9 +493,17 @@ class ItemView extends GalleryComponent {
     const { styleParams, type } = this.props;
     let itemInner;
     const imageDimensions = this.getImageDimensions();
-    const { width, height } = imageDimensions;
+    const { width, height, margin } = imageDimensions;
 
     const itemStyles = { width, height };
+    const marginVal =
+      margin && Number(margin.replace('0 ', '').replace('px', ''));
+    const fitInfoStyles = marginVal
+      ? {
+          width: `calc(100% + ${marginVal * 2}px)`,
+          margin: `0 -${marginVal}px`,
+        }
+      : {};
 
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
@@ -504,11 +532,12 @@ class ItemView extends GalleryComponent {
 
     if (styleParams.isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props;
-      const fadeAnimationStyles = this.getFadeAnimationStyles();
+      const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
-        ...fadeAnimationStyles,
+        ...fitInfoStyles,
+        ...slideAnimationStyles,
         transition: 'none',
       };
       const slideshowInfo = customSlideshowInfoRenderer
@@ -525,7 +554,7 @@ class ItemView extends GalleryComponent {
             key={'item-container-link-' + id}
             {...this.getLinkParams()}
             tabIndex={-1}
-            style={{ ...fadeAnimationStyles }}
+            style={{ ...slideAnimationStyles, width, height }}
           >
             {itemInner}
           </a>
@@ -545,7 +574,10 @@ class ItemView extends GalleryComponent {
 
   getRightInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasRightPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasRightPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
@@ -558,7 +590,10 @@ class ItemView extends GalleryComponent {
 
   getLeftInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasLeftPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasLeftPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT,
@@ -571,7 +606,10 @@ class ItemView extends GalleryComponent {
 
   getBottomInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasBelowPlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasBelowPlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_BELOW,
@@ -584,7 +622,10 @@ class ItemView extends GalleryComponent {
 
   getTopInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasAbovePlacement(this.props.styleParams.titlePlacement)
+      GALLERY_CONSTS.hasAbovePlacement(
+        this.props.styleParams.titlePlacement,
+        this.props.idx
+      )
     ) {
       return this.getExternalInfoElement(
         GALLERY_CONSTS.placements.SHOW_ABOVE,
@@ -630,7 +671,6 @@ class ItemView extends GalleryComponent {
             infoWidth
           )}
           className={'gallery-item-common-info ' + elementName}
-          aria-hidden={true}
           onClick={this.onItemInfoClick}
         >
           {itemExternalInfo}
@@ -673,13 +713,8 @@ class ItemView extends GalleryComponent {
       styleParams,
       settings = {},
     } = this.props;
-    const {
-      oneRow,
-      imageMargin,
-      itemClick,
-      isRTL,
-      slideAnimation,
-    } = styleParams;
+    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } =
+      styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -718,15 +753,27 @@ class ItemView extends GalleryComponent {
           height: style.height + style.infoHeight,
         };
 
-    const fadeAnimationStyles =
-      slideAnimation === GALLERY_CONSTS.slideAnimations.FADE
-        ? {
-            left: isRTL ? 'auto' : 0,
-            right: !isRTL ? 'auto' : 0,
-            pointerEvents: currentIdx === idx ? 'auto' : 'none',
-            zIndex: currentIdx === idx ? 0 : 1,
-          }
-        : {};
+    let slideAnimationStyles;
+    switch (slideAnimation) {
+      case GALLERY_CONSTS.slideAnimations.FADE:
+        slideAnimationStyles = {
+          left: isRTL ? 'auto' : 0,
+          right: !isRTL ? 'auto' : 0,
+          pointerEvents: currentIdx === idx ? 'auto' : 'none',
+          zIndex: currentIdx === idx ? 0 : 1,
+        };
+        break;
+      case GALLERY_CONSTS.slideAnimations.DECK:
+        slideAnimationStyles = {
+          left: isRTL ? 'auto' : 0,
+          right: !isRTL ? 'auto' : 0,
+          pointerEvents: currentIdx === idx ? 'auto' : 'none',
+          zIndex: Math.sign(currentIdx - idx),
+        };
+        break;
+      default:
+        slideAnimationStyles = {};
+    }
 
     const transitionStyles =
       this.state.loaded && (isEditMode() || isPreviewMode())
@@ -744,7 +791,7 @@ class ItemView extends GalleryComponent {
       ...containerStyleByStyleParams,
       ...transitionStyles,
       ...opacityStyles,
-      ...fadeAnimationStyles,
+      ...slideAnimationStyles,
     };
 
     return itemContainerStyles;
@@ -770,22 +817,56 @@ class ItemView extends GalleryComponent {
     const itemWrapperStyles = {
       ...styles,
       ...imageDimensions,
-      ...(!styleParams.isSlideshow && this.getFadeAnimationStyles()),
+      ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
     };
 
     return itemWrapperStyles;
   }
 
-  getFadeAnimationStyles() {
-    const { idx, currentIdx, styleParams } = this.props;
-    return styleParams.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE
-      ? {
-          transition: currentIdx === idx ? 'none' : 'opacity .8s ease',
+  getSlideAnimationStyles() {
+    const { idx, currentIdx, styleParams, container } = this.props;
+    const { isRTL, slideAnimation } = styleParams;
+    const baseStyles = {
+      position: 'absolute',
+      display: 'block',
+    };
+    switch (slideAnimation) {
+      case GALLERY_CONSTS.slideAnimations.FADE:
+        return {
+          ...baseStyles,
+          transition: `opacity 600ms ease`,
           opacity: currentIdx === idx ? 1 : 0,
-          display: 'block',
-          // visibility: currentIdx === idx ? 'visible' : 'hidden',
+        };
+      case GALLERY_CONSTS.slideAnimations.DECK: {
+        const rtlFix = isRTL ? 1 : -1;
+        if (currentIdx < idx) {
+          //the slides behind the deck
+          return {
+            ...baseStyles,
+            transition: `opacity .2s ease 600ms`,
+            zIndex: -1,
+            opacity: 0,
+          };
+        } else if (currentIdx === idx) {
+          return {
+            ...baseStyles,
+            zIndex: 0,
+            transition: `transform 600ms ease`,
+            transform: `translateX(0)`,
+          };
+        } else if (currentIdx > idx) {
+          return {
+            ...baseStyles,
+            zIndex: 1,
+            transition: `transform 600ms ease`,
+            transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
+          };
         }
-      : {};
+        break;
+      }
+      default:
+        return {};
+    }
   }
 
   getItemAriaLabel() {
@@ -900,65 +981,15 @@ class ItemView extends GalleryComponent {
     return tabIndex;
   }
 
-  changeActiveElementIfNeeded(prevProps) {
-    try {
-      if (
-        (isSiteMode() || isSEOMode()) &&
-        !utils.isMobile() &&
-        window.document &&
-        window.document.activeElement &&
-        window.document.activeElement.className
-      ) {
-        const activeElement = window.document.activeElement;
-
-        //check if focus is on 'gallery-item-container' in current gallery
-        const isThisGalleryItemInFocus = () =>
-          !!window.document.querySelector(
-            `#pro-gallery-${this.props.domId} #${String(activeElement.id)}`
-          );
-        const isGalleryItemInFocus = () =>
-          String(activeElement.className).indexOf('gallery-item-container') >=
-          0;
-        //check if focus is on 'load-more' in current gallery
-        const isThisGalleryShowMoreInFocus = () =>
-          !!window.document.querySelector(
-            `#pro-gallery-${this.props.domId} #${String(activeElement.id)}`
-          );
-        const isShowMoreInFocus = () =>
-          String(activeElement.className).indexOf('show-more') >= 0;
-
-        if (
-          (isGalleryItemInFocus() && isThisGalleryItemInFocus()) ||
-          (isShowMoreInFocus() && isThisGalleryShowMoreInFocus())
-        ) {
-          if (
-            this.props.thumbnailHighlightId !==
-              prevProps.thumbnailHighlightId &&
-            this.props.thumbnailHighlightId === this.props.id
-          ) {
-            // if the highlighted thumbnail changed and it is the same as this itemview's
-            this.itemContainer.focus();
-          } else if (
-            this.props.currentIdx !== prevProps.currentIdx &&
-            this.props.currentIdx === this.props.idx
-          ) {
-            //check if currentIdx has changed to the current item
-            this.itemContainer.focus();
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Could not set focus to active element', e);
-    }
-  }
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
-    if (utils.isMobile()) {
+    if (utils.isMobile() && typeof React.initializeTouchEvents === 'function') {
       try {
         React.initializeTouchEvents(true);
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
+      } catch (e) {
+        console.error(e)
+      }
     }
 
     window.addEventListener(
@@ -976,7 +1007,11 @@ class ItemView extends GalleryComponent {
   }
 
   componentDidUpdate(prevProps) {
-    this.changeActiveElementIfNeeded(prevProps);
+    changeActiveElementIfNeeded({
+      prevProps,
+      currentProps: this.props,
+      itemContainer: this.itemContainer
+    });
   }
 
   checkIfCurrentHoverChanged(e) {
@@ -1035,8 +1070,10 @@ class ItemView extends GalleryComponent {
       // place share link as the navigation item
       const url = directShareLink;
       const shouldUseDirectShareLink = !!url;
+      const shouldUseNofollow = !styleParams.shouldIndexDirectShareLinkInSEO;
+      const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
       const linkParams = shouldUseDirectShareLink
-        ? { href: url, 'data-cancel-link': true }
+        ? { href: url, 'data-cancel-link': true, ...seoLinkParams }
         : {};
       return linkParams;
     }
@@ -1059,6 +1096,8 @@ class ItemView extends GalleryComponent {
         ref={(e) => (this.itemContainer = e)}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
@@ -1077,10 +1116,12 @@ class ItemView extends GalleryComponent {
             ...(!this.props.styleParams.isSlideshow &&
               getImageStyle(this.props.styleParams)),
             ...(GALLERY_CONSTS.hasRightPlacement(
-              this.props.styleParams.titlePlacement
+              this.props.styleParams.titlePlacement,
+              this.props.idx
             ) && { float: 'left' }),
             ...(GALLERY_CONSTS.hasLeftPlacement(
-              this.props.styleParams.titlePlacement
+              this.props.styleParams.titlePlacement,
+              this.props.idx
             ) && { float: 'right' }),
           }}
         >
@@ -1111,6 +1152,14 @@ class ItemView extends GalleryComponent {
           data-id={photoId}
           data-idx={idx}
           key={'item-container-link-' + id}
+          onFocus={() => {
+            onAnchorFocus({
+              itemAnchor: this.itemAnchor,
+              enableExperimentalFeatures:
+                this.props.enableExperimentalFeatures,
+              itemContainer: this.itemContainer,
+            });
+          }}
           {...this.getLinkParams()}
           tabIndex={-1}
           onKeyDown={(e) => {
@@ -1143,3 +1192,4 @@ class ItemView extends GalleryComponent {
 }
 
 export default ItemView;
+/* eslint-enable prettier/prettier */

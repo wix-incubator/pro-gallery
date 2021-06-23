@@ -53,7 +53,6 @@ export const stylesBySection = {
     'cubeImages',
     'cubeType',
     'cubeRatio',
-    // 'gallerySliderImageRatio',
 
     'gallerySizeType',
     'gallerySize',
@@ -65,6 +64,7 @@ export const stylesBySection = {
     'gridStyle',
     'fixedColumns',
     'groupsPerStrip',
+    'placeGroupsLtr',
 
     'groupTypes',
     'rotatingGroupTypes',
@@ -72,6 +72,7 @@ export const stylesBySection = {
     'columnWidths',
     'galleryMargin',
     'scatter',
+    'rotatingScatter',
     'smartCrop',
 
     'galleryThumbnailsAlignment',
@@ -103,12 +104,14 @@ export const stylesBySection = {
     'playButtonForAutoSlideShow',
     'scrollSnap',
     'allowContextMenu',
+    'pauseAutoSlideshowOnHover',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
+    'arrowsVerticalPosition',
 
     'overlayBackground',
 
@@ -122,9 +125,7 @@ export const stylesBySection = {
     // 'loadMoreButtonFont',
     // 'loadMoreButtonFontColor',
     // 'loadMoreButtonColor',
-    // 'loadMoreButtonBorderWidth',
     // 'loadMoreButtonBorderColor',
-    // 'loadMoreButtonBorderRadius',
     'itemBorderWidth',
     'itemBorderColor',
     'itemBorderRadius',

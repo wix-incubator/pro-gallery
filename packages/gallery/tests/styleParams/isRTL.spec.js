@@ -16,27 +16,29 @@ describe('styleParam - isRTL', () => {
     driver = new GalleryDriver();
   });
 
-  it('should not set "rtl" class to the gallery container', () => {
+  it('should not set "rtl" class to the gallery container', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.false;
     driver.detach.proGallery();
   });
-  it('should set "rtl" class to the gallery container', () => {
+  it('should set "rtl" class to the gallery container', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
-  // it('should start keyboard navigation from left to right', () => {
+  // it('should start keyboard navigation from left to right', async () => {
   //   Object.assign(initialProps.styles, {
   //     galleryLayout: GALLERY_CONSTS.layout.GRID,
   //     isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
@@ -56,23 +58,25 @@ describe('styleParam - isRTL', () => {
   //   driver.detach.proGallery();
   // });
 
-  it('should set "rtl" class in slideShowView', () => {
+  it('should set "rtl" class in slideShowView', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
 
-  it('should not set "rtl" class in slideShowView', () => {
+  it('should not set "rtl" class in slideShowView', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
+    await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();

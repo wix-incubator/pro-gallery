@@ -44,27 +44,4 @@ export default class PlaygroundsBlueprintsApi {
     return true;
   }
 
-  // finalizeHeightByStructure({
-  //   styleParams,
-  //   isInfinite,
-  //   updatedHeight,
-  //   layoutHeight,
-  //   container,
-  // }) {
-  //   let newHeight = container.height;
-    
-  //   if (styleParams.oneRow) {
-  //     newHeight = window.innerHeight;
-  //   } else {
-  //     if(isInfinite || updatedHeight === Infinity) {
-  //       newHeight = layoutHeight;
-  //     } else if (updatedHeight > 0) {
-  //       newHeight = updatedHeight;
-  //     } 
-  //   }
-  //   if (!(container.height === newHeight) && newHeight){
-  //     // this.setDimensionsHeight(newHeight);
-  //   }
-// }
-
 }
