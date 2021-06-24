@@ -489,21 +489,12 @@ class ItemView extends GalleryComponent {
   }
 
   getItemInner() {
-    const { styleParams, type } = this.props;
+    const { styleParams, type, style } = this.props;
     let itemInner;
-    const imageDimensions = this.getImageDimensions();
-    const { width, height, margin } = imageDimensions;
+    // const imageDimensions = this.getImageDimensions();
+    const { width, height } = style;
 
     const itemStyles = { width, height };
-    const marginVal =
-      margin && Number(margin.replace('0 ', '').replace('px', ''));
-    const fitInfoStyles = marginVal
-      ? {
-          width: `calc(100% + ${marginVal * 2}px)`,
-          margin: `0 -${marginVal}px`,
-        }
-      : {};
-
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
       itemHover = this.getItemHover(itemStyles);
@@ -535,7 +526,6 @@ class ItemView extends GalleryComponent {
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
-        ...fitInfoStyles,
         ...slideAnimationStyles,
         transition: 'none',
       };
@@ -811,11 +801,11 @@ class ItemView extends GalleryComponent {
     styles.margin = -styleParams.itemBorderWidth + 'px';
     styles.height = height + 'px';
 
-    const imageDimensions = this.getImageDimensions();
+    // const imageDimensions = this.getImageDimensions();
 
     const itemWrapperStyles = {
       ...styles,
-      ...imageDimensions,
+      // ...imageDimensions,
       ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
     };
 

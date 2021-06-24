@@ -228,6 +228,10 @@ export class Item {
             ? this.calcPinOffset(this._group.width, 'left')
             : this._group.width - this.outerWidth) || 0,
     };
+    const { marginTop = 0, marginLeft = 0 } = this.dimensions;
+    offset.top += marginTop;
+    offset.left += marginLeft;
+
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
 
@@ -274,7 +278,7 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
+    return this.style.orgWidth || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
 
   get width() {
@@ -288,7 +292,12 @@ export class Item {
   }
 
   set width(w) {
-    this.style.cubedWidth = this.style.width = Math.max(1, w);
+    this.style.cubedWidth = this.style.orgWidth = this.style.width = Math.max(
+      1,
+      w
+    );
+    const { marginLeft = 0 } = this.dimensions;
+    this.style.width -= 2 * marginLeft;
   }
 
   get outerHeight() {
@@ -296,7 +305,7 @@ export class Item {
   }
 
   get orgHeight() {
-    return this.style.height || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.orgHeight || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get height() {
@@ -310,7 +319,13 @@ export class Item {
   }
 
   set height(h) {
-    this.style.cubedHeight = this.style.height = Math.max(1, h);
+    this.style.cubedHeight = this.style.orgHeight = this.style.height = Math.max(
+      1,
+      h
+    );
+
+    const { marginTop = 0 } = this.dimensions;
+    this.style.height -= 2 * marginTop;
   }
 
   get maxHeight() {
@@ -331,7 +346,6 @@ export class Item {
   }
 
   get dimensions() {
-    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
     const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
     const imageMarginLeft = Math.round(
       (this.height * this.ratio - this.width) / -2
@@ -344,22 +358,22 @@ export class Item {
     if (isGridFit) {
       return isLandscape
         ? {
-            height: this.height - 2 * imageMarginTop,
-            width: this.width,
+            // height: this.height - 2 * imageMarginTop,
+            // width: this.width,
             marginTop: imageMarginTop,
             marginLeft: 0,
           }
         : {
-            width: this.width - 2 * imageMarginLeft,
-            height: this.height,
+            // width: this.width - 2 * imageMarginLeft,
+            // height: this.height,
             marginLeft: imageMarginLeft,
             marginTop: 0,
           };
     }
 
     return {
-      width: this.width,
-      height: this.height,
+      // width: this.width,
+      // height: this.height,
     };
   }
 
