@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { utils, isEditMode } from 'pro-gallery-lib';
+import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -64,11 +65,8 @@ class VideoItemWrapper extends ImageItem {
       'settings',
       'actions',
     ]);
-    const shouldCreatePlaceHolder =
-      utils.isSingleItemHorizontalDisplay(styleParams) && 
-      styleParams.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
 
-    return shouldCreatePlaceHolder ? null : (
+    return !shouldCreateVideoPlaceholder(styleParams) ? null : (
       <VideoItemPlaceholder
         {...props}
         key="videoPlaceholder"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../../galleryComponent';
+import { shouldCreateVideoPlaceholder } from '../itemHelper';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -231,10 +232,12 @@ class VideoItem extends GalleryComponent {
               disablepictureinpicture: 'true',
               muted: !this.props.styleParams.videoSound,
               preload: 'metadata',
-              poster: this.props.createUrl(
-                GALLERY_CONSTS.urlSizes.SCALED,
-                GALLERY_CONSTS.urlTypes.HIGH_RES
-              ),
+              poster: shouldCreateVideoPlaceholder(this.props.styleParams)
+                ? this.props.createUrl(
+                    GALLERY_CONSTS.urlSizes.SCALED,
+                    GALLERY_CONSTS.urlTypes.HIGH_RES
+                  )
+                : '',
               style: videoDimensionsCss,
               type: 'video/mp4',
             },
@@ -288,7 +291,9 @@ class VideoItem extends GalleryComponent {
         data-hook="video_container-video-player-element"
         key={'video_container-' + this.props.id}
         style={
-          utils.deviceHasMemoryIssues() || this.state.ready
+          utils.deviceHasMemoryIssues() ||
+          this.state.ready ||
+          !shouldCreateVideoPlaceholder(this.props.styleParams)
             ? { backgroundColor: 'black' }
             : {
                 backgroundImage: `url(${this.props.createUrl(
