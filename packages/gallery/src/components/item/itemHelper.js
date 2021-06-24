@@ -71,6 +71,6 @@ export function changeActiveElementIfNeeded({
 export function shouldCreateVideoPlaceholder(styles) {
   return (
     !utils.isSingleItemHorizontalDisplay(styles) ||
-    !styles.videoPlay === GALLERY_CONSTS.videoPlay.AUTO
+    styles.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO
   );
 }
