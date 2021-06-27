@@ -9,6 +9,18 @@ describe('video playOn', () => {
     expect(currentStyles.item.video.playOn).to.equal(playOn);
   });
 
+  it('shoud get playOn current value', () => {
+    const playOn = 'auto';
+    const currentStyles = {
+      item: {
+        video: {
+          playOn,
+        },
+      },
+    };
+    expect(styleParamsBuilder.getVideoPlayOn(currentStyles)).to.equal(playOn);
+  });
+
   it('shoud raise an error when playOn value is not valid', () => {
     const currentStyles = {};
     const playOn = 'auto2';

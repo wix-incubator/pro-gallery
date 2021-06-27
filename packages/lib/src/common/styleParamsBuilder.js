@@ -14,4 +14,8 @@ styleParamsBuilder.setVideoPlayOn = function (currentStyles, playOnValue) {
   return currentStyles;
 };
 
+styleParamsBuilder.getVideoPlayOn = function (currentStyles) {
+  return currentStyles.item.video.playOn;
+};
+
 export default styleParamsBuilder;
