@@ -169,6 +169,14 @@ To replace the default rendering of these elements, pass a function that will re
   customNavArrowsRenderer={direction => <button>{direction}</button>}
 />
 ```
+### Accessibility Aria role
+The gallery allows setting the aria role attribute of its container by passing a prop. The default value is “region” (read more about the different options of the “role” attribute [here] https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles)
+```
+<ProGallery
+  {...otherProps}
+  proGalleryRole: 'application'
+/>
+```
 
 ## Version 3
 Version 3 introduces a clear separation between logic and rendering in the pro-gallery.
