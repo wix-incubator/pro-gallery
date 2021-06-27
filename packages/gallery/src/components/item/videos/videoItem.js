@@ -177,6 +177,23 @@ class VideoItem extends GalleryComponent {
           GALLERY_CONSTS.urlSizes.RESIZED,
           GALLERY_CONSTS.urlTypes.VIDEO
         );
+
+    const attributes = {
+      controlsList: 'nodownload',
+      disablepictureinpicture: 'true',
+      muted: !this.props.styleParams.videoSound,
+      preload: 'metadata',
+      style: videoDimensionsCss,
+      type: 'video/mp4',
+    };
+
+    if (shouldCreateVideoPlaceholder(this.props.styleParams)) {
+      attributes.poster = this.props.createUrl(
+        GALLERY_CONSTS.urlSizes.SCALED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      );
+    }
+
     return (
       <PlayerElement
         className={'gallery-item-visible video gallery-item'}
@@ -227,20 +244,7 @@ class VideoItem extends GalleryComponent {
         controls={this.props.styleParams.showVideoControls}
         config={{
           file: {
-            attributes: {
-              controlsList: 'nodownload',
-              disablepictureinpicture: 'true',
-              muted: !this.props.styleParams.videoSound,
-              preload: 'metadata',
-              poster: shouldCreateVideoPlaceholder(this.props.styleParams)
-                ? this.props.createUrl(
-                    GALLERY_CONSTS.urlSizes.SCALED,
-                    GALLERY_CONSTS.urlTypes.HIGH_RES
-                  )
-                : '',
-              style: videoDimensionsCss,
-              type: 'video/mp4',
-            },
+            attributes,
             forceHLS: this.shouldUseHlsPlayer(),
             forceVideo: this.shouldForceVideoForHLS(),
           },
