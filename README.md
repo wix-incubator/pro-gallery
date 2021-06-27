@@ -170,7 +170,7 @@ To replace the default rendering of these elements, pass a function that will re
 />
 ```
 ### Accessibility Aria role
-The gallery allows setting the aria role attribute of its container by passing a prop. The default value is “region” (read more about the different options of the “role” attribute [here])https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles))
+The gallery allows setting the aria role attribute of its container by passing a prop. The default value is “region” (read more about the different options of the “role” attribute [here](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles))
 ```
 <ProGallery
   {...otherProps}
