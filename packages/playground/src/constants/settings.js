@@ -78,6 +78,7 @@ export const stylesBySection = {
     'galleryThumbnailsAlignment',
     'thumbnailSize',
     'thumbnailSpacings',
+    'useMaxDimensions'
   ],
   [SECTIONS.INFO]: [
     'titlePlacement',

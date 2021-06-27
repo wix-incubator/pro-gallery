@@ -33,6 +33,7 @@ export class Item {
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
+      this.useMaxDimensions = styleParams.useMaxDimensions;
     }
 
     this._groupOffset = {
@@ -292,10 +293,10 @@ export class Item {
   }
 
   set width(w) {
-    this.style.cubedWidth = this.style.orgWidth = this.style.width = Math.max(
-      1,
-      w
-    );
+    this.style.cubedWidth =
+      this.style.orgWidth =
+      this.style.width =
+        Math.max(1, w);
     const { marginLeft = 0 } = this.dimensions;
     this.style.width -= 2 * marginLeft;
   }
@@ -319,10 +320,10 @@ export class Item {
   }
 
   set height(h) {
-    this.style.cubedHeight = this.style.orgHeight = this.style.height = Math.max(
-      1,
-      h
-    );
+    this.style.cubedHeight =
+      this.style.orgHeight =
+      this.style.height =
+        Math.max(1, h);
 
     const { marginTop = 0 } = this.dimensions;
     this.style.height -= 2 * marginTop;

@@ -88,6 +88,7 @@ import placeGroupsLtr from './placeGroupsLtr';
 import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
 import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
+import useMaxDimensions from './useMaxDimensions';
 
 export default {
   itemClick,
@@ -180,6 +181,7 @@ export default {
   showVideoControls,
   pauseAutoSlideshowOnHover,
   shouldIndexDirectShareLinkInSEO,
+  useMaxDimensions,
 };
 
 // TODO = add the options:
