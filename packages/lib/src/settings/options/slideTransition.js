@@ -1,6 +1,5 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
-import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Slide Transition',
@@ -10,7 +9,6 @@ export default {
   isRelevant: (sp) =>
     sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     sp.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL,
-  options: createOptions('slideTransition'),
-  type: INPUT_TYPES.OPTIONS,
+  type: INPUT_TYPES.TEXT,
   default: GALLERY_CONSTS.slideTransition.ease,
 };
