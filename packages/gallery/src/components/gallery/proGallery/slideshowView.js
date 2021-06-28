@@ -943,8 +943,11 @@ class SlideshowView extends GalleryComponent {
             [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight,
           }[arrowsVerticalPosition]
         : 0;
+
+    const arrowsOutsideGallery = oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY;
+
     let containerStyle;
-    if (oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY) {
+    if (arrowsOutsideGallery) {
       containerStyle = {
         width: `${navArrowsContainerSize}px`,
         height: `${navArrowsContainerSize}px`,
@@ -965,8 +968,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
-    const arrowsPos =
-      oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
+    const arrowsPos = arrowsOutsideGallery
         ? `-${arrowsSize + navArrowsContainerSize / 2 + 10}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
     // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
@@ -979,12 +981,13 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
+
     return [
       hideLeftArrow ? null : (
         <button
           className={
-            'nav-arrows-container prev ' +
-            (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
+            `nav-arrows-container ${arrowsOutsideGallery ? 'prev-outside' : 'prev-inside'}` +
+            (utils.isMobile() ? ' pro-gallery-mobile-indicator ' : '')
           }
           onClick={() => this._next({ direction: -1 })}
           aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
@@ -998,7 +1001,7 @@ class SlideshowView extends GalleryComponent {
       ),
       hideRightArrow ? null : (
         <button
-          className={'nav-arrows-container next'}
+          className={`nav-arrows-container ${arrowsOutsideGallery ? 'next-outside' : 'next-inside'}`}
           onClick={() => this._next({ direction: 1 })}
           aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
