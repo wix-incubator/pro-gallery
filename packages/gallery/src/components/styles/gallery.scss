@@ -105,6 +105,7 @@ body.pro-gallery {
   z-index: 1;
   position: absolute;
   display: flex;
+  justify-content: center;
   text-align: center;
   cursor: pointer;
   opacity: 0.9;
@@ -116,14 +117,6 @@ body.pro-gallery {
 
   &:hover {
     opacity: 1;
-  }
-
-  &.prev {
-    justify-content: flex-end;
-  }
-
-  &.next {
-    justify-content: flex-start;
   }
 
   svg {

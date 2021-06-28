@@ -880,15 +880,19 @@ class SlideshowView extends GalleryComponent {
     }
 
     const { customNavArrowsRenderer } = this.props;
-    let arrowRenderer, navArrowsContainerSize;
+    let arrowRenderer, navArrowsContainerSize, navArrowsContainerWidth, navArrowsContainerHeight;
 
     if (customNavArrowsRenderer) {
       arrowRenderer = customNavArrowsRenderer;
       navArrowsContainerSize = arrowsSize;
     } else {
       const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
+      const arrowOrigHeight = 39; //arrow-right svg and arrow-left svg height
       const scalePercentage = arrowsSize / arrowOrigWidth;
       const svgStyle = { transform: `scale(${scalePercentage})` };
+
+      navArrowsContainerWidth = arrowOrigWidth * scalePercentage;
+      navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
 
       const svgInternalStyle = {};
       if (utils.isMobile()) {
@@ -926,7 +930,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     const { galleryHeight } = this.props.container;
-    const containerPadding = (navArrowsContainerSize - arrowsSize) / 2;
+    const containerHorizontalPadding = (navArrowsContainerSize - arrowsSize) / 2;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
       ? galleryHeight
@@ -939,15 +943,27 @@ class SlideshowView extends GalleryComponent {
             [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight,
           }[arrowsVerticalPosition]
         : 0;
+    let containerStyle;
+    if (oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY) {
+      containerStyle = {
+        width: `${navArrowsContainerSize}px`,
+        height: `${navArrowsContainerSize}px`,
+        padding: `0 ${containerHorizontalPadding}px`,
+        top: `calc(50% - ${navArrowsContainerSize / 2}px + ${
+          imageMargin / 4
+        }px - ${infoSpace / 2}px)`,
+      };
+    } else {
+      containerStyle = {
+        width: `${navArrowsContainerWidth}px`,
+        height: `${navArrowsContainerHeight}px`,
+        padding: 0,
+        top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
+          imageMargin / 4
+        }px - ${infoSpace / 2}px)`,
+      };
+    }
 
-    const containerStyle = {
-      width: `${navArrowsContainerSize}px`,
-      height: `${navArrowsContainerSize}px`,
-      padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
-      top: `calc(50% - ${navArrowsContainerSize / 2}px + ${
-        imageMargin / 4
-      }px - ${infoSpace / 2}px)`,
-    };
     // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
     const arrowsPos =
       oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
