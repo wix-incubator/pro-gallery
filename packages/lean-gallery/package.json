@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "lean-gallery",
-  "version": "4.0.0-beta.0",
+  "version": "4.0.3",
   "sideEffects": [
     "./src/leanGallery/leanGallery.scss"
   ],
