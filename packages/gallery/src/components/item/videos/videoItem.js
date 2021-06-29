@@ -315,7 +315,10 @@ class VideoItem extends GalleryComponent {
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
-        {[video, videoPlaceholder, hover]}
+        {video}
+        {shouldCreateVideoPlaceholder(this.props.styleParams) &&
+          videoPlaceholder}
+        {hover}
       </div>
     );
   }

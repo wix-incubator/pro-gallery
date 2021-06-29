@@ -105,7 +105,7 @@ class VideoItemWrapper extends ImageItem {
     if (!this.mightPlayVideo() || !VideoItem) {
       return (
         <div>
-          {!shouldCreateVideoPlaceholder(this.props.styleParams) && videoPlaceholder}
+          {shouldCreateVideoPlaceholder(this.props.styleParams) && videoPlaceholder}
           {hover}
         </div>
       );
