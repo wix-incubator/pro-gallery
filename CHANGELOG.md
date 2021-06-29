@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## [v3.1.30](https://pro-gallery-3-1-30.surge.sh) (29/06/2021)
  
 #### OTHER
@@ -87,6 +88,21 @@
 
 #### PLAYGROUND
  -  fix: correct poster objects
+=======
+## [v3.1.29](https://pro-gallery-3-1-29.surge.sh) (23/06/2021)
+ 
+#### LIB
+ -  galleryItem: url '' when not defined
+
+#### GALLERY
+ -  fix (videoItem): grid cropped video styles (black margins) 
+
+---
+## [v3.1.28](https://pro-gallery-3-1-28.surge.sh) (22/06/2021)
+ 
+#### LAYOUTS
+ -  improve: add dimensions to item scheme
+>>>>>>> master
 
 ---
 ## [v3.1.27](https://pro-gallery-3-1-27.surge.sh) (22/06/2021)

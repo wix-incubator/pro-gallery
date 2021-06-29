@@ -67,8 +67,13 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
+<<<<<<< HEAD
     "pro-gallery": "4.0.3",
     "pro-layouts": "4.0.3",
+=======
+    "pro-gallery": "3.1.29",
+    "pro-layouts": "3.1.28",
+>>>>>>> master
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dev-utils": "^11.0.0",
