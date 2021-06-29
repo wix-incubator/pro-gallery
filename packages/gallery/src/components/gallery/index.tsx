@@ -3,15 +3,7 @@ import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 // import { Dimensions } from '../../common/interfaces/Dimensions';
 
-interface GalleryProps {
-  domId?: string;
-  // dimensions: Dimensions;
-  [key: string]: any;
-}
-
-interface GalleryState {
-  blueprint: any;
-}
+import {GalleryProps, GalleryState} from './gallery'
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
@@ -21,6 +13,7 @@ export default class BaseGallery extends React.Component<
   private galleryProps: any;
 
   constructor(props: GalleryProps) {
+    console.log('local BaseGallery')
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
