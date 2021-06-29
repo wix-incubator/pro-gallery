@@ -1,5 +1,15 @@
 ## [v4.0.4](https://pro-gallery-4-0-4.surge.sh) (29/06/2021)
  
+#### OTHER
+ - bump versions
+
+#### GALLERY
+ -  remove video poster and background when needed
+ -  fix (videoItem): grid cropped video styles (black margins) 
+
+---
+## [v4.0.4](https://pro-gallery-4-0-4.surge.sh) (29/06/2021)
+ 
 #### GALLERY
  -  fix: remove video poster and background when needed
  -  fix: grid cropped video styles (black margins) 
