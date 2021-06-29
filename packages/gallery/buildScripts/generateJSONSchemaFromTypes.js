@@ -17,14 +17,14 @@ const compilerOptions = {
 // const basePath = "./my-dir";
 
 const program = TJS.getProgramFromFiles(
-  [path.join(__dirname, 'src/types.d.ts')],
+  [path.join(__dirname, '../src/components/gallery/gallery.d.ts')],
   compilerOptions,
   // basePath
 );
 
 // We can either get the schema for one file and one type...
 const schema = TJS.generateSchema(program, "StyleParams", settings);
-fs.writeFileSync(path.join(__dirname, 'built/schema.json'), JSON.stringify(schema, null, 4), {encoding: 'utf-8'})
+fs.writeFileSync(path.join(__dirname, '../src/components/gallery/schema.json'), JSON.stringify(schema, null, 4), {encoding: 'utf-8'})
 
 // // ... or a generator that lets us incrementally get more schemas
 
