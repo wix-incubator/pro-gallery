@@ -22,7 +22,8 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile && npm run generateSchemaFromTypes",
+    "generateSchemaFromTypes": "node buildScripts/generateJSONSchemaFromTypes.js",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
@@ -71,7 +72,8 @@
     "sinon": "^6.0.0",
     "ts-jest": "^26.4.4",
     "tslib": "^2.1.0",
-    "typescript": "4.1.2"
+    "typescript": "4.1.2",
+    "typescript-json-schema": "^0.50.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
