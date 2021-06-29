@@ -1,3 +1,94 @@
+## [v3.1.30](https://pro-gallery-3-1-30.surge.sh) (29/06/2021)
+ 
+#### OTHER
+ - Adding styles builder and using it for videoPlay (#360)
+ - * Adding styles builder
+ - * Adding getter
+ - * Adding _.get and _.set custom build
+ - v4.0.3-beta.0
+ - Merge branch 'master' into v4
+ - v3.1.26
+ -  feat: A11Y added an option to focus outside the gallery when we are in application mode
+ - v3.1.25
+ - v3.1.24
+ - This reverts commit 08ab80988336cbc08304dc87f4fd0f4ff825c2ec.
+ - Revert v3.1.24
+ - This reverts commit 950e57d4fa51f33ea3688f08b5b2e4f4755e06ed.
+ - This reverts commit fdfc680030df3c8156b5c481eb065c3caa03c5a9.
+ - Revert v3.1.25
+ - This reverts commit e2753b12f93744eec4c00c22087090c6aedcdac6.
+ - v3.1.25
+ - v3.1.24
+ - This reverts commit b5e13a39b55e1bd5b973febc3fdde4e626511357.
+ - Revert v3.1.24
+ - This reverts commit 6ecc0ee2641de9f8a5bffd677ee6596817203ab3.
+ - v3.1.24
+ -  fix: added default value to the aria role
+ - v4.0.2-beta.0
+ - Revert Revert v4.0.1-beta.0
+ - This reverts commit 9120eb239cd161ee189b12e7fb58c60adf4e503d.
+ - First tsx file on v4 - ProGallery API
+ - Merge branch 'master' into v4
+ - Revert v4.0.1-beta.0
+ - This reverts commit b0c2334b90b992377c44074690932b49dcd181a0.
+ - v4.0.1-beta.0
+ - Merge branch 'master' into v4
+ - use numberOfItemsPerRow/Col in specific presets(Grid/Masonry)
+ - Merge branch 'master' into v4
+ - v4.0.0-beta.0
+ - Revert v4.0.0-beta.0
+ - This reverts commit 5b7a817d4a4d9c66849fc54f28e4f629ddb5537a.
+ - v4.0.0-beta.0
+ -  consolidate oneRow with scrollDirection
+ - * replace oneRow with scrollDirection
+ - * fix import in styles migrator
+ - * fix to styleMigrator
+ - * more removal of onerow
+ - * more
+ - * refactor for layouter. styleMigrator there
+ - * export stylesMigrator
+ - * export stylesMigrator
+ - * dummy
+ - * import stylesMigrator
+ - * change oneRow SP unitTests to scrollDirection
+ - * hasThumbnails tests
+ - * remove oneRow in gallery unittests. make them pass
+ - * leave oneRow e2e to make sure this whole change isnt breaking
+ - * add deprecation warning and error in is relevant.
+ - * test text
+ - * remove oneRow in processLayouts!!!! YES!
+ - * add deprecation text to integration e2e tests that make sure we dont break users
+ - * remove unused import
+ - * add test link frrom lib to layouts
+ - * fix stylesMigrator function
+ - * fix stylesMigrator affected by global replaces
+ - * change oneRow's default value to undefined as its deprecated
+ - * keep oneRow in the styleParams object. So it wont break outgoing events API
+ - * make it breaking
+ - * add a migration guide(/log)
+ - * snapshots for scrollDirection
+
+#### GALLERY
+ -  created first typed prop in ProGallery index.tsx file, configed lint to support ts (#354)
+ -  dont initializeTouchEvents if its undefined(desktop mobile sim)
+ -  add formFactor to main flow 
+ -  : fix focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded
+
+#### MAIN
+ -  update changelog.md
+ -  update changelog.md
+ -  update changelog.md
+ -  update changelog.md
+ -  update changelog.md
+ -  update changelog.md
+ -  update changelog.md
+ -  update changelog.md
+ -  update changelog.md
+
+#### PLAYGROUND
+ -  fix: correct poster objects
+
+---
 ## [v3.1.27](https://pro-gallery-3-1-27.surge.sh) (22/06/2021)
 
 #### GALLERY
