@@ -970,7 +970,7 @@ class SlideshowView extends GalleryComponent {
         <button
           className={
             'nav-arrows-container' +
-            (utils.isMobile() ? ' pro-gallery-mobile-indicator ' : '')
+            (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
           }
           onClick={() => this._next({ direction: -1 })}
           aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
