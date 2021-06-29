@@ -231,7 +231,7 @@ class SlideshowView extends GalleryComponent {
         avoidIndividualNavigation &&
         !(this.props.styleParams.groupSize > 1)
       ) {
-        currentIdx = this.getCenteredItemIdxByScroll(); 
+        currentIdx = this.getCenteredItemIdxByScroll();
       } else {
         currentIdx = isAutoTrigger
           ? this.setCurrentItemByScroll()
@@ -880,18 +880,18 @@ class SlideshowView extends GalleryComponent {
     }
 
     const { customNavArrowsRenderer } = this.props;
-    let arrowRenderer, navArrowsContainerSize, navArrowsContainerWidth, navArrowsContainerHeight;
+    let arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight;
 
     if (customNavArrowsRenderer) {
       arrowRenderer = customNavArrowsRenderer;
-      navArrowsContainerSize = arrowsSize;
+      navArrowsContainerWidth = navArrowsContainerHeight = arrowsSize;
     } else {
       const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
       const arrowOrigHeight = 39; //arrow-right svg and arrow-left svg height
       const scalePercentage = arrowsSize / arrowOrigWidth;
       const svgStyle = { transform: `scale(${scalePercentage})` };
 
-      navArrowsContainerWidth = arrowOrigWidth * scalePercentage;
+      navArrowsContainerWidth = arrowsSize; // === arrowOrigWidth * scalePercentage
       navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
 
       const svgInternalStyle = {};
@@ -900,7 +900,6 @@ class SlideshowView extends GalleryComponent {
           svgInternalStyle.fill = arrowsColor.value;
         }
       }
-      navArrowsContainerSize = arrowsSize * 3;
 
       arrowRenderer = (position) => {
         if (position === 'left') {
@@ -930,7 +929,6 @@ class SlideshowView extends GalleryComponent {
     }
 
     const { galleryHeight } = this.props.container;
-    const containerHorizontalPadding = (navArrowsContainerSize - arrowsSize) / 2;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
       ? galleryHeight
@@ -944,34 +942,19 @@ class SlideshowView extends GalleryComponent {
           }[arrowsVerticalPosition]
         : 0;
 
-    const arrowsOutsideGallery = oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY;
+    const containerStyle = {
+      width: `${navArrowsContainerWidth}px`,
+      height: `${navArrowsContainerHeight}px`,
+      padding: 0,
+      top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
+        imageMargin / 4
+      }px - ${infoSpace / 2}px)`,
+    };
 
-    let containerStyle;
-    if (arrowsOutsideGallery) {
-      containerStyle = {
-        width: `${navArrowsContainerSize}px`,
-        height: `${navArrowsContainerSize}px`,
-        padding: `0 ${containerHorizontalPadding}px`,
-        top: `calc(50% - ${navArrowsContainerSize / 2}px + ${
-          imageMargin / 4
-        }px - ${infoSpace / 2}px)`,
-      };
-    } else {
-      containerStyle = {
-        width: `${navArrowsContainerWidth}px`,
-        height: `${navArrowsContainerHeight}px`,
-        padding: 0,
-        top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
-          imageMargin / 4
-        }px - ${infoSpace / 2}px)`,
-      };
-    }
-
-    // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
-    const arrowsPos = arrowsOutsideGallery
-        ? `-${arrowsSize + navArrowsContainerSize / 2 + 10}px`
+    const arrowsPos = oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
+        ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-    // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+    // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
     const prevContainerStyle = {
@@ -986,7 +969,7 @@ class SlideshowView extends GalleryComponent {
       hideLeftArrow ? null : (
         <button
           className={
-            `nav-arrows-container ${arrowsOutsideGallery ? 'prev-outside' : 'prev-inside'}` +
+            'nav-arrows-container' +
             (utils.isMobile() ? ' pro-gallery-mobile-indicator ' : '')
           }
           onClick={() => this._next({ direction: -1 })}
@@ -1001,7 +984,7 @@ class SlideshowView extends GalleryComponent {
       ),
       hideRightArrow ? null : (
         <button
-          className={`nav-arrows-container ${arrowsOutsideGallery ? 'next-outside' : 'next-inside'}`}
+          className={'nav-arrows-container'}
           onClick={() => this._next({ direction: 1 })}
           aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
@@ -1094,7 +1077,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   createGallery() {
-    // When arrows are set outside of the gallery, gallery is resized and needs to be positioned
+    // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
     const galleryStyleForExternalArrows =
       this.props.styleParams.oneRow &&
       this.props.styleParams.arrowsPosition ===
