@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { utils, isEditMode } from 'pro-gallery-lib';
+import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -29,8 +30,8 @@ class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoPlaceholderIfNeeded =
-      this.createVideoPlaceholderIfNeeded.bind(this);
+    this.createVideoPlaceholder=
+      this.createVideoPlaceholder.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 
@@ -51,8 +52,7 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoPlaceholderIfNeeded(showVideoPlayButton) {
-    const {styleParams} = this.props;
+  createVideoPlaceholder(showVideoPlayButton) {
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -64,11 +64,8 @@ class VideoItemWrapper extends ImageItem {
       'settings',
       'actions',
     ]);
-    const shouldCreatePlaceHolder =
-      utils.isSingleItemHorizontalDisplay(styleParams) && 
-      styleParams.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
 
-    return shouldCreatePlaceHolder ? null : (
+    return (
       <VideoItemPlaceholder
         {...props}
         key="videoPlaceholder"
@@ -102,13 +99,13 @@ class VideoItemWrapper extends ImageItem {
     const hover = this.props.hover;
     const showVideoPlayButton =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoPlaceholderIfNeeded(showVideoPlayButton);
+    const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
       return (
         <div>
-          {videoPlaceholder}
+          {shouldCreateVideoPlaceholder(this.props.styleParams) && videoPlaceholder}
           {hover}
         </div>
       );
