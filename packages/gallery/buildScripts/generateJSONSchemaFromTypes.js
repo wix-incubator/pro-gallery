@@ -24,7 +24,9 @@ const program = TJS.getProgramFromFiles(
 
 // We can either get the schema for one file and one type...
 const schema = TJS.generateSchema(program, "StyleParams", settings);
-fs.writeFileSync(path.join(__dirname, '../src/components/gallery/schema.json'), JSON.stringify(schema, null, 4), {encoding: 'utf-8'})
+const schemaJSON = JSON.stringify(schema, null, 4)
+const template = `export default ${schemaJSON}`
+fs.writeFileSync(path.join(__dirname, '../src/components/gallery/proGallery/schema.js'), template, {encoding: 'utf-8'})
 
 // // ... or a generator that lets us incrementally get more schemas
 

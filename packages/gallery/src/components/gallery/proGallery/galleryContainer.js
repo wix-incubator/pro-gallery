@@ -19,10 +19,15 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import ImageRenderer from '../../item/imageRenderer';
+import schema from './schema'
+import validateTypes from './validateTypes'
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
+    if(true) {
+      validateTypes(props.styles, schema)
+    }
     if (utils.isVerbose()) {
       console.count('[OOISSR] galleryContainer constructor', window.isMock);
     }

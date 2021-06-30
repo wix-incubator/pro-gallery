@@ -8,4 +8,4 @@ maven
 .idea
 .vscode
 yarn.lock
-schema.json
+schema.js
