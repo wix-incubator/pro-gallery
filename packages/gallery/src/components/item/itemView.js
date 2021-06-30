@@ -221,12 +221,12 @@ class ItemView extends GalleryComponent {
     const constantHoverBehavior = styleParams.hoveringBehaviour ===
       GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE;
 
-    const shouldUseDirectLinkMobileOnMobile =
+    const shouldUseDirectLinkOnMobile =
       this.shouldShowHoverOnMobile() &&
       (this.isClickOnCurrentHoveredItem() || constantHoverBehavior) &&
       useDirectLink;
 
-    if (shouldUseDirectLinkMobileOnMobile) {
+    if (shouldUseDirectLinkOnMobile) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
       return true;
     }
