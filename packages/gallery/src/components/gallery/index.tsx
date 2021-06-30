@@ -5,6 +5,9 @@ import ProGallery from './proGallery/proGallery';
 
 import {GalleryProps, GalleryState} from './gallery'
 
+import schema from './typeValidator/schema'
+import validateTypes from './typeValidator/validateTypes'
+
 export default class BaseGallery extends React.Component<
   GalleryProps,
   GalleryState
@@ -14,6 +17,9 @@ export default class BaseGallery extends React.Component<
 
   constructor(props: GalleryProps) {
     console.log('local BaseGallery')
+    if(true) {
+      validateTypes(props.options || props.styles || props.styleParams, schema)
+    }
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
