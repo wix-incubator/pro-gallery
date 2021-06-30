@@ -65,15 +65,14 @@ export function scrollToItemImp(scrollParams) {
     }
   }
   if (oneRow) {
-    return horizontalCssScrollTo(
-      horizontalElement,
-      Math.round(from),
-      Math.round(to),
-      durationInMS,
+    return horizontalCssScrollTo({
+      scroller: horizontalElement,
+      from: Math.round(from),
+      to: Math.round(to),
+      duration: durationInMS,
       isRTL,
-      slideTransition,
-      true
-    );
+      slideTransition: slideTransition,
+    });
   } else {
     return new Promise((resolve) => {
       scrollingElement.vertical().scrollTo(0, to);
@@ -157,15 +156,14 @@ export function scrollToGroupImp(scrollParams) {
     }
   }
   if (oneRow) {
-    return horizontalCssScrollTo(
-      horizontalElement,
-      Math.round(from),
-      Math.round(to),
-      durationInMS,
+    return horizontalCssScrollTo({
+      scroller: horizontalElement,
+      from: Math.round(from),
+      to: Math.round(to),
+      duration: durationInMS,
       isRTL,
-      slideTransition,
-      true
-    );
+      slideTransition: slideTransition,
+    });
   } else {
     return new Promise((resolve) => {
       scrollingElement.vertical().scrollTo(0, to);
@@ -221,14 +219,14 @@ function isWithinPaddingHorizontally({
   return res.before < padding && res.after < padding;
 }
 
-function horizontalCssScrollTo(
+function horizontalCssScrollTo({
   scroller,
   from,
   to,
   duration,
   isRTL,
-  slideTransition
-) {
+  slideTransition,
+}) {
   const change = to - from;
 
   if (change === 0) {
