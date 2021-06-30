@@ -210,19 +210,23 @@ class ItemView extends GalleryComponent {
   }
 
   shouldUseDirectLink = () => {
-    const { directLink } = this.props;
+    const { directLink, styleParams } = this.props;
     const { url, target } = directLink || {};
     const useDirectLink = !!(
       url &&
       target &&
       this.props.styleParams.itemClick === 'link'
     );
-    const shouldUseDirectLinkMobileSecondClick =
+    
+    const constantHoverBehavior = styleParams.hoveringBehaviour ===
+      GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE;
+
+    const shouldUseDirectLinkMobileOnMobile =
       this.shouldShowHoverOnMobile() &&
-      this.isClickOnCurrentHoveredItem() &&
+      (this.isClickOnCurrentHoveredItem() || constantHoverBehavior) &&
       useDirectLink;
 
-    if (shouldUseDirectLinkMobileSecondClick) {
+    if (shouldUseDirectLinkMobileOnMobile) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
       return true;
     }
