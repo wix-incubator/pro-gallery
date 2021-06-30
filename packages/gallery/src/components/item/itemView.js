@@ -36,7 +36,6 @@ class ItemView extends GalleryComponent {
     this.state = {
       isCurrentHover: false,
       itemWasHovered: false,
-      clickedAtLeastOnce: false,
     };
 
     this.activeElement = '';
@@ -199,12 +198,15 @@ class ItemView extends GalleryComponent {
       e.preventDefault();
     }
 
-    if (this.shouldShowHoverOnMobile()) {
+    if (
+      this.shouldShowHoverOnMobile() &&
+      this.props.styleParams.hoveringBehaviour !==
+        GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
+    ) {
       this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
     }
-    this.setState({clickedAtLeastOnce: true});
   }
 
   shouldUseDirectLink = () => {
@@ -279,13 +281,12 @@ class ItemView extends GalleryComponent {
       } = this.props.styleParams;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (
-        hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW
+        hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW 
       ) {
         return false;
       }
       if (itemClick === 'nothing' && this.props.type !== 'video') {
-        const shouldShowHover = this.state.clickedAtLeastOnce;
-        return shouldShowHover;
+        return true;
       } else if (
         this.props.customHoverRenderer &&
         GALLERY_CONSTS.hasHoverPlacement(titlePlacement) &&
