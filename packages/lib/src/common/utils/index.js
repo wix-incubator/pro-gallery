@@ -441,7 +441,7 @@ class Utils {
       if (v === '') {
         v = "''";
       } else if (this.isUndefined(v)) {
-        v = 'undefined';
+        v = 'undefined';  
       }
       return String(v);
     };
