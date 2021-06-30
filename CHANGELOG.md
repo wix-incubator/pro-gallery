@@ -1,18 +1,14 @@
-## [v3.1.31](https://pro-gallery-3-1-31.surge.sh) (30/06/2021)
- 
-#### GALLERY
- -  feat: added slideTransition styleParam
-
----
 ## [v4.0.4](https://pro-gallery-4-0-4.surge.sh) (29/06/2021)
-
+ 
+#### OTHER
+ - bump versions
 
 #### GALLERY
  -  remove video poster and background when needed
  -  fix (videoItem): grid cropped video styles (black margins) 
 
 ---
-## [v3.1.30](https://pro-gallery-3-1-30.surge.sh) (29/06/2021)
+## [v4.0.4](https://pro-gallery-4-0-4.surge.sh) (29/06/2021)
  
 #### GALLERY
  -  fix: remove video poster and background when needed
