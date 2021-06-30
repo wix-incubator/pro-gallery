@@ -281,7 +281,7 @@ class ItemView extends GalleryComponent {
       } = this.props.styleParams;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (
-        hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW 
+        hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW
       ) {
         return false;
       }
