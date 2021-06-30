@@ -1,6 +1,8 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../../galleryComponent';
+import { shouldCreateVideoPlaceholder } from '../itemHelper';
+import getStyle from './getStyle';
 
 class VideoItem extends GalleryComponent {
   constructor(props) {
@@ -147,35 +149,33 @@ class VideoItem extends GalleryComponent {
     const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
-    const videoDimensionsCss = {
-      width: isWiderThenContainer ? 'calc(100% + 1px)' : 'auto',
-      height: isWiderThenContainer ? '100%' : 'calc(100% + 1px)',
-    };
-
-    if (
+    const isCrop =
       this.props.styleParams.cubeImages &&
-      this.props.styleParams.cubeType === 'fill'
-    ) {
-      //grid crop mode
-      [videoDimensionsCss.width, videoDimensionsCss.height] = [
-        videoDimensionsCss.height,
-        videoDimensionsCss.width,
-      ];
-      videoDimensionsCss.position = 'absolute';
-      videoDimensionsCss.margin = 'auto';
-      videoDimensionsCss.minHeight = '100%';
-      videoDimensionsCss.minWidth = '100%';
-      videoDimensionsCss.left = '-100%';
-      videoDimensionsCss.right = '-100%';
-      videoDimensionsCss.top = '-100%';
-      videoDimensionsCss.bottom = '-100%';
-    }
+      this.props.styleParams.cubeType === 'fill';
+
     const url = this.props.videoUrl
       ? this.props.videoUrl
       : this.props.createUrl(
           GALLERY_CONSTS.urlSizes.RESIZED,
           GALLERY_CONSTS.urlTypes.VIDEO
         );
+
+    const attributes = {
+      controlsList: 'nodownload',
+      disablepictureinpicture: 'true',
+      muted: !this.props.styleParams.videoSound,
+      preload: 'metadata',
+      style: getStyle(isCrop, isWiderThenContainer),
+      type: 'video/mp4',
+    };
+
+    if (shouldCreateVideoPlaceholder(this.props.styleParams)) {
+      attributes.poster = this.props.createUrl(
+        GALLERY_CONSTS.urlSizes.SCALED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      );
+    }
+
     return (
       <PlayerElement
         className={'gallery-item-visible video gallery-item'}
@@ -226,18 +226,7 @@ class VideoItem extends GalleryComponent {
         controls={this.props.styleParams.showVideoControls}
         config={{
           file: {
-            attributes: {
-              controlsList: 'nodownload',
-              disablepictureinpicture: 'true',
-              muted: !this.props.styleParams.videoSound,
-              preload: 'metadata',
-              poster: this.props.createUrl(
-                GALLERY_CONSTS.urlSizes.SCALED,
-                GALLERY_CONSTS.urlTypes.HIGH_RES
-              ),
-              style: videoDimensionsCss,
-              type: 'video/mp4',
-            },
+            attributes,
             forceHLS: this.shouldUseHlsPlayer(),
             forceVideo: this.shouldForceVideoForHLS(),
           },
@@ -288,7 +277,9 @@ class VideoItem extends GalleryComponent {
         data-hook="video_container-video-player-element"
         key={'video_container-' + this.props.id}
         style={
-          utils.deviceHasMemoryIssues() || this.state.ready
+          utils.deviceHasMemoryIssues() ||
+          this.state.ready ||
+          !shouldCreateVideoPlaceholder(this.props.styleParams)
             ? { backgroundColor: 'black' }
             : {
                 backgroundImage: `url(${this.props.createUrl(
@@ -306,7 +297,10 @@ class VideoItem extends GalleryComponent {
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
-        {[video, videoPlaceholder, hover]}
+        {video}
+        {shouldCreateVideoPlaceholder(this.props.styleParams) &&
+          videoPlaceholder}
+        {hover}
       </div>
     );
   }
