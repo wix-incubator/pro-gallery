@@ -5,7 +5,6 @@ import ProGallery from './proGallery/proGallery';
 
 import {GalleryProps, GalleryState} from './gallery'
 
-import schema from './typeValidator/schema'
 import validateTypes from './typeValidator/validateTypes'
 
 export default class BaseGallery extends React.Component<
@@ -18,7 +17,7 @@ export default class BaseGallery extends React.Component<
   constructor(props: GalleryProps) {
     console.log('local BaseGallery')
     if(true) {
-      validateTypes(props.options || props.styles || props.styleParams, schema)
+      validateTypes(props.options || props.styles || props.styleParams)
     }
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);

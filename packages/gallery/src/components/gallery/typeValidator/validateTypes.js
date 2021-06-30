@@ -4,8 +4,9 @@
 const Ajv = require("ajv")
 
 const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+import schema from './schema'
 
-function validate(data, schema) {
+function validate(data) {
 	// const path = require('path')
 	// const fs = require('fs')
 	// const schema = JSON.parse(fs.readFileSync(path.join(__dirname, 'schema.json')))
