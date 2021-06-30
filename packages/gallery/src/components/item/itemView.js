@@ -36,6 +36,7 @@ class ItemView extends GalleryComponent {
     this.state = {
       isCurrentHover: false,
       itemWasHovered: false,
+      clickedAtLeastOnce: false,
     };
 
     this.activeElement = '';
@@ -203,6 +204,7 @@ class ItemView extends GalleryComponent {
     } else {
       this.handleGalleryItemAction(e);
     }
+    this.setState({clickedAtLeastOnce: true});
   }
 
   shouldUseDirectLink = () => {
@@ -282,7 +284,8 @@ class ItemView extends GalleryComponent {
         return false;
       }
       if (itemClick === 'nothing' && this.props.type !== 'video') {
-        return true;
+        const shouldShowHover = this.state.clickedAtLeastOnce;
+        return shouldShowHover;
       } else if (
         this.props.customHoverRenderer &&
         GALLERY_CONSTS.hasHoverPlacement(titlePlacement) &&
