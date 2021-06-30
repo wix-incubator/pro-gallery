@@ -1,4 +1,4 @@
 try {
-  console.debug('Pro Gallery Version: 3.1.30');
+  console.debug('Pro Gallery Version: 3.1.31');
   // eslint-disable-next-line no-empty
 } catch (e) {}
