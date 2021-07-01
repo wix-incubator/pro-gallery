@@ -842,15 +842,68 @@ class SlideshowView extends GalleryComponent {
     return <GalleryDebugMessage {...this.props.debug} />;
   }
 
+  getArrowsRenderData() {
+    const { customNavArrowsRenderer, arrowsSize } = this.props;
+    if (customNavArrowsRenderer) {
+      return {
+        arrowRenderer: customNavArrowsRenderer,
+        navArrowsContainerWidth: arrowsSize,
+        navArrowsContainerHeight: arrowsSize
+      }
+    }
+
+    const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
+    const arrowOrigHeight = 39; //arrow-right svg and arrow-left svg height
+    const scalePercentage = arrowsSize / arrowOrigWidth;
+    const svgStyle = { transform: `scale(${scalePercentage})` };
+
+    const navArrowsContainerWidth = arrowsSize; // === arrowOrigWidth * scalePercentage
+    const navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
+
+    const svgInternalStyle = {};
+    if (utils.isMobile()) {
+      const { arrowsColor } = this.props;
+      if (typeof arrowsColor !== 'undefined') {
+        svgInternalStyle.fill = arrowsColor.value;
+      }
+    }
+
+    const arrowRenderer = (position) => {
+      if (position === 'left') {
+        return (
+          <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
+            <path
+              className="slideshow-arrow"
+              style={svgInternalStyle}
+              d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
+              transform="translate(-133 -225)"
+            />
+          </svg>
+        );
+      } else if (position === 'right') {
+        return (
+          <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
+            <path
+              className="slideshow-arrow"
+              style={svgInternalStyle}
+              d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
+              transform="translate(-855 -230)"
+            />
+          </svg>
+        );
+      }
+    };
+
+    return {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight}
+  }
+
   createNavArrows() {
     const {
       isRTL,
       oneRow,
-      arrowsColor,
       isSlideshow,
       slideshowInfoSize,
       imageMargin,
-      arrowsSize,
       arrowsPadding,
       arrowsPosition,
       arrowsVerticalPosition,
@@ -879,54 +932,7 @@ class SlideshowView extends GalleryComponent {
       return null;
     }
 
-    const { customNavArrowsRenderer } = this.props;
-    let arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight;
-
-    if (customNavArrowsRenderer) {
-      arrowRenderer = customNavArrowsRenderer;
-      navArrowsContainerWidth = navArrowsContainerHeight = arrowsSize;
-    } else {
-      const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
-      const arrowOrigHeight = 39; //arrow-right svg and arrow-left svg height
-      const scalePercentage = arrowsSize / arrowOrigWidth;
-      const svgStyle = { transform: `scale(${scalePercentage})` };
-
-      navArrowsContainerWidth = arrowsSize; // === arrowOrigWidth * scalePercentage
-      navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
-
-      const svgInternalStyle = {};
-      if (utils.isMobile()) {
-        if (typeof arrowsColor !== 'undefined') {
-          svgInternalStyle.fill = arrowsColor.value;
-        }
-      }
-
-      arrowRenderer = (position) => {
-        if (position === 'left') {
-          return (
-            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-              <path
-                className="slideshow-arrow"
-                style={svgInternalStyle}
-                d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
-                transform="translate(-133 -225)"
-              />
-            </svg>
-          );
-        } else if (position === 'right') {
-          return (
-            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-              <path
-                className="slideshow-arrow"
-                style={svgInternalStyle}
-                d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
-                transform="translate(-855 -230)"
-              />
-            </svg>
-          );
-        }
-      };
-    }
+    const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
 
     const { galleryHeight } = this.props.container;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
