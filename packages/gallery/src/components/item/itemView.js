@@ -344,49 +344,6 @@ class ItemView extends GalleryComponent {
 
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
-  getImageDimensions() {
-    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    const { styleParams, cubeRatio, style } = this.props;
-    const isLandscape = style.ratio >= cubeRatio; //relative to container size
-    const imageMarginLeft = Math.round(
-      (style.height * style.ratio - style.width) / -2
-    );
-    const imageMarginTop = Math.round(
-      (style.width / style.ratio - style.height) / -2
-    );
-    const isGridFit = styleParams.cubeImages && styleParams.cubeType === 'fit';
-
-    let dimensions = {};
-
-    if (!isGridFit) {
-      dimensions = {
-        width: style.width,
-        height: style.height,
-      };
-    } else if (isGridFit && isLandscape) {
-      dimensions = {
-        //landscape
-        height: style.height - 2 * imageMarginTop,
-        width: style.width,
-        margin: `${imageMarginTop}px 0`,
-      };
-    } else if (isGridFit && !isLandscape) {
-      dimensions = {
-        //portrait
-        width: style.width - 2 * imageMarginLeft,
-        height: style.height,
-        margin: `0 ${imageMarginLeft}px`,
-      };
-    }
-    if (
-      styleParams.itemBorderRadius > 0 &&
-      styleParams.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND
-    ) {
-      dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
-    }
-    return dimensions;
-  }
-
   getItemHover(imageDimensions) {
     const { customHoverRenderer, ...props } = this.props;
     const shouldHover = this.shouldHover();
@@ -491,7 +448,7 @@ class ItemView extends GalleryComponent {
   getItemInner() {
     const { styleParams, type, style, offset } = this.props;
     let itemInner;
-    // const imageDimensions = this.getImageDimensions();
+
     const { width, height, innerWidth, innerHeight } = style;
     const { innerTop, innerLeft } = offset;
 
@@ -802,11 +759,8 @@ class ItemView extends GalleryComponent {
     styles.margin = -styleParams.itemBorderWidth + 'px';
     styles.height = height + 'px';
 
-    // const imageDimensions = this.getImageDimensions();
-
     const itemWrapperStyles = {
       ...styles,
-      // ...imageDimensions,
       ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
     };
 
