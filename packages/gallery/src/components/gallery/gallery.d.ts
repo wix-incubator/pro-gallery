@@ -6,7 +6,7 @@ export interface GalleryProps {
 
 export interface GalleryState {
   blueprint: any;
-  typeErrors: array
+  typeErrors?: any
 }
 
 export type PlayOn = "hover" | "auto" | "onClick"

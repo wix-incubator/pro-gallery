@@ -4,8 +4,8 @@ import ProGallery from './proGallery/proGallery';
 // import { Dimensions } from '../../common/interfaces/Dimensions';
 
 import {GalleryProps, GalleryState} from './gallery'
-
 import shouldValidate from './typeValidator/shouldValidate'
+
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
@@ -98,16 +98,7 @@ export default class BaseGallery extends React.Component<
 
 
     if(typeErrors) {
-      const style = {
-        height: '100px',
-        width: '500px',
-        border: 'sold black 3px'
-      }
-      return (
-        <h1 style={style}>
-        {JSON.stringify(typeErrors, null, 4)}
-        </h1>
-      )
+      return (typeErrors)
     }
     if (blueprint && Object.keys(blueprint).length > 0) {
       return <ProGallery {...this.galleryProps} {...blueprint} />;
@@ -117,19 +108,14 @@ export default class BaseGallery extends React.Component<
   }
 
   async componentDidMount() {
-/* import validateTypes from './typeValidator/validateTypes' */
+    /* import validateTypes from './typeValidator/validateTypes' */
     const props = this.props
-    if(shouldValidate(props)) {
-      try {
-        const validateTypesModule = await import(
-          /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
-        );
-        const validateTypes = validateTypesModule.default
-        const typeErrors = validateTypes(props.options || props.styles || props.styleParams)
-        if(typeErrors.length > 0) this.setState({typeErrors})
-      } catch (e) {
-        console.error('Failed to fetch validateTypes');
-      }
-    }
+    if(shouldValidate(props) === false) return
+    const validateTypesModule = await import(
+      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
+    );
+    const {validate, typeErrorsUI} = validateTypesModule.default
+    const typeErrors = validate(props.options || props.styles || props.styleParams)
+    if(typeErrors.length > 0) this.setState({typeErrors: typeErrorsUI(typeErrors)})
   }
 }
