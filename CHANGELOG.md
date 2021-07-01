@@ -1,3 +1,9 @@
+## [v3.1.32](https://pro-gallery-4-0-5.surge.sh) (01/07/2021)
+ 
+#### GALLERY
+ -  fix: Increasing removeArrowsIfNeeded setTimeOut call
+
+---
 ## [v3.1.31](https://pro-gallery-3-1-31.surge.sh) (30/06/2021)
 
 #### GALLERY
