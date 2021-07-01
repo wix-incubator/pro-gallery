@@ -144,6 +144,7 @@ export const stylesBySection = {
     'scrollAnimation',
     'slideAnimation',
     'oneColorAnimationColor',
+    'slideTransition',
   ],
   [SECTIONS.IMAGE]: [
     // 'imageQuality',

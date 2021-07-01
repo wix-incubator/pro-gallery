@@ -1445,7 +1445,7 @@ class SlideshowView extends GalleryComponent {
           hideRightArrow: !!nextHideRight,
         });
       }
-    }, 50);
+    }, 100);
   }
   navigationOutHandler() {
     //TODO remove after full refactor release

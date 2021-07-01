@@ -103,6 +103,7 @@ const styleParams = {
   videoSpeed: '1',
   videoLoop: true,
   shouldIndexDirectShareLinkInSEO: true,
+  slideTransition: 'ease',
 };
 
 const container = {
