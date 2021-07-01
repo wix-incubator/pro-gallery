@@ -3,9 +3,8 @@ import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 // import { Dimensions } from '../../common/interfaces/Dimensions';
 
-import {GalleryProps, GalleryState} from './gallery'
-import shouldValidate from './typeValidator/shouldValidate'
-
+import { GalleryProps, GalleryState } from './gallery';
+import shouldValidate from './typeValidator/shouldValidate';
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
@@ -15,7 +14,7 @@ export default class BaseGallery extends React.Component<
   private galleryProps: any;
 
   constructor(props: GalleryProps) {
-    console.log('local BaseGallery')
+    console.log('local BaseGallery');
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
@@ -96,9 +95,8 @@ export default class BaseGallery extends React.Component<
   render() {
     const { blueprint, typeErrors } = this.state;
 
-
-    if(typeErrors) {
-      return (typeErrors)
+    if (typeErrors) {
+      return typeErrors;
     }
     if (blueprint && Object.keys(blueprint).length > 0) {
       return <ProGallery {...this.galleryProps} {...blueprint} />;
@@ -109,13 +107,16 @@ export default class BaseGallery extends React.Component<
 
   async componentDidMount() {
     /* import validateTypes from './typeValidator/validateTypes' */
-    const props = this.props
-    if(shouldValidate(props) === false) return
+    const props = this.props;
+    if (shouldValidate(props) === false) return;
     const validateTypesModule = await import(
       /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
     );
-    const {validate, typeErrorsUI} = validateTypesModule.default
-    const typeErrors = validate(props.options || props.styles || props.styleParams)
-    if(typeErrors.length > 0) this.setState({typeErrors: typeErrorsUI(typeErrors)})
+    const { validate, typeErrorsUI } = validateTypesModule.default;
+    const typeErrors = validate(
+      props.options || props.styles || props.styleParams
+    );
+    if (typeErrors.length > 0)
+      this.setState({ typeErrors: typeErrorsUI(typeErrors) });
   }
 }

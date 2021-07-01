@@ -6,19 +6,18 @@ export interface GalleryProps {
 
 export interface GalleryState {
   blueprint: any;
-  typeErrors?: any
+  typeErrors?: any;
 }
 
-export type PlayOn = "hover" | "auto" | "onClick"
-export interface Video  {
-    playOn: PlayOn
+export type PlayOn = 'hover' | 'auto' | 'onClick';
+export interface Video {
+  playOn: PlayOn;
 }
 
 export interface Item {
-    video: Video
+  video: Video;
 }
 
 export interface StyleParams {
-    item : Item
+  item: Item;
 }
-
