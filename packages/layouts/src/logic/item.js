@@ -229,9 +229,9 @@ export class Item {
             ? this.calcPinOffset(this._group.width, 'left')
             : this._group.width - this.outerWidth) || 0,
     };
-    const { marginTop = 0, marginLeft = 0 } = this.dimensions;
-    offset.top += marginTop;
-    offset.left += marginLeft;
+    const { fixTop = 0, fixLeft = 0 } = this.dimensions;
+    offset.innerTop = fixTop;
+    offset.innerLeft = fixLeft;
 
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
@@ -297,8 +297,8 @@ export class Item {
       this.style.orgWidth =
       this.style.width =
         Math.max(1, w);
-    const { marginLeft = 0 } = this.dimensions;
-    this.style.width -= 2 * marginLeft;
+    const { fixLeft = 0 } = this.dimensions;
+    this.style.innerWidth = this.style.width - 2 * fixLeft;
   }
 
   get outerHeight() {
@@ -314,7 +314,7 @@ export class Item {
     if (this.cubeImages && this.ratio < this.cubeRatio) {
       height = this.style.cubedHeight || this.orgWidth / this.cubeRatio;
     } else {
-      height = this.orgHeight;
+      height = this.orgHeight; // when the size is too small this is returned wrong (the small size)
     }
     return Math.max(height, 1);
   }
@@ -325,8 +325,8 @@ export class Item {
       this.style.height =
         Math.max(1, h);
 
-    const { marginTop = 0 } = this.dimensions;
-    this.style.height -= 2 * marginTop;
+    const { fixTop = 0 } = this.dimensions;
+    this.style.innerHeight = this.style.height - 2 * fixTop;
   }
 
   get maxHeight() {
@@ -347,34 +347,38 @@ export class Item {
   }
 
   get dimensions() {
-    const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
-    const imageMarginLeft = Math.round(
-      (this.height * this.ratio - this.width) / -2
-    );
-    const imageMarginTop = Math.round(
-      (this.width / this.ratio - this.height) / -2
-    );
     const isGridFit = this.cubeImages && this.cubeType === 'fit';
 
+    let targetWidth = this.width;
+    let targetHeight = this.height;
+
+    const setTargetDimensions = (setByWidth, ratio) => {
+      if (setByWidth) {
+        targetWidth = Math.min(this.width, this.maxWidth);
+        targetHeight = targetWidth / ratio;
+      } else {
+        targetHeight = Math.min(this.height, this.maxHeight);
+        targetWidth = targetHeight * ratio;
+      }
+    };
+
+    const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
     if (isGridFit) {
-      return isLandscape
-        ? {
-            // height: this.height - 2 * imageMarginTop,
-            // width: this.width,
-            marginTop: imageMarginTop,
-            marginLeft: 0,
-          }
-        : {
-            // width: this.width - 2 * imageMarginLeft,
-            // height: this.height,
-            marginLeft: imageMarginLeft,
-            marginTop: 0,
-          };
+      setTargetDimensions(isLandscape, this.ratio);
+    } else if (
+      this.useMaxDimensions &&
+      (this.width > this.maxWidth || this.height > this.maxHeight)
+    ) {
+      if (this.cubeImages) {
+        setTargetDimensions(!isLandscape, this.cubeRatio);
+      } else {
+        setTargetDimensions(!isLandscape, this.ratio);
+      }
     }
 
     return {
-      // width: this.width,
-      // height: this.height,
+      fixTop: (this.height - targetHeight) / 2,
+      fixLeft: (this.width - targetWidth) / 2,
     };
   }
 

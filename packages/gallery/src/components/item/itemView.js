@@ -379,7 +379,7 @@ class ItemView extends GalleryComponent {
       };
     }
     if (
-      styleParams.itemBorderRadius &&
+      styleParams.itemBorderRadius > 0 &&
       styleParams.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND
     ) {
       dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
@@ -489,12 +489,13 @@ class ItemView extends GalleryComponent {
   }
 
   getItemInner() {
-    const { styleParams, type, style } = this.props;
+    const { styleParams, type, style, offset } = this.props;
     let itemInner;
     // const imageDimensions = this.getImageDimensions();
-    const { width, height } = style;
+    const { width, height, innerWidth, innerHeight } = style;
+    const { innerTop, innerLeft } = offset;
 
-    const itemStyles = { width, height };
+    const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
       itemHover = this.getItemHover(itemStyles);
