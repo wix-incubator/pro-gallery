@@ -6,6 +6,7 @@ import ProGallery from './proGallery/proGallery';
 import {GalleryProps, GalleryState} from './gallery'
 
 import validateTypes from './typeValidator/validateTypes'
+import shouldValidate from './typeValidator/shouldValidate'
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
@@ -16,7 +17,7 @@ export default class BaseGallery extends React.Component<
 
   constructor(props: GalleryProps) {
     console.log('local BaseGallery')
-    if(true) {
+    if(shouldValidate(props)) {
       validateTypes(props.options || props.styles || props.styleParams)
     }
     super(props);

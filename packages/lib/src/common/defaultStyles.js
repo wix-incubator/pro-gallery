@@ -48,6 +48,7 @@ const defaultStyles = {
   itemClick: GALLERY_CONSTS.itemClick.NOTHING,
   fullscreen: true,
   videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
+  item: {video: {playOn: 'hover'}},
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

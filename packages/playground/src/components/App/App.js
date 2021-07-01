@@ -307,6 +307,7 @@ export function App() {
 }
 
 const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
+  props.shouldValidateTypes = true
   return gallerySettings.responsivePreview ? (<div style={{
     background: '#666',
     width: '100%',
