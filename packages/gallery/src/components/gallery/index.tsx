@@ -94,14 +94,19 @@ export default class BaseGallery extends React.Component<
   }
 
   render() {
-    const { blueprint, typeValidationFailed, errors } = this.state;
+    const { blueprint, typeErrors } = this.state;
 
 
-    if(typeValidationFailed) {
+    if(typeErrors) {
+      const style = {
+        height: '100px',
+        width: '500px',
+        border: 'sold black 3px'
+      }
       return (
-        <div>
-          errors
-        </div>
+        <h1 style={style}>
+        {JSON.stringify(typeErrors, null, 4)}
+        </h1>
       )
     }
     if (blueprint && Object.keys(blueprint).length > 0) {
@@ -120,12 +125,10 @@ export default class BaseGallery extends React.Component<
           /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
         );
         const validateTypes = validateTypesModule.default
-        const result = validateTypes(props.options || props.styles || props.styleParams)
-        /* if(result.valid === false) { */
-        /*   this.setState({typeValidationFailed: true, errors: result.errors}) */
-        /* } */
+        const typeErrors = validateTypes(props.options || props.styles || props.styleParams)
+        if(typeErrors.length > 0) this.setState({typeErrors})
       } catch (e) {
-        console.error('Failed to fetch VideoItem');
+        console.error('Failed to fetch validateTypes');
       }
     }
   }

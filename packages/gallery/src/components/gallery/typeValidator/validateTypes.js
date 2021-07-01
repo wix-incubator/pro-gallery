@@ -12,12 +12,13 @@ function validate(data) {
 	// const schema = JSON.parse(fs.readFileSync(path.join(__dirname, 'schema.json')))
 	const validate = ajv.compile(schema)
 	const valid = validate(data)
-	if (!valid) {
-		console.log('validation failed')
-		console.log(JSON.stringify(validate.errors, null, 4))
-		throw new Error(JSON.stringify(validate.errors, null, 4))
-	} else 
-		console.log('OKaaaa')
+	return valid ? [] : validate.errors
+	// if (!valid) {
+	// 	console.log('validation failed')
+	// 	console.log(JSON.stringify(validate.errors, null, 4))
+	// 	throw new Error(JSON.stringify(validate.errors, null, 4))
+	// } else 
+	// 	console.log('OKaaaa')
 
 }
 
