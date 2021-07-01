@@ -7,5 +7,4 @@ maven
 .DS_Store
 .idea
 .vscode
-yarn.lock
 schema.js
