@@ -5,7 +5,6 @@ import ProGallery from './proGallery/proGallery';
 
 import {GalleryProps, GalleryState} from './gallery'
 
-import validateTypes from './typeValidator/validateTypes'
 import shouldValidate from './typeValidator/shouldValidate'
 
 export default class BaseGallery extends React.Component<
@@ -17,9 +16,6 @@ export default class BaseGallery extends React.Component<
 
   constructor(props: GalleryProps) {
     console.log('local BaseGallery')
-    if(shouldValidate(props)) {
-      validateTypes(props.options || props.styles || props.styleParams)
-    }
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
@@ -98,12 +94,39 @@ export default class BaseGallery extends React.Component<
   }
 
   render() {
-    const { blueprint } = this.state;
+    const { blueprint, typeValidationFailed, errors } = this.state;
 
+
+    if(typeValidationFailed) {
+      return (
+        <div>
+          errors
+        </div>
+      )
+    }
     if (blueprint && Object.keys(blueprint).length > 0) {
       return <ProGallery {...this.galleryProps} {...blueprint} />;
     } else {
       return null;
+    }
+  }
+
+  async componentDidMount() {
+/* import validateTypes from './typeValidator/validateTypes' */
+    const props = this.props
+    if(shouldValidate(props)) {
+      try {
+        const validateTypesModule = await import(
+          /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
+        );
+        const validateTypes = validateTypesModule.default
+        const result = validateTypes(props.options || props.styles || props.styleParams)
+        /* if(result.valid === false) { */
+        /*   this.setState({typeValidationFailed: true, errors: result.errors}) */
+        /* } */
+      } catch (e) {
+        console.error('Failed to fetch VideoItem');
+      }
     }
   }
 }
