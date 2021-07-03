@@ -198,9 +198,7 @@ class ItemView extends GalleryComponent {
       e.preventDefault();
     }
 
-    if (
-      this.shouldShowHoverOnMobile()
-    ) {
+    if (this.shouldShowHoverOnMobile()) {
       this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
