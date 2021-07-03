@@ -199,9 +199,7 @@ class ItemView extends GalleryComponent {
     }
 
     if (
-      this.shouldShowHoverOnMobile() &&
-      this.props.styleParams.hoveringBehaviour !==
-        GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
+      this.shouldShowHoverOnMobile()
     ) {
       this.handleHoverClickOnMobile(e);
     } else {
@@ -210,7 +208,7 @@ class ItemView extends GalleryComponent {
   }
 
   shouldUseDirectLink = () => {
-    const { directLink, styleParams } = this.props;
+    const { directLink } = this.props;
     const { url, target } = directLink || {};
     const useDirectLink = !!(
       url &&
@@ -218,12 +216,10 @@ class ItemView extends GalleryComponent {
       this.props.styleParams.itemClick === 'link'
     );
     
-    const constantHoverBehavior = styleParams.hoveringBehaviour ===
-      GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE;
 
     const shouldUseDirectLinkOnMobile =
       this.shouldShowHoverOnMobile() &&
-      (this.isClickOnCurrentHoveredItem() || constantHoverBehavior) &&
+      this.isClickOnCurrentHoveredItem() &&
       useDirectLink;
 
     if (shouldUseDirectLinkOnMobile) {
@@ -236,7 +232,9 @@ class ItemView extends GalleryComponent {
     return false;
   };
 
-  isClickOnCurrentHoveredItem = () => this.state.isCurrentHover;
+  isClickOnCurrentHoveredItem = () => this.state.isCurrentHover ||  // this single item was already hovered.
+  this.props.styleParams.hoveringBehaviour ===
+  GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE; // all the items are always 'already' hovered
 
   handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
