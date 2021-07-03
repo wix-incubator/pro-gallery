@@ -213,8 +213,6 @@ class ItemView extends GalleryComponent {
       target &&
       this.props.styleParams.itemClick === 'link'
     );
-    
-
     const shouldUseDirectLinkOnMobile =
       this.shouldShowHoverOnMobile() &&
       this.isClickOnCurrentHoveredItem() &&
