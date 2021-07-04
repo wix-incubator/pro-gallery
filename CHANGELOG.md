@@ -1,3 +1,10 @@
+## [v3.1.33](https://pro-gallery-3-1-33.surge.sh) (04/07/2021)
+ 
+#### GALLERY
+ - fix: fix behaviour of what happens on the first tap when hovering behaviour set to NO_CHANGE
+ - fix: Increasing removeArrowsIfNeeded setTimeOut call
+
+---
 ## [v3.1.32](https://pro-gallery-4-0-5.surge.sh) (01/07/2021)
  
 #### GALLERY
