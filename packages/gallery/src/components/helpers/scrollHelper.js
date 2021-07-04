@@ -233,6 +233,7 @@ function horizontalCssScrollTo({
     return new Promise((resolve) => resolve(to));
   }
 
+  console.log(slideTransition);
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');
@@ -242,8 +243,8 @@ function horizontalCssScrollTo({
   Object.assign(
     scrollerInner.style,
     {
-      transition: `margin ${duration}ms ${slideTransition}`,
-      '-webkit-transition': `margin ${duration}ms ${slideTransition}`,
+      transition: `margin ${duration}ms linear`,
+      '-webkit-transition': `margin ${duration}ms linear`,
     },
     isRTL
       ? {

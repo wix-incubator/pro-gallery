@@ -271,7 +271,7 @@ class SlideshowView extends GalleryComponent {
         ((direction >= 1 && this.isLastItemFullyVisible()) ||
           (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
-      const _scrollDuration =
+      const _scrollDuration = 4000;
         scrollDuration || this.props.styleParams.scrollDuration || 400;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
       const scrollToItemPromise =
@@ -304,6 +304,14 @@ class SlideshowView extends GalleryComponent {
             this.isSliding = false;
           }
         );
+        
+        this.nextItem({
+          direction,
+          isAutoTrigger,
+          _scrollDuration,
+          avoidIndividualNavigation,
+          ignoreScrollPosition,
+        });
 
         if (ignoreScrollPosition) {
           this.props.getMoreItemsIfNeeded(
