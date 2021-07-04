@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile && npm run generateSchemaFromTypes",
+    "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
     "generateSchemaFromTypes": "node buildScripts/generateJSONSchemaFromTypes.js",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
