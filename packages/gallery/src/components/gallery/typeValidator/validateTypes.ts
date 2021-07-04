@@ -2,9 +2,9 @@ import Ajv from 'ajv';
 
 // import schema from './schema';
 
-// import typeErrorsUI from './typeErrorsUI';
+import typeErrorsUI from './typeErrorsUI';
 
-export default function validate(data: any) {
+function validate(data: any) {
   const schema = {
     type: 'object',
     properties: {
@@ -44,5 +44,5 @@ export default function validate(data: any) {
   validateFunc(data);
   return validateFunc.errors || [];
 }
-
+export { validate, typeErrorsUI };
 // export default { validate, typeErrorsUI };

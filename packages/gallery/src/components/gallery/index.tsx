@@ -6,12 +6,7 @@ import ProGallery from './proGallery/proGallery';
 import { GalleryProps, GalleryState } from './gallery';
 import shouldValidate from './typeValidator/shouldValidate';
 /* import validateTypesModule from './typeValidator/validateTypes.js'; */
-import validate from './typeValidator/validateTypes';
-
-function typeErrorsUI(errors) {
-  console.log(errors);
-  return <div>you are wrong</div>;
-}
+import { validate, typeErrorsUI } from './typeValidator/validateTypes';
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
