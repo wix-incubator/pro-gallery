@@ -113,7 +113,7 @@ export default class BaseGallery extends React.Component<
       return;
     }
     const { validate, typeErrorsUI } = validateTypesModule.default;
-    runTypeValidations(validate, typeErrorsUI);
+    this.runTypeValidations(validate, typeErrorsUI);
     /* import( */
     /*   /1* webpackChunkName: "proGallery_validateTypes" *1/ './typeValidator/validateTypes' */
     /* ).then((validateTypesModule) => { */
@@ -124,7 +124,7 @@ export default class BaseGallery extends React.Component<
 
   runTypeValidations(validate, typeErrorsUI) {
     const typeErrors = validate(
-      props.options || props.styles || props.styleParams
+      this.props.options || this.props.styles || this.props.styleParams
     );
     if (typeErrors.length > 0) {
       console.log('test');
