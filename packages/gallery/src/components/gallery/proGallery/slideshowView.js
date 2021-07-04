@@ -843,7 +843,8 @@ class SlideshowView extends GalleryComponent {
   }
 
   getArrowsRenderData() {
-    const { customNavArrowsRenderer, arrowsSize } = this.props;
+    const { customNavArrowsRenderer } = this.props;
+    const { arrowsSize } = this.props.styleParams;
     if (customNavArrowsRenderer) {
       return {
         arrowRenderer: customNavArrowsRenderer,
