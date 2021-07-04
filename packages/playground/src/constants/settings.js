@@ -111,6 +111,7 @@ export const stylesBySection = {
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
+    'arrowsPadding',
     'arrowsVerticalPosition',
 
     'overlayBackground',
