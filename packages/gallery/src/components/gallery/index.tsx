@@ -107,7 +107,7 @@ export default class BaseGallery extends React.Component<
   async componentDidMount() {
     /* import validateTypes from './typeValidator/validateTypes' */
     const props = this.props;
-    if (shouldValidate(props) === false) return;
+    if (shouldValidate(props, utils.isSSR()) === false) return;
     const validateTypesModule = await import(
       /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
     );

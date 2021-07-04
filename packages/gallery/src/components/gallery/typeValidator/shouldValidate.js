@@ -1,4 +1,5 @@
-export default function shouldValidate(props) {
+export default function shouldValidate(props, isSSR) {
+  if (isSSR === true) return false;
   return (
     props.shouldValidateTypes === true ||
     getQueryParams('shouldValidateTypes') === 'true'
