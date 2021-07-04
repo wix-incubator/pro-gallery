@@ -4,7 +4,7 @@ import Ajv from 'ajv';
 
 // import typeErrorsUI from './typeErrorsUI';
 
-export function validate(data) {
+export default function validate(data: any) {
   const schema = {
     type: 'object',
     properties: {
