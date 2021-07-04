@@ -1,4 +1,4 @@
-const Ajv = require('ajv');
+import Ajv from 'ajv';
 
 import schema from './schema';
 import typeErrorsUI from './typeErrorsUI';
