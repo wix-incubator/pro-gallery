@@ -5,6 +5,7 @@ import ProGallery from './proGallery/proGallery';
 
 import { GalleryProps, GalleryState } from './gallery';
 import shouldValidate from './typeValidator/shouldValidate';
+import validateTypesModule from './typeValidator/validateTypes.js'
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
@@ -111,17 +112,23 @@ export default class BaseGallery extends React.Component<
       console.log('no validation needed');
       return;
     }
-    import(
-      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
-    ).then((validateTypesModule) => {
-      const { validate, typeErrorsUI } = validateTypesModule.default;
-      const typeErrors = validate(
-        props.options || props.styles || props.styleParams
-      );
-      if (typeErrors.length > 0) {
-        console.log('test');
-        this.setState({ typeErrors: typeErrorsUI(typeErrors) });
-      }
-    });
+    const { validate, typeErrorsUI } = validateTypesModule.default;
+    runTypeValidations(validate, typeErrorsUI)
+    /* import( */
+    /*   /1* webpackChunkName: "proGallery_validateTypes" *1/ './typeValidator/validateTypes' */
+    /* ).then((validateTypesModule) => { */
+    /*   const { validate, typeErrorsUI } = validateTypesModule.default; */
+    /*   runTypeValidations(validate, typeErrorsUI) */
+    /* }); */
+  }
+
+  runTypeValidations(validate, typeErrorsUI) {
+    const typeErrors = validate(
+      props.options || props.styles || props.styleParams
+    );
+    if (typeErrors.length > 0) {
+      console.log('test');
+      this.setState({ typeErrors: typeErrorsUI(typeErrors) });
+    }
   }
 }
