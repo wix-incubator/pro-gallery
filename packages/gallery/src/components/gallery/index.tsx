@@ -5,7 +5,7 @@ import ProGallery from './proGallery/proGallery';
 
 import { GalleryProps, GalleryState } from './gallery';
 import shouldValidate from './typeValidator/shouldValidate';
-import validateTypesModule from './typeValidator/validateTypes.js'
+import validateTypesModule from './typeValidator/validateTypes.js';
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
@@ -113,7 +113,7 @@ export default class BaseGallery extends React.Component<
       return;
     }
     const { validate, typeErrorsUI } = validateTypesModule.default;
-    runTypeValidations(validate, typeErrorsUI)
+    runTypeValidations(validate, typeErrorsUI);
     /* import( */
     /*   /1* webpackChunkName: "proGallery_validateTypes" *1/ './typeValidator/validateTypes' */
     /* ).then((validateTypesModule) => { */
