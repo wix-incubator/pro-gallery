@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, isEditMode, GALLERY_CONSTS, styleParamsBuilder } from 'pro-gallery-lib';
+import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -35,8 +35,7 @@ class VideoItemWrapper extends ImageItem {
   }
 
   mightPlayVideo() {
-    const { itemClick } = this.props.styleParams;
-    const videoPlay = styleParamsBuilder.getVideoPlayOn(this.props.styleParams)
+    const { videoPlay, itemClick } = this.props.styleParams;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
