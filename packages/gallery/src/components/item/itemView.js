@@ -746,7 +746,7 @@ class ItemView extends GalleryComponent {
 
   getItemWrapperStyles() {
     const { styleParams, style, type } = this.props;
-    const height = style.height;
+    const { height, width} = style;
     const styles = {};
     if (type === 'text') {
       styles.backgroundColor =
@@ -758,7 +758,8 @@ class ItemView extends GalleryComponent {
     }
 
     styles.height = height + 'px';
-
+    styles.width = width + 'px';
+    styles.margin = -styleParams.itemBorderWidth + 'px';
     const itemWrapperStyles = {
       ...styles,
       ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
