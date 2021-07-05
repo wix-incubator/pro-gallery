@@ -89,6 +89,7 @@ import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
 import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
+import autoSlideShowSpeed from './autoSlideShowSpeed';
 
 export default {
   itemClick,
@@ -182,6 +183,7 @@ export default {
   pauseAutoSlideshowOnHover,
   shouldIndexDirectShareLinkInSEO,
   slideTransition,
+  autoSlideShowSpeed,
 };
 
 // TODO = add the options:

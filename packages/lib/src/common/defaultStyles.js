@@ -43,6 +43,7 @@ const defaultStyles = {
   isAutoSlideshow: false,
   slideshowLoop: false,
   autoSlideshowInterval: 4,
+  autoSlideshowSpeed: 2,
   titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   galleryTextAlign: 'center',
   scrollSnap: false,
