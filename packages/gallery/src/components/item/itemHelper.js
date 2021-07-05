@@ -1,4 +1,10 @@
-import { window, utils, isSiteMode, isSEOMode } from 'pro-gallery-lib';
+import {
+  window,
+  utils,
+  isSiteMode,
+  isSEOMode,
+  GALLERY_CONSTS,
+} from 'pro-gallery-lib';
 
 function shouldChangeActiveElement() {
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
@@ -60,4 +66,11 @@ export function changeActiveElementIfNeeded({
   } catch (e) {
     console.error('Could not set focus to active element', e);
   }
+}
+
+export function shouldCreateVideoPlaceholder(styles) {
+  return (
+    !utils.isSingleItemHorizontalDisplay(styles) ||
+    styles.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO
+  );
 }

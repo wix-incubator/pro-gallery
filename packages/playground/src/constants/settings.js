@@ -112,6 +112,7 @@ export const stylesBySection = {
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
+    'arrowsPadding',
     'arrowsVerticalPosition',
 
     'overlayBackground',
@@ -145,6 +146,7 @@ export const stylesBySection = {
     'scrollAnimation',
     'slideAnimation',
     'oneColorAnimationColor',
+    'slideTransition',
   ],
   [SECTIONS.IMAGE]: [
     // 'imageQuality',

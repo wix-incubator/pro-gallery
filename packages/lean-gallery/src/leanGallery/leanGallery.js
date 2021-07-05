@@ -7,7 +7,7 @@ import {
   isSEOMode,
   utils,
 } from 'pro-gallery-lib';
-
+//lean gallery dummy commit
 export default class LeanGallery extends React.Component {
   constructor() {
     super();

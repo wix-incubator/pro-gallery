@@ -54,10 +54,10 @@ const defaultStyles = {
   scrollDirection: 0,
   scrollDuration: 400,
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
-  arrowsPosition: 0,
+  arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
   arrowsVerticalPosition: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
-  arrowsPadding: 0,
+  arrowsPadding: 23,
   loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
@@ -122,6 +122,7 @@ const defaultStyles = {
   jsonStyleParams: '',
   showVideoControls: false,
   shouldIndexDirectShareLinkInSEO: true,
+  slideTransition: GALLERY_CONSTS.slideTransition.ease,
   useMaxDimensions: false,
 };
 
