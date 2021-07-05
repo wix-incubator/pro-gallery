@@ -78,7 +78,7 @@ class SlideshowView extends GalleryComponent {
       return false;
     }
 
-    if (this.container) {
+    if (this.scrollElement) {
       return this.getScrollLeft() <= 1;
     } else {
       return false;
@@ -98,11 +98,10 @@ class SlideshowView extends GalleryComponent {
       return false;
     }
 
-    if (this.container) {
-      /* 'scrollWidth' is not reliable before first scroll (= it is equal to 'clientWidth' size).
-        'scrollWidth' will get his real value just after scrolling.
-      */
-      const { scrollWidth, clientWidth } = this.container;
+    if (this.scrollElement) {
+      const  { clientWidth } = this.scrollElement;
+      const galleryWidth = galleryStructure.width;
+
       const scrollLeft = this.getScrollLeft();
       const visibleItemsCount = getVisibleItems(
         galleryStructure.galleryItems,
@@ -110,7 +109,7 @@ class SlideshowView extends GalleryComponent {
       ).length;
       const allItemsLoaded = visibleItemsCount >= totalItemsCount;
       const visibleLeft = scrollLeft + clientWidth;
-      const visibleScroll = scrollWidth - 1;
+      const visibleScroll = galleryWidth - 1;
 
       return allItemsLoaded && visibleLeft >= visibleScroll;
     } else {
@@ -810,7 +809,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     const isScrolling =
-      (this.container && this.container.getAttribute('data-scrolling')) ===
+      (this.scrollElement && this.scrollElement.getAttribute('data-scrolling')) ===
       'true';
 
     if (isScrolling) {
@@ -1318,8 +1317,8 @@ class SlideshowView extends GalleryComponent {
   }
 
   getScrollLeft() {
-    return this.container
-      ? (this.props.styleParams.isRTL ? -1 : 1) * this.container.scrollLeft
+    return this.scrollElement
+      ? (this.props.styleParams.isRTL ? -1 : 1) * this.scrollElement.scrollLeft
       : 0;
   }
 
@@ -1470,11 +1469,11 @@ class SlideshowView extends GalleryComponent {
     );
     window.addEventListener('gallery_navigation_in', this.navigationInHandler);
 
-    this.container = window.document.querySelector(
+    this.scrollElement = window.document.querySelector(
       `#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`
     );
-    if (this.container) {
-      this.container.addEventListener('scroll', this._setCurrentItemByScroll);
+    if (this.scrollElement) {
+      this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
     }
     if (this.state.currentIdx > 0) {
       this.props.actions.scrollToItem(this.state.currentIdx);
@@ -1495,8 +1494,8 @@ class SlideshowView extends GalleryComponent {
       this.navigationInHandler
     );
 
-    if (this.container) {
-      this.container.removeEventListener(
+    if (this.scrollElement) {
+      this.scrollElement.removeEventListener(
         'scroll',
         this._setCurrentItemByScroll
       );
