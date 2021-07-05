@@ -953,7 +953,7 @@ class SlideshowView extends GalleryComponent {
     };
 
     const arrowsPos =
-      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTA &&
+      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
