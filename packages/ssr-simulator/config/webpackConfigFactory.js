@@ -139,22 +139,22 @@ module.exports = function(envType) {
     ].filter(Boolean)
   };
 
-  config.optimization = IS_DEV
-    ? {}
-    : {
-        minimizer: [
-          new UglifyJsPlugin({
-            parallel: true,
-            sourceMap: true,
-            uglifyOptions: {
-              output: {
-                comments: false
-              }
-            }
-          }),
-          new OptimizeCSSAssetsPlugin({})
-        ]
-      };
+  // config.optimization = IS_DEV
+  //   ? {}
+  //   : {
+  //       minimizer: [
+  //         new UglifyJsPlugin({
+  //           parallel: true,
+  //           sourceMap: true,
+  //           uglifyOptions: {
+  //             output: {
+  //               comments: false
+  //             }
+  //           }
+  //         }),
+  //         new OptimizeCSSAssetsPlugin({})
+  //       ]
+  //     };
 
   config.plugins = [
     new webpack.DefinePlugin(env.forWebpackDefinePlugin),

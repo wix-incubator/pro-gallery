@@ -49,6 +49,7 @@ const defaultStyles = {
   fullscreen: true,
   videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+  item: { video: { playOn: 'hover' } },
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   scrollDuration: 400,
