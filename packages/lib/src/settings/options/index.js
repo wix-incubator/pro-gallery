@@ -90,6 +90,7 @@ import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
 import autoSlideShowSpeed from './autoSlideShowSpeed';
+import useMaxDimensions from './useMaxDimensions';
 
 export default {
   itemClick,
@@ -184,6 +185,7 @@ export default {
   shouldIndexDirectShareLinkInSEO,
   slideTransition,
   autoSlideShowSpeed,
+  useMaxDimensions,
 };
 
 // TODO = add the options:

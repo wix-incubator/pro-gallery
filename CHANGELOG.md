@@ -1,8 +1,19 @@
+## [v3.1.35](https://pro-gallery-3-1-35.surge.sh) (04/07/2021)
+ 
+#### GALLERY
+ - fix: destruct arrowsColor from styleParams and not props
+
+---
+## [v3.1.34](https://pro-gallery-3-1-34.surge.sh) (04/07/2021)
+ 
+#### OTHER
+ -  slideshowView: arrows -> fix container size to be same as svg size (to support arrowsPadding correctly) 
+
+---
 ## [v3.1.33](https://pro-gallery-3-1-33.surge.sh) (04/07/2021)
  
 #### GALLERY
  - fix: fix behaviour of what happens on the first tap when hovering behaviour set to NO_CHANGE
- - fix: Increasing removeArrowsIfNeeded setTimeOut call
 
 ---
 ## [v3.1.32](https://pro-gallery-4-0-5.surge.sh) (01/07/2021)

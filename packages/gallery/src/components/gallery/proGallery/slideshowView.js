@@ -860,7 +860,7 @@ class SlideshowView extends GalleryComponent {
     const navArrowsContainerWidth = arrowsSize; // === arrowOrigWidth * scalePercentage
     const navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
 
-    const { arrowsColor } = this.props;
+    const { arrowsColor } = this.props.styleParams;
     const svgInternalStyle = utils.isMobile() && arrowsColor?.value ? {fill: arrowsColor.value} : {}
 
 
