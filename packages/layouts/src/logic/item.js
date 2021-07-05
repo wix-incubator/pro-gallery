@@ -293,10 +293,10 @@ export class Item {
   }
 
   set width(w) {
-    this.style.cubedWidth = this.style.orgWidth = this.style.width = Math.max(
-      1,
-      w
-    );
+    this.style.cubedWidth =
+      this.style.orgWidth =
+      this.style.width =
+        Math.max(1, w);
     const { fixLeft = 0 } = this.dimensions;
     this.style.innerWidth = this.style.width - 2 * fixLeft;
   }
@@ -320,10 +320,10 @@ export class Item {
   }
 
   set height(h) {
-    this.style.cubedHeight = this.style.orgHeight = this.style.height = Math.max(
-      1,
-      h
-    );
+    this.style.cubedHeight =
+      this.style.orgHeight =
+      this.style.height =
+        Math.max(1, h);
 
     const { fixTop = 0 } = this.dimensions;
     this.style.innerHeight = this.style.height - 2 * fixTop;
