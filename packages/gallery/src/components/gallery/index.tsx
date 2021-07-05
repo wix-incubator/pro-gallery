@@ -105,24 +105,20 @@ export default class BaseGallery extends React.Component<
     }
   }
 
-  componentDidMount() {
-    /* import validateTypes from './typeValidator/validateTypes' */
+  async componentDidMount() {
     const props = this.props;
     if (shouldValidate(props, utils.isSSR()) === false) {
       return;
     }
-    /* const { validate, typeErrorsUI } = validateTypesModule.default; */
-    /* const typeErrorsUI = () => <div> you have errors </div>; */
-    import(
+    const validateTypesModule = await import(
       /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
-    ).then((validateTypesModule) => {
-      const { validate, typeErrorsUI } = validateTypesModule;
-      const typeErrors = validate(
-        this.props.options || this.props.styles || this.props.styleParams
-      );
-      if (typeErrors.length > 0) {
-        this.setState({ typeErrors: typeErrorsUI(typeErrors) });
-      }
-    });
+    );
+    const { validate, typeErrorsUI } = validateTypesModule;
+    const typeErrors = validate(
+      this.props.options || this.props.styles || this.props.styleParams
+    );
+    if (typeErrors.length > 0) {
+      this.setState({ typeErrors: typeErrorsUI(typeErrors) });
+    }
   }
 }
