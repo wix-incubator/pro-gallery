@@ -1,7 +1,8 @@
 import GALLERY_CONSTS from './constants';
+import duplicatedInWix from './duplicatedInWix';
 // this is the one place for the default styles !!!
 
-const defaultStyles = {
+const defaultStyles = Object.assign({}, duplicatedInWix, {
   isRTL: false,
   isVertical: false,
   gallerySize: 30,
@@ -123,7 +124,7 @@ const defaultStyles = {
   showVideoControls: false,
   shouldIndexDirectShareLinkInSEO: true,
   slideTransition: GALLERY_CONSTS.slideTransition.ease,
-};
+});
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {
   if (defaultStyles[styleParam] !== settings.default) {
