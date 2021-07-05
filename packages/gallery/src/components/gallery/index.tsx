@@ -5,7 +5,6 @@ import ProGallery from './proGallery/proGallery';
 
 import { GalleryProps, GalleryState } from './gallery';
 import shouldValidate from './typeValidator/shouldValidate';
-import { validate, typeErrorsUI } from './typeValidator/validateTypes';
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
