@@ -57,15 +57,23 @@ describe('GalleryItem ', () => {
   it('recieves correct styles from dto', () => {
     expect(galleryItem.style).to.deep.equal({
       width: 1920,
+      innerWidth: 1920,
       cubedWidth: 1920,
+      orgWidth: 1920,
       height: 1000,
+      innerHeight: 1000,
       cubedHeight: 1000,
+      orgHeight: 1000,
     });
     expect(antiGalleryItem.style).to.deep.equal({
       width: 1,
       cubedWidth: 1,
       height: 1,
       cubedHeight: 1,
+      innerHeight: 1,
+      innerWidth: 1,
+      orgHeight: 1,
+      orgWidth: 1,
     });
   });
   //not testing missuse of item-core

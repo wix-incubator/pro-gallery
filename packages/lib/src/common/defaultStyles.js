@@ -123,6 +123,7 @@ const defaultStyles = {
   showVideoControls: false,
   shouldIndexDirectShareLinkInSEO: true,
   slideTransition: GALLERY_CONSTS.slideTransition.ease,
+  useMaxDimensions: false,
 };
 
 /* Object.entries(galleryOptions).forEach(([styleParam, settings]) => {

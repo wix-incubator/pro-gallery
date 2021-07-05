@@ -69,11 +69,7 @@ export default class ImageItem extends GalleryComponent {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
-        style={
-          imageDimensions.borderRadius
-            ? { borderRadius: imageDimensions.borderRadius }
-            : {}
-        }
+        style={imageDimensions}
       >
         {imageRenderer()}
         {extraNodes}
@@ -139,7 +135,7 @@ export default class ImageItem extends GalleryComponent {
         : {};
 
     // eslint-disable-next-line no-unused-vars
-    const { margin, ...restOfDimensions } = imageDimensions || {};
+    const {marginLeft, marginTop, ...imageSizing} = imageDimensions;
 
     const image = () => {
       const imagesComponents = [];
@@ -178,7 +174,7 @@ export default class ImageItem extends GalleryComponent {
                   GALLERY_CONSTS.urlTypes.LOW_RES
                 )}
                 style={{
-                  ...restOfDimensions,
+                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
@@ -196,7 +192,7 @@ export default class ImageItem extends GalleryComponent {
                   GALLERY_CONSTS.urlTypes.HIGH_RES
                 )}
                 style={{
-                  ...restOfDimensions,
+                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
@@ -230,7 +226,7 @@ export default class ImageItem extends GalleryComponent {
           alt={alt ? alt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
           style={{
-            ...restOfDimensions,
+            ...imageSizing,
             ...blockDownloadStyles,
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
