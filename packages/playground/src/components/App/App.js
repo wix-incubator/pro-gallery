@@ -20,6 +20,7 @@ import s from './App.module.scss';
 import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
 import 'lean-gallery/dist/styles/leanGallery.css';
 
+// //dummy commit
 const SideBar = React.lazy(() => import('../SideBar'));
 
 const pJson = require('../../../package.json');
@@ -307,6 +308,7 @@ export function App() {
 }
 
 const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
+  props.shouldValidateTypes = true
   return gallerySettings.responsivePreview ? (<div style={{
     background: '#666',
     width: '100%',

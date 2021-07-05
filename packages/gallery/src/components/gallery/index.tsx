@@ -1,17 +1,9 @@
 import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
-import { Dimensions } from '../../common/interfaces/Dimensions';
 
-interface GalleryProps {
-  domId?: string;
-  dimensions: Dimensions;
-  [key: string]: any;
-}
-
-interface GalleryState {
-  blueprint: any;
-}
+import { GalleryProps, GalleryState } from './gallery';
+import shouldValidate from './typeValidator/shouldValidate';
 
 export default class BaseGallery extends React.Component<
   GalleryProps,
@@ -99,12 +91,31 @@ export default class BaseGallery extends React.Component<
   }
 
   render() {
-    const { blueprint } = this.state;
+    const { blueprint, typeErrors } = this.state;
 
+    if (typeErrors) {
+      return typeErrors;
+    }
     if (blueprint && Object.keys(blueprint).length > 0) {
       return <ProGallery {...this.galleryProps} {...blueprint} />;
     } else {
       return null;
+    }
+  }
+
+  async componentDidMount() {
+    if (shouldValidate(this.props, utils.isSSR()) === false) {
+      return;
+    }
+    const validateTypesModule = await import(
+      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
+    );
+    const { validate, typeErrorsUI } = validateTypesModule;
+    const typeErrors = validate(
+      this.props.options || this.props.styles || this.props.styleParams
+    );
+    if (typeErrors.length > 0) {
+      this.setState({ typeErrors: typeErrorsUI(typeErrors) });
     }
   }
 }
