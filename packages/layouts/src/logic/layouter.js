@@ -9,6 +9,7 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 export default class Layouter {
   constructor(layoutParams) {
+    //dummy commit
     this.ready = false;
     this.pointer = 0;
     this.layoutItems = [];

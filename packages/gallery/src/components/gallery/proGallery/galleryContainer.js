@@ -407,6 +407,7 @@ export class GalleryContainer extends React.Component {
           scrollingElement,
           horizontalElement,
           durationInMS,
+          slideTransition: this.state.styles.slideTransition,
         };
         return scrollToItemImp(scrollParams);
       } catch (e) {
@@ -457,6 +458,7 @@ export class GalleryContainer extends React.Component {
           scrollingElement,
           horizontalElement,
           durationInMS,
+          slideTransition: this.state.styles.slideTransition,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {

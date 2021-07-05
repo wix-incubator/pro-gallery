@@ -17,6 +17,7 @@ export function scrollToItemImp(scrollParams) {
     items,
     itemIdx,
     fixedScroll,
+    slideTransition,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -66,14 +67,14 @@ export function scrollToItemImp(scrollParams) {
     }
   }
   if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
-    return horizontalCssScrollTo(
-      horizontalElement,
-      Math.round(from),
-      Math.round(to),
-      durationInMS,
+    return horizontalCssScrollTo({
+      scroller: horizontalElement,
+      from: Math.round(from),
+      to: Math.round(to),
+      duration: durationInMS,
       isRTL,
-      true
-    );
+      slideTransition: slideTransition,
+    });
   } else {
     return new Promise((resolve) => {
       scrollingElement.vertical().scrollTo(0, to);
@@ -97,6 +98,7 @@ export function scrollToGroupImp(scrollParams) {
     groups,
     groupIdx,
     fixedScroll,
+    slideTransition,
   } = scrollParams;
 
   //default = scroll by half the container size
@@ -159,14 +161,14 @@ export function scrollToGroupImp(scrollParams) {
     }
   }
   if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
-    return horizontalCssScrollTo(
-      horizontalElement,
-      Math.round(from),
-      Math.round(to),
-      durationInMS,
+    return horizontalCssScrollTo({
+      scroller: horizontalElement,
+      from: Math.round(from),
+      to: Math.round(to),
+      duration: durationInMS,
       isRTL,
-      true
-    );
+      slideTransition: slideTransition,
+    });
   } else {
     return new Promise((resolve) => {
       scrollingElement.vertical().scrollTo(0, to);
@@ -222,7 +224,14 @@ function isWithinPaddingHorizontally({
   return res.before < padding && res.after < padding;
 }
 
-function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
+function horizontalCssScrollTo({
+  scroller,
+  from,
+  to,
+  duration,
+  isRTL,
+  slideTransition,
+}) {
   const change = to - from;
 
   if (change === 0) {
@@ -238,8 +247,8 @@ function horizontalCssScrollTo(scroller, from, to, duration, isRTL) {
   Object.assign(
     scrollerInner.style,
     {
-      transition: `margin ${duration}ms linear`,
-      '-webkit-transition': `margin ${duration}ms linear`,
+      transition: `margin ${duration}ms ${slideTransition}`,
+      '-webkit-transition': `margin ${duration}ms ${slideTransition}`,
     },
     isRTL
       ? {

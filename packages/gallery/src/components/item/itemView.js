@@ -213,12 +213,12 @@ class ItemView extends GalleryComponent {
       target &&
       this.props.styleParams.itemClick === 'link'
     );
-    const shouldUseDirectLinkMobileSecondClick =
+    const shouldUseDirectLinkOnMobile =
       this.shouldShowHoverOnMobile() &&
       this.isClickOnCurrentHoveredItem() &&
       useDirectLink;
 
-    if (shouldUseDirectLinkMobileSecondClick) {
+    if (shouldUseDirectLinkOnMobile) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
       return true;
     }
@@ -228,7 +228,9 @@ class ItemView extends GalleryComponent {
     return false;
   };
 
-  isClickOnCurrentHoveredItem = () => this.state.isCurrentHover;
+  isClickOnCurrentHoveredItem = () => this.state.isCurrentHover ||  // this single item was already hovered.
+  this.props.styleParams.hoveringBehaviour ===
+  GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE; // all the items are always 'already' hovered
 
   handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {

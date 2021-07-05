@@ -113,17 +113,10 @@ body.pro-gallery {
   background: transparent;
   border: none;
   outline: none;
+  justify-content: center;
 
   &:hover {
     opacity: 1;
-  }
-
-  &.prev {
-    justify-content: flex-end;
-  }
-
-  &.next {
-    justify-content: flex-start;
   }
 
   svg {

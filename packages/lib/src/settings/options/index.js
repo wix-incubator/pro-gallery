@@ -87,6 +87,7 @@ import placeGroupsLtr from './placeGroupsLtr';
 import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
 import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
+import slideTransition from './slideTransition';
 
 export default {
   itemClick,
@@ -178,6 +179,7 @@ export default {
   showVideoControls,
   pauseAutoSlideshowOnHover,
   shouldIndexDirectShareLinkInSEO,
+  slideTransition,
 };
 
 // TODO = add the options:

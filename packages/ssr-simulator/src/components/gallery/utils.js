@@ -53,6 +53,7 @@ export const defaultStyleParams = {
   arrowsPosition: 0,
   arrowsVerticalPosition: Consts.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
+  arrowsPadding: 23,
   loadMoreAmount: Consts.loadMoreAmount.ALL,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5

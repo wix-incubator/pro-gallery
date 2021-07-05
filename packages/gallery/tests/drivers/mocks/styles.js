@@ -47,6 +47,7 @@ const styleParams = {
   arrowsPosition: 0,
   arrowsVerticalPosition: 'ITEM_CENTER',
   arrowsSize: 23,
+  arrowsPadding: 23,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
   // titleFontExpand: font_5
@@ -101,6 +102,7 @@ const styleParams = {
   videoSpeed: '1',
   videoLoop: true,
   shouldIndexDirectShareLinkInSEO: true,
+  slideTransition: 'ease',
 };
 
 const container = {
