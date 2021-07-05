@@ -105,8 +105,7 @@ export default class BaseGallery extends React.Component<
   }
 
   async componentDidMount() {
-    const props = this.props;
-    if (shouldValidate(props, utils.isSSR()) === false) {
+    if (shouldValidate(this.props, utils.isSSR()) === false) {
       return;
     }
     const validateTypesModule = await import(
