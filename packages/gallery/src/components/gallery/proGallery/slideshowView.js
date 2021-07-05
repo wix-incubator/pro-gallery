@@ -1420,7 +1420,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   removeArrowsIfNeeded() {
-    setTimeout(() => {
       const { isRTL } = this.props.styleParams;
       const { hideLeftArrow, hideRightArrow } = this.state;
 
@@ -1444,8 +1443,8 @@ class SlideshowView extends GalleryComponent {
           hideRightArrow: !!nextHideRight,
         });
       }
-    }, 50);
   }
+
   navigationOutHandler() {
     //TODO remove after full refactor release
     utils.setStateAndLog(this, 'Next Item', {
