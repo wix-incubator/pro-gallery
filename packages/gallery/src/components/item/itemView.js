@@ -756,7 +756,7 @@ class ItemView extends GalleryComponent {
         (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
         'transparent';
     }
-    // styles.margin = -styleParams.itemBorderWidth + 'px';
+
     styles.height = height + 'px';
 
     const itemWrapperStyles = {
