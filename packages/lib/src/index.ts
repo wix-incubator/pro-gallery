@@ -3,6 +3,7 @@ export { default as GalleryItem } from './core/galleryItem';
 export { default as BlueprintsManager } from './core/blueprints/BlueprintsManager';
 export { default as blueprints } from './core/blueprints/Blueprints';
 export { default as defaultStyles } from './common/defaultStyles';
+export { default as duplicatedInWix } from './common/duplicatedInWix';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
