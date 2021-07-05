@@ -3,10 +3,12 @@ import _ from 'lodash';
 import defaultStyles from '../src/common/defaultStyles';
 
 describe('defaultStyles', () => {
-  it('should return the expected styles', () => {
+  it('should return the expected styles unchanged', () => {
     const actual = defaultStyles;
     expect(_.isEqual(actual, expectedStyles())).eq(true);
-    expect(_.keys(actual).length).eq(_.keys(expectedStyles()).length);
+    const actualLength = _.keys(actual).length;
+    expect(actualLength).eq(_.keys(expectedStyles()).length);
+    expect(actualLength).eq(89);
   });
 });
 
