@@ -99,10 +99,8 @@ class SlideshowView extends GalleryComponent {
     }
 
     if (this.scrollElement) {
-      /* 'scrollWidth' is not reliable before first scroll (= it is equal to 'clientWidth' size).
-        'scrollWidth' will get his real value just after scrolling.
-      */
-      const { scrollWidth, clientWidth } = this.scrollElement;
+      const { clientWidth } = this.scrollElement;
+      const galleryWidth = galleryStructure.width;
       const scrollLeft = this.getScrollLeft();
       const visibleItemsCount = getVisibleItems(
         galleryStructure.galleryItems,
@@ -110,7 +108,7 @@ class SlideshowView extends GalleryComponent {
       ).length;
       const allItemsLoaded = visibleItemsCount >= totalItemsCount;
       const visibleLeft = scrollLeft + clientWidth;
-      const visibleScroll = scrollWidth - 1;
+      const visibleScroll = galleryWidth - 1;
 
       return allItemsLoaded && visibleLeft >= visibleScroll;
     } else {
