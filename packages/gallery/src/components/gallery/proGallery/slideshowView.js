@@ -74,21 +74,16 @@ class SlideshowView extends GalleryComponent {
   isScrollStart() {
     const { slideAnimation } = this.props.styleParams;
 
-    if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL) {
+    if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL || !this.scrollElement) {
       return false;
     }
-
-    if (this.scrollElement) {
-      return this.getScrollLeft() <= 1;
-    } else {
-      return false;
-    }
+    return this.scrollLeft() <= 1;
   }
 
   isScrollEnd() {
     const { totalItemsCount, getVisibleItems, galleryStructure, container } =
       this.props;
-    const { slideshowLoop, slideAnimation } = this.props.styleParams;
+    const { slideshowLoop, slideAnimation, imageMargin } = this.props.styleParams;
 
     if (
       slideshowLoop ||
@@ -101,16 +96,16 @@ class SlideshowView extends GalleryComponent {
     if (this.scrollElement) {
       const { clientWidth } = this.scrollElement;
       const galleryWidth = galleryStructure.width;
-      const scrollLeft = this.getScrollLeft();
+      const scrollLeft = this.scrollLeft();
       const visibleItemsCount = getVisibleItems(
         galleryStructure.galleryItems,
         container
       ).length;
       const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-      const visibleLeft = scrollLeft + clientWidth;
-      const visibleScroll = galleryWidth - 1;
+      const scrollPosition = scrollLeft + clientWidth;
+      const scrollElementWidth = galleryWidth - imageMargin / 2;
 
-      return allItemsLoaded && visibleLeft >= visibleScroll;
+      return allItemsLoaded && scrollPosition >= scrollElementWidth;
     } else {
       return false;
     }
@@ -1317,8 +1312,12 @@ class SlideshowView extends GalleryComponent {
 
   getScrollLeft() {
     return this.scrollElement
-      ? (this.props.styleParams.isRTL ? -1 : 1) * this.scrollElement.scrollLeft
+      ? this.scrollLeft()
       : 0;
+  }
+
+  scrollLeft() {
+    return (this.props.styleParams.isRTL ? -1 : 1) * this.scrollElement.scrollLeft;
   }
 
   //-----------------------------------------| REACT |--------------------------------------------//
