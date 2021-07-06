@@ -210,7 +210,7 @@ export class GalleryContainer extends React.Component {
       updatedHeight,
     };
     if (utils.isVerbose()) {
-      console.log('handleNewGalleryStructure', onGalleryChangeData);
+      console.log('handleNewGalleryStructure:', onGalleryChangeData);
     }
     this.eventsListener(
       GALLERY_CONSTS.events.GALLERY_CHANGE,
