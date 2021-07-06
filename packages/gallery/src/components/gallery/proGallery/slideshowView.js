@@ -92,22 +92,17 @@ class SlideshowView extends GalleryComponent {
     ) {
       return false;
     }
-
-    if (this.scrollElement) {
-      const { clientWidth } = this.scrollElement;
-      const galleryWidth = galleryStructure.width;
+     const galleryWidth = galleryStructure.width;
       const visibleItemsCount = getVisibleItems(
         galleryStructure.galleryItems,
         container
       ).length;
       const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-      const scrollPosition = this.scrollPosition() + clientWidth;
+      const scrollPosition = this.scrollPositionInTheAndOfTheGallery();
       const scrollElementWidth = galleryWidth - imageMargin / 2;
 
       return allItemsLoaded && scrollPosition >= scrollElementWidth;
-    } else {
-      return false;
-    }
+  
   }
 
   isFirstItemFullyVisible() {
@@ -746,7 +741,7 @@ class SlideshowView extends GalleryComponent {
 
     // const scrollPos = this.props.styleParams.isRTL ?
     // this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    const scrollPos =  this.getScrollPosition() + this.props.container.galleryWidth / 2;
+    const scrollPos = this.scrollPositionInTheMiddleOfTheGallery();
 
     if (scrollPos === 0) {
       centeredIdx = 0;
@@ -770,7 +765,7 @@ class SlideshowView extends GalleryComponent {
 
     let centeredGroupIdx;
 
-    const scrollPos =  this.getScrollPosition() + this.props.container.galleryWidth / 2;
+    const scrollPos = this.scrollPositionInTheMiddleOfTheGallery();
 
     if (scrollPos === 0) {
       centeredGroupIdx = 0;
@@ -1311,6 +1306,14 @@ class SlideshowView extends GalleryComponent {
     return this.scrollElement
       ? this.scrollPosition()
       : 0;
+  }
+
+  scrollPositionInTheMiddleOfTheGallery(){
+    return this.getScrollPosition() + this.props.container.galleryWidth / 2;
+  }
+
+  scrollPositionInTheAndOfTheGallery(){
+    return this.getScrollPosition() + this.props.container.galleryWidth;
   }
 
   scrollPosition() {
