@@ -92,17 +92,15 @@ class SlideshowView extends GalleryComponent {
     ) {
       return false;
     }
-     const galleryWidth = galleryStructure.width;
-      const visibleItemsCount = getVisibleItems(
-        galleryStructure.galleryItems,
-        container
-      ).length;
-      const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-      const scrollPosition = this.scrollPositionInTheAndOfTheGallery();
-      const scrollElementWidth = galleryWidth - imageMargin / 2;
+    const galleryStructureWidth = galleryStructure.width;
+    const visibleItemsCount = getVisibleItems(
+      galleryStructure.galleryItems,
+      container
+    ).length;
+    const allItemsLoaded = visibleItemsCount >= totalItemsCount;
+    const scrollElementWidth = galleryStructureWidth - imageMargin / 2;
 
-      return allItemsLoaded && scrollPosition >= scrollElementWidth;
-  
+    return allItemsLoaded && this.scrollPositionAtTheAndOfTheGallery() >= scrollElementWidth;
   }
 
   isFirstItemFullyVisible() {
@@ -741,13 +739,13 @@ class SlideshowView extends GalleryComponent {
 
     // const scrollPos = this.props.styleParams.isRTL ?
     // this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    const scrollPos = this.scrollPositionInTheMiddleOfTheGallery();
+    const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
 
-    if (scrollPos === 0) {
+    if (scrollPositionAtTheMiddleOfTheGallery === 0) {
       centeredIdx = 0;
     } else {
       for (let item, i = 0; (item = items[i]); i++) {
-        if (item.offset.left > scrollPos) {
+        if (item.offset.left > scrollPositionAtTheMiddleOfTheGallery) {
           centeredIdx = i - 1;
           break;
         }
@@ -765,13 +763,13 @@ class SlideshowView extends GalleryComponent {
 
     let centeredGroupIdx;
 
-    const scrollPos = this.scrollPositionInTheMiddleOfTheGallery();
+    const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
 
-    if (scrollPos === 0) {
+    if (scrollPositionAtTheMiddleOfTheGallery === 0) {
       centeredGroupIdx = 0;
     } else {
       for (let group, i = 0; (group = groups[i]); i++) {
-        if (group.left > scrollPos) {
+        if (group.left > scrollPositionAtTheMiddleOfTheGallery) {
           centeredGroupIdx = i - 1;
           break;
         }
@@ -1308,11 +1306,11 @@ class SlideshowView extends GalleryComponent {
       : 0;
   }
 
-  scrollPositionInTheMiddleOfTheGallery(){
+  scrollPositionAtTheMiddleOfTheGallery(){
     return this.getScrollPosition() + this.props.container.galleryWidth / 2;
   }
 
-  scrollPositionInTheAndOfTheGallery(){
+  scrollPositionAtTheAndOfTheGallery(){
     return this.getScrollPosition() + this.props.container.galleryWidth;
   }
 
