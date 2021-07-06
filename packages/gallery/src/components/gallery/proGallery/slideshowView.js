@@ -77,7 +77,7 @@ class SlideshowView extends GalleryComponent {
     if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL || !this.scrollElement) {
       return false;
     }
-    return this.scrollLeft() <= 1;
+    return this.scrollPosition() <= 1;
   }
 
   isScrollEnd() {
@@ -96,13 +96,12 @@ class SlideshowView extends GalleryComponent {
     if (this.scrollElement) {
       const { clientWidth } = this.scrollElement;
       const galleryWidth = galleryStructure.width;
-      const scrollLeft = this.scrollLeft();
       const visibleItemsCount = getVisibleItems(
         galleryStructure.galleryItems,
         container
       ).length;
       const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-      const scrollPosition = scrollLeft + clientWidth;
+      const scrollPosition = this.scrollPosition() + clientWidth;
       const scrollElementWidth = galleryWidth - imageMargin / 2;
 
       return allItemsLoaded && scrollPosition >= scrollElementWidth;
@@ -740,7 +739,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCenteredItemIdxByScroll() {
-    const scrollLeft = this.getScrollLeft();
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const items = this.props.galleryStructure.galleryItems;
 
@@ -748,7 +746,7 @@ class SlideshowView extends GalleryComponent {
 
     // const scrollPos = this.props.styleParams.isRTL ?
     // this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    const scrollPos = scrollLeft + this.props.container.galleryWidth / 2;
+    const scrollPos =  this.getScrollPosition() + this.props.container.galleryWidth / 2;
 
     if (scrollPos === 0) {
       centeredIdx = 0;
@@ -767,13 +765,12 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCenteredGroupIdxByScroll() {
-    const scrollLeft = this.getScrollLeft();
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const groups = this.props.galleryStructure.groups;
 
     let centeredGroupIdx;
 
-    const scrollPos = scrollLeft + this.props.container.galleryWidth / 2;
+    const scrollPos =  this.getScrollPosition() + this.props.container.galleryWidth / 2;
 
     if (scrollPos === 0) {
       centeredGroupIdx = 0;
@@ -1310,13 +1307,13 @@ class SlideshowView extends GalleryComponent {
     };
   }
 
-  getScrollLeft() {
+  getScrollPosition() {
     return this.scrollElement
-      ? this.scrollLeft()
+      ? this.scrollPosition()
       : 0;
   }
 
-  scrollLeft() {
+  scrollPosition() {
     return (this.props.styleParams.isRTL ? -1 : 1) * this.scrollElement.scrollLeft;
   }
 
