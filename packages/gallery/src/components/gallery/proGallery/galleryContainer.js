@@ -202,7 +202,7 @@ export class GalleryContainer extends React.Component {
 
     const onGalleryChangeData = {
       numOfItems,
-      dimensions,
+      container: dimensions,
       styleParams,
       layoutHeight,
       layoutItems,
