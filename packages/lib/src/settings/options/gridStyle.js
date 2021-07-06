@@ -11,7 +11,7 @@ export default {
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.gridStyle.FIT_TO_SCREEN,
   options: createOptions('gridStyle'),
-  description: `Choose between adjusting the number of columns addording to the container
-  size or setting it manually and keep it fixed.`,
+  description: `Choose between adjusting the number of columns according to the provided dimensions
+  or setting it manually and keep it fixed.`,
   alert: 'This option will disable the responsive feature of the gallery!',
 };

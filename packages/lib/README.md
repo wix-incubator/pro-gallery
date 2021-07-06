@@ -13,7 +13,7 @@ The blueprintsManager works with an api provided by the user (see blow)
 
 | Function Name | description       |  arguments  | return
 | --------------- | ----------- | ---------- | ---------|
-| async `createBlueprint` | Used when changes were made that might require a new blueprint, params can be empty - the manager will fetch by the provided api | params: {styles, items, container, totalItemsCount} | {blueprint: object, blueprintChange: boolean}
+| async `createBlueprint` | Used when changes were made that might require a new blueprint, params can be empty - the manager will fetch by the provided api | params: {styles, items, dimensions, totalItemsCount} | {blueprint: object, blueprintChange: boolean}
 | `init`  | call to provide the formFactor and api |config: {api, formFactor, totalItemsCount} | --
 | `getMoreItems`  | Call this when the gallery needs more items | currentItemsLength: number | --
 
@@ -81,7 +81,7 @@ const triggerBlueprintCreation = () => { //call this whenever something changes 
 ## Basic component code:
 Here we use the `ProGalleryRenderer` instead of the `ProGallery`.
 
-Instead of the normal styles, items, container props we will destruct the `blueprint` we got from the `blueprintsManager` into the props.
+Instead of the normal styles, items, dimensions props we will destruct the `blueprint` we got from the `blueprintsManager` into the props.
 ```jsx
 
 import { ProGalleryRenderer } from 'pro-gallery'

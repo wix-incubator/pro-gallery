@@ -4,7 +4,7 @@ import { testItems, monochromeImages } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
 
-const UNKNOWN_CONTAINER = {
+const UNKNOWN_DIMENSIONS = {
   width: 980,
   height: 500,
 };
@@ -12,33 +12,33 @@ export default class Gallery extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const container = this.getContainerFromUrl(props);
+    const dimensions = this.getDimensionsFromUrl(props);
 
     this.handleResize = this.handleResize.bind(this);
 
     this.state = {
-      knownContainer:
-        (container.width > 0 || container.height > 0) &&
-        container !== UNKNOWN_CONTAINER,
-      container: container,
+      knownDimensions:
+        (dimensions.width > 0 || dimensions.height > 0) &&
+        dimensions !== UNKNOWN_DIMENSIONS,
+      dimensions: dimensions,
     };
   }
 
-  getContainerFromUrl(props) {
-    let container = UNKNOWN_CONTAINER;
+  getDimensionsFromUrl(props) {
+    let dimensions = UNKNOWN_DIMENSIONS;
 
     const { urlParams: { containerWidth, containerHeight } = {} } = props;
     if (containerWidth !== undefined && containerHeight !== undefined) {
-      container = {
+      dimensions = {
         width: containerWidth,
         height: containerHeight,
       };
     }
 
-    return container;
+    return dimensions;
   }
 
-  getContainerFromWindowDimensions() {
+  getWindowDimensions() {
     return {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -46,28 +46,28 @@ export default class Gallery extends React.PureComponent {
   }
 
   handleResize = () => {
-    const container = this.getContainerFromWindowDimensions();
+    const dimensions = this.getWindowDimensions();
 
     this.setState({
-      container,
+      dimensions,
     });
   };
 
-  shouldUpdateContainerOnMount = () => {
-    let shouldUpdateContainer = true;
+  shouldUpdateDimensionsOnMount = () => {
+    let shouldUpdateDimensions = true;
     const { urlParams: { containerWidth, containerHeight } = {} } = this.props;
-    const containerWithWindowDimensions = this.getContainerFromWindowDimensions();
+    const windowDimensions = this.getWindowDimensions();
 
     if (containerWidth !== undefined && containerHeight !== undefined) {
       if (
-        containerWithWindowDimensions.width === containerWidth &&
-        containerWithWindowDimensions.height === containerHeight
+        windowDimensions.width === containerWidth &&
+        windowDimensions.height === containerHeight
       ) {
-        shouldUpdateContainer = false;
+        shouldUpdateDimensions = false;
       }
     }
 
-    return shouldUpdateContainer;
+    return shouldUpdateDimensions;
   };
 
   isSSR() {
@@ -75,10 +75,10 @@ export default class Gallery extends React.PureComponent {
   }
 
   componentDidMount() {
-    const newState = { knownContainer: true };
+    const newState = { knownDimensions: true };
 
-    if (this.shouldUpdateContainerOnMount()) {
-      newState.container = this.getContainerFromWindowDimensions();
+    if (this.shouldUpdateDimensionsOnMount()) {
+      newState.dimensions = this.getWindowDimensions();
     }
 
     this.setState(newState);
@@ -91,9 +91,9 @@ export default class Gallery extends React.PureComponent {
 
   render() {
     const { urlParams } = this.props;
-    const { knownContainer, container } = this.state;
+    const { knownDimensions, dimensions } = this.state;
     const viewMode =
-      !knownContainer || this.isSSR()
+      !knownDimensions || this.isSSR()
         ? GALLERY_CONSTS.viewMode.PRERENDER
         : GALLERY_CONSTS.viewMode.SITE;
 
@@ -128,7 +128,7 @@ export default class Gallery extends React.PureComponent {
             disableSSROpacity: !!urlParams.disableSSROpacity,
             avoidInlineStyles: !urlParams.useLayoutFixer,
           }}
-          container={container}
+          dimensions={dimensions}
           viewMode={viewMode}
           isPrerenderMode={true}
           eventsListener={eventsListener}

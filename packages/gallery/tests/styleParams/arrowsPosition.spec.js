@@ -2,12 +2,12 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { styleParams, dimensions } from '../drivers/mocks/styles';
 
 describe('styleParam - arrowsPosition', () => {
   let driver;
   const initialProps = {
-    container,
+    dimensions,
     items: images2,
     styles: styleParams,
   };
@@ -29,13 +29,13 @@ describe('styleParam - arrowsPosition', () => {
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { width } = galleryContainer.props().style;
     const newWidth =
-      initialProps.container.width -
+      initialProps.dimensions.width -
       2 *
         (initialProps.styles.arrowsSize + 40 + initialProps.styles.imageMargin);
     expect(width).to.eq(newWidth);
     driver.detach.proGallery();
   });
-  it('should have original container width (arrowsPosition = "OUTSIDE_GALLERY")', async () => {
+  it('should have original dimensions.width (arrowsPosition = "OUTSIDE_GALLERY")', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
@@ -47,7 +47,7 @@ describe('styleParam - arrowsPosition', () => {
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { width } = galleryContainer.props().style;
 
-    expect(width).to.eq(initialProps.container.width);
+    expect(width).to.eq(initialProps.dimensions.width);
     driver.detach.proGallery();
   });
 });
