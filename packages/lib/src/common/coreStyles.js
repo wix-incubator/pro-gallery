@@ -1,5 +1,5 @@
 import GALLERY_CONSTS from './constants';
-const duplicatedInWix = {
+const coreStyles = {
   //duplicated from lib
   isRTL: false,
   isVertical: false,
@@ -59,4 +59,4 @@ const duplicatedInWix = {
   //duplicated from lib
 };
 
-export default duplicatedInWix;
+export default coreStyles;

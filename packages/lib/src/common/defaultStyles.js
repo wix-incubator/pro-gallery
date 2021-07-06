@@ -1,7 +1,7 @@
 import GALLERY_CONSTS from './constants';
-import duplicatedInWix from './duplicatedInWix';
+import coreStyles from './coreStyles';
 
-const defaultStyles = Object.assign({}, duplicatedInWix, {
+const defaultStyles = Object.assign({}, coreStyles, {
   gallerySize: 30,
   rotatingGroupTypes: '',
   cropOnlyFill: false,
