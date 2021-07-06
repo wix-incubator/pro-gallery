@@ -40,6 +40,7 @@ const defaultStyles = Object.assign({}, coreStyles, {
   showVideoControls: false,
   shouldIndexDirectShareLinkInSEO: true,
   slideTransition: GALLERY_CONSTS.slideTransition.ease,
+  useMaxDimensions: false,
 });
 
 export default defaultStyles;

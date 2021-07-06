@@ -1,3 +1,9 @@
+## [v3.1.36](https://pro-gallery-3-1-36.surge.sh) (06/07/2021)
+ 
+#### OTHER
+ -  improve: refactor image dimensions to layouter and added useMaxDImensions styleParam
+
+---
 ## [v3.1.35](https://pro-gallery-3-1-35.surge.sh) (04/07/2021)
  
 #### GALLERY
