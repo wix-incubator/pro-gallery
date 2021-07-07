@@ -40,7 +40,6 @@ function expectedStyles() {
     rotatingScatter: '',
     gridStyle: 0,
     placeGroupsLtr: false,
-    oneRow: false,
     showArrows: true,
     enableInfiniteScroll: true,
     thumbnailSpacings: 4,

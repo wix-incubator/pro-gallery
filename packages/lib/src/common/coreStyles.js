@@ -53,7 +53,7 @@ const coreStyles = {
   textBoxBorderWidth: 0,
   textBoxHeight: 200,
   textImageSpace: 10,
-  scrollDirection: 0,
+  scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   jsonStyleParams: '',
   //duplicated from lib

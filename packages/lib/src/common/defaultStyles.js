@@ -13,7 +13,6 @@ const defaultStyles = Object.assign({}, coreStyles, {
   scatter: 0,
   rotatingScatter: '',
   placeGroupsLtr: false,
-  oneRow: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   enableScroll: true,
