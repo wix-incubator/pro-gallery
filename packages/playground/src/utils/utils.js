@@ -55,6 +55,9 @@ export function mixAndSlice(array, length, startIdx = 0, customMetadata = {}) {
       item.metadata.title = (
         customMetadata.customTitle || `Item ${itemIdx}`
       ).replace('#', itemIdx);
+      item.metadata.alt = (
+        customMetadata.customAlt || `Item ${itemIdx}`
+      ).replace('#', itemIdx);
       item.metadata.description = customMetadata.loremDescription
         ? createLoremIpsum(rnd(80) + 20)
         : (customMetadata.customDescription || '').replace('#', itemIdx); //`Description #${result.length + 1}: ${createLoremIpsum(rnd(80) + 20)}`;
