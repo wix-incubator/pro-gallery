@@ -753,8 +753,6 @@ class SlideshowView extends GalleryComponent {
 
     let centeredIdx;
 
-    // const scrollPos = this.props.styleParams.isRTL ?
-    // this.props.galleryStructure.width - scrollLeft - this.props.dimensions.galleryWidth / 2 :
     const scrollPos = scrollLeft + this.props.dimensions.galleryWidth / 2;
 
     if (scrollPos === 0) {

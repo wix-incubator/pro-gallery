@@ -83,7 +83,6 @@ class DimensionsHelper {
 
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
-      //const offsetTop = this.styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL ? this.dimensions.offsetTop : 0;
       const dimensionFix = () =>
         this.styles.scrollDirection ===
         GALLERY_CONSTS.scrollDirection.HORIZONTAL

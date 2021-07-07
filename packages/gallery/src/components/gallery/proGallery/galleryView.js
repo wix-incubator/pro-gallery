@@ -175,7 +175,6 @@ class GalleryView extends GalleryComponent {
         style={{
           height: galleryHeight,
           overflowX: 'hidden',
-          //  width: this.props.dimensions.galleryWidth,
         }}
         onKeyDown={this.handleKeys}
       >
