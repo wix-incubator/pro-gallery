@@ -50,7 +50,7 @@ export class GalleryContainer extends React.Component {
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      gotFirstScrollEvent: false,
+      gotFirstScrollEvent: (props.currentIdx >= 0),
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
