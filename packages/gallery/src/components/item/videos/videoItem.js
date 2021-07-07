@@ -255,7 +255,9 @@ class VideoItem extends GalleryComponent {
   }
 
   getVideoContainerStyles() {
-    const videoContainerStyle = this.props.imageDimensions;
+    const videoContainerStyle = {
+      ...this.props.imageDimensions,
+    };
     if (
       utils.deviceHasMemoryIssues() ||
       this.state.ready ||
