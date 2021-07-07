@@ -578,11 +578,7 @@ class GalleryItem {
   }
 
   get alt() {
-    return this.altMetadata || this.title || this.description;
-  }
-
-  get altMetadata() {
-    return this.metadata.alt || '';
+    return this.metadata.alt || this.title || this.description || '';
   }
 
   set alt(value) {
