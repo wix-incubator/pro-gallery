@@ -1,3 +1,9 @@
+## [v3.1.38](https://pro-gallery-3-1-38.surge.sh) (07/07/2021)
+ 
+#### GALLERY
+ -  fix: use imageDimensions in video item and text item
+
+---
 ## [v3.1.37](https://pro-gallery-3-1-37.surge.sh) (07/07/2021)
  
 #### GALLERY
