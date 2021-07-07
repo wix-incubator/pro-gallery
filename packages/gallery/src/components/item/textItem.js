@@ -11,8 +11,9 @@ export default class TextItem extends GalleryComponent {
   }
 
   getTextDimensions() {
-    const { style, styleParams, cubeRatio } = this.props;
+    const { style, styleParams, cubeRatio, imageDimensions } = this.props;
     const isVerticalItem = style.ratio < cubeRatio - 0.01;
+    const { marginLeft, marginTop } = imageDimensions || {}
     //text dimensions include scaling
     const textHeight =
       (isVerticalItem
@@ -35,6 +36,8 @@ export default class TextItem extends GalleryComponent {
     return {
       width: style.maxWidth + 'px',
       height: style.maxHeight + 'px',
+      marginLeft,
+      marginTop,
       transformOrigin: '0 0',
       WebkitTransform: transform,
       MsTransform: transform,
