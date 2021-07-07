@@ -1,3 +1,12 @@
+## [v3.1.37](https://pro-gallery-3-1-37.surge.sh) (07/07/2021)
+ 
+#### GALLERY
+ -  fix: Navigation Arrows Missing When Navigating to Page with Slider Gallery
+
+#### OTHER
+ -  feat:added alt text 
+
+---
 ## [v3.1.36](https://pro-gallery-3-1-36.surge.sh) (06/07/2021)
  
 #### OTHER
