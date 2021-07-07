@@ -432,7 +432,7 @@ export default class LeanGallery extends React.Component {
                     'gallery-item-content',
                     'lean-gallery-image',
                   ].join(' ')}
-                  alt={get(item, 'title')}
+                  alt={get(item, 'alt')}
                   style={this.createImageStyle(imageWrapperStyle)}
                   onLoad={() =>
                     eventsListener(GALLERY_CONSTS.events.ITEM_LOADED, itemData)
