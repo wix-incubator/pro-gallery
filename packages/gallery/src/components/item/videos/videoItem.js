@@ -254,6 +254,23 @@ class VideoItem extends GalleryComponent {
     }
   }
 
+  getVideoContainerStyles() {
+    const videoContainerStyle = this.props.imageDimensions;
+    if (
+      utils.deviceHasMemoryIssues() ||
+      this.state.ready ||
+      !shouldCreateVideoPlaceholder(this.props.styleParams)
+    ) {
+      videoContainerStyle.backgroundColor = 'black';
+    } else {
+      videoContainerStyle.backgroundImage = `url(${this.props.createUrl(
+        GALLERY_CONSTS.urlSizes.RESIZED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      )})`;
+    }
+    return videoContainerStyle;
+  }
+
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
@@ -269,28 +286,13 @@ class VideoItem extends GalleryComponent {
       baseClassName += ' playedOnce';
     }
     // eslint-disable-next-line no-unused-vars
-    const imageDimensions = this.props.imageDimensions || {};
+
     const video = (
       <div
         className={baseClassName}
         data-hook="video_container-video-player-element"
         key={'video_container-' + this.props.id}
-        style={
-          utils.deviceHasMemoryIssues() ||
-          this.state.ready ||
-          !shouldCreateVideoPlaceholder(this.props.styleParams)
-            ? {
-                backgroundColor: 'black',
-                ...imageDimensions,
-              }
-            : {
-                backgroundImage: `url(${this.props.createUrl(
-                  GALLERY_CONSTS.urlSizes.RESIZED,
-                  GALLERY_CONSTS.urlTypes.HIGH_RES
-                )})`,
-                ...imageDimensions,
-              }
-        }
+        style={this.getVideoContainerStyles()}
       >
         {this.createPlayerElement()}
         {this.props.videoPlayButton}
