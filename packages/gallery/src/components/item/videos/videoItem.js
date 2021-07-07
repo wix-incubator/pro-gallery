@@ -269,8 +269,7 @@ class VideoItem extends GalleryComponent {
       baseClassName += ' playedOnce';
     }
     // eslint-disable-next-line no-unused-vars
-    const { marginLeft, marginTop, ...restOfDimensions } =
-      this.props.imageDimensions || {};
+    const imageDimensions = this.props.imageDimensions || {};
     const video = (
       <div
         className={baseClassName}
@@ -280,13 +279,16 @@ class VideoItem extends GalleryComponent {
           utils.deviceHasMemoryIssues() ||
           this.state.ready ||
           !shouldCreateVideoPlaceholder(this.props.styleParams)
-            ? { backgroundColor: 'black' }
+            ? {
+                backgroundColor: 'black',
+                ...imageDimensions,
+              }
             : {
                 backgroundImage: `url(${this.props.createUrl(
                   GALLERY_CONSTS.urlSizes.RESIZED,
                   GALLERY_CONSTS.urlTypes.HIGH_RES
                 )})`,
-                ...restOfDimensions,
+                ...imageDimensions,
               }
         }
       >
