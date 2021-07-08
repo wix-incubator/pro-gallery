@@ -180,6 +180,9 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Form.Item label="Generate Random Description" labelAlign="left">
                 <Switch checked={!!gallerySettings.loremDescription} onChange={e => setGallerySettings({ loremDescription: e })} />
               </Form.Item>
+              <Form.Item label="Custom Alt" help="use the # symbol for the item index">
+              <Input defaultValue={gallerySettings.customAlt || ''} onChange={e => setGallerySettings({ customAlt: e.target.value }) } />
+              </Form.Item>
             </Form>
           </Collapse.Panel>
           <Collapse.Panel header="Styles" key="styles">
