@@ -1,6 +1,5 @@
 export interface GalleryProps {
   domId?: string;
-  // dimensions: Dimensions;
   [key: string]: any;
 }
 
