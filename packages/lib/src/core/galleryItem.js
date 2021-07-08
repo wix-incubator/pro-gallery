@@ -230,8 +230,8 @@ class GalleryItem {
         focalPoint
       );
 
-    urls[URL_TYPES.SEO] = () =>
-      urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, `.${this.fileType}`); // SEO needs the original file type (jpg or png, etc..) instead of .webp, replace does not mutate
+    // urls[URL_TYPES.SEO] = () =>
+    //   urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, `.${this.fileType}`); // SEO needs the original file type (jpg or png, etc..) instead of .webp, replace does not mutate
 
     return urls;
   }
