@@ -46,14 +46,14 @@ class VideoScrollHelper {
     videoPlay,
     videoLoop,
     itemClick,
-    oneRow,
+    scrollDirection,
   }) {
     this.galleryWidth = dimensionsHelper.getGalleryDimensions().galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
     this.videoLoop = videoLoop;
     this.itemClick = itemClick;
-    this.oneRow = oneRow;
+    this.scrollDirection = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
     this.videoItems = [];
     galleryStructure.galleryItems.forEach((item) => {
@@ -276,7 +276,7 @@ class VideoScrollHelper {
       padding: videoPlayVerticalTolerance,
     });
     let visibleHorizontally;
-    if (!this.oneRow) {
+    if (this.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
       visibleHorizontally = true;
     } else {
       visibleHorizontally = isWithinPaddingHorizontally({

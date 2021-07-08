@@ -7,7 +7,9 @@ export default {
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical"), set "Layout Orientation" to "Columns" and set "Max Group Size" to "1".',
   isRelevant: (styleParams) =>
-    (styleParams.isVertical || styleParams.oneRow) &&
+    (styleParams.isVertical ||
+      styleParams.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL) &&
     styleParams.groupSize === 1,
   type: INPUT_TYPES.MULTISELECT,
   default: GALLERY_CONSTS.placements.SHOW_ON_HOVER,

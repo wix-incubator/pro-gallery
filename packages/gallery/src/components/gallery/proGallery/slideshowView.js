@@ -486,7 +486,7 @@ class SlideshowView extends GalleryComponent {
 
     let width = this.props.styleParams.thumbnailSize;
     let height = this.props.styleParams.thumbnailSize;
-    let oneRow;
+    let horizontalThumbnails;
     let numOfThumbnails;
     let numOfWholeThumbnails;
 
@@ -499,7 +499,7 @@ class SlideshowView extends GalleryComponent {
         height =
           this.props.styleParams.thumbnailSize +
           this.props.styleParams.thumbnailSpacings;
-        oneRow = true;
+        horizontalThumbnails = true;
         numOfThumbnails = Math.ceil(
           width / this.props.styleParams.thumbnailSize
         );
@@ -517,7 +517,7 @@ class SlideshowView extends GalleryComponent {
         width =
           this.props.styleParams.thumbnailSize +
           2 * this.props.styleParams.thumbnailSpacings;
-        oneRow = false;
+        horizontalThumbnails = false;
         numOfThumbnails = Math.ceil(
           height / this.props.styleParams.thumbnailSize
         );
@@ -653,7 +653,7 @@ class SlideshowView extends GalleryComponent {
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
-          (oneRow ? ' one-row hide-scrollbars ' : '') +
+          (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
           (this.props.styleParams.isRTL ? ' rtl ' : ' ltr ') +
           (this.props.styleParams.isAccessible ? ' accessible ' : '')
         }
@@ -686,7 +686,7 @@ class SlideshowView extends GalleryComponent {
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               )})`,
             };
-            const thumbnailOffset = oneRow
+            const thumbnailOffset = horizontalThumbnails
               ? {
                   [this.props.styleParams.isRTL ? 'right' : 'left']:
                     thumbnailSize * idx + 2 * idx * thumbnailSpacings,
@@ -877,7 +877,7 @@ class SlideshowView extends GalleryComponent {
   createNavArrows() {
     const {
       isRTL,
-      oneRow,
+      scrollDirection,
       isSlideshow,
       slideshowInfoSize,
       imageMargin,
@@ -900,7 +900,8 @@ class SlideshowView extends GalleryComponent {
           0
         );
         const isAllItemsFitsGalleryWidth =
-          oneRow && this.props.container.galleryWidth >= allGroupsWidth;
+          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+          this.props.container.galleryWidth >= allGroupsWidth;
         return isAllItemsFitsGalleryWidth;
       });
 
@@ -934,7 +935,9 @@ class SlideshowView extends GalleryComponent {
       }px - ${infoSpace / 2}px)`,
     };
 
-    const arrowsPos = oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
+    const arrowsPos =
+      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
     // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
@@ -1062,7 +1065,8 @@ class SlideshowView extends GalleryComponent {
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
     const galleryStyleForExternalArrows =
-      this.props.styleParams.oneRow &&
+      this.props.styleParams.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       this.props.styleParams.arrowsPosition ===
         GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? {

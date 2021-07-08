@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { window, utils } from 'pro-gallery-lib';
+import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { GalleryComponent } from '../../galleryComponent';
@@ -165,7 +165,10 @@ class GalleryView extends GalleryComponent {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles ' +
-          (styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') +
+          (styleParams.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.HORIZONTAL
+            ? ' one-row slider hide-scrollbars '
+            : '') +
           (styleParams.isAccessible ? ' accessible ' : '') +
           (styleParams.isRTL ? ' rtl ' : ' ltr ')
         }

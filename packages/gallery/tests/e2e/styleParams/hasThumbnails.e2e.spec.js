@@ -19,7 +19,7 @@ describe('hasThumbnails - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       hasThumbnails: false,
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -30,6 +30,7 @@ describe('hasThumbnails - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       hasThumbnails: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -40,7 +41,7 @@ describe('hasThumbnails - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       hasThumbnails: true,
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

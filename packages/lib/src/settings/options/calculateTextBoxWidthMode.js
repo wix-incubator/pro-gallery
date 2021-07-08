@@ -10,7 +10,7 @@ export default {
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&
-    !styleParams.oneRow &&
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     (styleParams.titlePlacement ===
       GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT ||
       styleParams.titlePlacement ===

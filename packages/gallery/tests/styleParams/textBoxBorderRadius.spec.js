@@ -25,7 +25,6 @@ describe('styleParam - textBoxBorderRadius', () => {
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
       textBoxBorderRadius: 10,
     });
     driver.mount.proGallery(initialProps);
@@ -44,7 +43,6 @@ describe('styleParam - textBoxBorderRadius', () => {
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
       textBoxBorderWidth: 10,
     });
     driver.mount.proGallery(initialProps);

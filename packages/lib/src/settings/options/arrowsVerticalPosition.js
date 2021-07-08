@@ -4,7 +4,9 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Navigation Arrows Vertical Position',
-  isRelevant: (styleParams) => styleParams.oneRow && styleParams.showArrows,
+  isRelevant: (styleParams) =>
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    styleParams.showArrows,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.OPTIONS,

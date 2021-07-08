@@ -7,7 +7,6 @@ export const fixedStyles = {
   cubeType: 'fill',
   cubeImages: true,
   cubeRatio: 0.35,
-  oneRow: true,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   isVertical: false,
   groupSize: 1,

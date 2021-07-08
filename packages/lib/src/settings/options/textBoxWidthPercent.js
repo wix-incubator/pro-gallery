@@ -9,7 +9,7 @@ export default {
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&
-    !styleParams.oneRow &&
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     styleParams.calculateTextBoxWidthMode ===
       GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT &&
     GALLERY_CONSTS.hasHorizontalPlacement(styleParams.titlePlacement),
