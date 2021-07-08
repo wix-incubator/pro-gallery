@@ -8,7 +8,7 @@ describe('defaultStyles', () => {
     expect(_.isEqual(actual, expectedStyles())).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expectedStyles()).length);
-    expect(actualLength).eq(89);
+    expect(actualLength).eq(90);
   });
 });
 
@@ -40,6 +40,7 @@ function expectedStyles() {
     rotatingScatter: '',
     gridStyle: 0,
     placeGroupsLtr: false,
+    oneRow: false,
     showArrows: true,
     enableInfiniteScroll: true,
     thumbnailSpacings: 4,
