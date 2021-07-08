@@ -255,22 +255,23 @@ class VideoItem extends GalleryComponent {
   }
 
   getVideoContainerStyles() {
+    function getBackground() {
+      return utils.deviceHasMemoryIssues() ||
+        this.state.ready ||
+        !shouldCreateVideoPlaceholder(this.props.styleParams)
+        ? { backgroundColor: 'black' }
+        : {
+            backgroundImage: `url(${this.props.createUrl(
+              GALLERY_CONSTS.urlSizes.RESIZED,
+              GALLERY_CONSTS.urlTypes.HIGH_RES
+            )})`,
+          };
+    }
     const videoContainerStyle = {
       ...this.props.imageDimensions,
     };
-    if (
-      utils.deviceHasMemoryIssues() ||
-      this.state.ready ||
-      !shouldCreateVideoPlaceholder(this.props.styleParams)
-    ) {
-      videoContainerStyle.backgroundColor = 'black';
-    } else {
-      videoContainerStyle.backgroundImage = `url(${this.props.createUrl(
-        GALLERY_CONSTS.urlSizes.RESIZED,
-        GALLERY_CONSTS.urlTypes.HIGH_RES
-      )})`;
-    }
-    return videoContainerStyle;
+    const background = getBackground();
+    return Object.assign({}, videoContainerStyle, ...background);
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//
