@@ -9,6 +9,7 @@ class VideoItem extends GalleryComponent {
     super(props);
 
     this.pause = this.pause.bind(this);
+    this.getStyle = this.getStyle.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
 
@@ -256,6 +257,27 @@ class VideoItem extends GalleryComponent {
 
   //-----------------------------------------| RENDER |--------------------------------------------//
 
+  getStyle() {
+    function placeHolderObjectValue() {
+      const backgroundValue = !shouldCreateVideoPlaceholder(
+        this.props.styleParams
+      )
+        ? { backgroundColor: 'black' }
+        : {
+            backgroundImage: `url(${this.props.createUrl(
+              GALLERY_CONSTS.urlSizes.RESIZED,
+              GALLERY_CONSTS.urlTypes.HIGH_RES
+            )})`,
+          };
+      const imageDimensions = this.props.imageDimensions || {};
+      return Object.assign({}, { ...imageDimensions }, backgroundValue);
+    }
+    return (
+      utils.deviceHasMemoryIssues() ||
+      this.state.ready ||
+      placeHolderObjectValue()
+    );
+  }
   render() {
     const { videoPlaceholder, hover } = this.props;
 
@@ -269,28 +291,12 @@ class VideoItem extends GalleryComponent {
       baseClassName += ' playedOnce';
     }
     // eslint-disable-next-line no-unused-vars
-    const imageDimensions = this.props.imageDimensions || {};
     const video = (
       <div
         className={baseClassName}
         data-hook="video_container-video-player-element"
         key={'video_container-' + this.props.id}
-        style={
-          utils.deviceHasMemoryIssues() ||
-          this.state.ready ||
-          !shouldCreateVideoPlaceholder(this.props.styleParams)
-            ? {
-                backgroundColor: 'black',
-                ...imageDimensions,
-              }
-            : {
-                backgroundImage: `url(${this.props.createUrl(
-                  GALLERY_CONSTS.urlSizes.RESIZED,
-                  GALLERY_CONSTS.urlTypes.HIGH_RES
-                )})`,
-                ...imageDimensions,
-              }
-        }
+        style={this.getStyle()}
       >
         {this.createPlayerElement()}
         {this.props.videoPlayButton}
