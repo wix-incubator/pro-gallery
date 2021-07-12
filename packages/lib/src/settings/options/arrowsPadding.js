@@ -4,7 +4,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 export default {
   title: 'Navigation Arrows Padding',
   isRelevant: (styleParams) =>
-    styleParams.oneRow &&
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     styleParams.showArrows &&
     styleParams.arrowsPosition === GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
   isRelevantDescription:

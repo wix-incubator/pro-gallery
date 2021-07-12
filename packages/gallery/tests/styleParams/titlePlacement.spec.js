@@ -25,7 +25,7 @@ describe('styleParam - titlePlacement', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     });
     driver.mount.proGallery(initialProps);
@@ -38,7 +38,7 @@ describe('styleParam - titlePlacement', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     driver.mount.proGallery(initialProps);
@@ -51,7 +51,7 @@ describe('styleParam - titlePlacement', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
     });
     driver.mount.proGallery(initialProps);

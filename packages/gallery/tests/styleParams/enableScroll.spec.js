@@ -18,8 +18,7 @@ describe('styleParam - enableScroll', () => {
   it('should set class "slider" when "enableScroll" is "true"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true,
-      scrollDirection: 1,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableScroll: true,
     });
     driver.mount.proGallery(initialProps);
@@ -31,8 +30,7 @@ describe('styleParam - enableScroll', () => {
   it('should not set class "slider" when "enableScroll" is "false"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      oneRow: true,
-      scrollDirection: 1,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableScroll: false,
     });
 

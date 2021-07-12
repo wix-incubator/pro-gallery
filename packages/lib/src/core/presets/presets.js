@@ -52,6 +52,7 @@ import {
   createStyles as emptyStyles,
 } from './emptyGallery';
 import { createStyles as designedPresetStyles } from './designedPresetGallery';
+
 //#endregion Imports
 
 const addPresetStyles = (styles) => {

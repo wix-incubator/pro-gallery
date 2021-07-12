@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
-import { featureManager } from './versionsHelper';
-import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
   hasVerticalPlacement,
   hasHoverPlacement,
@@ -17,6 +15,7 @@ import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -36,11 +35,67 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
   }
 };
 
+export const processNumberOfImagesPerRow = (styles) => {
+  //This will be used in the masonry and grid presets
+  if (
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+      styles.isVertical //relevant for masonry, in grid its fixed to true.
+  ) {
+    const res = {}
+
+    res.fixedColumns =
+      String(styles.gridStyle) === '1'
+        ? Number(styles.numberOfImagesPerRow)
+        : 0;
+    res.groupTypes = '1';
+    res.groupSize = 1;
+    res.collageAmount = 0;
+    res.collageDensity = 0;
+    // }
+    return res;
+  } else {
+    return {};
+  }
+}
+
+export const processNumberOfImagesPerCol = (styles) => {
+    //This will be used in the grid preset
+  if (
+    !utils.isUndefined(styles.numberOfImagesPerCol) &&
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+  ) {
+    const res = {}
+    res.fixedColumns = 0;
+    switch (styles.numberOfImagesPerCol) {
+      case 1:
+      default:
+        res.groupTypes = '1';
+        res.groupSize = 1;
+        res.collageAmount = 0;
+        res.collageDensity = 0;
+        break;
+      case 2:
+        res.groupTypes = '2v';
+        res.groupSize = 2;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
+        break;
+      case 3:
+        res.groupTypes = '3v';
+        res.groupSize = 3;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
+        break;
+    }
+    return res
+  } else {
+    return {};
+  }
+
+}
+
 function processLayouts(styles, customExternalInfoRendererExists) {
   const processedStyles = styles;
-  processedStyles.oneRow =
-    processedStyles.oneRow ||
-    processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
 
   const isDesignedPreset =
     processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
@@ -88,7 +143,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (
     (!processedStyles.isVertical ||
       processedStyles.groupSize > 1 ||
-      (processedStyles.oneRow === true && !isDesignedPreset)) &&
+      (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !isDesignedPreset)) &&
     !processedStyles.isSlider &&
     !processedStyles.isColumns
   ) {
@@ -125,7 +180,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (processedStyles.itemEnableShadow) {
-    if (processedStyles.oneRow) {
+    if (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       processedStyles.itemEnableShadow = false;
     } else {
       // add galleryMargin to allow the shadow to be seen
@@ -141,8 +196,8 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles.arrowsPadding = 0;
   }
 
-  if (processedStyles.oneRow) {
-    // if oneRow is true, use horizontal layouts only
+  if (processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    // in horizontal galleries allow only horizontal orientation
     processedStyles.isVertical = false;
     // processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
   } else {
@@ -150,7 +205,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   }
 
   if (
-    !processedStyles.oneRow ||
+    processedStyles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
     processedStyles.groupSize > 1 ||
     !processedStyles.cubeImages
   ) {
@@ -178,56 +233,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     }
   }
 
-  if (
-    (processedStyles.isGrid && !processedStyles.oneRow) ||
-    (featureManager.supports.fixedColumnsInMasonry &&
-      processedStyles.isMasonry &&
-      processedStyles.isVertical)
-  ) {
-    // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
-    // If toggle is for Items per row, fill the fixedColumns with the number of items
-    // If toggle is responsive, make fixedColumns to be 0 or undefined;
-    // Show the new controls only on Vertical scroll (one ow is false)
-    processedStyles.fixedColumns =
-      String(processedStyles.gridStyle) === '1'
-        ? Number(processedStyles.numberOfImagesPerRow)
-        : 0;
-    processedStyles.groupTypes = '1';
-    processedStyles.groupSize = 1;
-    processedStyles.collageAmount = 0;
-    processedStyles.collageDensity = 0;
-    // }
-  }
-
-  // TODO this needs to split, need to leave the wixStyles assign in the statics section
-  if (
-    !utils.isUndefined(processedStyles.numberOfImagesPerCol) &&
-    processedStyles.isGrid &&
-    processedStyles.oneRow
-  ) {
-    processedStyles.fixedColumns = 0;
-    switch (processedStyles.numberOfImagesPerCol) {
-      case 1:
-      default:
-        processedStyles.groupTypes = '1';
-        processedStyles.groupSize = 1;
-        processedStyles.collageAmount = 0;
-        processedStyles.collageDensity = 0;
-        break;
-      case 2:
-        processedStyles.groupTypes = '2v';
-        processedStyles.groupSize = 2;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
-        break;
-      case 3:
-        processedStyles.groupTypes = '3v';
-        processedStyles.groupSize = 3;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
-        break;
-    }
-  }
 
   // returned to the statics because it was the definition of the object.
   // processedStyles.sharpParams = {
@@ -335,9 +340,9 @@ function shouldShowTextRightOrLeft(
   styleParams,
   customExternalInfoRendererExists
 ) {
-  const { oneRow, isVertical, groupSize, titlePlacement } = styleParams;
+  const { scrollDirection, isVertical, groupSize, titlePlacement } = styleParams;
 
-  const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
+  const allowedByLayoutConfig = scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && isVertical && groupSize === 1;
 
   return (
     allowedByLayoutConfig &&
