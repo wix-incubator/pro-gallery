@@ -13,7 +13,7 @@ export default class TextItem extends GalleryComponent {
   getTextDimensions() {
     const { style, styleParams, cubeRatio, imageDimensions } = this.props;
     const isVerticalItem = style.ratio < cubeRatio - 0.01;
-    const { marginLeft, marginTop } = imageDimensions || {};
+    const { marginLeft, marginTop } = imageDimensions;
     //text dimensions include scaling
     const textHeight =
       (isVerticalItem
@@ -72,6 +72,7 @@ export default class TextItem extends GalleryComponent {
       ...htmlParam,
       ...changeBgColor,
     };
+    const { marginLeft, marginTop } = imageDimensions;
     const itemContentStyle = {
       height:
         imageDimensions && !this.props.isPrerenderMode
@@ -79,6 +80,8 @@ export default class TextItem extends GalleryComponent {
           : 'inherit',
       backgroundColor:
         styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit',
+      marginLeft,
+      marginTop
     };
 
     if (imageDimensions && imageDimensions.borderRadius) {
