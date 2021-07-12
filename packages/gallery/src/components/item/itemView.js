@@ -387,6 +387,7 @@ class ItemView extends GalleryComponent {
       'createUrl',
       'settings',
       'isPrerenderMode',
+      'isTransparent'
     ]);
 
     return (
