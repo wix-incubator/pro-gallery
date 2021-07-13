@@ -33,7 +33,8 @@ export class Item {
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
-      this.useMaxDimensions = styleParams.useMaxDimensions;
+      this.useMaxDimensions =
+        styleParams.useMaxDimensions && this.itemType !== 'text';
     }
 
     this._groupOffset = {
@@ -261,6 +262,14 @@ export class Item {
 
   get seed() {
     return this.dto.seed || utils.hashToInt(this.hash);
+  }
+
+  get metadata() {
+    return this.dto.metadata || this.dto.metaData || {};
+  }
+
+  get itemType() {
+    return this.metadata.type || 'image';
   }
 
   get maxWidth() {
