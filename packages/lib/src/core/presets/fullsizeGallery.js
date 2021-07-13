@@ -8,7 +8,6 @@ export const fixedStyles = {
   cubeImages: true,
   cubeRatio: '100%/100%',
   cubeType: 'fill',
-  oneRow: true,
   titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
   scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
   galleryMargin: 0,

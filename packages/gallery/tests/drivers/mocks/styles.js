@@ -2,7 +2,6 @@ const styleParams = {
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
-  oneRow: false,
   scrollDirection: 1,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 2,
@@ -48,6 +47,7 @@ const styleParams = {
   arrowsPosition: 0,
   arrowsVerticalPosition: 'ITEM_CENTER',
   arrowsSize: 23,
+  arrowsPadding: 23,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
   // titleFontExpand: font_5

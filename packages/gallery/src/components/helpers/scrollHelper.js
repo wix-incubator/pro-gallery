@@ -1,4 +1,5 @@
 import { utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -8,7 +9,7 @@ export function scrollToItemImp(scrollParams) {
     horizontalElement,
     scrollingElement,
     isRTL,
-    oneRow,
+    scrollDirection,
     galleryWidth,
     galleryHeight,
     totalWidth,
@@ -21,7 +22,7 @@ export function scrollToItemImp(scrollParams) {
 
   const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
-  if (oneRow) {
+  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
     from = horizontalElement.scrollLeft * rtlFix;
     to = from + (itemIdx * galleryWidth) / 2;
   } else {
@@ -36,9 +37,10 @@ export function scrollToItemImp(scrollParams) {
     }
 
     const item = items.find((itm) => itm.idx === itemIdx);
-    to = oneRow
-      ? utils.get(item, 'offset.left')
-      : utils.get(item, 'offset.top');
+    to =
+      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? utils.get(item, 'offset.left')
+        : utils.get(item, 'offset.top');
 
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, item);
@@ -49,7 +51,7 @@ export function scrollToItemImp(scrollParams) {
       return new Promise((res) => res());
     }
 
-    if (oneRow) {
+    if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the item in the middle of the component
       const diff = (galleryWidth - item.width) / 2;
       if (diff > 0) {
@@ -64,7 +66,7 @@ export function scrollToItemImp(scrollParams) {
       }
     }
   }
-  if (oneRow) {
+  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
     return horizontalCssScrollTo({
       scroller: horizontalElement,
       from: Math.round(from),
@@ -88,7 +90,7 @@ export function scrollToGroupImp(scrollParams) {
     horizontalElement,
     scrollingElement,
     isRTL,
-    oneRow,
+    scrollDirection,
     galleryWidth,
     galleryHeight,
     totalWidth,
@@ -100,7 +102,7 @@ export function scrollToGroupImp(scrollParams) {
   } = scrollParams;
 
   //default = scroll by half the container size
-  if (oneRow) {
+  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
     from = horizontalElement.scrollLeft;
     if (isRTL) {
       to = from - (groupIdx * galleryWidth) / 2;
@@ -120,7 +122,10 @@ export function scrollToGroupImp(scrollParams) {
     }
 
     const group = groups.find((grp) => grp.idx === groupIdx);
-    to = oneRow ? utils.get(group, 'left') : utils.get(group, 'top');
+    to =
+      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? utils.get(group, 'left')
+        : utils.get(group, 'top');
 
     if (group && isRTL) {
       to += group.width;
@@ -135,7 +140,7 @@ export function scrollToGroupImp(scrollParams) {
       return new Promise((res) => res());
     }
 
-    if (oneRow) {
+    if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the group in the middle of the component
       const diff = (galleryWidth - group.width) / 2;
       if (diff > 0) {
@@ -155,7 +160,7 @@ export function scrollToGroupImp(scrollParams) {
       }
     }
   }
-  if (oneRow) {
+  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
     return horizontalCssScrollTo({
       scroller: horizontalElement,
       from: Math.round(from),

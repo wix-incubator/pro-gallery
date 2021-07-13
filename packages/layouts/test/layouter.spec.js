@@ -4,6 +4,7 @@ import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 const getItems = (count) => deepFreeze(testImages.slice(0, count));
 const getGroupCount = (layout) =>
@@ -20,7 +21,7 @@ describe('Layouter', () => {
   beforeEach(() => {
     const items = getItems();
     styleParams = {
-      oneRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       isVertical: false,
       targetItemSize: 200,
       groupSize: 3,
@@ -383,18 +384,18 @@ describe('Layouter', () => {
       expect(gallery.columns.length).to.equal(1);
     });
 
-    // oneRow
-    it('should create one long row of items if oneRow is true', () => {
+    // scrollDirection
+    it('should create one long row of items if scrollDirection is horizontal', () => {
       const items = getItems(100);
       container.galleryHeight = 500;
 
-      styleParams.oneRow = false;
+      styleParams.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
       styleParams.imageMargin = 0;
 
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.height).to.be.above(container.galleryHeight);
 
-      styleParams.oneRow = true;
+      styleParams.scrollDirection = GALLERY_CONSTS.scrollDirection.HORIZONTAL;
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.height).to.equal(container.galleryHeight);
     });

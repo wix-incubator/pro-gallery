@@ -25,7 +25,6 @@ describe('styleParam - textBoxHeight', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       textBoxHeight: 250,
     });

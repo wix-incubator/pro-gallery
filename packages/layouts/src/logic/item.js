@@ -33,6 +33,7 @@ export class Item {
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
+      this.useMaxDimensions = styleParams.useMaxDimensions;
     }
 
     this._groupOffset = {
@@ -228,6 +229,10 @@ export class Item {
             ? this.calcPinOffset(this._group.width, 'left')
             : this._group.width - this.outerWidth) || 0,
     };
+    const { fixTop = 0, fixLeft = 0 } = this.dimensions;
+    offset.innerTop = fixTop;
+    offset.innerLeft = fixLeft;
+
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
 
@@ -274,7 +279,7 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
+    return this.style.orgWidth || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
 
   get width() {
@@ -288,7 +293,17 @@ export class Item {
   }
 
   set width(w) {
-    this.style.cubedWidth = this.style.width = Math.max(1, w);
+    // prettier-ignore
+    this.style.cubedWidth =
+    // prettier-ignore
+      this.style.orgWidth =
+    // prettier-ignore
+      this.style.width =
+    // prettier-ignore
+        Math.max(1, w);
+
+    const { fixLeft = 0 } = this.dimensions;
+    this.style.innerWidth = this.style.width - 2 * fixLeft;
   }
 
   get outerHeight() {
@@ -296,7 +311,7 @@ export class Item {
   }
 
   get orgHeight() {
-    return this.style.height || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.orgHeight || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get height() {
@@ -310,7 +325,17 @@ export class Item {
   }
 
   set height(h) {
-    this.style.cubedHeight = this.style.height = Math.max(1, h);
+    // prettier-ignore
+    this.style.cubedHeight =
+    // prettier-ignore
+      this.style.orgHeight =
+    // prettier-ignore
+      this.style.height =
+    // prettier-ignore
+        Math.max(1, h);
+
+    const { fixTop = 0 } = this.dimensions;
+    this.style.innerHeight = this.style.height - 2 * fixTop;
   }
 
   get maxHeight() {
@@ -331,35 +356,42 @@ export class Item {
   }
 
   get dimensions() {
-    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
-    const imageMarginLeft = Math.round(
-      (this.height * this.ratio - this.width) / -2
-    );
-    const imageMarginTop = Math.round(
-      (this.width / this.ratio - this.height) / -2
-    );
     const isGridFit = this.cubeImages && this.cubeType === 'fit';
 
+    let targetWidth = this.width;
+    let targetHeight = this.height;
+
+    const setTargetDimensions = (setByWidth, ratio) => {
+      if (setByWidth) {
+        targetWidth = this.useMaxDimensions
+          ? Math.min(this.width, this.maxWidth)
+          : this.width;
+        targetHeight = targetWidth / ratio;
+      } else {
+        targetHeight = this.useMaxDimensions
+          ? Math.min(this.height, this.maxHeight)
+          : this.height;
+        targetWidth = targetHeight * ratio;
+      }
+    };
+
+    const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
     if (isGridFit) {
-      return isLandscape
-        ? {
-            height: this.height - 2 * imageMarginTop,
-            width: this.width,
-            marginTop: imageMarginTop,
-            marginLeft: 0,
-          }
-        : {
-            width: this.width - 2 * imageMarginLeft,
-            height: this.height,
-            marginLeft: imageMarginLeft,
-            marginTop: 0,
-          };
+      setTargetDimensions(isLandscape, this.ratio);
+    } else if (
+      this.useMaxDimensions &&
+      (this.width > this.maxWidth || this.height > this.maxHeight)
+    ) {
+      if (this.cubeImages) {
+        setTargetDimensions(!isLandscape, this.cubeRatio);
+      } else {
+        setTargetDimensions(!isLandscape, this.ratio);
+      }
     }
 
     return {
-      width: this.width,
-      height: this.height,
+      fixTop: (this.height - targetHeight) / 2,
+      fixLeft: (this.width - targetWidth) / 2,
     };
   }
 

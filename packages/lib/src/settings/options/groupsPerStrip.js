@@ -1,9 +1,10 @@
 import { INPUT_TYPES } from '../utils/constants';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Groups per Row',
   isRelevant: (styleParams) =>
-    !styleParams.oneRow &&
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     !styleParams.isVertical &&
     styleParams.gridStyle === 1,
   isRelevantDescription:

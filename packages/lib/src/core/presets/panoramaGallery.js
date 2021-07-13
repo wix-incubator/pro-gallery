@@ -12,7 +12,6 @@ export const fixedStyles = {
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
 
   galleryType: 'Columns',
-  oneRow: false,
   fixedColumns: 1,
   enableScroll: true,
   isGrid: false,

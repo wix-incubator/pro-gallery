@@ -213,12 +213,12 @@ class ItemView extends GalleryComponent {
       target &&
       this.props.styleParams.itemClick === 'link'
     );
-    const shouldUseDirectLinkMobileSecondClick =
+    const shouldUseDirectLinkOnMobile =
       this.shouldShowHoverOnMobile() &&
       this.isClickOnCurrentHoveredItem() &&
       useDirectLink;
 
-    if (shouldUseDirectLinkMobileSecondClick) {
+    if (shouldUseDirectLinkOnMobile) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
       return true;
     }
@@ -228,7 +228,9 @@ class ItemView extends GalleryComponent {
     return false;
   };
 
-  isClickOnCurrentHoveredItem = () => this.state.isCurrentHover;
+  isClickOnCurrentHoveredItem = () => this.state.isCurrentHover ||  // this single item was already hovered.
+  this.props.styleParams.hoveringBehaviour ===
+  GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE; // all the items are always 'already' hovered
 
   handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
@@ -344,49 +346,6 @@ class ItemView extends GalleryComponent {
 
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
-  getImageDimensions() {
-    //image dimensions are for images in grid fit - placing the image with positive margins to show it within the square
-    const { styleParams, cubeRatio, style } = this.props;
-    const isLandscape = style.ratio >= cubeRatio; //relative to container size
-    const imageMarginLeft = Math.round(
-      (style.height * style.ratio - style.width) / -2
-    );
-    const imageMarginTop = Math.round(
-      (style.width / style.ratio - style.height) / -2
-    );
-    const isGridFit = styleParams.cubeImages && styleParams.cubeType === 'fit';
-
-    let dimensions = {};
-
-    if (!isGridFit) {
-      dimensions = {
-        width: style.width,
-        height: style.height,
-      };
-    } else if (isGridFit && isLandscape) {
-      dimensions = {
-        //landscape
-        height: style.height - 2 * imageMarginTop,
-        width: style.width,
-        margin: `${imageMarginTop}px 0`,
-      };
-    } else if (isGridFit && !isLandscape) {
-      dimensions = {
-        //portrait
-        width: style.width - 2 * imageMarginLeft,
-        height: style.height,
-        margin: `0 ${imageMarginLeft}px`,
-      };
-    }
-    if (
-      styleParams.itemBorderRadius &&
-      styleParams.imageInfoType !== GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND
-    ) {
-      dimensions.borderRadius = styleParams.itemBorderRadius + 'px';
-    }
-    return dimensions;
-  }
-
   getItemHover(imageDimensions) {
     const { customHoverRenderer, ...props } = this.props;
     const shouldHover = this.shouldHover();
@@ -428,6 +387,7 @@ class ItemView extends GalleryComponent {
       'createUrl',
       'settings',
       'isPrerenderMode',
+      'isTransparent'
     ]);
 
     return (
@@ -489,21 +449,13 @@ class ItemView extends GalleryComponent {
   }
 
   getItemInner() {
-    const { styleParams, type } = this.props;
+    const { styleParams, type, style, offset } = this.props;
     let itemInner;
-    const imageDimensions = this.getImageDimensions();
-    const { width, height, margin } = imageDimensions;
 
-    const itemStyles = { width, height };
-    const marginVal =
-      margin && Number(margin.replace('0 ', '').replace('px', ''));
-    const fitInfoStyles = marginVal
-      ? {
-          width: `calc(100% + ${marginVal * 2}px)`,
-          margin: `0 -${marginVal}px`,
-        }
-      : {};
+    const { width, height, innerWidth, innerHeight } = style;
+    const { innerTop, innerLeft } = offset;
 
+    const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
     let itemHover = null;
     if (this.shouldHover() || styleParams.isSlideshow) {
       itemHover = this.getItemHover(itemStyles);
@@ -535,7 +487,6 @@ class ItemView extends GalleryComponent {
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
         bottom: `-${styleParams.slideshowInfoSize}px`,
-        ...fitInfoStyles,
         ...slideAnimationStyles,
         transition: 'none',
       };
@@ -712,7 +663,7 @@ class ItemView extends GalleryComponent {
       styleParams,
       settings = {},
     } = this.props;
-    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } =
+    const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
       styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
@@ -722,7 +673,10 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin: oneRow ? imageMargin / 2 + 'px' : 0,
+      margin:
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? imageMargin / 2 + 'px'
+          : 0,
       cursor:
         itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
         (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
@@ -798,7 +752,7 @@ class ItemView extends GalleryComponent {
 
   getItemWrapperStyles() {
     const { styleParams, style, type } = this.props;
-    const height = style.height;
+    const { height, width} = style;
     const styles = {};
     if (type === 'text') {
       styles.backgroundColor =
@@ -808,14 +762,12 @@ class ItemView extends GalleryComponent {
         (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
         'transparent';
     }
-    styles.margin = -styleParams.itemBorderWidth + 'px';
+
     styles.height = height + 'px';
-
-    const imageDimensions = this.getImageDimensions();
-
+    styles.width = width + 'px';
+    styles.margin = -styleParams.itemBorderWidth + 'px';
     const itemWrapperStyles = {
       ...styles,
-      ...imageDimensions,
       ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
     };
 

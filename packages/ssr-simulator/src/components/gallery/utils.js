@@ -27,7 +27,6 @@ export const defaultStyleParams = {
   rotatingScatter: '',
   gridStyle: 0,
   placeGroupsLtr: false,
-  oneRow: false,
   showArrows: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
@@ -49,11 +48,12 @@ export const defaultStyleParams = {
   fullscreen: true,
   videoPlay: Consts.videoPlay.HOVER,
   scrollAnimation: Consts.scrollAnimations.NO_EFFECT,
-  scrollDirection: 0,
+  scrollDirection: Consts.scrollDirection.VERTICAL,
   overlayAnimation: Consts.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
   arrowsVerticalPosition: Consts.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
+  arrowsPadding: 23,
   loadMoreAmount: Consts.loadMoreAmount.ALL,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5

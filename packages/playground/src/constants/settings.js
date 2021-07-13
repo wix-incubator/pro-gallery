@@ -78,6 +78,7 @@ export const stylesBySection = {
     'galleryThumbnailsAlignment',
     'thumbnailSize',
     'thumbnailSpacings',
+    'useMaxDimensions'
   ],
   [SECTIONS.INFO]: [
     'titlePlacement',
@@ -111,6 +112,7 @@ export const stylesBySection = {
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
+    'arrowsPadding',
     'arrowsVerticalPosition',
 
     'overlayBackground',

@@ -21,7 +21,7 @@ describe('styleParam - pauseAutoSlideshowOnHover', () => {
   });
   it('should not auto slide when Hovering over the gallery', () => {
     Object.assign(initialProps.styleParams, {
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,

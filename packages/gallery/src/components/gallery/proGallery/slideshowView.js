@@ -74,21 +74,16 @@ class SlideshowView extends GalleryComponent {
   isScrollStart() {
     const { slideAnimation } = this.props.styleParams;
 
-    if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL) {
+    if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL || !this.scrollElement) {
       return false;
     }
-
-    if (this.container) {
-      return this.getScrollLeft() <= 1;
-    } else {
-      return false;
-    }
+    return this.scrollPosition() <= 1;
   }
 
   isScrollEnd() {
     const { totalItemsCount, getVisibleItems, galleryStructure, container } =
       this.props;
-    const { slideshowLoop, slideAnimation } = this.props.styleParams;
+    const { slideshowLoop, slideAnimation, imageMargin } = this.props.styleParams;
 
     if (
       slideshowLoop ||
@@ -97,25 +92,15 @@ class SlideshowView extends GalleryComponent {
     ) {
       return false;
     }
+    const galleryStructureWidth = galleryStructure.width;
+    const visibleItemsCount = getVisibleItems(
+      galleryStructure.galleryItems,
+      container
+    ).length;
+    const allItemsLoaded = visibleItemsCount >= totalItemsCount;
+    const scrollElementWidth = galleryStructureWidth - imageMargin / 2;
 
-    if (this.container) {
-      /* 'scrollWidth' is not reliable before first scroll (= it is equal to 'clientWidth' size).
-        'scrollWidth' will get his real value just after scrolling.
-      */
-      const { scrollWidth, clientWidth } = this.container;
-      const scrollLeft = this.getScrollLeft();
-      const visibleItemsCount = getVisibleItems(
-        galleryStructure.galleryItems,
-        container
-      ).length;
-      const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-      const visibleLeft = scrollLeft + clientWidth;
-      const visibleScroll = scrollWidth - 1;
-
-      return allItemsLoaded && visibleLeft >= visibleScroll;
-    } else {
-      return false;
-    }
+    return allItemsLoaded && this.scrollPositionAtTheAndOfTheGallery() >= scrollElementWidth;
   }
 
   isFirstItemFullyVisible() {
@@ -231,7 +216,7 @@ class SlideshowView extends GalleryComponent {
         avoidIndividualNavigation &&
         !(this.props.styleParams.groupSize > 1)
       ) {
-        currentIdx = this.getCenteredItemIdxByScroll(); 
+        currentIdx = this.getCenteredItemIdxByScroll();
       } else {
         currentIdx = isAutoTrigger
           ? this.setCurrentItemByScroll()
@@ -509,7 +494,7 @@ class SlideshowView extends GalleryComponent {
 
     let width = this.props.styleParams.thumbnailSize;
     let height = this.props.styleParams.thumbnailSize;
-    let oneRow;
+    let horizontalThumbnails;
     let numOfThumbnails;
     let numOfWholeThumbnails;
 
@@ -522,7 +507,7 @@ class SlideshowView extends GalleryComponent {
         height =
           this.props.styleParams.thumbnailSize +
           this.props.styleParams.thumbnailSpacings;
-        oneRow = true;
+        horizontalThumbnails = true;
         numOfThumbnails = Math.ceil(
           width / this.props.styleParams.thumbnailSize
         );
@@ -540,7 +525,7 @@ class SlideshowView extends GalleryComponent {
         width =
           this.props.styleParams.thumbnailSize +
           2 * this.props.styleParams.thumbnailSpacings;
-        oneRow = false;
+        horizontalThumbnails = false;
         numOfThumbnails = Math.ceil(
           height / this.props.styleParams.thumbnailSize
         );
@@ -676,7 +661,7 @@ class SlideshowView extends GalleryComponent {
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
-          (oneRow ? ' one-row hide-scrollbars ' : '') +
+          (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
           (this.props.styleParams.isRTL ? ' rtl ' : ' ltr ') +
           (this.props.styleParams.isAccessible ? ' accessible ' : '')
         }
@@ -709,7 +694,7 @@ class SlideshowView extends GalleryComponent {
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               )})`,
             };
-            const thumbnailOffset = oneRow
+            const thumbnailOffset = horizontalThumbnails
               ? {
                   [this.props.styleParams.isRTL ? 'right' : 'left']:
                     thumbnailSize * idx + 2 * idx * thumbnailSpacings,
@@ -755,7 +740,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCenteredItemIdxByScroll() {
-    const scrollLeft = this.getScrollLeft();
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const items = this.props.galleryStructure.galleryItems;
 
@@ -763,13 +747,13 @@ class SlideshowView extends GalleryComponent {
 
     // const scrollPos = this.props.styleParams.isRTL ?
     // this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
-    const scrollPos = scrollLeft + this.props.container.galleryWidth / 2;
+    const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
 
-    if (scrollPos === 0) {
+    if (scrollPositionAtTheMiddleOfTheGallery === 0) {
       centeredIdx = 0;
     } else {
       for (let item, i = 0; (item = items[i]); i++) {
-        if (item.offset.left > scrollPos) {
+        if (item.offset.left > scrollPositionAtTheMiddleOfTheGallery) {
           centeredIdx = i - 1;
           break;
         }
@@ -782,19 +766,18 @@ class SlideshowView extends GalleryComponent {
   }
 
   getCenteredGroupIdxByScroll() {
-    const scrollLeft = this.getScrollLeft();
     // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
     const groups = this.props.galleryStructure.groups;
 
     let centeredGroupIdx;
 
-    const scrollPos = scrollLeft + this.props.container.galleryWidth / 2;
+    const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
 
-    if (scrollPos === 0) {
+    if (scrollPositionAtTheMiddleOfTheGallery === 0) {
       centeredGroupIdx = 0;
     } else {
       for (let group, i = 0; (group = groups[i]); i++) {
-        if (group.left > scrollPos) {
+        if (group.left > scrollPositionAtTheMiddleOfTheGallery) {
           centeredGroupIdx = i - 1;
           break;
         }
@@ -818,7 +801,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     const isScrolling =
-      (this.container && this.container.getAttribute('data-scrolling')) ===
+      (this.scrollElement && this.scrollElement.getAttribute('data-scrolling')) ===
       'true';
 
     if (isScrolling) {
@@ -850,15 +833,62 @@ class SlideshowView extends GalleryComponent {
     return <GalleryDebugMessage {...this.props.debug} />;
   }
 
+  getArrowsRenderData() {
+    const { customNavArrowsRenderer } = this.props;
+    const { arrowsSize } = this.props.styleParams;
+    if (customNavArrowsRenderer) {
+      return {
+        arrowRenderer: customNavArrowsRenderer,
+        navArrowsContainerWidth: arrowsSize,
+        navArrowsContainerHeight: arrowsSize
+      }
+    }
+
+    const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
+    const arrowOrigHeight = 39; //arrow-right svg and arrow-left svg height
+    const scalePercentage = arrowsSize / arrowOrigWidth;
+    const svgStyle = { transform: `scale(${scalePercentage})` };
+
+    const navArrowsContainerWidth = arrowsSize; // === arrowOrigWidth * scalePercentage
+    const navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
+
+    const { arrowsColor } = this.props.styleParams;
+    const svgInternalStyle = utils.isMobile() && arrowsColor?.value ? {fill: arrowsColor.value} : {}
+
+
+    const arrowRenderer = (position) => {
+      const { d, transform } = position === 'right' ?
+        {
+          d: "M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z",
+          transform: "translate(-855 -230)"
+        }
+          :
+        {
+          d: "M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z",
+          transform: "translate(-133 -225)"
+        }
+      return (
+        <svg width={arrowOrigWidth} height={arrowOrigHeight} viewBox={`0 0 ${arrowOrigWidth} ${arrowOrigHeight}`} style={svgStyle}>
+          <path
+            className="slideshow-arrow"
+            style={svgInternalStyle}
+            d={d}
+            transform={transform}
+          />
+        </svg>
+      );
+    };
+
+    return {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight}
+  }
+
   createNavArrows() {
     const {
       isRTL,
-      oneRow,
-      arrowsColor,
+      scrollDirection,
       isSlideshow,
       slideshowInfoSize,
       imageMargin,
-      arrowsSize,
       arrowsPadding,
       arrowsPosition,
       arrowsVerticalPosition,
@@ -878,7 +908,8 @@ class SlideshowView extends GalleryComponent {
           0
         );
         const isAllItemsFitsGalleryWidth =
-          oneRow && this.props.container.galleryWidth >= allGroupsWidth;
+          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+          this.props.container.galleryWidth >= allGroupsWidth;
         return isAllItemsFitsGalleryWidth;
       });
 
@@ -887,54 +918,9 @@ class SlideshowView extends GalleryComponent {
       return null;
     }
 
-    const { customNavArrowsRenderer } = this.props;
-    let arrowRenderer, navArrowsContainerSize;
-
-    if (customNavArrowsRenderer) {
-      arrowRenderer = customNavArrowsRenderer;
-      navArrowsContainerSize = arrowsSize;
-    } else {
-      const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
-      const scalePercentage = arrowsSize / arrowOrigWidth;
-      const svgStyle = { transform: `scale(${scalePercentage})` };
-
-      const svgInternalStyle = {};
-      if (utils.isMobile()) {
-        if (typeof arrowsColor !== 'undefined') {
-          svgInternalStyle.fill = arrowsColor.value;
-        }
-      }
-      navArrowsContainerSize = arrowsSize * 3;
-
-      arrowRenderer = (position) => {
-        if (position === 'left') {
-          return (
-            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-              <path
-                className="slideshow-arrow"
-                style={svgInternalStyle}
-                d="M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z"
-                transform="translate(-133 -225)"
-              />
-            </svg>
-          );
-        } else if (position === 'right') {
-          return (
-            <svg width="23" height="39" viewBox="0 0 23 39" style={svgStyle}>
-              <path
-                className="slideshow-arrow"
-                style={svgInternalStyle}
-                d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
-                transform="translate(-855 -230)"
-              />
-            </svg>
-          );
-        }
-      };
-    }
+    const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
 
     const { galleryHeight } = this.props.container;
-    const containerPadding = (navArrowsContainerSize - arrowsSize) / 2;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
       ? galleryHeight
@@ -949,19 +935,20 @@ class SlideshowView extends GalleryComponent {
         : 0;
 
     const containerStyle = {
-      width: `${navArrowsContainerSize}px`,
-      height: `${navArrowsContainerSize}px`,
-      padding: `0 ${containerPadding}px 0 ${containerPadding}px`,
-      top: `calc(50% - ${navArrowsContainerSize / 2}px + ${
+      width: `${navArrowsContainerWidth}px`,
+      height: `${navArrowsContainerHeight}px`,
+      padding: 0,
+      top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
         imageMargin / 4
       }px - ${infoSpace / 2}px)`,
     };
-    // Add negative positioning for external arrows. consists of arrow size, half of arrow container and padding
+
     const arrowsPos =
-      oneRow && arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
-        ? `-${arrowsSize + navArrowsContainerSize / 2 + 10}px`
+      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
+        ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-    // left & right: imageMargin effect the margin of the main div that SlideshowView is rendering, so the arrows should be places accordingly
+    // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
     const prevContainerStyle = {
@@ -971,12 +958,13 @@ class SlideshowView extends GalleryComponent {
       right: arrowsPos,
     };
 
+
     return [
       hideLeftArrow ? null : (
         <button
           className={
-            'nav-arrows-container prev ' +
-            (utils.isMobile() ? 'pro-gallery-mobile-indicator ' : '')
+            'nav-arrows-container' +
+            (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
           }
           onClick={() => this._next({ direction: -1 })}
           aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
@@ -990,7 +978,7 @@ class SlideshowView extends GalleryComponent {
       ),
       hideRightArrow ? null : (
         <button
-          className={'nav-arrows-container next'}
+          className={'nav-arrows-container'}
           onClick={() => this._next({ direction: 1 })}
           aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}
@@ -1083,9 +1071,10 @@ class SlideshowView extends GalleryComponent {
   }
 
   createGallery() {
-    // When arrows are set outside of the gallery, gallery is resized and needs to be positioned
+    // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
     const galleryStyleForExternalArrows =
-      this.props.styleParams.oneRow &&
+      this.props.styleParams.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       this.props.styleParams.arrowsPosition ===
         GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? {
@@ -1323,10 +1312,22 @@ class SlideshowView extends GalleryComponent {
     };
   }
 
-  getScrollLeft() {
-    return this.container
-      ? (this.props.styleParams.isRTL ? -1 : 1) * this.container.scrollLeft
+  getScrollPosition() {
+    return this.scrollElement
+      ? this.scrollPosition()
       : 0;
+  }
+
+  scrollPositionAtTheMiddleOfTheGallery(){
+    return this.getScrollPosition() + this.props.container.galleryWidth / 2;
+  }
+
+  scrollPositionAtTheAndOfTheGallery(){
+    return this.getScrollPosition() + this.props.container.galleryWidth;
+  }
+
+  scrollPosition() {
+    return (this.props.styleParams.isRTL ? -1 : 1) * this.scrollElement.scrollLeft;
   }
 
   //-----------------------------------------| REACT |--------------------------------------------//
@@ -1427,7 +1428,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   removeArrowsIfNeeded() {
-    setTimeout(() => {
       const { isRTL } = this.props.styleParams;
       const { hideLeftArrow, hideRightArrow } = this.state;
 
@@ -1441,18 +1441,18 @@ class SlideshowView extends GalleryComponent {
 
       const nextHideLeft = (!isRTL && atStart) || (isRTL && atEnd);
       const nextHideRight = (isRTL && atStart) || (!isRTL && atEnd);
-      const isNew =
+      const shouldUpdateArrowsState =
         !!nextHideLeft !== !!hideLeftArrow ||
         !!nextHideRight !== !!hideRightArrow;
 
-      if (isNew) {
+      if (shouldUpdateArrowsState) {
         this.setState({
           hideLeftArrow: !!nextHideLeft,
           hideRightArrow: !!nextHideRight,
         });
       }
-    }, 100);
   }
+
   navigationOutHandler() {
     //TODO remove after full refactor release
     utils.setStateAndLog(this, 'Next Item', {
@@ -1476,11 +1476,11 @@ class SlideshowView extends GalleryComponent {
     );
     window.addEventListener('gallery_navigation_in', this.navigationInHandler);
 
-    this.container = window.document.querySelector(
+    this.scrollElement = window.document.querySelector(
       `#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`
     );
-    if (this.container) {
-      this.container.addEventListener('scroll', this._setCurrentItemByScroll);
+    if (this.scrollElement) {
+      this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
     }
     if (this.state.currentIdx > 0) {
       this.props.actions.scrollToItem(this.state.currentIdx);
@@ -1501,8 +1501,8 @@ class SlideshowView extends GalleryComponent {
       this.navigationInHandler
     );
 
-    if (this.container) {
-      this.container.removeEventListener(
+    if (this.scrollElement) {
+      this.scrollElement.removeEventListener(
         'scroll',
         this._setCurrentItemByScroll
       );

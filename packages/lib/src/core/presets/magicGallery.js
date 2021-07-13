@@ -74,7 +74,7 @@ const getStyleBySeed = (seed) => {
         .split(',')
         .filter((type, i) => boolFromSeed('groupTypes' + i))
     ),
-    oneRow: boolFromSeed('oneRow'),
+    oneRow: boolFromSeed('oneRow'), //we keep oneRow here as this is the string that defines the outcome of the seed.
     imageMargin: numFromSeed(
       0,
       featureManager.supports.spacingCalculation

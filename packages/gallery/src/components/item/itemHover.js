@@ -64,11 +64,7 @@ export default class ItemHover extends GalleryComponent {
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
         aria-hidden={true}
-        style={
-          imageDimensions && imageDimensions.borderRadius
-            ? { borderRadius: imageDimensions.borderRadius }
-            : {}
-        }
+        style={imageDimensions}
       >
         <div
           style={{ height: '100%' }}
