@@ -36,6 +36,8 @@ import itemBorderColor from './itemBorderColor';
 import rotatingCropRatios from './rotatingCropRatios';
 import columnWidths from './columnWidths';
 import autoSlideshowInterval from './autoSlideshowInterval';
+import autoSlideshowSpeed from './autoSlideshowSpeed';
+import autoSlideshowType from './autoSlideshowType';
 import smartCrop from './smartCrop';
 import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
@@ -182,6 +184,8 @@ export default {
   shouldIndexDirectShareLinkInSEO,
   slideTransition,
   useMaxDimensions,
+  autoSlideshowSpeed,
+  autoSlideshowType,
 };
 
 // TODO = add the options:

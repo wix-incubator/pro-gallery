@@ -18,6 +18,7 @@ import layoutDirection from './layoutDirection';
 import loadingMode from './loadingMode';
 import loadingWithColorMode from './loadingWithColorMode';
 import loadMoreAmount from './loadMoreAmount';
+import autoSlideshowType from './autoSlideshowType';
 import mobileSwipeAnimations from './mobileSwipeAnimations';
 import overlayAnimations from './overlayAnimations';
 import placements, {
@@ -100,4 +101,5 @@ export default {
   viewMode,
   imagePlacementAnimations,
   slideTransition,
+  autoSlideshowType,
 };

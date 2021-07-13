@@ -41,6 +41,8 @@ export const defaultStyleParams = {
   isAutoSlideshow: false,
   slideshowLoop: false,
   autoSlideshowInterval: 4,
+  autoSlideshowSpeed: 4,
+  autoSlideshowType: Consts.autoSlideshowType.INTERVAL,
   titlePlacement: Consts.placements.SHOW_ON_HOVER,
   galleryTextAlign: 'center',
   scrollSnap: false,

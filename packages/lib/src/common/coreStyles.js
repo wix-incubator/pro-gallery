@@ -35,6 +35,8 @@ const coreStyles = {
   pauseAutoSlideshowOnHover: true,
   allowSlideshowCounter: false,
   autoSlideshowInterval: 4,
+  autoSlideshowSpeed: 4,
+  autoSlideshowType: GALLERY_CONSTS.autoSlideshowType.INTERVAL,
   arrowsSize: 23,
   slideshowInfoSize: 200,
   imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
