@@ -28,7 +28,6 @@ describe('styleParam - thumbnailSpacings', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.selector('.thumbnailItem').at(0);
-    console.log(item.props().style);
     expect(item.props().style).to.include(mock);
     driver.detach.proGallery();
   });
