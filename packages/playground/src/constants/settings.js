@@ -101,6 +101,7 @@ export const stylesBySection = {
     'scrollDuration',
     'slideshowLoop',
     'isAutoSlideshow',
+    'autoSlideshowInterval',
     'autoSlideshowSpeed',
     'autoSlideshowType',
     'playButtonForAutoSlideShow',
