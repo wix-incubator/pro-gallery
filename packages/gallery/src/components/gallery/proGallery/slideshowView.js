@@ -680,7 +680,9 @@ class SlideshowView extends GalleryComponent {
             const itemStyle = {
               width: thumbnailSize,
               height: thumbnailSize,
-              margin: thumbnailSpacings,
+              marginLeft: thumbnailSpacings,
+              marginTop: thumbnailSpacings,
+              overflow: 'hidden',
               backgroundImage: `url(${thumbnailItem.createUrl(
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,
                 GALLERY_CONSTS.urlTypes.HIGH_RES
@@ -715,8 +717,13 @@ class SlideshowView extends GalleryComponent {
                   <TextItem
                     {...this.props}
                     {...thumbnailItem.renderProps()}
+                    styleParams={{
+                      ...this.props.styleParams,
+                      cubeType: 'fill',
+                      cubeImages: true
+                    }}
                     actions={{}}
-                    imageDimensions={itemStyle}
+                    imageDimensions={{...itemStyle, marginTop: 0, marginLeft: 0}}
                     style={{
                       ...thumbnailItem.renderProps().style,
                       ...itemStyle,
