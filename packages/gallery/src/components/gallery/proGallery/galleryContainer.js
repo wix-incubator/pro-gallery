@@ -511,6 +511,10 @@ export class GalleryContainer extends React.Component {
   }
 
   onGalleryScroll({ top, left }) {
+    this.eventsListener(
+      GALLERY_CONSTS.events.GALLERY_SCROLLED,
+      { top, left }
+    );
     this.videoScrollHelper.trigger.SCROLL({
       top,
       left,
