@@ -32,7 +32,7 @@ class SlideshowView extends GalleryComponent {
     this.navigationOutHandler = this.navigationOutHandler.bind(this);
     this.navigationInHandler = this.navigationInHandler.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
-    this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
+    this.clearAutoSlideshowInterval = this.clearAutoSlideshowInterval.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onAutoSlideShowButtonClick =
@@ -41,7 +41,6 @@ class SlideshowView extends GalleryComponent {
       this.startAutoSlideshowIfNeeded.bind(this);
     this.blockAutoSlideshowIfNeeded =
       this.blockAutoSlideshowIfNeeded.bind(this);
-    this.shouldStartAutoSlideshow = this.shouldStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress =
       this.onAutoSlideshowAutoPlayKeyPress.bind(this);
@@ -156,6 +155,7 @@ class SlideshowView extends GalleryComponent {
     isAutoTrigger,
     scrollDuration,
     isKeyboardNavigation = false,
+    isContinuesScrolling = false,
   }) {
     const activeElement = document.activeElement;
     const galleryItemIsFocused =
@@ -176,7 +176,7 @@ class SlideshowView extends GalleryComponent {
 
     direction *= this.props.styleParams.isRTL ? -1 : 1;
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
-      this.nextGroup({ direction, isAutoTrigger, scrollDuration }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+      this.nextGroup({ direction, isAutoTrigger, isContinuesScrolling}); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if (
         avoidIndividualNavigation &&
@@ -191,7 +191,7 @@ class SlideshowView extends GalleryComponent {
         scrollDuration,
         avoidIndividualNavigation,
         ignoreScrollPosition,
-      });
+        isContinuesScrolling});
     }
     this.removeArrowsIfNeeded();
   }
@@ -202,7 +202,7 @@ class SlideshowView extends GalleryComponent {
     scrollDuration,
     avoidIndividualNavigation,
     ignoreScrollPosition,
-  }) {
+    isContinuesScrolling}) {
     if (this.isSliding) {
       return;
     }
@@ -287,6 +287,14 @@ class SlideshowView extends GalleryComponent {
           () => {
             this.onCurrentItemChanged();
             this.isSliding = false;
+            if(this.canStartAutoSlideshow(this.props.styleParams) && isContinuesScrolling){
+              this.next({
+                direction,
+                isAutoTrigger: true,
+                scrollDuration: this.props.styleParams.autoSlideshowSpeed * 1000,
+                isContinuesScrolling,
+              })
+            }
           }
         );
 
@@ -299,12 +307,12 @@ class SlideshowView extends GalleryComponent {
       });
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
-      this.stopAutoSlideshow();
+      this.clearAutoSlideshowInterval();
       return;
     }
   }
 
-  nextGroup({ direction, isAutoTrigger, scrollDuration }) {
+  nextGroup({ direction, isAutoTrigger, scrollDuration,isContinuesScrolling }) {
     if (this.isSliding) {
       return;
     }
@@ -360,11 +368,19 @@ class SlideshowView extends GalleryComponent {
         () => {
           this.onCurrentItemChanged();
           this.isSliding = false;
+          if(this.canStartAutoSlideshow(this.props.styleParams) && isContinuesScrolling){
+            this.next({
+              direction,
+              isAutoTrigger: true,
+              scrollDuration: this.props.autoSlideshowSpeed * 1000,
+              isContinuesScrolling: true
+            })
+          }
         }
       );
     } catch (e) {
       console.error('Cannot proceed to the next Group', e);
-      this.stopAutoSlideshow();
+      this.clearAutoSlideshowInterval();
       return;
     }
   }
@@ -390,38 +406,69 @@ class SlideshowView extends GalleryComponent {
     }
     this.removeArrowsIfNeeded();
   }
-  stopAutoSlideshow() {
+
+  clearAutoSlideshowInterval() {
     clearInterval(this.autoSlideshowInterval);
   }
 
-  shouldStartAutoSlideshow(styleParams) {
-    const { isAutoSlideshow, autoSlideshowInterval } = styleParams;
+  startAutoSlideshowIfNeeded(styleParams) {
+    this.clearAutoSlideshowInterval()
+    // console.log('>>>>>startAutoSlideshowIfNeeded')
+    // debugger;
+    if (this.canStartAutoSlideshow(styleParams)) {
+      const {
+        isRTL,
+        slideshowLoop,
+        autoSlideshowType,
+        autoSlideshowSpeed,
+        autoSlideshowInterval,
+      } = styleParams;
+      if (this.isContinuesScrolling(slideshowLoop, autoSlideshowType, autoSlideshowSpeed))
+      {
+        // console.log('>>>>>isContinues')
+       const direction = isRTL ? -1 : 1;
+       this.next({
+        direction,
+        isAutoTrigger: true,
+        scrollDuration: autoSlideshowSpeed * 1000,
+        isContinuesScrolling: true
+       })
+      } else if (this.isIntervalScrolling(autoSlideshowInterval, autoSlideshowType)) {
+        this.autoSlideshowInterval = setInterval(
+          this.autoScrollToNextItem.bind(this),
+        autoSlideshowInterval * 1000
+        );
+      }
+    }  }
+
+  isContinuesScrolling(slideshowLoop, autoSlideshowType, autoSlideshowSpeed) {
     return (
-      isAutoSlideshow &&
-      autoSlideshowInterval > 0 &&
-      !this.state.shouldBlockAutoSlideshow
+      slideshowLoop &&
+      autoSlideshowType === GALLERY_CONSTS.autoSlideshowType.CONTINUES &&
+      autoSlideshowSpeed > 0
     );
   }
 
-  startAutoSlideshowIfNeeded(styleParams) {
-    this.stopAutoSlideshow();
-    if (this.shouldStartAutoSlideshow(styleParams)) {
-      this.autoSlideshowInterval = setInterval(
-        this.autoScrollToNextItem.bind(this),
-        styleParams.autoSlideshowInterval * 1000
-      );
-    }
+  isIntervalScrolling(autoSlideshowInterval, autoSlideshowType) {
+    return (
+      autoSlideshowInterval > 0 &&
+      autoSlideshowType === GALLERY_CONSTS.autoSlideshowType.INTERVAL
+    );
   }
-
   autoScrollToNextItem = () => {
-    if (
-      !isEditMode() &&
-      (isGalleryInViewport(this.props.container) || isPreviewMode())
-    ) {
-      const direction = this.props.styleParams.isRTL ? -1 : 1;
-      this._next({ direction, isAutoTrigger: true, scrollDuration: 800 });
-    }
+    const direction = this.props.styleParams.isRTL ? -1 : 1;
+    this._next({ direction, isAutoTrigger: true, scrollDuration: 800 });
   };
+
+  canStartAutoSlideshow(styleParams) {
+    const { isAutoSlideshow } = styleParams;
+    return (
+      !isEditMode() &&
+      (isGalleryInViewport(this.props.container) || isPreviewMode()) &&
+      isAutoSlideshow &&
+      !this.state.shouldBlockAutoSlideshow
+    );
+  }
 
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
@@ -804,7 +851,7 @@ class SlideshowView extends GalleryComponent {
       'true';
 
     if (isScrolling) {
-      this.stopAutoSlideshow();
+      this.clearAutoSlideshowInterval();
 
       //while the scroll is animating, prevent the reaction to this event
       return;
@@ -1385,7 +1432,9 @@ class SlideshowView extends GalleryComponent {
         this.blockAutoSlideshowIfNeeded(props)
       );
     }
-    if (this.props.isGalleryInHover !== props.isGalleryInHover) {
+    if (this.props.isGalleryInHover !== props.isGalleryInHover ||
+      this.props.autoSlideshowType !== props.autoSlideshowType  
+      ) {
       this.blockAutoSlideshowIfNeeded(props);
     }
     if (this.props.currentIdx !== props.currentIdx) {
@@ -1457,7 +1506,7 @@ class SlideshowView extends GalleryComponent {
     utils.setStateAndLog(this, 'Next Item', {
       isInView: false,
     });
-    this.stopAutoSlideshow();
+    this.clearAutoSlideshowInterval();
   }
 
   navigationInHandler() {
