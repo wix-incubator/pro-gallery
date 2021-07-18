@@ -39,7 +39,7 @@ export default class ImageItem extends GalleryComponent {
   }
 
   getImageContainerClassNames() {
-    const { styleParams } = this.props;
+    const { styleParams, isTransparent } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
@@ -51,7 +51,7 @@ export default class ImageItem extends GalleryComponent {
       styleParams.cubeImages && styleParams.cubeType === 'fit'
         ? 'grid-fit'
         : '',
-      styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR
+      styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR && !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
@@ -69,11 +69,7 @@ export default class ImageItem extends GalleryComponent {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
-        style={
-          imageDimensions.borderRadius
-            ? { borderRadius: imageDimensions.borderRadius }
-            : {}
-        }
+        style={imageDimensions}
       >
         {imageRenderer()}
         {extraNodes}
@@ -129,6 +125,7 @@ export default class ImageItem extends GalleryComponent {
       settings = {},
       styleParams,
       gotFirstScrollEvent,
+      isTransparent
     } = this.props;
     const { isHighResImageLoaded } = this.state;
     const imageProps =
@@ -139,7 +136,7 @@ export default class ImageItem extends GalleryComponent {
         : {};
 
     // eslint-disable-next-line no-unused-vars
-    const { margin, ...restOfDimensions } = imageDimensions || {};
+    const {marginLeft, marginTop, ...imageSizing} = imageDimensions;
 
     const image = () => {
       const imagesComponents = [];
@@ -158,7 +155,7 @@ export default class ImageItem extends GalleryComponent {
           }
         : {};
 
-      if (!isHighResImageLoaded && gotFirstScrollEvent) {
+      if (!isHighResImageLoaded && gotFirstScrollEvent && !isTransparent) {
         let preload = null;
         const preloadProps = {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',
@@ -178,7 +175,7 @@ export default class ImageItem extends GalleryComponent {
                   GALLERY_CONSTS.urlTypes.LOW_RES
                 )}
                 style={{
-                  ...restOfDimensions,
+                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
@@ -196,7 +193,7 @@ export default class ImageItem extends GalleryComponent {
                   GALLERY_CONSTS.urlTypes.HIGH_RES
                 )}
                 style={{
-                  ...restOfDimensions,
+                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
@@ -230,7 +227,7 @@ export default class ImageItem extends GalleryComponent {
           alt={alt ? alt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
           style={{
-            ...restOfDimensions,
+            ...imageSizing,
             ...blockDownloadStyles,
             ...(!shouldRenderHighResImages && preloadStyles),
           }}

@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, dimensions } from '../drivers/mocks/styles';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
+
 describe('styleParam - scrollDirection', () => {
   let driver;
   const initialProps = {

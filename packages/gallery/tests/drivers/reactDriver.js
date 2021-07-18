@@ -335,7 +335,14 @@ class galleryDriver {
         const galleryItem = new GalleryItem({ dto: itemDto });
         const itemViewPropsObj = Object.assign(
           galleryItem.renderProps(newGalleryConfig),
-          { config: newGalleryConfig, visible: true }
+          {
+            config: newGalleryConfig,
+            visible: true,
+            imageDimensions: {
+              marginLeft: 0,
+              marginTop: 0,
+            },
+          }
         );
         return Object.assign(itemViewPropsObj, {
           actions: {

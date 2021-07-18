@@ -102,6 +102,7 @@ class GalleryItem {
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
       cubeRatio: this.cubeRatio,
+      isTransparent: this.isTransparent,
       offset: this.offset,
       style: {
         ratio: this.ratio,
@@ -578,7 +579,11 @@ class GalleryItem {
   }
 
   get alt() {
-    return this.metadata.alt || this.title || this.description;
+    return this.metadata.alt || this.title || this.description || '';
+  }
+
+  set alt(value) {
+    this.metadata.alt = value;
   }
 
   get title() {
