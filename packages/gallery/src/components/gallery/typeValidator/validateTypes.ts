@@ -3,7 +3,7 @@ import Ajv from 'ajv';
 import schema from './schema';
 
 import typeErrorsUI from './typeErrorsUI';
-import { StyleParams } from '../gallery.d';
+import { StyleParams } from '../styles.d';
 
 function validate(data: StyleParams) {
   const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
