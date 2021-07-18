@@ -161,6 +161,7 @@ export const stylesBySection = {
     'videoSpeed',
     'videoSound',
     'videoLoop',
+    'enableVideoPlaceholder',
   ],
 };
 
