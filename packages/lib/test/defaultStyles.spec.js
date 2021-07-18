@@ -104,5 +104,6 @@ function expectedStyles() {
     shouldIndexDirectShareLinkInSEO: true,
     slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
     useMaxDimensions: false,
+    enableVideoPlaceholder: true,
   };
 }
