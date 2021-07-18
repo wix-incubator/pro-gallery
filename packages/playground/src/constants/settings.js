@@ -141,6 +141,7 @@ export const stylesBySection = {
     'overlayAnimation',
     'imageHoverAnimation',
     'imageLoadingMode',
+    'removeVideoPlaceholder',
     'imageLoadingColor',
     'imagePlacementAnimation',
     'scrollAnimation',
