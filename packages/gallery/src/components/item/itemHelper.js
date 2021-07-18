@@ -69,11 +69,9 @@ export function changeActiveElementIfNeeded({
 }
 
 export function shouldCreateVideoPlaceholder(styles) {
-  if (styles.removeVideoPlaceholder) {
-    return false;
-  }
   return (
-    !utils.isSingleItemHorizontalDisplay(styles) ||
-    styles.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO
+    styles.enableVideoPlaceholder &&
+    (!utils.isSingleItemHorizontalDisplay(styles) ||
+      styles.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
   );
 }

@@ -8,7 +8,7 @@ const mountAndGetPreloadElements = (driver, sampleItemProps) => {
   return driver.find.selector('.gallery-item-video.image-item');
 };
 
-describe('Video Item ', () => {
+describe('styleParam - enableVideoPlaceholder ', () => {
   let driver;
   let sampleItem;
   let sampleItemViewProps;
@@ -26,24 +26,24 @@ describe('Video Item ', () => {
     });
   });
 
-  it('should remove video placeholder when "removeVideoPlaceholder=true"', async () => {
+  it('should not remove video placeholder when "enableVideoPlaceholder=true"', async () => {
     Object.assign(sampleItemViewProps.styleParams, {
-      removeVideoPlaceholder: true,
-    });
-    const placeholders = mountAndGetPreloadElements(
-      driver,
-      sampleItemViewProps
-    );
-    expect(placeholders.length).to.equal(0);
-  });
-  it('should not remove video placeholder when "removeVideoPlaceholder=false"', async () => {
-    Object.assign(sampleItemViewProps.styleParams, {
-      removeVideoPlaceholder: false,
+      enableVideoPlaceholder: true,
     });
     const placeholders = mountAndGetPreloadElements(
       driver,
       sampleItemViewProps
     );
     expect(placeholders.length).to.equal(1);
+  });
+  it('should not remove video placeholder when "enableVideoPlaceholder=false"', async () => {
+    Object.assign(sampleItemViewProps.styleParams, {
+      enableVideoPlaceholder: false,
+    });
+    const placeholders = mountAndGetPreloadElements(
+      driver,
+      sampleItemViewProps
+    );
+    expect(placeholders.length).to.equal(0);
   });
 });

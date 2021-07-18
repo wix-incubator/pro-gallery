@@ -106,6 +106,7 @@ export const stylesBySection = {
     'scrollSnap',
     'allowContextMenu',
     'pauseAutoSlideshowOnHover',
+    'enableVideoPlaceholder',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
@@ -141,7 +142,6 @@ export const stylesBySection = {
     'overlayAnimation',
     'imageHoverAnimation',
     'imageLoadingMode',
-    'removeVideoPlaceholder',
     'imageLoadingColor',
     'imagePlacementAnimation',
     'scrollAnimation',

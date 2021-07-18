@@ -89,7 +89,7 @@ import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
-import removeVideoPlaceholder from './removeVideoPlaceholder';
+import enableVideoPlaceholder from './enableVideoPlaceholder ';
 
 export default {
   itemClick,
@@ -183,7 +183,7 @@ export default {
   shouldIndexDirectShareLinkInSEO,
   slideTransition,
   useMaxDimensions,
-  removeVideoPlaceholder,
+  enableVideoPlaceholder,
 };
 
 // TODO = add the options:
