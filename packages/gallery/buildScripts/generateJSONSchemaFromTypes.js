@@ -17,7 +17,7 @@ const compilerOptions = {
 // const basePath = "./my-dir";
 
 const program = TJS.getProgramFromFiles(
-  [path.join(__dirname, '../src/components/gallery/gallery.d.ts')],
+  [path.join(__dirname, '../src/components/gallery/styles.d.ts')],
   compilerOptions,
   // basePath
 );
