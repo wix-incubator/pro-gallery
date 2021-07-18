@@ -106,7 +106,6 @@ export const stylesBySection = {
     'scrollSnap',
     'allowContextMenu',
     'pauseAutoSlideshowOnHover',
-    'enableVideoPlaceholder',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
@@ -162,6 +161,7 @@ export const stylesBySection = {
     'videoSpeed',
     'videoSound',
     'videoLoop',
+    'enableVideoPlaceholder',
   ],
 };
 
