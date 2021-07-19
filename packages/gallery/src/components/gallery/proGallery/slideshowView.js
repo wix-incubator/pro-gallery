@@ -266,7 +266,8 @@ class SlideshowView extends GalleryComponent {
           false,
           true,
           _scrollDuration,
-          scrollMarginCorrection
+          scrollMarginCorrection,
+          isContinuesScrolling,
         );
       scrollToItemPromise.then(() => {
         if (this.props.styleParams.groupSize === 1) {
@@ -291,8 +292,8 @@ class SlideshowView extends GalleryComponent {
               this.next({
                 direction,
                 isAutoTrigger: true,
-                scrollDuration: this.props.styleParams.autoSlideshowSpeed * 1000,
-                isContinuesScrolling,
+                scrollDuration: this.props.styleParams.autoSlideshowSpeed,
+                isContinuesScrolling: true
               })
             }
           }
@@ -372,7 +373,7 @@ class SlideshowView extends GalleryComponent {
             this.next({
               direction,
               isAutoTrigger: true,
-              scrollDuration: this.props.autoSlideshowSpeed * 1000,
+              scrollDuration: this.props.autoSlideshowSpeed,
               isContinuesScrolling: true
             })
           }
@@ -413,8 +414,6 @@ class SlideshowView extends GalleryComponent {
 
   startAutoSlideshowIfNeeded(styleParams) {
     this.clearAutoSlideshowInterval()
-    // console.log('>>>>>startAutoSlideshowIfNeeded')
-    // debugger;
     if (this.canStartAutoSlideshow(styleParams)) {
       const {
         isRTL,
@@ -425,12 +424,11 @@ class SlideshowView extends GalleryComponent {
       } = styleParams;
       if (this.isContinuesScrolling(slideshowLoop, autoSlideshowType, autoSlideshowSpeed))
       {
-        // console.log('>>>>>isContinues')
        const direction = isRTL ? -1 : 1;
        this.next({
         direction,
         isAutoTrigger: true,
-        scrollDuration: autoSlideshowSpeed * 1000,
+        scrollDuration: autoSlideshowSpeed,
         isContinuesScrolling: true
        })
       } else if (this.isIntervalScrolling(autoSlideshowInterval, autoSlideshowType)) {
@@ -1433,7 +1431,7 @@ class SlideshowView extends GalleryComponent {
       );
     }
     if (this.props.isGalleryInHover !== props.isGalleryInHover ||
-      this.props.autoSlideshowType !== props.autoSlideshowType  
+      this.props.styleParams.autoSlideshowType !== props.styleParams.autoSlideshowType  
       ) {
       this.blockAutoSlideshowIfNeeded(props);
     }

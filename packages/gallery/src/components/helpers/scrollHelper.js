@@ -18,6 +18,7 @@ export function scrollToItemImp(scrollParams) {
     itemIdx,
     fixedScroll,
     slideTransition,
+    isContinuesScrolling,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -67,11 +68,17 @@ export function scrollToItemImp(scrollParams) {
     }
   }
   if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    let duration = durationInMS;
+    if (isContinuesScrolling) {
+      const dist = Math.round(to - from);
+      const speed = durationInMS * 50;
+      duration = (dist / speed) * 1000;
+    }
     return horizontalCssScrollTo({
       scroller: horizontalElement,
       from: Math.round(from),
       to: Math.round(to),
-      duration: durationInMS,
+      duration,
       isRTL,
       slideTransition: slideTransition,
     });
