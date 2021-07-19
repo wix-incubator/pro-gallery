@@ -97,6 +97,7 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         currentPlayingIdx: 1,
         styleParams: {
+          enableVideoPlaceholder: true,
           isSlideshow: false,
         },
         type: 'video',

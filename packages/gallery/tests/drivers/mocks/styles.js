@@ -103,6 +103,7 @@ const styleParams = {
   videoLoop: true,
   shouldIndexDirectShareLinkInSEO: true,
   slideTransition: 'ease',
+  enableVideoPlaceholder: true,
 };
 
 const dimensions = {
