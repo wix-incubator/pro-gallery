@@ -15,7 +15,7 @@ describe('gridStyle - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should set number of columns according to container size (not numberOfImagesPerRow)', async () => {
+  it('should set number of columns according to provided dimensions (not numberOfImagesPerRow)', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       gridStyle: GALLERY_CONSTS.gridStyle.FIT_TO_SCREEN,

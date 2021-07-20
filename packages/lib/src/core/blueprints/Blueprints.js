@@ -41,8 +41,8 @@ class Blueprints {
           oldStylesParams,
           isUsingCustomInfoElements
         );
-      const { formattedContainer, changed: containerChanged } =
-        this.formatContainerIfNeeded(
+      const { formattedDimensions, changed: dimensionsChanged } =
+        this.formatDimensionsIfNeeded(
           newDimensionsParams,
           oldDimensionsParams,
           oldStylesParams,
@@ -50,8 +50,8 @@ class Blueprints {
           stylesChanged
         );
 
-      const changed = itemsChanged || stylesChanged || containerChanged;
-      changedParams = { itemsChanged, stylesChanged, containerChanged };
+      const changed = itemsChanged || stylesChanged || dimensionsChanged;
+      changedParams = { itemsChanged, stylesChanged, dimensionsChanged };
 
       if (changed || !existingBlueprint) {
         if (!existingBlueprint) {
@@ -60,8 +60,8 @@ class Blueprints {
 
         const structure = this.createStructure(
           {
-            formattedContainer:
-              formattedContainer || existingBlueprint.container,
+            formattedDimensions:
+              formattedDimensions || existingBlueprint.dimensions,
             formattedItems: formattedItems || existingBlueprint.items,
             formattedStyles: formattedStyles || existingBlueprint.styles,
           },
@@ -75,19 +75,19 @@ class Blueprints {
         if (formattedItems) {
           existingBlueprint.items = formattedItems;
         }
-        if (formattedContainer) {
-          existingBlueprint.container = formattedContainer;
+        if (formattedDimensions) {
+          existingBlueprint.dimensions = formattedDimensions;
         }
         existingBlueprint.structure = structure;
 
-        // if its an infinite gallery - let the container loose
+        // if its an infinite gallery - let the dimensions loose
         const isInfinite =
           existingBlueprint.styles.scrollDirection ===
             GALLERY_CONSTS.scrollDirection.VERTICAL &&
           existingBlueprint.styles.enableInfiniteScroll;
         if (isInfinite) {
-          existingBlueprint.container.height =
-            existingBlueprint.container.galleryHeight = structure.height;
+          existingBlueprint.dimensions.height =
+            existingBlueprint.dimensions.galleryHeight = structure.height;
         }
       }
     } catch (error) {
@@ -258,7 +258,7 @@ class Blueprints {
     return { formattedStyles, changed };
   }
 
-  formatContainerIfNeeded(
+  formatDimensionsIfNeeded(
     dimensions,
     lastDimensions,
     lastStyles,
@@ -308,9 +308,9 @@ class Blueprints {
     const oldDimensionsParams = lastDimensions;
     let changed = false;
     const oldStylesParams = lastStyles;
-    let formattedContainer;
+    let formattedDimensions;
     if (
-      stylesChanged || // If styles changed they could affect the container and a new container must be created (slideshow,thumbs,shadow,borders...etc)
+      stylesChanged || // If styles changed they could affect the dimensions and a new dimensions must be created (slideshow,thumbs,shadow,borders...etc)
       dimensionsHaveChanged({
         newDimensionsParams: dimensions,
         oldDimensionsParams,
@@ -319,22 +319,22 @@ class Blueprints {
     ) {
       dimensionsHelper.updateParams({
         styles: formattedStyles,
-        container: dimensions,
+        dimensions: dimensions,
       });
       changed = true;
-      formattedContainer = Object.assign(
+      formattedDimensions = Object.assign(
         {},
         dimensions,
         dimensionsHelper.getGalleryDimensions()
       );
     }
-    return { formattedContainer, changed };
+    return { formattedDimensions, changed };
   }
 
-  createStructure({ formattedContainer, formattedStyles, formattedItems }) {
+  createStructure({ formattedDimensions, formattedStyles, formattedItems }) {
     const layoutParams = {
       items: formattedItems,
-      container: formattedContainer,
+      container: formattedDimensions,
       styleParams: formattedStyles,
       options: {
         showAllItems: true,

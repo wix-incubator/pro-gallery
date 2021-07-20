@@ -7,19 +7,19 @@ import CloseButton from './x';
 const styles = {
     gallery: {
 
-    }, 
+    },
     fullscreen: {
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        width: '100vw', 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
         height: '100vh',
         zIndex: 9999,
         background: 'white',
         opacity: 0,
         transition: 'opacity 2s ease',
         visibility: 'hidden'
-    }, 
+    },
     shown: {
         visibility: 'visible',
         opacity: 1
@@ -38,7 +38,7 @@ const styles = {
         fill: 'black',
         cursor: 'pointer'
     }
-} 
+}
 
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
 
@@ -85,7 +85,7 @@ export default class ExpandableProGallery extends React.Component {
                         key={`pro-fullscreen-${this.props.domId}`}
                         domId={`pro-fullscreen-${this.props.domId}`}
                         currentIdx={this.state.fullscreenIdx}
-                        container= {{
+                        dimensions= {{
                             width: window.innerWidth,
                             height: window.innerHeight
                         }}

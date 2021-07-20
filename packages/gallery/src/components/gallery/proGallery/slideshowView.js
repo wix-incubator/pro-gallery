@@ -81,7 +81,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   isScrollEnd() {
-    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
+    const { totalItemsCount, getVisibleItems, galleryStructure, dimensions } =
       this.props;
     const { slideshowLoop, slideAnimation, imageMargin } = this.props.styleParams;
 
@@ -95,7 +95,7 @@ class SlideshowView extends GalleryComponent {
     const galleryStructureWidth = galleryStructure.width;
     const visibleItemsCount = getVisibleItems(
       galleryStructure.galleryItems,
-      container
+      dimensions
     ).length;
     const allItemsLoaded = visibleItemsCount >= totalItemsCount;
     const scrollElementWidth = galleryStructureWidth - imageMargin / 2;
@@ -123,7 +123,7 @@ class SlideshowView extends GalleryComponent {
     const items = this.props.items;
     const biasedItems = [];
     const numOfThumbnails = Math.ceil(
-      this.props.container.galleryWidth / this.props.styleParams.thumbnailSize
+      this.props.dimensions.galleryWidth / this.props.styleParams.thumbnailSize
     );
     // need to create new item ! not just to copy the last once - the react view refferce one of them
     Object.keys(items).forEach((idx) => {
@@ -416,7 +416,7 @@ class SlideshowView extends GalleryComponent {
   autoScrollToNextItem = () => {
     if (
       !isEditMode() &&
-      (isGalleryInViewport(this.props.container) || isPreviewMode())
+      (isGalleryInViewport(this.props.dimensions) || isPreviewMode())
     ) {
       const direction = this.props.styleParams.isRTL ? -1 : 1;
       this._next({ direction, isAutoTrigger: true, scrollDuration: 800 });
@@ -494,7 +494,7 @@ class SlideshowView extends GalleryComponent {
       case 'top':
       case 'bottom':
         width =
-          this.props.container.galleryWidth +
+          this.props.dimensions.galleryWidth +
           this.props.styleParams.thumbnailSpacings;
         height =
           this.props.styleParams.thumbnailSize +
@@ -512,7 +512,7 @@ class SlideshowView extends GalleryComponent {
       case 'left':
       case 'right':
         height =
-          this.props.container.galleryHeight +
+          this.props.dimensions.galleryHeight +
           2 * this.props.styleParams.thumbnailSpacings;
         width =
           this.props.styleParams.thumbnailSize +
@@ -908,7 +908,7 @@ class SlideshowView extends GalleryComponent {
         );
         const isAllItemsFitsGalleryWidth =
           scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-          this.props.container.galleryWidth >= allGroupsWidth;
+          this.props.dimensions.galleryWidth >= allGroupsWidth;
         return isAllItemsFitsGalleryWidth;
       });
 
@@ -919,7 +919,7 @@ class SlideshowView extends GalleryComponent {
 
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
 
-    const { galleryHeight } = this.props.container;
+    const { galleryHeight } = this.props.dimensions;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
       ? galleryHeight
@@ -992,7 +992,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   createLayout() {
-    const { itemsLoveData, getVisibleItems, galleryStructure, container } =
+    const { itemsLoveData, getVisibleItems, galleryStructure, dimensions } =
       this.props;
 
     const galleryConfig = {
@@ -1000,7 +1000,7 @@ class SlideshowView extends GalleryComponent {
       totalItemsCount: this.props.totalItemsCount,
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
-      container: this.props.container,
+      dimensions: this.props.dimensions,
       watermark: this.props.watermark,
       settings: this.props.settings,
       currentIdx: this.state.currentIdx,
@@ -1022,7 +1022,7 @@ class SlideshowView extends GalleryComponent {
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
-        getVisibleItems(column.galleryGroups, container);
+        getVisibleItems(column.galleryGroups, dimensions);
       return (
         layoutGroupView &&
         layoutGroupView.map((group) => {
@@ -1031,7 +1031,7 @@ class SlideshowView extends GalleryComponent {
                 allowLoop:
                   this.props.styleParams.slideshowLoop &&
                   this.props.galleryStructure.width >
-                    this.props.container.width,
+                    this.props.dimensions.width,
                 itemsLoveData,
                 ...group.renderProps(galleryConfig),
                 ariaHidden: group.idx > this.skipFromSlide,
@@ -1044,7 +1044,7 @@ class SlideshowView extends GalleryComponent {
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
-        height: container.galleryHeight,
+        height: dimensions.galleryHeight,
       };
       if (this.props.styleParams.isSlideshow) {
         Object.assign(columnStyle, {
@@ -1088,11 +1088,11 @@ class SlideshowView extends GalleryComponent {
     const galleryDimensions = this.props.isPrerenderMode
       ? {
           width: '100%',
-          height: this.props.container.galleryHeight,
+          height: this.props.dimensions.galleryHeight,
         }
       : {
-          height: this.props.container.galleryHeight,
-          width: this.props.container.galleryWidth,
+          height: this.props.dimensions.galleryHeight,
+          width: this.props.dimensions.galleryWidth,
         };
 
     const galleryStyle = {
@@ -1136,7 +1136,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   isFullWidthGallery() {
-    return this.props.container.galleryWidth >= utils.getWindowWidth() - 10;
+    return this.props.dimensions.galleryWidth >= utils.getWindowWidth() - 10;
   }
 
   onAutoSlideshowAutoPlayKeyPress(e) {
@@ -1318,11 +1318,11 @@ class SlideshowView extends GalleryComponent {
   }
 
   scrollPositionAtTheMiddleOfTheGallery(){
-    return this.getScrollPosition() + this.props.container.galleryWidth / 2;
+    return this.getScrollPosition() + this.props.dimensions.galleryWidth / 2;
   }
 
   scrollPositionAtTheAndOfTheGallery(){
-    return this.getScrollPosition() + this.props.container.galleryWidth;
+    return this.getScrollPosition() + this.props.dimensions.galleryWidth;
   }
 
   scrollPosition() {
