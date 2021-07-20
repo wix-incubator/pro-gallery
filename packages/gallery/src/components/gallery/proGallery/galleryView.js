@@ -99,7 +99,7 @@ class GalleryView extends GalleryComponent {
   lastVisibleItemIdx() {
     //the item must be visible and above the show more button
     return this.lastVisibleItemIdxInHeight(
-      this.props.container.galleryHeight - 100
+      this.props.dimensions.galleryHeight - 100
     );
   }
   showMoreItems() {
@@ -130,7 +130,7 @@ class GalleryView extends GalleryComponent {
     const {
       itemsLoveData,
       styleParams,
-      container,
+      dimensions,
       galleryStructure,
       getVisibleItems,
     } = this.props;
@@ -140,13 +140,13 @@ class GalleryView extends GalleryComponent {
 
     let galleryHeight;
     if (showMore) {
-      galleryHeight = container.galleryHeight - showMoreContainerHeight;
+      galleryHeight = dimensions.galleryHeight - showMoreContainerHeight;
     } else {
       galleryHeight = galleryStructure.height + 'px';
     }
     const galleryStructureItems = getVisibleItems(
       galleryStructure.galleryItems,
-      container
+      dimensions
     );
     const layout = galleryStructureItems.map((item, index) =>
       React.createElement(
@@ -175,7 +175,6 @@ class GalleryView extends GalleryComponent {
         style={{
           height: galleryHeight,
           overflowX: 'hidden',
-          //  width: this.props.container.galleryWidth,
         }}
         onKeyDown={this.handleKeys}
       >
@@ -184,7 +183,7 @@ class GalleryView extends GalleryComponent {
           style={{
             margin: styleParams.galleryMargin + 'px',
             height: galleryHeight,
-            width: this.props.container.galleryWidth - styleParams.imageMargin,
+            width: this.props.dimensions.galleryWidth - styleParams.imageMargin,
             overflow: 'visible',
             position: 'relative',
           }}
@@ -200,7 +199,7 @@ class GalleryView extends GalleryComponent {
     return {
       scrollingElement: this.props.scrollingElement,
       scroll: this.props.scroll,
-      container: this.props.container,
+      dimensions: this.props.dimensions,
       styleParams: this.props.styleParams,
       watermark: this.props.watermark,
       settings: this.props.settings,
@@ -224,7 +223,7 @@ class GalleryView extends GalleryComponent {
     return utils.shouldDebug('screenLogs') ? (
       <div className="screen-logs">
         URL width: {utils.parseGetParam('width')}, Container:{' '}
-        {JSON.stringify(this.props.container.galleryWidth)},
+        {JSON.stringify(this.props.dimensions.galleryWidth)},
         window.document.body.clientWidth {document.body.clientWidth},
         window.innerWidth {window.innerWidth}, window.screen.width:{' '}
         {window.screen.width}
@@ -247,7 +246,7 @@ class GalleryView extends GalleryComponent {
     const buttonState = this.props.displayShowMore;
     const shouldShowButton =
       buttonState &&
-      this.props.galleryStructure.height > this.props.container.height;
+      this.props.galleryStructure.height > this.props.dimensions.height;
 
     if (shouldShowButton) {
       const buttonText = styleParams.loadMoreButtonText || 'Load More';

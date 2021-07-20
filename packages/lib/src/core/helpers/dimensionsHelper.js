@@ -3,7 +3,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants/index';
 class DimensionsHelper {
   constructor() {
     this.styles = {};
-    this.container = {};
+    this.dimensions = {};
     this.domId = '';
     this._cache = {};
   }
@@ -18,11 +18,11 @@ class DimensionsHelper {
     this._cache = {};
   }
 
-  updateParams({ styles, container, domId }) {
+  updateParams({ styles, dimensions, domId }) {
     this.dumpCache();
     this.domId = domId || this.domId;
     this.styles = styles || this.styles;
-    this.container = container || this.container;
+    this.dimensions = dimensions || this.dimensions;
   }
 
   getGalleryDimensions() {
@@ -30,15 +30,15 @@ class DimensionsHelper {
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
         galleryHeight: Math.ceil(this.getGalleryHeight()),
-        scrollBase: this.container.scrollBase
-          ? Math.ceil(this.container.scrollBase)
+        scrollBase: this.dimensions.scrollBase
+          ? Math.ceil(this.dimensions.scrollBase)
           : 0,
-        height: Math.ceil(this.container.height),
-        width: Math.ceil(this.container.width),
+        height: Math.ceil(this.dimensions.height),
+        width: Math.ceil(this.dimensions.width),
       };
-      if (this.container.externalScrollBase) {
+      if (this.dimensions.externalScrollBase) {
         //if was provided from the wrapper
-        res.scrollBase += this.container.externalScrollBase;
+        res.scrollBase += this.dimensions.externalScrollBase;
       }
       if (this.styles.hasThumbnails) {
         const fixedThumbnailSize =
@@ -66,7 +66,8 @@ class DimensionsHelper {
 
   getGalleryWidth() {
     return this.getOrPutInCache('galleryWidth', () => {
-      let width = Math.floor(this.container.width) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
+      let width =
+        Math.floor(this.dimensions.width) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
       if (
         this.styles.arrowsPosition ===
           GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY &&
@@ -82,14 +83,14 @@ class DimensionsHelper {
 
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
-      //const offsetTop = this.styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL ? this.container.offsetTop : 0;
       const dimensionFix = () =>
         this.styles.scrollDirection ===
         GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? this.getDimensionFix()
           : 0;
       const res = Math.floor(
-        (this.container.height > 0 ? this.container.height : 0) + dimensionFix()
+        (this.dimensions.height > 0 ? this.dimensions.height : 0) +
+          dimensionFix()
       );
       return res;
     });
