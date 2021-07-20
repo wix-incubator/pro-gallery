@@ -10,9 +10,14 @@ function shouldChangeActiveElement() {
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
 }
 
-function isThisGalleryElementInFocus(className) {
+function isThisGalleryElementInFocus(className, currentProps) {
   const activeElement = window.document.activeElement;
-  return String(activeElement.className).includes(className);
+  return (
+    String(activeElement.className).includes(className) &&
+    window.document.querySelector(
+      `#pro-gallery-${currentProps.domId} #${String(activeElement.id)}`
+    )
+  );
 }
 
 export function onAnchorFocus({
@@ -42,9 +47,14 @@ export function changeActiveElementIfNeeded({
       window.document.activeElement.className
     ) {
       const isGalleryItemInFocus = isThisGalleryElementInFocus(
-        'gallery-item-container'
+        'gallery-item-container',
+        currentProps
       );
-      const isShowMoreInFocus = isThisGalleryElementInFocus('show-more');
+
+      const isShowMoreInFocus = isThisGalleryElementInFocus(
+        'show-more',
+        currentProps
+      );
 
       if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
