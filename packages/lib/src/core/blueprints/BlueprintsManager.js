@@ -159,10 +159,11 @@ export default class BlueprintsManager {
   }
 
   alignParamNamingOptions(params) {
-    let { dimensions, items, styles, styleParams, options, domId } =
+    let { dimensions, container, items, styles, styleParams, options, domId } =
       params || {};
 
     styles = { ...options, ...styles, ...styleParams };
+    dimensions = { ...dimensions, ...container };
 
     return { dimensions, items, styles, domId };
   }
@@ -240,7 +241,7 @@ export default class BlueprintsManager {
       this.currentState.items = changedParams.itemsChanged
         ? items
         : this.currentState.items;
-      this.currentState.dimensions = changedParams.dimensionsChanged
+      this.currentState.dimensions = changedParams.containerChanged
         ? { ...dimensions }
         : this.currentState.dimensions;
       this.currentState.styles = changedParams.stylesChanged
