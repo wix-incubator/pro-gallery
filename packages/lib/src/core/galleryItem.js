@@ -102,6 +102,7 @@ class GalleryItem {
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
       cubeRatio: this.cubeRatio,
+      isTransparent: this.isTransparent,
       offset: this.offset,
       style: {
         ratio: this.ratio,

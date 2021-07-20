@@ -28,7 +28,7 @@ class galleryDriver {
   initDefaults() {
     //override utils functions
     this.isTesingEnvironment = true;
-    this.container = {
+    this.dimensions = {
       scrollBase: 0,
       maxGalleryWidth: 1000,
       galleryWidth: 1000,
@@ -87,6 +87,7 @@ class galleryDriver {
       itemShadowDirection: 135,
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
+      enableVideoPlaceholder: true,
     };
 
     this.scroll = {
@@ -108,7 +109,7 @@ class galleryDriver {
 
     this.layoutParams = {
       items: this.items,
-      container: this.container,
+      container: this.dimensions,
       styleParams: this.styleParams,
       gotScrollEvent: true,
     };
@@ -118,7 +119,7 @@ class galleryDriver {
     );
 
     this.galleryConfig = {
-      container: this.get.container,
+      dimensions: this.get.dimensions,
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions,
@@ -131,7 +132,7 @@ class galleryDriver {
 
   get get() {
     return {
-      container: this.container,
+      dimensions: this.dimensions,
       styleParams: this.styleParams,
       scroll: this.scroll,
       items: this.items,
@@ -261,7 +262,7 @@ class galleryDriver {
             items: this.items,
             galleryStructure: this.galleryStructure,
             scroll: this.scroll,
-            container: this.container,
+            dimensions: this.dimensions,
             styleParams: this.styleParams,
             actions: this.actions,
             customHoverRenderer: this.customHoverRenderer,
@@ -273,7 +274,7 @@ class galleryDriver {
 
         const layoutParams = {
           items: galleryViewProps.items,
-          container: galleryViewProps.container,
+          container: galleryViewProps.dimensions,
           styleParams: galleryViewProps.styleParams,
         };
 
@@ -287,7 +288,7 @@ class galleryDriver {
           items: galleryViewProps.items,
           galleryStructure,
           scroll: galleryViewProps.scroll,
-          container: galleryViewProps.container,
+          dimensions: galleryViewProps.dimensions,
           getVisibleItems: (items) => items,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
@@ -335,7 +336,14 @@ class galleryDriver {
         const galleryItem = new GalleryItem({ dto: itemDto });
         const itemViewPropsObj = Object.assign(
           galleryItem.renderProps(newGalleryConfig),
-          { config: newGalleryConfig, visible: true }
+          {
+            config: newGalleryConfig,
+            visible: true,
+            imageDimensions: {
+              marginLeft: 0,
+              marginTop: 0,
+            },
+          }
         );
         return Object.assign(itemViewPropsObj, {
           actions: {

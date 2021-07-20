@@ -1,11 +1,11 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { styleParams, dimensions } from '../drivers/mocks/styles';
 
 describe('styleParam - slideAnimation', () => {
   const initialProps = {
-    container,
+    dimensions,
     items: images2,
     styles: styleParams,
   };

@@ -103,9 +103,10 @@ const styleParams = {
   videoLoop: true,
   shouldIndexDirectShareLinkInSEO: true,
   slideTransition: 'ease',
+  enableVideoPlaceholder: true,
 };
 
-const container = {
+const dimensions = {
   width: 1150,
   height: 850,
   scrollBase: 0,
@@ -117,4 +118,4 @@ const customRenderers = {
   customSlideshowInfoRenderer: () => {},
 };
 
-export { container, styleParams, customRenderers };
+export { dimensions, styleParams, customRenderers };
