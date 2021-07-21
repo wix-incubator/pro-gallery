@@ -4,6 +4,7 @@ group: edge
 arch: arm64-graviton2
 sudo: required
 install: true
+if: tag IS blank
 jobs:
   include:
     - stage: Build
