@@ -67,11 +67,15 @@ jobs:
         - npm run ci:test-e2e-ssr || travis_terminate 1;
 
     - stage: Deploy
+      if: NOT type IN (pull_request)
       workspaces:
         use: production_build
       script:
-        - npm run publish || travis_terminate 1;
-        - npm run deploy  || travis_terminate 1;
+        - git remote set-url origin "https://wix:${GITHUB_TOKEN}@github.com/wix/pro-gallery.git" > /dev/null 2>&1
+        - git checkout master
+        - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+        - npm run publishNewAlpha
+
 notifications:
   email:
     recipients:
