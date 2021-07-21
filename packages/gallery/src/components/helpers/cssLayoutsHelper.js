@@ -12,7 +12,7 @@ const getImageStyle = (item) => ({
   innerHeight: item.height,
 });
 
-const createItemId = (galleryId, item) => {
+const createItemId = ({ galleryId, item }) => {
   return `#pro-gallery-${galleryId} #${cssScrollHelper.getSellectorDomId(
     item
   )}`;
@@ -22,7 +22,7 @@ const createExactCssForItems = (id = '', galleryItems, styleParams) => {
 
   let cssStr = '';
   galleryItems.forEach((item) => {
-    const itemId = createItemId(id, item);
+    const itemId = createItemId({ galleryId: id, item });
     const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px;`;
     const L = isRTL
