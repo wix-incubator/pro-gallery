@@ -1008,7 +1008,7 @@ class SlideshowView extends GalleryComponent {
       customInfoRenderer: this.props.customInfoRenderer,
       customSlideshowInfoRenderer: this.props.customSlideshowInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
-      id: this.props.id,
+      galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       isPrerenderMode: this.props.isPrerenderMode,
