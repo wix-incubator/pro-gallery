@@ -22,8 +22,6 @@ jobs:
       workspaces:
         use: production_build
       script:
-        - git config --global user.email ${GITHUB_EMAIL}
-        - git config --global user.name ${GITHUB_USER}
         - git remote set-url origin "https://wix:${GITHUB_TOKEN}@github.com/wix/pro-gallery.git" > /dev/null 2>&1
         - git checkout master_test_new_alpha_flow
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
