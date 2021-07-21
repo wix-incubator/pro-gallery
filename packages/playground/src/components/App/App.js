@@ -33,7 +33,7 @@ let sideShownOnce = false;
 let totalItems = 0;
 
 export function App() {
-  const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
+  const {getBlueprintFromServer, setContainer, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, container, setShowSide} = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
   sideShownOnce = sideShownOnce || showSide;
 
@@ -73,7 +73,7 @@ export function App() {
         break;
       case GALLERY_EVENTS.GALLERY_CHANGE: //TODO split to an event named "PARTIALY_GROW_GALLERY_PRETTY_PLEASE"
         if(eventData.updatedHeight){
-          setDimensions({height: eventData.updatedHeight});
+          setContainer({height: eventData.updatedHeight});
         }
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
@@ -151,7 +151,7 @@ export function App() {
       return blueprint;
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {
       const params = {
-        dimensions: getContainer(),
+        container: getContainer(),
         styleParams: getStyles(),
         items: getItems()
       }
@@ -159,7 +159,7 @@ export function App() {
     } else {
       const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
       blueprintsManager.init({api: playgroundBlueprintsApi})
-      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), container: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
 
@@ -205,7 +205,7 @@ export function App() {
   const slideshowInfoElement = (pgItemProps) => {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
-  
+
   const getExternalInfoRenderers = () => {
     return {
       customHoverRenderer: hoverInfoElement,
@@ -215,7 +215,7 @@ export function App() {
   }
 
   const getContainer = () => {
-    return {scrollBase: 0, ...dimensions, ...(gallerySettings.responsivePreview && resizedDims)};
+    return {scrollBase: 0, ...container, ...(gallerySettings.responsivePreview && resizedDims)};
   }
 
   const getStyles = () => {
@@ -231,11 +231,11 @@ export function App() {
   }
 
   useEffect(() => {
-    window.addEventListener('resize', setDimensions);
+    window.addEventListener('resize', setContainer);
     return () => {
-      window.removeEventListener('resize', setDimensions);
+      window.removeEventListener('resize', setContainer);
     };
-  }, [setDimensions]);
+  }, [setContainer]);
 
   if (!isTestingEnv) { // isTestingEnvironment is not a valid style param and would be removed from the url if we use setStyleParamsInUrl. this removed this protection for testing environment as well
     setStyleParamsInUrl(styleParams);
@@ -269,7 +269,7 @@ export function App() {
   };
 
   window.playgroundItems = getItems();
-  
+
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -301,7 +301,7 @@ export function App() {
           useLayoutFixer: gallerySettings.useLayoutFixer,
           ...getExternalInfoRenderers(),
           ...blueprintProps
-        }, resizedDims, dims => {setDimensions(dims); setResizedDims(dims)}, gallerySettings)}
+        }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
       </section>
     </main>
   );
