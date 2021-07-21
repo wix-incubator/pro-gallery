@@ -27,7 +27,7 @@ jobs:
         - git remote set-url origin "https://wix:${GITHUB_TOKEN}@github.com/wix/pro-gallery.git" > /dev/null 2>&1
         - git checkout master_test_new_alpha_flow
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
-        - npm run publishNewAlpha
+        - npm run fixLatestTag
 
 notifications:
   email:
