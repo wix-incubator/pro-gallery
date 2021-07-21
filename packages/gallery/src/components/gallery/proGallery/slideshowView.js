@@ -196,7 +196,7 @@ class SlideshowView extends GalleryComponent {
     this.removeArrowsIfNeeded();
   }
 
-  nextItem({
+  async nextItem({
     direction,
     isAutoTrigger,
     scrollDuration,
@@ -259,22 +259,22 @@ class SlideshowView extends GalleryComponent {
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
-      const scrollToItemPromise =
+
         !isScrollingPastEdge &&
-        scrollToItem(
+       await scrollToItem(
           itemToScroll,
           false,
           true,
           _scrollDuration,
           scrollMarginCorrection
         );
-      scrollToItemPromise.then(() => {
+
         if (this.props.styleParams.groupSize === 1) {
           const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
 
           if (nextItem >= this.skipFromSlide) {
             nextItem = skipToSlide;
-            scrollToItem(nextItem);
+          await scrollToItem(nextItem);
           }
         }
 
@@ -296,7 +296,7 @@ class SlideshowView extends GalleryComponent {
           );
           this.props.setGotFirstScrollIfNeeded();
         }
-      });
+    
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
       this.stopAutoSlideshow();
@@ -304,7 +304,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  nextGroup({ direction, isAutoTrigger, scrollDuration }) {
+  async nextGroup({ direction, isAutoTrigger, scrollDuration }) {
     if (this.isSliding) {
       return;
     }
@@ -344,7 +344,7 @@ class SlideshowView extends GalleryComponent {
         scrollDuration || this.props.styleParams.scrollDuration || 400;
 
       !isScrollingPastEdge &&
-        scrollToGroup(
+       await scrollToGroup(
           currentGroup,
           false,
           true,
