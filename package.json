@@ -7,6 +7,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
+    "publishNewAlpha": "lerna publish prerelease --yes",
     "deploy": "node scripts/deployToSurge",
     "start": "npm run watch",
     "build": "lerna run build",

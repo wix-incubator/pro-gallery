@@ -67,11 +67,17 @@ jobs:
         - npm run ci:test-e2e-ssr || travis_terminate 1;
 
     - stage: Deploy
+      if: branch = master_test_new_alpha_flow
       workspaces:
         use: production_build
       script:
-        - npm run publish || travis_terminate 1;
-        - npm run deploy  || travis_terminate 1;
+        - git config --global user.email ${GITHUB_EMAIL}
+        - git config --global user.name ${GITHUB_USER}
+        - git remote set-url origin "https://nirnaor:${GITHUB_TOKEN}@github.com/nirnaor/publish-test.git" > /dev/null 2>&1
+        - git checkout master_test_new_alpha_flow
+        - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+        - npm run publishNewAlpha
+
 notifications:
   email:
     recipients:
