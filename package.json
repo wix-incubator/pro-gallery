@@ -7,7 +7,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "lerna bootstrap --hoist",
     "publish": "node scripts/publishPackages",
-    "publishNewAlpha": "lerna publish prerelease --dist-tag beta --yes",
+    "publishNewAlpha": "lerna publish prerelease --dist-tag next --yes",
     "fixLatestTag": "npm dist-tag add pro-gallery@3.1.38 latest",
     "deploy": "node scripts/deployToSurge",
     "start": "npm run watch",
