@@ -966,7 +966,7 @@ class ItemView extends GalleryComponent {
   }
 
   checkIfCurrentHoverChanged(e) {
-    if (e.domId === this.props.domId) {
+    if (e.id === this.props.id) {
       if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
         this.setState({
           isCurrentHover: true,

@@ -207,7 +207,7 @@ class GalleryView extends GalleryComponent {
       currentIdx: this.state.currentIdx,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
-      domId: this.props.domId,
+      id: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
@@ -260,7 +260,7 @@ class GalleryView extends GalleryComponent {
         >
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
-            id={'show-more-' + this.props.domId}
+            id={'show-more-' + this.props.id}
             className="show-more"
             onClick={this.showMoreItems}
             onMouseDown={(e) => e.preventDefault()}
