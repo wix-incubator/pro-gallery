@@ -318,7 +318,7 @@ class Blueprints {
     ) {
       dimensionsHelper.updateParams({
         styles: formattedStyles,
-        container: container,
+        container,
       });
       changed = true;
       formattedContainer = Object.assign(
