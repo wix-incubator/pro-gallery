@@ -67,12 +67,12 @@ jobs:
         - npm run ci:test-e2e-ssr || travis_terminate 1;
 
     - stage: Deploy
-      if: branch = master_test_new_alpha_flow
+      if: NOT type IN (pull_request)
       workspaces:
         use: production_build
       script:
         - git remote set-url origin "https://wix:${GITHUB_TOKEN}@github.com/wix/pro-gallery.git" > /dev/null 2>&1
-        - git checkout master_test_new_alpha_flow
+        - git checkout master
         - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
         - npm run publishNewAlpha
 
