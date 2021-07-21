@@ -68,7 +68,7 @@ jobs:
         - npm run ci:test-e2e-ssr || travis_terminate 1;
 
     - stage: Deploy
-      if: NOT type IN (pull_request)
+      if: NOT type IN (pull_request) AND branch = master
       workspaces:
         use: production_build
       script:
