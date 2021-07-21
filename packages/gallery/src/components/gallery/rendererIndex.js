@@ -30,7 +30,7 @@ export default class BaseGallery extends React.Component {
     if (
       galleryProps.styles &&
       galleryProps.items &&
-      galleryProps.dimensions &&
+      galleryProps.container &&
       galleryProps.structure
     ) {
       return <ProGallery {...galleryProps} />;

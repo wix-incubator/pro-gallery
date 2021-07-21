@@ -1,6 +1,8 @@
 import React from 'react';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
+// import { Dimensions } from '../../common/interfaces/Dimensions';
+
 import { GalleryProps, GalleryState } from './galleryTypes';
 import shouldValidate from './typeValidator/shouldValidate';
 
