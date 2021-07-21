@@ -28,7 +28,7 @@ class galleryDriver {
   initDefaults() {
     //override utils functions
     this.isTesingEnvironment = true;
-    this.dimensions = {
+    this.container = {
       scrollBase: 0,
       maxGalleryWidth: 1000,
       galleryWidth: 1000,
@@ -109,7 +109,7 @@ class galleryDriver {
 
     this.layoutParams = {
       items: this.items,
-      container: this.dimensions,
+      container: this.container,
       styleParams: this.styleParams,
       gotScrollEvent: true,
     };
@@ -119,7 +119,7 @@ class galleryDriver {
     );
 
     this.galleryConfig = {
-      dimensions: this.get.dimensions,
+      container: this.get.container,
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions,
@@ -132,7 +132,7 @@ class galleryDriver {
 
   get get() {
     return {
-      dimensions: this.dimensions,
+      container: this.container,
       styleParams: this.styleParams,
       scroll: this.scroll,
       items: this.items,
@@ -262,7 +262,7 @@ class galleryDriver {
             items: this.items,
             galleryStructure: this.galleryStructure,
             scroll: this.scroll,
-            dimensions: this.dimensions,
+            container: this.container,
             styleParams: this.styleParams,
             actions: this.actions,
             customHoverRenderer: this.customHoverRenderer,
@@ -274,7 +274,7 @@ class galleryDriver {
 
         const layoutParams = {
           items: galleryViewProps.items,
-          container: galleryViewProps.dimensions,
+          container: galleryViewProps.container,
           styleParams: galleryViewProps.styleParams,
         };
 
@@ -288,7 +288,7 @@ class galleryDriver {
           items: galleryViewProps.items,
           galleryStructure,
           scroll: galleryViewProps.scroll,
-          dimensions: galleryViewProps.dimensions,
+          container: galleryViewProps.container,
           getVisibleItems: (items) => items,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,

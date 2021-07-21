@@ -106,7 +106,7 @@ const styleParams = {
   enableVideoPlaceholder: true,
 };
 
-const dimensions = {
+const container = {
   width: 1150,
   height: 850,
   scrollBase: 0,
@@ -118,4 +118,4 @@ const customRenderers = {
   customSlideshowInfoRenderer: () => {},
 };
 
-export { dimensions, styleParams, customRenderers };
+export { container, styleParams, customRenderers };
