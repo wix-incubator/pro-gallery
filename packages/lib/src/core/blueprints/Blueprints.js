@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-//dummy
 import { Layouter } from 'pro-layouts';
 import defaultStyles from '../../common/defaultStyles';
 import { addPresetStyles } from '../presets/presets';
@@ -22,12 +21,12 @@ class Blueprints {
     let changedParams = {};
     try {
       const {
-        dimensions: newDimensionsParams,
+        container: newContainerParams,
         items: newItemsParams,
         styles: newStylesParams,
       } = params;
       const {
-        dimensions: oldDimensionsParams,
+        container: oldContainerParams,
         items: oldItemsParams,
         styles: oldStylesParams,
       } = lastParams;
@@ -43,8 +42,8 @@ class Blueprints {
         );
       const { formattedContainer, changed: containerChanged } =
         this.formatContainerIfNeeded(
-          newDimensionsParams,
-          oldDimensionsParams,
+          newContainerParams,
+          oldContainerParams,
           oldStylesParams,
           formattedStyles || existingBlueprint.styles,
           stylesChanged
@@ -259,72 +258,72 @@ class Blueprints {
   }
 
   formatContainerIfNeeded(
-    dimensions,
-    lastDimensions,
+    container,
+    lastContainer,
     lastStyles,
     formattedStyles,
     stylesChanged
   ) {
     const reason = {
-      dimensions: '',
+      container: '',
     };
-    const dimensionsHaveChanged = ({
-      newDimensionsParams,
-      oldDimensionsParams,
+    const containerHasChanged = ({
+      newContainerParams,
+      oldContainerParams,
       oldStylesParams,
     }) => {
-      if (!oldStylesParams || !oldDimensionsParams) {
-        reason.dimensions = 'no old dimensions or styles. ';
-        return true; // no old dimensions or styles (style may change dimensions)
+      if (!oldStylesParams || !oldContainerParams) {
+        reason.container = 'no old container or styles. ';
+        return true; // no old container or styles (style may change container)
       }
-      if (!newDimensionsParams) {
-        reason.dimensions = 'no new dimensions.';
+      if (!newContainerParams) {
+        reason.container = 'no new container.';
         return false; // no new continainer
       }
-      const dimensionsHaveChanged = {
+      const containerHasChanged = {
         height:
           formattedStyles.scrollDirection ===
             GALLERY_CONSTS.scrollDirection.VERTICAL &&
           formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
             ? false
-            : !!newDimensionsParams.height &&
-              newDimensionsParams.height !== oldDimensionsParams.height,
+            : !!newContainerParams.height &&
+              newContainerParams.height !== oldContainerParams.height,
         width:
-          !oldDimensionsParams ||
-          (!!newDimensionsParams.width &&
-            newDimensionsParams.width !== oldDimensionsParams.width),
+          !oldContainerParams ||
+          (!!newContainerParams.width &&
+            newContainerParams.width !== oldContainerParams.width),
         scrollBase:
-          !!newDimensionsParams.scrollBase &&
-          newDimensionsParams.scrollBase !== oldDimensionsParams.scrollBase,
+          !!newContainerParams.scrollBase &&
+          newContainerParams.scrollBase !== oldContainerParams.scrollBase,
       };
-      return Object.keys(dimensionsHaveChanged).reduce((is, key) => {
-        if (dimensionsHaveChanged[key]) {
-          reason.dimensions += `dimensions.${key} has changed. `;
+      return Object.keys(containerHasChanged).reduce((is, key) => {
+        if (containerHasChanged[key]) {
+          reason.container += `container.${key} has changed. `;
         }
-        return is || dimensionsHaveChanged[key];
+        return is || containerHasChanged[key];
       }, false);
     };
 
-    const oldDimensionsParams = lastDimensions;
+    const oldContainerParams = lastContainer;
     let changed = false;
     const oldStylesParams = lastStyles;
     let formattedContainer;
     if (
       stylesChanged || // If styles changed they could affect the container and a new container must be created (slideshow,thumbs,shadow,borders...etc)
-      dimensionsHaveChanged({
-        newDimensionsParams: dimensions,
-        oldDimensionsParams,
+      containerHasChanged({
+        newContainerParams: container,
+        oldContainerParams,
         oldStylesParams,
       })
     ) {
       dimensionsHelper.updateParams({
         styles: formattedStyles,
-        container: dimensions,
+        container,
       });
       changed = true;
       formattedContainer = Object.assign(
         {},
-        dimensions,
+        container,
         dimensionsHelper.getGalleryDimensions()
       );
     }
