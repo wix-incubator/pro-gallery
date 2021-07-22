@@ -409,7 +409,7 @@ class ItemView extends GalleryComponent {
     return (
       <VideoItemWrapper
         {...this.props}
-        shouldPlay={this.props.idx === this.props.playingVideoIdx}
+        playing={this.props.idx === this.props.playingVideoIdx}
         key={'video' + this.props.idx}
         hover={itemHover}
         imageDimensions={imageDimensions}
