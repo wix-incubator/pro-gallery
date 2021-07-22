@@ -775,7 +775,7 @@ class ItemView extends GalleryComponent {
   }
 
   getSlideAnimationStyles() {
-    const { idx, currentIdx, styleParams, container } = this.props;
+    const { idx, currentIdx, styleParams, dimensions } = this.props;
     const { isRTL, slideAnimation } = styleParams;
     const baseStyles = {
       position: 'absolute',
@@ -810,7 +810,7 @@ class ItemView extends GalleryComponent {
             ...baseStyles,
             zIndex: 1,
             transition: `transform 600ms ease`,
-            transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
+            transform: `translateX(${rtlFix * Math.round(dimensions.width)}px)`,
           };
         }
         break;

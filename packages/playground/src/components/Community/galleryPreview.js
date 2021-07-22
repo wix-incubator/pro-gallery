@@ -20,7 +20,7 @@ export const GalleryPreview = ({item}) => {
             <ProGallery
                 items={(window.playgroundItems || testImages).slice(0, 20)}
                 options={item.options}
-                container={{ width: 736, height: 700 }}
+                dimensions={{ width: 736, height: 700 }}
                 resizeMediaUrl={resizeMediaUrl}
             ></ProGallery>
         </div>

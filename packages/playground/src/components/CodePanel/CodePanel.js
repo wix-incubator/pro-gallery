@@ -59,7 +59,7 @@ function CodePanel() {
         </SyntaxHighlighter>
       </Modal>
       <Button type="primary" icon="code" shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
-        Generate Gallery Code 
+        Generate Gallery Code
       </Button>
     </div>
   );
@@ -127,8 +127,8 @@ function getCode(options) {
 ${options}
     };
 
-    // The size of the gallery container. The images will fit themselves in it
-    const container = {
+    // The size of the gallery dimensions. The images will fit themselves in it
+    const dimensions = {
       width: window.innerWidth,
       height: window.innerHeight
     };
@@ -143,7 +143,7 @@ ${options}
       <ProGallery
         items={items}
         options={options}
-        container={container}
+        dimensions={dimensions}
         eventsListener={eventsListener}
         scrollingElement={scrollingElement}
       />
