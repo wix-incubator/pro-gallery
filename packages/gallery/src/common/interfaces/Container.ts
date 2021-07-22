@@ -1,4 +1,4 @@
-export interface Dimensions {
+export interface Container {
   width: number;
   height?: number;
   scrollBase?: number;
