@@ -33,7 +33,7 @@ import 'pro-gallery/dist/statics/main.css';
   domId={domId}
   items={items}
   options={options}
-  dimensions={dimensions}
+  container={container}
   scrollingElement={() => document.getElementById('gallery') || window}
   eventsListener={(eName, eData) => console.log({eName, eData})}
 />
@@ -100,11 +100,11 @@ const items = [
 ]
 ```
 
-### Dimensions
+### Container
 An object containing the width and height (in pixels) of the gallery.
 This values should change when the container resizes, to allow the gallery to be responsive.
 ```js
-const dimensions = {
+const container = {
   width: 1000,
   height: 500,
 }

@@ -205,7 +205,7 @@ export function App() {
   const slideshowInfoElement = (pgItemProps) => {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
-
+  
   const getExternalInfoRenderers = () => {
     return {
       customHoverRenderer: hoverInfoElement,
@@ -245,7 +245,7 @@ export function App() {
   {
     items: getItems(),
     options: styleParams,
-    dimensions: getContainer()
+    container: getContainer()
   };
 
   // console.log('Rendering App: ', {styleParams, items, dimensions, showSide, blueprint, blueprintProps})
@@ -269,7 +269,7 @@ export function App() {
   };
 
   window.playgroundItems = getItems();
-
+  
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -346,8 +346,8 @@ const addResizable = (Component, props, resizedDims, setResizedDims, gallerySett
       overflow: 'visible'
     }}>
         <Component {...props}
-          dimensions={{
-            ...props.dimensions,
+          container={{
+            ...props.container,
             width: resizedDims.width,
             height: resizedDims.height
           }}

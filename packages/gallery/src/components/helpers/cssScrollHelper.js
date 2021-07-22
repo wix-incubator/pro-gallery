@@ -60,7 +60,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams, dimensions }) {
+  calcScrollCss({ domId, items, styleParams, container }) {
     utils.isVerbose() && console.time('CSS Scroll');
     if (!(items && items.length)) {
       return [];
@@ -77,7 +77,7 @@ class CssScrollHelper {
         ? Math.min(
             window.outerWidth,
             window.screen.width,
-            dimensions.galleryWidth
+            container.galleryWidth
           )
         : Math.min(window.outerHeight, window.screen.height);
     if (

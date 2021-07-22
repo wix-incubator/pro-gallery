@@ -2,12 +2,12 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, dimensions } from '../drivers/mocks/styles';
+import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - slideshowInfoSize', () => {
   let driver;
   const initialProps = {
-    dimensions,
+    container,
     items: images2,
     styles: styleParams,
   };
@@ -41,7 +41,7 @@ describe('styleParam - slideshowInfoSize', () => {
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { height } = galleryContainer.props().style;
     //expect height to be container.height - slideshowInfoSize
-    expect(height).to.eq(initialProps.dimensions.height - 250);
+    expect(height).to.eq(initialProps.container.height - 250);
     driver.detach.proGallery();
   });
 });
