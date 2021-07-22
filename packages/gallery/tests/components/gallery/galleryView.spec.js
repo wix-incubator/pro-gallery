@@ -55,7 +55,7 @@ describe('Gallery View', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       Object.assign(galleryViewProps, {
         displayShowMore: true,
-        container: { height: 1000 },
+        dimensions: { height: 1000 },
       });
       driver.mount(GalleryView, galleryViewProps);
       const stub = sinon.stub(

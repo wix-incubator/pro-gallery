@@ -4,14 +4,14 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
-  container,
+  dimensions,
   customRenderers,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - textImageSpace', () => {
   let driver;
   const initialProps = {
-    container,
+    dimensions,
     items: images2,
     styles: styleParams,
     ...customRenderers,

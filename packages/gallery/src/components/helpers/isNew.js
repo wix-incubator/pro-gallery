@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 export default (
-  { items, styles, container, watermark, itemsDimensions },
+  { items, styles, dimensions, watermark, itemsDimensions },
   state
 ) => {
   const reason = {
@@ -8,11 +8,11 @@ export default (
     itemsMetadata: '',
     itemsAdded: '',
     styles: '',
-    container: '',
+    dimensions: '',
   };
 
   const watermarkHaveChanged = (newWatermark) => {
-    const oldWatermark = state.container;
+    const oldWatermark = state.dimensions;
     if (newWatermark) {
       if (!oldWatermark) {
         reason.watermark = 'first watermark arrived';
@@ -35,34 +35,35 @@ export default (
     return false;
   };
 
-  const containerHadChanged = (_container) => {
-    if (!state.styles || !state.container) {
-      reason.container = 'no old container or styles. ';
-      return true; //no old container or styles (style may change container)
+  const dimensionsHaveChanged = (_dimensions) => {
+    if (!state.styles || !state.dimensions) {
+      reason.dimensions = 'no old dimensions or styles. ';
+      return true; //no old dimensions or styles (style may change dimensions)
     }
-    if (!_container) {
-      reason.container = 'no new container.';
+    if (!_dimensions) {
+      reason.dimensions = 'no new dimensions.';
       return false; // no new continainer
     }
-    const containerHasChanged = {
+    const dimensionsHaveChanged = {
       height:
         state.styles.scrollDirection ===
           GALLERY_CONSTS.scrollDirection.VERTICAL &&
         state.styles.enableInfiniteScroll
           ? false
-          : !!_container.height && _container.height !== state.container.height,
+          : !!_dimensions.height &&
+            _dimensions.height !== state.dimensions.height,
       width:
-        !state.container ||
-        (!!_container.width && _container.width !== state.container.width),
+        !state.dimensions ||
+        (!!_dimensions.width && _dimensions.width !== state.dimensions.width),
       scrollBase:
-        !!_container.scrollBase &&
-        _container.scrollBase !== state.container.scrollBase,
+        !!_dimensions.scrollBase &&
+        _dimensions.scrollBase !== state.dimensions.scrollBase,
     };
-    return Object.keys(containerHasChanged).reduce((is, key) => {
-      if (containerHasChanged[key]) {
-        reason.container += `container.${key} has changed. `;
+    return Object.keys(dimensionsHaveChanged).reduce((is, key) => {
+      if (dimensionsHaveChanged[key]) {
+        reason.dimensions += `dimensions.${key} has changed. `;
       }
-      return is || containerHasChanged[key];
+      return is || dimensionsHaveChanged[key];
     }, false);
   };
 
@@ -197,7 +198,7 @@ export default (
     itemsMetadata: itemsMetadataWasChanged(items),
     styles: stylesHaveChanged(styles),
     watermark: watermarkHaveChanged(watermark),
-    container: containerHadChanged(container),
+    dimensions: dimensionsHaveChanged(dimensions),
     itemsDimensions: !!itemsDimensions,
   };
 
