@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  test-unit:
+  ci:test-unit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -49,7 +49,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    # needs: [unit, e2e]
+    needs: [ci:test-unit, ci:test-e2e-layouts]
     strategy:
       matrix:
         node-version: [14.16.1]
