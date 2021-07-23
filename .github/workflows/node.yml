@@ -46,10 +46,65 @@ jobs:
     - run: npm run build
     - run: npm run build:dev
     - run: npm run ci:test-e2e-layouts
+  test-e2e-styleParams:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run lint
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-e2e-styleParams
+  test-e2e-integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run lint
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-e2e-integration
+  test-e2e-ssr:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run lint
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-e2e-ssr
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    needs: [test-unit, test-e2e-layouts]
+    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,test-e2e-ssr]
+
     strategy:
       matrix:
         node-version: [14.16.1]
