@@ -418,12 +418,18 @@ class SlideshowView extends GalleryComponent {
 
   startAutoSlideshowIfNeeded(styleParams) {
     this.clearAutoSlideshowInterval();
-    const autoSlideshowType = 'continues'
     if (this.shouldStartAutoSlideshow(styleParams)) {
-      if (autoSlideshowType === 'continues') {
+      if (
+        styleParams.autoSlideshowType ===
+        GALLERY_CONSTS.autoSlideshowType.CONTINUES &&
+        styleParams.scrollDuration > 0
+      ) {
         this.autoScrollToNextItem();
-      }
-      else if (autoSlideshowType === 'interval' && styleParams.autoSlideshowInterval > 0) {
+      } else if (
+        styleParams.autoSlideshowType ===
+          GALLERY_CONSTS.autoSlideshowType.INTERVAL &&
+        styleParams.autoSlideshowInterval > 0
+      ) {
         this.autoSlideshowInterval = setInterval(
           this.autoScrollToNextItem,
           styleParams.autoSlideshowInterval * 1000
@@ -437,11 +443,25 @@ class SlideshowView extends GalleryComponent {
       !isEditMode() &&
       (isGalleryInViewport(this.props.container) || isPreviewMode())
     ) {
-      const autoSlideshowType = 'continues'
-      const direction = this.props.styleParams.isRTL ? -1 : 1;
-      const scrollDuration = autoSlideshowType === 'continues' ? 8000 : 800;
-      const isContinuesScrolling = autoSlideshowType === 'continues' ? true : false;
-      this._next({ direction, isAutoTrigger: true, scrollDuration, isContinuesScrolling });
+      const { styleParams } = this.props;
+      const direction = styleParams.isRTL ? -1 : 1;
+      let isContinuesScrolling = false;
+      let scrollDuration = 800;
+
+      if (
+        styleParams.autoSlideshowType ===
+        GALLERY_CONSTS.autoSlideshowType.CONTINUES
+      ) {
+        isContinuesScrolling = true;
+        scrollDuration = styleParams.scrollDuration;
+      }
+
+      this._next({
+        direction,
+        isAutoTrigger: true,
+        scrollDuration,
+        isContinuesScrolling,
+      });
     }
   };
 
