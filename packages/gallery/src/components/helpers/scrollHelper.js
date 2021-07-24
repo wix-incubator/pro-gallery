@@ -18,6 +18,7 @@ export function scrollToItemImp(scrollParams) {
     itemIdx,
     fixedScroll,
     slideTransition,
+    isContinuesScrolling,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -74,6 +75,7 @@ export function scrollToItemImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuesScrolling,
     });
   } else {
     return new Promise((resolve) => {
@@ -231,8 +233,13 @@ function horizontalCssScrollTo({
   duration,
   isRTL,
   slideTransition,
+  isContinuesScrolling,
 }) {
   const change = to - from;
+
+  if (isContinuesScrolling) {
+    duration = Math.abs((duration / change) * 1000);
+  }
 
   if (change === 0) {
     return new Promise((resolve) => resolve(to));
