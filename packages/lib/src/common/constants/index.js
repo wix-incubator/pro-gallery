@@ -48,6 +48,7 @@ import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import imagePlacementAnimations from './imagePlacementAnimations';
 import slideTransition from './slideTransition';
+import autoSlideshowType from './autoSlideshowType';
 
 export default {
   arrowsPosition,
@@ -100,4 +101,5 @@ export default {
   viewMode,
   imagePlacementAnimations,
   slideTransition,
+  autoSlideshowType,
 };
