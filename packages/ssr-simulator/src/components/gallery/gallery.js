@@ -11,6 +11,7 @@ const UNKNOWN_CONTAINER = {
 export default class Gallery extends React.PureComponent {
   constructor(props) {
     super(props);
+    console.log('test')
 
     const container = this.getContainerFromUrl(props);
 
