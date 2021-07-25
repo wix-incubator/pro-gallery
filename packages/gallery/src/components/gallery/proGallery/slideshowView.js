@@ -157,6 +157,13 @@ class SlideshowView extends GalleryComponent {
     scrollDuration,
     isKeyboardNavigation = false,
   }) {
+    if (
+      isAutoTrigger &&
+      !this.props.styleParams.slideshowLoop &&
+      this.props.totalItemsCount -1 === this.state.currentIdx) {
+      this.stopAutoSlideshow();
+      return;
+    }
     const activeElement = document.activeElement;
     const galleryItemIsFocused =
       activeElement.className &&
