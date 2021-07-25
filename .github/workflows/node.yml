@@ -103,7 +103,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,test-e2e-ssr]
+    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,test-e2e-ssr, test-e2e-integration]
 
     strategy:
       matrix:
