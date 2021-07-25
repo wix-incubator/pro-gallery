@@ -115,15 +115,14 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
     - run: npm run build --if-present
-    - run: git config --global user.email "nirnaori@gmail.com"
-    - run: git config --global user.name "Nir Naor"
-    - run: git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_PAT@github.com/wix/pro-gallery
+    - run: git config --global user.email "octocat@github.com"
+    - run: git config --global user.name "GitHub Actions"
+    - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
     - run: git checkout master
     - run: |
         echo "registry=http://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
         lerna publish prerelease --dist-tag next --yes
       env:
-        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
