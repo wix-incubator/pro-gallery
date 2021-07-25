@@ -2,7 +2,7 @@
   "private": false,
   "name": "pro-layouts",
   "sideEffects": false,
-  "version": "4.0.15-beta.8",
+  "version": "4.0.15-beta.9",
   "author": {
     "name": "Guy Sopher",
     "email": "guysopher@gmail.com"
@@ -42,6 +42,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "pro-gallery-lib": "^4.0.15-beta.8"
+    "pro-gallery-lib": "^4.0.15-beta.9"
   }
 }
