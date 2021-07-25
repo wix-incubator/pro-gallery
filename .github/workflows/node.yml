@@ -24,7 +24,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run lint
     - run: npm run build
     - run: npm run build:dev
     - run: npm run ci:test-unit
@@ -42,7 +41,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run lint
     - run: npm run build
     - run: npm run build:dev
     - run: npm run ci:test-e2e-layouts
@@ -60,7 +58,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run lint
     - run: npm run build
     - run: npm run build:dev
     - run: npm run ci:test-e2e-styleParams
@@ -78,11 +75,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run lint
     - run: npm run build
     - run: npm run build:dev
     - run: npm run ci:test-e2e-integration
-  test-e2e-ssr:
+  lint-and-test-e2e-ssr:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -103,7 +99,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,test-e2e-ssr, test-e2e-integration]
+    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,lint-and-test-e2e-ssr, test-e2e-integration]
 
     strategy:
       matrix:
