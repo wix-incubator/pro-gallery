@@ -1,0 +1,128 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test-unit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-unit
+  test-e2e-layouts:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-e2e-layouts
+  test-e2e-styleParams:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-e2e-styleParams
+  test-e2e-integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-e2e-integration
+  lint-and-test-e2e-ssr:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install
+    - run: npm run lint
+    - run: npm run build
+    - run: npm run build:dev
+    - run: npm run ci:test-e2e-ssr
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,lint-and-test-e2e-ssr, test-e2e-integration]
+
+    strategy:
+      matrix:
+        node-version: [14.16.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        registry-url: 'https://registry.npmjs.org'
+    - run: npm install
+    - run: npm run build --if-present
+    - run: git config --global user.email "octocat@github.com"
+    - run: git config --global user.name "GitHub Actions"
+    - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
+    - run: git checkout master
+    - run: |
+        echo "registry=http://registry.npmjs.org/" >> .npmrc
+        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+        lerna publish prerelease --dist-tag next --yes
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
