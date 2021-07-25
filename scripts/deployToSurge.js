@@ -21,10 +21,10 @@ const formatBranchName = branch => {
 
 const generateSubdomains = subdomain => {
   const { version } = require('../lerna.json');
-  const { TRAVIS_BRANCH, TRAVIS_PULL_REQUEST } = process.env;
-  const isVersionSpecific = shouldPublishVersionSpecific(TRAVIS_BRANCH);
+  const { GITHUB_HEAD_REF, GITHUB_SHA } = process.env;
+  const isVersionSpecific = shouldPublishVersionSpecific(GITHUB_HEAD_REF);
 
-  console.log(chalk.magenta(`Generating Surge subdomains from branch: ${TRAVIS_BRANCH}, PR: ${TRAVIS_PULL_REQUEST}, version: ${version}, commit: ${getLatestCommit()}`));
+  console.log(chalk.magenta(`Generating Surge subdomains from branch: ${GITHUB_HEAD_REF}, version: ${version}, commit: ${getLatestCommit(GITHUB_SHA)}`));
 
   let subdomains = [];
   if (isVersionSpecific) {
@@ -37,7 +37,7 @@ const generateSubdomains = subdomain => {
       console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   } else {
     //push with branch suffix
-    subdomains.push(subdomain + `-${formatBranchName(TRAVIS_BRANCH)}`);
+    subdomains.push(subdomain + `-${formatBranchName(GITHUB_HEAD_REF)}`);
     console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   }
 
@@ -52,15 +52,14 @@ function build() {
   exec(buildCommand);
 }
 
-function getLatestCommit() {
-    const gitCommand = `git log --pretty=format:%B HEAD~1..HEAD`;
+function getLatestCommit(commitSha) {
+    const gitCommand = `git log --pretty=format${commitSha}`;
     return execSync(gitCommand, {
         stdio: 'pipe'
     });
 }
 
 function shouldPublishVersionSpecific(commit) {
-    // const commit = getLatestCommit();
     const regex = /^v\d.\d{1,2}.\d{1,3}$/gm;
     return !!(regex.exec(commit)) 
 }
