@@ -4,7 +4,7 @@ import SlideshowView from '../../src/components/gallery/proGallery/slideshowView
 import GalleryDriver from '../drivers/reactDriver';
 import sinon from 'sinon';
 
-describe('styleParam - autoSlideShowInterval', () => {
+describe('styleParam - autoSlideShowType', () => {
   let driver;
   let galleryViewProps;
   let clock;
@@ -22,10 +22,11 @@ describe('styleParam - autoSlideShowInterval', () => {
   afterEach(() => {
     clock.restore();
   });
-  it('startAutoSlideshow is called if needed', () => {
+  it('should startAutoSlideshow after interval', () => {
     Object.assign(initialProps.styleParams, {
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowType.INTERVAL,
       galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
@@ -36,6 +37,22 @@ describe('styleParam - autoSlideShowInterval', () => {
     clock.tick(900);
     expect(stub.called).to.equal(false);
     clock.tick(300);
+    expect(stub.called).to.equal(true);
+    stub.restore();
+    viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
+  });
+  it('should call startAutoSlideshow with CONTINUES behavior', () => {
+    Object.assign(initialProps.styleParams, {
+      isAutoSlideshow: true,
+      autoSlideshowInterval: 1,
+      scrollDuration: 2000,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowType.CONTINUES,
+      galleryLayout: 4,
+    });
+    galleryViewProps = driver.props.galleryView(initialProps);
+    const stub = sinon.stub(SlideshowView.prototype, 'next');
+    viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
+    driver.mount(SlideshowView, galleryViewProps);
     expect(stub.called).to.equal(true);
     stub.restore();
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
