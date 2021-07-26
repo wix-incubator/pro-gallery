@@ -90,6 +90,8 @@ import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
+import overlayPosition from './overlayPosition';
+import overlaySize from './overlaySize';
 
 export default {
   itemClick,
@@ -184,6 +186,8 @@ export default {
   slideTransition,
   useMaxDimensions,
   enableVideoPlaceholder,
+  overlayPosition,
+  overlaySize,
 };
 
 // TODO = add the options:

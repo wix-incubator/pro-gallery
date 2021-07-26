@@ -116,6 +116,8 @@ export const stylesBySection = {
     'arrowsVerticalPosition',
 
     'overlayBackground',
+    'overlayPosition',
+    'overlaySize',
 
     // 'itemIconColorSlideshow',
     // 'itemIconColor',
