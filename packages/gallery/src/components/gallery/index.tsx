@@ -75,7 +75,7 @@ export default class BaseGallery extends React.Component<
     this.galleryProps = {
       ...otherProps,
       eventsListener: _eventsListener,
-      domId: props.domId || 'default-dom-id',
+      id: props.id || 'default-dom-id',
     };
     if (calledByConstructor) {
       // the blueprint will be initiated with the state
