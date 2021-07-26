@@ -45,9 +45,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     needs: [lint, tests]
-
     strategy:
       matrix:
         node-version: [14.16.1]
