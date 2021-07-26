@@ -259,7 +259,7 @@ class SlideshowView extends GalleryComponent {
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
-      
+
         !isScrollingPastEdge &&
        await scrollToItem(
           itemToScroll,
@@ -268,7 +268,7 @@ class SlideshowView extends GalleryComponent {
           _scrollDuration,
           scrollMarginCorrection
         );
-      
+
         if (this.props.styleParams.groupSize === 1) {
           const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
 
@@ -1014,6 +1014,7 @@ class SlideshowView extends GalleryComponent {
       isPrerenderMode: this.props.isPrerenderMode,
       totalWidth: this.props.galleryStructure.width,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
+      enableExperimentalFeatures: this.props.enableExperimentalFeatures,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },

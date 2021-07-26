@@ -73,6 +73,7 @@ class VideoItem extends GalleryComponent {
         this.props.videoUrl.includes('.m3u8'))
     );
   }
+
   shouldUseHlsPlayer() {
     return this.isHLSVideo() && !utils.isiOS();
   }
@@ -181,8 +182,11 @@ class VideoItem extends GalleryComponent {
       );
     }
 
+    const playsinline = !!this.props.enableExperimentalFeatures;
+
     return (
       <PlayerElement
+        playsinline={playsinline}
         className={'gallery-item-visible video gallery-item'}
         id={`video-${this.props.id}`}
         width="100%"
