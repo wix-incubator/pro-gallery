@@ -92,7 +92,6 @@ export default class BaseGallery extends React.Component<
   }
 
   render() {
-    console.log('Change production code18');
     const { blueprint, typeErrors } = this.state;
 
     if (typeErrors) {
