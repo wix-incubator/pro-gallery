@@ -14,8 +14,9 @@ class VideoItem extends GalleryComponent {
 
     this.state = {
       playedOnce: false,
-      loadVideo: props.loadVideo || props.playing,
-      playing: false,
+      loadVideo: props.loadVideo || props.shouldPlay,
+      isPlaying: false,
+      shouldPlay: props.shouldPlay,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
       hlsPlayerLoaded: false,
@@ -82,8 +83,12 @@ class VideoItem extends GalleryComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.playing || nextProps.firstUserInteractionExecuted) {
+    if (nextProps.shouldPlay || nextProps.firstUserInteractionExecuted) {
       this.setState({ loadVideo: true });
+    }
+
+    if (nextProps.shouldPlay) {
+      this.setState({ shouldPlay: true });
     }
 
     this.playVideoIfNeeded(nextProps);
@@ -189,16 +194,16 @@ class VideoItem extends GalleryComponent {
         loop={!!this.props.styleParams.videoLoop}
         ref={(player) => (this.video = player)}
         volume={this.props.styleParams.videoSound ? 0.8 : 0}
-        playing={this.props.playing}
+        playing={this.state.shouldPlay}
         onEnded={() => {
-          this.setState({ playing: false });
+          this.setState({ isPlaying: false });
           this.props.actions.eventsListener(
             GALLERY_CONSTS.events.VIDEO_ENDED,
             this.props
           );
         }}
         onPause={() => {
-          this.setState({ playing: false });
+          this.setState({ isPlaying: false });
         }}
         onError={(e) => {
           this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {
@@ -217,13 +222,18 @@ class VideoItem extends GalleryComponent {
             GALLERY_CONSTS.events.VIDEO_PLAYED,
             this.props
           );
-          this.setState({ playing: true });
+          this.setState({ isPlaying: true });
         }}
         onReady={() => {
           this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
+        }}
+        onProgress={() => {
+          if (!this.props.shouldPlay) {
+            this.setState({ shouldPlay: false });
+          }
         }}
         controls={this.props.styleParams.showVideoControls}
         config={{
@@ -279,11 +289,10 @@ class VideoItem extends GalleryComponent {
 
   render() {
     const { videoPlaceholder, hover } = this.props;
-
     let baseClassName =
       'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
       (utils.isiPhone() ? ' ios' : '');
-    if (this.state.playing) {
+    if (this.state.isPlaying) {
       baseClassName += ' playing';
     }
     if (this.state.playedOnce && this.state.ready) {

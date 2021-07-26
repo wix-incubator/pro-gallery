@@ -10,100 +10,43 @@ on:
     branches: [ master ]
 
 jobs:
-  test-unit:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.16.1]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Install and run lint
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
     - run: npm run lint
-    - run: npm run build
-    - run: npm run build:dev
-    - run: npm run ci:test-unit
-  test-e2e-layouts:
+  tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.16.1]
+        test-script: ["ci:test-unit", "ci:test-e2e-layouts","ci:test-e2e-styleParams", "ci:test-e2e-integration", "ci:test-e2e-ssr" ]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Install, build and run test
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: npm run lint
     - run: npm run build
     - run: npm run build:dev
-    - run: npm run ci:test-e2e-layouts
-  test-e2e-styleParams:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.16.1]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: npm run lint
-    - run: npm run build
-    - run: npm run build:dev
-    - run: npm run ci:test-e2e-styleParams
-  test-e2e-integration:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.16.1]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: npm run lint
-    - run: npm run build
-    - run: npm run build:dev
-    - run: npm run ci:test-e2e-integration
-  test-e2e-ssr:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.16.1]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: npm run lint
-    - run: npm run build
-    - run: npm run build:dev
-    - run: npm run ci:test-e2e-ssr
+    - run: npm run ${{ matrix.test-script }}
+
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,test-e2e-ssr, test-e2e-integration]
+    needs: [lint, tests]
 
     strategy:
       matrix:
@@ -111,7 +54,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Install, build, configure git and lerna publish
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
@@ -119,15 +62,14 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
     - run: npm run build --if-present
-    - run: git config --global user.email "nirnaori@gmail.com"
-    - run: git config --global user.name "Nir Naor"
-    - run: git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_PAT@github.com/wix/pro-gallery
+    - run: git config --global user.email "octocat@github.com"
+    - run: git config --global user.name "GitHub Actions"
+    - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
     - run: git checkout master
     - run: |
         echo "registry=http://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
         lerna publish prerelease --dist-tag next --yes
       env:
-        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 

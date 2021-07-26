@@ -141,7 +141,7 @@ export default class ScrollIndicator extends GalleryComponent {
   UNSAFE_componentWillReceiveProps(nextProps) {
     let didChange = false;
     for (const prop of [
-      'domId',
+      'id',
       'scrollDirection',
       'isRTL',
       'totalWidth',
@@ -165,17 +165,14 @@ export default class ScrollIndicator extends GalleryComponent {
         ? this.props.scrollBase
         : 0;
     const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
-    const { domId } = this.props;
+    const { id } = this.props;
     return (
       <div
         key="css-scroll-indicator"
         data-hook="css-scroll-indicator"
         data-scroll-base={verticalScrollBase}
         data-scroll-top={this.state.scrollTop}
-        className={cssScrollHelper.calcScrollClasses(
-          domId,
-          scrollTopWithoutBase
-        )}
+        className={cssScrollHelper.calcScrollClasses(id, scrollTopWithoutBase)}
         style={{ display: 'none' }}
       />
     );

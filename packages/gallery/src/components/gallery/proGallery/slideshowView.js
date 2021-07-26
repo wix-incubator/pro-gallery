@@ -1008,7 +1008,7 @@ class SlideshowView extends GalleryComponent {
       customInfoRenderer: this.props.customInfoRenderer,
       customSlideshowInfoRenderer: this.props.customSlideshowInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
-      domId: this.props.domId,
+      galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       isPrerenderMode: this.props.isPrerenderMode,
@@ -1476,7 +1476,7 @@ class SlideshowView extends GalleryComponent {
     window.addEventListener('gallery_navigation_in', this.navigationInHandler);
 
     this.scrollElement = window.document.querySelector(
-      `#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`
+      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
     );
     if (this.scrollElement) {
       this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);

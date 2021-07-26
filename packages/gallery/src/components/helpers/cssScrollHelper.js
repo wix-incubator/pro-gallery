@@ -38,20 +38,20 @@ class CssScrollHelper {
     return `pgi${shortId}_${idx}`;
   }
 
-  buildScrollClassName(domId, idx, val) {
-    const shortId = String(domId).replace(/[\W]+/g, '').slice(-8);
+  buildScrollClassName(id, idx, val) {
+    const shortId = String(id).replace(/[\W]+/g, '').slice(-8);
     return `${this.pgScrollClassName}_${shortId}_${val}-${
       this.pgScrollSteps[idx] + Number(val)
     }`;
   }
 
-  calcScrollClasses(domId, scrollTop) {
+  calcScrollClasses(id, scrollTop) {
     return (
       `${this.pgScrollClassName}-${scrollTop} ` +
       this.pgScrollSteps
         .map((step, idx) =>
           this.buildScrollClassName(
-            domId,
+            id,
             idx,
             Math.floor(scrollTop / step) * step
           )
@@ -60,7 +60,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams, container }) {
+  calcScrollCss({ id, items, styleParams, container }) {
     utils.isVerbose() && console.time('CSS Scroll');
     if (!(items && items.length)) {
       return [];
@@ -105,7 +105,7 @@ class CssScrollHelper {
       maxStep;
 
     const cssScroll = items.map((item) =>
-      this.calcScrollCssForItem({ domId, item, styleParams })
+      this.calcScrollCssForItem({ id, item, styleParams })
     );
     utils.isVerbose() && console.timeEnd('CSS Scroll');
 
@@ -119,7 +119,7 @@ class CssScrollHelper {
     return true;
   }
 
-  createScrollSelectorsFunction({ domId, item, styleParams }) {
+  createScrollSelectorsFunction({ id, item, styleParams }) {
     const imageTop =
       styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ? item.offset.left - this.screenSize
@@ -137,7 +137,7 @@ class CssScrollHelper {
     return (padding, suffix) => {
       const [before, after] = padding;
       if (before === Infinity && after === Infinity) {
-        return `#pro-gallery-${domId} #${sellectorDomId} ${suffix}`;
+        return `#pro-gallery-${id} #${sellectorDomId} ${suffix}`;
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
@@ -164,7 +164,7 @@ class CssScrollHelper {
         }
         scrollClasses.push(
           `.${this.buildScrollClassName(
-            domId,
+            id,
             largestDividerIdx,
             from
           )} ~ div #${sellectorDomId} ${suffix}`
@@ -176,11 +176,11 @@ class CssScrollHelper {
     };
   }
 
-  calcScrollCssForItem({ domId, item, styleParams }) {
+  calcScrollCssForItem({ id, item, styleParams }) {
     const { idx } = item;
     let scrollCss = '';
     const createScrollSelectors = this.createScrollSelectorsFunction({
-      domId,
+      id,
       item,
       styleParams,
     });
