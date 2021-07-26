@@ -150,21 +150,22 @@ export default class BlueprintsManager {
 
   // ------------------ Get all the needed raw data ---------------------------- //
   async completeParams(params) {
-    let { container, items, styles, domId } =
+    let { container, items, styles, id } =
       this.alignParamNamingOptions(params);
     container = await this.fetchContainerIfNeeded(container);
     items = await this.fetchItemsIfNeeded(items);
     styles = await this.fetchStylesIfNeeded(styles); // can be async... TODO
-    return { container, items, styles, domId };
+
+    return { container, items, styles, id };
   }
 
   alignParamNamingOptions(params) {
-    let { container, items, styles, styleParams, options, domId } =
+    let { container, items, styles, styleParams, options, id } =
       params || {};
 
     styles = { ...options, ...styles, ...styleParams };
 
-    return { container, items, styles, domId };
+    return { container, items, styles, id };
   }
 
   async fetchContainerIfNeeded(container) {
@@ -173,6 +174,7 @@ export default class BlueprintsManager {
       if (_container && Object.keys(_container).length > 0) {
         should = false;
       }
+
       return should;
     };
 

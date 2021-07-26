@@ -289,7 +289,7 @@ export function App() {
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
-          domId: 'pro-gallery-playground',
+          id: 'pro-gallery-playground',
           scrollingElement: () => (gallerySettings.responsivePreview ? document.getElementById('resizable') : window),
           viewMode: gallerySettings.viewMode,
           eventsListener: eventListener,
