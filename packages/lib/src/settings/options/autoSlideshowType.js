@@ -12,5 +12,5 @@ export default {
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.autoSlideshowType.INTERVAL,
   options: createOptions('autoSlideshowTypes'),
-  description: `Choose between continuous scrolling and interval scrolling when using autoSlide.`,
+  description: `Choose the type of auto-scrolling to be used when navigation between items, "interval" (time between navigation) or "continues" (Continuous scrolling).`,
 };
