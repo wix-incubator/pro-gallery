@@ -1106,8 +1106,6 @@ class ItemView extends GalleryComponent {
           onFocus={() => {
             onAnchorFocus({
               itemAnchor: this.itemAnchor,
-              enableExperimentalFeatures:
-                this.props.enableExperimentalFeatures,
               itemContainer: this.itemContainer,
             });
           }}

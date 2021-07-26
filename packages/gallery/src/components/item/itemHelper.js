@@ -15,12 +15,8 @@ function isThisGalleryElementInFocus(className) {
   return String(activeElement.className).includes(className);
 }
 
-export function onAnchorFocus({
-  itemContainer,
-  enableExperimentalFeatures,
-  itemAnchor,
-}) {
-  if (shouldChangeActiveElement() && enableExperimentalFeatures) {
+export function onAnchorFocus({ itemContainer, itemAnchor }) {
+  if (shouldChangeActiveElement()) {
     /* Relevant only for Screen-Reader cases:
          When we navigate on the accessibility tree, screen readers stops and focuses on the <a> tag,
          so it will not go deeper to the item-container keyDown event */
