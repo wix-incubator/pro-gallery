@@ -75,7 +75,7 @@ export default class BaseGallery extends React.Component<
     this.galleryProps = {
       ...otherProps,
       eventsListener: _eventsListener,
-      domId: props.domId || 'default-dom-id',
+      id: props.id || 'default-dom-id',
     };
     if (calledByConstructor) {
       // the blueprint will be initiated with the state
@@ -92,7 +92,6 @@ export default class BaseGallery extends React.Component<
   }
 
   render() {
-    console.log('Change production code18');
     const { blueprint, typeErrors } = this.state;
 
     if (typeErrors) {

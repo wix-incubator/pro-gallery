@@ -4,7 +4,7 @@ class DimensionsHelper {
   constructor() {
     this.styles = {};
     this.container = {};
-    this.domId = '';
+    this.id = '';
     this._cache = {};
   }
 
@@ -18,9 +18,9 @@ class DimensionsHelper {
     this._cache = {};
   }
 
-  updateParams({ styles, container, domId }) {
+  updateParams({ styles, container, id }) {
     this.dumpCache();
-    this.domId = domId || this.domId;
+    this.id = id || this.id;
     this.styles = styles || this.styles;
     this.container = container || this.container;
   }

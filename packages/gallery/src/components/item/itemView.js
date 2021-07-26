@@ -409,7 +409,7 @@ class ItemView extends GalleryComponent {
     return (
       <VideoItemWrapper
         {...this.props}
-        playing={this.props.idx === this.props.playingVideoIdx}
+        shouldPlay={this.props.idx === this.props.playingVideoIdx}
         key={'video' + this.props.idx}
         hover={itemHover}
         imageDimensions={imageDimensions}
@@ -966,7 +966,7 @@ class ItemView extends GalleryComponent {
   }
 
   checkIfCurrentHoverChanged(e) {
-    if (e.domId === this.props.domId) {
+    if (e.galleryId === this.props.galleryId) {
       if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
         this.setState({
           isCurrentHover: true,

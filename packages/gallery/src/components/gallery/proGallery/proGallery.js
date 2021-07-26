@@ -38,7 +38,7 @@ export default class ProGallery extends GalleryComponent {
   renderProps() {
     return {
       ...this.props,
-      domId: this.props.domId,
+      id: this.props.id,
       items: this.props.items || [],
       watermarkData: this.props.watermarkData,
       settings: this.props.settings || {},
@@ -50,7 +50,7 @@ export default class ProGallery extends GalleryComponent {
 
   containerProps() {
     return {
-      id: `pro-gallery-${this.props.domId}`,
+      id: `pro-gallery-${this.props.id}`,
       className: 'pro-gallery',
     };
   }

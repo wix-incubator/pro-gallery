@@ -32,7 +32,7 @@ class SlideshowView extends GalleryComponent {
     this.navigationOutHandler = this.navigationOutHandler.bind(this);
     this.navigationInHandler = this.navigationInHandler.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
-    this.stopAutoSlideshow = this.stopAutoSlideshow.bind(this);
+    this.clearAutoSlideshowInterval = this.clearAutoSlideshowInterval.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onAutoSlideShowButtonClick =
@@ -41,7 +41,7 @@ class SlideshowView extends GalleryComponent {
       this.startAutoSlideshowIfNeeded.bind(this);
     this.blockAutoSlideshowIfNeeded =
       this.blockAutoSlideshowIfNeeded.bind(this);
-    this.shouldStartAutoSlideshow = this.shouldStartAutoSlideshow.bind(this);
+    this.canStartAutoSlideshow = this.canStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress =
       this.onAutoSlideshowAutoPlayKeyPress.bind(this);
@@ -306,7 +306,7 @@ class SlideshowView extends GalleryComponent {
 
     } catch (e) {
       console.error('Cannot proceed to the next Item', e);
-      this.stopAutoSlideshow();
+      this.clearAutoSlideshowInterval();
       return;
     }
   }
@@ -371,7 +371,7 @@ class SlideshowView extends GalleryComponent {
       );
     } catch (e) {
       console.error('Cannot proceed to the next Group', e);
-      this.stopAutoSlideshow();
+      this.clearAutoSlideshowInterval();
       return;
     }
   }
@@ -397,11 +397,11 @@ class SlideshowView extends GalleryComponent {
     }
     this.removeArrowsIfNeeded();
   }
-  stopAutoSlideshow() {
+  clearAutoSlideshowInterval() {
     clearInterval(this.autoSlideshowInterval);
   }
 
-  shouldStartAutoSlideshow(styleParams) {
+  canStartAutoSlideshow(styleParams) {
     const { isAutoSlideshow, autoSlideshowInterval } = styleParams;
     return (
       isAutoSlideshow &&
@@ -411,8 +411,8 @@ class SlideshowView extends GalleryComponent {
   }
 
   startAutoSlideshowIfNeeded(styleParams) {
-    this.stopAutoSlideshow();
-    if (this.shouldStartAutoSlideshow(styleParams)) {
+    this.clearAutoSlideshowInterval();
+    if (this.canStartAutoSlideshow(styleParams)) {
       this.autoSlideshowInterval = setInterval(
         this.autoScrollToNextItem.bind(this),
         styleParams.autoSlideshowInterval * 1000
@@ -811,7 +811,7 @@ class SlideshowView extends GalleryComponent {
       'true';
 
     if (isScrolling) {
-      this.stopAutoSlideshow();
+      this.clearAutoSlideshowInterval();
 
       //while the scroll is animating, prevent the reaction to this event
       return;
@@ -1015,7 +1015,7 @@ class SlideshowView extends GalleryComponent {
       customInfoRenderer: this.props.customInfoRenderer,
       customSlideshowInfoRenderer: this.props.customSlideshowInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
-      domId: this.props.domId,
+      galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       isPrerenderMode: this.props.isPrerenderMode,
@@ -1464,7 +1464,7 @@ class SlideshowView extends GalleryComponent {
     utils.setStateAndLog(this, 'Next Item', {
       isInView: false,
     });
-    this.stopAutoSlideshow();
+    this.clearAutoSlideshowInterval();
   }
 
   navigationInHandler() {
@@ -1483,7 +1483,7 @@ class SlideshowView extends GalleryComponent {
     window.addEventListener('gallery_navigation_in', this.navigationInHandler);
 
     this.scrollElement = window.document.querySelector(
-      `#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`
+      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
     );
     if (this.scrollElement) {
       this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
