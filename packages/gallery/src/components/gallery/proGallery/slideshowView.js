@@ -157,6 +157,14 @@ class SlideshowView extends GalleryComponent {
     scrollDuration,
     isKeyboardNavigation = false,
   }) {
+
+    direction *= this.props.styleParams.isRTL ? -1 : 1;
+    if (
+      this.isLastItem() &&
+      this.state.currentIdx + direction >= this.props.totalItemsCount) {
+      this.clearAutoSlideshowInterval();
+      return;
+    }
     const activeElement = document.activeElement;
     const galleryItemIsFocused =
       activeElement.className &&
@@ -174,7 +182,6 @@ class SlideshowView extends GalleryComponent {
       ignoreScrollPosition = true;
     }
 
-    direction *= this.props.styleParams.isRTL ? -1 : 1;
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
       this.nextGroup({ direction, isAutoTrigger, scrollDuration }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
