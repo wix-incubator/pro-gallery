@@ -162,7 +162,7 @@ class SlideshowView extends GalleryComponent {
     if (
       this.isLastItem() &&
       this.state.currentIdx + direction >= this.props.totalItemsCount) {
-      this.stopAutoSlideshow();
+      this.clearAutoSlideshowInterval();
       return;
     }
     const activeElement = document.activeElement;
