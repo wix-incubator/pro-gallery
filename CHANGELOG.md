@@ -209,7 +209,7 @@
 ## [v3.1.8](https://pro-gallery-3-1-8.surge.sh) (19/04/2021)
  
 #### GALLERY
- -  fix: first video is playing when initial currentIdx is not 0 
+ -  fix: first video is playing when initial activeIndex is not 0 
  -  fix (imageRenderer): use the original file type as the default surl for images
  -  feature: add  arrowsVerticalPosition param to control to position of the arrows in slideshow galleries
 
@@ -358,7 +358,7 @@
 ## [v3.0.2](https://pro-gallery-3-0-2.surge.sh) (16/02/2021)
  
 #### GALLERY
- -  fix: set currentIdx on prop.currentIdx change
+ -  fix: set activeIndex on prop.activeIndex change
 
 #### PLAYGROUND
  -  improve: add the placeGroupsLtr params to the sidebar
@@ -1096,7 +1096,7 @@
  
 #### GALLERY
  -  (isNew) check if watermark changed
- -  fix: return all items instead of visible items when there's currentIdx
+ -  fix: return all items instead of visible items when there's activeIndex
  -  fix: fix getMoreItems is not called when dimensions are unknown
 
 #### OTHER
@@ -2166,7 +2166,7 @@ Added MAIN_COLOR to imageLoading options (SP imageLoadingMode and imageLoaindWit
  -  fix (withFullscreen): fix imports paths
  -  improve: export ExpandableProGallery from index
  -  improve: move settings to gallery/src
- -  improve: allow openning fullscreen with currentIdx
+ -  improve: allow openning fullscreen with activeIndex
  -  use real thumbnailSize for thumbnails
  -  enable collage horizontal navigation - fix for last version regression
  
@@ -2192,7 +2192,7 @@ Added MAIN_COLOR to imageLoading options (SP imageLoadingMode and imageLoaindWit
  
 #### GALLERY
  -  improve (tests): reorganize tests folders
- -  improve: scroll to currentIdx on gallery load if defined
+ -  improve: scroll to activeIndex on gallery load if defined
  -  fix: add polyfill for Object.values
  -  improve: add ExpandableProGallery component
  -  fix (slideshowView): add restriction to nextItem > 0
