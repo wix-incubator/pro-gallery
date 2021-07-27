@@ -85,7 +85,7 @@ jobs:
   update-playground:
     runs-on: ubuntu-latest
     # if: github.ref == 'refs/heads/master'
-    needs: [test-unit, test-e2e-layouts, test-e2e-styleParams,test-e2e-ssr, test-e2e-integration]
+    # needs: [lint, tests]
 
     strategy:
       matrix:
@@ -102,8 +102,8 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
     - run: npm run deployToSurge
-      # env:
-      #   SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-      #   SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      env:
+        SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+        # SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }} not found in script
 
 
