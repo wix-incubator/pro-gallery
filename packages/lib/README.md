@@ -89,7 +89,7 @@ import 'pro-gallery/dist/statics/main.css';
 
 
 <ProGalleryRenderer
-    domId={domId}
+    id={id}
     {...blueprint}
     scrollingElement = { () => document.getElementById('gallery') || window }
     eventsListener = {(eName, eData) => console.log({eName, eData})}

@@ -121,7 +121,7 @@ export default class Gallery extends React.PureComponent {
     return (
       <div className={containerClassName}>
         <Gallery
-          domId="ssr-simulator"
+          id="ssr-simulator"
           items={items}
           styles={styles}
           settings={{

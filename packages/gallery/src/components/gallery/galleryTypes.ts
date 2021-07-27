@@ -6,10 +6,10 @@ type FormFactor = 'desktop' | 'mobile' | 'tablet';
 
 export interface GalleryProps {
   container: Container;
-  domId?: string;
-  totalItemsCount: number;
   items: (PhotoItem | VideoItem | TextItem)[];
-  currentIdx?: number;
+  id?: string;
+  totalItemsCount?: number;
+  activeIndex?: number;
   isPrerenderMode?: boolean;
   viewMode?: ViewMode;
   formFactor?: FormFactor;

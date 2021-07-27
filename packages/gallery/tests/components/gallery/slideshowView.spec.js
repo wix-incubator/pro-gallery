@@ -75,7 +75,7 @@ describe('Slideshow View', () => {
       const stubFirst = sinon
         .stub(SlideshowView.prototype, 'isFirstItem')
         .returns(true);
-      expect(driver.get.state('currentIdx')).to.equal(0);
+      expect(driver.get.state('activeIndex')).to.equal(0);
       //nextItem - forward
       driver.get.instance().handleSlideshowKeyPress({
         keyCode: 39,
@@ -84,7 +84,7 @@ describe('Slideshow View', () => {
         stopPropagation() {},
       });
       setTimeout(() => {
-        expect(driver.get.state('currentIdx')).to.equal(1);
+        expect(driver.get.state('activeIndex')).to.equal(1);
         stubFirst.returns(false);
         driver.get.instance().handleSlideshowKeyPress({
           keyCode: 40,
@@ -93,7 +93,7 @@ describe('Slideshow View', () => {
           stopPropagation() {},
         });
         setTimeout(() => {
-          expect(driver.get.state('currentIdx')).to.equal(2);
+          expect(driver.get.state('activeIndex')).to.equal(2);
           driver.get.instance().handleSlideshowKeyPress({
             keyCode: null,
             charCode: 32,
@@ -101,7 +101,7 @@ describe('Slideshow View', () => {
             stopPropagation() {},
           });
           setTimeout(() => {
-            expect(driver.get.state('currentIdx')).to.equal(3);
+            expect(driver.get.state('activeIndex')).to.equal(3);
             driver.get.instance().handleSlideshowKeyPress({
               keyCode: null,
               charCode: 34,
@@ -109,7 +109,7 @@ describe('Slideshow View', () => {
               stopPropagation() {},
             });
             setTimeout(() => {
-              expect(driver.get.state('currentIdx')).to.equal(4);
+              expect(driver.get.state('activeIndex')).to.equal(4);
               driver.get.instance().handleSlideshowKeyPress({
                 keyCode: 38,
                 charCode: null,
@@ -117,7 +117,7 @@ describe('Slideshow View', () => {
                 stopPropagation() {},
               });
               setTimeout(() => {
-                expect(driver.get.state('currentIdx')).to.equal(3);
+                expect(driver.get.state('activeIndex')).to.equal(3);
                 driver.get.instance().handleSlideshowKeyPress({
                   keyCode: 37,
                   charCode: null,
@@ -125,7 +125,7 @@ describe('Slideshow View', () => {
                   stopPropagation() {},
                 });
                 setTimeout(() => {
-                  expect(driver.get.state('currentIdx')).to.equal(2);
+                  expect(driver.get.state('activeIndex')).to.equal(2);
                   driver.get.instance().handleSlideshowKeyPress({
                     keyCode: null,
                     charCode: 33,
@@ -133,7 +133,7 @@ describe('Slideshow View', () => {
                     stopPropagation() {},
                   });
                   setTimeout(() => {
-                    expect(driver.get.state('currentIdx')).to.equal(1);
+                    expect(driver.get.state('activeIndex')).to.equal(1);
                     driver.get.instance().handleSlideshowKeyPress({
                       keyCode: null,
                       charCode: 33,
@@ -141,7 +141,7 @@ describe('Slideshow View', () => {
                       stopPropagation() {},
                     });
                     setTimeout(() => {
-                      expect(driver.get.state('currentIdx')).to.equal(0);
+                      expect(driver.get.state('activeIndex')).to.equal(0);
                       stubFirst.returns(true);
                       driver.get.instance().handleSlideshowKeyPress({
                         keyCode: null,
@@ -150,7 +150,7 @@ describe('Slideshow View', () => {
                         stopPropagation() {},
                       });
                       setTimeout(() => {
-                        expect(driver.get.state('currentIdx')).to.equal(0);
+                        expect(driver.get.state('activeIndex')).to.equal(0);
                         stubLast.restore();
                         stubFirst.restore();
                       }, 450);
@@ -171,13 +171,13 @@ describe('Slideshow View', () => {
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
-      expect(driver.get.state('currentIdx')).to.equal(0);
+      expect(driver.get.state('activeIndex')).to.equal(0);
       driver.find.hook('nav-arrow-next').simulate('click');
       setTimeout(() => {
-        expect(driver.get.state('currentIdx')).to.equal(1); //navigates
+        expect(driver.get.state('activeIndex')).to.equal(1); //navigates
         driver.find.hook('nav-arrow-next').simulate('click');
         setTimeout(() => {
-          expect(driver.get.state('currentIdx')).to.equal(2);
+          expect(driver.get.state('activeIndex')).to.equal(2);
         }, 450);
       }, 450);
     });
