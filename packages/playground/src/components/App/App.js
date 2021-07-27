@@ -296,7 +296,7 @@ export function App() {
           totalItemsCount: getTotalItemsCount(),
           resizeMediaUrl: resizeMediaUrl,
           settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
-          currentIdx: gallerySettings.initialIdx,
+          activeIndex: gallerySettings.initialIdx,
           useBlueprints: gallerySettings.useBlueprints,
           useLayoutFixer: gallerySettings.useLayoutFixer,
           ...getExternalInfoRenderers(),

@@ -9,7 +9,7 @@ export interface GalleryProps {
   items: (PhotoItem | VideoItem | TextItem)[];
   id?: string;
   totalItemsCount?: number;
-  currentIdx?: number;
+  activeIndex?: number;
   isPrerenderMode?: boolean;
   viewMode?: ViewMode;
   formFactor?: FormFactor;

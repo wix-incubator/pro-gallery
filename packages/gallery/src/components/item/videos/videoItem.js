@@ -95,7 +95,7 @@ class VideoItem extends GalleryComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.currentIdx !== this.props.currentIdx) {
+    if (prevProps.activeIndex !== this.props.activeIndex) {
       this.fixIFrameTabIndexIfNeeded();
     }
 
@@ -259,7 +259,7 @@ class VideoItem extends GalleryComponent {
         videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
       const videoIFrame = videoIFrames && videoIFrames[0];
       if (videoIFrame) {
-        if (this.props.currentIdx === this.props.idx) {
+        if (this.props.activeIndex === this.props.idx) {
           videoIFrame.setAttribute('tabIndex', '0');
         } else {
           videoIFrame.setAttribute('tabIndex', '-1');
