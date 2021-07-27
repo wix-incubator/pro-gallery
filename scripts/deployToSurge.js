@@ -24,7 +24,7 @@ const generateSubdomains = subdomain => {
   const { GITHUB_HEAD_REF, GITHUB_SHA } = process.env;
   const isVersionSpecific = shouldPublishVersionSpecific(GITHUB_HEAD_REF);
 
-  console.log(chalk.magenta(`Generating Surge subdomains from branch: ${GITHUB_HEAD_REF}, version: ${version}, commit: ${getLatestCommit(GITHUB_SHA)}`));
+  console.log(chalk.magenta(`Generating Surge subdomains from branch: ${GITHUB_HEAD_REF}, version: ${version}, commit: ${GITHUB_SHA}`));
 
   let subdomains = [];
   if (isVersionSpecific) {
