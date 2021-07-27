@@ -22,10 +22,11 @@ describe('styleParam - autoSlideShowInterval', () => {
   afterEach(() => {
     clock.restore();
   });
-  it('startAutoSlideshow is called if needed', () => {
+  it('startAutoSlideshow is called after one second when auto "autoSlideshowInterval" set to 1', () => {
     Object.assign(initialProps.styleParams, {
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
       galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
