@@ -35,8 +35,8 @@ export const createStyles = (styles) => {
   let res = { ...styles };
   res = fixToGrid(res);
   res.targetItemSize = calcTargetItemSize(
-    styles,
-    Math.round(styles.gallerySize * 8.5 + 150)
+    res,
+    Math.round(res.gallerySize * 8.5 + 150)
   );
   res = mutateNumberOfImagesPerRow(res);
   res = mutateNumberOfImagesPerCol(res); //TODO rename back to process
