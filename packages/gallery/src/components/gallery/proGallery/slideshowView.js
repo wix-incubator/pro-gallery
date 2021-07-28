@@ -156,6 +156,7 @@ class SlideshowView extends GalleryComponent {
     isAutoTrigger,
     scrollDuration,
     isKeyboardNavigation = false,
+    isContinuesScrolling = false,
   }) {
 
     direction *= this.props.styleParams.isRTL ? -1 : 1;
@@ -198,6 +199,7 @@ class SlideshowView extends GalleryComponent {
         scrollDuration,
         avoidIndividualNavigation,
         ignoreScrollPosition,
+        isContinuesScrolling,
       });
     }
     this.removeArrowsIfNeeded();
@@ -209,6 +211,7 @@ class SlideshowView extends GalleryComponent {
     scrollDuration,
     avoidIndividualNavigation,
     ignoreScrollPosition,
+    isContinuesScrolling
   }) {
     if (this.isSliding) {
       return;
@@ -273,7 +276,8 @@ class SlideshowView extends GalleryComponent {
           false,
           true,
           _scrollDuration,
-          scrollMarginCorrection
+          scrollMarginCorrection,
+          isContinuesScrolling,
         );
 
         if (this.props.styleParams.groupSize === 1) {
@@ -294,6 +298,9 @@ class SlideshowView extends GalleryComponent {
           () => {
             this.onCurrentItemChanged();
             this.isSliding = false;
+            if (isContinuesScrolling) {    
+              this.startAutoSlideshowIfNeeded(this.props.styleParams);
+            }
           }
         );
 
@@ -402,10 +409,8 @@ class SlideshowView extends GalleryComponent {
   }
 
   canStartAutoSlideshow(styleParams) {
-    const { isAutoSlideshow, autoSlideshowInterval } = styleParams;
     return (
-      isAutoSlideshow &&
-      autoSlideshowInterval > 0 &&
+      styleParams.isAutoSlideshow &&
       !this.state.shouldBlockAutoSlideshow
     );
   }
@@ -413,10 +418,22 @@ class SlideshowView extends GalleryComponent {
   startAutoSlideshowIfNeeded(styleParams) {
     this.clearAutoSlideshowInterval();
     if (this.canStartAutoSlideshow(styleParams)) {
-      this.autoSlideshowInterval = setInterval(
-        this.autoScrollToNextItem.bind(this),
-        styleParams.autoSlideshowInterval * 1000
-      );
+      if (
+        styleParams.autoSlideshowType ===
+        GALLERY_CONSTS.autoSlideshowTypes.CONTINUES &&
+        styleParams.autoSlideshowContinuesSpeed > 0
+      ) {
+        this.autoScrollToNextItem();
+      } else if (
+        styleParams.autoSlideshowType ===
+          GALLERY_CONSTS.autoSlideshowTypes.INTERVAL &&
+        styleParams.autoSlideshowInterval > 0
+      ) {
+        this.autoSlideshowInterval = setInterval(
+          this.autoScrollToNextItem,
+          styleParams.autoSlideshowInterval * 1000
+        );
+      }
     }
   }
 
@@ -425,8 +442,25 @@ class SlideshowView extends GalleryComponent {
       !isEditMode() &&
       (isGalleryInViewport(this.props.container) || isPreviewMode())
     ) {
-      const direction = this.props.styleParams.isRTL ? -1 : 1;
-      this._next({ direction, isAutoTrigger: true, scrollDuration: 800 });
+     const { styleParams } = this.props;
+      const direction = styleParams.isRTL ? -1 : 1;
+      let isContinuesScrolling = false;
+      let scrollDuration = 800;
+
+      if (
+        styleParams.autoSlideshowType ===
+        GALLERY_CONSTS.autoSlideshowTypes.CONTINUES
+      ) {
+        isContinuesScrolling = true;
+        scrollDuration = styleParams.autoSlideshowContinuesSpeed;
+      }
+
+      this._next({
+        direction,
+        isAutoTrigger: true,
+        scrollDuration,
+        isContinuesScrolling,
+      });
     }
   };
 
