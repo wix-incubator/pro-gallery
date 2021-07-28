@@ -6,7 +6,6 @@ export default {
   title: 'Auto slide Behaviour',
   isRelevant: (sp) =>
     sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    sp.groupSize === 1 &&
     sp.isAutoSlideshow,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto Slide" to "true".',
