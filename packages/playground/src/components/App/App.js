@@ -157,6 +157,7 @@ export function App() {
       }
       getBlueprintFromServer(params);
     } else {
+      debugger;
       const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
       blueprintsManager.init({api: playgroundBlueprintsApi})
       blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), container: getContainer(), totalItemsCount: getTotalItemsCount()}, true);

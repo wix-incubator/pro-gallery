@@ -84,7 +84,7 @@ export function useGalleryContext(
   const setPreset = (newPreset) => {
     const newContext = {
       preset: newPreset,
-      styleParams: getInitialStyleParams(newPreset),
+      styleParams: addPresetStyles(getInitialStyleParams(newPreset)),
     };
 
     if (getGallerySettings().useBlueprints) {
@@ -97,11 +97,11 @@ export function useGalleryContext(
   const setStyleParams = (newProp, value) => {
     // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
     const newContext = {
-      styleParams: {
+      styleParams: addPresetStyles({
         ...getInitialStyleParams(),
         ...getStyleParamsFromUrl(),
         [newProp]: value,
-      },
+      }),
     };
     if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
