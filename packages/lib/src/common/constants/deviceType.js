@@ -1,7 +1,7 @@
-const FORM_FACTOR = {
+const DEVICE_TYPE = {
   DESKTOP: 'desktop',
   MOBILE: 'mobile',
   TABLET: 'tablet',
 };
 
-export default FORM_FACTOR;
+export default DEVICE_TYPE;

@@ -3,7 +3,7 @@ import arrowsVerticalPosition from './arrowsVerticalPosition';
 import cubeType from './cubeType';
 import dimensions from './dimensions';
 import events from './events';
-import formFactor from './formFactor';
+import deviceType from './deviceType';
 import gallerySizeType from './gallerySizeType';
 import galleryTextAlign from './galleryTextAlign.js';
 import gridStyle from './gridStyle';
@@ -56,7 +56,7 @@ export default {
   cubeType,
   dimensions,
   events,
-  formFactor,
+  deviceType,
   gallerySizeType,
   galleryTextAlign,
   gridStyle,

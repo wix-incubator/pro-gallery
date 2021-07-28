@@ -9,7 +9,7 @@
     "deprecatedPublish": "node scripts/publishPackages",
     "publishNewAlpha": "lerna publish prerelease --dist-tag next --yes",
     "fixLatestTag": "npm dist-tag add pro-gallery@3.1.38 latest",
-    "deploy": "node scripts/deployToSurge",
+    "deployToSurge": "node scripts/deployToSurge",
     "start": "npm run watch",
     "build": "lerna run build",
     "lint": "lerna run lint",
