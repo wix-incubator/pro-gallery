@@ -101,6 +101,7 @@ export function scrollToGroupImp(scrollParams) {
     groupIdx,
     fixedScroll,
     slideTransition,
+    isContinuesScrolling,
   } = scrollParams;
 
   //default = scroll by half the container size
@@ -170,6 +171,7 @@ export function scrollToGroupImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuesScrolling,
     });
   } else {
     return new Promise((resolve) => {
@@ -242,10 +244,9 @@ function horizontalCssScrollTo({
   }
 
   if (isContinuesScrolling) {
-    change = Math.abs(change);
-    duration = change * duration;
+    duration = Math.abs(change) * duration;
   }
-  console.log('scrool to');
+
   const scrollerInner = scroller.firstChild;
 
   scroller.setAttribute('data-scrolling', 'true');

@@ -160,6 +160,8 @@ class SlideshowView extends GalleryComponent {
   }) {
 
     direction *= this.props.styleParams.isRTL ? -1 : 1;
+    // debugger
+    console.log(this.state);
     if (
       this.isLastItem() &&
       this.state.currentIdx + direction >= this.props.totalItemsCount) {
@@ -184,7 +186,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
-      this.nextGroup({ direction, isAutoTrigger, scrollDuration }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+      this.nextGroup({ direction, isAutoTrigger, scrollDuration, isContinuesScrolling }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if (
         avoidIndividualNavigation &&
@@ -318,7 +320,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  async nextGroup({ direction, isAutoTrigger, scrollDuration }) {
+  async nextGroup({ direction, isAutoTrigger, scrollDuration,isContinuesScrolling = false }) {
     if (this.isSliding) {
       return;
     }
@@ -363,7 +365,8 @@ class SlideshowView extends GalleryComponent {
           false,
           true,
           _scrollDuration,
-          scrollMarginCorrection
+          scrollMarginCorrection,
+          isContinuesScrolling
         );
       utils.setStateAndLog(
         this,
@@ -374,6 +377,9 @@ class SlideshowView extends GalleryComponent {
         () => {
           this.onCurrentItemChanged();
           this.isSliding = false;
+          if (isContinuesScrolling) {
+            this.startAutoSlideshowIfNeeded(this.props.styleParams);
+          }
         }
       );
     } catch (e) {
@@ -442,7 +448,7 @@ class SlideshowView extends GalleryComponent {
       !isEditMode() &&
       (isGalleryInViewport(this.props.container) || isPreviewMode())
     ) {
-     const { styleParams } = this.props;
+      const { styleParams } = this.props;
       const direction = styleParams.isRTL ? -1 : 1;
       let isContinuesScrolling = false;
       let scrollDuration = 800;

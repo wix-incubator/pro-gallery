@@ -439,7 +439,8 @@ export class GalleryContainer extends React.Component {
     fixedScroll,
     isManual,
     durationInMS = 0,
-    scrollMarginCorrection
+    scrollMarginCorrection,
+    isContinuesScrolling = false
   ) {
     if (groupIdx >= 0) {
       const scrollingElement = this._scrollingElement;
@@ -461,6 +462,7 @@ export class GalleryContainer extends React.Component {
           horizontalElement,
           durationInMS,
           slideTransition: this.state.styles.slideTransition,
+          isContinuesScrolling,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {
