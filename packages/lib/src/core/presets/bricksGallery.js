@@ -38,6 +38,6 @@ export const fixedStyles = fixToBricks({});
 export const createStyles = (styles) => {
   let res = { ...styles };
   res = fixToBricks(res);
-  res.targetItemSize = calcTargetItemSize(styles);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };
