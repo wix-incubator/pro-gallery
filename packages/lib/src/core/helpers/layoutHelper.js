@@ -35,6 +35,59 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
   }
 };
 
+export const mutateNumberOfImagesPerRow = (styles) => {
+  //This will be used in the masonry and grid presets
+  let res = {...styles}
+  if (
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+      styles.isVertical //relevant for masonry, in grid its fixed to true.
+  ) {
+    res.fixedColumns =
+      String(styles.gridStyle) === '1'
+        ? Number(styles.numberOfImagesPerRow)
+        : 0;
+    res.groupTypes = '1';
+    res.groupSize = 1;
+    res.collageAmount = 0;
+    res.collageDensity = 0;
+  } 
+  return res;
+}
+
+export const mutateNumberOfImagesPerCol = (styles) => {
+  //This will be used in the grid preset
+  let res = {...styles}
+if (
+  !utils.isUndefined(styles.numberOfImagesPerCol) &&
+  styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+) {
+  res.fixedColumns = 0;
+  switch (styles.numberOfImagesPerCol) {
+    case 1:
+    default:
+      res.groupTypes = '1';
+      res.groupSize = 1;
+      res.collageAmount = 0;
+      res.collageDensity = 0;
+      break;
+    case 2:
+      res.groupTypes = '2v';
+      res.groupSize = 2;
+      res.collageAmount = 1;
+      res.collageDensity = 1;
+      break;
+    case 3:
+      res.groupTypes = '3v';
+      res.groupSize = 3;
+      res.collageAmount = 1;
+      res.collageDensity = 1;
+      break;
+  }
+}
+return res
+
+}
+
 export const processNumberOfImagesPerRow = (styles) => {
   //This will be used in the masonry and grid presets
   if (
