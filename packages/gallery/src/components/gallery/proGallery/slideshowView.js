@@ -160,12 +160,10 @@ class SlideshowView extends GalleryComponent {
   }) {
 
     direction *= this.props.styleParams.isRTL ? -1 : 1;
-    console.log('cccccccc')
     if (
-      ((direction >= 1 && this.isLastItemFullyVisible()) ||
-      (direction <= -1 && this.isFirstItemFullyVisible()))
+      this.isLastItem() &&
+      this.state.activeIndex + direction >= this.props.totalItemsCount
       ) {
-       console.log("clear auto slide show");
       this.clearAutoSlideshowInterval();
       return;
     }
