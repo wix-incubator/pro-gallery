@@ -2,40 +2,41 @@ import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import {
   calcTargetItemSize,
-  processNumberOfImagesPerRow,
+  mutateNumberOfImagesPerRow,
 } from '../helpers/layoutHelper';
 import { featureManager } from '../helpers/versionsHelper';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.MASONRY,
-  cubeImages: false,
-  scrollDirection: SCROLL_DIRECTION.VERTICAL,
-  groupSize: 1,
-  groupTypes: '1',
-  slideshowLoop: false,
+const fixToMasonry = (styles) => {
+  let presetStyles = { ...styles };
+  presetStyles.galleryLayout = LAYOUTS.MASONRY;
+  presetStyles.cubeImages = false;
+  presetStyles.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  presetStyles.groupSize = 1;
+  presetStyles.groupTypes = '1';
+  presetStyles.slideshowLoop = false;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  fixedColumns: 0,
-  enableScroll: true,
-  isGrid: false,
-  isSlider: false,
-  isMasonry: true,
-  isColumns: false,
-  isSlideshow: false,
-  cropOnlyFill: false,
+  presetStyles.fixedColumns = 0;
+  presetStyles.enableScroll = true;
+  presetStyles.isGrid = false;
+  presetStyles.isSlider = false;
+  presetStyles.isMasonry = true;
+  presetStyles.isColumns = false;
+  presetStyles.isSlideshow = false;
+  presetStyles.cropOnlyFill = false;
+  return presetStyles;
 };
+export const fixedStyles = fixToMasonry({});
 
 export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(
-      styles,
-      styles.isVertical
-        ? styles.gallerySize * 8 + 200
-        : styles.gallerySize * 5 + 200
-    ),
-    ...(featureManager.supports.fixedColumnsInMasonry &&
-      processNumberOfImagesPerRow({ ...styles, ...fixedStyles })),
-  };
+  let res = { ...styles };
+  res = fixToMasonry(res);
+  res.targetItemSize = calcTargetItemSize(
+    res,
+    res.isVertical ? res.gallerySize * 8 + 200 : res.gallerySize * 5 + 200
+  );
+  if (featureManager.supports.fixedColumnsInMasonry) {
+    res = mutateNumberOfImagesPerRow(res);
+  }
+  return res;
 };
