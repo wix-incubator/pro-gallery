@@ -18,7 +18,7 @@ export default class BlueprintsManager {
     this.api = config.api;
     this.currentState.totalItemsCount =
       (config && config.totalItemsCount) || this.currentState.totalItemsCount;
-    viewModeWrapper.setFormFactor(config.formFactor);
+    viewModeWrapper.setDeviceType(config.deviceType);
   }
 
   async createBlueprint(params = {}) {

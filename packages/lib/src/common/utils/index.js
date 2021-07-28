@@ -4,7 +4,7 @@ import window from '../window/windowWrapper';
 import {
   isEditMode,
   isPreviewMode,
-  isFormFactorMobile,
+  isDeviceTypeMobile,
 } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants'
 
@@ -172,13 +172,13 @@ class Utils {
     const _isMobileByProps = () => {
       const deviceType = this.parseGetParam('deviceType') || window.deviceType;
       const isMobileViewer = this.parseGetParam('showMobileView') === 'true';
-      const formFactorMobile = isFormFactorMobile();
+      const deviceTypeMobile = isDeviceTypeMobile();
       if (isMobileViewer) {
         return true;
       } else if (deviceType) {
         return String(deviceType).toLowerCase().indexOf('mobile') >= 0;
-      } else if (formFactorMobile) {
-        return formFactorMobile;
+      } else if (deviceTypeMobile) {
+        return deviceTypeMobile;
       } else {
         return undefined;
       }
@@ -441,7 +441,7 @@ class Utils {
       if (v === '') {
         v = "''";
       } else if (this.isUndefined(v)) {
-        v = 'undefined';  
+        v = 'undefined';
       }
       return String(v);
     };
@@ -662,7 +662,7 @@ class Utils {
         proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
   }
-  
+
   focusGalleryElement(element){
     element.focus();
   }
