@@ -105,7 +105,7 @@ function expectedStyles() {
     slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
     useMaxDimensions: false,
     enableVideoPlaceholder: true,
-    autoSlideshowType: 'interval',
-    autoSlideshowContinuesSpeed: 2,
+    // autoSlideshowType: 'interval',
+    // autoSlideshowContinuesSpeed: 2,
   };
 }
