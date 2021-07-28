@@ -14,6 +14,7 @@ const fixToGrid = (styles) => {
   presetStyles.hasThumbnails = false;
   presetStyles.groupTypes = '1';
   presetStyles.slideshowLoop = false;
+  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetStyles.smartCrop = false;
   presetStyles.galleryType = 'Columns';
   presetStyles.fixedColumns = 0;
