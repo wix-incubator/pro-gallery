@@ -37,6 +37,6 @@ export const fixedStyles = fixToAlternate({});
 export const createStyles = (styles) => {
   let res = { ...styles };
   res = fixToAlternate(res);
-  res.targetItemSize = calcTargetItemSize(styles);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };
