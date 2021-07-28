@@ -45,9 +45,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     needs: [lint, tests]
-
     strategy:
       matrix:
         node-version: [14.16.1]
@@ -65,11 +63,23 @@ jobs:
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
-    - run: git checkout master
     - run: |
         echo "registry=http://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Push to master
+      if: github.event_name == 'push'
+      # run: echo "this is a push to master"
+      run: |
+        git checkout master
         lerna publish prerelease --dist-tag next --yes
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Push to pull request
+      if: github.event_name == 'pull_request'
+      # run: echo "PULL REQUEST PUSH"
+      run: lerna publish --canary --preid ${{ github.sha }} --yes
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
