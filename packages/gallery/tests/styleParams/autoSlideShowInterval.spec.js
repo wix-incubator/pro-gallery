@@ -22,7 +22,7 @@ describe('styleParam - autoSlideShowInterval', () => {
   afterEach(() => {
     clock.restore();
   });
-  it('startAutoSlideshow is called after one second when "autoSlideshowInterval" set to 1', () => {
+  it('auto-scrolling should be start after one second when "autoSlideshowInterval" set to 1', () => {
     Object.assign(initialProps.styleParams, {
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
