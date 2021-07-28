@@ -84,13 +84,11 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   update-playground:
     runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/master'
-    # needs: [lint, tests]
-
+    if: github.ref == 'refs/heads/master'
+    needs: [lint, tests]
     strategy:
       matrix:
         node-version: [14.16.1]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v2
     - name: update-playground
