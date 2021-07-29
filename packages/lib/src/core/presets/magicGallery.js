@@ -36,7 +36,6 @@ export const fixedStyles = fixToMagic({});
 const addSeedStyles = (styles) => {
   let res = { ...styles };
   let seed = res.magicLayoutSeed;
-  delete res.magicLayoutSeed;
   if (!seed > 0) {
     seed = 999999;
   }
