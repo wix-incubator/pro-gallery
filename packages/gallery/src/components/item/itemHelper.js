@@ -55,10 +55,10 @@ export function changeActiveElementIfNeeded({
           // if the highlighted thumbnail changed and it is the same as this itemview's
           itemContainer.focus();
         } else if (
-          currentProps.currentIdx !== prevProps.currentIdx &&
-          currentProps.currentIdx === currentProps.idx
+          currentProps.activeIndex !== prevProps.activeIndex &&
+          currentProps.activeIndex === currentProps.idx
         ) {
-          //check if currentIdx has changed to the current item
+          //check if activeIndex has changed to the current item
           itemContainer.focus();
         }
       }

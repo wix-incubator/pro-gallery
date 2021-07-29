@@ -73,8 +73,8 @@ export default class ExpandableProGallery extends React.Component {
                 <section style={{...styles.gallery, display: (this.state.fullscreenIdx < 0 ? 'block' : 'none')}}>
                     <Gallery
                         {...this.props}
-                        key={`pro-gallery-${this.props.domId}`}
-                        domId={`pro-gallery-${this.props.domId}`}
+                        key={`pro-gallery-${this.props.id}`}
+                        id={`pro-gallery-${this.props.id}`}
                         eventsListener={this.eventListener}
                     />
                 </section>
@@ -82,10 +82,10 @@ export default class ExpandableProGallery extends React.Component {
                     <CloseButton style={styles.close} onClick={() => this.setState({fullscreenIdx: -1})} />
                     <Gallery
                         {...this.props}
-                        key={`pro-fullscreen-${this.props.domId}`}
-                        domId={`pro-fullscreen-${this.props.domId}`}
-                        currentIdx={this.state.fullscreenIdx}
-                        dimensions= {{
+                        key={`pro-fullscreen-${this.props.id}`}
+                        id={`pro-fullscreen-${this.props.id}`}
+                        activeIndex={this.state.fullscreenIdx}
+                        container= {{
                             width: window.innerWidth,
                             height: window.innerHeight
                         }}

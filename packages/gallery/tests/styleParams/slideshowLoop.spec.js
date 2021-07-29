@@ -2,12 +2,12 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, dimensions } from '../drivers/mocks/styles';
+import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - slideshowLoop', () => {
   let driver;
   const initialProps = {
-    dimensions: { ...dimensions, width: 400 },
+    container: { ...container, width: 400 },
     items: images2.slice(0, 2),
     totalItemsCount: 2,
     styles: styleParams,

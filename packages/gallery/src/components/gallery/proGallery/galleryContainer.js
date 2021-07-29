@@ -80,7 +80,7 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.scrollToItem(this.props.currentIdx, false, true, 0);
+    this.scrollToItem(this.props.activeIndex, false, true, 0);
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
@@ -106,20 +106,20 @@ export class GalleryContainer extends React.Component {
       );
     }
 
-    if (this.props.domId) {
-      this.currentHoverChangeEvent.domId = this.props.domId;
+    if (this.props.id) {
+      this.currentHoverChangeEvent.galleryId = this.props.id;
     }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!this.currentHoverChangeEvent.domId && nextProps.domId) {
-      this.currentHoverChangeEvent.domId = nextProps.domId;
+    if (!this.currentHoverChangeEvent.galleryId && nextProps.id) {
+      this.currentHoverChangeEvent.galleryId = nextProps.id;
     }
     if (
-      this.props.currentIdx !== nextProps.currentIdx &&
-      nextProps.currentIdx !== this.currentSlideshowViewIdx
+      this.props.activeIndex !== nextProps.activeIndex &&
+      nextProps.activeIndex !== this.currentSlideshowViewIdx
     ) {
-      this.scrollToItem(nextProps.currentIdx, false, true, 0);
+      this.scrollToItem(nextProps.activeIndex, false, true, 0);
     }
 
     const reCreateGallery = () => {
@@ -130,8 +130,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = (props) => {
-      const { domId, styles, dimensions, items, watermark, isInDisplay } = props;
-      return { domId, styles, dimensions, items, watermark, isInDisplay };
+      const { id, styles, container, items, watermark, isInDisplay } = props;
+      return { id, styles, container, items, watermark, isInDisplay };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -161,8 +161,8 @@ export class GalleryContainer extends React.Component {
     if (hasPropsChanged) {
       reCreateGallery();
 
-      if (!!nextProps.currentIdx && nextProps.currentIdx > 0) {
-        this.scrollToItem(nextProps.currentIdx, false, true, 0);
+      if (!!nextProps.activeIndex && nextProps.activeIndex > 0) {
+        this.scrollToItem(nextProps.activeIndex, false, true, 0);
       }
 
       if (this.props.isInDisplay !== nextProps.isInDisplay) {
@@ -184,7 +184,7 @@ export class GalleryContainer extends React.Component {
 
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
-    const { dimensions, needToHandleShowMoreClick, initialGalleryHeight } =
+    const { container, needToHandleShowMoreClick, initialGalleryHeight } =
       this.state;
     const styleParams = this.props.styles;
     const numOfItems = this.state.items.length;
@@ -197,12 +197,12 @@ export class GalleryContainer extends React.Component {
     if (needToUpdateHeightNotInfinite) {
       const showMoreContainerHeight = 138; //according to the scss
       updatedHeight =
-        dimensions.height + (initialGalleryHeight - showMoreContainerHeight);
+        container.height + (initialGalleryHeight - showMoreContainerHeight);
     }
 
     const onGalleryChangeData = {
       numOfItems,
-      container: dimensions,
+      container,
       styleParams,
       layoutHeight,
       layoutItems,
@@ -237,17 +237,17 @@ export class GalleryContainer extends React.Component {
     );
   }
 
-  getVisibleItems(items, dimensions) {
+  getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = window.scrollY;
-    const { galleryHeight, scrollBase, galleryWidth } = dimensions;
+    const { galleryHeight, scrollBase, galleryWidth } = container;
     if (
       utils.isSSR() ||
       isSEOMode() ||
       isEditMode() ||
       gotFirstScrollEvent ||
       scrollY > 0 ||
-      this.props.currentIdx > 0
+      this.props.activeIndex > 0
     ) {
       return items;
     }
@@ -287,17 +287,17 @@ export class GalleryContainer extends React.Component {
     items,
     styles,
     structure,
-    dimensions,
-    domId,
+    container,
+    id,
     resizeMediaUrl,
     isPrerenderMode,
     customImageRenderer,
   }) {
     items = items || this.props.items;
     styles = styles || this.props.styles;
-    dimensions = dimensions || this.props.dimensions;
+    container = container || this.props.container;
     structure = structure || this.props.structure;
-    domId = domId || this.props.domId;
+    id = id || this.props.id;
     resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
 
     if (typeof customImageRenderer === 'function') {
@@ -320,15 +320,15 @@ export class GalleryContainer extends React.Component {
         this.state.showMoreClickedAtLeastOnce);
     if (shouldUseScrollCss) {
       this.getScrollCss({
-        domId: domId,
+        id,
         items: this.galleryStructure.galleryItems,
         styleParams: styles,
-        dimensions: dimensions,
+        container: container,
       });
     }
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
-      scrollBase: dimensions.scrollBase,
+      scrollBase: container.scrollBase,
       videoPlay: styles.videoPlay,
       videoLoop: styles.videoLoop,
       itemClick: styles.itemClick,
@@ -344,7 +344,7 @@ export class GalleryContainer extends React.Component {
 
     const layoutParams = {
       items: items,
-      dimensions,
+      container,
       styleParams: styles,
       gotScrollEvent: true,
       options: {
@@ -361,7 +361,7 @@ export class GalleryContainer extends React.Component {
     const newState = {
       items,
       styles,
-      dimensions,
+      container,
       structure,
       isScrollLessGallery: this.getIsScrollLessGallery(styles),
     };
@@ -371,7 +371,7 @@ export class GalleryContainer extends React.Component {
   getScrollingElement() {
     const horizontal = () =>
       window.document.querySelector(
-        `#pro-gallery-${this.props.domId} #gallery-horizontal-scroll`
+        `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
       );
     const vertical = this.props.scrollingElement
       ? typeof this.props.scrollingElement === 'function'
@@ -396,8 +396,8 @@ export class GalleryContainer extends React.Component {
           scrollMarginCorrection,
           isRTL: this.state.styles.isRTL,
           scrollDirection: this.state.styles.scrollDirection,
-          galleryWidth: this.state.dimensions.galleryWidth,
-          galleryHeight: this.state.dimensions.galleryHeight,
+          galleryWidth: this.state.container.galleryWidth,
+          galleryHeight: this.state.container.galleryHeight,
           top: 0,
           items: this.galleryStructure.items,
           totalWidth: this.galleryStructure.width,
@@ -424,8 +424,8 @@ export class GalleryContainer extends React.Component {
           isSiteMode(),
           ' this.state.styles =',
           this.state.styles,
-          ' this.state.dimensions =',
-          this.state.dimensions,
+          ' this.state.container =',
+          this.state.container,
           ' this.galleryStructure =',
           this.galleryStructure
         );
@@ -447,8 +447,8 @@ export class GalleryContainer extends React.Component {
           scrollMarginCorrection,
           isRTL: this.state.styles.isRTL,
           scrollDirection: this.state.styles.scrollDirection,
-          galleryWidth: this.state.dimensions.galleryWidth,
-          galleryHeight: this.state.dimensions.galleryHeight,
+          galleryWidth: this.state.container.galleryWidth,
+          galleryHeight: this.state.container.galleryHeight,
           top: 0,
           groups: this.galleryStructure.groups,
           totalWidth: this.galleryStructure.width,
@@ -475,8 +475,8 @@ export class GalleryContainer extends React.Component {
           isSiteMode(),
           ' this.state.styles =',
           this.state.styles,
-          ' this.state.dimensions =',
-          this.state.dimensions,
+          ' this.state.container =',
+          this.state.container,
           ' this.galleryStructure =',
           this.galleryStructure
         );
@@ -528,12 +528,12 @@ export class GalleryContainer extends React.Component {
       ${
         !useSSROpacity
           ? ''
-          : `#pro-gallery-${this.props.domId} .gallery-item-container { opacity: 0 }`
+          : `#pro-gallery-${this.props.id} .gallery-item-container { opacity: 0 }`
       }
       ${
         !overlayBackground
           ? ''
-          : `#pro-gallery-${this.props.domId} .gallery-item-hover::before { background: ${overlayBackground} !important}`
+          : `#pro-gallery-${this.props.id} .gallery-item-hover::before { background: ${overlayBackground} !important}`
       }
     `.trim();
   }
@@ -545,18 +545,18 @@ export class GalleryContainer extends React.Component {
       this.layoutCss = createCssLayouts({
         layoutParams,
         isMobile: utils.isMobile(),
-        domId: this.props.domId,
+        id: this.props.id,
         galleryItems: this.galleryStructure.galleryItems,
       });
     }
   }
 
-  getScrollCss({ domId, items, styleParams, dimensions }) {
+  getScrollCss({ id, items, styleParams, container }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
       styleParams,
-      domId,
-      dimensions,
+      id,
+      container,
     });
   }
 
@@ -570,12 +570,12 @@ export class GalleryContainer extends React.Component {
     //before clicking "load more" at the first time
     if (!this.state.showMoreClickedAtLeastOnce) {
       this.getScrollCss({
-        domId: this.props.domId,
+        id: this.props.id,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
-        dimensions: this.state.dimensions,
+        container: this.state.container,
       });
-      const initialGalleryHeight = this.state.dimensions.height; //dimensions.height before clicking "load more" at the first time
+      const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
         {
           showMoreClickedAtLeastOnce,
@@ -602,10 +602,10 @@ export class GalleryContainer extends React.Component {
   setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
       this.getScrollCss({
-        domId: this.props.domId,
+        id: this.props.id,
         items: this.galleryStructure.galleryItems,
         styleParams: this.state.styles,
-        dimensions: this.state.dimensions,
+        container: this.state.container,
       });
       this.setState({
         gotFirstScrollEvent: true,
@@ -658,7 +658,7 @@ export class GalleryContainer extends React.Component {
       !this.gettingMoreItems &&
       this.state.items &&
       this.state.styles &&
-      this.state.dimensions
+      this.state.container
     ) {
       //more items can be fetched from the server
       //TODO - add support for horizontal galleries
@@ -672,7 +672,7 @@ export class GalleryContainer extends React.Component {
         ] +
         (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? 0
-          : this.state.dimensions.scrollBase);
+          : this.state.container.scrollBase);
       const screenSize =
         window.screen[
           scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
@@ -701,12 +701,12 @@ export class GalleryContainer extends React.Component {
   }
 
   canRender() {
-    const can = this.props.dimensions && this.props.styles && this.state.items;
+    const can = this.props.container && this.props.styles && this.state.items;
     if (!can && utils.isVerbose()) {
       console.log(
         'PROGALLERY [CAN_RENDER] GalleryContainer',
         can,
-        this.props.dimensions,
+        this.props.container,
         this.props.styles,
         this.state.items
       );
@@ -740,7 +740,7 @@ export class GalleryContainer extends React.Component {
       console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
       console.log(
         'PROGALLERY [RENDER] - GalleryContainer',
-        this.props.dimensions.scrollBase,
+        this.props.container.scrollBase,
         { props: this.props, items: this.state.items }
       );
     }
@@ -757,11 +757,11 @@ export class GalleryContainer extends React.Component {
         tabIndex={-1}
       >
         <ScrollIndicator
-          domId={this.props.domId}
+          id={this.props.id}
           scrollDirection={this.props.styles.scrollDirection}
           isRTL={this.props.styles.isRTL}
           totalWidth={this.galleryStructure.width}
-          scrollBase={this.props.dimensions.scrollBase}
+          scrollBase={this.props.container.scrollBase}
           scrollingElement={this._scrollingElement}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
@@ -781,12 +781,12 @@ export class GalleryContainer extends React.Component {
           itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={this.props.styles}
-          dimensions={this.props.dimensions}
+          container={this.props.container}
           watermark={this.props.watermark}
           settings={this.props.settings}
           displayShowMore={displayShowMore}
-          domId={this.props.domId}
-          currentIdx={this.props.currentIdx || 0}
+          id={this.props.id}
+          activeIndex={this.props.activeIndex || 0}
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}

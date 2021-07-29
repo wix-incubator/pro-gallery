@@ -21,10 +21,10 @@ export { isSiteMode } from './common/window/viewModeWrapper';
 export { isEditMode } from './common/window/viewModeWrapper';
 export { isPreviewMode } from './common/window/viewModeWrapper';
 export { isSEOMode } from './common/window/viewModeWrapper';
-export { isFormFactorMobile } from './common/window/viewModeWrapper';
-export { isFormFactorTablet } from './common/window/viewModeWrapper';
-export { isFormFactorDesktop } from './common/window/viewModeWrapper';
-export { isFormFactorTouch } from './common/window/viewModeWrapper';
+export { isDeviceTypeMobile } from './common/window/viewModeWrapper';
+export { isDeviceTypeTablet } from './common/window/viewModeWrapper';
+export { isDeviceTypeDesktop } from './common/window/viewModeWrapper';
+export { isDeviceTypeTouch } from './common/window/viewModeWrapper';
 
 export { default as galleryOptions } from './settings/options';
 export { INPUT_TYPES } from './settings/utils/constants';

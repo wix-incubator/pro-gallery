@@ -1,11 +1,11 @@
 import { window } from 'pro-gallery-lib';
 
-export function isGalleryInViewport(dimensions) {
+export function isGalleryInViewport(container) {
   try {
     const haveAllVariablesForViewPortCalc = !!(
-      dimensions &&
-      Number.isInteger(dimensions.scrollBase) &&
-      Number.isInteger(dimensions.galleryHeight) &&
+      container &&
+      Number.isInteger(container.scrollBase) &&
+      Number.isInteger(container.galleryHeight) &&
       window &&
       window.document &&
       window.document.documentElement &&
@@ -16,11 +16,11 @@ export function isGalleryInViewport(dimensions) {
     );
     const inTopViewPort =
       haveAllVariablesForViewPortCalc &&
-      dimensions.scrollBase + dimensions.galleryHeight >
+      container.scrollBase + container.galleryHeight >
         window.document.documentElement.scrollTop;
     const inBottomViewPort =
       haveAllVariablesForViewPortCalc &&
-      dimensions.scrollBase <
+      container.scrollBase <
         (window.document.documentElement.scrollTop ||
           window.document.scrollingElement.scrollTop) +
           window.document.documentElement.offsetHeight;

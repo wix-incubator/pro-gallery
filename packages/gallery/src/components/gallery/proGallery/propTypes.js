@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 
 export default {
   items: PropTypes.array.isRequired,
-  dimensions: PropTypes.object.isRequired,
+  container: PropTypes.object.isRequired,
 
-  domId: PropTypes.string,
+  id: PropTypes.string,
   scrollingElement: PropTypes.any,
   options: PropTypes.object,
   eventsListener: PropTypes.func,

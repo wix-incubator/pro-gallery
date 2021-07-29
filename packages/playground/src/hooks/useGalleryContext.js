@@ -17,21 +17,21 @@ export function useGalleryContext(
     setGallerySettings({ showSide: newShowSide });
     //    const widthChange = SIDEBAR_WIDTH * (newShowSide ? -1 : 1)
 
-    //  setDimensions({width: calcGalleryDimensions().width + widthChange});
-    setDimensions();
+    //  setDimensions({width: calcGalleryContainer().width + widthChange});
+    setContainer();
   };
 
   const getBlueprintFromServer = async (params) => {
-    let { items, styleParams, dimensions } = params;
+    let { items, styleParams, container } = params;
 
-    dimensions = dimensions || context.dimensions || calcGalleryDimensions();
+    container = container || context.container || calcGalleryContainer();
     const styles = styleParams || context.styleParams || getInitialStyleParams();
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
-    if (!items || !dimensions || !styles) {
+    if (!items || !container || !styles) {
       return;
     }
-    
+
     const response = await fetch(url, {
       method: 'POST',
       credentials: 'omit', // include, *same-origin, omit
@@ -41,7 +41,7 @@ export function useGalleryContext(
       body: JSON.stringify({
         items,
         styles,
-        dimensions
+        container
       }) // body data type must match "Content-Type" header
     });
     const data = await response.json();
@@ -59,19 +59,19 @@ export function useGalleryContext(
     }
   };
 
-  const setDimensions = (config = {}) => {
+  const setContainer = (config = {}) => {
     const { width, height } = config;
     const newContext = {
-      dimensions: {
-        ...calcGalleryDimensions(),
+      container: {
+        ...calcGalleryContainer(),
         ...(width && { width }),
         ...(height && { height }),
       },
     };
 
     if (
-      JSON.stringify(newContext.dimensions) !==
-      JSON.stringify({ ...context.dimensions })
+      JSON.stringify(newContext.container) !==
+      JSON.stringify({ ...context.container })
     ) {
       if (getGallerySettings().useBlueprints) {
         requestNewBlueprint(newContext);
@@ -152,12 +152,12 @@ export function useGalleryContext(
     }
   };
 
-  const calcGalleryDimensions = () => {
-    let dimensions = {};
+  const calcGalleryContainer = () => {
+    let container = {};
     const showSide = !!getGallerySettings().showSide && !utils.isMobile();
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!getGallerySettings().isUnknownDimensions) {
-      dimensions = !utils.isMobile()
+      container = !utils.isMobile()
         ? {
             width: 500,
             height: 500,
@@ -167,13 +167,13 @@ export function useGalleryContext(
             height: 500,
           };
     } else {
-      dimensions.width = !showSide
+      container.width = !showSide
         ? window.innerWidth
         : window.innerWidth - SIDEBAR_WIDTH;
-      dimensions.height = window.innerHeight;
+      container.height = window.innerHeight;
     }
 
-    return dimensions;
+    return container;
   };
 
   const res = {
@@ -193,8 +193,8 @@ export function useGalleryContext(
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
-    dimensions: context.dimensions || calcGalleryDimensions(),
-    setDimensions,
+    container: context.container || calcGalleryContainer(),
+    setContainer,
     getBlueprintFromServer,
   };
 

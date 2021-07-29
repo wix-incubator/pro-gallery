@@ -2,34 +2,35 @@ import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-export const fixedStyles = {
-  // tested params
-  galleryLayout: LAYOUTS.SLIDER,
-  enableInfiniteScroll: true,
-  cubeImages: true,
-  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
-  isVertical: false,
-  groupSize: 1,
-  groupTypes: '1',
+const fixToSlider = (styles) => {
+  let presetStyles = { ...styles };
+  presetStyles.galleryLayout = LAYOUTS.SLIDER;
+  presetStyles.enableInfiniteScroll = true;
+  presetStyles.cubeImages = true;
+  presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetStyles.isVertical = false;
+  presetStyles.groupSize = 1;
+  presetStyles.groupTypes = '1';
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  smartCrop: false,
-  galleryType: 'Strips',
-  hasThumbnails: false,
-  enableScroll: true,
-  scrollSnap: true,
-  isGrid: false,
-  isSlider: true,
-  isColumns: false,
-  isMasonry: false,
-  isSlideshow: false,
-  cropOnlyFill: true,
+  presetStyles.smartCrop = false;
+  presetStyles.galleryType = 'Strips';
+  presetStyles.hasThumbnails = false;
+  presetStyles.enableScroll = true;
+  presetStyles.scrollSnap = true;
+  presetStyles.isGrid = false;
+  presetStyles.isSlider = true;
+  presetStyles.isColumns = false;
+  presetStyles.isMasonry = false;
+  presetStyles.isSlideshow = false;
+  presetStyles.cropOnlyFill = true;
+  return presetStyles;
 };
+export const fixedStyles = fixToSlider({});
 
 export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles),
-  };
+  let res = { ...styles };
+  res = fixToSlider(res);
+  res.targetItemSize = calcTargetItemSize(res);
+  return res;
 };

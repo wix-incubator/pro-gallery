@@ -1,18 +1,18 @@
 import { PhotoItem, VideoItem, TextItem } from '../../common/interfaces/Item';
-import { Dimensions } from '../../common/interfaces/Dimensions';
+import { Container } from '../../common/interfaces/Container';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
-type FormFactor = 'desktop' | 'mobile' | 'tablet';
+type DeviceType = 'desktop' | 'mobile' | 'tablet';
 
 export interface GalleryProps {
-  domId?: string;
-  dimensions: Dimensions;
-  totalItemsCount: number;
+  container: Container;
   items: (PhotoItem | VideoItem | TextItem)[];
-  currentIdx?: number;
+  id?: string;
+  totalItemsCount?: number;
+  activeIndex?: number;
   isPrerenderMode?: boolean;
   viewMode?: ViewMode;
-  formFactor?: FormFactor;
+  deviceType?: DeviceType;
   [key: string]: any;
 }
 
