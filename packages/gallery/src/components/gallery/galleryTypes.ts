@@ -1,5 +1,6 @@
 import { PhotoItem, VideoItem, TextItem } from '../../common/interfaces/Item';
 import { Container } from '../../common/interfaces/Container';
+import { EventsListener } from '../../common/interfaces/EventsListener';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
@@ -13,6 +14,7 @@ export interface GalleryProps {
   isPrerenderMode?: boolean;
   viewMode?: ViewMode;
   deviceType?: DeviceType;
+  eventsListener: EventsListener;
   [key: string]: any;
 }
 
