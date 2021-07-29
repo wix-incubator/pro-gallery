@@ -4,45 +4,47 @@ import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import ARROWS_VERTICAL_POSITION from '../../common/constants/arrowsVerticalPosition';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.SLIDESHOW,
-  enableInfiniteScroll: true,
-  cubeRatio: '100%/100%',
-  cubeImages: true,
-  hoveringBehaviour: INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW,
-  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
-  galleryMargin: 0,
-  isVertical: false,
-  groupSize: 1,
-  groupTypes: '1',
-  arrowsVerticalPosition: ARROWS_VERTICAL_POSITION.IMAGE_CENTER,
-  itemBorderWidth: 0,
-  itemBorderRadius: 0,
-  itemBorderColor: undefined,
+const fixToSlideshow = (styles) => {
+  let presetStyles = { ...styles };
+  presetStyles.galleryLayout = LAYOUTS.SLIDESHOW;
+  presetStyles.enableInfiniteScroll = true;
+  presetStyles.cubeRatio = '100%/100%';
+  presetStyles.cubeImages = true;
+  presetStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW;
+  presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetStyles.galleryMargin = 0;
+  presetStyles.isVertical = false;
+  presetStyles.groupSize = 1;
+  presetStyles.groupTypes = '1';
+  presetStyles.arrowsVerticalPosition = ARROWS_VERTICAL_POSITION.IMAGE_CENTER;
+  presetStyles.itemBorderWidth = 0;
+  presetStyles.itemBorderRadius = 0;
+  presetStyles.itemBorderColor = undefined;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  smartCrop: false,
-  targetItemSize: 550,
-  galleryType: 'Strips',
-  fixedColumns: 1,
-  hasThumbnails: false,
-  enableScroll: true,
-  scrollSnap: true,
-  isGrid: false,
-  isColumns: false,
-  isMasonry: false,
-  isSlider: false,
-  isSlideshow: true,
-  cropOnlyFill: false,
-  scatter: 0,
-  rotatingScatter: '',
-  imageMargin: 0,
+  presetStyles.smartCrop = false;
+  presetStyles.targetItemSize = 550;
+  presetStyles.galleryType = 'Strips';
+  presetStyles.fixedColumns = 1;
+  presetStyles.hasThumbnails = false;
+  presetStyles.enableScroll = true;
+  presetStyles.scrollSnap = true;
+  presetStyles.isGrid = false;
+  presetStyles.isColumns = false;
+  presetStyles.isMasonry = false;
+  presetStyles.isSlider = false;
+  presetStyles.isSlideshow = true;
+  presetStyles.cropOnlyFill = false;
+  presetStyles.scatter = 0;
+  presetStyles.rotatingScatter = '';
+  presetStyles.imageMargin = 0;
+  return presetStyles;
 };
+export const fixedStyles = fixToSlideshow({});
 
 export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles),
-  };
+  let res = { ...styles };
+  res = fixToSlideshow(res);
+  res.targetItemSize = calcTargetItemSize(res);
+  return res;
 };
