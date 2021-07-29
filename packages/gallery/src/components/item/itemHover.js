@@ -24,6 +24,7 @@ export default class ItemHover extends GalleryComponent {
     } else if (utils.isMobile()) {
       hoverClass.push('hide-hover');
     }
+
     return hoverClass.join(' ');
   }
 
