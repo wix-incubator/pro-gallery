@@ -5,6 +5,7 @@ export { default as ItemView } from './components/item/itemView';
 
 export { PhotoItem, VideoItem, TextItem } from './common/interfaces/Item';
 export { Container } from './common/interfaces/Container';
+export { EventsListener } from './common/interfaces/EventsListener';
 
 export { GALLERY_CONSTS } from 'pro-gallery-lib';
 export { addPresetStyles } from 'pro-gallery-lib';
