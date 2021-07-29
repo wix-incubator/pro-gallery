@@ -2,7 +2,7 @@ import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import {
   calcTargetItemSize,
-  mutateNumberOfImagesPerRow,
+  processNumberOfImagesPerRow,
 } from '../helpers/layoutHelper';
 import { featureManager } from '../helpers/versionsHelper';
 
@@ -36,7 +36,7 @@ export const createStyles = (styles) => {
     res.isVertical ? res.gallerySize * 8 + 200 : res.gallerySize * 5 + 200
   );
   if (featureManager.supports.fixedColumnsInMasonry) {
-    res = mutateNumberOfImagesPerRow(res);
+    res = processNumberOfImagesPerRow(res);
   }
   return res;
 };

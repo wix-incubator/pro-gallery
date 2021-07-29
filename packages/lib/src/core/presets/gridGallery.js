@@ -1,8 +1,8 @@
 import LAYOUTS from '../../common/constants/layout';
 import {
   calcTargetItemSize,
-  mutateNumberOfImagesPerRow,
-  mutateNumberOfImagesPerCol,
+  processNumberOfImagesPerRow,
+  processNumberOfImagesPerCol,
 } from '../helpers/layoutHelper';
 
 const fixToGrid = (styles) => {
@@ -39,7 +39,7 @@ export const createStyles = (styles) => {
     res,
     Math.round(res.gallerySize * 8.5 + 150)
   );
-  res = mutateNumberOfImagesPerRow(res);
-  res = mutateNumberOfImagesPerCol(res); //TODO rename back to process
+  res = processNumberOfImagesPerRow(res);
+  res = processNumberOfImagesPerCol(res);
   return res;
 };
