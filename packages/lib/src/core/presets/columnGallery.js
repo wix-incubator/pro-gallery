@@ -2,34 +2,36 @@ import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.COLUMN,
-  cubeType: 'fill',
-  cubeImages: true,
-  cubeRatio: 0.35,
-  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
-  isVertical: false,
-  groupSize: 1,
-  groupTypes: '1',
-  slideshowLoop: false,
+const fixToColumn = (styles) => {
+  let presetStyles = { ...styles };
+  presetStyles.galleryLayout = LAYOUTS.COLUMN;
+  presetStyles.cubeType = 'fill';
+  presetStyles.cubeImages = true;
+  presetStyles.cubeRatio = 0.35;
+  presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetStyles.isVertical = false;
+  presetStyles.groupSize = 1;
+  presetStyles.groupTypes = '1';
+  presetStyles.slideshowLoop = false;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  smartCrop: false,
-  galleryType: 'Strips',
-  fixedColumns: 0,
-  enableScroll: true,
-  isGrid: false,
-  isColumns: true,
-  isMasonry: false,
-  isSlider: false,
-  isSlideshow: false,
-  cropOnlyFill: false,
+  presetStyles.smartCrop = false;
+  presetStyles.galleryType = 'Strips';
+  presetStyles.fixedColumns = 0;
+  presetStyles.enableScroll = true;
+  presetStyles.isGrid = false;
+  presetStyles.isColumns = true;
+  presetStyles.isMasonry = false;
+  presetStyles.isSlider = false;
+  presetStyles.isSlideshow = false;
+  presetStyles.cropOnlyFill = false;
+  return presetStyles;
 };
+export const fixedStyles = fixToColumn({});
 
 export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles),
-  };
+  let res = { ...styles };
+  res = fixToColumn(res);
+  res.targetItemSize = calcTargetItemSize(res);
+  return res;
 };
