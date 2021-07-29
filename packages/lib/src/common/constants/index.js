@@ -49,6 +49,8 @@ import viewMode from './viewMode';
 import imagePlacementAnimations from './imagePlacementAnimations';
 import slideTransition from './slideTransition';
 import overlayPositions from './overlayPositions';
+import overlaySizeType from './overlaySizeType';
+
 export default {
   arrowsPosition,
   arrowsVerticalPosition,
@@ -101,4 +103,5 @@ export default {
   imagePlacementAnimations,
   slideTransition,
   overlayPositions,
+  overlaySizeType,
 };

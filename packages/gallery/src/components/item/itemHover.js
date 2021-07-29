@@ -5,7 +5,6 @@ import { GalleryComponent } from '../galleryComponent';
 export default class ItemHover extends GalleryComponent {
   getHoverClass() {
     const { styleParams, forceShowHover } = this.props;
-    const { overlayPosition } = styleParams;
     const hoverClass = ['gallery-item-hover'];
 
     hoverClass.push(
@@ -25,21 +24,6 @@ export default class ItemHover extends GalleryComponent {
     } else if (utils.isMobile()) {
       hoverClass.push('hide-hover');
     }
-
-    //overlay positions
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT) {
-      hoverClass.push('position-left');
-    }
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.BOTTOM) {
-      hoverClass.push('position-bottom');
-    }
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.TOP) {
-      hoverClass.push('position-top');
-    }
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT) {
-      hoverClass.push('position-right');
-    }
-
     return hoverClass.join(' ');
   }
 
@@ -68,42 +52,112 @@ export default class ItemHover extends GalleryComponent {
     }
     return true;
   }
-  //to do- isHorizon,isVertical, isTop, isLeft.... separate between height width to top left right bottom
-  getStyleByOverlay() {
-    const { styleParams, imageDimensions } = this.props;
+
+  getOverlayStyle() {
+    const { styleParams } = this.props;
     const { overlayPosition } = styleParams;
-    const { width, height, top, bottom } = imageDimensions;
-    let style;
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT) {
-      style = {
-        width: 10000 + 'px',
-        height: height,
-        bottom: top,
-        left: bottom,
-      };
+    const isHorizontal =
+      overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
+      overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
+      overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
+    if (isHorizontal) {
+      return this.calculateHorizontalOverlayStyles();
     }
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT) {
-      style = { width: width, height: height, bottom: top, left: 100 + 'px' };
+    return this.calculateVerticalOverlayStyles();
+  }
+
+  calculateVerticalOverlayStyles() {
+    const { styleParams, imageDimensions } = this.props;
+    const { overlayPosition, overlaySize, overlaySizeType } = styleParams;
+    const { width, height, marginTop, marginLeft } = imageDimensions;
+    const convertHeight =
+      overlaySizeType === 'PERCENT'
+        ? height * (overlaySize / 100)
+        : overlaySize;
+    // const convertWidth = overlaySizeType  === 'PERCENT' ? width * (overlaySize/100) : overlaySize;
+    let style = {};
+
+    switch (overlayPosition) {
+      case GALLERY_CONSTS.overlayPositions.TOP:
+        style = {
+          width,
+          height: convertHeight,
+          marginTop,
+          marginLeft,
+        };
+        break;
+      case GALLERY_CONSTS.overlayPositions.BOTTOM:
+        style = {
+          width,
+          height: convertHeight,
+          marginTop: height - convertHeight,
+          marginLeft,
+        };
+        break;
+      case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
+        style = {
+          width,
+          height: convertHeight,
+          marginTop: height / 2 - convertHeight / 2,
+          marginLeft,
+        };
+        break;
     }
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.TOP) {
-      style = { width: width, height: 100 + 'px', bottom: top, left: bottom };
+    style.maxWidth = width;
+    return style;
+  }
+
+  calculateHorizontalOverlayStyles() {
+    let style = {};
+    const { styleParams, imageDimensions } = this.props;
+    const { overlayPosition, overlaySize, overlaySizeType } = styleParams;
+    const { width, height, marginTop, marginLeft } = imageDimensions;
+    // const convertHeight = overlaySizeType  === 'PERCENT' ? height * (overlaySize/100) : overlaySize;
+    const convertWidth =
+      overlaySizeType === 'PERCENT' ? width * (overlaySize / 100) : overlaySize;
+
+    switch (overlayPosition) {
+      case GALLERY_CONSTS.overlayPositions.LEFT:
+        style = {
+          width: convertWidth,
+          height,
+          marginTop,
+          marginLeft,
+        };
+        break;
+      case GALLERY_CONSTS.overlayPositions.RIGHT:
+        style = {
+          width: convertWidth,
+          height,
+          marginTop,
+          marginLeft: width - convertWidth,
+        };
+        break;
+      case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
+        style = {
+          width: convertWidth,
+          height,
+          marginTop,
+          marginLeft: width / 2 - convertWidth / 2,
+        };
+        break;
+      default:
+        style = {
+          width,
+          height,
+          marginTop,
+          marginLeft,
+        };
+        break;
     }
-    if (overlayPosition === GALLERY_CONSTS.overlayPositions.BOTTOM) {
-      style = {
-        width: width,
-        height: height,
-        bottom: 100 + 'px',
-        left: bottom,
-      };
-    }
+    style.maxHeight = height;
     return style;
   }
 
   render() {
     const { actions, idx, renderCustomInfo } = this.props;
     const hoverClass = this.getHoverClass();
-    // const { width, height, top, bottom} = imageDimensions;
-    const overlayStyle = this.getStyleByOverlay();
+    const overlayStyle = this.getOverlayStyle();
     return (
       <div
         className={hoverClass}

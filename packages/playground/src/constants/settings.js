@@ -118,6 +118,7 @@ export const stylesBySection = {
     'overlayBackground',
     'overlayPosition',
     'overlaySize',
+    'overlaySizeType',
 
     // 'itemIconColorSlideshow',
     // 'itemIconColor',

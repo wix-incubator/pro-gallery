@@ -92,6 +92,7 @@ import useMaxDimensions from './useMaxDimensions';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
 import overlayPosition from './overlayPosition';
 import overlaySize from './overlaySize';
+import overlaySizeType from './overlaySizeType';
 
 export default {
   itemClick,
@@ -188,6 +189,7 @@ export default {
   enableVideoPlaceholder,
   overlayPosition,
   overlaySize,
+  overlaySizeType,
 };
 
 // TODO = add the options:

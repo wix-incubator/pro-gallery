@@ -4,7 +4,7 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Overlay Position',
-  description: `The color and opacity of the overlay background of the item`,
+  description: `The position of the overlay`,
   isRelevantDescription: 'Set "Texts Placement" to "Show On Hover".',
   isRelevant: (sp) => GALLERY_CONSTS.hasHoverPlacement(sp.titlePlacement),
   type: INPUT_TYPES.OPTIONS,
