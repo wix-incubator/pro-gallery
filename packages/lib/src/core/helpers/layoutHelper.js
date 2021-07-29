@@ -37,12 +37,11 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
 
 export const processNumberOfImagesPerRow = (styles) => {
   //This will be used in the masonry and grid presets
+  let res = {...styles}
   if (
     styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
       styles.isVertical //relevant for masonry, in grid its fixed to true.
   ) {
-    const res = {}
-
     res.fixedColumns =
       String(styles.gridStyle) === '1'
         ? Number(styles.numberOfImagesPerRow)
@@ -51,20 +50,17 @@ export const processNumberOfImagesPerRow = (styles) => {
     res.groupSize = 1;
     res.collageAmount = 0;
     res.collageDensity = 0;
-    // }
-    return res;
-  } else {
-    return {};
-  }
+  } 
+  return res;
 }
 
 export const processNumberOfImagesPerCol = (styles) => {
-    //This will be used in the grid preset
+  //This will be used in the grid preset
+  let res = {...styles}
   if (
     !utils.isUndefined(styles.numberOfImagesPerCol) &&
     styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
   ) {
-    const res = {}
     res.fixedColumns = 0;
     switch (styles.numberOfImagesPerCol) {
       case 1:
@@ -87,11 +83,8 @@ export const processNumberOfImagesPerCol = (styles) => {
         res.collageDensity = 1;
         break;
     }
-    return res
-  } else {
-    return {};
   }
-
+  return res
 }
 
 const forceInfoOnHoverWhenNeeded = (styles) =>{
