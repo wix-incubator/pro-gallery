@@ -14,7 +14,7 @@ export interface GalleryProps {
   isPrerenderMode?: boolean;
   viewMode?: ViewMode;
   deviceType?: DeviceType;
-  eventsListener: EventsListener;
+  eventsListener?: EventsListener;
   [key: string]: any;
 }
 
