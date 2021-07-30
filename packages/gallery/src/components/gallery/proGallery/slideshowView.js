@@ -156,7 +156,7 @@ class SlideshowView extends GalleryComponent {
     isAutoTrigger,
     scrollDuration,
     isKeyboardNavigation = false,
-    isContinuesScrolling = false,
+    isContinuousScrolling = false,
   }) {
 
     direction *= this.props.styleParams.isRTL ? -1 : 1;
@@ -185,7 +185,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
-      this.nextGroup({ direction, isAutoTrigger, scrollDuration, isContinuesScrolling }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+      this.nextGroup({ direction, isAutoTrigger, scrollDuration, isContinuousScrolling }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if (
         avoidIndividualNavigation &&
@@ -200,7 +200,7 @@ class SlideshowView extends GalleryComponent {
         scrollDuration,
         avoidIndividualNavigation,
         ignoreScrollPosition,
-        isContinuesScrolling,
+        isContinuousScrolling,
       });
     }
     this.removeArrowsIfNeeded();
@@ -212,7 +212,7 @@ class SlideshowView extends GalleryComponent {
     scrollDuration,
     avoidIndividualNavigation,
     ignoreScrollPosition,
-    isContinuesScrolling
+    isContinuousScrolling
   }) {
     if (this.isSliding) {
       return;
@@ -278,7 +278,7 @@ class SlideshowView extends GalleryComponent {
           true,
           _scrollDuration,
           scrollMarginCorrection,
-          isContinuesScrolling,
+          isContinuousScrolling,
         );
 
         if (this.props.styleParams.groupSize === 1) {
@@ -299,7 +299,7 @@ class SlideshowView extends GalleryComponent {
           () => {
             this.onCurrentItemChanged();
             this.isSliding = false;
-            if (isContinuesScrolling) {    
+            if (isContinuousScrolling) {    
               this.startAutoSlideshowIfNeeded(this.props.styleParams);
             }
           }
@@ -319,7 +319,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  async nextGroup({ direction, isAutoTrigger, scrollDuration,isContinuesScrolling = false }) {
+  async nextGroup({ direction, isAutoTrigger, scrollDuration,isContinuousScrolling = false }) {
     if (this.isSliding) {
       return;
     }
@@ -365,7 +365,7 @@ class SlideshowView extends GalleryComponent {
           true,
           _scrollDuration,
           scrollMarginCorrection,
-          isContinuesScrolling
+          isContinuousScrolling
         );
       utils.setStateAndLog(
         this,
@@ -376,7 +376,7 @@ class SlideshowView extends GalleryComponent {
         () => {
           this.onCurrentItemChanged();
           this.isSliding = false;
-          if (isContinuesScrolling) {
+          if (isContinuousScrolling) {
             this.startAutoSlideshowIfNeeded(this.props.styleParams);
           }
         }
@@ -449,14 +449,14 @@ class SlideshowView extends GalleryComponent {
     ) {
       const { styleParams } = this.props;
       const direction = styleParams.isRTL ? -1 : 1;
-      let isContinuesScrolling = false;
+      let isContinuousScrolling = false;
       let scrollDuration = 800;
 
       if (
         styleParams.autoSlideshowType ===
         GALLERY_CONSTS.autoSlideshowTypes.CONTINUES
       ) {
-        isContinuesScrolling = true;
+        isContinuousScrolling = true;
         scrollDuration = styleParams.autoSlideshowContinuesSpeed;
       }
 
@@ -464,7 +464,7 @@ class SlideshowView extends GalleryComponent {
         direction,
         isAutoTrigger: true,
         scrollDuration,
-        isContinuesScrolling,
+        isContinuousScrolling,
       });
     }
   };
