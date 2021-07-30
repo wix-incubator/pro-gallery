@@ -244,7 +244,7 @@ function horizontalCssScrollTo({
   }
 
   if (isContinuousScrolling) {
-    duration = Math.abs(change) * duration;
+    duration = (Math.abs(change) / duration) * 1000;
   }
 
   const scrollerInner = scroller.firstChild;
