@@ -57,7 +57,7 @@ const coreStyles = {
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   jsonStyleParams: '',
   // autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
-  // autoSlideshowContinuesSpeed: 2,
+  // autoSlideshowContinuousSpeed: 2,
   //duplicated from lib
 };
 

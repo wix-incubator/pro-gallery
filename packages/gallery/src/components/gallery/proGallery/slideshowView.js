@@ -426,7 +426,7 @@ class SlideshowView extends GalleryComponent {
       if (
         styleParams.autoSlideshowType ===
         GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS &&
-        styleParams.autoSlideshowContinuesSpeed > 0
+        styleParams.autoSlideshowContinuousSpeed > 0
       ) {
         this.autoScrollToNextItem();
       } else if (
@@ -440,7 +440,7 @@ class SlideshowView extends GalleryComponent {
         );
       }
     }
-  }
+  } //autoSlideshowContinuousSpeed
 
   autoScrollToNextItem = () => {
     if (
@@ -457,7 +457,7 @@ class SlideshowView extends GalleryComponent {
         GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS
       ) {
         isContinuousScrolling = true;
-        scrollDuration = styleParams.autoSlideshowContinuesSpeed;
+        scrollDuration = styleParams.autoSlideshowContinuousSpeed;
       }
 
       this._next({

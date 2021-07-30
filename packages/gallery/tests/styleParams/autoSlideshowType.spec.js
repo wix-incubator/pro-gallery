@@ -42,7 +42,7 @@ describe('styleParam - autoSlideshowType', () => {
   it('Should call "next" with the correct value when auto autoSlideshowType set to "CONTINUOUS"', () => {
     Object.assign(initialProps.styleParams, {
       isAutoSlideshow: true,
-      autoSlideshowContinuesSpeed: 1,
+      autoSlideshowContinuousSpeed: 1,
       autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS,
       galleryLayout: 4,
     });

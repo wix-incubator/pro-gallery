@@ -103,7 +103,7 @@ export const stylesBySection = {
     'isAutoSlideshow',
     'autoSlideshowType',
     'autoSlideshowInterval',
-    'autoSlideshowContinuesSpeed',
+    'autoSlideshowContinuousSpeed',
     'playButtonForAutoSlideShow',
     'scrollSnap',
     'allowContextMenu',

@@ -91,7 +91,7 @@ import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
 import autoSlideshowType from './autoSlideshowType';
-import autoSlideshowContinuesSpeed from './autoSlideshowContinuesSpeed';
+import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 
 export default {
   itemClick,
@@ -187,7 +187,7 @@ export default {
   useMaxDimensions,
   enableVideoPlaceholder,
   autoSlideshowType,
-  autoSlideshowContinuesSpeed,
+  autoSlideshowContinuousSpeed,
 };
 
 // TODO = add the options:
