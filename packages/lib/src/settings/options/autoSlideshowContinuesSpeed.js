@@ -10,7 +10,7 @@ export default {
     styleParams.isAutoSlideshow &&
     styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     styleParams.autoSlideshowType ===
-      GALLERY_CONSTS.autoSlideshowTypes.CONTINUES,
+      GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS,
   type: INPUT_TYPES.NUMBER,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Auto Slide" to "true", and set "Auto slide behavior" to "continuous"',

@@ -425,7 +425,7 @@ class SlideshowView extends GalleryComponent {
     if (this.canStartAutoSlideshow(styleParams)) {
       if (
         styleParams.autoSlideshowType ===
-        GALLERY_CONSTS.autoSlideshowTypes.CONTINUES &&
+        GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS &&
         styleParams.autoSlideshowContinuesSpeed > 0
       ) {
         this.autoScrollToNextItem();
@@ -454,7 +454,7 @@ class SlideshowView extends GalleryComponent {
 
       if (
         styleParams.autoSlideshowType ===
-        GALLERY_CONSTS.autoSlideshowTypes.CONTINUES
+        GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS
       ) {
         isContinuousScrolling = true;
         scrollDuration = styleParams.autoSlideshowContinuesSpeed;

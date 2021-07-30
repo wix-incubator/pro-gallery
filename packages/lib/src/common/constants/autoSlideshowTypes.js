@@ -1,6 +1,6 @@
 const AUTO_SLIDESHOW_TYPES = {
   INTERVAL: 'interval',
-  CONTINUES: 'continues',
+  CONTINUOUS: 'continuous',
 };
 
 export default AUTO_SLIDESHOW_TYPES;

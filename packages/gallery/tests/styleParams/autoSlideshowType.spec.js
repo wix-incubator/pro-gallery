@@ -34,23 +34,23 @@ describe('styleParam - autoSlideshowType', () => {
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
     driver.mount(SlideshowView, galleryViewProps);
     clock.tick(1100);
-    expect(stub.getCall(0).args[0].isContinuesScrolling).to.equal(false);
+    expect(stub.getCall(0).args[0].isContinuousScrolling).to.equal(false);
     stub.restore();
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
   });
 
-  it('Should call "next" with the correct value when auto autoSlideshowType set to "CONTINUES"', () => {
+  it('Should call "next" with the correct value when auto autoSlideshowType set to "CONTINUOUS"', () => {
     Object.assign(initialProps.styleParams, {
       isAutoSlideshow: true,
       autoSlideshowContinuesSpeed: 1,
-      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.CONTINUES,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS,
       galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
     const stub = sinon.stub(SlideshowView.prototype, 'next');
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
     driver.mount(SlideshowView, galleryViewProps);
-    expect(stub.getCall(0).args[0].isContinuesScrolling).to.equal(true);
+    expect(stub.getCall(0).args[0].isContinuousScrolling).to.equal(true);
     stub.restore();
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
   });
