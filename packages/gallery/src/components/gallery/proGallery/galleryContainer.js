@@ -410,6 +410,7 @@ export class GalleryContainer extends React.Component {
           durationInMS,
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
+          autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
         };
         return scrollToItemImp(scrollParams);
       } catch (e) {
@@ -463,6 +464,7 @@ export class GalleryContainer extends React.Component {
           durationInMS,
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
+          autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {

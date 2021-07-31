@@ -439,7 +439,7 @@ class SlideshowView extends GalleryComponent {
         );
       }
     }
-  } //autoSlideshowContinuousSpeed
+  } 
 
   autoScrollToNextItem = () => {
     if (
@@ -448,23 +448,24 @@ class SlideshowView extends GalleryComponent {
     ) {
       const { styleParams } = this.props;
       const direction = styleParams.isRTL ? -1 : 1;
-      let isContinuousScrolling = false;
-      let scrollDuration = 800;
 
       if (
         styleParams.autoSlideshowType ===
         GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS
       ) {
-        isContinuousScrolling = true;
-        scrollDuration = styleParams.autoSlideshowContinuousSpeed;
+        this._next({
+          direction,
+          isAutoTrigger: true,
+          isContinuousScrolling: true,
+        });
+      } else if (styleParams.autoSlideshowType ===
+        GALLERY_CONSTS.autoSlideshowTypes.INTERVAL) {
+        this._next({
+          direction,
+          isAutoTrigger: true,
+          scrollDuration: 800,
+        });
       }
-
-      this._next({
-        direction,
-        isAutoTrigger: true,
-        scrollDuration,
-        isContinuousScrolling,
-      });
     }
   };
 
