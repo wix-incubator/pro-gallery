@@ -101,14 +101,11 @@ export function scrollToGroupImp(scrollParams) {
     slideTransition,
   } = scrollParams;
 
+  const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
   if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
     from = horizontalElement.scrollLeft;
-    if (isRTL) {
-      to = from - (groupIdx * galleryWidth) / 2;
-    } else {
-      to = from + (groupIdx * galleryWidth) / 2;
-    }
+    to = from + (groupIdx * galleryWidth) / 2;
     // console.log('[RTL SCROLL] scrollTogroupImp: ', from, to);
   } else {
     from = top;
@@ -127,10 +124,6 @@ export function scrollToGroupImp(scrollParams) {
         ? utils.get(group, 'left')
         : utils.get(group, 'top');
 
-    if (group && isRTL) {
-      to += group.width;
-    }
-
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, group);
     }
@@ -144,17 +137,11 @@ export function scrollToGroupImp(scrollParams) {
       //set scroll to place the group in the middle of the component
       const diff = (galleryWidth - group.width) / 2;
       if (diff > 0) {
-        if (isRTL) {
-          to += diff;
-        } else {
-          to -= diff;
-        }
-      }
-      if (isRTL) {
-        to = totalWidth - to;
+        to -= diff;
       }
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
+      to *= rtlFix;
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
