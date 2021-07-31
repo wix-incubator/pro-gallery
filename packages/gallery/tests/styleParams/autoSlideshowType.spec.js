@@ -34,7 +34,7 @@ describe('styleParam - autoSlideshowType', () => {
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
     driver.mount(SlideshowView, galleryViewProps);
     clock.tick(1100);
-    expect(stub.getCall(0).args[0].isContinuousScrolling).to.equal(false);
+    expect(stub.getCall(0).args[0].isContinuousScrolling).to.equal(undefined);
     stub.restore();
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
   });
