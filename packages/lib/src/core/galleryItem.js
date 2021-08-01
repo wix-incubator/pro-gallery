@@ -261,16 +261,16 @@ class GalleryItem {
     }
   }
 
-  get processed_url() {
-    if (!this.urls.processed_url) {
-      this.urls.processed_url = this.processedMediaUrl(
+  get resized_url() {
+    if (!this.urls.resized_url) {
+      this.urls.resized_url = this.processedMediaUrl(
         this.cubeType,
         this.resizeWidth,
         this.resizeHeight,
         this.sharpParams
       );
     }
-    return this.urls.processed_url;
+    return this.urls.resized_url;
   }
 
   get multi_url() {
