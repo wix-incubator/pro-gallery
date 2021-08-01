@@ -205,17 +205,17 @@ const createProcessedImageUrl = ({
   return retUrl;
 };
 
-const createMediaUrl = (
-  item,
-  originalUrl,
-  resizeMethod,
-  requiredWidth,
-  requiredHeight,
-  sharpParams,
-  focalPoint,
-  createMultiple,
-  imageToken,
-) => {
+const createMediaUrl = ({
+                          item,
+                          originalUrl,
+                          resizeMethod,
+                          requiredWidth,
+                          requiredHeight,
+                          sharpParams,
+                          focalPoint,
+                          createMultiple,
+                          imageToken,
+                        }) => {
   const hasImageToken = item.dto.imageToken || item.dto.token || imageToken;
 
   originalUrl = removeResizeParams(originalUrl);

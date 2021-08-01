@@ -4,6 +4,22 @@ import { EventsListener } from '../../common/interfaces/EventsListener';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
+type ResizeMethods = 'fill' | 'fit' | 'full' | 'video';
+
+interface CreateMediaUrl {
+  (args: {
+    item: unknown;
+    originalUrl: string;
+    resizeMethod: ResizeMethods; // RESIZE_METHODS
+    requiredWidth: number;
+    requiredHeight: number;
+    sharpParams?: Record<string, any>;
+    focalPoint?: [number, number];
+    createMultiple?: boolean; //new
+    imageToken?: string; // new
+    watermark?: string; //old
+  }): string;
+}
 
 export interface GalleryProps {
   container: Container;
@@ -15,6 +31,7 @@ export interface GalleryProps {
   viewMode?: ViewMode;
   deviceType?: DeviceType;
   eventsListener?: EventsListener;
+  createMediaUrl?: CreateMediaUrl;
   [key: string]: any;
 }
 

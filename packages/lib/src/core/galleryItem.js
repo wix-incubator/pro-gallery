@@ -157,20 +157,58 @@ class GalleryItem {
     requiredWidth,
     requiredHeight,
     sharpParams,
-    createMultipleUrls
+    createMultipleUrls = false
   ) {
-    const mediaUrl = (item, url, ...args) => {
+    const mediaUrl = (
+      item,
+      url,
+      resizeMethod,
+      requiredWidth,
+      requiredHeight,
+      sharpParams = null,
+      focalPoint = null
+    ) => {
       let mediaUrl;
       if (typeof this.createMediaUrl === 'function') {
         try {
-          const str = String(utils.hashCode(JSON.stringify({ url, ...args })));
+          const str = String(
+            utils.hashCode(
+              JSON.stringify({
+                url,
+                resizeMethod,
+                requiredWidth,
+                requiredHeight,
+                sharpParams,
+                focalPoint,
+              })
+            )
+          );
           if (!this._cachedUrls[str]) {
             this._cachedUrls[str] =
-              this.createMediaUrl(item, url, ...args, createMultipleUrls) || '';
+              this.createMediaUrl({
+                item,
+                originalUrl: url,
+                resizeMethod,
+                requiredWidth,
+                requiredHeight,
+                sharpParams,
+                focalPoint,
+                createMultiple: createMultipleUrls,
+              }) || '';
           }
           mediaUrl = this._cachedUrls[str];
         } catch (e) {
-          console.error('Cannot create url', e, item, args);
+          console.error(
+            'Cannot create url',
+            e,
+            item,
+            url,
+            resizeMethod,
+            requiredWidth,
+            requiredHeight,
+            sharpParams,
+            focalPoint
+          );
           mediaUrl = String(url);
         }
       } else {
