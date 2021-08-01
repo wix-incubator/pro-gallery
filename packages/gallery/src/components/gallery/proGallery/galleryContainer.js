@@ -80,7 +80,7 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.scrollToItem(this.props.currentIdx, false, true, 0);
+    this.scrollToItem(this.props.activeIndex, false, true, 0);
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
@@ -116,10 +116,10 @@ export class GalleryContainer extends React.Component {
       this.currentHoverChangeEvent.galleryId = nextProps.id;
     }
     if (
-      this.props.currentIdx !== nextProps.currentIdx &&
-      nextProps.currentIdx !== this.currentSlideshowViewIdx
+      this.props.activeIndex !== nextProps.activeIndex &&
+      nextProps.activeIndex !== this.currentSlideshowViewIdx
     ) {
-      this.scrollToItem(nextProps.currentIdx, false, true, 0);
+      this.scrollToItem(nextProps.activeIndex, false, true, 0);
     }
 
     const reCreateGallery = () => {
@@ -161,8 +161,8 @@ export class GalleryContainer extends React.Component {
     if (hasPropsChanged) {
       reCreateGallery();
 
-      if (!!nextProps.currentIdx && nextProps.currentIdx > 0) {
-        this.scrollToItem(nextProps.currentIdx, false, true, 0);
+      if (!!nextProps.activeIndex && nextProps.activeIndex > 0) {
+        this.scrollToItem(nextProps.activeIndex, false, true, 0);
       }
 
       if (this.props.isInDisplay !== nextProps.isInDisplay) {
@@ -247,7 +247,7 @@ export class GalleryContainer extends React.Component {
       isEditMode() ||
       gotFirstScrollEvent ||
       scrollY > 0 ||
-      this.props.currentIdx > 0
+      this.props.activeIndex > 0
     ) {
       return items;
     }
@@ -786,7 +786,7 @@ export class GalleryContainer extends React.Component {
           settings={this.props.settings}
           displayShowMore={displayShowMore}
           id={this.props.id}
-          currentIdx={this.props.currentIdx || 0}
+          activeIndex={this.props.activeIndex || 0}
           customHoverRenderer={this.props.customHoverRenderer}
           customInfoRenderer={this.props.customInfoRenderer}
           customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}

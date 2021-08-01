@@ -17,7 +17,7 @@ class GalleryView extends GalleryComponent {
     this.id = Date.now() + '|' + Math.floor(Math.random() * 10000);
 
     this.state = {
-      currentIdx: 0,
+      activeIndex: 0,
     };
   }
 
@@ -47,7 +47,7 @@ class GalleryView extends GalleryComponent {
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
-          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.currentIdx){
+          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.activeIndex){
             // If we are on the last item in the gallery and we pressed the down arrow
             // we want to move the focus to the out0fGallery element
             e.stopPropagation();
@@ -76,7 +76,7 @@ class GalleryView extends GalleryComponent {
         e.preventDefault();
         e.stopPropagation();
         utils.setStateAndLog(this, 'Set Gallery Current Item', {
-          currentIdx: newIdx,
+          activeIndex: newIdx,
         });
         return false;
       }
@@ -112,7 +112,7 @@ class GalleryView extends GalleryComponent {
           this,
           'Focus on Last Gallery Item',
           {
-            currentIdx: lastItemIdx + 1,
+            activeIndex: lastItemIdx + 1,
           },
           () => {
             this.props.actions.toggleLoadMoreItems();
@@ -204,7 +204,7 @@ class GalleryView extends GalleryComponent {
       styleParams: this.props.styleParams,
       watermark: this.props.watermark,
       settings: this.props.settings,
-      currentIdx: this.state.currentIdx,
+      activeIndex: this.state.activeIndex,
       customHoverRenderer: this.props.customHoverRenderer,
       customInfoRenderer: this.props.customInfoRenderer,
       galleryId: this.props.id,

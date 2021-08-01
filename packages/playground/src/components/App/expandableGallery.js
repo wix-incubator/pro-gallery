@@ -84,7 +84,7 @@ export default class ExpandableProGallery extends React.Component {
                         {...this.props}
                         key={`pro-fullscreen-${this.props.id}`}
                         id={`pro-fullscreen-${this.props.id}`}
-                        currentIdx={this.state.fullscreenIdx}
+                        activeIndex={this.state.fullscreenIdx}
                         container= {{
                             width: window.innerWidth,
                             height: window.innerHeight

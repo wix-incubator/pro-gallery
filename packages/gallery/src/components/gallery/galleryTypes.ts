@@ -1,18 +1,20 @@
 import { PhotoItem, VideoItem, TextItem } from '../../common/interfaces/Item';
 import { Container } from '../../common/interfaces/Container';
+import { EventsListener } from '../../common/interfaces/EventsListener';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
-type FormFactor = 'desktop' | 'mobile' | 'tablet';
+type DeviceType = 'desktop' | 'mobile' | 'tablet';
 
 export interface GalleryProps {
   container: Container;
   items: (PhotoItem | VideoItem | TextItem)[];
   id?: string;
   totalItemsCount?: number;
-  currentIdx?: number;
+  activeIndex?: number;
   isPrerenderMode?: boolean;
   viewMode?: ViewMode;
-  formFactor?: FormFactor;
+  deviceType?: DeviceType;
+  eventsListener?: EventsListener;
   [key: string]: any;
 }
 

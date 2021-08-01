@@ -14,7 +14,7 @@ The blueprintsManager works with an api provided by the user (see blow)
 | Function Name | description       |  arguments  | return
 | --------------- | ----------- | ---------- | ---------|
 | async `createBlueprint` | Used when changes were made that might require a new blueprint, params can be empty - the manager will fetch by the provided api | params: {styles, items, container, totalItemsCount} | {blueprint: object, blueprintChange: boolean}
-| `init`  | call to provide the formFactor and api |config: {api, formFactor, totalItemsCount} | --
+| `init`  | call to provide the deviceType and api |config: {api, deviceType, totalItemsCount} | --
 | `getMoreItems`  | Call this when the gallery needs more items | currentItemsLength: number | --
 
 
@@ -69,7 +69,7 @@ const blueprintsManager = new BlueprintsManager({
     }
 blueprintsManager.init({
     api: blueprintsApi,
-    formFactor: GALLERY_CONSTS.formFactor.DESKTOP,
+    deviceType: GALLERY_CONSTS.deviceType.DESKTOP,
     // totalItemsCont, This is optional and can be passed in the params in createBlueprint(params) or via the api;
 });
 const triggerBlueprintCreation = () => { //call this whenever something changes (styles/ items/ container...anything). If this was called and nothing relevant changed the BM will call the onBlueprintReady api with a false blueprintChanged flag.
