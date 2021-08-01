@@ -3,7 +3,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
 
 export default {
-  title: 'Overlay size type',
+  title: 'Overlay Size Type',
   description: `choose pixel or percent`,
   isRelevantDescription: 'Set "Texts Placement" to "Show On Hover".',
   isRelevant: (sp) => GALLERY_CONSTS.hasHoverPlacement(sp.titlePlacement),

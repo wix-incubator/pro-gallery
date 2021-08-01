@@ -71,12 +71,15 @@ export default class ItemHover extends GalleryComponent {
     const { styleParams, imageDimensions } = this.props;
     const { overlayPosition, overlaySize, overlaySizeType } = styleParams;
     const { width, height, marginTop, marginLeft } = imageDimensions;
-    const convertHeight =
+    let convertHeight =
       overlaySizeType === 'PERCENT'
         ? height * (overlaySize / 100)
         : overlaySize;
     // const convertWidth = overlaySizeType  === 'PERCENT' ? width * (overlaySize/100) : overlaySize;
     let style = {};
+    if (convertHeight > height) {
+      convertHeight = height;
+    }
 
     switch (overlayPosition) {
       case GALLERY_CONSTS.overlayPositions.TOP:
@@ -114,8 +117,12 @@ export default class ItemHover extends GalleryComponent {
     const { overlayPosition, overlaySize, overlaySizeType } = styleParams;
     const { width, height, marginTop, marginLeft } = imageDimensions;
     // const convertHeight = overlaySizeType  === 'PERCENT' ? height * (overlaySize/100) : overlaySize;
-    const convertWidth =
+    let convertWidth =
       overlaySizeType === 'PERCENT' ? width * (overlaySize / 100) : overlaySize;
+
+    if (convertWidth > width) {
+      convertWidth = width;
+    }
 
     switch (overlayPosition) {
       case GALLERY_CONSTS.overlayPositions.LEFT:
