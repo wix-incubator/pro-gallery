@@ -93,7 +93,7 @@ import 'pro-gallery/dist/statics/main.css';
     {...blueprint}
     scrollingElement = { () => document.getElementById('gallery') || window }
     eventsListener = {(eName, eData) => console.log({eName, eData})}
-    resizeMediaUrl  {(item, url, resizeMethod, width, height) => `https://...`}
+    createMediaUrl  {(item, url, resizeMethod, width, height) => `https://...`}
     isPrerenderMode = {isPrerenderMode}
 />
 ```
