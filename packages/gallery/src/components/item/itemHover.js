@@ -68,97 +68,88 @@ export default class ItemHover extends GalleryComponent {
   }
 
   calculateVerticalOverlayStyles() {
-    const { styleParams, imageDimensions } = this.props;
-    const { overlayPosition, overlaySize, overlaySizeType } = styleParams;
-    const { width, height, marginTop, marginLeft } = imageDimensions;
-    let convertHeight =
-      overlaySizeType === 'PERCENT'
-        ? height * (overlaySize / 100)
-        : overlaySize;
-    // const convertWidth = overlaySizeType  === 'PERCENT' ? width * (overlaySize/100) : overlaySize;
     let style = {};
-    if (convertHeight > height) {
-      convertHeight = height;
+    const { styleParams, imageDimensions } = this.props;
+    const { overlayPosition, overlaySize, overlaySizeType, overlayPadding } =
+      styleParams;
+    let { width, height, marginTop, marginLeft } = imageDimensions;
+    let overlayHeight =
+      (overlaySizeType === 'PERCENT'
+        ? height * (overlaySize / 100)
+        : overlaySize) -
+      2 * overlayPadding;
+    let overlayWidth = width - 2 * overlayPadding;
+    let marginRight = overlayPadding;
+    let marginBottom = overlayPadding;
+    marginTop += overlayPadding;
+    marginLeft += overlayPadding;
+
+    if (overlayHeight > height) {
+      overlayHeight = height;
     }
 
     switch (overlayPosition) {
-      case GALLERY_CONSTS.overlayPositions.TOP:
-        style = {
-          width,
-          height: convertHeight,
-          marginTop,
-          marginLeft,
-        };
-        break;
       case GALLERY_CONSTS.overlayPositions.BOTTOM:
-        style = {
-          width,
-          height: convertHeight,
-          marginTop: height - convertHeight,
-          marginLeft,
-        };
+        marginTop += height - overlayHeight - 2 * overlayPadding;
         break;
       case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
-        style = {
-          width,
-          height: convertHeight,
-          marginTop: height / 2 - convertHeight / 2,
-          marginLeft,
-        };
+        marginTop += height / 2 - overlayHeight / 2 - overlayPadding;
         break;
     }
-    style.maxWidth = width;
+
+    style = {
+      width: overlayWidth,
+      height: overlayHeight,
+      marginTop,
+      marginLeft,
+      marginRight,
+      marginBottom,
+      maxHeight: height,
+      maxWidth: width,
+    };
     return style;
   }
 
   calculateHorizontalOverlayStyles() {
     let style = {};
     const { styleParams, imageDimensions } = this.props;
-    const { overlayPosition, overlaySize, overlaySizeType } = styleParams;
-    const { width, height, marginTop, marginLeft } = imageDimensions;
-    // const convertHeight = overlaySizeType  === 'PERCENT' ? height * (overlaySize/100) : overlaySize;
-    let convertWidth =
-      overlaySizeType === 'PERCENT' ? width * (overlaySize / 100) : overlaySize;
+    const { overlayPosition, overlaySize, overlaySizeType, overlayPadding } =
+      styleParams;
+    let { width, height, marginTop, marginLeft } = imageDimensions;
+    let overlayWidth =
+      (overlaySizeType === 'PERCENT'
+        ? width * (overlaySize / 100)
+        : overlaySize) -
+      2 * overlayPadding;
+    let overlayHeight = height - 2 * overlayPadding;
+    let marginRight = overlayPadding;
+    let marginBottom = overlayPadding;
+    marginTop += overlayPadding;
+    marginLeft += overlayPadding;
 
-    if (convertWidth > width) {
-      convertWidth = width;
+    if (overlayWidth > width) {
+      overlayWidth = width;
     }
 
     switch (overlayPosition) {
-      case GALLERY_CONSTS.overlayPositions.LEFT:
-        style = {
-          width: convertWidth,
-          height,
-          marginTop,
-          marginLeft,
-        };
-        break;
       case GALLERY_CONSTS.overlayPositions.RIGHT:
-        style = {
-          width: convertWidth,
-          height,
-          marginTop,
-          marginLeft: width - convertWidth,
-        };
+        marginLeft += width - overlayWidth - 2 * overlayPadding;
         break;
       case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
-        style = {
-          width: convertWidth,
-          height,
-          marginTop,
-          marginLeft: width / 2 - convertWidth / 2,
-        };
-        break;
-      default:
-        style = {
-          width,
-          height,
-          marginTop,
-          marginLeft,
-        };
+        marginLeft += width / 2 - overlayWidth / 2 - overlayPadding;
         break;
     }
-    style.maxHeight = height;
+
+    style = {
+      width: overlayWidth,
+      height: overlayHeight,
+      marginTop,
+      marginLeft,
+      marginRight,
+      marginBottom,
+      maxHeight: height,
+      maxWidth: width,
+    };
     return style;
   }
 

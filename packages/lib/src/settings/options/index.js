@@ -93,6 +93,7 @@ import enableVideoPlaceholder from './enableVideoPlaceholder ';
 import overlayPosition from './overlayPosition';
 import overlaySize from './overlaySize';
 import overlaySizeType from './overlaySizeType';
+import overlayPadding from './overlayPadding';
 
 export default {
   itemClick,
@@ -190,6 +191,7 @@ export default {
   overlayPosition,
   overlaySize,
   overlaySizeType,
+  overlayPadding,
 };
 
 // TODO = add the options:
