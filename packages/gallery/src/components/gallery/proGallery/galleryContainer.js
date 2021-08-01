@@ -387,7 +387,7 @@ export class GalleryContainer extends React.Component {
     isManual,
     durationInMS = 0,
     scrollMarginCorrection,
-    isContinuousScrolling = false
+    isContinuousScrolling = false,
   ) {
     if (itemIdx >= 0) {
       const scrollingElement = this._scrollingElement;
@@ -441,7 +441,7 @@ export class GalleryContainer extends React.Component {
     isManual,
     durationInMS = 0,
     scrollMarginCorrection,
-    isContinuousScrolling = false
+    isContinuousScrolling = false,
   ) {
     if (groupIdx >= 0) {
       const scrollingElement = this._scrollingElement;
