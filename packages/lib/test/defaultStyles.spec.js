@@ -8,7 +8,7 @@ describe('defaultStyles', () => {
     const expected = expectedStyles();
 
     for (const [key, value] of Object.entries(expected)) {
-      assert.deepEqual(value, actual[key]);
+      assert.deepEqual(value, actual[key], `key: ${key}`);
     }
     for (const [k, v] of Object.entries(actual)) {
       assert.deepEqual(v, expected[k], `key: ${k}`);
@@ -69,7 +69,7 @@ function expectedStyles() {
     scrollSnap: false,
     itemClick: 'nothing',
     fullscreen: true,
-    videoPlay: 'hover',
+    item: { video: { playOn: 'hover' } },
     scrollAnimation: 'NO_EFFECT',
     slideAnimation: 'SCROLL',
     scrollDirection: 0,
