@@ -9,7 +9,6 @@ export interface CreateMediaUrl {
     focalPoint?: [number, number];
     createMultiple?: boolean;
     imageToken?: string;
-    watermark?: string;
   }): string;
 }
 
