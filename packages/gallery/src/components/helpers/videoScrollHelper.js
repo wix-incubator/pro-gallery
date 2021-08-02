@@ -304,31 +304,3 @@ class VideoScrollHelper {
 
 export default VideoScrollHelper;
 
-// this.renderedPaddingMultiply = 2;
-// this.visiblePaddingMultiply = 0;
-// this.videoPlayVerticalTolerance =
-//   (this.props.offset.bottom - this.props.offset.top) / 2;
-// this.videoPlayHorizontalTolerance =
-//   (this.props.offset.right - this.props.offset.left) / 2;
-// this.padding = {
-//   renderedVertical:
-//     utils.parseGetParam('renderedPadding') ||
-//     this.screenSize.height * this.renderedPaddingMultiply,
-//   visibleVertical:
-//     utils.parseGetParam('displayPadding') ||
-//     this.screenSize.height * this.visiblePaddingMultiply,
-//   playVertical:
-//     utils.parseGetParam('playPadding') ||
-//     this.screenSize.height * this.visiblePaddingMultiply -
-//       this.videoPlayVerticalTolerance,
-//   renderedHorizontal:
-//     utils.parseGetParam('renderedPadding') ||
-//     this.screenSize.width * this.renderedPaddingMultiply,
-//   visibleHorizontal:
-//     utils.parseGetParam('displayPadding') ||
-//     this.screenSize.width * this.visiblePaddingMultiply,
-//   playHorizontal:
-//     utils.parseGetParam('playPadding') ||
-//     this.screenSize.width * this.visiblePaddingMultiply -
-//       this.videoPlayHorizontalTolerance,
-// };
