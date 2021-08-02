@@ -78,6 +78,7 @@ export default class ItemHover extends GalleryComponent {
         ? height * (overlaySize / 100)
         : overlaySize) -
       2 * overlayPadding;
+
     let overlayWidth = width - 2 * overlayPadding;
     let marginRight = overlayPadding;
     let marginBottom = overlayPadding;
@@ -109,12 +110,16 @@ export default class ItemHover extends GalleryComponent {
     const { overlayPosition, overlaySize, overlaySizeType, overlayPadding } =
       styleParams;
     let { width, height, marginTop, marginLeft } = imageDimensions;
-    let style = { maxHeight: height, maxWidth: width };
+    let style = {};
     let overlayWidth =
       (overlaySizeType === 'PERCENT'
         ? width * (overlaySize / 100)
         : overlaySize) -
       2 * overlayPadding;
+    let normalizedWidth = (overlayWidth - 0) / (width - 0);
+    if (width > overlayWidth) {
+      overlayWidth = normalizedWidth;
+    }
     let overlayHeight = height - 2 * overlayPadding;
     let marginRight = overlayPadding;
     let marginBottom = overlayPadding;
@@ -123,9 +128,7 @@ export default class ItemHover extends GalleryComponent {
 
     switch (overlayPosition) {
       case GALLERY_CONSTS.overlayPositions.RIGHT:
-        if (overlayWidth < width) {
-          marginLeft += width - overlayWidth - 2 * overlayPadding;
-        }
+        marginLeft += width - overlayWidth - 2 * overlayPadding;
         break;
       case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
         marginLeft += width / 2 - overlayWidth / 2 - overlayPadding;
