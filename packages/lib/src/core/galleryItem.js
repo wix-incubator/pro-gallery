@@ -230,12 +230,9 @@ class GalleryItem {
         { ...sharpParams, quality: 30, blur: 30 },
         focalPoint
       );
-
-    urls[URL_TYPES.SEO] = () =>
-      urls[URL_TYPES.HIGH_RES]().replace(/\.webp$/i, `.${this.fileType}`); // SEO needs the original file type (jpg or png, etc..) instead of .webp, replace does not mutate
-
     return urls;
   }
+
   resetUrls() {
     const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
     const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
@@ -485,10 +482,6 @@ class GalleryItem {
       this.dto.src ||
       ''
     );
-  }
-
-  get fileType() {
-    return this.url.split('.').pop();
   }
 
   get mediaUrl() {
