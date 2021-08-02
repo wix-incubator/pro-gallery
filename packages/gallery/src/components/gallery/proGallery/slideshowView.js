@@ -918,14 +918,12 @@ class SlideshowView extends GalleryComponent {
           this.props.container.galleryWidth >= allGroupsWidth;
         return isAllItemsFitsGalleryWidth;
       });
-    
     //remove navBars if no scroll is needed and is column layout
     if (shouldNotRenderNavArrows) {
       return null;
     }
 
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
-    
     const { galleryHeight } = this.props.container;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
@@ -948,7 +946,6 @@ class SlideshowView extends GalleryComponent {
         imageMargin / 4
       }px ${GALLERY_CONSTS.hasAbovePlacement(titlePlacement)? '+' : '-'} ${infoSpace / 2}px)`,
     };
-    
     const arrowsPos =
       scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY

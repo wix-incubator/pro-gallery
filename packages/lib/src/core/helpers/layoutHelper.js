@@ -376,7 +376,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles = removeVideoAutoplayInIOS(processedStyles); 
     processedStyles = centerArrowsWhenNeeded(processedStyles); 
     
-    
   return processedStyles;
 }
 
