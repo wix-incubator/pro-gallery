@@ -18,7 +18,7 @@ function getBranchName() {
 }
 
 function createManyPullRequests() {
-	for(let i = 0; i < 5; i++) {
+	for(let i = 0; i < 10; i++) {
 		createPullRequest(i)
 		execSync('git checkout many-prs')
 	}
