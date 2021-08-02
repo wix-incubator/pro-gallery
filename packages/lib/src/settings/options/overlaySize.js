@@ -7,5 +7,6 @@ export default {
   isRelevantDescription: 'Set "Texts Placement" to "Show On Hover".',
   isRelevant: (sp) => GALLERY_CONSTS.hasHoverPlacement(sp.titlePlacement),
   type: INPUT_TYPES.NUMBER,
-  default: '100',
+  min: 0,
+  default: 100,
 };
