@@ -5,10 +5,22 @@ import defaultStyles from '../src/common/defaultStyles';
 describe('defaultStyles', () => {
   it('should return the expected styles unchanged', () => {
     const actual = defaultStyles;
-    expect(_.isEqual(actual, expectedStyles())).eq(true);
+    const expected= expectedStyles()
+
+    for (const [key, value] of Object.entries(expected)) {
+      expect(value).eq(actual[key], key);
+    }
+    for (const [k, v] of Object.entries(actual)) {
+      expect(v).eq(expected[k], k);
+    }
+
+    expect(_.isEqual(actual, expected)).eq(true);
     const actualLength = _.keys(actual).length;
-    expect(actualLength).eq(_.keys(expectedStyles()).length);
+    expect(actualLength).eq(_.keys(expected).length);
     expect(actualLength).eq(91);
+
+
+    
   });
 });
 
