@@ -5,6 +5,7 @@ import PLACEMENTS, {
   hasVerticalPlacement,
   hasHoverPlacement,
   hasHorizontalPlacement,
+  isAboveOrBelowPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
@@ -298,6 +299,14 @@ const addMarginsToSupportShadows = (styles) => {
   }
   return _styles;
 }
+const centerArrowsWhenNeeded = (styles) => {
+  let _styles = {...styles}
+  if (!isAboveOrBelowPlacement(styles.titlePlacement)) {
+    // if text (info) placement is not above or below, arrows are gallery centered
+    _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
+  }
+  return _styles;
+}
 
 const removeBordersIfNeeded = (styles) => {
 //TODO this can go into the _stylespective 4 layouts.
@@ -365,6 +374,8 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles = processSpecialGallerySize(processedStyles); 
     processedStyles = processTextDimensions(processedStyles, customExternalInfoRendererExists);
     processedStyles = removeVideoAutoplayInIOS(processedStyles); 
+    processedStyles = centerArrowsWhenNeeded(processedStyles); 
+    
     
   return processedStyles;
 }

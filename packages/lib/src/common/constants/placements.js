@@ -49,7 +49,8 @@ const isRightPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_RIGHT;
 const isLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
-
+const isAboveOrBelowPlacement = (placement) =>
+  isBelowPlacement(placement) || isAbovePlacement(placement);
 export default PLACEMENTS;
 
 export {
@@ -67,4 +68,5 @@ export {
   isLeftPlacement,
   isVerticalPlacement,
   isHorizontalPlacement,
+  isAboveOrBelowPlacement,
 };
