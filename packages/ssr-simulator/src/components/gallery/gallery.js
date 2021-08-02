@@ -1,5 +1,6 @@
 import React from 'react';
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
+import { addPresetStyles } from 'pro-gallery-lib';
 import { testItems, monochromeImages } from './images';
 import { resizeMediaUrl } from './itemResizer';
 import * as utils from './utils';
@@ -101,7 +102,7 @@ export default class Gallery extends React.PureComponent {
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
     const hasUrlStyles = Object.keys(urlParams).length > 0;
-    const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
+    const styles = addPresetStyles(hasUrlStyles ? urlParams : utils.defaultStyleParams);
 
     const items = urlParams.isTestEnvironment ?
       monochromeImages.slice(0, 20) :
