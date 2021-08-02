@@ -5,7 +5,7 @@ import defaultStyles from '../src/common/defaultStyles';
 describe('defaultStyles', () => {
   it('should return the expected styles unchanged', () => {
     const actual = defaultStyles;
-    const expected= expectedStyles()
+    const expected = expectedStyles();
 
     for (const [key, value] of Object.entries(expected)) {
       expect(value).eq(actual[key], key);
@@ -18,9 +18,6 @@ describe('defaultStyles', () => {
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expected).length);
     expect(actualLength).eq(91);
-
-
-    
   });
 });
 
