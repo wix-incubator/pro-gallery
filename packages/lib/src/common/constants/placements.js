@@ -49,8 +49,28 @@ const isRightPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_RIGHT;
 const isLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
+const isHoverAndAbovePlacement = (placement) => {
+  let placementArray = String(placement).split(',');
+  return (
+    placementArray.length === 2 &&
+    hasAbovePlacement(placement) &&
+    hasHoverPlacement(placement)
+  );
+};
+const isHoverAndBelowPlacement = (placement) => {
+  let placementArray = String(placement).split(',');
+  return (
+    placementArray.length === 2 &&
+    hasBelowPlacement(placement) &&
+    hasHoverPlacement(placement)
+  );
+};
+
 const isAboveOrBelowPlacement = (placement) =>
-  isBelowPlacement(placement) || isAbovePlacement(placement);
+  isBelowPlacement(placement) ||
+  isAbovePlacement(placement) ||
+  isHoverAndAbovePlacement(placement) ||
+  isHoverAndBelowPlacement(placement);
 export default PLACEMENTS;
 
 export {

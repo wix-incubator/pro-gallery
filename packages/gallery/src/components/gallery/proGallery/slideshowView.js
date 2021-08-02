@@ -925,7 +925,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
-
+    
     const { galleryHeight } = this.props.container;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
@@ -946,7 +946,7 @@ class SlideshowView extends GalleryComponent {
       padding: 0,
       top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
         imageMargin / 4
-      }px ${GALLERY_CONSTS.isAbovePlacement(titlePlacement)? '+' : '-'} ${infoSpace / 2}px)`,
+      }px ${GALLERY_CONSTS.hasAbovePlacement(titlePlacement)? '+' : '-'} ${infoSpace / 2}px)`,
     };
     
     const arrowsPos =
