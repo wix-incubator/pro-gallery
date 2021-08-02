@@ -1,6 +1,6 @@
 export interface CreateMediaUrl {
   (args: {
-    item: Record<string, any>; //GalleryItem
+    item: Record<string, any>;
     originalUrl: string;
     resizeMethod: ResizeMethods;
     requiredWidth: number;
@@ -14,3 +14,30 @@ export interface CreateMediaUrl {
 }
 
 type ResizeMethods = 'fill' | 'fit' | 'full' | 'video';
+
+// interface CreateMediaUrlItemData {
+//   idx: number;
+//   url: string;
+//   mediaUrl: string;
+//   dto: {
+//     mediaUrl: string;
+//     metaData: {
+//       type: string;
+//       posters?: any[];
+//     };
+//     imageToken?: string;
+//     token?: string;
+//   };
+//   metaData: {
+//     watermarkStr: string;
+//   };
+//   ratio: number;
+//   maxHeight: number;
+//   maxWidth: number;
+//   isDimensionless: boolean;
+//   poster?: {
+//     height: number;
+//     width: number;
+//   };
+//   qualities?: Record<string, any>[];
+// }
