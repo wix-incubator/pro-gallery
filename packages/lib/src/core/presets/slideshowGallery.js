@@ -1,7 +1,6 @@
 import LAYOUTS from '../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import ARROWS_VERTICAL_POSITION from '../../common/constants/arrowsVerticalPosition';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
 const fixToSlideshow = (styles) => {
@@ -16,7 +15,6 @@ const fixToSlideshow = (styles) => {
   presetStyles.isVertical = false;
   presetStyles.groupSize = 1;
   presetStyles.groupTypes = '1';
-  presetStyles.arrowsVerticalPosition = ARROWS_VERTICAL_POSITION.IMAGE_CENTER;
   presetStyles.itemBorderWidth = 0;
   presetStyles.itemBorderRadius = 0;
   presetStyles.itemBorderColor = undefined;

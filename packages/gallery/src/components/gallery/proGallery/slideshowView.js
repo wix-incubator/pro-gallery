@@ -944,7 +944,9 @@ class SlideshowView extends GalleryComponent {
       padding: 0,
       top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
         imageMargin / 4
-      }px ${GALLERY_CONSTS.hasAbovePlacement(titlePlacement)? '+' : '-'} ${infoSpace / 2}px)`,
+      }px ${isSlideshow ? '-' : 
+      GALLERY_CONSTS.hasAbovePlacement(titlePlacement) ? '+' :
+      '-'} ${infoSpace / 2}px)`,
     };
     const arrowsPos =
       scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
