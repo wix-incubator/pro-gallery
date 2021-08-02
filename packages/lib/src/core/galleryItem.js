@@ -15,7 +15,7 @@ class GalleryItem {
   }
 
   update(config) {
-    this.resizeMediaUrl = config.resizeMediaUrl;
+    this.createMediaUrl = config.createMediaUrl;
 
     if (config.dto && config.dto.dto) {
       config.dto = config.dto.dto; // defence patch due to mis-use of item-core
@@ -133,7 +133,13 @@ class GalleryItem {
       title: metadata.title,
       itemWidth: metadata.width,
       itemType: metadata.type || 'image',
-      imageUrl: this.resizedUrl(RESIZE_METHODS.FIT, 200, 200, null, null).img(),
+      imageUrl: this.processedMediaUrl(
+        RESIZE_METHODS.FIT,
+        200,
+        200,
+        null,
+        null
+      ).img(),
       imagePurchasedUrl: this.dto.mediaUrl,
       fpX: focalPoint[0],
       fpY: focalPoint[1],
@@ -146,31 +152,69 @@ class GalleryItem {
     return { width, height };
   }
 
-  resizedUrl(
+  processedMediaUrl(
     resizeMethod,
     requiredWidth,
     requiredHeight,
     sharpParams,
-    createMultipleUrls
+    createMultipleUrls = false
   ) {
-    const resizeUrl = (item, url, ...args) => {
-      let resizedUrl;
-      if (typeof this.resizeMediaUrl === 'function') {
+    const mediaUrl = (
+      item,
+      url,
+      resizeMethod,
+      requiredWidth,
+      requiredHeight,
+      sharpParams = null,
+      focalPoint = null
+    ) => {
+      let mediaUrl;
+      if (typeof this.createMediaUrl === 'function') {
         try {
-          const str = String(utils.hashCode(JSON.stringify({ url, ...args })));
+          const str = String(
+            utils.hashCode(
+              JSON.stringify({
+                url,
+                resizeMethod,
+                requiredWidth,
+                requiredHeight,
+                sharpParams,
+                focalPoint,
+              })
+            )
+          );
           if (!this._cachedUrls[str]) {
             this._cachedUrls[str] =
-              this.resizeMediaUrl(item, url, ...args, createMultipleUrls) || '';
+              this.createMediaUrl({
+                item,
+                originalUrl: url,
+                resizeMethod,
+                requiredWidth,
+                requiredHeight,
+                sharpParams,
+                focalPoint,
+                createMultiple: createMultipleUrls,
+              }) || '';
           }
-          resizedUrl = this._cachedUrls[str];
+          mediaUrl = this._cachedUrls[str];
         } catch (e) {
-          console.error('Cannot create url', e, item, args);
-          resizedUrl = String(url);
+          console.error(
+            'Cannot create url',
+            e,
+            item,
+            url,
+            resizeMethod,
+            requiredWidth,
+            requiredHeight,
+            sharpParams,
+            focalPoint
+          );
+          mediaUrl = String(url);
         }
       } else {
-        resizedUrl = String(url);
+        mediaUrl = String(url);
       }
-      return resizedUrl;
+      return mediaUrl;
     };
 
     requiredWidth = Math.ceil(requiredWidth);
@@ -197,7 +241,7 @@ class GalleryItem {
         urls[URL_TYPES.VIDEO] = () => this.url;
       } else {
         urls[URL_TYPES.VIDEO] = () =>
-          resizeUrl(
+          mediaUrl(
             this,
             this.url,
             RESIZE_METHODS.VIDEO,
@@ -208,7 +252,7 @@ class GalleryItem {
     }
 
     urls[URL_TYPES.HIGH_RES] = () =>
-      resizeUrl(
+      mediaUrl(
         this,
         imgUrl,
         resizeMethod,
@@ -219,7 +263,7 @@ class GalleryItem {
       );
 
     urls[URL_TYPES.LOW_RES] = () =>
-      resizeUrl(
+      mediaUrl(
         this,
         imgUrl,
         this.cubeImages && resizeMethod !== RESIZE_METHODS.FIT
@@ -254,7 +298,7 @@ class GalleryItem {
 
   get resized_url() {
     if (!this.urls.resized_url) {
-      this.urls.resized_url = this.resizedUrl(
+      this.urls.resized_url = this.processedMediaUrl(
         this.cubeType,
         this.resizeWidth,
         this.resizeHeight,
@@ -266,7 +310,7 @@ class GalleryItem {
 
   get multi_url() {
     if (!this.urls.multi_url) {
-      this.urls.multi_url = this.resizedUrl(
+      this.urls.multi_url = this.processedMediaUrl(
         this.cubeType,
         this.resizeWidth,
         this.resizeHeight,
@@ -282,7 +326,7 @@ class GalleryItem {
       const orgRatio = this.maxWidth / this.maxHeight;
       const resizedRatio = this.resizeWidth / this.resizeHeight;
       const isOrgWider = resizedRatio < orgRatio;
-      this.urls.scaled_url = this.resizedUrl(
+      this.urls.scaled_url = this.processedMediaUrl(
         RESIZE_METHODS.FILL,
         isOrgWider ? orgRatio * this.resizeHeight : this.resizeWidth,
         isOrgWider ? this.resizeHeight : this.resizeWidth / orgRatio,
@@ -294,7 +338,7 @@ class GalleryItem {
 
   get pixel_url() {
     if (!this.urls.pixel_url) {
-      this.urls.pixel_url = this.resizedUrl(RESIZE_METHODS.FILL, 1, 1, {
+      this.urls.pixel_url = this.processedMediaUrl(RESIZE_METHODS.FILL, 1, 1, {
         quality: 5,
       });
     }
@@ -303,7 +347,7 @@ class GalleryItem {
 
   get thumbnail_url() {
     if (!this.urls.thumbnail_url) {
-      this.urls.thumbnail_url = this.resizedUrl(
+      this.urls.thumbnail_url = this.processedMediaUrl(
         RESIZE_METHODS.FILL,
         this.thumbnailSize,
         this.thumbnailSize,
@@ -315,16 +359,21 @@ class GalleryItem {
 
   get square_url() {
     if (!this.urls.square_url) {
-      this.urls.square_url = this.resizedUrl(RESIZE_METHODS.FILL, 100, 100, {
-        quality: 80,
-      });
+      this.urls.square_url = this.processedMediaUrl(
+        RESIZE_METHODS.FILL,
+        100,
+        100,
+        {
+          quality: 80,
+        }
+      );
     }
     return this.urls.square_url;
   }
 
   get full_url() {
     if (!this.urls.full_url) {
-      this.urls.full_url = this.resizedUrl(
+      this.urls.full_url = this.processedMediaUrl(
         RESIZE_METHODS.FULL,
         this.maxWidth,
         this.maxHeight,
@@ -336,7 +385,7 @@ class GalleryItem {
 
   get sample_url() {
     if (!this.urls.sample_url) {
-      this.urls.sample_url = this.resizedUrl(
+      this.urls.sample_url = this.processedMediaUrl(
         RESIZE_METHODS.FIT,
         500,
         500,
@@ -348,7 +397,7 @@ class GalleryItem {
 
   get preload_url() {
     if (!this.urls.preload_url) {
-      this.urls.preload_url = this.resized_url;
+      this.urls.preload_url = this.processed_url;
     }
     return this.urls.preload_url;
   }
