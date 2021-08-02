@@ -58,7 +58,7 @@ class galleryDriver {
       videoLoop: true,
       videoSound: false,
       videoSpeed: 1,
-      videoPlay: 'hover',
+      item: { video: { playOn: 'hover' } },
       sharpParams: {
         quality: 90,
         usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},

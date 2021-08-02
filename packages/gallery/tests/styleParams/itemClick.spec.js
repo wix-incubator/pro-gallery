@@ -1,4 +1,5 @@
 import GalleryDriver from '../drivers/reactDriver';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import { images2, videoItems } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
@@ -131,7 +132,7 @@ describe('styleParam - itemClick', () => {
       });
       Object.assign(initialProps.styles, {
         itemClick: 'nothing',
-        videoPlay: 'onClick',
+        item: { video: { playOn: 'onClick' } },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -148,7 +149,7 @@ describe('styleParam - itemClick', () => {
       });
       Object.assign(initialProps.styles, {
         itemClick: 'expand',
-        item: { video: { videoPlay: 'onClick' } },
+        item: { video: { playOn: 'onClick' } },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -164,7 +165,7 @@ describe('styleParam - itemClick', () => {
       });
       Object.assign(initialProps.styles, {
         itemClick: 'fullscreen',
-        videoPlay: 'onClick',
+        item: { video: { playOn: GALLERY_CONSTS.videoPlay.onClick } },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -181,7 +182,7 @@ describe('styleParam - itemClick', () => {
       });
       Object.assign(initialProps.styles, {
         itemClick: 'link',
-        videoPlay: 'onClick',
+        item: { video: { playOn: GALLERY_CONSTS.videoPlay.onClick } },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();

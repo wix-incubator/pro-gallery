@@ -43,7 +43,7 @@ describe('RCE Integration test', () => {
       thumbnailSize: 120,
       gotStyleParams: true,
       showVideoPlayButton: true,
-      videoPlay: 'onClick',
+      item: { video: { playOn: GALLERY_CONSTS.videoPlay.onClick } },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);
@@ -77,7 +77,7 @@ describe('RCE Integration test', () => {
       thumbnailSize: 120,
       gotStyleParams: true,
       showVideoPlayButton: true,
-      videoPlay: 'onClick',
+      item: { video: { playOn: GALLERY_CONSTS.videoPlay.onClick } },
     };
     await driver.navigate({
       ...styleParams,

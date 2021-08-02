@@ -17,7 +17,7 @@ describe('styleParam - videoPlay', () => {
 
   it('should play videos automaticaly', async () => {
     Object.assign(initialProps.styles, {
-      videoPlay: GALLERY_CONSTS.videoPlay.AUTO,
+      item: { video: { playOn: GALLERY_CONSTS.videoPlay.AUTO } },
       galleyLayout: GALLERY_CONSTS.layout.GRID,
     });
     driver.mount.proGallery(initialProps);
@@ -36,7 +36,7 @@ describe('styleParam - videoPlay', () => {
 
     it('should not have video elements intially (with no hover event)', async () => {
       Object.assign(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
+        item: { video: { playOn: 'hover' } },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
@@ -47,7 +47,7 @@ describe('styleParam - videoPlay', () => {
     });
     it('should have video element on hover', async () => {
       Object.assign(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
+        item: { video: { playOn: GALLERY_CONSTS.videoPlay.ON_CLICK } },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
@@ -67,7 +67,7 @@ describe('styleParam - videoPlay', () => {
 
     it('should not have video elements intially (with no click event)', async () => {
       Object.assign(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.ON_CLICK,
+        item: { video: { playOn: GALLERY_CONSTS.videoPlay.ON_CLICK } },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
@@ -78,7 +78,7 @@ describe('styleParam - videoPlay', () => {
     });
     it('should have video element on click', async () => {
       Object.assign(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.ON_CLICK,
+        item: { video: { playOn: GALLERY_CONSTS.videoPlay.ON_CLICK } },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
         itemClick: GALLERY_CONSTS.itemClick.NOTHING,
       });
