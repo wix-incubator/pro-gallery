@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import _ from 'lodash';
 import defaultStyles from '../src/common/defaultStyles';
 
@@ -8,10 +8,10 @@ describe('defaultStyles', () => {
     const expected = expectedStyles();
 
     for (const [key, value] of Object.entries(expected)) {
-      expect(value).eq(actual[key], key);
+      assert.deepEqual(value, actual[key]);
     }
     for (const [k, v] of Object.entries(actual)) {
-      expect(v).eq(expected[k], k);
+      assert.deepEqual(v, expected[k], `key: ${k}`);
     }
 
     expect(_.isEqual(actual, expected)).eq(true);
