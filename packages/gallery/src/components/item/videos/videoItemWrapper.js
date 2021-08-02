@@ -36,7 +36,8 @@ class VideoItemWrapper extends ImageItem {
   }
 
   mightPlayVideo() {
-    const { videoPlay, itemClick } = this.props.styleParams;
+    const { item, itemClick } = this.props.styleParams;
+    const videoPlay = item?.video?.playOn
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;

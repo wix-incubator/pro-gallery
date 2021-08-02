@@ -13,7 +13,7 @@ const coreStyles = {
   fullscreen: true,
   videoLoop: true,
   videoSound: false,
-  videoPlay: 'hover',
+  item: { video: { playOn: 'hover' } },
   videoSpeed: 1,
   numberOfImagesPerRow: 3,
   collageDensity: 0.8,
