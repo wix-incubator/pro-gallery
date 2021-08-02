@@ -72,6 +72,6 @@ export function shouldCreateVideoPlaceholder(styles) {
   return (
     styles.enableVideoPlaceholder &&
     (!utils.isSingleItemHorizontalDisplay(styles) ||
-      styles.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
+      styles.item?.video?.playOn !== GALLERY_CONSTS.videoPlay.AUTO)
   );
 }

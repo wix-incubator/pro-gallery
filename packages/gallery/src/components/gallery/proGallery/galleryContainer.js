@@ -329,7 +329,7 @@ export class GalleryContainer extends React.Component {
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
       scrollBase: container.scrollBase,
-      videoPlay: styles.videoPlay,
+      videoPlay: styles.item?.video?.playOn,
       videoLoop: styles.videoLoop,
       itemClick: styles.itemClick,
       scrollDirection: styles.scrollDirection,
