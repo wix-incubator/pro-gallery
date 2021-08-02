@@ -1,6 +1,6 @@
 export interface CreateMediaUrl {
   (args: {
-    item: unknown; //GalleryItem
+    item: Record<string, any>; //GalleryItem
     originalUrl: string;
     resizeMethod: ResizeMethods;
     requiredWidth: number;
