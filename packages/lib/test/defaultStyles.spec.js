@@ -106,6 +106,6 @@ function expectedStyles() {
     useMaxDimensions: false,
     enableVideoPlaceholder: true,
     autoSlideshowType: 'interval',
-    autoSlideshowContinuousSpeed: 2,
+    autoSlideshowContinuousSpeed: 200,
   };
 }
