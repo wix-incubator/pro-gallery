@@ -303,4 +303,3 @@ class VideoScrollHelper {
 }
 
 export default VideoScrollHelper;
-
