@@ -18,6 +18,8 @@ export function scrollToItemImp(scrollParams) {
     itemIdx,
     fixedScroll,
     slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -74,6 +76,8 @@ export function scrollToItemImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuousScrolling,
+      autoSlideshowContinuousSpeed,
     });
   } else {
     return new Promise((resolve) => {
@@ -99,6 +103,8 @@ export function scrollToGroupImp(scrollParams) {
     groupIdx,
     fixedScroll,
     slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -155,6 +161,8 @@ export function scrollToGroupImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuousScrolling,
+      autoSlideshowContinuousSpeed,
     });
   } else {
     return new Promise((resolve) => {
@@ -218,11 +226,17 @@ function horizontalCssScrollTo({
   duration,
   isRTL,
   slideTransition,
+  isContinuousScrolling,
+  autoSlideshowContinuousSpeed,
 }) {
-  const change = to - from;
+  let change = to - from;
 
   if (change === 0) {
     return new Promise((resolve) => resolve(to));
+  }
+
+  if (isContinuousScrolling) {
+    duration = (Math.abs(change) / autoSlideshowContinuousSpeed) * 1000;
   }
 
   const scrollerInner = scroller.firstChild;
