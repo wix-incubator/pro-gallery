@@ -4,7 +4,7 @@ import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
-import { resizeMediaUrl } from '../../utils/itemResizer';
+import { createMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
@@ -183,7 +183,7 @@ export function App() {
         }
         break;
       case 'EXTERNAL':
-        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+        if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasExternalHorizontalPlacement(titlePlacement)) {
           return infoElement;
         }
         break;
@@ -294,7 +294,7 @@ export function App() {
           viewMode: gallerySettings.viewMode,
           eventsListener: eventListener,
           totalItemsCount: getTotalItemsCount(),
-          resizeMediaUrl: resizeMediaUrl,
+          createMediaUrl: createMediaUrl,
           settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
           activeIndex: gallerySettings.initialIdx,
           useBlueprints: gallerySettings.useBlueprints,

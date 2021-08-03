@@ -10,50 +10,52 @@ const PLACEMENTS = {
 
 const hasHoverPlacement = (placement) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_HOVER) >= 0;
-const hasAbovePlacement = (placement, idx) =>
+const hasExternalAbovePlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ABOVE) >= 0 ||
   (idx % 2 === 0 &&
     String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0);
-const hasBelowPlacement = (placement, idx) =>
+const hasExternalBelowPlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_BELOW) >= 0 ||
   (idx % 2 === 1 &&
     String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0);
-const hasRightPlacement = (placement, idx) =>
+const hasExternalRightPlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_RIGHT) >= 0 ||
   (idx % 2 === 0 &&
     String(placement).indexOf(PLACEMENTS.ALTERNATE_HORIZONTAL) >= 0);
-const hasLeftPlacement = (placement, idx) =>
+const hasExternalLeftPlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_LEFT) >= 0 ||
   (idx % 2 === 1 &&
     String(placement).indexOf(PLACEMENTS.ALTERNATE_HORIZONTAL) >= 0);
-const hasVerticalPlacement = (placement) =>
-  hasAbovePlacement(placement, 0) || hasBelowPlacement(placement, 1);
-const hasHorizontalPlacement = (placement) =>
-  hasRightPlacement(placement, 0) || hasLeftPlacement(placement, 1);
+const hasExternalVerticalPlacement = (placement) =>
+  hasExternalAbovePlacement(placement, 0) ||
+  hasExternalBelowPlacement(placement, 1);
+const hasExternalHorizontalPlacement = (placement) =>
+  hasExternalRightPlacement(placement, 0) ||
+  hasExternalLeftPlacement(placement, 1);
 
-const isVerticalPlacement = (placement) =>
-  hasVerticalPlacement(placement) &&
-  !hasHorizontalPlacement(placement) &&
+const isExternalVerticalPlacement = (placement) =>
+  hasExternalVerticalPlacement(placement) &&
+  !hasExternalHorizontalPlacement(placement) &&
   !hasHoverPlacement(placement);
-const isHorizontalPlacement = (placement) =>
-  hasHorizontalPlacement(placement) &&
-  !hasVerticalPlacement(placement) &&
+const isExternalHorizontalPlacement = (placement) =>
+  hasExternalHorizontalPlacement(placement) &&
+  !hasExternalVerticalPlacement(placement) &&
   !hasHoverPlacement(placement);
-const isAbovePlacement = (placement) =>
+const isExternalAbovePlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ABOVE;
-const isBelowPlacement = (placement) =>
+const isExternalBelowPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_BELOW;
 const isHoverPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_HOVER;
-const isRightPlacement = (placement) =>
+const isExternalRightPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_RIGHT;
-const isLeftPlacement = (placement) =>
+const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
 const isHoverAndAbovePlacement = (placement) => {
   let placementArray = String(placement).split(',');
   return (
     placementArray.length === 2 &&
-    hasAbovePlacement(placement) &&
+    hasExternalAbovePlacement(placement) &&
     hasHoverPlacement(placement)
   );
 };
@@ -61,32 +63,32 @@ const isHoverAndBelowPlacement = (placement) => {
   let placementArray = String(placement).split(',');
   return (
     placementArray.length === 2 &&
-    hasBelowPlacement(placement) &&
+    hasExternalBelowPlacement(placement) &&
     hasHoverPlacement(placement)
   );
 };
 
 const isAboveOrBelowPlacement = (placement) =>
-  isBelowPlacement(placement) ||
-  isAbovePlacement(placement) ||
+  isExternalBelowPlacement(placement) ||
+  isExternalAbovePlacement(placement) ||
   isHoverAndAbovePlacement(placement) ||
   isHoverAndBelowPlacement(placement);
 export default PLACEMENTS;
 
 export {
-  hasAbovePlacement,
-  hasBelowPlacement,
+  hasExternalAbovePlacement,
+  hasExternalBelowPlacement,
   hasHoverPlacement,
-  hasRightPlacement,
-  hasLeftPlacement,
-  hasVerticalPlacement,
-  hasHorizontalPlacement,
-  isAbovePlacement,
-  isBelowPlacement,
+  hasExternalRightPlacement,
+  hasExternalLeftPlacement,
+  hasExternalVerticalPlacement,
+  hasExternalHorizontalPlacement,
+  isExternalAbovePlacement,
+  isExternalBelowPlacement,
   isHoverPlacement,
-  isRightPlacement,
-  isLeftPlacement,
-  isVerticalPlacement,
-  isHorizontalPlacement,
+  isExternalRightPlacement,
+  isExternalLeftPlacement,
+  isExternalVerticalPlacement,
+  isExternalHorizontalPlacement,
   isAboveOrBelowPlacement,
 };

@@ -930,7 +930,7 @@ class SlideshowView extends GalleryComponent {
       ? galleryHeight
       : galleryHeight - infoHeight;
     const infoSpace =
-      isSlideshow || GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)
+      isSlideshow || GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement)
         ? {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
             [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight,
