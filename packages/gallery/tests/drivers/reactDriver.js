@@ -323,6 +323,7 @@ class galleryDriver {
             ...this.actions,
             eventsListener: () => {},
           },
+          customComponents: {},
         });
       },
 
