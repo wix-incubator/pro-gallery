@@ -169,14 +169,14 @@ To replace the default rendering of these elements, pass to the customComponents
 ```
 <ProGallery
   {...otherProps}
-  customComponents: {
+  customComponents={{
       customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
       customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
       customSlideshowInfoRenderer={itemProps => <div>Slideshow Info #{itemProps.idx}</div>}
       customImageRenderer={imageProps => <img {...imageProps} />}
       customLoadMoreRenderer={galleryProps => <button>Load More</button>}
       customNavArrowsRenderer={direction => <button>{direction}</button>}
-  }
+  }}
 />
 ```
 ### Accessibility Aria role

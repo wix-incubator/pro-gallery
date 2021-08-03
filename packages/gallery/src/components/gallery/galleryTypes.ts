@@ -2,18 +2,10 @@ import { PhotoItem, VideoItem, TextItem } from '../../common/interfaces/Item';
 import { Container } from '../../common/interfaces/Container';
 import { EventsListener } from '../../common/interfaces/EventsListener';
 import { CreateMediaUrl } from '../../common/interfaces/CreateMediaUrl';
+import { CustomComponents } from '../../common/interfaces/CustomComponents';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
-
-export interface CustomComponents {
-  customHoverRenderer?: (any) => unknown;
-  customInfoRenderer?: (any) => unknown;
-  customSlideshowInfoRenderer?: (any) => unknown;
-  customNavArrowsRenderer?: (any) => unknown;
-  customImageRenderer?: (any) => unknown;
-  customLoadMoreRenderer?: (any) => unknown;
-}
 
 export interface GalleryProps {
   container: Container;
