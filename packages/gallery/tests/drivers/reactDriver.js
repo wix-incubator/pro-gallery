@@ -118,17 +118,18 @@ class galleryDriver {
       new Layouter(this.layoutParams)
     );
 
+    this.customComponents = {
+      customHoverRenderer: () => {},
+      customInfoRenderer: () => {},
+      customSlideshowInfoRenderer: () => {},
+    };
+
     this.galleryConfig = {
       container: this.get.container,
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions,
-    };
-
-    this.customComponents = {
-      customHoverRenderer: () => {},
-      customInfoRenderer: () => {},
-      customSlideshowInfoRenderer: () => {},
+      customComponents: this.customComponents,
     };
   }
 
