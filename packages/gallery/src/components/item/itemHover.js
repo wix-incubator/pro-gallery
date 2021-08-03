@@ -72,13 +72,12 @@ export default class ItemHover extends GalleryComponent {
     const { overlayPosition, overlaySize, overlaySizeType, overlayPadding } =
       styleParams;
     let { width, height, marginTop, marginLeft } = imageDimensions;
-    let style = { maxHeight: height, maxWidth: width };
+    let style = {};
     let overlayHeight =
       (overlaySizeType === 'PERCENT'
         ? height * (overlaySize / 100)
         : overlaySize) -
       2 * overlayPadding;
-
     let overlayWidth = width - 2 * overlayPadding;
     let marginRight = overlayPadding;
     let marginBottom = overlayPadding;
@@ -93,7 +92,6 @@ export default class ItemHover extends GalleryComponent {
         marginTop += height / 2 - overlayHeight / 2 - overlayPadding;
         break;
     }
-
     style = {
       width: overlayWidth,
       height: overlayHeight,
@@ -111,20 +109,34 @@ export default class ItemHover extends GalleryComponent {
       styleParams;
     let { width, height, marginTop, marginLeft } = imageDimensions;
     let style = {};
-    let overlayWidth =
-      (overlaySizeType === 'PERCENT'
-        ? width * (overlaySize / 100)
-        : overlaySize) -
-      2 * overlayPadding;
-    let normalizedWidth = (overlayWidth - 0) / (width - 0);
-    if (width > overlayWidth) {
-      overlayWidth = normalizedWidth;
-    }
+    let overlayWidth;
+    // let overlayWidth =
+    //   (overlaySizeType === 'PERCENT'
+    //     ? width * (overlaySize / 100)
+    //     : overlaySize) -
+    //   2 * overlayPadding;
     let overlayHeight = height - 2 * overlayPadding;
     let marginRight = overlayPadding;
     let marginBottom = overlayPadding;
     marginTop += overlayPadding;
     marginLeft += overlayPadding;
+    switch (overlaySizeType) {
+      case GALLERY_CONSTS.overlaySizeType.PERCENT:
+        if (overlaySize <= 100) {
+          overlayWidth = width * (overlaySize / 100);
+        } else {
+          overlayWidth = width;
+        }
+        break;
+      case GALLERY_CONSTS.overlaySizeType.PIXEL:
+        if (overlaySize < width) {
+          overlayWidth = overlaySize;
+        } else {
+          overlayWidth = width;
+        }
+        break;
+    }
+    overlayWidth += -2 * overlayPadding;
 
     switch (overlayPosition) {
       case GALLERY_CONSTS.overlayPositions.RIGHT:
@@ -134,7 +146,6 @@ export default class ItemHover extends GalleryComponent {
         marginLeft += width / 2 - overlayWidth / 2 - overlayPadding;
         break;
     }
-
     style = {
       width: overlayWidth,
       height: overlayHeight,
