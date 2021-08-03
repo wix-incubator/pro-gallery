@@ -125,9 +125,11 @@ class galleryDriver {
       actions: this.get.actions,
     };
 
-    this.customHoverRenderer = () => {};
-    this.customInfoRenderer = () => {};
-    this.customSlideshowInfoRenderer = () => {};
+    this.customComponents = {
+      customHoverRenderer: () => {},
+      customInfoRenderer: () => {},
+      customSlideshowInfoRenderer: () => {},
+    };
   }
 
   get get() {
@@ -248,9 +250,7 @@ class galleryDriver {
           totalItemsCount: this.items.length,
           layout,
           actions: this.actions,
-          customHoverRenderer: this.customHoverRenderer,
-          customInfoRenderer: this.customInfoRenderer,
-          customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
+          customComponents: this.customComponents,
         };
       },
 
@@ -265,9 +265,7 @@ class galleryDriver {
             container: this.container,
             styleParams: this.styleParams,
             actions: this.actions,
-            customHoverRenderer: this.customHoverRenderer,
-            customInfoRenderer: this.customInfoRenderer,
-            customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
+            customComponents: this.customComponents,
             itemsLoveData: {},
           };
         }
@@ -295,10 +293,7 @@ class galleryDriver {
           itemsLoveData: galleryViewProps.itemsLoveData,
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
-          customHoverRenderer: galleryViewProps.customHoverRenderer,
-          customInfoRenderer: galleryViewProps.customInfoRenderer,
-          customSlideshowInfoRenderer:
-            galleryViewProps.customSlideshowInfoRenderer,
+          customComponents: galleryViewProps.customComponents,
         };
       },
 
