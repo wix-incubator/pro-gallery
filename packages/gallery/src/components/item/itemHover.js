@@ -55,36 +55,52 @@ export default class ItemHover extends GalleryComponent {
   }
 
   getOverlayStyle() {
-    const { styleParams } = this.props;
-    const { overlayPosition } = styleParams;
+    const { styleParams, imageDimensions } = this.props;
+    let {
+      overlayPosition,
+      overlaySize: requiredOverlaySize,
+      overlaySizeType,
+      overlayPadding,
+    } = styleParams;
+    let { width, height, marginTop, marginLeft } = imageDimensions;
+    let style = {};
     const isHorizontal =
       overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
+    marginTop = overlayPadding;
+    marginLeft = overlayPadding;
+    let overlayHeight, overlayWidth, overlaySize;
     if (isHorizontal) {
-      return this.calculateHorizontalOverlayStyles();
+      overlaySize = Math.min(
+        width,
+        overlaySizeType === 'PERCENT'
+          ? width * (requiredOverlaySize / 100)
+          : requiredOverlaySize
+      );
+      overlaySize += -2 * overlayPadding;
+      overlaySize = Math.max(0, overlaySize);
+      overlayWidth = overlaySize;
+      overlayHeight = height - 2 * overlayPadding;
+    } else {
+      overlaySize = Math.min(
+        height,
+        overlaySizeType === 'PERCENT'
+          ? height * (requiredOverlaySize / 100)
+          : requiredOverlaySize
+      );
+      overlaySize += -2 * overlayPadding;
+      overlaySize = Math.max(0, overlaySize);
+      overlayHeight = overlaySize;
+      overlayWidth = width - 2 * overlayPadding;
     }
-    return this.calculateVerticalOverlayStyles();
-  }
-
-  calculateVerticalOverlayStyles() {
-    const { styleParams, imageDimensions } = this.props;
-    const { overlayPosition, overlaySize, overlaySizeType, overlayPadding } =
-      styleParams;
-    let { width, height, marginTop, marginLeft } = imageDimensions;
-    let style = {};
-    let overlayHeight =
-      (overlaySizeType === 'PERCENT'
-        ? height * (overlaySize / 100)
-        : overlaySize) -
-      2 * overlayPadding;
-    let overlayWidth = width - 2 * overlayPadding;
-    let marginRight = overlayPadding;
-    let marginBottom = overlayPadding;
-    marginTop += overlayPadding;
-    marginLeft += overlayPadding;
-
     switch (overlayPosition) {
+      case GALLERY_CONSTS.overlayPositions.RIGHT:
+        marginLeft += width - overlayWidth - 2 * overlayPadding;
+        break;
+      case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
+        marginLeft += width / 2 - overlayWidth / 2 - overlayPadding;
+        break;
       case GALLERY_CONSTS.overlayPositions.BOTTOM:
         marginTop += height - overlayHeight - 2 * overlayPadding;
         break;
@@ -97,62 +113,6 @@ export default class ItemHover extends GalleryComponent {
       height: overlayHeight,
       marginTop,
       marginLeft,
-      marginRight,
-      marginBottom,
-    };
-    return style;
-  }
-
-  calculateHorizontalOverlayStyles() {
-    const { styleParams, imageDimensions } = this.props;
-    const { overlayPosition, overlaySize, overlaySizeType, overlayPadding } =
-      styleParams;
-    let { width, height, marginTop, marginLeft } = imageDimensions;
-    let style = {};
-    let overlayWidth;
-    // let overlayWidth =
-    //   (overlaySizeType === 'PERCENT'
-    //     ? width * (overlaySize / 100)
-    //     : overlaySize) -
-    //   2 * overlayPadding;
-    let overlayHeight = height - 2 * overlayPadding;
-    let marginRight = overlayPadding;
-    let marginBottom = overlayPadding;
-    marginTop += overlayPadding;
-    marginLeft += overlayPadding;
-    switch (overlaySizeType) {
-      case GALLERY_CONSTS.overlaySizeType.PERCENT:
-        if (overlaySize <= 100) {
-          overlayWidth = width * (overlaySize / 100);
-        } else {
-          overlayWidth = width;
-        }
-        break;
-      case GALLERY_CONSTS.overlaySizeType.PIXEL:
-        if (overlaySize < width) {
-          overlayWidth = overlaySize;
-        } else {
-          overlayWidth = width;
-        }
-        break;
-    }
-    overlayWidth += -2 * overlayPadding;
-
-    switch (overlayPosition) {
-      case GALLERY_CONSTS.overlayPositions.RIGHT:
-        marginLeft += width - overlayWidth - 2 * overlayPadding;
-        break;
-      case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
-        marginLeft += width / 2 - overlayWidth / 2 - overlayPadding;
-        break;
-    }
-    style = {
-      width: overlayWidth,
-      height: overlayHeight,
-      marginTop,
-      marginLeft,
-      marginRight,
-      marginBottom,
     };
     return style;
   }
@@ -167,7 +127,6 @@ export default class ItemHover extends GalleryComponent {
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
         aria-hidden={true}
-        // style={imageDimensions}
         style={overlayStyle}
       >
         <div
