@@ -9,5 +9,5 @@ export default {
   options: PropTypes.object,
   eventsListener: PropTypes.func,
   totalItemsCount: PropTypes.number,
-  resizeMediaUrl: PropTypes.func,
+  createMediaUrl: PropTypes.func,
 };

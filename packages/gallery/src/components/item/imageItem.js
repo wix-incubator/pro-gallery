@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 
@@ -207,13 +207,9 @@ export default class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src = isSEOMode()
-        ? createUrl(
-            GALLERY_CONSTS.urlSizes.RESIZED,
-            GALLERY_CONSTS.urlTypes.SEO
-          )
-        : createUrl(
-            GALLERY_CONSTS.urlSizes.MULTI,
+      const src = 
+        createUrl(
+    GALLERY_CONSTS.urlSizes.MULTI,
             GALLERY_CONSTS.urlTypes.HIGH_RES
           );
 

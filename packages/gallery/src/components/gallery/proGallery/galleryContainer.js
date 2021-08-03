@@ -289,7 +289,7 @@ export class GalleryContainer extends React.Component {
     structure,
     container,
     id,
-    resizeMediaUrl,
+    createMediaUrl,
     isPrerenderMode,
     customImageRenderer,
   }) {
@@ -298,7 +298,7 @@ export class GalleryContainer extends React.Component {
     container = container || this.props.container;
     structure = structure || this.props.structure;
     id = id || this.props.id;
-    resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
+    createMediaUrl = createMediaUrl || this.props.createMediaUrl;
 
     if (typeof customImageRenderer === 'function') {
       ImageRenderer.customImageRenderer = customImageRenderer;
@@ -308,7 +308,7 @@ export class GalleryContainer extends React.Component {
       // TODO use same objects in the memory when the galleryItems are changed
       thumbnailSize: styles.thumbnailSize,
       sharpParams: styles.sharpParams,
-      resizeMediaUrl: resizeMediaUrl,
+      createMediaUrl,
     });
 
     // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
