@@ -55,6 +55,41 @@ import { createStyles as designedPresetStyles } from './designedPresetGallery';
 
 //#endregion Imports
 
+const assignByString = (Obj, string, value) => {
+  let _obj = { ...Obj };
+  let keyArr = string.split('_');
+  let assignedProperty = keyArr.pop();
+  let pointer = _obj;
+  keyArr.forEach((key) => {
+    if (!pointer[key]) pointer[key] = {};
+    pointer = pointer[key];
+  });
+  pointer[assignedProperty] = value;
+  return _obj;
+}
+
+const flattenObject = (ob) => {
+  var toReturn = {};
+
+  for (var i in ob) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (!ob.hasOwnProperty(i)) continue;
+
+    if (typeof ob[i] == 'object' && ob[i] !== null) {
+      var flatObject = flattenObject(ob[i]);
+      for (var x in flatObject) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (!flatObject.hasOwnProperty(x)) continue;
+
+        toReturn[i + '.' + x] = flatObject[x];
+      }
+    } else {
+      toReturn[i] = ob[i];
+    }
+  }
+  return toReturn;
+}
+
 const addPresetStyles = (styles) => {
   const galleryType = styles.galleryType;
   const galleryLayoutV1 = styles.galleryType;
@@ -162,4 +197,4 @@ const isInPreset = (galleryLayout, paramToCheck) => {
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 };
 
-export { addPresetStyles, NEW_PRESETS, getLayoutName, isInPreset };
+export { addPresetStyles, assignByString, flattenObject, NEW_PRESETS, getLayoutName, isInPreset };

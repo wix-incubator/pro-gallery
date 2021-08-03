@@ -7,13 +7,10 @@ export { default as coreStyles } from './common/coreStyles';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
-import assignByString from './core/helpers/assignByString';
-import flattenObject from './core/helpers/flattenObject';
-export { assignByString, flattenObject };
-// export default flattenObject
-// export moshe2 = flattenObject
 export { featureManager } from './core/helpers/versionsHelper';
 export { addPresetStyles } from './core/presets/presets';
+export { assignByString } from './core/presets/presets';
+export { flattenObject } from './core/presets/presets';
 export { NEW_PRESETS } from './core/presets/presets';
 export { getLayoutName } from './core/presets/presets';
 export { isInPreset } from './core/presets/presets';

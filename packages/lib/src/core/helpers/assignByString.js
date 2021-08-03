@@ -1,5 +1,4 @@
-export default assignByString;
-function assignByString(Obj, string, value) {
+const assignByString = (Obj, string, value) => {
   let _obj = { ...Obj };
   let keyArr = string.split('_');
   let assignedProperty = keyArr.pop();
@@ -11,3 +10,4 @@ function assignByString(Obj, string, value) {
   pointer[assignedProperty] = value;
   return _obj;
 }
+export {assignByString};
