@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "lerna bootstrap --ignore-prepublish",
+    "bootstrap": "lerna bootstrap --ignore-prepublish --hoist",
     "postinstall": "lerna bootstrap --hoist",
     "deprecatedPublish": "node scripts/publishPackages",
     "publishNewAlpha": "lerna publish prerelease --dist-tag next --yes",
