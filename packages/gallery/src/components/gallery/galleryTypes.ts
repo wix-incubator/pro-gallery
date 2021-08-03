@@ -1,4 +1,4 @@
-import { PhotoItem, VideoItem, TextItem } from '../../common/interfaces/Item';
+import { Item } from '../../common/interfaces/Item';
 import { Container } from '../../common/interfaces/Container';
 import { EventsListener } from '../../common/interfaces/EventsListener';
 import { CreateMediaUrl } from '../../common/interfaces/CreateMediaUrl';
@@ -8,7 +8,7 @@ type DeviceType = 'desktop' | 'mobile' | 'tablet';
 
 export interface GalleryProps {
   container: Container;
-  items: (PhotoItem | VideoItem | TextItem)[];
+  items: Item[];
   id?: string;
   totalItemsCount?: number;
   activeIndex?: number;

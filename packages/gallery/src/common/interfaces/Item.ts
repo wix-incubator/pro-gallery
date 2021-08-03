@@ -1,3 +1,5 @@
+export type Item = PhotoItem | VideoItem | TextItem;
+
 export interface PhotoItem {
   [key: string]: any;
 }
