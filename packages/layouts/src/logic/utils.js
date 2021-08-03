@@ -1,4 +1,3 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 class Utils {
   constructor() {
@@ -97,7 +96,7 @@ class Utils {
         rotatingGroupTypes: '',
         isVertical: true,
         minItemSize: 120,
-        scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+        scrollDirection: 0,
         targetItemSize: 500,
         collageDensity: 50,
         fixedColumns: 0,

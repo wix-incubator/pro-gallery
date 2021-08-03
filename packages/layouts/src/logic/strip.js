@@ -1,4 +1,3 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 export class Strip {
   constructor(config) {
@@ -77,7 +76,7 @@ export class Strip {
     const { galleryWidth } = this.container;
 
     let isStripSmallEnough;
-    if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    if (scrollDirection === 1) {
       isStripSmallEnough = false; //horizontal layout is one long strip
     } else {
       const withNewGroup =
