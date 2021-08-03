@@ -7,6 +7,7 @@ export { default as coreStyles } from './common/coreStyles';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
+export { assignByString, flattenObject } from './core/helpers/stylesHelper';
 export { featureManager } from './core/helpers/versionsHelper';
 export { addPresetStyles } from './core/presets/presets';
 export { NEW_PRESETS } from './core/presets/presets';

@@ -4,6 +4,8 @@ import {
   NEW_PRESETS,
   defaultStyles,
   galleryOptions,
+  flattenObject,
+  assignByString,
 } from 'pro-gallery-lib';
 
 const defaultStyleParams = defaultStyles;
@@ -65,16 +67,16 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
 export const getStyleParamsFromUrl = () => {
   try {
     let styleParams = window.location.search
-      .replace('?', '')
-      .split('&')
-      .map((styleParam) => styleParam.split('='))
-      .reduce(
-        (obj, [styleParam, value]) =>
-          Object.assign(obj, { [styleParam]: formatValue(value) }),
-        {}
+    .replace('?', '')
+    .split('&')
+    .map((styleParam) => styleParam.split('='))
+    .reduce(
+      (obj, [styleParam, value]) =>
+      Object.assign(obj, { [styleParam]: formatValue(value) }),
+      {}
       );
 
-    styleParams = addPresetStyles({ ...defaultStyleParams, ...styleParams });
+      styleParams = addPresetStyles({ ...defaultStyleParams, ...styleParams });
 
     const relevantStyleParams = Object.entries(styleParams).reduce(
       (obj, [styleParam, value]) =>
@@ -85,7 +87,10 @@ export const getStyleParamsFromUrl = () => {
     );
 
     // console.log(`[STYLE PARAMS - VALIDATION] getting styleParams from the url`, relevantStyleParams);
-    return relevantStyleParams;
+    return Object.entries(relevantStyleParams).reduce(
+      (obj, [styleParam, value]) =>
+      assignByString(obj,styleParam, value),{}
+    );
   } catch (e) {
     console.error('Cannot getStyleParamsFromUrl', e);
     return {};
@@ -93,11 +98,12 @@ export const getStyleParamsFromUrl = () => {
 };
 
 export const setStyleParamsInUrl = (styleParams) => {
+  const flatSP = flattenObject(styleParams);
   // console.log(`[STYLE PARAMS - VALIDATION] setting styleParams in the url`, styleParams);
-  const urlParams = Object.entries(styleParams)
+  const urlParams = Object.entries(flatSP)
     .reduce(
       (arr, [styleParam, value]) =>
-        isValidStyleParam(styleParam, value, styleParams)
+        isValidStyleParam(styleParam, value, flatSP)
           ? arr.concat(`${styleParam}=${value}`)
           : arr,
       []
