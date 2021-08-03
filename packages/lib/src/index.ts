@@ -9,7 +9,7 @@ export { ItemsHelper } from './core/helpers/itemsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
 import assignByString from './core/helpers/assignByString';
 import flattenObject from './core/helpers/flattenObject';
-export default { assignByString, flattenObject };
+export { assignByString, flattenObject };
 // export default flattenObject
 // export moshe2 = flattenObject
 export { featureManager } from './core/helpers/versionsHelper';

@@ -4,9 +4,10 @@ import {
   NEW_PRESETS,
   defaultStyles,
   galleryOptions,
-  flattenObject,
-  assignByString,
 } from 'pro-gallery-lib';
+import * as  lib from 'pro-gallery-lib'
+const assignByString = lib.assignByString
+const flattenObject = lib.flattenObject
 
 const defaultStyleParams = defaultStyles;
 Object.entries(galleryOptions).forEach(
