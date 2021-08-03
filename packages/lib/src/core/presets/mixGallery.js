@@ -26,7 +26,7 @@ const fixToMix = (styles) => {
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';
   presetStyles.fixedColumns = 1;
-  presetStyles.groupsPerStrip = 0;
+  presetStyles.layoutParams.numberOfGroupsPerRow = 0;
   presetStyles.placeGroupsLtr = false;
   presetStyles.rotatingCropRatios = '';
   return presetStyles;

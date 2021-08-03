@@ -1,4 +1,7 @@
 const styleParams = {
+  layoutParams: {
+    numberOfGroupsPerRow: 0,
+  },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
@@ -21,7 +24,6 @@ const styleParams = {
   smartCrop: false,
   rotatingCubeRatio: '',
   fixedColumns: 0,
-  groupsPerStrip: 0,
   imageMargin: 10,
   galleryMargin: 0,
   scatter: 0,

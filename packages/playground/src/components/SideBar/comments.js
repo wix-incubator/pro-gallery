@@ -19,7 +19,7 @@ const comment =
 'smartCrop - wixers\n'+
 'cubeRatio - wixers\n'+
 'fixedColumns - wixers\n'+
-'groupsPerStrip - wixers\n'+
+'numberOfGroupsPerRow - wixers\n'+
 'placeGroupsLtr - wixers\n'+
 'galleryType - check that all layout define this property\n',
 '--> Mobile: \n'+

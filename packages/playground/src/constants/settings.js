@@ -63,7 +63,7 @@ export const stylesBySection = {
   [SECTIONS.ADVANCED]: [
     'gridStyle',
     'fixedColumns',
-    'groupsPerStrip',
+    'numberOfGroupsPerRow',
     'placeGroupsLtr',
 
     'groupTypes',

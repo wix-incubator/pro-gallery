@@ -48,10 +48,12 @@ describe('groupSize - e2e', () => {
     //expect to have groups of 1 despite groupSize = 3 (because of collageDensity)
     expect(page).toMatchImageSnapshot();
   });
-  it('should have groups of 1 item (restricted by groupsPerStrip)', async () => {
+  it('should have groups of 1 item (restricted by numberOfGroupsPerRow)', async () => {
     await driver.navigate({
+      layoutParams: {
+        numberOfGroupsPerRow: 1,
+      },
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      groupsPerStrip: 1,
       gridStyle: 1,
       groupSize: 3,
     });

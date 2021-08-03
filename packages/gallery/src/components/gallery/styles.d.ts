@@ -8,5 +8,9 @@ export interface Item {
 }
 
 export interface StyleParams {
-  item: Item;
+  layoutParams: LayoutParams;
+  // item: Item;
+}
+export interface LayoutParams {
+  numberOfGroupsPerRow: number;
 }

@@ -9,7 +9,7 @@ export class Strip {
     this.isFullWidth = true;
 
     this.idx = config.idx;
-    this.groupsPerStrip = config.groupsPerStrip;
+    this.numberOfGroupsPerRow = config.numberOfGroupsPerRow;
     this.scrollDirection = config.scrollDirection;
     this.targetItemSize = config.targetItemSize;
     this.container = config.container;
@@ -33,7 +33,7 @@ export class Strip {
   }
 
   canRemainIncomplete() {
-    if (this.groupsPerStrip > 0) {
+    if (this.numberOfGroupsPerRow > 0) {
       return false;
     } else {
       return this.targetItemSize * 1.5 < this.height;
@@ -68,10 +68,10 @@ export class Strip {
       return false;
     }
 
-    const { groupsPerStrip, scrollDirection, targetItemSize } = this;
+    const { numberOfGroupsPerRow, scrollDirection, targetItemSize } = this;
 
-    if (groupsPerStrip > 0) {
-      return this.groups.length >= groupsPerStrip;
+    if (numberOfGroupsPerRow > 0) {
+      return this.groups.length >= numberOfGroupsPerRow;
     }
 
     const { galleryWidth } = this.container;

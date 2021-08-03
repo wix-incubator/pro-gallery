@@ -14,6 +14,9 @@ describe('defaultStyles', () => {
 
 function expectedStyles() {
   return {
+    layoutParams: {
+      numberOfGroupsPerRow: 0,
+    },
     isRTL: false,
     isVertical: false,
     gallerySize: 30,
@@ -33,7 +36,6 @@ function expectedStyles() {
     fixedColumns: 0,
     numberOfImagesPerRow: 3,
     numberOfImagesPerCol: 1,
-    groupsPerStrip: 0,
     imageMargin: 10,
     galleryMargin: 0,
     scatter: 0,

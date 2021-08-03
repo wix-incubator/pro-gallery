@@ -2,13 +2,15 @@ import GALLERY_CONSTS from './constants';
 import coreStyles from './coreStyles';
 
 const defaultStyles = Object.assign({}, coreStyles, {
+  layoutParams: {
+    numberOfGroupsPerRow: 0,
+  },
   gallerySize: 30,
   rotatingGroupTypes: '',
   cropOnlyFill: false,
   rotatingCropRatios: '',
   columnWidths: '',
   numberOfImagesPerCol: 1,
-  groupsPerStrip: 0,
   imageMargin: 10,
   scatter: 0,
   rotatingScatter: '',

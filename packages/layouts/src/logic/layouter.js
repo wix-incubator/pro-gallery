@@ -186,7 +186,7 @@ export default class Layouter {
               this.strip = new Strip({
                 idx: this.strips.length + 1,
                 container: this.container,
-                groupsPerStrip: this.styleParams.groupsPerStrip,
+                numberOfGroupsPerRow: this.styleParams.numberOfGroupsPerRow,
                 scrollDirection: this.styleParams.scrollDirection,
                 targetItemSize: this.targetItemSize,
               });
@@ -241,7 +241,7 @@ export default class Layouter {
       this.strip = new Strip({
         idx: 1,
         container: this.container,
-        groupsPerStrip: this.styleParams.groupsPerStrip,
+        numberOfGroupsPerRow: this.styleParams.numberOfGroupsPerRow,
         scrollDirection: this.styleParams.scrollDirection,
         targetItemSize: this.targetItemSize,
       });
@@ -382,7 +382,7 @@ export default class Layouter {
           this.strip = new Strip({
             idx: this.strip.idx + 1,
             container: this.container,
-            groupsPerStrip: this.styleParams.groupsPerStrip,
+            numberOfGroupsPerRow: this.styleParams.numberOfGroupsPerRow,
             scrollDirection: this.styleParams.scrollDirection,
             targetItemSize: this.targetItemSize,
           });
