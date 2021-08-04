@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "lerna bootstrap --hoist --strict",
+    "postinstall": "lerna bootstrap --force-local --hoist --strict",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
     "build": "lerna run build",
