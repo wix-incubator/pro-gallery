@@ -29,7 +29,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "pro-gallery-lib": "2.3.1"
+    "pro-gallery-lib": "3.1.37"
   },
   "peerDependencies": {
     "react": "^16.8.6",
