@@ -92,6 +92,7 @@ import useMaxDimensions from './useMaxDimensions';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
+import magnifyPercent from './magnifyPerecent';
 
 export default {
   itemClick,
@@ -188,6 +189,7 @@ export default {
   enableVideoPlaceholder,
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
+  magnifyPercent,
 };
 
 // TODO = add the options:

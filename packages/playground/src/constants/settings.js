@@ -108,6 +108,8 @@ export const stylesBySection = {
     'scrollSnap',
     'allowContextMenu',
     'pauseAutoSlideshowOnHover',
+    'itemClick',
+    'magnifyPercent',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
