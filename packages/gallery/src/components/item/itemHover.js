@@ -73,43 +73,42 @@ export default class ItemHover extends GalleryComponent {
     marginTop = overlayPadding;
     marginLeft = overlayPadding;
     let overlayHeight, overlayWidth, overlaySize;
-
     if (isHorizontal) {
+      width += -2 * overlayPadding;
       overlaySize = Math.min(
         width,
         overlaySizeType === 'PERCENT'
           ? width * (requiredOverlaySize / 100)
           : requiredOverlaySize
       );
-      overlaySize += -2 * overlayPadding;
       overlaySize = Math.max(0, overlaySize);
       overlayWidth = overlaySize;
       overlayHeight = height - 2 * overlayPadding;
     } else {
+      height += -2 * overlayPadding;
       overlaySize = Math.min(
         height,
         overlaySizeType === 'PERCENT'
           ? height * (requiredOverlaySize / 100)
           : requiredOverlaySize
       );
-      overlaySize += -2 * overlayPadding;
       overlaySize = Math.max(0, overlaySize);
       overlayHeight = overlaySize;
       overlayWidth = width - 2 * overlayPadding;
     }
-
+    console.log(overlaySize);
     switch (overlayPosition) {
       case GALLERY_CONSTS.overlayPositions.RIGHT:
-        marginLeft += width - overlayWidth - 2 * overlayPadding;
+        marginLeft += width - overlayWidth;
         break;
       case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
-        marginLeft += width / 2 - overlayWidth / 2 - overlayPadding;
+        marginLeft += width / 2 - overlayWidth / 2;
         break;
       case GALLERY_CONSTS.overlayPositions.BOTTOM:
-        marginTop += height - overlayHeight - 2 * overlayPadding;
+        marginTop += height - overlayHeight;
         break;
       case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
-        marginTop += height / 2 - overlayHeight / 2 - overlayPadding;
+        marginTop += height / 2 - overlayHeight / 2;
         break;
     }
     style = {
