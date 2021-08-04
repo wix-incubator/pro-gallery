@@ -1,10 +1,10 @@
-export interface CustomComponents {
-  customHoverRenderer?: (props: { [key: string]: any }) => unknown;
-  customInfoRenderer?: (props: { [key: string]: any }) => unknown;
-  customSlideshowInfoRenderer?: (props: { [key: string]: any }) => unknown;
-  customNavArrowsRenderer?: (direction: NavArrowDirection) => unknown;
-  customImageRenderer?: (props: { [key: string]: any }) => unknown;
-  customLoadMoreRenderer?: (props: { [key: string]: any }) => unknown;
-}
+import { ReactNode } from 'react';
 
-type NavArrowDirection = 'left' | 'right';
+export interface CustomComponents {
+  customHoverRenderer?: (props: { [key: string]: any }) => ReactNode;
+  customInfoRenderer?: (props: { [key: string]: any }) => ReactNode;
+  customSlideshowInfoRenderer?: (props: { [key: string]: any }) => ReactNode;
+  customNavArrowsRenderer?: (direction: 'left' | 'right') => ReactNode;
+  customImageRenderer?: (props: { [key: string]: any }) => ReactNode;
+  customLoadMoreRenderer?: (props: { [key: string]: any }) => ReactNode;
+}
