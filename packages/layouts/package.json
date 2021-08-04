@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "watch": "tsc -w",
-    "start": "tsc -w",
+    "start": "tsc -p tsconfig-esm.json -w",
     "build": "tsc && tsc -p tsconfig-esm.json",
     "test": "mocha --require ts-node/register test/*.spec.*",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
