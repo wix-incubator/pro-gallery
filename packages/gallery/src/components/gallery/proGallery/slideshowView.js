@@ -936,11 +936,13 @@ class SlideshowView extends GalleryComponent {
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
 
 
-    // Need to add a clause for when info < arrow size
-    
+    // arrows on info? True : False
+    const arrowsOnInfo = arrowsVerticalPosition === GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER;
+
     const shouldNotRenderNavArrows =
       this.props.isPrerenderMode ||
       !showArrows ||
+      isSlideshow && arrowsOnInfo && (slideshowInfoSize < navArrowsContainerHeight) ||
       this.props.galleryStructure.columns.some((column) => {
         const allRenderedGroups =
           column.groups.filter((group) => group.rendered) || [];

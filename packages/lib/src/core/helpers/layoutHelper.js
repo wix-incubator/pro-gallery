@@ -302,7 +302,7 @@ const addMarginsToSupportShadows = (styles) => {
 const centerArrowsWhenNeeded = (styles) => {
   let _styles = {...styles}
   if (!isVerticalPlacement(styles.titlePlacement, styles.isSlideshow)) {
-    // if text (info) placement is not above or below (w/o hover), arrows are gallery centered
+    // if text (info) placement is not above or below (w/o hover), arrows are gallery("item") centered
     _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
   }
   return _styles;
