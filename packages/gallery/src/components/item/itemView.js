@@ -22,6 +22,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
+import MagnifiedItem from './magnifiedItem';
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -1086,6 +1087,9 @@ class ItemView extends GalleryComponent {
               onClick={this.onItemWrapperClick}
             >
               {this.getItemInner()}
+              <MagnifiedItem
+                {...this.props}
+              />
             </div>
           )}
         </div>

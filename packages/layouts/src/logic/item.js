@@ -35,6 +35,7 @@ export class Item {
       this.smartCrop = styleParams.smartCrop;
       this.useMaxDimensions =
         styleParams.useMaxDimensions && this.itemType !== 'text';
+      this.magnifyPercent = styleParams.magnifyPercent;
     }
 
     this._groupOffset = {
@@ -550,6 +551,7 @@ export class Item {
       isPortrait: this.isPortrait,
       isLandscape: this.isLandscape,
       visibility: this.visibility,
+      magnifyPercent: this.magnifyPercent,
     };
   }
 }

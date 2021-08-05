@@ -74,6 +74,7 @@ class GalleryItem {
     this.group = scheme.group;
     this.orientation = scheme.orientation;
     this.visibility = scheme.visibility;
+    this.magnifyPercent = scheme.magnifyPercent;
   }
 
   renderProps(config) {
@@ -393,6 +394,19 @@ class GalleryItem {
       );
     }
     return this.urls.sample_url;
+  }
+
+  get magnified_url() {
+    if (!this.urls.magnified_url) {
+      this.urls.magnified_url = this.processedMediaUrl(
+        this.cubeType,
+        this.resizeWidth * this.magnifyPercent,
+        this.resizeHeight * this.magnifyPercent,
+        this.sharpParams,
+        true
+      );
+    }
+    return this.urls.magnified_url;
   }
 
   get preload_url() {

@@ -8,5 +8,5 @@ export default {
   isRelevant: (styleParams) =>
     styleParams.itemClick === GALLERY_CONSTS.itemClick.MAGNIFY,
   isRelevantDescription: 'Set the click action ("itemClick") to "MAGNIFY".',
-  default: 1,
+  default: 2,
 };

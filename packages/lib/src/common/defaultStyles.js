@@ -42,7 +42,7 @@ const defaultStyles = Object.assign({}, coreStyles, {
   slideTransition: GALLERY_CONSTS.slideTransition.ease,
   useMaxDimensions: false,
   enableVideoPlaceholder: true,
-  magnifyPercent: 1,
+  magnifyPercent: 2,
 });
 
 export default defaultStyles;

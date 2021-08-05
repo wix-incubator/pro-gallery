@@ -107,6 +107,6 @@ function expectedStyles() {
     enableVideoPlaceholder: true,
     autoSlideshowType: 'interval',
     autoSlideshowContinuousSpeed: 200,
-    magnifyPercent: 1,
+    magnifyPercent: 2,
   };
 }
