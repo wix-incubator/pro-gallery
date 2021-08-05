@@ -18,7 +18,7 @@ export interface GalleryProps {
   deviceType?: DeviceType;
   eventsListener?: EventsListener;
   createMediaUrl?: CreateMediaUrl;
-  scrollingElement?: ScrollingElement | HTMLElement | null;
+  scrollingElement?: ScrollingElement;
   isInDisplay?: boolean;
   [key: string]: any;
 }

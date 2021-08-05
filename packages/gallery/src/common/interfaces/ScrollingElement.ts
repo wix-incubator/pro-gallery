@@ -1,4 +1,6 @@
-export interface ScrollingElement {
+export type ScrollingElement = ScrollingObject | HTMLElement | null;
+
+export interface ScrollingObject {
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject
