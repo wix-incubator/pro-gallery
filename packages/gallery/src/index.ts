@@ -3,9 +3,11 @@ export { default as ProGalleryRenderer } from './components/gallery/rendererInde
 export { cssScrollHelper } from './components/helpers/cssScrollHelper';
 export { default as ItemView } from './components/item/itemView';
 
-export { PhotoItem, VideoItem, TextItem } from './common/interfaces/Item';
+export { Item, PhotoItem, VideoItem, TextItem } from './common/interfaces/Item';
 export { Container } from './common/interfaces/Container';
 export { EventsListener } from './common/interfaces/EventsListener';
+export { CreateMediaUrl } from './common/interfaces/CreateMediaUrl';
+export { CustomComponents } from './common/interfaces/CustomComponents';
 
 export { GALLERY_CONSTS } from 'pro-gallery-lib';
 export { addPresetStyles } from 'pro-gallery-lib';

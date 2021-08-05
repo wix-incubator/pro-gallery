@@ -50,6 +50,7 @@ import imagePlacementAnimations from './imagePlacementAnimations';
 import slideTransition from './slideTransition';
 import overlayPositions from './overlayPositions';
 import overlaySizeType from './overlaySizeType';
+import autoSlideshowTypes from './autoSlideshowTypes';
 
 export default {
   arrowsPosition,
@@ -104,4 +105,5 @@ export default {
   slideTransition,
   overlayPositions,
   overlaySizeType,
+  autoSlideshowTypes,
 };

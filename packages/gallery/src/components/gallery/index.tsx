@@ -56,9 +56,9 @@ export default class BaseGallery extends React.Component<
 
   isUsingCustomInfoElements() {
     return (
-      !!this.galleryProps.customHoverRenderer ||
-      !!this.galleryProps.customInfoRenderer ||
-      !!this.galleryProps.customSlideshowInfoRenderer
+      !!this.galleryProps.customComponents.customHoverRenderer ||
+      !!this.galleryProps.customComponents.customInfoRenderer ||
+      !!this.galleryProps.customComponents.customSlideshowInfoRenderer
     );
   }
 
@@ -76,6 +76,7 @@ export default class BaseGallery extends React.Component<
       ...otherProps,
       eventsListener: _eventsListener,
       id: props.id || 'default-dom-id',
+      customComponents: props.customComponents || {},
     };
     if (calledByConstructor) {
       // the blueprint will be initiated with the state

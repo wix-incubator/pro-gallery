@@ -94,6 +94,8 @@ import overlayPosition from './overlayPosition';
 import overlaySize from './overlaySize';
 import overlaySizeType from './overlaySizeType';
 import overlayPadding from './overlayPadding';
+import autoSlideshowType from './autoSlideshowType';
+import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 
 export default {
   itemClick,
@@ -192,6 +194,8 @@ export default {
   overlaySize,
   overlaySizeType,
   overlayPadding,
+  autoSlideshowType,
+  autoSlideshowContinuousSpeed,
 };
 
 // TODO = add the options:
