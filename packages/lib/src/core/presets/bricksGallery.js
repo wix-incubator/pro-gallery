@@ -2,6 +2,7 @@ import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
+import { assignByString } from '../helpers/stylesUtils';
 
 const fixToBricks = (styles) => {
   let presetStyles = { ...styles };
@@ -27,7 +28,7 @@ const fixToBricks = (styles) => {
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';
   presetStyles.fixedColumns = 1;
-  presetStyles.layoutParams.numberOfGroupsPerRow = 0;
+  assignByString(presetStyles, 'layoutParams_numberOfGroupsPerRow', 0);
   presetStyles.placeGroupsLtr = false;
   presetStyles.rotatingCropRatios = '0.707,1.414,1.414,0.707';
   return presetStyles;

@@ -2,6 +2,7 @@ import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
+import { assignByString } from '../helpers/stylesUtils';
 
 const fixToMix = (styles) => {
   let presetStyles = { ...styles };
@@ -26,7 +27,7 @@ const fixToMix = (styles) => {
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';
   presetStyles.fixedColumns = 1;
-  presetStyles.layoutParams.numberOfGroupsPerRow = 0;
+  assignByString(presetStyles, 'layoutParams_numberOfGroupsPerRow', 0);
   presetStyles.placeGroupsLtr = false;
   presetStyles.rotatingCropRatios = '';
   return presetStyles;
