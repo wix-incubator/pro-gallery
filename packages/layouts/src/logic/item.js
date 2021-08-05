@@ -35,7 +35,7 @@ export class Item {
       this.smartCrop = styleParams.smartCrop;
       this.useMaxDimensions =
         styleParams.useMaxDimensions && this.itemType !== 'text';
-      this.gridFitAlign = styleParams.gridFitAlign;
+      this.cubeFitPosition = styleParams.cubeFitPosition;
     }
 
     this._groupOffset = {
@@ -414,7 +414,7 @@ export class Item {
       fixBottom: (this.height - targetHeight) / 2,
     };
 
-    switch (this.gridFitAlign) {
+    switch (this.cubeFitPosition) {
       case 'TOP':
         fixVals.fixTop = 0;
         fixVals.fixBottom *= 2;

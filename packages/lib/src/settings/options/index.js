@@ -89,7 +89,7 @@ import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
-import gridFitAlign from './gridFitAlign';
+import cubeFitPosition from './cubeFitPosition';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
@@ -186,7 +186,7 @@ export default {
   shouldIndexDirectShareLinkInSEO,
   slideTransition,
   useMaxDimensions,
-  gridFitAlign,
+  cubeFitPosition,
   enableVideoPlaceholder,
   autoSlideshowType,
   autoSlideshowContinuousSpeed,

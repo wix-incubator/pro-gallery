@@ -53,7 +53,7 @@ export const stylesBySection = {
     'cubeImages',
     'cubeType',
     'cubeRatio',
-    'gridFitAlign',
+    'cubeFitPosition',
 
     'gallerySizeType',
     'gallerySize',
