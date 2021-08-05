@@ -7,6 +7,8 @@ import { CustomComponents } from '../../common/interfaces/CustomComponents';
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
 
+// dummy
+
 export interface GalleryProps {
   container: Container;
   items: Item[];
