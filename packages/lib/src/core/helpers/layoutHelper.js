@@ -4,7 +4,7 @@ import window from '../../common/window/windowWrapper';
 import PLACEMENTS, {
   hasExternalVerticalPlacement,
   hasHoverPlacement,
-  isAboveOrBelowPlacement,
+  isVerticalPlacement,
   hasExternalHorizontalPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
@@ -301,7 +301,7 @@ const addMarginsToSupportShadows = (styles) => {
 }
 const centerArrowsWhenNeeded = (styles) => {
   let _styles = {...styles}
-  if (!isAboveOrBelowPlacement(styles.titlePlacement) && !(styles.isSlideshow)) {
+  if (!isVerticalPlacement(styles.titlePlacement, styles.isSlideshow)) {
     // if text (info) placement is not above or below (w/o hover), arrows are gallery centered
     _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
   }

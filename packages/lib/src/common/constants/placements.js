@@ -51,28 +51,25 @@ const isExternalRightPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_RIGHT;
 const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
-const isHoverAndAbovePlacement = (placement) => {
+const isHoverAndExternalVerticalPlacement = (placement) => {
   let placementArray = String(placement).split(',');
   return (
     placementArray.length === 2 &&
-    hasExternalAbovePlacement(placement) &&
-    hasHoverPlacement(placement)
-  );
-};
-const isHoverAndBelowPlacement = (placement) => {
-  let placementArray = String(placement).split(',');
-  return (
-    placementArray.length === 2 &&
-    hasExternalBelowPlacement(placement) &&
+    hasExternalVerticalPlacement(placement) &&
     hasHoverPlacement(placement)
   );
 };
 
-const isAboveOrBelowPlacement = (placement) =>
-  isExternalBelowPlacement(placement) ||
-  isExternalAbovePlacement(placement) ||
-  isHoverAndAbovePlacement(placement) ||
-  isHoverAndBelowPlacement(placement);
+// Gets placement and isSlideshow from current style, returns whether there's a vertical info placement
+const isVerticalPlacement = (placement, isSlideshow) => {
+  return (
+    isExternalBelowPlacement(placement) ||
+    isExternalAbovePlacement(placement) ||
+    isHoverAndExternalVerticalPlacement(placement) ||
+    isSlideshow
+  );
+};
+
 export default PLACEMENTS;
 
 export {
@@ -90,5 +87,5 @@ export {
   isExternalLeftPlacement,
   isExternalVerticalPlacement,
   isExternalHorizontalPlacement,
-  isAboveOrBelowPlacement,
+  isVerticalPlacement,
 };

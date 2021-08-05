@@ -903,25 +903,6 @@ class SlideshowView extends GalleryComponent {
       showArrows,
     } = this.props.styleParams;
     const { hideLeftArrow, hideRightArrow } = this.state;
-    const shouldNotRenderNavArrows =
-      this.props.isPrerenderMode ||
-      !showArrows ||
-      this.props.galleryStructure.columns.some((column) => {
-        const allRenderedGroups =
-          column.groups.filter((group) => group.rendered) || [];
-        const allGroupsWidth = allRenderedGroups.reduce(
-          (sum, group) => sum + Math.max(0, group.width),
-          0
-        );
-        const isAllItemsFitsGalleryWidth =
-          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-          this.props.container.galleryWidth >= allGroupsWidth;
-        return isAllItemsFitsGalleryWidth;
-      });
-    //remove navBars if no scroll is needed and is column layout
-    if (shouldNotRenderNavArrows) {
-      return null;
-    }
 
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
     const { galleryHeight } = this.props.container;
@@ -945,7 +926,7 @@ class SlideshowView extends GalleryComponent {
       top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
         imageMargin / 4
       }px ${isSlideshow ? '-' : 
-      GALLERY_CONSTS.hasAbovePlacement(titlePlacement) ? '+' :
+      GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? '+' :
       '-'} ${infoSpace / 2}px)`,
     };
     const arrowsPos =
@@ -953,6 +934,30 @@ class SlideshowView extends GalleryComponent {
       arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
+
+
+    // Need to add a clause for when info < arrow size
+    
+    const shouldNotRenderNavArrows =
+      this.props.isPrerenderMode ||
+      !showArrows ||
+      this.props.galleryStructure.columns.some((column) => {
+        const allRenderedGroups =
+          column.groups.filter((group) => group.rendered) || [];
+        const allGroupsWidth = allRenderedGroups.reduce(
+          (sum, group) => sum + Math.max(0, group.width),
+          0
+        );
+        const isAllItemsFitsGalleryWidth =
+          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+          this.props.container.galleryWidth >= allGroupsWidth;
+        return isAllItemsFitsGalleryWidth;
+      });
+      
+      //remove navBars if no scroll is needed and is column layout
+      if (shouldNotRenderNavArrows) {
+        return null;
+      }
     // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
