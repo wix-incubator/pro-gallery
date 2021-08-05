@@ -56,6 +56,8 @@ const coreStyles = {
   scrollDirection: 0,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   jsonStyleParams: '',
+  autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
+  autoSlideshowContinuousSpeed: 200,
   //duplicated from lib
 };
 

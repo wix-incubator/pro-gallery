@@ -386,7 +386,8 @@ export class GalleryContainer extends React.Component {
     fixedScroll,
     isManual,
     durationInMS = 0,
-    scrollMarginCorrection
+    scrollMarginCorrection,
+    isContinuousScrolling = false,
   ) {
     if (itemIdx >= 0) {
       const scrollingElement = this._scrollingElement;
@@ -408,6 +409,8 @@ export class GalleryContainer extends React.Component {
           horizontalElement,
           durationInMS,
           slideTransition: this.state.styles.slideTransition,
+          isContinuousScrolling,
+          autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
         };
         return scrollToItemImp(scrollParams);
       } catch (e) {
@@ -437,7 +440,8 @@ export class GalleryContainer extends React.Component {
     fixedScroll,
     isManual,
     durationInMS = 0,
-    scrollMarginCorrection
+    scrollMarginCorrection,
+    isContinuousScrolling = false,
   ) {
     if (groupIdx >= 0) {
       const scrollingElement = this._scrollingElement;
@@ -459,6 +463,8 @@ export class GalleryContainer extends React.Component {
           horizontalElement,
           durationInMS,
           slideTransition: this.state.styles.slideTransition,
+          isContinuousScrolling,
+          autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {
