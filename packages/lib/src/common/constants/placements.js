@@ -18,6 +18,8 @@ const hasExternalBelowPlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_BELOW) >= 0 ||
   (idx % 2 === 1 &&
     String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0);
+const hasExternalVerticalAlternatePlacement = (placement) =>
+  String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0;
 const hasExternalRightPlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_RIGHT) >= 0 ||
   (idx % 2 === 0 &&
@@ -75,6 +77,7 @@ export default PLACEMENTS;
 export {
   hasExternalAbovePlacement,
   hasExternalBelowPlacement,
+  hasExternalVerticalAlternatePlacement,
   hasHoverPlacement,
   hasExternalRightPlacement,
   hasExternalLeftPlacement,

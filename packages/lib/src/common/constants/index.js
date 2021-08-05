@@ -23,6 +23,7 @@ import overlayAnimations from './overlayAnimations';
 import placements, {
   hasExternalAbovePlacement,
   hasExternalBelowPlacement,
+  hasExternalVerticalAlternatePlacement,
   hasHoverPlacement,
   hasExternalRightPlacement,
   hasExternalLeftPlacement,
@@ -76,6 +77,7 @@ export default {
   placements,
   hasExternalAbovePlacement,
   hasExternalBelowPlacement,
+  hasExternalVerticalAlternatePlacement,
   hasHoverPlacement,
   hasExternalRightPlacement,
   hasExternalLeftPlacement,
