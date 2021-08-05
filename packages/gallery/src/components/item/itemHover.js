@@ -64,13 +64,13 @@ export default class ItemHover extends GalleryComponent {
     } = styleParams;
     let { width, height } = imageDimensions;
     let style = {};
-    let margin = overlayPadding;
-
+    let overlayHeight, overlayWidth, overlaySize;
+    const margin = overlayPadding;
     const isHorizontal =
       overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
-    let overlayHeight, overlayWidth, overlaySize;
+
     if (isHorizontal) {
       width += -2 * overlayPadding;
       overlaySize = Math.min(
@@ -94,7 +94,6 @@ export default class ItemHover extends GalleryComponent {
       overlayHeight = overlaySize;
       overlayWidth = width - 2 * overlayPadding;
     }
-    console.log(overlaySize);
     // switch (overlayPosition) {
     //   case GALLERY_CONSTS.overlayPositions.RIGHT:
     //     // marginLeft += width - overlayWidth;
@@ -118,7 +117,7 @@ export default class ItemHover extends GalleryComponent {
     return style;
   }
 
-  getStyleByFlex() {
+  getOverlayPositionByFlex() {
     const { styleParams } = this.props;
     const { overlayPosition } = styleParams;
     let style = {
@@ -159,13 +158,13 @@ export default class ItemHover extends GalleryComponent {
     const { actions, idx, renderCustomInfo } = this.props;
     const hoverClass = this.getHoverClass();
     const overlayStyle = this.getOverlayStyle();
-    const styleByFlex = this.getStyleByFlex();
+    const overlayPositionCalc = this.getOverlayPositionByFlex();
     return (
       <div
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
         aria-hidden={true}
-        style={styleByFlex}
+        style={overlayPositionCalc}
         // style={overlayStyle}
       >
         <div
