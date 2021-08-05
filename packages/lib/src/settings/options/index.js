@@ -90,6 +90,8 @@ import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
+import autoSlideshowType from './autoSlideshowType';
+import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 
 export default {
   itemClick,
@@ -184,6 +186,8 @@ export default {
   slideTransition,
   useMaxDimensions,
   enableVideoPlaceholder,
+  autoSlideshowType,
+  autoSlideshowContinuousSpeed,
 };
 
 // TODO = add the options:

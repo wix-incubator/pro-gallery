@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { Item } from './item.js';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 const GROUP_TYPES_BY_RATIOS_V = {
   lll: '1,2h',
@@ -126,7 +125,7 @@ export class Group {
   round() {
     //round all sizes to full pixels
     
-    if (this.isLastGroup && this.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    if (this.isLastGroup && this.scrollDirection === 0) {
       this.width = this.stripWidth - this.left;
     } else {
       this.width = Math.round(this.width);
