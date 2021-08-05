@@ -62,16 +62,14 @@ export default class ItemHover extends GalleryComponent {
       overlaySizeType,
       overlayPadding,
     } = styleParams;
-    let { width, height, marginTop, marginLeft } = imageDimensions;
+    let { width, height } = imageDimensions;
     let style = {};
+    let margin = overlayPadding;
 
     const isHorizontal =
       overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
-
-    marginTop = overlayPadding;
-    marginLeft = overlayPadding;
     let overlayHeight, overlayWidth, overlaySize;
     if (isHorizontal) {
       width += -2 * overlayPadding;
@@ -97,26 +95,63 @@ export default class ItemHover extends GalleryComponent {
       overlayWidth = width - 2 * overlayPadding;
     }
     console.log(overlaySize);
-    switch (overlayPosition) {
-      case GALLERY_CONSTS.overlayPositions.RIGHT:
-        marginLeft += width - overlayWidth;
-        break;
-      case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
-        marginLeft += width / 2 - overlayWidth / 2;
-        break;
-      case GALLERY_CONSTS.overlayPositions.BOTTOM:
-        marginTop += height - overlayHeight;
-        break;
-      case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
-        marginTop += height / 2 - overlayHeight / 2;
-        break;
-    }
+    // switch (overlayPosition) {
+    //   case GALLERY_CONSTS.overlayPositions.RIGHT:
+    //     // marginLeft += width - overlayWidth;
+    //     break;
+    //   case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
+    //     // marginLeft += width / 2 - overlayWidth / 2;
+    //     break;
+    //   case GALLERY_CONSTS.overlayPositions.BOTTOM:
+    //     // marginTop += height - overlayHeight;
+    //     break;
+    //   case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
+    //     // marginTop += height / 2 - overlayHeight / 2;
+    //     break;
+    // }
     style = {
       width: overlayWidth,
       height: overlayHeight,
-      marginTop,
-      marginLeft,
+      margin,
+      position: 'relative',
     };
+    return style;
+  }
+
+  getStyleByFlex() {
+    const { styleParams } = this.props;
+    const { overlayPosition } = styleParams;
+    let style = {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+    };
+    switch (overlayPosition) {
+      case GALLERY_CONSTS.overlayPositions.RIGHT:
+        style = {
+          ...style,
+          justifyContent: 'flex-end',
+        };
+        break;
+      case GALLERY_CONSTS.overlayPositions.BOTTOM:
+        style = {
+          ...style,
+          alignItems: 'flex-end',
+        };
+        break;
+      case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
+        style = {
+          ...style,
+          justifyContent: 'center',
+        };
+        break;
+      case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
+        style = {
+          ...style,
+          alignItems: 'center',
+        };
+        break;
+    }
     return style;
   }
 
@@ -124,18 +159,21 @@ export default class ItemHover extends GalleryComponent {
     const { actions, idx, renderCustomInfo } = this.props;
     const hoverClass = this.getHoverClass();
     const overlayStyle = this.getOverlayStyle();
+    const styleByFlex = this.getStyleByFlex();
     return (
       <div
-        className={hoverClass}
         key={'item-hover-' + idx}
         data-hook={'item-hover-' + idx}
         aria-hidden={true}
-        style={overlayStyle}
+        style={styleByFlex}
+        // style={overlayStyle}
       >
         <div
-          style={{ height: '100%' }}
+          className={hoverClass}
+          // style={{ height: '100%' }}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
+          style={overlayStyle}
         >
           {this.shouldRenderHoverInnerIfExist() && renderCustomInfo ? (
             <div className="gallery-item-hover-inner">{renderCustomInfo()}</div>
