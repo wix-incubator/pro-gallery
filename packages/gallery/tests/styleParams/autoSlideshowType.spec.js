@@ -4,7 +4,7 @@ import SlideshowView from '../../src/components/gallery/proGallery/slideshowView
 import GalleryDriver from '../drivers/reactDriver';
 import sinon from 'sinon';
 
-describe('styleParam - autoSlideShowInterval', () => {
+describe('styleParam - autoSlideshowType', () => {
   let driver;
   let galleryViewProps;
   let clock;
@@ -22,7 +22,7 @@ describe('styleParam - autoSlideShowInterval', () => {
   afterEach(() => {
     clock.restore();
   });
-  it('startAutoSlideshow is called if needed', () => {
+  it('Should call "next" with the correct value when auto autoSlideshowType set to "INTERVAL"', () => {
     Object.assign(initialProps.styleParams, {
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
@@ -33,11 +33,24 @@ describe('styleParam - autoSlideShowInterval', () => {
     const stub = sinon.stub(SlideshowView.prototype, 'next');
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
     driver.mount(SlideshowView, galleryViewProps);
-    expect(stub.called).to.equal(false);
-    clock.tick(900);
-    expect(stub.called).to.equal(false);
-    clock.tick(300);
-    expect(stub.called).to.equal(true);
+    clock.tick(1100);
+    expect(stub.getCall(0).args[0].isContinuousScrolling).to.equal(undefined);
+    stub.restore();
+    viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
+  });
+
+  it('Should call "next" with the correct value when auto autoSlideshowType set to "CONTINUOUS"', () => {
+    Object.assign(initialProps.styleParams, {
+      isAutoSlideshow: true,
+      autoSlideshowContinuousSpeed: 200,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS,
+      galleryLayout: 4,
+    });
+    galleryViewProps = driver.props.galleryView(initialProps);
+    const stub = sinon.stub(SlideshowView.prototype, 'next');
+    viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.PREVIEW);
+    driver.mount(SlideshowView, galleryViewProps);
+    expect(stub.getCall(0).args[0].isContinuousScrolling).to.equal(true);
     stub.restore();
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
   });

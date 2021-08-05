@@ -5,7 +5,6 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 export default class Layouter {
   constructor(layoutParams) {
@@ -135,7 +134,7 @@ export default class Layouter {
           });
         } else {
           //---------------------| STRIPS GALLERY |----------------------//
-          if (this.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+          if (this.scrollDirection === 1) {
             //remove items from the last group:
             const lastGroups = this.groups.slice(-1);
             lastGroups.forEach((group) => {
@@ -402,7 +401,7 @@ export default class Layouter {
         this.strip.addGroup(this.group);
 
         if (this.isLastImage && this.strip.hasGroups) {
-          if (this.styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+          if (this.styleParams.scrollDirection === 1) {
             this.strip.height =
               this.container.galleryHeight +
               (this.styleParams.imageMargin / 2 -

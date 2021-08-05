@@ -114,10 +114,10 @@ const container = {
   scrollBase: 0,
 };
 
-const customRenderers = {
+const customComponents = {
   customHoverRenderer: () => {},
   customInfoRenderer: () => {},
   customSlideshowInfoRenderer: () => {},
 };
 
-export { container, styleParams, customRenderers };
+export { container, styleParams, customComponents };

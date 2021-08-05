@@ -1,5 +1,3 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
-
 class Utils {
   constructor() {
     this._hash2int = {};
@@ -97,7 +95,7 @@ class Utils {
         rotatingGroupTypes: '',
         isVertical: true,
         minItemSize: 120,
-        scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+        scrollDirection: 0,
         targetItemSize: 500,
         collageDensity: 50,
         fixedColumns: 0,
@@ -231,7 +229,7 @@ class Utils {
     }
     if (
       styleParams.externalInfoHeight >= 0 &&
-      styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+      styleParams.scrollDirection === 1
     ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }
