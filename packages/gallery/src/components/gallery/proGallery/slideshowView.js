@@ -879,7 +879,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   getArrowsRenderData() {
-    const { customNavArrowsRenderer } = this.props;
+    const { customNavArrowsRenderer } = this.props.customComponents;
     const { arrowsSize } = this.props.styleParams;
     if (customNavArrowsRenderer) {
       return {
@@ -1050,9 +1050,7 @@ class SlideshowView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
-      customHoverRenderer: this.props.customHoverRenderer,
-      customInfoRenderer: this.props.customInfoRenderer,
-      customSlideshowInfoRenderer: this.props.customSlideshowInfoRenderer,
+      customComponents: this.props.customComponents,
       noFollowForSEO: this.props.noFollowForSEO,
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,

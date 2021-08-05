@@ -130,14 +130,16 @@ The most important events are:
 
 The full list gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/lib/src/common/constants/events.js)
 
-### Custom Renderers
+### Custom Components
 The Gallery supports custom renderers both for the Hover Element (appears when hoveing over an item) and the Info Element (appears below / above the item).
 To replace the default rendering of these element, pass a function that will receive the item's props and should return a JSX element.
 for example:
 ```
 <ProGallery
   {...otherProps}
-  customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
-  customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+  customComponents: {
+    customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
+    customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+  }
 />
 ```
