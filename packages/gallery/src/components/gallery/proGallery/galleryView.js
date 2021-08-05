@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { window, utils } from 'pro-gallery-lib';
+import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { GalleryComponent } from '../../galleryComponent';
@@ -17,7 +17,7 @@ class GalleryView extends GalleryComponent {
     this.id = Date.now() + '|' + Math.floor(Math.random() * 10000);
 
     this.state = {
-      currentIdx: 0,
+      activeIndex: 0,
     };
   }
 
@@ -47,7 +47,7 @@ class GalleryView extends GalleryComponent {
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
-          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.currentIdx){
+          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.activeIndex){
             // If we are on the last item in the gallery and we pressed the down arrow
             // we want to move the focus to the out0fGallery element
             e.stopPropagation();
@@ -76,7 +76,7 @@ class GalleryView extends GalleryComponent {
         e.preventDefault();
         e.stopPropagation();
         utils.setStateAndLog(this, 'Set Gallery Current Item', {
-          currentIdx: newIdx,
+          activeIndex: newIdx,
         });
         return false;
       }
@@ -112,7 +112,7 @@ class GalleryView extends GalleryComponent {
           this,
           'Focus on Last Gallery Item',
           {
-            currentIdx: lastItemIdx + 1,
+            activeIndex: lastItemIdx + 1,
           },
           () => {
             this.props.actions.toggleLoadMoreItems();
@@ -165,7 +165,10 @@ class GalleryView extends GalleryComponent {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles ' +
-          (styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') +
+          (styleParams.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.HORIZONTAL
+            ? ' one-row slider hide-scrollbars '
+            : '') +
           (styleParams.isAccessible ? ' accessible ' : '') +
           (styleParams.isRTL ? ' rtl ' : ' ltr ')
         }
@@ -201,10 +204,9 @@ class GalleryView extends GalleryComponent {
       styleParams: this.props.styleParams,
       watermark: this.props.watermark,
       settings: this.props.settings,
-      currentIdx: this.state.currentIdx,
-      customHoverRenderer: this.props.customHoverRenderer,
-      customInfoRenderer: this.props.customInfoRenderer,
-      domId: this.props.domId,
+      activeIndex: this.state.activeIndex,
+      customComponents: this.props.customComponents,
+      galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
@@ -232,10 +234,10 @@ class GalleryView extends GalleryComponent {
   }
 
   createShowMoreButton() {
-    if (typeof this.props.customLoadMoreRenderer === 'function') {
+    if (typeof this.props.customComponents.customLoadMoreRenderer === 'function') {
       return (
         <div onClick={this.showMoreItems}>
-          {this.props.customLoadMoreRenderer(this.props)}
+          {this.props.customComponents.customLoadMoreRenderer(this.props)}
         </div>
       );
     }
@@ -257,7 +259,7 @@ class GalleryView extends GalleryComponent {
         >
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
-            id={'show-more-' + this.props.domId}
+            id={'show-more-' + this.props.id}
             className="show-more"
             onClick={this.showMoreItems}
             onMouseDown={(e) => e.preventDefault()}

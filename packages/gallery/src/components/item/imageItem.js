@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 
@@ -39,7 +39,7 @@ export default class ImageItem extends GalleryComponent {
   }
 
   getImageContainerClassNames() {
-    const { styleParams } = this.props;
+    const { styleParams, isTransparent } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
@@ -51,7 +51,7 @@ export default class ImageItem extends GalleryComponent {
       styleParams.cubeImages && styleParams.cubeType === 'fit'
         ? 'grid-fit'
         : '',
-      styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR
+      styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR && !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
@@ -125,6 +125,7 @@ export default class ImageItem extends GalleryComponent {
       settings = {},
       styleParams,
       gotFirstScrollEvent,
+      isTransparent
     } = this.props;
     const { isHighResImageLoaded } = this.state;
     const imageProps =
@@ -154,7 +155,7 @@ export default class ImageItem extends GalleryComponent {
           }
         : {};
 
-      if (!isHighResImageLoaded && gotFirstScrollEvent) {
+      if (!isHighResImageLoaded && gotFirstScrollEvent && !isTransparent) {
         let preload = null;
         const preloadProps = {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',
@@ -206,13 +207,9 @@ export default class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src = isSEOMode()
-        ? createUrl(
-            GALLERY_CONSTS.urlSizes.RESIZED,
-            GALLERY_CONSTS.urlTypes.SEO
-          )
-        : createUrl(
-            GALLERY_CONSTS.urlSizes.MULTI,
+      const src = 
+        createUrl(
+    GALLERY_CONSTS.urlSizes.MULTI,
             GALLERY_CONSTS.urlTypes.HIGH_RES
           );
 

@@ -101,7 +101,9 @@ export const stylesBySection = {
     'scrollDuration',
     'slideshowLoop',
     'isAutoSlideshow',
+    'autoSlideshowType',
     'autoSlideshowInterval',
+    'autoSlideshowContinuousSpeed',
     'playButtonForAutoSlideShow',
     'scrollSnap',
     'allowContextMenu',
@@ -161,6 +163,7 @@ export const stylesBySection = {
     'videoSpeed',
     'videoSound',
     'videoLoop',
+    'enableVideoPlaceholder',
   ],
 };
 

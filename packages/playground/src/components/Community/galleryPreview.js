@@ -3,7 +3,7 @@ import React from 'react';
 import { ProGallery } from 'pro-gallery';
 import { testImages } from '../App/images';
 
-import { resizeMediaUrl } from '../../utils/itemResizer';
+import { createMediaUrl } from '../../utils/itemResizer';
 
 export const GalleryPreview = ({item}) => {
 
@@ -21,7 +21,7 @@ export const GalleryPreview = ({item}) => {
                 items={(window.playgroundItems || testImages).slice(0, 20)}
                 options={item.options}
                 container={{ width: 736, height: 700 }}
-                resizeMediaUrl={resizeMediaUrl}
+                createMediaUrl={createMediaUrl}
             ></ProGallery>
         </div>
     )

@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customRenderers,
+  customComponents,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - textBoxWidth', () => {
@@ -14,7 +14,7 @@ describe('styleParam - textBoxWidth', () => {
     container,
     items: images2,
     styles: styleParams,
-    ...customRenderers,
+    customComponents,
   };
 
   beforeEach(() => {
@@ -25,7 +25,6 @@ describe('styleParam - textBoxWidth', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       calculateTextBoxWidthMode:
         GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,

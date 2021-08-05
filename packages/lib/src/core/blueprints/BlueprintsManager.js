@@ -18,7 +18,7 @@ export default class BlueprintsManager {
     this.api = config.api;
     this.currentState.totalItemsCount =
       (config && config.totalItemsCount) || this.currentState.totalItemsCount;
-    viewModeWrapper.setFormFactor(config.formFactor);
+    viewModeWrapper.setDeviceType(config.deviceType);
   }
 
   async createBlueprint(params = {}) {
@@ -150,42 +150,42 @@ export default class BlueprintsManager {
 
   // ------------------ Get all the needed raw data ---------------------------- //
   async completeParams(params) {
-    let { dimensions, items, styles, domId } =
+    let { container, items, styles, id } =
       this.alignParamNamingOptions(params);
-    dimensions = await this.fetchDimensionsIfNeeded(dimensions);
+    container = await this.fetchContainerIfNeeded(container);
     items = await this.fetchItemsIfNeeded(items);
     styles = await this.fetchStylesIfNeeded(styles); // can be async... TODO
-    return { dimensions, items, styles, domId };
+
+    return { container, items, styles, id };
   }
 
   alignParamNamingOptions(params) {
-    let { dimensions, container, items, styles, styleParams, options, domId } =
+    let { container, items, styles, styleParams, options, id } =
       params || {};
 
     styles = { ...options, ...styles, ...styleParams };
-    dimensions = { ...dimensions, ...container };
 
-    return { dimensions, items, styles, domId };
+    return { container, items, styles, id };
   }
 
-  async fetchDimensionsIfNeeded(dimensions) {
-    const shouldFetchDimensions = (_dimensions) => {
+  async fetchContainerIfNeeded(container) {
+    const shouldFetchContainer = (_container) => {
       let should = true;
-      if (_dimensions && Object.keys(_dimensions).length > 0) {
+      if (_container && Object.keys(_container).length > 0) {
         should = false;
       }
 
       return should;
     };
 
-    if (shouldFetchDimensions(dimensions)) {
+    if (shouldFetchContainer(container)) {
       // dimensions = {yonatanFakeDimensions: true, width: "", height: ""} // TODO - is there something here???
-      dimensions =
-        (this.api.fetchDimensions && (await this.api.fetchDimensions())) ||
-        this.currentState.dimensions;
+      container =
+        (this.api.fetchContainer && (await this.api.fetchContainer())) ||
+        this.currentState.container;
     }
 
-    return dimensions;
+    return container;
   }
 
   async fetchItemsIfNeeded(items) {
@@ -233,7 +233,7 @@ export default class BlueprintsManager {
   }
 
   updateLastParamsIfNeeded(
-    { items, dimensions, styles },
+    { items, container, styles },
     changedParams,
     blueprintCreated
   ) {
@@ -241,9 +241,9 @@ export default class BlueprintsManager {
       this.currentState.items = changedParams.itemsChanged
         ? items
         : this.currentState.items;
-      this.currentState.dimensions = changedParams.containerChanged
-        ? { ...dimensions }
-        : this.currentState.dimensions;
+      this.currentState.container = changedParams.containerChanged
+        ? { ...container }
+        : this.currentState.container;
       this.currentState.styles = changedParams.stylesChanged
         ? { ...styles }
         : this.currentState.styles;

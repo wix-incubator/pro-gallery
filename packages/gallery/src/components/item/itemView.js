@@ -286,7 +286,7 @@ class ItemView extends GalleryComponent {
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
-        this.props.customHoverRenderer &&
+        this.props.customComponents.customHoverRenderer &&
         GALLERY_CONSTS.hasHoverPlacement(titlePlacement) &&
         hoveringBehaviour !== GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW &&
         isNewMobileSettings &&
@@ -347,7 +347,7 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getItemHover(imageDimensions) {
-    const { customHoverRenderer, ...props } = this.props;
+    const { customComponents, ...props } = this.props;
     const shouldHover = this.shouldHover();
     return (
       shouldHover && (
@@ -362,8 +362,8 @@ class ItemView extends GalleryComponent {
             handleItemMouseUp: this.handleItemMouseUp,
           }}
           renderCustomInfo={
-            customHoverRenderer
-              ? () => customHoverRenderer(this.getCustomInfoRendererProps())
+            customComponents.customHoverRenderer
+              ? () => customComponents.customHoverRenderer(this.getCustomInfoRendererProps())
               : null
           }
         ></ItemHover>
@@ -387,6 +387,7 @@ class ItemView extends GalleryComponent {
       'createUrl',
       'settings',
       'isPrerenderMode',
+      'isTransparent'
     ]);
 
     return (
@@ -408,7 +409,7 @@ class ItemView extends GalleryComponent {
     return (
       <VideoItemWrapper
         {...this.props}
-        playing={this.props.idx === this.props.playingVideoIdx}
+        shouldPlay={this.props.idx === this.props.playingVideoIdx}
         key={'video' + this.props.idx}
         hover={itemHover}
         imageDimensions={imageDimensions}
@@ -481,7 +482,7 @@ class ItemView extends GalleryComponent {
     }
 
     if (styleParams.isSlideshow) {
-      const { customSlideshowInfoRenderer } = this.props;
+      const { customSlideshowInfoRenderer } = this.props.customComponents;
       const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
@@ -586,8 +587,8 @@ class ItemView extends GalleryComponent {
   }
 
   getExternalInfoElement(placement, elementName) {
-    const { styleParams, customInfoRenderer, style } = this.props;
-    if (!customInfoRenderer) {
+    const { styleParams, customComponents, style } = this.props;
+    if (!customComponents.customInfoRenderer) {
       return null;
     }
     let info = null;
@@ -598,7 +599,7 @@ class ItemView extends GalleryComponent {
     const infoWidth =
       style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemExternalInfo = customInfoRenderer(
+    const itemExternalInfo = customComponents.customInfoRenderer(
       this.getCustomInfoRendererProps(),
       placement
     );
@@ -656,13 +657,13 @@ class ItemView extends GalleryComponent {
   getItemContainerStyles() {
     const {
       idx,
-      currentIdx,
+      activeIndex,
       offset,
       style,
       styleParams,
       settings = {},
     } = this.props;
-    const { oneRow, imageMargin, itemClick, isRTL, slideAnimation } =
+    const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
       styleParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
@@ -672,7 +673,10 @@ class ItemView extends GalleryComponent {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin: oneRow ? imageMargin / 2 + 'px' : 0,
+      margin:
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? imageMargin / 2 + 'px'
+          : 0,
       cursor:
         itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
         (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
@@ -708,16 +712,16 @@ class ItemView extends GalleryComponent {
         slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
-          pointerEvents: currentIdx === idx ? 'auto' : 'none',
-          zIndex: currentIdx === idx ? 0 : 1,
+          pointerEvents: activeIndex === idx ? 'auto' : 'none',
+          zIndex: activeIndex === idx ? 0 : 1,
         };
         break;
       case GALLERY_CONSTS.slideAnimations.DECK:
         slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
-          pointerEvents: currentIdx === idx ? 'auto' : 'none',
-          zIndex: Math.sign(currentIdx - idx),
+          pointerEvents: activeIndex === idx ? 'auto' : 'none',
+          zIndex: Math.sign(activeIndex - idx),
         };
         break;
       default:
@@ -771,7 +775,7 @@ class ItemView extends GalleryComponent {
   }
 
   getSlideAnimationStyles() {
-    const { idx, currentIdx, styleParams, container } = this.props;
+    const { idx, activeIndex, styleParams, container } = this.props;
     const { isRTL, slideAnimation } = styleParams;
     const baseStyles = {
       position: 'absolute',
@@ -782,11 +786,11 @@ class ItemView extends GalleryComponent {
         return {
           ...baseStyles,
           transition: `opacity 600ms ease`,
-          opacity: currentIdx === idx ? 1 : 0,
+          opacity: activeIndex === idx ? 1 : 0,
         };
       case GALLERY_CONSTS.slideAnimations.DECK: {
         const rtlFix = isRTL ? 1 : -1;
-        if (currentIdx < idx) {
+        if (activeIndex < idx) {
           //the slides behind the deck
           return {
             ...baseStyles,
@@ -794,14 +798,14 @@ class ItemView extends GalleryComponent {
             zIndex: -1,
             opacity: 0,
           };
-        } else if (currentIdx === idx) {
+        } else if (activeIndex === idx) {
           return {
             ...baseStyles,
             zIndex: 0,
             transition: `transform 600ms ease`,
             transform: `translateX(0)`,
           };
-        } else if (currentIdx > idx) {
+        } else if (activeIndex > idx) {
           return {
             ...baseStyles,
             zIndex: 1,
@@ -922,7 +926,7 @@ class ItemView extends GalleryComponent {
   getItemContainerTabIndex() {
     const tabIndex = this.isHighlight()
       ? utils.getTabIndex('currentThumbnail')
-      : this.props.currentIdx === this.props.idx
+      : this.props.activeIndex === this.props.idx
       ? utils.getTabIndex('currentGalleryItem')
       : -1;
     return tabIndex;
@@ -962,7 +966,7 @@ class ItemView extends GalleryComponent {
   }
 
   checkIfCurrentHoverChanged(e) {
-    if (e.domId === this.props.domId) {
+    if (e.galleryId === this.props.galleryId) {
       if (!this.state.isCurrentHover && e.currentHoverIdx === this.props.idx) {
         this.setState({
           isCurrentHover: true,

@@ -65,16 +65,16 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
 export const getStyleParamsFromUrl = () => {
   try {
     let styleParams = window.location.search
-      .replace('?', '')
-      .split('&')
-      .map((styleParam) => styleParam.split('='))
-      .reduce(
-        (obj, [styleParam, value]) =>
-          Object.assign(obj, { [styleParam]: formatValue(value) }),
-        {}
+    .replace('?', '')
+    .split('&')
+    .map((styleParam) => styleParam.split('='))
+    .reduce(
+      (obj, [styleParam, value]) =>
+      Object.assign(obj, { [styleParam]: formatValue(value) }),
+      {}
       );
 
-    styleParams = addPresetStyles({ ...defaultStyleParams, ...styleParams });
+      styleParams = addPresetStyles({ ...defaultStyleParams, ...styleParams });
 
     const relevantStyleParams = Object.entries(styleParams).reduce(
       (obj, [styleParam, value]) =>
@@ -85,19 +85,61 @@ export const getStyleParamsFromUrl = () => {
     );
 
     // console.log(`[STYLE PARAMS - VALIDATION] getting styleParams from the url`, relevantStyleParams);
-    return relevantStyleParams;
+    return Object.entries(relevantStyleParams).reduce(
+      (obj, [styleParam, value]) =>
+      assignByString(obj,styleParam, value),{}
+    );
   } catch (e) {
     console.error('Cannot getStyleParamsFromUrl', e);
     return {};
   }
 };
+function assignByString(
+  Obj,
+  string,
+  value,
+) {
+  let _obj = { ...Obj };
+  let keyArr = string.split('_');
+  let assignedProperty = keyArr.pop();
+  let pointer = _obj;
+  keyArr.forEach((key) => {
+    if (!pointer[key]) pointer[key] = {};
+    pointer = pointer[key];
+  });
+  pointer[assignedProperty] = value;
+  return _obj;
+}
+
+function flattenObject(ob) {
+  var toReturn = {};
+
+  for (var i in ob) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (!ob.hasOwnProperty(i)) continue;
+
+    if (typeof ob[i] == 'object' && ob[i] !== null) {
+      var flatObject = flattenObject(ob[i]);
+      for (var x in flatObject) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (!flatObject.hasOwnProperty(x)) continue;
+
+        toReturn[i + '.' + x] = flatObject[x];
+      }
+    } else {
+      toReturn[i] = ob[i];
+    }
+  }
+  return toReturn;
+}
 
 export const setStyleParamsInUrl = (styleParams) => {
+  const flatSP = flattenObject(styleParams);
   // console.log(`[STYLE PARAMS - VALIDATION] setting styleParams in the url`, styleParams);
-  const urlParams = Object.entries(styleParams)
+  const urlParams = Object.entries(flatSP)
     .reduce(
       (arr, [styleParam, value]) =>
-        isValidStyleParam(styleParam, value, styleParams)
+        isValidStyleParam(styleParam, value, flatSP)
           ? arr.concat(`${styleParam}=${value}`)
           : arr,
       []

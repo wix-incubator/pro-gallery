@@ -14,7 +14,7 @@ The blueprintsManager works with an api provided by the user (see blow)
 | Function Name | description       |  arguments  | return
 | --------------- | ----------- | ---------- | ---------|
 | async `createBlueprint` | Used when changes were made that might require a new blueprint, params can be empty - the manager will fetch by the provided api | params: {styles, items, container, totalItemsCount} | {blueprint: object, blueprintChange: boolean}
-| `init`  | call to provide the formFactor and api |config: {api, formFactor, totalItemsCount} | --
+| `init`  | call to provide the deviceType and api |config: {api, deviceType, totalItemsCount} | --
 | `getMoreItems`  | Call this when the gallery needs more items | currentItemsLength: number | --
 
 
@@ -29,7 +29,7 @@ To use the blueprints Manager to the full extent you need to provide it with an 
 | `fetchMoreItems` | Will be called when the BM requires more items (under the totalItemsCount) | currentItemLength: number | --
 | `fetchItems`  | Will be called by the BM to get the current items| -- | items
 | `fetchStyles`  | Will be called by the BM to get the current styles | -- | styles
-| `fetchDimensions`  | Will be called by the BM to get the current dimensions | -- | dimensions
+| `fetchContainer`  | Will be called by the BM to get the current container | -- | container
 | `getTotalItemsCount`  | Will be called by the BM to get the totalItemsCount | -- | totalItemsCount: number
 | `onBlueprintReady`  | Will be called by the BM when a requested blueprint is ready | {blueprint: object, blueprintChanged: boolean} | --
 | `isUsingCustomInfoElements`  | Will be called by the BM to know if Custom Info Elements are used | -- | boolean
@@ -53,8 +53,8 @@ const blueprintsManager = new BlueprintsManager({
         fetchStyles() {
             //return the current styles object;
         }
-        fetchDimensions() {
-            //return the current dimensions object;
+        fetchContainer() {
+            //return the current container object;
         }
         getTotalItemsCount() {
             //return the current totalItemsCount;
@@ -69,10 +69,10 @@ const blueprintsManager = new BlueprintsManager({
     }
 blueprintsManager.init({
     api: blueprintsApi,
-    formFactor: GALLERY_CONSTS.formFactor.DESKTOP,
+    deviceType: GALLERY_CONSTS.deviceType.DESKTOP,
     // totalItemsCont, This is optional and can be passed in the params in createBlueprint(params) or via the api;
 });
-const triggerBlueprintCreation = () => { //call this whenever something changes (styles/ items/ dimensions...anything). If this was called and nothing relevant changed the BM will call the onBlueprintReady api with a false blueprintChanged flag.
+const triggerBlueprintCreation = () => { //call this whenever something changes (styles/ items/ container...anything). If this was called and nothing relevant changed the BM will call the onBlueprintReady api with a false blueprintChanged flag.
     blueprintsManager.createBlueprint({}); //since the api is used params can be empty, the BM will use the provided api to fetch all the needed params to create a blueprint.
 }
 
@@ -89,11 +89,11 @@ import 'pro-gallery/dist/statics/main.css';
 
 
 <ProGalleryRenderer
-    domId={domId}
+    id={id}
     {...blueprint}
     scrollingElement = { () => document.getElementById('gallery') || window }
-    eventsListener = {(eName, eData) => console.log({eName, eData})}
-    resizeMediaUrl  {(item, url, resizeMethod, width, height) => `https://...`}
+    eventsListener = {(eventName, eventData) => console.log({eventName, eventData})}
+    createMediaUrl =  {({item, originalUrl, resizeMethod, requiredWidth, requiredHeight}) => `https://...`}
     isPrerenderMode = {isPrerenderMode}
 />
 ```

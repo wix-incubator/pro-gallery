@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('styleParam - enableInfiniteScroll', () => {
   let driver;
@@ -24,8 +25,7 @@ describe('styleParam - enableInfiniteScroll', () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
-      oneRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: false,
     });
     driver.mount.proGallery(initialProps);
@@ -39,8 +39,7 @@ describe('styleParam - enableInfiniteScroll', () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
-      oneRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: true,
     });
     driver.mount.proGallery(initialProps);
@@ -50,12 +49,11 @@ describe('styleParam - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button in a "oneRow" gallery when "enableInfiniteScroll" is false', async () => {
+  it('should not render "Show More" button in a horizontal gallery when "enableInfiniteScroll" is false', async () => {
     // make sure to give the right params to make a horizontal gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
-      oneRow: true,
-      scrollDirection: 1,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableInfiniteScroll: false,
     });
     driver.mount.proGallery(initialProps);
@@ -69,8 +67,7 @@ describe('styleParam - enableInfiniteScroll', () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
-      oneRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: false,
     });
     driver.mount.proGallery(initialProps);
@@ -86,8 +83,7 @@ describe('styleParam - enableInfiniteScroll', () => {
     // make sure to give the right params to make a vertical gallery for the test
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
-      oneRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: true,
     });
     driver.mount.proGallery(initialProps);

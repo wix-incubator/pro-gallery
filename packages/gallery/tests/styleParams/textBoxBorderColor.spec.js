@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customRenderers,
+  customComponents,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - textBoxBorderColor', () => {
@@ -14,7 +14,7 @@ describe('styleParam - textBoxBorderColor', () => {
     container,
     items: images2,
     styles: styleParams,
-    ...customRenderers,
+    customComponents,
   };
   beforeEach(() => {
     driver = new GalleryDriver();
@@ -25,7 +25,6 @@ describe('styleParam - textBoxBorderColor', () => {
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
       textBoxBorderColor: { value: 'rgba(0,0,0,0)' },
     });
     driver.mount.proGallery(initialProps);
@@ -43,7 +42,6 @@ describe('styleParam - textBoxBorderColor', () => {
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
       textBoxBorderColor: { value: 'rgba(0,0,0,0)' },
     });
     driver.mount.proGallery(initialProps);

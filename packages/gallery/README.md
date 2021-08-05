@@ -30,7 +30,7 @@ import { ProGallery } from 'pro-gallery';
 import 'pro-gallery/dist/statics/main.css';
 
 <ProGallery
-  domId={domId}
+  id={id}
   items={items}
   options={options}
   container={container}
@@ -111,8 +111,8 @@ const container = {
 ```
 The `width` and `height` values represent the size in which the gallery should be. The gallery will size the items to fit exactly in that box. Notice that when infiniteScroll is enabled, vertical galleries will ignore the `height` parameter and horizontal galleries will ignore the `width` parameter.
 
-### domId
-A unique Id for the gallery. Use for multiple galleries in the same page, or when using SSR - to make sure the gallery does not flickr in the hydrate phase.
+### id
+A unique id for the gallery. Use for multiple galleries in the same page, or when using SSR - to make sure the gallery does not flickr in the hydrate phase.
 
 ### Scrolling Element
 The DOM element inside which the gallery is scrolled (defaults to `window`). If the gallery is scrolled inside a different element, pass its dom reference in this property. You can also pass a function that returns that dom element.
@@ -130,14 +130,16 @@ The most important events are:
 
 The full list gallery events is [here](https://github.com/wix/pro-gallery/blob/master/packages/lib/src/common/constants/events.js)
 
-### Custom Renderers
+### Custom Components
 The Gallery supports custom renderers both for the Hover Element (appears when hoveing over an item) and the Info Element (appears below / above the item).
 To replace the default rendering of these element, pass a function that will receive the item's props and should return a JSX element.
 for example:
 ```
 <ProGallery
   {...otherProps}
-  customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
-  customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+  customComponents: {
+    customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
+    customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+  }
 />
 ```

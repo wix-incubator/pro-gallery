@@ -32,7 +32,7 @@ export default class PlaygroundsBlueprintsApi {
     return this.getStyles();
   }
 
-  fetchDimensions() {
+  fetchContainer() {
     return this.getContainer();
   }
 

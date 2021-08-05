@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
-import { featureManager } from './versionsHelper';
-import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
   hasVerticalPlacement,
   hasHoverPlacement,
@@ -17,6 +15,7 @@ import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -36,259 +35,337 @@ export const calcTargetItemSize = (styles, smartCalc = false) => {
   }
 };
 
-function processLayouts(styles, customExternalInfoRendererExists) {
-  const processedStyles = styles;
-  processedStyles.oneRow =
-    processedStyles.oneRow ||
-    processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
-
-  const isDesignedPreset =
-    processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
-
-  const setTextUnderline = (itemFontStyleParam, textDecorationType) => {
-    /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
-    textDecorationType: textDecorationTitle / textDecorationDesc */
-    processedStyles[itemFontStyleParam].value = processedStyles[
-      itemFontStyleParam
-    ].value.replace(/^font\s*:\s*/, '');
-    processedStyles[itemFontStyleParam].value = processedStyles[
-      itemFontStyleParam
-    ].value.replace(/;$/, '');
-    if (
-      processedStyles[itemFontStyleParam].value.indexOf('underline') > -1 ||
-      processedStyles[itemFontStyleParam].style.underline === true
-    ) {
-      processedStyles[itemFontStyleParam].value = processedStyles[
-        itemFontStyleParam
-      ].value.replace('underline', '');
-      processedStyles[textDecorationType] = 'underline';
-    } else if (processedStyles[itemFontStyleParam].style.underline === false) {
-      processedStyles[textDecorationType] = 'none';
-    }
-  };
-
-  if (utils.isMobile()) {
-    if (isSlideshowFont(processedStyles)) {
-      if (!utils.isUndefined(processedStyles.itemFontSlideshow)) {
-        setTextUnderline('itemFontSlideshow', 'textDecorationTitle');
-      }
-      if (!utils.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
-        setTextUnderline('itemDescriptionFontSlideshow', 'textDecorationDesc');
-      }
-    } else {
-      if (!utils.isUndefined(processedStyles.itemFont)) {
-        setTextUnderline('itemFont', 'textDecorationTitle');
-      }
-      if (!utils.isUndefined(processedStyles.itemDescriptionFont)) {
-        setTextUnderline('itemDescriptionFont', 'textDecorationDesc');
-      }
-    }
-  }
-
+export const processNumberOfImagesPerRow = (styles) => {
+  //This will be used in the masonry and grid presets
+  let res = {...styles}
   if (
-    (!processedStyles.isVertical ||
-      processedStyles.groupSize > 1 ||
-      (processedStyles.oneRow === true && !isDesignedPreset)) &&
-    !processedStyles.isSlider &&
-    !processedStyles.isColumns
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+      styles.isVertical //relevant for masonry, in grid its fixed to true.
   ) {
-    // Dont allow titlePlacement to be above / below / left / right
-    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
-  }
-
-  // to_wrapper
-  if (
-    !hasHoverPlacement(processedStyles.titlePlacement) &&
-    processedStyles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
-  ) {
-    processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
-  }
-
-  if (
-    processedStyles.imageLoadingMode === LOADING_MODE.COLOR &&
-    processedStyles.imageLoadingWithColorMode ===
-      LOADING_WITH_COLOR_MODE.MAIN_COLOR
-  ) {
-    processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
-  }
-
-  if (
-    processedStyles.cubeType === 'fit' &&
-    (processedStyles.isGrid ||
-      processedStyles.hasThumbnails ||
-      processedStyles.isSlider ||
-      processedStyles.isSlideshow)
-  ) {
-    processedStyles.itemBorderWidth = 0;
-    processedStyles.itemBorderRadius = 0;
-    processedStyles.itemEnableShadow = false;
-  }
-
-  if (processedStyles.itemEnableShadow) {
-    if (processedStyles.oneRow) {
-      processedStyles.itemEnableShadow = false;
-    } else {
-      // add galleryMargin to allow the shadow to be seen
-      processedStyles.galleryMargin = Math.max(
-        processedStyles.galleryMargin,
-        (processedStyles.itemShadowSize || 0) +
-          (processedStyles.itemShadowBlur || 0)
-      );
-    }
-  }
-
-  if (processedStyles.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
-    processedStyles.arrowsPadding = 0;
-  }
-
-  if (processedStyles.oneRow) {
-    // if oneRow is true, use horizontal layouts only
-    processedStyles.isVertical = false;
-    // processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
-  } else {
-    processedStyles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
-  }
-
-  if (
-    !processedStyles.oneRow ||
-    processedStyles.groupSize > 1 ||
-    !processedStyles.cubeImages
-  ) {
-    processedStyles.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
-  }
-
-  if (processedStyles.imageMargin > 0) {
-    if (utils.isMobile()) {
-      processedStyles.imageMargin = Math.min(processedStyles.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
-    }
-    // processedStyles.imageMargin /= 2;
-  }
-
-  if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
-    processedStyles.loadMoreButtonFont.value =
-      processedStyles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
-    processedStyles.loadMoreButtonFont.value =
-      processedStyles.loadMoreButtonFont.value.replace(/;$/, '');
-    if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > -1) {
-      processedStyles.loadMoreButtonFont.value =
-        processedStyles.loadMoreButtonFont.value.replace('underline', '');
-      processedStyles.textDecorationLoadMore = 'underline';
-    } else {
-      processedStyles.textDecorationLoadMore = 'none';
-    }
-  }
-
-  if (
-    (processedStyles.isGrid && !processedStyles.oneRow) ||
-    (featureManager.supports.fixedColumnsInMasonry &&
-      processedStyles.isMasonry &&
-      processedStyles.isVertical)
-  ) {
-    // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
-    // If toggle is for Items per row, fill the fixedColumns with the number of items
-    // If toggle is responsive, make fixedColumns to be 0 or undefined;
-    // Show the new controls only on Vertical scroll (one ow is false)
-    processedStyles.fixedColumns =
-      String(processedStyles.gridStyle) === '1'
-        ? Number(processedStyles.numberOfImagesPerRow)
+    res.fixedColumns =
+      String(styles.gridStyle) === '1'
+        ? Number(styles.numberOfImagesPerRow)
         : 0;
-    processedStyles.groupTypes = '1';
-    processedStyles.groupSize = 1;
-    processedStyles.collageAmount = 0;
-    processedStyles.collageDensity = 0;
-    // }
-  }
+    res.groupTypes = '1';
+    res.groupSize = 1;
+    res.collageAmount = 0;
+    res.collageDensity = 0;
+  } 
+  return res;
+}
 
-  // TODO this needs to split, need to leave the wixStyles assign in the statics section
+export const processNumberOfImagesPerCol = (styles) => {
+  //This will be used in the grid preset
+  let res = {...styles}
   if (
-    !utils.isUndefined(processedStyles.numberOfImagesPerCol) &&
-    processedStyles.isGrid &&
-    processedStyles.oneRow
+    !utils.isUndefined(styles.numberOfImagesPerCol) &&
+    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
   ) {
-    processedStyles.fixedColumns = 0;
-    switch (processedStyles.numberOfImagesPerCol) {
+    res.fixedColumns = 0;
+    switch (styles.numberOfImagesPerCol) {
       case 1:
       default:
-        processedStyles.groupTypes = '1';
-        processedStyles.groupSize = 1;
-        processedStyles.collageAmount = 0;
-        processedStyles.collageDensity = 0;
+        res.groupTypes = '1';
+        res.groupSize = 1;
+        res.collageAmount = 0;
+        res.collageDensity = 0;
         break;
       case 2:
-        processedStyles.groupTypes = '2v';
-        processedStyles.groupSize = 2;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
+        res.groupTypes = '2v';
+        res.groupSize = 2;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
         break;
       case 3:
-        processedStyles.groupTypes = '3v';
-        processedStyles.groupSize = 3;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
+        res.groupTypes = '3v';
+        res.groupSize = 3;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
         break;
     }
   }
+  return res
+}
 
-  // returned to the statics because it was the definition of the object.
-  // processedStyles.sharpParams = {
-  //   quality: 90,
-  //   usm: {}
-  // };
-
-  if (processedStyles.forceMobileCustomButton) {
-    processedStyles.targetItemSize = Math.round(30 * 8.5 + 150);
-    processedStyles.titlePlacement = PLACEMENTS.SHOW_BELOW;
-    processedStyles.galleryLayout = 2;
-    processedStyles.fixedColumns = 1;
-    processedStyles.numberOfImagesPerRow = 1;
-  }
+const forceInfoOnHoverWhenNeeded = (styles) =>{
+  let _styles = {...styles}
+  const isDesignedPreset =
+  _styles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
 
   if (
-    processedStyles.fixedColumns > 0 &&
-    utils.isMobile() &&
-    typeof processedStyles.m_numberOfImagesPerRow === 'undefined'
+    (!_styles.isVertical ||
+      _styles.groupSize > 1 ||
+      (_styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !isDesignedPreset)) &&
+    !_styles.isSlider &&
+    !_styles.isColumns
   ) {
-    processedStyles.fixedColumns = 1;
+    // Dont allow titlePlacement to be above / below / left / right
+    _styles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
-  // in case a special gallery size was specified, use it
+  return _styles;
+}
+
+const setMobileFonts = (styles) => {
+  let _styles = {...styles}
+  if (isSlideshowFont(_styles)) {
+    if (!utils.isUndefined(_styles.itemFontSlideshow)) {
+      _styles = setTextUnderline('itemFontSlideshow', 'textDecorationTitle', _styles);
+    }
+    if (!utils.isUndefined(_styles.itemDescriptionFontSlideshow)) {
+      _styles = setTextUnderline('itemDescriptionFontSlideshow', 'textDecorationDesc', _styles);
+    }
+  } else {
+    if (!utils.isUndefined(_styles.itemFont)) {
+      _styles = setTextUnderline('itemFont', 'textDecorationTitle', _styles);
+    }
+    if (!utils.isUndefined(_styles.itemDescriptionFont)) {
+      _styles = setTextUnderline('itemDescriptionFont', 'textDecorationDesc', _styles);
+    }
+  }
+
+  return _styles;
+}
+
+const forceHoverToShowTextsIfNeeded = (styles) =>{
+  let _styles = {...styles}
   if (
-    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
-    processedStyles.gallerySizePx > 0
+    !hasHoverPlacement(_styles.titlePlacement) &&
+    _styles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
   ) {
-    processedStyles.targetItemSize = processedStyles.gallerySizePx;
-  } else if (
-    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
-    processedStyles.gallerySizeRatio > 0
-  ) {
-    processedStyles.targetItemSize =
-      ((window && window.innerWidth) || 980) *
-      (processedStyles.gallerySizeRatio / 100);
+    _styles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
 
-  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(
-    processedStyles,
-    customExternalInfoRendererExists
-  );
-  processedStyles.externalInfoHeight = getHeightFromStyleParams(
-    processedStyles,
-    processedStyles.textBoxHeight
-  );
+  return _styles
+}
 
-  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(
-    processedStyles,
-    customExternalInfoRendererExists
-  );
-
+const processImageLoadingWithColorMode = (styles) => {
+  let _styles = {...styles}
+  if (
+    _styles.imageLoadingMode === LOADING_MODE.COLOR &&
+    _styles.imageLoadingWithColorMode ===
+      LOADING_WITH_COLOR_MODE.MAIN_COLOR
+  ) {
+    _styles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
+  }
+  return _styles;
+}
+const removeShadowOnHorizontalGalleries = (styles) => {
+  let _styles = {...styles}
+  if(_styles.itemEnableShadow && _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    _styles.itemEnableShadow = false;
+  }
+  return _styles;
+}
+const forceHorizontalOrientationInHorizontalGalleries = (styles) => {
+  let _styles = {...styles}
+  if (_styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    // in horizontal galleries allow only horizontal orientation
+    _styles.isVertical = false;
+  } 
+  return _styles;
+}
+const removeLoopOnVerticalGalleries = (styles) => {
+  let _styles = {...styles}
+  if (_styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    _styles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
+  }
+  return _styles;
+}
+const limitImageMargin = (styles) => {
+  let _styles = {...styles}
+  if (_styles.imageMargin > 0) {
+    _styles.imageMargin = Math.min(_styles.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
+  }
+  return _styles;
+}
+const forceScrollAnimationOnSingleImageInViewGalleries = (styles) => {
+  let _styles = {...styles}
+  if (
+    _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
+    _styles.groupSize > 1 ||
+    !_styles.cubeImages
+  ) {
+    _styles.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
+  }
+  return _styles;
+}
+const removeArrowPaddingIfOutsideTheGallery = (styles) => {
+  let _styles = {...styles}
+  if (_styles.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
+    _styles.arrowsPadding = 0;
+  }
+  return _styles;
+}
+const fixColumnsInMobile = (styles) => {
+  let _styles = {...styles}
+  if (
+    _styles.fixedColumns > 0 &&
+    typeof _styles.m_numberOfImagesPerRow === 'undefined'
+    ) {
+      _styles.fixedColumns = 1;
+    }
+  
+  return _styles;
+}
+const removeVideoAutoplayInIOS = (styles) => {
+  let _styles = {...styles}
   // Handle case of autoplay on ios devices
   if (
-    processedStyles.videoPlay === 'auto' &&
-    processedStyles.itemClick === 'nothing' &&
+    _styles.videoPlay === 'auto' &&
+    _styles.itemClick === 'nothing' &&
     utils.isiOS()
   ) {
-    processedStyles.videoPlay = 'onClick';
+    _styles.videoPlay = 'onClick';
   }
+  return _styles;
+}
 
+const processTextDimensions = (styles, customExternalInfoRendererExists) => {
+  let _styles = {...styles}
+
+  _styles.textBoxHeight = getTextBoxAboveOrBelowHeight(
+    _styles,
+    customExternalInfoRendererExists
+  );
+  _styles.externalInfoHeight = getHeightFromStyleParams(
+    _styles,
+    _styles.textBoxHeight
+  );
+
+  _styles.externalInfoWidth = getTextBoxRightOrLeftWidth(
+    _styles,
+    customExternalInfoRendererExists
+  );
+  return _styles;
+}
+const processForceMobileCustomButton = (styles) => {
+  let _styles = {...styles}
+  if (_styles.forceMobileCustomButton) {
+    _styles.targetItemSize = Math.round(30 * 8.5 + 150);
+    _styles.titlePlacement = PLACEMENTS.SHOW_BELOW;
+    _styles.galleryLayout = 2;
+    _styles.fixedColumns = 1;
+    _styles.numberOfImagesPerRow = 1;
+  }
+  return _styles;
+}
+const processSpecialGallerySize = (styles) => {
+  let _styles = {...styles}
+  // in case a special gallery size was specified, use it
+  if (
+    _styles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
+    _styles.gallerySizePx > 0
+  ) {
+    _styles.targetItemSize = _styles.gallerySizePx;
+  } else if (
+    _styles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
+    _styles.gallerySizeRatio > 0
+  ) {
+    _styles.targetItemSize =
+      ((window && window.innerWidth) || 980) *
+      (_styles.gallerySizeRatio / 100);
+  }
+  return _styles;
+}
+const processLoadMoreButtonFont = (styles) => {
+  let _styles = {...styles}
+  if (_styles.loadMoreButtonFont && utils.isMobile()) {
+    _styles.loadMoreButtonFont.value =
+      _styles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
+    _styles.loadMoreButtonFont.value =
+      _styles.loadMoreButtonFont.value.replace(/;$/, '');
+    if (_styles.loadMoreButtonFont.value.indexOf('underline') > -1) {
+      _styles.loadMoreButtonFont.value =
+        _styles.loadMoreButtonFont.value.replace('underline', '');
+      _styles.textDecorationLoadMore = 'underline';
+    } else {
+      _styles.textDecorationLoadMore = 'none';
+    }
+  }
+  return _styles;
+}
+const addMarginsToSupportShadows = (styles) => {
+  let _styles = {...styles}
+
+  if (_styles.itemEnableShadow && _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    // add galleryMargin to allow the shadow to be seen
+    _styles.galleryMargin = Math.max(
+      _styles.galleryMargin,
+      (_styles.itemShadowSize || 0) +
+        (_styles.itemShadowBlur || 0)
+    );
+  }
+  return _styles;
+}
+
+const removeBordersIfNeeded = (styles) => {
+//TODO this can go into the _stylespective 4 layouts.
+let _styles = {...styles}
+
+if (
+  _styles.cubeType === 'fit' &&
+  (_styles.isGrid || 
+    _styles.hasThumbnails ||
+    _styles.isSlider ||
+    _styles.isSlideshow)
+) {
+  _styles.itemBorderWidth = 0;
+  _styles.itemBorderRadius = 0;
+  _styles.itemEnableShadow = false;
+}
+
+return _styles
+}
+
+const setTextUnderline = (itemFontStyleParam, textDecorationType, styles) => {
+  /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
+  textDecorationType: textDecorationTitle / textDecorationDesc */
+
+  let _styles = {...styles}
+  _styles[itemFontStyleParam].value = _styles[
+    itemFontStyleParam
+  ].value.replace(/^font\s*:\s*/, '');
+  _styles[itemFontStyleParam].value = _styles[
+    itemFontStyleParam
+  ].value.replace(/;$/, '');
+  if (
+    _styles[itemFontStyleParam].value.indexOf('underline') > -1 ||
+    _styles[itemFontStyleParam].style.underline === true
+  ) {
+    _styles[itemFontStyleParam].value = _styles[
+      itemFontStyleParam
+    ].value.replace('underline', '');
+    _styles[textDecorationType] = 'underline';
+  } else if (_styles[itemFontStyleParam].style.underline === false) {
+    _styles[textDecorationType] = 'none';
+  }
+  return _styles;
+};
+
+function processLayouts(styles, customExternalInfoRendererExists) {
+  let processedStyles = {...styles};
+  if (utils.isMobile()) {
+    processedStyles = setMobileFonts(processedStyles);
+    processedStyles = limitImageMargin(processedStyles);
+    processedStyles = fixColumnsInMobile(processedStyles);
+  }
+    processedStyles = forceInfoOnHoverWhenNeeded(processedStyles);
+    processedStyles = forceHoverToShowTextsIfNeeded(processedStyles);
+    processedStyles = processImageLoadingWithColorMode(processedStyles);
+    processedStyles = removeBordersIfNeeded(processedStyles);
+    processedStyles = removeShadowOnHorizontalGalleries(processedStyles);
+    processedStyles = addMarginsToSupportShadows(processedStyles);
+    processedStyles = removeArrowPaddingIfOutsideTheGallery(processedStyles);
+    processedStyles = forceHorizontalOrientationInHorizontalGalleries(processedStyles);
+    processedStyles = removeLoopOnVerticalGalleries(processedStyles);
+    processedStyles = forceScrollAnimationOnSingleImageInViewGalleries(processedStyles);
+    processedStyles = processLoadMoreButtonFont(processedStyles); //contains if isMobile, but also has an else.
+    processedStyles = processForceMobileCustomButton(processedStyles); //TODO this seems like it doesnt really exists. consider deleting support.
+    processedStyles = processSpecialGallerySize(processedStyles); 
+    processedStyles = processTextDimensions(processedStyles, customExternalInfoRendererExists);
+    processedStyles = removeVideoAutoplayInIOS(processedStyles); 
+    
   return processedStyles;
 }
 
@@ -335,9 +412,9 @@ function shouldShowTextRightOrLeft(
   styleParams,
   customExternalInfoRendererExists
 ) {
-  const { oneRow, isVertical, groupSize, titlePlacement } = styleParams;
+  const { scrollDirection, isVertical, groupSize, titlePlacement } = styleParams;
 
-  const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
+  const allowedByLayoutConfig = scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && isVertical && groupSize === 1;
 
   return (
     allowedByLayoutConfig &&

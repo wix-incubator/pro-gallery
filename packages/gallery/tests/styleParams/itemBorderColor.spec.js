@@ -20,7 +20,6 @@ describe('styleParam - itemBorderColor', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemBorderColor: 'rgba(0,0,0,1)',
     });
     driver.mount.proGallery(initialProps);
@@ -34,7 +33,6 @@ describe('styleParam - itemBorderColor', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemBorderColor: 'rgba(23,110,23,1)',
     });
     driver.mount.proGallery(initialProps);

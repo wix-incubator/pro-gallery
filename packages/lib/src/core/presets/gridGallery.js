@@ -1,36 +1,45 @@
 import LAYOUTS from '../../common/constants/layout';
-import { calcTargetItemSize } from '../helpers/layoutHelper';
+import {
+  calcTargetItemSize,
+  processNumberOfImagesPerRow,
+  processNumberOfImagesPerCol,
+} from '../helpers/layoutHelper';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.GRID,
-  cubeImages: true,
-  isVertical: true,
-  groupSize: 1,
-  hasThumbnails: false,
-  groupTypes: '1',
-  slideshowLoop: false,
+const fixToGrid = (styles) => {
+  let presetStyles = { ...styles };
+  presetStyles.galleryLayout = LAYOUTS.GRID;
+  presetStyles.cubeImages = true;
+  presetStyles.isVertical = true;
+  presetStyles.groupSize = 1;
+  presetStyles.hasThumbnails = false;
+  presetStyles.groupTypes = '1';
+  presetStyles.slideshowLoop = false;
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  smartCrop: false,
-  galleryType: 'Columns',
-  fixedColumns: 0,
-  targetItemSize: 0,
-  enableScroll: true,
-  cropOnlyFill: false,
-  isSlider: false,
-  isColumns: false,
-  isGrid: true,
-  isMasonry: false,
-  isSlideshow: false,
-  minItemSize: 50,
+  presetStyles.smartCrop = false;
+  presetStyles.galleryType = 'Columns';
+  presetStyles.fixedColumns = 0;
+  presetStyles.targetItemSize = 0;
+  presetStyles.enableScroll = true;
+  presetStyles.cropOnlyFill = false;
+  presetStyles.isSlider = false;
+  presetStyles.isColumns = false;
+  presetStyles.isGrid = true;
+  presetStyles.isMasonry = false;
+  presetStyles.isSlideshow = false;
+  presetStyles.minItemSize = 50;
+  return presetStyles;
 };
 
+export const fixedStyles = fixToGrid({});
+
 export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(
-      styles,
-      Math.round(styles.gallerySize * 8.5 + 150)
-    ),
-  };
+  let res = { ...styles };
+  res = fixToGrid(res);
+  res.targetItemSize = calcTargetItemSize(
+    res,
+    Math.round(res.gallerySize * 8.5 + 150)
+  );
+  res = processNumberOfImagesPerRow(res);
+  res = processNumberOfImagesPerCol(res);
+  return res;
 };

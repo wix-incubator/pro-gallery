@@ -3,38 +3,39 @@ import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.MIX,
-  cubeType: 'fill',
-  cubeImages: true,
-  cubeRatio: 1,
-  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
-  scrollDirection: SCROLL_DIRECTION.VERTICAL,
-  galleryMargin: 0,
-  isVertical: true,
-  groupSize: 3,
-  groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
-  collageDensity: 0.48,
+const fixToMix = (styles) => {
+  let presetStyles = { ...styles };
+  presetStyles.galleryLayout = LAYOUTS.MIX;
+  presetStyles.cubeType = 'fill';
+  presetStyles.cubeImages = true;
+  presetStyles.cubeRatio = 1;
+  presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+  presetStyles.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  presetStyles.galleryMargin = 0;
+  presetStyles.isVertical = true;
+  presetStyles.groupSize = 3;
+  presetStyles.groupTypes = '1,2h,2v,3t,3b,3l,3r,3v,3h';
+  presetStyles.collageDensity = 0.48;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  targetItemSize: 86,
-  minItemSize: 50,
-  chooseBestGroup: true,
-  rotatingGroupTypes: '1,3l,1,3r',
-  smartCrop: false,
-  scatter: 0,
-  rotatingScatter: '',
-  fixedColumns: 1,
-  groupsPerStrip: 0,
-  oneRow: false,
-  placeGroupsLtr: false,
-  rotatingCropRatios: '',
+  presetStyles.targetItemSize = 86;
+  presetStyles.minItemSize = 50;
+  presetStyles.chooseBestGroup = true;
+  presetStyles.rotatingGroupTypes = '1,3l,1,3r';
+  presetStyles.smartCrop = false;
+  presetStyles.scatter = 0;
+  presetStyles.rotatingScatter = '';
+  presetStyles.fixedColumns = 1;
+  presetStyles.groupsPerStrip = 0;
+  presetStyles.placeGroupsLtr = false;
+  presetStyles.rotatingCropRatios = '';
+  return presetStyles;
 };
+export const fixedStyles = fixToMix({});
 
 export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles),
-  };
+  let res = { ...styles };
+  res = fixToMix(res);
+  res.targetItemSize = calcTargetItemSize(res);
+  return res;
 };

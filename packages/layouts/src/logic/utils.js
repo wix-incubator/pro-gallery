@@ -95,7 +95,7 @@ class Utils {
         rotatingGroupTypes: '',
         isVertical: true,
         minItemSize: 120,
-        oneRow: false,
+        scrollDirection: 0,
         targetItemSize: 500,
         collageDensity: 50,
         fixedColumns: 0,
@@ -182,11 +182,6 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'oneRow',
-      convertedStyleParams.isVerticalScroll
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
       'targetItemSize',
       convertedStyleParams.rowSize || convertedStyleParams.columnSize
     );
@@ -232,7 +227,10 @@ class Utils {
         ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0));
       delete convertedContainer.height;
     }
-    if (styleParams.externalInfoHeight >= 0 && styleParams.oneRow) {
+    if (
+      styleParams.externalInfoHeight >= 0 &&
+      styleParams.scrollDirection === 1
+    ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }
 

@@ -134,7 +134,7 @@ export default class Layouter {
           });
         } else {
           //---------------------| STRIPS GALLERY |----------------------//
-          if (this.styleParams.oneRow) {
+          if (this.scrollDirection === 1) {
             //remove items from the last group:
             const lastGroups = this.groups.slice(-1);
             lastGroups.forEach((group) => {
@@ -186,7 +186,7 @@ export default class Layouter {
                 idx: this.strips.length + 1,
                 container: this.container,
                 groupsPerStrip: this.styleParams.groupsPerStrip,
-                oneRow: this.styleParams.oneRow,
+                scrollDirection: this.styleParams.scrollDirection,
                 targetItemSize: this.targetItemSize,
               });
             }
@@ -241,7 +241,7 @@ export default class Layouter {
         idx: 1,
         container: this.container,
         groupsPerStrip: this.styleParams.groupsPerStrip,
-        oneRow: this.styleParams.oneRow,
+        scrollDirection: this.styleParams.scrollDirection,
         targetItemSize: this.targetItemSize,
       });
 
@@ -382,7 +382,7 @@ export default class Layouter {
             idx: this.strip.idx + 1,
             container: this.container,
             groupsPerStrip: this.styleParams.groupsPerStrip,
-            oneRow: this.styleParams.oneRow,
+            scrollDirection: this.styleParams.scrollDirection,
             targetItemSize: this.targetItemSize,
           });
 
@@ -401,7 +401,7 @@ export default class Layouter {
         this.strip.addGroup(this.group);
 
         if (this.isLastImage && this.strip.hasGroups) {
-          if (this.styleParams.oneRow) {
+          if (this.styleParams.scrollDirection === 1) {
             this.strip.height =
               this.container.galleryHeight +
               (this.styleParams.imageMargin / 2 -

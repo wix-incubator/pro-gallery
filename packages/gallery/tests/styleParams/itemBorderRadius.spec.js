@@ -20,7 +20,6 @@ describe('styleParam - itemBorderRadius', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemBorderRadius: 10,
     });
     driver.mount.proGallery(initialProps);
@@ -33,7 +32,6 @@ describe('styleParam - itemBorderRadius', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemBorderRadius: 40,
     });
     driver.mount.proGallery(initialProps);
@@ -48,7 +46,6 @@ describe('styleParam - itemBorderRadius', () => {
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       itemBorderRadius: 40,
-      oneRow: false,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

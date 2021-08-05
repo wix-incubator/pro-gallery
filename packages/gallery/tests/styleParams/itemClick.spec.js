@@ -148,7 +148,7 @@ describe('styleParam - itemClick', () => {
       });
       Object.assign(initialProps.styles, {
         itemClick: 'expand',
-        videoPlay: 'onClick',
+        item: { video: { videoPlay: 'onClick' } },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();

@@ -8,7 +8,7 @@ describe('defaultStyles', () => {
     expect(_.isEqual(actual, expectedStyles())).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expectedStyles()).length);
-    expect(actualLength).eq(90);
+    expect(actualLength).eq(93);
   });
 });
 
@@ -104,5 +104,8 @@ function expectedStyles() {
     shouldIndexDirectShareLinkInSEO: true,
     slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
     useMaxDimensions: false,
+    enableVideoPlaceholder: true,
+    autoSlideshowType: 'interval',
+    autoSlideshowContinuousSpeed: 200,
   };
 }
