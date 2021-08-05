@@ -206,7 +206,7 @@ export function App() {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
 
-  const getCustomComponents = () => {
+  const getExternalInfoRenderers = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
@@ -299,7 +299,7 @@ export function App() {
           activeIndex: gallerySettings.initialIdx,
           useBlueprints: gallerySettings.useBlueprints,
           useLayoutFixer: gallerySettings.useLayoutFixer,
-          customComponents: getCustomComponents(),
+          ...getExternalInfoRenderers(),
           ...blueprintProps
         }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
       </section>

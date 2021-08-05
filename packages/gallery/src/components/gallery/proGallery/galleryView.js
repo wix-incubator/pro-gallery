@@ -205,7 +205,8 @@ class GalleryView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
-      customComponents: this.props.customComponents,
+      customHoverRenderer: this.props.customHoverRenderer,
+      customInfoRenderer: this.props.customInfoRenderer,
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
@@ -234,10 +235,10 @@ class GalleryView extends GalleryComponent {
   }
 
   createShowMoreButton() {
-    if (typeof this.props.customComponents.customLoadMoreRenderer === 'function') {
+    if (typeof this.props.customLoadMoreRenderer === 'function') {
       return (
         <div onClick={this.showMoreItems}>
-          {this.props.customComponents.customLoadMoreRenderer(this.props)}
+          {this.props.customLoadMoreRenderer(this.props)}
         </div>
       );
     }

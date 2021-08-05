@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customComponents,
+  customRenderers,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - textBoxWidth', () => {
@@ -14,7 +14,7 @@ describe('styleParam - textBoxWidth', () => {
     container,
     items: images2,
     styles: styleParams,
-    customComponents,
+    ...customRenderers,
   };
 
   beforeEach(() => {
