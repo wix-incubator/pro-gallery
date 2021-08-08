@@ -92,7 +92,7 @@ class Utils {
     _styles.rotatingCropRatios = '';
     _styles.smartCrop = false;
     _styles.imageMargin = 10;
-    _styles.galleryMargin = 0;
+    _styles = this.assignByString(_styles, 'layoutParams_gallerySpacing', 0);
     _styles.scatter = 0;
     _styles.rotatingScatter = '';
     _styles.chooseBestGroup = true;
