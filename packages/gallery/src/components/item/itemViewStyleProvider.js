@@ -66,11 +66,13 @@ export function getOuterInfoStyle(
   textBoxHeight
 ) {
   const styles = {
-    ...(GALLERY_CONSTS.hasHorizontalPlacement(placement) && {
+    ...(GALLERY_CONSTS.hasExternalHorizontalPlacement(placement) && {
       height: mediaHeight,
-      float: GALLERY_CONSTS.isRightPlacement(placement) ? 'right' : 'left',
+      float: GALLERY_CONSTS.isExternalRightPlacement(placement)
+        ? 'right'
+        : 'left',
     }),
-    ...(GALLERY_CONSTS.hasVerticalPlacement(placement) && {
+    ...(GALLERY_CONSTS.hasExternalVerticalPlacement(placement) && {
       height: textBoxHeight,
       boxSizing: 'content-box',
     }),
@@ -85,10 +87,10 @@ export function getOuterInfoStyle(
         styleParams.textBoxBorderWidth,
         styleParams.textBoxBorderColor
       ),
-      ...(GALLERY_CONSTS.hasAbovePlacement(placement) && {
+      ...(GALLERY_CONSTS.hasExternalAbovePlacement(placement) && {
         marginBottom: styleParams.textImageSpace,
       }),
-      ...(GALLERY_CONSTS.hasBelowPlacement(placement) && {
+      ...(GALLERY_CONSTS.hasExternalBelowPlacement(placement) && {
         marginTop: styleParams.textImageSpace,
       }),
     };
@@ -129,8 +131,10 @@ export function getInnerInfoStyle(
     boxSizing: 'border-box',
   };
 
-  const infoAboveOrBelow = GALLERY_CONSTS.hasVerticalPlacement(placement);
-  const infoRightOrLeft = GALLERY_CONSTS.hasHorizontalPlacement(placement);
+  const infoAboveOrBelow =
+    GALLERY_CONSTS.hasExternalVerticalPlacement(placement);
+  const infoRightOrLeft =
+    GALLERY_CONSTS.hasExternalHorizontalPlacement(placement);
 
   return {
     ...commonStyles,
