@@ -6,7 +6,7 @@ import {
 } from '../constants/styleParams';
 import { addPresetStyles } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
-import { utils } from 'pro-gallery-lib';
+import { utils, flatToNested } from 'pro-gallery-lib';
 
 export function useGalleryContext(
   blueprintsManager,
@@ -25,7 +25,7 @@ export function useGalleryContext(
     let { items, styleParams, container } = params;
 
     container = container || context.container || calcGalleryContainer();
-    const styles = styleParams || context.styleParams || getInitialStyleParams();
+    const styles = styleParams || context.styleParams || flatToNested(getInitialStyleParams());
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
     if (!items || !container || !styles) {
@@ -84,7 +84,7 @@ export function useGalleryContext(
   const setPreset = (newPreset) => {
     const newContext = {
       preset: newPreset,
-      styleParams: getInitialStyleParams(newPreset),
+      styleParams: flatToNested(getInitialStyleParams(newPreset)),
     };
 
     if (getGallerySettings().useBlueprints) {
@@ -96,12 +96,14 @@ export function useGalleryContext(
 
   const setStyleParams = (newProp, value) => {
     // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
+    const styleParams = flatToNested({
+      ...getInitialStyleParams(),
+      ...getStyleParamsFromUrl(),
+      [newProp]: value,
+    })
+    console.log('setting new context and requesting BP', styleParams.layoutParams)
     const newContext = {
-      styleParams: {
-        ...getInitialStyleParams(),
-        ...getStyleParamsFromUrl(),
-        [newProp]: value,
-      },
+      styleParams,
     };
     if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
@@ -182,7 +184,7 @@ export function useGalleryContext(
     preset: context.preset,
     setPreset,
     styleParams: addPresetStyles(
-      context.styleParams || getInitialStyleParams()
+      context.styleParams || flatToNested(getInitialStyleParams())
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setStyleParams,
     items: context.items,
