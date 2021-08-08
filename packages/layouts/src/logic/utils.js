@@ -70,10 +70,44 @@ class Utils {
     return this._hash2int[str];
   }
 
-  insertIfDefined(obj, field, value) {
-    if (typeof value !== 'undefined') {
-      obj[field] = value;
-    }
+  assignByString(Obj, string, value) {
+    let _obj = { ...Obj };
+    let keyArr = string.split('_');
+    let assignedProperty = keyArr.pop();
+    let pointer = _obj;
+    keyArr.forEach((key) => {
+      if (!pointer[key]) pointer[key] = {};
+      pointer = pointer[key];
+    });
+    pointer[assignedProperty] = value;
+    return _obj;
+  }
+
+  addDefaultStyleParams(styleParams) {
+    //default styleParams
+    let _styles = { ...styleParams };
+    _styles.cubeImages = false;
+    _styles.cubeType = 'fill';
+    _styles.cubeRatio = 1;
+    _styles.rotatingCropRatios = '';
+    _styles.smartCrop = false;
+    _styles.imageMargin = 10;
+    _styles.galleryMargin = 0;
+    _styles.scatter = 0;
+    _styles.rotatingScatter = '';
+    _styles.chooseBestGroup = true;
+    _styles.groupSize = 3;
+    _styles.groupTypes = '1,2h,2v,3h,3v,3t,3b,3l,3r';
+    _styles.rotatingGroupTypes = '';
+    _styles.isVertical = true;
+    _styles.minItemSize = 120;
+    _styles.scrollDirection = 0;
+    _styles.targetItemSize = 500;
+    _styles.collageDensity = 50;
+    _styles.fixedColumns = 0;
+    _styles.columnWidths = '';
+
+    return _styles;
   }
 
   convertContainer(container, styleParams) {
