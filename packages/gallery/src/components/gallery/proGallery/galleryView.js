@@ -4,7 +4,7 @@ import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { GalleryComponent } from '../../galleryComponent';
-
+// dummy commit
 class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
