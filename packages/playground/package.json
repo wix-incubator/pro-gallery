@@ -6,6 +6,7 @@
     "watch": "sleep 10 && node scripts/start.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
     "deploy": "node scripts/build.js && gh-pages-with-token -d build",
     "lint": "eslint src/**/*.js",
     "lint:fix": "npm run lint -- --fix",
@@ -105,7 +106,7 @@
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
