@@ -19,7 +19,7 @@ const styleParams = {
   cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingcropRatio: '',
+  rotatingCropRatio: '',
   fixedColumns: 0,
   groupsPerStrip: 0,
   imageMargin: 10,

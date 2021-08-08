@@ -57,7 +57,7 @@ describe('RCE Integration test', () => {
   //     gallerySizePx: 300,
   //     galleryMargin: 0,
   //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-  //  cropRatiotio: 1,
+  //     cropRatio: 1,
   //     galleryThumbnailsAlignment: 'bottom',
   //     isVertical: false,
   //     imageMargin: 20,

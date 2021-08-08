@@ -15,7 +15,7 @@ export const defaultStyleParams = {
   cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingcropRatio: '',
+  rotatingCropRatio: '',
   galleryImageRatioFromWix: 1, //galleryImageRatio translates to galleryImageRatioFromWix
   fixedColumns: 0,
   numberOfImagesPerRow: 3,

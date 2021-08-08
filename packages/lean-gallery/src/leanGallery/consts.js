@@ -34,7 +34,7 @@ export const fixedStyleParams = {
   ],
   rotatingGroupTypes: '',
   smartCrop: false,
-  rotatingcropRatio: '',
+  rotatingCropRatio: '',
   galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
