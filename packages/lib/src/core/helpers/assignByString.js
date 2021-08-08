@@ -1,9 +1,5 @@
-export default assignByString
-function assignByString(
-  Obj,
-  string,
-  value,
-) {
+export default assignByString;
+function assignByString(Obj, string, value) {
   let _obj = { ...Obj };
   let keyArr = string.split('_');
   let assignedProperty = keyArr.pop();
