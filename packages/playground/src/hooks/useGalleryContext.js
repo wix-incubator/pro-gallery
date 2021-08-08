@@ -99,7 +99,7 @@ export function useGalleryContext(
     const newContext = {
       styleParams: {
         ...getInitialStyleParams(),
-        ...getStyleParamsFromUrl(),
+        ...getStyleParamsFromUrl(window.location.search),
         [newProp]: value,
       },
     };
