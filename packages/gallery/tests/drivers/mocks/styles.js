@@ -16,10 +16,10 @@ const styleParams = {
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingCubeRatio: '',
+  rotatingcropRatio: '',
   fixedColumns: 0,
   groupsPerStrip: 0,
   imageMargin: 10,

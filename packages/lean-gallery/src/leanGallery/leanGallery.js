@@ -105,7 +105,7 @@ export default class LeanGallery extends React.Component {
       cubeImages,
       titlePlacement,
       textBoxHeight,
-      cubeRatio,
+      cropRatio,
       imageMargin,
     } = styles;
 
@@ -113,7 +113,7 @@ export default class LeanGallery extends React.Component {
       container.width > 0
         ? Math.min(targetItemSize, container.width)
         : targetItemSize;
-    let itemHeight = itemWidth / cubeRatio;
+    let itemHeight = itemWidth / cropRatio;
 
     if (item && cubeImages === false) {
       const ratio = get(item, 'width') / get(item, 'height');
@@ -219,7 +219,7 @@ export default class LeanGallery extends React.Component {
   // #region Image
   resizeUrl({ item }) {
     const { styles, resizeMediaUrl } = this.props;
-    const { cubeType, imageQuality, cubeRatio, cubeImages } = styles;
+    const { cubeType, imageQuality, cropRatio, cubeImages } = styles;
     const { itemStyle } = this.state;
 
     const { url, mediaUrl, src } = item;
@@ -229,7 +229,7 @@ export default class LeanGallery extends React.Component {
 
     const width = (cubeImages === true && itemStyle.width) || itemSize.width;
     const height =
-      (cubeImages === true && itemStyle.height) || itemSize.height / cubeRatio;
+      (cubeImages === true && itemStyle.height) || itemSize.height / cropRatio;
 
     const focalPoint = false;
 
@@ -323,7 +323,7 @@ export default class LeanGallery extends React.Component {
       this.setState({
         itemStyle: {
           width: this.clientWidth,
-          height: Math.round(this.clientWidth / styles.cubeRatio),
+          height: Math.round(this.clientWidth / styles.cropRatio),
         },
       });
     }
