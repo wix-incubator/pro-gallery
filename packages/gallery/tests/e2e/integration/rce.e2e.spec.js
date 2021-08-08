@@ -18,10 +18,10 @@ describe('RCE Integration test', () => {
   });
   it('should match screenshot with default RCE styles', async () => {
     await driver.navigate({
+      layoutParams: { gallerySpacing: 0 },
       galleryLayout: 2,
       gallerySizeType: 'px',
       gallerySizePx: 300,
-      galleryMargin: 0,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       cubeRatio: 1,
       galleryThumbnailsAlignment: 'bottom',
@@ -52,10 +52,11 @@ describe('RCE Integration test', () => {
   });
   it('should match screenshot with mibile and title styles for RCE', async () => {
     const styleParams = {
+      layoutParams: { gallerySpacing: 0 },
+
       galleryLayout: 2,
       gallerySizeType: 'px',
       gallerySizePx: 300,
-      galleryMargin: 0,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       cubeRatio: 1,
       galleryThumbnailsAlignment: 'bottom',

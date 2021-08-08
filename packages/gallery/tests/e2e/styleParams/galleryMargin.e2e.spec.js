@@ -3,7 +3,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('galleryMargin - e2e', () => {
+describe('gallerySpacing - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -16,8 +16,9 @@ describe('galleryMargin - e2e', () => {
   });
   it('should set the gallery with a margin of 100px ', async () => {
     await driver.navigate({
+      layoutParams: { gallerySpacing: 100 },
+
       galleryLayout: -1,
-      galleryMargin: 100,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

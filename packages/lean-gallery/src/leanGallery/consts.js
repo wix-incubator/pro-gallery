@@ -20,6 +20,8 @@ export const handledStyleParams = {
 
 //these params must be set to these exact values in order for the lean gallery to render well
 export const fixedStyleParams = {
+  layoutParams: { gallerySpacing: 0 },
+
   allowLeanGallery: true,
   cubeImages: true,
   galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID],
@@ -35,7 +37,6 @@ export const fixedStyleParams = {
   rotatingGroupTypes: '',
   smartCrop: false,
   rotatingCubeRatio: '',
-  galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   placeGroupsLtr: false,

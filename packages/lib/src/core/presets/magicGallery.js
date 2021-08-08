@@ -1,6 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { featureManager } from '../helpers/versionsHelper';
+import { assignByString } from '../helpers/stylesUtils';
 
 const fixToMagic = (styles) => {
   let presetStyles = { ...styles };
@@ -15,7 +16,11 @@ const fixToMagic = (styles) => {
   presetStyles.oneRow = undefined; // later on in layoutHelper this can be changed if it is false, so not exactly fixed;
   presetStyles.imageMargin = undefined;
   presetStyles.scatter = undefined;
-  presetStyles.galleryMargin = undefined;
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_gallerySpacing',
+    undefined
+  );
   presetStyles.chooseBestGroup = undefined;
   presetStyles.smartCrop = undefined;
   presetStyles.cubeType = undefined;
@@ -86,9 +91,13 @@ const addSeedStyles = (styles) => {
       : 5,
     'imageMargin'
   );
-  res.galleryMargin = featureManager.supports.spacingCalculation
-    ? 0
-    : numFromSeed(0, 5, 'imageMargin');
+  res = assignByString(
+    res,
+    'layoutParams_gallerySpacing',
+    featureManager.supports.spacingCalculation
+      ? 0
+      : numFromSeed(0, 5, 'imageMargin')
+  );
   res.scatter = 0;
   res.rotatingScatter = '';
   res.chooseBestGroup = boolFromSeed('chooseBestGroup');

@@ -43,7 +43,7 @@ class DimensionsHelper {
       if (this.styles.hasThumbnails) {
         const fixedThumbnailSize =
           this.styles.thumbnailSize +
-          this.styles.galleryMargin +
+          this.styles.layoutParams.gallerySpacing +
           3 * this.styles.thumbnailSpacings;
         switch (this.styles.galleryThumbnailsAlignment) {
           case 'top':
@@ -98,7 +98,8 @@ class DimensionsHelper {
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
       return (
-        Number(this.styles.imageMargin / 2) - Number(this.styles.galleryMargin)
+        Number(this.styles.imageMargin / 2) -
+        Number(this.styles.layoutParams.gallerySpacing)
       );
     });
   }

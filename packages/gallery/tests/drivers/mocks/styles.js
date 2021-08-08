@@ -1,4 +1,5 @@
 const styleParams = {
+  layoutParams: { gallerySpacing: 0 },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
@@ -23,7 +24,6 @@ const styleParams = {
   fixedColumns: 0,
   groupsPerStrip: 0,
   imageMargin: 10,
-  galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   gridStyle: 0,

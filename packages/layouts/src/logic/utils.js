@@ -217,14 +217,15 @@ class Utils {
       convertedContainer.galleryWidth =
         container.width +
         ((styleParams.imageMargin / 2 || 0) -
-          (styleParams.galleryMargin || 0)) *
+          (styleParams.layoutParams.gallerySpacing || 0)) *
           2;
       delete convertedContainer.width;
     }
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {
       convertedContainer.galleryHeight =
         container.height +
-        ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0));
+        ((styleParams.imageMargin / 2 || 0) -
+          (styleParams.layoutParams.gallerySpacing || 0));
       delete convertedContainer.height;
     }
     if (

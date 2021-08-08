@@ -43,6 +43,7 @@ class galleryDriver {
     };
 
     this.styleParams = {
+      layoutParams: { gallerySpacing: 1 },
       gotStyleParams: true,
       selectedLayout: 0,
       isVertical: false,
@@ -66,7 +67,6 @@ class galleryDriver {
       collageAmount: 0.8,
       collageDensity: 0.8,
       imageMargin: 5,
-      galleryMargin: 1,
       viewMode: 'preview',
       enableInfiniteScroll: true,
       itemClick: 'expand',

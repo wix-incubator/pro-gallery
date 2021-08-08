@@ -1354,7 +1354,7 @@ class SlideshowView extends GalleryComponent {
       margin:
         -1 *
         (this.props.styleParams.imageMargin / 2 -
-          this.props.styleParams.galleryMargin),
+          this.props.styleParams.layoutParams.gallerySpacing),
     };
   }
 

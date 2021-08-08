@@ -182,7 +182,7 @@ class GalleryView extends GalleryComponent {
         <div
           id="pro-gallery-margin-container"
           style={{
-            margin: styleParams.galleryMargin + 'px',
+            margin: styleParams.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
             width: this.props.container.galleryWidth - styleParams.imageMargin,
             overflow: 'visible',

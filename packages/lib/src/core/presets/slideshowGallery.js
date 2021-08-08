@@ -3,6 +3,7 @@ import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import ARROWS_VERTICAL_POSITION from '../../common/constants/arrowsVerticalPosition';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
+import { assignByString } from '../helpers/stylesUtils';
 
 const fixToSlideshow = (styles) => {
   let presetStyles = { ...styles };
@@ -12,7 +13,7 @@ const fixToSlideshow = (styles) => {
   presetStyles.cubeImages = true;
   presetStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW;
   presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
-  presetStyles.galleryMargin = 0;
+  presetStyles = assignByString(presetStyles, 'layoutParams_gallerySpacing', 0);
   presetStyles.isVertical = false;
   presetStyles.groupSize = 1;
   presetStyles.groupTypes = '1';

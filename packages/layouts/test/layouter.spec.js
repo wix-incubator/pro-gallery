@@ -21,6 +21,7 @@ describe('Layouter', () => {
   beforeEach(() => {
     const items = getItems();
     styleParams = {
+      layoutParams: { gallerySpacing: 0},
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       isVertical: false,
       targetItemSize: 200,
@@ -35,7 +36,6 @@ describe('Layouter', () => {
       collageAmount: 0.9,
       collageDensity: 0.9,
       minItemSize: 20,
-      galleryMargin: 0,
       imageMargin: 10,
       scatter: 0,
       rotatingScatter: '',
