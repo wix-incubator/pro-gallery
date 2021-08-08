@@ -10,6 +10,7 @@ import GALLERY_CONSTS from '../constants'
 
 class Utils {
   constructor() {
+    console.log('local lib utils2')
     this._cache = {};
     this._hash2int = {};
     this._params = {};

@@ -4,8 +4,12 @@ import {
   NEW_PRESETS,
   defaultStyles,
   galleryOptions,
+  nir,
 } from 'pro-gallery-lib';
 
+console.log('local calling nir from playground')
+console.log(nir('moshe'))
+console.log('local calling nir from playground')
 const defaultStyleParams = defaultStyles;
 Object.entries(galleryOptions).forEach(
   ([styleParam, settings]) =>

@@ -1,6 +1,7 @@
 import GALLERY_CONSTS from './constants';
 import coreStyles from './coreStyles';
 
+console.log('local default defaultStyles');
 const defaultStyles = Object.assign({}, coreStyles, {
   gallerySize: 30,
   rotatingGroupTypes: '',

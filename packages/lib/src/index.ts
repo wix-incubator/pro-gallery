@@ -6,6 +6,7 @@ export { default as defaultStyles } from './common/defaultStyles';
 export { default as coreStyles } from './common/coreStyles';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
+export { default as nir } from './core/helpers/yonatan';
 export { default as processLayouts } from './core/helpers/layoutHelper';
 export { featureManager } from './core/helpers/versionsHelper';
 export { addPresetStyles } from './core/presets/presets';
