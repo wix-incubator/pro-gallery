@@ -24,7 +24,7 @@ export default class Layouter {
 
   updateParams(layoutParams) {
     this.srcItems = layoutParams.items;
-    this.styleParams = utils.convertStyleParams(layoutParams.styleParams);
+    this.styleParams = layoutParams.styleParams;
     this.container = utils.convertContainer(
       layoutParams.container,
       this.styleParams
