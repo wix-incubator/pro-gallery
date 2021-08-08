@@ -70,7 +70,7 @@ export default class ItemHover extends GalleryComponent {
       overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
-
+    console.log(width);
     if (isHorizontal) {
       width += -2 * overlayPadding;
       overlaySize = Math.min(
@@ -94,6 +94,7 @@ export default class ItemHover extends GalleryComponent {
       overlayHeight = overlaySize;
       overlayWidth = width - 2 * overlayPadding;
     }
+    console.log(overlaySize);
     // switch (overlayPosition) {
     //   case GALLERY_CONSTS.overlayPositions.RIGHT:
     //     // marginLeft += width - overlayWidth;
