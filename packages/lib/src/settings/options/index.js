@@ -52,7 +52,7 @@ import calculateTextBoxWidthMode from './calculateTextBoxWidthMode';
 import chooseBestGroup from './chooseBestGroup';
 import imageLoadingMode from './imageLoadingMode';
 import cropOnlyFill from './cropOnlyFill';
-import numberOfGroupsPerRow from './numberOfGroupsPerRow';
+import layoutParams_numberOfGroupsPerRow from './numberOfGroupsPerRow';
 import fixedColumns from './fixedColumns';
 import rotatingGroupTypes from './rotatingGroupTypes';
 import arrowsPosition from './arrowsPosition';
@@ -148,7 +148,7 @@ export default {
   chooseBestGroup,
   imageLoadingMode,
   cropOnlyFill,
-  numberOfGroupsPerRow,
+  layoutParams_numberOfGroupsPerRow,
   fixedColumns,
   rotatingGroupTypes,
   arrowsPosition,
