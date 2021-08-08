@@ -13,22 +13,21 @@ class DiffsReporter {
     this._options = options;
   }
   onRunComplete(contexts, results) {
-    const { CI, GITHUB_REF } = process.env;
+    const { CI, TRAVIS_BRANCH, TRAVIS_COMMIT_MESSAGE } = process.env;
     if (!CI) {
       console.log('Not in CI, skipping generating and publishing test report');
       return;
     }
     if (results.numFailedTests && results.snapshot.unmatched) {
       try {
-        const branchName = GITHUB_REF.split('/').pop();
         jestStareProcessor(results, {
-          reportTitle: branchName,
-          reportHeadline: '',
+          reportTitle: TRAVIS_BRANCH,
+          reportHeadline: TRAVIS_COMMIT_MESSAGE,
           hidePassing: true,
         });
         const reportPath = path.resolve(process.cwd(), 'jest-stare');
         const domain = `${formatBranchName(
-          branchName
+          TRAVIS_BRANCH
         )}.pro-gallery-report.surge.sh/`;
         console.log(`Publishing test report to ${domain}`);
         exec(`npx surge --project ${reportPath} --domain ${domain}`);
