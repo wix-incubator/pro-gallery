@@ -6,7 +6,10 @@ import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { List, Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { SECTIONS, settingsManager } from '../../constants/settings';
-import { INPUT_TYPES, flattenObject } from 'pro-gallery-lib';
+import { 
+  INPUT_TYPES, 
+  // flattenObject 
+} from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
 import { throttle } from "../../utils/utils";
@@ -21,6 +24,28 @@ import {utils} from 'pro-gallery-lib';
 import {StylesList} from './StyleList';
 
 const Community = React.lazy(() => import('../Community'));
+
+function flattenObject(ob) {
+  var toReturn = {};
+
+  for (var i in ob) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (!ob.hasOwnProperty(i)) continue;
+
+    if (typeof ob[i] == 'object' && ob[i] !== null) {
+      var flatObject = flattenObject(ob[i]);
+      for (var x in flatObject) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (!flatObject.hasOwnProperty(x)) continue;
+
+        toReturn[i + '_' + x] = flatObject[x];
+      }
+    } else {
+      toReturn[i] = ob[i];
+    }
+  }
+  return toReturn;
+}
 
 function SideBar({ items, blueprintsManager, visible }) {
   const {
