@@ -8,7 +8,7 @@ const getVersion = f => json(f).version
 const lernaVersion = getVersion(path.join(pacakgesDir, '../lerna.json'))
 const packageFolderNames = fs.readdirSync(pacakgesDir)
 
-it('should make sure that only lerna manages the internal version numbers (relevant for lerna Fixed/Locked mode)', () => {
+it('version numbers in all pacakages remain the same', () => {
   const uniqVersionNumbers = packageFolderNames
     .map(pJsonPath)
     .map(getVersion)
@@ -18,7 +18,7 @@ it('should make sure that only lerna manages the internal version numbers (relev
   expect(uniqVersionNumbers).toContain(lernaVersion)
 })
 
-it('should make sure versions are consumed correctly by dependants', () => {
+it('consumption of dependencies in every pacakge is done with the same version number', () => {
   const packageNames = packageFolderNames
     .map(pJsonPath)
     .map(json)
@@ -33,6 +33,7 @@ it('should make sure versions are consumed correctly by dependants', () => {
     Object
       .entries(json.dependencies || {})
       .filter(e => packageNames.includes(e[0]))
-      .forEach(e => expect(e[1]).toMatch(lernaVersion))
+      .forEach(e => expect(e[1]).toMatch(lernaVersion)) // using toMatch and not toEqual because "^4.0.15-beta.31" and "4.0.15-beta.31" is OK
+ 
   }
 })
