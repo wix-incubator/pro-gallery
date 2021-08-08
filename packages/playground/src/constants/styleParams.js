@@ -6,20 +6,9 @@ import {
   galleryOptions,
   // flattenObject,
   // flatToNested,
+  assignByString,
 } from 'pro-gallery-lib';
 
-function assignByString(Obj, string, value) {
-  let _obj = { ...Obj };
-  let keyArr = string.split('_');
-  let assignedProperty = keyArr.pop();
-  let pointer = _obj;
-  keyArr.forEach((key) => {
-    if (!pointer[key]) pointer[key] = {};
-    pointer = pointer[key];
-  });
-  pointer[assignedProperty] = value;
-  return _obj;
-}
 
 function flattenObject(ob) {
   var toReturn = {};
@@ -57,11 +46,11 @@ Object.entries(galleryOptions).forEach(
 );
 
 export const getInitialStyleParams = () => {
-  const savedStyleParams = getStyleParamsFromUrl();
-  return ({
+  const savedStyleParams = getStyleParamsFromUrl(window.location.search);
+  return {
     ...defaultStyleParams,
     ...savedStyleParams,
-  });
+  };
 };
 
 const formatValue = (val) => {
@@ -112,9 +101,9 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
   return true;
 };
 
-export const getStyleParamsFromUrl = () => {
+export const getStyleParamsFromUrl = (locationSearchString) => {
   try {
-    let styleParams = window.location.search
+    let styleParams = locationSearchString
     .replace('?', '')
     .split('&')
     .map((styleParam) => styleParam.split('='))

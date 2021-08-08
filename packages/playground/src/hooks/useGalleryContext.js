@@ -121,7 +121,7 @@ export function useGalleryContext(
     // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
     const styleParams = flatToNested({
       ...getInitialStyleParams(),
-      ...getStyleParamsFromUrl(),
+      ...getStyleParamsFromUrl(window.location.search),
       [newProp]: value,
     })
     console.log('setting new context and requesting BP', styleParams.layoutParams)
