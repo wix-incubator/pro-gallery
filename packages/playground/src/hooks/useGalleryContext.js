@@ -8,28 +8,9 @@ import { addPresetStyles } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
 import { 
   utils, 
-  // flatToNested
+  flatToNested
 } from 'pro-gallery-lib';
 
-function assignByString(Obj, string, value) {
-  let _obj = { ...Obj };
-  let keyArr = string.split('_');
-  let assignedProperty = keyArr.pop();
-  let pointer = _obj;
-  keyArr.forEach((key) => {
-    if (!pointer[key]) pointer[key] = {};
-    pointer = pointer[key];
-  });
-  pointer[assignedProperty] = value;
-  return _obj;
-}
-
-function flatToNested(ob) {
-  return Object.entries(ob).reduce(
-    (obj, [styleParam, value]) => assignByString(obj, styleParam, value),
-    {}
-  );
-}
 
 export function useGalleryContext(
   blueprintsManager,

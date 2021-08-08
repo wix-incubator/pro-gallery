@@ -4,40 +4,10 @@ import {
   NEW_PRESETS,
   defaultStyles,
   galleryOptions,
-  // flattenObject,
-  // flatToNested,
-  assignByString,
+  flattenObject,
+  flatToNested,
 } from 'pro-gallery-lib';
 
-
-function flattenObject(ob) {
-  var toReturn = {};
-
-  for (var i in ob) {
-    // eslint-disable-next-line no-prototype-builtins
-    if (!ob.hasOwnProperty(i)) continue;
-
-    if (typeof ob[i] == 'object' && ob[i] !== null) {
-      var flatObject = flattenObject(ob[i]);
-      for (var x in flatObject) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (!flatObject.hasOwnProperty(x)) continue;
-
-        toReturn[i + '_' + x] = flatObject[x];
-      }
-    } else {
-      toReturn[i] = ob[i];
-    }
-  }
-  return toReturn;
-}
-
-function flatToNested(ob) {
-  return Object.entries(ob).reduce(
-    (obj, [styleParam, value]) => assignByString(obj, styleParam, value),
-    {}
-  );
-}
 
 const defaultStyleParams = flattenObject(defaultStyles);
 Object.entries(galleryOptions).forEach(
