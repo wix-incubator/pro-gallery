@@ -978,10 +978,16 @@ class SlideshowView extends GalleryComponent {
     // arrows on info? True : False
     const arrowsOnInfo = arrowsVerticalPosition === GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER;
 
+    // arrows too big for info? True : False
+    const arrowsDontFitInfo = isSlideshow ?
+    arrowsOnInfo && (slideshowInfoSize < navArrowsContainerHeight) :
+    GALLERY_CONSTS.isAboveOrBelowPlacement(titlePlacement, isSlideshow) && arrowsOnInfo && (textBoxHeight < navArrowsContainerHeight);
+
+    // Should not render nav arrows? True : False
     const shouldNotRenderNavArrows =
       this.props.isPrerenderMode ||
       !showArrows ||
-      isSlideshow && arrowsOnInfo && (slideshowInfoSize < navArrowsContainerHeight) ||
+      arrowsDontFitInfo ||
       this.props.galleryStructure.columns.some((column) => {
         const allRenderedGroups =
           column.groups.filter((group) => group.rendered) || [];

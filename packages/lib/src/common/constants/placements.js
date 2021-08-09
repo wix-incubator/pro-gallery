@@ -62,13 +62,21 @@ const isHoverAndExternalVerticalPlacement = (placement) => {
   );
 };
 
-// Gets placement and isSlideshow from current style, returns whether there's a vertical info placement
+// (placement, isSlideshow) => Any vertical info placement (above \ below \ vertical alternate)? True : False
 const isVerticalPlacement = (placement, isSlideshow) => {
   return (
     isExternalBelowPlacement(placement) ||
     isExternalAbovePlacement(placement) ||
     isHoverAndExternalVerticalPlacement(placement) ||
     isSlideshow
+  );
+};
+
+// (placement, isSlideshow) => Above \ Below placements ? True : False
+const isAboveOrBelowPlacement = (placement, isSlideshow) => {
+  return (
+    isVerticalPlacement(placement, isSlideshow) &&
+    !hasExternalVerticalAlternatePlacement(placement)
   );
 };
 
@@ -91,4 +99,5 @@ export {
   isExternalVerticalPlacement,
   isExternalHorizontalPlacement,
   isVerticalPlacement,
+  isAboveOrBelowPlacement,
 };
