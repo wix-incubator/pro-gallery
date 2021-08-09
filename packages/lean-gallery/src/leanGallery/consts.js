@@ -8,7 +8,7 @@ export const handledStyleParams = {
   gallerySizePx: 300,
   gallerySize: 30,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   fixedColumns: 0,
   imageMargin: 10,
   gridStyle: 0,
