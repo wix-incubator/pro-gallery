@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customRenderers,
+  customComponents,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - textBoxBorderColor', () => {
@@ -14,7 +14,7 @@ describe('styleParam - textBoxBorderColor', () => {
     container,
     items: images2,
     styles: styleParams,
-    ...customRenderers,
+    customComponents,
   };
   beforeEach(() => {
     driver = new GalleryDriver();
