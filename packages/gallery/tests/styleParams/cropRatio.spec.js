@@ -4,7 +4,7 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
 
-describe('styleParam - cubeRatio', () => {
+describe('styleParam - cropRatio', () => {
   let driver;
   const initialProps = {
     container,
@@ -20,7 +20,7 @@ describe('styleParam - cubeRatio', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
-      cubeRatio: 1,
+      cropRatio: 1,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -34,7 +34,7 @@ describe('styleParam - cubeRatio', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
-      cubeRatio: 2,
+      cropRatio: 2,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -48,7 +48,7 @@ describe('styleParam - cubeRatio', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
-      cubeRatio: 1,
+      cropRatio: 1,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
