@@ -430,11 +430,11 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'style',
       'html',
-      'cubeRatio',
+      'cropRatio',
       'isPrerenderMode',
     ]);
 
-    
+
     return (
       <TextItem
         {...props}
