@@ -969,7 +969,7 @@ class SlideshowView extends GalleryComponent {
       GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? '+' :
       '-'} ${infoSpace / 2}px)`,
     };
-    
+
     const arrowsPos =
       scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
