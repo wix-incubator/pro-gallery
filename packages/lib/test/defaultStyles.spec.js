@@ -27,7 +27,7 @@ function expectedStyles() {
     collageDensity: 0.8,
     cubeImages: false,
     cubeType: 'fill',
-    cubeRatio: 1,
+    cropRatio: 1,
     cropOnlyFill: false,
     smartCrop: false,
     rotatingCropRatios: '',

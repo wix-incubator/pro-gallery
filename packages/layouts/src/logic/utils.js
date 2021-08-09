@@ -83,30 +83,63 @@ class Utils {
     return _obj;
   }
 
+  flattenObject(ob) {
+    var toReturn = {};
+
+    for (var i in ob) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (!ob.hasOwnProperty(i)) continue;
+
+      if (typeof ob[i] == 'object' && ob[i] !== null) {
+        var flatObject = this.flattenObject(ob[i]);
+        for (var x in flatObject) {
+          // eslint-disable-next-line no-prototype-builtins
+          if (!flatObject.hasOwnProperty(x)) continue;
+
+          toReturn[i + '_' + x] = flatObject[x];
+        }
+      } else {
+        toReturn[i] = ob[i];
+      }
+    }
+    return toReturn;
+  }
+
+  flatToNested(ob) {
+    return Object.entries(ob).reduce(
+      (obj, [styleParam, value]) => this.assignByString(obj, styleParam, value),
+      {}
+    );
+  }
+
   addDefaultStyleParams(styleParams) {
     //default styleParams
-    let _styles = { ...styleParams };
-    _styles.cubeImages = false;
-    _styles.cubeType = 'fill';
-    _styles.cubeRatio = 1;
-    _styles.rotatingCropRatios = '';
-    _styles.smartCrop = false;
-    _styles.imageMargin = 10;
-    _styles = this.assignByString(_styles, 'layoutParams_gallerySpacing', 0);
-    _styles.scatter = 0;
-    _styles.rotatingScatter = '';
-    _styles.chooseBestGroup = true;
-    _styles.groupSize = 3;
-    _styles.groupTypes = '1,2h,2v,3h,3v,3t,3b,3l,3r';
-    _styles.rotatingGroupTypes = '';
-    _styles.isVertical = true;
-    _styles.minItemSize = 120;
-    _styles.scrollDirection = 0;
-    _styles.targetItemSize = 500;
-    _styles.collageDensity = 50;
-    _styles.fixedColumns = 0;
-    _styles.columnWidths = '';
+    const defaultSP = {
+      layoutParams: { gallerySpacing: 0 },
+      cubeImages: false,
+      cubeType: 'fill',
+      cubeRatio: 1,
+      rotatingCropRatios: '',
+      smartCrop: false,
+      imageMargin: 10,
+      scatter: 0,
+      rotatingScatter: '',
+      chooseBestGroup: true,
+      groupSize: 3,
+      groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
+      rotatingGroupTypes: '',
+      isVertical: true,
+      minItemSize: 120,
+      scrollDirection: 0,
+      targetItemSize: 500,
+      collageDensity: 50,
+      fixedColumns: 0,
+      columnWidths: '',
+    };
 
+    const flatSP = this.flattenObject(styleParams);
+    const flatDefaultSP = this.flattenObject(defaultSP);
+    let _styles = this.flatToNested({ ...flatDefaultSP, ...flatSP });
     return _styles;
   }
 

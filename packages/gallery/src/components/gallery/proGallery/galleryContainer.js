@@ -50,7 +50,7 @@ export class GalleryContainer extends React.Component {
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      gotFirstScrollEvent: false,
+      gotFirstScrollEvent: (props.activeIndex >= 0),
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
@@ -390,6 +390,11 @@ export class GalleryContainer extends React.Component {
     isContinuousScrolling = false,
   ) {
     if (itemIdx >= 0) {
+      if(!this.state.gotFirstScrollEvent) {
+        this.setState({
+          gotFirstScrollEvent:true,
+        });
+      }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {
@@ -411,6 +416,7 @@ export class GalleryContainer extends React.Component {
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
           autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
+          imageMargin: this.state.styles.imageMargin,
         };
         return scrollToItemImp(scrollParams);
       } catch (e) {
@@ -465,6 +471,7 @@ export class GalleryContainer extends React.Component {
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
           autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
+          imageMargin: this.state.styles.imageMargin,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {

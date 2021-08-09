@@ -2,9 +2,9 @@
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import PLACEMENTS, {
-  hasVerticalPlacement,
+  hasExternalVerticalPlacement,
   hasHoverPlacement,
-  hasHorizontalPlacement,
+  hasExternalHorizontalPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
@@ -375,7 +375,7 @@ function getHeightFromStyleParams(styleParams, textBoxHeight) {
   let additionalHeight = textBoxHeight;
   if (
     textBoxHeight > 0 &&
-    hasVerticalPlacement(styleParams.titlePlacement) &&
+    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
     styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
   ) {
     additionalHeight += styleParams.textImageSpace;
@@ -420,7 +420,7 @@ function shouldShowTextRightOrLeft(
 
   return (
     allowedByLayoutConfig &&
-    hasHorizontalPlacement(titlePlacement) &&
+    hasExternalHorizontalPlacement(titlePlacement) &&
     customExternalInfoRendererExists
   );
 }
@@ -445,7 +445,7 @@ function shouldShowTextBoxAboveOrBelow(
   customExternalInfoRendererExists
 ) {
   return (
-    hasVerticalPlacement(styleParams.titlePlacement) &&
+    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
     customExternalInfoRendererExists
   );
 }
@@ -455,7 +455,7 @@ function isSlideshowFont(styles) {
   if (galleryLayout === LAYOUTS.SLIDESHOW) {
     return true;
   }
-  if (hasVerticalPlacement(styles.titlePlacement)) {
+  if (hasExternalVerticalPlacement(styles.titlePlacement)) {
     if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
       return true;
     } else if (galleryLayout === 1 && styles.isVertical) {
