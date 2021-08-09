@@ -2491,7 +2491,7 @@ fs-extra@^8.1.0:
 
 fs-minipass@^1.2.5:
   version "1.2.7"
-  resolved "https://registry.npmjs.org/fs-minipass/-/fs-minipass-1.2.7.tgz#ccff8570841e7fe4265693da88936c55aed7f7c7"
+  resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-1.2.7.tgz#ccff8570841e7fe4265693da88936c55aed7f7c7"
   integrity sha512-GWSSJGFy4e9GUeCcbIkED+bgAoFyj7XF1mV8rma3QW4NIqX9Kyx79N/PF61H5udOV3aY1IaMLs6pGbH71nlCTA==
   dependencies:
     minipass "^2.6.0"
@@ -3646,7 +3646,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.2.1:
+lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.21, lodash@^4.2.1:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -3910,7 +3910,7 @@ minimist-options@^3.0.1:
 
 minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
-  resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
 
 minipass@^2.3.5, minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0:
@@ -3923,7 +3923,7 @@ minipass@^2.3.5, minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0:
 
 minizlib@^1.2.1:
   version "1.3.3"
-  resolved "https://registry.npmjs.org/minizlib/-/minizlib-1.3.3.tgz#2290de96818a34c29551c8a8d301216bd65a861d"
+  resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-1.3.3.tgz#2290de96818a34c29551c8a8d301216bd65a861d"
   integrity sha512-6ZYMOEnmVsdCeTJVE0W9ZD+pVnE8h9Hma/iOwwRDsdQoePpoX56/8B6z3P9VNwppJuBKNRuFDRNRqRWexT9G9Q==
   dependencies:
     minipass "^2.9.0"
@@ -4671,28 +4671,28 @@ prettier@^2.1.2:
   resolved "https://registry.npmjs.org/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
   integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
-pro-gallery-lib@3.1.29:
-  version "3.1.29"
-  resolved "https://registry.npmjs.org/pro-gallery-lib/-/pro-gallery-lib-3.1.29.tgz#fd1b7f32190b31506861eb8f04ea29e6665464e5"
-  integrity sha512-R17fx7nbvZuGov14dqi0PsGe6KMgW6uSEXJwSe2dljDAOaix9CvAmr0IFFuTy+kxGOTgU+SY/5jQkfXFKz3t/w==
+pro-gallery-lib@3.1.37:
+  version "3.1.37"
+  resolved "https://registry.yarnpkg.com/pro-gallery-lib/-/pro-gallery-lib-3.1.37.tgz#82b19e61e4e33294c089bd77346d7478b2ba9ea8"
+  integrity sha512-pNJxzOSg90JQ08J8+uPwM/HMoM78BTffAUtr4Cd0hIbCen/JKfCwlDmcGIpS1/FElgLLVIYAOJpodtBuM4WWEg==
   dependencies:
-    pro-layouts "3.1.28"
+    pro-layouts "3.1.37"
 
-pro-gallery@^3.0.0:
-  version "3.1.29"
-  resolved "https://registry.npmjs.org/pro-gallery/-/pro-gallery-3.1.29.tgz#a5a92f08591d3c5289d28d7f96ee2b73984db375"
-  integrity sha512-D9OdqB+qKpdkSsNPbc/CaFtngMGygjs6aZz1VXZnKzKICFV5XneU3l5esnfY1Qio6GwDHOSGHAl1FqDyMZi7aw==
+pro-gallery@3.1.38:
+  version "3.1.38"
+  resolved "https://registry.yarnpkg.com/pro-gallery/-/pro-gallery-3.1.38.tgz#8bd4f9485a7cfd62b36f3000ab036d3bbc009f76"
+  integrity sha512-z1tKRoOHXfg6Z4TwbVu2umrlyaSYeLr+w0Xl8Pxxwi7MwPr0JKpXbZaqc31GFtXcF3PII22G86KXeWFPlUl+Jg==
   dependencies:
     "@vimeo/player" "2.8.2"
     hls.js "^0.14.12"
-    pro-gallery-lib "3.1.29"
-    pro-layouts "3.1.28"
+    pro-gallery-lib "3.1.37"
+    pro-layouts "3.1.37"
     react-player "^2.6.2"
 
-pro-layouts@3.1.28:
-  version "3.1.28"
-  resolved "https://registry.npmjs.org/pro-layouts/-/pro-layouts-3.1.28.tgz#296bf9c2490ce7d3e62a1e79db6b2e62eb84a9cc"
-  integrity sha512-KkAmKI8jbojl0v9zdo4keqNptItBcxtK+E0OFBFnwmeJBntOADQE+/zhNlc5uGWAqjn/f7Sjue8gFgq7xvHX6g==
+pro-layouts@3.1.37:
+  version "3.1.37"
+  resolved "https://registry.yarnpkg.com/pro-layouts/-/pro-layouts-3.1.37.tgz#27c47f2fd8bde2b434311b2a898f54d294551bf7"
+  integrity sha512-VOnnqjKRsObyXEAUGYAZF/VyxuNWzym7kiSQX8tyOy5qrNO6Vx9SHfqHKuJ82kFbZ3CnVbMXv7UpHWOXRXRGRw==
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
@@ -5720,9 +5720,9 @@ supports-color@^7.1.0:
     has-flag "^4.0.0"
 
 tar@^4.4.10, tar@^4.4.12, tar@^4.4.8:
-  version "4.4.13"
-  resolved "https://registry.npmjs.org/tar/-/tar-4.4.13.tgz#43b364bc52888d555298637b10d60790254ab525"
-  integrity sha512-w2VwSrBoHa5BsSyH+KxEqeQBAllHhccyMFVHtGtdMpF4W7IRWfZjFiQceJPChOeTsSDVUpER2T8FA93pr0L+QA==
+  version "4.4.15"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-4.4.15.tgz#3caced4f39ebd46ddda4d6203d48493a919697f8"
+  integrity sha512-ItbufpujXkry7bHH9NpQyTXPbJ72iTlXgkBAYsAjDXk3Ds8t/3NfO5P4xZGy7u+sYuQUbimgzswX4uQIEeNVOA==
   dependencies:
     chownr "^1.1.1"
     fs-minipass "^1.2.5"
