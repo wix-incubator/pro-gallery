@@ -26,6 +26,7 @@ export interface GalleryProps {
   settings?: Settings;
   proGalleryRegionLabel?: string;
   proGalleryRole?: string;
+  translations?: Record<string, string>;
   [key: string]: any;
 }
 
