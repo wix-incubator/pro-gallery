@@ -16,7 +16,7 @@ describe('styleParam - overlaySize', () => {
     driver = new GalleryDriver();
   });
 
-  it('should set the correct overlaySize according to size type-pixel', async () => {
+  it('should set the correct overlaySize according to size type - PIXEL', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
@@ -32,21 +32,20 @@ describe('styleParam - overlaySize', () => {
     driver.detach.proGallery();
   });
 
-  it('should set the correct overlaySize according to size type-percent', async () => {
+  it('should set the correct overlaySize according to size type- PERCENT', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
       overlaySizeType: 'PERCENT',
       overlaySize: 50,
       overlayPadding: 0,
-      width: 246,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
     const overlaySizeImage = driver.find.selector('.gallery-item-hover').at(0);
     console.log(overlaySizeImage.props().style);
-    const { width } = overlaySizeImage.props().style;
-    expect(width).to.eq(210);
+    const { width, height } = overlaySizeImage.props().style;
+    expect(width).to.eq(height / 2);
     driver.detach.proGallery();
   });
 });
