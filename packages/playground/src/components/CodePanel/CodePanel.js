@@ -26,7 +26,7 @@ function CodePanel() {
 
   const getStyleParams = () => {
     const {galleryLayout} = styleParams;
-    return Object.entries({galleryLayout, ...getStyleParamsFromUrl()})
+    return Object.entries({galleryLayout, ...getStyleParamsFromUrl(window.location.search)})
       .reduce((acc, [key, value]) => {
         const val = typeof value === 'string' ? `'${value}'` : value;
         return acc.concat(`      ${key}: ${val},`);
