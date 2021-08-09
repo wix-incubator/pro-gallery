@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Layouter } from 'pro-layouts';
-import {defaultStyles, addPresetStyles, dimensionsHelper, itemsHelper, processLayouts, GALLERY_CONSTS} from 'pro-gallery-lib'
+import {defaultStyles, addPresetStyles, dimensionsHelper, ItemsHelper, processLayouts, GALLERY_CONSTS} from 'pro-gallery-lib'
 
 class Blueprints {
   createBlueprint({
