@@ -43,7 +43,6 @@ describe('styleParam - overlaySize', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const overlaySizeImage = driver.find.selector('.gallery-item-hover').at(0);
-    console.log(overlaySizeImage.props().style);
     const { width, height } = overlaySizeImage.props().style;
     expect(width).to.eq(height / 2);
     driver.detach.proGallery();
