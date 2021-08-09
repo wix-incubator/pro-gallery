@@ -44,6 +44,7 @@ export default class ProGallery extends GalleryComponent {
       settings: this.props.settings || {},
       offsetTop: this.props.offsetTop,
       itemsLoveData: this.props.itemsLoveData || {},
+      proGalleryRegionLabel: this.props.proGalleryRegionLabel,
     };
   }
 
