@@ -944,6 +944,7 @@ class SlideshowView extends GalleryComponent {
     const { hideLeftArrow, hideRightArrow } = this.state;
 
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
+
     const { galleryHeight } = this.props.container;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
@@ -968,12 +969,12 @@ class SlideshowView extends GalleryComponent {
       GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? '+' :
       '-'} ${infoSpace / 2}px)`,
     };
+    
     const arrowsPos =
       scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-
 
     // arrows on info? True : False
     const arrowsOnInfo = arrowsVerticalPosition === GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER;
