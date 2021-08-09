@@ -50,7 +50,7 @@ export const fixedStyleParams = {
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   titlePlacement: (sp) => {
     return (
-      GALLERY_CONSTS.isVerticalPlacement(sp.titlePlacement) ||
+      GALLERY_CONSTS.isExternalVerticalPlacement(sp.titlePlacement) ||
       sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW ||
       (GALLERY_CONSTS.isHoverPlacement(sp.titlePlacement) &&
         !sp.loveButton &&
