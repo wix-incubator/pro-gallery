@@ -286,7 +286,7 @@ class ItemView extends GalleryComponent {
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
-        this.props.customHoverRenderer &&
+        this.props.customComponents.customHoverRenderer &&
         GALLERY_CONSTS.hasHoverPlacement(titlePlacement) &&
         hoveringBehaviour !== GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW &&
         isNewMobileSettings &&
@@ -347,7 +347,7 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getItemHover(imageDimensions) {
-    const { customHoverRenderer, ...props } = this.props;
+    const { customComponents, ...props } = this.props;
     const shouldHover = this.shouldHover();
     return (
       shouldHover && (
@@ -362,8 +362,8 @@ class ItemView extends GalleryComponent {
             handleItemMouseUp: this.handleItemMouseUp,
           }}
           renderCustomInfo={
-            customHoverRenderer
-              ? () => customHoverRenderer(this.getCustomInfoRendererProps())
+            customComponents.customHoverRenderer
+              ? () => customComponents.customHoverRenderer(this.getCustomInfoRendererProps())
               : null
           }
         ></ItemHover>
@@ -482,7 +482,7 @@ class ItemView extends GalleryComponent {
     }
 
     if (styleParams.isSlideshow) {
-      const { customSlideshowInfoRenderer } = this.props;
+      const { customSlideshowInfoRenderer } = this.props.customComponents;
       const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
@@ -587,8 +587,8 @@ class ItemView extends GalleryComponent {
   }
 
   getExternalInfoElement(placement, elementName) {
-    const { styleParams, customInfoRenderer, style } = this.props;
-    if (!customInfoRenderer) {
+    const { styleParams, customComponents, style } = this.props;
+    if (!customComponents.customInfoRenderer) {
       return null;
     }
     let info = null;
@@ -599,7 +599,7 @@ class ItemView extends GalleryComponent {
     const infoWidth =
       style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemExternalInfo = customInfoRenderer(
+    const itemExternalInfo = customComponents.customInfoRenderer(
       this.getCustomInfoRendererProps(),
       placement
     );
