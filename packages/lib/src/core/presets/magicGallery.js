@@ -65,7 +65,7 @@ const addSeedStyles = (styles) => {
   };
 
   res.cubeImages = boolFromSeed('cubeImages');
-  res.cropRatio = numFromSeed(1, 25, 'cropRatio') / 5;
+  res.cropRatio = numFromSeed(1, 25, 'cubeRatio') / 5;
   res.isVertical = boolFromSeed('isVertical');
   res.targetItemSize = numFromSeed(300, 800, 'gallerySize');
   res.collageAmount = numFromSeed(5, 10, 'collageAmount') / 10;
