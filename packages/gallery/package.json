@@ -85,8 +85,7 @@
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
     "reporters": [
-      "default",
-      "<rootDir>/tests/drivers/customReporter.js"
+      "default"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
