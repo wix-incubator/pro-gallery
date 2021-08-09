@@ -25,6 +25,9 @@ export interface GalleryProps {
   eventsListener?: EventsListener;
   createMediaUrl?: CreateMediaUrl;
   settings?: Settings;
+  proGalleryRegionLabel?: string;
+  proGalleryRole?: string;
+  translations?: Record<string, string>;
   customComponents?: CustomComponents;
   [key: string]: any;
 }

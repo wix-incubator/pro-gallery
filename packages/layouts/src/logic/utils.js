@@ -82,7 +82,7 @@ class Utils {
       {
         cubeImages: false,
         cubeType: 'fill',
-        cubeRatio: 1,
+        cropRatio: 1,
         rotatingCropRatios: '',
         smartCrop: false,
         imageMargin: 10,
@@ -116,7 +116,7 @@ class Utils {
     );
     this.insertIfDefined(
       convertedStyleParams,
-      'cubeRatio',
+      'cropRatio',
       convertedStyleParams.cropRatio
     );
     this.insertIfDefined(

@@ -8,7 +8,7 @@ const fixToAlternate = (styles) => {
   presetStyles.galleryLayout = LAYOUTS.ALTERNATE;
   presetStyles.cubeType = 'fill';
   presetStyles.cubeImages = true;
-  presetStyles.cubeRatio = 1;
+  presetStyles.cropRatio = 1;
   presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetStyles.scrollDirection = SCROLL_DIRECTION.VERTICAL;
   presetStyles.galleryMargin = 0;

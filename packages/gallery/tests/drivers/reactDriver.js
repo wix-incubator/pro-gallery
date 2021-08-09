@@ -70,7 +70,7 @@ class galleryDriver {
       viewMode: 'preview',
       enableInfiniteScroll: true,
       itemClick: 'expand',
-      cubeRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
+      cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
       fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       showArrows: true,
