@@ -120,7 +120,7 @@ export default class LeanGallery extends React.Component {
       itemHeight = Math.round((itemWidth - imageMargin / 2) / ratio);
     }
 
-    if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)) {
+    if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement)) {
       itemHeight += textBoxHeight;
     }
 
@@ -483,8 +483,8 @@ function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth) {
     boxSizing: 'border-box',
   };
 
-  const infoAboveOrBelow = GALLERY_CONSTS.hasVerticalPlacement(placement);
-  const infoRightOrLeft = GALLERY_CONSTS.hasHorizontalPlacement(placement);
+  const infoAboveOrBelow = GALLERY_CONSTS.hasExternalVerticalPlacement(placement);
+  const infoRightOrLeft = GALLERY_CONSTS.hasExternalHorizontalPlacement(placement);
 
   return {
     ...commonStyles,
