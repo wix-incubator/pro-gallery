@@ -24,6 +24,8 @@ export interface GalleryProps {
   eventsListener?: EventsListener;
   createMediaUrl?: CreateMediaUrl;
   settings?: Settings;
+  proGalleryRegionLabel?: string;
+  proGalleryRole?: string;
   [key: string]: any;
 }
 

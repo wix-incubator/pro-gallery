@@ -298,7 +298,7 @@ class SlideshowView extends GalleryComponent {
           () => {
             this.onCurrentItemChanged();
             this.isSliding = false;
-            if (isContinuousScrolling) {    
+            if (isContinuousScrolling) {
               this.startAutoSlideshowIfNeeded(this.props.styleParams);
             }
           }
@@ -439,7 +439,7 @@ class SlideshowView extends GalleryComponent {
         );
       }
     }
-  } 
+  }
 
   autoScrollToNextItem = () => {
     if (
@@ -1576,7 +1576,10 @@ class SlideshowView extends GalleryComponent {
         className={this.getClassNames()}
         style={this.getStyles()}
         onKeyDown={this.handleSlideshowKeyPress}
-        {...utils.getAriaAttributes(this.props)}
+        {...utils.getAriaAttributes({
+          proGalleryRole: this.props.proGalleryRole,
+          proGalleryRegionLabel: this.props.proGalleryRegionLabel
+        })}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
