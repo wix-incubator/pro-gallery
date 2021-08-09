@@ -50,7 +50,7 @@ export class GalleryContainer extends React.Component {
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      gotFirstScrollEvent: false,
+      gotFirstScrollEvent: (props.activeIndex >= 0),
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
@@ -291,7 +291,7 @@ export class GalleryContainer extends React.Component {
     id,
     createMediaUrl,
     isPrerenderMode,
-    customComponents,
+    customImageRenderer,
   }) {
     items = items || this.props.items;
     styles = styles || this.props.styles;
@@ -300,8 +300,8 @@ export class GalleryContainer extends React.Component {
     id = id || this.props.id;
     createMediaUrl = createMediaUrl || this.props.createMediaUrl;
 
-    if (typeof customComponents.customImageRenderer === 'function') {
-      ImageRenderer.customImageRenderer = customComponents.customImageRenderer;
+    if (typeof customImageRenderer === 'function') {
+      ImageRenderer.customImageRenderer = customImageRenderer;
     }
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, {
@@ -390,6 +390,11 @@ export class GalleryContainer extends React.Component {
     isContinuousScrolling = false,
   ) {
     if (itemIdx >= 0) {
+      if(!this.state.gotFirstScrollEvent) {
+        this.setState({
+          gotFirstScrollEvent:true,
+        });
+      }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {
@@ -795,7 +800,11 @@ export class GalleryContainer extends React.Component {
           displayShowMore={displayShowMore}
           id={this.props.id}
           activeIndex={this.props.activeIndex || 0}
-          customComponents={this.props.customComponents}
+          customHoverRenderer={this.props.customHoverRenderer}
+          customInfoRenderer={this.props.customInfoRenderer}
+          customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
+          customLoadMoreRenderer={this.props.customLoadMoreRenderer}
+          customNavArrowsRenderer={this.props.customNavArrowsRenderer}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}

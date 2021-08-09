@@ -286,7 +286,7 @@ class ItemView extends GalleryComponent {
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return true;
       } else if (
-        this.props.customComponents.customHoverRenderer &&
+        this.props.customHoverRenderer &&
         GALLERY_CONSTS.hasHoverPlacement(titlePlacement) &&
         hoveringBehaviour !== GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW &&
         isNewMobileSettings &&
@@ -347,7 +347,7 @@ class ItemView extends GalleryComponent {
   //---------------------------------------| COMPONENTS |-----------------------------------------//
 
   getItemHover(imageDimensions) {
-    const { customComponents, ...props } = this.props;
+    const { customHoverRenderer, ...props } = this.props;
     const shouldHover = this.shouldHover();
     return (
       shouldHover && (
@@ -362,8 +362,8 @@ class ItemView extends GalleryComponent {
             handleItemMouseUp: this.handleItemMouseUp,
           }}
           renderCustomInfo={
-            customComponents.customHoverRenderer
-              ? () => customComponents.customHoverRenderer(this.getCustomInfoRendererProps())
+            customHoverRenderer
+              ? () => customHoverRenderer(this.getCustomInfoRendererProps())
               : null
           }
         ></ItemHover>
@@ -482,7 +482,7 @@ class ItemView extends GalleryComponent {
     }
 
     if (styleParams.isSlideshow) {
-      const { customSlideshowInfoRenderer } = this.props.customComponents;
+      const { customSlideshowInfoRenderer } = this.props;
       const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
         height: `${styleParams.slideshowInfoSize}px`,
@@ -524,7 +524,7 @@ class ItemView extends GalleryComponent {
 
   getRightInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasRightPlacement(
+      GALLERY_CONSTS.hasExternalRightPlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -540,7 +540,7 @@ class ItemView extends GalleryComponent {
 
   getLeftInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasLeftPlacement(
+      GALLERY_CONSTS.hasExternalLeftPlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -556,7 +556,7 @@ class ItemView extends GalleryComponent {
 
   getBottomInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasBelowPlacement(
+      GALLERY_CONSTS.hasExternalBelowPlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -572,7 +572,7 @@ class ItemView extends GalleryComponent {
 
   getTopInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasAbovePlacement(
+      GALLERY_CONSTS.hasExternalAbovePlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -587,8 +587,8 @@ class ItemView extends GalleryComponent {
   }
 
   getExternalInfoElement(placement, elementName) {
-    const { styleParams, customComponents, style } = this.props;
-    if (!customComponents.customInfoRenderer) {
+    const { styleParams, customInfoRenderer, style } = this.props;
+    if (!customInfoRenderer) {
       return null;
     }
     let info = null;
@@ -599,7 +599,7 @@ class ItemView extends GalleryComponent {
     const infoWidth =
       style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemExternalInfo = customComponents.customInfoRenderer(
+    const itemExternalInfo = customInfoRenderer(
       this.getCustomInfoRendererProps(),
       placement
     );
@@ -1066,11 +1066,11 @@ class ItemView extends GalleryComponent {
           style={{
             ...(!this.props.styleParams.isSlideshow &&
               getImageStyle(this.props.styleParams)),
-            ...(GALLERY_CONSTS.hasRightPlacement(
+            ...(GALLERY_CONSTS.hasExternalRightPlacement(
               this.props.styleParams.titlePlacement,
               this.props.idx
             ) && { float: 'left' }),
-            ...(GALLERY_CONSTS.hasLeftPlacement(
+            ...(GALLERY_CONSTS.hasExternalLeftPlacement(
               this.props.styleParams.titlePlacement,
               this.props.idx
             ) && { float: 'right' }),

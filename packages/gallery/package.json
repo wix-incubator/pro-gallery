@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "4.0.15-beta.29",
+  "version": "4.0.15-beta.39",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -41,8 +41,8 @@
     "@vimeo/player": "2.8.2",
     "ajv": "^8.6.0",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "^4.0.15-beta.29",
-    "pro-layouts": "^4.0.15-beta.29",
+    "pro-gallery-lib": "^4.0.15-beta.39",
+    "pro-layouts": "^4.0.15-beta.39",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -85,8 +85,7 @@
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/drivers/mocks/stylesImportMock.js"
     },
     "reporters": [
-      "default",
-      "<rootDir>/tests/drivers/customReporter.js"
+      "default"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",

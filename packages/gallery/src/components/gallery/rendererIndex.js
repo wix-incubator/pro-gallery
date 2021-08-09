@@ -10,7 +10,6 @@ export default class BaseGallery extends React.Component {
   constructor(props) {
     super(props);
     this.id = props.id || 'default-dom-id';
-    this.customComponents = props.customComponents || {};
   }
 
   render() {
@@ -24,7 +23,6 @@ export default class BaseGallery extends React.Component {
       styles: _styles,
       eventsListener: _eventsListener,
       id: this.id,
-      customComponents: this.customComponents,
     };
 
     utils.logPlaygroundLink(galleryProps.styles);

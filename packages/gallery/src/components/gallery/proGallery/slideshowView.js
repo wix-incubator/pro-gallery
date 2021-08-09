@@ -879,7 +879,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   getArrowsRenderData() {
-    const { customNavArrowsRenderer } = this.props.customComponents;
+    const { customNavArrowsRenderer } = this.props;
     const { arrowsSize } = this.props.styleParams;
     if (customNavArrowsRenderer) {
       return {
@@ -971,7 +971,7 @@ class SlideshowView extends GalleryComponent {
       ? galleryHeight
       : galleryHeight - infoHeight;
     const infoSpace =
-      isSlideshow || GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)
+      isSlideshow || GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement)
         ? {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
             [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight,
@@ -1050,7 +1050,9 @@ class SlideshowView extends GalleryComponent {
       watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
-      customComponents: this.props.customComponents,
+      customHoverRenderer: this.props.customHoverRenderer,
+      customInfoRenderer: this.props.customInfoRenderer,
+      customSlideshowInfoRenderer: this.props.customSlideshowInfoRenderer,
       noFollowForSEO: this.props.noFollowForSEO,
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
