@@ -7,7 +7,7 @@ const fixToColumn = (styles) => {
   presetStyles.galleryLayout = LAYOUTS.COLUMN;
   presetStyles.cubeType = 'fill';
   presetStyles.cubeImages = true;
-  presetStyles.cubeRatio = 0.35;
+  presetStyles.cropRatio = 0.35;
   presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
   presetStyles.isVertical = false;
   presetStyles.groupSize = 1;

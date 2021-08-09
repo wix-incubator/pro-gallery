@@ -20,7 +20,7 @@ describe('cubeImages - e2e', () => {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fit',
-      cubeRatio: 1,
+      cropRatio: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
@@ -31,7 +31,7 @@ describe('cubeImages - e2e', () => {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',
-      cubeRatio: 1,
+      cropRatio: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
@@ -42,7 +42,7 @@ describe('cubeImages - e2e', () => {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',
-      cubeRatio: 2,
+      cropRatio: 2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
