@@ -50,7 +50,7 @@ export class GalleryContainer extends React.Component {
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      gotFirstScrollEvent: false,
+      gotFirstScrollEvent: (props.activeIndex >= 0),
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
@@ -388,6 +388,11 @@ export class GalleryContainer extends React.Component {
     isContinuousScrolling = false,
   ) {
     if (itemIdx >= 0) {
+      if(!this.state.gotFirstScrollEvent) {
+        this.setState({
+          gotFirstScrollEvent:true,
+        });
+      }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {

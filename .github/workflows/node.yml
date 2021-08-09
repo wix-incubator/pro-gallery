@@ -40,7 +40,6 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run build
-    - run: npm run build:dev
     - run: npm run ${{ matrix.test-script }}
 
   deploy:

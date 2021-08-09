@@ -183,7 +183,7 @@ export function App() {
         }
         break;
       case 'EXTERNAL':
-        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+        if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasExternalHorizontalPlacement(titlePlacement)) {
           return infoElement;
         }
         break;
