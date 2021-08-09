@@ -67,7 +67,7 @@ class GalleryItem {
     this.infoHeight = scheme.infoHeight;
     this.margins = scheme.margins;
     this.ratio = scheme.ratio;
-    this.cubeRatio = scheme.cropRatio;
+    this.cropRatio = scheme.cropRatio;
     this.cubeImages = scheme.isCropped;
     this.cubeType = scheme.cropType || RESIZE_METHODS.FILL;
     this.offset = scheme.offset;
@@ -101,7 +101,7 @@ class GalleryItem {
       createUrl: this.createUrl,
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
-      cubeRatio: this.cubeRatio,
+      cropRatio: this.cropRatio,
       isTransparent: this.isTransparent,
       offset: this.offset,
       style: {
