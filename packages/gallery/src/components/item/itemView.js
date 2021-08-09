@@ -434,6 +434,7 @@ class ItemView extends GalleryComponent {
       'isPrerenderMode',
     ]);
 
+    
     return (
       <TextItem
         {...props}
