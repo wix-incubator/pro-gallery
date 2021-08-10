@@ -42,6 +42,7 @@ class DiffsReporter {
         console.log('report published successfully')
       } catch (error) {
         console.log('Error publishing reporter: ', error);
+        process.exit(1);
       }
     }
   }
