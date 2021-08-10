@@ -17,7 +17,6 @@ describe('gallerySpacing - e2e', () => {
   it('should set the gallery with a margin of 100px ', async () => {
     await driver.navigate({
       layoutParams: { gallerySpacing: 100 },
-
       galleryLayout: -1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
