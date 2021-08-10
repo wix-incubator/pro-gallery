@@ -17,6 +17,7 @@ Object.entries(galleryOptions).forEach(
 
 export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl(window.location.search);
+  console.log(savedStyleParams);
   return {
     ...defaultStyleParams,
     ...savedStyleParams,
@@ -53,6 +54,7 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
   }
   styleParams = { ...defaultStyleParams, ...styleParams };
   const flatFixedPresetStyles = flattenObject(NEW_PRESETS[getLayoutName(styleParams.galleryLayout)]);
+  styleParams = { ...styleParams, ...flatFixedPresetStyles, }
   if (styleParam !== 'galleryLayout' && value === flatFixedPresetStyles[styleParam]) {
 
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the flatFixedPresetStyles: ${value}`, flatFixedPresetStyles, getLayoutName(styleParams.galleryLayout));
@@ -64,7 +66,7 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
     return false;
   }
   if (!galleryOptions[styleParam].isRelevant(flatToNested(styleParams))) {
-
+    
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is not relevant`, galleryOptions[styleParam].isRelevant.toString(), styleParams);
     return false;
   }
