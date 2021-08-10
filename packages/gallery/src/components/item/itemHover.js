@@ -56,21 +56,20 @@ export default class ItemHover extends GalleryComponent {
 
   getOverlayStyle() {
     const { styleParams, imageDimensions } = this.props;
-    let {
+    const style = {};
+    const {
       overlayPosition,
       overlaySize: requiredOverlaySize,
       overlaySizeType,
       overlayPadding,
     } = styleParams;
     let { width, height } = imageDimensions;
-    let style = {};
     let overlayHeight, overlayWidth, overlaySize;
     const margin = overlayPadding;
     const isHorizontal =
       overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
-    console.log(width);
     if (isHorizontal) {
       width += -2 * overlayPadding;
       overlaySize = Math.min(
@@ -94,47 +93,43 @@ export default class ItemHover extends GalleryComponent {
       overlayHeight = overlaySize;
       overlayWidth = width - 2 * overlayPadding;
     }
-    style = {
+    Object.assign(style, {
       width: overlayWidth,
       height: overlayHeight,
       margin,
       position: 'relative',
-    };
+    });
     return style;
   }
 
   getOverlayPositionByFlex() {
     const { styleParams } = this.props;
     const { overlayPosition } = styleParams;
-    let style = {
+    const style = {
       width: '100%',
       height: '100%',
       display: 'flex',
     };
     switch (overlayPosition) {
       case GALLERY_CONSTS.overlayPositions.RIGHT:
-        style = {
-          ...style,
+        Object.assign(style, {
           justifyContent: 'flex-end',
-        };
+        });
         break;
       case GALLERY_CONSTS.overlayPositions.BOTTOM:
-        style = {
-          ...style,
+        Object.assign(style, {
           alignItems: 'flex-end',
-        };
+        });
         break;
       case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
-        style = {
-          ...style,
+        Object.assign(style, {
           justifyContent: 'center',
-        };
+        });
         break;
       case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
-        style = {
-          ...style,
+        Object.assign(style, {
           alignItems: 'center',
-        };
+        });
         break;
     }
     return style;
