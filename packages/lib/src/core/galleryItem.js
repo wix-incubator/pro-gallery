@@ -398,10 +398,11 @@ class GalleryItem {
 
   get magnified_url() {
     if (!this.urls.magnified_url) {
+      const { magnifiedWidth, magnifiedHeight } = this.style;
       this.urls.magnified_url = this.processedMediaUrl(
         this.cubeType,
-        this.resizeWidth * this.magnifyPercent,
-        this.resizeHeight * this.magnifyPercent,
+        magnifiedWidth,
+        magnifiedHeight,
         this.sharpParams,
         true
       );

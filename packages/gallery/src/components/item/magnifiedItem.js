@@ -2,7 +2,7 @@ import React from 'react';
 import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-
+//http://localhost:3000/?hoveringBehaviour=NEVER_SHOW&itemClick=magnify&galleryLayout=2
 export default class magnifiedItem extends GalleryComponent {
   constructor(props) {
     super(props);
@@ -10,6 +10,7 @@ export default class magnifiedItem extends GalleryComponent {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.containerRef = null;
+    // const { x, y } = props.startPos;
     this.state = {
       x: 0,
       y: 0,
@@ -20,79 +21,112 @@ export default class magnifiedItem extends GalleryComponent {
   onDragStart(e) {
     e.preventDefault();
   }
+
   onMouseMove(e) {
-    const { isDragging } = this.state;
-    if (isDragging) {
+    if (this.dragStarted) {
+      this.isDragging = true;
+      const {
+        cubedWidth,
+        cubedHeight,
+        innerWidth,
+        innerHeight,
+        magnifiedWidth,
+        magnifiedHeight,
+      } = this.props.style;
       const { clientY, clientX } = e;
-      const { top, left } = this.containerRef.getBoundingClientRect();
-      const currentPos = {
-        x: clientX - left,
-        y: clientY - top,
-      };
       this.setState({
-        x: this.dragStartX - currentPos.x,
-        y: this.dragStartY - currentPos.y,
+        x: Math.max(
+          0,
+          Math.min(
+            this.dragStartX - clientX,
+            magnifiedWidth - Math.max(cubedWidth, innerWidth)
+          )
+        ),
+        y: Math.max(
+          0,
+          Math.min(
+            this.dragStartY - clientY,
+            magnifiedHeight - Math.max(cubedHeight, innerHeight)
+          )
+        ),
       });
     }
   }
+
   onMouseDown(e) {
     const { clientX, clientY } = e;
     const { x, y } = this.state;
-    const { top, left } = this.containerRef.getBoundingClientRect();
-    this.dragStartY = y + clientY - top;
-    this.dragStartX = x + clientX - left;
-    this.setState({ isDragging: true });
+    this.dragStartY = y + clientY;
+    this.dragStartX = x + clientX;
+    this.dragStarted = true;
   }
   onMouseUp() {
-    this.setState({
-      isDragging: false,
-    });
+    const { toggleMagnify } = this.props;
+    if (!this.isDragging) {
+      toggleMagnify(false);
+    }
+    this.dragStarted = false;
+    this.isDragging = false;
   }
-  render() {
-    const { createUrl } = this.props;
-    const { x, y } = this.state;
+
+  getPreloadImage() {
+    const { createUrl, id, style } = this.props;
+    const { magnifiedWidth, magnifiedHeight } = style;
+    const src = createUrl(
+      GALLERY_CONSTS.urlSizes.RESIZED,
+      GALLERY_CONSTS.urlTypes.HIGH_RES
+    );
+    return (
+      <ImageRenderer
+        alt=""
+        key={'magnified-item-preload-' + id}
+        src={src}
+        style={{
+          width: magnifiedWidth,
+          height: magnifiedHeight,
+          position: 'absolute',
+          zIndex: -1,
+        }}
+      />
+    );
+  }
+
+  getHighResImage() {
+    const { createUrl, id, alt } = this.props;
     const src = createUrl(
       GALLERY_CONSTS.urlSizes.MAGNIFIED,
       GALLERY_CONSTS.urlTypes.HIGH_RES
     );
     return (
+      <ImageRenderer
+        key={`magnified-item-${this.props.id}`}
+        className="magnified-item"
+        data-hook="magnified-item"
+        src={src}
+        alt={alt ? alt : 'untitled image'}
+        id={id}
+      />
+    );
+  }
+
+  render() {
+    const { x, y } = this.state;
+    return (
       <div
-        className={'magnified-item-wrapper'}
-        ref={(element) => (this.containerRef = element)}
+        className={'magnified-item-container'}
         style={{
-          width: '100%',
-          height: '100%',
-          position: 'relative',
           zIndex: 1000,
+          position: 'relative',
+          cursor: 'grab',
+          transform: `translate(${-x}px, ${-y}px)`,
         }}
         onDragStart={this.onDragStart}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
       >
-        <div
-          style={{
-            zIndex: 1000,
-            position: 'relative',
-            cursor: 'grab',
-            transform: `translate(${-x}px, ${-y}px)`,
-          }}
-        >
-          <ImageRenderer
-            key={'magnified-item'}
-            className={`magnified-item`}
-            data-hook="magnified-item"
-            src={src}
-            alt={'untitled image'}
-            id={this.props.id}
-            // style={{
-            //   ...imageSizing,
-            //   ...blockDownloadStyles,
-            //   ...(!shouldRenderHighResImages && preloadStyles),
-            // }}
-            // {...imageProps}
-          />
-        </div>
+        {this.getPreloadImage()}
+        {this.getHighResImage()}
       </div>
     );
   }

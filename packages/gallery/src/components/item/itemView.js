@@ -74,6 +74,8 @@ class ItemView extends GalleryComponent {
       this.checkIfCurrentHoverChanged.bind(this);
     this.getCustomInfoRendererProps =
       this.getCustomInfoRendererProps.bind(this);
+      this.shouldMagnifyImage = this.shouldMagnifyImage.bind(this);
+      this.toggleMagnify = this.toggleMagnify.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -198,14 +200,42 @@ class ItemView extends GalleryComponent {
     if (shouldPreventDefault) {
       e.preventDefault();
     }
-
+    if (this.shouldMagnifyImage()) {
+      const { clientX, clientY } = e;
+      const { top, left } = this.props.offset;
+      const startPos = {
+        x: clientX - left,
+        y: clientY - top,
+      }
+      this.setState({
+        startPos,
+        shouldMagnify: true,
+      })
+    }
     if (this.shouldShowHoverOnMobile()) {
       this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
     }
   }
-
+  toggleMagnify(bool){
+    const { shouldMagnify } = this.state;
+    if (bool) {
+      this.setState({
+        shouldMagnify: bool,
+      })
+    } else {
+      this.setState({
+        shouldMagnify: !shouldMagnify,
+      })
+    }
+  }
+  shouldMagnifyImage() {
+    const { itemClick } = this.props.styleParams;
+    const { type } = this.props;
+    return itemClick === GALLERY_CONSTS.itemClick.MAGNIFY &&
+      (type === 'image' || type === 'picture');
+  }
   shouldUseDirectLink = () => {
     const { directLink } = this.props;
     const { url, target } = directLink || {};
@@ -669,7 +699,16 @@ class ItemView extends GalleryComponent {
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
-
+    let cursor;
+    if (itemClick === GALLERY_CONSTS.itemClick.MAGNIFY) {
+      cursor = 'crosshair'
+    } else {
+      cursor =
+        itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
+        (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
+          ? 'default'
+          : 'pointer'
+    }
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -678,11 +717,7 @@ class ItemView extends GalleryComponent {
         scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? imageMargin / 2 + 'px'
           : 0,
-      cursor:
-        itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-        (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
-          ? 'default'
-          : 'pointer',
+      cursor: cursor,
     };
 
     const { avoidInlineStyles } = settings;
@@ -1033,6 +1068,7 @@ class ItemView extends GalleryComponent {
 
   composeItem() {
     const { photoId, id, hash, idx, styleParams, type, url } = this.props;
+    const { shouldMagnify, startPos } = this.state;
 
     //if (there is an url for video items and image items) OR text item (text item do not use media url)
     this.hasRequiredMediaUrl = url || type === 'text';
@@ -1087,9 +1123,13 @@ class ItemView extends GalleryComponent {
               onClick={this.onItemWrapperClick}
             >
               {this.getItemInner()}
-              <MagnifiedItem
+              {shouldMagnify &&
+                <MagnifiedItem
                 {...this.props}
-              />
+                startPos={startPos}
+                toggleMagnify={this.toggleMagnify}
+                />
+              }
             </div>
           )}
         </div>

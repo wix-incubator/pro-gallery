@@ -314,6 +314,7 @@ export class Item {
 
     const { fixLeft = 0 } = this.dimensions;
     this.style.innerWidth = this.style.width - 2 * fixLeft;
+    this.style.magnifiedWidth = this.style.innerWidth * this.magnifyPercent;
   }
 
   get outerHeight() {
@@ -346,6 +347,7 @@ export class Item {
 
     const { fixTop = 0 } = this.dimensions;
     this.style.innerHeight = this.style.height - 2 * fixTop;
+    this.style.magnifiedHeight = this.style.innerHeight * this.magnifyPercent;
   }
 
   get maxHeight() {
