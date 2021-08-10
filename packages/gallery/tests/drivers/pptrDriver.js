@@ -46,9 +46,6 @@ export default class galleryDriver {
   }
 
   async navigate(styleParams) {
-    if (styleParams.galleryLayout === 10) {
-      styleParams.galleryLayout = 5;
-    }
     const pageUrl = this.getPageUrl(styleParams);
     await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
     await this.scrollInteraction();
