@@ -28,9 +28,7 @@ class DiffsReporter {
           hidePassing: true,
         });
         const reportPath = path.resolve(process.cwd(), 'jest-stare');
-        const uniqueJobId = [branchName, TEST_NAME]
-          .join('-')
-          .substring(0, 100); // max domain length is 255. chopping string from the SHA so the doamin will look like this:  http://create-blueprints-package-test-e2e-layout-4acf916a430baadc.pro-gallery-report.surge.sh/
+        const uniqueJobId = [branchName, TEST_NAME].join('-').substring(0, 100); // max domain length is 255. chopping string from the SHA so the doamin will look like this:  http://create-blueprints-package-test-e2e-layout-4acf916a430baadc.pro-gallery-report.surge.sh/
 
         // This ensures that I will not overwrite any diff written by parallel tasks. If a new commit is added a new SHA is generated makes it easier to compare between the same commits in each PR.
         const domain = `${formatSubDomain(
@@ -38,7 +36,7 @@ class DiffsReporter {
         )}.pro-gallery-report.surge.sh/`;
         console.log(`Will publish test report on failues to:${domain}`);
         exec(`npx surge --project ${reportPath} --domain ${domain}`);
-        console.log('publish report successfully');
+        console.log(`publish report successfully. Click here: ${domain}`);
       } catch (error) {
         console.log('Error publishing reporter: ', error);
         process.exit(1);
