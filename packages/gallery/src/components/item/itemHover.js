@@ -5,23 +5,28 @@ export default class ItemHover extends GalleryComponent {
   getHoverClass() {
     const { styleParams, forceShowHover } = this.props;
     const hoverClass = ['gallery-item-hover'];
+
     hoverClass.push(
       'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled')
     );
+
     if (utils.isUndefined(styleParams.itemOpacity)) {
       //if gallery was just added to the page, and it's settings were never opened,
       //the styles of opacity and background were not set (are undefined),
       //so we are using the default background & opacity (is scss under .gallery-item-hover.default)
       hoverClass.push('default');
     }
+
     if (forceShowHover) {
       //in mobile, when item is hovered (tapped, with all the right configurations), forceShowHover is true
       hoverClass.push('force-hover');
     } else if (utils.isMobile()) {
       hoverClass.push('hide-hover');
     }
+
     return hoverClass.join(' ');
   }
+
   shouldRenderHoverInnerIfExist() {
     const { itemWasHovered, styleParams } = this.props;
     const {
@@ -32,6 +37,7 @@ export default class ItemHover extends GalleryComponent {
     } = styleParams;
     const { APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
     const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
+
     if (alwaysShowHover) {
       return true;
     }
