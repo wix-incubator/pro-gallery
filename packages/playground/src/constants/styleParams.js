@@ -17,7 +17,6 @@ Object.entries(galleryOptions).forEach(
 
 export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl(window.location.search);
-  console.log(savedStyleParams);
   return {
     ...defaultStyleParams,
     ...savedStyleParams,
