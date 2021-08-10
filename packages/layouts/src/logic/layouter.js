@@ -24,7 +24,7 @@ export default class Layouter {
 
   updateParams(layoutParams) {
     this.srcItems = layoutParams.items;
-    this.styleParams = utils.convertStyleParams(layoutParams.styleParams);
+    this.styleParams = utils.addDefaultStyleParams(layoutParams.styleParams);
     this.container = utils.convertContainer(
       layoutParams.container,
       this.styleParams
@@ -255,7 +255,7 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, cubeRatio, externalInfoWidth, imageMargin } =
+      const { columnWidths, cropRatio, externalInfoWidth, imageMargin } =
         this.styleParams;
 
       let columnWidthsArr = false;
@@ -285,7 +285,7 @@ export default class Layouter {
           const curLeft = totalLeft;
           totalLeft += colWidth;
           remainderWidth -= colWidth;
-          //fix cubeRatio of rounded columns
+          //fix cropRatio of rounded columns
           const infoWidth =
             Math.round(
               externalInfoWidth > 1 // integer represent size in pixels, floats size in percentage
@@ -295,7 +295,7 @@ export default class Layouter {
           colWidth -= infoWidth;
           fixedCubeHeight =
             fixedCubeHeight ||
-            (this.targetItemSize - infoWidth - imageMargin) / cubeRatio +
+            (this.targetItemSize - infoWidth - imageMargin) / cropRatio +
               imageMargin; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
@@ -457,7 +457,7 @@ export default class Layouter {
       const stretchRatio = this.container.galleryHeight / this.galleryHeight;
       this.items.map((item) => {
         item.cubeImages = true;
-        item.cubeRatio = item.ratio = item.width / (item.height * stretchRatio);
+        item.cropRatio = item.ratio = item.width / (item.height * stretchRatio);
         item.height *= stretchRatio;
         return item;
       });

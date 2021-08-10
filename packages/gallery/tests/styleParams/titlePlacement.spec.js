@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customRenderers,
+  customComponents,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - titlePlacement', () => {
@@ -14,7 +14,7 @@ describe('styleParam - titlePlacement', () => {
     container,
     items: images2,
     styles: styleParams,
-    ...customRenderers,
+    customComponents,
   };
 
   beforeEach(() => {

@@ -183,7 +183,7 @@ export function App() {
         }
         break;
       case 'EXTERNAL':
-        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+        if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasExternalHorizontalPlacement(titlePlacement)) {
           return infoElement;
         }
         break;
@@ -206,7 +206,7 @@ export function App() {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
 
-  const getExternalInfoRenderers = () => {
+  const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
@@ -299,7 +299,7 @@ export function App() {
           activeIndex: gallerySettings.initialIdx,
           useBlueprints: gallerySettings.useBlueprints,
           useLayoutFixer: gallerySettings.useLayoutFixer,
-          ...getExternalInfoRenderers(),
+          customComponents: getCustomComponents(),
           ...blueprintProps
         }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
       </section>
