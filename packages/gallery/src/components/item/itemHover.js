@@ -94,21 +94,6 @@ export default class ItemHover extends GalleryComponent {
       overlayHeight = overlaySize;
       overlayWidth = width - 2 * overlayPadding;
     }
-    console.log(overlaySize);
-    // switch (overlayPosition) {
-    //   case GALLERY_CONSTS.overlayPositions.RIGHT:
-    //     // marginLeft += width - overlayWidth;
-    //     break;
-    //   case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
-    //     // marginLeft += width / 2 - overlayWidth / 2;
-    //     break;
-    //   case GALLERY_CONSTS.overlayPositions.BOTTOM:
-    //     // marginTop += height - overlayHeight;
-    //     break;
-    //   case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
-    //     // marginTop += height / 2 - overlayHeight / 2;
-    //     break;
-    // }
     style = {
       width: overlayWidth,
       height: overlayHeight,
@@ -166,11 +151,9 @@ export default class ItemHover extends GalleryComponent {
         data-hook={'item-hover-' + idx}
         aria-hidden={true}
         style={overlayPositionCalc}
-        // style={overlayStyle}
       >
         <div
           className={hoverClass}
-          // style={{ height: '100%' }}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
           style={overlayStyle}
