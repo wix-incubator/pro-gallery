@@ -1,33 +1,27 @@
 import React from 'react';
 import { GALLERY_CONSTS, isEditMode, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
-
 export default class ItemHover extends GalleryComponent {
   getHoverClass() {
     const { styleParams, forceShowHover } = this.props;
     const hoverClass = ['gallery-item-hover'];
-
     hoverClass.push(
       'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled')
     );
-
     if (utils.isUndefined(styleParams.itemOpacity)) {
       //if gallery was just added to the page, and it's settings were never opened,
       //the styles of opacity and background were not set (are undefined),
       //so we are using the default background & opacity (is scss under .gallery-item-hover.default)
       hoverClass.push('default');
     }
-
     if (forceShowHover) {
       //in mobile, when item is hovered (tapped, with all the right configurations), forceShowHover is true
       hoverClass.push('force-hover');
     } else if (utils.isMobile()) {
       hoverClass.push('hide-hover');
     }
-
     return hoverClass.join(' ');
   }
-
   shouldRenderHoverInnerIfExist() {
     const { itemWasHovered, styleParams } = this.props;
     const {
@@ -38,7 +32,6 @@ export default class ItemHover extends GalleryComponent {
     } = styleParams;
     const { APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
     const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
-
     if (alwaysShowHover) {
       return true;
     }
@@ -63,43 +56,74 @@ export default class ItemHover extends GalleryComponent {
       overlaySizeType,
       overlayPadding,
     } = styleParams;
-    let { width, height } = imageDimensions;
-    let overlayHeight, overlayWidth, overlaySize;
-    const margin = overlayPadding;
+
     const isHorizontal =
       overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
       overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
-    if (isHorizontal) {
-      width += -2 * overlayPadding;
-      overlaySize = Math.min(
-        width,
-        overlaySizeType === 'PERCENT'
-          ? width * (requiredOverlaySize / 100)
-          : requiredOverlaySize
-      );
-      overlaySize = Math.max(0, overlaySize);
-      overlayWidth = overlaySize;
-      overlayHeight = height - 2 * overlayPadding;
-    } else {
-      height += -2 * overlayPadding;
-      overlaySize = Math.min(
-        height,
-        overlaySizeType === 'PERCENT'
-          ? height * (requiredOverlaySize / 100)
-          : requiredOverlaySize
-      );
-      overlaySize = Math.max(0, overlaySize);
-      overlayHeight = overlaySize;
-      overlayWidth = width - 2 * overlayPadding;
-    }
+
+    const { width, height } = this.calcHeightAndWidth({
+      isHorizontal,
+      overlayPadding,
+      requiredOverlaySize,
+      imageDimensions,
+      overlaySizeType,
+    });
+    const margin = overlayPadding;
     Object.assign(style, {
-      width: overlayWidth,
-      height: overlayHeight,
+      width,
+      height,
       margin,
       position: 'relative',
     });
     return style;
+  }
+
+  calcHeightAndWidth({
+    isHorizontal,
+    overlayPadding,
+    requiredOverlaySize,
+    imageDimensions,
+    overlaySizeType,
+  }) {
+    const { width, height } = imageDimensions;
+    if (isHorizontal) {
+      return {
+        width: this.calcOverlaySize(
+          width,
+          requiredOverlaySize,
+          overlaySizeType,
+          overlayPadding
+        ),
+        height: height - 2 * overlayPadding,
+      };
+    } else {
+      return {
+        width: width - 2 * overlayPadding,
+        height: this.calcOverlaySize(
+          height,
+          requiredOverlaySize,
+          overlaySizeType,
+          overlayPadding
+        ),
+      };
+    }
+  }
+
+  calcOverlaySize(
+    widthOrHeight,
+    requiredOverlaySize,
+    overlaySizeType,
+    overlayPadding
+  ) {
+    const widthOrHeightCalc = widthOrHeight + -2 * overlayPadding;
+    const overlaySize = Math.min(
+      widthOrHeightCalc,
+      overlaySizeType === 'PERCENT'
+        ? widthOrHeightCalc * (requiredOverlaySize / 100)
+        : requiredOverlaySize
+    );
+    return Math.max(0, overlaySize);
   }
 
   getOverlayPositionByFlex() {

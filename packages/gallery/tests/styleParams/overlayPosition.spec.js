@@ -27,8 +27,26 @@ describe('styleParam - overlaySize', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const overlaySizeImage = driver.find.selector('.gallery-item-hover').at(0);
-    const { height } = overlaySizeImage.props().style;
+    const { height, width } = overlaySizeImage.props().style;
     expect(height).to.eq(50);
+    expect(width).to.eq(360);
+    driver.detach.proGallery();
+  });
+
+  it('should set the correct overlayPosition - RIGHT position', async () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      overlayPosition: GALLERY_CONSTS.overlayPositions.RIGHT,
+      overlaySize: 50,
+      overlaySizeType: 'PIXEL',
+      overlayPadding: 30,
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const overlaySizeImage = driver.find.selector('.gallery-item-hover').at(0);
+    const { width, height } = overlaySizeImage.props().style;
+    expect(width).to.eq(50);
+    expect(height).to.eq(360);
     driver.detach.proGallery();
   });
 });
