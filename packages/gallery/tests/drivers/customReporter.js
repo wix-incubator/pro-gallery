@@ -13,14 +13,14 @@ class DiffsReporter {
     this._options = options;
   }
   onRunComplete(contexts, results) {
-    const { CI, GITHUB_REF } = process.env;
+    const { CI, GITHUB_HEAD_REF } = process.env;
     if (!CI) {
       console.log('Not in CI, skipping generating and publishing test report');
       return;
     }
     if (results.numFailedTests && results.snapshot.unmatched) {
       try {
-        const branchName = GITHUB_REF.split('/').pop();
+        const branchName = GITHUB_HEAD_REF || 'master'
         jestStareProcessor(results, {
           reportTitle: branchName,
           reportHeadline: '',
