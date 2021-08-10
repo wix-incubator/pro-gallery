@@ -7,7 +7,7 @@ const fixToFullsize = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.FULLSIZE;
   presetStyles.cubeImages = true;
-  presetStyles.cubeRatio = '100%/100%';
+  presetStyles.cropRatio = '100%/100%';
   presetStyles.cubeType = 'fill';
   presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
