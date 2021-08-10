@@ -46,7 +46,7 @@ export default class galleryDriver {
   }
 
   async navigate(styleParams) {
-    const pageUrl = this.getPageUrl(styleParams);
+    const pageUrl = styleParams.galleryLayout === 10 ? 'https://img.bleacherreport.net/img/images/photos/003/875/045/f747eca6d77ef4822de3a4c98bb4324e_crop_exact.jpg?h=646&w=970&q=70&crop_x=center&crop_y=top' : this.getPageUrl(styleParams);
     await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
     await this.scrollInteraction();
     await this.page.waitFor(500);
