@@ -3,8 +3,8 @@ const path = require('path');
 const jestStareProcessor = require('jest-stare');
 
 const exec = (cmd) => execSync(cmd, { stdio: 'inherit' });
-const formatBranchName = (branch) => {
-  return branch.replace(/[.]|_/g, '-').toLowerCase();
+const formatSubDomain = (branch) => {
+  return branch.replace(/[.]|_|[:]/g, '-').toLowerCase();
 };
 
 class DiffsReporter {
@@ -13,11 +13,13 @@ class DiffsReporter {
     this._options = options;
   }
   onRunComplete(contexts, results) {
-    const { CI, GITHUB_HEAD_REF, GITHUB_SHA } = process.env;
+    const { CI, GITHUB_HEAD_REF, GITHUB_SHA, GITHUB_JOB } = process.env;
     const branchName = GITHUB_HEAD_REF || 'master';
-    const branchTriggertingCommit = `${branchName}-${GITHUB_SHA}`.substring(0, 100) // chopping string from the SHA and not the branch name.
-    const domain = `${formatBranchName(
-      branchTriggertingCommit
+    const uniqueJobId = [branchName,GITHUB_JOB, GITHUB_SHA]
+      .join('-')
+      .substring(0, 150) // max domain length is 255. chopping string from the SHA so the doamin will look like this:  http://create-blueprints-package-test-e2e-layout-4acf916a430baadc.pro-gallery-report.surge.sh/
+    const domain = `${formatSubDomain(
+      uniqueJobId
     )}.pro-gallery-report.surge.sh/`;
     console.log(`Will publish test report on failues to:${domain}`);
     if (!CI) {
