@@ -927,6 +927,33 @@ class SlideshowView extends GalleryComponent {
     return {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight}
   }
 
+  // Should not render nav arrows? True : False
+  shouldNotRenderNavArrows = (arrowsRenderingDeterminingArgs) => {
+  const {
+    isPrerenderMode,
+    showArrows,
+    arrowsDontFitInfo, 
+    galleryStructure,
+    scrollDirection,
+  } = arrowsRenderingDeterminingArgs;
+  return(
+  isPrerenderMode ||
+  !showArrows ||
+  arrowsDontFitInfo ||
+  galleryStructure.columns.some((column) => {
+    const allRenderedGroups =
+      column.groups.filter((group) => group.rendered) || [];
+    const allGroupsWidth = allRenderedGroups.reduce(
+      (sum, group) => sum + Math.max(0, group.width),
+      0
+    );
+    const isAllItemsFitsGalleryWidth =
+      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      this.props.container.galleryWidth >= allGroupsWidth;
+    return isAllItemsFitsGalleryWidth;
+  })); 
+  }
+
   createNavArrows() {
     const {
       isRTL,
@@ -941,21 +968,43 @@ class SlideshowView extends GalleryComponent {
       textBoxHeight,
       showArrows,
     } = this.props.styleParams;
+    
     const { hideLeftArrow, hideRightArrow } = this.state;
-
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
+    const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
+
+    // arrows on info? True : False
+    const arrowsOnInfo = arrowsVerticalPosition === GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER;
+    // arrows too big for info? True : False
+    const arrowsDontFitInfo = 
+    GALLERY_CONSTS.isAboveOrBelowPlacement(titlePlacement, isSlideshow) && arrowsOnInfo && (infoHeight < navArrowsContainerHeight);
+    
+    const arrowsRenderingDeterminingArgs = {
+      isPrerenderMode : this.props.isPrerenderMode,
+      galleryStructure : this.props.galleryStructure,
+      scrollDirection,
+      showArrows,
+      arrowsDontFitInfo, 
+    }
+    
+    //remove navBars if no scroll is needed and is column layout
+    if (this.shouldNotRenderNavArrows(arrowsRenderingDeterminingArgs)) {
+      return null;
+    }
 
     const { galleryHeight } = this.props.container;
-    const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
       ? galleryHeight
       : galleryHeight - infoHeight;
+
+    // Determines the direction in which the Nav arrows are pushed by 'infoSpace'
+    const infoSpaceDirection = GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? -1 : 1;
     const infoSpace =
-      isSlideshow || GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement)
+    GALLERY_CONSTS.isAboveOrBelowPlacement(titlePlacement, isSlideshow)
         ? {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
-            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight,
-            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight,
+            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight * infoSpaceDirection,
+            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight * infoSpaceDirection,
           }[arrowsVerticalPosition]
         : 0;
 
@@ -965,9 +1014,7 @@ class SlideshowView extends GalleryComponent {
       padding: 0,
       top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
         imageMargin / 4
-      }px ${isSlideshow ? '-' : 
-      GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? '+' :
-      '-'} ${infoSpace / 2}px)`,
+      }px - ${infoSpace / 2}px)`,
     };
 
     const arrowsPos =
@@ -976,36 +1023,6 @@ class SlideshowView extends GalleryComponent {
         ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
 
-    // arrows on info? True : False
-    const arrowsOnInfo = arrowsVerticalPosition === GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER;
-
-    // arrows too big for info? True : False
-    const arrowsDontFitInfo = isSlideshow ?
-    arrowsOnInfo && (slideshowInfoSize < navArrowsContainerHeight) :
-    GALLERY_CONSTS.isAboveOrBelowPlacement(titlePlacement, isSlideshow) && arrowsOnInfo && (textBoxHeight < navArrowsContainerHeight);
-
-    // Should not render nav arrows? True : False
-    const shouldNotRenderNavArrows =
-      this.props.isPrerenderMode ||
-      !showArrows ||
-      arrowsDontFitInfo ||
-      this.props.galleryStructure.columns.some((column) => {
-        const allRenderedGroups =
-          column.groups.filter((group) => group.rendered) || [];
-        const allGroupsWidth = allRenderedGroups.reduce(
-          (sum, group) => sum + Math.max(0, group.width),
-          0
-        );
-        const isAllItemsFitsGalleryWidth =
-          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-          this.props.container.galleryWidth >= allGroupsWidth;
-        return isAllItemsFitsGalleryWidth;
-      });
-      
-      //remove navBars if no scroll is needed and is column layout
-      if (shouldNotRenderNavArrows) {
-        return null;
-      }
     // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
