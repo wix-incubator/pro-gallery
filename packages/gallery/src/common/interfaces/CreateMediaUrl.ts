@@ -8,7 +8,6 @@ export interface CreateMediaUrl {
     sharpParams?: Record<string, any>;
     focalPoint?: [number, number];
     createMultiple?: boolean;
-    imageToken?: string;
   }): string;
 }
 
