@@ -650,7 +650,7 @@ class Utils {
     return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       styles.groupSize === 1 &&
       styles.cubeImages &&
-      styles.cubeRatio === '100%/100%';
+      styles.cropRatio === '100%/100%';
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {

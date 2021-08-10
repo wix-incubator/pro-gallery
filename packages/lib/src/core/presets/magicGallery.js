@@ -6,7 +6,7 @@ const fixToMagic = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.MAGIC;
   presetStyles.cubeImages = undefined;
-  presetStyles.cubeRatio = undefined;
+  presetStyles.cropRatio = undefined;
   presetStyles.isVertical = undefined;
   presetStyles.targetItemSize = undefined;
   presetStyles.collageAmount = undefined;
@@ -65,7 +65,7 @@ const addSeedStyles = (styles) => {
   };
 
   res.cubeImages = boolFromSeed('cubeImages');
-  res.cubeRatio = numFromSeed(1, 25, 'cubeRatio') / 5;
+  res.cropRatio = numFromSeed(1, 25, 'cubeRatio') / 5;
   res.isVertical = boolFromSeed('isVertical');
   res.targetItemSize = numFromSeed(300, 800, 'gallerySize');
   res.collageAmount = numFromSeed(5, 10, 'collageAmount') / 10;
