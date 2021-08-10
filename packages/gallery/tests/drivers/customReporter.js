@@ -13,11 +13,15 @@ class DiffsReporter {
     this._options = options;
   }
   onRunComplete(contexts, results) {
+    //          feature-name     82b582fb    ci:test-e2e-layouts
     const { CI, GITHUB_HEAD_REF, GITHUB_SHA, GITHUB_JOB } = process.env;
     const branchName = GITHUB_HEAD_REF || 'master';
     const uniqueJobId = [branchName,GITHUB_JOB, GITHUB_SHA]
       .join('-')
       .substring(0, 150) // max domain length is 255. chopping string from the SHA so the doamin will look like this:  http://create-blueprints-package-test-e2e-layout-4acf916a430baadc.pro-gallery-report.surge.sh/
+
+
+    // This ensures that I will not overwrite any diff written by parallel tasks. If a new commit is added a new SHA is generated makes it easier to compare between the same commits in each PR.
     const domain = `${formatSubDomain(
       uniqueJobId
     )}.pro-gallery-report.surge.sh/`;
