@@ -298,7 +298,7 @@ class SlideshowView extends GalleryComponent {
           () => {
             this.onCurrentItemChanged();
             this.isSliding = false;
-            if (isContinuousScrolling) {    
+            if (isContinuousScrolling) {
               this.startAutoSlideshowIfNeeded(this.props.styleParams);
             }
           }
@@ -439,7 +439,7 @@ class SlideshowView extends GalleryComponent {
         );
       }
     }
-  } 
+  }
 
   autoScrollToNextItem = () => {
     if (
@@ -971,7 +971,7 @@ class SlideshowView extends GalleryComponent {
       ? galleryHeight
       : galleryHeight - infoHeight;
     const infoSpace =
-      isSlideshow || GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)
+      isSlideshow || GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement)
         ? {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
             [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight,
@@ -1576,7 +1576,10 @@ class SlideshowView extends GalleryComponent {
         className={this.getClassNames()}
         style={this.getStyles()}
         onKeyDown={this.handleSlideshowKeyPress}
-        {...utils.getAriaAttributes(this.props)}
+        {...utils.getAriaAttributes({
+          proGalleryRole: this.props.proGalleryRole,
+          proGalleryRegionLabel: this.props.proGalleryRegionLabel
+        })}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >

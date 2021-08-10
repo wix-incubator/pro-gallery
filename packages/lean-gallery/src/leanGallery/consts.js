@@ -8,7 +8,7 @@ export const handledStyleParams = {
   gallerySizePx: 300,
   gallerySize: 30,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   fixedColumns: 0,
   imageMargin: 10,
   gridStyle: 0,
@@ -34,7 +34,7 @@ export const fixedStyleParams = {
   ],
   rotatingGroupTypes: '',
   smartCrop: false,
-  rotatingCubeRatio: '',
+  rotatingCropRatio: '',
   galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
@@ -50,7 +50,7 @@ export const fixedStyleParams = {
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   titlePlacement: (sp) => {
     return (
-      GALLERY_CONSTS.isVerticalPlacement(sp.titlePlacement) ||
+      GALLERY_CONSTS.isExternalVerticalPlacement(sp.titlePlacement) ||
       sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW ||
       (GALLERY_CONSTS.isHoverPlacement(sp.titlePlacement) &&
         !sp.loveButton &&
