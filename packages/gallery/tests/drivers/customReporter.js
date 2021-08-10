@@ -13,8 +13,13 @@ class DiffsReporter {
     this._options = options;
   }
   onRunComplete(contexts, results) {
-    const { CI, GITHUB_HEAD_REF } = process.env;
+    const { CI, GITHUB_HEAD_REF, GITHUB_SHA } = process.env;
     const branchName = GITHUB_HEAD_REF || 'master';
+    const branchTriggertingCommit = `${branchName}-${GITHUB_SHA}`.substring(0, 100) // chopping string from the SHA and not the branch name.
+    const domain = `${formatBranchName(
+      branchTriggertingCommit
+    )}.pro-gallery-report.surge.sh/`;
+    console.log(`Will publish test report on failues to:${domain}`);
     if (!CI) {
       console.log('Not in CI, skipping generating and publishing test report');
       return;
@@ -27,11 +32,8 @@ class DiffsReporter {
           hidePassing: true,
         });
         const reportPath = path.resolve(process.cwd(), 'jest-stare');
-        const domain = `${formatBranchName(
-          branchName
-        )}.pro-gallery-report.surge.sh/`;
-        console.log(`Publishing test report to ${domain}`);
         exec(`npx surge --project ${reportPath} --domain ${domain}`);
+        console.log('report published successfully')
       } catch (error) {
         console.log('Error publishing reporter: ', error);
       }
