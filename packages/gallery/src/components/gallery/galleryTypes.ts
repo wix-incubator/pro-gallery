@@ -32,6 +32,7 @@ export interface GalleryProps {
   customComponents?: CustomComponents;
   scrollingElement?: ScrollingElement;
   isInDisplay?: boolean;
+  enableExperimentalFeatures?: boolean;
   [key: string]: any;
 }
 
