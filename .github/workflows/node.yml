@@ -45,6 +45,7 @@ jobs:
       env:
         SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
         SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        TEST_NAME: ${{ matrix.test-script }}
 
   deploy:
     runs-on: ubuntu-latest
