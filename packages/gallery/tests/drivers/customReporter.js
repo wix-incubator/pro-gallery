@@ -10,7 +10,7 @@ const formatSubDomain = (branch) => {
 function getDomain(branchName, testName, gitSha) {
   const uniqueJobId = [branchName, testName, gitSha]
     .join('-')
-    .substring(0, 100); // max domain length is 255. chopping string from the SHA so the doamin will look like this:
+    .substring(0, 62); // max domain length is 255. chopping string from the SHA so the doamin will look like this:
   return `${formatSubDomain(uniqueJobId)}.pro-gallery-report.surge.sh/`;
 }
 
