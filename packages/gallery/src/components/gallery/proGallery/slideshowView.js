@@ -261,16 +261,11 @@ class SlideshowView extends GalleryComponent {
     }
     // ---- navigate ---- //
     try {
-      const isScrollingPastEdge =
-        !isAutoTrigger &&
-        ((direction >= 1 && this.isLastItemFullyVisible()) ||
-          (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
 
-        !isScrollingPastEdge &&
        await scrollToItem(
           itemToScroll,
           false,
@@ -349,15 +344,10 @@ class SlideshowView extends GalleryComponent {
     }
     // ---- navigate ---- //
     try {
-      const isScrollingPastEdge =
-        !isAutoTrigger &&
-        ((direction >= 1 && this.isLastItemFullyVisible()) ||
-          (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
 
-      !isScrollingPastEdge &&
       await scrollToGroup(
           currentGroup,
           false,
