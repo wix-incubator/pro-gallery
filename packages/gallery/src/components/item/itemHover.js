@@ -134,11 +134,14 @@ export default class ItemHover extends GalleryComponent {
   }
 
   getOverlayPositionByFlex() {
-    const { styleParams } = this.props;
+    const { styleParams, imageDimensions } = this.props;
     const { overlayPosition } = styleParams;
+    const { width, height, marginTop, marginLeft } = imageDimensions;
     const style = {
-      width: '100%',
-      height: '100%',
+      width,
+      height,
+      marginTop,
+      marginLeft,
       display: 'flex',
     };
     switch (overlayPosition) {
