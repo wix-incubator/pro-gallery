@@ -81,51 +81,54 @@ class SlideshowView extends GalleryComponent {
   }
 
   isScrollEnd() {
-    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
-      this.props;
-    const { slideshowLoop, slideAnimation, imageMargin } = this.props.styleParams;
-
+    const { slideshowLoop, slideAnimation } = this.props.styleParams
     if (
       slideshowLoop ||
       slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
       slideAnimation === GALLERY_CONSTS.slideAnimations.DECK
     ) {
       return false;
-    }
-    const galleryStructureWidth = galleryStructure.width;
+    } 
+    const scrollElementWidth = this.getScrollElementWidth();
+
+    return (
+      this.isAllItemsLoaded() &&
+      this.scrollPositionAtTheAndOfTheGallery() >= scrollElementWidth
+    );
+  }
+
+  isAllItemsLoaded() {
+    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
+      this.props;
     const visibleItemsCount = getVisibleItems(
       galleryStructure.galleryItems,
       container
     ).length;
-    const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-    const scrollElementWidth = galleryStructureWidth - imageMargin / 2;
 
-    return allItemsLoaded && this.scrollPositionAtTheAndOfTheGallery() >= scrollElementWidth;
+    return visibleItemsCount >= totalItemsCount;
+  }
+
+  getScrollElementWidth() {
+    const { galleryStructure } = this.props;
+    const { imageMargin } = this.props.styleParams
+    return galleryStructure.width - imageMargin / 2;
   }
 
   shouldNotCallNext = (direction) => {
-    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
-      this.props;
-    const { slideshowLoop, imageMargin, isRTL } = this.props.styleParams;
-    if (slideshowLoop) return false;
-    const galleryStructureWidth = galleryStructure.width;
-    const visibleItemsCount = getVisibleItems(
-      galleryStructure.galleryItems,
-      container
-    ).length;
-    const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-    const scrollElementWidth = galleryStructureWidth - imageMargin / 2;
-    const rtlGalleryWidth = -scrollElementWidth;
-    const scrollLeft =
-      this.scrollElement.scrollLeft + -this.props.container.galleryWidth;
+    const {slideshowLoop,isRTL } =this.props.styleParams
+    if (slideshowLoop && !this.isAllItemsLoaded()) return false;
+    const scrollElementWidth = this.getScrollElementWidth();
+    const scrollPositionAtTheAndOfTheGallery =
+      this.scrollPositionAtTheAndOfTheGallery()
     if (isRTL) {
-      return direction <= -1 && allItemsLoaded && scrollLeft <= rtlGalleryWidth;
+      return (
+        direction <= -1 &&
+        scrollPositionAtTheAndOfTheGallery * -1 <= Math.floor(scrollElementWidth) * -1
+      );
     } else {
       return (
         direction >= 1 &&
-        allItemsLoaded &&
-        this.scrollElement.scrollLeft + this.props.container.galleryWidth >=
-          scrollElementWidth
+        scrollPositionAtTheAndOfTheGallery >= Math.floor(scrollElementWidth)
       );
     }
   };

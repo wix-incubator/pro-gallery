@@ -22,6 +22,7 @@ export function scrollToItemImp(scrollParams) {
     autoSlideshowContinuousSpeed,
     imageMargin,
   } = scrollParams;
+  console.log('ssssss');
 
   const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
@@ -106,6 +107,7 @@ export function scrollToGroupImp(scrollParams) {
     autoSlideshowContinuousSpeed,
     imageMargin,
   } = scrollParams;
+  console.log('rrrrrr');
 
   const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
