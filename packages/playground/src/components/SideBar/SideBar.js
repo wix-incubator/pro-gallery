@@ -6,7 +6,10 @@ import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { List, Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { SECTIONS, settingsManager } from '../../constants/settings';
-import { INPUT_TYPES } from 'pro-gallery-lib';
+import { 
+  INPUT_TYPES, 
+  flattenObject 
+} from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
 import { throttle } from "../../utils/utils";
@@ -30,6 +33,7 @@ function SideBar({ items, blueprintsManager, visible }) {
     styleParams,
   } = useGalleryContext(blueprintsManager);
 
+  const flatStyleParams = flattenObject(styleParams)
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -57,8 +61,7 @@ function SideBar({ items, blueprintsManager, visible }) {
     setSearchResult('');
     setSearchTerm('');
   };
-
-  const changedStyleParams = Object.entries(styleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, styleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const changedStyleParams = Object.entries(flatStyleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, flatStyleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
   const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
@@ -96,8 +99,8 @@ function SideBar({ items, blueprintsManager, visible }) {
           }}>
             <JsonEditor
               onChange={_setStyleParams}
-              allStyleParams={styleParams}
-              styleParams={styleParams}
+              allStyleParams={flatStyleParams}
+              styleParams={flatStyleParams}
               section={settingsManager[searchResult].section}
               styleParam={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
@@ -113,18 +116,18 @@ function SideBar({ items, blueprintsManager, visible }) {
             <Collapse.Panel header={'* Changed Settings'} key="-1">
               <JsonEditor
                 onChange={_setStyleParams}
-                allStyleParams={styleParams}
+                allStyleParams={flatStyleParams}
                 styleParams={changedStyleParams}
                 showAllStyles={true}
               />
             </Collapse.Panel> : null}
           <Collapse.Panel header={SECTIONS.PRESET} key="1">
-            <LayoutPicker selectedLayout={styleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
+            <LayoutPicker selectedLayout={flatStyleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
             <Divider />
             <JsonEditor
               onChange={_setStyleParams}
-              allStyleParams={styleParams}
-              styleParams={styleParams}
+              allStyleParams={flatStyleParams}
+              styleParams={flatStyleParams}
               section={SECTIONS.PRESET}
               showAllStyles={gallerySettings.showAllStyles}
             />
@@ -136,8 +139,8 @@ function SideBar({ items, blueprintsManager, visible }) {
                   <JsonEditor
                     section={section}
                     onChange={_setStyleParams}
-                    allStyleParams={styleParams}
-                    styleParams={styleParams}
+                    allStyleParams={flatStyleParams}
+                    styleParams={flatStyleParams}
                     showAllStyles={gallerySettings.showAllStyles}
                   />
                 </Collapse.Panel>
@@ -242,7 +245,7 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Button shape="circle" icon="arrow-right" target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(styleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(flatStyleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
@@ -254,17 +257,17 @@ function SideBar({ items, blueprintsManager, visible }) {
           {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
-                <Switch checked={!!styleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
+                <Switch checked={!!flatStyleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
               </Form.Item>
               {
-                isEligibleForLeanGallery({ items, styles: styleParams }) ?
+                isEligibleForLeanGallery({ items, styles: flatStyleParams }) ?
                   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
                   :
                   <List
                     size="small"
                     header="CAN NOT RENDER LEAN GALLERY"
                     bordered
-                    dataSource={notEligibleReasons({ items, styles: styleParams })}
+                    dataSource={notEligibleReasons({ items, styles: flatStyleParams })}
                     renderItem={item => <List.Item>{item}</List.Item>}
                   />
               }

@@ -290,7 +290,7 @@ export function App() {
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
           id: 'pro-gallery-playground',
-          scrollingElement: () => (gallerySettings.responsivePreview ? document.getElementById('resizable') : window),
+          scrollingElement: gallerySettings.responsivePreview ? document.getElementById('resizable') : window,
           viewMode: gallerySettings.viewMode,
           eventsListener: eventListener,
           totalItemsCount: getTotalItemsCount(),
