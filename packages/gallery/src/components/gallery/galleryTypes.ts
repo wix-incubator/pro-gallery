@@ -4,7 +4,7 @@ import { EventsListener } from '../../common/interfaces/EventsListener';
 import { CreateMediaUrl } from '../../common/interfaces/CreateMediaUrl';
 import { CustomComponents } from '../../common/interfaces/CustomComponents';
 import { ScrollingElement } from '../../common/interfaces/ScrollingElement';
-import { Styles } from '../../common/interfaces/Styles';
+import { StyleParams } from './styles';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
@@ -18,9 +18,9 @@ export interface Settings {
 export interface GalleryProps {
   container: Container;
   items: Item[];
-  styles?: Styles;
-  options?: Styles;
-  styleParams?: Styles;
+  styles?: StyleParams;
+  options?: StyleParams;
+  styleParams?: StyleParams;
   id?: string;
   totalItemsCount?: number;
   activeIndex?: number;
