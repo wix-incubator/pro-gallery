@@ -1,70 +1,66 @@
 function convertStyles(initialStyles) {
   //This will add the new names while keeping the old ones.
-  let styles = convertLayoutParams(initialStyles);
+  let styles = { ...initialStyles };
+  Object.keys(initialStyles).forEach((key) => {
+    styles[(layoutParamsMap[key] = initialStyles[key])];
+  });
   return styles;
 }
 
-function convertLayoutParams(initialStyles) {
-  //This will add the new names while keeping the old ones.
-  let styles = { ...initialStyles };
-  styles['cropRatio'] = initialStyles['layoutParams_cubeRatio'];
-  styles['cubeType'] = initialStyles['layoutParams_cropType'];
-  styles['cubeImages'] = initialStyles['layoutParams_enableCrop'];
-  styles['groupsPerStrip'] = initialStyles['layoutParams_numberOfGroupsPerRow'];
-  styles['galleryMargin'] = initialStyles['layoutParams_gallerySpacing'];
+const layoutParamsMap = {
+  cropRatio: 'layoutParams_cubeRatio',
+  cubeType: 'layoutParams_cropType',
+  cubeImages: 'layoutParams_enableCrop',
+  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow',
+  galleryMargin: 'layoutParams_gallerySpacing',
 
-  styles['imageMargin'] = initialStyles['layoutParams_itemSpacing'];
-  styles['placeGroupsLtr'] = initialStyles['layoutParams_forceGroupsOrder'];
-  styles['rotatingGroupTypes'] =
-    initialStyles['layoutParams_repeatingGroupTypes'];
-  styles['rotatingCropRatios'] =
-    initialStyles['layoutParams_repeatingCropRatios'];
-  styles['smartCrop'] = initialStyles['layoutParams_enableSmartCrop'];
+  imageMargin: 'layoutParams_itemSpacing',
+  placeGroupsLtr: 'layoutParams_forceGroupsOrder',
+  rotatingGroupTypes: 'layoutParams_repeatingGroupTypes',
+  rotatingCropRatios: 'layoutParams_repeatingCropRatios',
+  smartCrop: 'layoutParams_enableSmartCrop',
 
-  styles['slideshowInfoSize'] = initialStyles['layoutParams_slideshowInfoSize'];
+  slideshowInfoSize: 'layoutParams_slideshowInfoSize',
 
   //is is is?
-  styles['isSlideshow'] = initialStyles['layoutParams_isSlideshow'];
-  styles['isGrid'] = initialStyles['layoutParams_isGrid'];
-  styles['isMasonry'] = initialStyles['layoutParams_isMasonry'];
-  styles['isSlider'] = initialStyles['layoutParams_isSlider'];
-  styles['isColumns'] = initialStyles['layoutParams_isColumns'];
-  styles['isSlideshow'] = initialStyles['layoutParams_isSlideshow'];
-
+  isSlideshow: 'layoutParams_isSlideshow',
+  isGrid: 'layoutParams_isGrid',
+  isMasonry: 'layoutParams_isMasonry',
+  isSlider: 'layoutParams_isSlider',
+  isColumns: 'layoutParams_isColumns',
   //bundle collage
-  styles['collageAmount'] = initialStyles['layoutParams_collage_amount']; //????????????????
-  styles['collageDensity'] = initialStyles['layoutParams_collage_density'];
-  styles['chooseBestGroup'] =
-    initialStyles['layoutParams_collage_groupByOrientation'];
-  styles['groupTypes'] = initialStyles['layoutParams_collage_groupTypes'];
-  styles['groupSize'] = initialStyles['layoutParams_collage_groupSize'];
+  collageAmount: 'layoutParams_collage_amount', //????????????????
+  collageDensity: 'layoutParams_collage_density',
+  chooseBestGroup: 'layoutParams_collage_groupByOrientation',
+  groupTypes: 'layoutParams_collage_groupTypes',
+  groupSize: 'layoutParams_collage_groupSize',
   //bundle thumbnails
-  styles['hasThumbnails'] =
-    initialStyles['layoutParams_thumbnails_enableThumbnails'];
-  styles['thumbnailSpacings'] =
-    initialStyles['layoutParams_thumbnails_spacings'];
-  styles['thumbnailSize'] = initialStyles['layoutParams_thumbnails_size'];
-  styles['galleryThumbnailsAlignment'] =
-    initialStyles['layoutParams_thumbnails_alignment'];
+  hasThumbnails: 'layoutParams_thumbnails_enableThumbnails',
+  thumbnailSpacings: 'layoutParams_thumbnails_spacings',
+  thumbnailSize: 'layoutParams_thumbnails_size',
+  galleryThumbnailsAlignment: 'layoutParams_thumbnails_alignment',
 
-  styles['columnsWidth'] = initialStyles['layoutParams_columnsWidth']; //????????????????
-  styles['cropOnlyFill'] = initialStyles['layoutParams_cropOnlyFill']; //????????????????
-  styles['fixedColumns'] = initialStyles['layoutParams_fixedColumns']; //????????????????
+  //bundle arrows
+  showArrows: 'layoutParams_navigationArrows_enableArrows',
+  arrowsPadding: 'layoutParams_navigationArrows_padding',
+  arrowsVerticalPosition: 'layoutParams_navigationArrows_verticalAlignment',
+  arrowsSize: 'layoutParams_navigationArrows_size',
+  arrowsPosition: 'layoutParams_navigationArrows_position',
 
-  styles['scatter'] = initialStyles['layoutParams_scatter'];
-  styles['scrollDirection'] = initialStyles['layoutParams_scrollDirection'];
-  styles['minItemSize'] = initialStyles['layoutParams_minItemSize'];
+  columnsWidth: 'layoutParams_columnsWidth', //????????????????
+  cropOnlyFill: 'layoutParams_cropOnlyFill', //????????????????
+  fixedColumns: 'layoutParams_fixedColumns', //????????????????
 
-  styles['isVertical'] = initialStyles['layoutParams_isVerticalOrientation']; // This needs to be refactored to be an enum. but can wait
+  scatter: 'layoutParams_scatter',
+  scrollDirection: 'layoutParams_scrollDirection',
+  minItemSize: 'layoutParams_minItemSize',
 
-  // 'externalInfoHeight', //internals for layouter
-  // 'externalInfoWidth', //internals for layouter
-  // 'targetItemSize',//internals for layouter
-  styles['externalInfoHeight'] =
-    initialStyles['layoutParams_externalInfoHeight'];
-  styles['externalInfoWidth'] = initialStyles['layoutParams_externalInfoWidth'];
-  styles['targetItemSize'] = initialStyles['layoutParams_targetItemSize'];
-  return styles;
-}
+  isVertical: 'layoutParams_isVerticalOrientation', // This needs to be refactored to be an enum. but can wait
+  columnWidths: 'layoutParams_columnWidths',
+
+  externalInfoHeight: 'layoutParams_externalInfoHeight', //layouter internal
+  externalInfoWidth: 'layoutParams_externalInfoWidth', //layouter internal
+  targetItemSize: 'layoutParams_targetItemSize', //layouter internal
+};
 
 export { convertStyles };
