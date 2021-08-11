@@ -94,7 +94,7 @@ export default class ItemHover extends GalleryComponent {
     overlaySizeType,
   }) {
     const calculatedField = isHorizontal ? 'width' : 'height'
-    const halfField = isHorizontal ? 'height' :'width' 
+    const halfField = calculatedField === 'width' ? 'height' :'width' 
     const { width, height } = imageDimensions;
     const x = this.calcOverlaySize(
       imageDimensions[calculatedField],
