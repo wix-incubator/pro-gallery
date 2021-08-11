@@ -104,9 +104,8 @@ export default class ItemHover extends GalleryComponent {
     )
 
     const result = {[calculatedField]: x}
-    const calcHalf = y => y - 2 * overlayPadding
     return Object.assign({}, result, {
-      [halfField]: calcHalf(imageDimensions[halfField])
+      [halfField]: imageDimensions[halfField]- 2 * overlayPadding
     });
   }
 
