@@ -1,38 +1,11 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-export default (
-  { items, styles, container, watermark, itemsDimensions },
-  state
-) => {
+export default ({ items, styles, container, itemsDimensions }, state) => {
   const reason = {
     items: '',
     itemsMetadata: '',
     itemsAdded: '',
     styles: '',
     container: '',
-  };
-
-  const watermarkHaveChanged = (newWatermark) => {
-    const oldWatermark = state.container;
-    if (newWatermark) {
-      if (!oldWatermark) {
-        reason.watermark = 'first watermark arrived';
-        return true;
-      } else {
-        try {
-          const wasChanged =
-            JSON.stringify(Object.entries(oldWatermark).sort()) !==
-            JSON.stringify(Object.entries(newWatermark).sort());
-          if (wasChanged) {
-            reason.watermark = 'watermark changed.';
-          }
-          return wasChanged;
-        } catch (e) {
-          console.error('Could not compare watermarks', e);
-          return false;
-        }
-      }
-    }
-    return false;
   };
 
   const containerHadChanged = (_container) => {
@@ -196,7 +169,6 @@ export default (
     addedItems: itemsWereAdded(items),
     itemsMetadata: itemsMetadataWasChanged(items),
     styles: stylesHaveChanged(styles),
-    watermark: watermarkHaveChanged(watermark),
     container: containerHadChanged(container),
     itemsDimensions: !!itemsDimensions,
   };
