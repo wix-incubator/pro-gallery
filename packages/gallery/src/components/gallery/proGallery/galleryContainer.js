@@ -50,7 +50,7 @@ export class GalleryContainer extends React.Component {
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      gotFirstScrollEvent: false,
+      gotFirstScrollEvent: (props.activeIndex >= 0),
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
@@ -291,7 +291,7 @@ export class GalleryContainer extends React.Component {
     id,
     createMediaUrl,
     isPrerenderMode,
-    customImageRenderer,
+    customComponents,
   }) {
     items = items || this.props.items;
     styles = styles || this.props.styles;
@@ -300,8 +300,8 @@ export class GalleryContainer extends React.Component {
     id = id || this.props.id;
     createMediaUrl = createMediaUrl || this.props.createMediaUrl;
 
-    if (typeof customImageRenderer === 'function') {
-      ImageRenderer.customImageRenderer = customImageRenderer;
+    if (typeof customComponents.customImageRenderer === 'function') {
+      ImageRenderer.customImageRenderer = customComponents.customImageRenderer;
     }
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, {
@@ -374,9 +374,7 @@ export class GalleryContainer extends React.Component {
         `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
       );
     const vertical = this.props.scrollingElement
-      ? typeof this.props.scrollingElement === 'function'
-        ? this.props.scrollingElement
-        : () => this.props.scrollingElement
+      ? () => this.props.scrollingElement
       : () => window;
     return { vertical, horizontal };
   }
@@ -390,6 +388,11 @@ export class GalleryContainer extends React.Component {
     isContinuousScrolling = false,
   ) {
     if (itemIdx >= 0) {
+      if(!this.state.gotFirstScrollEvent) {
+        this.setState({
+          gotFirstScrollEvent:true,
+        });
+      }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {
@@ -411,6 +414,7 @@ export class GalleryContainer extends React.Component {
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
           autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
+          imageMargin: this.state.styles.imageMargin,
         };
         return scrollToItemImp(scrollParams);
       } catch (e) {
@@ -465,6 +469,7 @@ export class GalleryContainer extends React.Component {
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
           autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
+          imageMargin: this.state.styles.imageMargin,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {
@@ -793,11 +798,7 @@ export class GalleryContainer extends React.Component {
           displayShowMore={displayShowMore}
           id={this.props.id}
           activeIndex={this.props.activeIndex || 0}
-          customHoverRenderer={this.props.customHoverRenderer}
-          customInfoRenderer={this.props.customInfoRenderer}
-          customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
-          customLoadMoreRenderer={this.props.customLoadMoreRenderer}
-          customNavArrowsRenderer={this.props.customNavArrowsRenderer}
+          customComponents={this.props.customComponents}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}

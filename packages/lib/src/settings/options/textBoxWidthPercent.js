@@ -12,7 +12,7 @@ export default {
     styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     styleParams.calculateTextBoxWidthMode ===
       GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT &&
-    GALLERY_CONSTS.hasHorizontalPlacement(styleParams.titlePlacement),
+    GALLERY_CONSTS.hasExternalHorizontalPlacement(styleParams.titlePlacement),
   type: INPUT_TYPES.NUMBER,
   default: 50,
   min: 0,

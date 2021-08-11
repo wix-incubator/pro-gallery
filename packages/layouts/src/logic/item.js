@@ -24,7 +24,7 @@ export class Item {
       const { styleParams } = config;
       this.cubeType = styleParams.cubeType;
       this.cubeImages = styleParams.cubeImages;
-      this._cubeRatio = styleParams.cubeRatio;
+      this._cropRatio = styleParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop = styleParams.smartCrop;
       this.cropOnlyFill = styleParams.cropOnlyFill;
@@ -294,8 +294,8 @@ export class Item {
 
   get width() {
     let width;
-    if (this.cubeImages && this.ratio >= this.cubeRatio) {
-      width = this.style.cubedWidth || this.orgHeight * this.cubeRatio;
+    if (this.cubeImages && this.ratio >= this.cropRatio) {
+      width = this.style.cubedWidth || this.orgHeight * this.cropRatio;
     } else {
       width = this.orgWidth;
     }
@@ -327,8 +327,8 @@ export class Item {
 
   get height() {
     let height;
-    if (this.cubeImages && this.ratio < this.cubeRatio) {
-      height = this.style.cubedHeight || this.orgWidth / this.cubeRatio;
+    if (this.cubeImages && this.ratio < this.cropRatio) {
+      height = this.style.cubedHeight || this.orgWidth / this.cropRatio;
     } else {
       height = this.orgHeight;
     }
@@ -387,7 +387,7 @@ export class Item {
       }
     };
 
-    const isLandscape = this.ratio >= this.cubeRatio; //relative to container size
+    const isLandscape = this.ratio >= this.cropRatio; //relative to container size
     if (isGridFit) {
       setTargetDimensions(isLandscape, this.ratio);
     } else if (
@@ -395,7 +395,7 @@ export class Item {
       (this.width > this.maxWidth || this.height > this.maxHeight)
     ) {
       if (this.cubeImages) {
-        setTargetDimensions(!isLandscape, this.cubeRatio);
+        setTargetDimensions(!isLandscape, this.cropRatio);
       } else {
         setTargetDimensions(!isLandscape, this.ratio);
       }
@@ -407,7 +407,7 @@ export class Item {
     };
   }
 
-  get cubeRatio() {
+  get cropRatio() {
     let ratio;
     if (this.rotatingCropRatio) {
       ratio = this.rotatingCropRatio;
@@ -416,15 +416,15 @@ export class Item {
       ratio = this.rotatingCropRatio =
         cropRatiosArr[this.idx % cropRatiosArr.length];
     }
-    if (!ratio && typeof this._cubeRatio === 'function') {
-      ratio = this._cubeRatio();
+    if (!ratio && typeof this._cropRatio === 'function') {
+      ratio = this._cropRatio();
     }
     if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {
       ratio = this.ratio;
     }
 
     if (!ratio) {
-      ratio = this._cubeRatio || this.ratio;
+      ratio = this._cropRatio || this.ratio;
     }
 
     if (this.dynamicCropRatios !== null && typeof ratio === 'string') {
@@ -485,9 +485,9 @@ export class Item {
     return ratio;
   }
 
-  set cubeRatio(ratio) {
-    if (typeof this._cubeRatio === 'number') {
-      this._cubeRatio = ratio;
+  set cropRatio(ratio) {
+    if (typeof this._cropRatio === 'number') {
+      this._cropRatio = ratio;
       this.style.cubedHeight = this.style.cubedWidth = 0;
     }
   }
@@ -539,7 +539,7 @@ export class Item {
       margins: this.margins,
       ratio: this.ratio,
       dimensions: this.dimensions,
-      cropRatio: this.cubeRatio,
+      cropRatio: this.cropRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
       height: this.height,

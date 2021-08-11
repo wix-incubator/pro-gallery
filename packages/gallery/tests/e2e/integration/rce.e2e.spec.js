@@ -1,4 +1,3 @@
-// import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
@@ -23,7 +22,7 @@ describe('RCE Integration test', () => {
       gallerySizePx: 300,
       galleryMargin: 0,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      cubeRatio: 1,
+      cropRatio: 1,
       galleryThumbnailsAlignment: 'bottom',
       isVertical: false,
       imageMargin: 20,
@@ -57,7 +56,7 @@ describe('RCE Integration test', () => {
   //     gallerySizePx: 300,
   //     galleryMargin: 0,
   //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-  //     cubeRatio: 1,
+  //     cropRatio: 1,
   //     galleryThumbnailsAlignment: 'bottom',
   //     isVertical: false,
   //     imageMargin: 20,
