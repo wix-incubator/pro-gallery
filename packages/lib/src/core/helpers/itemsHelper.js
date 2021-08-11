@@ -2,7 +2,7 @@ import GalleryItem from '../galleryItem';
 import GalleryGroup from '../galleryGroup';
 import utils from '../../common/utils';
 
-export default class ItemsHelper {
+export class ItemsHelper {
   static convertDtoToLayoutItem(dto) {
     const isLayoutItem = !!(dto.id && dto.width > 0 && dto.height > 0);
     if (isLayoutItem) {
