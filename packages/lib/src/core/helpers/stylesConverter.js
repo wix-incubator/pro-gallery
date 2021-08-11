@@ -2,13 +2,21 @@ function convertStyles(initialStyles) {
   //This will add the new names while keeping the old ones.
   let styles = { ...initialStyles };
   Object.keys(initialStyles).forEach((key) => {
-    styles[(layoutParamsMap[key] = initialStyles[key])];
+    styles[layoutParamsMap[key]] = initialStyles[key];
+  });
+  return styles;
+}
+function convertStylesBackwards(initialStyles) {
+  //This will add the old names while keeping the new ones.
+  let styles = { ...initialStyles };
+  Object.keys(layoutParamsMap).forEach((key) => {
+    styles[key] = initialStyles[layoutParamsMap[key]];
   });
   return styles;
 }
 
 const layoutParamsMap = {
-  cropRatio: 'layoutParams_cubeRatio',
+  cubeRatio: 'layoutParams_cropRatio',
   cubeType: 'layoutParams_cropType',
   cubeImages: 'layoutParams_enableCrop',
   groupsPerStrip: 'layoutParams_numberOfGroupsPerRow',
@@ -63,4 +71,4 @@ const layoutParamsMap = {
   targetItemSize: 'layoutParams_targetItemSize', //layouter internal
 };
 
-export { convertStyles };
+export { convertStyles, convertStylesBackwards };
