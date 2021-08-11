@@ -1,7 +1,6 @@
 import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
-import { BlueprintsManager } from 'pro-gallery-blueprints';
-import ProGallery from './proGallery/proGallery';
+import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 // import { Dimensions } from '../../common/interfaces/Dimensions';
 
 import { GalleryProps, GalleryState } from './galleryTypes';
