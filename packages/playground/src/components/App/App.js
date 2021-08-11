@@ -9,7 +9,7 @@ import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import { BlueprintsManager } from 'pro-gallery-blueprints'
+import { BlueprintsManager } from 'pro-gallery-lib'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
