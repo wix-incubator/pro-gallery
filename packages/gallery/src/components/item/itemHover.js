@@ -102,14 +102,15 @@ export default class ItemHover extends GalleryComponent {
     )
 
     const result = {[isHorizontal ? 'width' : 'height']: x}
+    const calcHalf = y => y - 2 * overlayPadding,
 
     if (isHorizontal) {
       return Object.assign({}, result, {
-        height: height - 2 * overlayPadding,
+        height: calcHalf(height)
       });
     } else {
       return Object.assign({}, result, {
-        width: width - 2 * overlayPadding,
+        width: calcHalf(width)
       });
     }
   }
