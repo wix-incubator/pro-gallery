@@ -10,6 +10,6 @@ export interface Item {
 }
 
 export interface StyleParams {
-  item: Item;
+  item?: Item;
   [key: string]: any;
 }
