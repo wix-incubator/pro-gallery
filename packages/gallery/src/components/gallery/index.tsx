@@ -1,5 +1,4 @@
 import React from 'react';
-import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 // import { Dimensions } from '../../common/interfaces/Dimensions';
 
