@@ -6,7 +6,7 @@ function convertStyles(initialStyles) {
   });
   return styles;
 }
-function convertStyleBackwards(initialStyles) {
+function convertStylesBackwards(initialStyles) {
   //This will add the old names while keeping the new ones.
   let styles = { ...initialStyles };
   Object.keys(layoutParamsMap).forEach((key) => {
@@ -71,4 +71,4 @@ const layoutParamsMap = {
   targetItemSize: 'layoutParams_targetItemSize', //layouter internal
 };
 
-export { convertStyles, convertStyleBackwards };
+export { convertStyles, convertStylesBackwards };

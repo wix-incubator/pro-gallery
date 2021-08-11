@@ -1047,7 +1047,6 @@ class SlideshowView extends GalleryComponent {
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,
-      watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
