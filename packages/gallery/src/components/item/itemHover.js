@@ -94,25 +94,22 @@ export default class ItemHover extends GalleryComponent {
     overlaySizeType,
   }) {
     const { width, height } = imageDimensions;
+    const x = this.calcOverlaySize(
+      isHorizontal ? width : height,
+      requiredOverlaySize,
+      overlaySizeType,
+      overlayPadding
+    )
+
     if (isHorizontal) {
       return {
-        width: this.calcOverlaySize(
-          width,
-          requiredOverlaySize,
-          overlaySizeType,
-          overlayPadding
-        ),
+        width: x,
         height: height - 2 * overlayPadding,
       };
     } else {
       return {
         width: width - 2 * overlayPadding,
-        height: this.calcOverlaySize(
-          height,
-          requiredOverlaySize,
-          overlaySizeType,
-          overlayPadding
-        ),
+        height: x
       };
     }
   }
