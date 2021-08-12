@@ -114,23 +114,21 @@ class SlideshowView extends GalleryComponent {
     return galleryStructure.width - imageMargin / 2;
   }
 
-  shouldNotCallNext = (direction) => {
+  shouldStopNext = (direction) => {
     const {slideshowLoop,isRTL } =this.props.styleParams
-    if (slideshowLoop && !this.isAllItemsLoaded()) return false;
+    if (slideshowLoop || !this.isAllItemsLoaded()) return false;
     const scrollElementWidth = this.getScrollElementWidth();
     const scrollPositionAtTheAndOfTheGallery =
       this.scrollPositionAtTheAndOfTheGallery()
+    let shouldStopNext = false;
     if (isRTL) {
-      return (
-        direction <= -1 &&
-        scrollPositionAtTheAndOfTheGallery * -1 <= Math.floor(scrollElementWidth) * -1
-      );
-    } else {
-      return (
-        direction >= 1 &&
+      shouldStopNext = direction <= -1 &&
+        scrollPositionAtTheAndOfTheGallery <= Math.floor(scrollElementWidth)
+    } else { 
+      shouldStopNext = direction >= 1 &&
         scrollPositionAtTheAndOfTheGallery >= Math.floor(scrollElementWidth)
-      );
     }
+    return shouldStopNext;
   };
 
   isLastItem() {
@@ -181,17 +179,18 @@ class SlideshowView extends GalleryComponent {
     isKeyboardNavigation = false,
     isContinuousScrolling = false,
   }) {
-    if(this.shouldNotCallNext(direction)){
+    // should Stop Next by scrolling position
+    if(this.shouldStopNext(direction)){
        this.clearAutoSlideshowInterval();
       return;
     }
     const activeElement = document.activeElement;
     const galleryItemIsFocused =
-    activeElement.className &&
-    activeElement.className.includes('gallery-item-container');
+     activeElement.className &&
+     activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation =
-    !isKeyboardNavigation ||
-    !(this.props.styleParams.isAccessible && galleryItemIsFocused);
+     !isKeyboardNavigation ||
+     !(this.props.styleParams.isAccessible && galleryItemIsFocused);
     let ignoreScrollPosition = false;
 
     if (
