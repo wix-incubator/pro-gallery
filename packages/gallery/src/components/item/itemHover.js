@@ -94,19 +94,18 @@ export default class ItemHover extends GalleryComponent {
     overlaySizeType,
   }) {
     const calculatedField = isHorizontal ? 'width' : 'height';
-    const calculatedHalfField =
-      calculatedField === 'width' ? 'height' : 'width';
+    const calculatedOppositeField = isHorizontal ? 'height' : 'width';
     const overlaySizeCalc = this.calcOverlaySize(
       imageDimensions[calculatedField],
       requiredOverlaySize,
       overlaySizeType,
       overlayPadding
     );
-    const result = { [calculatedField]: overlaySizeCalc };
-    return Object.assign({}, result, {
-      [calculatedHalfField]:
-        imageDimensions[calculatedHalfField] - 2 * overlayPadding,
-    });
+    return {
+      [calculatedField]: overlaySizeCalc,
+      [calculatedOppositeField]:
+        imageDimensions[calculatedOppositeField] - 2 * overlayPadding,
+    };
   }
 
   calcOverlaySize(
@@ -174,6 +173,7 @@ export default class ItemHover extends GalleryComponent {
         style={overlayPositionCalc}
       >
         <div
+          id={'item-hover-' + idx}
           className={hoverClass}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}

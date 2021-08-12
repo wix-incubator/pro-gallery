@@ -15,7 +15,7 @@ describe('ItemHover', () => {
   let stub;
 
   function itemHoverHasClass(_driver, className) {
-    return expect(_driver.find.hook('item-hover-1').hasClass(className));
+    return expect(_driver.find.id('item-hover-1').hasClass(className));
   }
 
   beforeEach(() => {
