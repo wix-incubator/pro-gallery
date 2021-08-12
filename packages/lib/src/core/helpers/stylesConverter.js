@@ -6,11 +6,14 @@ function convertStyles(initialStyles) {
   });
   return styles;
 }
+
 function convertStylesBackwards(initialStyles) {
   //This will add the old names while keeping the new ones.
   let styles = { ...initialStyles };
   Object.keys(layoutParamsMap).forEach((key) => {
-    styles[key] = initialStyles[layoutParamsMap[key]];
+    if (typeof initialStyles[layoutParamsMap[key]] !== undefined) {
+      styles[key] = initialStyles[layoutParamsMap[key]];
+    }
   });
   return styles;
 }
