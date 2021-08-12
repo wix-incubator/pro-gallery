@@ -93,7 +93,7 @@ class SlideshowView extends GalleryComponent {
 
     return (
       this.isAllItemsLoaded() &&
-      this.scrollPositionAtTheAndOfTheGallery() >= scrollElementWidth
+      this.scrollPositionAtTheAndOfTheGallery() >=  Math.floor(scrollElementWidth)
     );
   }
 
