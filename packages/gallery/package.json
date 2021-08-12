@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "4.0.15-beta.60",
+  "version": "4.0.15-beta.63",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -39,11 +39,10 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "ajv": "^8.6.0",
     "hls.js": "^0.14.12",
-    "pro-gallery-blueprints": "^4.0.15-beta.60",
-    "pro-gallery-lib": "^4.0.15-beta.60",
-    "pro-layouts": "^4.0.15-beta.60",
+    "pro-gallery-blueprints": "^4.0.15-beta.63",
+    "pro-gallery-lib": "^4.0.15-beta.63",
+    "pro-layouts": "^4.0.15-beta.63",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -54,6 +53,7 @@
     "@types/react": "^16.14.6",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
+    "ajv": "^8.6.0",
     "chai": "^4.2.0",
     "chai-spies": "^0.7.1",
     "concurrently": "^6.1.0",
