@@ -118,10 +118,7 @@ export const stylesBySection = {
     'arrowsVerticalPosition',
 
     'overlayBackground',
-    'overlayPosition',
-    'overlaySize',
-    'overlaySizeType',
-    'overlayPadding',
+
     // 'itemIconColorSlideshow',
     // 'itemIconColor',
     // 'textBoxFillColor',
