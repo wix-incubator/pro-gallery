@@ -166,14 +166,11 @@ export default class ItemHover extends GalleryComponent {
     const overlayStyle = this.getOverlayStyle();
     const overlayPositionCalc = this.getOverlayPositionByFlex();
     return (
-      <div
-        key={'item-hover-' + idx}
-        data-hook={'item-hover-' + idx}
-        aria-hidden={true}
-        style={overlayPositionCalc}
-      >
+      <div style={overlayPositionCalc}>
         <div
-          id={'item-hover-' + idx}
+          key={'item-hover-' + idx}
+          data-hook={'item-hover-' + idx}
+          aria-hidden={true}
           className={hoverClass}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
