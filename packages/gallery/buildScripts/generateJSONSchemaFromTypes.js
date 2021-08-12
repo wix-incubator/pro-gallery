@@ -1,9 +1,9 @@
-module.exports = getSchema
+module.exports = getSchemaFromTypes
 const path = require("path");
 const fs = require("fs");
 
 const TJS = require("typescript-json-schema")
-function getSchema() {
+function getSchemaFromTypes() {
   // optionally pass argument to schema generator
   const settings = {
     required: true,
