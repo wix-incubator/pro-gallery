@@ -9,8 +9,9 @@ const getSchemaFromTypes = require('./generateJSONSchemaFromTypes')
 function writeES5StandaloneValidateMethod() {
   const moduleCode = buildValidationFunction(getSchemaFromTypes())
   const {code} = transformSync(moduleCode, {});
+  const es5CompatibleCode = `/* eslint-disable */ ${code} /* eslint-enable */`
   const typeValidatorDir = path.join(__dirname, '../src/components/gallery/typeValidator')
-  fs.writeFileSync(path.join(typeValidatorDir,'/standaloneValidateCode.js'), code, {encoding: 'utf-8'})
+  fs.writeFileSync(path.join(typeValidatorDir,'/standaloneValidateCode.js'), es5CompatibleCode, {encoding: 'utf-8'})
 }
 
 function buildValidationFunction(schema) {
