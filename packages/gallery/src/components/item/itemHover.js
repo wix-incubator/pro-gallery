@@ -134,6 +134,9 @@ export default class ItemHover extends GalleryComponent {
       marginTop,
       marginLeft,
       display: 'flex',
+      position: 'absolute',
+      top: 0,
+      left: 0,
     };
     switch (overlayPosition) {
       case GALLERY_CONSTS.overlayPositions.RIGHT:
