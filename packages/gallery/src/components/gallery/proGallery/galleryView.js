@@ -128,7 +128,6 @@ class GalleryView extends GalleryComponent {
 
   createGallery(showMore) {
     const {
-      itemsLoveData,
       styleParams,
       container,
       galleryStructure,
@@ -153,7 +152,6 @@ class GalleryView extends GalleryComponent {
         itemView,
         item.renderProps({
           ...galleryConfig,
-          ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
         })
