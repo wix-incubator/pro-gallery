@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "4.0.15-beta.55",
+  "version": "4.0.15-beta.56",
   "publishScoped": false,
   "private": false,
   "author": {
@@ -40,7 +40,7 @@
     "typescript": "4.1.2"
   },
   "dependencies": {
-    "pro-layouts": "^4.0.15-beta.55"
+    "pro-layouts": "^4.0.15-beta.56"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
