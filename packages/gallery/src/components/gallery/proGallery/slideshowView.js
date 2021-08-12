@@ -115,18 +115,20 @@ class SlideshowView extends GalleryComponent {
   }
 
   shouldStopNext = (direction) => {
-    const {slideshowLoop,isRTL } =this.props.styleParams
+    const { slideshowLoop, isRTL } = this.props.styleParams;
     if (slideshowLoop || !this.isAllItemsLoaded()) return false;
     const scrollElementWidth = this.getScrollElementWidth();
     const scrollPositionAtTheAndOfTheGallery =
-      this.scrollPositionAtTheAndOfTheGallery()
+      this.scrollPositionAtTheAndOfTheGallery();
     let shouldStopNext = false;
     if (isRTL) {
-      shouldStopNext = direction <= -1 &&
-        scrollPositionAtTheAndOfTheGallery <= Math.floor(scrollElementWidth)
-    } else { 
-      shouldStopNext = direction >= 1 &&
-        scrollPositionAtTheAndOfTheGallery >= Math.floor(scrollElementWidth)
+      shouldStopNext =
+        direction <= -1 &&
+        scrollPositionAtTheAndOfTheGallery >= Math.floor(scrollElementWidth);
+    } else {
+      shouldStopNext =
+        direction >= 1 &&
+        scrollPositionAtTheAndOfTheGallery >= Math.floor(scrollElementWidth);
     }
     return shouldStopNext;
   };
@@ -203,7 +205,7 @@ class SlideshowView extends GalleryComponent {
 
     direction *= this.props.styleParams.isRTL ? -1 : 1;
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
-      this.nextGroup({ direction, isAutoTrigger, scrollDuration, isContinuousScrolling }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+      this.nextGroup({ direction, scrollDuration, isContinuousScrolling }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if (
         avoidIndividualNavigation &&
@@ -318,7 +320,11 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  async nextGroup({ direction,scrollDuration, isContinuousScrolling = false }) {
+  async nextGroup({
+    direction,
+    scrollDuration,
+    isContinuousScrolling = false,
+  }) {
     if (this.isSliding) {
       return;
     }
