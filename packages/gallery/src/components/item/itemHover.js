@@ -54,22 +54,127 @@ export default class ItemHover extends GalleryComponent {
     return true;
   }
 
-  render() {
-    const { imageDimensions, actions, idx, renderCustomInfo } = this.props;
-    const hoverClass = this.getHoverClass();
+  getOverlayStyle() {
+    const { styleParams, imageDimensions } = this.props;
+    const style = {};
+    const {
+      overlayPosition,
+      overlaySize: requiredOverlaySize,
+      overlaySizeType,
+      overlayPadding,
+    } = styleParams;
 
+    const isHorizontal =
+      overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
+      overlayPosition === GALLERY_CONSTS.overlayPositions.RIGHT ||
+      overlayPosition === GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY;
+
+    const { width, height } = this.calcHeightAndWidth({
+      isHorizontal,
+      overlayPadding,
+      requiredOverlaySize,
+      imageDimensions,
+      overlaySizeType,
+    });
+    const margin = overlayPadding;
+    Object.assign(style, {
+      width,
+      height,
+      margin,
+      position: 'relative',
+    });
+    return style;
+  }
+
+  calcHeightAndWidth({
+    isHorizontal,
+    overlayPadding,
+    requiredOverlaySize,
+    imageDimensions,
+    overlaySizeType,
+  }) {
+    const calculatedField = isHorizontal ? 'width' : 'height';
+    const calculatedOppositeField = isHorizontal ? 'height' : 'width';
+    const overlaySizeCalc = this.calcOverlaySize(
+      imageDimensions[calculatedField],
+      requiredOverlaySize,
+      overlaySizeType,
+      overlayPadding
+    );
+    return {
+      [calculatedField]: overlaySizeCalc,
+      [calculatedOppositeField]:
+        imageDimensions[calculatedOppositeField] - 2 * overlayPadding,
+    };
+  }
+
+  calcOverlaySize(
+    widthOrHeight,
+    requiredOverlaySize,
+    overlaySizeType,
+    overlayPadding
+  ) {
+    const widthOrHeightCalc = widthOrHeight + -2 * overlayPadding;
+    const overlaySize = Math.min(
+      widthOrHeightCalc,
+      overlaySizeType === 'PERCENT'
+        ? widthOrHeightCalc * (requiredOverlaySize / 100)
+        : requiredOverlaySize
+    );
+    return Math.max(0, overlaySize);
+  }
+
+  getOverlayPositionByFlex() {
+    const { styleParams, imageDimensions } = this.props;
+    const { overlayPosition } = styleParams;
+    const { width, height, marginTop, marginLeft } = imageDimensions;
+    const style = {
+      width,
+      height,
+      marginTop,
+      marginLeft,
+      display: 'flex',
+    };
+    switch (overlayPosition) {
+      case GALLERY_CONSTS.overlayPositions.RIGHT:
+        Object.assign(style, {
+          justifyContent: 'flex-end',
+        });
+        break;
+      case GALLERY_CONSTS.overlayPositions.BOTTOM:
+        Object.assign(style, {
+          alignItems: 'flex-end',
+        });
+        break;
+      case GALLERY_CONSTS.overlayPositions.CENTERED_HORIZONTALLY:
+        Object.assign(style, {
+          justifyContent: 'center',
+        });
+        break;
+      case GALLERY_CONSTS.overlayPositions.CENTERED_VERTICALLY:
+        Object.assign(style, {
+          alignItems: 'center',
+        });
+        break;
+    }
+    return style;
+  }
+
+  render() {
+    const { actions, idx, renderCustomInfo } = this.props;
+    const hoverClass = this.getHoverClass();
+    const overlayStyle = this.getOverlayStyle();
+    const overlayPositionCalc = this.getOverlayPositionByFlex();
     return (
-      <div
-        className={hoverClass}
-        key={'item-hover-' + idx}
-        data-hook={'item-hover-' + idx}
-        aria-hidden={true}
-        style={imageDimensions}
-      >
+      <div style={overlayPositionCalc}>
         <div
-          style={{ height: '100%' }}
+          key={'item-hover-' + idx}
+          data-hook={'item-hover-' + idx}
+          aria-hidden={true}
+          className={hoverClass}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}
+          style={overlayStyle}
         >
           {this.shouldRenderHoverInnerIfExist() && renderCustomInfo ? (
             <div className="gallery-item-hover-inner">{renderCustomInfo()}</div>
