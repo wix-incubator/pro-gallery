@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const Ajv = require("ajv") // version >= v7.0.0
 // import Ajv from "ajv" // version >= v7.0.0
-const ajv = new Ajv({messages: true, verbose: true, code: {source: true}}) // this option is required to generate standalone code
+const ajv = new Ajv({messages: true, verbose: true, code: {source: true, es5: true}}) // this option is required to generate standalone code
 const standaloneCode = require("ajv/dist/standalone").default
 
 // const schema = {
@@ -44,9 +44,15 @@ function buildValidationFunction(schema) {
 }
 
 
+const { transformSync } =require("@babel/core")
+
 const moduleCode = buildValidationFunction(getSchema())
+const options = {}
+const {code} = transformSync(moduleCode, options); // => { code, map, ast }
+
+
 const typeValidatorDir = path.join(__dirname, '../src/components/gallery/typeValidator')
-fs.writeFileSync(path.join(typeValidatorDir,'/standaloneValidateCode.js'), moduleCode, {encoding: 'utf-8'})
+fs.writeFileSync(path.join(typeValidatorDir,'/standaloneValidateCode.js'), code, {encoding: 'utf-8'})
 
 // const requireFromString = require("require-from-string")
 // const standaloneValidate = requireFromString(moduleCode) // for a single default export
