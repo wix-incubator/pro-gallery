@@ -27,8 +27,3 @@ function getSchema() {
   const schema = TJS.generateSchema(program, "StyleParams", settings);
   return schema
 }
-// const schema = getSchema()
-// const schemaJSON = JSON.stringify(schema, null, 4)
-// const template = `export default ${schemaJSON}`
-// const typeValidatorDir = path.join(__dirname, '../src/components/gallery/typeValidator')
-// fs.writeFileSync(path.join(typeValidatorDir,'/schema.js'), template, {encoding: 'utf-8'})
