@@ -29,7 +29,7 @@ export class Item {
       this.smartCrop = styleParams.smartCrop;
       this.cropOnlyFill = styleParams.cropOnlyFill;
       this.imageMargin = styleParams.imageMargin;
-      this.galleryMargin = styleParams.galleryMargin;
+      this.gallerySpacing = styleParams.layoutParams.gallerySpacing;
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
@@ -128,7 +128,7 @@ export class Item {
 
   calcScatter(offset) {
     const m = this.imageMargin / 2;
-    const g = this.galleryMargin;
+    const g = this.gallerySpacing;
 
     const spaceLeft = offset.left > 0 ? m : g;
     const spaceRight =

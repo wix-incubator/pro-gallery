@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 
 export const defaultStyleParams = {
+  layoutParams: { gallerySpacing: 0 },
   isRTL: false,
   isVertical: 0,
   gallerySize: 30,
@@ -22,7 +23,6 @@ export const defaultStyleParams = {
   numberOfImagesPerCol: 1,
   groupsPerStrip: 0,
   imageMargin: 10,
-  galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   gridStyle: 0,
