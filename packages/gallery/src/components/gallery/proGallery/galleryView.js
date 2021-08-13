@@ -202,7 +202,6 @@ class GalleryView extends GalleryComponent {
       scroll: this.props.scroll,
       container: this.props.container,
       styleParams: this.props.styleParams,
-      watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,

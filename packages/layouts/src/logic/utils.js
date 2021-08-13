@@ -90,7 +90,11 @@ class Utils {
       // eslint-disable-next-line no-prototype-builtins
       if (!ob.hasOwnProperty(i)) continue;
 
-      if (typeof ob[i] == 'object' && ob[i] !== null) {
+      if (
+        typeof ob[i] == 'object' &&
+        ob[i] !== null &&
+        Object.keys(ob[i]).length > 0
+      ) {
         var flatObject = this.flattenObject(ob[i]);
         for (var x in flatObject) {
           // eslint-disable-next-line no-prototype-builtins
@@ -118,7 +122,7 @@ class Utils {
       layoutParams: { gallerySpacing: 0 },
       cubeImages: false,
       cubeType: 'fill',
-      cubeRatio: 1,
+      cropRatio: 1,
       rotatingCropRatios: '',
       smartCrop: false,
       imageMargin: 10,

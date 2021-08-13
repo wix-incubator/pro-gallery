@@ -81,10 +81,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   isScrollEnd() {
-    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
-      this.props;
-    const { slideshowLoop, slideAnimation, imageMargin } = this.props.styleParams;
-
+    const { slideshowLoop, slideAnimation } = this.props.styleParams
     if (
       slideshowLoop ||
       slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
@@ -92,15 +89,26 @@ class SlideshowView extends GalleryComponent {
     ) {
       return false;
     }
-    const galleryStructureWidth = galleryStructure.width;
+    return (
+      this.isAllItemsLoaded() &&
+      this.scrollPositionAtTheAndOfTheGallery() >=  Math.floor(this.getScrollElementWidth())
+    );
+  }
+
+  isAllItemsLoaded() {
+    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
+      this.props;
     const visibleItemsCount = getVisibleItems(
       galleryStructure.galleryItems,
       container
     ).length;
-    const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-    const scrollElementWidth = galleryStructureWidth - imageMargin / 2;
+    return visibleItemsCount >= totalItemsCount;
+  }
 
-    return allItemsLoaded && this.scrollPositionAtTheAndOfTheGallery() >= scrollElementWidth;
+  getScrollElementWidth() {
+    const { galleryStructure } = this.props;
+    const { imageMargin } = this.props.styleParams
+    return galleryStructure.width - imageMargin / 2;
   }
 
   isFirstItemFullyVisible() {
@@ -1047,7 +1055,6 @@ class SlideshowView extends GalleryComponent {
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,
-      watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
