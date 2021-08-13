@@ -4,7 +4,7 @@ function assignByString(Obj, string, value) {
   let assignedProperty = keyArr.pop();
   let pointer = _obj;
   keyArr.forEach((key) => {
-    if (!pointer[key]) pointer[key] = {};
+    if (typeof pointer[key] !== 'object') pointer[key] = {}; //if its not an object we put an object over it to allow assignments
     pointer = pointer[key];
   });
   pointer[assignedProperty] = value;
