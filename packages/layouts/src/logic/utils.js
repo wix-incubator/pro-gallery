@@ -117,7 +117,7 @@ class Utils {
     const defaultSP = {
       cubeImages: false,
       cubeType: 'fill',
-      cubeRatio: 1,
+      cropRatio: 1,
       rotatingCropRatios: '',
       smartCrop: false,
       imageMargin: 10,
