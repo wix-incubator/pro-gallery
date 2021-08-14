@@ -4,9 +4,9 @@ import hoveringBehaviour from './hoveringBehaviour';
 import enableInfiniteScroll from './enableInfiniteScroll';
 import cubeType from './cubeType';
 import cubeImages from './cubeImages';
-import cubeRatio from './cubeRatio';
+import cropRatio from './cropRatio';
 import titlePlacement from './titlePlacement';
-import galleryMargin from './galleryMargin';
+import layoutParams_gallerySpacing from './gallerySpacing';
 import isVertical from './isVertical';
 import numberOfImagesPerRow from './numberOfImagesPerRow';
 import numberOfImagesPerCol from './numberOfImagesPerCol';
@@ -100,9 +100,9 @@ export default {
   enableInfiniteScroll,
   cubeType,
   cubeImages,
-  cubeRatio,
+  cropRatio,
   titlePlacement,
-  galleryMargin,
+  layoutParams_gallerySpacing,
   isVertical,
   numberOfImagesPerRow,
   numberOfImagesPerCol,

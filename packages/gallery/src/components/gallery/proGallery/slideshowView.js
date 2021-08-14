@@ -81,10 +81,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   isScrollEnd() {
-    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
-      this.props;
-    const { slideshowLoop, slideAnimation, imageMargin } = this.props.styleParams;
-
+    const { slideshowLoop, slideAnimation } = this.props.styleParams
     if (
       slideshowLoop ||
       slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
@@ -92,15 +89,26 @@ class SlideshowView extends GalleryComponent {
     ) {
       return false;
     }
-    const galleryStructureWidth = galleryStructure.width;
+    return (
+      this.isAllItemsLoaded() &&
+      this.scrollPositionAtTheAndOfTheGallery() >=  Math.floor(this.getScrollElementWidth())
+    );
+  }
+
+  isAllItemsLoaded() {
+    const { totalItemsCount, getVisibleItems, galleryStructure, container } =
+      this.props;
     const visibleItemsCount = getVisibleItems(
       galleryStructure.galleryItems,
       container
     ).length;
-    const allItemsLoaded = visibleItemsCount >= totalItemsCount;
-    const scrollElementWidth = galleryStructureWidth - imageMargin / 2;
+    return visibleItemsCount >= totalItemsCount;
+  }
 
-    return allItemsLoaded && this.scrollPositionAtTheAndOfTheGallery() >= scrollElementWidth;
+  getScrollElementWidth() {
+    const { galleryStructure } = this.props;
+    const { imageMargin } = this.props.styleParams
+    return galleryStructure.width - imageMargin / 2;
   }
 
   isFirstItemFullyVisible() {
@@ -298,7 +306,7 @@ class SlideshowView extends GalleryComponent {
           () => {
             this.onCurrentItemChanged();
             this.isSliding = false;
-            if (isContinuousScrolling) {    
+            if (isContinuousScrolling) {
               this.startAutoSlideshowIfNeeded(this.props.styleParams);
             }
           }
@@ -439,7 +447,7 @@ class SlideshowView extends GalleryComponent {
         );
       }
     }
-  } 
+  }
 
   autoScrollToNextItem = () => {
     if (
@@ -971,7 +979,7 @@ class SlideshowView extends GalleryComponent {
       ? galleryHeight
       : galleryHeight - infoHeight;
     const infoSpace =
-      isSlideshow || GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)
+      isSlideshow || GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement)
         ? {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
             [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight,
@@ -1047,7 +1055,6 @@ class SlideshowView extends GalleryComponent {
       scroll: this.props.scroll,
       styleParams: this.props.styleParams,
       container: this.props.container,
-      watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
@@ -1352,7 +1359,7 @@ class SlideshowView extends GalleryComponent {
       margin:
         -1 *
         (this.props.styleParams.imageMargin / 2 -
-          this.props.styleParams.galleryMargin),
+          this.props.styleParams.layoutParams.gallerySpacing),
     };
   }
 
@@ -1574,7 +1581,10 @@ class SlideshowView extends GalleryComponent {
         className={this.getClassNames()}
         style={this.getStyles()}
         onKeyDown={this.handleSlideshowKeyPress}
-        {...utils.getAriaAttributes(this.props)}
+        {...utils.getAriaAttributes({
+          proGalleryRole: this.props.proGalleryRole,
+          proGalleryRegionLabel: this.props.proGalleryRegionLabel
+        })}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >

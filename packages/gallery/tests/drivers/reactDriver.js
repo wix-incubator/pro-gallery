@@ -43,6 +43,7 @@ class galleryDriver {
     };
 
     this.styleParams = {
+      layoutParams: { gallerySpacing: 1 },
       gotStyleParams: true,
       selectedLayout: 0,
       isVertical: false,
@@ -66,11 +67,10 @@ class galleryDriver {
       collageAmount: 0.8,
       collageDensity: 0.8,
       imageMargin: 5,
-      galleryMargin: 1,
       viewMode: 'preview',
       enableInfiniteScroll: true,
       itemClick: 'expand',
-      cubeRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
+      cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
       fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       showArrows: true,

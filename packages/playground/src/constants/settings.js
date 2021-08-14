@@ -52,7 +52,7 @@ export const stylesBySection = {
 
     'cubeImages',
     'cubeType',
-    'cubeRatio',
+    'cropRatio',
 
     'gallerySizeType',
     'gallerySize',
@@ -70,7 +70,7 @@ export const stylesBySection = {
     'rotatingGroupTypes',
     'rotatingCropRatios',
     'columnWidths',
-    'galleryMargin',
+    'layoutParams_gallerySpacing',
     'scatter',
     'rotatingScatter',
     'smartCrop',

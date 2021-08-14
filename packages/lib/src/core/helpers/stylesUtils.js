@@ -4,7 +4,7 @@ function assignByString(Obj, string, value) {
   let assignedProperty = keyArr.pop();
   let pointer = _obj;
   keyArr.forEach((key) => {
-    if (!pointer[key]) pointer[key] = {};
+    if (typeof pointer[key] !== 'object') pointer[key] = {}; //if its not an object we put an object over it to allow assignments
     pointer = pointer[key];
   });
   pointer[assignedProperty] = value;
@@ -18,13 +18,17 @@ function flattenObject(ob) {
     // eslint-disable-next-line no-prototype-builtins
     if (!ob.hasOwnProperty(i)) continue;
 
-    if (typeof ob[i] == 'object' && ob[i] !== null) {
+    if (
+      typeof ob[i] == 'object' &&
+      ob[i] !== null &&
+      Object.keys(ob[i]).length > 0
+    ) {
       var flatObject = flattenObject(ob[i]);
       for (var x in flatObject) {
         // eslint-disable-next-line no-prototype-builtins
         if (!flatObject.hasOwnProperty(x)) continue;
 
-        toReturn[i + '.' + x] = flatObject[x];
+        toReturn[i + '_' + x] = flatObject[x];
       }
     } else {
       toReturn[i] = ob[i];
@@ -33,4 +37,11 @@ function flattenObject(ob) {
   return toReturn;
 }
 
-export { flattenObject, assignByString };
+function flatToNested(ob) {
+  return Object.entries(ob).reduce(
+    (obj, [styleParam, value]) => assignByString(obj, styleParam, value),
+    {}
+  );
+}
+
+export { flattenObject, assignByString, flatToNested };

@@ -17,7 +17,7 @@ const comment =
 'rotatingCropRatios - wixers\n'+
 'cubeImages - wixers\n'+
 'smartCrop - wixers\n'+
-'cubeRatio - wixers\n'+
+'cropRatio - wixers\n'+
 'fixedColumns - wixers\n'+
 'numberOfGroupsPerRow - wixers\n'+
 'placeGroupsLtr - wixers\n'+

@@ -13,7 +13,7 @@ describe('leanGallery - e2e', () => {
     targetItemSize: 370,
     isVertical: true,
     cubeImages: true,
-    cubeRatio: 1,
+    cropRatio: 1,
     groupSize: 1,
     titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     imageInfoType: GALLERY_CONSTS.infoType.DONT_SHOW,

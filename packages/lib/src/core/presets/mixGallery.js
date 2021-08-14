@@ -9,10 +9,10 @@ const fixToMix = (styles) => {
   presetStyles.galleryLayout = LAYOUTS.MIX;
   presetStyles.cubeType = 'fill';
   presetStyles.cubeImages = true;
-  presetStyles.cubeRatio = 1;
+  presetStyles.cropRatio = 1;
   presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetStyles.scrollDirection = SCROLL_DIRECTION.VERTICAL;
-  presetStyles.galleryMargin = 0;
+  presetStyles = assignByString(presetStyles, 'layoutParams_gallerySpacing', 0);
   presetStyles.isVertical = true;
   presetStyles.groupSize = 3;
   presetStyles.groupTypes = '1,2h,2v,3t,3b,3l,3r,3v,3h';

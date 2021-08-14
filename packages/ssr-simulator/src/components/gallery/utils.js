@@ -3,6 +3,7 @@ import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 export const defaultStyleParams = {
   layoutParams: {
     numberOfGroupsPerRow: 0,
+    gallerySpacing: 0,
   },
   isRTL: false,
   isVertical: 0,
@@ -15,16 +16,15 @@ export const defaultStyleParams = {
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingCubeRatio: '',
+  rotatingCropRatio: '',
   galleryImageRatioFromWix: 1, //galleryImageRatio translates to galleryImageRatioFromWix
   fixedColumns: 0,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 1,
   imageMargin: 10,
-  galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   gridStyle: 0,
