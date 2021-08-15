@@ -32,3 +32,4 @@ export const createStyles = (styles) => {
   res.targetItemSize = calcTargetItemSize(res);
   return res;
 };
+console.log('nir');
