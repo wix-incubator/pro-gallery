@@ -2,16 +2,17 @@ import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
+import { assignByString } from '../helpers/stylesUtils';
 
 const fixToThumbnail = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.THUMBNAIL;
   presetStyles.enableInfiniteScroll = true;
-  presetStyles.cubeRatio = '100%/100%';
+  presetStyles.cropRatio = '100%/100%';
   presetStyles.cubeImages = true;
   presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
-  presetStyles.galleryMargin = 0;
+  presetStyles = assignByString(presetStyles, 'layoutParams_gallerySpacing', 0);
   presetStyles.isVertical = false;
   presetStyles.groupSize = 1;
   presetStyles.groupTypes = '1';

@@ -1,6 +1,7 @@
 import GALLERY_CONSTS from './constants';
 const coreStyles = {
   //duplicated from lib
+  layoutParams: { gallerySpacing: 0 },
   isRTL: false,
   isVertical: false,
   minItemSize: 120,
@@ -18,10 +19,9 @@ const coreStyles = {
   numberOfImagesPerRow: 3,
   collageDensity: 0.8,
   galleryTextAlign: 'center',
-  galleryMargin: 0,
   imageMargin: 10, // The renderer will do the /2 *2 for his pictures, the default is the margin between images (thats how it is in the settings menu. 50 = 50 between images)
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
-  cubeRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
+  cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
   showArrows: true,
   hasThumbnails: false,
   isSlideshow: false,
@@ -56,6 +56,8 @@ const coreStyles = {
   scrollDirection: 0,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   jsonStyleParams: '',
+  autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
+  autoSlideshowContinuousSpeed: 200,
   //duplicated from lib
 };
 

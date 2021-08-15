@@ -8,12 +8,14 @@ describe('defaultStyles', () => {
     expect(_.isEqual(actual, expectedStyles())).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expectedStyles()).length);
-    expect(actualLength).eq(91);
+    expect(actualLength).eq(93);
   });
 });
 
 function expectedStyles() {
   return {
+    layoutParams: { gallerySpacing: 0 },
+
     isRTL: false,
     isVertical: false,
     gallerySize: 30,
@@ -25,7 +27,7 @@ function expectedStyles() {
     collageDensity: 0.8,
     cubeImages: false,
     cubeType: 'fill',
-    cubeRatio: 1,
+    cropRatio: 1,
     cropOnlyFill: false,
     smartCrop: false,
     rotatingCropRatios: '',
@@ -35,7 +37,6 @@ function expectedStyles() {
     numberOfImagesPerCol: 1,
     groupsPerStrip: 0,
     imageMargin: 10,
-    galleryMargin: 0,
     scatter: 0,
     rotatingScatter: '',
     gridStyle: 0,
@@ -105,5 +106,7 @@ function expectedStyles() {
     slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
     useMaxDimensions: false,
     enableVideoPlaceholder: true,
+    autoSlideshowType: 'interval',
+    autoSlideshowContinuousSpeed: 200,
   };
 }

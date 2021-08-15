@@ -1,19 +1,22 @@
 import {
-  addPresetStyles,
+  // addPresetStyles,
   getLayoutName,
   NEW_PRESETS,
   defaultStyles,
   galleryOptions,
+  flattenObject,
+  flatToNested,
 } from 'pro-gallery-lib';
 
-const defaultStyleParams = defaultStyles;
+
+const defaultStyleParams = flattenObject(defaultStyles);
 Object.entries(galleryOptions).forEach(
   ([styleParam, settings]) =>
     (defaultStyleParams[styleParam] = settings.default)
 );
 
 export const getInitialStyleParams = () => {
-  const savedStyleParams = getStyleParamsFromUrl();
+  const savedStyleParams = getStyleParamsFromUrl(window.location.search);
   return {
     ...defaultStyleParams,
     ...savedStyleParams,
@@ -34,58 +37,59 @@ const formatValue = (val) => {
 
 export const isValidStyleParam = (styleParam, value, styleParams) => {
   if (!styleParam) {
+
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} is undefined`);
     return false;
   }
   if (typeof value === 'undefined') {
+
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is undefined`);
     return false;
   }
-  if (value === defaultStyles[styleParam]) {
+  if (value === defaultStyleParams[styleParam]) {
+
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the default: ${value}`);
     return false;
   }
-  styleParams = { ...defaultStyles, ...styleParams };
-  const preset = NEW_PRESETS[getLayoutName(styleParams.galleryLayout)];
-  if (styleParam !== 'galleryLayout' && value === preset[styleParam]) {
-    // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the preset: ${value}`, preset, getLayoutName(styleParams.galleryLayout));
+  styleParams = { ...defaultStyleParams, ...styleParams };
+  const flatFixedPresetStyles = flattenObject(NEW_PRESETS[getLayoutName(styleParams.galleryLayout)]);
+  styleParams = { ...styleParams, ...flatFixedPresetStyles, }
+  if (styleParam !== 'galleryLayout' && value === flatFixedPresetStyles[styleParam]) {
+
+    // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is as the flatFixedPresetStyles: ${value}`, flatFixedPresetStyles, getLayoutName(styleParams.galleryLayout));
     return false;
   }
   if (!galleryOptions[styleParam]) {
+
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} has not galleryOptions`);
     return false;
   }
-  if (!galleryOptions[styleParam].isRelevant(styleParams)) {
+  if (!galleryOptions[styleParam].isRelevant(flatToNested(styleParams))) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is not relevant`, galleryOptions[styleParam].isRelevant.toString(), styleParams);
     return false;
   }
   return true;
 };
 
-export const getStyleParamsFromUrl = () => {
+export const getStyleParamsFromUrl = (locationSearchString) => {
   try {
-    let styleParams = window.location.search
-      .replace('?', '')
-      .split('&')
-      .map((styleParam) => styleParam.split('='))
-      .reduce(
-        (obj, [styleParam, value]) =>
-          Object.assign(obj, { [styleParam]: formatValue(value) }),
-        {}
-      );
-
-    styleParams = addPresetStyles({ ...defaultStyleParams, ...styleParams });
-
-    const relevantStyleParams = Object.entries(styleParams).reduce(
+    let styleParams = locationSearchString
+    .replace('?', '')
+    .split('&')
+    .map((styleParam) => styleParam.split('='))
+    .reduce(
       (obj, [styleParam, value]) =>
-        isValidStyleParam(styleParam, value, styleParams)
-          ? Object.assign(obj, { [styleParam]: formatValue(value) })
-          : obj,
+      Object.assign(obj, { [styleParam]: formatValue(value) }),
       {}
-    );
-
-    // console.log(`[STYLE PARAMS - VALIDATION] getting styleParams from the url`, relevantStyleParams);
-    return relevantStyleParams;
+      );
+      const relevantStyleParams = Object.entries(styleParams).reduce(
+        (obj, [styleParam, value]) =>
+        isValidStyleParam(styleParam, value, styleParams)
+        ? Object.assign(obj, { [styleParam]: formatValue(value) })
+        : obj,
+        {}
+        );
+    return relevantStyleParams; //flatStyleParams
   } catch (e) {
     console.error('Cannot getStyleParamsFromUrl', e);
     return {};
@@ -93,11 +97,12 @@ export const getStyleParamsFromUrl = () => {
 };
 
 export const setStyleParamsInUrl = (styleParams) => {
+  const flatSP = flattenObject(styleParams);
   // console.log(`[STYLE PARAMS - VALIDATION] setting styleParams in the url`, styleParams);
-  const urlParams = Object.entries(styleParams)
+  const urlParams = Object.entries(flatSP)
     .reduce(
       (arr, [styleParam, value]) =>
-        isValidStyleParam(styleParam, value, styleParams)
+        isValidStyleParam(styleParam, value, flatSP)
           ? arr.concat(`${styleParam}=${value}`)
           : arr,
       []

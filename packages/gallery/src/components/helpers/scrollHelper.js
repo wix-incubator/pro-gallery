@@ -18,6 +18,9 @@ export function scrollToItemImp(scrollParams) {
     itemIdx,
     fixedScroll,
     slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
+    imageMargin,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -53,10 +56,8 @@ export function scrollToItemImp(scrollParams) {
 
     if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the item in the middle of the component
-      const diff = (galleryWidth - item.width) / 2;
-      if (diff > 0) {
-        to -= diff;
-      }
+      const diff = (galleryWidth - item.width - imageMargin) / 2;
+      to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
       to *= rtlFix;
@@ -74,6 +75,8 @@ export function scrollToItemImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuousScrolling,
+      autoSlideshowContinuousSpeed,
     });
   } else {
     return new Promise((resolve) => {
@@ -99,6 +102,9 @@ export function scrollToGroupImp(scrollParams) {
     groupIdx,
     fixedScroll,
     slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
+    imageMargin,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -135,10 +141,8 @@ export function scrollToGroupImp(scrollParams) {
 
     if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the group in the middle of the component
-      const diff = (galleryWidth - group.width) / 2;
-      if (diff > 0) {
-        to -= diff;
-      }
+      const diff = (galleryWidth - group.width - imageMargin) / 2;
+      to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
       to *= rtlFix;
@@ -155,6 +159,8 @@ export function scrollToGroupImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuousScrolling,
+      autoSlideshowContinuousSpeed,
     });
   } else {
     return new Promise((resolve) => {
@@ -218,11 +224,17 @@ function horizontalCssScrollTo({
   duration,
   isRTL,
   slideTransition,
+  isContinuousScrolling,
+  autoSlideshowContinuousSpeed,
 }) {
-  const change = to - from;
+  let change = to - from;
 
   if (change === 0) {
     return new Promise((resolve) => resolve(to));
+  }
+
+  if (isContinuousScrolling) {
+    duration = (Math.abs(change) / autoSlideshowContinuousSpeed) * 1000;
   }
 
   const scrollerInner = scroller.firstChild;

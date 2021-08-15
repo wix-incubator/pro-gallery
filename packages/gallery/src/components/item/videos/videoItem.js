@@ -152,7 +152,7 @@ class VideoItem extends GalleryComponent {
       return null;
     }
     const PlayerElement = window.ReactPlayer;
-    const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
+    const isWiderThenContainer = this.props.style.ratio >= this.props.cropRatio;
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
     const isCrop =

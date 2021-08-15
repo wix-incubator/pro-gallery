@@ -40,8 +40,11 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run build
-    - run: npm run build:dev
     - run: npm run ${{ matrix.test-script }}
+      env:
+        SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        TEST_NAME: ${{ matrix.test-script }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -99,9 +102,9 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
     - run: npm run build --if-present
-    - run: npm run deployToSurge
+    - run: node scripts/deployToSurge
       env:
         SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-        # SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }} not found in script
+        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
 
 

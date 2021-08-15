@@ -207,6 +207,7 @@ describe('Slideshow View', () => {
       Object.assign(initialGalleryViewProps.styleParams, {
         isAutoSlideshow: true,
         autoSlideshowInterval: 1,
+        autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
         galleryLayout: 4,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);

@@ -4,7 +4,7 @@ import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('styleParam - galleryMargin', () => {
+describe('styleParam - gallerySpacing', () => {
   let driver;
   const initialProps = {
     container,
@@ -18,8 +18,9 @@ describe('styleParam - galleryMargin', () => {
 
   it('should set the gallery with a margin of 20px in a vertical gallery', async () => {
     Object.assign(initialProps.styles, {
+      layoutParams: { gallerySpacing: 20 },
       galleryLayout: 2,
-      galleryMargin: 20,
+
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
@@ -31,11 +32,12 @@ describe('styleParam - galleryMargin', () => {
     expect(margin).to.eq('20px');
     driver.detach.proGallery();
   });
-  it('should set the gallery with a margin of (galleryMargin - (imageMargin / 2)) in a horizontal gallery', async () => {
+  it('should set the gallery with a margin of (gallerySpacing - (imageMargin / 2)) in a horizontal gallery', async () => {
     Object.assign(initialProps.styles, {
+      layoutParams: { gallerySpacing: 20 },
+
       galleryLayout: 2,
       imageMargin: 10,
-      galleryMargin: 20,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
@@ -44,7 +46,7 @@ describe('styleParam - galleryMargin', () => {
       .selector('.pro-gallery-parent-container')
       .getDOMNode();
     const margin = getComputedStyle(galleryContainer).margin;
-    // expect the margin to be (galleryMargin - (imageMargin / 2)
+    // expect the margin to be (gallerySpacing - (imageMargin / 2)
     expect(margin).to.eq('15px');
     driver.detach.proGallery();
   });
