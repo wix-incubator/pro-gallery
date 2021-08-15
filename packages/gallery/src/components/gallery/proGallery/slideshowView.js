@@ -978,17 +978,17 @@ class SlideshowView extends GalleryComponent {
     // arrows too big for info? True : False
     const arrowsDontFitInfo = 
     GALLERY_CONSTS.isAboveOrBelowPlacement(titlePlacement, isSlideshow) && arrowsOnInfo && (infoHeight < navArrowsContainerHeight);
-    
-    const arrowsRenderingDeterminingArgs = {
+
+    const shouldNotRenderArrows = this.shouldNotRenderNavArrows({
       isPrerenderMode : this.props.isPrerenderMode,
       galleryStructure : this.props.galleryStructure,
       scrollDirection,
       showArrows,
       arrowsDontFitInfo, 
-    }
-    
+    })
+
     //remove navBars if no scroll is needed and is column layout
-    if (this.shouldNotRenderNavArrows(arrowsRenderingDeterminingArgs)) {
+    if (shouldNotRenderArrows) {
       return null;
     }
 
