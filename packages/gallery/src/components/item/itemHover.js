@@ -6,6 +6,7 @@ export default class ItemHover extends GalleryComponent {
   getHoverClass() {
     console.log('nir');
     console.log('nir');
+    console.log('nir');
     const { styleParams, forceShowHover } = this.props;
     const hoverClass = ['gallery-item-hover'];
 
