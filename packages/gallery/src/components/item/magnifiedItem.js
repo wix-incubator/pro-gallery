@@ -3,18 +3,19 @@ import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 //http://localhost:3000/?hoveringBehaviour=NEVER_SHOW&itemClick=magnify&galleryLayout=2
-export default class magnifiedItem extends GalleryComponent {
+export default class MagnifiedItem extends GalleryComponent {
   constructor(props) {
     super(props);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.isMagnifiedBiggerThanContainer =
+      this.isMagnifiedBiggerThanContainer.bind(this);
     this.containerRef = null;
-    // const { x, y } = props.startPos;
+    const { x, y } = props.startPos;
     this.state = {
-      x: 0,
-      y: 0,
-      isDragging: false,
+      x: x || 0,
+      y: y || 0,
     };
   }
 
@@ -92,34 +93,65 @@ export default class magnifiedItem extends GalleryComponent {
   }
 
   getHighResImage() {
-    const { createUrl, id, alt } = this.props;
+    const { createUrl, id, alt, style } = this.props;
+    const { magnifiedWidth, magnifiedHeight } = style;
     const src = createUrl(
       GALLERY_CONSTS.urlSizes.MAGNIFIED,
       GALLERY_CONSTS.urlTypes.HIGH_RES
     );
     return (
       <ImageRenderer
-        key={`magnified-item-${this.props.id}`}
+        key={`magnified-item-${id}`}
         className="magnified-item"
         data-hook="magnified-item"
         src={src}
         alt={alt ? alt : 'untitled image'}
         id={id}
+        style={{
+          width: magnifiedWidth,
+          height: magnifiedHeight,
+        }}
       />
     );
   }
 
-  render() {
+  isMagnifiedBiggerThanContainer(itemStyle) {
+    const { cubedWidth, cubedHeight, magnifiedWidth, magnifiedHeight } =
+      itemStyle;
+
+    return cubedWidth < magnifiedWidth && cubedHeight < magnifiedHeight;
+  }
+  getContainerStyle() {
     const { x, y } = this.state;
+    const { style } = this.props;
+    const { magnifiedWidth, magnifiedHeight } = style;
+
+    const styles = {
+      zIndex: 1000,
+      position: 'relative',
+      cursor: 'grab',
+      width: magnifiedWidth,
+      height: magnifiedHeight,
+    };
+
+    if (this.isMagnifiedBiggerThanContainer(style)) {
+      Object.assign(styles, {
+        transform: `translate(${-x}px, ${-y}px)`,
+      });
+    } else {
+      Object.assign(styles, {
+        transform: `translate(-50%, -50%)`,
+        top: '50%',
+        left: '50%',
+      });
+    }
+    return styles;
+  }
+  render() {
     return (
       <div
         className={'magnified-item-container'}
-        style={{
-          zIndex: 1000,
-          position: 'relative',
-          cursor: 'grab',
-          transform: `translate(${-x}px, ${-y}px)`,
-        }}
+        style={this.getContainerStyle()}
         onDragStart={this.onDragStart}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}

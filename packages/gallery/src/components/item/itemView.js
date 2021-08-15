@@ -201,14 +201,9 @@ class ItemView extends GalleryComponent {
       e.preventDefault();
     }
     if (this.shouldMagnifyImage()) {
-      const { clientX, clientY } = e;
-      const { top, left } = this.props.offset;
-      const startPos = {
-        x: clientX - left,
-        y: clientY - top,
-      }
+      
       this.setState({
-        startPos,
+        startPos: this.getMagnifyInitialPos(e),
         shouldMagnify: true,
       })
     }
@@ -230,11 +225,29 @@ class ItemView extends GalleryComponent {
       })
     }
   }
+  getMagnifyInitialPos(e) {
+    const { clientX, clientY } = e;// save only these 2. rest calculate in the mag comp
+      const {
+        magnifiedWidth,
+        magnifiedHeight,
+        cubedWidth,
+        cubedHeight,
+        innerWidth,
+        innerHeight
+      } = this.props.style;
+
+      const { top, left } = this.props.offset;
+      return {
+        x: Math.max(0, Math.min(clientX - left,  magnifiedWidth - Math.max(cubedWidth, innerWidth))),
+        y: Math.max(0, Math.min(clientY - top,  magnifiedHeight - Math.max(cubedHeight, innerHeight))),
+      }
+  }
   shouldMagnifyImage() {
     const { itemClick } = this.props.styleParams;
+    const { itemTypes } = GALLERY_CONSTS
     const { type } = this.props;
     return itemClick === GALLERY_CONSTS.itemClick.MAGNIFY &&
-      (type === 'image' || type === 'picture');
+      (type === itemTypes.IMAGE || type === itemTypes.PICTURE) //use const / extract to function;
   }
   shouldUseDirectLink = () => {
     const { directLink } = this.props;
