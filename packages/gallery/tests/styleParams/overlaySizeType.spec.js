@@ -14,15 +14,17 @@ describe('styleParam - overlaySize', () => {
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
+      overlayPadding: 0,
+    });
   });
 
   it('should set the correct overlaySize according to size type - PIXEL', async () => {
     Object.assign(initialProps.styles, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
       overlaySize: 20,
       overlaySizeType: 'PIXEL',
-      overlayPadding: 0,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -34,11 +36,8 @@ describe('styleParam - overlaySize', () => {
 
   it('should set the correct overlaySize according to size type- PERCENT', async () => {
     Object.assign(initialProps.styles, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
       overlaySizeType: 'PERCENT',
       overlaySize: 50,
-      overlayPadding: 0,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

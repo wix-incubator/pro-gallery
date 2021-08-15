@@ -14,13 +14,15 @@ describe('styleParam - overlaySize', () => {
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      overlaySize: 50,
+    });
   });
 
   it('should set the correct overlaySize of 50 - right position', async () => {
     Object.assign(initialProps.styles, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayPosition: GALLERY_CONSTS.overlayPositions.RIGHT,
-      overlaySize: 50,
       overlaySizeType: 'PIXEL',
       overlayPadding: 20,
     });
@@ -35,8 +37,6 @@ describe('styleParam - overlaySize', () => {
 
   it('should set the correct overlaySize of "50" - position top ', async () => {
     Object.assign(initialProps.styles, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlaySize: 50,
       overlayPosition: GALLERY_CONSTS.overlayPositions.TOP,
       overlayPadding: 30,
     });
