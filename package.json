@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap --force-local --hoist --strict",
     "lint": "lerna run lint",
-    "lint:fix": "lerna run lint:fix --",
+    "lint:fix": "lerna run lint:fix",
     "build": "lerna run build",
     "start-playground": "cd packages/playground && npm run start",
     "start-ssr-simulator": "cd packages/ssr-simulator && npm run start",
