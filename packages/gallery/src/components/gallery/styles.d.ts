@@ -1,4 +1,3 @@
-import { LayoutParams } from './styles.d';
 export type PlayOn = 'hover' | 'auto' | 'onClick';
 export interface Video {
   playOn: PlayOn;
@@ -12,7 +11,7 @@ export interface Item {
 
 export interface StyleParams {
   // item: Item;
-  LayoutParams: LayoutParams;
+  layoutParams: LayoutParams;
 }
 export interface LayoutParams {
   numberOfGroupsPerRow: number;
