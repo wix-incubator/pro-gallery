@@ -1046,7 +1046,7 @@ class SlideshowView extends GalleryComponent {
   }
 
   createLayout() {
-    const { itemsLoveData, getVisibleItems, galleryStructure, container } =
+    const { getVisibleItems, galleryStructure, container } =
       this.props;
 
     const galleryConfig = {
@@ -1084,7 +1084,6 @@ class SlideshowView extends GalleryComponent {
                   this.props.styleParams.slideshowLoop &&
                   this.props.galleryStructure.width >
                     this.props.container.width,
-                itemsLoveData,
                 ...group.renderProps(galleryConfig),
                 ariaHidden: group.idx > this.skipFromSlide,
               })

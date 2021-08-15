@@ -1,11 +1,11 @@
 {
-  "name": "pro-gallery-lib",
+  "name": "pro-gallery-blueprints",
   "version": "4.0.15-beta.73",
   "publishScoped": false,
   "private": false,
   "author": {
-    "name": "Rita Bazak",
-    "email": "ritab@wix.com"
+    "name": "Nir Naor",
+    "email": "nirna@wix.com"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "typescript": "4.1.2"
   },
   "dependencies": {
+    "pro-gallery-lib": "^4.0.15-beta.73",
     "pro-layouts": "^4.0.15-beta.73"
   },
   "publishConfig": {
