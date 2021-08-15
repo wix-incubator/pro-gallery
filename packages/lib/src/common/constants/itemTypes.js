@@ -1,9 +1,9 @@
 const ITEN_TYPES = {
-  IMAGE: 'IMAGE',
-  PICTURE: 'PICTURE',
-  TEXT: 'TEXT',
-  VIDEO: 'VIDEO',
-  DUNNY: 'DUMMY',
+  IMAGE: 'image',
+  PICTURE: 'picture',
+  TEXT: 'text',
+  VIDEO: 'video',
+  DUNNY: 'dummy',
 };
 
 export default ITEN_TYPES;
