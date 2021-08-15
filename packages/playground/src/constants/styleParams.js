@@ -17,7 +17,6 @@ Object.entries(galleryOptions).forEach(
 
 export const getInitialStyleParams = () => {
   const savedStyleParams = getStyleParamsFromUrl(window.location.search);
-  console.log(savedStyleParams);
   return {
     ...defaultStyleParams,
     ...savedStyleParams,
@@ -66,7 +65,6 @@ export const isValidStyleParam = (styleParam, value, styleParams) => {
     return false;
   }
   if (!galleryOptions[styleParam].isRelevant(flatToNested(styleParams))) {
-    
     // console.log(`[STYLE PARAMS - VALIDATION] ${styleParam} value is not relevant`, galleryOptions[styleParam].isRelevant.toString(), styleParams);
     return false;
   }

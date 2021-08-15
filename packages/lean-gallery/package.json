@@ -2,7 +2,7 @@
   "publishScoped": false,
   "private": false,
   "name": "lean-gallery",
-  "version": "4.0.15-beta.55",
+  "version": "4.0.15-beta.68",
   "sideEffects": [
     "./src/leanGallery/leanGallery.scss"
   ],
@@ -29,7 +29,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "pro-gallery-lib": "^4.0.15-beta.55"
+    "pro-gallery-lib": "^4.0.15-beta.68"
   },
   "peerDependencies": {
     "react": "^16.8.6",

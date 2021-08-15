@@ -17,6 +17,7 @@ import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWi
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
+import {assignByString} from './stylesUtils'
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -290,12 +291,13 @@ const addMarginsToSupportShadows = (styles) => {
   let _styles = {...styles}
 
   if (_styles.itemEnableShadow && _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
-    // add galleryMargin to allow the shadow to be seen
-    _styles.galleryMargin = Math.max(
-      _styles.galleryMargin,
+    // add gallerySpacing to allow the shadow to be seen
+    let _gallerySpacing = Math.max(
+      _styles.layoutParams.gallerySpacing,
       (_styles.itemShadowSize || 0) +
         (_styles.itemShadowBlur || 0)
     );
+    _styles = assignByString(_styles, 'layoutParams_gallerySpacing', _gallerySpacing)
   }
   return _styles;
 }
