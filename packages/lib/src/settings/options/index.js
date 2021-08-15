@@ -6,7 +6,7 @@ import cubeType from './cubeType';
 import cubeImages from './cubeImages';
 import cropRatio from './cropRatio';
 import titlePlacement from './titlePlacement';
-import galleryMargin from './galleryMargin';
+import layoutParams_gallerySpacing from './gallerySpacing';
 import isVertical from './isVertical';
 import numberOfImagesPerRow from './numberOfImagesPerRow';
 import numberOfImagesPerCol from './numberOfImagesPerCol';
@@ -102,7 +102,7 @@ export default {
   cubeImages,
   cropRatio,
   titlePlacement,
-  galleryMargin,
+  layoutParams_gallerySpacing,
   isVertical,
   numberOfImagesPerRow,
   numberOfImagesPerCol,

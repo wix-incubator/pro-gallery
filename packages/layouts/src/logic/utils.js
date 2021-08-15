@@ -90,7 +90,11 @@ class Utils {
       // eslint-disable-next-line no-prototype-builtins
       if (!ob.hasOwnProperty(i)) continue;
 
-      if (typeof ob[i] == 'object' && ob[i] !== null) {
+      if (
+        typeof ob[i] == 'object' &&
+        ob[i] !== null &&
+        Object.keys(ob[i]).length > 0
+      ) {
         var flatObject = this.flattenObject(ob[i]);
         for (var x in flatObject) {
           // eslint-disable-next-line no-prototype-builtins
@@ -115,13 +119,13 @@ class Utils {
   addDefaultStyleParams(styleParams) {
     //default styleParams
     const defaultSP = {
+      layoutParams: { gallerySpacing: 0 },
       cubeImages: false,
       cubeType: 'fill',
-      cubeRatio: 1,
+      cropRatio: 1,
       rotatingCropRatios: '',
       smartCrop: false,
       imageMargin: 10,
-      galleryMargin: 0,
       scatter: 0,
       rotatingScatter: '',
       chooseBestGroup: true,
@@ -154,14 +158,15 @@ class Utils {
       convertedContainer.galleryWidth =
         container.width +
         ((styleParams.imageMargin / 2 || 0) -
-          (styleParams.galleryMargin || 0)) *
+          (styleParams.layoutParams.gallerySpacing || 0)) *
           2;
       delete convertedContainer.width;
     }
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {
       convertedContainer.galleryHeight =
         container.height +
-        ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0));
+        ((styleParams.imageMargin / 2 || 0) -
+          (styleParams.layoutParams.gallerySpacing || 0));
       delete convertedContainer.height;
     }
     if (
