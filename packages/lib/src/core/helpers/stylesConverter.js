@@ -19,11 +19,12 @@ function convertStylesBackwards(initialStyles) {
 }
 
 const layoutParamsMap = {
+  galleryMargin: 'layoutParams_gallerySpacing',
+  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow',
+  cubeFitPosition: 'layoutParams_fitAlignment',
   cubeRatio: 'layoutParams_cropRatio',
   cubeType: 'layoutParams_cropType',
   cubeImages: 'layoutParams_enableCrop',
-  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow',
-  galleryMargin: 'layoutParams_gallerySpacing',
 
   imageMargin: 'layoutParams_itemSpacing',
   placeGroupsLtr: 'layoutParams_forceGroupsOrder',
