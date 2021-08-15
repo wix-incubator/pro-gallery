@@ -20,6 +20,7 @@ export default class BaseGallery extends React.Component<
     console.log('nir');
     console.log('nir');
     console.log('nir');
+    console.log('nir');
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });
     this.blueprintsManager.init({
