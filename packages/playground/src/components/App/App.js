@@ -9,7 +9,7 @@ import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import { BlueprintsManager } from 'pro-gallery-lib'
+import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
@@ -183,7 +183,7 @@ export function App() {
         }
         break;
       case 'EXTERNAL':
-        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+        if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasExternalHorizontalPlacement(titlePlacement)) {
           return infoElement;
         }
         break;
@@ -290,7 +290,7 @@ export function App() {
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
           id: 'pro-gallery-playground',
-          scrollingElement: () => (gallerySettings.responsivePreview ? document.getElementById('resizable') : window),
+          scrollingElement: gallerySettings.responsivePreview ? document.getElementById('resizable') : window,
           viewMode: gallerySettings.viewMode,
           eventsListener: eventListener,
           totalItemsCount: getTotalItemsCount(),

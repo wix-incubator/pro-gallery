@@ -22,20 +22,20 @@ import loadMoreAmount from './loadMoreAmount';
 import mobileSwipeAnimations from './mobileSwipeAnimations';
 import overlayAnimations from './overlayAnimations';
 import placements, {
-  hasAbovePlacement,
-  hasBelowPlacement,
+  hasExternalAbovePlacement,
+  hasExternalBelowPlacement,
   hasHoverPlacement,
-  hasRightPlacement,
-  hasLeftPlacement,
-  hasVerticalPlacement,
-  hasHorizontalPlacement,
-  isAbovePlacement,
-  isBelowPlacement,
+  hasExternalRightPlacement,
+  hasExternalLeftPlacement,
+  hasExternalVerticalPlacement,
+  hasExternalHorizontalPlacement,
+  isExternalAbovePlacement,
+  isExternalBelowPlacement,
   isHoverPlacement,
-  isRightPlacement,
-  isLeftPlacement,
-  isVerticalPlacement,
-  isHorizontalPlacement,
+  isExternalRightPlacement,
+  isExternalLeftPlacement,
+  isExternalVerticalPlacement,
+  isExternalHorizontalPlacement,
 } from './placements';
 import resizeMethods from './resizeMethods';
 import scrollAnimations from './scrollAnimations';
@@ -49,6 +49,8 @@ import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import imagePlacementAnimations from './imagePlacementAnimations';
 import slideTransition from './slideTransition';
+import overlayPositions from './overlayPositions';
+import overlaySizeType from './overlaySizeType';
 import autoSlideshowTypes from './autoSlideshowTypes';
 
 export default {
@@ -76,20 +78,20 @@ export default {
   mobileSwipeAnimations,
   overlayAnimations,
   placements,
-  hasAbovePlacement,
-  hasBelowPlacement,
+  hasExternalAbovePlacement,
+  hasExternalBelowPlacement,
   hasHoverPlacement,
-  hasRightPlacement,
-  hasLeftPlacement,
-  hasVerticalPlacement,
-  hasHorizontalPlacement,
-  isAbovePlacement,
-  isBelowPlacement,
+  hasExternalRightPlacement,
+  hasExternalLeftPlacement,
+  hasExternalVerticalPlacement,
+  hasExternalHorizontalPlacement,
+  isExternalAbovePlacement,
+  isExternalBelowPlacement,
   isHoverPlacement,
-  isRightPlacement,
-  isLeftPlacement,
-  isVerticalPlacement,
-  isHorizontalPlacement,
+  isExternalRightPlacement,
+  isExternalLeftPlacement,
+  isExternalVerticalPlacement,
+  isExternalHorizontalPlacement,
   resizeMethods,
   scrollAnimations,
   slideAnimations,
@@ -103,5 +105,7 @@ export default {
   viewMode,
   imagePlacementAnimations,
   slideTransition,
+  overlayPositions,
+  overlaySizeType,
   autoSlideshowTypes,
 };

@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 
 const config = require('../environment-setup.js');
 const devices = require('puppeteer/DeviceDescriptors');
-
+import { flattenObject } from 'pro-gallery-lib';
 export default class galleryDriver {
   constructor() {
     this.timeout = 60000;
@@ -88,9 +88,8 @@ export default class galleryDriver {
   }
   getPageUrl(styleParams) {
     let urlParam = '';
-    Object.keys(styleParams).map(
-      (sp) => (urlParam += `${sp}=${styleParams[sp]}&`)
-    );
+    let flatSP = flattenObject(styleParams);
+    Object.keys(flatSP).map((sp) => (urlParam += `${sp}=${flatSP[sp]}&`));
     const localhost = config.baseUrl;
     const url = `${localhost}/?${urlParam}isTestEnvironment=true`;
     return url;

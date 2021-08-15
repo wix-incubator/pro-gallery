@@ -1,4 +1,5 @@
 const styleParams = {
+  layoutParams: { gallerySpacing: 0 },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
@@ -16,14 +17,13 @@ const styleParams = {
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingCubeRatio: '',
+  rotatingCropRatio: '',
   fixedColumns: 0,
   groupsPerStrip: 0,
   imageMargin: 10,
-  galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   gridStyle: 0,

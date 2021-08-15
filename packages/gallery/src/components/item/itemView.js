@@ -430,7 +430,7 @@ class ItemView extends GalleryComponent {
       'styleParams',
       'style',
       'html',
-      'cubeRatio',
+      'cropRatio',
       'isPrerenderMode',
     ]);
 
@@ -524,7 +524,7 @@ class ItemView extends GalleryComponent {
 
   getRightInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasRightPlacement(
+      GALLERY_CONSTS.hasExternalRightPlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -540,7 +540,7 @@ class ItemView extends GalleryComponent {
 
   getLeftInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasLeftPlacement(
+      GALLERY_CONSTS.hasExternalLeftPlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -556,7 +556,7 @@ class ItemView extends GalleryComponent {
 
   getBottomInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasBelowPlacement(
+      GALLERY_CONSTS.hasExternalBelowPlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -572,7 +572,7 @@ class ItemView extends GalleryComponent {
 
   getTopInfoElementIfNeeded() {
     if (
-      GALLERY_CONSTS.hasAbovePlacement(
+      GALLERY_CONSTS.hasExternalAbovePlacement(
         this.props.styleParams.titlePlacement,
         this.props.idx
       )
@@ -1066,11 +1066,11 @@ class ItemView extends GalleryComponent {
           style={{
             ...(!this.props.styleParams.isSlideshow &&
               getImageStyle(this.props.styleParams)),
-            ...(GALLERY_CONSTS.hasRightPlacement(
+            ...(GALLERY_CONSTS.hasExternalRightPlacement(
               this.props.styleParams.titlePlacement,
               this.props.idx
             ) && { float: 'left' }),
-            ...(GALLERY_CONSTS.hasLeftPlacement(
+            ...(GALLERY_CONSTS.hasExternalLeftPlacement(
               this.props.styleParams.titlePlacement,
               this.props.idx
             ) && { float: 'right' }),
