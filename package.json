@@ -48,12 +48,7 @@
     }
   },
   "lint-staged": {
-    "packages/layouts/{src,test}/**/*.{js,ts}": "cd packages/layouts && npm run lint:fix",
-    "packages/lib/{src,test}/**/*.{js,ts}": "cd packages/lib && npm run lint:fix",
-    "packages/gallery/{src,tests}/**/*.{js,ts,tsx}": "lerna run --stream lint:fix --",
-    "packages/playground/src/**/*.{js,ts}": "cd packages/playground && npm run lint:fix",
-    "packages/ssr-simulator/src/**/*.{js,ts}": "cd packages/ssr-simulator && npm run lint:fix",
-    "packages/lean-gallery/src/**/*.{js,ts}": "cd packages/lean-gallery && npm run lint:fix"
+    "packages/*/{src,tests}/**/*.{js,ts,tsx}": "lerna run --stream lint:fix --"
   },
   "repository": {
     "type": "git",
