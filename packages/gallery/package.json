@@ -28,7 +28,7 @@
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
-    "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
     "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
