@@ -2,7 +2,7 @@ import React from 'react';
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import { addPresetStyles } from 'pro-gallery-lib';
 import { testItems, monochromeImages } from './images';
-import { resizeMediaUrl } from './itemResizer';
+import { createMediaUrl } from './itemResizer';
 import * as utils from './utils';
 
 const UNKNOWN_CONTAINER = {
@@ -133,7 +133,7 @@ export default class Gallery extends React.PureComponent {
           viewMode={viewMode}
           isPrerenderMode={true}
           eventsListener={eventsListener}
-          resizeMediaUrl={resizeMediaUrl}
+          createMediaUrl={createMediaUrl}
           useBlueprints={true}
         />
       </div>

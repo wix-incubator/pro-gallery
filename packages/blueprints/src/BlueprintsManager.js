@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import blueprints from './Blueprints';
-import { viewModeWrapper } from '../../common/window/viewModeWrapper';
+import { viewModeWrapper } from 'pro-gallery-lib';
 
 export default class BlueprintsManager {
   constructor({ id }) {

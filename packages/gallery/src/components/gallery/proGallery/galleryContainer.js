@@ -50,7 +50,7 @@ export class GalleryContainer extends React.Component {
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
-      gotFirstScrollEvent: false,
+      gotFirstScrollEvent: (props.activeIndex >= 0),
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
@@ -130,8 +130,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = (props) => {
-      const { id, styles, container, items, watermark, isInDisplay } = props;
-      return { id, styles, container, items, watermark, isInDisplay };
+      const { id, styles, container, items, isInDisplay } = props;
+      return { id, styles, container, items, isInDisplay };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -140,17 +140,17 @@ export class GalleryContainer extends React.Component {
 
     let hasPropsChanged = true;
     try {
-      const currentSignificatProps = getSignificantProps(this.props);
-      const nextSignificatProps = getSignificantProps(nextProps);
+      const currentSignificantProps = getSignificantProps(this.props);
+      const nextSignificantProps = getSignificantProps(nextProps);
       hasPropsChanged =
-        JSON.stringify(currentSignificatProps) !==
-        JSON.stringify(nextSignificatProps);
+        JSON.stringify(currentSignificantProps) !==
+        JSON.stringify(nextSignificantProps);
       if (utils.isVerbose() && hasPropsChanged) {
         console.log(
           'New props arrived',
           utils.printableObjectsDiff(
-            currentSignificatProps,
-            nextSignificatProps
+            currentSignificantProps,
+            nextSignificantProps
           )
         );
       }
@@ -289,26 +289,26 @@ export class GalleryContainer extends React.Component {
     structure,
     container,
     id,
-    resizeMediaUrl,
+    createMediaUrl,
     isPrerenderMode,
-    customImageRenderer,
+    customComponents,
   }) {
     items = items || this.props.items;
     styles = styles || this.props.styles;
     container = container || this.props.container;
     structure = structure || this.props.structure;
     id = id || this.props.id;
-    resizeMediaUrl = resizeMediaUrl || this.props.resizeMediaUrl;
+    createMediaUrl = createMediaUrl || this.props.createMediaUrl;
 
-    if (typeof customImageRenderer === 'function') {
-      ImageRenderer.customImageRenderer = customImageRenderer;
+    if (typeof customComponents.customImageRenderer === 'function') {
+      ImageRenderer.customImageRenderer = customComponents.customImageRenderer;
     }
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, {
       // TODO use same objects in the memory when the galleryItems are changed
       thumbnailSize: styles.thumbnailSize,
       sharpParams: styles.sharpParams,
-      resizeMediaUrl: resizeMediaUrl,
+      createMediaUrl,
     });
 
     // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
@@ -328,6 +328,7 @@ export class GalleryContainer extends React.Component {
     }
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
+      galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
       videoPlay: styles.videoPlay,
       videoLoop: styles.videoLoop,
@@ -374,9 +375,7 @@ export class GalleryContainer extends React.Component {
         `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
       );
     const vertical = this.props.scrollingElement
-      ? typeof this.props.scrollingElement === 'function'
-        ? this.props.scrollingElement
-        : () => this.props.scrollingElement
+      ? () => this.props.scrollingElement
       : () => window;
     return { vertical, horizontal };
   }
@@ -386,9 +385,15 @@ export class GalleryContainer extends React.Component {
     fixedScroll,
     isManual,
     durationInMS = 0,
-    scrollMarginCorrection
+    scrollMarginCorrection,
+    isContinuousScrolling = false,
   ) {
     if (itemIdx >= 0) {
+      if(!this.state.gotFirstScrollEvent) {
+        this.setState({
+          gotFirstScrollEvent:true,
+        });
+      }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {
@@ -408,6 +413,9 @@ export class GalleryContainer extends React.Component {
           horizontalElement,
           durationInMS,
           slideTransition: this.state.styles.slideTransition,
+          isContinuousScrolling,
+          autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
+          imageMargin: this.state.styles.imageMargin,
         };
         return scrollToItemImp(scrollParams);
       } catch (e) {
@@ -437,7 +445,8 @@ export class GalleryContainer extends React.Component {
     fixedScroll,
     isManual,
     durationInMS = 0,
-    scrollMarginCorrection
+    scrollMarginCorrection,
+    isContinuousScrolling = false,
   ) {
     if (groupIdx >= 0) {
       const scrollingElement = this._scrollingElement;
@@ -459,6 +468,9 @@ export class GalleryContainer extends React.Component {
           horizontalElement,
           durationInMS,
           slideTransition: this.state.styles.slideTransition,
+          isContinuousScrolling,
+          autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
+          imageMargin: this.state.styles.imageMargin,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {
@@ -778,20 +790,14 @@ export class GalleryContainer extends React.Component {
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           items={this.state.items}
           getVisibleItems={this.getVisibleItems}
-          itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={this.props.styles}
           container={this.props.container}
-          watermark={this.props.watermark}
           settings={this.props.settings}
           displayShowMore={displayShowMore}
           id={this.props.id}
           activeIndex={this.props.activeIndex || 0}
-          customHoverRenderer={this.props.customHoverRenderer}
-          customInfoRenderer={this.props.customInfoRenderer}
-          customSlideshowInfoRenderer={this.props.customSlideshowInfoRenderer}
-          customLoadMoreRenderer={this.props.customLoadMoreRenderer}
-          customNavArrowsRenderer={this.props.customNavArrowsRenderer}
+          customComponents={this.props.customComponents}
           playingVideoIdx={this.state.playingVideoIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}

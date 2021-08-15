@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, dimensionsHelper, window } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window } from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
@@ -42,13 +42,14 @@ class VideoScrollHelper {
   //--------------------------updates----------------------------------//
   updateGalleryStructure({
     galleryStructure,
+    galleryWidth,
     scrollBase,
     videoPlay,
     videoLoop,
     itemClick,
     scrollDirection,
   }) {
-    this.galleryWidth = dimensionsHelper.getGalleryDimensions().galleryWidth;
+    this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
     this.videoLoop = videoLoop;

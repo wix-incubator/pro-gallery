@@ -8,7 +8,9 @@ export default {
   max: 30,
   isRelevant: (styleParams) =>
     styleParams.isAutoSlideshow &&
-    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    styleParams.autoSlideshowType ===
+      GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
   type: INPUT_TYPES.NUMBER,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto Slide" to "true".',

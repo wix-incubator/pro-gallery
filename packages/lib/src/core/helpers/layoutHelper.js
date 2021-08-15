@@ -2,9 +2,9 @@
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
 import PLACEMENTS, {
-  hasVerticalPlacement,
+  hasExternalVerticalPlacement,
   hasHoverPlacement,
-  hasHorizontalPlacement,
+  hasExternalHorizontalPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
@@ -16,6 +16,7 @@ import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWi
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
+import {assignByString} from './stylesUtils'
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -342,12 +343,13 @@ const addMarginsToSupportShadows = (styles) => {
   let _styles = {...styles}
 
   if (_styles.itemEnableShadow && _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
-    // add galleryMargin to allow the shadow to be seen
-    _styles.galleryMargin = Math.max(
-      _styles.galleryMargin,
+    // add gallerySpacing to allow the shadow to be seen
+    let _gallerySpacing = Math.max(
+      _styles.layoutParams.gallerySpacing,
       (_styles.itemShadowSize || 0) +
         (_styles.itemShadowBlur || 0)
     );
+    _styles = assignByString(_styles, 'layoutParams_gallerySpacing', _gallerySpacing)
   }
   return _styles;
 }
@@ -426,7 +428,7 @@ function getHeightFromStyleParams(styleParams, textBoxHeight) {
   let additionalHeight = textBoxHeight;
   if (
     textBoxHeight > 0 &&
-    hasVerticalPlacement(styleParams.titlePlacement) &&
+    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
     styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
   ) {
     additionalHeight += styleParams.textImageSpace;
@@ -471,7 +473,7 @@ function shouldShowTextRightOrLeft(
 
   return (
     allowedByLayoutConfig &&
-    hasHorizontalPlacement(titlePlacement) &&
+    hasExternalHorizontalPlacement(titlePlacement) &&
     customExternalInfoRendererExists
   );
 }
@@ -496,7 +498,7 @@ function shouldShowTextBoxAboveOrBelow(
   customExternalInfoRendererExists
 ) {
   return (
-    hasVerticalPlacement(styleParams.titlePlacement) &&
+    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
     customExternalInfoRendererExists
   );
 }
@@ -506,7 +508,7 @@ function isSlideshowFont(styles) {
   if (galleryLayout === LAYOUTS.SLIDESHOW) {
     return true;
   }
-  if (hasVerticalPlacement(styles.titlePlacement)) {
+  if (hasExternalVerticalPlacement(styles.titlePlacement)) {
     if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
       return true;
     } else if (galleryLayout === 1 && styles.isVertical) {

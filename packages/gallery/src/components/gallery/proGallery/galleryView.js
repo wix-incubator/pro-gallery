@@ -128,7 +128,6 @@ class GalleryView extends GalleryComponent {
 
   createGallery(showMore) {
     const {
-      itemsLoveData,
       styleParams,
       container,
       galleryStructure,
@@ -153,7 +152,6 @@ class GalleryView extends GalleryComponent {
         itemView,
         item.renderProps({
           ...galleryConfig,
-          ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
         })
@@ -182,7 +180,7 @@ class GalleryView extends GalleryComponent {
         <div
           id="pro-gallery-margin-container"
           style={{
-            margin: styleParams.galleryMargin + 'px',
+            margin: styleParams.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
             width: this.props.container.galleryWidth - styleParams.imageMargin,
             overflow: 'visible',
@@ -202,11 +200,9 @@ class GalleryView extends GalleryComponent {
       scroll: this.props.scroll,
       container: this.props.container,
       styleParams: this.props.styleParams,
-      watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
-      customHoverRenderer: this.props.customHoverRenderer,
-      customInfoRenderer: this.props.customInfoRenderer,
+      customComponents: this.props.customComponents,
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
@@ -235,10 +231,10 @@ class GalleryView extends GalleryComponent {
   }
 
   createShowMoreButton() {
-    if (typeof this.props.customLoadMoreRenderer === 'function') {
+    if (typeof this.props.customComponents.customLoadMoreRenderer === 'function') {
       return (
         <div onClick={this.showMoreItems}>
-          {this.props.customLoadMoreRenderer(this.props)}
+          {this.props.customComponents.customLoadMoreRenderer(this.props)}
         </div>
       );
     }
@@ -311,7 +307,10 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        {...utils.getAriaAttributes(this.props)}
+        {...utils.getAriaAttributes({
+          proGalleryRole: this.props.proGalleryRole,
+          proGalleryRegionLabel: this.props.proGalleryRegionLabel
+        })}
       >
         {screenLogs}
         {gallery}

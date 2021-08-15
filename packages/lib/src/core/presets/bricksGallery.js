@@ -2,16 +2,17 @@ import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
+import { assignByString } from '../helpers/stylesUtils';
 
 const fixToBricks = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.BRICKS;
   presetStyles.cubeType = 'fill';
   presetStyles.cubeImages = true;
-  presetStyles.cubeRatio = 1;
+  presetStyles.cropRatio = 1;
   presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetStyles.scrollDirection = SCROLL_DIRECTION.VERTICAL;
-  presetStyles.galleryMargin = 0;
+  presetStyles = assignByString(presetStyles, 'layoutParams_gallerySpacing', 0);
   presetStyles.isVertical = true;
   presetStyles.groupSize = 3;
   presetStyles.collageDensity = 0.8;

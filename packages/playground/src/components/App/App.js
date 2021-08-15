@@ -4,12 +4,12 @@ import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
-import { resizeMediaUrl } from '../../utils/itemResizer';
+import { createMediaUrl } from '../../utils/itemResizer';
 import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import { BlueprintsManager } from 'pro-gallery-lib'
+import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
@@ -184,7 +184,7 @@ export function App() {
         }
         break;
       case 'EXTERNAL':
-        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+        if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasExternalHorizontalPlacement(titlePlacement)) {
           return infoElement;
         }
         break;
@@ -207,7 +207,7 @@ export function App() {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
 
-  const getExternalInfoRenderers = () => {
+  const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
@@ -291,16 +291,16 @@ export function App() {
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
           id: 'pro-gallery-playground',
-          scrollingElement: () => (gallerySettings.responsivePreview ? document.getElementById('resizable') : window),
+          scrollingElement: gallerySettings.responsivePreview ? document.getElementById('resizable') : window,
           viewMode: gallerySettings.viewMode,
           eventsListener: eventListener,
           totalItemsCount: getTotalItemsCount(),
-          resizeMediaUrl: resizeMediaUrl,
+          createMediaUrl: createMediaUrl,
           settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
           activeIndex: gallerySettings.initialIdx,
           useBlueprints: gallerySettings.useBlueprints,
           useLayoutFixer: gallerySettings.useLayoutFixer,
-          ...getExternalInfoRenderers(),
+          customComponents: getCustomComponents(),
           ...blueprintProps
         }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
       </section>

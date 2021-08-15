@@ -18,6 +18,9 @@ export function scrollToItemImp(scrollParams) {
     itemIdx,
     fixedScroll,
     slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
+    imageMargin,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -53,10 +56,8 @@ export function scrollToItemImp(scrollParams) {
 
     if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the item in the middle of the component
-      const diff = (galleryWidth - item.width) / 2;
-      if (diff > 0) {
-        to -= diff;
-      }
+      const diff = (galleryWidth - item.width - imageMargin) / 2;
+      to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
       to *= rtlFix;
@@ -74,6 +75,8 @@ export function scrollToItemImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuousScrolling,
+      autoSlideshowContinuousSpeed,
     });
   } else {
     return new Promise((resolve) => {
@@ -99,16 +102,16 @@ export function scrollToGroupImp(scrollParams) {
     groupIdx,
     fixedScroll,
     slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
+    imageMargin,
   } = scrollParams;
 
+  const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
   if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
     from = horizontalElement.scrollLeft;
-    if (isRTL) {
-      to = from - (groupIdx * galleryWidth) / 2;
-    } else {
-      to = from + (groupIdx * galleryWidth) / 2;
-    }
+    to = from + (groupIdx * galleryWidth) / 2;
     // console.log('[RTL SCROLL] scrollTogroupImp: ', from, to);
   } else {
     from = top;
@@ -127,10 +130,6 @@ export function scrollToGroupImp(scrollParams) {
         ? utils.get(group, 'left')
         : utils.get(group, 'top');
 
-    if (group && isRTL) {
-      to += group.width;
-    }
-
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, group);
     }
@@ -142,19 +141,11 @@ export function scrollToGroupImp(scrollParams) {
 
     if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the group in the middle of the component
-      const diff = (galleryWidth - group.width) / 2;
-      if (diff > 0) {
-        if (isRTL) {
-          to += diff;
-        } else {
-          to -= diff;
-        }
-      }
-      if (isRTL) {
-        to = totalWidth - to;
-      }
+      const diff = (galleryWidth - group.width - imageMargin) / 2;
+      to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
+      to *= rtlFix;
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
@@ -168,6 +159,8 @@ export function scrollToGroupImp(scrollParams) {
       duration: durationInMS,
       isRTL,
       slideTransition: slideTransition,
+      isContinuousScrolling,
+      autoSlideshowContinuousSpeed,
     });
   } else {
     return new Promise((resolve) => {
@@ -231,11 +224,17 @@ function horizontalCssScrollTo({
   duration,
   isRTL,
   slideTransition,
+  isContinuousScrolling,
+  autoSlideshowContinuousSpeed,
 }) {
-  const change = to - from;
+  let change = to - from;
 
   if (change === 0) {
     return new Promise((resolve) => resolve(to));
+  }
+
+  if (isContinuousScrolling) {
+    duration = (Math.abs(change) / autoSlideshowContinuousSpeed) * 1000;
   }
 
   const scrollerInner = scroller.firstChild;

@@ -69,7 +69,7 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
 
-  it('should set the right "galleryMargin"', async () => {
+  it('should set the right "gallerySpacing"', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
