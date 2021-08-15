@@ -3,8 +3,9 @@ import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
+import withMagnify from '../hoc/withMagnified';
 
-export default class ImageItem extends GalleryComponent {
+class ImageItem extends GalleryComponent {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
@@ -252,3 +253,4 @@ export default class ImageItem extends GalleryComponent {
   }
 }
 /* eslint-enable prettier/prettier */
+export default withMagnify(ImageItem);

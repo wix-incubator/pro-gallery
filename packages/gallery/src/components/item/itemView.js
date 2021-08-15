@@ -22,7 +22,6 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import MagnifiedItem from './magnifiedItem';
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -74,8 +73,6 @@ class ItemView extends GalleryComponent {
       this.checkIfCurrentHoverChanged.bind(this);
     this.getCustomInfoRendererProps =
       this.getCustomInfoRendererProps.bind(this);
-      this.shouldMagnifyImage = this.shouldMagnifyImage.bind(this);
-      this.toggleMagnify = this.toggleMagnify.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -200,55 +197,14 @@ class ItemView extends GalleryComponent {
     if (shouldPreventDefault) {
       e.preventDefault();
     }
-    if (this.shouldMagnifyImage()) {
-      
-      this.setState({
-        startPos: this.getMagnifyInitialPos(e),
-        shouldMagnify: true,
-      })
-    }
+
     if (this.shouldShowHoverOnMobile()) {
       this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
     }
   }
-  toggleMagnify(bool){
-    const { shouldMagnify } = this.state;
-    if (bool) {
-      this.setState({
-        shouldMagnify: bool,
-      })
-    } else {
-      this.setState({
-        shouldMagnify: !shouldMagnify,
-      })
-    }
-  }
-  getMagnifyInitialPos(e) {
-    const { clientX, clientY } = e;// save only these 2. rest calculate in the mag comp
-      const {
-        magnifiedWidth,
-        magnifiedHeight,
-        cubedWidth,
-        cubedHeight,
-        innerWidth,
-        innerHeight
-      } = this.props.style;
 
-      const { top, left } = this.props.offset;
-      return {
-        x: Math.max(0, Math.min(clientX - left,  magnifiedWidth - Math.max(cubedWidth, innerWidth))),
-        y: Math.max(0, Math.min(clientY - top,  magnifiedHeight - Math.max(cubedHeight, innerHeight))),
-      }
-  }
-  shouldMagnifyImage() {
-    const { itemClick } = this.props.styleParams;
-    const { itemTypes } = GALLERY_CONSTS
-    const { type } = this.props;
-    return itemClick === GALLERY_CONSTS.itemClick.MAGNIFY &&
-      (type === itemTypes.IMAGE || type === itemTypes.PICTURE) //use const / extract to function;
-  }
   shouldUseDirectLink = () => {
     const { directLink } = this.props;
     const { url, target } = directLink || {};
@@ -431,7 +387,9 @@ class ItemView extends GalleryComponent {
       'createUrl',
       'settings',
       'isPrerenderMode',
-      'isTransparent'
+      'isTransparent',
+      'style',
+      'offset',
     ]);
 
     return (
@@ -712,16 +670,7 @@ class ItemView extends GalleryComponent {
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
-    let cursor;
-    if (itemClick === GALLERY_CONSTS.itemClick.MAGNIFY) {
-      cursor = 'crosshair'
-    } else {
-      cursor =
-        itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-        (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
-          ? 'default'
-          : 'pointer'
-    }
+
     const itemStyles = {
       overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
@@ -730,7 +679,11 @@ class ItemView extends GalleryComponent {
         scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? imageMargin / 2 + 'px'
           : 0,
-      cursor: cursor,
+      cursor:
+        itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
+        (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
+          ? 'default'
+          : 'pointer',
     };
 
     const { avoidInlineStyles } = settings;
@@ -1081,7 +1034,6 @@ class ItemView extends GalleryComponent {
 
   composeItem() {
     const { photoId, id, hash, idx, styleParams, type, url } = this.props;
-    const { shouldMagnify, startPos } = this.state;
 
     //if (there is an url for video items and image items) OR text item (text item do not use media url)
     this.hasRequiredMediaUrl = url || type === 'text';
@@ -1136,13 +1088,6 @@ class ItemView extends GalleryComponent {
               onClick={this.onItemWrapperClick}
             >
               {this.getItemInner()}
-              {shouldMagnify &&
-                <MagnifiedItem
-                {...this.props}
-                startPos={startPos}
-                toggleMagnify={this.toggleMagnify}
-                />
-              }
             </div>
           )}
         </div>
