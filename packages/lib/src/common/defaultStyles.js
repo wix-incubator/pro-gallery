@@ -8,6 +8,7 @@ const defaultStyles = flatToNested(
     flattenObject(coreStyles),
     flattenObject({
       layoutParams: {
+        gallerySpacing: 0,
         numberOfGroupsPerRow: 0,
       },
       gallerySize: 30,
