@@ -25,6 +25,7 @@
     "precommit:layouts": "cd packages/layouts && npm run lint:fix",
     "precommit:lib": "cd packages/lib && npm run lint:fix",
     "precommit:gallery": "cd packages/gallery && npm run lint:fix",
+    "precommit:blueprints": "cd packages/blueprints && npm run lint:fix",
     "precommit:playground": "cd packages/playground && npm run lint:fix",
     "precommit:ssr-simulator": "cd packages/ssr-simulator && npm run lint:fix",
     "precommit:lean-gallery": "cd packages/lean-gallery && npm run lint:fix"

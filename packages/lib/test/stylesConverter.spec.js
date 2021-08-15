@@ -8,6 +8,7 @@ describe('stylesConverter', () => {
   it('should create new styles from old ones', () => {
     const expected = { ...oldStyles(), ...newStyles() };
     const converted = convertStyles(oldStyles());
+
     Object.keys(expected).forEach((key) => {
       expect(converted[key]).to.equal(expected[key]);
     });
@@ -16,12 +17,15 @@ describe('stylesConverter', () => {
     const expected = {
       ...oldStyles(),
       ...newStyles(),
+      groupTypes: '1,2h,2v,3t,3b,3l,3r',
       someUnrelatedOldStyle: 0,
     };
     const converted = convertStylesBackwards({
       ...newStyles(),
+      groupTypes: '1,2h,2v,3t,3b,3l,3r',
       someUnrelatedOldStyle: 0,
     });
+
     Object.keys(expected).forEach((key) => {
       expect(converted[key]).to.equal(expected[key]);
     });

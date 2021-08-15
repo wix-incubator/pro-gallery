@@ -8,7 +8,7 @@ import { addPresetStyles } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
 import { 
   utils, 
-  flatToNested
+  flatToNested,
 } from 'pro-gallery-lib';
 
 
