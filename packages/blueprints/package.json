@@ -21,7 +21,8 @@
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
     "build": "tsc && tsc -p tsconfig-esm.json",
-    "test": "mocha --require ts-node/register test/*.spec.*",
+    "unit": "mocha --require ts-node/register test/*.spec.*",
+    "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },
