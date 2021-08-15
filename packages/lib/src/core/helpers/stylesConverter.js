@@ -19,11 +19,14 @@ function convertStylesBackwards(initialStyles) {
 }
 
 const layoutParamsMap = {
+  //done
+  galleryMargin: 'layoutParams_gallerySpacing',
+  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow',
+
+  //TBD
   cubeRatio: 'layoutParams_cropRatio',
   cubeType: 'layoutParams_cropType',
   cubeImages: 'layoutParams_enableCrop',
-  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow',
-  galleryMargin: 'layoutParams_gallerySpacing',
 
   imageMargin: 'layoutParams_itemSpacing',
   placeGroupsLtr: 'layoutParams_forceGroupsOrder',

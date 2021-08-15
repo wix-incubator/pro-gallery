@@ -14,8 +14,10 @@ describe('defaultStyles', () => {
 
 function expectedStyles() {
   return {
-    layoutParams: { gallerySpacing: 0 },
-
+    layoutParams: {
+      gallerySpacing: 0,
+      cropRatio: 1,
+    },
     isRTL: false,
     isVertical: false,
     gallerySize: 30,
@@ -27,7 +29,6 @@ function expectedStyles() {
     collageDensity: 0.8,
     cubeImages: false,
     cubeType: 'fill',
-    cropRatio: 1,
     cropOnlyFill: false,
     smartCrop: false,
     rotatingCropRatios: '',

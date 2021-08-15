@@ -20,7 +20,9 @@ describe('styleParam - cropRatio', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
-      cropRatio: 1,
+      layoutParams: {
+        cropRatio: 1,
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -34,7 +36,9 @@ describe('styleParam - cropRatio', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
-      cropRatio: 2,
+      layoutParams: {
+        cropRatio: 2,
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -48,7 +52,9 @@ describe('styleParam - cropRatio', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
-      cropRatio: 1,
+      layoutParams: {
+        cropRatio: 1,
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
