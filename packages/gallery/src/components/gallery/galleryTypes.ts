@@ -40,6 +40,7 @@ export interface GalleryProps {
   [key: string]: any;
 }
 
+console.log('nir');
 export interface GalleryState {
   blueprint: any;
   typeErrors?: any;
