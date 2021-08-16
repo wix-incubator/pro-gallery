@@ -14,7 +14,6 @@ class GroupView extends GalleryComponent {
     return this.props.items.map((item) =>
       React.createElement(itemView, {
         ...item.renderProps({ ...this.props.galleryConfig, visible }),
-        ...this.props.itemsLoveData[item.id],
       })
     );
   }
@@ -33,9 +32,9 @@ class GroupView extends GalleryComponent {
 
     if (this.props.allowLoop) {
       const { idx } = items[items.length - 1];
-      const { currentIdx, totalItemsCount } = galleryConfig;
+      const { activeIndex, totalItemsCount } = galleryConfig;
 
-      const distance = currentIdx - idx;
+      const distance = activeIndex - idx;
       const padding = Math.floor(totalItemsCount / 2);
 
       return Math.abs(distance) <= padding;

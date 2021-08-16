@@ -1,5 +1,5 @@
 import VIEW_MODE from '../constants/viewMode';
-import FORM_FACTOR from '../constants/formFactor';
+import DEVICE_TYPE from '../constants/deviceType';
 
 class ViewModeWrapper {
   constructor() {
@@ -8,32 +8,32 @@ class ViewModeWrapper {
     this.isEditMode = this.isEditMode.bind(this);
     this.isPreviewMode = this.isPreviewMode.bind(this);
     this.isSEOMode = this.isSEOMode.bind(this);
-    this.setFormFactor = this.setFormFactor.bind(this);
-    this.isFormFactorDesktop = this.isFormFactorDesktop.bind(this);
-    this.isFormFactorMobile = this.isFormFactorMobile.bind(this);
-    this.isFormFactorTablet = this.isFormFactorTablet.bind(this);
-    this.isFormFactorTouch = this.isFormFactorTouch.bind(this);
+    this.setDeviceType = this.setDeviceType.bind(this);
+    this.isDeviceTypeDesktop = this.isDeviceTypeDesktop.bind(this);
+    this.isDeviceTypeMobile = this.isDeviceTypeMobile.bind(this);
+    this.isDeviceTypeTablet = this.isDeviceTypeTablet.bind(this);
+    this.isDeviceTypeTouch = this.isDeviceTypeTouch.bind(this);
     this._viewMode = VIEW_MODE.SITE;
-    this._formFactor = FORM_FACTOR.DESKTOP;
+    this._deviceType = DEVICE_TYPE.DESKTOP;
   }
 
   setViewMode(viewMode) {
     this._viewMode = viewMode;
   }
-  setFormFactor(forceVal) {
-    this._formFactor = forceVal;
+  setDeviceType(forceVal) {
+    this._deviceType = forceVal;
   }
 
-  isFormFactorMobile() {
-    return this._formFactor === FORM_FACTOR.MOBILE;
+  isDeviceTypeMobile() {
+    return this._deviceType === DEVICE_TYPE.MOBILE;
   }
-  isFormFactorTablet() {
-    return this._formFactor === FORM_FACTOR.TABLET;
+  isDeviceTypeTablet() {
+    return this._deviceType === DEVICE_TYPE.TABLET;
   }
-  isFormFactorDesktop() {
-    return this._formFactor === FORM_FACTOR.DESKTOP;
+  isDeviceTypeDesktop() {
+    return this._deviceType === DEVICE_TYPE.DESKTOP;
   }
-  isFormFactorTouch() {
+  isDeviceTypeTouch() {
     return this.isMobile() || this.isTablet();
   }
 
@@ -59,17 +59,17 @@ const isSiteMode = viewModeWrapper.isSiteMode;
 const isEditMode = viewModeWrapper.isEditMode;
 const isPreviewMode = viewModeWrapper.isPreviewMode;
 const isSEOMode = viewModeWrapper.isSEOMode;
-const isFormFactorMobile = viewModeWrapper.isFormFactorMobile;
-const isFormFactorTablet = viewModeWrapper.isFormFactorTablet;
-const isFormFactorDesktop = viewModeWrapper.isFormFactorDesktop;
-const isFormFactorTouch = viewModeWrapper.isFormFactorTouch;
+const isDeviceTypeMobile = viewModeWrapper.isDeviceTypeMobile;
+const isDeviceTypeTablet = viewModeWrapper.isDeviceTypeTablet;
+const isDeviceTypeDesktop = viewModeWrapper.isDeviceTypeDesktop;
+const isDeviceTypeTouch = viewModeWrapper.isDeviceTypeTouch;
 
 export { viewModeWrapper };
 export { isSiteMode };
 export { isEditMode };
 export { isPreviewMode };
 export { isSEOMode };
-export { isFormFactorMobile };
-export { isFormFactorTablet };
-export { isFormFactorDesktop };
-export { isFormFactorTouch };
+export { isDeviceTypeMobile };
+export { isDeviceTypeTablet };
+export { isDeviceTypeDesktop };
+export { isDeviceTypeTouch };

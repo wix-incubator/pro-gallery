@@ -7,19 +7,19 @@ import CloseButton from './x';
 const styles = {
     gallery: {
 
-    }, 
+    },
     fullscreen: {
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        width: '100vw', 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
         height: '100vh',
         zIndex: 9999,
         background: 'white',
         opacity: 0,
         transition: 'opacity 2s ease',
         visibility: 'hidden'
-    }, 
+    },
     shown: {
         visibility: 'visible',
         opacity: 1
@@ -38,7 +38,7 @@ const styles = {
         fill: 'black',
         cursor: 'pointer'
     }
-} 
+}
 
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
 
@@ -73,8 +73,8 @@ export default class ExpandableProGallery extends React.Component {
                 <section style={{...styles.gallery, display: (this.state.fullscreenIdx < 0 ? 'block' : 'none')}}>
                     <Gallery
                         {...this.props}
-                        key={`pro-gallery-${this.props.domId}`}
-                        domId={`pro-gallery-${this.props.domId}`}
+                        key={`pro-gallery-${this.props.id}`}
+                        id={`pro-gallery-${this.props.id}`}
                         eventsListener={this.eventListener}
                     />
                 </section>
@@ -82,9 +82,9 @@ export default class ExpandableProGallery extends React.Component {
                     <CloseButton style={styles.close} onClick={() => this.setState({fullscreenIdx: -1})} />
                     <Gallery
                         {...this.props}
-                        key={`pro-fullscreen-${this.props.domId}`}
-                        domId={`pro-fullscreen-${this.props.domId}`}
-                        currentIdx={this.state.fullscreenIdx}
+                        key={`pro-fullscreen-${this.props.id}`}
+                        id={`pro-fullscreen-${this.props.id}`}
+                        activeIndex={this.state.fullscreenIdx}
                         container= {{
                             width: window.innerWidth,
                             height: window.innerHeight

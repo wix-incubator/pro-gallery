@@ -3,40 +3,41 @@ import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.FULLSIZE,
-  cubeImages: true,
-  cubeRatio: '100%/100%',
-  cubeType: 'fill',
-  oneRow: true,
-  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
-  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
-  galleryMargin: 0,
-  isVertical: false,
-  groupSize: 1,
-  groupTypes: '1',
+const fixToFullsize = (styles) => {
+  let presetStyles = { ...styles };
+  presetStyles.galleryLayout = LAYOUTS.FULLSIZE;
+  presetStyles.cubeImages = true;
+  presetStyles.cropRatio = '100%/100%';
+  presetStyles.cubeType = 'fill';
+  presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+  presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetStyles.galleryMargin = 0;
+  presetStyles.isVertical = false;
+  presetStyles.groupSize = 1;
+  presetStyles.groupTypes = '1';
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  smartCrop: false,
-  galleryType: 'Strips',
-  hasThumbnails: false,
-  enableScroll: true,
-  scrollSnap: true,
-  isGrid: false,
-  isSlider: false,
-  isColumns: false,
-  isMasonry: false,
-  isSlideshow: false,
-  cropOnlyFill: false,
-  scatter: 0,
-  rotatingScatter: '',
-  imageMargin: 0,
+  presetStyles.smartCrop = false;
+  presetStyles.galleryType = 'Strips';
+  presetStyles.hasThumbnails = false;
+  presetStyles.enableScroll = true;
+  presetStyles.scrollSnap = true;
+  presetStyles.isGrid = false;
+  presetStyles.isSlider = false;
+  presetStyles.isColumns = false;
+  presetStyles.isMasonry = false;
+  presetStyles.isSlideshow = false;
+  presetStyles.cropOnlyFill = false;
+  presetStyles.scatter = 0;
+  presetStyles.rotatingScatter = '';
+  presetStyles.imageMargin = 0;
+  return presetStyles;
 };
+export const fixedStyles = fixToFullsize({});
 
 export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles),
-  };
+  let res = { ...styles };
+  res = fixToFullsize(res);
+  res.targetItemSize = calcTargetItemSize(res);
+  return res;
 };

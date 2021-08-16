@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customRenderers,
+  customComponents,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - textImageSpace', () => {
@@ -14,7 +14,7 @@ describe('styleParam - textImageSpace', () => {
     container,
     items: images2,
     styles: styleParams,
-    ...customRenderers,
+    customComponents,
   };
 
   beforeEach(() => {
@@ -27,7 +27,6 @@ describe('styleParam - textImageSpace', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
@@ -46,7 +45,6 @@ describe('styleParam - textImageSpace', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
@@ -62,7 +60,6 @@ describe('styleParam - textImageSpace', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       textImageSpace: 20,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);

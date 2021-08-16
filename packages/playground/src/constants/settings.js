@@ -52,7 +52,7 @@ export const stylesBySection = {
 
     'cubeImages',
     'cubeType',
-    'cubeRatio',
+    'cropRatio',
 
     'gallerySizeType',
     'gallerySize',
@@ -70,7 +70,7 @@ export const stylesBySection = {
     'rotatingGroupTypes',
     'rotatingCropRatios',
     'columnWidths',
-    'galleryMargin',
+    'layoutParams_gallerySpacing',
     'scatter',
     'rotatingScatter',
     'smartCrop',
@@ -78,6 +78,7 @@ export const stylesBySection = {
     'galleryThumbnailsAlignment',
     'thumbnailSize',
     'thumbnailSpacings',
+    'useMaxDimensions'
   ],
   [SECTIONS.INFO]: [
     'titlePlacement',
@@ -100,7 +101,9 @@ export const stylesBySection = {
     'scrollDuration',
     'slideshowLoop',
     'isAutoSlideshow',
+    'autoSlideshowType',
     'autoSlideshowInterval',
+    'autoSlideshowContinuousSpeed',
     'playButtonForAutoSlideShow',
     'scrollSnap',
     'allowContextMenu',
@@ -111,10 +114,14 @@ export const stylesBySection = {
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
+    'arrowsPadding',
     'arrowsVerticalPosition',
 
     'overlayBackground',
-
+    'overlayPosition',
+    'overlaySize',
+    'overlaySizeType',
+    'overlayPadding',
     // 'itemIconColorSlideshow',
     // 'itemIconColor',
     // 'textBoxFillColor',
@@ -144,6 +151,7 @@ export const stylesBySection = {
     'scrollAnimation',
     'slideAnimation',
     'oneColorAnimationColor',
+    'slideTransition',
   ],
   [SECTIONS.IMAGE]: [
     // 'imageQuality',
@@ -158,6 +166,7 @@ export const stylesBySection = {
     'videoSpeed',
     'videoSound',
     'videoLoop',
+    'enableVideoPlaceholder',
   ],
 };
 

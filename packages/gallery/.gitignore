@@ -8,3 +8,4 @@ maven
 .idea
 .vscode
 yarn.lock
+standaloneValidateCode.js

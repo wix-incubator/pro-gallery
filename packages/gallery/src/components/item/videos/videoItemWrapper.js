@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { utils, isEditMode } from 'pro-gallery-lib';
+import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import ImageItem from '../imageItem';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
-const videoControls = (
+const videoPlayButton = (
   <div>
     <i
       key="play-triangle"
@@ -29,8 +30,8 @@ class VideoItemWrapper extends ImageItem {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoItemPlaceholder =
-      this.createVideoItemPlaceholder.bind(this);
+    this.createVideoPlaceholder=
+      this.createVideoPlaceholder.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 
@@ -51,7 +52,7 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoItemPlaceholder(showVideoControls) {
+  createVideoPlaceholder(showVideoPlayButton) {
     const props = utils.pick(this.props, [
       'alt',
       'title',
@@ -71,8 +72,8 @@ class VideoItemWrapper extends ImageItem {
         imageDimensions={this.props.imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
-        videoControls={
-          showVideoControls && !this.mightPlayVideo() && videoControls
+        videoPlayButton={
+          showVideoPlayButton && !this.mightPlayVideo() && videoPlayButton
         }
       />
     );
@@ -96,15 +97,15 @@ class VideoItemWrapper extends ImageItem {
 
   render() {
     const hover = this.props.hover;
-    const showVideoControls =
+    const showVideoPlayButton =
       !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoItemPlaceholder(showVideoControls);
+    const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
       return (
         <div>
-          {videoPlaceholder}
+          {shouldCreateVideoPlaceholder(this.props.styleParams) && videoPlaceholder}
           {hover}
         </div>
       );
@@ -113,7 +114,7 @@ class VideoItemWrapper extends ImageItem {
       <VideoItem
         {...this.props}
         videoPlaceholder={videoPlaceholder}
-        videoControls={showVideoControls && videoControls}
+        videoPlayButton={showVideoPlayButton && videoPlayButton}
       />
     );
   }

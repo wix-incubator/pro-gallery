@@ -4,42 +4,43 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist",
-    "postinstall": "lerna bootstrap --hoist",
-    "publish": "node scripts/publishPackages",
-    "deploy": "node scripts/deployToSurge",
-    "start": "npm run watch",
-    "build": "lerna run build",
+    "postinstall": "lerna bootstrap --force-local --hoist --strict",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
-    "watch": "npm run link-packages && lerna run --parallel watch",
-    "link-packages": "cd packages/layouts && yarn link && cd ../lib && yarn link && yarn link pro-layouts && cd ../lean-gallery && yarn link && yarn link pro-gallery-lib && cd ../gallery && yarn link && yarn link pro-layouts && yarn link pro-gallery-lib && cd ../playground && yarn link pro-gallery && yarn link pro-gallery-lib && yarn link lean-gallery && cd ../ssr-simulator && yarn link pro-gallery && cd ../..",
-    "build-packages-by-order": "cd packages/layouts && npm run build && cd ../lib && npm run build && cd ../gallery && npm run build && cd ../lean-gallery && npm run build && cd ../playground && npm run build && cd ../ssr-simulator && npm run build && cd ../..",
+    "build": "lerna run build",
     "start-playground": "cd packages/playground && npm run start",
     "start-ssr-simulator": "cd packages/ssr-simulator && npm run start",
-    "build-all-and-start-playground": "npm run link-packages && npm run build-packages-by-order && npm run start-playground",
-    "build-all-and-start-ssr-simulator": "npm run link-packages && npm run build-packages-by-order && npm run start-ssr-simulator",
-    "build:dev": "npm run link-packages && npm run build-packages-by-order",
     "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3000 'lerna run test:e2e-all'",
     "test:e2e-ssr": "start-server-and-test build-all-and-start-ssr-simulator http-get://localhost:3001 'lerna run test:e2e-ssr'",
-    "test": "npm run link-packages && npm run build-packages-by-order && lerna run --parallel test",
+    "test": "echo 'not running tests from root - runnign it using GitHub actions",
     "ci:run-playground": "cd packages/playground && npx serve -s build -l 3000 && cd ../..",
     "ci:run-ssr": "cd packages/ssr-simulator && npm run watch && cd ../..",
-    "ci:test-unit": "npm run link-packages && lerna run --parallel test",
-    "ci:test-e2e-layouts": "npm run link-packages && start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-layouts'",
-    "ci:test-e2e-styleParams": "npm run link-packages && start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-styleParams'",
-    "ci:test-e2e-integration": "npm run link-packages && start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-integration'",
-    "ci:test-e2e-ssr": "npm run link-packages && start-server-and-test ci:run-ssr http-get://localhost:3001 'lerna run test:e2e-ssr'",
+    "ci:test-unit": "lerna run --parallel unit",
+    "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-layouts'",
+    "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-styleParams'",
+    "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-integration'",
+    "ci:test-e2e-ssr": "start-server-and-test ci:run-ssr http-get://localhost:3001 'lerna run test:e2e-ssr'",
+    "build-all-and-start-playground": "npm run start-playground",
+    "build-all-and-start-ssr-simulator": "npm run start-ssr-simulator"
+  },
+  "deprecated": {
     "test:all": "npm run test && npm run test:e2e",
+    "publishNewAlpha": "lerna publish prerelease --dist-tag next --yes",
+    "bootstrap": "lerna bootstrap --hoist",
+    "start": "npm run watch",
+    "watch": "lerna run --parallel watch",
+    "build-packages-by-order": "echo 'lerna already ran `lerna run build` which runs build in all these pacakges - so this is no longer required'",
+    "link-packages": "echo 'lerna is linking pacakges so this is not needed anymore'",
+    "build:dev": "echo 'packages are linked in postinstall script with lerna, and packages are built with lerna run build - so this is no longer needed'",
+    "fixLatestTag": "npm dist-tag add pro-gallery@3.1.38 latest",
+    "build:dev-deprecated": "npm run link-packages && npm run build-packages-by-order",
+    "deployToSurge": "node scripts/deployToSurge",
+    "deprecatedPublish": "node scripts/publishPackages",
+    "build-packages-by-order-deprecated": "cd packages/layouts && npm run build && cd ../lib && npm run build && cd ../gallery && npm run build && cd ../lean-gallery && npm run build && cd ../playground && npm run build && cd ../ssr-simulator && npm run build && cd ../..",
+    "link-packages-deprecated": "cd packages/layouts && yarn link && cd ../lib && yarn link && yarn link pro-layouts && cd ../lean-gallery && yarn link && yarn link pro-gallery-lib && cd ../gallery && yarn link && yarn link pro-layouts && yarn link pro-gallery-lib && cd ../playground && yarn link pro-gallery && yarn link pro-gallery-lib && yarn link lean-gallery && cd ../ssr-simulator && yarn link pro-gallery && cd ../layouts && yarn link pro-gallery-lib && cd ../..",
     "patch": "npm config set registry https://registry.npmjs.org/ && npm run lint && node scripts/releaseVersion --patch",
     "minor": "npm config set registry https://registry.npmjs.org/ && npm run lint && node scripts/releaseVersion --minor",
-    "major": "npm config set registry https://registry.npmjs.org/ && npm run lint && node scripts/releaseVersion --major",
-    "precommit:layouts": "cd packages/layouts && npm run lint:fix",
-    "precommit:lib": "cd packages/lib && npm run lint:fix",
-    "precommit:gallery": "cd packages/gallery && npm run lint:fix",
-    "precommit:playground": "cd packages/playground && npm run lint:fix",
-    "precommit:ssr-simulator": "cd packages/ssr-simulator && npm run lint:fix",
-    "precommit:lean-gallery": "cd packages/lean-gallery && npm run lint:fix"
+    "major": "npm config set registry https://registry.npmjs.org/ && npm run lint && node scripts/releaseVersion --major"
   },
   "husky": {
     "hooks": {
@@ -47,12 +48,7 @@
     }
   },
   "lint-staged": {
-    "packages/layouts/{src,test}/**/*.{js,ts}": "npm run precommit:layouts",
-    "packages/lib/{src,test}/**/*.{js,ts}": "npm run precommit:lib",
-    "packages/gallery/{src,tests}/**/*.{js,ts}": "npm run precommit:gallery",
-    "packages/playground/src/**/*.{js,ts}": "npm run precommit:playground",
-    "packages/ssr-simulator/src/**/*.{js,ts}": "npm run precommit:ssr-simulator",
-    "packages/lean-gallery/src/**/*.{js,ts}": "npm run precommit:lean-gallery"
+    "packages/*/{src,tests}/**/*.{js,jsx,ts,tsx}": "eslint --fix --"
   },
   "repository": {
     "type": "git",
@@ -71,13 +67,13 @@
     "lerna": "^3.13.3",
     "lerna-packages": "0.0.1",
     "lint-staged": "^10.5.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "prettier": "^2.1.2",
     "prompt": "^1.0.0",
     "semver": "^6.3.0"
   },
   "dependencies": {
-    "pro-gallery": "^3.0.0",
+    "pro-gallery": "3.1.38",
     "start-server-and-test": "^1.10.6"
   }
 }

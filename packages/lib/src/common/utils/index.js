@@ -4,8 +4,9 @@ import window from '../window/windowWrapper';
 import {
   isEditMode,
   isPreviewMode,
-  isFormFactorMobile,
+  isDeviceTypeMobile,
 } from '../window/viewModeWrapper';
+import GALLERY_CONSTS from '../constants'
 
 class Utils {
   constructor() {
@@ -171,13 +172,13 @@ class Utils {
     const _isMobileByProps = () => {
       const deviceType = this.parseGetParam('deviceType') || window.deviceType;
       const isMobileViewer = this.parseGetParam('showMobileView') === 'true';
-      const formFactorMobile = isFormFactorMobile();
+      const deviceTypeMobile = isDeviceTypeMobile();
       if (isMobileViewer) {
         return true;
       } else if (deviceType) {
         return String(deviceType).toLowerCase().indexOf('mobile') >= 0;
-      } else if (formFactorMobile) {
-        return formFactorMobile;
+      } else if (deviceTypeMobile) {
+        return deviceTypeMobile;
       } else {
         return undefined;
       }
@@ -644,6 +645,26 @@ class Utils {
     } catch (e) {
       console.error(e)
     }
+  }
+  isSingleItemHorizontalDisplay(styles) {
+    return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      styles.groupSize === 1 &&
+      styles.cubeImages &&
+      styles.cropRatio === '100%/100%';
+  }
+
+  getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
+    return {
+      role: proGalleryRole || 'region',
+      ['aria-label']: proGalleryRegionLabel ||
+        'Press the Enter key and then use the arrow keys to navigate the gallery items',
+      ['aria-roledescription']:
+        proGalleryRole === 'application' ? 'gallery application' : 'region',
+    };
+  }
+
+  focusGalleryElement(element){
+    element.focus();
   }
 }
 

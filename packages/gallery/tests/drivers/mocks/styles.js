@@ -1,8 +1,8 @@
 const styleParams = {
+  layoutParams: { gallerySpacing: 0 },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
-  oneRow: false,
   scrollDirection: 1,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 2,
@@ -17,14 +17,13 @@ const styleParams = {
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingCubeRatio: '',
+  rotatingCropRatio: '',
   fixedColumns: 0,
   groupsPerStrip: 0,
   imageMargin: 10,
-  galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   gridStyle: 0,
@@ -48,6 +47,7 @@ const styleParams = {
   arrowsPosition: 0,
   arrowsVerticalPosition: 'ITEM_CENTER',
   arrowsSize: 23,
+  arrowsPadding: 23,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
   // titleFontExpand: font_5
@@ -102,6 +102,8 @@ const styleParams = {
   videoSpeed: '1',
   videoLoop: true,
   shouldIndexDirectShareLinkInSEO: true,
+  slideTransition: 'ease',
+  enableVideoPlaceholder: true,
 };
 
 const container = {
@@ -110,10 +112,10 @@ const container = {
   scrollBase: 0,
 };
 
-const customRenderers = {
+const customComponents = {
   customHoverRenderer: () => {},
   customInfoRenderer: () => {},
   customSlideshowInfoRenderer: () => {},
 };
 
-export { container, styleParams, customRenderers };
+export { container, styleParams, customComponents };

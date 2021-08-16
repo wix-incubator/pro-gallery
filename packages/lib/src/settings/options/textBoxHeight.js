@@ -9,8 +9,8 @@ export default {
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&
-    !styleParams.oneRow &&
-    GALLERY_CONSTS.hasVerticalPlacement(styleParams.titlePlacement),
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
+    GALLERY_CONSTS.hasExternalVerticalPlacement(styleParams.titlePlacement),
   type: INPUT_TYPES.NUMBER,
   default: 200,
   min: 0,

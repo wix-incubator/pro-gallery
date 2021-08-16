@@ -9,10 +9,10 @@ export default {
   isRelevant: (styleParams) =>
     styleParams.isVertical &&
     styleParams.groupSize === 1 &&
-    !styleParams.oneRow &&
+    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     styleParams.calculateTextBoxWidthMode ===
       GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL &&
-    GALLERY_CONSTS.hasHorizontalPlacement(styleParams.titlePlacement),
+    GALLERY_CONSTS.hasExternalHorizontalPlacement(styleParams.titlePlacement),
   type: INPUT_TYPES.NUMBER,
   default: 200,
   min: 0,

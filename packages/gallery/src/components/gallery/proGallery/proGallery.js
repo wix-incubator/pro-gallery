@@ -19,8 +19,8 @@ export default class ProGallery extends GalleryComponent {
     if (typeof props.viewMode !== 'undefined') {
       viewModeWrapper.setViewMode(props.viewMode);
     }
-    if (typeof props.formFactor !== 'undefined') {
-      viewModeWrapper.setFormFactor(props.formFactor);
+    if (typeof props.deviceType !== 'undefined') {
+      viewModeWrapper.setDeviceType(props.deviceType);
     }
   }
 
@@ -29,30 +29,26 @@ export default class ProGallery extends GalleryComponent {
       utils.dumpCache();
       viewModeWrapper.setViewMode(nextProps.viewMode);
     }
-    if (this.props.formFactor !== nextProps.formFactor) {
+    if (this.props.deviceType !== nextProps.deviceType) {
       utils.dumpCache();
-      viewModeWrapper.setFormFactor(nextProps.formFactor);
+      viewModeWrapper.setDeviceType(nextProps.deviceType);
     }
   }
 
   renderProps() {
     return {
       ...this.props,
-      domId: this.props.domId,
+      id: this.props.id,
       items: this.props.items || [],
-      watermarkData: this.props.watermarkData,
       settings: this.props.settings || {},
       offsetTop: this.props.offsetTop,
-      itemsLoveData: this.props.itemsLoveData || {},
-      proGalleryRegionLabel:
-        this.props.proGalleryRegionLabel ||
-        'Gallery. you can navigate the gallery with keyboard arrow keys.',
+      proGalleryRegionLabel: this.props.proGalleryRegionLabel,
     };
   }
 
   containerProps() {
     return {
-      id: `pro-gallery-${this.props.domId}`,
+      id: `pro-gallery-${this.props.id}`,
       className: 'pro-gallery',
     };
   }

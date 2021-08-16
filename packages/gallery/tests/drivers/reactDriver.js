@@ -43,6 +43,7 @@ class galleryDriver {
     };
 
     this.styleParams = {
+      layoutParams: { gallerySpacing: 1 },
       gotStyleParams: true,
       selectedLayout: 0,
       isVertical: false,
@@ -66,13 +67,12 @@ class galleryDriver {
       collageAmount: 0.8,
       collageDensity: 0.8,
       imageMargin: 5,
-      galleryMargin: 1,
       viewMode: 'preview',
       enableInfiniteScroll: true,
       itemClick: 'expand',
-      cubeRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
+      cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
       fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
-      oneRow: false, //render the gallery as a single row with horizontal scroll
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       showArrows: true,
       isSlideshow: false,
       isSlider: false,
@@ -87,6 +87,7 @@ class galleryDriver {
       itemShadowDirection: 135,
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
+      enableVideoPlaceholder: true,
     };
 
     this.scroll = {
@@ -117,16 +118,19 @@ class galleryDriver {
       new Layouter(this.layoutParams)
     );
 
+    this.customComponents = {
+      customHoverRenderer: () => {},
+      customInfoRenderer: () => {},
+      customSlideshowInfoRenderer: () => {},
+    };
+
     this.galleryConfig = {
       container: this.get.container,
       scroll: this.get.scroll,
       styleParams: this.get.styleParams,
       actions: this.get.actions,
+      customComponents: this.customComponents,
     };
-
-    this.customHoverRenderer = () => {};
-    this.customInfoRenderer = () => {};
-    this.customSlideshowInfoRenderer = () => {};
   }
 
   get get() {
@@ -247,9 +251,7 @@ class galleryDriver {
           totalItemsCount: this.items.length,
           layout,
           actions: this.actions,
-          customHoverRenderer: this.customHoverRenderer,
-          customInfoRenderer: this.customInfoRenderer,
-          customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
+          customComponents: this.customComponents,
         };
       },
 
@@ -264,10 +266,7 @@ class galleryDriver {
             container: this.container,
             styleParams: this.styleParams,
             actions: this.actions,
-            customHoverRenderer: this.customHoverRenderer,
-            customInfoRenderer: this.customInfoRenderer,
-            customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
-            itemsLoveData: {},
+            customComponents: this.customComponents,
           };
         }
 
@@ -291,13 +290,9 @@ class galleryDriver {
           getVisibleItems: (items) => items,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
-          itemsLoveData: galleryViewProps.itemsLoveData,
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
-          customHoverRenderer: galleryViewProps.customHoverRenderer,
-          customInfoRenderer: galleryViewProps.customInfoRenderer,
-          customSlideshowInfoRenderer:
-            galleryViewProps.customSlideshowInfoRenderer,
+          customComponents: galleryViewProps.customComponents,
         };
       },
 
@@ -327,6 +322,7 @@ class galleryDriver {
             ...this.actions,
             eventsListener: () => {},
           },
+          customComponents: {},
         });
       },
 
@@ -335,7 +331,14 @@ class galleryDriver {
         const galleryItem = new GalleryItem({ dto: itemDto });
         const itemViewPropsObj = Object.assign(
           galleryItem.renderProps(newGalleryConfig),
-          { config: newGalleryConfig, visible: true }
+          {
+            config: newGalleryConfig,
+            visible: true,
+            imageDimensions: {
+              marginLeft: 0,
+              marginTop: 0,
+            },
+          }
         );
         return Object.assign(itemViewPropsObj, {
           actions: {

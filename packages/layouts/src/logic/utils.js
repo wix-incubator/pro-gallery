@@ -70,145 +70,81 @@ class Utils {
     return this._hash2int[str];
   }
 
-  insertIfDefined(obj, field, value) {
-    if (typeof value !== 'undefined') {
-      obj[field] = value;
-    }
+  assignByString(Obj, string, value) {
+    let _obj = { ...Obj };
+    let keyArr = string.split('_');
+    let assignedProperty = keyArr.pop();
+    let pointer = _obj;
+    keyArr.forEach((key) => {
+      if (!pointer[key]) pointer[key] = {};
+      pointer = pointer[key];
+    });
+    pointer[assignedProperty] = value;
+    return _obj;
   }
 
-  convertStyleParams(styleParams) {
+  flattenObject(ob) {
+    var toReturn = {};
+
+    for (var i in ob) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (!ob.hasOwnProperty(i)) continue;
+
+      if (
+        typeof ob[i] == 'object' &&
+        ob[i] !== null &&
+        Object.keys(ob[i]).length > 0
+      ) {
+        var flatObject = this.flattenObject(ob[i]);
+        for (var x in flatObject) {
+          // eslint-disable-next-line no-prototype-builtins
+          if (!flatObject.hasOwnProperty(x)) continue;
+
+          toReturn[i + '_' + x] = flatObject[x];
+        }
+      } else {
+        toReturn[i] = ob[i];
+      }
+    }
+    return toReturn;
+  }
+
+  flatToNested(ob) {
+    return Object.entries(ob).reduce(
+      (obj, [styleParam, value]) => this.assignByString(obj, styleParam, value),
+      {}
+    );
+  }
+
+  addDefaultStyleParams(styleParams) {
     //default styleParams
-    const convertedStyleParams = Object.assign(
-      {
-        cubeImages: false,
-        cubeType: 'fill',
-        cubeRatio: 1,
-        rotatingCropRatios: '',
-        smartCrop: false,
-        imageMargin: 10,
-        galleryMargin: 0,
-        scatter: 0,
-        rotatingScatter: '',
-        chooseBestGroup: true,
-        groupSize: 3,
-        groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
-        rotatingGroupTypes: '',
-        isVertical: true,
-        minItemSize: 120,
-        oneRow: false,
-        targetItemSize: 500,
-        collageDensity: 50,
-        fixedColumns: 0,
-        columnWidths: '',
-      },
-      styleParams
-    );
+    const defaultSP = {
+      layoutParams: { gallerySpacing: 0 },
+      cubeImages: false,
+      cubeType: 'fill',
+      cropRatio: 1,
+      rotatingCropRatios: '',
+      smartCrop: false,
+      imageMargin: 10,
+      scatter: 0,
+      rotatingScatter: '',
+      chooseBestGroup: true,
+      groupSize: 3,
+      groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
+      rotatingGroupTypes: '',
+      isVertical: true,
+      minItemSize: 120,
+      scrollDirection: 0,
+      targetItemSize: 500,
+      collageDensity: 50,
+      fixedColumns: 0,
+      columnWidths: '',
+    };
 
-    this.insertIfDefined(
-      convertedStyleParams,
-      'cubeImages',
-      convertedStyleParams.cropItems
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'cubeType',
-      convertedStyleParams.cropType
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'cubeRatio',
-      convertedStyleParams.cropRatio
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'rotatingCropRatios',
-      Array.isArray(convertedStyleParams.rotatingCropRatios)
-        ? convertedStyleParams.rotatingCropRatios.join(',')
-        : undefined
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'smartCrop',
-      convertedStyleParams.smartCrop
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'imageMargin',
-      convertedStyleParams.itemSpacing
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'galleryMargin',
-      convertedStyleParams.layoutSpacing
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'scatter',
-      convertedStyleParams.randomSpacings
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'chooseBestGroup',
-      convertedStyleParams.smartGrouping
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'groupSize',
-      convertedStyleParams.itemsPerGroup
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'groupTypes',
-      Array.isArray(convertedStyleParams.allowedGroupTypes)
-        ? convertedStyleParams.allowedGroupTypes.join(',')
-        : undefined
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'rotatingGroupTypes',
-      Array.isArray(convertedStyleParams.rotatingGroupTypes)
-        ? convertedStyleParams.rotatingGroupTypes.join(',')
-        : undefined
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'isVertical',
-      convertedStyleParams.isColumnsLayout
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'minItemSize',
-      convertedStyleParams.minItemSize
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'oneRow',
-      convertedStyleParams.isVerticalScroll
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'targetItemSize',
-      convertedStyleParams.rowSize || convertedStyleParams.columnSize
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'collageDensity',
-      convertedStyleParams.collageDensity
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'fixedColumns',
-      convertedStyleParams.fixedColumns
-    );
-    this.insertIfDefined(
-      convertedStyleParams,
-      'columnWidths',
-      Array.isArray(convertedStyleParams.columnWidths)
-        ? convertedStyleParams.columnWidths.join(',')
-        : undefined
-    );
-
-    return convertedStyleParams;
+    const flatSP = this.flattenObject(styleParams);
+    const flatDefaultSP = this.flattenObject(defaultSP);
+    let _styles = this.flatToNested({ ...flatDefaultSP, ...flatSP });
+    return _styles;
   }
 
   convertContainer(container, styleParams) {
@@ -222,17 +158,21 @@ class Utils {
       convertedContainer.galleryWidth =
         container.width +
         ((styleParams.imageMargin / 2 || 0) -
-          (styleParams.galleryMargin || 0)) *
+          (styleParams.layoutParams.gallerySpacing || 0)) *
           2;
       delete convertedContainer.width;
     }
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {
       convertedContainer.galleryHeight =
         container.height +
-        ((styleParams.imageMargin / 2 || 0) - (styleParams.galleryMargin || 0));
+        ((styleParams.imageMargin / 2 || 0) -
+          (styleParams.layoutParams.gallerySpacing || 0));
       delete convertedContainer.height;
     }
-    if (styleParams.externalInfoHeight >= 0 && styleParams.oneRow) {
+    if (
+      styleParams.externalInfoHeight >= 0 &&
+      styleParams.scrollDirection === 1
+    ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }
 

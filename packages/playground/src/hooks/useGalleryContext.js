@@ -6,7 +6,11 @@ import {
 } from '../constants/styleParams';
 import { addPresetStyles } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
-import { utils } from 'pro-gallery-lib';
+import { 
+  utils, 
+  flatToNested,
+} from 'pro-gallery-lib';
+
 
 export function useGalleryContext(
   blueprintsManager,
@@ -17,21 +21,21 @@ export function useGalleryContext(
     setGallerySettings({ showSide: newShowSide });
     //    const widthChange = SIDEBAR_WIDTH * (newShowSide ? -1 : 1)
 
-    //  setDimensions({width: calcGalleryDimensions().width + widthChange});
-    setDimensions();
+    //  setDimensions({width: calcGalleryContainer().width + widthChange});
+    setContainer();
   };
 
   const getBlueprintFromServer = async (params) => {
-    let { items, styleParams, dimensions } = params;
+    let { items, styleParams, container } = params;
 
-    dimensions = dimensions || context.dimensions || calcGalleryDimensions();
-    const styles = styleParams || context.styleParams || getInitialStyleParams();
+    container = container || context.container || calcGalleryContainer();
+    const styles = styleParams || context.styleParams || flatToNested(getInitialStyleParams());
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
-    if (!items || !dimensions || !styles) {
+    if (!items || !container || !styles) {
       return;
     }
-    
+
     const response = await fetch(url, {
       method: 'POST',
       credentials: 'omit', // include, *same-origin, omit
@@ -41,7 +45,7 @@ export function useGalleryContext(
       body: JSON.stringify({
         items,
         styles,
-        dimensions
+        container
       }) // body data type must match "Content-Type" header
     });
     const data = await response.json();
@@ -59,19 +63,19 @@ export function useGalleryContext(
     }
   };
 
-  const setDimensions = (config = {}) => {
+  const setContainer = (config = {}) => {
     const { width, height } = config;
     const newContext = {
-      dimensions: {
-        ...calcGalleryDimensions(),
+      container: {
+        ...calcGalleryContainer(),
         ...(width && { width }),
         ...(height && { height }),
       },
     };
 
     if (
-      JSON.stringify(newContext.dimensions) !==
-      JSON.stringify({ ...context.dimensions })
+      JSON.stringify(newContext.container) !==
+      JSON.stringify({ ...context.container })
     ) {
       if (getGallerySettings().useBlueprints) {
         requestNewBlueprint(newContext);
@@ -84,7 +88,7 @@ export function useGalleryContext(
   const setPreset = (newPreset) => {
     const newContext = {
       preset: newPreset,
-      styleParams: getInitialStyleParams(newPreset),
+      styleParams: flatToNested(getInitialStyleParams(newPreset)),
     };
 
     if (getGallerySettings().useBlueprints) {
@@ -96,12 +100,14 @@ export function useGalleryContext(
 
   const setStyleParams = (newProp, value) => {
     // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
+    const styleParams = flatToNested({
+      ...getInitialStyleParams(),
+      ...getStyleParamsFromUrl(window.location.search),
+      [newProp]: value,
+    })
+    console.log('setting new context and requesting BP', styleParams.layoutParams)
     const newContext = {
-      styleParams: {
-        ...getInitialStyleParams(),
-        ...getStyleParamsFromUrl(),
-        [newProp]: value,
-      },
+      styleParams,
     };
     if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
@@ -152,12 +158,12 @@ export function useGalleryContext(
     }
   };
 
-  const calcGalleryDimensions = () => {
-    let dimensions = {};
+  const calcGalleryContainer = () => {
+    let container = {};
     const showSide = !!getGallerySettings().showSide && !utils.isMobile();
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!getGallerySettings().isUnknownDimensions) {
-      dimensions = !utils.isMobile()
+      container = !utils.isMobile()
         ? {
             width: 500,
             height: 500,
@@ -167,13 +173,13 @@ export function useGalleryContext(
             height: 500,
           };
     } else {
-      dimensions.width = !showSide
+      container.width = !showSide
         ? window.innerWidth
         : window.innerWidth - SIDEBAR_WIDTH;
-      dimensions.height = window.innerHeight;
+      container.height = window.innerHeight;
     }
 
-    return dimensions;
+    return container;
   };
 
   const res = {
@@ -182,7 +188,7 @@ export function useGalleryContext(
     preset: context.preset,
     setPreset,
     styleParams: addPresetStyles(
-      context.styleParams || getInitialStyleParams()
+      context.styleParams || flatToNested(getInitialStyleParams())
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setStyleParams,
     items: context.items,
@@ -193,8 +199,8 @@ export function useGalleryContext(
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
-    dimensions: context.dimensions || calcGalleryDimensions(),
-    setDimensions,
+    container: context.container || calcGalleryContainer(),
+    setContainer,
     getBlueprintFromServer,
   };
 

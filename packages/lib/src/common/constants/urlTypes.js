@@ -15,6 +15,5 @@ export const URL_SIZES = {
 export const URL_TYPES = {
   HIGH_RES: 'img',
   LOW_RES: 'thumb',
-  SEO: 'seoLink',
   VIDEO: 'video',
 };

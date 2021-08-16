@@ -38,20 +38,20 @@ class CssScrollHelper {
     return `pgi${shortId}_${idx}`;
   }
 
-  buildScrollClassName(domId, idx, val) {
-    const shortId = String(domId).replace(/[\W]+/g, '').slice(-8);
+  buildScrollClassName(id, idx, val) {
+    const shortId = String(id).replace(/[\W]+/g, '').slice(-8);
     return `${this.pgScrollClassName}_${shortId}_${val}-${
       this.pgScrollSteps[idx] + Number(val)
     }`;
   }
 
-  calcScrollClasses(domId, scrollTop) {
+  calcScrollClasses(id, scrollTop) {
     return (
       `${this.pgScrollClassName}-${scrollTop} ` +
       this.pgScrollSteps
         .map((step, idx) =>
           this.buildScrollClassName(
-            domId,
+            id,
             idx,
             Math.floor(scrollTop / step) * step
           )
@@ -60,7 +60,7 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams, container }) {
+  calcScrollCss({ id, items, styleParams, container }) {
     utils.isVerbose() && console.time('CSS Scroll');
     if (!(items && items.length)) {
       return [];
@@ -72,10 +72,18 @@ class CssScrollHelper {
     ) {
       return [];
     }
-    this.screenSize = styleParams.oneRow
-      ? Math.min(window.outerWidth, window.screen.width, container.galleryWidth)
-      : Math.min(window.outerHeight, window.screen.height);
-    if (!styleParams.oneRow && utils.isMobile()) {
+    this.screenSize =
+      styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? Math.min(
+            window.outerWidth,
+            window.screen.width,
+            container.galleryWidth
+          )
+        : Math.min(window.outerHeight, window.screen.height);
+    if (
+      styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
+      utils.isMobile()
+    ) {
       this.screenSize += 50;
     }
     this.calcScrollPaddings();
@@ -86,13 +94,18 @@ class CssScrollHelper {
     this.minHeight = 0 - maxStep;
     this.maxHeight =
       (Math.ceil(
-        ((styleParams.oneRow ? right : top) + this.screenSize) / maxStep
+        ((styleParams.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? right
+          : top) +
+          this.screenSize) /
+          maxStep
       ) +
         1) *
       maxStep;
 
     const cssScroll = items.map((item) =>
-      this.calcScrollCssForItem({ domId, item, styleParams })
+      this.calcScrollCssForItem({ id, item, styleParams })
     );
     utils.isVerbose() && console.timeEnd('CSS Scroll');
 
@@ -106,13 +119,15 @@ class CssScrollHelper {
     return true;
   }
 
-  createScrollSelectorsFunction({ domId, item, styleParams }) {
-    const imageTop = styleParams.oneRow
-      ? item.offset.left - this.screenSize
-      : item.offset.top - this.screenSize;
-    const imageBottom = styleParams.oneRow
-      ? item.offset.left + item.width
-      : item.offset.top + item.height;
+  createScrollSelectorsFunction({ id, item, styleParams }) {
+    const imageTop =
+      styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? item.offset.left - this.screenSize
+        : item.offset.top - this.screenSize;
+    const imageBottom =
+      styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? item.offset.left + item.width
+        : item.offset.top + item.height;
     const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
     const ceil = (num, step) =>
       Math.ceil(Math.min(this.maxHeight, num) / step) * step;
@@ -122,7 +137,7 @@ class CssScrollHelper {
     return (padding, suffix) => {
       const [before, after] = padding;
       if (before === Infinity && after === Infinity) {
-        return `#pro-gallery-${domId} #${sellectorDomId} ${suffix}`;
+        return `#pro-gallery-${id} #${sellectorDomId} ${suffix}`;
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
@@ -149,7 +164,7 @@ class CssScrollHelper {
         }
         scrollClasses.push(
           `.${this.buildScrollClassName(
-            domId,
+            id,
             largestDividerIdx,
             from
           )} ~ div #${sellectorDomId} ${suffix}`
@@ -161,11 +176,11 @@ class CssScrollHelper {
     };
   }
 
-  calcScrollCssForItem({ domId, item, styleParams }) {
+  calcScrollCssForItem({ id, item, styleParams }) {
     const { idx } = item;
     let scrollCss = '';
     const createScrollSelectors = this.createScrollSelectorsFunction({
-      domId,
+      id,
       item,
       styleParams,
     });
@@ -193,7 +208,7 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
-    const { isRTL, oneRow, scrollAnimation } = styleParams;
+    const { isRTL, scrollDirection, scrollAnimation } = styleParams;
 
     if (
       !scrollAnimation ||
@@ -258,7 +273,10 @@ class CssScrollHelper {
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SLIDE_UP) {
-      const axis = oneRow ? 'X' : 'Y';
+      const axis =
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? 'X'
+          : 'Y';
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +

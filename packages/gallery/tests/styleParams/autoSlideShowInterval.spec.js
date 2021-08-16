@@ -14,7 +14,7 @@ describe('styleParam - autoSlideShowInterval', () => {
     driver = new GalleryDriver();
     initialProps = driver.props.galleryView();
     Object.assign(initialProps.styleParams, {
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -26,6 +26,7 @@ describe('styleParam - autoSlideShowInterval', () => {
     Object.assign(initialProps.styleParams, {
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
       galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);

@@ -1,4 +1,4 @@
-import { utils } from 'pro-gallery-lib';
+import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
@@ -13,8 +13,8 @@ describe('Gallery View', () => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
     Object.assign(initialGalleryViewProps.styleParams, {
-      oneRow: false,
-      styleParams: { imageMargin: 10, galleryMargin: 5 },
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      styleParams: { imageMargin: 10, layoutParams: { gallerySpacing: 5 } },
     });
   });
 
@@ -82,7 +82,7 @@ describe('Gallery View', () => {
       const stub_findNeighborItem = sinon
         .stub(driver.get.props().galleryStructure, 'findNeighborItem')
         .returns(3);
-      const result = driver.get.instance().handleArrowKeys({
+      const result = driver.get.instance().handleKeys({
         keyCode: 38,
         charCode: null,
         preventDefault() {},
@@ -106,7 +106,7 @@ describe('Gallery View', () => {
       const stub_findNeighborItem = sinon
         .stub(driver.get.props().galleryStructure, 'findNeighborItem')
         .returns(16);
-      const result = driver.get.instance().handleArrowKeys({
+      const result = driver.get.instance().handleKeys({
         keyCode: 37,
         charCode: null,
         preventDefault() {},
@@ -130,7 +130,7 @@ describe('Gallery View', () => {
       const stub_findNeighborItem = sinon
         .stub(driver.get.props().galleryStructure, 'findNeighborItem')
         .returns(10);
-      const result = driver.get.instance().handleArrowKeys({
+      const result = driver.get.instance().handleKeys({
         keyCode: 40,
         charCode: null,
         preventDefault() {},
@@ -154,7 +154,7 @@ describe('Gallery View', () => {
       const stub_findNeighborItem = sinon
         .stub(driver.get.props().galleryStructure, 'findNeighborItem')
         .returns(3);
-      const result = driver.get.instance().handleArrowKeys({
+      const result = driver.get.instance().handleKeys({
         keyCode: null,
         charCode: 39,
         preventDefault() {},
@@ -177,7 +177,7 @@ describe('Gallery View', () => {
       const stub_findNeighborItem = sinon
         .stub(driver.get.props().galleryStructure, 'findNeighborItem')
         .returns(3);
-      const result = driver.get.instance().handleArrowKeys({
+      const result = driver.get.instance().handleKeys({
         keyCode: null,
         charCode: 2,
         preventDefault() {},

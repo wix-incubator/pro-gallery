@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customRenderers,
+  customComponents,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - textBoxBorderRadius', () => {
@@ -14,7 +14,7 @@ describe('styleParam - textBoxBorderRadius', () => {
     container,
     items: images2,
     styles: styleParams,
-    ...customRenderers,
+    customComponents,
   };
   beforeEach(() => {
     driver = new GalleryDriver();
@@ -25,7 +25,6 @@ describe('styleParam - textBoxBorderRadius', () => {
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
       textBoxBorderRadius: 10,
     });
     driver.mount.proGallery(initialProps);
@@ -44,7 +43,6 @@ describe('styleParam - textBoxBorderRadius', () => {
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      oneRow: false,
       textBoxBorderWidth: 10,
     });
     driver.mount.proGallery(initialProps);

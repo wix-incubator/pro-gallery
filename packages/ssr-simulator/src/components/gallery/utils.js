@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 
 export const defaultStyleParams = {
+  layoutParams: { gallerySpacing: 0 },
   isRTL: false,
   isVertical: 0,
   gallerySize: 30,
@@ -12,22 +13,20 @@ export const defaultStyleParams = {
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingCubeRatio: '',
+  rotatingCropRatio: '',
   galleryImageRatioFromWix: 1, //galleryImageRatio translates to galleryImageRatioFromWix
   fixedColumns: 0,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 1,
   groupsPerStrip: 0,
   imageMargin: 10,
-  galleryMargin: 0,
   scatter: 0,
   rotatingScatter: '',
   gridStyle: 0,
   placeGroupsLtr: false,
-  oneRow: false,
   showArrows: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
@@ -49,11 +48,12 @@ export const defaultStyleParams = {
   fullscreen: true,
   videoPlay: Consts.videoPlay.HOVER,
   scrollAnimation: Consts.scrollAnimations.NO_EFFECT,
-  scrollDirection: 0,
+  scrollDirection: Consts.scrollDirection.VERTICAL,
   overlayAnimation: Consts.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
   arrowsVerticalPosition: Consts.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
+  arrowsPadding: 23,
   loadMoreAmount: Consts.loadMoreAmount.ALL,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5

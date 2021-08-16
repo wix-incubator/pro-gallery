@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { window, utils } from 'pro-gallery-lib';
+import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { GalleryComponent } from '../../galleryComponent';
@@ -8,7 +8,7 @@ import { GalleryComponent } from '../../galleryComponent';
 class GalleryView extends GalleryComponent {
   constructor(props) {
     super(props);
-    this.handleArrowKeys = this.handleArrowKeys.bind(this);
+    this.handleKeys = this.handleKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
@@ -17,11 +17,11 @@ class GalleryView extends GalleryComponent {
     this.id = Date.now() + '|' + Math.floor(Math.random() * 10000);
 
     this.state = {
-      currentIdx: 0,
+      activeIndex: 0,
     };
   }
 
-  handleArrowKeys(e) {
+  handleKeys(e) {
     const activeItemIdx =
       window.document.activeElement.getAttribute('data-idx');
 
@@ -47,6 +47,13 @@ class GalleryView extends GalleryComponent {
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
+          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.activeIndex){
+            // If we are on the last item in the gallery and we pressed the down arrow
+            // we want to move the focus to the out0fGallery element
+            e.stopPropagation();
+            utils.focusGalleryElement(this.props.outOfViewComponent)
+            return false;
+          }
           break;
         case 39: //right
           newIdx = findNeighborItem(
@@ -54,6 +61,10 @@ class GalleryView extends GalleryComponent {
             this.props.styleParams.isRTL ? 'left' : 'right'
           );
           break;
+        case 27: //esc
+          e.stopPropagation();
+          utils.focusGalleryElement(this.props.galleryContainerRef);
+          return false;
       }
 
       //if nextIdx is below the lastVisibleItemIdx (higher idx), we will ignore the findNeighborItem answer and stay on the same item
@@ -65,7 +76,7 @@ class GalleryView extends GalleryComponent {
         e.preventDefault();
         e.stopPropagation();
         utils.setStateAndLog(this, 'Set Gallery Current Item', {
-          currentIdx: newIdx,
+          activeIndex: newIdx,
         });
         return false;
       }
@@ -101,7 +112,7 @@ class GalleryView extends GalleryComponent {
           this,
           'Focus on Last Gallery Item',
           {
-            currentIdx: lastItemIdx + 1,
+            activeIndex: lastItemIdx + 1,
           },
           () => {
             this.props.actions.toggleLoadMoreItems();
@@ -117,7 +128,6 @@ class GalleryView extends GalleryComponent {
 
   createGallery(showMore) {
     const {
-      itemsLoveData,
       styleParams,
       container,
       galleryStructure,
@@ -142,7 +152,6 @@ class GalleryView extends GalleryComponent {
         itemView,
         item.renderProps({
           ...galleryConfig,
-          ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
         })
@@ -154,7 +163,10 @@ class GalleryView extends GalleryComponent {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles ' +
-          (styleParams.oneRow ? ' one-row slider hide-scrollbars ' : '') +
+          (styleParams.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.HORIZONTAL
+            ? ' one-row slider hide-scrollbars '
+            : '') +
           (styleParams.isAccessible ? ' accessible ' : '') +
           (styleParams.isRTL ? ' rtl ' : ' ltr ')
         }
@@ -163,12 +175,12 @@ class GalleryView extends GalleryComponent {
           overflowX: 'hidden',
           //  width: this.props.container.galleryWidth,
         }}
-        onKeyDown={this.handleArrowKeys}
+        onKeyDown={this.handleKeys}
       >
         <div
           id="pro-gallery-margin-container"
           style={{
-            margin: styleParams.galleryMargin + 'px',
+            margin: styleParams.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
             width: this.props.container.galleryWidth - styleParams.imageMargin,
             overflow: 'visible',
@@ -188,17 +200,16 @@ class GalleryView extends GalleryComponent {
       scroll: this.props.scroll,
       container: this.props.container,
       styleParams: this.props.styleParams,
-      watermark: this.props.watermark,
       settings: this.props.settings,
-      currentIdx: this.state.currentIdx,
-      customHoverRenderer: this.props.customHoverRenderer,
-      customInfoRenderer: this.props.customInfoRenderer,
-      domId: this.props.domId,
+      activeIndex: this.state.activeIndex,
+      customComponents: this.props.customComponents,
+      galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
+      enableExperimentalFeatures: this.props.enableExperimentalFeatures,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },
@@ -220,10 +231,10 @@ class GalleryView extends GalleryComponent {
   }
 
   createShowMoreButton() {
-    if (typeof this.props.customLoadMoreRenderer === 'function') {
+    if (typeof this.props.customComponents.customLoadMoreRenderer === 'function') {
       return (
         <div onClick={this.showMoreItems}>
-          {this.props.customLoadMoreRenderer(this.props)}
+          {this.props.customComponents.customLoadMoreRenderer(this.props)}
         </div>
       );
     }
@@ -245,7 +256,7 @@ class GalleryView extends GalleryComponent {
         >
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
-            id={'show-more-' + this.props.domId}
+            id={'show-more-' + this.props.id}
             className="show-more"
             onClick={this.showMoreItems}
             onMouseDown={(e) => e.preventDefault()}
@@ -296,8 +307,10 @@ class GalleryView extends GalleryComponent {
       <div
         className={'pro-gallery-parent-container'}
         key={`pro-gallery-${this.id}`}
-        role="region"
-        aria-label={this.props.proGalleryRegionLabel}
+        {...utils.getAriaAttributes({
+          proGalleryRole: this.props.proGalleryRole,
+          proGalleryRegionLabel: this.props.proGalleryRegionLabel
+        })}
       >
         {screenLogs}
         {gallery}

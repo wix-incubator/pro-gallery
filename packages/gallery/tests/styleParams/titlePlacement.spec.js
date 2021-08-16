@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
   container,
-  customRenderers,
+  customComponents,
 } from '../drivers/mocks/styles';
 
 describe('styleParam - titlePlacement', () => {
@@ -14,7 +14,7 @@ describe('styleParam - titlePlacement', () => {
     container,
     items: images2,
     styles: styleParams,
-    ...customRenderers,
+    customComponents,
   };
 
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe('styleParam - titlePlacement', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     });
     driver.mount.proGallery(initialProps);
@@ -38,7 +38,7 @@ describe('styleParam - titlePlacement', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     driver.mount.proGallery(initialProps);
@@ -51,7 +51,7 @@ describe('styleParam - titlePlacement', () => {
     Object.assign(initialProps.styles, {
       galleryLayout: 2,
       onRow: false,
-      scrollDirection: 0,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
     });
     driver.mount.proGallery(initialProps);
