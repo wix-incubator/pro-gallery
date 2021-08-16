@@ -88,6 +88,10 @@ class galleryDriver {
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
       enableVideoPlaceholder: true,
+      overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
+      overlaySize: 100,
+      overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
+      overlayPadding: 0,
     };
 
     this.scroll = {
