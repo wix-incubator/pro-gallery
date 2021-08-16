@@ -12,6 +12,12 @@ const gridFitWithPosition = (position) => {
   };
 };
 
+const expectGalleryToMatchSnapshot = async (driver) => {
+  await driver.waitFor.hookToBeVisible('item-container');
+  const page = await driver.grab.elemScreenshot('.pro-gallery');
+  expect(page).toMatchImageSnapshot();
+};
+
 describe('cubeFitPosition - e2e', () => {
   let driver;
   const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } = GALLERY_CONSTS.cubeFitPosition;
@@ -25,32 +31,22 @@ describe('cubeFitPosition - e2e', () => {
   });
   it('should align to the middle', async () => {
     await driver.navigate(gridFitWithPosition(MIDDLE));
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the left', async () => {
     await driver.navigate(gridFitWithPosition(LEFT));
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the right', async () => {
     await driver.navigate(gridFitWithPosition(RIGHT));
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the top', async () => {
     await driver.navigate(gridFitWithPosition(TOP));
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the bottom', async () => {
     await driver.navigate(gridFitWithPosition(BOTTOM));
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    expectGalleryToMatchSnapshot(driver);
   });
 });
