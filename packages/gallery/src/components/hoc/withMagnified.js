@@ -179,27 +179,26 @@ function withMagnified(WrappedComponent) {
       const { x, y, shouldMagnify } = this.state;
       const { style } = this.props;
       const { magnifiedWidth, magnifiedHeight } = style;
-
-      const magnifiedStyles = {
-        zIndex: 1000,
-        position: 'relative',
-        cursor: 'grab',
-        width: magnifiedWidth,
-        height: magnifiedHeight,
-      };
-
-      if (this.isMagnifiedBiggerThanContainer(style)) {
-        Object.assign(magnifiedStyles, {
-          transform: `translate(${-x}px, ${-y}px)`,
-        });
-      } else {
-        Object.assign(magnifiedStyles, {
-          transform: `translate(-50%, -50%)`,
-          top: '50%',
-          left: '50%',
-        });
-      }
       if (shouldMagnify) {
+        const magnifiedStyles = {
+          zIndex: 1000,
+          position: 'relative',
+          cursor: 'grab',
+          width: magnifiedWidth,
+          height: magnifiedHeight,
+        };
+
+        if (this.isMagnifiedBiggerThanContainer(style)) {
+          Object.assign(magnifiedStyles, {
+            transform: `translate(${-x}px, ${-y}px)`,
+          });
+        } else {
+          Object.assign(magnifiedStyles, {
+            transform: `translate(-50%, -50%)`,
+            top: '50%',
+            left: '50%',
+          });
+        }
         return magnifiedStyles;
       } else {
         return {
