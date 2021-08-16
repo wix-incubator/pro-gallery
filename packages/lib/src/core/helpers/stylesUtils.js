@@ -45,9 +45,7 @@ function flatToNested(ob) {
 }
 
 function mergeNestedObjects(...args) {
-  let res = {};
-  args.forEach((obj) => (res = Object.assign(res, flattenObject(obj))));
-  return flatToNested(res);
+  return flatToNested(Object.assign({}, ...args.map(flattenObject)));
 }
 
 export { flattenObject, assignByString, flatToNested, mergeNestedObjects };
