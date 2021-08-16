@@ -4,9 +4,17 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
+const gridFitWithPosition = (position) => {
+  return {
+    galleryLayout: GALLERY_CONSTS.layout.GRID,
+    cubeType: GALLERY_CONSTS.cubeType.FIT,
+    cubeFitPosition: position,
+  };
+};
+
 describe('cubeFitPosition - e2e', () => {
   let driver;
-
+  const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } = GALLERY_CONSTS.cubeFitPosition;
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();
@@ -16,51 +24,31 @@ describe('cubeFitPosition - e2e', () => {
     await driver.closePage();
   });
   it('should align to the middle', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
-      cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
-    });
+    await driver.navigate(gridFitWithPosition(MIDDLE));
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should align to the left', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
-      cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.LEFT,
-    });
+    await driver.navigate(gridFitWithPosition(LEFT));
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should align to the right', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
-      cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.RIGHT,
-    });
+    await driver.navigate(gridFitWithPosition(RIGHT));
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should align to the top', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
-      cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.TOP,
-    });
+    await driver.navigate(gridFitWithPosition(TOP));
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should align to the bottom', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
-      cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.BOTTOM,
-    });
+    await driver.navigate(gridFitWithPosition(BOTTOM));
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
