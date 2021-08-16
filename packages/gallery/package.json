@@ -41,7 +41,7 @@
     "@vimeo/player": "2.8.2",
     "ajv": "^8.6.0",
     "hls.js": "^0.14.12",
-    "pro-gallery-blueprints": "^4.0.15-fff79b1c42fb9cc0ce0823b0585800f77c92f52e.0",
+    "pro-gallery-blueprints": "^4.0.15-beta.76",
     "pro-gallery-lib": "^4.0.15-beta.76",
     "pro-layouts": "^4.0.15-beta.76",
     "react-player": "^2.6.2"
