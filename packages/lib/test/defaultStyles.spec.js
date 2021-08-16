@@ -8,7 +8,7 @@ describe('defaultStyles', () => {
     expect(_.isEqual(actual, expectedStyles())).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expectedStyles()).length);
-    expect(actualLength).eq(93);
+    expect(actualLength).eq(97);
   });
 });
 
