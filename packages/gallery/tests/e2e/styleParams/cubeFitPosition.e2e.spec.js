@@ -31,22 +31,22 @@ describe('cubeFitPosition - e2e', () => {
   });
   it('should align to the middle', async () => {
     await driver.navigate(gridFitWithPosition(MIDDLE));
-    expectGalleryToMatchSnapshot(driver);
+    await expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the left', async () => {
     await driver.navigate(gridFitWithPosition(LEFT));
-    expectGalleryToMatchSnapshot(driver);
+    await expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the right', async () => {
     await driver.navigate(gridFitWithPosition(RIGHT));
-    expectGalleryToMatchSnapshot(driver);
+    await expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the top', async () => {
     await driver.navigate(gridFitWithPosition(TOP));
-    expectGalleryToMatchSnapshot(driver);
+    await expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the bottom', async () => {
     await driver.navigate(gridFitWithPosition(BOTTOM));
-    expectGalleryToMatchSnapshot(driver);
+    await expectGalleryToMatchSnapshot(driver);
   });
 });
