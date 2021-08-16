@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import _ from 'lodash';
 import defaultStyles from '../src/common/defaultStyles';
+import GALLERY_CONSTS from '../src/common/constants';
 
 describe('defaultStyles', () => {
   it('should return the expected styles unchanged', () => {
@@ -8,7 +9,7 @@ describe('defaultStyles', () => {
     expect(_.isEqual(actual, expectedStyles())).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expectedStyles()).length);
-    expect(actualLength).eq(93);
+    expect(actualLength).eq(94);
   });
 });
 
@@ -105,7 +106,7 @@ function expectedStyles() {
     shouldIndexDirectShareLinkInSEO: true,
     slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
     useMaxDimensions: false,
-    cubeFitPosition: 'MIDDLE',
+    cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
     enableVideoPlaceholder: true,
     autoSlideshowType: 'interval',
     autoSlideshowContinuousSpeed: 200,
