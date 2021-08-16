@@ -26,6 +26,7 @@ describe('styleParam - textBoxBorderColor', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderColor: { value: 'rgba(0,0,0,0)' },
+      itemBorderWidth: 1,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -33,7 +34,7 @@ describe('styleParam - textBoxBorderColor', () => {
       .selector('.gallery-item-bottom-info')
       .at(0)
       .parent();
-    expect(textsStyles.props().style.borderColor).to.eq('rgba(0,0,0,0)');
+    expect(textsStyles.props().style.borderColor).to.be.undefined();
     driver.detach.proGallery();
   });
   it('should not set border-color to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {

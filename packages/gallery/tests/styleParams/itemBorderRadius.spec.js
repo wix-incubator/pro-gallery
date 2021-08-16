@@ -53,7 +53,7 @@ describe('styleParam - itemBorderRadius', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.borderRadius).to.eq(0);
+    expect(item.props().style.borderRadius).to.be.undefined();
     driver.detach.proGallery();
   });
 });
