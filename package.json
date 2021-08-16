@@ -21,14 +21,7 @@
     "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-integration'",
     "ci:test-e2e-ssr": "start-server-and-test ci:run-ssr http-get://localhost:3001 'lerna run test:e2e-ssr'",
     "build-all-and-start-playground": "npm run start-playground",
-    "build-all-and-start-ssr-simulator": "npm run start-ssr-simulator",
-    "precommit:layouts": "cd packages/layouts && npm run lint:fix",
-    "precommit:lib": "cd packages/lib && npm run lint:fix",
-    "precommit:gallery": "cd packages/gallery && npm run lint:fix",
-    "precommit:blueprints": "cd packages/blueprints && npm run lint:fix",
-    "precommit:playground": "cd packages/playground && npm run lint:fix",
-    "precommit:ssr-simulator": "cd packages/ssr-simulator && npm run lint:fix",
-    "precommit:lean-gallery": "cd packages/lean-gallery && npm run lint:fix"
+    "build-all-and-start-ssr-simulator": "npm run start-ssr-simulator"
   },
   "deprecated": {
     "test:all": "npm run test && npm run test:e2e",
@@ -55,12 +48,7 @@
     }
   },
   "lint-staged": {
-    "packages/layouts/{src,test}/**/*.{js,ts}": "npm run precommit:layouts",
-    "packages/lib/{src,test}/**/*.{js,ts}": "npm run precommit:lib",
-    "packages/gallery/{src,tests}/**/*.{js,ts,tsx}": "npm run precommit:gallery",
-    "packages/playground/src/**/*.{js,ts}": "npm run precommit:playground",
-    "packages/ssr-simulator/src/**/*.{js,ts}": "npm run precommit:ssr-simulator",
-    "packages/lean-gallery/src/**/*.{js,ts}": "npm run precommit:lean-gallery"
+    "packages/*/{src,tests}/**/*.{js,jsx,ts,tsx}": "eslint --fix --"
   },
   "repository": {
     "type": "git",
