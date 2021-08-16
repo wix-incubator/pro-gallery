@@ -5,7 +5,6 @@ import ImageRenderer from '../item/imageRenderer';
 function withMagnified(WrappedComponent) {
   return class extends Component {
     constructor(props) {
-      console.log(props);
       super(props);
       this.onMouseMove = this.onMouseMove.bind(this);
       this.onMouseDown = this.onMouseDown.bind(this);
@@ -206,6 +205,7 @@ function withMagnified(WrappedComponent) {
         return {
           width: '100%',
           height: '100%',
+          cursor: 'crosshair',
         };
       }
     }
