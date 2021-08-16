@@ -50,7 +50,7 @@ describe('styleParam - itemBorderWidth', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.borderWidth).to.be.undefined();
+    expect(item.props().style.borderWidth).to.be.undefined;
     driver.detach.proGallery();
   });
 });

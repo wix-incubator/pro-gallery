@@ -34,7 +34,7 @@ describe('styleParam - textBoxBorderColor', () => {
       .selector('.gallery-item-bottom-info')
       .at(0)
       .parent();
-    expect(textsStyles.props().style.borderColor).to.be.undefined();
+    expect(textsStyles.props().style.borderColor).to.be.undefined;
     driver.detach.proGallery();
   });
   it('should not set border-color to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
