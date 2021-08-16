@@ -157,7 +157,9 @@ class galleryDriver {
 
   get mount() {
     const res = (Component, props) => {
-      this.wrapper = mount(<Component {...props} />);
+      this.wrapper = mount(
+        <Component styleParams={this.styleParams} {...props} />
+      );
       return this;
     };
     res.galleryContainer = (props) => {
