@@ -48,7 +48,7 @@
     }
   },
   "lint-staged": {
-    "packages/*/{src,tests}/**/*.{js,jsx,ts,tsx}": "eslint --fix --"
+    "packages/**/*.{js,jsx,ts,tsx}": "eslint --fix --"
   },
   "repository": {
     "type": "git",
