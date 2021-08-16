@@ -59,6 +59,10 @@ const coreStyles = {
   autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
   autoSlideshowContinuousSpeed: 200,
   //duplicated from lib
+  overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
+  overlaySize: 100,
+  overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
+  overlayPadding: 0,
 };
 
 export default coreStyles;
