@@ -1,6 +1,8 @@
 const path = require('path');
+var browserify = require('browserify');
+// import browserify from 'browserify'
 const fs = require('fs');
-const { execSync } = require('child_process');
+// const { execSync } = require('child_process');
 
 // const { transformSync } =require("@babel/core")
 const Ajv = require('ajv');
@@ -25,9 +27,14 @@ function writeES5StandaloneValidateMethod() {
   // fs.writeFileSync(standaloneValidateCodePath, `module.exports=${moduleCode}`)
   // const browserifyBundle = path.join(typeValidatorDir,'/browserify.js')
   const browserifyBundle = standaloneValidateCodePath;
-  execSync(
-    `node node_modules/.bin/browserify -t [ babelify --presets [ @babel/preset-env ] ] --standalone nirnaor ${tempFilePath} > ${browserifyBundle}`
-  );
+  browserify(tempFilePath, { standalone: 'nirnaor' })
+    .transform('babelify', { global: true, presets: ['@babel/preset-env'] })
+    .bundle()
+    .pipe(fs.createWriteStream(browserifyBundle));
+
+  // execSync(
+  //   `node node_modules/.bin/browserify -t [ babelify --presets [ @babel/preset-env ] ] --standalone nirnaor ${tempFilePath} > ${browserifyBundle}`
+  // );
   // fs.writeFileSync(standaloneValidateCodePath, moduleCode, {encoding: 'utf-8'})
 }
 
