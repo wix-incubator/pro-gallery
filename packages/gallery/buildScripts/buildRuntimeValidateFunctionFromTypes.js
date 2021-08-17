@@ -1,5 +1,6 @@
 const path = require('path');
-const browserify = require('browserify');
+// const browserify = require('browserify');
+import browserify from 'browserify';
 const fs = require('fs');
 const Ajv = require('ajv');
 
@@ -26,6 +27,8 @@ function writeES5StandaloneValidateMethod() {
     .transform('babelify', { global: true, presets: ['@babel/preset-env'] })
     .bundle()
     .pipe(fs.createWriteStream(browserifyBundle));
+
+  fs.rmSync(tempFilePath);
 }
 
 function buildValidationFunction(schema) {
