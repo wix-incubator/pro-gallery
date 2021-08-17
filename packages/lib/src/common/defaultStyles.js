@@ -42,6 +42,10 @@ const defaultStyles = Object.assign({}, coreStyles, {
   slideTransition: GALLERY_CONSTS.slideTransition.ease,
   useMaxDimensions: false,
   enableVideoPlaceholder: true,
+  overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
+  overlaySize: 100,
+  overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
+  overlayPadding: 0,
 });
 
 export default defaultStyles;

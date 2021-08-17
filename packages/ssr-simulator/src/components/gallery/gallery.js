@@ -133,7 +133,6 @@ export default class Gallery extends React.PureComponent {
           isPrerenderMode={true}
           eventsListener={eventsListener}
           createMediaUrl={createMediaUrl}
-          useBlueprints={true}
         />
       </div>
     );
