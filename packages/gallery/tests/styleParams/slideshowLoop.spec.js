@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
@@ -16,11 +17,11 @@ describe('styleParam - slideshowLoop', () => {
     driver = new GalleryDriver();
   });
   it('should be able to to click next when reached last item', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowLoop: true,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     driver.find.hook('nav-arrow-next').simulate('click');
     await driver.update(500);
@@ -28,11 +29,11 @@ describe('styleParam - slideshowLoop', () => {
     driver.detach.proGallery();
   });
   it('should not be able to to click next', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowLoop: false,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     driver.find.hook('nav-arrow-next').simulate('click');
     await driver.update(500);

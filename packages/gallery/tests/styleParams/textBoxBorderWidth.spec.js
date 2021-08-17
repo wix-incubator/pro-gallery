@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
@@ -22,14 +23,14 @@ describe('styleParam - textBoxBorderWidth', () => {
   });
 
   it('should set border-width to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 10,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const textsStyles = driver.find
       .selector('.gallery-item-bottom-info')
@@ -39,14 +40,14 @@ describe('styleParam - textBoxBorderWidth', () => {
     driver.detach.proGallery();
   });
   it('should not set border-width to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 10,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const textsStyles = driver.find
       .selector('.gallery-item-bottom-info')

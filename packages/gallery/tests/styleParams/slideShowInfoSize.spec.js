@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
@@ -15,11 +16,11 @@ describe('styleParam - slideshowInfoSize', () => {
     driver = new GalleryDriver();
   });
   it('should set style for "slideshowInfoSize=250"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 250,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const infoContainer = driver.find.selector('.gallery-slideshow-info').at(0);
     const infoStyleMock = {
@@ -31,12 +32,12 @@ describe('styleParam - slideshowInfoSize', () => {
     driver.detach.proGallery();
   });
   it('should set the right height for the gallery', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 250,
       isSlideshow: true,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { height } = galleryContainer.props().style;

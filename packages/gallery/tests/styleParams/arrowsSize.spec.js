@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
@@ -17,11 +18,11 @@ describe('styleParam - arrowsSize', () => {
   });
 
   it('should set the correct arrowsSize', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsSize: 50,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const arrowImage = driver.find.selector('.nav-arrows-container svg');
     const { transform } = arrowImage.props().style;
@@ -30,12 +31,12 @@ describe('styleParam - arrowsSize', () => {
     driver.detach.proGallery();
   });
   it('should set the position of arrows according to arrowsSize', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsSize: 50,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const arrowContainer = driver.find.selector('.nav-arrows-container');
     const { right } = arrowContainer.props().style;

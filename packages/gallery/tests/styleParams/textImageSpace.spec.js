@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
@@ -22,14 +23,14 @@ describe('styleParam - textImageSpace', () => {
   });
 
   it('should set spacing between the image and the texts (texts below items and separated background)', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const item = driver.find
       .selector('.gallery-item-bottom-info')
@@ -40,14 +41,14 @@ describe('styleParam - textImageSpace', () => {
     driver.detach.proGallery();
   });
   it('should set spacing between the image and the texts (texts above items and separated background)', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       textImageSpace: 20,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const item = driver.find.selector('.gallery-item-top-info').at(0).parent();
     // expect marginBottom to equal textImageSpace value.
@@ -55,14 +56,14 @@ describe('styleParam - textImageSpace', () => {
     driver.detach.proGallery();
   });
   it('should not set when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       textImageSpace: 20,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const item = driver.find.selector('.gallery-item-top-info').at(0).parent();
     // expect marginBottom to be undefined.

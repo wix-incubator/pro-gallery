@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2, textItems } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
@@ -17,36 +18,36 @@ describe('styleParam - cubeType', () => {
   });
 
   it('should set class "cube-type-fit" to "item-wrapper"(hook) when "cubeType" is "fit"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const items = driver.find.selector('.cube-type-fit');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should set class "cube-type-fill" to "item-wrapper"(hook) when "cubeType" is "fill"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const items = driver.find.selector('.cube-type-fill');
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should set class "grid-fit" to "image-item"(hook) when "cubeType" is "fit"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const items = driver.find.selector('.grid-fit');
     expect(items.length).to.be.greaterThan(0);
@@ -54,12 +55,12 @@ describe('styleParam - cubeType', () => {
   });
   it('should set "backgroundColor" to "transparent" on text items when "cubeType" is "fill"', async () => {
     initialProps.items = textItems;
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const textItem = driver.find.hook('item-wrapper').at(0);
     const { backgroundColor } = textItem.props().style;
@@ -68,12 +69,12 @@ describe('styleParam - cubeType', () => {
   });
   it('should set "backgroundColor" to "inherit" on text items when "cubeType" is "fit"', async () => {
     initialProps.items = textItems;
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const textItem = driver.find.hook('item-wrapper').at(0);
     const { backgroundColor } = textItem.props().style;

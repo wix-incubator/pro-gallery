@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
@@ -22,13 +23,13 @@ describe('styleParam - textBoxHeight', () => {
   });
 
   it('should set "textBoxHeight" of "250"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       textBoxHeight: 250,
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const textBox = driver.find.selector('.gallery-item-common-info').at(0);
     const { height } = textBox.props().style;

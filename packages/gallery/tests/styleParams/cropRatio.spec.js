@@ -1,5 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
@@ -17,14 +18,14 @@ describe('styleParam - cropRatio', () => {
   });
 
   it('should set cube ratio of 1', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       layoutParams: {
         cropRatio: 1,
       },
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { width, height } = getElementDimensions(item);
@@ -33,14 +34,14 @@ describe('styleParam - cropRatio', () => {
     driver.detach.proGallery();
   });
   it('should set cube ratio of 2', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       layoutParams: {
         cropRatio: 2,
       },
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { width, height } = getElementDimensions(item);
@@ -49,14 +50,14 @@ describe('styleParam - cropRatio', () => {
     driver.detach.proGallery();
   });
   it('should not be able to set cube ratio when "cubeImages" is "false"', async () => {
-    Object.assign(initialProps.styles, {
+    const styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
       layoutParams: {
         cropRatio: 1,
       },
     });
-    driver.mount.proGallery(initialProps);
+    driver.mount.proGallery(styles);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { width, height } = getElementDimensions(item);
