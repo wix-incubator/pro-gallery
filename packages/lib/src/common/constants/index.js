@@ -48,6 +48,8 @@ import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import imagePlacementAnimations from './imagePlacementAnimations';
 import slideTransition from './slideTransition';
+import overlayPositions from './overlayPositions';
+import overlaySizeType from './overlaySizeType';
 import autoSlideshowTypes from './autoSlideshowTypes';
 import itemTypes from './itemTypes';
 
@@ -102,6 +104,8 @@ export default {
   viewMode,
   imagePlacementAnimations,
   slideTransition,
+  overlayPositions,
+  overlaySizeType,
   autoSlideshowTypes,
   itemTypes,
 };

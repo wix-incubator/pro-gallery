@@ -6,7 +6,7 @@ import cubeType from './cubeType';
 import cubeImages from './cubeImages';
 import cropRatio from './cropRatio';
 import titlePlacement from './titlePlacement';
-import galleryMargin from './galleryMargin';
+import layoutParams_gallerySpacing from './gallerySpacing';
 import isVertical from './isVertical';
 import numberOfImagesPerRow from './numberOfImagesPerRow';
 import numberOfImagesPerCol from './numberOfImagesPerCol';
@@ -90,6 +90,10 @@ import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
+import overlayPosition from './overlayPosition';
+import overlaySize from './overlaySize';
+import overlaySizeType from './overlaySizeType';
+import overlayPadding from './overlayPadding';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import magnifyPercent from './magnifyPerecent';
@@ -103,7 +107,7 @@ export default {
   cubeImages,
   cropRatio,
   titlePlacement,
-  galleryMargin,
+  layoutParams_gallerySpacing,
   isVertical,
   numberOfImagesPerRow,
   numberOfImagesPerCol,
@@ -187,6 +191,10 @@ export default {
   slideTransition,
   useMaxDimensions,
   enableVideoPlaceholder,
+  overlayPosition,
+  overlaySize,
+  overlaySizeType,
+  overlayPadding,
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
   magnifyPercent,

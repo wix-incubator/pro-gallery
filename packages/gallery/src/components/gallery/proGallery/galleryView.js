@@ -128,7 +128,6 @@ class GalleryView extends GalleryComponent {
 
   createGallery(showMore) {
     const {
-      itemsLoveData,
       styleParams,
       container,
       galleryStructure,
@@ -153,7 +152,6 @@ class GalleryView extends GalleryComponent {
         itemView,
         item.renderProps({
           ...galleryConfig,
-          ...itemsLoveData[item.id],
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
         })
@@ -182,7 +180,7 @@ class GalleryView extends GalleryComponent {
         <div
           id="pro-gallery-margin-container"
           style={{
-            margin: styleParams.galleryMargin + 'px',
+            margin: styleParams.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
             width: this.props.container.galleryWidth - styleParams.imageMargin,
             overflow: 'visible',
@@ -202,7 +200,6 @@ class GalleryView extends GalleryComponent {
       scroll: this.props.scroll,
       container: this.props.container,
       styleParams: this.props.styleParams,
-      watermark: this.props.watermark,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,

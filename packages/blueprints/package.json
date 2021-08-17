@@ -1,0 +1,50 @@
+{
+  "name": "pro-gallery-blueprints",
+  "version": "4.0.15-beta.81",
+  "publishScoped": false,
+  "private": false,
+  "author": {
+    "name": "Nir Naor",
+    "email": "nirna@wix.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/pro-gallery.git"
+  },
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "watch": "tsc -w",
+    "start": "tsc -w -p tsconfig-dev.json",
+    "build": "tsc && tsc -p tsconfig-esm.json",
+    "unit": "mocha --require ts-node/register test/*.spec.*",
+    "test": "echo 'no test in wix CI'",
+    "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "chai": "^4.2.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "lodash": "^4.17.21",
+    "mocha": "^8.2.1",
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0",
+    "tslib": "^2.1.0",
+    "typescript": "4.1.2"
+  },
+  "dependencies": {
+    "pro-gallery-lib": "^4.0.15-beta.81",
+    "pro-layouts": "^4.0.15-beta.81"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

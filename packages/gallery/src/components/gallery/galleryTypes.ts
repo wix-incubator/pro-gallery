@@ -4,19 +4,18 @@ import { EventsListener } from '../../common/interfaces/EventsListener';
 import { CreateMediaUrl } from '../../common/interfaces/CreateMediaUrl';
 import { CustomComponents } from '../../common/interfaces/CustomComponents';
 import { ScrollingElement } from '../../common/interfaces/ScrollingElement';
+import { Settings } from '../../common/interfaces/Settings';
+import { StyleParams } from './styles';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
 
-export interface Settings {
-  disableSSROpacity?: boolean;
-  avoidInlineStyles?: boolean;
-  imageProps?: (id: string) => { [key: string]: any };
-}
-
 export interface GalleryProps {
   container: Container;
   items: Item[];
+  styles?: StyleParams;
+  options?: StyleParams;
+  styleParams?: StyleParams;
   id?: string;
   totalItemsCount?: number;
   activeIndex?: number;
@@ -33,7 +32,6 @@ export interface GalleryProps {
   scrollingElement?: ScrollingElement;
   isInDisplay?: boolean;
   enableExperimentalFeatures?: boolean;
-  [key: string]: any;
 }
 
 export interface GalleryState {

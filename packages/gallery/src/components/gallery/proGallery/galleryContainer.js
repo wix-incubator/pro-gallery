@@ -130,8 +130,8 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = (props) => {
-      const { id, styles, container, items, watermark, isInDisplay } = props;
-      return { id, styles, container, items, watermark, isInDisplay };
+      const { id, styles, container, items, isInDisplay } = props;
+      return { id, styles, container, items, isInDisplay };
     };
 
     if (this.reCreateGalleryTimer) {
@@ -140,17 +140,17 @@ export class GalleryContainer extends React.Component {
 
     let hasPropsChanged = true;
     try {
-      const currentSignificatProps = getSignificantProps(this.props);
-      const nextSignificatProps = getSignificantProps(nextProps);
+      const currentSignificantProps = getSignificantProps(this.props);
+      const nextSignificantProps = getSignificantProps(nextProps);
       hasPropsChanged =
-        JSON.stringify(currentSignificatProps) !==
-        JSON.stringify(nextSignificatProps);
+        JSON.stringify(currentSignificantProps) !==
+        JSON.stringify(nextSignificantProps);
       if (utils.isVerbose() && hasPropsChanged) {
         console.log(
           'New props arrived',
           utils.printableObjectsDiff(
-            currentSignificatProps,
-            nextSignificatProps
+            currentSignificantProps,
+            nextSignificantProps
           )
         );
       }
@@ -328,6 +328,7 @@ export class GalleryContainer extends React.Component {
     }
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
+      galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
       videoPlay: styles.videoPlay,
       videoLoop: styles.videoLoop,
@@ -789,11 +790,9 @@ export class GalleryContainer extends React.Component {
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           items={this.state.items}
           getVisibleItems={this.getVisibleItems}
-          itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={this.props.styles}
           container={this.props.container}
-          watermark={this.props.watermark}
           settings={this.props.settings}
           displayShowMore={displayShowMore}
           id={this.props.id}

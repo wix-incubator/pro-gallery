@@ -1,8 +1,7 @@
 {
-  "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "4.0.15-beta.50",
+  "version": "4.0.15-beta.81",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -22,13 +21,14 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "build": " npm run generateSchemaFromTypes && tsc && tsc -p tsconfig-esm.json && npm run css-compile",
-    "generateSchemaFromTypes": "node buildScripts/generateJSONSchemaFromTypes.js",
+    "build": " npm run generateValidationFunction && tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
-    "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "test": "echo 'no test in wix CI'",
     "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
@@ -41,8 +41,9 @@
     "@vimeo/player": "2.8.2",
     "ajv": "^8.6.0",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "^4.0.15-beta.50",
-    "pro-layouts": "^4.0.15-beta.50",
+    "pro-gallery-blueprints": "^4.0.15-beta.81",
+    "pro-gallery-lib": "^4.0.15-beta.81",
+    "pro-layouts": "^4.0.15-beta.81",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -53,6 +54,7 @@
     "@types/react": "^16.14.6",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
+    "ajv": "^8.6.0",
     "chai": "^4.2.0",
     "chai-spies": "^0.7.1",
     "concurrently": "^6.1.0",

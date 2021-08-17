@@ -70,7 +70,7 @@ export const stylesBySection = {
     'rotatingGroupTypes',
     'rotatingCropRatios',
     'columnWidths',
-    'galleryMargin',
+    'layoutParams_gallerySpacing',
     'scatter',
     'rotatingScatter',
     'smartCrop',
@@ -120,7 +120,10 @@ export const stylesBySection = {
     'arrowsVerticalPosition',
 
     'overlayBackground',
-
+    'overlayPosition',
+    'overlaySize',
+    'overlaySizeType',
+    'overlayPadding',
     // 'itemIconColorSlideshow',
     // 'itemIconColor',
     // 'textBoxFillColor',

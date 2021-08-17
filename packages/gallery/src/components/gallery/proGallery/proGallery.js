@@ -40,10 +40,8 @@ export default class ProGallery extends GalleryComponent {
       ...this.props,
       id: this.props.id,
       items: this.props.items || [],
-      watermarkData: this.props.watermarkData,
       settings: this.props.settings || {},
       offsetTop: this.props.offsetTop,
-      itemsLoveData: this.props.itemsLoveData || {},
       proGalleryRegionLabel: this.props.proGalleryRegionLabel,
     };
   }

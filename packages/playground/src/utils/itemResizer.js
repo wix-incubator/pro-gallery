@@ -213,10 +213,9 @@ const createMediaUrl = ({
                           requiredHeight,
                           sharpParams,
                           focalPoint,
-                          createMultiple,
-                          imageToken,
+                          createMultiple
                         }) => {
-  const hasImageToken = item.dto.imageToken || item.dto.token || imageToken;
+  const hasImageToken = item.dto.imageToken || item.dto.token;
 
   originalUrl = removeResizeParams(originalUrl);
 
