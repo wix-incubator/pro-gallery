@@ -1,6 +1,5 @@
 const path = require('path');
-// const browserify = require('browserify');
-import browserify from 'browserify';
+const browserify = require('browserify');
 const fs = require('fs');
 const Ajv = require('ajv');
 
