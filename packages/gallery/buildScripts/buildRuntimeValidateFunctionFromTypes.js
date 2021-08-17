@@ -7,9 +7,12 @@ const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
 
 function writeES5StandaloneValidateMethod() {
   const code = buildValidationFunction(getSchemaFromTypes());
-  const moduleCode = `/* eslint-disable */ ${code} /* eslint-enable */`;
+  // const moduleCode = `/* eslint-disable */ ${code} /* eslint-enable */`;
   const tempFilePath = path.join(__dirname, 'temp.js');
-  fs.writeFileSync(tempFilePath, `module.exports=${moduleCode}`);
+  fs.writeFileSync(
+    tempFilePath,
+    `/* eslint-disable */ module.exports=${code}/* eslint-enable */`
+  );
   const typeValidatorDir = path.join(
     __dirname,
     '../src/components/gallery/typeValidator'
