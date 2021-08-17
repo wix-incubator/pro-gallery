@@ -169,7 +169,7 @@ export default class ItemHover extends GalleryComponent {
     const overlayStyle = this.getOverlayStyle();
     const overlayPositionCalc = this.getOverlayPositionByFlex();
     return (
-      <div style={overlayPositionCalc}>
+      <div className={'item-hover-flex-container'} style={overlayPositionCalc}>
         <div
           key={'item-hover-' + idx}
           data-hook={'item-hover-' + idx}
