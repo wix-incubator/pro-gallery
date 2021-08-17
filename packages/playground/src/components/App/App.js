@@ -297,8 +297,6 @@ export function App() {
           createMediaUrl: createMediaUrl,
           settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
           activeIndex: gallerySettings.initialIdx,
-          useBlueprints: gallerySettings.useBlueprints,
-          useLayoutFixer: gallerySettings.useLayoutFixer,
           customComponents: getCustomComponents(),
           ...blueprintProps
         }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
