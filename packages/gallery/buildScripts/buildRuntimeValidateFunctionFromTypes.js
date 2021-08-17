@@ -1,5 +1,6 @@
 const path = require('path');
 const browserify = require('browserify');
+// import browserify from 'browserify';
 const fs = require('fs');
 const Ajv = require('ajv');
 
@@ -22,12 +23,16 @@ function writeES5StandaloneValidateMethod() {
     '/standaloneValidateCode.js'
   );
   const browserifyBundle = standaloneValidateCodePath;
+  const fileWriter = fs.createWriteStream(browserifyBundle);
   browserify(tempFilePath, { standalone: 'nirnaor' })
     .transform('babelify', { global: true, presets: ['@babel/preset-env'] })
     .bundle()
-    .pipe(fs.createWriteStream(browserifyBundle));
+    .pipe(fileWriter);
 
-  fs.rmSync(tempFilePath);
+  fileWriter.on('finish', function () {
+    console.log('finished writing the browserify file');
+    fs.rmSync(tempFilePath);
+  });
 }
 
 function buildValidationFunction(schema) {
