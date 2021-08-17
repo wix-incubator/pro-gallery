@@ -1,24 +1,33 @@
 const path = require('path');
+const browserify = require('browserify');
 const fs = require('fs');
-
-const { transformSync } = require('@babel/core');
 const Ajv = require('ajv');
 
 const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
 
 function writeES5StandaloneValidateMethod() {
-  const moduleCode = buildValidationFunction(getSchemaFromTypes());
-  const { code } = transformSync(moduleCode, {});
-  const es5CompatibleCode = `/* eslint-disable */ ${code} /* eslint-enable */`;
+  const code = buildValidationFunction(getSchemaFromTypes());
+  const tempFilePath = path.join(__dirname, 'temp.js');
+  fs.writeFileSync(tempFilePath, `module.exports=${code}`);
   const typeValidatorDir = path.join(
     __dirname,
     '../src/components/gallery/typeValidator'
   );
-  fs.writeFileSync(
-    path.join(typeValidatorDir, '/standaloneValidateCode.js'),
-    es5CompatibleCode,
-    { encoding: 'utf-8' }
+  const standaloneValidateCodePath = path.join(
+    typeValidatorDir,
+    '/standaloneValidateCode.js'
   );
+  const browserifyBundle = standaloneValidateCodePath;
+  const fileWriter = fs.createWriteStream(browserifyBundle);
+  browserify(tempFilePath, { standalone: 'nirnaor' })
+    .transform('babelify', { global: true, presets: ['@babel/preset-env'] })
+    .bundle()
+    .pipe(fileWriter);
+
+  fileWriter.on('finish', function () {
+    console.log('finished writing the browserify file');
+    fs.rmSync(tempFilePath);
+  });
 }
 
 function buildValidationFunction(schema) {
