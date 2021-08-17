@@ -202,7 +202,7 @@ const fixColumnsInMobile = (styles) => {
   let _styles = {...styles}
   if (
     _styles.fixedColumns > 0 &&
-    typeof _styles.m_numberOfImagesPerRow === 'undefined'
+    typeof _styles.numberOfImagesPerRow === 'undefined'
     ) {
       _styles.fixedColumns = 1;
     }
