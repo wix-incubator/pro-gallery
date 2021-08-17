@@ -13,6 +13,7 @@ function withMagnified(WrappedComponent) {
         this.isMagnifiedBiggerThanContainer.bind(this);
       this.toggleMagnify = this.toggleMagnify.bind(this);
       this.getMagnifyInitialPos = this.getMagnifyInitialPos.bind(this);
+      this.containerRef = null;
       this.state = {
         shouldMagnify: false,
         x: 0,
@@ -27,29 +28,17 @@ function withMagnified(WrappedComponent) {
     onMouseMove(e) {
       if (this.dragStarted) {
         this.isDragging = true;
-        const {
-          cubedWidth,
-          cubedHeight,
-          innerWidth,
-          innerHeight,
-          magnifiedWidth,
-          magnifiedHeight,
-        } = this.props.style;
+        const { cubedWidth, cubedHeight, magnifiedWidth, magnifiedHeight } =
+          this.props.style;
         const { clientY, clientX } = e;
         this.setState({
           x: Math.max(
             0,
-            Math.min(
-              this.dragStartX - clientX,
-              magnifiedWidth - Math.max(cubedWidth, innerWidth)
-            )
+            Math.min(this.dragStartX - clientX, magnifiedWidth - cubedWidth)
           ),
           y: Math.max(
             0,
-            Math.min(
-              this.dragStartY - clientY,
-              magnifiedHeight - Math.max(cubedHeight, innerHeight)
-            )
+            Math.min(this.dragStartY - clientY, magnifiedHeight - cubedHeight)
           ),
         });
       }
@@ -137,42 +126,21 @@ function withMagnified(WrappedComponent) {
 
     getMagnifyInitialPos(e) {
       const { clientX, clientY } = e;
-      const { style, offset } = this.props;
-      const {
-        magnifiedWidth,
-        magnifiedHeight,
-        cubedWidth,
-        cubedHeight,
-        innerWidth,
-        innerHeight,
-      } = style;
-      const { top, left } = offset;
+      const { style } = this.props;
+      const { magnifiedWidth, magnifiedHeight, cubedWidth, cubedHeight } =
+        style;
+      const { marginTop, marginLeft } = this.props.imageDimensions;
+      const { top, left } = this.containerRef.getBoundingClientRect();
       return {
         x: Math.max(
           0,
-          Math.min(
-            clientX - left,
-            magnifiedWidth - Math.max(cubedWidth, innerWidth)
-          )
+          Math.min(clientX - left - marginLeft * 2, magnifiedWidth - cubedWidth)
         ),
         y: Math.max(
           0,
-          Math.min(
-            clientY - top,
-            magnifiedHeight - Math.max(cubedHeight, innerHeight)
-          )
+          Math.min(clientY - top - marginTop * 2, magnifiedHeight - cubedHeight)
         ),
       };
-    }
-
-    shouldMagnifyImage() {
-      const { itemClick } = this.props.styleParams;
-      const { itemTypes } = GALLERY_CONSTS;
-      const { type } = this.props;
-      return (
-        itemClick === GALLERY_CONSTS.itemClick.MAGNIFY &&
-        (type === itemTypes.IMAGE || type === itemTypes.PICTURE)
-      ); //use const / extract to function;
     }
 
     getContainerStyle() {
@@ -181,7 +149,6 @@ function withMagnified(WrappedComponent) {
       const { magnifiedWidth, magnifiedHeight } = style;
       if (shouldMagnify) {
         const magnifiedStyles = {
-          zIndex: 1000,
           position: 'relative',
           cursor: 'grab',
           width: magnifiedWidth,
@@ -208,10 +175,16 @@ function withMagnified(WrappedComponent) {
         };
       }
     }
+
     render() {
       const { shouldMagnify } = this.state;
+      const { itemClick } = this.props.styleParams;
+      if (itemClick !== GALLERY_CONSTS.itemClick.MAGNIFY) {
+        return <WrappedComponent {...this.props} />;
+      }
       return (
         <div
+          ref={(ref) => (this.containerRef = ref)}
           className={'magnified-item-container'}
           style={this.getContainerStyle()}
           onDragStart={this.onDragStart}
@@ -219,13 +192,17 @@ function withMagnified(WrappedComponent) {
           onMouseDown={this.onMouseDown}
           onMouseUp={this.onMouseUp}
         >
-          {!shouldMagnify ? (
-            <WrappedComponent {...this.props} />
-          ) : (
-            <>
+          <WrappedComponent {...this.props} />
+          {shouldMagnify && (
+            <div
+              style={{
+                zIndex: 1000,
+                position: 'absolute',
+              }}
+            >
               {this.getPreloadImage()}
               {this.getHighResImage()}
-            </>
+            </div>
           )}
         </div>
       );
