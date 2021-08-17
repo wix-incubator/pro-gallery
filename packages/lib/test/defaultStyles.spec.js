@@ -108,9 +108,5 @@ function expectedStyles() {
     enableVideoPlaceholder: true,
     autoSlideshowType: 'interval',
     autoSlideshowContinuousSpeed: 200,
-    overlayPosition: 'LEFT',
-    overlaySize: 100,
-    overlaySizeType: 'PERCENT',
-    overlayPadding: 0,
   };
 }
