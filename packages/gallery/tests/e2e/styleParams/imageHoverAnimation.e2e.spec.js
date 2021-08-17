@@ -23,10 +23,6 @@ describe('imageHoverAnimation - e2e', () => {
           galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
           imageHoverAnimation: animationType,
           hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
-          overlayPosition: 'LEFT',
-          overlaySize: 100,
-          overlaySizeType: 'PERCENT',
-          overlayPadding: 0,
         });
         await driver.waitFor.hookToBeVisible('item-container');
         await driver.actions.hover('item-container')[0];
