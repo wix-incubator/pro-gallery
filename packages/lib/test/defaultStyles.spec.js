@@ -8,7 +8,7 @@ describe('defaultStyles', () => {
     expect(_.isEqual(actual, expectedStyles())).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expectedStyles()).length);
-    expect(actualLength).eq(93);
+    expect(actualLength).eq(97);
   });
 });
 
@@ -108,5 +108,9 @@ function expectedStyles() {
     enableVideoPlaceholder: true,
     autoSlideshowType: 'interval',
     autoSlideshowContinuousSpeed: 200,
+    overlayPosition: 'LEFT',
+    overlaySize: 100,
+    overlaySizeType: 'PERCENT',
+    overlayPadding: 0,
   };
 }
