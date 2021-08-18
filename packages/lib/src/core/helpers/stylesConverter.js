@@ -7,6 +7,9 @@ function convertStyles(initialStyles) {
   Object.keys(initialStyles).forEach((key) => {
     styles[behaviourParams[key]] = initialStyles[key];
   });
+  Object.keys(initialStyles).forEach((key) => {
+    styles[stylingParams[key]] = initialStyles[key];
+  });
   return styles;
 }
 
@@ -21,6 +24,11 @@ function convertStylesBackwards(initialStyles) {
   Object.keys(behaviourParams).forEach((key) => {
     if (typeof initialStyles[behaviourParams[key]] !== 'undefined') {
       styles[key] = initialStyles[behaviourParams[key]];
+    }
+  });
+  Object.keys(stylingParams).forEach((key) => {
+    if (typeof initialStyles[stylingParams[key]] !== 'undefined') {
+      styles[key] = initialStyles[stylingParams[key]];
     }
   });
   return styles;
@@ -147,6 +155,17 @@ const behaviourParams = {
     'behaviourParams_gallery_horizontal_slideShowInfo_enableCounter',
   playButtonForAutoSlideShow:
     'behaviourParams_gallery_horizontal_slideShowInfo_enablePlayButton',
+};
+
+const stylingParams = {
+  arrowsColor: 'stylingParams_arrowsColor',
+  itemShadowBlur: 'stylingParams_itemShadowBlur',
+  itemShadowDirection: 'stylingParams_itemShadowDirection',
+  itemShadowOpacityAndColor: 'stylingParams_itemShadowOpacityAndColor',
+  textBoxBorderColor: 'stylingParams_textBoxBorderColor',
+  textBoxBorderRadius: 'stylingParams_textBoxBorderRadius',
+  itemShadowSize: 'stylingParams_itemShadowSize',
+  itemEnableShadow: 'stylingParams_itemEnableShadow',
 };
 
 export { convertStyles, convertStylesBackwards };
