@@ -1,5 +1,5 @@
 import ImageItem from '../imageItem';
-import GalleryComponent from '../../galleryComponent';
+import { GalleryComponent } from '../../galleryComponent';
 
 class VideoItemPlaceholder extends GalleryComponent {
   render() {
