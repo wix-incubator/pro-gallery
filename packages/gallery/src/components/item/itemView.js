@@ -348,7 +348,6 @@ class ItemView extends GalleryComponent {
 
   getItemHover(imageDimensions) {
     const { customComponents, ...props } = this.props;
-    console.log('1',this.props.styleParams.overlaySizeType);
 
     const shouldHover = this.shouldHover();
     return (
