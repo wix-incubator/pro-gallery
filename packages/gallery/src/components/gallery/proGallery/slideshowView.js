@@ -159,17 +159,17 @@ class SlideshowView extends GalleryComponent {
   }
 
   //__________________________________end of slide show loop functions__________________________
-  shouldBlockNext({ scrollingDownTheGallery }) {
+  shouldBlockNext({ scrollingUpTheGallery }) {
     return (
-      (scrollingDownTheGallery && this.isLastItem()) ||
-      (!scrollingDownTheGallery && this.isFirstItem())
+      (scrollingUpTheGallery && this.isLastItem()) ||
+      (!scrollingUpTheGallery && this.isFirstItem())
     );
   }
 
-  shouldNotAllowScroll({ scrollingDownTheGallery }) {
+  shouldNotAllowScroll({ scrollingUpTheGallery }) {
     return (
-      (scrollingDownTheGallery && this.isLastItemFullyVisible()) ||
-      (!scrollingDownTheGallery && this.isFirstItemFullyVisible())
+      (scrollingUpTheGallery && this.isLastItemFullyVisible()) ||
+      (!scrollingUpTheGallery && this.isFirstItemFullyVisible())
     );
   }
 
@@ -181,12 +181,12 @@ class SlideshowView extends GalleryComponent {
     isContinuousScrolling = false,
   }) {
 
-    const scrollingDownTheGallery = this.props.styleParams.isRTL
+    const scrollingUpTheGallery = this.props.styleParams.isRTL
     ? direction <= -1
     : direction >= 1;
 
     if (
-      this.shouldBlockNext({ scrollingDownTheGallery })
+      this.shouldBlockNext({ scrollingUpTheGallery })
     ) {
       this.clearAutoSlideshowInterval();
       return;
@@ -210,7 +210,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
-      this.nextGroup({ direction, scrollDuration, isContinuousScrolling, scrollingDownTheGallery }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+      this.nextGroup({ direction, scrollDuration, isContinuousScrolling, scrollingUpTheGallery }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if (
         avoidIndividualNavigation &&
@@ -226,7 +226,7 @@ class SlideshowView extends GalleryComponent {
         avoidIndividualNavigation,
         ignoreScrollPosition,
         isContinuousScrolling,
-        scrollingDownTheGallery,
+        scrollingUpTheGallery,
       });
     }
     this.removeArrowsIfNeeded();
@@ -239,7 +239,7 @@ class SlideshowView extends GalleryComponent {
     avoidIndividualNavigation,
     ignoreScrollPosition,
     isContinuousScrolling,
-    scrollingDownTheGallery,
+    scrollingUpTheGallery,
   }) {
     if (this.isSliding) {
       return;
@@ -280,7 +280,7 @@ class SlideshowView extends GalleryComponent {
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
-      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingDownTheGallery });
+      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
 
         shouldAllowScroll &&
         await scrollToItem(
@@ -330,7 +330,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  async nextGroup({ direction, scrollDuration, isContinuousScrolling = false, scrollingDownTheGallery }) {
+  async nextGroup({ direction, scrollDuration, isContinuousScrolling = false, scrollingUpTheGallery }) {
     if (this.isSliding) {
       return;
     }
@@ -346,7 +346,7 @@ class SlideshowView extends GalleryComponent {
       const scrollMarginCorrection = this.getStyles().margin || 0;
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
-      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingDownTheGallery });
+      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
 
       shouldAllowScroll &&
       await scrollToGroup(
