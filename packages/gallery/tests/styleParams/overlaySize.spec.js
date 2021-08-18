@@ -40,6 +40,7 @@ describe('styleParam - overlaySize', () => {
   it('should set the correct overlaySize of "50" - position top ', async () => {
     initialProps.styles = mergeNestedObjects(initialProps.styles, {
       overlayPosition: GALLERY_CONSTS.overlayPositions.TOP,
+      overlaySizeType: 'PIXEL',
       overlayPadding: 30,
     });
     driver.mount.proGallery(initialProps);
