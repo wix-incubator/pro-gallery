@@ -6,52 +6,53 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - itemClick', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   describe('should set the correct role for each "itemClick" value', () => {
     it('expect "role" to be "link" when "itemClick" is "link"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('link');
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "expand"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'expand',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('button');
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "fullscreen"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'fullscreen',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('button');
       driver.detach.proGallery();
     });
     it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'nothing',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.props().role).to.eq('');
@@ -61,40 +62,40 @@ describe('styleParam - itemClick', () => {
 
   describe('should set className "clickable" when "itemClick" is "expand/fullscreen/link"', () => {
     it('expect item to have className "clickable" when "itemClick" is "link"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "expand"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'expand',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "fullscreen"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'fullscreen',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
     it('expect item to not have className "clickable" when "itemClick" is "nothing"', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'nothing',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.false;
@@ -104,20 +105,20 @@ describe('styleParam - itemClick', () => {
 
   describe('should set href link only when "itemClick" is set to "link"', () => {
     it('check href when itemClick = link', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.selector('#pro-gallery-container a').at(0);
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
     });
     it('check href when itemClick = expand', async () => {
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'expand',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.selector('#pro-gallery-container a').at(0);
       expect(item.props().href).to.be.undefined;
@@ -130,11 +131,11 @@ describe('styleParam - itemClick', () => {
       Object.assign(initialProps, {
         items: videoItems,
       });
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'nothing',
         videoPlay: 'onClick',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
@@ -147,11 +148,11 @@ describe('styleParam - itemClick', () => {
       Object.assign(initialProps, {
         items: videoItems,
       });
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'expand',
         item: { video: { videoPlay: 'onClick' } },
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
@@ -163,11 +164,11 @@ describe('styleParam - itemClick', () => {
       Object.assign(initialProps, {
         items: videoItems,
       });
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'fullscreen',
         videoPlay: 'onClick',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);
@@ -180,11 +181,11 @@ describe('styleParam - itemClick', () => {
       Object.assign(initialProps, {
         items: videoItems,
       });
-      const styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
         videoPlay: 'onClick',
       });
-      driver.mount.proGallery(styles);
+      driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);
       const item = driver.find.hook('item-wrapper').at(0);

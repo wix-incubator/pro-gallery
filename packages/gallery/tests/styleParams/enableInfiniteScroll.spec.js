@@ -8,28 +8,29 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('styleParam - enableInfiniteScroll', () => {
   let driver;
-  const initialProps = {
-    container: {
-      height: 600,
-      width: 600,
-      scrollBase: 0,
-    },
-    items: [...images2, ...images2],
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container: {
+        height: 600,
+        width: 600,
+        scrollBase: 0,
+      },
+      items: [...images2, ...images2],
+      styles: styleParams,
+    };
   });
 
   it('should render "Show More" button when "enableInfiniteScroll" is "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: false,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const showMoreBtn = driver.find.hook('show-more');
     //expect to have "Show more" button
@@ -38,12 +39,12 @@ describe('styleParam - enableInfiniteScroll', () => {
   });
   it('should not render "Show More" button when "enableInfiniteScroll" is "true"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: true,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const showMoreBtn = driver.find.hook('show-more');
     //expect to not have "Show more" button
@@ -52,12 +53,12 @@ describe('styleParam - enableInfiniteScroll', () => {
   });
   it('should not render "Show More" button in a horizontal gallery when "enableInfiniteScroll" is false', async () => {
     // make sure to give the right params to make a horizontal gallery for the test
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableInfiniteScroll: false,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const showMoreBtn = driver.find.hook('show-more');
     //expect to not have "Show more" button
@@ -66,12 +67,12 @@ describe('styleParam - enableInfiniteScroll', () => {
   });
   it('should set the gallery height (container.height - show-more-container" height) when "enableInfiniteScroll" "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: false,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const galleryHeight = getElementDimensions(galleryContainer).height;
@@ -82,12 +83,12 @@ describe('styleParam - enableInfiniteScroll', () => {
   });
   it('should set the gallery height as given in container.height (ProGallery props)', async () => {
     // make sure to give the right params to make a vertical gallery for the test
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       enableInfiniteScroll: true,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const galleryHeight = getElementDimensions(galleryContainer).height;

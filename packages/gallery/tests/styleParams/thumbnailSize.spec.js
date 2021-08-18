@@ -7,20 +7,21 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - thumbnailSize', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
   it('should "thumbnailSize" of "300"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
     const { height } = thumbnailItem.props().style;
@@ -28,11 +29,11 @@ describe('styleParam - thumbnailSize', () => {
     driver.detach.proGallery();
   });
   it('should "thumbnailSize" of "150"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 150,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
     const { height } = thumbnailItem.props().style;
@@ -40,13 +41,13 @@ describe('styleParam - thumbnailSize', () => {
     driver.detach.proGallery();
   });
   it('should set the gallery height for thumbnailSize=300', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
       thumbnailSpacings: 10,
       galleryThumbnailsAlignment: 'bottom',
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { height } = galleryContainer.props().style;
@@ -56,13 +57,13 @@ describe('styleParam - thumbnailSize', () => {
   });
 
   it('should set the gallery width for thumbnailSize=300', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
       thumbnailSpacings: 10,
       galleryThumbnailsAlignment: 'left',
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     const { width } = galleryContainer.props().style;

@@ -11,25 +11,26 @@ import {
 
 describe('styleParam - textBoxHeight', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-    customComponents,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+      customComponents,
+    };
   });
 
   it('should set "textBoxHeight" of "250"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       textBoxHeight: 250,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const textBox = driver.find.selector('.gallery-item-common-info').at(0);
     const { height } = textBox.props().style;

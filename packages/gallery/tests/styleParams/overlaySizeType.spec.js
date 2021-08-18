@@ -7,14 +7,15 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - overlaySize', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
     initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
@@ -23,11 +24,11 @@ describe('styleParam - overlaySize', () => {
   });
 
   it('should set the correct overlaySize according to size type - PIXEL', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       overlaySize: 20,
       overlaySizeType: 'PIXEL',
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const overlaySizeImage = driver.find.selector('.gallery-item-hover').at(0);
     const { width } = overlaySizeImage.props().style;
@@ -36,11 +37,11 @@ describe('styleParam - overlaySize', () => {
   });
 
   it('should set the correct overlaySize according to size type- PERCENT', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       overlaySizeType: 'PERCENT',
       overlaySize: 50,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const overlaySizeImage = driver.find.selector('.gallery-item-hover').at(0);
     const { width, height } = overlaySizeImage.props().style;

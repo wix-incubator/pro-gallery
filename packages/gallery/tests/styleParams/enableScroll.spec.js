@@ -7,35 +7,36 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - enableScroll', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should set class "slider" when "enableScroll" is "true"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableScroll: true,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('slider')).to.be.true;
     driver.detach.proGallery();
   });
   it('should not set class "slider" when "enableScroll" is "false"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableScroll: false,
     });
 
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('slider')).to.be.false;

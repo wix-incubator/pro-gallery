@@ -11,19 +11,20 @@ import {
 
 describe('styleParam - textBoxWidth', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-    customComponents,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+      customComponents,
+    };
   });
 
   it('should set "textBoxWidth" of "250"(manual)', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -31,7 +32,7 @@ describe('styleParam - textBoxWidth', () => {
         GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,
       textBoxWidth: 250,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const textBox = driver.find.selector('.gallery-item-common-info').at(0);
     const { width } = textBox.props().style;

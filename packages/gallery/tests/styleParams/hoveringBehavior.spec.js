@@ -7,23 +7,24 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - hoveringBehaviour', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "APPEARS")', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     //test for "force-hover" class after simulating hover event
@@ -32,12 +33,12 @@ describe('styleParam - hoveringBehaviour', () => {
   });
 
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "DISAPPEARS")', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     //test for "force-hover" class after simulating hover event
@@ -45,11 +46,11 @@ describe('styleParam - hoveringBehaviour', () => {
     driver.detach.proGallery();
   });
   it('should have class invert-hover when "hoveringBehaviour" is "DISAPPEARS"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     // test for "invert-hover" class on items
@@ -57,11 +58,11 @@ describe('styleParam - hoveringBehaviour', () => {
     driver.detach.proGallery();
   });
   it('should have default class force-hover when "hoveringBehaviour" is "NO_CHANGE"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const items = driver.find.selector('.force-hover');
     // when the value is "NO_CHANGE" all items will be in a constant state of hover

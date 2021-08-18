@@ -7,88 +7,89 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - imageHoverAnimation', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should have "Zoom in" animation on items', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.zoom-in-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should have "Blur" animation on items', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.BLUR,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.blur-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should have "Greyscale" animation on items', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.grayscale-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should have "Shrink" animation on items', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.SHRINK,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.shrink-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should have "invert" animation on items', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.INVERT,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.invert-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should have "Color in" animation on items', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.COLOR_IN,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.color-in-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should have "Darkened" animation on items', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.DARKENED,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.darkened-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);

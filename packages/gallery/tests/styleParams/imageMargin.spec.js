@@ -8,23 +8,24 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('styleParam - imageMargin', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 7,
       imageMargin: 10,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     expect(item.prop('style').margin).to.eq('5px');
@@ -33,7 +34,7 @@ describe('styleParam - imageMargin', () => {
 
   it('should use "top" and "left" properties to create the spacing', async () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 2,
       imageMargin: 25,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -41,7 +42,7 @@ describe('styleParam - imageMargin', () => {
       gallerySizePx: 390,
       isVertical: true,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     //get the middle image in the second row to test
     let prevDims = { top: -1, left: 0, width: 0, height: 0 };

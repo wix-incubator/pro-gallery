@@ -7,44 +7,45 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - isRTL', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should not set "rtl" class to the gallery container', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.false;
     driver.detach.proGallery();
   });
   it('should set "rtl" class to the gallery container', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
   // it('should start keyboard navigation from left to right', async () => {
-  //   const styles = mergeNestedObjects(initialProps.styles, {
+  //   initialProps.styles = mergeNestedObjects(initialProps.styles, {
   //     galleryLayout: GALLERY_CONSTS.layout.GRID,
   //     isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
   //   })
-  //   driver.mount.proGallery(styles);
+  //   driver.mount.proGallery(initialProps);
   //   const galleryContainer = driver.find.selector('#pro-gallery-container');
   //   const stub = sinon.stub(driver.wrapper.instance());
   //   galleryContainer.getDOMNode().focus();
@@ -60,11 +61,11 @@ describe('styleParam - isRTL', () => {
   // });
 
   it('should set "rtl" class in slideShowView', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;
@@ -72,11 +73,11 @@ describe('styleParam - isRTL', () => {
   });
 
   it('should not set "rtl" class in slideShowView', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#pro-gallery-container');
     expect(galleryContainer.hasClass('rtl')).to.be.true;

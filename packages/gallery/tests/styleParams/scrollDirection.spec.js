@@ -6,44 +6,45 @@ import { styleParams, container } from '../drivers/mocks/styles';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 describe('styleParam - scrollDirection', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: [...images2, ...images2],
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: [...images2, ...images2],
+      styles: styleParams,
+    };
   });
 
   it('should render element "#gallery-horizontal-scroll" when "scrollDirection" is horizontal', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       galleryLayout: 2,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const elem = driver.find.selector('#gallery-horizontal-scroll');
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
   it('should render element "#pro-gallery-margin-container" when "scrollDirection" is vertical', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       galleryLayout: 2,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const elem = driver.find.selector('#pro-gallery-margin-container');
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
   it('should set margin on items to "0px" when scrollDirection is false(vertical)', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       galleryLayout: 2,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0).getDOMNode();
     const { margin } = getComputedStyle(item);

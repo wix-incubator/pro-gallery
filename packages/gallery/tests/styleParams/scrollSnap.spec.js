@@ -7,21 +7,22 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - scrollSnap', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
   it('should set class "scroll-snap"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#gallery-horizontal-scroll');
     expect(galleryContainer.hasClass('scroll-snap')).to.be.true;
@@ -29,12 +30,12 @@ describe('styleParam - scrollSnap', () => {
   });
 
   it('should not set class "scroll-snap"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const galleryContainer = driver.find.selector('#gallery-horizontal-scroll');
     expect(galleryContainer.hasClass('scroll-snap')).to.be.false;

@@ -7,23 +7,24 @@ import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - cubeImages', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should allow to "cubeType" to set class to "itemWrapper"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const itemWrappers = driver.find.selector('.cube-type-fill');
     //expect to find items that have "cube-type-fill" class
@@ -31,12 +32,12 @@ describe('styleParam - cubeImages', () => {
     driver.detach.proGallery();
   });
   it('should not allow to "cubeType" to set class to "itemWrapper"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const itemWrappers = driver.find.selector('.cube-type-fill');
     //expect to not find items with "cube-type-fill" class

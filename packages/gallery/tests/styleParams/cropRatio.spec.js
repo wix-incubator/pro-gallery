@@ -7,25 +7,26 @@ import { getElementDimensions } from '../utils/utils';
 
 describe('styleParam - cropRatio', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should set cube ratio of 1', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       layoutParams: {
         cropRatio: 1,
       },
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { width, height } = getElementDimensions(item);
@@ -34,14 +35,14 @@ describe('styleParam - cropRatio', () => {
     driver.detach.proGallery();
   });
   it('should set cube ratio of 2', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: true,
       layoutParams: {
         cropRatio: 2,
       },
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { width, height } = getElementDimensions(item);
@@ -50,14 +51,14 @@ describe('styleParam - cropRatio', () => {
     driver.detach.proGallery();
   });
   it('should not be able to set cube ratio when "cubeImages" is "false"', async () => {
-    const styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: -1,
       cubeImages: false,
       layoutParams: {
         cropRatio: 1,
       },
     });
-    driver.mount.proGallery(styles);
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
     const { width, height } = getElementDimensions(item);
