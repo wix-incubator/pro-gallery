@@ -975,8 +975,8 @@ class SlideshowView extends GalleryComponent {
       titlePlacement,
       textBoxHeight,
       showArrows,
+      numberOfImagesPerCol,
     } = this.props.styleParams;
-    
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
@@ -1007,8 +1007,10 @@ class SlideshowView extends GalleryComponent {
 
     // Determines the direction in which the Nav arrows are pushed by 'infoSpace'
     const infoSpaceDirection = GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? -1 : 1;
+    // Always Gallery centered when more then one image per column
+    const isSingleElementPerCol = numberOfImagesPerCol === 1 || isSlideshow;
     const infoSpace =
-    GALLERY_CONSTS.isAboveOrBelowPlacement(titlePlacement, isSlideshow)
+    GALLERY_CONSTS.isAboveOrBelowPlacement(titlePlacement, isSlideshow) && isSingleElementPerCol
         ? {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
             [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight * infoSpaceDirection,

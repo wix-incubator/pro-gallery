@@ -4,8 +4,6 @@ import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
-const aboveAndBelowPlacements = ['SHOW_ABOVE', 'SHOW_BELOW'];
-
 describe('styleParam - arrowsVerticalPosition', () => {
   let driver;
   const initialProps = {
@@ -18,81 +16,90 @@ describe('styleParam - arrowsVerticalPosition', () => {
     driver = new GalleryDriver();
   });
 
+  afterEach(() => {
+    driver.detach.proGallery();
+  });
+
   it('Should not render the arrows when not enough info space', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 38, // info height is 39 when default, so should not render the arrows
+      slideshowInfoSize: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
       arrowsVerticalPosition: 'INFO_CENTER',
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
     const navArrows = driver.find.selector('.nav-arrows-container');
     expect(navArrows).to.have.lengthOf(0);
-    driver.detach.proGallery();
   });
 
-  // Checks if INFO_CENTER is good on layouts with above/below
-  it('Checks if has correct distance from top for SlideShow and above/below placements', async () => {
+  // Checks if INFO_CENTER position is good on Slideshow
+  it('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 39, // info height is 39 when default, so should not render the arrows
+      slideshowInfoSize: 39,
       arrowsVerticalPosition: 'INFO_CENTER',
     });
-    for (const placement in aboveAndBelowPlacements) {
-      Object.assign(initialProps.styles, {
-        titlePlacement: placement,
-      });
-      driver.mount.proGallery(initialProps);
-      await driver.update();
-      const navArrows = driver.find
-        .selector('.nav-arrows-container')
-        .getElement();
-      const galleryContainer = driver.find
-        .selector('#pro-gallery-container')
-        .getElement();
-      const directionOfInfoSpace = placement === 'SHOW_ABOVE' ? 1 : -1;
-      const { height: galleryHeight } = galleryContainer.props.style;
-      const { top } = navArrows.props.style;
-      const expectedInfoSpace = galleryHeight / 2;
-      expect(top).to.eq(
-        `calc(50% - 19.5px + 0px - ${
-          directionOfInfoSpace * expectedInfoSpace
-        }px)`
-      );
-      driver.detach.proGallery();
-    }
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const navArrows = driver.find
+      .selector('.nav-arrows-container')
+      .getElement();
+    const galleryContainer = driver.find
+      .selector('#pro-gallery-container')
+      .getElement();
+    const { height: galleryHeight } = galleryContainer.props.style;
+    const { top } = navArrows.props.style;
+    const expectedInfoSpace = (-1 * galleryHeight) / 2;
+    expect(top).to.eq(`calc(50% - 19.5px + 0px - ${expectedInfoSpace}px)`);
   });
 
-  it('Checks if has correct distance from top for columns and above/below placements', async () => {
+  it('Checks if "ITEM_CENTER" has correct distance from top for SlideShow', async () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      slideshowInfoSize: 39,
+      arrowsVerticalPosition: 'ITEM_CENTER',
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const navArrows = driver.find
+      .selector('.nav-arrows-container')
+      .getElement();
+    const { top } = navArrows.props.style;
+    expect(top).to.eq(`calc(50% - 19.5px + 0px - 0px)`);
+  });
+
+  it('Checks if "IMAGE_CENTER" has correct distance from top for SlideShow', async () => {
+    Object.assign(initialProps.styles, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      slideshowInfoSize: 39,
+      arrowsVerticalPosition: 'IMAGE_CENTER',
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const navArrows = driver.find
+      .selector('.nav-arrows-container')
+      .getElement();
+    const { top } = navArrows.props.style;
+    const expectedInfoSpace = initialProps.styles.slideshowInfoSize / 2;
+    expect(top).to.eq(`calc(50% - 19.5px + 0px - ${expectedInfoSpace}px)`);
+  });
+
+  // Checks if INFO_CENTER position is good on Slider and below placement
+  it('Checks if "INFO_CENTER" has correct distance from top for Slider', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      slideshowInfoSize: 39, // info height is 39 when default, so should not render the arrows
+      titlePlacement: 'SHOW_BELOW',
       arrowsVerticalPosition: 'INFO_CENTER',
     });
-    for (const placement in aboveAndBelowPlacements) {
-      Object.assign(initialProps.styles, {
-        titlePlacement: 'SHOW_ABOVE',
-      });
-      driver.mount.proGallery(initialProps);
-      await driver.update();
-      const navArrows = driver.find
-        .selector('.nav-arrows-container')
-        .getElement();
-      const galleryContainer = driver.find
-        .selector('#pro-gallery-container')
-        .getElement();
-      const directionOfInfoSpace = placement === 'SHOW_ABOVE' ? 1 : -1;
-      const { height: galleryHeight } = galleryContainer.props.style;
-      const { top } = navArrows.props.style;
-      console.error(navArrows);
-      const expectedInfoSpace =
-        (galleryHeight - initialProps.styles.textBoxHeight) / 2;
-      expect(top).to.eq(
-        `calc(50% - 19.5px + 2.5px - ${
-          directionOfInfoSpace * expectedInfoSpace
-        }px)`
-      );
-      driver.detach.proGallery();
-    }
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const navArrows = driver.find.hook('nav-arrow-next').getElement();
+    const galleryContainer = driver.find
+      .selector('#pro-gallery-container')
+      .getElement();
+    const { height: galleryHeight } = galleryContainer.props.style;
+    const { top } = navArrows.props.style;
+    const expectedInfoSpace = (-1 * galleryHeight) / 2;
+    expect(top).to.eq(`calc(50% - 19.5px + 2.5px - ${expectedInfoSpace}px)`);
   });
 });
