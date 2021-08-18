@@ -13,9 +13,8 @@
     "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3000 'lerna run test:e2e-all'",
     "test:e2e-ssr": "start-server-and-test build-all-and-start-ssr-simulator http-get://localhost:3001 'lerna run test:e2e-ssr'",
     "test": "echo 'not running tests from root - runnign it using GitHub actions",
-    "ci:run-ssr": "cd packages/ssr-simulator && npm run watch && cd ../..",
-    "ci:test-unit": "lerna run --parallel unit",
     "ci:test-e2e-ssr": "start-server-and-test ci:run-ssr http-get://localhost:3001 'lerna run test:e2e-ssr'",
+    "ci:run-ssr": "cd packages/ssr-simulator && npm run watch && cd ../..",
     "build-all-and-start-playground": "npm run start-playground",
     "build-all-and-start-ssr-simulator": "npm run start-ssr-simulator"
   },
