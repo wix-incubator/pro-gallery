@@ -1,19 +1,15 @@
 import ImageItem from '../imageItem';
+import GalleryComponent from '../../galleryComponent';
 
-class VideoItemPlaceholder extends ImageItem {
+class VideoItemPlaceholder extends GalleryComponent {
   render() {
-    const { videoPlayButton } = this.props;
-
-    const VideoPlaceholderContainerClassnames =
-      this.getImageContainerClassNames() + ' video-item gallery-item-video';
-    const videoPlaceholderImageRenderer = this.getImageElement();
-    const renderedItem = this.getImageContainer(
-      videoPlaceholderImageRenderer,
-      VideoPlaceholderContainerClassnames,
-      videoPlayButton
+    return (
+      <ImageItem
+        overlay={this.props.videoPlayButton}
+        extraClasses={' video-item gallery-item-video'}
+        {...this.props}
+      />
     );
-
-    return renderedItem;
   }
 }
 
