@@ -21,12 +21,13 @@ describe('styleParam - arrowsVerticalPosition', () => {
   });
 
   it('Should not render the arrows when not enough info space', async () => {
-    Object.assign(initialProps.styles, {
+    const currentTestStyles = {
+      ...initialProps.styles,
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
       arrowsVerticalPosition: 'INFO_CENTER',
-    });
-    driver.mount.proGallery(initialProps);
+    };
+    driver.mount.proGallery(currentTestStyles);
     await driver.update();
     const navArrows = driver.find.selector('.nav-arrows-container');
     expect(navArrows).to.have.lengthOf(0);
@@ -41,14 +42,10 @@ describe('styleParam - arrowsVerticalPosition', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const navArrows = driver.find
-      .selector('.nav-arrows-container')
-      .getElement();
-    const galleryContainer = driver.find
-      .selector('#pro-gallery-container')
-      .getElement();
-    const { height: galleryHeight } = galleryContainer.props.style;
-    const { top } = navArrows.props.style;
+    const navArrows = driver.find.selector('.nav-arrows-container');
+    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const { height: galleryHeight } = galleryContainer.props().style;
+    const { top } = navArrows.props().style;
     const expectedInfoSpace = (-1 * galleryHeight) / 2;
     expect(top).to.eq(`calc(50% - 19.5px + 0px - ${expectedInfoSpace}px)`);
   });
@@ -61,10 +58,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const navArrows = driver.find
-      .selector('.nav-arrows-container')
-      .getElement();
-    const { top } = navArrows.props.style;
+    const navArrows = driver.find.selector('.nav-arrows-container');
+    const { top } = navArrows.props().style;
     expect(top).to.eq(`calc(50% - 19.5px + 0px - 0px)`);
   });
 
@@ -76,10 +71,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const navArrows = driver.find
-      .selector('.nav-arrows-container')
-      .getElement();
-    const { top } = navArrows.props.style;
+    const navArrows = driver.find.selector('.nav-arrows-container');
+    const { top } = navArrows.props().style;
     const expectedInfoSpace = initialProps.styles.slideshowInfoSize / 2;
     expect(top).to.eq(`calc(50% - 19.5px + 0px - ${expectedInfoSpace}px)`);
   });
@@ -88,17 +81,16 @@ describe('styleParam - arrowsVerticalPosition', () => {
   it('Checks if "INFO_CENTER" has correct distance from top for Slider', async () => {
     Object.assign(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
+      slideshowInfoSize: 39,
       titlePlacement: 'SHOW_BELOW',
-      arrowsVerticalPosition: 'INFO_CENTER',
+      arrowsVerticalPosition: 'ITEM_CENTER',
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const navArrows = driver.find.hook('nav-arrow-next').getElement();
-    const galleryContainer = driver.find
-      .selector('#pro-gallery-container')
-      .getElement();
-    const { height: galleryHeight } = galleryContainer.props.style;
-    const { top } = navArrows.props.style;
+    const navArrows = driver.find.selector('.nav-arrows-container');
+    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const { height: galleryHeight } = galleryContainer.props().style;
+    const { top } = navArrows.props().style;
     const expectedInfoSpace = (-1 * galleryHeight) / 2;
     expect(top).to.eq(`calc(50% - 19.5px + 2.5px - ${expectedInfoSpace}px)`);
   });
