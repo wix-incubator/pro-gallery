@@ -790,7 +790,6 @@ export class GalleryContainer extends React.Component {
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           items={this.state.items}
           getVisibleItems={this.getVisibleItems}
-          itemsLoveData={this.props.itemsLoveData}
           galleryStructure={this.galleryStructure}
           styleParams={this.props.styles}
           container={this.props.container}

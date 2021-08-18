@@ -9,7 +9,7 @@ import {setStyleParamsInUrl} from '../../constants/styleParams'
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import { BlueprintsManager } from 'pro-gallery-lib'
+import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
@@ -297,8 +297,6 @@ export function App() {
           createMediaUrl: createMediaUrl,
           settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
           activeIndex: gallerySettings.initialIdx,
-          useBlueprints: gallerySettings.useBlueprints,
-          useLayoutFixer: gallerySettings.useLayoutFixer,
           customComponents: getCustomComponents(),
           ...blueprintProps
         }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}

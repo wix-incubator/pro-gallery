@@ -1,8 +1,7 @@
 {
-  "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "4.0.15-beta.68",
+  "version": "4.0.15-beta.82",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -28,7 +27,8 @@
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
-    "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "test": "echo 'no test in wix CI'",
     "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
@@ -41,8 +41,9 @@
     "@vimeo/player": "2.8.2",
     "ajv": "^8.6.0",
     "hls.js": "^0.14.12",
-    "pro-gallery-lib": "^4.0.15-beta.68",
-    "pro-layouts": "^4.0.15-beta.68",
+    "pro-gallery-blueprints": "^4.0.15-beta.82",
+    "pro-gallery-lib": "^4.0.15-beta.82",
+    "pro-layouts": "^4.0.15-beta.82",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -50,10 +51,14 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "^7.5.5",
     "@types/react": "^16.14.6",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "ajv": "^8.6.0",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
     "chai": "^4.2.0",
     "chai-spies": "^0.7.1",
     "concurrently": "^6.1.0",

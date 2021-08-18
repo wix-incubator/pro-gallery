@@ -44,4 +44,8 @@ function flatToNested(ob) {
   );
 }
 
-export { flattenObject, assignByString, flatToNested };
+function mergeNestedObjects(...args) {
+  return flatToNested(Object.assign({}, ...args.map(flattenObject)));
+}
+
+export { flattenObject, assignByString, flatToNested, mergeNestedObjects };

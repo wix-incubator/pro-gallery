@@ -1,11 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Layouter } from 'pro-layouts';
-import defaultStyles from '../../common/defaultStyles';
-import { addPresetStyles } from '../presets/presets';
-import dimensionsHelper from '../helpers/dimensionsHelper';
-import { ItemsHelper } from '../helpers/itemsHelper';
-import processLayouts from '../helpers/layoutHelper.js';
-import { default as GALLERY_CONSTS } from '../../common/constants';
+import {defaultStyles, addPresetStyles, dimensionsHelper, ItemsHelper, processLayouts, GALLERY_CONSTS} from 'pro-gallery-lib'
 
 class Blueprints {
   createBlueprint({
@@ -292,9 +287,6 @@ class Blueprints {
           !oldContainerParams ||
           (!!newContainerParams.width &&
             newContainerParams.width !== oldContainerParams.width),
-        scrollBase:
-          !!newContainerParams.scrollBase &&
-          newContainerParams.scrollBase !== oldContainerParams.scrollBase,
       };
       return Object.keys(containerHasChanged).reduce((is, key) => {
         if (containerHasChanged[key]) {

@@ -267,7 +267,6 @@ class galleryDriver {
             styleParams: this.styleParams,
             actions: this.actions,
             customComponents: this.customComponents,
-            itemsLoveData: {},
           };
         }
 
@@ -291,7 +290,6 @@ class galleryDriver {
           getVisibleItems: (items) => items,
           styleParams: galleryViewProps.styleParams,
           actions: galleryViewProps.actions,
-          itemsLoveData: galleryViewProps.itemsLoveData,
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
           customComponents: galleryViewProps.customComponents,
