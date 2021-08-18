@@ -1,23 +1,25 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - overlayAnimation', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should have overlay animation class - "EXPAND"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.EXPAND,
     });
@@ -28,7 +30,7 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have overlay animation class - "FADE IN"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.FADE_IN,
     });
@@ -39,7 +41,7 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have overlay animation class - "SLIDE UP"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
@@ -50,7 +52,7 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have overlay animation class - "SLIDE RIGHT"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
     });

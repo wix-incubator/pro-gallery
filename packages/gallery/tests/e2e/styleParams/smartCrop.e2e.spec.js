@@ -21,7 +21,9 @@ describe('smartCrop - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       smartCrop: true,
       cubeImages: true,
-      cropRatio: 2,
+      layoutParams: {
+        cropRatio: 2,
+      },
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -34,7 +36,9 @@ describe('smartCrop - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       smartCrop: false,
       cubeImages: true,
-      cropRatio: 2,
+      layoutParams: {
+        cropRatio: 2,
+      },
       cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     await driver.waitFor.hookToBeVisible('item-container');

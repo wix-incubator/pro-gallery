@@ -9,15 +9,16 @@ describe('defaultStyles', () => {
     expect(_.isEqual(actual, expected)).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expected).length);
-    expect(actualLength).eq(93);
+    expect(actualLength).eq(97);
   });
 });
 
 function expectedStyles() {
   return {
     layoutParams: {
-      numberOfGroupsPerRow: 0,
       gallerySpacing: 0,
+      cropRatio: 1,
+      numberOfGroupsPerRow: 0,
     },
     isRTL: false,
     isVertical: false,
@@ -30,7 +31,6 @@ function expectedStyles() {
     collageDensity: 0.8,
     cubeImages: false,
     cubeType: 'fill',
-    cropRatio: 1,
     cropOnlyFill: false,
     smartCrop: false,
     rotatingCropRatios: '',
@@ -110,5 +110,9 @@ function expectedStyles() {
     enableVideoPlaceholder: true,
     autoSlideshowType: 'interval',
     autoSlideshowContinuousSpeed: 200,
+    overlayPosition: 'LEFT',
+    overlaySize: 100,
+    overlaySizeType: 'PERCENT',
+    overlayPadding: 0,
   };
 }

@@ -1,7 +1,10 @@
 import GALLERY_CONSTS from './constants';
 const coreStyles = {
   //duplicated from lib
-  layoutParams: { gallerySpacing: 0 },
+  layoutParams: {
+    gallerySpacing: 0,
+    cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
+  },
   isRTL: false,
   isVertical: false,
   minItemSize: 120,
@@ -21,7 +24,6 @@ const coreStyles = {
   galleryTextAlign: 'center',
   imageMargin: 10, // The renderer will do the /2 *2 for his pictures, the default is the margin between images (thats how it is in the settings menu. 50 = 50 between images)
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
-  cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
   showArrows: true,
   hasThumbnails: false,
   isSlideshow: false,

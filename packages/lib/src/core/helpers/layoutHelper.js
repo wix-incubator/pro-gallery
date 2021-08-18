@@ -198,17 +198,7 @@ const removeArrowPaddingIfOutsideTheGallery = (styles) => {
   }
   return _styles;
 }
-const fixColumnsInMobile = (styles) => {
-  let _styles = {...styles}
-  if (
-    _styles.fixedColumns > 0 &&
-    typeof _styles.m_numberOfImagesPerRow === 'undefined'
-    ) {
-      _styles.fixedColumns = 1;
-    }
-  
-  return _styles;
-}
+
 const removeVideoAutoplayInIOS = (styles) => {
   let _styles = {...styles}
   // Handle case of autoplay on ios devices
@@ -350,7 +340,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   if (utils.isMobile()) {
     processedStyles = setMobileFonts(processedStyles);
     processedStyles = limitImageMargin(processedStyles);
-    processedStyles = fixColumnsInMobile(processedStyles);
   }
     processedStyles = forceInfoOnHoverWhenNeeded(processedStyles);
     processedStyles = forceHoverToShowTextsIfNeeded(processedStyles);

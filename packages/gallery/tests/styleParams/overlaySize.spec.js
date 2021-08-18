@@ -1,27 +1,29 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - overlaySize', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
-    Object.assign(initialProps.styles, {
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlaySize: 50,
     });
   });
 
   it('should set the correct overlaySize of 50 - right position', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       overlayPosition: GALLERY_CONSTS.overlayPositions.RIGHT,
       overlaySizeType: 'PIXEL',
       overlayPadding: 20,
@@ -36,8 +38,9 @@ describe('styleParam - overlaySize', () => {
   });
 
   it('should set the correct overlaySize of "50" - position top ', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       overlayPosition: GALLERY_CONSTS.overlayPositions.TOP,
+      overlaySizeType: 'PIXEL',
       overlayPadding: 30,
     });
     driver.mount.proGallery(initialProps);
