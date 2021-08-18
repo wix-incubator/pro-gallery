@@ -61,6 +61,14 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should set className "clickable" when "itemClick" is "expand/fullscreen/link"', () => {
+    beforeEach(() => {
+      driver = new GalleryDriver();
+      initialProps = {
+        container,
+        items: images2,
+        styles: styleParams,
+      };
+    });
     it('expect item to have className "clickable" when "itemClick" is "link"', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
@@ -104,6 +112,14 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should set href link only when "itemClick" is set to "link"', () => {
+    beforeEach(() => {
+      driver = new GalleryDriver();
+      initialProps = {
+        container,
+        items: images2,
+        styles: styleParams,
+      };
+    });
     it('check href when itemClick = link', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
@@ -127,10 +143,16 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should play video onClick in gallery only when itemClick is nothing and videoPlay is onClick', () => {
-    it('expect to find video element', async () => {
-      Object.assign(initialProps, {
+    beforeEach(() => {
+      driver = new GalleryDriver();
+      initialProps = {
+        container,
         items: videoItems,
-      });
+        styles: styleParams,
+      };
+    });
+
+    it('expect to find video element', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'nothing',
         videoPlay: 'onClick',
@@ -145,12 +167,9 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "expand"', async () => {
-      Object.assign(initialProps, {
-        items: videoItems,
-      });
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'expand',
-        item: { video: { videoPlay: 'onClick' } },
+        videoPlay: 'onClick',
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -161,9 +180,6 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
-      Object.assign(initialProps, {
-        items: videoItems,
-      });
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'fullscreen',
         videoPlay: 'onClick',
@@ -178,9 +194,6 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "link"', async () => {
-      Object.assign(initialProps, {
-        items: videoItems,
-      });
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
         videoPlay: 'onClick',
