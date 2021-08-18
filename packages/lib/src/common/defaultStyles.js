@@ -45,5 +45,9 @@ const defaultStyles = mergeNestedObjects({}, coreStyles, {
   slideTransition: GALLERY_CONSTS.slideTransition.ease,
   useMaxDimensions: false,
   enableVideoPlaceholder: true,
+  overlayPosition: 'LEFT',
+  overlaySize: 100,
+  overlaySizeType: 'PERCENT',
+  overlayPadding: 0,
 });
 export default defaultStyles;
