@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
@@ -10,19 +11,20 @@ import {
 
 describe('styleParam - textImageSpace', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-    customComponents,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+      customComponents,
+    };
   });
 
   it('should set spacing between the image and the texts (texts below items and separated background)', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
@@ -40,7 +42,7 @@ describe('styleParam - textImageSpace', () => {
     driver.detach.proGallery();
   });
   it('should set spacing between the image and the texts (texts above items and separated background)', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
@@ -55,7 +57,7 @@ describe('styleParam - textImageSpace', () => {
     driver.detach.proGallery();
   });
   it('should not set when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,

@@ -1,5 +1,8 @@
 const styleParams = {
-  layoutParams: { gallerySpacing: 0 },
+  layoutParams: {
+    gallerySpacing: 0,
+    cropRatio: 1,
+  },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
@@ -17,7 +20,6 @@ const styleParams = {
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
   rotatingCropRatio: '',

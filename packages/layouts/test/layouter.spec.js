@@ -21,7 +21,10 @@ describe('Layouter', () => {
   beforeEach(() => {
     const items = getItems();
     styleParams = {
-      layoutParams: { gallerySpacing: 0},
+      layoutParams: { 
+        gallerySpacing: 0,
+        cropRatio: 1,
+      },
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       isVertical: false,
       targetItemSize: 200,
@@ -30,7 +33,6 @@ describe('Layouter', () => {
       rotatingGroupTypes: '',
       cubeImages: false,
       cubeType: 'fill',
-      cropRatio: 1,
       smartCrop: false,
       chooseBestGroup: true,
       collageAmount: 0.9,
@@ -184,7 +186,7 @@ describe('Layouter', () => {
       styleParams.imageMargin = 0;
 
       for (const ratio of [0.25, 0.5, 1, 2, 4]) {
-        styleParams.cropRatio = ratio;
+        styleParams.layoutParams.cropRatio = ratio;
         gallery = getLayout({ items, container, styleParams });
 
         const isCroppedCorrectly = gallery.columns[0].groups.reduce(
@@ -481,10 +483,10 @@ describe('Layouter', () => {
               const isItemCroppedCorrectly =
                 (image.width - allowedRounding) /
                   (image.height + allowedRounding) <=
-                  styleParams.cropRatio &&
+                  styleParams.layoutParams.cropRatio &&
                 (image.width + allowedRounding) /
                   (image.height - allowedRounding) >=
-                  styleParams.cropRatio;
+                  styleParams.layoutParams.cropRatio;
               return i && isItemCroppedCorrectly;
             }, true)
           );
@@ -500,7 +502,7 @@ describe('Layouter', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100);
-      styleParams.cropRatio = 2;
+      styleParams.layoutParams.cropRatio = 2;
       styleParams.cubeImages = true;
       styleParams.smartCrop = true;
       styleParams.imageMargin = 0;
@@ -512,8 +514,8 @@ describe('Layouter', () => {
             g &&
             group.items.reduce((i, image) => {
               const cropRatio = image.isLandscape
-                ? styleParams.cropRatio
-                : 1 / styleParams.cropRatio;
+                ? styleParams.layoutParams.cropRatio
+                : 1 / styleParams.layoutParams.cropRatio;
               const isItemCroppedCorrectly =
                 (image.width - allowedRounding) /
                   (image.height + allowedRounding) <=
@@ -642,7 +644,7 @@ describe('Layouter', () => {
     // functional cropRatio
     it('should crop items according to the cropRatio function if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.cropRatio = () => Math.random();
+      styleParams.layoutParams.cropRatio = () => Math.random();
       styleParams.cropItems = true;
       styleParams.smartCrop = false;
 
@@ -657,7 +659,7 @@ describe('Layouter', () => {
     // crop only fill
     it('should not crop items if cropOnlyFill is true and cropType is fit', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.cropRatio = 1;
+      styleParams.layoutParams.cropRatio = 1;
       styleParams.cropOnlyFill = true;
       styleParams.cubeType = 'fit';
       styleParams.cropItems = true;
@@ -674,7 +676,7 @@ describe('Layouter', () => {
     it('should crop items according to rotatingCropRatios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
-      styleParams.cropRatio = '1';
+      styleParams.layoutParams.cropRatio = '1';
       styleParams.cubeImages = true;
       styleParams.smartCrop = false;
       styleParams.isVertical = true;
@@ -697,7 +699,7 @@ describe('Layouter', () => {
   it('should not find ratios under 1 when "cubeType" is "min"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
-    styleParams.cropRatio = ratio;
+    styleParams.layoutParams.cropRatio = ratio;
     styleParams.cubeType = 'min';
     styleParams.cubeImages = true;
     styleParams.smartCrop = false;
@@ -714,7 +716,7 @@ describe('Layouter', () => {
   it('should not find ratios above 1 when "cubeType" is "max"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
-    styleParams.cropRatio = ratio;
+    styleParams.layoutParams.cropRatio = ratio;
     styleParams.cubeType = 'max';
     styleParams.cubeImages = true;
     styleParams.smartCrop = false;
@@ -760,7 +762,7 @@ describe('Layouter', () => {
 
       styleParams.isVertical = true;
       styleParams.cubeImages = true;
-      styleParams.cropRatio = 1;
+      styleParams.layoutParams.cropRatio = 1;
       styleParams.groupSize = 1;
 
       container.galleryWidth = 1000;
