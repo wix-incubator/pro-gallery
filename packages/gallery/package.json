@@ -32,6 +32,8 @@
     "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
     "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-layouts'",
+    "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-styleParams'",
+    "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-integration'",
     "ci:run-playground": "cd ../playground && npx serve -s build -l 3000 && cd ../..",
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
     "test:e2e-integration": "jest --testPathPattern='.*/e2e/integration/.*.e2e.spec.js'",
