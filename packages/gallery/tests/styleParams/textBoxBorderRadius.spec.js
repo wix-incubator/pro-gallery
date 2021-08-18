@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
@@ -10,17 +11,19 @@ import {
 
 describe('styleParam - textBoxBorderRadius', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-    customComponents,
-  };
+  let initialProps;
+
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+      customComponents,
+    };
   });
   it('should set border-radius to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -38,7 +41,7 @@ describe('styleParam - textBoxBorderRadius', () => {
   });
 
   it('should not set border-radius to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

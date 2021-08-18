@@ -8,7 +8,11 @@ const fixToSlideshow = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.SLIDESHOW;
   presetStyles.enableInfiniteScroll = true;
-  presetStyles.cropRatio = '100%/100%';
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_cropRatio',
+    '100%/100%'
+  );
   presetStyles.cubeImages = true;
   presetStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW;
   presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
