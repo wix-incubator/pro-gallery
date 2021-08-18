@@ -1,4 +1,5 @@
 import ImageItem from '../imageItem';
+import triggerSetItemLoaded from '../triggerSetItemLoaded';
 
 class VideoItemPlaceholder extends ImageItem {
   render() {
@@ -14,6 +15,10 @@ class VideoItemPlaceholder extends ImageItem {
     );
 
     return renderedItem;
+  }
+
+  componentDidMount() {
+    triggerSetItemLoaded(this.props);
   }
 }
 

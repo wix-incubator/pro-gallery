@@ -3,6 +3,8 @@ import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
+import triggerSetItemLoaded from './triggerSetItemLoaded'
+
 
 export default class ImageItem extends GalleryComponent {
   constructor(props) {
@@ -20,13 +22,7 @@ export default class ImageItem extends GalleryComponent {
   }
 
   componentDidMount() {
-    try {
-      if (typeof this.props.actions.setItemLoaded === 'function') {
-        this.props.actions.setItemLoaded();
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    triggerSetItemLoaded(this.props)
   }
 
   handleHighResImageLoad() {
