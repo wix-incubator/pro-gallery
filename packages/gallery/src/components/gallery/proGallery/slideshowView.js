@@ -346,7 +346,7 @@ class SlideshowView extends GalleryComponent {
       const scrollMarginCorrection = this.getStyles().margin || 0;
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
-      const shouldAllowScroll = this.shouldNotAllowScroll({ scrollingDownTheGallery });
+      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingDownTheGallery });
 
       shouldAllowScroll &&
       await scrollToGroup(
