@@ -57,7 +57,6 @@ export default class ItemHover extends GalleryComponent {
   getOverlayStyle() {
     const { styleParams, imageDimensions } = this.props;
     const style = {};
-    console.log(styleParams.overlaySizeType);
     const {
       overlayPosition,
       overlaySize: requiredOverlaySize,
@@ -102,17 +101,6 @@ export default class ItemHover extends GalleryComponent {
       overlaySizeType,
       overlayPadding
     );
-    console.log(
-      imageDimensions[calculatedField],
-      requiredOverlaySize,
-      overlaySizeType,
-      overlayPadding
-    );
-    console.log({
-      [calculatedField]: overlaySizeCalc,
-      [calculatedOppositeField]:
-        imageDimensions[calculatedOppositeField] - 2 * overlayPadding,
-    });
     return {
       [calculatedField]: overlaySizeCalc,
       [calculatedOppositeField]:
@@ -127,7 +115,6 @@ export default class ItemHover extends GalleryComponent {
     overlayPadding
   ) {
     const widthOrHeightCalc = widthOrHeight + -2 * overlayPadding;
-    console.log({ widthOrHeightCalc });
     const overlaySize = Math.min(
       widthOrHeightCalc,
       overlaySizeType === 'PERCENT'
