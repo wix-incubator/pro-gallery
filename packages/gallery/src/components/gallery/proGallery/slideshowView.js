@@ -111,6 +111,13 @@ class SlideshowView extends GalleryComponent {
     return galleryStructure.width - imageMargin / 2;
   }
 
+  isFirstItemFullyVisible() {
+    return !this.props.styleParams.slideshowLoop && this.isScrollStart();
+  }
+  isLastItemFullyVisible() {
+    return !this.props.styleParams.slideshowLoop && this.isScrollEnd();
+  }
+
   isLastItem() {
     return (
       !this.props.styleParams.slideshowLoop &&
@@ -161,8 +168,8 @@ class SlideshowView extends GalleryComponent {
 
   shouldNotAllowScroll({ scrollingDownTheGallery }) {
     return (
-      (scrollingDownTheGallery && this.isScrollEnd()) ||
-      (!scrollingDownTheGallery && this.isScrollStart())
+      (scrollingDownTheGallery && this.isLastItemFullyVisible()) ||
+      (!scrollingDownTheGallery && this.isFirstItemFullyVisible())
     );
   }
 
