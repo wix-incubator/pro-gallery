@@ -22,9 +22,6 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import withMagnified from '../hoc/withMagnified.js';
-
-const MagnifiedImageItem = withMagnified(ImageItem);
 
 class ItemView extends GalleryComponent {
   constructor(props) {
@@ -396,7 +393,7 @@ class ItemView extends GalleryComponent {
     ]);
 
     return (
-      <MagnifiedImageItem
+      <ImageItem
         {...props}
         key="imageItem"
         imageDimensions={imageDimensions}
