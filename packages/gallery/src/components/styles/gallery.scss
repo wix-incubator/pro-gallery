@@ -502,6 +502,10 @@ div.pro-gallery {
         }
       }
 
+      .item-hover-flex-container{
+        pointer-events: none;
+      }
+      
       .gallery-item-hover {
         white-space: initial;
         position: absolute;
@@ -515,7 +519,6 @@ div.pro-gallery {
         //border-radius: $image-radius+px;
         z-index: 15;
         overflow: hidden;
-        pointer-events: none;
         .gallery-item-hover-inner {
           height: 100%;
         }
