@@ -19,13 +19,12 @@ function getSchemaFromTypes() {
 
   const typesFilePath = path.join(
     __dirname,
-    '../../common/interfaces/galleryTypes.ts'
+    '../../../types/common/interfaces/galleryTypes.d.ts'
   );
-  console.log(
-    fs.existsSync(
-      path.join(__dirname, '../../common/interfaces/galleryTypes.ts')
-    )
-  );
+  // const typesFilePath = path.join(__dirname, '../types/common/interfaces/galleryTypes.ts')
+  if (fs.existsSync(typesFilePath) === false) {
+    throw new Error(`cannot find types file: ${typesFilePath}`);
+  }
   const program = TJS.getProgramFromFiles(
     [typesFilePath],
     compilerOptions
