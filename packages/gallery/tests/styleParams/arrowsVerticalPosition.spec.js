@@ -76,22 +76,4 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const expectedInfoSpace = initialProps.styles.slideshowInfoSize / 2;
     expect(top).to.eq(`calc(50% - 19.5px + 0px - ${expectedInfoSpace}px)`);
   });
-
-  // Checks if INFO_CENTER position is good on Slider and below placement
-  it('Checks if "INFO_CENTER" has correct distance from top for Slider', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      slideshowInfoSize: 39,
-      titlePlacement: 'SHOW_BELOW',
-      arrowsVerticalPosition: 'INFO_CENTER',
-    });
-    driver.mount.proGallery(initialProps);
-    await driver.update();
-    const navArrows = driver.find.selector('.nav-arrows-container');
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
-    const { height: galleryHeight } = galleryContainer.props().style;
-    const { top } = navArrows.props().style;
-    const expectedInfoSpace = (-1 * galleryHeight) / 2;
-    expect(top).to.eq(`calc(50% - 19.5px + 2.5px - ${expectedInfoSpace}px)`);
-  });
 });
