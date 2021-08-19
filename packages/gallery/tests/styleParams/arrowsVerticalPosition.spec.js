@@ -2,6 +2,7 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - arrowsVerticalPosition', () => {
@@ -21,13 +22,12 @@ describe('styleParam - arrowsVerticalPosition', () => {
   });
 
   it('Should not render the arrows when not enough info space', async () => {
-    const currentTestStyles = {
-      ...initialProps.styles,
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
       arrowsVerticalPosition: 'INFO_CENTER',
-    };
-    driver.mount.proGallery(currentTestStyles);
+    });
+    driver.mount.proGallery(initialProps);
     await driver.update();
     const navArrows = driver.find.selector('.nav-arrows-container');
     expect(navArrows).to.have.lengthOf(0);
@@ -35,7 +35,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   // Checks if INFO_CENTER position is good on Slideshow
   it('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 39,
       arrowsVerticalPosition: 'INFO_CENTER',
@@ -51,7 +51,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
   });
 
   it('Checks if "ITEM_CENTER" has correct distance from top for SlideShow', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 39,
       arrowsVerticalPosition: 'ITEM_CENTER',
@@ -64,7 +64,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
   });
 
   it('Checks if "IMAGE_CENTER" has correct distance from top for SlideShow', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 39,
       arrowsVerticalPosition: 'IMAGE_CENTER',
@@ -79,11 +79,11 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   // Checks if INFO_CENTER position is good on Slider and below placement
   it('Checks if "INFO_CENTER" has correct distance from top for Slider', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       slideshowInfoSize: 39,
       titlePlacement: 'SHOW_BELOW',
-      arrowsVerticalPosition: 'ITEM_CENTER',
+      arrowsVerticalPosition: 'INFO_CENTER',
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
