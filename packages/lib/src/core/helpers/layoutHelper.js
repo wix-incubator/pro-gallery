@@ -293,8 +293,8 @@ const addMarginsToSupportShadows = (styles) => {
 }
 const centerArrowsWhenNeeded = (styles) => {
   let _styles = {...styles}
-  if (!isAboveOrBelowPlacement(styles.titlePlacement, styles.isSlideshow)) {
-    // if text (info) placement is not above or below (w/o hover), arrows are gallery("item") centered
+  if (!isAboveOrBelowPlacement(styles.titlePlacement, styles.isSlideshow) || styles.numberOfImagesPerCol !== 1) {
+    // if text (info) placement is not above or below (w/o hover) or more then 1 images per col, arrows are gallery("item") centered
     _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
   }
   return _styles;

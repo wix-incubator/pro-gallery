@@ -23,6 +23,7 @@ const fixToSlideshow = (styles) => {
   presetStyles.itemBorderWidth = 0;
   presetStyles.itemBorderRadius = 0;
   presetStyles.itemBorderColor = undefined;
+  presetStyles.numberOfImagesPerCol = 1;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetStyles.smartCrop = false;
