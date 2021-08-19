@@ -1,5 +1,6 @@
 module.exports = getSchemaFromTypes;
 const path = require('path');
+const fs = require('fs');
 
 const TJS = require('typescript-json-schema');
 function getSchemaFromTypes() {
@@ -16,8 +17,17 @@ function getSchemaFromTypes() {
   // optionally pass a base path
   // const basePath = "./my-dir";
 
+  const typesFilePath = path.join(
+    __dirname,
+    '../../common/interfaces/galleryTypes.ts'
+  );
+  console.log(
+    fs.existsSync(
+      path.join(__dirname, '../../common/interfaces/galleryTypes.ts')
+    )
+  );
   const program = TJS.getProgramFromFiles(
-    [path.join(__dirname, '../src/components/gallery/galleryTypes.ts')],
+    [typesFilePath],
     compilerOptions
     // basePath
   );
