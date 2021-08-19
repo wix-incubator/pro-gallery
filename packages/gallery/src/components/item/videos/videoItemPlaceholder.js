@@ -1,3 +1,4 @@
+import React from 'react';
 import ImageItem from '../imageItem';
 import { GalleryComponent } from '../../galleryComponent';
 
