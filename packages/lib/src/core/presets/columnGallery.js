@@ -1,13 +1,13 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
-
+import { assignByString } from '../helpers/stylesUtils';
 const fixToColumn = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.COLUMN;
   presetStyles.cubeType = 'fill';
   presetStyles.cubeImages = true;
-  presetStyles.cropRatio = 0.35;
+  presetStyles = assignByString(presetStyles, 'layoutParams_cropRatio', 0.35);
   presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
   presetStyles.isVertical = false;
   presetStyles.groupSize = 1;

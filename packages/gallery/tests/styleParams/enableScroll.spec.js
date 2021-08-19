@@ -1,22 +1,24 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - enableScroll', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should set class "slider" when "enableScroll" is "true"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableScroll: true,
@@ -28,7 +30,7 @@ describe('styleParam - enableScroll', () => {
     driver.detach.proGallery();
   });
   it('should not set class "slider" when "enableScroll" is "false"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       enableScroll: false,

@@ -241,8 +241,8 @@ class ImageItem extends GalleryComponent {
 
   render() {
     const imageRenderer = this.getImageElement();
-    const imageContainerClassNames = this.getImageContainerClassNames();
-    const animationOverlay = this.getImageAnimationOverlay();
+    const imageContainerClassNames = `${this.getImageContainerClassNames()} ${this.props.extraClasses || ''}`
+    const animationOverlay = this.props.overlay || this.getImageAnimationOverlay();
     const renderedItem = this.getImageContainer(
       imageRenderer,
       imageContainerClassNames,

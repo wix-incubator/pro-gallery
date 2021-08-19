@@ -8,7 +8,11 @@ const fixToThumbnail = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.THUMBNAIL;
   presetStyles.enableInfiniteScroll = true;
-  presetStyles.cropRatio = '100%/100%';
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_cropRatio',
+    '100%/100%'
+  );
   presetStyles.cubeImages = true;
   presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
