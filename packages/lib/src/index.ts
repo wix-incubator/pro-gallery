@@ -32,5 +32,13 @@ export { isDeviceTypeTablet } from './common/window/viewModeWrapper';
 export { isDeviceTypeDesktop } from './common/window/viewModeWrapper';
 export { isDeviceTypeTouch } from './common/window/viewModeWrapper';
 
+export { StyleParams } from './common/interfaces/styles';
+export { Item } from './common/interfaces/Item';
+export { Container } from './common/interfaces/Container';
+export { EventsListener } from './common/interfaces/EventsListener';
+export { CreateMediaUrl } from './common/interfaces/CreateMediaUrl';
+export { CustomComponents } from './common/interfaces/CustomComponents';
+export { ScrollingElement } from './common/interfaces/ScrollingElement';
+
 export { default as galleryOptions } from './settings/options';
 export { INPUT_TYPES } from './settings/utils/constants';

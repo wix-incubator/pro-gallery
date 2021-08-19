@@ -1,5 +1,5 @@
 export interface CreateMediaUrl {
-  (args: {
+  (args: { // eslint-disable-line
     item: Record<string, any>;
     originalUrl: string;
     resizeMethod: ResizeMethods;

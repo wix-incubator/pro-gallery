@@ -4,10 +4,7 @@ import { BlueprintsManager } from 'pro-gallery-blueprints';
 import ProGallery from './proGallery/proGallery';
 // import { Dimensions } from '../../common/interfaces/Dimensions';
 
-import {
-  GalleryProps,
-  GalleryState,
-} from '../../common/interfaces/galleryTypes';
+import { GalleryProps, GalleryState } from 'pro-gallery-lib';
 import shouldValidate from './typeValidator/shouldValidate';
 
 export default class BaseGallery extends React.Component<
