@@ -1,6 +1,5 @@
 module.exports = getSchemaFromTypes;
 const path = require('path');
-const fs = require('fs');
 
 const TJS = require('typescript-json-schema');
 function getSchemaFromTypes() {
@@ -25,9 +24,5 @@ function getSchemaFromTypes() {
 
   // We can either get the schema for one file and one type...
   const schema = TJS.generateSchema(program, 'GalleryProps', settings);
-  fs.writeFileSync(
-    path.join(__dirname, 'schema.json'),
-    JSON.stringify(schema, null, 4)
-  );
   return schema;
 }
