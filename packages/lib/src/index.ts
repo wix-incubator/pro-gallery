@@ -2,6 +2,7 @@ export { default as GALLERY_CONSTS } from './common/constants';
 export { default as GalleryItem } from './core/galleryItem';
 export { default as defaultStyles } from './common/defaultStyles';
 export { default as coreStyles } from './common/coreStyles';
+export { writeES5StandaloneValidateMethod } from './common/buildScripts/buildRuntimeValidateFunctionFromTypes';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
