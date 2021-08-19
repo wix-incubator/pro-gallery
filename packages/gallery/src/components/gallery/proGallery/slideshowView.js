@@ -1006,7 +1006,6 @@ class SlideshowView extends GalleryComponent {
 
     // Determines the direction in which the Nav arrows are pushed by 'infoSpace'
     const infoSpaceDirection = GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? -1 : 1;
-    // Always Gallery centered when more then one image per column
     const infoSpace = 
           {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
