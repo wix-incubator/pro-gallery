@@ -2,8 +2,10 @@ import GALLERY_CONSTS from './constants';
 import coreStyles from './coreStyles';
 
 const defaultStyles = Object.assign({}, coreStyles, {
+  layoutParams: {
+    repeatingGroupTypes: '',
+  },
   gallerySize: 30,
-  rotatingGroupTypes: '',
   cropOnlyFill: false,
   rotatingCropRatios: '',
   columnWidths: '',
