@@ -9,10 +9,10 @@ function build(schema) {
   let route = [];
   const properties = schema.properties;
   _.forEach(properties, (refObj, key) => {
-    traverse(schema, refObj.$ref, key);
+    traverse(refObj.$ref, key);
   });
 
-  function traverse(schema, refName, key) {
+  function traverse(refName, key) {
     // console.log(`key: ${key}`)
     route.push(key);
     // console.log(route)
@@ -20,9 +20,7 @@ function build(schema) {
     const obj = schema.definitions[refName.split('#/definitions/').pop()];
     if (_.isUndefined(obj.properties)) buildObject();
     else {
-      _.forEach(obj.properties, (refObj, key) =>
-        traverse(schema, refObj.$ref, key)
-      );
+      _.forEach(obj.properties, (refObj, key) => traverse(refObj.$ref, key));
     }
   }
 
