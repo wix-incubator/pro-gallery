@@ -9,7 +9,7 @@ import {
   isPreviewMode,
   isSEOMode,
 } from 'pro-gallery-lib';
-import ImageItem from './imageItem.js';
+import ImageItem from './imageWithMagnified.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
