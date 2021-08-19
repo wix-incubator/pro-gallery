@@ -36,13 +36,11 @@ function convertStylesBackwards(initialStyles) {
 
 const layoutParamsMap = {
   //done
-  galleryMargin: 'layoutParams_gallerySpacing',
-  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow',
-
-  //TBD
+  galleryMargin: 'layoutParams_gallerySpacing', //done
+  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow', //done
 
   //Are all of the following content keys? so they could go into layoutParams_content_
-  cubeRatio: 'layoutParams_cropRatio',
+  cubeRatio: 'layoutParams_cropRatio', //done
   cubeType: 'layoutParams_cropType',
   cubeImages: 'layoutParams_enableCrop',
   useMaxDimensions: 'layoutParams_enableStretchImages', //naming???
