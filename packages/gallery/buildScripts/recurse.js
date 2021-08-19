@@ -9,16 +9,26 @@ function build(schema) {
   let route = [];
   const properties = schema.properties;
   _.forEach(properties, (refObj, key) => {
-    traverse(refObj.$ref, key);
+    try {
+      traverse(refObj.$ref, key);
+    } catch (e) {
+      console.log(`error with key: ${key}`);
+      console.error(e);
+      throw e;
+    }
   });
 
   function traverse(refName, key) {
     // console.log(`key: ${key}`)
     route.push(key);
+    if (!refName) {
+      buildObject();
+      return;
+    }
     // console.log(route)
 
     const obj = schema.definitions[refName.split('#/definitions/').pop()];
-    if (_.isUndefined(obj.properties)) buildObject();
+    if (_.isUndefined(obj.properties) || _.isUndefined(refName)) buildObject();
     else {
       _.forEach(obj.properties, (refObj, key) => traverse(refObj.$ref, key));
     }
@@ -37,4 +47,4 @@ const schema = fs.readFileSync(path.join(__dirname, 'schema.json'), {
   encoding: 'utf8',
 });
 const result = build(JSON.parse(schema));
-console.log(result);
+fs.writeFileSync('schemaKeys.json', JSON.stringify(result, null, 4));
