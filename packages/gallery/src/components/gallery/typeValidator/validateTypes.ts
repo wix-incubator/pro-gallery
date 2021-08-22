@@ -1,4 +1,5 @@
 import typeErrorsUI from './typeErrorsUI';
-import validate from './validateTypes/validateTypes';
+import { validateTypes } from 'pro-gallery-lib';
 
+const validate = validateTypes;
 export { validate, typeErrorsUI };
