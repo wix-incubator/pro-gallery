@@ -12,7 +12,7 @@ function writeES5StandaloneValidateMethod() {
     getSchemaFromTypes(typesFileAbsolutePath)
   );
   const tempFilePath = path.join(__dirname, 'temp.js');
-  fs.writeFileSync(tempFilePath, `module.exports=${code}`);
+  fs.writeFileSync(tempFilePath, code);
   const standaloneValidateCodePath = path.join(
     galleryFolder,
     'typeValidator/standaloneValidateCode.js'
