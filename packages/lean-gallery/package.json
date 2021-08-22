@@ -23,9 +23,10 @@
     "watch": "npm run start",
     "start": "tsc -w & npm run css-watch",
     "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "test": "echo 'no test needed'",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/leanGallery/leanGallery.scss:dist/styles/leanGallery.css",
     "css-watch": "sass --watch src/leanGallery/leanGallery.scss:dist/styles/leanGallery.css",
-    "lint": "eslint \"src/**/*.{js,jsx,ts}\"",
+    "lint": "eslint \"src/**t*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
