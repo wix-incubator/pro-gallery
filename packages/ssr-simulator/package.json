@@ -8,8 +8,8 @@
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "_test": "node scripts/test.js",
+    "build": "echo 'not building'",
+    "_test": "echo 'no test'",
     "test": " ",
     "start:prod": "node scripts/startProd.js",
     "lint": "eslint src/**/*.js",
