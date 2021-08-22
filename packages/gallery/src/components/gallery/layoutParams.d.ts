@@ -1,5 +1,5 @@
 export interface LayoutParams {
-  cropRatio: number | string | array<string>; //This is cropRatio and rotatingCropRatios all together.
+  cropRatio: number | string | Array<string>; //This is cropRatio and rotatingCropRatios all together.
   // numberOfGroupsPerRow: number;
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;
@@ -31,7 +31,7 @@ export interface Collage {
   amount: number;
   density: number;
   groupByOrientation: boolean;
-  groupTypes: string | array<string>; // the string is of a closed list of strings. need to validate it. how? //the array is the representation of rotating.
+  groupTypes: string | Array<string>; // the string is of a closed list of strings. need to validate it. how? //the Array is the representation of rotating.
   groupSize: number;
 }
 export interface Thumbnails {
