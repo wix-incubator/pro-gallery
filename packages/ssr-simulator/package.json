@@ -89,6 +89,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
+    "ts-node": "^9.0.0",
     "eslint-config-react-app": "^6.0.0"
   }
 }
