@@ -276,11 +276,9 @@ class SlideshowView extends GalleryComponent {
 
     // ---- navigate ---- //
     try {
-      const scrollMarginCorrection = this.getStyles().margin || 0;
-      const _scrollDuration =
-        scrollDuration || this.props.styleParams.scrollDuration || 400;
+      const scrollParams = this.getScrollParameters(scrollDuration, scrollingUpTheGallery);
+      const { scrollMarginCorrection, _scrollDuration, shouldAllowScroll } = scrollParams;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
-      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
 
         shouldAllowScroll &&
         await scrollToItem(
@@ -330,10 +328,8 @@ class SlideshowView extends GalleryComponent {
 
     // ---- navigate ---- //
     try {
-      const scrollMarginCorrection = this.getStyles().margin || 0;
-      const _scrollDuration =
-        scrollDuration || this.props.styleParams.scrollDuration || 400;
-      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
+      const scrollParams = this.getScrollParameters(scrollDuration, scrollingUpTheGallery);
+      const { scrollMarginCorrection, _scrollDuration, shouldAllowScroll } = scrollParams;
 
       shouldAllowScroll &&
       await scrollToGroup(
@@ -368,6 +364,14 @@ class SlideshowView extends GalleryComponent {
         }
       }
     );
+  }
+
+  getScrollParameters(scrollDuration, scrollingUpTheGallery) {
+    return {
+      scrollMarginCorrection: this.getStyles().margin || 0,
+      _scrollDuration: scrollDuration || this.props.styleParams.scrollDuration || 400,
+      shouldAllowScroll: !this.shouldNotAllowScroll({ scrollingUpTheGallery })
+    }
   }
 
   onCurrentItemChanged() {
