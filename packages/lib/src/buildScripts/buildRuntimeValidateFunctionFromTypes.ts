@@ -1,12 +1,15 @@
-export { writeES5StandaloneValidateMethod };
+export default writeES5StandaloneValidateMethod;
 const path = require('path');
 const browserify = require('browserify');
 const fs = require('fs');
 const Ajv = require('ajv');
 
-const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
+import getSchemaFromTypes from './generateJSONSchemaFromTypes';
 
-function writeES5StandaloneValidateMethod(rootTypesFile, outputPath) {
+function writeES5StandaloneValidateMethod(
+  rootTypesFile: string,
+  outputPath: string
+) {
   const code = buildValidationFunction(getSchemaFromTypes(rootTypesFile));
   const tempFilePath = path.join(__dirname, 'temp.js');
   fs.writeFileSync(tempFilePath, `module.exports=${code}`);

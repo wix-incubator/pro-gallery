@@ -13,7 +13,7 @@ export {
 } from './core/helpers/stylesConverter';
 export { assignByString } from './core/helpers/stylesUtils';
 export { flatToNested } from './core/helpers/stylesUtils';
-export { writeES5StandaloneValidateMethod } from './buildScripts/buildRuntimeValidateFunctionFromTypes';
+export { default as writeES5StandaloneValidateMethod } from './buildScripts/buildRuntimeValidateFunctionFromTypes';
 export { flattenObject } from './core/helpers/stylesUtils';
 export { mergeNestedObjects } from './core/helpers/stylesUtils';
 export { NEW_PRESETS } from './core/presets/presets';
