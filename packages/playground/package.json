@@ -14,6 +14,8 @@
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
+    "ajv": "^8.6.0",
+    "typescript-json-schema": "^0.50.1",
     "@babel/core": "7.4.3",
     "antd": "^3.20.7",
     "css-animation": "1.5.0",
