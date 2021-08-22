@@ -68,6 +68,7 @@
     "lerna-packages": "0.0.1",
     "lint-staged": "^10.5.2",
     "lodash": "^4.17.21",
+    "module": "^1.2.5",
     "prettier": "^2.1.2",
     "prompt": "^1.0.0",
     "semver": "^6.3.0"
