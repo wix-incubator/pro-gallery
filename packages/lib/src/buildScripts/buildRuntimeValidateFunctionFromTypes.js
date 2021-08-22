@@ -1,3 +1,4 @@
+export { writeES5StandaloneValidateMethod };
 const path = require('path');
 const browserify = require('browserify');
 const fs = require('fs');
@@ -5,19 +6,11 @@ const Ajv = require('ajv');
 
 const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
 
-function writeES5StandaloneValidateMethod() {
-  const code = buildValidationFunction(getSchemaFromTypes());
+function writeES5StandaloneValidateMethod(rootTypesFile, outputPath) {
+  const code = buildValidationFunction(getSchemaFromTypes(rootTypesFile));
   const tempFilePath = path.join(__dirname, 'temp.js');
   fs.writeFileSync(tempFilePath, `module.exports=${code}`);
-  const typeValidatorDir = path.join(
-    __dirname,
-    '../src/components/gallery/typeValidator'
-  );
-  const standaloneValidateCodePath = path.join(
-    typeValidatorDir,
-    '/standaloneValidateCode.js'
-  );
-  const browserifyBundle = standaloneValidateCodePath;
+  const browserifyBundle = outputPath;
   const fileWriter = fs.createWriteStream(browserifyBundle);
   browserify(tempFilePath, { standalone: 'nirnaor' })
     .transform('babelify', { global: true, presets: ['@babel/preset-env'] })
@@ -42,5 +35,3 @@ function buildValidationFunction(schema) {
   let moduleCode = standaloneCode(ajv, validate);
   return moduleCode;
 }
-
-writeES5StandaloneValidateMethod();
