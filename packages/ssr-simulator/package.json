@@ -20,6 +20,9 @@
     "docker": "npm run docker:build && npm run docker:start"
   },
   "dependencies": {
+    "ajv": "^8.6.0",
+    "typescript-json-schema": "^0.50.1",
+    "tslib": "^2.1.0",
     "@babel/core": "7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
@@ -68,6 +71,7 @@
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
     "pro-gallery": "^4.0.15-beta.86",
+    "pro-gallery-lib": "^4.0.15-beta.86",
     "pro-layouts": "^4.0.15-beta.86",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
