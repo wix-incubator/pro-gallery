@@ -102,7 +102,7 @@ export class Item {
         return 0;
       } else if (this.pin === dir) {
         //this is used only for 3h/3v group types - to calc the offset of the middle item
-        const m = this.imageMargin / 2;
+        const m = this.itemSpacing / 2;
         // return ((groupSize - 6 * m) * this.pinOffset + 2 * m);
         if (dir === 'top') {
           return this.pinAfter.height + 2 * m;
@@ -127,7 +127,7 @@ export class Item {
   }
 
   calcScatter(offset) {
-    const m = this.imageMargin / 2;
+    const m = this.itemSpacing / 2;
     const g = this.gallerySpacing;
 
     const spaceLeft = offset.left > 0 ? m : g;
@@ -358,10 +358,10 @@ export class Item {
   }
 
   get margins() {
-    return this.imageMargin / 2 || 0;
+    return this.itemSpacing / 2 || 0;
   }
   set margins(m) {
-    this.imageMargin = m;
+    this.itemSpacing = m;
   }
 
   get dimensions() {
@@ -452,8 +452,8 @@ export class Item {
           if (r.type === '%') {
             const dim =
               this.container[r.dim] +
-              (r.dim === 'galleryHeight' ? this.imageMargin / 2 : 0);
-            const relativeDim = r.val * dim - this.imageMargin;
+              (r.dim === 'galleryHeight' ? this.itemSpacing / 2 : 0);
+            const relativeDim = r.val * dim - this.itemSpacing;
             return relativeDim;
           } else {
             return r.val;
