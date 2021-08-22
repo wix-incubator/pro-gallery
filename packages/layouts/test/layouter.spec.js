@@ -86,7 +86,7 @@ describe('Layouter', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
-      styleParams.repeatingGroupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
+      styleParams.layoutParams.repeatingGroupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
       styleParams.imageMargin = 0;
 
       gallery = getLayout({ items, container, styleParams });
@@ -419,13 +419,13 @@ describe('Layouter', () => {
       ];
 
       for (const type of groupTypes) {
-        styleParams.repeatingGroupTypes = type;
+        styleParams.layoutParams.repeatingGroupTypes = type;
         gallery = getLayout({ items, container, styleParams });
 
         const isWithinTypes = gallery.columns[0].groups.reduce(
           (g, group, idx) => {
             const repeatingGroupTypes =
-              styleParams.repeatingGroupTypes.split(',');
+              styleParams.layoutParams.repeatingGroupTypes.split(',');
             const expectedType =
               repeatingGroupTypes[idx % repeatingGroupTypes.length];
             const groupType = group.type;
@@ -630,8 +630,8 @@ describe('Layouter', () => {
     // repeatingGroupTypes
     it('should type groups according to repeatingGroupTypes if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.repeatingGroupTypes = '2h,3v,3b,3t,1,2h,2v';
-      const repeatingGroupTypesArr = styleParams.repeatingGroupTypes.split(',');
+      styleParams.layoutParams.repeatingGroupTypes = '2h,3v,3b,3t,1,2h,2v';
+      const repeatingGroupTypesArr = styleParams.layoutParams.repeatingGroupTypes.split(',');
 
       gallery = getLayout({ items, container, styleParams });
       gallery.groups.forEach((group, g) => {
