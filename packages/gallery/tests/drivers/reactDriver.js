@@ -325,6 +325,11 @@ class galleryDriver {
             eventsListener: () => {},
           },
           customComponents: {},
+          styleParams: {
+            layoutParams: {},
+            behaviourParams: {},
+            stylingParams: {},
+          },
         });
       },
 

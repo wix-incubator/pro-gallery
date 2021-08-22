@@ -6,6 +6,7 @@ import GalleryDriver from '../../drivers/reactDriver';
 import { testImages } from '../../drivers/mocks/images-mock';
 import ItemView from '../../../src/components/item/itemView';
 import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 
 describe('Item View', () => {
   let driver;
@@ -36,7 +37,7 @@ describe('Item View', () => {
   });
   // describe('toggleHoverOnMobile', () => {
   //   it('should toggle showHover', () => {
-  //     driver.mount(ItemView, sampleItemViewProps);
+  //     driver.mount(ItemView, props);
   //     driver.set.state({
   //       showHover: true
   //     });
@@ -48,11 +49,11 @@ describe('Item View', () => {
   // });
   describe('onItemClick', () => {
     it('should onItemClicked for items with link', () => {
-      Object.assign(sampleItemViewProps, {
+      const props = mergeNestedObjects(sampleItemViewProps, {
         type: 'image',
         styleParams: { itemClick: 'link', videoPlay: 'onClick' },
       });
-      driver.mount(ItemView, sampleItemViewProps);
+      driver.mount(ItemView, props);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
       expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_CLICKED)).to.be.true;
@@ -60,12 +61,12 @@ describe('Item View', () => {
     });
 
     it('should onItemClicked for items with expand', () => {
-      Object.assign(sampleItemViewProps, {
+      const props = mergeNestedObjects(sampleItemViewProps, {
         thumbnailHighlightId: null,
         type: 'image',
         styleParams: { itemClick: 'expand' },
       });
-      driver.mount(ItemView, sampleItemViewProps);
+      driver.mount(ItemView, props);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
       expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED)).to.be
@@ -77,7 +78,7 @@ describe('Item View', () => {
     // it('should toggleHover onClick when the device is mobile and the onclick is styles to nothing', () => {
     //   const mobileStub = sinon.stub(utils, 'isMobile').returns(true);
     //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'nothing', videoPlay: 'onClick'}});
-    //   driver.mount(ItemView, sampleItemViewProps);
+    //   driver.mount(ItemView, props);
     //   const spy = sinon.spy(ItemView.prototype, 'props.actions.setCurrentHover');
     //   driver.find.hook('item-wrapper').simulate('click');
     //   expect(spy.called).to.be.true;
@@ -94,7 +95,7 @@ describe('Item View', () => {
   // not testing all the "return component" functions
   describe('getItemInner', () => {
     it('should return a placeholder for non playing video', () => {
-      Object.assign(sampleItemViewProps, {
+      const props = mergeNestedObjects(sampleItemViewProps, {
         currentPlayingIdx: 1,
         styleParams: {
           enableVideoPlaceholder: true,
@@ -103,14 +104,14 @@ describe('Item View', () => {
         type: 'video',
         idx: 0,
       });
-      driver.mount(ItemView, sampleItemViewProps);
+      driver.mount(ItemView, props);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
     });
   });
   //compunentDidUpdate not tested
   describe('render', () => {
     it('should have boxshadow if defined', () => {
-      Object.assign(sampleItemViewProps, {
+      const props = mergeNestedObjects(sampleItemViewProps, {
         styleParams: {
           layoutParams: {
             itemSpacing: 5,
@@ -123,7 +124,7 @@ describe('Item View', () => {
           imageInfoType: 'ATTACHED_BACKGROUND',
         },
       });
-      driver.mount(ItemView, sampleItemViewProps);
+      driver.mount(ItemView, props);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
       driver.set.props({
@@ -143,57 +144,60 @@ describe('Item View', () => {
       expect(style.boxShadow).to.equal(undefined);
     });
     it('should toggle overflowY visible/inherit', () => {
-      Object.assign(sampleItemViewProps, {
+      let props = mergeNestedObjects(sampleItemViewProps, {
         styleParams: {
           isSlideshow: true,
         },
       });
-      driver.mount(ItemView, sampleItemViewProps);
+      driver.mount(ItemView, props);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('visible');
-      driver.set.props({
+      props = mergeNestedObjects(props, {
         styleParams: {
           isSlideshow: false,
         },
       });
+      driver.set.props(props);
       style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('hidden');
     });
     it('item-Wrapper should have class based on cubeType', () => {
-      Object.assign(sampleItemViewProps, {
+      let props = mergeNestedObjects(sampleItemViewProps, {
         styleParams: {
           cubeImages: true,
           cubeType: 'foo',
         },
       });
-      driver.mount(ItemView, sampleItemViewProps);
+      driver.mount(ItemView, props);
       expect(
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(true);
-      driver.set.props({
+      props = mergeNestedObjects(sampleItemViewProps, {
         styleParams: {
           cubeImages: false,
         },
       });
+      driver.set.props(props);
       expect(
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(false);
     });
     it('should toggle overflowY visible/inherit test2', () => {
-      Object.assign(sampleItemViewProps, {
+      let props = mergeNestedObjects(sampleItemViewProps, {
         style: { bgColor: 'red' },
         styleParams: {
           cubeType: 'fit',
         },
       });
-      driver.mount(ItemView, sampleItemViewProps);
+      driver.mount(ItemView, props);
       let style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
-      driver.set.props({
+      props = mergeNestedObjects(props, {
         styleParams: {
           cubeType: 'foot',
         },
       });
+      driver.set.props(props);
       style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('red');
     });
