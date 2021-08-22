@@ -115,6 +115,6 @@ function expectedStyles() {
     overlaySize: 100,
     overlaySizeType: 'PERCENT',
     overlayPadding: 0,
-    magnifyPercent: 2,
+    magnificationLevel: 2,
   };
 }

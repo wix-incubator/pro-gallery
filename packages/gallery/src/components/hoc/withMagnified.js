@@ -48,6 +48,7 @@ function withMagnified(WrappedComponent) {
       const { clientX, clientY } = e;
       const { x, y, shouldMagnify } = this.state;
       if (!shouldMagnify) {
+        // console.log(this.getMagnifyInitialPos(e));
         this.setState(this.getMagnifyInitialPos(e));
       } else {
         this.dragStartX = x + clientX;
@@ -129,17 +130,15 @@ function withMagnified(WrappedComponent) {
       const { style } = this.props;
       const { magnifiedWidth, magnifiedHeight, cubedWidth, cubedHeight } =
         style;
-      const { marginTop, marginLeft } = this.props.imageDimensions;
       const { top, left } = this.containerRef.getBoundingClientRect();
+
+      const x =
+        ((clientX - left) / cubedWidth) * magnifiedWidth - (clientX - left);
+      const y =
+        ((clientY - top) / cubedHeight) * magnifiedHeight - (clientY - top);
       return {
-        x: Math.max(
-          0,
-          Math.min(clientX - left - marginLeft * 2, magnifiedWidth - cubedWidth)
-        ),
-        y: Math.max(
-          0,
-          Math.min(clientY - top - marginTop * 2, magnifiedHeight - cubedHeight)
-        ),
+        x: Math.max(0, Math.min(x, magnifiedWidth - cubedWidth)),
+        y: Math.max(0, Math.min(y, magnifiedHeight - cubedHeight)),
       };
     }
 
@@ -198,6 +197,8 @@ function withMagnified(WrappedComponent) {
               style={{
                 zIndex: 1000,
                 position: 'absolute',
+                top: 0,
+                left: 0,
               }}
             >
               {this.getPreloadImage()}

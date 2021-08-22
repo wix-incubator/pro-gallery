@@ -109,7 +109,7 @@ export const stylesBySection = {
     'allowContextMenu',
     'pauseAutoSlideshowOnHover',
     'itemClick',
-    'magnifyPercent',
+    'magnificationLevel',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',

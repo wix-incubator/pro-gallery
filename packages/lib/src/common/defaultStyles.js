@@ -46,7 +46,7 @@ const defaultStyles = Object.assign({}, coreStyles, {
   overlaySize: 100,
   overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
   overlayPadding: 0,
-  magnifyPercent: 2,
+  magnificationLevel: 2,
 });
 
 export default defaultStyles;

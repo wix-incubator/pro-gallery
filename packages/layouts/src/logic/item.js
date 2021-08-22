@@ -35,7 +35,7 @@ export class Item {
       this.smartCrop = styleParams.smartCrop;
       this.useMaxDimensions =
         styleParams.useMaxDimensions && this.itemType !== 'text';
-      this.magnifyPercent = styleParams.magnifyPercent;
+      this.magnificationLevel = styleParams.magnificationLevel;
     }
 
     this._groupOffset = {
@@ -314,7 +314,7 @@ export class Item {
 
     const { fixLeft = 0 } = this.dimensions;
     this.style.innerWidth = this.style.width - 2 * fixLeft;
-    this.style.magnifiedWidth = this.style.innerWidth * this.magnifyPercent;
+    this.style.magnifiedWidth = this.style.innerWidth * this.magnificationLevel;
   }
 
   get outerHeight() {
@@ -347,7 +347,8 @@ export class Item {
 
     const { fixTop = 0 } = this.dimensions;
     this.style.innerHeight = this.style.height - 2 * fixTop;
-    this.style.magnifiedHeight = this.style.innerHeight * this.magnifyPercent;
+    this.style.magnifiedHeight =
+      this.style.innerHeight * this.magnificationLevel;
   }
 
   get maxHeight() {
@@ -553,7 +554,7 @@ export class Item {
       isPortrait: this.isPortrait,
       isLandscape: this.isLandscape,
       visibility: this.visibility,
-      magnifyPercent: this.magnifyPercent,
+      magnificationLevel: this.magnificationLevel,
     };
   }
 }
