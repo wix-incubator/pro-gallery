@@ -1,21 +1,23 @@
 export interface LayoutParams {
+  collage: Collage;
+  thumbnails: Thumbnails;
+  navigationArrows: NavigationArrows;
+
+  gallerySpacing: number;
+  itemSpacing: number;
+  enableStreching: boolean;
+
   cropRatio: number | string | Array<string>; //This is cropRatio and rotatingCropRatios all together.
   // numberOfGroupsPerRow: number;
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;
-  gallerySpacing: number;
   cropType: string;
   enableCrop: boolean;
-  enableStreching: boolean;
   enableSmartCrop: boolean;
   minItemSize: number;
-  cropOnlyFill: boolean; //DELETE?
-  itemSpacing: number;
+  cropOnlyFill: boolean; //DELETE? - its used in slider gallery
   forceGroupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT'; //use const? or is this the new const?
   slideshowInfoSize: number;
-  collage: Collage;
-  thumbnails: Thumbnails;
-  navigationArrows: NavigationArrows;
   scatter: number; //make sure this is a number;
   scrollDirection: 'VERTICAL' | 'HORIZONTAL';
   layoutOrientation: 'VERTICAL' | 'HORIZONTAL'; //isVertical
@@ -47,9 +49,9 @@ export interface NavigationArrows {
   position: 'ON_THE_GALLERY' | 'OUTSIDE_THE_GALLERY';
   verticalAlignment: 'ITEM' | 'IMAGE' | 'INFO';
 }
-const layoutParamsMap = {
-  fixedColumns: 'layoutParams_fixedColumns', // layouter internal
-  externalInfoHeight: 'layoutParams_externalInfoHeight', //layouter API
-  externalInfoWidth: 'layoutParams_externalInfoWidth', //layouter API
-  targetItemSize: 'layoutParams_targetItemSize', //layouter API
-};
+// const layoutParamsMap = {
+//   fixedColumns: 'layoutParams_fixedColumns', // layouter internal
+//   externalInfoHeight: 'layoutParams_externalInfoHeight', //layouter API
+//   externalInfoWidth: 'layoutParams_externalInfoWidth', //layouter API
+//   targetItemSize: 'layoutParams_targetItemSize', //layouter API
+// };
