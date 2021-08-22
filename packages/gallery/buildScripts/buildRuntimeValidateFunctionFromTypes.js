@@ -61,11 +61,14 @@ function getSchemaFromTypes(typesFileAbsolutePath) {
   return schema;
 }
 
-const galleryFolder = path.join(__dirname, '../src/components/gallery');
-const sourceTypesFile = path.join(galleryFolder, 'galleryTypes.ts');
-const tempFile = path.join(__dirname, 'temp.js');
-const targetFile = path.join(
-  galleryFolder,
-  'typeValidator/standaloneValidateCode.js'
-);
-writeES5StandaloneValidateMethod({ sourceTypesFile, targetFile, tempFile });
+function start() {
+  const galleryFolder = path.join(__dirname, '../src/components/gallery');
+  const sourceTypesFile = path.join(galleryFolder, 'galleryTypes.ts');
+  const tempFile = path.join(__dirname, 'temp.js');
+  const targetFile = path.join(
+    galleryFolder,
+    'typeValidator/standaloneValidateCode.js'
+  );
+  writeES5StandaloneValidateMethod({ sourceTypesFile, targetFile, tempFile });
+}
+start();
