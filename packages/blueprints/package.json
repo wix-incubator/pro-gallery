@@ -1,7 +1,6 @@
 {
   "name": "pro-gallery-blueprints",
   "version": "4.0.15-beta.86",
-  "publishScoped": false,
   "private": false,
   "author": {
     "name": "Nir Naor",
