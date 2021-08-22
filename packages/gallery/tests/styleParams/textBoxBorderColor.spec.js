@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import {
   styleParams,
@@ -10,22 +11,26 @@ import {
 
 describe('styleParam - textBoxBorderColor', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-    customComponents,
-  };
+  let initialProps;
+
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+      customComponents,
+    };
   });
+
   it('should set border-color to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderColor: { value: 'rgba(0,0,0,0)' },
+      itemBorderWidth: 1,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -33,11 +38,11 @@ describe('styleParam - textBoxBorderColor', () => {
       .selector('.gallery-item-bottom-info')
       .at(0)
       .parent();
-    expect(textsStyles.props().style.borderColor).to.eq('rgba(0,0,0,0)');
+    expect(textsStyles.props().style.borderColor).to.be.undefined;
     driver.detach.proGallery();
   });
   it('should not set border-color to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

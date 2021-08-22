@@ -17,12 +17,14 @@ describe('RCE Integration test', () => {
   });
   it('should match screenshot with default RCE styles', async () => {
     await driver.navigate({
-      layoutParams: { gallerySpacing: 0 },
+      layoutParams: {
+        gallerySpacing: 0,
+        cropRatio: 1,
+      },
       galleryLayout: 2,
       gallerySizeType: 'px',
       gallerySizePx: 300,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      cropRatio: 1,
       galleryThumbnailsAlignment: 'bottom',
       isVertical: false,
       imageMargin: 20,

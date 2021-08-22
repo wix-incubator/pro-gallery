@@ -1,5 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
@@ -7,18 +8,19 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('styleParam - imageMargin', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
   });
 
   it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 7,
       imageMargin: 10,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
@@ -32,7 +34,7 @@ describe('styleParam - imageMargin', () => {
 
   it('should use "top" and "left" properties to create the spacing', async () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: 2,
       imageMargin: 25,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
