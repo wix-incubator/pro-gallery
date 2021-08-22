@@ -6,7 +6,13 @@ const Ajv = require('ajv');
 const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
 
 function writeES5StandaloneValidateMethod() {
-  const code = buildValidationFunction(getSchemaFromTypes());
+  const typesFileAbsolutePath = path.join(
+    __dirname,
+    '../src/components/gallery/styles.d.ts'
+  );
+  const code = buildValidationFunction(
+    getSchemaFromTypes(typesFileAbsolutePath)
+  );
   const tempFilePath = path.join(__dirname, 'temp.js');
   fs.writeFileSync(tempFilePath, `module.exports=${code}`);
   const typeValidatorDir = path.join(
