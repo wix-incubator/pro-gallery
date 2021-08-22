@@ -8,6 +8,11 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "parserOptions": {
+	    "ecmaFeatures": {
+		    "globalReturn": true
+	    }
+    },
     "extends": [
         "eslint:recommended",
         "plugin:prettier/recommended",
