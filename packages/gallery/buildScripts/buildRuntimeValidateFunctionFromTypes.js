@@ -7,7 +7,7 @@ const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
 
 function writeES5StandaloneValidateMethod() {
   const galleryFolder = path.join(__dirname, '../src/components/gallery');
-  const typesFileAbsolutePath = path.join(galleryFolder, 'styles.d.ts');
+  const typesFileAbsolutePath = path.join(galleryFolder, 'galleryTypes.ts');
   const code = buildValidationFunction(
     getSchemaFromTypes(typesFileAbsolutePath)
   );
