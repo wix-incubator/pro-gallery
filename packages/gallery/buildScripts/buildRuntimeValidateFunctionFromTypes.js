@@ -8,7 +8,7 @@ function start() {
   const tempFile = path.join(__dirname, 'temp.js');
   const targetFile = path.join(
     galleryFolder,
-    'typeValidator/standaloneValidateCode.js'
+    'typeValidator/validateTypes/standaloneValidateCode.js'
   );
   writeES5StandaloneValidateMethod({
     sourceTypesFile,
