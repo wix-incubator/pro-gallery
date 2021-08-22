@@ -6,22 +6,16 @@ const Ajv = require('ajv');
 const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
 
 function writeES5StandaloneValidateMethod() {
-  const typesFileAbsolutePath = path.join(
-    __dirname,
-    '../src/components/gallery/styles.d.ts'
-  );
+  const galleryFolder = path.join(__dirname, '../src/components/gallery');
+  const typesFileAbsolutePath = path.join(galleryFolder, 'styles.d.ts');
   const code = buildValidationFunction(
     getSchemaFromTypes(typesFileAbsolutePath)
   );
   const tempFilePath = path.join(__dirname, 'temp.js');
   fs.writeFileSync(tempFilePath, `module.exports=${code}`);
-  const typeValidatorDir = path.join(
-    __dirname,
-    '../src/components/gallery/typeValidator'
-  );
   const standaloneValidateCodePath = path.join(
-    typeValidatorDir,
-    '/standaloneValidateCode.js'
+    galleryFolder,
+    'typeValidator/standaloneValidateCode.js'
   );
   const browserifyBundle = standaloneValidateCodePath;
   const fileWriter = fs.createWriteStream(browserifyBundle);
