@@ -18,7 +18,11 @@ const fixToMagic = (styles) => {
   presetStyles.collageDensity = undefined;
   presetStyles.groupTypes = undefined;
   presetStyles.oneRow = undefined; // later on in layoutHelper this can be changed if it is false, so not exactly fixed;
-  presetStyles.imageMargin = undefined;
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_itemSpacing',
+    undefined
+  );
   presetStyles.scatter = undefined;
   presetStyles = assignByString(
     presetStyles,
@@ -92,12 +96,16 @@ const addSeedStyles = (styles) => {
       .filter((type, i) => boolFromSeed('groupTypes' + i))
   );
   res.oneRow = boolFromSeed('oneRow'); //we keep oneRow here as this is the string that defines the outcome of the seed.
-  res.imageMargin = numFromSeed(
-    0,
-    featureManager.supports.spacingCalculation
-      ? numFromSeed(300, 800, 'gallerySize') / 5
-      : 5,
-    'imageMargin'
+  res = assignByString(
+    res,
+    'layoutParams_itemSpacing',
+    numFromSeed(
+      0,
+      featureManager.supports.spacingCalculation
+        ? numFromSeed(300, 800, 'gallerySize') / 5
+        : 5,
+      'imageMargin'
+    )
   );
   res = assignByString(
     res,

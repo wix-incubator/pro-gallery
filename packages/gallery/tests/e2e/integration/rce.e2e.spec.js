@@ -20,6 +20,7 @@ describe('RCE Integration test', () => {
       layoutParams: {
         gallerySpacing: 0,
         cropRatio: 1,
+        itemSpacing: 20,
       },
       galleryLayout: 2,
       gallerySizeType: 'px',
@@ -27,7 +28,6 @@ describe('RCE Integration test', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       galleryThumbnailsAlignment: 'bottom',
       isVertical: false,
-      imageMargin: 20,
       thumbnailSpacings: 0,
       cubeType: 'fill',
       enableInfiniteScroll: true,

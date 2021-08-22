@@ -3,7 +3,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('imageMargin - e2e', () => {
+describe('itemSpacing - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -16,18 +16,22 @@ describe('imageMargin - e2e', () => {
   });
   it('should create a margin between items ', async () => {
     await driver.navigate({
+      layoutParams: {
+        itemSpacing: 20,
+      },
       galleryLayout: 2,
-      imageMargin: 20,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
     const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not create a margin between items when "imageMargin" is "0"', async () => {
+  it('should not create a margin between items when "itemSpacing" is "0"', async () => {
     await driver.navigate({
+      layoutParams: {
+        itemSpacing: 0,
+      },
       galleryLayout: 2,
-      imageMargin: 0,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);

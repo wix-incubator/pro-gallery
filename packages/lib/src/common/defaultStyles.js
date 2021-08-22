@@ -5,6 +5,7 @@ import { mergeNestedObjects } from '../core/helpers/stylesUtils';
 const defaultStyles = mergeNestedObjects(coreStyles, {
   layoutParams: {
     repeatingGroupTypes: '',
+    itemSpacing: 10,
   },
   gallerySize: 30,
   cropOnlyFill: false,
@@ -12,7 +13,6 @@ const defaultStyles = mergeNestedObjects(coreStyles, {
   columnWidths: '',
   numberOfImagesPerCol: 1,
   groupsPerStrip: 0,
-  imageMargin: 10,
   scatter: 0,
   rotatingScatter: '',
   placeGroupsLtr: false,

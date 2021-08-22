@@ -4,6 +4,7 @@ const coreStyles = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
+    itemSpacing: 10, // The renderer will do the /2 *2 for his pictures, the default is the margin between images (thats how it is in the settings menu. 50 = 50 between images)
   },
   isRTL: false,
   isVertical: false,
@@ -22,7 +23,6 @@ const coreStyles = {
   numberOfImagesPerRow: 3,
   collageDensity: 0.8,
   galleryTextAlign: 'center',
-  imageMargin: 10, // The renderer will do the /2 *2 for his pictures, the default is the margin between images (thats how it is in the settings menu. 50 = 50 between images)
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
   showArrows: true,
   hasThumbnails: false,

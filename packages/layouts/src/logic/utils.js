@@ -123,12 +123,12 @@ class Utils {
         gallerySpacing: 0,
         cropRatio: 1,
         repeatingGroupTypes: '',
+        itemSpacing: 10,
       },
       cubeImages: false,
       cubeType: 'fill',
       rotatingCropRatios: '',
       smartCrop: false,
-      imageMargin: 10,
       scatter: 0,
       rotatingScatter: '',
       chooseBestGroup: true,
@@ -159,7 +159,7 @@ class Utils {
     if (container.width >= 0 && !(container.galleryWidth >= 0)) {
       convertedContainer.galleryWidth =
         container.width +
-        ((styleParams.imageMargin / 2 || 0) -
+        ((styleParams.itemSpacing / 2 || 0) -
           (styleParams.layoutParams.gallerySpacing || 0)) *
           2;
       delete convertedContainer.width;
@@ -167,7 +167,7 @@ class Utils {
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {
       convertedContainer.galleryHeight =
         container.height +
-        ((styleParams.imageMargin / 2 || 0) -
+        ((styleParams.itemSpacing / 2 || 0) -
           (styleParams.layoutParams.gallerySpacing || 0));
       delete convertedContainer.height;
     }

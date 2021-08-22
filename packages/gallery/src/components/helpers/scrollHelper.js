@@ -20,7 +20,7 @@ export function scrollToItemImp(scrollParams) {
     slideTransition,
     isContinuousScrolling,
     autoSlideshowContinuousSpeed,
-    imageMargin,
+    itemSpacing,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -56,7 +56,7 @@ export function scrollToItemImp(scrollParams) {
 
     if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the item in the middle of the component
-      const diff = (galleryWidth - item.width - imageMargin) / 2;
+      const diff = (galleryWidth - item.width - itemSpacing) / 2;
       to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
@@ -104,7 +104,7 @@ export function scrollToGroupImp(scrollParams) {
     slideTransition,
     isContinuousScrolling,
     autoSlideshowContinuousSpeed,
-    imageMargin,
+    itemSpacing,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
@@ -141,7 +141,7 @@ export function scrollToGroupImp(scrollParams) {
 
     if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       //set scroll to place the group in the middle of the component
-      const diff = (galleryWidth - group.width - imageMargin) / 2;
+      const diff = (galleryWidth - group.width - itemSpacing) / 2;
       to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);

@@ -25,6 +25,7 @@ describe('Layouter', () => {
         gallerySpacing: 0,
         cropRatio: 1,
         repeatingGroupTypes: '',
+        itemSpacing: 10,
       },
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       isVertical: false,
@@ -38,7 +39,6 @@ describe('Layouter', () => {
       collageAmount: 0.9,
       collageDensity: 0.9,
       minItemSize: 20,
-      imageMargin: 10,
       scatter: 0,
       rotatingScatter: '',
       fixedColumns: 0,
@@ -87,7 +87,7 @@ describe('Layouter', () => {
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
       styleParams.layoutParams.repeatingGroupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
-      styleParams.imageMargin = 0;
+      styleParams.layoutParams.itemSpacing = 0;
 
       gallery = getLayout({ items, container, styleParams });
 
@@ -183,7 +183,7 @@ describe('Layouter', () => {
 
       const items = getItems(100);
       styleParams.cubeImages = true;
-      styleParams.imageMargin = 0;
+      styleParams.layoutParams.itemSpacing = 0;
 
       for (const ratio of [0.25, 0.5, 1, 2, 4]) {
         styleParams.layoutParams.cropRatio = ratio;
@@ -316,7 +316,7 @@ describe('Layouter', () => {
     it('should have all Strips GalleryLayout images larger than minItemSize', () => {
       const items = getItems(100);
       styleParams.isVertical = false;
-      styleParams.imageMargin = 0;
+      styleParams.layoutParams.itemSpacing = 0;
 
       const minItemSizes = [10, 50, 100, 200, 300, 400];
 
@@ -341,7 +341,7 @@ describe('Layouter', () => {
       const items = getItems(100);
       styleParams.isVertical = true;
       styleParams.galleryWidth = 4000;
-      styleParams.imageMargin = 0;
+      styleParams.layoutParams.itemSpacing = 0;
       styleParams.collageDensity = 1;
 
       const minItemSizes = [10, 50, 100, 200, 300];
@@ -392,7 +392,7 @@ describe('Layouter', () => {
       container.galleryHeight = 500;
 
       styleParams.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
-      styleParams.imageMargin = 0;
+      styleParams.layoutParams.itemSpacing = 0;
 
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.height).to.be.above(container.galleryHeight);
@@ -446,7 +446,7 @@ describe('Layouter', () => {
 
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.cubeImages = false;
-      styleParams.imageMargin = 0;
+      styleParams.layoutParams.itemSpacing = 0;
       styleParams.collageDensity = 0.8;
 
       gallery = getLayout({ items, container, styleParams });
@@ -505,7 +505,7 @@ describe('Layouter', () => {
       styleParams.layoutParams.cropRatio = 2;
       styleParams.cubeImages = true;
       styleParams.smartCrop = true;
-      styleParams.imageMargin = 0;
+      styleParams.layoutParams.itemSpacing = 0;
 
       gallery = getLayout({ items, container, styleParams });
       const isCroppedCorrectly = gallery.columns[0].groups.reduce(
@@ -556,15 +556,15 @@ describe('Layouter', () => {
       }
     });
 
-    // imageMargin (between groups)
-    it('should have spaces between groups equal to imageMargin', () => {
+    // itemSpacing (between groups)
+    it('should have spaces between groups equal to itemSpacing', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
       styleParams.groupSize = 1;
 
       for (const margin of [10, 50, 100, 200]) {
-        styleParams.imageMargin = margin * 2;
+        styleParams.layoutParams.itemSpacing = margin * 2;
         gallery = getLayout({ items, container, styleParams });
 
         let lastItem = false;
@@ -588,9 +588,9 @@ describe('Layouter', () => {
       }
     });
 
-    // imageMargin (within groups)
+    // itemSpacing (within groups)
     //TODO fix this test once the playground is complete
-    it('should have spaces between items in a group equal to imageMargin', () => {
+    it('should have spaces between items in a group equal to itemSpacing', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 1000;
@@ -598,7 +598,7 @@ describe('Layouter', () => {
       styleParams.groupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
 
       for (const margin of [0, 30, 40, 80]) {
-        styleParams.imageMargin = margin * 2;
+        styleParams.layoutParams.itemSpacing = margin * 2;
         gallery = getLayout({ items, container, styleParams });
 
         let marginDiff = 0;

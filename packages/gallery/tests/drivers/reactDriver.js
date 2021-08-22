@@ -46,6 +46,7 @@ class galleryDriver {
       layoutParams: {
         gallerySpacing: 1,
         cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
+        itemSpacing: 5,
       },
       gotStyleParams: true,
       selectedLayout: 0,
@@ -69,7 +70,6 @@ class galleryDriver {
       },
       collageAmount: 0.8,
       collageDensity: 0.8,
-      imageMargin: 5,
       viewMode: 'preview',
       enableInfiniteScroll: true,
       itemClick: 'expand',

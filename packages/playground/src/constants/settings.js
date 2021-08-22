@@ -44,7 +44,7 @@ export const stylesBySection = {
     'scrollDirection',
     'isVertical',
     'isRTL',
-    'imageMargin',
+    'layoutParams_itemSpacing',
 
     'groupSize',
     'collageDensity',

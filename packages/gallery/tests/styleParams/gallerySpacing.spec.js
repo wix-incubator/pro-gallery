@@ -34,12 +34,13 @@ describe('styleParam - gallerySpacing', () => {
     expect(margin).to.eq('20px');
     driver.detach.proGallery();
   });
-  it('should set the gallery with a margin of (gallerySpacing - (imageMargin / 2)) in a horizontal gallery', async () => {
+  it('should set the gallery with a margin of (gallerySpacing - (itemSpacing / 2)) in a horizontal gallery', async () => {
     initialProps.styles = mergeNestedObjects(initialProps.styles, {
-      layoutParams: { gallerySpacing: 20 },
-
+      layoutParams: {
+        gallerySpacing: 20,
+        itemSpacing: 10,
+      },
       galleryLayout: 2,
-      imageMargin: 10,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
@@ -48,7 +49,7 @@ describe('styleParam - gallerySpacing', () => {
       .selector('.pro-gallery-parent-container')
       .getDOMNode();
     const margin = getComputedStyle(galleryContainer).margin;
-    // expect the margin to be (gallerySpacing - (imageMargin / 2)
+    // expect the margin to be (gallerySpacing - (itemSpacing / 2)
     expect(margin).to.eq('15px');
     driver.detach.proGallery();
   });

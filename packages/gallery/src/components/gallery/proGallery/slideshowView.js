@@ -107,8 +107,8 @@ class SlideshowView extends GalleryComponent {
 
   getScrollElementWidth() {
     const { galleryStructure } = this.props;
-    const { imageMargin } = this.props.styleParams
-    return galleryStructure.width - imageMargin / 2;
+    const { itemSpacing } = this.props.styleParams.layoutParams
+    return galleryStructure.width - itemSpacing / 2;
   }
 
   isFirstItemFullyVisible() {
@@ -919,12 +919,13 @@ class SlideshowView extends GalleryComponent {
   }
 
   createNavArrows() {
+    const {itemSpacing} = this.props.styleParams.layoutParams;
     const {
       isRTL,
       scrollDirection,
       isSlideshow,
       slideshowInfoSize,
-      imageMargin,
+      
       arrowsPadding,
       arrowsPosition,
       arrowsVerticalPosition,
@@ -975,7 +976,7 @@ class SlideshowView extends GalleryComponent {
       height: `${navArrowsContainerHeight}px`,
       padding: 0,
       top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
-        imageMargin / 4
+        itemSpacing / 4
       }px - ${infoSpace / 2}px)`,
     };
 
@@ -983,8 +984,8 @@ class SlideshowView extends GalleryComponent {
       scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${20 + navArrowsContainerWidth}px`
-        : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-    // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
+        : `${itemSpacing / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
+    // itemSpacing effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
     const prevContainerStyle = {
@@ -1115,7 +1116,7 @@ class SlideshowView extends GalleryComponent {
             left:
               this.props.styleParams.arrowsSize +
               40 +
-              this.props.styleParams.imageMargin / 2,
+              this.props.styleParams.layoutParams.itemSpacing / 2,
           }
         : {};
 
@@ -1211,16 +1212,16 @@ class SlideshowView extends GalleryComponent {
       styleParams: { galleryTextAlign, slideshowInfoSize },
     } = this.props;
 
-    const imageMargin =
-      this.props.styleParams.imageMargin / 2 +
+    const itemSpacing =
+      this.props.styleParams.layoutParams.itemSpacing / 2 +
       (this.isFullWidthGallery() ? 50 : 0);
 
     const side =
       galleryTextAlign === 'right'
-        ? { left: `${imageMargin / 2}px` }
+        ? { left: `${itemSpacing / 2}px` }
         : {
             right: `${
-              imageMargin / 2 +
+              itemSpacing / 2 +
               (this.shouldCreateSlideShowNumbers
                 ? this.calcSlideshowCounterWidth()
                 : 0)
@@ -1260,18 +1261,18 @@ class SlideshowView extends GalleryComponent {
       styleParams: { galleryTextAlign, slideshowInfoSize },
     } = this.props;
 
-    const imageMargin =
-      this.props.styleParams.imageMargin / 2 +
+    const itemSpacing =
+      this.props.styleParams.layoutParams.itemSpacing / 2 +
       (this.isFullWidthGallery() ? 50 : 0);
 
     const leftMargin = this.shouldCreateSlideShowPlayButton
-      ? imageMargin / 2 + 25
-      : imageMargin / 2;
+      ? itemSpacing / 2 + 25
+      : itemSpacing / 2;
 
     const side =
       galleryTextAlign === 'right'
         ? { left: `${leftMargin}px` }
-        : { right: `${imageMargin / 2}px` };
+        : { right: `${itemSpacing / 2}px` };
 
     return (
       <div
@@ -1340,7 +1341,7 @@ class SlideshowView extends GalleryComponent {
     return {
       margin:
         -1 *
-        (this.props.styleParams.imageMargin / 2 -
+        (this.props.styleParams.layoutParams.itemSpacing / 2 -
           this.props.styleParams.layoutParams.gallerySpacing),
     };
   }

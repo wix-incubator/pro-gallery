@@ -42,7 +42,7 @@ const fixToSlideshow = (styles) => {
   presetStyles.cropOnlyFill = false;
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';
-  presetStyles.imageMargin = 0;
+  presetStyles = assignByString(presetStyles, 'layoutParams_itemSpacing', 0);
   return presetStyles;
 };
 export const fixedStyles = fixToSlideshow({});

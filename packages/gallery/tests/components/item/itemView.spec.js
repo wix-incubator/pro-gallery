@@ -112,12 +112,14 @@ describe('Item View', () => {
     it('should have boxshadow if defined', () => {
       Object.assign(sampleItemViewProps, {
         styleParams: {
+          layoutParams: {
+            itemSpacing: 5,
+          },
           itemEnableShadow: true,
           itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
           itemShadowBlur: 15,
           itemShadowDirection: 0,
           itemShadowSize: 18,
-          imageMargin: 5,
           imageInfoType: 'ATTACHED_BACKGROUND',
         },
       });
@@ -126,12 +128,14 @@ describe('Item View', () => {
       expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
       driver.set.props({
         styleParams: {
+          layoutParams: {
+            itemSpacing: 5,
+          },
           itemEnableShadow: false,
           itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
           itemShadowBlur: 20,
           itemShadowDirection: 135,
           itemShadowSize: 10,
-          imageMargin: 5,
           imageInfoType: 'ATTACHED_BACKGROUND',
         },
       });

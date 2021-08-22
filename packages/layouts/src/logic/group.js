@@ -60,7 +60,7 @@ export class Group {
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
-      this.imageMargin = styleParams.imageMargin;
+      this.itemSpacing = styleParams.itemSpacing;
       this.groupSize = styleParams.groupSize;
     }
 
@@ -140,7 +140,7 @@ export class Group {
         height: this.height,
       };
     }
-    const m = this.imageMargin;
+    const m = this.itemSpacing;
 
     switch (this.type) {
       default:
@@ -561,7 +561,7 @@ export class Group {
   }
 
   getItemDimensions(items, idx) {
-    const m = this.imageMargin;
+    const m = this.itemSpacing;
     switch (this.type) {
       default:
       case '1':
@@ -611,7 +611,7 @@ export class Group {
   getHeightByWidth(W) {
     let Rg = 1;
     let Rm = 1;
-    const M = this.imageMargin;
+    const M = this.itemSpacing;
     const R = this.items.map((item) => item.width / item.height);
     switch (this.type) {
       // ---------------------------------
@@ -671,7 +671,7 @@ export class Group {
   getWidthByHeight(H) {
     let Rg = 1;
     let Rm = 1;
-    const M = this.imageMargin;
+    const M = this.itemSpacing;
     const R = this.items.map((item) => item.width / item.height);
     switch (this.type) {
       // ---------------------------------

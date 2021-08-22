@@ -173,10 +173,10 @@ const removeLoopOnVerticalGalleries = (styles) => {
   }
   return _styles;
 }
-const limitImageMargin = (styles) => {
+const limitItemSpacing = (styles) => {
   let _styles = {...styles}
-  if (_styles.imageMargin > 0) {
-    _styles.imageMargin = Math.min(_styles.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
+  if (_styles.layoutParams.itemSpacing > 0) {
+    _styles.layoutParams.itemSpacing = Math.min(_styles.layoutParams.itemSpacing, 50); // limit mobile spacing to 50px (25 on each side)
   }
   return _styles;
 }
@@ -339,7 +339,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
   let processedStyles = {...styles};
   if (utils.isMobile()) {
     processedStyles = setMobileFonts(processedStyles);
-    processedStyles = limitImageMargin(processedStyles);
+    processedStyles = limitItemSpacing(processedStyles);
   }
     processedStyles = forceInfoOnHoverWhenNeeded(processedStyles);
     processedStyles = forceHoverToShowTextsIfNeeded(processedStyles);

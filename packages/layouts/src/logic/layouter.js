@@ -222,7 +222,7 @@ export default class Layouter {
           Math.floor(gallerySizeVal) +
           Math.ceil(
             2 *
-              (this.styleParams.imageMargin / 2 -
+              (this.styleParams.itemSpacing / 2 -
                 this.styleParams.layoutParams.gallerySpacing)
           );
       }
@@ -255,7 +255,7 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, cropRatio, externalInfoWidth, imageMargin } =
+      const { columnWidths, cropRatio, externalInfoWidth, itemSpacing } =
         this.styleParams;
 
       let columnWidthsArr = false;
@@ -295,8 +295,8 @@ export default class Layouter {
           colWidth -= infoWidth;
           fixedCubeHeight =
             fixedCubeHeight ||
-            (this.targetItemSize - infoWidth - imageMargin) / cropRatio +
-              imageMargin; //calc the cube height only once
+            (this.targetItemSize - infoWidth - itemSpacing) / cropRatio +
+              itemSpacing; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
         });
@@ -404,7 +404,7 @@ export default class Layouter {
           if (this.styleParams.scrollDirection === 1) {
             this.strip.height =
               this.container.galleryHeight +
-              (this.styleParams.imageMargin / 2 -
+              (this.styleParams.itemSpacing / 2 -
                 this.styleParams.layoutParams.gallerySpacing);
           } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the targetItemSize and not stretch
@@ -474,7 +474,7 @@ export default class Layouter {
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
       this.galleryHeight -
-      (this.styleParams.imageMargin / 2 - this.styleParams.layoutParams.gallerySpacing) * 2;
+      (this.styleParams.itemSpacing / 2 - this.styleParams.layoutParams.gallerySpacing) * 2;
 
     this.width = this.lastGroup.left + this.lastGroup.width;
 

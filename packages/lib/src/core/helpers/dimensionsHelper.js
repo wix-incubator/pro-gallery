@@ -74,7 +74,10 @@ class DimensionsHelper {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
       ) {
         width -=
-          2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin / 2);
+          2 *
+          (this.styles.arrowsSize +
+            40 +
+            this.styles.layoutParams.itemSpacing / 2);
       }
       return width;
     });
@@ -98,7 +101,7 @@ class DimensionsHelper {
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
       return (
-        Number(this.styles.imageMargin / 2) -
+        Number(this.styles.layoutParams.itemSpacing / 2) -
         Number(this.styles.layoutParams.gallerySpacing)
       );
     });

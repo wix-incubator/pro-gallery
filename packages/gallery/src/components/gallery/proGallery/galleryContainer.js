@@ -415,7 +415,7 @@ export class GalleryContainer extends React.Component {
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
           autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
-          imageMargin: this.state.styles.imageMargin,
+          itemSpacing: this.state.styles.layoutParams.itemSpacing,
         };
         return scrollToItemImp(scrollParams);
       } catch (e) {
@@ -470,7 +470,7 @@ export class GalleryContainer extends React.Component {
           slideTransition: this.state.styles.slideTransition,
           isContinuousScrolling,
           autoSlideshowContinuousSpeed: this.state.styles.autoSlideshowContinuousSpeed,
-          imageMargin: this.state.styles.imageMargin,
+          itemSpacing: this.state.styles.layoutParams.itemSpacing,
         };
         return scrollToGroupImp(scrollParams);
       } catch (e) {

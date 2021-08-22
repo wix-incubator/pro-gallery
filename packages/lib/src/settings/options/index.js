@@ -1,5 +1,5 @@
 import itemClick from './itemClick';
-import imageMargin from './imageMargin';
+import layoutParams_itemSpacing from './itemSpacing';
 import hoveringBehaviour from './hoveringBehaviour';
 import enableInfiniteScroll from './enableInfiniteScroll';
 import cubeType from './cubeType';
@@ -102,7 +102,7 @@ export default {
   layoutParams_cropRatio,
   layoutParams_repeatingGroupTypes,
   itemClick,
-  imageMargin,
+  layoutParams_itemSpacing,
   hoveringBehaviour,
   enableInfiniteScroll,
   cubeType,

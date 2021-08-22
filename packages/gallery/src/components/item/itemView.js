@@ -664,8 +664,10 @@ class ItemView extends GalleryComponent {
       styleParams,
       settings = {},
     } = this.props;
-    const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
+    const { scrollDirection, layoutParams, itemClick, isRTL, slideAnimation } =
       styleParams;
+    const { itemSpacing } =
+      layoutParams;
 
     const containerStyleByStyleParams = getContainerStyle(styleParams);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
@@ -676,7 +678,7 @@ class ItemView extends GalleryComponent {
       bottom: 'auto',
       margin:
         scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-          ? imageMargin / 2 + 'px'
+          ? itemSpacing / 2 + 'px'
           : 0,
       cursor:
         itemClick === GALLERY_CONSTS.itemClick.NOTHING ||

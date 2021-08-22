@@ -6,7 +6,7 @@ import { styleParams, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('styleParam - imageMargin', () => {
+describe('styleParam - itemSpacing', () => {
   let driver;
   let initialProps;
 
@@ -21,8 +21,10 @@ describe('styleParam - imageMargin', () => {
 
   it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
     initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      layoutParams: {
+        itemSpacing: 10,
+      },
       galleryLayout: 7,
-      imageMargin: 10,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
@@ -35,8 +37,10 @@ describe('styleParam - imageMargin', () => {
   it('should use "top" and "left" properties to create the spacing', async () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
     initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      layoutParams: {
+        itemSpacing: 25,
+      },
       galleryLayout: 2,
-      imageMargin: 25,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       gallerySizeType: 'px',
       gallerySizePx: 390,
@@ -51,7 +55,7 @@ describe('styleParam - imageMargin', () => {
       const dims = getElementDimensions(item);
       if (dims.top === prevDims.top) {
         const spacing = dims.left - (prevDims.left + prevDims.width);
-        expect(spacing).to.eq(initialProps.styles.imageMargin);
+        expect(spacing).to.eq(initialProps.styles.layoutParams.itemSpacing);
       }
       prevDims = dims;
     }
