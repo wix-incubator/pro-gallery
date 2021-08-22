@@ -159,20 +159,6 @@ class SlideshowView extends GalleryComponent {
   }
 
   //__________________________________end of slide show loop functions__________________________
-  shouldBlockNext({ scrollingUpTheGallery }) {
-    return (
-      (scrollingUpTheGallery && this.isLastItem()) ||
-      (!scrollingUpTheGallery && this.isFirstItem())
-    );
-  }
-
-  shouldNotAllowScroll({ scrollingUpTheGallery }) {
-    return (
-      (scrollingUpTheGallery && this.isLastItemFullyVisible()) ||
-      (!scrollingUpTheGallery && this.isFirstItemFullyVisible())
-    );
-  }
-
   next({
     direction,
     isAutoTrigger,
@@ -181,17 +167,13 @@ class SlideshowView extends GalleryComponent {
     isContinuousScrolling = false,
   }) {
 
-    const scrollingUpTheGallery = this.props.styleParams.isRTL
-    ? direction <= -1
-    : direction >= 1;
-
+    direction *= this.props.styleParams.isRTL ? -1 : 1;
     if (
-      this.shouldBlockNext({ scrollingUpTheGallery })
-    ) {
+      this.isLastItem() &&
+      this.state.activeIndex + direction >= this.props.totalItemsCount) {
       this.clearAutoSlideshowInterval();
       return;
     }
-    direction *= this.props.styleParams.isRTL ? -1 : 1;
     const activeElement = document.activeElement;
     const galleryItemIsFocused =
       activeElement.className &&
@@ -210,7 +192,7 @@ class SlideshowView extends GalleryComponent {
     }
 
     if (avoidIndividualNavigation && this.props.styleParams.groupSize > 1) {
-      this.nextGroup({ direction, scrollDuration, isContinuousScrolling, scrollingUpTheGallery }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+      this.nextGroup({ direction, isAutoTrigger, scrollDuration, isContinuousScrolling }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if (
         avoidIndividualNavigation &&
@@ -226,7 +208,6 @@ class SlideshowView extends GalleryComponent {
         avoidIndividualNavigation,
         ignoreScrollPosition,
         isContinuousScrolling,
-        scrollingUpTheGallery,
       });
     }
     this.removeArrowsIfNeeded();
@@ -238,8 +219,7 @@ class SlideshowView extends GalleryComponent {
     scrollDuration,
     avoidIndividualNavigation,
     ignoreScrollPosition,
-    isContinuousScrolling,
-    scrollingUpTheGallery,
+    isContinuousScrolling
   }) {
     if (this.isSliding) {
       return;
@@ -274,23 +254,39 @@ class SlideshowView extends GalleryComponent {
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
 
+    if (isAutoTrigger) {
+      // ---- Called by the Auto Slideshow ---- //
+    } else {
+      // ---- Called by the user (arrows, keys etc.) ---- //
+      this.startAutoSlideshowIfNeeded(this.props.styleParams);
+      const scrollingPastLastItem =
+        (direction >= 1 && this.isLastItem()) ||
+        (direction <= -1 && this.isFirstItem());
+      if (scrollingPastLastItem) {
+        this.isSliding = false;
+        return;
+      }
+    }
     // ---- navigate ---- //
     try {
+      const isScrollingPastEdge =
+        !isAutoTrigger &&
+        ((direction >= 1 && this.isLastItemFullyVisible()) ||
+          (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
-      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
 
-        shouldAllowScroll &&
-        await scrollToItem(
-            itemToScroll,
-            false,
-            true,
-            _scrollDuration,
-            scrollMarginCorrection,
-            isContinuousScrolling,
-          );
+        !isScrollingPastEdge &&
+       await scrollToItem(
+          itemToScroll,
+          false,
+          true,
+          _scrollDuration,
+          scrollMarginCorrection,
+          isContinuousScrolling,
+        );
 
         if (this.props.styleParams.groupSize === 1) {
           const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
@@ -330,7 +326,7 @@ class SlideshowView extends GalleryComponent {
     }
   }
 
-  async nextGroup({ direction, scrollDuration, isContinuousScrolling = false, scrollingUpTheGallery }) {
+  async nextGroup({ direction, isAutoTrigger, scrollDuration,isContinuousScrolling = false }) {
     if (this.isSliding) {
       return;
     }
@@ -341,14 +337,35 @@ class SlideshowView extends GalleryComponent {
 
     this.isAutoScrolling = true;
 
+    if (isAutoTrigger) {
+      // ---- Called by the Auto Slideshow ---- //
+      if (this.isLastItem()) {
+        // maybe this should be isLastItemFullyVisible now that we have both. product- do we allow autoSlideshow in other layouts ( those that could have more than one item displayed in the galleryWidth)
+        currentGroup = 0;
+        scrollDuration = 0;
+      }
+    } else {
+      // ---- Called by the user (arrows, keys etc.) ---- //
+      // this.startAutoSlideshowIfNeeded(this.props.styleParams);
+      const scrollingPastLastItem =
+        (direction >= 1 && this.isLastItem()) ||
+        (direction <= -1 && this.isFirstItem());
+      if (scrollingPastLastItem) {
+        this.isSliding = false;
+        return;
+      }
+    }
     // ---- navigate ---- //
     try {
+      const isScrollingPastEdge =
+        !isAutoTrigger &&
+        ((direction >= 1 && this.isLastItemFullyVisible()) ||
+          (direction <= -1 && this.isFirstItemFullyVisible()));
       const scrollMarginCorrection = this.getStyles().margin || 0;
       const _scrollDuration =
         scrollDuration || this.props.styleParams.scrollDuration || 400;
-      const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
 
-      shouldAllowScroll &&
+      !isScrollingPastEdge &&
       await scrollToGroup(
           currentGroup,
           false,
