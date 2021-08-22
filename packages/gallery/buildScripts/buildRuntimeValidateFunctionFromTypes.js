@@ -17,8 +17,7 @@ function writeES5StandaloneValidateMethod() {
     galleryFolder,
     'typeValidator/standaloneValidateCode.js'
   );
-  const browserifyBundle = standaloneValidateCodePath;
-  const fileWriter = fs.createWriteStream(browserifyBundle);
+  const fileWriter = fs.createWriteStream(standaloneValidateCodePath);
   browserify(tempFilePath, { standalone: 'nirnaor' })
     .transform('babelify', { global: true, presets: ['@babel/preset-env'] })
     .bundle()
