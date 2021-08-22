@@ -3,7 +3,7 @@
   "version": "4.0.15-beta.86",
   "private": true,
   "engines": {
-    "node": ">=10.15"
+    "node": ">=14.16.1"
   },
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
