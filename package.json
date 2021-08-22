@@ -62,6 +62,7 @@
   "homepage": "https://github.com/wix/pro-gallery#readme",
   "devDependencies": {
     "chalk": "^2.4.2",
+    "console": "^0.7.2",
     "gh-pages": "2.0.1",
     "husky": "^4.3.0",
     "lerna": "^3.13.3",
