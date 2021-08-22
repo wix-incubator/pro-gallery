@@ -1,7 +1,10 @@
 import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 
 export const defaultStyleParams = {
-  layoutParams: { gallerySpacing: 0 },
+  layoutParams: {
+    gallerySpacing: 0,
+    cropRatio: 1,
+  },
   isRTL: false,
   isVertical: 0,
   gallerySize: 30,
@@ -13,7 +16,6 @@ export const defaultStyleParams = {
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
   rotatingCropRatio: '',

@@ -119,10 +119,12 @@ class Utils {
   addDefaultStyleParams(styleParams) {
     //default styleParams
     const defaultSP = {
-      layoutParams: { gallerySpacing: 0 },
+      layoutParams: {
+        gallerySpacing: 0,
+        cropRatio: 1,
+      },
       cubeImages: false,
       cubeType: 'fill',
-      cropRatio: 1,
       rotatingCropRatios: '',
       smartCrop: false,
       imageMargin: 10,
@@ -144,7 +146,7 @@ class Utils {
     const flatSP = this.flattenObject(styleParams);
     const flatDefaultSP = this.flattenObject(defaultSP);
     let _styles = this.flatToNested({ ...flatDefaultSP, ...flatSP });
-    return _styles;
+    return { ..._styles, ..._styles.layoutParams };
   }
 
   convertContainer(container, styleParams) {
