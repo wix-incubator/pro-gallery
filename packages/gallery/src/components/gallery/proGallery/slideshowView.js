@@ -301,20 +301,7 @@ class SlideshowView extends GalleryComponent {
           }
         }
 
-        utils.setStateAndLog(
-          this,
-          'Next Item',
-          {
-            activeIndex: nextItem,
-          },
-          () => {
-            this.onCurrentItemChanged();
-            this.isSliding = false;
-            if (isContinuousScrolling) {
-              this.startAutoSlideshowIfNeeded(this.props.styleParams);
-            }
-          }
-        );
+        this.onScroll(nextItem, isContinuousScrolling);
 
         if (ignoreScrollPosition) {
           this.props.getMoreItemsIfNeeded(
@@ -357,25 +344,30 @@ class SlideshowView extends GalleryComponent {
           scrollMarginCorrection,
           isContinuousScrolling
         );
-      utils.setStateAndLog(
-        this,
-        'Next Item',
-        {
-          activeIndex: this.getCenteredItemIdxByScroll() + direction,
-        },
-        () => {
-          this.onCurrentItemChanged();
-          this.isSliding = false;
-          if (isContinuousScrolling) {
-            this.startAutoSlideshowIfNeeded(this.props.styleParams);
-          }
-        }
-      );
+      const nextItem = this.getCenteredItemIdxByScroll() + direction;
+      this.onScroll(nextItem, isContinuousScrolling);
     } catch (e) {
       console.error('Cannot proceed to the next Group', e);
       this.clearAutoSlideshowInterval();
       return;
     }
+  }
+
+  onScroll(nextItem, isContinuousScrolling) {
+    utils.setStateAndLog(
+      this,
+      'Next Item',
+      {
+        activeIndex: nextItem,
+      },
+      () => {
+        this.onCurrentItemChanged();
+        this.isSliding = false;
+        if (isContinuousScrolling) {
+          this.startAutoSlideshowIfNeeded(this.props.styleParams);
+        }
+      }
+    );
   }
 
   onCurrentItemChanged() {
