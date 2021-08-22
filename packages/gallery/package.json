@@ -22,7 +22,7 @@
   "scripts": {
     "watch": "npm run start",
     "build": " npm run generateValidationFunction && tsc && tsc -p tsconfig-esm.json && npm run css-compile",
-    "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
+    "generateValidationFunction": "node src/buildRuntimeValidateFunctionFromTypes.js",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
