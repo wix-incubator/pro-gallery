@@ -19,6 +19,7 @@ function expectedStyles() {
     layoutParams: {
       gallerySpacing: 0,
       cropRatio: 1,
+      repeatingGroupTypes: '',
     },
     isRTL: false,
     isVertical: false,
@@ -27,7 +28,6 @@ function expectedStyles() {
     chooseBestGroup: true,
     groupSize: 3,
     groupTypes: '1,2h,2v,3t,3b,3l,3r',
-    rotatingGroupTypes: '',
     collageDensity: 0.8,
     cubeImages: false,
     cubeType: 'fill',

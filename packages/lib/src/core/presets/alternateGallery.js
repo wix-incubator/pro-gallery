@@ -22,7 +22,11 @@ const fixToAlternate = (styles) => {
   presetStyles.gallerySize = 86;
   presetStyles.minItemSize = 50;
   presetStyles.chooseBestGroup = true;
-  presetStyles.rotatingGroupTypes = '1,2h,1,2h';
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_repeatingGroupTypes',
+    '1,2h,1,2h'
+  );
   presetStyles.smartCrop = false;
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';

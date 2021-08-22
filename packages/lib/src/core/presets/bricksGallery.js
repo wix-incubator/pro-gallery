@@ -23,7 +23,11 @@ const fixToBricks = (styles) => {
   presetStyles.gallerySize = 400;
   presetStyles.minItemSize = 50;
   presetStyles.chooseBestGroup = true;
-  presetStyles.rotatingGroupTypes = '2h';
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_repeatingGroupTypes',
+    '2h'
+  );
   presetStyles.smartCrop = false;
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';
