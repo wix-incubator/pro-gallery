@@ -26,7 +26,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "allowReturnOutsideFunction": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "noEmit": false,
