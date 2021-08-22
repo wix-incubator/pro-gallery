@@ -6,7 +6,6 @@ function start() {
   const galleryPath = path.join(__dirname, 'components/gallery');
 
   const standaloneValidateCodePath = path.join(
-    __dirname,
     galleryPath,
     'typeValidator/standaloneValidateCode.js'
   );
@@ -17,6 +16,11 @@ function start() {
   console.log(`direxist: ${fs.existsSync(galleryPath)}`);
   console.log(`existsSync: ${fs.existsSync(galleryTypesPath)}`);
   console.log(`direxist: ${fs.existsSync(standaloneValidateCodePath)}`);
+
+  writeES5StandaloneValidateMethod(
+    galleryTypesPath,
+    standaloneValidateCodePath
+  );
 }
 
 start();
