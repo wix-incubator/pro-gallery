@@ -7,17 +7,17 @@ const getSchemaFromTypes = require('./generateJSONSchemaFromTypes');
 
 function writeES5StandaloneValidateMethod() {
   const galleryFolder = path.join(__dirname, '../src/components/gallery');
-  const typesFileAbsolutePath = path.join(galleryFolder, 'galleryTypes.ts');
+  const sourceTypesFile = path.join(galleryFolder, 'galleryTypes.ts');
   const code = buildValidationFunction(
-    getSchemaFromTypes(typesFileAbsolutePath)
+    getSchemaFromTypes(sourceTypesFile)
   );
   const tempFilePath = path.join(__dirname, 'temp.js');
   fs.writeFileSync(tempFilePath, code);
-  const standaloneValidateCodePath = path.join(
+  const targetFilePath = path.join(
     galleryFolder,
     'typeValidator/standaloneValidateCode.js'
   );
-  const fileWriter = fs.createWriteStream(standaloneValidateCodePath);
+  const fileWriter = fs.createWriteStream(targetFilePath);
   browserify(tempFilePath, { standalone: 'nirnaor' })
     .transform('babelify', { global: true, presets: ['@babel/preset-env'] })
     .bundle()
