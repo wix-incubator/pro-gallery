@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery",
-  "version": "4.0.15-beta.86",
+  "version": "4.0.15-beta.91",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -21,8 +21,7 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "build": " npm run generateValidationFunction && tsc && tsc -p tsconfig-esm.json && npm run css-compile",
-    "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
+    "build": " tsc && tsc -p tsconfig-esm.json && npm run css-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
@@ -39,11 +38,10 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "ajv": "^8.6.0",
     "hls.js": "^0.14.12",
-    "pro-gallery-blueprints": "^4.0.15-beta.86",
-    "pro-gallery-lib": "^4.0.15-beta.86",
-    "pro-layouts": "^4.0.15-beta.86",
+    "pro-gallery-blueprints": "^4.0.15-beta.91",
+    "pro-gallery-lib": "^4.0.15-beta.91",
+    "pro-layouts": "^4.0.15-beta.91",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -56,9 +54,7 @@
     "@types/react": "^16.14.6",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "ajv": "^8.6.0",
     "babelify": "^10.0.0",
-    "browserify": "^17.0.0",
     "chai": "^4.2.0",
     "chai-spies": "^0.7.1",
     "concurrently": "^6.1.0",
@@ -79,8 +75,7 @@
     "sinon": "^6.0.0",
     "ts-jest": "^26.4.4",
     "tslib": "^2.1.0",
-    "typescript": "4.1.2",
-    "typescript-json-schema": "^0.50.1"
+    "typescript": "4.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
