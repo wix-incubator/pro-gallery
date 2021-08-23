@@ -1,6 +1,6 @@
-import { LayoutParams } from './layoutParams.d';
-import { BehaviourParams } from './behaviourParams.d';
-import { StylingParams } from './stylingParams.d';
+import { LayoutParams } from './layoutParams';
+import { BehaviourParams } from './behaviourParams';
+import { StylingParams } from './stylingParams';
 
 export interface StyleParams {
   layoutParams: LayoutParams;
