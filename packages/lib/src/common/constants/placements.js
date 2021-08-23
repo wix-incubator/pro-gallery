@@ -7,6 +7,7 @@ const PLACEMENTS = {
   ALTERNATE_HORIZONTAL: 'ALTERNATE_HORIZONTAL',
   ALTERNATE_VERTICAL: 'ALTERNATE_VERTICAL',
 };
+const VERTICAL_PLACEMENTS = ['SHOW_BELOW', 'SHOW_ABOVE', 'ALTERNATE_VERTICAL'];
 
 const hasHoverPlacement = (placement) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_HOVER) >= 0;
@@ -18,8 +19,6 @@ const hasExternalBelowPlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_BELOW) >= 0 ||
   (idx % 2 === 1 &&
     String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0);
-const hasExternalVerticalAlternatePlacement = (placement) =>
-  String(placement).indexOf(PLACEMENTS.ALTERNATE_VERTICAL) >= 0;
 const hasExternalRightPlacement = (placement, idx) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_THE_RIGHT) >= 0 ||
   (idx % 2 === 0 &&
@@ -47,36 +46,74 @@ const isExternalAbovePlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ABOVE;
 const isExternalBelowPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_BELOW;
+const isExternalVerticalAlternatePlacement = (placement) =>
+  String(placement) === PLACEMENTS.ALTERNATE_VERTICAL;
 const isHoverPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_HOVER;
 const isExternalRightPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_RIGHT;
 const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
-const isHoverAndExternalVerticalPlacement = (placement) => {
-  let placementArray = String(placement).split(',');
-  return (
-    placementArray.length === 2 &&
-    hasExternalVerticalPlacement(placement) &&
-    hasHoverPlacement(placement)
-  );
-};
 
-// (placement, isSlideshow) => Any vertical info placement (above \ below \ vertical alternate)? True : False
-const isVerticalPlacement = (placement, isSlideshow) => {
+// The following functions check the actual behaviour of the info-placement.
+// NOTICE: they do not handle multiple vertical placements (With it's hierarchy) as it is restricted by the instructions
+
+// (placement, isSlideshow, isHorizontalInfoPossible, customExternalInfoRendererExists) => Any vertical info placement (above \ below \ vertical alternate)? True : False
+const isVerticalPlacement = (
+  placement,
+  isSlideshow,
+  isHorizontalInfoPossible,
+  customExternalInfoRendererExists
+) => {
+  if (
+    isHorizontalInfoPossible &&
+    hasExternalHorizontalPlacement(placement) &&
+    customExternalInfoRendererExists
+  ) {
+    // Horizontal placement is displayed - so Above/Below info is not displayed
+    return false;
+  }
+  // Filtering all horizontal placements from the placements string
+  const verticalPlacements = String(placement)
+    .split(',')
+    .filter((placement) => VERTICAL_PLACEMENTS.includes(placement))
+    .join(',');
   return (
-    isExternalBelowPlacement(placement) ||
-    isExternalAbovePlacement(placement) ||
-    isHoverAndExternalVerticalPlacement(placement) ||
+    isAboveOrBelowPlacement(
+      placement,
+      isSlideshow,
+      isHorizontalInfoPossible,
+      customExternalInfoRendererExists
+    ) ||
+    isExternalVerticalAlternatePlacement(verticalPlacements) ||
     isSlideshow
   );
 };
 
-// (placement, isSlideshow) => Above \ Below placements ? True : False
-const isAboveOrBelowPlacement = (placement, isSlideshow) => {
+// (placement, isSlideshow, isHorizontalInfoPossible, customExternalInfoRendererExists) => Above \ Below placements ? True : False
+const isAboveOrBelowPlacement = (
+  placement,
+  isSlideshow,
+  isHorizontalInfoPossible,
+  customExternalInfoRendererExists
+) => {
+  if (
+    isHorizontalInfoPossible &&
+    hasExternalHorizontalPlacement(placement) &&
+    customExternalInfoRendererExists
+  ) {
+    // Horizontal placement is displayed - so Above/Below info is not displayed
+    return false;
+  }
+  // Filtering all horizontal placements from the placements string
+  const verticalPlacements = String(placement)
+    .split(',')
+    .filter((placement) => VERTICAL_PLACEMENTS.includes(placement))
+    .join(',');
   return (
-    isVerticalPlacement(placement, isSlideshow) &&
-    !hasExternalVerticalAlternatePlacement(placement)
+    isExternalBelowPlacement(verticalPlacements) ||
+    isExternalAbovePlacement(verticalPlacements) ||
+    isSlideshow
   );
 };
 
@@ -85,7 +122,6 @@ export default PLACEMENTS;
 export {
   hasExternalAbovePlacement,
   hasExternalBelowPlacement,
-  hasExternalVerticalAlternatePlacement,
   hasHoverPlacement,
   hasExternalRightPlacement,
   hasExternalLeftPlacement,

@@ -291,9 +291,13 @@ const addMarginsToSupportShadows = (styles) => {
   }
   return _styles;
 }
-const centerArrowsWhenNeeded = (styles) => {
+const centerArrowsWhenNeeded = (styles, customExternalInfoRendererExists) => {
   let _styles = {...styles}
-  if (!isAboveOrBelowPlacement(_styles.titlePlacement, styles.isSlideshow) || _styles.numberOfImagesPerCol !== 1) {
+  // layout parameter relevant to deciding how info-placement is displayed
+  const isHorizontalInfoPossible = _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && 
+  _styles.isVertical && _styles.groupSize === 1;
+  if (!isAboveOrBelowPlacement(_styles.titlePlacement, _styles.isSlideshow, isHorizontalInfoPossible, customExternalInfoRendererExists) ||
+  _styles.numberOfImagesPerCol !== 1) {
     // if text (info) placement is not above or below (w/o hover) or more then 1 images per col, arrows are gallery("item") centered
     _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
   }
@@ -365,7 +369,7 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles = processSpecialGallerySize(processedStyles); 
     processedStyles = processTextDimensions(processedStyles, customExternalInfoRendererExists);
     processedStyles = removeVideoAutoplayInIOS(processedStyles); 
-    processedStyles = centerArrowsWhenNeeded(processedStyles); 
+    processedStyles = centerArrowsWhenNeeded(processedStyles, customExternalInfoRendererExists); 
     
   return processedStyles;
 }
