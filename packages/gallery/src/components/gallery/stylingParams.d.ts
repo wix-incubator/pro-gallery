@@ -7,5 +7,8 @@ export interface StylingParams {
   textBoxBorderRadius: number;
   itemShadowSize: number;
   itemEnableShadow: boolean;
+  itemBorderRadius: number;
+  itemBorderWidth: number;
+  textBoxBorderWidth: number;
   [key: string]: any;
 }

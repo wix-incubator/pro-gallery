@@ -10,6 +10,17 @@ function assignByString(Obj, string, value) {
   pointer[assignedProperty] = value;
   return _obj;
 }
+function getByString(Obj, string) {
+  let _obj = { ...Obj };
+  let keyArr = string.split('_');
+  let assignedProperty = keyArr.pop();
+  let pointer = _obj;
+  keyArr.forEach((key) => {
+    if (typeof pointer[key] !== 'object') return undefined; //if its not an object we put an object over it to allow assignments
+    pointer = pointer[key];
+  });
+  return pointer[assignedProperty];
+}
 
 function flattenObject(ob) {
   var toReturn = {};
@@ -48,4 +59,10 @@ function mergeNestedObjects(...args) {
   return flatToNested(Object.assign({}, ...args.map(flattenObject)));
 }
 
-export { flattenObject, assignByString, flatToNested, mergeNestedObjects };
+export {
+  flattenObject,
+  assignByString,
+  flatToNested,
+  mergeNestedObjects,
+  getByString,
+};

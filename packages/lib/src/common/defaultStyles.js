@@ -6,6 +6,13 @@ const defaultStyles = mergeNestedObjects(coreStyles, {
   layoutParams: {
     repeatingGroupTypes: '',
   },
+  // adding
+  itemShadowOpacityAndColor: '',
+  arrowsColor: '',
+  textBoxBorderColor: '',
+  allowContextMenu: false,
+  hidePlay: false,
+  // ----
   gallerySize: 30,
   cropOnlyFill: false,
   rotatingCropRatios: '',
@@ -16,7 +23,6 @@ const defaultStyles = mergeNestedObjects(coreStyles, {
   scatter: 0,
   rotatingScatter: '',
   placeGroupsLtr: false,
-  oneRow: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   enableScroll: true,

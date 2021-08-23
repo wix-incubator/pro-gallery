@@ -47,12 +47,13 @@ export interface Content {
 }
 export interface Info {
   placement:
+    | 'OVERLAY'
     | 'ABOVE'
     | 'BELOW'
     | 'LEFT'
     | 'RIGHT'
-    | 'ALTERNATE_HORIZONTALY'
-    | 'ALTERNATE_VERTICALY';
+    | 'ALTERNATE_HORIZONTALLY'
+    | 'ALTERNATE_VERTICALLY';
   [key: string]: any;
 }
 export interface Vertical {
@@ -60,6 +61,7 @@ export interface Vertical {
   [key: string]: any;
 }
 export interface Horizontal {
+  enableScrollSnap: boolean;
   slideAnimation: 'SCROLL' | 'DECK' | 'FADE';
   blockScroll: boolean;
   navigationDuration: number;
@@ -89,7 +91,7 @@ export interface LoadMore {
 }
 export interface BehaviourParams {
   item?: Item;
-  // gallery?: Gallery;
+  gallery?: Gallery;
   [key: string]: any;
 }
 export interface Item {
@@ -97,10 +99,10 @@ export interface Item {
   video: Video;
   overlay: Overlay;
   info: Info;
+  content: Content;
   [key: string]: any;
 }
 export interface Gallery {
-  enableScrollSnap: boolean;
   layoutDirection: 'RIGHT_TO_LEFT' | 'LEFT_TO_RIGHT';
   disableContextMenu: boolean;
   scrollAnimation:

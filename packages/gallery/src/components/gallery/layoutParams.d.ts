@@ -11,12 +11,12 @@ export interface LayoutParams {
   // numberOfGroupsPerRow: number;
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;
-  cropType: string;
+  cropMethod: string;
   enableCrop: boolean;
   enableSmartCrop: boolean;
   minItemSize: number;
   cropOnlyFill: boolean; //DELETE? - its used in slider gallery
-  forceGroupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT'; //use const? or is this the new const?
+  forceGroupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_COLUMNS'; //use const? or is this the new const?
   slideshowInfoSize: number;
   scatter: number; //make sure this is a number;
   scrollDirection: 'VERTICAL' | 'HORIZONTAL';
@@ -30,7 +30,7 @@ export interface LayoutParams {
 }
 
 export interface Collage {
-  amount: number;
+  // amount: number;
   density: number;
   groupByOrientation: boolean;
   groupTypes: string | Array<string>; // the string is of a closed list of strings. need to validate it. how? //the Array is the representation of rotating.
@@ -38,16 +38,16 @@ export interface Collage {
 }
 export interface Thumbnails {
   enable: boolean;
-  spacings: number;
+  spacing: number;
   size: number;
-  alignment: 'bottom' | 'right' | 'left' | 'top';
+  alignment: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
 }
 export interface NavigationArrows {
   enable: boolean;
   size: number;
   padding: number;
-  position: 'ON_THE_GALLERY' | 'OUTSIDE_THE_GALLERY';
-  verticalAlignment: 'ITEM' | 'IMAGE' | 'INFO';
+  position: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
+  verticalAlignment: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
 }
 // const layoutParamsMap = {
 //   fixedColumns: 'layoutParams_fixedColumns', // layouter internal
