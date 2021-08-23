@@ -43,3 +43,4 @@ export { CreateMediaUrl } from './common/interfaces/CreateMediaUrl';
 export { CustomComponents } from './common/interfaces/CustomComponents';
 export { ScrollingElement } from './common/interfaces/ScrollingElement';
 export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
+export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
