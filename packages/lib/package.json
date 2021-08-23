@@ -19,13 +19,17 @@
   "scripts": {
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
-    "build": "tsc && tsc -p tsconfig-esm.json",
+    "build": "npm run generateValidationFunction && tsc && tsc -p tsconfig-esm.json",
+    "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
     "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
+    "ajv": "^8.6.0",
+    "typescript-json-schema": "^0.50.1",
+    "browserify": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "chai": "^4.2.0",
