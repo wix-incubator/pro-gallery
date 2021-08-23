@@ -1,11 +1,11 @@
-import { Item } from '../../common/interfaces/Item';
-import { Container } from '../../common/interfaces/Container';
-import { EventsListener } from '../../common/interfaces/EventsListener';
-import { CreateMediaUrl } from '../../common/interfaces/CreateMediaUrl';
-import { CustomComponents } from '../../common/interfaces/CustomComponents';
-import { ScrollingElement } from '../../common/interfaces/ScrollingElement';
-import { Settings } from '../../common/interfaces/Settings';
-import { StyleParams } from '../../common/interfaces/styles';
+import { Item } from './Item';
+import { Container } from './Container';
+import { EventsListener } from './EventsListener';
+import { CreateMediaUrl } from './CreateMediaUrl';
+import { CustomComponents } from './CustomComponents';
+import { ScrollingElement } from './ScrollingElement';
+import { Settings } from './Settings';
+import { StyleParams } from './styles';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
