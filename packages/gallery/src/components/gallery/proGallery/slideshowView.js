@@ -357,12 +357,8 @@ class SlideshowView extends GalleryComponent {
     scrollDuration,
     scrollingUpTheGallery
   ) {
-    const scrollParams = this.getScrollParameters(
-      scrollDuration,
-      scrollingUpTheGallery
-    );
-    const { scrollMarginCorrection, _scrollDuration, shouldAllowScroll } =
-      scrollParams;
+    const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
+    const { scrollMarginCorrection, _scrollDuration } = this.getScrollParameters(scrollDuration);
     shouldAllowScroll &&
       (await func(
         indexToScroll,
@@ -396,11 +392,10 @@ class SlideshowView extends GalleryComponent {
     );
   }
 
-  getScrollParameters(scrollDuration, scrollingUpTheGallery) {
+  getScrollParameters(scrollDuration) {
     return {
       scrollMarginCorrection: this.getStyles().margin || 0,
       _scrollDuration: scrollDuration || this.props.styleParams.scrollDuration || 400,
-      shouldAllowScroll: !this.shouldNotAllowScroll({ scrollingUpTheGallery }),
     };
   }
 
