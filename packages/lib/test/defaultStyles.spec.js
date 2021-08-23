@@ -1,21 +1,26 @@
 import { expect } from 'chai';
 import _ from 'lodash';
 import defaultStyles from '../src/common/defaultStyles';
+import { flattenObject } from '../src/core/helpers/stylesUtils';
 
 describe('defaultStyles', () => {
   it('should return the expected styles unchanged', () => {
-    const actual = defaultStyles;
-    expect(_.isEqual(actual, expectedStyles())).eq(true);
+    const actual = flattenObject(defaultStyles);
+    const expected = flattenObject(expectedStyles());
+    expect(_.isEqual(actual, expected)).eq(true);
     const actualLength = _.keys(actual).length;
-    expect(actualLength).eq(_.keys(expectedStyles()).length);
+    expect(actualLength).eq(_.keys(expected).length);
     expect(actualLength).eq(97);
   });
 });
 
 function expectedStyles() {
   return {
-    layoutParams: { gallerySpacing: 0 },
-
+    layoutParams: {
+      gallerySpacing: 0,
+      cropRatio: 1,
+      repeatingGroupTypes: '',
+    },
     isRTL: false,
     isVertical: false,
     gallerySize: 30,
@@ -23,11 +28,9 @@ function expectedStyles() {
     chooseBestGroup: true,
     groupSize: 3,
     groupTypes: '1,2h,2v,3t,3b,3l,3r',
-    rotatingGroupTypes: '',
     collageDensity: 0.8,
     cubeImages: false,
     cubeType: 'fill',
-    cropRatio: 1,
     cropOnlyFill: false,
     smartCrop: false,
     rotatingCropRatios: '',

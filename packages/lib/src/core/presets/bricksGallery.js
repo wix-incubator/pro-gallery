@@ -9,7 +9,7 @@ const fixToBricks = (styles) => {
   presetStyles.galleryLayout = LAYOUTS.BRICKS;
   presetStyles.cubeType = 'fill';
   presetStyles.cubeImages = true;
-  presetStyles.cropRatio = 1;
+  presetStyles = assignByString(presetStyles, 'layoutParams_cropRatio', 1);
   presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetStyles.scrollDirection = SCROLL_DIRECTION.VERTICAL;
   presetStyles = assignByString(presetStyles, 'layoutParams_gallerySpacing', 0);
@@ -23,7 +23,11 @@ const fixToBricks = (styles) => {
   presetStyles.gallerySize = 400;
   presetStyles.minItemSize = 50;
   presetStyles.chooseBestGroup = true;
-  presetStyles.rotatingGroupTypes = '2h';
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_repeatingGroupTypes',
+    '2h'
+  );
   presetStyles.smartCrop = false;
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';

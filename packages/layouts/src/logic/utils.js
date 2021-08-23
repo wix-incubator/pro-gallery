@@ -119,10 +119,13 @@ class Utils {
   addDefaultStyleParams(styleParams) {
     //default styleParams
     const defaultSP = {
-      layoutParams: { gallerySpacing: 0 },
+      layoutParams: {
+        gallerySpacing: 0,
+        cropRatio: 1,
+        repeatingGroupTypes: '',
+      },
       cubeImages: false,
       cubeType: 'fill',
-      cropRatio: 1,
       rotatingCropRatios: '',
       smartCrop: false,
       imageMargin: 10,
@@ -131,7 +134,6 @@ class Utils {
       chooseBestGroup: true,
       groupSize: 3,
       groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
-      rotatingGroupTypes: '',
       isVertical: true,
       minItemSize: 120,
       scrollDirection: 0,
@@ -144,7 +146,7 @@ class Utils {
     const flatSP = this.flattenObject(styleParams);
     const flatDefaultSP = this.flattenObject(defaultSP);
     let _styles = this.flatToNested({ ...flatDefaultSP, ...flatSP });
-    return _styles;
+    return { ..._styles, ..._styles.layoutParams }; //I flatten the FLAT layoutsParam object here, when we are done only it should remain as other SP are irrelevant for the layouts
   }
 
   convertContainer(container, styleParams) {

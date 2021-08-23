@@ -1,20 +1,22 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
 describe('styleParam - overlaySize', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
-    Object.assign(initialProps.styles, {
+    initialProps = {
+      container,
+      items: images2,
+      styles: styleParams,
+    };
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
       overlayPadding: 0,
@@ -22,7 +24,7 @@ describe('styleParam - overlaySize', () => {
   });
 
   it('should set the correct overlaySize according to size type - PIXEL', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       overlaySize: 20,
       overlaySizeType: 'PIXEL',
     });
@@ -35,7 +37,7 @@ describe('styleParam - overlaySize', () => {
   });
 
   it('should set the correct overlaySize according to size type- PERCENT', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.styles = mergeNestedObjects(initialProps.styles, {
       overlaySizeType: 'PERCENT',
       overlaySize: 50,
     });

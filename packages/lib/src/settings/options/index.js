@@ -4,7 +4,7 @@ import hoveringBehaviour from './hoveringBehaviour';
 import enableInfiniteScroll from './enableInfiniteScroll';
 import cubeType from './cubeType';
 import cubeImages from './cubeImages';
-import cropRatio from './cropRatio';
+import layoutParams_cropRatio from './cropRatio';
 import titlePlacement from './titlePlacement';
 import layoutParams_gallerySpacing from './gallerySpacing';
 import isVertical from './isVertical';
@@ -54,7 +54,7 @@ import imageLoadingMode from './imageLoadingMode';
 import cropOnlyFill from './cropOnlyFill';
 import groupsPerStrip from './groupsPerStrip';
 import fixedColumns from './fixedColumns';
-import rotatingGroupTypes from './rotatingGroupTypes';
+import layoutParams_repeatingGroupTypes from './repeatingGroupTypes';
 import arrowsPosition from './arrowsPosition';
 import arrowsVerticalPosition from './arrowsVerticalPosition';
 import itemShadowSize from './itemShadowSize';
@@ -98,15 +98,16 @@ import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 
 export default {
+  layoutParams_gallerySpacing,
+  layoutParams_cropRatio,
+  layoutParams_repeatingGroupTypes,
   itemClick,
   imageMargin,
   hoveringBehaviour,
   enableInfiniteScroll,
   cubeType,
   cubeImages,
-  cropRatio,
   titlePlacement,
-  layoutParams_gallerySpacing,
   isVertical,
   numberOfImagesPerRow,
   numberOfImagesPerCol,
@@ -154,7 +155,6 @@ export default {
   cropOnlyFill,
   groupsPerStrip,
   fixedColumns,
-  rotatingGroupTypes,
   arrowsPosition,
   arrowsVerticalPosition,
   itemShadowSize,

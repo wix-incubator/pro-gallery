@@ -55,7 +55,7 @@ export class Group {
       this.collageAmount = styleParams.collageAmount;
       this.collageDensity = styleParams.collageDensity;
       this.groupTypes = String(styleParams.groupTypes);
-      this.rotatingGroupTypes = String(styleParams.rotatingGroupTypes);
+      this.repeatingGroupTypes = String(styleParams.repeatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.externalInfoHeight = styleParams.externalInfoHeight;
@@ -117,7 +117,7 @@ export class Group {
       this.cubeImages &&
       this.groupSize === 1 &&
       ['fill', 'fit'].includes(this.cubeType) &&
-      this.rotatingGroupTypes.length === 0 &&
+      this.repeatingGroupTypes.length === 0 &&
       this.rotatingCropRatios.length === 0;
     this.cubedHeight = shouldUseFixedHeight ? height : null;
   }
@@ -216,8 +216,8 @@ export class Group {
 
   getGroupType(forcedGroupSize) {
     //---------| Override with specifically defined rotating group types (ignores everything else)
-    if (this.rotatingGroupTypes) {
-      const groupTypesArr = String(this.rotatingGroupTypes).split(',');
+    if (this.repeatingGroupTypes) {
+      const groupTypesArr = String(this.repeatingGroupTypes).split(',');
       return groupTypesArr[this.idx % groupTypesArr.length];
 
       // } else if (this.isLastItems) {

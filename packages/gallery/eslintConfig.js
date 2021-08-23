@@ -11,6 +11,6 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
   ],
-  ignorePatterns: ['versionLogger.js'],
+  ignorePatterns: ['versionLogger.js', 'standaloneValidateCode.js'],
   rules: {},
 };

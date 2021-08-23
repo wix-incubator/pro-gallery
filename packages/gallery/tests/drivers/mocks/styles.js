@@ -1,5 +1,9 @@
 const styleParams = {
-  layoutParams: { gallerySpacing: 0 },
+  layoutParams: {
+    gallerySpacing: 0,
+    cropRatio: 1,
+    repeatingGroupTypes: '',
+  },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
@@ -13,11 +17,9 @@ const styleParams = {
   chooseBestGroup: true,
   groupSize: 3,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  rotatingGroupTypes: '',
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cropRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
   rotatingCropRatio: '',

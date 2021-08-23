@@ -12,6 +12,7 @@ export {
   convertStylesBackwards,
 } from './core/helpers/stylesConverter';
 export { assignByString } from './core/helpers/stylesUtils';
+export { validateTypes } from './common/validateTypes/validateTypes';
 export { flatToNested } from './core/helpers/stylesUtils';
 export { flattenObject } from './core/helpers/stylesUtils';
 export { mergeNestedObjects } from './core/helpers/stylesUtils';
