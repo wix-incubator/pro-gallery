@@ -9,12 +9,10 @@ function start() {
   );
   const sourceTypesFile = path.join(galleryFolder, 'galleryTypes.ts');
   const tempFile = path.join(__dirname, 'temp.js');
-  const targetFile = path.join(
-    __dirname,
-    '../src/common/validateTypes/standaloneValidateCode.js'
-  );
+  const targetDir = path.join(__dirname, '../src/common/validateTypes/');
+  const targetFile = path.join(targetDir, 'standaloneValidateCode.js');
 
-  [sourceTypesFile, targetFile].forEach(raiseIfNotExist);
+  [sourceTypesFile, targetDir].forEach(raiseIfNotExist);
 
   writeES5StandaloneValidateMethod({
     sourceTypesFile,
