@@ -2,7 +2,10 @@ import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager } from 'pro-gallery-blueprints';
 import ProGallery from './proGallery/proGallery';
-import { GalleryProps, GalleryState } from './galleryTypes';
+import {
+  GalleryProps,
+  GalleryState,
+} from '../../common/interfaces/galleryTypes';
 import shouldValidate from './typeValidator/shouldValidate';
 
 export default class Gallery extends React.Component<
