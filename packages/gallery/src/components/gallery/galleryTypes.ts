@@ -5,7 +5,7 @@ import { CreateMediaUrl } from '../../common/interfaces/CreateMediaUrl';
 import { CustomComponents } from '../../common/interfaces/CustomComponents';
 import { ScrollingElement } from '../../common/interfaces/ScrollingElement';
 import { Settings } from '../../common/interfaces/Settings';
-import { StyleParams } from './styles';
+import { StyleParams } from '../../common/interfaces/styles';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
