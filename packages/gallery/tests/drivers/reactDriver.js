@@ -90,6 +90,7 @@ class galleryDriver {
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
       enableVideoPlaceholder: true,
+      magnificationLevel: 2,
     };
 
     this.scroll = {

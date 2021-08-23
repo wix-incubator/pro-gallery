@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('styleParam - itemClick', () => {
   let driver;
@@ -205,6 +206,52 @@ describe('styleParam - itemClick', () => {
       item.simulate('click');
       expect(driver.find.tag('video').length).to.eq(0);
 
+      driver.detach.proGallery();
+    });
+  });
+
+  describe('itemClick = "MAGNIFY"', async () => {
+    const mountAndGetMagnifiedItems = async (
+      galleryDriver,
+      selector = '.magnified-item-container'
+    ) => {
+      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+        itemClick: GALLERY_CONSTS.itemClick.MAGNIFY,
+      });
+      galleryDriver.mount.proGallery(initialProps);
+      await galleryDriver.update();
+      return galleryDriver.find.selector(selector);
+    };
+    it('should have magnification container', async () => {
+      const items = await mountAndGetMagnifiedItems(driver);
+      expect(items.length).to.not.eq(0);
+      driver.detach.proGallery();
+    });
+
+    it('should not render magnified images', async () => {
+      const items = await mountAndGetMagnifiedItems(
+        driver,
+        '.magnified-images'
+      );
+      expect(items.length).to.eq(0);
+      driver.detach.proGallery();
+    });
+
+    it('should render magnified images', async () => {
+      const items = await mountAndGetMagnifiedItems(driver);
+      const item = items.at(0);
+      item.simulate('mouseup');
+      expect(driver.find.selector('.magnified-images').length).to.eq(1);
+      driver.detach.proGallery();
+    });
+    it('should have default styles', async () => {
+      const items = await mountAndGetMagnifiedItems(driver);
+      const magnificationContainer = items.at(0);
+      expect(magnificationContainer.props().style).to.deep.equal({
+        width: '100%',
+        height: '100%',
+        cursor: 'zoom-in',
+      });
       driver.detach.proGallery();
     });
   });

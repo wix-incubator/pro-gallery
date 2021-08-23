@@ -170,7 +170,7 @@ function withMagnified(WrappedComponent) {
         return {
           width: '100%',
           height: '100%',
-          cursor: 'crosshair',
+          cursor: 'zoom-in',
         };
       }
     }
@@ -194,6 +194,7 @@ function withMagnified(WrappedComponent) {
           <WrappedComponent {...this.props} />
           {shouldMagnify && (
             <div
+              className={'magnified-images'}
               style={{
                 zIndex: 1000,
                 position: 'absolute',
