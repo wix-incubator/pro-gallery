@@ -54,7 +54,7 @@ import imageLoadingMode from './imageLoadingMode';
 import cropOnlyFill from './cropOnlyFill';
 import groupsPerStrip from './groupsPerStrip';
 import fixedColumns from './fixedColumns';
-import rotatingGroupTypes from './rotatingGroupTypes';
+import layoutParams_repeatingGroupTypes from './repeatingGroupTypes';
 import arrowsPosition from './arrowsPosition';
 import arrowsVerticalPosition from './arrowsVerticalPosition';
 import itemShadowSize from './itemShadowSize';
@@ -99,15 +99,16 @@ import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import magnificationLevel from './magnificationLevel';
 
 export default {
+  layoutParams_gallerySpacing,
+  layoutParams_cropRatio,
+  layoutParams_repeatingGroupTypes,
   itemClick,
   imageMargin,
   hoveringBehaviour,
   enableInfiniteScroll,
   cubeType,
   cubeImages,
-  layoutParams_cropRatio,
   titlePlacement,
-  layoutParams_gallerySpacing,
   isVertical,
   numberOfImagesPerRow,
   numberOfImagesPerCol,
@@ -155,7 +156,6 @@ export default {
   cropOnlyFill,
   groupsPerStrip,
   fixedColumns,
-  rotatingGroupTypes,
   arrowsPosition,
   arrowsVerticalPosition,
   itemShadowSize,

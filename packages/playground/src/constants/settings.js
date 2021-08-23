@@ -67,7 +67,7 @@ export const stylesBySection = {
     'placeGroupsLtr',
 
     'groupTypes',
-    'rotatingGroupTypes',
+    'layoutParams_repeatingGroupTypes',
     'rotatingCropRatios',
     'columnWidths',
     'layoutParams_gallerySpacing',

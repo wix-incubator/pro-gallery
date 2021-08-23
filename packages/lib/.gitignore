@@ -13,3 +13,4 @@ test/e2e/screenshots
 .yo-rc.json
 package-lock.json
 yarn-lock
+standaloneValidateCode.js
