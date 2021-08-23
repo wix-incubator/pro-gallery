@@ -1,8 +1,7 @@
 {
-  "publishScoped": false,
   "private": false,
   "name": "lean-gallery",
-  "version": "4.0.15-beta.87",
+  "version": "4.0.15-beta.90",
   "sideEffects": [
     "./src/leanGallery/leanGallery.scss"
   ],
@@ -23,13 +22,14 @@
     "watch": "npm run start",
     "start": "tsc -w & npm run css-watch",
     "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "test": "echo 'no test'",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/leanGallery/leanGallery.scss:dist/styles/leanGallery.css",
     "css-watch": "sass --watch src/leanGallery/leanGallery.scss:dist/styles/leanGallery.css",
     "lint": "eslint \"src/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "pro-gallery-lib": "^4.0.15-beta.87"
+    "pro-gallery-lib": "^4.0.15-beta.90"
   },
   "peerDependencies": {
     "react": "^16.8.6",

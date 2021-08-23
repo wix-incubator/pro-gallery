@@ -22,7 +22,11 @@ const fixToMix = (styles) => {
   presetStyles.targetItemSize = 86;
   presetStyles.minItemSize = 50;
   presetStyles.chooseBestGroup = true;
-  presetStyles.rotatingGroupTypes = '1,3l,1,3r';
+  presetStyles = assignByString(
+    presetStyles,
+    'layoutParams_repeatingGroupTypes',
+    '1,3l,1,3r'
+  );
   presetStyles.smartCrop = false;
   presetStyles.scatter = 0;
   presetStyles.rotatingScatter = '';

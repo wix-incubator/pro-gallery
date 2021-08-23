@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery",
-  "version": "4.0.15-beta.87",
+  "version": "4.0.15-beta.90",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "build": " npm run generateValidationFunction && tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "build": " tsc && tsc -p tsconfig-esm.json && npm run css-compile",
     "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
@@ -39,11 +39,10 @@
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "ajv": "^8.6.0",
     "hls.js": "^0.14.12",
-    "pro-gallery-blueprints": "^4.0.15-beta.87",
-    "pro-gallery-lib": "^4.0.15-beta.87",
-    "pro-layouts": "^4.0.15-beta.87",
+    "pro-gallery-blueprints": "^4.0.15-beta.90",
+    "pro-gallery-lib": "^4.0.15-beta.90",
+    "pro-layouts": "^4.0.15-beta.90",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {

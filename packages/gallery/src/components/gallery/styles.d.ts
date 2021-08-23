@@ -1,15 +1,10 @@
-export type PlayOn = 'hover' | 'auto' | 'onClick';
-export interface Video {
-  playOn: PlayOn;
-  [key: string]: any;
-}
-
-export interface Item {
-  video: Video;
-  [key: string]: any;
-}
+import { LayoutParams } from './layoutParams.d';
+import { BehaviourParams } from './behaviourParams.d';
+import { StylingParams } from './stylingParams.d';
 
 export interface StyleParams {
-  item?: Item;
+  layoutParams: LayoutParams;
+  behavourParams?: BehaviourParams;
+  stylingParams?: StylingParams;
   [key: string]: any;
 }

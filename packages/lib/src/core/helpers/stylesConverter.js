@@ -50,7 +50,7 @@ const layoutParamsMap = {
   cropOnlyFill: 'layoutParams_cropOnlyFill', //????????????????
 
   imageMargin: 'layoutParams_itemSpacing',
-  placeGroupsLtr: 'layoutParams_forceGroupsOrder',
+  placeGroupsLtr: 'layoutParams_groupsOrder', //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
   rotatingGroupTypes: 'layoutParams_repeatingGroupTypes',
 
   slideshowInfoSize: 'layoutParams_slideshowInfoSize',

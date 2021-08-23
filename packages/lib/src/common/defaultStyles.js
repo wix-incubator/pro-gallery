@@ -1,9 +1,12 @@
 import GALLERY_CONSTS from './constants';
 import coreStyles from './coreStyles';
+import { mergeNestedObjects } from '../core/helpers/stylesUtils';
 
-const defaultStyles = Object.assign({}, coreStyles, {
+const defaultStyles = mergeNestedObjects(coreStyles, {
+  layoutParams: {
+    repeatingGroupTypes: '',
+  },
   gallerySize: 30,
-  rotatingGroupTypes: '',
   cropOnlyFill: false,
   rotatingCropRatios: '',
   columnWidths: '',
