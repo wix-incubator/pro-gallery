@@ -232,15 +232,42 @@ class SlideshowView extends GalleryComponent {
     this.removeArrowsIfNeeded();
   }
 
-  getNextItemOrGruopToScrollTo(initiator) {
-    // This is a shared logic to both flows. make sure that you reuse it here
-    // const currentGroupIdx = this.getCenteredGroupIdxByScroll();
-    // let currentGroup = currentGroupIdx + direction;
-    if(initiator === 'nextItem') {
-      console.log('do something')
+  getNextItemOrGroupToScrollTo(
+    initiator,
+    direction,
+    ignoreScrollPosition,
+    avoidIndividualNavigation,
+    isAutoTrigger
+  ) {
+    let nextIndex;
+    if (initiator === 'nextItem') {
+      if (ignoreScrollPosition) {
+        nextIndex = this.state.activeIndex;
+      } else {
+        if (
+          avoidIndividualNavigation &&
+          !(this.props.styleParams.groupSize > 1)
+        ) {
+          nextIndex = this.getCenteredItemIdxByScroll();
+        } else {
+          nextIndex = isAutoTrigger
+            ? this.setCurrentItemByScroll()
+            : this.state.activeIndex;
+        }
+      }
+      nextIndex += direction;
+
+      if (!this.props.styleParams.slideshowLoop) {
+        nextIndex = Math.min(
+          this.props.galleryStructure.items.length - 1,
+          nextIndex
+        );
+        nextIndex = Math.max(0, nextIndex);
+      }
     } else if (initiator === 'nextGroup') {
-      console.log('do something else')
+      nextIndex = this.getCenteredGroupIdxByScroll() + direction;
     }
+    return nextIndex;
   }
 
   async nextItem({
@@ -257,35 +284,17 @@ class SlideshowView extends GalleryComponent {
     }
     this.isSliding = true;
 
-    let activeIndex;
-    if (ignoreScrollPosition) {
-      activeIndex = this.state.activeIndex;
-    } else {
-      if (
-        avoidIndividualNavigation &&
-        !(this.props.styleParams.groupSize > 1)
-      ) {
-        activeIndex = this.getCenteredItemIdxByScroll();
-      } else {
-        activeIndex = isAutoTrigger
-          ? this.setCurrentItemByScroll()
-          : this.state.activeIndex;
-      }
-    }
-
-    let nextItem = activeIndex + direction;
-    if (!this.props.styleParams.slideshowLoop) {
-      nextItem = Math.min(
-        this.props.galleryStructure.items.length - 1,
-        nextItem
-      );
-      nextItem = Math.max(0, nextItem);
-    }
+    let nextItem = this.getNextItemOrGroupToScrollTo(
+      'nextItem',
+      direction,
+      ignoreScrollPosition,
+      avoidIndividualNavigation,
+      isAutoTrigger
+    );
 
     const { scrollToItem } = this.props.actions;
     this.isAutoScrolling = true;
 
-    // ---- navigate ---- //
     try {
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
       await this.scrollTo(
@@ -328,17 +337,16 @@ class SlideshowView extends GalleryComponent {
       return;
     }
     this.isSliding = true;
-    const currentGroupIdx = this.getCenteredGroupIdxByScroll();
-    let currentGroup = currentGroupIdx + direction;
-    const scrollToGroup = this.props.actions.scrollToGroup;
 
+    const nextGroup = this.getNextItemOrGroupToScrollTo('nextGroup', direction);
+    const { scrollToGroup } = this.props.actions;
     this.isAutoScrolling = true;
 
     // ---- navigate ---- //
     try {
       await this.scrollTo(
         scrollToGroup,
-        currentGroup,
+        nextGroup,
         isContinuousScrolling,
         scrollDuration,
         scrollingUpTheGallery
