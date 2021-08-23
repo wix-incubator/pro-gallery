@@ -276,44 +276,43 @@ class SlideshowView extends GalleryComponent {
 
     // ---- navigate ---- //
     try {
-      const scrollParams = this.getScrollParameters(scrollDuration, scrollingUpTheGallery);
-      const { scrollMarginCorrection, _scrollDuration, shouldAllowScroll } = scrollParams;
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
+      await this.scrollTo(
+        scrollToItem,
+        itemToScroll,
+        isContinuousScrolling,
+        scrollDuration,
+        scrollingUpTheGallery
+      );
 
-        shouldAllowScroll &&
-        await scrollToItem(
-            itemToScroll,
-            false,
-            true,
-            _scrollDuration,
-            scrollMarginCorrection,
-            isContinuousScrolling,
-          );
+      if (this.props.styleParams.groupSize === 1) {
+        const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
 
-        if (this.props.styleParams.groupSize === 1) {
-          const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
-
-          if (nextItem >= this.skipFromSlide) {
-            nextItem = skipToSlide;
-           await scrollToItem(nextItem);
-          }
+        if (nextItem >= this.skipFromSlide) {
+          nextItem = skipToSlide;
+          await scrollToItem(nextItem);
         }
+      }
 
-        this.onScroll(nextItem, isContinuousScrolling);
+      this.onScroll(nextItem, isContinuousScrolling);
 
-        if (ignoreScrollPosition) {
-          this.props.getMoreItemsIfNeeded(
-            this.props.galleryStructure.galleryItems[nextItem].offset.left
-          );
-          this.props.setGotFirstScrollIfNeeded();
-        }
-
+      if (ignoreScrollPosition) {
+        this.props.getMoreItemsIfNeeded(
+          this.props.galleryStructure.galleryItems[nextItem].offset.left
+        );
+        this.props.setGotFirstScrollIfNeeded();
+      }
     } catch (e) {
-       this.onThrowScrollError('Cannot proceed to the next Item', e);
+      this.onThrowScrollError('Cannot proceed to the next Item', e);
     }
   }
 
-  async nextGroup({ direction, scrollDuration, isContinuousScrolling = false, scrollingUpTheGallery }) {
+  async nextGroup({
+    direction,
+    scrollDuration,
+    isContinuousScrolling = false,
+    scrollingUpTheGallery,
+  }) {
     if (this.isSliding) {
       return;
     }
@@ -326,26 +325,45 @@ class SlideshowView extends GalleryComponent {
 
     // ---- navigate ---- //
     try {
-      const scrollParams = this.getScrollParameters(scrollDuration, scrollingUpTheGallery);
-      const { scrollMarginCorrection, _scrollDuration, shouldAllowScroll } = scrollParams;
-
-      shouldAllowScroll &&
-      await scrollToGroup(
-          currentGroup,
-          false,
-          true,
-          _scrollDuration,
-          scrollMarginCorrection,
-          isContinuousScrolling
-        );
+      await this.scrollTo(
+        scrollToGroup,
+        currentGroup,
+        isContinuousScrolling,
+        scrollDuration,
+        scrollingUpTheGallery
+      );
       const nextItem = this.getCenteredItemIdxByScroll() + direction;
       this.onScroll(nextItem, isContinuousScrolling);
     } catch (e) {
       this.onThrowScrollError('Cannot proceed to the next Group', e);
     }
   }
-  
-  onThrowScrollError(massage,e) {
+
+  async scrollTo(
+    func,
+    indexToScroll,
+    isContinuousScrolling,
+    scrollDuration,
+    scrollingUpTheGallery
+  ) {
+    const scrollParams = this.getScrollParameters(
+      scrollDuration,
+      scrollingUpTheGallery
+    );
+    const { scrollMarginCorrection, _scrollDuration, shouldAllowScroll } =
+      scrollParams;
+    shouldAllowScroll &&
+      (await func(
+        indexToScroll,
+        false,
+        true,
+        _scrollDuration,
+        scrollMarginCorrection,
+        isContinuousScrolling
+      ));
+  }
+
+  onThrowScrollError(massage, e) {
     console.error(massage, e);
     this.clearAutoSlideshowInterval();
   }
@@ -371,8 +389,8 @@ class SlideshowView extends GalleryComponent {
     return {
       scrollMarginCorrection: this.getStyles().margin || 0,
       _scrollDuration: scrollDuration || this.props.styleParams.scrollDuration || 400,
-      shouldAllowScroll: !this.shouldNotAllowScroll({ scrollingUpTheGallery })
-    }
+      shouldAllowScroll: !this.shouldNotAllowScroll({ scrollingUpTheGallery }),
+    };
   }
 
   onCurrentItemChanged() {
