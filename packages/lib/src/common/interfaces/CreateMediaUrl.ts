@@ -1,3 +1,4 @@
+/* eslint-disable */
 export interface CreateMediaUrl {
   (args: {
     item: Record<string, any>;
@@ -39,3 +40,4 @@ type ResizeMethods = 'fill' | 'fit' | 'full' | 'video';
 //   };
 //   qualities?: Record<string, any>[];
 // }
+/* eslint-enable */
