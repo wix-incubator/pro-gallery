@@ -232,6 +232,17 @@ class SlideshowView extends GalleryComponent {
     this.removeArrowsIfNeeded();
   }
 
+  getNextItemOrGruopToScrollTo(initiator) {
+    // This is a shared logic to both flows. make sure that you reuse it here
+    // const currentGroupIdx = this.getCenteredGroupIdxByScroll();
+    // let currentGroup = currentGroupIdx + direction;
+    if(initiator === 'nextItem') {
+      console.log('do something')
+    } else if (initiator === 'nextGroup') {
+      console.log('do something else')
+    }
+  }
+
   async nextItem({
     direction,
     isAutoTrigger,
