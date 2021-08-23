@@ -309,7 +309,7 @@ class SlideshowView extends GalleryComponent {
         }
 
     } catch (e) {
-      console.error('Cannot proceed to the next Item', e);
+      utils.logError('Cannot proceed to the next Item', e);
       this.clearAutoSlideshowInterval();
       return;
     }
@@ -343,7 +343,7 @@ class SlideshowView extends GalleryComponent {
       const nextItem = this.getCenteredItemIdxByScroll() + direction;
       this.onScroll(nextItem, isContinuousScrolling);
     } catch (e) {
-      console.error('Cannot proceed to the next Group', e);
+      utils.logError('Cannot proceed to the next Group', e);
       this.clearAutoSlideshowInterval();
       return;
     }

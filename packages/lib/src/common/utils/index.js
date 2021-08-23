@@ -666,6 +666,10 @@ class Utils {
   focusGalleryElement(element){
     element.focus();
   }
+
+  logError(massage,e) {
+    console.error(massage, e);
+  }
 }
 
 export default new Utils();
