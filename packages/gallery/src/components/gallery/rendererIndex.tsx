@@ -2,14 +2,7 @@
 import React from 'react';
 import { utils, defaultStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
-
-interface GalleryRendererProps {
-  container: any;
-  items: any;
-  structure: any;
-  styles: any;
-  [key: string]: any;
-}
+import { GalleryRendererProps } from './galleryRendererTypes';
 
 export default class GalleryRenderer extends React.Component<GalleryRendererProps> {
   render() {
