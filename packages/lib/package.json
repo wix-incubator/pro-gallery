@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-lib",
-  "version": "4.0.15-beta.92",
+  "version": "4.0.15-beta.93",
   "private": false,
   "author": {
     "name": "Rita Bazak",
@@ -44,7 +44,7 @@
     "typescript-json-schema": "^0.50.1"
   },
   "dependencies": {
-    "pro-layouts": "^4.0.15-beta.92"
+    "pro-layouts": "^4.0.15-beta.93"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
