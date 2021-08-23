@@ -9,8 +9,8 @@ export default class GalleryRenderer extends React.Component<GalleryRendererProp
     const { id, styles, options, styleParams, eventsListener, customComponents, ...otherProps } =
       this.props;
 
-    const _eventsListener = (...args) =>
-      typeof eventsListener === 'function' && eventsListener(...args);
+    const _eventsListener = (eventName, eventData) =>
+      typeof eventsListener === 'function' && eventsListener(eventName, eventData);
 
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams }; //TODOVER3 can we remove the default styles?? blueprints should take care of it
 
