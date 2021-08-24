@@ -2,10 +2,8 @@ import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager } from 'pro-gallery-blueprints';
 import ProGallery from './proGallery/proGallery';
-import {
-  GalleryProps,
-  GalleryState,
-} from '../../common/interfaces/galleryTypes';
+
+import { GalleryProps, GalleryState } from 'pro-gallery-lib';
 import shouldValidate from './typeValidator/shouldValidate';
 
 export default class Gallery extends React.Component<
@@ -66,12 +64,12 @@ export default class Gallery extends React.Component<
 
   onNewProps(props, calledByConstructor) {
     const { eventsListener, ...otherProps } = props;
-    const _eventsListener = (...args) => {
-      const [eventName, value] = args;
+    const _eventsListener = (eventName, eventData) => {
       if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
-        this.blueprintsManager.getMoreItems(value);
+        this.blueprintsManager.getMoreItems(eventData);
       } else {
-        typeof eventsListener === 'function' && eventsListener(...args);
+        typeof eventsListener === 'function' &&
+          eventsListener(eventName, eventData);
       }
     };
     this.galleryProps = {

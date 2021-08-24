@@ -1,3 +1,4 @@
+/* eslint-disable */
 export type Item = PhotoItem | VideoItem | TextItem;
 
 export interface PhotoItem {
@@ -11,3 +12,4 @@ export interface VideoItem {
 export interface TextItem {
   [key: string]: any;
 }
+/* eslint-enable */

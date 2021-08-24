@@ -49,6 +49,7 @@ const defaultStyles = mergeNestedObjects(coreStyles, {
   overlaySize: 100,
   overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
   overlayPadding: 0,
+  cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
 });
 
 export default defaultStyles;

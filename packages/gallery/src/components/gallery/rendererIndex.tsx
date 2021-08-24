@@ -2,15 +2,15 @@
 import React from 'react';
 import { utils, defaultStyles } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
-import { GalleryRendererProps } from '../../common/interfaces/galleryRendererTypes';
+import { GalleryRendererProps } from 'pro-gallery-lib';
 
 export default class GalleryRenderer extends React.Component<GalleryRendererProps> {
   render() {
     const { id, styles, options, styleParams, eventsListener, customComponents, ...otherProps } =
       this.props;
 
-    const _eventsListener = (...args) =>
-      typeof eventsListener === 'function' && eventsListener(...args);
+    const _eventsListener = (eventName, eventData) =>
+      typeof eventsListener === 'function' && eventsListener(eventName, eventData);
 
     const _styles = { ...defaultStyles, ...options, ...styles, ...styleParams }; //TODOVER3 can we remove the default styles?? blueprints should take care of it
 

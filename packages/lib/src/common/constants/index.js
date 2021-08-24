@@ -7,6 +7,7 @@ import deviceType from './deviceType';
 import gallerySizeType from './gallerySizeType';
 import galleryTextAlign from './galleryTextAlign.js';
 import gridStyle from './gridStyle';
+import cubeFitPosition from './cubeFitPosition';
 import groupTypes from './groupTypes';
 import imageHoverAnimations from './imageHoverAnimations';
 import infoBehaviourOnHover from './infoBehaviourOnHover';
@@ -63,6 +64,7 @@ export default {
   gallerySizeType,
   galleryTextAlign,
   gridStyle,
+  cubeFitPosition,
   groupTypes,
   imageHoverAnimations,
   infoBehaviourOnHover,
