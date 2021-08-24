@@ -12,7 +12,8 @@ function writeES5StandaloneValidateMethod({
   createWriteStream,
   rmSync,
 }) {
-  const code = buildValidationFunction(getSchemaFromTypes(sourceTypesFile));
+  const schema = getSchemaFromTypes(sourceTypesFile);
+  const code = buildValidationFunction(schema);
   writeFileSync(tempFile, code);
   const fileWriter = createWriteStream(targetFile);
   browserify(tempFile, { standalone: 'nirnaor' })
