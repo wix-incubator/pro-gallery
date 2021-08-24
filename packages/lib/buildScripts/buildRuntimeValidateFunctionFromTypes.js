@@ -16,6 +16,10 @@ function start() {
   [sourceTypesFile, targetDir].forEach(raiseIfNotExist);
 
   const schema = getSchemaFromTypes(sourceTypesFile);
+  // fs.writeFileSync(
+  //   path.join(libSrcFolder, 'schema.json'),
+  //   JSON.stringify(schema, null, 4)
+  // );
 
   writeES5StandaloneValidateMethod({
     schema,

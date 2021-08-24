@@ -17,8 +17,7 @@ function getStyleParamsMap(schema) {
 
   function traverse(key, obj, schema, route) {
     if (obj.$ref) {
-      const def = getDef(obj, schema);
-      traverseProperties(def.properties, schema, route);
+      traverseProperties(definition(obj, schema).properties, schema, route);
     } else {
       const routeString = route.join('_');
       final = assignByString(final, routeString, routeString);
@@ -26,7 +25,7 @@ function getStyleParamsMap(schema) {
   }
 }
 
-function getDef(obj, schema) {
+function definition(obj, schema) {
   return schema.definitions[obj.$ref.split('#/definitions/').pop()];
 }
 function assignByString(Obj, string, value) {
@@ -43,12 +42,12 @@ function assignByString(Obj, string, value) {
   return _obj;
 }
 
-const path = require('path');
-const fs = require('fs');
-const s = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../src/schema.json'), {
-    encoding: 'utf8',
-  })
-);
-const res = getStyleParamsMap(s);
-console.log(JSON.stringify(res, null, 4));
+// const path = require('path');
+// const fs = require('fs');
+// const s = JSON.parse(
+//   fs.readFileSync(path.join(__dirname, '../src/schema.json'), {
+//     encoding: 'utf8',
+//   })
+// );
+// const res = getStyleParamsMap(s);
+// console.log(JSON.stringify(res, null, 4));
