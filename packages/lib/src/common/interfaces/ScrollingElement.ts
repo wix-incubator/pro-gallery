@@ -1,3 +1,4 @@
+/* eslint-disable */
 export type ScrollingElement = ScrollingObject | HTMLElement | null;
 
 export interface ScrollingObject {
@@ -11,3 +12,4 @@ export interface ScrollingObject {
   ): void;
   scrollTo?(x: number, y: number): void;
 }
+/* eslint-enable */

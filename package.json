@@ -15,7 +15,7 @@
     "test": "echo 'not running tests from root - runnign it using GitHub actions",
     "ci:run-playground": "cd packages/playground && npx serve -s build -l 3000 && cd ../..",
     "ci:run-ssr": "cd packages/ssr-simulator && npm run watch && cd ../..",
-    "ci:test-unit": "lerna run --parallel unit",
+    "ci:test-unit": "lerna run unit",
     "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-layouts'",
     "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-styleParams'",
     "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3000 'lerna run test:e2e-integration'",

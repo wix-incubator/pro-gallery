@@ -2,10 +2,9 @@ import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager } from 'pro-gallery-blueprints';
 import ProGallery from './proGallery/proGallery';
-import {
-  GalleryProps,
-  GalleryState,
-} from '../../common/interfaces/galleryTypes';
+
+/// <reference types="pro-gallery-lib" />
+import { GalleryProps, GalleryState } from 'pro-gallery-lib';
 import shouldValidate from './typeValidator/shouldValidate';
 
 export default class Gallery extends React.Component<
@@ -15,7 +14,7 @@ export default class Gallery extends React.Component<
   private blueprintsManager: any;
   private galleryProps: any;
 
-  constructor(props: GalleryProps) {
+  constructor(props: any) {
     super(props);
     this.isUsingCustomInfoElements = this.isUsingCustomInfoElements.bind(this);
     this.blueprintsManager = new BlueprintsManager({ id: 'layoutingGallery' });

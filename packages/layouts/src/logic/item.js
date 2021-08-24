@@ -35,6 +35,7 @@ export class Item {
       this.smartCrop = styleParams.smartCrop;
       this.useMaxDimensions =
         styleParams.useMaxDimensions && this.itemType !== 'text';
+      this.cubeFitPosition = styleParams.cubeFitPosition;
     }
 
     this._groupOffset = {
@@ -230,9 +231,17 @@ export class Item {
             ? this.calcPinOffset(this._group.width, 'left')
             : this._group.width - this.outerWidth) || 0,
     };
-    const { fixTop = 0, fixLeft = 0 } = this.dimensions;
+    const {
+      fixTop = 0,
+      fixLeft = 0,
+      fixRight = 0,
+      fixBottom = 0,
+    } = this.dimensions;
+
     offset.innerTop = fixTop;
     offset.innerLeft = fixLeft;
+    offset.innerRight = fixRight;
+    offset.innerBottom = fixBottom;
 
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
@@ -311,8 +320,8 @@ export class Item {
     // prettier-ignore
         Math.max(1, w);
 
-    const { fixLeft = 0 } = this.dimensions;
-    this.style.innerWidth = this.style.width - 2 * fixLeft;
+    const { fixLeft = 0, fixRight = 0 } = this.dimensions;
+    this.style.innerWidth = this.style.width - fixLeft - fixRight;
   }
 
   get outerHeight() {
@@ -343,8 +352,8 @@ export class Item {
     // prettier-ignore
         Math.max(1, h);
 
-    const { fixTop = 0 } = this.dimensions;
-    this.style.innerHeight = this.style.height - 2 * fixTop;
+    const { fixTop = 0, fixBottom = 0 } = this.dimensions;
+    this.style.innerHeight = this.style.height - fixBottom - fixTop;
   }
 
   get maxHeight() {
@@ -398,10 +407,33 @@ export class Item {
       }
     }
 
-    return {
+    let fixVals = {
       fixTop: (this.height - targetHeight) / 2,
       fixLeft: (this.width - targetWidth) / 2,
+      fixRight: (this.width - targetWidth) / 2,
+      fixBottom: (this.height - targetHeight) / 2,
     };
+
+    switch (this.cubeFitPosition) {
+      case 'TOP':
+        fixVals.fixTop = 0;
+        fixVals.fixBottom *= 2;
+        break;
+      case 'BOTTOM':
+        fixVals.fixTop *= 2;
+        fixVals.fixBottom = 0;
+        break;
+      case 'LEFT':
+        fixVals.fixLeft = 0;
+        fixVals.fixRight *= 2;
+        break;
+      case 'RIGHT':
+        fixVals.fixLeft *= 2;
+        fixVals.fixRight = 0;
+        break;
+    }
+
+    return fixVals;
   }
 
   get cropRatio() {

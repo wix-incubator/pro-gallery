@@ -3,10 +3,7 @@ const fs = require('fs');
 
 const writeES5StandaloneValidateMethod = require('./writeStandaloneValidate');
 function start() {
-  const galleryFolder = path.join(
-    __dirname,
-    '../../gallery/src/common/interfaces'
-  );
+  const galleryFolder = path.join(__dirname, '../src/common/interfaces');
   const sourceTypesFile = path.join(galleryFolder, 'galleryTypes.ts');
   const tempFile = path.join(__dirname, 'temp.js');
   const targetDir = path.join(__dirname, '../src/common/validateTypes/');

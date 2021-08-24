@@ -48,6 +48,7 @@ const layoutParamsMap = {
   smartCrop: 'layoutParams_enableSmartCrop',
   minItemSize: 'layoutParams_minItemSize',
   cropOnlyFill: 'layoutParams_cropOnlyFill', //????????????????
+  cubeFitPosition: 'layoutParams_fitAlignment',
 
   imageMargin: 'layoutParams_itemSpacing',
   placeGroupsLtr: 'layoutParams_groupsOrder', //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
