@@ -239,21 +239,24 @@ class SlideshowView extends GalleryComponent {
     avoidIndividualNavigation,
     isAutoTrigger
   ) {
+     
     let nextIndex;
-    if (initiator === 'nextItem') {
-      if (ignoreScrollPosition) {
-        nextIndex = this.state.activeIndex;
+    if (
+      initiator === 'nextGroup' ||
+      (initiator === 'nextItem' &&
+        !ignoreScrollPosition &&
+        avoidIndividualNavigation &&
+        !(this.props.styleParams.groupSize > 1))
+    ) {
+      const key = initiator === 'nextGroup' ? 'groups' : 'galleryItems';
+      nextIndex =
+        this.getCenteredItemOrGroupIdxByScroll(key) + direction;
+    }
+    else if(initiator === 'nextItem') {
+      if(ignoreScrollPosition || !isAutoTrigger) {
+        nextIndex = this.state.activeIndex
       } else {
-        if (
-          avoidIndividualNavigation &&
-          !(this.props.styleParams.groupSize > 1)
-        ) {
-          nextIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
-        } else {
-          nextIndex = isAutoTrigger
-            ? this.setCurrentItemByScroll()
-            : this.state.activeIndex;
-        }
+        nextIndex = this.setCurrentItemByScroll();
       }
       nextIndex += direction;
 
@@ -264,8 +267,6 @@ class SlideshowView extends GalleryComponent {
         );
         nextIndex = Math.max(0, nextIndex);
       }
-    } else if (initiator === 'nextGroup') {
-      nextIndex = this.getCenteredItemOrGroupIdxByScroll('groups') + direction;
     }
     return nextIndex;
   }
