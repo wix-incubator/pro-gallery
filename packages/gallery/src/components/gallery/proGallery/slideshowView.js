@@ -295,7 +295,7 @@ class SlideshowView extends GalleryComponent {
 
     try {
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
-      await this.scrollTo(
+      await this.scrollToItemOrGroup(
         this.props.actions.scrollToItem,
         itemToScroll,
         isContinuousScrolling,
@@ -312,7 +312,7 @@ class SlideshowView extends GalleryComponent {
         }
       }
 
-      this.onScroll(nextItem, isContinuousScrolling);
+      this.onScrollToItemOrGroup(nextItem, isContinuousScrolling);
 
       if (ignoreScrollPosition) {
         this.props.getMoreItemsIfNeeded(
@@ -338,7 +338,7 @@ class SlideshowView extends GalleryComponent {
     const nextGroup = this.getNextItemOrGroupToScrollTo('nextGroup', direction);
 
     try {
-      await this.scrollTo(
+      await this.scrollToItemOrGroup(
         this.props.actions.scrollToGroup,
         nextGroup,
         isContinuousScrolling,
@@ -346,13 +346,13 @@ class SlideshowView extends GalleryComponent {
         scrollingUpTheGallery
       );
       const nextItem = this.getCenteredItemOrGroupIdxByScroll('galleryItems') + direction;
-      this.onScroll(nextItem, isContinuousScrolling);
+      this.onScrollToItemOrGroup(nextItem, isContinuousScrolling);
     } catch (e) {
       this.onThrowScrollError('Cannot proceed to the next Group', e);
     }
   }
 
-  async scrollTo(
+  async scrollToItemOrGroup(
     func,
     indexToScroll,
     isContinuousScrolling,
@@ -377,7 +377,7 @@ class SlideshowView extends GalleryComponent {
     this.clearAutoSlideshowInterval();
   }
 
-  onScroll(nextItem, isContinuousScrolling) {
+  onScrollToItemOrGroup(nextItem, isContinuousScrolling) {
     utils.setStateAndLog(
       this,
       'Next Item',
