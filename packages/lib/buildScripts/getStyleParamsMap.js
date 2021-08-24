@@ -25,46 +25,10 @@ function traverse(key, obj, schema, route) {
     const def = getDef(obj, schema);
     traverseProperties(def.properties, schema, route);
   } else {
-    // console.log(`leaf: ${key}. route: ${route}`)
-    // final = Object.assign({}, assignByString(final, routeString, routeString));
     const routeString = route.join('_');
     final = assignByString(final, routeString, routeString);
   }
-  // if(key === 'density') {
-  //   console.log(final)
-  //   throw new Error('bye')
-  // }
 }
-//   try {
-//     traverse(refObj.$ref, key, route);
-//   } catch (e) {
-//     console.log(`error with key: ${key}`);
-//     console.error(e);
-//     throw e;
-//   }
-// });
-
-// function traverse(refName, key, route) {
-//   console.log(arguments)
-//   // route.push(key);
-//   // if (!refName) {
-//   //   buildObject(route);
-//   //   return;
-//   // }
-
-//   // const obj = schema.definitions[refName.split('#/definitions/').pop()];
-//   // const layoutParams = schema.definitions.LayoutParams
-//   // console.log(layoutParams)
-//   // // if (_.isUndefined(obj.properties) || _.isUndefined(refName)) {
-//   // //   buildObject(route);
-//   // // }
-//   // // else {
-//   // //   _.forEach(obj.properties, (refObj, key) => traverse(refObj.$ref, key, route));
-//   // //   route = []
-//   // // }
-// // }
-
-// }
 
 function assignByString(Obj, string, value) {
   // TODO: Figure out why I cannot import this from pro-gallery-lib
