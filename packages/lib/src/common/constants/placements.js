@@ -46,8 +46,6 @@ const isExternalAbovePlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ABOVE;
 const isExternalBelowPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_BELOW;
-const isExternalVerticalAlternatePlacement = (placement) =>
-  String(placement) === PLACEMENTS.ALTERNATE_VERTICAL;
 const isHoverPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_HOVER;
 const isExternalRightPlacement = (placement) =>
@@ -55,53 +53,13 @@ const isExternalRightPlacement = (placement) =>
 const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
 
-// The following functions check the actual behaviour of the info-placement.
-// NOTICE: they do not handle multiple vertical placements (With it's hierarchy) as it is restricted by the instructions
-
-// (placement, isSlideshow, isHorizontalInfoPossible, customExternalInfoRendererExists) => Any vertical info placement (above \ below \ vertical alternate)? True : False
-const isVerticalPlacement = (
-  placement,
-  isSlideshow,
-  isHorizontalInfoPossible,
-  customExternalInfoRendererExists
-) => {
-  if (
-    isHorizontalInfoPossible &&
-    hasExternalHorizontalPlacement(placement) &&
-    customExternalInfoRendererExists
-  ) {
-    // Horizontal placement is displayed - so Above/Below info is not displayed
-    return false;
-  }
-  // Filtering all horizontal placements from the placements string
-  const verticalPlacements = String(placement)
-    .split(',')
-    .filter((placement) => VERTICAL_PLACEMENTS.includes(placement))
-    .join(',');
-  return (
-    isAboveOrBelowPlacement(
-      placement,
-      isSlideshow,
-      isHorizontalInfoPossible,
-      customExternalInfoRendererExists
-    ) ||
-    isExternalVerticalAlternatePlacement(verticalPlacements) ||
-    isSlideshow
-  );
-};
-
-// (placement, isSlideshow, isHorizontalInfoPossible, customExternalInfoRendererExists) => Above \ Below placements ? True : False
+// (placement, isSlideshow, isHorizontalInfoPossible) => Above \ Below placements ? True : False
 const isAboveOrBelowPlacement = (
   placement,
   isSlideshow,
-  isHorizontalInfoPossible,
-  customExternalInfoRendererExists
+  isHorizontalInfoPossible
 ) => {
-  if (
-    isHorizontalInfoPossible &&
-    hasExternalHorizontalPlacement(placement) &&
-    customExternalInfoRendererExists
-  ) {
+  if (isHorizontalInfoPossible && hasExternalHorizontalPlacement(placement)) {
     // Horizontal placement is displayed - so Above/Below info is not displayed
     return false;
   }
@@ -134,6 +92,5 @@ export {
   isExternalLeftPlacement,
   isExternalVerticalPlacement,
   isExternalHorizontalPlacement,
-  isVerticalPlacement,
   isAboveOrBelowPlacement,
 };
