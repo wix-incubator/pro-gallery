@@ -293,10 +293,10 @@ const addMarginsToSupportShadows = (styles) => {
 }
 const centerArrowsWhenNeeded = (styles, customExternalInfoRendererExists) => {
   let _styles = {...styles}
-  // layout parameter relevant to deciding how info-placement is displayed
+  // A constant determining whether horizontal info can be displayed or not
   const isHorizontalInfoPossible = _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && 
-  _styles.isVertical && _styles.groupSize === 1;
-  if (!isAboveOrBelowPlacement(_styles.titlePlacement, _styles.isSlideshow, isHorizontalInfoPossible, customExternalInfoRendererExists) ||
+  _styles.isVertical && _styles.groupSize === 1 && customExternalInfoRendererExists;
+  if (!isAboveOrBelowPlacement(_styles.titlePlacement, _styles.isSlideshow, isHorizontalInfoPossible) ||
   _styles.numberOfImagesPerCol !== 1) {
     // if text (info) placement is not above or below (w/o hover) or more then 1 images per col, arrows are gallery("item") centered
     _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
