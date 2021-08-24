@@ -2,7 +2,7 @@ import { LayoutParams } from './layoutParams';
 import { BehaviourParams } from './behaviourParams';
 import { StylingParams } from './stylingParams';
 
-export interface Options {
+export interface StyleParams {
   layoutParams: LayoutParams;
   behavourParams?: BehaviourParams;
   stylingParams?: StylingParams;
