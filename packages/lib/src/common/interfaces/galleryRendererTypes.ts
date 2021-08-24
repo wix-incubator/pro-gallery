@@ -1,7 +1,8 @@
-export interface GalleryRendererProps {
-  container: any;
-  items: any;
-  structure: any;
-  styles: any;
-  [key: string]: any;
+import { GalleryProps } from './galleryTypes';
+import { RendererContainer } from './RendererContainer';
+import { Structure } from './Structure';
+
+export interface GalleryRendererProps extends GalleryProps {
+  container: RendererContainer;
+  structure: Structure;
 }

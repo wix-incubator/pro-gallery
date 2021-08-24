@@ -38,9 +38,11 @@ export { INPUT_TYPES } from './settings/utils/constants';
 
 export { Item, PhotoItem, VideoItem, TextItem } from './common/interfaces/Item';
 export { Container } from './common/interfaces/Container';
+export { RendererContainer } from './common/interfaces/RendererContainer';
 export { EventsListener } from './common/interfaces/EventsListener';
 export { CreateMediaUrl } from './common/interfaces/CreateMediaUrl';
 export { CustomComponents } from './common/interfaces/CustomComponents';
 export { ScrollingElement } from './common/interfaces/ScrollingElement';
+export { Structure } from './common/interfaces/Structure';
 export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
