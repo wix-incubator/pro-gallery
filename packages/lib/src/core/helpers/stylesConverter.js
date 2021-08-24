@@ -166,4 +166,4 @@ const stylingParams = {
   itemEnableShadow: 'stylingParams_itemEnableShadow',
 };
 
-export { convertStyles, convertStylesBackwards };
+export { convertStyles, convertStylesBackwards, layoutParamsMap };

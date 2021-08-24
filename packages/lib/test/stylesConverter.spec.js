@@ -1,10 +1,16 @@
 import { expect } from 'chai';
 import {
   convertStyles,
+  layoutParamsMap,
   convertStylesBackwards,
 } from '../src/core/helpers/stylesConverter';
 
 describe('stylesConverter', () => {
+  it('should contain correct keys for params map', () => {
+    expect(layoutParamsMap.collageAmount).to.equal(
+      'layoutParams_collage_amount'
+    );
+  });
   it('should create new styles from old ones', () => {
     const expected = { ...oldStyles(), ...newStyles() };
     const converted = convertStyles(oldStyles());
