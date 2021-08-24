@@ -248,7 +248,7 @@ class SlideshowView extends GalleryComponent {
           avoidIndividualNavigation &&
           !(this.props.styleParams.groupSize > 1)
         ) {
-          nextIndex = this.getCenteredItemIdxByScroll();
+          nextIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
         } else {
           nextIndex = isAutoTrigger
             ? this.setCurrentItemByScroll()
@@ -265,7 +265,7 @@ class SlideshowView extends GalleryComponent {
         nextIndex = Math.max(0, nextIndex);
       }
     } else if (initiator === 'nextGroup') {
-      nextIndex = this.getCenteredGroupIdxByScroll() + direction;
+      nextIndex = this.getCenteredItemOrGroupIdxByScroll('groups') + direction;
     }
     return nextIndex;
   }
@@ -351,7 +351,7 @@ class SlideshowView extends GalleryComponent {
         scrollDuration,
         scrollingUpTheGallery
       );
-      const nextItem = this.getCenteredItemIdxByScroll() + direction;
+      const nextItem = this.getCenteredItemOrGroupIdxByScroll('galleryItems') + direction;
       this.onScroll(nextItem, isContinuousScrolling);
     } catch (e) {
       this.onThrowScrollError('Cannot proceed to the next Group', e);
@@ -804,54 +804,27 @@ class SlideshowView extends GalleryComponent {
     );
   }
 
-  getCenteredItemIdxByScroll() {
-    // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
-    const items = this.props.galleryStructure.galleryItems;
-
-    let centeredIdx;
-
-    // const scrollPos = this.props.styleParams.isRTL ?
-    // this.props.galleryStructure.width - scrollLeft - this.props.container.galleryWidth / 2 :
+  getCenteredItemOrGroupIdxByScroll(key) {
+    const itemsOrGroups = this.props.galleryStructure[key];
+    let centeredItemOrGroupIdx;
     const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
 
     if (scrollPositionAtTheMiddleOfTheGallery === 0) {
-      centeredIdx = 0;
+      centeredItemOrGroupIdx = 0;
     } else {
-      for (let item, i = 0; (item = items[i]); i++) {
-        if (item.offset.left > scrollPositionAtTheMiddleOfTheGallery) {
-          centeredIdx = i - 1;
+      for (let itemOrGroup, i = 0; (itemOrGroup = itemsOrGroups[i]); i++) {
+        const itemOrGroupLeft = key === 'galleryItems' ? 
+        itemOrGroup.offset.left : itemOrGroup.left
+        if (itemOrGroupLeft > scrollPositionAtTheMiddleOfTheGallery) {
+          centeredItemOrGroupIdx = i - 1;
           break;
         }
       }
     }
-    if (!(centeredIdx >= 0)) {
-      centeredIdx = items.length - 1;
+    if (!(centeredItemOrGroupIdx >= 0)) {
+      centeredItemOrGroupIdx = itemsOrGroups.length - 1;
     }
-    return centeredIdx;
-  }
-
-  getCenteredGroupIdxByScroll() {
-    // console.log('[RTL SCROLL] setCurrentItemByScroll: ', scrollLeft);
-    const groups = this.props.galleryStructure.groups;
-
-    let centeredGroupIdx;
-
-    const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
-
-    if (scrollPositionAtTheMiddleOfTheGallery === 0) {
-      centeredGroupIdx = 0;
-    } else {
-      for (let group, i = 0; (group = groups[i]); i++) {
-        if (group.left > scrollPositionAtTheMiddleOfTheGallery) {
-          centeredGroupIdx = i - 1;
-          break;
-        }
-      }
-    }
-    if (!(centeredGroupIdx >= 0)) {
-      centeredGroupIdx = groups.length - 1;
-    }
-    return centeredGroupIdx;
+    return centeredItemOrGroupIdx;
   }
 
   setCurrentItemByScroll() {
@@ -877,7 +850,7 @@ class SlideshowView extends GalleryComponent {
     }
     this.startAutoSlideshowIfNeeded(this.props.styleParams);
 
-    const activeIndex = this.getCenteredItemIdxByScroll();
+    const activeIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
 
     if (!utils.isUndefined(activeIndex)) {
       utils.setStateAndLog(
