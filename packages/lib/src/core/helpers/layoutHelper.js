@@ -4,7 +4,6 @@ import window from '../../common/window/windowWrapper';
 import PLACEMENTS, {
   hasExternalVerticalPlacement,
   hasHoverPlacement,
-  hasExternalHorizontalPlacement,
   isAboveOrBelowPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
@@ -12,12 +11,11 @@ import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
-import INFO_TYPE from '../../common/constants/infoType';
-import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
 import {assignByString} from './stylesUtils'
+import processTextDimensions from './textBoxDimensionsHelper'
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
   if (
@@ -213,24 +211,7 @@ const removeVideoAutoplayInIOS = (styles) => {
   return _styles;
 }
 
-const processTextDimensions = (styles, customExternalInfoRendererExists) => {
-  let _styles = {...styles}
 
-  _styles.textBoxHeight = getTextBoxAboveOrBelowHeight(
-    _styles,
-    customExternalInfoRendererExists
-  );
-  _styles.externalInfoHeight = getHeightFromStyleParams(
-    _styles,
-    _styles.textBoxHeight
-  );
-
-  _styles.externalInfoWidth = getTextBoxRightOrLeftWidth(
-    _styles,
-    customExternalInfoRendererExists
-  );
-  return _styles;
-}
 const processForceMobileCustomButton = (styles) => {
   let _styles = {...styles}
   if (_styles.forceMobileCustomButton) {
@@ -372,85 +353,6 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles = centerArrowsWhenNeeded(processedStyles, customExternalInfoRendererExists); 
     
   return processedStyles;
-}
-
-function getHeightFromStyleParams(styleParams, textBoxHeight) {
-  let additionalHeight = textBoxHeight;
-  if (
-    textBoxHeight > 0 &&
-    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
-    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
-  ) {
-    additionalHeight += styleParams.textImageSpace;
-    additionalHeight += styleParams.textBoxBorderWidth * 2;
-  }
-  return additionalHeight;
-}
-
-function getTextBoxRightOrLeftWidth(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  if (
-    !shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)
-  ) {
-    return 0;
-  }
-  const {
-    targetItemSize,
-    calculateTextBoxWidthMode,
-    textBoxWidth,
-    textBoxWidthPercent,
-  } = styleParams;
-  let width = 0;
-  if (
-    calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT
-  ) {
-    width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
-  } else {
-    width = Math.min(targetItemSize, textBoxWidth);
-  }
-  return width;
-}
-
-function shouldShowTextRightOrLeft(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  const { scrollDirection, isVertical, groupSize, titlePlacement } = styleParams;
-
-  const allowedByLayoutConfig = scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && isVertical && groupSize === 1;
-
-  return (
-    allowedByLayoutConfig &&
-    hasExternalHorizontalPlacement(titlePlacement) &&
-    customExternalInfoRendererExists
-  );
-}
-
-function getTextBoxAboveOrBelowHeight(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  if (
-    !shouldShowTextBoxAboveOrBelow(
-      styleParams,
-      customExternalInfoRendererExists
-    )
-  ) {
-    return 0;
-  }
-  return styleParams.textBoxHeight;
-}
-
-function shouldShowTextBoxAboveOrBelow(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  return (
-    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
-    customExternalInfoRendererExists
-  );
 }
 
 function isSlideshowFont(styles) {
