@@ -1,3 +1,5 @@
+import styleParamsMap from './styleParamsMap';
+
 function convertStyles(initialStyles) {
   //This will add the new names while keeping the old ones.
   let styles = { ...initialStyles };
@@ -63,7 +65,7 @@ const layoutParamsMap = {
   isSlider: 'layoutParams_isSlider',
   isColumns: 'layoutParams_isColumns',
   //bundle collage
-  collageAmount: 'layoutParams_collage_amount', //????????????????
+  collageAmount: styleParamsMap.layoutParams.collage.amount, //????????????????
   collageDensity: 'layoutParams_collage_density',
   chooseBestGroup: 'layoutParams_collage_groupByOrientation',
   groupTypes: 'layoutParams_collage_groupTypes',
@@ -167,4 +169,4 @@ const stylingParams = {
   itemEnableShadow: 'stylingParams_itemEnableShadow',
 };
 
-export { convertStyles, convertStylesBackwards };
+export { convertStyles, convertStylesBackwards, layoutParamsMap };

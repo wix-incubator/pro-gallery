@@ -14,3 +14,4 @@ test/e2e/screenshots
 package-lock.json
 yarn-lock
 standaloneValidateCode.js
+styleParamsMap.js
