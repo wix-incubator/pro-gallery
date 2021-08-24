@@ -15,10 +15,6 @@ function getStyleParamsMap(schema) {
     }
   }
 
-  function getDef(obj, schema) {
-    return schema.definitions[obj.$ref.split('#/definitions/').pop()];
-  }
-
   function traverse(key, obj, schema, route) {
     if (obj.$ref) {
       const def = getDef(obj, schema);
@@ -30,6 +26,9 @@ function getStyleParamsMap(schema) {
   }
 }
 
+function getDef(obj, schema) {
+  return schema.definitions[obj.$ref.split('#/definitions/').pop()];
+}
 function assignByString(Obj, string, value) {
   // TODO: Figure out why I cannot import this from pro-gallery-lib
   let _obj = { ...Obj };
