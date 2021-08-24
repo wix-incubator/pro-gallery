@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const writeES5StandaloneValidateMethod = require('./writeStandaloneValidate');
+const getSchemaFromTypes = require('./getSchema');
 function start() {
   const galleryFolder = path.join(__dirname, '../src/common/interfaces');
   const sourceTypesFile = path.join(galleryFolder, 'galleryTypes.ts');
@@ -11,8 +12,10 @@ function start() {
 
   [sourceTypesFile, targetDir].forEach(raiseIfNotExist);
 
+  const schema = getSchemaFromTypes(sourceTypesFile);
+
   writeES5StandaloneValidateMethod({
-    sourceTypesFile,
+    schema,
     targetFile,
     tempFile,
     writeFileSync: fs.writeFileSync,
