@@ -1026,22 +1026,26 @@ class SlideshowView extends GalleryComponent {
       ? galleryHeight
       : galleryHeight - infoHeight;
 
+    // ~~ Navigation arrows distance from top related consts ~~ //
+
+    // the container top edge is imageMargin/2 ABOVE the actual view so that's the middle point
+    const middleVerticalPointOfScreen = `50% +${imageMargin/4}px` 
     // Determines the direction in which the Nav arrows are pushed by 'infoSpace'
-    const infoSpaceDirection = GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? -1 : 1;
-    const infoSpace = 
+    const isInfoAbove = GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? -1 : 1;
+    const positionRelatedDistanceFromTop = 
           {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
-            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight * infoSpaceDirection,
-            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight * infoSpaceDirection,
+            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight * isInfoAbove,
+            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight * isInfoAbove,
           }[arrowsVerticalPosition]
-
+    
+    // ~~ Navigation arrows distance from top related consts ~~ //
     const containerStyle = {
       width: `${navArrowsContainerWidth}px`,
       height: `${navArrowsContainerHeight}px`,
       padding: 0,
-      top: `calc(50% - ${navArrowsContainerHeight / 2}px + ${
-        imageMargin / 4
-      }px - ${infoSpace / 2}px)`,
+      top: `calc(${middleVerticalPointOfScreen} - ${navArrowsContainerHeight / 2}px - 
+        ${positionRelatedDistanceFromTop / 2}px)`,
     };
 
     const arrowsPos =
