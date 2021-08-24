@@ -5,7 +5,7 @@ import { CreateMediaUrl } from './CreateMediaUrl';
 import { CustomComponents } from './CustomComponents';
 import { ScrollingElement } from './ScrollingElement';
 import { Settings } from './Settings';
-import { Options } from './options';
+import { StyleParams } from './styles';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
@@ -13,9 +13,9 @@ type DeviceType = 'desktop' | 'mobile' | 'tablet';
 export interface GalleryProps {
   container: Container;
   items: Item[];
-  styles?: Options;
-  options?: Options;
-  styleParams?: Options;
+  styles?: StyleParams;
+  options?: StyleParams;
+  styleParams?: StyleParams;
   id?: string;
   totalItemsCount?: number;
   activeIndex?: number;
