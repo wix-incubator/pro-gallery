@@ -72,7 +72,10 @@ function defaultStyles_new() {
       minItemSize: 120,
       cropOnlyFill: false,
       slideshowInfoSize: 200,
-      scatter: 0,
+      scatter: {
+        randomScatter: 0,
+        manualScatter: '',
+      },
       isGrid: false,
       isSlider: false,
       isColumns: false,
@@ -101,6 +104,21 @@ function defaultStyles_new() {
         size: 23,
         verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
       },
+      info: {
+        sizeCalculationMode:
+          GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
+        width: 200,
+        height: 200,
+        spacing: 10,
+        backgroundMode: GALLERY_CONSTS.infoType.NO_BACKGROUND,
+        // widthByPercent: 50, //I want this to be in the width just like we did the overlaySize
+        placement: 'OVERLAY', //TODO, create and use use consts
+        border: {
+          width: 0,
+          radius: 0,
+          color: '',
+        },
+      },
     },
     behaviourParams: {
       item: {
@@ -112,6 +130,7 @@ function defaultStyles_new() {
           enableControls: false,
           speed: '1',
           enablePlayButton: true,
+          enablePlaceholder: true,
         },
         overlay: {
           hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
@@ -120,9 +139,6 @@ function defaultStyles_new() {
           size: 100,
           sizeUnits: GALLERY_CONSTS.overlaySizeType.PERCENT,
           padding: 0,
-        },
-        info: {
-          placement: 'OVERLAY', //TODO, create and use use consts
         },
         content: {
           hoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
@@ -134,11 +150,13 @@ function defaultStyles_new() {
         disableContextMenu: true,
         layoutDirection: 'LEFT_TO_RIGHT', //TODO, create and use use consts
         scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+        enableIndexingShareLinks: true,
         horizontal: {
           enableScrollSnap: false,
           navigationDuration: 400,
           blockScroll: false,
           enableLoop: false,
+          slideTransition: GALLERY_CONSTS.slideTransition.ease,
           slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
           autoSlide: {
             behaviour: 'OFF',
@@ -164,8 +182,6 @@ function defaultStyles_new() {
       },
     },
     stylingParams: {
-      textBoxBorderRadius: 0,
-      textBoxBorderWidth: 0,
       itemBorderWidth: 0,
       itemBorderRadius: 0,
       itemEnableShadow: false,
@@ -174,28 +190,17 @@ function defaultStyles_new() {
       itemShadowSize: 10,
       itemShadowOpacityAndColor: '',
       arrowsColor: '',
-      textBoxBorderColor: '',
     },
-    calculateTextBoxWidthMode:
-      GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
-    textBoxWidth: 200,
-    textBoxHeight: 200,
-    textImageSpace: 10,
-    textBoxWidthPercent: 50,
 
     rotatingCropRatios: '',
-
-    gallerySize: 30,
-    columnWidths: '', //columnsRatio ?
-    rotatingScatter: '', //incorporate into scatter
-    magicLayoutSeed: 1,
-    shouldIndexDirectShareLinkInSEO: true,
-    slideTransition: GALLERY_CONSTS.slideTransition.ease,
-    enableVideoPlaceholder: true,
-    fullscreen: true,
-    gridStyle: 0,
-    imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
-    jsonStyleParams: '',
+    columnWidths: '', //columnsRatio ? TBD
+    // magicLayoutSeed: 1, //DELETE
+    gallerySize: 30, //This is something ...
+    // gallerySizePx: '', //??????????
+    // gallerySizeRatio: '', //??????????
+    // gallerySizeType: '', //??????????
+    // gridStyle: 0, //Looks like it doesnt really exist
+    jsonStyleParams: '', //I want to keep this as a backdoor, but should it be a part of the gallery or only of the lib?
   };
 
   return styles;

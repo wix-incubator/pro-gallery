@@ -84,11 +84,24 @@ const layoutParamsMap = {
   columnsWidth: 'layoutParams_columnsWidth', //????????????????
   fixedColumns: 'layoutParams_fixedColumns', //????????????????
 
-  scatter: 'layoutParams_scatter',
+  scatter: 'layoutParams_scatter_randomScatter',
+  rotatingScatter: 'layoutParams_scatter_manualScatter',
   scrollDirection: 'layoutParams_scrollDirection',
 
   isVertical: 'layoutParams_layoutOrientation', // This needs to be refactored to be an enum. but can wait
   columnWidths: 'layoutParams_columnWidths',
+
+  //info
+  calculateTextBoxWidthMode: 'layoutParams_info_sizeCalculationMode',
+  textBoxHeight: 'layoutParams_info_height',
+  textBoxWidth: 'layoutParams_info_width',
+  // textBoxWidthPercent: 'layoutParams_info_widthByPercent'
+  textImageSpace: 'layoutParams_info_spacing',
+  titlePlacement: 'layoutParams_info_placement',
+  //----------border
+  textBoxBorderColor: 'layoutParams_info_border_color',
+  textBoxBorderRadius: 'layoutParams_info_border_radius',
+  textBoxBorderWidth: 'layoutParams_info_border_width',
 
   externalInfoHeight: 'layoutParams_externalInfoHeight', //layouter API
   externalInfoWidth: 'layoutParams_externalInfoWidth', //layouter API
@@ -105,6 +118,7 @@ const behaviourParams = {
   videoLoop: 'behaviourParams_item_video_loop',
   showVideoControls: 'behaviourParams_item_video_enableControls',
   videoSound: 'behaviourParams_item_video_volume',
+  enableVideoPlaceholder: 'behaviourParams_item_video_enablePlaceholder',
   //----overlay
   hoveringBehaviour: 'behaviourParams_item_overlay_hoveringBehaviour',
   overlayAnimation: 'behaviourParams_item_overlay_hoverAnimation',
@@ -116,15 +130,14 @@ const behaviourParams = {
   imageHoverAnimation: 'behaviourParams_item_content_hoverAnimation',
   imagePlacementAnimation: 'behaviourParams_item_content_placementAnimation',
   imageLoadingMode: 'behaviourParams_item_content_loader',
-  //----info
-  titlePlacement: 'behaviourParams_item_info_placement',
-
   //gallery
   scrollSnap: 'behaviourParams_gallery_enableScrollSnap',
   isRTL: 'behaviourParams_gallery_layoutDirection', // changes from boolean to an enum (refactor)
-  allowLeanGallery: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
+  // allowLeanGallery: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
   allowContextMenu: 'behaviourParams_gallery_disableContextMenu', //REFACTOR reverse
   scrollAnimation: 'behaviourParams_gallery_scrollAnimation',
+  shouldIndexDirectShareLinkInSEO:
+    'behaviourParams_gallery_enableIndexingShareLinks',
   //----vertical
   //--------loadMore
   enableInfiniteScroll: 'behaviourParams_gallery_vertical_loadMore_enable',
@@ -133,6 +146,7 @@ const behaviourParams = {
 
   //----horizontal
   slideAnimation: 'behaviourParams_gallery_horizontal_slideAnimation',
+  slideTransition: 'behaviourParams_gallery_horizontal_slideTransition',
   enableScroll: 'behaviourParams_gallery_horizontal_blockScroll', //requires a reversal! (blocks instead of allowing),
   scrollDuration: 'behaviourParams_gallery_horizontal_navigationDuration',
   slideshowLoop: 'behaviourParams_gallery_horizontal_enableLoop',
@@ -160,18 +174,14 @@ const stylingParams = {
   itemShadowBlur: 'stylingParams_itemShadowBlur',
   itemShadowDirection: 'stylingParams_itemShadowDirection',
   itemShadowOpacityAndColor: 'stylingParams_itemShadowOpacityAndColor',
-  textBoxBorderColor: 'stylingParams_textBoxBorderColor',
-  textBoxBorderRadius: 'stylingParams_textBoxBorderRadius',
   itemShadowSize: 'stylingParams_itemShadowSize',
   itemEnableShadow: 'stylingParams_itemEnableShadow',
   itemBorderRadius: 'stylingParams_itemBorderRadius',
   itemBorderWidth: 'stylingParams_itemBorderWidth',
-  textBoxBorderWidth: 'stylingParams_textBoxBorderWidth',
 };
 
 function migrateStyles(oldStyles) {
   let newStyles = { ...oldStyles };
-  delete newStyles.enableLeanGallery;
   //naming
   newStyles = changeNames(newStyles, [
     ['imageMargin', 'layoutParams_itemSpacing'],
@@ -182,7 +192,8 @@ function migrateStyles(oldStyles) {
     ['minItemSize', 'layoutParams_minItemSize'],
     ['cropOnlyFill', 'layoutParams_cropOnlyFill'],
     ['slideshowInfoSize', 'layoutParams_slideshowInfoSize'],
-    ['scatter', 'layoutParams_scatter'],
+    ['scatter', 'layoutParams_scatter_randomScatter'],
+    ['rotatingScatter', 'layoutParams_scatter_manualScatter'],
     ['isSlideshow', 'layoutParams_isSlideshow'],
     ['isGrid', 'layoutParams_isGrid'],
     ['isMasonry', 'layoutParams_isMasonry'],
@@ -204,6 +215,16 @@ function migrateStyles(oldStyles) {
     ],
     ['arrowsSize', 'layoutParams_navigationArrows_size'],
     ['arrowsPosition', 'layoutParams_navigationArrows_position'],
+
+    ['calculateTextBoxWidthMode', 'layoutParams_info_sizeCalculationMode'],
+    ['textBoxHeight', 'layoutParams_info_height'],
+    ['textBoxWidth', 'layoutParams_info_width'],
+    //['textBoxWidthPercent', 'layoutParams_info_widthByPercent'],
+    ['textImageSpace', 'layoutParams_info_spacing'],
+    ['imageInfoType', 'layoutParams_info_backgroundMode'],
+    ['textBoxBorderWidth', 'layoutParams_info_border_width'],
+    ['textBoxBorderColor', 'layoutParams_info_border_color'],
+    ['textBoxBorderRadius', 'layoutParams_info_border_radius'],
   ]);
   newStyles = reverseBooleans(newStyles, [
     ['useMaxDimensions', 'layoutParams_enableStreching'],
@@ -214,10 +235,12 @@ function migrateStyles(oldStyles) {
   newStyles = processForceGroupOrder(newStyles);
   newStyles = processGroupTypes(newStyles);
   newStyles = processNumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
+  newStyles = processInfoBackgroundMode(newStyles);
 
   newStyles = changeNames(newStyles, [
     ['videoLoop', 'behaviourParams_item_video_loop'],
     ['showVideoControls', 'behaviourParams_item_video_enableControls'],
+    ['enableVideoPlaceholder', 'behaviourParams_item_video_enablePlaceholder'],
     ['overlayAnimation', 'behaviourParams_item_overlay_hoverAnimation'],
     ['overlayPosition', 'behaviourParams_item_overlay_position'],
     ['overlaySize', 'behaviourParams_item_overlay_size'],
@@ -231,8 +254,13 @@ function migrateStyles(oldStyles) {
     ['imageLoadingMode', 'behaviourParams_item_content_loader'],
     ['scrollSnap', 'behaviourParams_gallery_horizontal_enableScrollSnap'],
     ['scrollAnimation', 'behaviourParams_gallery_scrollAnimation'],
+    [
+      'shouldIndexDirectShareLinkInSEO',
+      'behaviourParams_gallery_enableIndexingShareLinks',
+    ],
     ['loadMoreButtonText', 'behaviourParams_gallery_vertical_loadMore_text'],
     ['slideAnimation', 'behaviourParams_gallery_horizontal_slideAnimation'],
+    ['slideTransition', 'behaviourParams_gallery_horizontal_slideTransition'],
     ['scrollDuration', 'behaviourParams_gallery_horizontal_navigationDuration'], //This might need to move to navigationArrows in layoutParams.
     ['slideshowLoop', 'behaviourParams_gallery_horizontal_enableLoop'],
     [
@@ -284,14 +312,17 @@ function migrateStyles(oldStyles) {
     ['itemShadowDirection', 'stylingParams_itemShadowDirection'],
     ['itemShadowOpacityAndColor', 'stylingParams_itemShadowOpacityAndColor'],
     ['arrowsColor', 'stylingParams_arrowsColor'],
-    ['textBoxBorderColor', 'stylingParams_textBoxBorderColor'],
-    ['textBoxBorderRadius', 'stylingParams_textBoxBorderRadius'],
     ['itemShadowSize', 'stylingParams_itemShadowSize'],
     ['itemEnableShadow', 'stylingParams_itemEnableShadow'],
     ['itemBorderRadius', 'stylingParams_itemBorderRadius'],
     ['itemBorderWidth', 'stylingParams_itemBorderWidth'],
-    ['textBoxBorderWidth', 'stylingParams_textBoxBorderWidth'],
   ]);
+
+  delete newStyles.textBoxWidthPercent;
+  delete newStyles.enableLeanGallery;
+  delete newStyles.fullscreen;
+  delete newStyles.magicLayoutSeed;
+  delete newStyles.gridStyle;
   return newStyles;
 }
 //---------tooling---------//
@@ -314,7 +345,7 @@ function namingChange(obj, oldName, newName) {
   delete obj[oldName];
   return (
     (typeof val !== 'undefined' &&
-      !getByString(obj, newName) &&
+      typeof getByString(obj, newName) === 'undefined' &&
       assignByString(obj, newName, val)) ||
     obj
   ); //dont overwrite existing property
@@ -438,6 +469,22 @@ function processLoadMoreAmount(obj) {
     _obj.behaviourParams.gallery.vertical.loadMore.amount?.toUpperCase();
   return _obj;
 }
+function processInfoBackgroundMode(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    'imageInfoType',
+    'layoutParams_info_backgroundMode'
+  );
+  switch (_obj.layoutParams.info.backgroundMode) {
+    case 'DONT_SHOW':
+      _obj.layoutParams.info.backgroundMode = 'NO_BACKGROUND';
+      break;
+    default:
+      break;
+  }
+  return _obj;
+}
 function processOverlayHoveringBehaviour(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
@@ -459,32 +506,28 @@ function processOverlayHoveringBehaviour(obj) {
 }
 function processInfoPlacement(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(
-    _obj,
-    'titlePlacement',
-    'behaviourParams_item_info_placement'
-  );
-  switch (_obj.behaviourParams.item.info.placement) {
+  _obj = namingChange(_obj, 'titlePlacement', 'layoutParams_info_placement');
+  switch (_obj.layoutParams.info.placement) {
     case 'SHOW_ON_HOVER':
-      _obj.behaviourParams.item.info.placement = 'OVERLAY';
+      _obj.layoutParams.info.placement = 'OVERLAY';
       break;
     case 'SHOW_BELOW':
-      _obj.behaviourParams.item.info.placement = 'BELOW';
+      _obj.layoutParams.info.placement = 'BELOW';
       break;
     case 'SHOW_ABOVE':
-      _obj.behaviourParams.item.info.placement = 'ABOVE';
+      _obj.layoutParams.info.placement = 'ABOVE';
       break;
     case 'SHOW_ON_THE_RIGHT':
-      _obj.behaviourParams.item.info.placement = 'RIGHT';
+      _obj.layoutParams.info.placement = 'RIGHT';
       break;
     case 'SHOW_ON_THE_LEFT':
-      _obj.behaviourParams.item.info.placement = 'LEFT';
+      _obj.layoutParams.info.placement = 'LEFT';
       break;
     case 'ALTERNATE_HORIZONTAL':
-      _obj.behaviourParams.item.info.placement = 'ALTERNATE_HORIZONTALLY';
+      _obj.layoutParams.info.placement = 'ALTERNATE_HORIZONTALLY';
       break;
     case 'ALTERNATE_VERTICAL':
-      _obj.behaviourParams.item.info.placement = 'ALTERNATE_VERTICALLY';
+      _obj.layoutParams.info.placement = 'ALTERNATE_VERTICALLY';
       break;
     default:
       break;
@@ -547,6 +590,7 @@ function processGroupTypes(obj) {
   delete _obj.repeatingGroupTypes;
   return _obj;
 }
+
 function processNumberOfColumns(obj) {
   let _obj = { ...obj };
   let fixedColumns = obj.fixedColumns;

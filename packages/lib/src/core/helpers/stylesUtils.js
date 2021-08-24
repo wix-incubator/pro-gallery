@@ -15,11 +15,17 @@ function getByString(Obj, string) {
   let keyArr = string.split('_');
   let assignedProperty = keyArr.pop();
   let pointer = _obj;
-  keyArr.forEach((key) => {
-    if (typeof pointer[key] !== 'object') return undefined; //if its not an object we put an object over it to allow assignments
-    pointer = pointer[key];
-  });
-  return pointer[assignedProperty];
+  if (
+    !keyArr.every((key) => {
+      if (typeof pointer[key] !== 'object') return false; //if its not an object there will be nothing in it...
+      pointer = pointer[key]; //programatically going town the rabit hole
+      return true;
+    })
+  ) {
+    return undefined;
+  } else {
+    return pointer[assignedProperty];
+  }
 }
 
 function flattenObject(ob) {

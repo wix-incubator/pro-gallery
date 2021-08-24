@@ -45,17 +45,7 @@ export interface Content {
   loader: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   [key: string]: any;
 }
-export interface Info {
-  placement:
-    | 'OVERLAY'
-    | 'ABOVE'
-    | 'BELOW'
-    | 'LEFT'
-    | 'RIGHT'
-    | 'ALTERNATE_HORIZONTALLY'
-    | 'ALTERNATE_VERTICALLY';
-  [key: string]: any;
-}
+
 export interface Vertical {
   loadMore: LoadMore;
   [key: string]: any;
@@ -63,6 +53,7 @@ export interface Vertical {
 export interface Horizontal {
   enableScrollSnap: boolean;
   slideAnimation: 'SCROLL' | 'DECK' | 'FADE';
+  slideTransition: string;
   blockScroll: boolean;
   navigationDuration: number;
   loop: boolean;
@@ -98,7 +89,6 @@ export interface Item {
   clickAction: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';
   video: Video;
   overlay: Overlay;
-  info: Info;
   content: Content;
   [key: string]: any;
 }
@@ -116,6 +106,7 @@ export interface Gallery {
     | 'ONE_COLOR'
     | 'MAIN_COLOR'
     | 'BLUR';
+  enableIndexingShareLinks: boolean;
   vertical: Vertical;
   horizontal: Horizontal;
   // allowLeanGallery: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
