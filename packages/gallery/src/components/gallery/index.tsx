@@ -3,14 +3,13 @@ import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager } from 'pro-gallery-blueprints';
 import ProGallery from './proGallery/proGallery';
 
-/* import { GalleryProps, GalleryState } from 'pro-gallery-lib'; */
+/// <reference types="pro-gallery-lib" />
+import { GalleryProps, GalleryState } from 'pro-gallery-lib';
 import shouldValidate from './typeValidator/shouldValidate';
 
 export default class Gallery extends React.Component<
-  any,
-  any
-  /* GalleryProps, */
-  /* GalleryState */
+  GalleryProps,
+  GalleryState
 > {
   private blueprintsManager: any;
   private galleryProps: any;
