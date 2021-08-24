@@ -13,6 +13,7 @@ export {
   convertStylesBackwards,
 } from './core/helpers/stylesConverter';
 export { assignByString } from './core/helpers/stylesUtils';
+export { validateTypes } from './common/validateTypes/validateTypes';
 export { flatToNested } from './core/helpers/stylesUtils';
 export { flattenObject } from './core/helpers/stylesUtils';
 export { mergeNestedObjects } from './core/helpers/stylesUtils';
@@ -43,3 +44,12 @@ export { ScrollingElement } from './common/interfaces/ScrollingElement';
 
 export { default as galleryOptions } from './settings/options';
 export { INPUT_TYPES } from './settings/utils/constants';
+
+export { Item, PhotoItem, VideoItem, TextItem } from './common/interfaces/Item';
+export { Container } from './common/interfaces/Container';
+export { EventsListener } from './common/interfaces/EventsListener';
+export { CreateMediaUrl } from './common/interfaces/CreateMediaUrl';
+export { CustomComponents } from './common/interfaces/CustomComponents';
+export { ScrollingElement } from './common/interfaces/ScrollingElement';
+export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
+export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';

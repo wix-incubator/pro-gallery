@@ -1,9 +1,5 @@
 import typeErrorsUI from './typeErrorsUI';
-import { StyleParams } from 'pro-gallery-lib';
-const validateFunc = require('./standaloneValidateCode'); //eslint-disable-line
+import { validateTypes } from 'pro-gallery-lib';
 
-function validate(data?: StyleParams): Record<string, unknown>[] {
-  validateFunc(data);
-  return validateFunc.errors || [];
-}
+const validate = validateTypes;
 export { validate, typeErrorsUI };

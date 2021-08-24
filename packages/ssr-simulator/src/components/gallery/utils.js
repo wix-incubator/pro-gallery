@@ -4,6 +4,7 @@ export const defaultStyleParams = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1,
+    repeatingGroupTypes: '',
   },
   isRTL: false,
   isVertical: 0,
@@ -12,7 +13,6 @@ export const defaultStyleParams = {
   chooseBestGroup: true,
   groupSize: 3,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  rotatingGroupTypes: '',
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',

@@ -1,3 +1,4 @@
+/* eslint-disable */
 export interface EventsListener {
   (eventName: string, eventData: EventData): void; // eslint-disable-line
 }
@@ -5,3 +6,4 @@ export interface EventsListener {
 interface EventData {
   [key: string]: any;
 }
+/* eslint-enable */
