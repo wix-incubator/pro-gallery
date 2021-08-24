@@ -2,31 +2,31 @@ module.exports = getStyleParamsMap;
 
 const _ = require('lodash');
 
-let final = {};
 function getStyleParamsMap(schema) {
+  let final = {};
   traverseProperties(schema.properties, schema, []);
-  return 'nir';
-}
+  return final;
 
-function traverseProperties(properties, schema, route) {
-  for (const [key, value] of Object.entries(properties)) {
-    const newRoute = _.clone(route);
-    newRoute.push(key);
-    traverse(key, value, schema, newRoute);
+  function traverseProperties(properties, schema, route) {
+    for (const [key, value] of Object.entries(properties)) {
+      const newRoute = _.clone(route);
+      newRoute.push(key);
+      traverse(key, value, schema, newRoute);
+    }
   }
-}
 
-function getDef(obj, schema) {
-  return schema.definitions[obj.$ref.split('#/definitions/').pop()];
-}
+  function getDef(obj, schema) {
+    return schema.definitions[obj.$ref.split('#/definitions/').pop()];
+  }
 
-function traverse(key, obj, schema, route) {
-  if (obj.$ref) {
-    const def = getDef(obj, schema);
-    traverseProperties(def.properties, schema, route);
-  } else {
-    const routeString = route.join('_');
-    final = assignByString(final, routeString, routeString);
+  function traverse(key, obj, schema, route) {
+    if (obj.$ref) {
+      const def = getDef(obj, schema);
+      traverseProperties(def.properties, schema, route);
+    } else {
+      const routeString = route.join('_');
+      final = assignByString(final, routeString, routeString);
+    }
   }
 }
 
@@ -51,5 +51,5 @@ const s = JSON.parse(
     encoding: 'utf8',
   })
 );
-getStyleParamsMap(s);
-console.log(JSON.stringify(final, null, 4));
+const res = getStyleParamsMap(s);
+console.log(JSON.stringify(res, null, 4));
