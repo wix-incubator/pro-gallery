@@ -53,7 +53,6 @@ const isExternalRightPlacement = (placement) =>
 const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
 
-// (placement, isSlideshow, isHorizontalInfoPossible) => Above \ Below placements ? True : False
 const isAboveOrBelowPlacement = (
   placement,
   isSlideshow,

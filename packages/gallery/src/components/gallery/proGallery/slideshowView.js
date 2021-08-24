@@ -886,25 +886,42 @@ class SlideshowView extends GalleryComponent {
     return <GalleryDebugMessage {...this.props.debug} />;
   }
 
-  getArrowsRenderData() {
+  getArrowsSizeData(){
     const { customNavArrowsRenderer } = this.props.customComponents;
     const { arrowsSize } = this.props.styleParams;
-    if (customNavArrowsRenderer) {
+    if (customNavArrowsRenderer){
       return {
-        arrowRenderer: customNavArrowsRenderer,
         navArrowsContainerWidth: arrowsSize,
-        navArrowsContainerHeight: arrowsSize
+        navArrowsContainerHeight: arrowsSize,
       }
     }
-
     const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
     const arrowOrigHeight = 39; //arrow-right svg and arrow-left svg height
     const scalePercentage = arrowsSize / arrowOrigWidth;
-    const svgStyle = { transform: `scale(${scalePercentage})` };
-
     const navArrowsContainerWidth = arrowsSize; // === arrowOrigWidth * scalePercentage
     const navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
+    return {
+      navArrowsContainerWidth,
+      navArrowsContainerHeight,
+      scalePercentage,
+    }
+  }
 
+  getArrowsRenderData() {
+    const { customNavArrowsRenderer } = this.props.customComponents;
+    const {
+      navArrowsContainerWidth,
+      navArrowsContainerHeight,
+      scalePercentage,
+    } = this.getArrowsSizeData()
+    if (customNavArrowsRenderer) {
+      return {
+        arrowRenderer: customNavArrowsRenderer,
+        navArrowsContainerWidth,
+        navArrowsContainerHeight,
+      }
+    }
+    const svgStyle = { transform: `scale(${scalePercentage})` };
     const { arrowsColor } = this.props.styleParams;
     const svgInternalStyle = utils.isMobile() && arrowsColor?.value ? {fill: arrowsColor.value} : {}
 
@@ -920,6 +937,7 @@ class SlideshowView extends GalleryComponent {
           d: "M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z",
           transform: "translate(-133 -225)"
         }
+      const arrowOrigWidth = 23, arrowOrigHeight = 39; // Initial arrows dimensions, pre-scaled
       return (
         <svg width={arrowOrigWidth} height={arrowOrigHeight} viewBox={`0 0 ${arrowOrigWidth} ${arrowOrigHeight}`} style={svgStyle}>
           <path
@@ -942,12 +960,10 @@ class SlideshowView extends GalleryComponent {
       slideshowInfoSize,
       arrowsVerticalPosition,
       textBoxHeight,
-      arrowsSize,
     } = this.props.styleParams;
     const { height } = this.props.container;
     // Calc of Nav arrows container's height
-    const scalePercentage = arrowsSize / 23; // determining the scaling factor
-    const navArrowsContainerHeight = scalePercentage * 39; // Scaling the original height of the arrows by the scaler.
+    const { navArrowsContainerHeight } = this.getArrowsSizeData();
     let parentHeight;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     switch (arrowsVerticalPosition){
@@ -982,7 +998,7 @@ class SlideshowView extends GalleryComponent {
         this.props.container.galleryWidth >= allGroupsWidth;
       return isAllItemsFitsGalleryWidth;
     });
-    return  showArrows && 
+    return showArrows && 
     !isPrerenderMode &&
     this.arrowsWillFitPosition() && 
     !isGalleryWiderThanRenderedItems
@@ -1003,8 +1019,9 @@ class SlideshowView extends GalleryComponent {
     } = this.props.styleParams;
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
-    const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
+
     const { galleryHeight } = this.props.container;
+    const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
     const imageHeight = isSlideshow
       ? galleryHeight
       : galleryHeight - infoHeight;
@@ -1032,7 +1049,6 @@ class SlideshowView extends GalleryComponent {
       arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? `-${20 + navArrowsContainerWidth}px`
         : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-
     // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
