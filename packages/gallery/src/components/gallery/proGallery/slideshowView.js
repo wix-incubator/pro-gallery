@@ -239,7 +239,7 @@ class SlideshowView extends GalleryComponent {
     avoidIndividualNavigation,
     isAutoTrigger
   ) {
-     
+    this.isSliding = true;
     let nextIndex;
     if (
       initiator === 'nextGroup' ||
@@ -268,6 +268,7 @@ class SlideshowView extends GalleryComponent {
         nextIndex = Math.max(0, nextIndex);
       }
     }
+    this.isAutoScrolling = true;
     return nextIndex;
   }
 
@@ -283,7 +284,6 @@ class SlideshowView extends GalleryComponent {
     if (this.isSliding) {
       return;
     }
-    this.isSliding = true;
 
     let nextItem = this.getNextItemOrGroupToScrollTo(
       'nextItem',
@@ -293,13 +293,10 @@ class SlideshowView extends GalleryComponent {
       isAutoTrigger
     );
 
-    const { scrollToItem } = this.props.actions;
-    this.isAutoScrolling = true;
-
     try {
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
       await this.scrollTo(
-        scrollToItem,
+        this.props.actions.scrollToItem,
         itemToScroll,
         isContinuousScrolling,
         scrollDuration,
@@ -311,7 +308,7 @@ class SlideshowView extends GalleryComponent {
 
         if (nextItem >= this.skipFromSlide) {
           nextItem = skipToSlide;
-          await scrollToItem(nextItem);
+          await this.props.actions.scrollToItem(nextItem);
         }
       }
 
@@ -337,16 +334,12 @@ class SlideshowView extends GalleryComponent {
     if (this.isSliding) {
       return;
     }
-    this.isSliding = true;
 
     const nextGroup = this.getNextItemOrGroupToScrollTo('nextGroup', direction);
-    const { scrollToGroup } = this.props.actions;
-    this.isAutoScrolling = true;
 
-    // ---- navigate ---- //
     try {
       await this.scrollTo(
-        scrollToGroup,
+        this.props.actions.scrollToGroup,
         nextGroup,
         isContinuousScrolling,
         scrollDuration,
