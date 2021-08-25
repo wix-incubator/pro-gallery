@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ReactNode } from 'react';
 
 export interface CustomComponents {
@@ -8,3 +9,4 @@ export interface CustomComponents {
   customImageRenderer?: (props: { [key: string]: any }) => ReactNode;
   customLoadMoreRenderer?: (props: { [key: string]: any }) => ReactNode;
 }
+/* eslint-enable */

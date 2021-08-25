@@ -2,12 +2,11 @@ import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager } from 'pro-gallery-blueprints';
 import ProGallery from './proGallery/proGallery';
-// import { Dimensions } from '../../common/interfaces/Dimensions';
 
-import { GalleryProps, GalleryState } from './galleryTypes';
+import { GalleryProps, GalleryState } from 'pro-gallery-lib';
 import shouldValidate from './typeValidator/shouldValidate';
 
-export default class BaseGallery extends React.Component<
+export default class Gallery extends React.Component<
   GalleryProps,
   GalleryState
 > {
@@ -65,12 +64,12 @@ export default class BaseGallery extends React.Component<
 
   onNewProps(props, calledByConstructor) {
     const { eventsListener, ...otherProps } = props;
-    const _eventsListener = (...args) => {
-      const [eventName, value] = args;
+    const _eventsListener = (eventName, eventData) => {
       if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
-        this.blueprintsManager.getMoreItems(value);
+        this.blueprintsManager.getMoreItems(eventData);
       } else {
-        typeof eventsListener === 'function' && eventsListener(...args);
+        typeof eventsListener === 'function' &&
+          eventsListener(eventName, eventData);
       }
     };
     this.galleryProps = {
@@ -114,9 +113,7 @@ export default class BaseGallery extends React.Component<
       /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
     );
     const { validate, typeErrorsUI } = validateTypesModule;
-    const typeErrors = validate(
-      this.props.options || this.props.styles || this.props.styleParams
-    );
+    const typeErrors = validate(this.props.options);
     if (typeErrors.length > 0) {
       this.setState({ typeErrors: typeErrorsUI(typeErrors) });
     }
