@@ -6,14 +6,14 @@ import { CodePanel } from "../CodePanel";
 import { Benchmarks } from "../Benchmarks";
 import { List, Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input, Button, Icon, Card } from "antd";
 import { SECTIONS, settingsManager } from '../../constants/settings';
-import { 
-  INPUT_TYPES, 
-  flattenObject 
+import {
+  INPUT_TYPES,
+  flattenObject
 } from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
-import { throttle } from "../../utils/utils";
-import { isValidStyleParam } from "../../constants/styleParams";
+import { throttle } from '../../utils/utils';
+import { isValidOption } from '../../constants/options';
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS } from 'pro-gallery';
 import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
@@ -61,7 +61,7 @@ function SideBar({ items, blueprintsManager, visible }) {
     setSearchResult('');
     setSearchTerm('');
   };
-  const changedStyleParams = Object.entries(flatStyleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidStyleParam(styleParam, value, flatStyleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const changedStyleParams = Object.entries(flatStyleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidOption(styleParam, value, flatStyleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
 
   const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;

@@ -43,7 +43,7 @@ export default ({ items, styles, totalItemsCount = 0 }) => {
     }
   }
   for (const [styleParam, value] of Object.entries(styles)) {
-    if (!isValidStyleParam(styleParam, value, styles)) {
+    if (!isValidOption(styleParam, value, styles)) {
       utils.isVerbose() &&
         console.log(
           `[LEAN GALLERY] NOT ALLOWED - invalid styleParam`,
@@ -77,7 +77,7 @@ export const notEligibleReasons = ({ items, styles }) => {
     res.push(`${nonImagesCount} items are not an image`);
   }
   for (const [styleParam, value] of Object.entries(s)) {
-    if (!isValidStyleParam(styleParam, value, s)) {
+    if (!isValidOption(styleParam, value, s)) {
       res.push(`invalid style: ${styleParam} => ${value}`);
     }
   }
@@ -95,7 +95,7 @@ const isImage = (item) => {
   return isImageItem;
 };
 
-const isValidStyleParam = (styleParam, value, allStyles) => {
+const isValidOption = (styleParam, value, allStyles) => {
   if (typeof handledStyleParams[styleParam] !== 'undefined') return true;
   // if (typeof ignoredStyleParams[styleParam] !== 'undefined') return true;
   if (typeof fixedStyleParams[styleParam] !== 'undefined') {

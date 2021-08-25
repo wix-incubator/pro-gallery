@@ -5,7 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import s from './CodePanel.module.scss';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import { getStyleParamsFromUrl } from '../../constants/styleParams'
+import { getOptionsFromUrl } from '../../constants/options'
 
 function CodePanel() {
 
@@ -26,7 +26,7 @@ function CodePanel() {
 
   const getStyleParams = () => {
     const {galleryLayout} = styleParams;
-    return Object.entries({galleryLayout, ...getStyleParamsFromUrl(window.location.search)})
+    return Object.entries({galleryLayout, ...getOptionsFromUrl(window.location.search)})
       .reduce((acc, [key, value]) => {
         const val = typeof value === 'string' ? `'${value}'` : value;
         return acc.concat(`      ${key}: ${val},`);
@@ -59,7 +59,7 @@ function CodePanel() {
         </SyntaxHighlighter>
       </Modal>
       <Button type="primary" icon="code" shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
-        Generate Gallery Code 
+        Generate Gallery Code
       </Button>
     </div>
   );

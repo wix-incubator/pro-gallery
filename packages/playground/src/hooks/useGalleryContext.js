@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { GalleryContext } from './GalleryContext';
 import {
-  getInitialStyleParams,
-  getStyleParamsFromUrl,
-} from '../constants/styleParams';
+  getInitialOptions,
+  getOptionsFromUrl,
+} from '../constants/options';
 import { addPresetOptions } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
 import {
@@ -26,13 +26,13 @@ export function useGalleryContext(
   };
 
   const getBlueprintFromServer = async (params) => {
-    let { items, styleParams, container } = params;
+    let { items, options, container } = params;
 
     container = container || context.container || calcGalleryContainer();
-    const styles = styleParams || context.styleParams || flatToNested(getInitialStyleParams());
+    const _options = options || context.options || flatToNested(getInitialOptions());
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
-    if (!items || !container || !styles) {
+    if (!items || !container || !_options) {
       return;
     }
 
@@ -44,7 +44,7 @@ export function useGalleryContext(
       },
       body: JSON.stringify({
         items,
-        styles,
+        options,
         container
       }) // body data type must match "Content-Type" header
     });
@@ -88,7 +88,7 @@ export function useGalleryContext(
   const setPreset = (newPreset) => {
     const newContext = {
       preset: newPreset,
-      styleParams: flatToNested(getInitialStyleParams(newPreset)),
+      options: flatToNested(getInitialOptions(newPreset)),
     };
 
     if (getGallerySettings().useBlueprints) {
@@ -98,21 +98,21 @@ export function useGalleryContext(
     setContext(newContext);
   };
 
-  const setStyleParams = (newProp, value) => {
-    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
-    const styleParams = flatToNested({
-      ...getInitialStyleParams(),
-      ...getStyleParamsFromUrl(window.location.search),
+  const setOptions = (newProp, value) => {
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options);
+    const options = flatToNested({
+      ...getInitialOptions(),
+      ...getOptionsFromUrl(window.location.search),
       [newProp]: value,
     })
-    console.log('setting new context and requesting BP', styleParams.layoutParams)
+    console.log('setting new context and requesting BP', options.layoutParams)
     const newContext = {
-      styleParams,
+      options,
     };
     if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
     }
-    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParams in the context`, newContext.styleParams);
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newContext.options);
 
     setContext(newContext);
   };
@@ -187,10 +187,10 @@ export function useGalleryContext(
     setShowSide,
     preset: context.preset,
     setPreset,
-    styleParams: addPresetOptions(
-      context.styleParams || flatToNested(getInitialStyleParams())
+    options: addPresetOptions(
+      context.options || flatToNested(getInitialOptions())
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
-    setStyleParams,
+    setOptions,
     items: context.items,
     setItems,
     blueprint: context.blueprint,

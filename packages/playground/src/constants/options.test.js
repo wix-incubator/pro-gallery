@@ -1,7 +1,7 @@
-import {getStyleParamsFromUrl} from './styleParams'
+import {getOptionsFromUrl} from './options'
 it('should return SP object from url', () => {
   const locationSearch = '?hoveringBehaviour=NO_CHANGE'
-  const styleParams = getStyleParamsFromUrl(locationSearch)
+  const styleParams = getOptionsFromUrl(locationSearch)
   const expected = {
     "hoveringBehaviour": "NO_CHANGE"
   }

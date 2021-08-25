@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 
-export const defaultStyleParams = {
+export const defaultOptions = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1,
@@ -128,7 +128,7 @@ export function formatValue(val) {
   }
 }
 
-export function getStyleParamsFromUrl(searchString) {
+export function getOptionsFromUrl(searchString) {
   try {
     const styleParams = searchString
       .replace('?', '')
