@@ -28,6 +28,7 @@ function writeES5StandaloneValidateMethod({
 function buildValidationFunction(schema) {
   const ajv = new Ajv({
     messages: true,
+    allErrors: true,
     verbose: true,
     code: { source: true, es5: true },
   });
