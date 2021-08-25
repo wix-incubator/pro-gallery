@@ -283,6 +283,8 @@ export function App() {
     customComponents: getCustomComponents(),
     ...blueprintProps
   }
+  props.shouldValidateTypes = true
+
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -307,7 +309,6 @@ export function App() {
 }
 
 const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
-  props.shouldValidateTypes = true
   return gallerySettings.responsivePreview ? (<div style={{
     background: '#666',
     width: '100%',
