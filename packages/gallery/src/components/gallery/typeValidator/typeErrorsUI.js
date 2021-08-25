@@ -6,7 +6,6 @@ export default function (typeErrors) {
 function Error(errObject) {
   return (
     <li>
-      {' '}
       <ErrorDescription errObject={errObject} />
     </li>
   );
