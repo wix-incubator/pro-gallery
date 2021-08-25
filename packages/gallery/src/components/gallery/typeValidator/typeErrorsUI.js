@@ -1,12 +1,14 @@
 import React from 'react';
 export default function (typeErrors) {
-  return <h1>{typeErrors.map(Error)}</h1>;
+  return <ol>{typeErrors.map(Error)}</ol>;
 }
 
 function Error(errObject) {
-  const style = {
-    height: '100px',
-    width: '500px',
-  };
-  return <div style={style}>{JSON.stringify(errObject, null, 4)} </div>;
+  // const style = {
+  //   height: '100px',
+  //   width: '500px',
+  // };
+  // return <li>{JSON.stringify(errObject, null, 4)} </li>;
+  // return <li> {Object.entries(errObject).map(items)}</li>;
+  return <li> {errObject.message}</li>;
 }
