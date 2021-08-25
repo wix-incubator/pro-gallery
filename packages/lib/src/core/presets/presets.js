@@ -55,66 +55,66 @@ import { createStyles as designedPresetStyles } from './designedPresetGallery';
 
 //#endregion Imports
 
-const addPresetStyles = (styles) => {
-  const galleryType = styles.galleryType;
-  const galleryLayoutV1 = styles.galleryType;
-  const galleryLayoutV2 = styles.galleryLayout;
+const addPresetOptions = (options) => {
+  const galleryType = options.galleryType;
+  const galleryLayoutV1 = options.galleryType;
+  const galleryLayoutV2 = options.galleryLayout;
   if (galleryLayoutV1 !== undefined && galleryLayoutV2 === undefined) {
     // legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
     switch (galleryType) {
       case '1': // horizontal collage
-        return collageStyles(styles);
+        return collageStyles(options);
       case '2': // grid
-        return gridStyles(styles);
+        return gridStyles(options);
       case '3': // vertical masonry
-        return masonryStyles(styles);
+        return masonryStyles(options);
       case '4': // horizontal masonry
-        return masonryStyles(styles);
+        return masonryStyles(options);
       case '5': // one column
-        return panoramaStyles(styles);
+        return panoramaStyles(options);
       case '6': // one row
-        return columnStyles(styles);
+        return columnStyles(options);
       case '7': // slideshow
-        return slideshowStyles(styles);
+        return slideshowStyles(options);
       case '0': // vertical collage
       default:
-        return collageStyles(styles);
+        return collageStyles(options);
     }
   } else {
     // new layouts
-    switch (styles.galleryLayout) {
+    switch (options.galleryLayout) {
       case LAYOUTS.MASONRY:
-        return masonryStyles(styles);
+        return masonryStyles(options);
       case LAYOUTS.GRID:
-        return gridStyles(styles);
+        return gridStyles(options);
       case LAYOUTS.THUMBNAIL:
-        return thumbnailsStyles(styles);
+        return thumbnailsStyles(options);
       case LAYOUTS.SLIDER:
-        return sliderStyles(styles);
+        return sliderStyles(options);
       case LAYOUTS.SLIDESHOW:
-        return slideshowStyles(styles);
+        return slideshowStyles(options);
       case LAYOUTS.PANORAMA:
-        return panoramaStyles(styles);
+        return panoramaStyles(options);
       case LAYOUTS.COLUMN:
-        return columnStyles(styles);
+        return columnStyles(options);
       case LAYOUTS.MAGIC:
-        return magicStyles(styles);
+        return magicStyles(options);
       case LAYOUTS.FULLSIZE:
-        return fullsizeStyles(styles);
+        return fullsizeStyles(options);
       case LAYOUTS.BRICKS:
-        return bricksStyles(styles);
+        return bricksStyles(options);
       case LAYOUTS.MIX:
-        return mixStyles(styles);
+        return mixStyles(options);
       case LAYOUTS.ALTERNATE:
-        return alternateStyles(styles);
+        return alternateStyles(options);
       case LAYOUTS.EMPTY:
-        return emptyStyles(styles);
+        return emptyStyles(options);
       case LAYOUTS.DESIGNED_PRESET:
-        return designedPresetStyles(styles);
+        return designedPresetStyles(options);
       case LAYOUTS.COLLAGE:
       default:
-        return collageStyles(styles);
+        return collageStyles(options);
     }
   }
 };
@@ -162,4 +162,4 @@ const isInPreset = (galleryLayout, paramToCheck) => {
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 };
 
-export { addPresetStyles, NEW_PRESETS, getLayoutName, isInPreset };
+export { addPresetOptions, NEW_PRESETS, getLayoutName, isInPreset };

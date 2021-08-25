@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, defaultStyles } from 'pro-gallery-lib';
+import { utils, defaultOptions } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import { GalleryRendererProps } from 'pro-gallery-lib';
 
@@ -12,7 +12,7 @@ export default class GalleryRenderer extends React.Component<GalleryRendererProp
     const _eventsListener = (eventName, eventData) =>
       typeof eventsListener === 'function' && eventsListener(eventName, eventData);
 
-    const _options = { ...defaultStyles, ...options }; //TODOVER3 can we remove the default styles?? blueprints should take care of it
+    const _options = { ...defaultOptions, ...options }; //TODOVER3 can we remove the default styles?? blueprints should take care of it
 
     const galleryRendererProps = {
       ...otherProps,

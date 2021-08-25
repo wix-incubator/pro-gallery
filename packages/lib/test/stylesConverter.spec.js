@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import {
-  convertStyles,
+  convertOptions,
   layoutParamsMap,
-  convertStylesBackwards,
+  convertOptionsBackwards,
 } from '../src/core/helpers/stylesConverter';
 
 describe('stylesConverter', () => {
@@ -16,7 +16,7 @@ describe('stylesConverter', () => {
   });
   it('should create new styles from old ones', () => {
     const expected = { ...oldStyles(), ...newStyles() };
-    const converted = convertStyles(oldStyles());
+    const converted = convertOptions(oldStyles());
 
     Object.keys(expected).forEach((key) => {
       expect(converted[key]).to.equal(expected[key]);
@@ -29,7 +29,7 @@ describe('stylesConverter', () => {
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
       someUnrelatedOldStyle: 0,
     };
-    const converted = convertStylesBackwards({
+    const converted = convertOptionsBackwards({
       ...newStyles(),
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
       someUnrelatedOldStyle: 0,

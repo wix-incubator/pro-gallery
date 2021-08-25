@@ -1,15 +1,14 @@
 import {
-  // addPresetStyles,
   getLayoutName,
   NEW_PRESETS,
-  defaultStyles,
+  defaultOptions,
   galleryOptions,
   flattenObject,
   flatToNested,
 } from 'pro-gallery-lib';
 
 
-const defaultStyleParams = flattenObject(defaultStyles);
+const defaultStyleParams = flattenObject(defaultOptions);
 Object.entries(galleryOptions).forEach(
   ([styleParam, settings]) =>
     (defaultStyleParams[styleParam] = settings.default)

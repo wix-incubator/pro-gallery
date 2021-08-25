@@ -4,10 +4,10 @@ import {
   getInitialStyleParams,
   getStyleParamsFromUrl,
 } from '../constants/styleParams';
-import { addPresetStyles } from 'pro-gallery';
+import { addPresetOptions } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
-import { 
-  utils, 
+import {
+  utils,
   flatToNested,
 } from 'pro-gallery-lib';
 
@@ -187,7 +187,7 @@ export function useGalleryContext(
     setShowSide,
     preset: context.preset,
     setPreset,
-    styleParams: addPresetStyles(
+    styleParams: addPresetOptions(
       context.styleParams || flatToNested(getInitialStyleParams())
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setStyleParams,

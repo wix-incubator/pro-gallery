@@ -152,14 +152,14 @@ export function App() {
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {
       const params = {
         container: getContainer(),
-        styleParams: getStyles(),
+        options: getStyles(),
         items: getItems()
       }
       getBlueprintFromServer(params);
     } else {
       const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
       blueprintsManager.init({api: playgroundBlueprintsApi})
-      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), container: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      blueprintsManager.createBlueprint({items: getItems(), options: getStyles(), container: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
 
@@ -174,7 +174,7 @@ export function App() {
       </div>
     </div>);
 
-    const { titlePlacement } = pgItemProps.styleParams;
+    const { titlePlacement } = pgItemProps.options;
 
     switch (type) {
       case 'HOVER':
