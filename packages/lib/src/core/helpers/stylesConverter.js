@@ -79,7 +79,8 @@ const layoutParamsMap = {
   //bundle arrows
   showArrows: 'layoutParams_navigationArrows_enableArrows',
   arrowsPadding: 'layoutParams_navigationArrows_padding',
-  arrowsVerticalPosition: 'layoutParams_navigationArrows_verticalAlignment',
+  arrowsVerticalPosition:
+    styleParamsMap.layoutParams.navigationArrows.verticalAlignment,
   arrowsSize: 'layoutParams_navigationArrows_size',
   arrowsPosition: 'layoutParams_navigationArrows_position',
 

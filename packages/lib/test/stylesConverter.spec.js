@@ -10,6 +10,9 @@ describe('stylesConverter', () => {
     expect(layoutParamsMap.collageAmount).to.equal(
       'layoutParams_collage_amount'
     );
+    expect(layoutParamsMap.arrowsVerticalPosition).to.equal(
+      'layoutParams_navigationArrows_verticalAlignment'
+    );
   });
   it('should create new styles from old ones', () => {
     const expected = { ...oldStyles(), ...newStyles() };

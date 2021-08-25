@@ -4,43 +4,30 @@ const _ = require('lodash');
 
 function getStyleParamsMap(schema) {
   let final = {};
-  let route = [];
-  const properties = schema.properties;
-  _.forEach(properties, (refObj, key) => {
-    try {
-      traverse(refObj.$ref, key);
-    } catch (e) {
-      console.log(`error with key: ${key}`);
-      console.error(e);
-      throw e;
-    }
-  });
-
-  function traverse(refName, key) {
-    // console.log(`key: ${key}`)
-    route.push(key);
-    if (!refName) {
-      buildObject();
-      return;
-    }
-    // console.log(route)
-
-    const obj = schema.definitions[refName.split('#/definitions/').pop()];
-    if (_.isUndefined(obj.properties) || _.isUndefined(refName)) buildObject();
-    else {
-      _.forEach(obj.properties, (refObj, key) => traverse(refObj.$ref, key));
-    }
-  }
-
-  function buildObject() {
-    const routeString = route.join('_');
-    final = Object.assign({}, assignByString(final, routeString, routeString));
-    route = [];
-  }
-
+  traverseProperties(schema.properties, schema, []);
   return final;
+
+  function traverseProperties(properties, schema, route) {
+    for (const [key, value] of Object.entries(properties)) {
+      const newRoute = _.clone(route);
+      newRoute.push(key);
+      traverse(key, value, schema, newRoute);
+    }
+  }
+
+  function traverse(key, obj, schema, route) {
+    if (obj.$ref) {
+      traverseProperties(definition(obj, schema).properties, schema, route);
+    } else {
+      const routeString = route.join('_');
+      final = assignByString(final, routeString, routeString);
+    }
+  }
 }
 
+function definition(obj, schema) {
+  return schema.definitions[obj.$ref.split('#/definitions/').pop()];
+}
 function assignByString(Obj, string, value) {
   // TODO: Figure out why I cannot import this from pro-gallery-lib
   let _obj = { ...Obj };
@@ -54,3 +41,13 @@ function assignByString(Obj, string, value) {
   pointer[assignedProperty] = value;
   return _obj;
 }
+
+// const path = require('path');
+// const fs = require('fs');
+// const s = JSON.parse(
+//   fs.readFileSync(path.join(__dirname, '../src/schema.json'), {
+//     encoding: 'utf8',
+//   })
+// );
+// const res = getStyleParamsMap(s);
+// console.log(JSON.stringify(res, null, 4));
