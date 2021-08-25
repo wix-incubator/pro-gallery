@@ -188,7 +188,7 @@ function migrateStyles(oldStyles) {
   let newStyles = { ...oldStyles };
   //naming
   newStyles = changeNames(newStyles, [
-    ['imageMargin', 'layoutParams_itemSpacing'],
+    ['imageMargin', styleParamsMap.layoutParams.itemSpacing],
     ['cubeType', 'layoutParams_cropMethod'], //Must get its own function o unite with the rotating!
     //rotatingCropRatios + cropType//TODO!
     ['cubeImages', 'layoutParams_enableCrop'],

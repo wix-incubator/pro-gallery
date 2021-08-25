@@ -200,7 +200,7 @@ function defaultStyles_new() {
       itemShadowOpacityAndColor: '',
       arrowsColor: '',
     },
-
+    cubeFitPosition: 'MIDDLE',
     rotatingCropRatios: '',
     columnWidths: '', //columnsRatio ? TBD
     // magicLayoutSeed: 1, //DELETE
