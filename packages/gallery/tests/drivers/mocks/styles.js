@@ -1,4 +1,4 @@
-const styleParams = {
+const options = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1,
@@ -120,4 +120,4 @@ const customComponents = {
   customSlideshowInfoRenderer: () => {},
 };
 
-export { container, styleParams, customComponents };
+export { container, options, customComponents };

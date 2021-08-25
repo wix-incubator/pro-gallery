@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - itemBorderRadius', () => {
+describe('options - itemBorderRadius', () => {
   let driver;
   let initialProps;
 
@@ -14,12 +14,12 @@ describe('styleParam - itemBorderRadius', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   it('should set border-radius of 10 to items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       itemBorderWidth: 1,
@@ -32,7 +32,7 @@ describe('styleParam - itemBorderRadius', () => {
     driver.detach.proGallery();
   });
   it('should set border-radius of 40 to items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       itemBorderWidth: 1,
@@ -45,7 +45,7 @@ describe('styleParam - itemBorderRadius', () => {
     driver.detach.proGallery();
   });
   it('should not set border-radius to when "cubeType" is "fit"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       cubeType: GALLERY_CONSTS.cubeType.FIT,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

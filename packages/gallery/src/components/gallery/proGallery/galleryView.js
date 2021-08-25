@@ -42,7 +42,7 @@ class GalleryView extends GalleryComponent {
         case 37: //left
           newIdx = findNeighborItem(
             idx,
-            this.props.styleParams.isRTL ? 'right' : 'left'
+            this.props.options.isRTL ? 'right' : 'left'
           );
           break;
         case 40: //down
@@ -58,7 +58,7 @@ class GalleryView extends GalleryComponent {
         case 39: //right
           newIdx = findNeighborItem(
             idx,
-            this.props.styleParams.isRTL ? 'left' : 'right'
+            this.props.options.isRTL ? 'left' : 'right'
           );
           break;
         case 27: //esc
@@ -103,7 +103,7 @@ class GalleryView extends GalleryComponent {
     );
   }
   showMoreItems() {
-    if (this.props.styleParams.isAccessible) {
+    if (this.props.options.isAccessible) {
       // tal - I left this check since we do not want to focus the last item in non-accessibility mode
       //find the last visible item and focus on it
       try {
@@ -128,7 +128,7 @@ class GalleryView extends GalleryComponent {
 
   createGallery(showMore) {
     const {
-      styleParams,
+      options,
       container,
       galleryStructure,
       getVisibleItems,
@@ -163,12 +163,12 @@ class GalleryView extends GalleryComponent {
         id="pro-gallery-container"
         className={
           'pro-gallery inline-styles ' +
-          (styleParams.scrollDirection ===
+          (options.scrollDirection ===
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
             ? ' one-row slider hide-scrollbars '
             : '') +
-          (styleParams.isAccessible ? ' accessible ' : '') +
-          (styleParams.isRTL ? ' rtl ' : ' ltr ')
+          (options.isAccessible ? ' accessible ' : '') +
+          (options.isRTL ? ' rtl ' : ' ltr ')
         }
         style={{
           height: galleryHeight,
@@ -180,9 +180,9 @@ class GalleryView extends GalleryComponent {
         <div
           id="pro-gallery-margin-container"
           style={{
-            margin: styleParams.layoutParams.gallerySpacing + 'px',
+            margin: options.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
-            width: this.props.container.galleryWidth - styleParams.imageMargin,
+            width: this.props.container.galleryWidth - options.imageMargin,
             overflow: 'visible',
             position: 'relative',
           }}
@@ -199,7 +199,7 @@ class GalleryView extends GalleryComponent {
       scrollingElement: this.props.scrollingElement,
       scroll: this.props.scroll,
       container: this.props.container,
-      styleParams: this.props.styleParams,
+      options: this.props.options,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
@@ -238,7 +238,7 @@ class GalleryView extends GalleryComponent {
         </div>
       );
     }
-    const { styleParams } = this.props;
+    const { options } = this.props;
     let showMoreButton = false;
     const buttonState = this.props.displayShowMore;
     const shouldShowButton =
@@ -246,7 +246,7 @@ class GalleryView extends GalleryComponent {
       this.props.galleryStructure.height > this.props.container.height;
 
     if (shouldShowButton) {
-      const buttonText = styleParams.loadMoreButtonText || 'Load More';
+      const buttonText = options.loadMoreButtonText || 'Load More';
       showMoreButton = (
         <div
           className={
@@ -279,8 +279,8 @@ class GalleryView extends GalleryComponent {
       console.count('galleryView render');
       console.time('Rendering Gallery took ');
       console.log(
-        '[DEBUG_RENDER] GalleryView styleParams',
-        this.props.styleParams
+        '[DEBUG_RENDER] GalleryView options',
+        this.props.options
       );
       console.log(
         '[DEBUG_RENDER] GalleryView props changed',

@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - imageHoverAnimation', () => {
+describe('options - imageHoverAnimation', () => {
   let driver;
   let initialProps;
 
@@ -14,12 +14,12 @@ describe('styleParam - imageHoverAnimation', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   it('should have "Zoom in" animation on items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
     });
@@ -30,7 +30,7 @@ describe('styleParam - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Blur" animation on items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.BLUR,
     });
@@ -41,7 +41,7 @@ describe('styleParam - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Greyscale" animation on items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE,
     });
@@ -52,7 +52,7 @@ describe('styleParam - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Shrink" animation on items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.SHRINK,
     });
@@ -63,7 +63,7 @@ describe('styleParam - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "invert" animation on items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.INVERT,
     });
@@ -74,7 +74,7 @@ describe('styleParam - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Color in" animation on items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.COLOR_IN,
     });
@@ -85,7 +85,7 @@ describe('styleParam - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Darkened" animation on items', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.DARKENED,
     });

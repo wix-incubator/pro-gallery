@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - cubeImages', () => {
+describe('options - cubeImages', () => {
   let driver;
   let initialProps;
 
@@ -14,12 +14,12 @@ describe('styleParam - cubeImages', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   it('should allow to "cubeType" to set class to "itemWrapper"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: -1,
       cubeImages: true,
       cubeType: GALLERY_CONSTS.cubeType.CROP,
@@ -32,7 +32,7 @@ describe('styleParam - cubeImages', () => {
     driver.detach.proGallery();
   });
   it('should not allow to "cubeType" to set class to "itemWrapper"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: -1,
       cubeImages: false,
       cubeType: GALLERY_CONSTS.cubeType.CROP,

@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - arrowsPosition', () => {
+describe('options - arrowsPosition', () => {
   let driver;
   let initialProps;
 
@@ -14,12 +14,12 @@ describe('styleParam - arrowsPosition', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   it('should calculate gallery width accroding to "arrowsPosition" ("OUTSIDE_GALLERY")', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
       arrowsSize: 40,
@@ -38,7 +38,7 @@ describe('styleParam - arrowsPosition', () => {
     driver.detach.proGallery();
   });
   it('should have original container width (arrowsPosition = "OUTSIDE_GALLERY")', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
       arrowsSize: 40,

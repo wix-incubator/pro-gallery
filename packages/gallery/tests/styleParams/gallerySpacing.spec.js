@@ -2,10 +2,10 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('styleParam - gallerySpacing', () => {
+describe('options - gallerySpacing', () => {
   let driver;
   let initialProps;
 
@@ -14,12 +14,12 @@ describe('styleParam - gallerySpacing', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   it('should set the gallery with a margin of 20px in a vertical gallery', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       layoutParams: { gallerySpacing: 20 },
       galleryLayout: 2,
 
@@ -35,7 +35,7 @@ describe('styleParam - gallerySpacing', () => {
     driver.detach.proGallery();
   });
   it('should set the gallery with a margin of (gallerySpacing - (imageMargin / 2)) in a horizontal gallery', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       layoutParams: { gallerySpacing: 20 },
 
       galleryLayout: 2,

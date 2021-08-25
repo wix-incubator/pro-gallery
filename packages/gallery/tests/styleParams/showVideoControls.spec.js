@@ -2,7 +2,7 @@ import GalleryDriver from '../drivers/reactDriver';
 import { videoItems } from '../drivers/mocks/items';
 import VideoItem from '../../src/components/item/videos/videoItem';
 
-describe('styleParam - showVideoControls', () => {
+describe('options - showVideoControls', () => {
   let driver;
   let sampleItem;
   let sampleItemViewProps;
@@ -17,7 +17,7 @@ describe('styleParam - showVideoControls', () => {
     Object.assign(sampleItemViewProps, {
       loadVideo: true,
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       showVideoControls: true,
     });
     driver.mount(VideoItem, sampleItemViewProps);
@@ -31,7 +31,7 @@ describe('styleParam - showVideoControls', () => {
     Object.assign(sampleItemViewProps, {
       loadVideo: true,
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       showVideoControls: false,
     });
     driver.mount(VideoItem, sampleItemViewProps);

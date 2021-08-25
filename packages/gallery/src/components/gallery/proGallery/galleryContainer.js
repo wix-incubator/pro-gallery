@@ -186,7 +186,7 @@ export class GalleryContainer extends React.Component {
     //should be called AFTER new state is set
     const { container, needToHandleShowMoreClick, initialGalleryHeight } =
       this.state;
-    const styleParams = this.props.styles;
+    const options = this.props.options;
     const numOfItems = this.state.items.length;
     const layoutHeight = this.props.structure.height;
     const layoutItems = this.props.structure.items;
@@ -203,7 +203,7 @@ export class GalleryContainer extends React.Component {
     const onGalleryChangeData = {
       numOfItems,
       container,
-      styleParams,
+      styleParams: options,
       layoutHeight,
       layoutItems,
       isInfinite,
@@ -285,7 +285,7 @@ export class GalleryContainer extends React.Component {
 
   propsToState({
     items,
-    styles,
+    options,
     structure,
     container,
     id,
@@ -294,7 +294,7 @@ export class GalleryContainer extends React.Component {
     customComponents,
   }) {
     items = items || this.props.items;
-    styles = styles || this.props.styles;
+    options = options || this.props.options;
     container = container || this.props.container;
     structure = structure || this.props.structure;
     id = id || this.props.id;
@@ -306,8 +306,8 @@ export class GalleryContainer extends React.Component {
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, {
       // TODO use same objects in the memory when the galleryItems are changed
-      thumbnailSize: styles.thumbnailSize,
-      sharpParams: styles.sharpParams,
+      thumbnailSize: options.thumbnailSize,
+      sharpParams: options.sharpParams,
       createMediaUrl,
     });
 
@@ -322,7 +322,7 @@ export class GalleryContainer extends React.Component {
       this.getScrollCss({
         id,
         items: this.galleryStructure.galleryItems,
-        styleParams: styles,
+        options,
         container: container,
       });
     }
@@ -330,10 +330,10 @@ export class GalleryContainer extends React.Component {
       galleryStructure: this.galleryStructure,
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
-      videoPlay: styles.videoPlay,
-      videoLoop: styles.videoLoop,
-      itemClick: styles.itemClick,
-      scrollDirection: styles.scrollDirection,
+      videoPlay: options.videoPlay,
+      videoLoop: options.videoLoop,
+      itemClick: options.itemClick,
+      scrollDirection: options.scrollDirection,
       cb: this.setPlayingIdxState,
     };
 
@@ -346,7 +346,7 @@ export class GalleryContainer extends React.Component {
     const layoutParams = {
       items: items,
       container,
-      styleParams: styles,
+      styleParams: options,
       gotScrollEvent: true,
       options: {
         showAllItems: true,
@@ -357,14 +357,14 @@ export class GalleryContainer extends React.Component {
     };
 
     this.createCssLayoutsIfNeeded(layoutParams);
-    this.createDynamicStyles(styles, isPrerenderMode);
+    this.createDynamicStyles(options, isPrerenderMode);
 
     const newState = {
       items,
-      styles,
+      options,
       container,
       structure,
-      isScrollLessGallery: this.getIsScrollLessGallery(styles),
+      isScrollLessGallery: this.getIsScrollLessGallery(options),
     };
     return newState;
   }
@@ -563,10 +563,10 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getScrollCss({ id, items, styleParams, container }) {
+  getScrollCss({ id, items, options, container }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
-      styleParams,
+      options,
       id,
       container,
     });
@@ -584,7 +584,7 @@ export class GalleryContainer extends React.Component {
       this.getScrollCss({
         id: this.props.id,
         items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
+        options: this.state.options,
         container: this.state.container,
       });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
@@ -616,7 +616,7 @@ export class GalleryContainer extends React.Component {
       this.getScrollCss({
         id: this.props.id,
         items: this.galleryStructure.galleryItems,
-        styleParams: this.state.styles,
+        options: this.state.options,
         container: this.state.container,
       });
       this.setState({
@@ -791,7 +791,7 @@ export class GalleryContainer extends React.Component {
           items={this.state.items}
           getVisibleItems={this.getVisibleItems}
           galleryStructure={this.galleryStructure}
-          styleParams={this.props.styles}
+          options={this.props.options}
           container={this.props.container}
           settings={this.props.settings}
           displayShowMore={displayShowMore}
