@@ -1028,16 +1028,16 @@ class SlideshowView extends GalleryComponent {
 
 
     // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
-    const galleryVerticalCenter = `50% +${imageMargin/4}px` 
+    const galleryVerticalCenter = `50% + ${imageMargin/4}px` 
 
     // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels 
     let directionFix;
     if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)){
       directionFix = -1;
-    } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)){
+    } else if (isSlideshow || GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)){
       directionFix = 1;
     } else {
-      // We should not get here, taken care of in layout helper
+      // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.js
     }
     const verticalPositionFix = 
           {
