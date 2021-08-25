@@ -4,11 +4,56 @@ export default function (typeErrors) {
 }
 
 function Error(errObject) {
-  // const style = {
-  //   height: '100px',
-  //   width: '500px',
-  // };
-  // return <li>{JSON.stringify(errObject, null, 4)} </li>;
-  // return <li> {Object.entries(errObject).map(items)}</li>;
-  return <li> {errObject.message}</li>;
+  return (
+    <li>
+      {' '}
+      <ErrorDescription errObject={errObject} />
+    </li>
+  );
+}
+
+class ErrorDescription extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showFull: false,
+    };
+
+    this.toggle = this.toggle.bind(this); // PUKE
+  }
+
+  render() {
+    const CompToRender = this.state.showFull ? FullError : Text;
+    return (
+      <a onClick={this.toggle}>
+        <CompToRender errObject={this.props.errObject} />
+      </a>
+    );
+  }
+
+  toggle() {
+    this.setState({ showFull: !this.state.showFull });
+  }
+}
+
+function FullError({ errObject }) {
+  return (
+    <ul>
+      {Object.entries(errObject).map((key, value) => (
+        <Item name={key} value={value} />
+      ))}
+    </ul>
+  );
+}
+
+function Item({ name }) {
+  const key = name[0];
+  const value = name[1];
+  const valueText =
+    typeof value === 'string' ? value : JSON.stringify(value, null, 4);
+  return <li>{`${key}: ${valueText}`}</li>;
+}
+
+function Text({ errObject }) {
+  return errObject.message;
 }
