@@ -38,8 +38,8 @@ class ErrorDescription extends React.Component {
 function FullError({ errObject }) {
   return (
     <ul>
-      {Object.entries(errObject).map((key, value) => (
-        <Item name={key} value={value} />
+      {Object.entries(errObject).map((entry, i) => (
+        <Item name={entry} key={i} />
       ))}
     </ul>
   );
