@@ -7,6 +7,9 @@ const defaultStyles = mergeNestedObjects(coreStyles, {
     repeatingGroupTypes: '',
   },
   // adding
+  gallerySizePx: 0,
+  gallerySizeRatio: 0,
+  gallerySizeType: GALLERY_CONSTS.gallerySizeType.SMART,
   itemShadowOpacityAndColor: '',
   arrowsColor: '',
   textBoxBorderColor: '',

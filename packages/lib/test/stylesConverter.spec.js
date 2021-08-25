@@ -1,67 +1,67 @@
 import { expect } from 'chai';
 import {
-  convertStyles,
-  layoutParamsMap,
-  convertStylesBackwards,
+  // convertStyles,
+  // convertStylesBackwards,
   migrateStyles,
 } from '../src/core/helpers/stylesConverter';
+import styleParamsMap from '../src/core/helpers/styleParamsMap';
 import GALLERY_CONSTS from '../src/common/constants';
 import defaultStyles from '../src/common/defaultStyles';
 
 describe('stylesConverter', () => {
   it('should contain correct keys for params map', () => {
-    expect(layoutParamsMap.collageAmount).to.equal(
-      'layoutParams_collage_amount'
+    expect(styleParamsMap.layoutParams.collage.density).to.equal(
+      'layoutParams_collage_density'
     );
-    expect(layoutParamsMap.arrowsVerticalPosition).to.equal(
-      'layoutParams_navigationArrows_verticalAlignment'
-    );
+    expect(
+      styleParamsMap.layoutParams.navigationArrows.verticalAlignment
+    ).to.equal('layoutParams_navigationArrows_verticalAlignment');
   });
-  it('should create new styles from old ones', () => {
-    const expected = { ...oldStyles(), ...newStyles() };
-    const converted = convertStyles(oldStyles());
+  //   it('should create new styles from old ones', () => {
+  //     const expected = { ...oldStyles(), ...newStyles() };
+  //     const converted = convertStyles(oldStyles());
 
-    Object.keys(expected).forEach((key) => {
-      expect(converted[key]).to.equal(expected[key]);
-    });
-  });
-  it('should create old styles from new ones while keeping existing ones', () => {
-    const expected = {
-      ...oldStyles(),
-      ...newStyles(),
-      groupTypes: '1,2h,2v,3t,3b,3l,3r',
-      someUnrelatedOldStyle: 0,
-    };
-    const converted = convertStylesBackwards({
-      ...newStyles(),
-      groupTypes: '1,2h,2v,3t,3b,3l,3r',
-      someUnrelatedOldStyle: 0,
-    });
+  //     Object.keys(expected).forEach((key) => {
+  //       expect(converted[key]).to.equal(expected[key]);
+  //     });
+  //   });
+  //   it('should create old styles from new ones while keeping existing ones', () => {
+  //     const expected = {
+  //       ...oldStyles(),
+  //       ...newStyles(),
+  //       groupTypes: '1,2h,2v,3t,3b,3l,3r',
+  //       someUnrelatedOldStyle: 0,
+  //     };
+  //     const converted = convertStylesBackwards({
+  //       ...newStyles(),
+  //       groupTypes: '1,2h,2v,3t,3b,3l,3r',
+  //       someUnrelatedOldStyle: 0,
+  //     });
 
-    Object.keys(expected).forEach((key) => {
-      expect(converted[key]).to.equal(expected[key]);
-    });
-  });
+  //     Object.keys(expected).forEach((key) => {
+  //       expect(converted[key]).to.equal(expected[key]);
+  //     });
+  //   });
 });
 describe('Old to new styles processing', () => {
-  it.only('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
+  it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
     let migrated = migrateStyles(defaultStyles_old());
     expect(migrated).to.eql(defaultStyles_new());
   });
 });
 
-function oldStyles() {
-  return {
-    cubeRatio: 0.5,
-    isVertical: false,
-  };
-}
-function newStyles() {
-  return {
-    layoutParams_cropRatio: 0.5,
-    layoutParams_isVerticalOrientation: false,
-  };
-}
+// function oldStyles() {
+//   return {
+//     cubeRatio: 0.5,
+//     isVertical: false,
+//   };
+// }
+// function newStyles() {
+//   return {
+//     layoutParams_cropRatio: 0.5,
+//     layoutParams_layoutOrientation: 'HORIZONTAL',
+//   };
+// }
 
 function defaultStyles_old() {
   return defaultStyles;
@@ -80,6 +80,7 @@ function defaultStyles_new() {
       enableSmartCrop: false,
       minItemSize: 120,
       cropOnlyFill: false,
+      croppedAlignment: 'CENTER',
       slideshowInfoSize: 200,
       scatter: {
         randomScatter: 0,
@@ -95,6 +96,7 @@ function defaultStyles_new() {
       forceGroupOrder: 'BY_COLUMNS', //TODO, create and use use NEW_CON
       numberOfRows: 1,
       numberOfColumns: 3,
+      columnRatios: '', //columnsRatio ? TBD
       collage: {
         groupByOrientation: true,
         density: 0.8,
@@ -112,6 +114,12 @@ function defaultStyles_new() {
         padding: 23,
         size: 23,
         verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
+      },
+      targetItemSize: {
+        mode: 'SMART',
+        smart: 30,
+        pixel: 0,
+        percent: 0,
       },
       info: {
         sizeCalculationMode:
@@ -200,16 +208,8 @@ function defaultStyles_new() {
       itemShadowOpacityAndColor: '',
       arrowsColor: '',
     },
-    cubeFitPosition: 'MIDDLE',
-    rotatingCropRatios: '',
-    columnWidths: '', //columnsRatio ? TBD
     // magicLayoutSeed: 1, //DELETE
-    gallerySize: 30, //This is something ...
-    // gallerySizePx: '', //??????????
-    // gallerySizeRatio: '', //??????????
-    // gallerySizeType: '', //??????????
     // gridStyle: 0, //Looks like it doesnt really exist
-    jsonStyleParams: '', //I want to keep this as a backdoor, but should it be a part of the gallery or only of the lib?
   };
 
   return styles;

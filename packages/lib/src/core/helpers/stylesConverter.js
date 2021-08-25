@@ -41,7 +41,8 @@ const layoutParamsMap = {
   //done
   galleryMargin: 'layoutParams_gallerySpacing', //done
   groupsPerStrip: 'layoutParams_numberOfGroupsPerRow', //done
-
+  columnWidths: styleParamsMap.layoutParams.columnRatios,
+  cubeFitPosition: styleParamsMap.layoutParams.croppedAlignment,
   //Are all of the following content keys? so they could go into layoutParams_content_
   cubeRatio: 'layoutParams_cropRatio', //done
   cubeType: 'layoutParams_cropMethod',
@@ -51,7 +52,6 @@ const layoutParamsMap = {
   smartCrop: 'layoutParams_enableSmartCrop',
   minItemSize: 'layoutParams_minItemSize',
   cropOnlyFill: 'layoutParams_cropOnlyFill', //????????????????
-  cubeFitPosition: 'layoutParams_fitAlignment',
 
   imageMargin: 'layoutParams_itemSpacing',
   placeGroupsLtr: 'layoutParams_groupsOrder', //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
@@ -65,6 +65,11 @@ const layoutParamsMap = {
   isMasonry: 'layoutParams_isMasonry',
   isSlider: 'layoutParams_isSlider',
   isColumns: 'layoutParams_isColumns',
+  //targetItemSize
+  gallerySize: 'layoutParams_targetItemSize_smart',
+  gallerySizePx: 'layoutParams_targetItemSize_pixel',
+  gallerySizeRatio: 'layoutParams_targetItemSize_percent',
+  gallerySizeType: 'layoutParams_targetItemSize_mode',
   //bundle collage
   collageAmount: styleParamsMap.layoutParams.collage.amount, //????????????????
   collageDensity: 'layoutParams_collage_density',
@@ -78,14 +83,13 @@ const layoutParamsMap = {
   galleryThumbnailsAlignment: 'layoutParams_thumbnails_alignment',
 
   //bundle arrows
-  showArrows: 'layoutParams_navigationArrows_enable',
-  arrowsPadding: 'layoutParams_navigationArrows_padding',
+  showArrows: styleParamsMap.layoutParams.navigationArrows.enable,
+  arrowsPadding: styleParamsMap.layoutParams.navigationArrows.padding,
   arrowsVerticalPosition:
     styleParamsMap.layoutParams.navigationArrows.verticalAlignment,
-  arrowsSize: 'layoutParams_navigationArrows_size',
-  arrowsPosition: 'layoutParams_navigationArrows_position',
+  arrowsSize: styleParamsMap.layoutParams.navigationArrows.size,
+  arrowsPosition: styleParamsMap.layoutParams.navigationArrows.position,
 
-  columnsWidth: 'layoutParams_columnsWidth', //????????????????
   fixedColumns: 'layoutParams_fixedColumns', //????????????????
 
   scatter: 'layoutParams_scatter_randomScatter',
@@ -93,7 +97,6 @@ const layoutParamsMap = {
   scrollDirection: 'layoutParams_scrollDirection',
 
   isVertical: 'layoutParams_layoutOrientation', // This needs to be refactored to be an enum. but can wait
-  columnWidths: 'layoutParams_columnWidths',
 
   //info
   calculateTextBoxWidthMode: 'layoutParams_info_sizeCalculationMode',
@@ -204,6 +207,7 @@ function migrateStyles(oldStyles) {
     ['isSlider', 'layoutParams_isSlider'],
     ['isColumns', 'layoutParams_isColumns'],
     ['numberOfImagesPerCol', 'layoutParams_numberOfRows'],
+    ['columnWidths', styleParamsMap.layoutParams.columnRatios],
     //['collageAmount', 'layoutParams_collage_amount'], //This doesnt really exist. need to eradicate as a refactor
     ['collageDensity', 'layoutParams_collage_density'],
     ['chooseBestGroup', 'layoutParams_collage_groupByOrientation'],
@@ -211,14 +215,14 @@ function migrateStyles(oldStyles) {
     ['hasThumbnails', 'layoutParams_thumbnails_enable'],
     ['thumbnailSpacings', 'layoutParams_thumbnails_spacing'],
     ['thumbnailSize', 'layoutParams_thumbnails_size'],
-    ['showArrows', 'layoutParams_navigationArrows_enable'],
-    ['arrowsPadding', 'layoutParams_navigationArrows_padding'],
+    ['showArrows', styleParamsMap.layoutParams.navigationArrows.enable],
+    ['arrowsPadding', styleParamsMap.layoutParams.navigationArrows.padding],
     [
       'arrowsVerticalPosition',
-      'layoutParams_navigationArrows_verticalAlignment',
+      styleParamsMap.layoutParams.navigationArrows.verticalAlignment,
     ],
-    ['arrowsSize', 'layoutParams_navigationArrows_size'],
-    ['arrowsPosition', 'layoutParams_navigationArrows_position'],
+    ['arrowsSize', styleParamsMap.layoutParams.navigationArrows.size],
+    ['arrowsPosition', styleParamsMap.layoutParams.navigationArrows.position],
 
     ['calculateTextBoxWidthMode', 'layoutParams_info_sizeCalculationMode'],
     ['textBoxHeight', 'layoutParams_info_height'],
@@ -229,6 +233,9 @@ function migrateStyles(oldStyles) {
     ['textBoxBorderWidth', 'layoutParams_info_border_width'],
     ['textBoxBorderColor', 'layoutParams_info_border_color'],
     ['textBoxBorderRadius', 'layoutParams_info_border_radius'],
+    ['gallerySize', 'layoutParams_targetItemSize_smart'],
+    ['gallerySizePx', 'layoutParams_targetItemSize_pixel'],
+    ['gallerySizeRatio', 'layoutParams_targetItemSize_percent'],
   ]);
   newStyles = reverseBooleans(newStyles, [
     ['useMaxDimensions', 'layoutParams_enableStreching'],
@@ -240,7 +247,11 @@ function migrateStyles(oldStyles) {
   newStyles = processGroupTypes(newStyles);
   newStyles = processNumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
   newStyles = processInfoBackgroundMode(newStyles);
+  newStyles = processtargetItemSizeMode(newStyles);
+  newStyles = processCroppedAlignment(newStyles);
+  newStyles = processCropRatio(newStyles);
 
+  ///-----------BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, [
     ['videoLoop', 'behaviourParams_item_video_loop'],
     ['showVideoControls', 'behaviourParams_item_video_enableControls'],
@@ -384,6 +395,17 @@ function processVideoPlayTrigger(obj) {
     _obj.behaviourParams.item.video.playTrigger?.toUpperCase();
   return _obj;
 }
+function processtargetItemSizeMode(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    'gallerySizeType',
+    'layoutParams_targetItemSize_mode'
+  );
+  _obj.layoutParams.targetItemSize.mode =
+    _obj.layoutParams.targetItemSize.mode?.toUpperCase();
+  return _obj;
+}
 function processVideoVolume(obj) {
   let _obj = { ...obj };
   _obj = namingChange(_obj, 'videoSound', 'behaviourParams_item_video_volume');
@@ -471,6 +493,22 @@ function processLoadMoreAmount(obj) {
   );
   _obj.behaviourParams.gallery.vertical.loadMore.amount =
     _obj.behaviourParams.gallery.vertical.loadMore.amount?.toUpperCase();
+  return _obj;
+}
+function processCroppedAlignment(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    'cubeFitPosition',
+    styleParamsMap.layoutParams.croppedAlignment
+  );
+  switch (_obj.layoutParams.croppedAlignment) {
+    case 'MIDDLE':
+      _obj.layoutParams.croppedAlignment = 'CENTER';
+      break;
+    default:
+      break;
+  }
   return _obj;
 }
 function processInfoBackgroundMode(obj) {
@@ -574,6 +612,23 @@ function processAutoSlideBehaviour(obj) {
   );
   delete _obj.isAutoSlideshow;
   delete _obj.autoSlideshowType;
+  return _obj;
+}
+function processCropRatio(obj) {
+  let _obj = { ...obj };
+  //['groupTypes', 'layoutParams_collage_groupTypes'], //Need to change this to incorporate rotatingGroupTypes //change the 'Types'?
+  let repeatingVal = obj.rotatingCropRatios;
+  let val = obj.cubeRatio || obj.layoutParams?.cropRatio;
+
+  let finalVal;
+  if (typeof repeatingVal === 'string' && repeatingVal !== '') {
+    finalVal = repeatingVal;
+  } else {
+    finalVal = val;
+  }
+  _obj.layoutParams.cropRatio = finalVal;
+  delete _obj.cropRatio;
+  delete _obj.rotatingCropRatios;
   return _obj;
 }
 function processGroupTypes(obj) {
