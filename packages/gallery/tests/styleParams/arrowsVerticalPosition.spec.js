@@ -47,7 +47,9 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
     const expectedInfoSpace = (-1 * galleryHeight) / 2;
-    expect(top).to.eq(`calc(50% - 19.5px + 0px - ${expectedInfoSpace}px)`);
+    expect(top.replace(/\s/g, '')).to.eq(
+      `calc(50%+0px-19.5px-${expectedInfoSpace}px)`
+    );
   });
 
   it('Checks if "ITEM_CENTER" has correct distance from top for SlideShow', async () => {
@@ -60,7 +62,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     await driver.update();
     const navArrows = driver.find.selector('.nav-arrows-container');
     const { top } = navArrows.props().style;
-    expect(top).to.eq(`calc(50% - 19.5px + 0px - 0px)`);
+    expect(top.replace(/\s/g, '')).to.eq(`calc(50%+0px-19.5px-0px)`);
   });
 
   it('Checks if "IMAGE_CENTER" has correct distance from top for SlideShow', async () => {
@@ -74,6 +76,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const navArrows = driver.find.selector('.nav-arrows-container');
     const { top } = navArrows.props().style;
     const expectedInfoSpace = initialProps.styles.slideshowInfoSize / 2;
-    expect(top).to.eq(`calc(50% - 19.5px + 0px - ${expectedInfoSpace}px)`);
+    expect(top.replace(/\s/g, '')).to.eq(
+      `calc(50%+0px-19.5px-${expectedInfoSpace}px)`
+    );
   });
 });

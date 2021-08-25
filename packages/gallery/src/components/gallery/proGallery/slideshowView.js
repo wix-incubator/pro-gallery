@@ -987,7 +987,8 @@ class SlideshowView extends GalleryComponent {
   shouldRenderNavArrows = () => {
     const { showArrows, scrollDirection } = this.props.styleParams;
     const { isPrerenderMode, galleryStructure } = this.props;
-    const isGalleryWiderThanRenderedItems = galleryStructure.columns.some((column) => {
+    const isGalleryWiderThanRenderedItems = 
+    galleryStructure.columns.some((column) => {
       const allRenderedGroups =
         column.groups.filter((group) => group.rendered) || [];
       const allGroupsWidth = allRenderedGroups.reduce(
