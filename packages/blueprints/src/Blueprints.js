@@ -18,34 +18,34 @@ class Blueprints {
       const {
         container: newContainerParams,
         items: newItemsParams,
-        styles: newStylesParams,
+        options: newOptions,
       } = params;
       const {
         container: oldContainerParams,
         items: oldItemsParams,
-        styles: oldStylesParams,
+        options: oldOptions,
       } = lastParams;
-      // getItems,styles and dimesions if not supplied in params;
+      // getItems,options and dimesions if not supplied in params;
 
       const { formattedItems, changed: itemsChanged } =
         this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
-      const { formattedStyles, changed: stylesChanged } =
-        this.formatStylesIfNeeded(
-          newStylesParams,
-          oldStylesParams,
+      const { formattedOptions, changed: optionsChanged } =
+        this.formatOptionsIfNeeded(
+          newOptions,
+          oldOptions,
           isUsingCustomInfoElements
         );
       const { formattedContainer, changed: containerChanged } =
         this.formatContainerIfNeeded(
           newContainerParams,
           oldContainerParams,
-          oldStylesParams,
-          formattedStyles || existingBlueprint.styles,
-          stylesChanged
+          oldOptions,
+          formattedOptions || existingBlueprint.options,
+          optionsChanged
         );
 
-      const changed = itemsChanged || stylesChanged || containerChanged;
-      changedParams = { itemsChanged, stylesChanged, containerChanged };
+      const changed = itemsChanged || optionsChanged || containerChanged;
+      changedParams = { itemsChanged, optionsChanged, containerChanged };
 
       if (changed || !existingBlueprint) {
         if (!existingBlueprint) {
@@ -57,14 +57,14 @@ class Blueprints {
             formattedContainer:
               formattedContainer || existingBlueprint.container,
             formattedItems: formattedItems || existingBlueprint.items,
-            formattedStyles: formattedStyles || existingBlueprint.styles,
+            formattedOptions: formattedOptions || existingBlueprint.options,
           },
           changed
         );
 
         // assign changed values w/o replacing the original object;
-        if (formattedStyles) {
-          existingBlueprint.styles = formattedStyles;
+        if (formattedOptions) {
+          existingBlueprint.options = formattedOptions;
         }
         if (formattedItems) {
           existingBlueprint.items = formattedItems;
@@ -76,9 +76,9 @@ class Blueprints {
 
         // if its an infinite gallery - let the container loose
         const isInfinite =
-          existingBlueprint.styles.scrollDirection ===
+          existingBlueprint.options.scrollDirection ===
             GALLERY_CONSTS.scrollDirection.VERTICAL &&
-          existingBlueprint.styles.enableInfiniteScroll;
+          existingBlueprint.options.enableInfiniteScroll;
         if (isInfinite) {
           existingBlueprint.container.height =
             existingBlueprint.container.galleryHeight = structure.height;
@@ -202,62 +202,62 @@ class Blueprints {
     return { formattedItems, changed };
   }
 
-  formatStylesIfNeeded(styles, lastStyles, isUsingCustomInfoElements) {
+  formatOptionsIfNeeded(options, lastOptions, isUsingCustomInfoElements) {
     const reason = {
-      styles: '',
+      options: '',
     };
 
-    const stylesHaveChanged = (newStylesParams, oldStylesParams) => {
-      if (!newStylesParams) {
-        reason.styles = 'no new styles.';
-        return false; // no new styles - use old styles
+    const optionsHaveChanged = (newOptions, oldOptions) => {
+      if (!newOptions) {
+        reason.options = 'no new options.';
+        return false; // no new options - use old options
       }
-      if (!oldStylesParams) {
-        reason.styles = 'no old styles.';
-        return true; // no old styles
+      if (!oldOptions) {
+        reason.options = 'no old options.';
+        return true; // no old options
       }
       try {
-        const oldStylesSorted = {};
-        Object.keys(oldStylesParams)
+        const oldOptionsSorted = {};
+        Object.keys(oldOptions)
           .sort() // sort by keys alphabetically
-          .forEach((key) => (oldStylesSorted[key] = oldStylesParams[key]));
-        const newStylesSorted = {};
-        Object.keys(newStylesParams)
+          .forEach((key) => (oldOptionsSorted[key] = oldOptions[key]));
+        const newOptionsSorted = {};
+        Object.keys(newOptions)
           .sort() // sort by keys alphabetically
-          .forEach((key) => (newStylesSorted[key] = newStylesParams[key]));
+          .forEach((key) => (newOptionsSorted[key] = newOptions[key]));
         const wasChanged =
-          JSON.stringify(newStylesSorted) !== JSON.stringify(oldStylesSorted);
+          JSON.stringify(newOptionsSorted) !== JSON.stringify(oldOptionsSorted);
         if (wasChanged) {
-          reason.styles = 'styles were changed.';
+          reason.options = 'options were changed.';
         }
         return wasChanged;
       } catch (e) {
-        console.error('Could not compare styles', e);
+        console.error('Could not compare options', e);
         return false;
       }
     };
 
-    const oldStylesParams = lastStyles;
+    const oldOptions = lastOptions;
     let changed = false;
-    let formattedStyles;
-    if (stylesHaveChanged(styles, oldStylesParams)) {
-      styles = { ...defaultStyles, ...styles };
-      formattedStyles = processLayouts(
-        addPresetStyles(styles),
+    let formattedOptions;
+    if (optionsHaveChanged(options, oldOptions)) {
+      options = { ...defaultStyles, ...options };
+      formattedOptions = processLayouts(
+        addPresetStyles(options),
         isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
     }
 
-    return { formattedStyles, changed };
+    return { formattedOptions, changed };
   }
 
   formatContainerIfNeeded(
     container,
     lastContainer,
-    lastStyles,
-    formattedStyles,
-    stylesChanged
+    lastOptions,
+    formattedOptions,
+    optionsChanged
   ) {
     const reason = {
       container: '',
@@ -265,11 +265,11 @@ class Blueprints {
     const containerHasChanged = ({
       newContainerParams,
       oldContainerParams,
-      oldStylesParams,
+      oldOptions,
     }) => {
-      if (!oldStylesParams || !oldContainerParams) {
-        reason.container = 'no old container or styles. ';
-        return true; // no old container or styles (style may change container)
+      if (!oldOptions || !oldContainerParams) {
+        reason.container = 'no old container or options. ';
+        return true; // no old container or options (style may change container)
       }
       if (!newContainerParams) {
         reason.container = 'no new container.';
@@ -277,9 +277,9 @@ class Blueprints {
       }
       const containerHasChanged = {
         height:
-          formattedStyles.scrollDirection ===
+          formattedOptions.scrollDirection ===
             GALLERY_CONSTS.scrollDirection.VERTICAL &&
-          formattedStyles.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
+          formattedOptions.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
             ? false
             : !!newContainerParams.height &&
               newContainerParams.height !== oldContainerParams.height,
@@ -298,18 +298,18 @@ class Blueprints {
 
     const oldContainerParams = lastContainer;
     let changed = false;
-    const oldStylesParams = lastStyles;
+    const oldOptions = lastOptions;
     let formattedContainer;
     if (
-      stylesChanged || // If styles changed they could affect the container and a new container must be created (slideshow,thumbs,shadow,borders...etc)
+      optionsChanged || // If options changed they could affect the container and a new container must be created (slideshow,thumbs,shadow,borders...etc)
       containerHasChanged({
         newContainerParams: container,
         oldContainerParams,
-        oldStylesParams,
+        oldOptions,
       })
     ) {
       dimensionsHelper.updateParams({
-        styles: formattedStyles,
+        options: formattedOptions,
         container,
       });
       changed = true;
@@ -322,11 +322,11 @@ class Blueprints {
     return { formattedContainer, changed };
   }
 
-  createStructure({ formattedContainer, formattedStyles, formattedItems }) {
+  createStructure({ formattedContainer, formattedOptions, formattedItems }) {
     const layoutParams = {
       items: formattedItems,
       container: formattedContainer,
-      styleParams: formattedStyles,
+      styleParams: formattedOptions,
       options: {
         showAllItems: true,
         skipVisibilitiesCalc: true,

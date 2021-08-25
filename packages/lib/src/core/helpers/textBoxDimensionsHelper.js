@@ -6,46 +6,41 @@ import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
 
-const processTextDimensions = (styles, customExternalInfoRendererExists) => {
-  let _styles = { ...styles };
+const processTextDimensions = (options, customExternalInfoRendererExists) => {
+  let _options = { ...options };
 
-  _styles.textBoxHeight = getTextBoxAboveOrBelowHeight(
-    _styles,
+  _options.textBoxHeight = getTextBoxAboveOrBelowHeight(
+    _options,
     customExternalInfoRendererExists
   );
 
-  _styles.externalInfoHeight = getHeightFromStyleParams(
-    _styles,
-    _styles.textBoxHeight
+  _options.externalInfoHeight = getHeightFromOptions(
+    _options,
+    _options.textBoxHeight
   );
 
-  _styles.externalInfoWidth = getTextBoxRightOrLeftWidth(
-    _styles,
+  _options.externalInfoWidth = getTextBoxRightOrLeftWidth(
+    _options,
     customExternalInfoRendererExists
   );
-  return _styles;
+  return _options;
 };
 
-function getHeightFromStyleParams(styleParams, textBoxHeight) {
+function getHeightFromOptions(options, textBoxHeight) {
   let additionalHeight = textBoxHeight;
   if (
     textBoxHeight > 0 &&
-    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
-    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
+    hasExternalVerticalPlacement(options.titlePlacement) &&
+    options.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
   ) {
-    additionalHeight += styleParams.textImageSpace;
-    additionalHeight += styleParams.textBoxBorderWidth * 2;
+    additionalHeight += options.textImageSpace;
+    additionalHeight += options.textBoxBorderWidth * 2;
   }
   return additionalHeight;
 }
 
-function getTextBoxRightOrLeftWidth(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  if (
-    !shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)
-  ) {
+function getTextBoxRightOrLeftWidth(options, customExternalInfoRendererExists) {
+  if (!shouldShowTextRightOrLeft(options, customExternalInfoRendererExists)) {
     return 0;
   }
   const {
@@ -53,7 +48,7 @@ function getTextBoxRightOrLeftWidth(
     calculateTextBoxWidthMode,
     textBoxWidth,
     textBoxWidthPercent,
-  } = styleParams;
+  } = options;
   let width = 0;
   if (
     calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT
@@ -65,12 +60,8 @@ function getTextBoxRightOrLeftWidth(
   return width;
 }
 
-function shouldShowTextRightOrLeft(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  const { scrollDirection, isVertical, groupSize, titlePlacement } =
-    styleParams;
+function shouldShowTextRightOrLeft(options, customExternalInfoRendererExists) {
+  const { scrollDirection, isVertical, groupSize, titlePlacement } = options;
 
   const allowedByLayoutConfig =
     scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
@@ -85,26 +76,23 @@ function shouldShowTextRightOrLeft(
 }
 
 function getTextBoxAboveOrBelowHeight(
-  styleParams,
+  options,
   customExternalInfoRendererExists
 ) {
   if (
-    !shouldShowTextBoxAboveOrBelow(
-      styleParams,
-      customExternalInfoRendererExists
-    )
+    !shouldShowTextBoxAboveOrBelow(options, customExternalInfoRendererExists)
   ) {
     return 0;
   }
-  return styleParams.textBoxHeight;
+  return options.textBoxHeight;
 }
 
 function shouldShowTextBoxAboveOrBelow(
-  styleParams,
+  options,
   customExternalInfoRendererExists
 ) {
   return (
-    hasExternalVerticalPlacement(styleParams.titlePlacement) &&
+    hasExternalVerticalPlacement(options.titlePlacement) &&
     customExternalInfoRendererExists
   );
 }
