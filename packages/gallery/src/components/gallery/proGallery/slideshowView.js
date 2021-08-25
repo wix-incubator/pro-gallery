@@ -1026,26 +1026,32 @@ class SlideshowView extends GalleryComponent {
       ? galleryHeight
       : galleryHeight - infoHeight;
 
-    // ~~ Navigation arrows distance from top related consts ~~ //
 
-    // the container top edge is imageMargin/2 ABOVE the actual view so that's the middle point
-    const middleVerticalPointOfScreen = `50% +${imageMargin/4}px` 
-    // Determines the direction in which the Nav arrows are pushed by 'infoSpace'
-    const isInfoAbove = GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement) ? -1 : 1;
-    const positionRelatedDistanceFromTop = 
+    // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
+    const galleryVerticalCenter = `50% +${imageMargin/4}px` 
+
+    // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels 
+    let directionFix;
+    if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)){
+      directionFix = -1;
+    } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)){
+      directionFix = 1;
+    } else {
+      // We should not get here, taken care of in layout helper
+    }
+    const verticalPositionFix = 
           {
             [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
-            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight * isInfoAbove,
-            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight * isInfoAbove,
+            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight * directionFix,
+            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight * directionFix,
           }[arrowsVerticalPosition]
     
-    // ~~ Navigation arrows distance from top related consts ~~ //
     const containerStyle = {
       width: `${navArrowsContainerWidth}px`,
       height: `${navArrowsContainerHeight}px`,
       padding: 0,
-      top: `calc(${middleVerticalPointOfScreen} - ${navArrowsContainerHeight / 2}px - 
-        ${positionRelatedDistanceFromTop / 2}px)`,
+      top: `calc(${galleryVerticalCenter} - ${navArrowsContainerHeight / 2}px - 
+        ${verticalPositionFix / 2}px)`,
     };
 
     const arrowsPos =

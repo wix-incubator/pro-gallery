@@ -7,7 +7,6 @@ const PLACEMENTS = {
   ALTERNATE_HORIZONTAL: 'ALTERNATE_HORIZONTAL',
   ALTERNATE_VERTICAL: 'ALTERNATE_VERTICAL',
 };
-const VERTICAL_PLACEMENTS = ['SHOW_BELOW', 'SHOW_ABOVE', 'ALTERNATE_VERTICAL'];
 
 const hasHoverPlacement = (placement) =>
   String(placement).indexOf(PLACEMENTS.SHOW_ON_HOVER) >= 0;
@@ -53,24 +52,10 @@ const isExternalRightPlacement = (placement) =>
 const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
 
-const isAboveOrBelowPlacement = (
-  placement,
-  isSlideshow,
-  isHorizontalInfoPossible
-) => {
-  if (isHorizontalInfoPossible && hasExternalHorizontalPlacement(placement)) {
-    // Horizontal placement is displayed - so Above/Below info is not displayed
-    return false;
-  }
-  // Filtering all horizontal placements from the placements string
-  const verticalPlacements = String(placement)
-    .split(',')
-    .filter((placement) => VERTICAL_PLACEMENTS.includes(placement))
-    .join(',');
+const isAboveOrBelowPlacement = (placement, isSlideshow) => {
   return (
-    isExternalBelowPlacement(verticalPlacements) ||
-    isExternalAbovePlacement(verticalPlacements) ||
-    isSlideshow
+    isSlideshow ||
+    String(placement).split(',').every(isExternalVerticalPlacement)
   );
 };
 

@@ -274,12 +274,25 @@ const addMarginsToSupportShadows = (styles) => {
 }
 const centerArrowsWhenNeeded = (styles, customExternalInfoRendererExists) => {
   let _styles = {...styles}
+
   // A constant determining whether horizontal info can be displayed or not
   const isHorizontalInfoPossible = _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && 
   _styles.isVertical && _styles.groupSize === 1 && customExternalInfoRendererExists;
-  if (!isAboveOrBelowPlacement(_styles.titlePlacement, _styles.isSlideshow, isHorizontalInfoPossible) ||
+
+  let relevantTitlePlacements;
+  if (isHorizontalInfoPossible) { // if horizontal placements can be displayed, then all user's placements are relevant
+    relevantTitlePlacements = _styles.titlePlacement; 
+  } else { // else, if horizontal placements cannot be displayed, then they do not matter in the current situation
+    relevantTitlePlacements = 
+    _styles.titlePlacement
+    .split(',')
+    .filter(placement => hasExternalVerticalPlacement(placement))
+    .join(',')
+  }
+
+  if (!isAboveOrBelowPlacement(relevantTitlePlacements, _styles.isSlideshow) ||
   _styles.numberOfImagesPerCol !== 1) {
-    // if text (info) placement is not above or below (w/o hover) or more then 1 images per col, arrows are gallery("item") centered
+    // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
     _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
   }
   return _styles;
