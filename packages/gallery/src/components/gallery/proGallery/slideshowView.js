@@ -16,6 +16,10 @@ import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
+const ARROWS_INITIAL_SIZE = {
+  width: 23,
+  height: 39,
+}
 
 function getDirection(code) {
   const reverse = [33, 37, 38]
@@ -895,11 +899,9 @@ class SlideshowView extends GalleryComponent {
         navArrowsContainerHeight: arrowsSize,
       }
     }
-    const arrowOrigWidth = 23; //arrow-right svg and arrow-left svg width
-    const arrowOrigHeight = 39; //arrow-right svg and arrow-left svg height
-    const scalePercentage = arrowsSize / arrowOrigWidth;
-    const navArrowsContainerWidth = arrowsSize; // === arrowOrigWidth * scalePercentage
-    const navArrowsContainerHeight = arrowOrigHeight * scalePercentage;
+    const scalePercentage = arrowsSize / ARROWS_INITIAL_SIZE.width;
+    const navArrowsContainerWidth = arrowsSize; // === ARROWS_INITIAL_SIZE.width * scalePercentage
+    const navArrowsContainerHeight = ARROWS_INITIAL_SIZE.height * scalePercentage;
     return {
       navArrowsContainerWidth,
       navArrowsContainerHeight,
@@ -937,9 +939,8 @@ class SlideshowView extends GalleryComponent {
           d: "M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z",
           transform: "translate(-133 -225)"
         }
-      const arrowOrigWidth = 23, arrowOrigHeight = 39; // Initial arrows dimensions, pre-scaled
       return (
-        <svg width={arrowOrigWidth} height={arrowOrigHeight} viewBox={`0 0 ${arrowOrigWidth} ${arrowOrigHeight}`} style={svgStyle}>
+        <svg width={ARROWS_INITIAL_SIZE.width} height={ARROWS_INITIAL_SIZE.height} viewBox={`0 0 ${ARROWS_INITIAL_SIZE.width} ${ARROWS_INITIAL_SIZE.height}`} style={svgStyle}>
           <path
             className="slideshow-arrow"
             style={svgInternalStyle}
