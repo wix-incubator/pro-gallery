@@ -113,9 +113,7 @@ export default class Gallery extends React.Component<
       /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
     );
     const { validate, typeErrorsUI } = validateTypesModule;
-    const typeErrors = validate(
-      this.props.options || this.props.styles || this.props.styleParams
-    );
+    const typeErrors = validate(this.props.options);
     if (typeErrors.length > 0) {
       this.setState({ typeErrors: typeErrorsUI(typeErrors) });
     }
