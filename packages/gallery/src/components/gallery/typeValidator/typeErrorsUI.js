@@ -1,9 +1,15 @@
 import React from 'react';
 export default function (typeErrors) {
-  return <ol>{typeErrors.map(Error)}</ol>;
+  return (
+    <ol>
+      {typeErrors.map((errObject, i) => (
+        <Error errObject={errObject} key={i} />
+      ))}
+    </ol>
+  );
 }
 
-function Error(errObject) {
+function Error({ errObject }) {
   return (
     <li>
       <ErrorDescription errObject={errObject} />
