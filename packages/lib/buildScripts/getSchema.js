@@ -23,6 +23,6 @@ function getSchemaFromTypes(typesFileAbsolutePath) {
   );
 
   // We can either get the schema for one file and one type...
-  const schema = TJS.generateSchema(program, 'StyleParams', settings);
+  const schema = TJS.generateSchema(program, 'Options', settings);
   return schema;
 }
