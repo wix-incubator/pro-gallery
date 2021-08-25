@@ -2,7 +2,7 @@ import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
-import { assignByString } from '../helpers/stylesUtils';
+import { assignByString } from '../helpers/optionsUtils';
 
 const fixToAlternate = (styles) => {
   let presetStyles = { ...styles };

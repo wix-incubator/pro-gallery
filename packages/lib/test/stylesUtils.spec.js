@@ -3,9 +3,9 @@ import {
   flattenObject,
   flatToNested,
   mergeNestedObjects,
-} from '../src/core/helpers/stylesUtils';
+} from '../src/core/helpers/optionsUtils';
 
-describe('stylesUtils', () => {
+describe('optionsUtils', () => {
   it('should create a nested object out of a flat object', () => {
     expect(nested()).to.deep.equal(flatToNested(flat()));
   });

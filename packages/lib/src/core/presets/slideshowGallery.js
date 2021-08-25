@@ -3,7 +3,7 @@ import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import ARROWS_VERTICAL_POSITION from '../../common/constants/arrowsVerticalPosition';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
-import { assignByString } from '../helpers/stylesUtils';
+import { assignByString } from '../helpers/optionsUtils';
 
 const fixToSlideshow = (styles) => {
   let presetStyles = { ...styles };

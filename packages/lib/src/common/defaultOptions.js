@@ -1,6 +1,6 @@
 import GALLERY_CONSTS from './constants';
 import coreOptions from './coreOptions';
-import { mergeNestedObjects } from '../core/helpers/stylesUtils';
+import { mergeNestedObjects } from '../core/helpers/optionsUtils';
 
 const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {

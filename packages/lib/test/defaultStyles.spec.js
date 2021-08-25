@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import _ from 'lodash';
 import defaultOptions from '../src/common/defaultOptions';
-import { flattenObject } from '../src/core/helpers/stylesUtils';
+import { flattenObject } from '../src/core/helpers/optionsUtils';
 import GALLERY_CONSTS from '../src/common/constants';
 
 describe('defaultOptions', () => {

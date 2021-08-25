@@ -13,7 +13,7 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
-import {assignByString} from './stylesUtils'
+import {assignByString} from './optionsUtils'
 import processTextDimensions from './textBoxDimensionsHelper'
 
 export const calcTargetItemSize = (styles, smartCalc = false) => {
@@ -49,7 +49,7 @@ export const processNumberOfImagesPerRow = (styles) => {
     res.groupSize = 1;
     res.collageAmount = 0;
     res.collageDensity = 0;
-  } 
+  }
   return res;
 }
 
@@ -161,7 +161,7 @@ const forceHorizontalOrientationInHorizontalGalleries = (styles) => {
   if (_styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
     // in horizontal galleries allow only horizontal orientation
     _styles.isVertical = false;
-  } 
+  }
   return _styles;
 }
 const removeLoopOnVerticalGalleries = (styles) => {
@@ -278,7 +278,7 @@ let _styles = {...styles}
 
 if (
   _styles.cubeType === 'fit' &&
-  (_styles.isGrid || 
+  (_styles.isGrid ||
     _styles.hasThumbnails ||
     _styles.isSlider ||
     _styles.isSlideshow)
@@ -334,10 +334,10 @@ function processLayouts(styles, customExternalInfoRendererExists) {
     processedStyles = forceScrollAnimationOnSingleImageInViewGalleries(processedStyles);
     processedStyles = processLoadMoreButtonFont(processedStyles); //contains if isMobile, but also has an else.
     processedStyles = processForceMobileCustomButton(processedStyles); //TODO this seems like it doesnt really exists. consider deleting support.
-    processedStyles = processSpecialGallerySize(processedStyles); 
+    processedStyles = processSpecialGallerySize(processedStyles);
     processedStyles = processTextDimensions(processedStyles, customExternalInfoRendererExists);
-    processedStyles = removeVideoAutoplayInIOS(processedStyles); 
-    
+    processedStyles = removeVideoAutoplayInIOS(processedStyles);
+
   return processedStyles;
 }
 

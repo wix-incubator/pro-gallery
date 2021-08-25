@@ -1,7 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
-import { assignByString } from '../helpers/stylesUtils';
+import { assignByString } from '../helpers/optionsUtils';
 const fixToColumn = (styles) => {
   let presetStyles = { ...styles };
   presetStyles.galleryLayout = LAYOUTS.COLUMN;
