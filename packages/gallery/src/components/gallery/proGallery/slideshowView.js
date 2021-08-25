@@ -16,7 +16,7 @@ import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
-const ARROWS_INITIAL_SIZE = {
+const ARROWS_BASE_SIZE = {
   width: 23,
   height: 39,
 }
@@ -899,9 +899,9 @@ class SlideshowView extends GalleryComponent {
         navArrowsContainerHeight: arrowsSize,
       }
     }
-    const scalePercentage = arrowsSize / ARROWS_INITIAL_SIZE.width;
-    const navArrowsContainerWidth = arrowsSize; // === ARROWS_INITIAL_SIZE.width * scalePercentage
-    const navArrowsContainerHeight = ARROWS_INITIAL_SIZE.height * scalePercentage;
+    const scalePercentage = arrowsSize / ARROWS_BASE_SIZE.width;
+    const navArrowsContainerWidth = arrowsSize; // === ARROWS_BASE_SIZE.width * scalePercentage
+    const navArrowsContainerHeight = ARROWS_BASE_SIZE.height * scalePercentage;
     return {
       navArrowsContainerWidth,
       navArrowsContainerHeight,
@@ -940,7 +940,7 @@ class SlideshowView extends GalleryComponent {
           transform: "translate(-133 -225)"
         }
       return (
-        <svg width={ARROWS_INITIAL_SIZE.width} height={ARROWS_INITIAL_SIZE.height} viewBox={`0 0 ${ARROWS_INITIAL_SIZE.width} ${ARROWS_INITIAL_SIZE.height}`} style={svgStyle}>
+        <svg width={ARROWS_BASE_SIZE.width} height={ARROWS_BASE_SIZE.height} viewBox={`0 0 ${ARROWS_BASE_SIZE.width} ${ARROWS_BASE_SIZE.height}`} style={svgStyle}>
           <path
             className="slideshow-arrow"
             style={svgInternalStyle}
@@ -985,21 +985,10 @@ class SlideshowView extends GalleryComponent {
 
   // function to Determine whether we should render the navigation arrows
   shouldRenderNavArrows = () => {
-    const { showArrows, scrollDirection } = this.props.styleParams;
+    const { showArrows } = this.props.styleParams;
     const { isPrerenderMode, galleryStructure } = this.props;
     const isGalleryWiderThanRenderedItems = 
-    galleryStructure.columns.some((column) => {
-      const allRenderedGroups =
-        column.groups.filter((group) => group.rendered) || [];
-      const allGroupsWidth = allRenderedGroups.reduce(
-        (sum, group) => sum + Math.max(0, group.width),
-        0
-      );
-      const isAllItemsFitsGalleryWidth =
-        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-        this.props.container.galleryWidth >= allGroupsWidth;
-      return isAllItemsFitsGalleryWidth;
-    });
+    galleryStructure.width <= this.props.container.galleryWidth;
     return showArrows && 
     !isPrerenderMode &&
     this.arrowsWillFitPosition() && 

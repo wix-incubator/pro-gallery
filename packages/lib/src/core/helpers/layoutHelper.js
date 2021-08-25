@@ -4,7 +4,7 @@ import window from '../../common/window/windowWrapper';
 import PLACEMENTS, {
   hasExternalVerticalPlacement,
   hasHoverPlacement,
-  isAboveOrBelowPlacement,
+  isConstantVerticalPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
@@ -274,14 +274,8 @@ const addMarginsToSupportShadows = (styles) => {
 }
 const centerArrowsWhenNeeded = (styles) => {
   let _styles = {...styles}
-
-  // If this array is of size > 1, then we have too many vertical placements, therefore we force ITEM_CENTER
-  const verticalPlacementsArray = _styles.titlePlacement
-  .split(',')
-  .filter(placement => hasExternalVerticalPlacement(placement))
-  
-  if (_styles.numberOfImagesPerCol > 1 || verticalPlacementsArray.length > 1 ||
-   !isAboveOrBelowPlacement(verticalPlacementsArray.join(','), _styles.isSlideshow))
+  if (!isConstantVerticalPlacement(_styles.titlePlacement, _styles.isSlideshow) || 
+      _styles.numberOfImagesPerCol > 1)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
     _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
