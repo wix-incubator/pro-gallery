@@ -10,12 +10,12 @@ export { addPresetOptions } from './core/presets/presets';
 export {
   convertOptions,
   convertOptionsBackwards,
-} from './core/helpers/stylesConverter';
-export { assignByString } from './core/helpers/stylesUtils';
+} from './core/helpers/optionsConverter';
+export { assignByString } from './core/helpers/optionsUtils';
 export { validateTypes } from './common/validateTypes/validateTypes';
-export { flatToNested } from './core/helpers/stylesUtils';
-export { flattenObject } from './core/helpers/stylesUtils';
-export { mergeNestedObjects } from './core/helpers/stylesUtils';
+export { flatToNested } from './core/helpers/optionsUtils';
+export { flattenObject } from './core/helpers/optionsUtils';
+export { mergeNestedObjects } from './core/helpers/optionsUtils';
 export { NEW_PRESETS } from './core/presets/presets';
 export { getLayoutName } from './core/presets/presets';
 export { isInPreset } from './core/presets/presets';
