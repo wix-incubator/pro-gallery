@@ -1,11 +1,15 @@
 import React from 'react';
 export default function (typeErrors) {
+  window.typeErrors = typeErrors;
   return (
-    <ol>
-      {typeErrors.map((errObject, i) => (
-        <Error errObject={errObject} key={i} />
-      ))}
-    </ol>
+    <div>
+      <ol>
+        {typeErrors.map((errObject, i) => (
+          <Error errObject={errObject} key={i} />
+        ))}
+      </ol>
+      {JSON.stringify(typeErrors, null, 4)}
+    </div>
   );
 }
 
