@@ -45,15 +45,15 @@ function FullError({ errObject }) {
   return (
     <ul>
       {Object.entries(errObject).map((entry, i) => (
-        <Item name={entry} key={i} />
+        <Item entry={entry} key={i} />
       ))}
     </ul>
   );
 }
 
-function Item({ name }) {
-  const key = name[0];
-  const value = name[1];
+function Item({ entry }) {
+  const key = entry[0];
+  const value = entry[1];
   const valueText =
     typeof value === 'string' ? value : JSON.stringify(value, null, 4);
   return <li>{`${key}: ${valueText}`}</li>;
