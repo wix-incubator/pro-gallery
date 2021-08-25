@@ -51,7 +51,7 @@ import {
   fixedStyles as empty,
   createStyles as emptyStyles,
 } from './emptyGallery';
-import { createStyles as designedPresetStyles } from './designedPresetGallery';
+import { createStyles as jsonFixedStyles } from './designedPresetGallery';
 
 //#endregion Imports
 
@@ -110,8 +110,8 @@ const addPresetStyles = (styles) => {
         return alternateStyles(styles);
       case LAYOUTS.EMPTY:
         return emptyStyles(styles);
-      case LAYOUTS.DESIGNED_PRESET:
-        return designedPresetStyles(styles);
+      case LAYOUTS.JSON_FIXED:
+        return jsonFixedStyles(styles);
       case LAYOUTS.COLLAGE:
       default:
         return collageStyles(styles);
