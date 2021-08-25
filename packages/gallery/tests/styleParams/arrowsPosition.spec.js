@@ -33,7 +33,9 @@ describe('options - arrowsPosition', () => {
     const newWidth =
       initialProps.container.width -
       2 *
-        (initialProps.styles.arrowsSize + 40 + initialProps.styles.imageMargin);
+        (initialProps.options.arrowsSize +
+          40 +
+          initialProps.options.imageMargin);
     expect(width).to.eq(newWidth);
     driver.detach.proGallery();
   });

@@ -13,7 +13,7 @@ export default class ItemHover extends GalleryComponent {
 
     if (utils.isUndefined(options.itemOpacity)) {
       //if gallery was just added to the page, and it's settings were never opened,
-      //the styles of opacity and background were not set (are undefined),
+      //the options of opacity and background were not set (are undefined),
       //so we are using the default background & opacity (is scss under .gallery-item-hover.default)
       hoverClass.push('default');
     }

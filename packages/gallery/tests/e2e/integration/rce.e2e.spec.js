@@ -15,7 +15,7 @@ describe('RCE Integration test', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should match screenshot with default RCE styles', async () => {
+  it('should match screenshot with default RCE options', async () => {
     await driver.navigate({
       layoutParams: {
         gallerySpacing: 0,

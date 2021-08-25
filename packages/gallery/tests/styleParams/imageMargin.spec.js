@@ -51,7 +51,7 @@ describe('options - imageMargin', () => {
       const dims = getElementDimensions(item);
       if (dims.top === prevDims.top) {
         const spacing = dims.left - (prevDims.left + prevDims.width);
-        expect(spacing).to.eq(initialProps.styles.imageMargin);
+        expect(spacing).to.eq(initialProps.options.imageMargin);
       }
       prevDims = dims;
     }

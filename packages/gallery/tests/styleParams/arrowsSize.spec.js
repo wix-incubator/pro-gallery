@@ -27,7 +27,7 @@ describe('options - arrowsSize', () => {
     await driver.update();
     const arrowImage = driver.find.selector('.nav-arrows-container svg');
     const { transform } = arrowImage.props().style;
-    const arrowFinalSize = initialProps.styles.arrowsSize / 23;
+    const arrowFinalSize = initialProps.options.arrowsSize / 23;
     expect(transform).to.eq(`scale(${arrowFinalSize})`);
     driver.detach.proGallery();
   });
@@ -41,7 +41,7 @@ describe('options - arrowsSize', () => {
     await driver.update();
     const arrowContainer = driver.find.selector('.nav-arrows-container');
     const { right } = arrowContainer.props().style;
-    expect(right).to.eq(`-${20 + initialProps.styles.arrowsSize}px`);
+    expect(right).to.eq(`-${20 + initialProps.options.arrowsSize}px`);
     driver.detach.proGallery();
   });
 });
