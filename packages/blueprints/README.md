@@ -64,7 +64,7 @@ const blueprintsManager = new BlueprintsManager({
         }
 
         isUsingCustomInfoElements() {
-            // return true/false to reflect the usage of Custom info elements. used to process the styles accordingly.
+            // return true/false to reflect the usage of Custom info elements. used to process the options accordingly.
         }
     }
 blueprintsManager.init({
