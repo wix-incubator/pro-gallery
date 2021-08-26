@@ -13,6 +13,7 @@ export {
 } from './core/helpers/optionsConverter';
 export { assignByString } from './core/helpers/optionsUtils';
 export { mutatingAssignMultipleByStrings } from './core/helpers/optionsUtils';
+export { default as optionsMap } from './core/helpers/optionsMap';
 export { validateTypes } from './common/validateTypes/validateTypes';
 export { flatToNested } from './core/helpers/optionsUtils';
 export { flattenObject } from './core/helpers/optionsUtils';
