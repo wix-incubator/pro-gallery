@@ -19,9 +19,11 @@ function writeES5StandaloneValidateMethod({
     .bundle()
     .pipe(fileWriter);
 
-  fileWriter.on('finish', function () {
-    console.log('finished writing the browserify file');
-    rmSync(tempFile);
+  return new Promise((resolve) => {
+    fileWriter.on('finish', function () {
+      rmSync(tempFile);
+      resolve('finished writing the browserify file');
+    });
   });
 }
 
