@@ -13,7 +13,7 @@ The blueprintsManager works with an api provided by the user (see blow)
 
 | Function Name | description       |  arguments  | return
 | --------------- | ----------- | ---------- | ---------|
-| async `createBlueprint` | Used when changes were made that might require a new blueprint, params can be empty - the manager will fetch by the provided api | params: {styles, items, container, totalItemsCount} | {blueprint: object, blueprintChange: boolean}
+| async `createBlueprint` | Used when changes were made that might require a new blueprint, params can be empty - the manager will fetch by the provided api | params: {options, items, container, totalItemsCount} | {blueprint: object, blueprintChange: boolean}
 | `init`  | call to provide the deviceType and api |config: {api, deviceType, totalItemsCount} | --
 | `getMoreItems`  | Call this when the gallery needs more items | currentItemsLength: number | --
 
@@ -28,7 +28,7 @@ To use the blueprints Manager to the full extent you need to provide it with an 
 | --------------- | ----------- | ---------- | ---------|
 | `fetchMoreItems` | Will be called when the BM requires more items (under the totalItemsCount) | currentItemLength: number | --
 | `fetchItems`  | Will be called by the BM to get the current items| -- | items
-| `fetchStyles`  | Will be called by the BM to get the current styles | -- | styles
+| `fetchOptions`  | Will be called by the BM to get the current options | -- | options
 | `fetchContainer`  | Will be called by the BM to get the current container | -- | container
 | `getTotalItemsCount`  | Will be called by the BM to get the totalItemsCount | -- | totalItemsCount: number
 | `onBlueprintReady`  | Will be called by the BM when a requested blueprint is ready | {blueprint: object, blueprintChanged: boolean} | --
@@ -50,8 +50,8 @@ const blueprintsManager = new BlueprintsManager({
         fetchItems() {
             //return the current items array;
         }
-        fetchStyles() {
-            //return the current styles object;
+        fetchOptions() {
+            //return the current options object;
         }
         fetchContainer() {
             //return the current container object;
@@ -64,7 +64,7 @@ const blueprintsManager = new BlueprintsManager({
         }
 
         isUsingCustomInfoElements() {
-            // return true/false to reflect the usage of Custom info elements. used to process the styles accordingly.
+            // return true/false to reflect the usage of Custom info elements. used to process the options accordingly.
         }
     }
 blueprintsManager.init({
@@ -72,7 +72,7 @@ blueprintsManager.init({
     deviceType: GALLERY_CONSTS.deviceType.DESKTOP,
     // totalItemsCont, This is optional and can be passed in the params in createBlueprint(params) or via the api;
 });
-const triggerBlueprintCreation = () => { //call this whenever something changes (styles/ items/ container...anything). If this was called and nothing relevant changed the BM will call the onBlueprintReady api with a false blueprintChanged flag.
+const triggerBlueprintCreation = () => { //call this whenever something changes (options/ items/ container...anything). If this was called and nothing relevant changed the BM will call the onBlueprintReady api with a false blueprintChanged flag.
     blueprintsManager.createBlueprint({}); //since the api is used params can be empty, the BM will use the provided api to fetch all the needed params to create a blueprint.
 }
 
@@ -81,7 +81,7 @@ const triggerBlueprintCreation = () => { //call this whenever something changes 
 ## Basic component code:
 Here we use the `ProGalleryRenderer` instead of the `ProGallery`.
 
-Instead of the normal styles, items, container props we will destruct the `blueprint` we got from the `blueprintsManager` into the props.
+Instead of the normal options, items, container props we will destruct the `blueprint` we got from the `blueprintsManager` into the props.
 ```jsx
 
 import { ProGalleryRenderer } from 'pro-gallery'

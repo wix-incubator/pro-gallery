@@ -13,5 +13,5 @@ export { ScrollingElement } from 'pro-gallery-lib';
 export { Structure } from 'pro-gallery-lib';
 
 export { GALLERY_CONSTS } from 'pro-gallery-lib';
-export { addPresetStyles } from 'pro-gallery-lib';
-export { defaultStyles } from 'pro-gallery-lib';
+export { addPresetOptions } from 'pro-gallery-lib';
+export { defaultOptions } from 'pro-gallery-lib';

@@ -39,7 +39,7 @@ function flattenObject(ob) {
 
 function flatToNested(ob) {
   return Object.entries(ob).reduce(
-    (obj, [styleParam, value]) => assignByString(obj, styleParam, value),
+    (obj, [option, value]) => assignByString(obj, option, value),
     {}
   );
 }

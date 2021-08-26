@@ -13,5 +13,5 @@ test/e2e/screenshots
 .yo-rc.json
 package-lock.json
 standaloneValidateCode.js
-styleParamsMap.js
+optionsMap.js
 schema.json

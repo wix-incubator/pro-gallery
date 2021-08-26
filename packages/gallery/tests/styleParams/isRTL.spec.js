@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - isRTL', () => {
+describe('options - isRTL', () => {
   let driver;
   let initialProps;
 
@@ -14,12 +14,12 @@ describe('styleParam - isRTL', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   it('should not set "rtl" class to the gallery container', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
     });
@@ -30,7 +30,7 @@ describe('styleParam - isRTL', () => {
     driver.detach.proGallery();
   });
   it('should set "rtl" class to the gallery container', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
@@ -41,7 +41,7 @@ describe('styleParam - isRTL', () => {
     driver.detach.proGallery();
   });
   // it('should start keyboard navigation from left to right', async () => {
-  //   initialProps.styles = mergeNestedObjects(initialProps.styles, {
+  //   initialProps.options = mergeNestedObjects(initialProps.options, {
   //     galleryLayout: GALLERY_CONSTS.layout.GRID,
   //     isRTL: GALLERY_CONSTS.layoutDirection.LEFT_TO_RIGHT,
   //   })
@@ -61,7 +61,7 @@ describe('styleParam - isRTL', () => {
   // });
 
   it('should set "rtl" class in slideShowView', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
@@ -73,7 +73,7 @@ describe('styleParam - isRTL', () => {
   });
 
   it('should not set "rtl" class in slideShowView', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });

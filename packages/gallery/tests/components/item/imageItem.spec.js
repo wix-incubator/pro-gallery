@@ -11,7 +11,7 @@ describe('Image Item', () => {
     sampleItem = testImages[0];
     imageItemsProps = galleryDriver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
-      styleParams: { cubeType: 'fit', cubeImages: true },
+      options: { cubeType: 'fit', cubeImages: true },
       imageDimensions: { borderRadius: null },
     });
   });

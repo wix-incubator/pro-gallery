@@ -5,10 +5,10 @@ export default {
   title: 'Images Per Row',
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical"), set "Layout Orientation" to "Column" and set "Max Group Size" to be "1".',
-  isRelevant: (styleParams) =>
-    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
-    styleParams.isVertical &&
-    styleParams.gridStyle === 1,
+  isRelevant: (options) =>
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
+    options.isVertical &&
+    options.gridStyle === 1,
   type: INPUT_TYPES.NUMBER,
   default: 3,
   description: `This sets the number of items per row in the gallery. Note that this option relies on a number of options, the gallery must be

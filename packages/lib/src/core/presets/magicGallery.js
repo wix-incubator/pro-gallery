@@ -1,49 +1,49 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { featureManager } from '../helpers/versionsHelper';
-import { assignByString } from '../helpers/stylesUtils';
+import { assignByString } from '../helpers/optionsUtils';
 
-const fixToMagic = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.MAGIC;
-  presetStyles.cubeImages = undefined;
-  presetStyles = assignByString(
-    presetStyles,
+const fixToMagic = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.MAGIC;
+  presetOptions.cubeImages = undefined;
+  presetOptions = assignByString(
+    presetOptions,
     'layoutParams_cropRatio',
     undefined
   );
-  presetStyles.isVertical = undefined;
-  presetStyles.targetItemSize = undefined;
-  presetStyles.collageAmount = undefined;
-  presetStyles.collageDensity = undefined;
-  presetStyles.groupTypes = undefined;
-  presetStyles.oneRow = undefined; // later on in layoutHelper this can be changed if it is false, so not exactly fixed;
-  presetStyles.imageMargin = undefined;
-  presetStyles.scatter = undefined;
-  presetStyles = assignByString(
-    presetStyles,
+  presetOptions.isVertical = undefined;
+  presetOptions.targetItemSize = undefined;
+  presetOptions.collageAmount = undefined;
+  presetOptions.collageDensity = undefined;
+  presetOptions.groupTypes = undefined;
+  presetOptions.oneRow = undefined; // later on in layoutHelper this can be changed if it is false, so not exactly fixed;
+  presetOptions.imageMargin = undefined;
+  presetOptions.scatter = undefined;
+  presetOptions = assignByString(
+    presetOptions,
     'layoutParams_gallerySpacing',
     undefined
   );
-  presetStyles.chooseBestGroup = undefined;
-  presetStyles.smartCrop = undefined;
-  presetStyles.cubeType = undefined;
-  presetStyles.hasThumbnails = undefined;
-  presetStyles.enableScroll = undefined;
-  presetStyles.isGrid = undefined;
-  presetStyles.isSlideshow = undefined;
-  presetStyles.isSlider = undefined;
-  presetStyles.isColumns = undefined;
-  presetStyles.cropOnlyFill = undefined;
-  presetStyles.fixedColumns = undefined;
-  presetStyles.enableInfiniteScroll = undefined;
-  presetStyles.slideshowLoop = false;
-  return presetStyles;
+  presetOptions.chooseBestGroup = undefined;
+  presetOptions.smartCrop = undefined;
+  presetOptions.cubeType = undefined;
+  presetOptions.hasThumbnails = undefined;
+  presetOptions.enableScroll = undefined;
+  presetOptions.isGrid = undefined;
+  presetOptions.isSlideshow = undefined;
+  presetOptions.isSlider = undefined;
+  presetOptions.isColumns = undefined;
+  presetOptions.cropOnlyFill = undefined;
+  presetOptions.fixedColumns = undefined;
+  presetOptions.enableInfiniteScroll = undefined;
+  presetOptions.slideshowLoop = false;
+  return presetOptions;
 };
-export const fixedStyles = fixToMagic({});
+export const fixedOptions = fixToMagic({});
 
-const addSeedStyles = (styles) => {
-  let res = { ...styles };
+const addSeedOptions = (options) => {
+  let res = { ...options };
   let seed = res.magicLayoutSeed;
   if (!seed > 0) {
     seed = 999999;
@@ -135,9 +135,9 @@ const addSeedStyles = (styles) => {
   return res;
 };
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToMagic(res);
-  res = addSeedStyles(res);
+  res = addSeedOptions(res);
   return res;
 };

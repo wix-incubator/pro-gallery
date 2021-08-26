@@ -2,11 +2,11 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('styleParam - imageMargin', () => {
+describe('options - imageMargin', () => {
   let driver;
   let initialProps;
 
@@ -15,12 +15,12 @@ describe('styleParam - imageMargin', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 7,
       imageMargin: 10,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
@@ -34,7 +34,7 @@ describe('styleParam - imageMargin', () => {
 
   it('should use "top" and "left" properties to create the spacing', async () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       imageMargin: 25,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -51,7 +51,7 @@ describe('styleParam - imageMargin', () => {
       const dims = getElementDimensions(item);
       if (dims.top === prevDims.top) {
         const spacing = dims.left - (prevDims.left + prevDims.width);
-        expect(spacing).to.eq(initialProps.styles.imageMargin);
+        expect(spacing).to.eq(initialProps.options.imageMargin);
       }
       prevDims = dims;
     }

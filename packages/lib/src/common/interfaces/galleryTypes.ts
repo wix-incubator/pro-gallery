@@ -13,9 +13,7 @@ type DeviceType = 'desktop' | 'mobile' | 'tablet';
 export interface GalleryProps {
   container: Container;
   items: Item[];
-  styles?: Options;
-  options?: Options;
-  styleParams?: Options;
+  options: Options;
   id?: string;
   totalItemsCount?: number;
   activeIndex?: number;

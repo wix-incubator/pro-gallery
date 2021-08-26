@@ -3,13 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import {
-  styleParams,
-  container,
-  customComponents,
-} from '../drivers/mocks/styles';
+import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('styleParam - textBoxWidth', () => {
+describe('options - textBoxWidth', () => {
   let driver;
   let initialProps;
 
@@ -18,13 +14,13 @@ describe('styleParam - textBoxWidth', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
       customComponents,
     };
   });
 
   it('should set "textBoxWidth" of "250"(manual)', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

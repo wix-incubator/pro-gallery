@@ -3,9 +3,9 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Navigation Arrows Size',
-  isRelevant: (styleParams) =>
-    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    styleParams.showArrows,
+  isRelevant: (options) =>
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    options.showArrows,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.NUMBER,
