@@ -7,10 +7,10 @@ export default {
   title: 'Text Space From Image',
   isRelevantDescription:
     'Set "Choose info layout" to "Separated Background" and set "Texts Placement" to contain "Show Above" or "Show Below".',
-  isRelevant: (styleParams) =>
-    styleParams.imageInfoType ===
+  isRelevant: (options) =>
+    options.imageInfoType ===
       GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND &&
-    [SHOW_ABOVE, SHOW_BELOW].indexOf(styleParams.titlePlacement) > -1,
+    [SHOW_ABOVE, SHOW_BELOW].indexOf(options.titlePlacement) > -1,
   type: INPUT_TYPES.NUMBER,
   default: 10,
   description: `Set the space between the item and the texts in the gallery. Note that this option is relevant
