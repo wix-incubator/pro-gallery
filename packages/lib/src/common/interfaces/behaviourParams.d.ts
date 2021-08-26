@@ -6,6 +6,7 @@ export interface Video {
   playTrigger: 'CLICK' | 'HOVER' | 'AUTO'; //or playOn
   enablePlayButton: boolean;
   enableControls: boolean;
+  enablePlaceholder: boolean;
   [key: string]: any;
 }
 export interface Overlay {

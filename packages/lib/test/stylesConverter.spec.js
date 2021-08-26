@@ -172,16 +172,14 @@ function defaultStyles_new() {
           enableScrollSnap: false,
           navigationDuration: 400,
           blockScroll: false,
-          enableLoop: false,
+          loop: false,
           slideTransition: GALLERY_CONSTS.slideTransition.ease,
           slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
           autoSlide: {
             behaviour: 'OFF',
             interval: 4,
             pauseOnHover: true,
-            continuous: {
-              speed: 200,
-            },
+            speed: 200,
           },
           slideshowInfo: {
             buttonsAlignment: 'center',

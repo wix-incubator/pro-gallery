@@ -143,13 +143,14 @@ const behaviourParams = {
     styleParamsMap.behaviourParams.item.content.placementAnimation,
   imageLoadingMode: styleParamsMap.behaviourParams.item.content.loader,
   //gallery
-  scrollSnap: 'behaviourParams_gallery_enableScrollSnap',
-  isRTL: 'behaviourParams_gallery_layoutDirection', // changes from boolean to an enum (refactor)
-  // allowLeanGallery: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
-  allowContextMenu: 'behaviourParams_gallery_disableContextMenu', //REFACTOR reverse
-  scrollAnimation: 'behaviourParams_gallery_scrollAnimation',
+  scrollSnap:
+    styleParamsMap.behaviourParams.gallery.horizontal.enableScrollSnap,
+  isRTL: styleParamsMap.behaviourParams.gallery.layoutDirection, // changes from boolean to an enum (refactor)
+  // allowLeanGallery: styleParamsMap.behaviourParams.gallery.enableLeanGallery', //think about removing this!
+  allowContextMenu: styleParamsMap.behaviourParams.gallery.disableContextMenu, //REFACTOR reverse
+  scrollAnimation: styleParamsMap.behaviourParams.gallery.scrollAnimation,
   shouldIndexDirectShareLinkInSEO:
-    'behaviourParams_gallery_enableIndexingShareLinks',
+    styleParamsMap.behaviourParams.gallery.enableIndexingShareLinks,
   //----vertical
   //--------loadMore
   enableInfiniteScroll:
@@ -160,39 +161,47 @@ const behaviourParams = {
     styleParamsMap.behaviourParams.gallery.vertical.loadMore.text,
 
   //----horizontal
-  slideAnimation: 'behaviourParams_gallery_horizontal_slideAnimation',
-  slideTransition: 'behaviourParams_gallery_horizontal_slideTransition',
-  enableScroll: 'behaviourParams_gallery_horizontal_blockScroll', //requires a reversal! (blocks instead of allowing),
-  scrollDuration: 'behaviourParams_gallery_horizontal_navigationDuration',
-  slideshowLoop: 'behaviourParams_gallery_horizontal_enableLoop',
+  slideAnimation:
+    styleParamsMap.behaviourParams.gallery.horizontal.slideAnimation,
+  slideTransition:
+    styleParamsMap.behaviourParams.gallery.horizontal.slideTransition,
+  enableScroll: styleParamsMap.behaviourParams.gallery.horizontal.blockScroll, //requires a reversal! (blocks instead of allowing),
+  scrollDuration:
+    styleParamsMap.behaviourParams.gallery.horizontal.navigationDuration,
+  slideshowLoop: styleParamsMap.behaviourParams.gallery.horizontal.loop,
   //--------Auto Slide
   autoSlideshowInterval:
-    'behaviourParams_gallery_horizontal_autoSlide_interval',
+    styleParamsMap.behaviourParams.gallery.horizontal.autoSlide.interval,
   isAutoSlideshow: 'behaviourParams_gallery_horizontal_autoSlide_enable',
   pauseAutoSlideshowOnHover:
-    'behaviourParams_gallery_horizontal_autoSlide_pauseOnHover',
+    styleParamsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover,
   autoSlideshowType: 'behaviourParams_gallery_horizontal_autoSlide_type',
   autoSlideshowContinuousSpeed:
-    'behaviourParams_gallery_horizontal_autoSlide_continuous_speed',
+    styleParamsMap.behaviourParams.gallery.horizontal.autoSlide
+      .continuous_speed,
 
   //--------SlideshowInfo
   galleryTextAlign:
-    'behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment', //think if slideshow is under horizontal or is a separate thing
+    styleParamsMap.behaviourParams.gallery.horizontal.slideshowInfo
+      .buttonsAlignment, //think if slideshow is under horizontal or is a separate thing
   allowSlideshowCounter:
-    'behaviourParams_gallery_horizontal_slideshowInfo_enableCounter',
+    styleParamsMap.behaviourParams.gallery.horizontal.slideshowInfo
+      .enableCounter,
   playButtonForAutoSlideShow:
-    'behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton',
+    styleParamsMap.behaviourParams.gallery.horizontal.slideshowInfo
+      .enablePlayButton,
 };
 
 const stylingParams = {
-  arrowsColor: 'stylingParams_arrowsColor',
-  itemShadowBlur: 'stylingParams_itemShadowBlur',
-  itemShadowDirection: 'stylingParams_itemShadowDirection',
-  itemShadowOpacityAndColor: 'stylingParams_itemShadowOpacityAndColor',
-  itemShadowSize: 'stylingParams_itemShadowSize',
-  itemEnableShadow: 'stylingParams_itemEnableShadow',
-  itemBorderRadius: 'stylingParams_itemBorderRadius',
-  itemBorderWidth: 'stylingParams_itemBorderWidth',
+  arrowsColor: styleParamsMap.stylingParams.arrowsColor,
+  itemShadowBlur: styleParamsMap.stylingParams.itemShadowBlur,
+  itemShadowDirection: styleParamsMap.stylingParams.itemShadowDirection,
+  itemShadowOpacityAndColor:
+    styleParamsMap.stylingParams.itemShadowOpacityAndColor,
+  itemShadowSize: styleParamsMap.stylingParams.itemShadowSize,
+  itemEnableShadow: styleParamsMap.stylingParams.itemEnableShadow,
+  itemBorderRadius: styleParamsMap.stylingParams.itemBorderRadius,
+  itemBorderWidth: styleParamsMap.stylingParams.itemBorderWidth,
 };
 
 function migrateStyles(oldStyles) {
@@ -264,9 +273,15 @@ function migrateStyles(oldStyles) {
 
   ///-----------BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, [
-    ['videoLoop', 'behaviourParams_item_video_loop'],
-    ['showVideoControls', 'behaviourParams_item_video_enableControls'],
-    ['enableVideoPlaceholder', 'behaviourParams_item_video_enablePlaceholder'],
+    ['videoLoop', styleParamsMap.behaviourParams.item.video.loop],
+    [
+      'showVideoControls',
+      styleParamsMap.behaviourParams.item.video.enableControls,
+    ],
+    [
+      'enableVideoPlaceholder',
+      styleParamsMap.behaviourParams.item.video.enablePlaceholder,
+    ],
     [
       'overlayAnimation',
       styleParamsMap.behaviourParams.item.overlay.hoverAnimation,
@@ -284,43 +299,58 @@ function migrateStyles(oldStyles) {
       styleParamsMap.behaviourParams.item.content.placementAnimation,
     ],
     ['imageLoadingMode', styleParamsMap.behaviourParams.item.content.loader],
-    ['scrollSnap', 'behaviourParams_gallery_horizontal_enableScrollSnap'],
-    ['scrollAnimation', 'behaviourParams_gallery_scrollAnimation'],
+    [
+      'scrollSnap',
+      styleParamsMap.behaviourParams.gallery.horizontal.enableScrollSnap,
+    ],
+    ['scrollAnimation', styleParamsMap.behaviourParams.gallery.scrollAnimation],
     [
       'shouldIndexDirectShareLinkInSEO',
-      'behaviourParams_gallery_enableIndexingShareLinks',
+      styleParamsMap.behaviourParams.gallery.enableIndexingShareLinks,
     ],
     [
       'loadMoreButtonText',
       styleParamsMap.behaviourParams.gallery.vertical.loadMore.text,
     ],
-    ['slideAnimation', 'behaviourParams_gallery_horizontal_slideAnimation'],
-    ['slideTransition', 'behaviourParams_gallery_horizontal_slideTransition'],
-    ['scrollDuration', 'behaviourParams_gallery_horizontal_navigationDuration'], //This might need to move to navigationArrows in layoutParams.
-    ['slideshowLoop', 'behaviourParams_gallery_horizontal_enableLoop'],
+    [
+      'slideAnimation',
+      styleParamsMap.behaviourParams.gallery.horizontal.slideAnimation,
+    ],
+    [
+      'slideTransition',
+      styleParamsMap.behaviourParams.gallery.horizontal.slideTransition,
+    ],
+    [
+      'scrollDuration',
+      styleParamsMap.behaviourParams.gallery.horizontal.navigationDuration,
+    ], //This might need to move to navigationArrows in layoutParams.
+    ['slideshowLoop', styleParamsMap.behaviourParams.gallery.horizontal.loop],
     [
       'autoSlideshowInterval',
-      'behaviourParams_gallery_horizontal_autoSlide_interval',
+      styleParamsMap.behaviourParams.gallery.horizontal.autoSlide.interval,
     ],
     [
       'pauseAutoSlideshowOnHover',
-      'behaviourParams_gallery_horizontal_autoSlide_pauseOnHover',
+      styleParamsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover,
     ],
     [
       'autoSlideshowContinuousSpeed',
-      'behaviourParams_gallery_horizontal_autoSlide_continuous_speed',
+      styleParamsMap.behaviourParams.gallery.horizontal.autoSlide.speed,
     ],
     [
       'galleryTextAlign',
-      'behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment',
+      styleParamsMap.behaviourParams.gallery.horizontal.slideshowInfo
+        .buttonsAlignment,
     ], //think if slideshow is under horizontal or is a separate thing
     [
       'allowSlideshowCounter',
-      'behaviourParams_gallery_horizontal_slideshowInfo_enableCounter',
+      styleParamsMap.behaviourParams.gallery.horizontal.slideshowInfo
+        .enableCounter,
     ],
     [
       'playButtonForAutoSlideShow',
-      'behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton',
+      styleParamsMap.behaviourParams.gallery.horizontal.slideshowInfo
+        .enablePlayButton,
     ],
   ]);
   newStyles = reverseBooleans(newStyles, [
@@ -328,9 +358,15 @@ function migrateStyles(oldStyles) {
       'enableInfiniteScroll',
       styleParamsMap.behaviourParams.gallery.vertical.loadMore.enable,
     ],
-    ['allowContextMenu', 'behaviourParams_gallery_disableContextMenu'],
-    ['hidePlay', 'behaviourParams_item_video_enablePlayButton'],
-    ['enableScroll', 'behaviourParams_gallery_horizontal_blockScroll'], //requires a reversal! (blocks instead of allowing),
+    [
+      'allowContextMenu',
+      styleParamsMap.behaviourParams.gallery.disableContextMenu,
+    ],
+    ['hidePlay', styleParamsMap.behaviourParams.item.video.enablePlayButton],
+    [
+      'enableScroll',
+      styleParamsMap.behaviourParams.gallery.horizontal.blockScroll,
+    ], //requires a reversal! (blocks instead of allowing),
   ]);
   newStyles = processClickAction(newStyles);
   newStyles = processVideoPlayTrigger(newStyles);
@@ -343,14 +379,17 @@ function migrateStyles(oldStyles) {
   newStyles = processAutoSlideBehaviour(newStyles);
 
   newStyles = changeNames(newStyles, [
-    ['itemShadowBlur', 'stylingParams_itemShadowBlur'],
-    ['itemShadowDirection', 'stylingParams_itemShadowDirection'],
-    ['itemShadowOpacityAndColor', 'stylingParams_itemShadowOpacityAndColor'],
-    ['arrowsColor', 'stylingParams_arrowsColor'],
-    ['itemShadowSize', 'stylingParams_itemShadowSize'],
-    ['itemEnableShadow', 'stylingParams_itemEnableShadow'],
-    ['itemBorderRadius', 'stylingParams_itemBorderRadius'],
-    ['itemBorderWidth', 'stylingParams_itemBorderWidth'],
+    ['itemShadowBlur', styleParamsMap.stylingParams.itemShadowBlur],
+    ['itemShadowDirection', styleParamsMap.stylingParams.itemShadowDirection],
+    [
+      'itemShadowOpacityAndColor',
+      styleParamsMap.stylingParams.itemShadowOpacityAndColor,
+    ],
+    ['arrowsColor', styleParamsMap.stylingParams.arrowsColor],
+    ['itemShadowSize', styleParamsMap.stylingParams.itemShadowSize],
+    ['itemEnableShadow', styleParamsMap.stylingParams.itemEnableShadow],
+    ['itemBorderRadius', styleParamsMap.stylingParams.itemBorderRadius],
+    ['itemBorderWidth', styleParamsMap.stylingParams.itemBorderWidth],
   ]);
 
   delete newStyles.textBoxWidthPercent;
@@ -409,7 +448,7 @@ function processVideoPlayTrigger(obj) {
   _obj = namingChange(
     _obj,
     'videoPlay',
-    'behaviourParams_item_video_playTrigger'
+    styleParamsMap.behaviourParams.item.video.playTrigger
   );
   _obj.behaviourParams.item.video.playTrigger =
     _obj.behaviourParams.item.video.playTrigger?.toUpperCase();
@@ -428,7 +467,11 @@ function processtargetItemSizeMode(obj) {
 }
 function processVideoVolume(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'videoSound', 'behaviourParams_item_video_volume');
+  _obj = namingChange(
+    _obj,
+    'videoSound',
+    styleParamsMap.behaviourParams.item.video.volume
+  );
   _obj.behaviourParams.item.video.volume = _obj.behaviourParams.item.video
     .volume
     ? _obj.behaviourParams.item.video.volume
@@ -437,7 +480,11 @@ function processVideoVolume(obj) {
 }
 function processVideoSpeed(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'videoSpeed', 'behaviourParams_item_video_speed');
+  _obj = namingChange(
+    _obj,
+    'videoSpeed',
+    styleParamsMap.behaviourParams.item.video.speed
+  );
   _obj.behaviourParams.item.video.volume = Number(
     _obj.behaviourParams.item.video.volume
   );
@@ -464,7 +511,11 @@ function processScrollDirection(obj) {
 }
 function processlayoutDirection(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'isRTL', 'behaviourParams_gallery_layoutDirection');
+  _obj = namingChange(
+    _obj,
+    'isRTL',
+    styleParamsMap.behaviourParams.gallery.layoutDirection
+  );
   switch (_obj.behaviourParams.gallery.layoutDirection) {
     case true:
       _obj.behaviourParams.gallery.layoutDirection = 'RIGHT_TO_LEFT';
@@ -614,7 +665,11 @@ function processInfoPlacement(obj) {
 }
 function processClickAction(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'itemClick', 'behaviourParams_item_clickAction');
+  _obj = namingChange(
+    _obj,
+    'itemClick',
+    styleParamsMap.behaviourParams.item.clickAction
+  );
   _obj.behaviourParams.item.clickAction =
     _obj.behaviourParams.item.clickAction.toUpperCase();
   switch (_obj.behaviourParams.item.clickAction) {
@@ -643,7 +698,7 @@ function processAutoSlideBehaviour(obj) {
   }
   _obj = assignByString(
     _obj,
-    'behaviourParams_gallery_horizontal_autoSlide_behaviour',
+    styleParamsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour,
     finalVal
   );
   delete _obj.isAutoSlideshow;
