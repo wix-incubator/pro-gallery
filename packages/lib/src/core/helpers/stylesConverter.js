@@ -1,3 +1,5 @@
+import styleParamsMap from './styleParamsMap';
+
 function convertStyles(initialStyles) {
   //This will add the new names while keeping the old ones.
   let styles = { ...initialStyles };
@@ -48,6 +50,7 @@ const layoutParamsMap = {
   smartCrop: 'layoutParams_enableSmartCrop',
   minItemSize: 'layoutParams_minItemSize',
   cropOnlyFill: 'layoutParams_cropOnlyFill', //????????????????
+  cubeFitPosition: 'layoutParams_fitAlignment',
 
   imageMargin: 'layoutParams_itemSpacing',
   placeGroupsLtr: 'layoutParams_groupsOrder', //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
@@ -62,7 +65,7 @@ const layoutParamsMap = {
   isSlider: 'layoutParams_isSlider',
   isColumns: 'layoutParams_isColumns',
   //bundle collage
-  collageAmount: 'layoutParams_collage_amount', //????????????????
+  collageAmount: styleParamsMap.layoutParams.collage.amount, //????????????????
   collageDensity: 'layoutParams_collage_density',
   chooseBestGroup: 'layoutParams_collage_groupByOrientation',
   groupTypes: 'layoutParams_collage_groupTypes',
@@ -76,7 +79,8 @@ const layoutParamsMap = {
   //bundle arrows
   showArrows: 'layoutParams_navigationArrows_enableArrows',
   arrowsPadding: 'layoutParams_navigationArrows_padding',
-  arrowsVerticalPosition: 'layoutParams_navigationArrows_verticalAlignment',
+  arrowsVerticalPosition:
+    styleParamsMap.layoutParams.navigationArrows.verticalAlignment,
   arrowsSize: 'layoutParams_navigationArrows_size',
   arrowsPosition: 'layoutParams_navigationArrows_position',
 
@@ -166,4 +170,4 @@ const stylingParams = {
   itemEnableShadow: 'stylingParams_itemEnableShadow',
 };
 
-export { convertStyles, convertStylesBackwards };
+export { convertStyles, convertStylesBackwards, layoutParamsMap };
