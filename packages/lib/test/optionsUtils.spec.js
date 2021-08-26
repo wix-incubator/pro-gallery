@@ -3,6 +3,7 @@ import {
   flattenObject,
   flatToNested,
   mergeNestedObjects,
+  mutatingAssignMultipleByStrings,
 } from '../src/core/helpers/optionsUtils';
 
 describe('optionsUtils', () => {
@@ -18,6 +19,27 @@ describe('optionsUtils', () => {
     let expected = merged();
     let actual = mergeNestedObjects(nested(), nested2());
     expect(actual).to.deep.equal(expected);
+  });
+  it('should assign multiple strings into the same object', () => {
+    let initial = {
+      layoutParams: {
+        bar: 'foo',
+      },
+    };
+    let expected = {
+      hi: 'bye',
+      layoutParams: {
+        bar: 'foo',
+        alice: 'bob',
+        moshe: 'bob',
+      },
+    };
+    mutatingAssignMultipleByStrings(initial, [
+      ['layoutParams_alice', 'bob'],
+      ['layoutParams_moshe', 'bob'],
+      ['hi', 'bye'],
+    ]);
+    expect(initial).to.deep.equal(expected);
   });
 });
 

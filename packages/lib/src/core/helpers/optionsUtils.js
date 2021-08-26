@@ -11,6 +11,12 @@ function assignByString(Obj, string, value) {
   return _obj;
 }
 
+function mutatingAssignMultipleByStrings(Obj, stringValuePairArray) {
+  for (let [string, value] of stringValuePairArray) {
+    Object.assign(Obj, assignByString(Obj, string, value));
+  }
+}
+
 function flattenObject(ob) {
   var toReturn = {};
 
@@ -48,4 +54,10 @@ function mergeNestedObjects(...args) {
   return flatToNested(Object.assign({}, ...args.map(flattenObject)));
 }
 
-export { flattenObject, assignByString, flatToNested, mergeNestedObjects };
+export {
+  flattenObject,
+  assignByString,
+  flatToNested,
+  mergeNestedObjects,
+  mutatingAssignMultipleByStrings,
+};
