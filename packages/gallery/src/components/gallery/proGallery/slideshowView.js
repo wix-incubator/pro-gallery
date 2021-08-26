@@ -396,7 +396,7 @@ class SlideshowView extends GalleryComponent {
   getScrollParameters(scrollDuration) {
     return {
       scrollMarginCorrection: this.getStyles().margin || 0,
-      _scrollDuration: scrollDuration || this.props.styleParams.scrollDuration || 400,
+      _scrollDuration: scrollDuration || this.props.options.scrollDuration || 400,
     };
   }
 
