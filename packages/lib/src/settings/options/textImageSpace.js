@@ -8,8 +8,7 @@ export default {
   isRelevantDescription:
     'Set "Choose info layout" to "Separated Background" and set "Texts Placement" to contain "Show Above" or "Show Below".',
   isRelevant: (options) =>
-    options.imageInfoType ===
-      GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND &&
+    options.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND &&
     [SHOW_ABOVE, SHOW_BELOW].indexOf(options.titlePlacement) > -1,
   type: INPUT_TYPES.NUMBER,
   default: 10,
