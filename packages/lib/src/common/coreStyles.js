@@ -8,7 +8,7 @@ const coreStyles = {
   behavourParams: {
     item: {
       video: {
-        playTrigger: 'HOVER',
+        playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
       },
     },
   },

@@ -1,6 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { mergeNestedObjects, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';
 import { styleParams, container } from '../drivers/mocks/styles';
 
@@ -155,7 +155,13 @@ describe('styleParam - itemClick', () => {
     it('expect to find video element', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'nothing',
-        videoPlay: 'onClick',
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+            },
+          },
+        },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -169,7 +175,13 @@ describe('styleParam - itemClick', () => {
     it('expect not to find video element when "itemClick" is "expand"', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'expand',
-        videoPlay: 'onClick',
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+            },
+          },
+        },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -182,7 +194,13 @@ describe('styleParam - itemClick', () => {
     it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'fullscreen',
-        videoPlay: 'onClick',
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+            },
+          },
+        },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -196,7 +214,13 @@ describe('styleParam - itemClick', () => {
     it('expect not to find video element when "itemClick" is "link"', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
         itemClick: 'link',
-        videoPlay: 'onClick',
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+            },
+          },
+        },
       });
       driver.mount.proGallery(initialProps);
       await driver.update();

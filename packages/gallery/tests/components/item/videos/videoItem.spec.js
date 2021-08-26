@@ -1,4 +1,4 @@
-import { utils } from 'pro-gallery-lib';
+import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../../drivers/reactDriver';
 import { testVideos } from '../../../drivers/mocks/images-mock';
 import sinon from 'sinon';
@@ -86,7 +86,13 @@ describe('Video Item ', () => {
     //!utils.isMobile() && videoPlay !== 'onClick'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.styleParams, {
-      videoPlay: 'hover',
+      behaviourParams: {
+        item: {
+          video: {
+            playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+          },
+        },
+      },
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
@@ -98,7 +104,13 @@ describe('Video Item ', () => {
       0
     );
     Object.assign(sampleItemViewProps.styleParams, {
-      videoPlay: 'auto',
+      behaviourParams: {
+        item: {
+          video: {
+            playTrigger: GALLERY_CONSTS.videoPlay.AUTO,
+          },
+        },
+      },
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });

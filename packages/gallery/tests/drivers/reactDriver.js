@@ -47,6 +47,13 @@ class galleryDriver {
         gallerySpacing: 1,
         cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
       },
+      behaviourParams: {
+        item: {
+          video: {
+            playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+          },
+        },
+      },
       gotStyleParams: true,
       selectedLayout: 0,
       isVertical: false,
@@ -62,7 +69,6 @@ class galleryDriver {
       videoLoop: true,
       videoSound: false,
       videoSpeed: 1,
-      videoPlay: 'hover',
       sharpParams: {
         quality: 90,
         usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},

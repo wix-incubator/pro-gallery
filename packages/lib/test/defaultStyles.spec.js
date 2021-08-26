@@ -22,6 +22,13 @@ function expectedStyles() {
       cropRatio: 1,
       repeatingGroupTypes: '',
     },
+    behaviourParams: {
+      item: {
+        video: {
+          playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+        },
+      },
+    },
     isRTL: false,
     isVertical: false,
     gallerySize: 30,
@@ -65,7 +72,6 @@ function expectedStyles() {
     scrollSnap: false,
     itemClick: 'nothing',
     fullscreen: true,
-    videoPlay: 'hover',
     scrollAnimation: 'NO_EFFECT',
     slideAnimation: 'SCROLL',
     scrollDirection: 0,

@@ -201,11 +201,11 @@ const removeVideoAutoplayInIOS = (styles) => {
   let _styles = {...styles}
   // Handle case of autoplay on ios devices
   if (
-    _styles.videoPlay === 'auto' &&
+    _styles.behaviourParams.item.video.playTrigger === GALLERY_CONSTS.videoPlay.AUTO &&
     _styles.itemClick === 'nothing' &&
     utils.isiOS()
   ) {
-    _styles.videoPlay = 'onClick';
+    _styles.behaviourParams.item.video.playTrigger = GALLERY_CONSTS.videoPlay.CLICK
   }
   return _styles;
 }

@@ -20,7 +20,13 @@ describe('styleParam - videoPlay', () => {
 
   it('should play videos automaticaly', async () => {
     initialProps.styles = mergeNestedObjects(initialProps.styles, {
-      videoPlay: GALLERY_CONSTS.videoPlay.AUTO,
+      behaviourParams: {
+        item: {
+          video: {
+            playTrigger: GALLERY_CONSTS.videoPlay.AUTO,
+          },
+        },
+      },
       galleyLayout: GALLERY_CONSTS.layout.GRID,
     });
     driver.mount.proGallery(initialProps);
@@ -39,7 +45,13 @@ describe('styleParam - videoPlay', () => {
 
     it('should not have video elements intially (with no hover event)', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+            },
+          },
+        },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
@@ -50,7 +62,13 @@ describe('styleParam - videoPlay', () => {
     });
     it('should have video element on hover', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+            },
+          },
+        },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
@@ -70,7 +88,13 @@ describe('styleParam - videoPlay', () => {
 
     it('should not have video elements intially (with no click event)', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.ON_CLICK,
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+            },
+          },
+        },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
       });
       driver.mount.proGallery(initialProps);
@@ -81,7 +105,13 @@ describe('styleParam - videoPlay', () => {
     });
     it('should have video element on click', async () => {
       initialProps.styles = mergeNestedObjects(initialProps.styles, {
-        videoPlay: GALLERY_CONSTS.videoPlay.ON_CLICK,
+        behaviourParams: {
+          item: {
+            video: {
+              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+            },
+          },
+        },
         galleyLayout: GALLERY_CONSTS.layout.GRID,
         itemClick: GALLERY_CONSTS.itemClick.NOTHING,
       });

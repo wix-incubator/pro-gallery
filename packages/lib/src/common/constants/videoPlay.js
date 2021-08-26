@@ -1,7 +1,7 @@
 const VIDEO_PLAY = {
-  HOVER: 'hover',
-  AUTO: 'auto',
-  ON_CLICK: 'onClick',
+  HOVER: 'HOVER',
+  AUTO: 'AUTO',
+  CLICK: 'CLICK',
 };
 
 export default VIDEO_PLAY;

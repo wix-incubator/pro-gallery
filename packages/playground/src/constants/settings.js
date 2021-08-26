@@ -163,7 +163,7 @@ export const stylesBySection = {
   ],
   [SECTIONS.VIDEO]: [
     'hidePlay',
-    'videoPlay',
+    'styles_behaviourParams_item_video_playTrigger',
     'videoSpeed',
     'videoSound',
     'videoLoop',

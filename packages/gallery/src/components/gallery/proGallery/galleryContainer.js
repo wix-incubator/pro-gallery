@@ -330,7 +330,7 @@ export class GalleryContainer extends React.Component {
       galleryStructure: this.galleryStructure,
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
-      videoPlay: styles.videoPlay,
+      videoPlay: styles.behaviourParams.item.video.playTrigger,
       videoLoop: styles.videoLoop,
       itemClick: styles.itemClick,
       scrollDirection: styles.scrollDirection,

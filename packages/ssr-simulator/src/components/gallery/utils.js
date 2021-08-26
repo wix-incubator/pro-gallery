@@ -6,6 +6,13 @@ export const defaultStyleParams = {
     cropRatio: 1,
     repeatingGroupTypes: '',
   },
+  behaviourParams: {
+    item: {
+      video: {
+        playTrigger: 'HOVER',
+      },
+    },
+  },
   isRTL: false,
   isVertical: 0,
   gallerySize: 30,

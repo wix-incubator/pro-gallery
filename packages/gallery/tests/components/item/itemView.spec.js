@@ -50,7 +50,16 @@ describe('Item View', () => {
     it('should onItemClicked for items with link', () => {
       Object.assign(sampleItemViewProps, {
         type: 'image',
-        styleParams: { itemClick: 'link', videoPlay: 'onClick' },
+        styleParams: {
+          itemClick: 'link',
+          behaviourParams: {
+            item: {
+              video: {
+                playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+              },
+            },
+          },
+        },
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
@@ -72,18 +81,6 @@ describe('Item View', () => {
         .true;
       stub.restore();
     });
-
-    // following will always fail for video items. it looks to me like a bug. videos will never have hover on mobile
-    // it('should toggleHover onClick when the device is mobile and the onclick is styles to nothing', () => {
-    //   const mobileStub = sinon.stub(utils, 'isMobile').returns(true);
-    //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'nothing', videoPlay: 'onClick'}});
-    //   driver.mount(ItemView, sampleItemViewProps);
-    //   const spy = sinon.spy(ItemView.prototype, 'props.actions.setCurrentHover');
-    //   driver.find.hook('item-wrapper').simulate('click');
-    //   expect(spy.called).to.be.true;
-    //   spy.restore();
-    //   mobileStub.restore();
-    // });
   });
   describe('toggleFullscreenIfNeeded', () => {
     it('should call onItemClicked if the target item does not have block-fullscreen class', () => {

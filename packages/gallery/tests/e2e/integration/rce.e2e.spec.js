@@ -21,6 +21,13 @@ describe('RCE Integration test', () => {
         gallerySpacing: 0,
         cropRatio: 1,
       },
+      behaviourParams: {
+        item: {
+          video: {
+            playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
+          },
+        },
+      },
       galleryLayout: 2,
       gallerySizeType: 'px',
       gallerySizePx: 300,
@@ -44,7 +51,6 @@ describe('RCE Integration test', () => {
       thumbnailSize: 120,
       gotStyleParams: true,
       showVideoPlayButton: true,
-      videoPlay: 'onClick',
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);

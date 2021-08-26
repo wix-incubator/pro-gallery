@@ -3,7 +3,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
 
 export default {
-  title: 'Play Video On',
+  title: 'Video Play Trigger',
   description: `Choose when video items will start playing: On hover, on click or autoplay`,
   isRelevant: () => true,
   isRelevantDescription: 'Always relevant.',

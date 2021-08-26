@@ -11,7 +11,7 @@ import isVertical from './isVertical';
 import numberOfImagesPerRow from './numberOfImagesPerRow';
 import numberOfImagesPerCol from './numberOfImagesPerCol';
 import galleryTextAlign from './galleryTextAlign';
-import videoPlay from './videoPlay';
+import behaviourParams_item_video_playTrigger from './videoPlay';
 import imageHoverAnimation from './imageHoverAnimation';
 import overlayAnimation from './overlayAnimation';
 import textImageSpace from './textImageSpace';
@@ -113,7 +113,7 @@ export default {
   numberOfImagesPerRow,
   numberOfImagesPerCol,
   galleryTextAlign,
-  videoPlay,
+  behaviourParams_item_video_playTrigger,
   imageHoverAnimation,
   overlayAnimation,
   textImageSpace,
